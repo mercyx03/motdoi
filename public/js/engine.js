@@ -1268,7 +1268,7 @@
       var kidT = TRIG.filter(function (T) {
         return T.child && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
-      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return T.cw || 1; }); add(KT.id); cdm[KT.id] = a; }
+      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1); }); /* v2.5: trọng số theo giới tính, hoàn cảnh */ add(KT.id); cdm[KT.id] = a; }
     }
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)
@@ -1359,7 +1359,7 @@
     { c: function (l, a) { return a === 3 && isVN(l); }, p: 0.85, run: function (l, a, r, log) { log('Bắt đầu đi mẫu giáo.', 'neutral'); l.st.soc += 3; } },
     { c: function (l, a) { return a >= 7 && a <= 17 && l.school && l.st.kno > 62; }, p: 0.12, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Đạt danh hiệu học sinh giỏi.', 'Đạt giải học sinh giỏi cấp tỉnh.', 'Được nhà trường khen thưởng cuối năm.']) : 'Được trường khen thưởng vì học giỏi.', 'good'); l.st.hap += 4; l.st.kno += 2; } },
     { c: function (l, a) { return a >= 6 && a <= 12 && l.talent && !l.flags.talentSeen; }, p: 0.25, run: function (l, a, r, log) { l.flags.talentSeen = true; log('Năng khiếu ' + talentText(l) + ' được thầy cô phát hiện.', 'good'); l.st.hap += 3; l.st.kno += 2; l.skill += 8; H.mem(l, 'Lần đầu được khen có năng khiếu ' + talentText(l) + '.', 3); } },
-    { c: function (l, a) { return a >= 6 && a <= 15; }, p: 0.03, run: function (l, a, r, log) { log('Bị gãy tay khi chơi đùa.', 'bad'); l.st.hea -= 3; } },
+    { c: function (l, a) { return a >= 6 && a <= 15 && !l.flags.brokeArm; }, p: 0.03, run: function (l, a, r, log) { l.flags.brokeArm = true; log(U.pick(r, ['Bị gãy tay khi chơi đùa.', 'Ngã từ trên cây xuống, gãy tay phải bó bột cả tháng.', 'Trượt chân ở cầu thang trường, gãy tay — cả lớp thay nhau ký tên lên lớp bột.']), 'bad'); l.st.hea -= 3; } },
     { c: function (l, a) { return a >= 7 && a <= 14 && !l.urban && l.fam.q <= 2; }, p: 0.15, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Sau giờ học phụ bố mẹ chăn trâu, cắt cỏ.', 'Theo mẹ ra đồng cấy lúa những ngày mùa.', 'Đi bộ hàng cây số đến trường mỗi ngày.']) : 'Phụ giúp gia đình việc đồng áng sau giờ học.', 'neutral'); } },
     { c: function (l, a) { return a >= 7 && a <= 14 && l.gdp < 3 && !l.school; }, p: 0.25, run: function (l, a, r, log) { log('Phải đi làm thuê để phụ giúp gia đình dù còn nhỏ.', 'bad'); l.st.hea -= 2; l.st.hap -= 3; } },
     { c: function (l, a) { return a >= 12 && a <= 17 && l.orient !== 'straight' && !l.realized; }, p: 0.35, run: function (l, a, r, log) { l.realized = true; log(l.orient === 'bi' ? 'Nhận ra mình có thể rung động với cả bạn nam lẫn bạn nữ.' : 'Nhận ra mình rung động với người cùng giới.', 'big'); } },

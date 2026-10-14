@@ -1401,7 +1401,7 @@
     title: 'Tiền lì xì', text: 'Tết năm nay bạn được lì xì kha khá. Mẹ bảo: "Đưa mẹ giữ cho."',
     opts: [
       { k: 'mom', l: 'Đưa mẹ giữ', run: function (l, r, log) { log('Đưa hết tiền lì xì cho mẹ "giữ hộ" — và không bao giờ thấy lại.', 'neutral'); fx(l, { karma: 1 }); } },
-      { k: 'toy', l: 'Tự mua đồ chơi', run: function (l, r, log) { log('Mua ngay khẩu súng nước, bộ lego mơ ước.', 'good'); fx(l, { hap: 4 }); } },
+      { k: 'toy', l: 'Tự mua đồ chơi', run: function (l, r, log) { log(l.sex === 'M' ? pick(r, ['Mua ngay khẩu súng nước, bộ lego mơ ước.', 'Mua chiếc ô tô điều khiển, chạy khắp sân.', 'Mua cả xấp thẻ bài siêu nhân.']) : pick(r, ['Mua ngay con búp bê tóc vàng mơ ước.', 'Mua bộ đồ hàng nấu ăn, chơi cả buổi.', 'Mua hộp bút màu 48 cây và cuốn sổ tô màu.']), 'good'); fx(l, { hap: 4 }); } },
       { k: 'piggy', l: 'Bỏ vào heo đất', run: function (l, r, log) { l.flags.piggy = (l.flags.piggy || 0) + 1; log('Nhét tiền lì xì vào con heo đất.', 'good'); fx(l, { kno: 1 }); } }
     ]
   });

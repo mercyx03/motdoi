@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -1104,6 +1104,39 @@ section('21. Bản 2.5: nghề mới, hướng đi giữa các nghề, sự ki�
   { const l = mk(61200, 25); l.fam.elite = 'tp'; l.flags.eliteFollow = true; const k = { name: 'Bé', sex: 'M', born: 25, alive: true, kids: 0 }; l.kids = [k]; const o = E.childOpts(l, k); ok(o.parent.elite === 'tp', 'đời con của tài phiệt vẫn sinh trong gia đình tài phiệt');
     const c = E.createLife(o); ok(c.fam.elite === 'tp' && c.fam.q === 5, 'sống tiếp đời con: vẫn là gia đình tài phiệt'); }
   ok(!/Nghèo cũng không/.test(play(mk(61300, 30, l => { l.fam.q = 5; l.money = l.base * 50; }), 'ru_re', 'no')), 'con nhà giàu từ chối làm ăn phi pháp không nói "nghèo"');
+}
+section('22. Bản 2.6: thu nhỏ hộp lựa chọn, tuổi thơ đa dạng theo giới tính');
+{
+  const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8'), css = fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf8');
+  ok(/id="decMin"/.test(appSrc) && /function minimizeDecision/.test(appSrc) && /decPill/.test(appSrc) && /\.decpill/.test(css), 'hộp lựa chọn có nút thu nhỏ và thanh "đang chờ bạn chọn" để mở lại');
+  ok(/S\.phase === 'decmin'/.test(appSrc) && /Escape/.test(appSrc), 'đang thu nhỏ thì đời tạm dừng, phím Esc để thu nhỏ / mở lại');
+  // v2.6: $() trả về một phần tử, $$() mới trả về danh sách — gọi .forEach trên $() làm hỏng cả trang
+  const badSel = appSrc.match(/[^$]\$\((['"])[^'"]*\1(?:,\s*\w+)?\)\.forEach/g);
+  ok(!badSel, 'app.js không gọi .forEach trên $() (chỉ dùng $$()): ' + (badSel || []).join(' | '));
+  for (const f of ['app.js', 'childhood.js', 'jobs.js', 'wealth.js']) { try { new vm.Script(fs.readFileSync(path.join(ROOT, 'js', f), 'utf8')); ok(true, f + ' cú pháp hợp lệ'); } catch (e) { ok(false, f + ' lỗi cú pháp: ' + e.message); } }
+  const run = (l, until) => { let g = 0; while (l.alive && l.age < until && g++ < 30) { E.beginYear(l, { auto: true }); let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l); } return l; };
+  const dec = {}; const wrap = {};
+  Object.keys(E.DEC).forEach(id => { const ap = E.DEC[id].apply; wrap[id] = ap; E.DEC[id].apply = function (l) { if (l.age <= 15) { const k = id + '|' + l.sex; dec[k] = (dec[k] || 0) + 1; } return ap.apply(this, arguments); }; });
+  let rep = 0, tot = 0, lines = 0, n = 0; const kinds = new Set();
+  for (let i = 0; i < 500; i++) {
+    const l = run(E.createLife({ mode: i % 5 ? 'vn' : 'world', seed: 70000 + i, gender: i % 2 ? 'M' : 'F' }), 16); n++;
+    const seen = {}; l.log.filter(e => e.a <= 15 && e.k !== 'money').forEach(e => { tot++; kinds.add(e.t); if (seen[e.t]) rep++; seen[e.t] = 1; });
+    lines += l.log.filter(e => e.a <= 15).length; cleanLife(l, 'tuổi thơ #' + i);
+    ok((l.flags.kidSeen || []).length <= 120, 'bộ nhớ chống lặp có giới hạn');
+  }
+  Object.keys(wrap).forEach(id => { E.DEC[id].apply = wrap[id]; });
+  console.log('   Tuổi thơ: ' + (lines / n).toFixed(1) + ' dòng/đời · ' + kinds.size + ' câu khác nhau · lặp trong cùng đời ' + (rep / tot * 100).toFixed(2) + '%');
+  ok(lines / n > 30, 'mỗi tuổi thơ có nhiều chuyện để kể (' + (lines / n).toFixed(1) + ' dòng)');
+  ok(kinds.size > 2000 && rep / tot < 0.03, 'tuổi thơ đa dạng, hiếm khi lặp lại (' + kinds.size + ' câu, lặp ' + (rep / tot * 100).toFixed(2) + '%)');
+  const c = (id, s) => dec[id + '|' + s] || 0;
+  ok(c('net_coi', 'F') < c('net_coi', 'M') * 0.4, 'bé gái ít bị rủ đi net hơn bé trai (' + c('net_coi', 'F') + ' vs ' + c('net_coi', 'M') + ')');
+  ok(c('son_moi', 'M') === 0 && c('toc_dai', 'M') === 0 && c('son_moi', 'F') + c('toc_dai', 'F') > 0, 'tình huống riêng của bé gái (son môi, mái tóc)');
+  ok(c('da_bong_vo_kinh', 'F') === 0 && c('da_bong_vo_kinh', 'M') > 0, 'tình huống riêng của bé trai (đá bóng vỡ kính)');
+  ok(c('kpop', 'F') > c('kpop', 'M'), 'bé gái mê thần tượng K-pop nhiều hơn (' + c('kpop', 'F') + ' vs ' + c('kpop', 'M') + ')');
+  const childIds = [...new Set(Object.keys(dec).map(k => k.split('|')[0]))];
+  ok(childIds.length >= 60, 'tuổi thơ gặp nhiều loại tình huống khác nhau (' + childIds.length + ')');
+  ['nhat_vi_be', 'trom_xoai', 'tam_song', 'ban_moi', 'hoi_khoe', 've_tranh', 'sinh_nhat', 'to_ong', 'dien_thoai_be', 'da_bong_vo_kinh', 'thach_danh', 'dua_xe_dap', 'kpop', 'nau_com', 'son_moi', 'toc_dai', 'thu_nac_danh', 'nap_game', 'tiktok', 'meo_ket', 'chuyen_ma', 'choi_le_hoi']
+    .forEach(id => ok(!!E.DEC[id], 'có tình huống tuổi thơ "' + id + '"'));
 }
 function isVNx(l) { return E.isVN(l); }
 

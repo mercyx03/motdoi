@@ -28,6 +28,7 @@
 
   // ---------- tiện ích giao diện ----------
   function show(id) {
+    if (id !== 'life') { var dp = document.getElementById('decPill'); if (dp) dp.remove(); }
     $$('.screen').forEach(function (s) { s.classList.toggle('active', s.id === id); });
     window.scrollTo(0, 0);
     if (id === 'home') renderHome();
@@ -547,6 +548,9 @@
       });
   };
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && S.phase === 'decision') { e.preventDefault(); minimizeDecision(); return; }
+    if (e.key === 'Escape' && S.phase === 'decmin') { e.preventDefault(); showDecision(); return; }
+    if (e.code === 'Space' && S.phase === 'decmin' && !/INPUT|TEXTAREA|SELECT|BUTTON/.test(document.activeElement.tagName)) { e.preventDefault(); showDecision(); return; }
     if (e.code === 'Space' && $('#life').classList.contains('active') && !$('#modalRoot').firstChild && !/INPUT|TEXTAREA|SELECT|BUTTON/.test(document.activeElement.tagName)) {
       e.preventDefault(); $('#pauseBtn').click();
     }
@@ -747,7 +751,7 @@
   }
   function doAction(id) {
     var l = S.life;
-    if (!l || !l.alive || S.phase === 'decision' || S.phase === 'reflect' || S.phase === 'dead') return;
+    if (!l || !l.alive || S.phase === 'decision' || S.phase === 'decmin' || S.phase === 'reflect' || S.phase === 'dead') { if (S.phase === 'decmin') toast('Hãy chọn xong lựa chọn đang chờ trước đã'); return; }
     var d = E.act(l, id);
     if (!d) { toast('Chưa thể làm việc này lúc này'); return; }
     d.manual = true; // người chơi tự bấm thì người chơi tự chọn, kể cả khi bật chế độ tự động
@@ -822,7 +826,18 @@
   }
   function closeModal() { $('#modalRoot').innerHTML = ''; if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; } }
 
+  // v2.5: thu nhỏ hộp lựa chọn để xem các bảng, đổi trọng tâm năm nay… rồi mở lại để chọn (đời tạm dừng trong lúc đó)
+  function minimizeDecision() {
+    var d = S.life && S.life.pending[0]; if (!d || S.phase !== 'decision') return;
+    closeModal(); S.phase = 'decmin';
+    var pill = $('#decPill') || document.body.appendChild(Object.assign(document.createElement('button'), { id: 'decPill', className: 'decpill' }));
+    pill.innerHTML = '<span class="dot"></span>Đang chờ bạn chọn: <b>' + esc(d.title) + '</b><span class="go">Mở lại ›</span>';
+    pill.onclick = function () { showDecision(); };
+    renderAll();
+  }
+  function clearDecPill() { var p = $('#decPill'); if (p) p.remove(); }
   function showDecision() {
+    clearDecPill();
     var l = S.life, d = l.pending[0];
     if (!d) { afterDecisions(); return; }
     S.phase = 'decision';
@@ -832,9 +847,11 @@
       '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
       '<div class="opts">' + d.opts.map(function (o) { return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (o.h ? '<span>' + esc(o.h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
-      (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : ''),
+      (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
+      '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {
         $$('[data-k]', box).forEach(function (b) { b.onclick = function () { choose(b.dataset.k); }; });
+        $('#decMin', box).onclick = minimizeDecision;
         if (aiPick) {
           var k = E.autoKey(l), fast = !S.auto;
           S.modalTimer = setTimeout(function () {

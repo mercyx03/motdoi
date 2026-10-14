@@ -364,3 +364,14 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
   .hero p.lead { font-size: 15.5px; }
   .tab { padding: 9px 6px; }
 }
+
+/* v2.5: thu nhỏ hộp lựa chọn */
+.decmin-row { display: flex; justify-content: center; margin-top: 12px; }
+.decmin-row .btn { font-size: 13px; opacity: .85; }
+.decpill { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px);
+  padding: 12px 18px; border-radius: 999px; border: 1px solid var(--accent); background: var(--surface); color: var(--ink); box-shadow: var(--shadow), var(--glow); cursor: pointer; font-size: 14px; text-align: left; }
+.decpill b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; }
+.decpill .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; animation: decpulse 1.4s ease-in-out infinite; }
+.decpill .go { color: var(--accent); font-weight: 700; white-space: nowrap; }
+@keyframes decpulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .decpill .dot { animation: none; } }

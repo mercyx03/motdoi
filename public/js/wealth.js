@@ -314,7 +314,7 @@
     opts: [
       { k: 'give', l: 'Nhường', ai: { w: 1.2 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close += 6; log('Nhường ' + sibCall(l, s) + '. Mẹ khen bạn biết điều.', 'good'); fx(l, { karma: 1 }); } },
       { k: 'tell', l: 'Mách bố mẹ', ai: { w: 0.8 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close -= 2; log('Mách bố mẹ, cả hai cùng bị mắng.', 'neutral'); } },
-      { k: 'fight', l: 'Không nhường, cãi đến cùng', ai: { risk: 1 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close -= 5; log('Hai anh em giận nhau cả tuần không nói chuyện.', 'bad'); fx(l, { hap: -2 }); } }
+      { k: 'fight', l: 'Không nhường, cãi đến cùng', ai: { risk: 1 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close -= 5; var two = s.born < 0 ? (s.sex === 'M' ? 'Hai anh em' : 'Hai chị em') : (l.sex === 'M' ? 'Hai anh em' : 'Hai chị em'); log(two + ' ' + pick(r, ['giận nhau cả tuần không nói chuyện.', 'cãi nhau to, bị mẹ phạt đứng mỗi đứa một góc.', 'chiến tranh lạnh mấy ngày, rồi lại chia nhau gói bim bim.']), 'bad'); fx(l, { hap: -2 }); } }
     ]
   });
   T('sib_tre', function (l, a) { return a >= 5 && a <= 16 && sibs(l).length > 0; }, 0.12, 3);

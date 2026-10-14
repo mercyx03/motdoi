@@ -4,6 +4,22 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v2.6.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.5.0.
+
+### Mới
+- **Thu nhỏ hộp lựa chọn**: nút "⤓ Thu nhỏ" (hoặc phím Esc) để tạm đóng hộp lựa chọn, xem các bảng, đổi trọng tâm năm nay… Đời tạm dừng trong lúc đó. Thanh "Đang chờ bạn chọn" ở cuối màn hình để mở lại (hoặc Esc / phím cách).
+- **Tuổi thơ 0–15 đa dạng hơn**:
+  - Hơn 120 dòng kể chuyện nhỏ theo từng độ tuổi (biết lẫy, rụng răng sữa, người bạn tưởng tượng, đọc trộm truyện dưới chăn…). Mỗi câu chỉ xuất hiện một lần trong một đời.
+  - Câu chuyện khác nhau theo giới tính (bé trai bắn bi, thả diều, đá bóng; bé gái nhảy dây, chơi đồ hàng, tết tóc), theo nông thôn / thành thị, nhà nghèo / nhà khá giả.
+  - 22 tình huống có lựa chọn mới: nhặt được ví, trèo hái trộm xoài, rủ tắm sông, bạn mới chuyển đến bị trêu, Hội khỏe Phù Đổng, thi vẽ tranh, sinh nhật, chọc tổ ong, lén chơi điện thoại của mẹ, hội làng, chuyện ma, cứu mèo, nạp game, video TikTok đầu tiên, lá thư không tên.
+  - Riêng bé trai: đá bóng vỡ kính, bị thách đánh nhau, đua xe đạp thả dốc. Riêng bé gái: mái tóc, thỏi son của mẹ. Bé gái mê K-pop nhiều hơn.
+- Bé gái ít bị rủ đi net chơi Liên Minh hơn hẳn (trừ khi có năng khiếu game).
+
+### Sửa / điều chỉnh
+- "Hai anh em giận nhau" đổi theo giới tính ("hai chị em"…), có nhiều cách kể. Gãy tay lúc nhỏ chỉ xảy ra một lần. Sinh nhật nhà nghèo / nhà khá có nhiều cách kể hơn.
+
 ## v2.5.0 — 14/10/2026
 
 Giữ nguyên toàn bộ tính năng v2.4.0. Đời đang chơi dở vẫn chơi tiếp; công an đang tại ngũ được tự xếp vào một ngành.
