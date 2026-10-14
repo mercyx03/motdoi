@@ -68,11 +68,11 @@
   });
   EV(function (l, a) { return a >= 6 && a <= 20 && !l.flags.grandLost; }, 0.05, function (l, a, r, log) {
     l.flags.grandLost = true; var w = pick(r, ['Ông nội', 'Bà nội', 'Ông ngoại', 'Bà ngoại']);
-    log(w + ' qua đời. Lần đầu bạn hiểu thế nào là mất mát.', 'bad'); fx(l, { hap: -6 }); H.mem(l, w + ' ra đi — mùi khói hương ngày ấy bạn nhớ mãi.', 4);
+    log(w + ' qua đời vì ' + pick(r, ['tuổi già sức yếu', 'một cơn đột quỵ', 'bạo bệnh', 'viêm phổi']) + '. Lần đầu bạn hiểu thế nào là mất mát.', 'bad'); fx(l, { hap: -6 }); H.mem(l, w + ' ra đi — mùi khói hương ngày ấy bạn nhớ mãi.', 4);
   });
 
   SC('net_coi', {
-    title: 'Quán net cỏ đầu làng', text: function (l) { return 'Tụi bạn rủ ra quán net chơi ' + (l.game || pick2(l, ['Liên Minh', 'Free Fire', 'Đột Kích', 'Liên Quân'])) + '. Trong túi có ít tiền mẹ đưa đóng học thêm.'; },
+    title: 'Quán net cỏ đầu làng', text: function (l) { return 'Tụi bạn rủ ra quán net chơi ' + (l.game && E.GAMES.moba.pc.concat(E.GAMES.fps.pc).indexOf(l.game) >= 0 ? l.game : pick2(l, l.talent === 'game' ? E.GAMES[l.talentSub === 'FPS' ? 'fps' : 'moba'].pc : E.GAMES.moba.pc.concat(E.GAMES.fps.pc))) + '. Trong túi có ít tiền mẹ đưa đóng học thêm.'; },
     opts: [
       { k: 'keyboard', l: 'Đi chơi, nhét tiền dưới bàn phím cho tiện', ai: { risk: 1, w: 1 }, run: function (l, r, log) {
         l.flags.netPlayer = true; skillGame(l, 3);
@@ -86,7 +86,7 @@
       } },
       { k: 'skip', l: 'Trốn học thêm để đi net', ai: { risk: 1, bad: 0.6 }, run: function (l, r, log) {
         l.flags.netPlayer = true; skillGame(l, 5);
-        if (ch(r, 0.4)) { log('Bị thầy gọi điện về nhà báo trốn học. Mẹ khóc, bố im lặng.', 'bad'); fx(l, { hap: -5, kno: -2 }); } else { log('Trốn học đi net trót lọt.', 'neutral'); fx(l, { hap: 2, kno: -2 }); }
+        if (ch(r, 0.4)) { log('Bị thầy gọi điện về nhà báo trốn học. ' + (l.fam.mAlive && l.fam.fAlive && !l.fam.noDad ? 'Mẹ khóc, bố im lặng.' : l.fam.mAlive ? 'Mẹ khóc cả buổi tối.' : l.fam.fAlive ? 'Bố im lặng rất lâu.' : 'Bà ngồi thở dài mãi.'), 'bad'); fx(l, { hap: -5, kno: -2 }); } else { log('Trốn học đi net trót lọt.', 'neutral'); fx(l, { hap: 2, kno: -2 }); }
       } },
       { k: 'study', l: 'Thôi, ở nhà học bài', ai: { w: 0.8, smart: 1 }, run: function (l, r, log) { log('Ở nhà học bài, nghe tiếng tụi bạn í ới ngoài ngõ.', 'neutral'); fx(l, { kno: 2 }); } }
     ]
@@ -388,7 +388,7 @@
     opts: [
       { k: 'scholar', l: 'Săn học bổng toàn phần', h: 'Cần học lực rất tốt', ai: { smart: 1.5 }, run: function (l, r, log, d) { if (ch(r, U.clamp((l.st.kno - 55) / 40, 0.05, 0.85))) { log('Giành học bổng toàn phần du học ' + d.c[1] + '!', 'big'); H.mem(l, 'Email báo đỗ học bổng toàn phần ' + d.c[1] + ' lúc nửa đêm.', 6); goAbroad(l, d.c, log); } else { log('Trượt học bổng du học.', 'bad'); fx(l, { hap: -6 }); l.pending.unshift(E.DEC.uniFail.make(l, r)); } } },
       { k: 'parents', l: 'Bố mẹ chi trả toàn bộ', req: function (l) { return l.fam.q >= 4; }, ai: { w: 1.5 }, run: function (l, r, log, d) { log('Bố mẹ dốc hầu bao cho bạn du học ' + d.c[1] + '.', 'big'); H.mem(l, 'Bố mẹ tiễn bạn ở sân bay ngày đi du học.', 5); goAbroad(l, d.c, log); } },
-      { k: 'agency', l: 'Qua công ty tư vấn du học', h: function (l) { return 'Phí dịch vụ ~' + mb(l, 0.6) + ', vay thêm'; }, ai: { risk: 0.6 }, run: function (l, r, log, d) {
+      { k: 'agency', l: 'Qua công ty tư vấn du học', h: function (l) { return 'Phí dịch vụ khoảng ' + mb(l, 0.6) + ', vay thêm'; }, ai: { risk: 0.6 }, run: function (l, r, log, d) {
         if (ch(r, 0.18)) { cashB(l, -0.6, 'Mất tiền cho công ty du học ma'); log('Công ty tư vấn du học ôm tiền bỏ trốn, hồ sơ visa bị làm giả. Giấc mơ du học tan vỡ.', 'bad'); fx(l, { hap: -12 }); H.mem(l, 'Giấc mơ du học tan vỡ vì công ty lừa đảo.', 4); l.pending.unshift(E.DEC.uniFail.make(l, r)); return; }
         cashB(l, -0.6, 'Phí công ty du học'); H.addLoan(l, 'family', l.base * d.cost); cashB(l, -d.cost, 'Học phí du học năm đầu');
         log('Qua công ty du học, gia đình vay mượn thêm để bạn sang ' + d.c[1] + '. Vừa học vừa làm thêm để trả nợ.', 'big'); goAbroad(l, d.c, log);
@@ -504,7 +504,7 @@
   SC('bang_lai', {
     title: 'Thi bằng lái', prep: function (l) { return { t: !l.lic.A1 ? 'A1' : 'B', name: !l.lic.A1 ? 'bằng lái xe máy (A1)' : 'bằng lái ô tô (B)', cost: !l.lic.A1 ? 0.01 : 0.18 }; },
     text: function (l, d) { return 'Bạn đăng ký thi ' + d.name + '. Học phí khoảng ' + mb(l, d.cost) + '.'; },
-    valid: function (l) { return !(l.lic.A1 && l.lic.B); },
+    valid: function (l, d) { return !(l.lic.A1 && l.lic.B) && !(d && d.t && l.lic[d.t]); }, // v2.8: đã đỗ bằng này trong năm thì bỏ lượt thi trùng
     opts: [
       { k: 'self', l: 'Tự ôn luyện và đi thi', ai: { w: 1.4, smart: 0.5 }, run: function (l, r, log, d) { cashB(l, -d.cost, 'Học & thi ' + d.name); if (ch(r, U.clamp(0.45 + l.st.kno / 150, 0.4, 0.95))) { l.lic[d.t] = true; log('Thi đỗ ' + d.name + '.', 'good'); fx(l, { hap: 4 }); } else { log('Trượt phần thi sa hình. Hẹn lần sau.', 'bad'); fx(l, { hap: -3 }); } } },
       { k: 'buy', l: 'Mua bằng "bao đậu"', ai: { bad: 1.2 }, run: function (l, r, log, d) { fx(l, { karma: -5 }); cashB(l, -d.cost * 2.5, 'Tiền "bao đậu" bằng lái'); if (ch(r, 0.3)) { log('Đưa tiền cho "cò" thi bằng, hóa ra là lừa đảo. Mất tiền, vẫn không có bằng.', 'bad'); fx(l, { hap: -6 }); } else { l.lic[d.t] = true; log('Có bằng ' + d.t + ' nhờ "bao đậu" — nhưng tay lái vẫn non.', 'neutral'); l.flags.weakDriver = true; } } }
@@ -549,7 +549,7 @@
       var pw0 = parentsWord(l), items = ITEMS.filter(function (x) { return !/bố mẹ/.test(x[0]) || pw0; }).map(function (x) { return [x[0].replace('bố mẹ', pw0 || 'bố mẹ'), x[1]]; });
       var it = pick(r, items); return { n: it[0], p: it[1] };
     },
-    text: function (l, d) { return 'Bạn rất muốn mua ' + d.n + ' (~' + mb(l, d.p) + '). Bạn bè ai cũng có. Trong tài khoản hiện có ' + H.money(l, l.money) + '.'; },
+    text: function (l, d) { return 'Bạn rất muốn mua ' + d.n + ' (khoảng ' + mb(l, d.p) + '). Bạn bè ai cũng có. Trong tài khoản hiện có ' + H.money(l, l.money) + '.'; },
     opts: [
       { k: 'cash', l: 'Trả bằng tiền tiết kiệm', req: function (l, d) { return l.money >= d.p * l.base; }, ai: { w: 1, amb: 0.5 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); log('Mua ' + d.n + ' bằng tiền dành dụm. Vui được vài tuần.', 'neutral'); fx(l, { hap: 4 }); } },
       { k: 'card', l: 'Quẹt thẻ tín dụng', req: function (l) { return H.canBankLoan(l) && l.indep; }, h: 'Lãi ~30%/năm nếu trả chậm', ai: { risk: 0.8 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); H.addLoan(l, 'card', d.p * l.base); log('Quẹt thẻ mua ' + d.n + '. Sao kê tháng sau tính sau.', 'neutral'); fx(l, { hap: 4 }); } },
@@ -686,8 +686,8 @@
     title: 'Hâm nóng tình cảm', text: function (l) { return 'Dạo này bạn và ' + l.partner.name + ' ít thời gian cho nhau.'; },
     valid: function (l) { return !!l.partner; },
     opts: [
-      { k: 'dinner', l: 'Một bữa tối lãng mạn', h: function (l) { return mb(l, 0.02); }, run: function (l, r, log) { cashB(l, -0.02, 'Hẹn hò'); log('Bữa tối nến cùng ' + l.partner.name + '.', 'good'); fx(l, { hap: 4, soc: 2 }); } },
-      { k: 'trip', l: 'Một chuyến du lịch chỉ hai người', h: function (l) { return mb(l, 0.1); }, run: function (l, r, log) { cashB(l, -0.1, 'Du lịch cùng ' + pw(l)); log('Chuyến đi chỉ có hai người, như hồi mới yêu.', 'good'); fx(l, { hap: 8, soc: 3 }); H.mem(l, 'Chuyến đi biển cùng ' + l.partner.name + ', hai người ngồi đếm sao.', 4); } },
+      { k: 'dinner', l: 'Một bữa tối lãng mạn', h: function (l) { return mb(l, 0.02); }, run: function (l, r, log) { var who = H.datePay ? H.datePay(l, r, 0.02, 'Hẹn hò') : (cashB(l, -0.02, 'Hẹn hò'), ''); log('Bữa tối nến cùng ' + l.partner.name + '.' + who, 'good'); fx(l, { hap: 4, soc: 2 }); } },
+      { k: 'trip', l: 'Một chuyến du lịch chỉ hai người', h: function (l) { return mb(l, 0.1); }, run: function (l, r, log) { var who = l.partner.status === 'dating' && H.datePay ? H.datePay(l, r, 0.1, 'Du lịch cùng ' + pw(l)) : (cashB(l, -0.1, 'Du lịch cùng ' + pw(l)), ''); log('Chuyến đi chỉ có hai người, như hồi mới yêu.' + who, 'good'); fx(l, { hap: 8, soc: 3 }); H.mem(l, 'Chuyến đi biển cùng ' + l.partner.name + ', hai người ngồi đếm sao.', 4); } },
       { k: 'talk', l: 'Dành một buổi tối nói chuyện thật lòng', run: function (l, r, log) { log('Ngồi nói với nhau những điều bấy lâu giấu kín.', 'good'); fx(l, { hap: 3, soc: 3 }); } }
     ]
   });
@@ -842,7 +842,7 @@
 
   SC('tang_luong', {
     title: 'Xin tăng lương', text: function (l) { return 'Bạn đã làm ' + E.jobTitle(l) + ' được ' + l.job.yrs + ' năm ở vị trí này.'; },
-    valid: function (l) { return !!l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime'; },
+    valid: function (l) { return !!l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' && H.isEmployee(l); },
     opts: [
       { k: 'ask', l: 'Mạnh dạn đề xuất tăng lương', ai: { amb: 1 }, run: function (l, r, log) { var c = E.jobDef(l); var need = (c.yrs && c.yrs[l.job.rank]) || 3; var p = 0.15 + (l.st.kno - 50) / 200 + Math.min(4, l.job.yrs) * 0.04; if (!c.ladder && l.job.yrs >= need - 1 && ch(r, p) && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; log('Sếp đồng ý — được nâng lên ' + E.jobTitle(l) + '.', 'good'); fx(l, { hap: 6 }); } else if (ch(r, 0.5)) { cashB(l, 0.05, 'Thưởng thêm'); log('Không lên chức, nhưng được tăng chút lương.', 'neutral'); } else if (H.isEmployee(l) && ch(r, 0.15)) { log('Sếp phật ý, ít lâu sau bạn bị cho nghỉ việc.', 'bad'); l.job = null; l.flags.needJob = true; } else { log('Bị từ chối khéo: "Cố gắng thêm nhé em."', 'bad'); fx(l, { hap: -3 }); } } },
       { k: 'no', l: 'Thôi, chờ thêm', ai: { w: 1 }, run: function () { } }
@@ -1059,7 +1059,7 @@
     log('Đi du lịch ' + dest + (l.partner ? ' cùng ' + pw(l) : '') + '.', 'good'); cashB(l, -0.05, 'Du lịch'); fx(l, { hap: 4 });
   });
   EV(function (l, a) { return a >= 25 && a <= 60; }, 0.03, function (l, a, r, log) { log('Giúp đỡ một người bạn cũ đang gặp khó khăn.', 'good'); fx(l, { soc: 4, hap: 2, karma: 2 }); });
-  EV(function (l, a) { return a >= 40 && (!l.bff || !l.bff.alive); }, 0.015, function (l, a, r, log) { log('Một người bạn cũ qua đời đột ngột.', 'bad'); fx(l, { hap: -5 }); });
+  EV(function (l, a) { return a >= 40 && (!l.bff || !l.bff.alive); }, 0.015, function (l, a, r, log) { log('Một người bạn cũ qua đời đột ngột vì ' + pick(r, a < 60 ? ['tai nạn giao thông', 'nhồi máu cơ tim', 'đột quỵ', 'ung thư phát hiện muộn'] : ['đột quỵ', 'nhồi máu cơ tim', 'viêm phổi', 'ung thư']) + '.', 'bad'); fx(l, { hap: -5 }); });
 
   var CONFLICT = { UA: 0.3, SD: 0.3, MM: 0.2, PS: 0.35, SY: 0.12, YE: 0.15, SS: 0.12, CD: 0.1, SO: 0.12, AF: 0.06, ML: 0.08, BF: 0.1, NE: 0.06, NG: 0.04, ET: 0.06, HT: 0.15, CF: 0.08, LY: 0.05, IL: 0.08, LB: 0.08, RU: 0.06, IQ: 0.03, MZ: 0.03, CM: 0.03, CO: 0.02, MX: 0.03 };
   SC('chien_tranh', {
@@ -1125,7 +1125,7 @@
   // TUỔI THƠ (1–14 tuổi): năm nào cũng có điều để chọn
   // =====================================================================
   function CT(id, when, cd, cw) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: 0.1, cd: cd || 3, child: true, cw: cw || 1 }); }
-  function giveTalent(l, t, p, r) { if (!l.talent && r() < p) { l.talent = t; if (t === 'game') l.game = l.game || 'Liên Quân Mobile'; } if (l.talent === t) l.skill = Math.min(100, (l.skill || 20) + 4); }
+  function giveTalent(l, t, p, r) { if (!l.talent && r() < p) { l.talent = t; if (t === 'game') { if (l.talentSub !== 'FPS' && l.talentSub !== 'MOBA') l.talentSub = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = l.game || E.gameFor(l, r); } } if (l.talent === t) l.skill = Math.min(100, (l.skill || 20) + 4); }
 
   SC('thoi_noi', {
     title: function (l) { return isVN(l) ? 'Lễ thôi nôi' : 'Sinh nhật đầu tiên'; },
@@ -1157,11 +1157,11 @@
     text: function (l, d) { return 'Đi chợ với mẹ, bạn thấy một con ' + d.t + ' bày ở sạp. Mắt bạn sáng rực.'; },
     opts: [
       { k: 'tantrum', l: 'Nằm lăn ra đất ăn vạ', run: function (l, r, log, d) { if (l.fam.q >= 3 && ch(r, 0.6)) { log('Ăn vạ thành công, ôm ' + d.t + ' về nhà. Mẹ thở dài.', 'neutral'); fx(l, { hap: 4, karma: -1 }); } else { log('Bị mẹ xách tai về, không có ' + d.t + ' mà còn ăn roi.', 'bad'); fx(l, { hap: -3 }); } } },
-      { k: 'ask', l: 'Ngoan ngoãn xin mẹ', run: function (l, r, log, d) { if (ch(r, l.fam.q >= 3 ? 0.7 : 0.3)) { log('Mẹ mua cho con ' + d.t + '. Bạn ôm ngủ suốt mấy tháng.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Con ' + d.t + ' mẹ mua cho ở chợ.', 2); } else { log('Mẹ bảo "để Tết mẹ mua". Bạn gật đầu, mắt rơm rớm.', 'neutral'); fx(l, { hap: -1 }); } } },
+      { k: 'ask', l: function (l) { return 'Ngoan ngoãn xin ' + (l.fam.mAlive ? 'mẹ' : l.fam.fAlive ? 'bố' : 'bà'); }, run: function (l, r, log, d) { if (ch(r, l.fam.q >= 3 ? 0.7 : 0.3)) { log((l.fam.mAlive ? 'Mẹ' : l.fam.fAlive ? 'Bố' : 'Bà') + ' mua cho con ' + d.t + '. Bạn ôm ngủ suốt mấy tháng.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Con ' + d.t + ' mẹ mua cho ở chợ.', 2); } else { log('Mẹ bảo "để Tết mẹ mua". Bạn gật đầu, mắt rơm rớm.', 'neutral'); fx(l, { hap: -1 }); } } },
       { k: 'quiet', l: l => l.fam.q <= 2 ? 'Thôi, nhà mình nghèo, không đòi' : 'Thôi, không đòi', run: function (l, r, log) { log('Không đòi gì, chỉ ngoái nhìn món đồ chơi mãi.', 'neutral'); fx(l, { karma: 2 }); if (l.fam.q <= 2) H.mem(l, 'Món đồ chơi ở chợ năm ấy bạn không dám đòi.', 3); } }
     ]
   });
-  CT('do_choi', function (l, a) { return a >= 3 && a <= 6; }, 3);
+  CT('do_choi', function (l, a) { return a >= 3 && a <= 6 && l.fam.mAlive; }, 3); // v2.8: chuyện đi chợ với mẹ
 
   SC('hoc_chu_som', {
     title: 'Học trước khi vào lớp 1?', text: 'Bố mẹ bàn nhau cho bạn đi học "tiền tiểu học" để vào lớp Một khỏi bỡ ngỡ.',
@@ -1436,7 +1436,7 @@
   A('bang_lai', G2, 'Thi bằng lái xe', { min: 18, avail: function (l) { return l.lic.A1 && l.lic.B ? 'Đã có đủ bằng' : true; }, ai: { w: 0.5, smart: 0.5 } });
   A('hoc_them', G2, 'Học chứng chỉ (ngoại ngữ, tin học…)', { min: 15, sc: 'hoc_them', avail: function (l) { return l.money > -l.base ? true : 'Không đủ tiền'; }, ai: { w: 0.06, smart: 1, amb: 1 } });
   A('tim_viec', G3, 'Tìm việc / nhảy việc', { min: 15, sc: 'job', avail: function (l) { return l.school ? 'Đang đi học' : l.abroad && !l.abroad.perm ? 'Đang ở nước ngoài theo hợp đồng' : true; }, arg: null });
-  A('tang_luong', G3, 'Xin tăng lương', { min: 16, avail: function (l) { return l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' ? true : 'Không áp dụng'; }, ai: { w: 0.2, amb: 1 } });
+  A('tang_luong', G3, 'Xin tăng lương', { min: 16, avail: function (l) { return l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' && H.isEmployee(l) ? true : 'Không áp dụng'; }, ai: { w: 0.2, amb: 1 } });
   A('nghi_viec', G3, 'Nghỉ việc', { min: 15, avail: function (l) { return l.job ? true : 'Chưa có việc'; } });
   A('khoi_nghiep', G3, 'Khởi nghiệp / kinh doanh', { min: 20, sc: 'biz', avail: function (l) { return l.money > l.base * 0.8 ? true : 'Cần ít nhất ' + mb(l, 0.8) + ' vốn'; }, ai: { w: 0.15, risk: 1, amb: 1 } });
   A('mua_xe', G4, 'Mua xe', { min: 16, ai: { w: 0.4 }, avail: function (l) { return l.veh === 'ô tô' ? 'Đã có ô tô' : true; } });

@@ -178,7 +178,7 @@
         H.mem(l, 'Chuyên án năm ' + yr(l) + ' — lần bạn đi đầu đối mặt với tội phạm.', 6);
         if (d.b === 'mt' || d.b === 'hs') l.flags.revenge = (l.flags.revenge || 0) + 1;
       } },
-      { k: 'bribe', l: 'Nhận tiền, cho qua', req: function (l, d) { return d.bribe > 0; }, h: function (l, d) { return '~' + mb(l, d.bribe) + ' · có thể bị phát hiện, đi tù'; }, ai: { bad: 1.5, w: 0.5 }, run: function (l, r, log, d) {
+      { k: 'bribe', l: 'Nhận tiền, cho qua', req: function (l, d) { return d.bribe > 0; }, h: function (l, d) { return 'Khoảng ' + mb(l, d.bribe) + ' · có thể bị phát hiện, đi tù'; }, ai: { bad: 1.5, w: 0.5 }, run: function (l, r, log, d) {
         cashB(l, d.bribe, 'Tiền "bôi trơn"'); fx(l, { karma: -12 }); l.flags.dirty = (l.flags.dirty || 0) + 1;
         log('Nhận tiền và cho qua. Đêm đó bạn trằn trọc mãi.', 'bad');
         if (ch(r, 0.15 + d.bribe * 0.08)) { log('Camera và tin nhắn bị thanh tra thu thập. Bạn bị đình chỉ công tác, khởi tố tội nhận hối lộ.', 'bad'); l.job = null; l.flags.needJob = true; H.sched(l, 'bi_bat', 0, { why: 'nhận hối lộ', sev: 2 }); }
@@ -578,6 +578,20 @@
     if (l.job && l.job.rep == null && (hasJob(l, ['tham_tu', 'luat_su', 'cong_an', 'bac_si', 'phong_vien', 'sale_bds']))) l.job.rep = 50;
     eliteYear(l, r, log, a);
   });
+  // v2.8: đang làm chủ cửa hàng / quán mở bằng vốn riêng thì có thể chọn tập trung điều hành, không cần đi làm thuê
+  var jobDec = E.DEC.job, jobMake = jobDec.make, jobApply = jobDec.apply;
+  jobDec.make = function (life, r, arg) {
+    var d = jobMake.call(this, life, r, arg), v = (life.ventures || [])[0];
+    if (v && !life.job) d.opts.splice(d.opts.length - 1, 0, { k: 'own', l: 'Tập trung điều hành ' + v.n + ' của mình', h: 'Không đi làm thuê, sống bằng lãi kinh doanh' });
+    return d;
+  };
+  jobDec.apply = function (life, d, k, r, log) {
+    if (k === 'own') { life.flags.upgradeJob = false; life.flags.needJob = false; life.flags.selfRun = true; log('Quyết định không đi làm thuê nữa, tập trung điều hành ' + ((life.ventures || [])[0] || { n: 'việc kinh doanh' }).n + ' của mình.', 'neutral'); return; }
+    if (k !== 'none') life.flags.selfRun = false;
+    return jobApply.call(this, life, d, k, r, log);
+  };
+  var jobAuto = jobDec.auto;
+  jobDec.auto = function (life, d, r) { return d.opts.some(function (o) { return o.k === 'own'; }) && (life.ventures[0].cap > life.base * 2 || r() < 0.5) ? 'own' : jobAuto.call(this, life, d, r); };
   // đang giữ ghế trong cơ nghiệp gia đình thì không "nhảy việc" (muốn đi thì phải chủ động nghỉ việc)
   E.ACT.forEach(function (a) { if (a.id === 'tim_viec') { var av = a.avail; a.avail = function (l) { return l.job && l.job.fam ? 'Đang giữ vị trí trong cơ nghiệp gia đình' : av ? av(l) : true; }; } });
   // du học theo sắp xếp gia đình thì không ở lại định cư

@@ -61,57 +61,134 @@
   H.LANG = LANG; H.langCert = langCert; H.langNext = langNext; H.langCtx = langCtx; H.langLabel = langLabel; H.studyLang = studyLang;
 
   // ===================================================================
-  // 2. XE CỘ THEO MỨC GIÀU CÓ
-  // tier: 0 xe máy · 1 ô tô điện / phổ thông · 2 hạng sang · 3 xe thể thao · 4 siêu xe
+  // 2. XE CỘ (v2.8): chọn theo số tiền đang có — từng phân khúc, từng mẫu xe với giá, thông số, ưu nhược điểm;
+  // đủ tiền thì trả thẳng, chưa đủ thì gợi ý trả góp. Giá tham khảo đã gồm chi phí lăn bánh (triệu đồng, làm tròn).
+  // tier (để tính chi phí nuôi xe, cảnh trong game): 0 xe máy · 1 ô tô phổ thông · 2 hạng sang · 3 thể thao · 4 siêu xe
   // ===================================================================
-  var CARS = [
-    { k: 'ev', n: 'ô tô điện cỡ nhỏ', ex: 'VinFast VF 5', p: 5, t: 1, up: 0 },
-    { k: 'pt', n: 'ô tô phổ thông', ex: 'Toyota Vios, Honda City', p: 7, t: 1, up: 0 },
-    { k: 'suv', n: 'SUV gia đình 7 chỗ', ex: 'Ford Everest, Toyota Fortuner', p: 12, t: 1, up: 0.02 },
-    { k: 'lux', n: 'xe hạng sang', ex: 'Mercedes, BMW, Lexus', p: 25, t: 2, up: 0.12 },
-    { k: 'sport', n: 'xe thể thao', ex: 'Porsche 911', p: 80, t: 3, up: 0.4 },
-    { k: 'super', n: 'siêu xe', ex: 'Lamborghini, Ferrari', p: 220, t: 4, up: 1.2 }
+  var SEGS = [
+    { k: 'so', n: 'Xe số', car: false, d: 'bền, rẻ, tiết kiệm xăng — hợp đi làm, chở hàng' },
+    { k: 'ga', n: 'Xe tay ga', car: false, d: 'cốp rộng, đi phố nhàn, kiểu dáng đẹp' },
+    { k: 'dien', n: 'Xe máy điện', car: false, d: 'êm, gần như không tốn nhiên liệu, phải sạc' },
+    { k: 'con', n: 'Xe côn tay & phân khối lớn', car: false, d: 'mạnh, thể thao, chạy đường dài' },
+    { k: 'A', n: 'Ô tô cỡ nhỏ (hạng A)', car: true, d: 'nhỏ gọn, dễ đi phố, giá mềm nhất' },
+    { k: 'B', n: 'Sedan / gầm cao hạng B', car: true, d: 'bán chạy nhất, rộng rãi vừa đủ cho gia đình 4–5 người' },
+    { k: 'C', n: 'Hạng C', car: true, d: 'rộng, nhiều tiện nghi, đi xa thoải mái' },
+    { k: 'D', n: 'SUV 7 chỗ / sedan hạng D', car: true, d: 'gia đình đông người, đi tỉnh, đường xấu' },
+    { k: 'L', n: 'Xe sang', car: true, d: 'đẳng cấp, êm ái — nhưng nuôi xe tốn kém' },
+    { k: 'S', n: 'Xe thể thao & siêu xe', car: true, d: 'tốc độ, hàng hiếm — chi phí bảo dưỡng rất lớn' }
   ];
-  function carPrice(l, c) { return c.p * (isVN(l) ? 1 : 0.5); }
+  // p: giá (triệu đ) · t: hạng · up: chi phí nuôi xe mỗi năm (× thu nhập cơ sở, ngoài xăng & gửi xe thông thường)
+  var MODELS = [
+    { k: 'wave', s: 'so', n: 'Honda Wave Alpha', p: 19, t: 0, sp: '110cc · ~1,7 L xăng/100 km', pro: 'rẻ, cực bền, dễ sửa ở đâu cũng có', con: 'đơn giản, ít tiện nghi' },
+    { k: 'sirius', s: 'so', n: 'Yamaha Sirius', p: 22, t: 0, sp: '110cc · ~1,8 L/100 km', pro: 'bốc, tiết kiệm xăng', con: 'cốp nhỏ, ngồi sau hơi chật' },
+    { k: 'future', s: 'so', n: 'Honda Future 125', p: 33, t: 0, sp: '125cc phun xăng · ~1,5 L/100 km', pro: 'êm, bền, giữ giá', con: 'đắt so với xe số khác' },
+    { k: 'vision', s: 'ga', n: 'Honda Vision', p: 34, t: 0, sp: '110cc · ~1,9 L/100 km · cốp 16 L', pro: 'nhẹ, dễ đi, hợp nữ và người mới', con: 'máy yếu khi chở nặng, lên dốc' },
+    { k: 'lead', s: 'ga', n: 'Honda Lead', p: 42, t: 0, sp: '125cc · cốp 37 L', pro: 'cốp siêu rộng, sàn để chân lớn', con: 'dáng không thể thao' },
+    { k: 'airblade', s: 'ga', n: 'Honda Air Blade 160', p: 58, t: 0, sp: '160cc · phanh ABS', pro: 'mạnh, giữ giá tốt', con: 'yên cao, xe nặng' },
+    { k: 'shmode', s: 'ga', n: 'Honda SH Mode', p: 62, t: 0, sp: '125cc · khóa thông minh', pro: 'sang, hợp đi làm văn phòng', con: 'giá cao, dễ bị nhắm trộm' },
+    { k: 'sh160', s: 'ga', n: 'Honda SH 160i', p: 100, t: 0, sp: '160cc · ABS · khóa thông minh', pro: '"vua tay ga", rất giữ giá', con: 'đắt, nặng, dễ bị trộm' },
+    { k: 'vespa', s: 'ga', n: 'Vespa Sprint', p: 85, t: 0, sp: '125cc · thân thép nguyên khối', pro: 'đẹp, cá tính kiểu Ý', con: 'đắt, bảo dưỡng tốn' },
+    { k: 'evo', s: 'dien', n: 'VinFast Evo200', p: 23, t: 0, sp: '~200 km/lần sạc · 70 km/h', pro: 'đi lại gần như miễn phí, êm', con: 'sạc lâu, đi tỉnh xa bất tiện' },
+    { k: 'feliz', s: 'dien', n: 'VinFast Feliz S', p: 30, t: 0, sp: '~198 km/lần sạc · cốp rộng', pro: 'dáng tay ga, không tốn xăng', con: 'pin thuê hoặc mua, nặng' },
+    { k: 'theon', s: 'dien', n: 'VinFast Theon S', p: 63, t: 0, sp: '~150 km/lần sạc · 99 km/h', pro: 'mạnh như xe xăng 150cc', con: 'giá cao' },
+    { k: 'exciter', s: 'con', n: 'Yamaha Exciter 155', p: 52, t: 0, sp: '155cc côn tay · ~2,1 L/100 km', pro: 'mạnh, bốc, "chất" với dân chơi xe', con: 'đi phố kẹt xe mỏi tay côn' },
+    { k: 'winner', s: 'con', n: 'Honda Winner X', p: 48, t: 0, sp: '150cc côn tay · ABS', pro: 'mạnh, an toàn', con: 'yên cứng khi đi xa' },
+    { k: 'z900', s: 'con', n: 'Kawasaki Z900', p: 330, t: 0, sp: '948cc · 125 mã lực', pro: 'đỉnh của xe phân khối lớn', con: 'cần bằng A2, nóng máy, đắt', up: 0.03 },
+    { k: 'vf3', s: 'A', n: 'VinFast VF 3 (điện)', p: 330, t: 1, sp: '4 chỗ · ~210 km/lần sạc', pro: 'rẻ nhất, đi phố siêu tiện', con: 'nhỏ, đi xa phải sạc' },
+    { k: 'i10', s: 'A', n: 'Hyundai Grand i10', p: 420, t: 1, sp: '1.2L · ~5,5 L/100 km', pro: 'rẻ, tiết kiệm, nhiều đồ chơi', con: 'cách âm kém, ồn ở tốc độ cao' },
+    { k: 'morning', s: 'A', n: 'Kia Morning', p: 410, t: 1, sp: '1.25L · ~5,5 L/100 km', pro: 'nhỏ gọn, dễ lái cho người mới', con: 'chật khi đi 4 người lớn' },
+    { k: 'vios', s: 'B', n: 'Toyota Vios', p: 560, t: 1, sp: 'sedan 1.5L · ~5,8 L/100 km', pro: 'bền, giữ giá, chạy dịch vụ cũng tốt', con: 'thiết kế đơn giản' },
+    { k: 'city', s: 'B', n: 'Honda City', p: 600, t: 1, sp: 'sedan 1.5L · 119 mã lực', pro: 'lái hay, rộng nhất phân khúc', con: 'cách âm trung bình' },
+    { k: 'accent', s: 'B', n: 'Hyundai Accent', p: 570, t: 1, sp: 'sedan 1.5L', pro: 'nhiều tiện nghi so với giá', con: 'mất giá nhanh hơn xe Nhật' },
+    { k: 'vf5', s: 'B', n: 'VinFast VF 5 (điện)', p: 520, t: 1, sp: 'gầm cao 5 chỗ · ~326 km/lần sạc', pro: 'chi phí vận hành rất thấp', con: 'phụ thuộc trạm sạc khi đi xa' },
+    { k: 'yariscross', s: 'B', n: 'Toyota Yaris Cross', p: 720, t: 1, sp: 'gầm cao · có bản hybrid', pro: 'tiết kiệm, an toàn', con: 'giá cao trong hạng B' },
+    { k: 'mazda3', s: 'C', n: 'Mazda 3', p: 720, t: 1, sp: 'sedan 1.5L · nội thất đẹp', pro: 'đẹp, nhiều trang bị', con: 'hàng ghế sau hơi chật' },
+    { k: 'cx5', s: 'C', n: 'Mazda CX-5', p: 860, t: 1, sp: 'SUV 5 chỗ 2.0L', pro: 'đẹp, đầm, bán chạy', con: 'ồn lốp ở tốc độ cao' },
+    { k: 'crv', s: 'C', n: 'Honda CR-V', p: 1150, t: 1, sp: 'SUV 5+2 chỗ · 1.5 turbo', pro: 'rộng, lái hay, có bản hybrid', con: 'giá cao' },
+    { k: 'vf7', s: 'C', n: 'VinFast VF 7 (điện)', p: 900, t: 1, sp: 'SUV điện · ~430 km/lần sạc', pro: 'mạnh, êm, nhiều công nghệ', con: 'mất giá nhanh' },
+    { k: 'fortuner', s: 'D', n: 'Toyota Fortuner', p: 1250, t: 1, sp: 'SUV 7 chỗ máy dầu', pro: 'bền, đi đường xấu tốt', con: 'cứng, ồn hơn SUV đô thị', up: 0.02 },
+    { k: 'everest', s: 'D', n: 'Ford Everest', p: 1350, t: 1, sp: 'SUV 7 chỗ · 2.0 turbo', pro: 'mạnh, nhiều công nghệ an toàn', con: 'to, khó đi phố hẹp', up: 0.02 },
+    { k: 'camry', s: 'D', n: 'Toyota Camry', p: 1350, t: 1, sp: 'sedan hạng D · có hybrid', pro: 'êm, "xe sếp", giữ giá', con: 'không hợp đường xấu', up: 0.02 },
+    { k: 'vf8', s: 'D', n: 'VinFast VF 8 (điện)', p: 1200, t: 1, sp: 'SUV điện · ~470 km/lần sạc', pro: 'mạnh, rộng, êm', con: 'mất giá nhanh', up: 0.01 },
+    { k: 'cclass', s: 'L', n: 'Mercedes-Benz C 300', p: 2000, t: 2, sp: 'sedan sang · 2.0 turbo 258 mã lực', pro: 'đẳng cấp, nội thất đẹp', con: 'bảo dưỡng đắt', up: 0.12 },
+    { k: 'bmw3', s: 'L', n: 'BMW 330i', p: 1900, t: 2, sp: 'sedan sang · lái thể thao', pro: 'lái hay nhất hạng sang cỡ nhỏ', con: 'cứng, bảo dưỡng đắt', up: 0.12 },
+    { k: 'glc', s: 'L', n: 'Mercedes-Benz GLC 300', p: 2700, t: 2, sp: 'SUV sang 5 chỗ', pro: 'sang, gầm cao', con: 'đắt', up: 0.15 },
+    { k: 'lexusrx', s: 'L', n: 'Lexus RX 350h', p: 4300, t: 2, sp: 'SUV sang hybrid', pro: 'êm, bền, rất giữ giá', con: 'giá rất cao', up: 0.15 },
+    { k: 'porsche911', s: 'S', n: 'Porsche 911 Carrera', p: 9000, t: 3, sp: 'xe thể thao · 0–100 km/h ~4 giây', pro: 'biểu tượng xe thể thao', con: 'chỉ 2+2 chỗ, nuôi xe rất tốn', up: 0.4 },
+    { k: 'huracan', s: 'S', n: 'Lamborghini Huracán', p: 20000, t: 4, sp: 'siêu xe V10 · 0–100 km/h ~3 giây', pro: 'cả phố ngoái nhìn', con: 'gầm thấp, khó đi đường Việt Nam', up: 1.2 },
+    { k: 'cullinan', s: 'S', n: 'Rolls-Royce Cullinan', p: 40000, t: 4, sp: 'SUV siêu sang V12', pro: 'đỉnh cao xa xỉ', con: 'gần như không có', up: 1.5 }
+  ];
+  var CARS = MODELS.filter(function (m) { return m.t >= 1; }).map(function (m) { return { k: m.k, n: m.n, p: m.p / 100, t: m.t, up: m.up || 0 }; }); // tương thích cũ
+  function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
+  // giá theo tiền đang dùng: ở VN là triệu đồng; nước khác quy đổi theo mức sống
+  function priceOf(l, m) { return vnd(l) ? m.p : m.p / 100 * l.base * (m.t >= 1 ? 0.55 : 0.6); }
+  function seg(k) { return SEGS.filter(function (s) { return s.k === k; })[0]; }
   function vehTier(l) { return l.veh === 'ô tô' ? (l.vehTier || 1) : 0; }
-  function carByK(k) { return CARS.filter(function (c) { return c.k === k; })[0]; }
-  // đổi xe: bán xe cũ (theo giá trị còn lại) rồi mua xe mới
-  function buyCar(l, c, loan, log) {
-    var price = carPrice(l, c);
-    if (l.veh && l.vehVal > 0) { H.cash(l, l.vehVal, 'Bán ' + (l.vehName || l.veh) + ' cũ'); log('Bán lại ' + (l.vehName || l.veh) + ' cũ được ' + mo(l, l.vehVal) + '.', 'neutral'); }
-    cashB(l, -price, 'Mua ' + c.n);
-    if (loan) H.addLoan(l, 'car', price * l.base * 0.7);
-    var first = l.veh !== 'ô tô';
-    l.veh = 'ô tô'; l.vehVal = price * l.base; l.vehTier = c.t; l.vehName = c.n; l.vehK = c.k;
-    log('Tậu ' + c.n + ' (' + c.ex + ')' + (loan ? ', vay ngân hàng 70%' : '') + '.', c.t >= 3 ? 'big' : 'good');
-    fx(l, { hap: 6 + c.t * 3, soc: c.t >= 2 ? 3 : 0 });
-    if (first) H.mem(l, 'Lần đầu lái chiếc ô tô của chính mình về quê, cả xóm ra xem.', 4);
-    else if (c.t >= 3) H.mem(l, 'Ngày chiếc ' + c.n + ' lăn bánh ra khỏi showroom, người qua đường ngoái lại nhìn.', 5);
-    if (!l.lic.B) log('Bạn chưa có bằng lái ô tô — ra đường có nguy cơ bị phạt.', 'neutral');
+  function carByK(k) { return MODELS.filter(function (c) { return c.k === k; })[0] || null; }
+  function haveFor(l, m) { var sameKind = (l.veh === 'ô tô') === (m.t >= 1); return Math.max(0, l.money) + (l.veh && sameKind ? l.vehVal || 0 : 0); } // đổi cùng loại thì bán xe cũ
+  function canLoan(l, m) { return m.t <= 3 && l.indep && H.loanAgeOk(l, m.t >= 1 ? 'car' : 'fin'); }
+  function affordCash(l, m) { return haveFor(l, m) >= priceOf(l, m); }
+  function affordLoan(l, m) { return canLoan(l, m) && haveFor(l, m) >= priceOf(l, m) * 0.3 && priceOf(l, m) <= Math.max(l.income || 0, l.base * 0.5) * 3.5; }
+  function suits(l, m) { return m.t >= 1 ? !(l.veh === 'ô tô' && l.vehK === m.k) && m.t >= vehTier(l) - 1 : l.veh !== 'ô tô' && l.vehK !== m.k; }
+  function buyModel(l, m, loan, log) {
+    var price = priceOf(l, m), isCar = m.t >= 1, sameKind = (l.veh === 'ô tô') === isCar;
+    if (l.veh && sameKind && l.vehVal > 0) { H.cash(l, l.vehVal, 'Bán ' + (l.vehName || l.veh) + ' cũ'); log('Bán lại ' + (l.vehName || l.veh) + ' cũ được ' + mo(l, l.vehVal) + '.', 'neutral'); }
+    H.cash(l, -price, 'Mua ' + m.n);
+    if (loan) H.addLoan(l, isCar ? 'car' : 'fin', price * 0.7);
+    var first = isCar && l.veh !== 'ô tô';
+    l.veh = isCar ? 'ô tô' : 'xe máy'; l.vehVal = price; l.vehTier = isCar ? m.t : 0; l.vehName = m.n; l.vehK = m.k; l.vehUp = m.up || 0;
+    log('Mua ' + m.n + (loan ? ' trả góp (trả trước 30%, vay ' + (isCar ? 'ngân hàng' : 'công ty tài chính') + ' 70%)' : ' bằng tiền mặt') + ' — ' + m.sp + '.', m.t >= 3 ? 'big' : 'good');
+    fx(l, { hap: isCar ? 6 + m.t * 3 : 4, soc: m.t >= 2 ? 3 : 0 });
+    if (first) H.mem(l, 'Lần đầu lái chiếc ' + m.n + ' của chính mình về quê, cả xóm ra xem.', 4);
+    else if (m.t >= 3) H.mem(l, 'Ngày chiếc ' + m.n + ' lăn bánh ra khỏi showroom, người qua đường ngoái lại nhìn.', 5);
+    if (isCar ? !l.lic.B : !l.lic.A1) log('Bạn chưa có bằng lái ' + (isCar ? 'ô tô' : 'xe máy') + ' — ra đường có nguy cơ bị phạt.', 'neutral');
   }
-  var oldCar = E.DEC.mua_xe.def;
+  function segRange(l, s) { var ms = MODELS.filter(function (m) { return m.s === s.k; }); return [Math.min.apply(null, ms.map(function (m) { return priceOf(l, m); })), Math.max.apply(null, ms.map(function (m) { return priceOf(l, m); }))]; }
+  function segModels(l, k) { return MODELS.filter(function (m) { return m.s === k && suits(l, m); }); }
+  function budgetText(l) {
+    var cash = Math.max(0, l.money), old = l.veh && l.vehVal > 0 ? l.vehVal : 0;
+    return 'Tiền mặt hiện có ' + mo(l, cash) + (old ? ', cộng tiền bán ' + (l.vehName || l.veh) + ' cũ khoảng ' + mo(l, old) : '') + '.';
+  }
+  // bước 1: chọn phân khúc phù hợp với số tiền
   SC('mua_xe', {
-    title: 'Mua xe', prep: oldCar.prep,
-    text: function (l, d) {
-      var cur = l.veh === 'ô tô' ? 'Bạn đang đi ' + (l.vehName || 'ô tô') + ' (còn giá khoảng ' + mo(l, l.vehVal || 0) + '). ' : '';
-      return cur + 'Xe máy khoảng ' + mb(l, d.moto) + ', ô tô từ ' + mb(l, carPrice(l, CARS[0])) + ' (xe điện) đến hơn ' + mb(l, carPrice(l, CARS[5])) + ' (siêu xe). Hiện bạn có ' + mo(l, l.money) + '.';
-    },
-    opts: oldCar.opts.filter(function (o) { return /^(moto|moto_tg|ev)$/.test(o.k); }).concat(CARS.map(function (c) {
+    title: 'Mua xe',
+    text: function (l) { return (l.veh ? 'Bạn đang đi ' + (l.vehName || l.veh) + '. ' : '') + budgetText(l) + ' Bạn muốn xem loại xe nào?'; },
+    opts: SEGS.map(function (s) {
       return {
-        k: 'car_' + c.k, l: function (l) { return (l.veh === 'ô tô' ? 'Đổi sang ' : 'Mua ') + c.n + ' (' + c.ex + ')'; },
-        h: function (l) { return mo(l, carPrice(l, c) * l.base) + (c.up ? ' · nuôi xe ~' + mb(l, c.up) + '/năm' : ''); },
-        req: function (l) { return vehTier(l) < c.t || (vehTier(l) === c.t && l.vehK !== c.k && c.t === 1); },
-        ai: { w: c.t <= 1 ? 1.2 : 0.5, amb: c.t >= 2 ? 1 : 0 },
-        run: function (l, r, log) {
-          var price = carPrice(l, c) * l.base, have = l.money + (l.veh ? l.vehVal || 0 : 0);
-          if (have >= price) buyCar(l, c, false, log);
-          else if (c.t <= 2 && have >= price * 0.3 && H.canBankLoan(l) && (l.income || 0) > 0) buyCar(l, c, true, log);
-          else { log('Ra showroom xem ' + c.n + ' rồi lặng lẽ về — chưa đủ tiền' + (c.t <= 2 ? ' và ngân hàng không duyệt khoản vay.' : '.'), 'neutral'); fx(l, { hap: -2 }); }
-        }
+        k: 'seg_' + s.k, l: function (l) { var g = segRange(l, s); return s.n + ' · ' + mo(l, g[0]) + (g[1] > g[0] ? ' – ' + mo(l, g[1]) : ''); },
+        h: function (l) { var ms = segModels(l, s.k), c = ms.filter(function (m) { return affordCash(l, m); }).length, g = ms.filter(function (m) { return !affordCash(l, m) && affordLoan(l, m); }).length; return s.d + ' · ' + (c ? 'trả thẳng được ' + c + ' mẫu' + (g ? ', trả góp thêm ' + g + ' mẫu' : '') : 'cần trả góp'); },
+        req: function (l) { return segModels(l, s.k).some(function (m) { return affordCash(l, m) || affordLoan(l, m); }); },
+        ai: function (l) { var ms = segModels(l, s.k), cashOk = ms.filter(function (m) { return affordCash(l, m); }); var top = Math.max.apply(null, [0].concat(cashOk.map(function (m) { return m.t; }))); return cashOk.length ? (s.car ? 1.2 + top : l.veh === 'ô tô' ? 0.1 : 1) : 0.25; },
+        run: function (l, r, log) { l.pending.unshift(E.DEC.mua_xe_mau.make(l, r, { s: s.k })); }
       };
-    })).concat([{ k: 'no', l: 'Thôi, chưa mua', ai: { w: 0.5 }, run: function () { } }])
+    }).concat([{ k: 'no', l: 'Thôi, chưa mua', ai: { w: 0.4 }, run: function () { } }])
   });
-  E.ACT.forEach(function (a) { if (a.id === 'mua_xe') { a.l = 'Mua xe / đổi xe'; a.avail = function (l) { return vehTier(l) >= 4 ? 'Đã có siêu xe' : true; }; a.ai = function (l) { return E.netWorth(l) > l.base * 40 && vehTier(l) < 3 ? 0.3 : vehTier(l) >= 1 ? 0.04 : 0.4; }; } });
+  // bước 2: chọn mẫu xe — trả thẳng nếu đủ tiền, không thì trả góp
+  SC('mua_xe_mau', {
+    title: function (l, d) { return seg(d.s || 'so').n; },
+    prep: function (l, r, arg) { var k = arg && arg.s; if (!k) { var ok = SEGS.filter(function (s) { return segModels(l, s.k).some(function (m) { return affordCash(l, m) || affordLoan(l, m); }); }); k = ok.length ? ok[ok.length - 1].k : 'so'; } return { s: k }; },
+    valid: function (l, d) { return segModels(l, (d && d.s) || 'so').length > 0; },
+    text: function (l, d) { return budgetText(l) + ' Các mẫu xe thuộc phân khúc “' + seg(d.s).n + '” phù hợp với bạn:'; },
+    opts: [].concat.apply([], MODELS.map(function (m) {
+      var info = function (l) { return m.sp + ' · ưu: ' + m.pro + ' · nhược: ' + m.con + (m.up ? ' · nuôi xe ~' + mb(l, m.up) + '/năm' : ''); };
+      return [{
+        k: 'm_' + m.k, l: function (l) { return m.n + ' — ' + mo(l, priceOf(l, m)) + ' · trả thẳng'; }, h: info,
+        req: function (l, d) { return d.s === m.s && suits(l, m) && affordCash(l, m); },
+        ai: function (l) { return 0.5 + priceOf(l, m) / Math.max(1, haveFor(l, m)) * 2; },
+        run: function (l, r, log) { buyModel(l, m, false, log); }
+      }, {
+        k: 'g_' + m.k, l: function (l) { return m.n + ' — ' + mo(l, priceOf(l, m)) + ' · trả góp'; },
+        h: function (l) { return 'Trả trước ' + mo(l, priceOf(l, m) * 0.3) + ', vay ' + mo(l, priceOf(l, m) * 0.7) + (m.t >= 1 ? ' ngân hàng (lãi ~10%/năm, trả mỗi năm ~' : ' công ty tài chính (lãi cao, trả mỗi năm ~') + mo(l, priceOf(l, m) * 0.7 * (m.t >= 1 ? 0.25 : 0.4)) + ') · ' + m.sp; },
+        req: function (l, d) { return d.s === m.s && suits(l, m) && !affordCash(l, m) && affordLoan(l, m); },
+        ai: { w: 0.4, risk: 0.8 },
+        run: function (l, r, log) {
+          if (m.t >= 1 && (!H.canBankLoan(l) || (l.income || 0) <= 0)) { log('Ngân hàng từ chối cho vay mua ' + m.n + ': ' + (H.canBankLoan(l) ? 'không chứng minh được thu nhập.' : 'hồ sơ đang có nợ xấu.'), 'bad'); fx(l, { hap: -3 }); return; }
+          buyModel(l, m, true, log);
+        }
+      }];
+    })).concat([{ k: 'back', l: 'Xem loại xe khác', ai: { w: 0.1 }, run: function (l, r, log) { l.pending.unshift(E.DEC.mua_xe.make(l, r)); } }, { k: 'no', l: 'Thôi, chưa mua', ai: { w: 0.2 }, run: function () { } }])
+  });
+  E.ACT.forEach(function (a) { if (a.id === 'mua_xe') { a.l = 'Mua xe / đổi xe'; a.avail = function (l) { return l.vehK === 'cullinan' ? 'Đã có xe đắt nhất' : true; }; a.ai = function (l) { return E.netWorth(l) > l.base * 40 && vehTier(l) < 3 ? 0.3 : vehTier(l) >= 1 ? 0.04 : 0.4; }; } });
 
   // ===================================================================
   // 3. NHÀ Ở THEO MỨC GIÀU CÓ: nhà bình thường → nhà phố → căn hộ cao cấp → biệt thự → dinh thự
@@ -188,7 +265,7 @@
           if ((l.props || []).length === 1) H.mem(l, 'Tháng đầu tiên nhận tiền cho thuê nhà — tiền tự sinh ra tiền.', 3);
         } };
     }).concat(BIZ.map(function (b) {
-      return { k: 'b_' + b.k, l: 'Mở ' + b.n, h: function (l) { return 'Vốn ~' + mb(l, b.cap) + ' · có thể lãi to, có thể phá sản'; },
+      return { k: 'b_' + b.k, l: 'Mở ' + b.n, h: function (l) { return 'Vốn khoảng ' + mb(l, b.cap) + ' · lãi mỗi năm ~' + Math.round(b.mu * 100) + '% vốn nếu làm ăn ổn'; },
         req: function (l) { return cash(l) >= b.cap * l.base && !(l.ventures || []).some(function (v) { return v.k === b.k; }); }, ai: { w: 0.6, risk: 1, amb: 1 },
         run: function (l, r, log) {
           var cap = b.cap * l.base; H.cash(l, -cap, 'Vốn mở ' + b.n);
@@ -201,11 +278,11 @@
 
   SC('mo_chi_nhanh', {
     title: 'Mở thêm chi nhánh?', prep: function (l) { var v = (l.ventures || []).filter(function (x) { return x.good >= 2; })[0]; return v ? { k: v.k } : null; },
-    valid: function (l, d) { return (l.ventures || []).some(function (x) { return x.good >= 2; }); },
+    valid: function (l, d) { return (l.ventures || []).some(function (x) { return x.good >= 2 && (cash(l) >= x.unit || (H.canBankLoan(l) && cash(l) >= x.unit * 0.3)); }); }, // v2.8: không mời mở chi nhánh khi không có tiền, không vay được
     text: function (l, d) { var v = ven(l, d.k); return v ? U.cap(v.n) + ' của bạn (' + v.br + ' cơ sở) làm ăn phát đạt mấy năm liền. Mở thêm một chi nhánh cần khoảng ' + mo(l, v.unit) + '. Tiền mặt hiện có ' + mo(l, l.money) + '.' : ''; },
     opts: [
       { k: 'yes', l: 'Mở thêm chi nhánh', req: function (l, d) { var v = ven(l, d.k); return v && cash(l) >= v.unit; }, ai: { w: 1.2, amb: 1, risk: 0.5 }, run: function (l, r, log, d) { var v = ven(l, d.k); if (!v) return; H.cash(l, -v.unit, 'Mở chi nhánh ' + v.n); v.br++; v.cap += v.unit; v.good = 0; log('Mở chi nhánh thứ ' + v.br + ' của ' + v.n + '.', 'big'); fx(l, { hap: 6 }); if (v.br === 3) H.mem(l, U.cap(v.n) + ' của bạn đã thành chuỗi ' + v.br + ' cơ sở.', 5); } },
-      { k: 'loan', l: 'Vay ngân hàng để mở chi nhánh', req: function (l, d) { var v = ven(l, d.k); return v && cash(l) < v.unit && H.canBankLoan(l); }, ai: { risk: 1.2, amb: 1 }, run: function (l, r, log, d) { var v = ven(l, d.k); if (!v) return; H.addLoan(l, 'bank', v.unit * 0.7); H.cash(l, -v.unit, 'Mở chi nhánh ' + v.n); v.br++; v.cap += v.unit; v.good = 0; log('Vay ngân hàng mở chi nhánh thứ ' + v.br + ' của ' + v.n + '.', 'big'); } },
+      { k: 'loan', l: 'Vay ngân hàng để mở chi nhánh', h: function (l, d) { var v = ven(l, d.k); return v ? 'Tự bỏ ra ' + mo(l, v.unit * 0.3) + ', vay ' + mo(l, v.unit * 0.7) : ''; }, req: function (l, d) { var v = ven(l, d.k); return v && cash(l) >= v.unit * 0.3 && H.canBankLoan(l); }, ai: { risk: 1.2, amb: 1 }, run: function (l, r, log, d) { var v = ven(l, d.k); if (!v) return; H.addLoan(l, 'bank', v.unit * 0.7); H.cash(l, -v.unit, 'Mở chi nhánh ' + v.n); v.br++; v.cap += v.unit; v.good = 0; log('Vay ngân hàng mở chi nhánh thứ ' + v.br + ' của ' + v.n + '.', 'big'); } },
       { k: 'no', l: 'Giữ quy mô hiện tại cho chắc', ai: { w: 1 }, run: function (l, r, log, d) { var v = ven(l, d.k); if (v) v.good = 0; log('Giữ nguyên quy mô, tập trung làm cho tốt.', 'neutral'); } }
     ]
   });
@@ -218,8 +295,8 @@
       return 'Đang có: ' + s.join(' · ') + '.';
     },
     opts: [
-      { k: 'prop', l: function (l) { var p = (l.props || [])[0]; return p ? 'Bán ' + p.n + ' (~' + mo(l, p.v) + ')' : ''; }, req: function (l) { return (l.props || []).length > 0; }, ai: { w: 1 }, run: function (l, r, log) { sellProp(l, 0, log); } },
-      { k: 'biz', l: function (l) { var v = (l.ventures || [])[0]; return v ? 'Sang nhượng ' + v.n + ' (~' + mo(l, v.cap * 0.7) + ')' : ''; }, req: function (l) { return (l.ventures || []).length > 0; }, ai: { w: 1 }, run: function (l, r, log) { closeVen(l, 0, log, 0.7, 'Sang nhượng'); } },
+      { k: 'prop', l: function (l) { var p = (l.props || [])[0]; return p ? 'Bán ' + p.n + ' (khoảng ' + mo(l, p.v) + ')' : ''; }, req: function (l) { return (l.props || []).length > 0; }, ai: { w: 1 }, run: function (l, r, log) { sellProp(l, 0, log); } },
+      { k: 'biz', l: function (l) { var v = (l.ventures || [])[0]; return v ? 'Sang nhượng ' + v.n + ' (khoảng ' + mo(l, v.cap * 0.7) + ')' : ''; }, req: function (l) { return (l.ventures || []).length > 0; }, ai: { w: 1 }, run: function (l, r, log) { closeVen(l, 0, log, 0.7, 'Sang nhượng'); } },
       { k: 'keep', l: 'Thôi, cứ giữ', ai: { w: 1 }, run: function () { } }
     ]
   });
@@ -230,12 +307,14 @@
   function investYear(l, r, log, a) {
     var mkt = l.mkt ? l.mkt.land : 'bình thường';
     // nhà cho thuê: giá theo thị trường đất, tiền thuê theo năm; thỉnh thoảng bỏ trống
+    var empties = [];
     (l.props || []).forEach(function (p) {
       var g = { 'bình thường': 0.03, 'sốt': 0.15, 'vỡ bong bóng': -0.2, 'đóng băng': -0.02 }[mkt] || 0.02;
       p.v = Math.max(p.basis * 0.3, p.v * (1 + g + U.normal(r) * 0.03));
-      if (ch(r, 0.12)) { p.empty++; log(U.cap(p.n) + ' bỏ trống mấy tháng chưa có khách thuê.', 'neutral'); H.cash(l, p.v * p.y * 0.4, 'Tiền cho thuê ' + p.n); }
+      if (ch(r, 0.12)) { p.empty++; empties.push(p.n); H.cash(l, p.v * p.y * 0.4, 'Tiền cho thuê ' + p.n); }
       else H.cash(l, p.v * p.y, 'Tiền cho thuê ' + p.n);
     });
+    if (empties.length) log((empties.length === 1 ? U.cap(empties[0]) : empties.length + ' bất động sản cho thuê') + ' bỏ trống mấy tháng chưa có khách thuê.', 'neutral');
     // cơ sở kinh doanh: lãi lỗ mỗi năm; lãi đều thì được mời mở chi nhánh; lỗ liên tiếp thì phá sản
     for (var i = (l.ventures || []).length - 1; i >= 0; i--) {
       var v = l.ventures[i]; v.yrs++;
@@ -250,14 +329,14 @@
         else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); if (l.mind) l.mind.stress = Math.min(100, l.mind.stress + 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }
         continue;
       }
-      if (v.good >= 2 && free(l) && a < 75 && ch(r, 0.6) && !(l.sched || []).some(function (s) { return s.id === 'mo_chi_nhanh'; })) H.sched(l, 'mo_chi_nhanh', 1);
+      if (v.good >= 2 && free(l) && a < 75 && (cash(l) >= v.unit || (H.canBankLoan(l) && cash(l) >= v.unit * 0.3)) && ch(r, 0.6) && !(l.sched || []).some(function (s) { return s.id === 'mo_chi_nhanh'; })) H.sched(l, 'mo_chi_nhanh', 1);
       v.cap *= 1 + Math.max(-0.1, Math.min(0.05, rate * 0.2)); v.unit = v.cap / v.br;
     }
     // về già hoặc nợ nần: bán bớt
     if (l.money < -l.base * 1.5 && (l.props || []).length) { log('Nợ nần dồn dập, phải bán bất động sản cho thuê.', 'bad'); sellProp(l, 0, log); }
     // chi phí duy trì nhà to, xe sang
-    var hu = HOMES.filter(function (h) { return h.t === homeTier(l); })[0], cu = l.veh === 'ô tô' && l.vehK ? carByK(l.vehK) : null;
-    var upk = (hu ? hu.up : 0) + (cu ? cu.up : 0);
+    var hu = HOMES.filter(function (h) { return h.t === homeTier(l); })[0], vup = l.vehUp != null ? l.vehUp : ({ suv: 0.02, lux: 0.12, sport: 0.4, super: 1.2 }[l.vehK] || 0); // xe mua từ bản cũ
+    var upk = (hu ? hu.up : 0) + vup;
     if (upk > 0 && l.indep) H.cash(l, -upk * l.base, 'Chi phí duy trì nhà, xe');
   }
 
@@ -274,13 +353,17 @@
   function newSib(l, r, born) {
     var sex = r() < 0.5 ? 'M' : 'F';
     var nm = H.name(l, r, sex, l.sur);
+    // v2.8: anh chị em ruột không trùng tên gọi với nhau và với bạn
+    var short = function (n) { return given(l, n.full || n); }, taken = (l.sibList || []).map(function (s) { return short(s.n); }).concat([short(l.name)]);
+    for (var t = 0; t < 8 && taken.indexOf(short(nm)) >= 0; t++) nm = H.name(l, r, sex, l.sur);
     return { n: nm.full || nm, sex: sex, born: born, alive: true, close: 55 + Math.floor(r() * 30), job: pick(r, SIB_JOBS), wed: false, kids: 0, q: U.clamp(l.fam.q + Math.round(U.normal(r)), 1, 5) };
   }
   function sibAge(l, s) { return l.age - s.born; }
   function sibs(l) { return (l.sibList || []).filter(function (s) { return s.alive; }); }
   // cách gọi theo vai vế: anh/chị (lớn hơn), em (nhỏ hơn)
   function sibWord(l, s) { return s.born < 0 ? (s.sex === 'M' ? 'anh' : 'chị') : 'em'; }
-  function sibCall(l, s) { return sibWord(l, s) + ' ' + String(s.n).split(' ').slice(-1)[0]; }
+  function given(l, n) { var w = String(n).split(' '); return l.pool === 'vn' ? w[w.length - 1] : w[0]; } // tên gọi: người Việt là chữ cuối, nước ngoài là chữ đầu
+  function sibCall(l, s) { return sibWord(l, s) + ' ' + given(l, s.n); }
   H.sibs = sibs; H.sibCall = sibCall; H.sibWord = sibWord;
   E.sibAge = sibAge;
 
@@ -301,7 +384,7 @@
       if (s.wed && s.kids < 3 && sa >= 24 && sa <= 42 && ch(r, 0.1)) { s.kids++; if (s.kids === 1 && a >= 6) log(U.cap(w) + ' sinh con đầu lòng — bạn lên chức ' + (s.born > 0 ? 'bác' : s.sex === 'M' ? (l.sex === 'M' ? 'chú' : 'cô') : (l.sex === 'M' ? 'cậu' : 'dì')) + '.', 'good'); }
       // anh chị em mất (tuổi già, bệnh tật, tai nạn hiếm)
       var q = sa < 40 ? 0.0012 : Math.min(0.5, 0.002 * Math.exp((sa - 50) * 0.085));
-      if (ch(r, q)) { s.alive = false; log(U.cap(w) + ' qua đời ở tuổi ' + sa + '.', 'bad'); fx(l, { hap: s.close > 70 ? -14 : -8 }); H.mem(l, 'Ngày tiễn ' + w + ' — người cùng lớn lên dưới một mái nhà.', s.close > 70 ? 5 : 4); }
+      if (ch(r, q)) { s.alive = false; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r)) + '.', 'bad'); fx(l, { hap: s.close > 70 ? -14 : -8 }); H.mem(l, 'Ngày tiễn ' + w + ' — người cùng lớn lên dưới một mái nhà.', s.close > 70 ? 5 : 4); }
       s.close = U.clamp(s.close + (ch(r, 0.5) ? -1 : 0), 10, 100);
     });
   }
@@ -375,7 +458,7 @@
     text: function (l) { return 'Bạn vừa nghỉ hưu, sức khỏe còn tốt, có ' + mo(l, l.money) + ' tiền mặt. Nhiều người cùng tuổi vẫn mở quán, buôn bán nhỏ hay mua nhà cho thuê để có thêm thu nhập.'; },
     opts: [
       { k: 'rest', l: 'An hưởng tuổi già', ai: { w: 1.2 }, run: function (l, r, log) { log('Nghỉ ngơi thật sự: sáng tập thể dục, chiều chăm cháu, tối xem thời sự.', 'good'); fx(l, { hap: 4 }); } },
-      { k: 'shop', l: 'Mở cửa hàng / quán nhỏ', h: function (l) { return 'Vốn ~' + mb(l, 0.8); }, req: function (l) { return cash(l) >= l.base * 0.8; }, ai: { w: 0.8, amb: 1, risk: 0.5 }, run: function (l, r, log) {
+      { k: 'shop', l: 'Mở cửa hàng / quán nhỏ', h: function (l) { return 'Vốn khoảng ' + mb(l, 0.8); }, req: function (l) { return cash(l) >= l.base * 0.8; }, ai: { w: 0.8, amb: 1, risk: 0.5 }, run: function (l, r, log) {
         cashB(l, -0.8, 'Vốn mở cửa hàng tuổi hưu');
         if (ch(r, 0.55 + (l.st.kno - 50) / 300)) { var id = ch(r, 0.5) ? 'kd_tap_hoa' : 'kd_quan'; l.retired = false; E.startJob(l, id, r, log, true); l.flags.afterRet = l.age + U.randint(r, 6, 12); log('Nghỉ hưu mà không chịu ngồi yên: mở ' + (l.job.p || (id === 'kd_tap_hoa' ? 'tiệm tạp hóa' : 'quán ăn')) + ' trước nhà, vẫn nhận lương hưu đều.', 'big'); fx(l, { hap: 5 }); H.mem(l, 'Ngày khai trương cửa hàng ở tuổi ' + l.age + '.', 4); }
         else { log('Mở cửa hàng được một năm thì ế, đành sang nhượng lại, mất một phần vốn.', 'bad'); cashB(l, 0.4, 'Sang nhượng cửa hàng'); fx(l, { hap: -4 }); }

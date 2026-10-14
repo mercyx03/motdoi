@@ -242,7 +242,7 @@
   }
   function offerHint(l, id) {
     var c = CAR[resolveJob(id)];
-    var s = c.fame ? 'Thu nhập phụ thuộc lượng người theo dõi' : 'Khoảng ' + E.fmtMoney(l, monthlyEst(l, id, 0)) + '/tháng';
+    var s = c.fame ? 'Thu nhập phụ thuộc lượng người theo dõi' : 'Khoảng ' + E.fmtMoney(l, monthlyEst(l, id, startRank(l, c))) + '/tháng';
     if (c.sec === 'crime') s += ' · phạm pháp, có thể vào tù';
     else if (c.sigma >= 0.5) s += ' · bấp bênh';
     if (c.haz) s += ' · nguy hiểm';
@@ -288,14 +288,23 @@
     }
     return picked;
   }
+  // v2.8: người đã đi làm nhiều năm không phải bắt đầu lại từ "thực tập sinh" — vào bậc hợp với tuổi & kinh nghiệm
+  function startRank(l, c) {
+    if (!c || c.ladder || c.fame || c.skillRank != null || c.t.length < 2 || E.noStartRank) return 0;
+    var exp = l.workYrs || 0, rk = 0;
+    if (/thực tập|tập sự|học việc|học viên|^trợ lý|^phụ /.test(c.t[0]) && (l.age >= 25 || exp >= 2)) rk = 1;
+    return Math.min(rk, c.t.length - 1);
+  }
+  function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
   function startJob(l, id, r, log, quiet) {
     id = resolveJob(id);
     var c = CAR[id];
+    if (l.job && resolveJob(l.job.id) === id && l.job.yrs === 0 && l.jobsHist && l.jobsHist.length && l.jobsHist[l.jobsHist.length - 1].from === l.age) return; // v2.8: vừa nhận đúng việc này trong năm
     if (l.school && l.school !== 'police') { if (!quiet) log('Bỏ dở việc học để đi làm.', 'bad'); l.school = null; l.schoolEnd = null; l.cityStudent = null; if (l.abroad && l.abroad.study) l.abroad = null; }
-    l.job = { id: id, rank: 0, yrs: 0 };
+    l.job = { id: id, rank: startRank(l, c), yrs: 0 };
     if (c.prod) l.job.p = U.pick(r, c.prod);
     if (c.fame && !l.fame) l.fame = U.randint(r, 200, 3000) * (l.talent === c.talent ? 2 : 1);
-    if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) l.game = U.pick(r, ['Liên Quân Mobile', 'Free Fire', 'Liên Minh Huyền Thoại', 'Valorant', 'PUBG Mobile', 'Minecraft', 'Roblox', 'Delta Force']);
+    if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) { if (l.talent !== 'game' && !l.gameType) l.gameType = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = E.gameFor(l, r); } // v2.8: game khớp thể loại sở trường
     if (c.skillRank != null) l.job.rank = rankBySkill(l, c);
     l.flags.needJob = false; l.indep = true;
     l.jobsHist = l.jobsHist || [];
@@ -358,7 +367,7 @@
     // kỹ năng (thể thao, esports, cờ, danh tiếng)
     if (c.skillRank != null || c.fame) {
       var peak = c.id === 'tuyen_thu_es' ? 22 : c.id === 'ky_thu' ? 35 : 27;
-      var dg = a <= peak ? 3 + r() * 5 + (focus === 'work' ? 3 : 0) + (focus === 'health' && c.id === 'vdv' ? 2 : 0) + (l.talent === c.talent ? 2 : 0) : -(1 + r() * 4);
+      var dg = a <= peak ? 3 + r() * 5 + (focus === 'work' ? 3 : focus === 'balance' ? 1.5 : 0) + (focus === 'health' && c.id === 'vdv' ? 2 : 0) + (l.talent === c.talent ? 2 : 0) : -(1 + r() * 4);
       l.skill = U.clamp((l.skill || 20) + dg, 0, 100);
       if (c.skillRank) { var nr = rankBySkill(l, c); if (nr > l.job.rank) { l.job.rank = nr; log('Được gọi lên: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 6 }); if (nr >= 2) H.mem(l, 'Lần đầu khoác áo đội tuyển quốc gia.', 5); } }
       sportYear(l, r, log, c, y);
@@ -367,7 +376,7 @@
       var f0 = l.fame || 300;
       // v2.2: nổi tiếng là chuyện hiếm — đa số dừng ở hạng thấp, càng lên cao càng khó (hiệu ứng bão hòa)
       var lf = Math.log(Math.max(50, f0)) / Math.LN10;
-      var g = Math.exp(0.6 * U.normal(r) + (l.talent === c.talent ? 0.15 : 0) + (focus === 'work' ? 0.12 : 0) + (l.skill - 50) / 250 - (a > 45 ? 0.3 : 0) - Math.max(0, lf - 4.5) * 0.4);
+      var g = Math.exp(0.6 * U.normal(r) + (l.talent === c.talent ? 0.15 : 0) + (focus === 'work' ? 0.12 : focus === 'balance' ? 0.06 : 0) + (l.skill - 50) / 250 - (a > 45 ? 0.3 : 0) - Math.max(0, lf - 4.5) * 0.4);
       if (r() < 0.03) { g *= 5 + r() * 15; log('Một ' + (c.id === 'ca_si' || c.id === 'rapper' ? 'bài hát' : c.id === 'dien_vien' ? 'vai diễn' : c.id === 'dv_hai' ? 'tiểu phẩm' : c.id === 'nguoi_mau' ? 'bộ ảnh' : c.id === 'kol_live' ? 'phiên livestream' : 'video') + ' bất ngờ viral, lượng người theo dõi tăng vọt!', 'big'); H.mem(l, 'Đêm bạn thức trắng nhìn lượt xem tăng từng giây.', 4); }
       l.fame = Math.min(5e7, Math.max(50, f0 * g));
       [[1e4, 'Cán mốc 10 nghìn người theo dõi.', 1], [1e5, c.cat === 'creator' ? 'Nhận nút bạc YouTube — 100 nghìn người đăng ký!' : 'Được 100 nghìn người hâm mộ biết tên.', 2], [1e6, c.cat === 'creator' ? 'Nhận nút vàng — 1 triệu người đăng ký!' : 'Trở thành người nổi tiếng với hơn 1 triệu người hâm mộ.', 3], [1e7, c.cat === 'creator' ? 'Nút kim cương — 10 triệu người đăng ký!' : 'Cán mốc 10 triệu người hâm mộ — đứng trên đỉnh cao.', 4]].forEach(function (m) {
@@ -394,7 +403,7 @@
       var need = c.yrs[l.job.rank] || 3;
       if (l.job.yrs >= need) {
         var pp = c.ladder ? (l.job.rank >= 7 ? 0.04 + (l.st.kno - 70) / 300 : 0.85 - (l.karma < -20 ? 0.4 : 0)) :
-          (c.promo || 0.2) + (l.st.kno - 50) / 250 + (focus === 'work' ? 0.12 : 0) + ((l.tr && l.tr.amb) - 50) / 300 + (l.talent === 'ăn nói' ? 0.04 : 0) - l.job.rank * 0.06 +
+          (c.promo || 0.2) + (l.st.kno - 50) / 250 + (focus === 'work' ? 0.12 : focus === 'balance' ? 0.06 : 0) + ((l.tr && l.tr.amb) - 50) / 300 + (l.talent === 'ăn nói' ? 0.04 : 0) - l.job.rank * 0.06 +
           (l.flags.eliteBoost && l.flags.eliteBoost === c.id ? 0.3 : 0); // v2.5: con nhà có "ô dù" thăng tiến nhanh hơn
         if (r() < pp) {
           l.job.rank++; l.job.yrs = 0;
@@ -481,6 +490,6 @@
   }
 
   E.resolveJob = resolveJob; E.jobLabel = jobLabel; E.jobTitleOf = jobTitleOf; E.offerHint = offerHint; E.offerAI = offerAI; E.offers = offers;
-  E.startJob = startJob; E.careerYear = careerYear; E.isCrime = isCrime; E.careerSummary = careerSummary; E.monthlyEst = monthlyEst;
+  E.startJob = startJob; E.startRank = startRank; E.offerLabel = offerLabel; E.careerYear = careerYear; E.isCrime = isCrime; E.careerSummary = careerSummary; E.monthlyEst = monthlyEst;
   E.fameMonthly = fameMonthly; E.fmtFollowers = fmtFollowers; E.jobDef = J; E.CAT = CAT; E.JOB_ALIAS = ALIAS; E.medal = medal;
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

@@ -375,3 +375,17 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
 .decpill .go { color: var(--accent); font-weight: 700; white-space: nowrap; }
 @keyframes decpulse { 50% { opacity: .3; } }
 @media (prefers-reduced-motion: reduce) { .decpill .dot { animation: none; } }
+
+/* v2.7: khung "Việc bạn muốn làm" gọn — hàng nhóm việc, mở từng nhóm */
+.actgroups { gap: 6px; }
+.actgroups .chip small { opacity: .6; margin-left: 2px; }
+.actgroups .chip.off { opacity: .45; }
+.actlist { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.actnote { margin: 8px 0 0; }
+.chip.sm { padding: 5px 11px; font-size: 13px; }
+
+/* v2.8: bảng chia tài sản ròng */
+.statlist.wb { margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+.statlist.wb dd { text-align: right; color: var(--ink); }
+.statlist.wb dd.neg { color: var(--bad); }
+.statlist.wb dt[title] { cursor: help; text-decoration: underline dotted rgba(157, 176, 193, .5); text-underline-offset: 3px; }

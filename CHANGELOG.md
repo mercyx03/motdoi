@@ -4,6 +4,52 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v2.8.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.7.0. Xe mua từ bản cũ vẫn giữ nguyên và vẫn tính chi phí nuôi xe.
+
+### Mới
+- **Tiền bạc rõ ràng hơn**:
+  - Dưới "Tài sản ròng" có bảng chia từng khoản: tiền mặt / tài khoản, tiết kiệm & đầu tư, nhà ở, nhà cho thuê & cửa hàng, xe, các khoản nợ. Rê chuột vào từng dòng có giải thích.
+  - Tiền mặt âm được cảnh báo rõ ("bạn tiêu nhiều hơn số tiền đang có").
+  - Bảng tài chính ghi "Cả năm dư ra / hụt …" kèm giải thích (thu trừ chi, đã cộng/trừ vào tiền mặt) và số tiền mặt hiện có.
+  - Bỏ dấu "~" dễ nhầm với dấu trừ, thay bằng chữ "khoảng".
+- **Mua xe theo số tiền đang có** (làm lại hoàn toàn):
+  - Bước 1, chọn phân khúc: xe số, tay ga, xe máy điện, côn tay & phân khối lớn, ô tô hạng A, B, C, SUV 7 chỗ / hạng D, xe sang, xe thể thao & siêu xe. Mỗi phân khúc ghi khoảng giá và "trả thẳng được mấy mẫu / cần trả góp".
+  - Bước 2, chọn mẫu xe cụ thể (Wave Alpha, Vision, SH, VinFast Evo, Exciter, Kawasaki Z900, i10, Vios, City, VF 5, Mazda 3, CX-5, Fortuner, Camry, Mercedes C 300, BMW 330i, Porsche 911, Lamborghini, Rolls-Royce…). Mỗi mẫu có giá lăn bánh tham khảo, thông số, ưu và nhược điểm.
+  - Đủ tiền thì trả thẳng (tính cả tiền bán xe cũ). Chưa đủ thì gợi ý trả góp, ghi rõ trả trước bao nhiêu, vay bao nhiêu, mỗi năm trả khoảng bao nhiêu: ô tô vay ngân hàng, xe máy vay công ty tài chính.
+- **Người thân, bạn bè mất đều ghi lý do** hợp với tuổi: người trẻ hay gặp tai nạn giao thông, đuối nước; trung niên là ung thư, nhồi máu cơ tim, đột quỵ; người già là tuổi già sức yếu, suy tim, viêm phổi. Có tính cả thói quen (bố nghiện rượu thì có thể mất vì xơ gan).
+- **Làm chủ cửa hàng / quán**:
+  - Bị mất việc làm thuê thì có lựa chọn "Tập trung điều hành … của mình". Căn cước hiện "chủ spa / thẩm mỹ viện…" thay vì nghề cũ hay "thất nghiệp". Không bị trừ hạnh phúc như người thất nghiệp.
+  - Chủ cơ sở không còn "Xin tăng lương".
+- **Game theo thể loại sở trường**: năng khiếu FPS chơi Valorant, CS2, Đột Kích, Delta Force, PUBG Mobile, Free Fire, Call of Duty Mobile; MOBA chơi Liên Minh Huyền Thoại, Dota 2, Liên Quân Mobile, Mobile Legends: Bang Bang, Tốc Chiến. Ở quán net chơi bản máy tính; nhà nghèo, nông thôn hay chơi bản điện thoại. Tuyển thủ, streamer thi đấu đúng game sở trường.
+
+### Sửa lỗi logic
+- **44 tuổi đi xin việc lại bị mời "thực tập sinh"**: người đã đi làm nhiều năm vào thẳng bậc hợp với tuổi và kinh nghiệm. Sinh viên mới ra trường vẫn bắt đầu từ thực tập.
+- **Trợ cấp hưu trí xã hội 0,4 triệu/tháng**: đúng theo Luật Bảo hiểm xã hội 2024 (hiệu lực 1/7/2025) là **500.000 đ/tháng**, mức chung cả nước, cho người từ 75 tuổi không có lương hưu (từ 70 tuổi nếu thuộc hộ nghèo / cận nghèo). Trước đây mức này bị nhân theo vùng nên ra 0,4 triệu, và nhân vật không có lương hưu còn nhận trợ cấp ngay từ lúc nghỉ việc. Bảng tài chính ghi "Trợ cấp / con biếu" thay vì "Lương hưu".
+- **Mời mở chi nhánh khi tiền mặt đang âm** và chỉ còn nút "Giữ quy mô": giờ chỉ mời khi đủ tiền, hoặc vay được ngân hàng (tự bỏ ra 30%).
+- Không còn nhắc mẹ đã mất ("Mẹ khóc", "Mẹ mua cho con búp bê", "Mẹ dạy tô son").
+- Anh chị em ruột không trùng tên gọi. Ở nước ngoài, anh chị em được gọi bằng tên chứ không phải họ, vì cả nhà cùng họ.
+- Không còn lặp tin trong cùng năm: thi đỗ bằng lái hai lần, "có chắt" hai lần, nhiều khoản nợ cùng loại bị xử lý cùng lúc, nhận cùng một việc hai lần, nhiều căn nhà cho thuê cùng bỏ trống.
+- Nhân vật mất vào cuối năm không còn để treo câu hỏi "Học tiếp sau đại học?".
+
+## v2.7.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.6.0.
+
+### Mới
+- **Bố cục gọn hơn**:
+  - Khung "Việc bạn muốn làm" chỉ còn một hàng nhóm việc (Tình cảm, Học tập, Tiền bạc…). Bấm một nhóm mới hiện các việc trong nhóm, nên nhật ký cuộc đời có nhiều chỗ hơn. Game nhớ nhóm bạn mở lần trước.
+  - Khung "Gia đình & những người thân" chuyển lên đầu cột bên phải.
+- **Số lượt hành động theo tuổi**: dưới 10 tuổi 3 lượt, 10–17 tuổi 7 lượt, từ 18 tuổi không giới hạn.
+- **Game tự chọn việc**: nếu năm trước bạn không tự làm việc gì, game đôi khi tự chọn ngẫu nhiên một việc (bạn vẫn quyết định các lựa chọn trong đó).
+- **Trọng tâm "Cân bằng"** (từ 21 tuổi): cân bằng công việc, sức khỏe, gia đình và trau dồi kỹ năng. Mọi chỉ số tăng nhẹ, thăng tiến đều mà không kiệt sức.
+- **Người yêu có nghề nghiệp**: người mới quen hiện cả công việc (đang làm gì, sinh viên, đã nghỉ hưu). Quen khoảng 2 năm hoặc khi đã cưới thì biết được lương. Bảng gia đình hiện nghề và thu nhập (hoặc "thu nhập: chưa rõ"). Người ấy ra trường đi làm, được thăng chức, nghỉ hưu theo năm tháng.
+- **Ai trả tiền buổi hẹn**: nữ hẹn hò với nam thì phần lớn bạn nam giành trả; nam thì thường tự trả, đôi khi được người yêu "bao" (nhất là khi người ấy kiếm nhiều hơn); cùng giới thì thường chia đôi.
+- **Bố mẹ khá giả chu cấp** tiền sinh hoạt cho con từ 15 đến khoảng 26 tuổi, nhiều hay ít tùy thu nhập của bố mẹ (đang đi học nhận nhiều nhất).
+- **Mua xe trả thẳng hoặc trả góp**: mỗi loại ô tô có hai lựa chọn. Trả thẳng khi đủ tiền (tính cả tiền bán xe cũ); trả góp thì trả trước 30%, vay ngân hàng 70% (siêu xe không cho vay).
+- **Tự đặt tên thú cưng**: tự tay chọn nhận nuôi thì được đặt tên (hoặc giữ tên gợi ý).
+
 ## v2.6.0 — 14/10/2026
 
 Giữ nguyên toàn bộ tính năng v2.5.0.

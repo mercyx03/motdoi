@@ -404,7 +404,8 @@
     ['health', 'Sức khỏe', 'Chăm sóc sức khỏe: ăn uống, tập luyện, khám định kỳ.', 'Vận động', 'Chạy nhảy, chơi thể thao: khỏe mạnh hơn.'],
     ['social', 'Gia đình & bạn bè', 'Dành thời gian cho người thân: gắn kết hơn, dễ gặp người thương.', 'Bạn bè & gia đình', 'Chơi với bạn, quây quần bên gia đình.'],
     ['work', 'Công việc', 'Làm việc & kiếm tiền: thu nhập, thăng tiến, danh tiếng & kỹ năng thi đấu tăng; sức khỏe và các mối quan hệ giảm.', null, null],
-    ['rest', 'Nghỉ ngơi', 'Nghỉ ngơi & tận hưởng: vui hơn, nhưng tiêu tiền nhiều hơn và làm ít hơn.', 'Vui chơi', 'Vui chơi thỏa thích: hạnh phúc hơn, học ít hơn.']
+    ['rest', 'Nghỉ ngơi', 'Nghỉ ngơi & tận hưởng: vui hơn, nhưng tiêu tiền nhiều hơn và làm ít hơn.', 'Vui chơi', 'Vui chơi thỏa thích: hạnh phúc hơn, học ít hơn.'],
+    ['balance', 'Cân bằng', 'Cân bằng công việc, sức khỏe, gia đình và trau dồi kỹ năng: mọi chỉ số tăng nhẹ, thăng tiến đều đặn mà không kiệt sức.', null, null, 21]
   ];
 
   function persist() { if (S.life) LS.set(K.cur, { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto }); }
@@ -582,8 +583,10 @@
   function renderId() {
     var l = S.life;
     var mrz = 'I<' + (E.isVN(l) ? 'VNM' : l.country + '<') + stripVN(l.name).toUpperCase().replace(/[^A-Z]+/g, '<') + '<<<<<<<<<<<<';
-    var job = l.job ? U.cap(E.jobTitle(l)) : l.retired ? 'Đã nghỉ hưu' : l.flags.military ? 'Đang tại ngũ' : l.jailUntil != null && l.age < l.jailUntil ? 'Đang thụ án' : l.school ? 'Đang đi học' : l.age < 15 ? '—' : 'Thất nghiệp';
-    var veh = l.veh ? l.veh + (l.veh === 'xe máy' && !l.lic.A1 ? ' (chưa có bằng)' : l.veh === 'ô tô' && !l.lic.B ? ' (chưa có bằng)' : '') : '';
+    // v2.8: đang làm chủ cửa hàng / quán (mở bằng vốn riêng) thì hiện là chủ, không phải "thất nghiệp" hay nghề cũ
+    var vens = (l.ventures || []).map(function (v) { return 'chủ ' + v.n + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : ''); });
+    var job = l.job ? U.cap(E.jobTitle(l)) + (vens.length ? ' · ' + vens.join(', ') : '') : vens.length ? U.cap(vens.join(', ')) : l.retired ? 'Đã nghỉ hưu' : l.flags.military ? 'Đang tại ngũ' : l.jailUntil != null && l.age < l.jailUntil ? 'Đang thụ án' : l.school ? 'Đang đi học' : l.age < 15 ? '—' : 'Thất nghiệp';
+    var veh = l.veh ? (l.vehName || l.veh) + (l.veh === 'xe máy' && !l.lic.A1 ? ' (chưa có bằng)' : l.veh === 'ô tô' && !l.lic.B ? ' (chưa có bằng)' : '') : '';
     var med = l.medals && l.medals.length ? l.medals.map(function (m) { return m.m; }).reduce(function (a, m) { a[m] = (a[m] || 0) + 1; return a; }, {}) : null;
     $('#idCard').innerHTML = '<h3>Căn cước · ' + esc(E.isVN(l) ? 'Việt Nam' : l.countryName) + '</h3>' +
       '<div class="idhead">' + E.art.avatar(l) + '<div class="nm">' + esc(l.name) + (l.nameSub ? '<small>' + esc(l.nameSub) + '</small>' : '') + '</div></div>' +
@@ -607,6 +610,22 @@
   function bar(label, v, color, txt) {
     return '<div class="stat"><div class="row"><span>' + label + '</span><b>' + (txt || Math.round(v)) + '</b></div><div class="track"><div class="fill" style="width:' + v + '%;background:' + color + '"></div></div></div>';
   }
+  // v2.8: tài sản ròng = tiền mặt + tiết kiệm/đầu tư + nhà + bất động sản & cửa hàng + xe − nợ, ghi rõ từng khoản
+  function wealthBreak(l) {
+    var A = l.assets || {}, fin = (A.save || 0) + (A.gold || 0) + (A.stock || 0) + (A.land || 0);
+    var biz = (l.props || []).reduce(function (s, p) { return s + p.v; }, 0) + (l.ventures || []).reduce(function (s, v) { return s + v.cap; }, 0);
+    var debt = (l.loans || []).reduce(function (s, x) { return s + x.bal; }, 0) + (l.mortgage || 0);
+    var rows = [];
+    function r(k, v, cls, tip) { rows.push('<dt' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' + esc(k) + '</dt><dd class="' + (cls || '') + '">' + esc(v) + '</dd>'); }
+    if (!l.indep) { if (l.money > 0.05) r('Tiền riêng', money(l, l.money), '', 'Tiền lì xì, tiền bố mẹ cho, tiền làm thêm — để dành được'); return rows.length ? '<dl class="statlist wb">' + rows.join('') + '</dl>' : ''; }
+    r('Tiền mặt / tài khoản', (l.money < 0 ? '−' : '') + money(l, Math.abs(l.money)), l.money < 0 ? 'neg' : '', 'Tiền tiêu được ngay. Âm nghĩa là đang tiêu lố, phải vay tạm người thân hoặc thấu chi.');
+    if (fin > 0.5) r('Tiết kiệm & đầu tư', money(l, fin), '', 'Sổ tiết kiệm, vàng, cổ phiếu, đất — muốn tiêu phải bán / rút');
+    if (l.ownHouse && l.houseVal > 0.5) r(U.cap(l.houseName && l.houseName !== 'nhà riêng' ? l.houseName : 'nhà ở'), money(l, l.houseVal), '', 'Giá trị căn nhà đang ở');
+    if (biz > 0.5) r('Nhà cho thuê & cửa hàng', money(l, biz), '', 'Bất động sản cho thuê và vốn trong cơ sở kinh doanh');
+    if (l.vehVal > 0.5) r(U.cap(l.vehName || l.veh || 'xe'), money(l, l.vehVal), '', 'Giá trị còn lại của xe (xe mất giá mỗi năm)');
+    if (debt > 0.5) r('Các khoản nợ', '−' + money(l, debt), 'neg', 'Tổng dư nợ ngân hàng, trả góp, vay mượn');
+    return '<dl class="statlist wb">' + rows.join('') + '</dl>' + (l.money < 0 ? '<div class="small" style="color:var(--bad);margin-top:4px">Tiền mặt đang âm: bạn tiêu nhiều hơn số tiền đang có.</div>' : '');
+  }
   function renderStats() {
     var l = S.life, st = l.st, k = l.karma || 0;
     var nw = E.netWorth(l);
@@ -614,8 +633,8 @@
       bar('Sức khỏe', st.hea, 'var(--good)') + bar('Hạnh phúc', st.hap, 'var(--gold)') + bar('Kiến thức', st.kno, '#3d7cc9') + bar('Các mối quan hệ', st.soc, 'var(--accent)') +
       (l.mind && l.age >= 12 ? bar('Căng thẳng', l.mind.stress, l.mind.stress >= 70 ? 'var(--bad)' : l.mind.stress >= 45 ? '#d08a3a' : '#6aa58a', Math.round(l.mind.stress) + (l.mind.stress >= 70 ? ' · quá tải' : '')) : '') +
       '<div class="stat"><div class="row"><span>Nhân cách</span><b>' + karmaWord(k) + '</b></div><div class="track karma"><div class="fill" style="left:' + (k < 0 ? 50 + k / 2 : 50) + '%;width:' + Math.abs(k) / 2 + '%;background:' + (k < 0 ? 'var(--bad)' : 'var(--good)') + '"></div></div></div>' +
-      '<div style="margin-top:14px" class="small muted">Tài sản ròng</div>' +
-      '<div class="money">' + (l.indep ? esc(money(l, nw)) : '—') + '</div>' +
+      '<div style="margin-top:14px" class="small muted">Tài sản ròng <span title="Tất cả những gì bạn có trừ đi tất cả những gì bạn nợ">ⓘ</span></div>' +
+      '<div class="money">' + (l.indep ? esc(money(l, nw)) : '—') + '</div>' + wealthBreak(l) +
       (l.indep && l.cur !== 'vnd' ? '<div class="small muted">≈ ' + esc(G.CUR.fmtVND(G.CUR.toVND(E.H.resCode(l) === l.country ? l.gdp : (W.BY[l.abroad.code] || { gdp: l.gdp }).gdp, nw))) + '</div>' : '') +
       '<div class="small muted" style="margin-top:4px">Gia đình gốc: ' + esc(E.QUINT[l.fam.q]) + '</div>';
   }
@@ -624,7 +643,7 @@
     if (!l.indep || !F) { p.innerHTML = '<h3>Tiền bạc</h3><p class="muted small" style="margin:0">' + (l.age < 18 ? 'Còn sống cùng bố mẹ. Thỉnh thoảng được cho ít tiền tiêu vặt.' : 'Chưa tự lập về tài chính.') + '</p>' + loansHtml(l); return; }
     var rows = [];
     function row(k, v, cls) { rows.push('<dt>' + esc(k) + '</dt><dd class="' + (cls || '') + '">' + esc(v) + '</dd>'); }
-    row(l.retired ? 'Lương hưu / con biếu' : 'Thu nhập của bạn', money(l, F.inc / 12) + '/tháng', 'pos');
+    row(l.retired ? (l.pensioned ? 'Lương hưu / con biếu' : 'Trợ cấp / con biếu') : 'Thu nhập của bạn', money(l, F.inc / 12) + '/tháng', 'pos');
     if (F.partner) row((l.partner ? U.cap(E.H.partnerWord(l, l.partner)) : 'Bạn đời') + ' góp', money(l, F.partner / 12) + '/tháng', 'pos');
     row('Ăn uống & sinh hoạt', '−' + money(l, Math.max(0, F.food - (F.pets || 0))));
     if (F.pets) row('Nuôi thú cưng', '−' + money(l, F.pets));
@@ -639,7 +658,8 @@
     var ev = items.map(function (x) { return '<li><span>' + esc(x.t) + '</span><b class="' + (x.v >= 0 ? 'pos' : 'neg') + '">' + (x.v >= 0 ? '+' : '−') + esc(money(l, Math.abs(x.v))) + '</b></li>'; }).join('');
     p.innerHTML = '<h3>Tài chính năm ' + (l.alive ? l.age - (S.yearRunning ? 0 : 1) >= 0 ? (l.birthYear + l.age - (S.yearRunning ? 0 : 1)) : '' : l.death.year) + '</h3>' +
       '<dl class="statlist fin">' + rows.join('') + '</dl>' +
-      '<div class="finsave ' + (F.save >= 0 ? 'pos' : 'neg') + '">' + (F.save >= 0 ? 'Để dành được ' : 'Hụt ') + esc(money(l, Math.abs(F.save))) + '</div>' +
+      '<div class="finsave ' + (F.save >= 0 ? 'pos' : 'neg') + '">' + (F.save >= 0 ? 'Cả năm dư ra ' : 'Cả năm hụt ') + esc(money(l, Math.abs(F.save))) + '</div>' +
+      '<div class="small muted">' + (F.save >= 0 ? 'Thu nhập trừ chi tiêu, đã cộng vào tiền mặt.' : 'Chi nhiều hơn thu, phần hụt bị trừ vào tiền mặt.') + ' Tiền mặt hiện có: <b class="' + (l.money < 0 ? 'neg' : '') + '">' + (l.money < 0 ? '−' : '') + esc(money(l, Math.abs(l.money))) + '</b></div>' +
       (ev ? '<div class="small muted" style="margin-top:10px">Khoản phát sinh</div><ul class="finev">' + ev + '</ul>' : '') +
       loansHtml(l) + assetsHtml(l) +
       '<div class="small muted" style="margin-top:8px">Cách chi tiêu: ' + { save: 'tằn tiện', normal: 'bình thường', lavish: 'thoải mái' }[l.spend] + (l.sendParents && (l.fam.mAlive || l.fam.fAlive) ? ' · có gửi tiền cho bố mẹ' : '') + '</div>';
@@ -696,7 +716,9 @@
     if (l.gen > 1) row('🌳 Thế hệ thứ ' + l.gen + ' · ' + esc((l.lineage || []).map(function (x) { return x.n; }).join(' → ')) + ' → bạn');
     if (l.partner) {
       var p = l.partner, w = p.status === 'dating' ? 'Người yêu' : p.status === 'cohabit' ? 'Bạn đời' : (p.sex === l.sex ? 'Bạn đời' : p.sex === 'M' ? 'Chồng' : 'Vợ');
-      row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi');
+      var pj = p.job ? ' · ' + esc(p.job) : '';
+      var pi = p.job && p.job !== 'sinh viên' ? (E.H.partnerIncKnown && E.H.partnerIncKnown(l, p) ? ' · <b>' + esc(money(l, p.inc || 0)) + '/tháng</b>' : ' · <span class="muted">thu nhập: chưa rõ</span>') : '';
+      row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi' + pj + pi);
     } else if (l.widowed) row('Góa bụa');
     l.kids.forEach(function (k) {
       var ka = a - k.born, info = '';
@@ -728,7 +750,8 @@
     var kid = a < 15;
     var cur = l.focus === 'baby' ? 'study' : l.focus;
     if (kid && cur === 'work') cur = 'study';
-    var chips = FOCUS.filter(function (f) { return !kid || f[3]; }).map(function (f) {
+    if (cur === 'balance' && a < 21) cur = kid ? 'study' : 'social';
+    var chips = FOCUS.filter(function (f) { return (!kid || f[3]) && !(f[5] && a < f[5]); }).map(function (f) {
       return '<button class="chip' + (f[0] === cur ? ' on' : '') + '" data-f="' + f[0] + '">' + (kid ? f[3] : f[1]) + '</button>';
     }).join('');
     var d = FOCUS.filter(function (f) { return f[0] === cur; })[0];
@@ -740,13 +763,19 @@
     if (!l.alive || l.age < 8) { p.innerHTML = '<h3>Việc bạn muốn làm</h3><p class="muted small" style="margin:0">' + (l.alive ? 'Từ 8 tuổi, bạn có thể chủ động làm những việc mình muốn.' : '—') + '</p>'; return; }
     var acts = E.actions(l), groups = {};
     acts.forEach(function (x) { if (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok)) (groups[x.g] = groups[x.g] || []).push(x); });
-    var left = Math.max(0, E.ACTS_PER_YEAR - (l.acts || 0));
-    p.innerHTML = '<h3>Việc bạn muốn làm <span class="muted small" style="text-transform:none;letter-spacing:0">· còn ' + left + '/' + E.ACTS_PER_YEAR + ' lượt năm nay</span></h3>' +
-      Object.keys(groups).map(function (g) {
-        return '<div class="actgroup"><div class="actg">' + esc(g) + '</div><div class="chips">' + groups[g].map(function (x) {
-          return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + '</button>';
-        }).join('') + '</div></div>';
-      }).join('');
+    // v2.7: gọn hơn — chỉ hiện hàng nhóm việc; bấm một nhóm mới mở danh sách việc của nhóm đó
+    var lim = E.actsLimit(l), left = lim === Infinity ? null : Math.max(0, lim - (l.acts || 0));
+    if (S.actG === undefined) S.actG = LS.get('mkn.actg', null);
+    var sel = S.actG && groups[S.actG] ? S.actG : null;
+    p.innerHTML = '<h3>Việc bạn muốn làm <span class="muted small" style="text-transform:none;letter-spacing:0">· ' + (left == null ? 'không giới hạn lượt' : 'còn ' + left + '/' + lim + ' lượt năm nay') + '</span></h3>' +
+      '<div class="chips actgroups">' + Object.keys(groups).map(function (g) {
+        var n = groups[g].filter(function (x) { return x.ok === true; }).length;
+        return '<button class="chip sm' + (g === sel ? ' on' : '') + (n ? '' : ' off') + '" data-ag="' + esc(g) + '">' + esc(g) + (n ? ' <small>' + n + '</small>' : '') + '</button>';
+      }).join('') + '</div>' +
+      (sel ? '<div class="chips actlist">' + groups[sel].map(function (x) {
+        return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + '</button>';
+      }).join('') + '</div>' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
+    $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });
   }
   function doAction(id) {
@@ -850,7 +879,7 @@
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {
-        $$('[data-k]', box).forEach(function (b) { b.onclick = function () { choose(b.dataset.k); }; });
+        $$('[data-k]', box).forEach(function (b) { b.onclick = function () { choose(b.dataset.k, true); }; });
         $('#decMin', box).onclick = minimizeDecision;
         if (aiPick) {
           var k = E.autoKey(l), fast = !S.auto;
@@ -861,10 +890,40 @@
         }
       }, (d.tone === 'dark' ? 'dark-tone ' : '') + (major ? 'major' : 'minor'));
   }
-  function choose(k) {
+  function choose(k, byHand) {
     closeModal();
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
+    var pets0 = (S.life.pets || []).length;
     var entries = E.resolve(S.life, k);
+    // v2.7: vừa nhận nuôi thú cưng bằng lựa chọn của chính mình → tự đặt tên
+    var newPet = byHand && S.life.alive && (S.life.pets || []).length > pets0 ? S.life.pets[S.life.pets.length - 1] : null;
+    if (newPet) { namePet(newPet, entries, function () { afterChoose(entries, wasManual, rest); }); return; }
+    afterChoose(entries, wasManual, rest);
+  }
+  function namePet(pet, entries, done) {
+    var old = pet.n;
+    modal('<div class="agep">Thú cưng mới</div><h2>Đặt tên cho ' + esc(E.H.petLabel ? E.H.petLabel(pet) : pet.k) + '</h2>' +
+      '<div class="field"><label for="petName">Tên</label><input id="petName" maxlength="24" value="' + esc(old) + '"></div>' +
+      '<div class="go-row"><button class="btn primary" id="petOk">Đặt tên</button><button class="btn ghost" id="petKeep">Giữ tên "' + esc(old) + '"</button></div>',
+      function (box) {
+        var inp = $('#petName', box); inp.focus(); inp.select();
+        function save(n) {
+          n = (n || '').trim().slice(0, 24) || old;
+          if (n !== old) {
+            pet.n = n;
+            var re = new RegExp(old.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+            (S.life.log || []).slice(-30).forEach(function (e) { if (e.t && e.a === S.life.age) e.t = e.t.replace(re, n); });
+            (entries || []).forEach(function (e) { if (e.t) e.t = e.t.replace(re, n); });
+            (S.life.mem || []).forEach(function (m) { if (m.a === S.life.age && m.t) m.t = m.t.replace(re, n); });
+          }
+          closeModal(); done();
+        }
+        $('#petOk', box).onclick = function () { save(inp.value); };
+        $('#petKeep', box).onclick = function () { save(old); };
+        inp.onkeydown = function (e) { if (e.key === 'Enter') save(inp.value); };
+      }, 'petname');
+  }
+  function afterChoose(entries, wasManual, rest) {
     if (wasManual) { var added = S.life.pending.length - rest; for (var i = 0; i < added; i++) S.life.pending[i].manual = true; }
     entries.forEach(function (e) { e.k = e.k || 'decision'; addLog(e); });
     renderAll(); persist();

@@ -213,7 +213,7 @@
     title: 'Thỏi son của mẹ', text: function (l) { return 'Thấy mấy bạn trong lớp đánh son, bạn lén lấy thỏi son của ' + (l.fam.mAlive ? 'mẹ' : 'chị họ') + ' bỏ vào cặp.'; },
     opts: [
       { k: 'wear', l: 'Đánh son đi học', run: function (l, r, log) { if (ch(r, 0.5)) { log('Bị cô chủ nhiệm nhắc nhở trước lớp, xấu hổ đỏ mặt.', 'bad'); fx(l, { hap: -2 }); } else { log('Cả nhóm bạn khen xinh. Vui cả ngày.', 'good'); fx(l, { hap: 3, soc: 2 }); } talent(l, 'làm đẹp', 0.15, r); } },
-      { k: 'ask', l: 'Xin mẹ dạy trang điểm nhẹ nhàng', run: function (l, r, log) { fx(l, { soc: 2 }); log('Mẹ cười, dạy bạn cách tô son nhẹ cho hợp tuổi. Hai mẹ con nói chuyện cả buổi tối.', 'good'); talent(l, 'làm đẹp', 0.2, r); } },
+      { k: 'ask', l: 'Xin mẹ dạy trang điểm nhẹ nhàng', req: function (l) { return l.fam.mAlive; }, run: function (l, r, log) { fx(l, { soc: 2 }); log('Mẹ cười, dạy bạn cách tô son nhẹ cho hợp tuổi. Hai mẹ con nói chuyện cả buổi tối.', 'good'); talent(l, 'làm đẹp', 0.2, r); } },
       { k: 'back', l: 'Trả lại chỗ cũ', run: function (l, r, log) { log('Lặng lẽ đặt thỏi son về bàn trang điểm.', 'neutral'); } }
     ]
   });
@@ -240,7 +240,7 @@
   CT('thu_nac_danh', function (l, a) { return a >= 11 && a <= 15 && l.school; }, 99, function (l) { return girl(l) ? 1.3 : 0.8; });
 
   SC('nap_game', {
-    title: 'Skin mới ra mắt', prep: function (l, r) { return { g: l.game || pick(r, ['Liên Quân Mobile', 'Free Fire', 'Roblox', 'Play Together', 'Minecraft']) }; },
+    title: 'Skin mới ra mắt', prep: function (l, r) { return { g: l.game || pick(r, girl(l) ? ['Play Together', 'Roblox', 'Liên Quân Mobile', 'Minecraft'] : ['Liên Quân Mobile', 'Free Fire', 'PUBG Mobile', 'Mobile Legends: Bang Bang', 'Roblox', 'Minecraft']) }; },
     text: function (l, d) { return d.g + ' vừa ra skin giới hạn. Cả nhóm bạn đều có, chỉ mình bạn chưa.'; },
     opts: [
       { k: 'beg', l: 'Năn nỉ bố mẹ nạp tiền', run: function (l, r, log) { if (!poor(l) && ch(r, 0.4)) { cashB(l, -0.002, 'Nạp game'); log('Được nạp cho một lần, với điều kiện cuối kỳ phải học khá.', 'neutral'); fx(l, { hap: 3 }); } else { log('Bị từ chối thẳng: "Tiền đâu mà nạp game!"', 'neutral'); fx(l, { hap: -1 }); } } },
