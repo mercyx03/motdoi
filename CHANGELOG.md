@@ -1,0 +1,146 @@
+# Nhật ký phiên bản — Một Đời
+
+**Nguyên tắc cập nhật:** bản mới = toàn bộ tính năng bản trước + tính năng mới + sửa lỗi.
+Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
+Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
+
+## v2.3.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.2.0. Đời đang chơi dở được tự bổ sung tài sản, mức căng thẳng và chỉ số của con cái.
+
+### Mới
+- **⭐ Đánh dấu khoảnh khắc**: mỗi dòng nhật ký có ngôi sao. Khoảnh khắc đã đánh dấu được ưu tiên khi nhân vật hồi tưởng cuối đời, hiện ở màn kết thúc, trong link chia sẻ và trên ảnh thẻ.
+- **Tài sản & tiền bạc**:
+  - Danh mục đầu tư giữ qua nhiều năm: sổ tiết kiệm, vàng, cổ phiếu, đất. Lãi lỗ hằng năm theo chu kỳ thị trường: chứng khoán tăng mạnh / đi xuống / sập; đất bình thường / **sốt** / **vỡ bong bóng** / đóng băng. Đất đóng băng thì bán phải cắt lỗ.
+  - Hết tiền mặt thì phải bán bớt tài sản.
+  - Hành động mới "Bán / rút tài sản". Bảng tài chính hiện từng khoản kèm % lãi/lỗ.
+  - **Chơi hụi/họ**: hốt sớm lấy vốn (trả lãi) hoặc hốt cuối lấy lãi — và có thể **vỡ hụi**, chủ hụi ôm tiền bỏ trốn.
+  - **Bảo hiểm nhân thọ**: gói bảo vệ (chi trả khi mắc bệnh hiểm nghèo) hoặc gói "liên kết đầu tư" 15 năm. Gói liên kết có thể phí cao, hủy sớm mất phần lớn tiền.
+- **Sức khỏe tinh thần**:
+  - Chỉ số **Căng thẳng** tích tụ theo công việc, nợ nần, con nhỏ, bệnh tật, thi cử. Nó giảm khi nghỉ ngơi, có thú cưng, tập thể dục, trị liệu. Quá tải thì sức khỏe và hạnh phúc đi xuống.
+  - **Kiệt sức** (nghỉ phép / trị liệu / nghỉ việc / gồng tiếp).
+  - **Trầm cảm sau sinh** (của bạn hoặc của vợ).
+  - **Khủng hoảng tuổi trung niên**: bỏ việc theo đam mê, mua mô tô, đi một mình, ngoại tình…
+  - Hành động "Chăm sóc tinh thần": trị liệu, thiền, cai mạng xã hội.
+- **Con cái có đời riêng**:
+  - Con có học lực, độ thân thiết với bố mẹ, có thể lạc lối (nghiện game, bỏ học, đua xe, ma túy) hoặc vào tù.
+  - **Ngã rẽ 18 tuổi của con**: ủng hộ học đại học, du học, học nghề, đi làm sớm hay để con tự quyết.
+  - Con đi làm, có nghề và lương riêng, được thăng chức. Con xin vốn làm ăn.
+  - Về già: con thân thiết và khá giả thì phụng dưỡng nhiều, con xa cách thì ít về thăm.
+  - **Sống tiếp đời con**: khi nhân vật mất, có thể sống lại đời của một người con từ lúc chào đời. Bố/mẹ là chính nhân vật cũ, sinh ra cùng quê, cùng gia cảnh. Có ghi thế hệ và dòng họ.
+- **Học hành chi tiết**:
+  - **Chọn khối thi** ở lớp 11 (A00, A01, B00, C00, D01, H00). Khối quyết định ngành hợp; học trái khối thì vất vả.
+  - **Luyện thi** năm cuối cấp.
+  - **Điểm thi tốt nghiệp THPT** thang 30, xét tuyển đại học theo điểm chuẩn (trường lớn ~23, trường địa phương ~18).
+  - **Học bổng** (toàn phần nếu điểm thi ≥ 27), chuyển trường, bắt nạt trên mạng.
+- **Ảnh thẻ cuộc đời** 1080×1350: chân dung pixel, văn bia, nghề chính, số con, tài sản, bản đồ đời người, khoảnh khắc ⭐. Xem trước rồi tải về hoặc chia sẻ thẳng (điện thoại). Có ở màn kết thúc và màn xem đời được chia sẻ.
+- **Nhạc nền lofi chill**: tự sinh bằng Web Audio — piano điện với hợp âm jazz, bass trầm, trống nhẹ có swing, tiếng đĩa than lạo xạo. Không dùng file nhạc nên không lo bản quyền. Nút ♪ trên thanh menu và thanh cuộc đời, có thanh âm lượng; nhớ lựa chọn cho lần sau.
+
+### Sửa / điều chỉnh
+- Chuyện "con đỗ đại học" trước đây là ngẫu nhiên, giờ thành ngã rẽ có lựa chọn của bố mẹ và phụ thuộc học lực của con.
+- Thu nhập bố mẹ ở đời con không bị kẹp theo bảng nghề chung nữa.
+
+## v2.2.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.1.0. Dữ liệu đang chơi dở được tự bổ sung phần mới (thú cưng cũ chuyển sang hệ thú cưng mới, thu nhập bố mẹ lúc chào đời).
+
+### Mới
+- **Hai tầng lựa chọn**: mỗi hộp thoại ghi rõ *Lựa chọn thường ngày* hay **⚡ Ngã rẽ quyết định** (học tiếp hay nghỉ, đại học, ngành, việc làm, cưới, sinh con, lên phố, XKLĐ, mua nhà, khởi nghiệp, ly hôn, điều trị bệnh, sang Campuchia, du học, sa ngã…). Ngã rẽ có viền vàng và lời nhắc cân nhắc. Nút mới **"⚡ Chỉ ngã rẽ lớn"**: AI lo các lựa chọn thường ngày theo tính cách, bạn chỉ dừng lại ở ngã rẽ quyết định (vẫn có thể bấm tự chọn).
+- **Thú cưng** như 1in8b: hành động "Nuôi thú cưng" chọn loài — chó (chó ta, Phú Quốc, Poodle, Corgi, Husky, Alaska, Phốc sóc, Golden), mèo (ta, mướp, Anh lông ngắn, Ba Tư, Xiêm), cá cảnh (vàng, betta, koi, rồng), chim (chào mào, yến phụng, vẹt), hamster, thỏ, rùa — mỗi loài có giá mua, chi phí nuôi mỗi tháng và tuổi thọ riêng; tối đa 3 con. "Chơi với thú cưng": dắt đi dạo, tiêm phòng, chụp ảnh (có thể viral), dạy trò. Biến cố: ốm (đi thú y / tự chữa / để mặc), **trộm chó** (VN), đi lạc, đẻ con (giữ lại / cho / bán / triệt sản), chó cắn người. Thú cưng già đi rồi mất, được vẽ trong khung cảnh pixel, có dòng chi phí riêng trong bảng tài chính, xuất hiện ở khúc cuối đời.
+- **Thêm ~55 nghề, tổng hơn 130 nghề** (bảng "Nghề & lương" trên trang chủ):
+  - *Showbiz theo hạng*: ca sĩ hát đám cưới/phòng trà → hạng C → B → A → diva; diễn viên quần chúng → vai phụ → vai chính → hạng A → ngôi sao; rapper, danh hài, người mẫu, KOL/KOC livestream theo hạng; vũ công → biên đạo, nhạc công → producer, biên kịch, quản lý nghệ sĩ, DJ, MC đám cưới/sự kiện.
+  - *Nhà nước*: viên chức, cán bộ xã/phường (công chức → chủ tịch → bí thư), thuế, hải quan, thẩm phán, kiểm sát viên, ngoại giao (tùy viên → đại sứ), quản lý thị trường, kiểm toán nhà nước, kiểm lâm, tập đoàn nhà nước (EVN, Viettel, PetroVietnam…).
+  - *Freelancer*: thiết kế, dịch thuật/phiên dịch cabin, content/copywriter, lập trình tự do, dựng video, dạy online, affiliate/TikTok Shop, lồng tiếng.
+  - *Nghề khác ở Việt Nam*: phi công (cơ phó → cơ trưởng), tiếp viên, kiểm soát không lưu, hướng dẫn viên, lễ tân → tổng quản lý khách sạn, barista, bartender, thu ngân siêu thị, nhân sự, phân tích dữ liệu, logistics/XNK, kỹ sư xây dựng, kỹ sư cơ điện, thuyền viên viễn dương, giàn khoan, thợ lò, tài xế xe tải/container, thợ mộc, nha sĩ, bác sĩ thú y, giáo viên mầm non, PT gym, barber, thợ xăm, spa, chủ vườn sầu riêng, nuôi tôm, tiệm vàng, cầm đồ, chủ xưởng.
+- **Thu nhập bố mẹ thay đổi theo năm**: tăng lương, thăng chức, làm ăn phát đạt/thua lỗ, mất việc rồi tìm lại việc, nội trợ đi làm; **nghỉ hưu** (công chức/công nhân 60–62 tuổi, công an 55) nhận lương hưu ~55–70%; chủ kinh doanh giao lại việc ở 65 tuổi; lao động tự do làm đến 68–72 rồi không có lương hưu, từ 75 tuổi nhận trợ cấp hưu trí xã hội. Bảng gia đình hiện thu nhập hiện tại, so với lúc bạn chào đời. Bố mẹ không lương hưu thì con phải gửi tiền nhiều hơn.
+- Hồ sơ xuất phát có thêm dòng **Năng khiếu** riêng và thu nhập từng người (bố · mẹ).
+
+### Sửa / điều chỉnh
+- **"Biến cố: Năng khiếu game (FPS)" là sai logic** — năng khiếu không phải biến cố. Biến cố giờ là hoàn cảnh thật của xuất phát điểm (bố nghiện ngập, thiếu vắng bố, bố/mẹ thất nghiệp, nghèo đói, đường đến trường xa ở miền núi, mùa bão vùng biển, nhà đông con, mẹ sinh khi còn trẻ…); năng khiếu tách sang dòng riêng và viết rõ: "game bắn súng (FPS)", "game chiến thuật đồng đội (MOBA)".
+- Bỏ chữ "10 cuộc đời" trên thanh menu và tiêu đề mục (giờ là "Những cuộc đời đã sống"); nút menu thay bằng "Nghề & lương".
+- **Thu nhập sát thực tế hơn** (tham chiếu thu nhập bình quân 2025 ~8,4 triệu/tháng, lương cơ sở 2,34 triệu, khảo sát lương tuyển dụng): chủ kinh doanh thu nhập cao hơn hẳn (kinh doanh tự do 18 → chủ tịch tập đoàn 500 triệu/tháng, nhưng rủi ro phá sản); bằng cấp chỉ cộng thêm khi vượt yêu cầu nghề (không cộng dồn hai lần); lương nhà nước theo hệ số, không phụ thuộc trường danh tiếng; thăng chức chậm lại cho đúng thực tế; "xin tăng lương" không còn nhảy bậc khi chưa đủ thâm niên; chênh lệch vùng miền vừa phải; nổi tiếng hạng A/ngôi sao trở nên hiếm (trước đây ca sĩ dễ kiếm hàng tỷ mỗi tháng); bảng lương bố mẹ nhóm giàu nhất hạ cho sát thực tế.
+- Phát triển nghề phụ: nông dân ở nông thôn được mời làm nông nhiều hơn.
+
+## v2.1.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.0.0. Dữ liệu đang chơi dở được tự bổ sung phần mới.
+
+### Mới
+- **Quay số phận khi bấm "Chào đời"**: 4 ô quay (tỉnh/thành hoặc quốc gia · dân tộc hoặc nơi sinh · giới tính · gia cảnh) chạy rồi dừng dần ở kết quả; có nút bỏ qua, tự rút ngắn với người bật "giảm chuyển động".
+- **Tuổi thơ có lựa chọn**: lễ thôi nôi (bốc đồ vật đoán nghề, ảnh hưởng năng khiếu), ngày đầu mẫu giáo, đòi đồ chơi ở chợ, học chữ trước lớp 1, chọn trường, hè này làm gì (học bơi giảm nguy cơ đuối nước, học vẽ/đàn, về quê với ông bà…), làm vỡ đồ, tiền ăn sáng, nuôi chó/mèo, văn nghệ, xin điện thoại, giúp việc nhà, cho bạn chép bài, đội tuyển học sinh giỏi, Trung thu, tiền lì xì & heo đất, lạc mẹ ở chợ phiên. ~84% số năm từ 1–14 tuổi có lựa chọn.
+- **Thu nhập của bố, mẹ và cả nhà** trên giấy khai sinh, hồ sơ xuất phát và bảng gia đình (bố/mẹ có thể thất nghiệp, nội trợ).
+- **Tranh pixel**: chân dung nhân vật lớn dần theo tuổi (em bé, học sinh quàng khăn đỏ, áo công an, áo blouse, nón lá, tóc bạc…) và khung cảnh gia đình: kiểu nhà theo hoàn cảnh (nhà sàn, trình tường, nhà tạm, mái ngói, nhà ống, chung cư, biệt thự, phòng trọ, trại giam…), quê/phố/núi/biển/sông nước, trời nắng – hoàng hôn – đêm sao theo tâm trạng, cả nhà và thú cưng.
+- **Giao diện mới** tông đêm xanh – vàng kim: trang chủ có hero "Một lần sinh ra. Vạn ngã rẽ.", thẻ **Hồ sơ xuất phát** ngẫu nhiên mỗi lần vào trang (nút "Xuất phát điểm khác" và "Sống đời này"), thẻ tính năng, 3 bước cách chơi. Logo mới cùng tông. Giao diện sáng vẫn có ở nút ◐.
+
+### Sửa / điều chỉnh
+- Thu nhập tham chiếu của bố mẹ nhóm giàu nhất được hạ cho sát thực tế.
+- Bài test chuỗi Campuchia chạy nhiều lượt hơn để ổn định thống kê.
+
+## v2.0.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v1.0.0 (2 chế độ, 63/34 tỉnh, 54 dân tộc, 195 quốc gia, giới tính & LGBTQ+, giấy khai sinh, sinh cùng giây, quãng lặng, bản đồ đời người, đài tưởng niệm, lưu tiến trình). Dữ liệu người chơi đang chơi dở từ bản 1.0 được tự động nâng cấp.
+
+### Đổi tên & nhận diện
+- Đổi tên game thành **Một Đời**, logo mới: cung đường mặt trời mọc rồi lặn trên đường chân trời — một đời người từ lúc sinh đến lúc mất.
+
+### Từng tuổi một
+- Năm nào cũng có chuyện kể (lớp 1 → lớp 12, đại học, đi làm, tuổi già…), kèm dòng thu nhập theo **tháng** và chi tiêu cả năm.
+- Ký ức: những khoảnh khắc quan trọng được ghi nhớ để hồi tưởng cuối đời.
+- Bạn thân từ thuở nhỏ đi cùng suốt cuộc đời: đi net, bị bắt nạt, hỏi vay tiền, đám cưới, nằm viện, ra đi.
+
+### Ngã rẽ tuổi 18 & chuỗi sự kiện
+- Lên Hà Nội / TP.HCM học (bằng cấp được trọng dụng hơn) hoặc học gần nhà; thi trường công an / quân đội; du học (học bổng / bố mẹ chi / qua công ty du học — có thể bị lừa); cao đẳng; đi làm; ở nhà phụ bố mẹ; nghĩa vụ quân sự; xuất khẩu lao động trả nợ cho nhà.
+- Lên phố: bị chặt chém / cướp ở bến xe, phòng trọ ảo, đa cấp, "việc làm thêm online".
+- "Việc nhẹ lương cao" → bị bán sang trại lừa đảo ở Campuchia: cam chịu, trốn thoát, lén liên lạc đại sứ quán, gia đình chuộc — có thể được giải cứu hoặc bỏ mạng.
+
+### Hơn 80 nghề có thang bậc & thu nhập thật
+- Công an / quân đội (Thiếu úy → Thiếu tướng, đúng số năm lên hàm, tuổi nghỉ hưu theo cấp), bác sĩ, điều dưỡng, giáo viên, công chức, văn phòng (thực tập → giám đốc), các loại sale, kinh doanh tự do (nước hoa, nhựa, vật liệu…), tài xế công nghệ, xe ôm, shipper, ăn xin, ve chai…
+- Làm đẹp & thời trang: makeup, stylist, thiết kế thời trang, tổ chức sự kiện, người mẫu.
+- Showbiz & sáng tạo nội dung theo danh tiếng: streamer (Liên Quân, Free Fire, LMHT, Valorant, Delta Force, Minecraft, Roblox…), YouTuber nút bạc / vàng / kim cương, ca sĩ, diễn viên (phim trăm tỷ hoặc flop), scandal & tẩy chay.
+- Esports (tuyển thủ, HLV, caster, nhà đầu tư), thể thao (huy chương SEA Games, ASIAD, Olympic), cờ vua / cờ tướng (FM, IM, GM, Kiện tướng).
+- Phi pháp: đòi nợ thuê, cho vay nặng lãi, lừa đảo, trộm, ma túy, buôn lậu, nhà cái — kèm bị bắt, xét xử, ngồi tù, ra tù làm lại cuộc đời.
+- Nước ngoài: thu nhập & tài sản hiển thị bằng **tiền bản địa** (won, yên, euro…) kèm quy đổi ra đồng.
+
+### Việc bạn muốn làm (hành động chủ động, 3 lượt/năm)
+- Tìm người yêu (app hẹn hò có thể gặp lừa tình), hẹn hò, cầu hôn, sinh con, ly hôn; thi bằng lái; học chứng chỉ / văn bằng 2; tìm việc, xin tăng lương, nghỉ việc, khởi nghiệp; mua xe, mua nhà, vay (ngân hàng, công ty tài chính, người thân, app, vay nóng), trả nợ, đầu tư (tiết kiệm, vàng, chứng khoán, tiền mã hóa, đất nền), vé số / Vietlott, cách chi tiêu, phụng dưỡng bố mẹ; concert thần tượng, du lịch, quán net, đi nhậu; khám sức khỏe, tập thể dục, cai nghiện, từ thiện, đi chùa / nhà thờ; thăm bố mẹ, gặp bạn thân; kiếm tiền bất chính, cá độ.
+
+### Tiền bạc như đời thật
+- Bảng thu chi năm: lương/tháng, bạn đời góp, ăn uống, thuê nhà, đi lại, con cái, gửi bố mẹ, thuốc men, trả nợ, mua sắm, khoản phát sinh.
+- Nợ: thẻ tín dụng, ví trả sau, vay tiêu dùng, app đen (khủng bố đồng nghiệp & gia đình), vay nóng; trễ hạn → **nợ xấu CIC** → không vay mua nhà, mua xe được; vỡ nợ sau 3 năm.
+- Bố mẹ cần sửa nhà, chữa bệnh, mua sắm theo mùa; Tết, đám cưới, mừng cưới.
+
+### Đời sống, cám dỗ & biến cố
+- Quán net cỏ (để tiền dưới bàn phím đi vệ sinh, gõ mật khẩu chậm bị nhìn trộm), bắt nạt, quay cóp, thuốc lá điện tử / bóng cười, đi "bão", tỏ tình.
+- Giao thông: đèn vàng 3 giây, CSGT (dừng / bỏ chạy → bị đuổi kịp hoặc phạt nguội / xin "bỏ qua"), không bằng lái, say rượu lái xe, ăn vạ, tông người, cướp xe ôm, khách quỵt.
+- Gia đình gốc: bố cờ bạc, nghiện rượu, giang hồ, chủ nợ đến nhà; nghèo đói, bỏ học; tiêm chủng theo mức sống — trẻ không tiêm dễ bệnh hơn.
+- Bão lũ theo vùng (miền Bắc, miền Trung nhiều; miền Nam ít), chiến tranh & bạo lực băng đảng ở các nước có xung đột, cướp giật, trầm cảm, nghiện ngập.
+- Cám dỗ & đạo đức: phong bì, tham nhũng, bán độ, doping, ngoại tình, nhặt được ví, cứu người — điểm **Nhân cách** (thiện ↔ ác).
+- Chế độ tự động / người cùng giây: **AI tự quyết theo tính cách** (liều lĩnh, đạo đức, tham vọng, hướng ngoại).
+
+### Khúc cuối đời & chia sẻ
+- Chết vì bệnh: phát bệnh → hồi tưởng ký ức → di nguyện cho con cháu → hôn mê → xuôi tay. Chết đột ngột / trẻ nhỏ có khúc cuối riêng.
+- Tự lưu **10 cuộc đời gần đây**; **chia sẻ cuộc đời bằng đường link** (người nhận mở ra xem được, không cần tài khoản).
+
+### Sửa lỗi trong quá trình kiểm thử (đã có bài test chống tái phát)
+- Tình huống hẹn trước không còn phù hợp (vd. đã nghỉ việc) gây lỗi → kiểm tra hợp lệ trước khi hiện.
+- Nợ app đen tăng vô hạn do lãi kép → trần nợ & cơ chế vỡ nợ.
+- Sinh viên nhận việc phi pháp vẫn giữ trạng thái đang học → bỏ dở việc học khi nhận việc.
+- Tỷ lệ tốt nghiệp đại học bị đẩy lên 65% → hiệu chỉnh lại.
+- Tình huống phát hiện tài năng hiện cho người không có năng khiếu.
+
+## v1.0.0 — 14/10/2026 (bản đầu tiên, tên cũ: Một Kiếp Người)
+
+### Tính năng
+- **Chế độ Việt Nam**
+  - Hai bản đồ hành chính: 63 tỉnh thành (trước 1/7/2025) và 34 tỉnh thành (sau sáp nhập, theo NQ 202/2025/QH15). Ở bản 34 tỉnh, nơi sinh ghi rõ "khu vực tỉnh cũ".
+  - Tự chọn tỉnh/thành hoặc ngẫu nhiên theo dân số thực tế.
+  - 54 dân tộc: tự chọn hoặc ngẫu nhiên (Kinh 86%, 53 dân tộc còn lại chia 14% theo dân số Tổng điều tra 2019).
+  - Tên nhân vật: tự nhập hoặc để trống — tự đặt tên theo phong tục từng nhóm dân tộc.
+  - Tôn giáo, kiểu nhà, mức sống, tuổi thọ, tử vong trẻ em thay đổi theo tỉnh và dân tộc.
+- **Chế độ Thế giới**: 195 quốc gia, quay theo số trẻ sinh mỗi năm. Chỉ chọn giới tính; tên, thành phố, tôn giáo, gia đình theo quốc gia.
+- **Giới tính**: Ngẫu nhiên / Nam / Nữ / LGBTQ+ (Đồng tính nam, Đồng tính nữ, Song tính).
+- Giấy khai sinh, 4 em bé "sinh cùng một giây", trọng tâm mỗi năm, quyết định ở các ngã rẽ, quãng lặng ở tuổi 5/15/30/50/70, bản đồ đời người, cáo phó, lời cuối, đài tưởng niệm.
+- Tốc độ 1×–16×, tạm dừng, "Tới lựa chọn tiếp", tự động; độ dài một đời 15/30/60 phút; tự lưu tiến trình; sáng/tối; điện thoại.
+
+### Sửa lỗi trong quá trình kiểm thử
+- Tuổi thọ mô phỏng thấp hơn thực tế ~5 năm; tỷ lệ đại học quá cao; nhận việc bán hàng rong cùng năm đỗ đại học; mua nhà trả góp bị báo "nợ nần"; tài sản cuối đời âm hàng tỷ; em bé cùng giây hiện sai thành phố sinh; một số câu chữ chưa tự nhiên; sốt xuất huyết xuất hiện quá dày.

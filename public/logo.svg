@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Một Đời">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16304a"/>
+      <stop offset="1" stop-color="#0a1520"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6deaa"/>
+      <stop offset="0.6" stop-color="#d9b26a"/>
+      <stop offset="1" stop-color="#a77a35"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#f6deaa" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#f6deaa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="#d9b26a" stroke-opacity="0.45"/>
+  <!-- cung đời: mọc bên trái (sinh ra), lặn bên phải (ra đi) -->
+  <path d="M12 43 A20 20 0 0 1 52 43" fill="none" stroke="url(#gold)" stroke-width="2.6" stroke-linecap="round"/>
+  <circle cx="19.2" cy="28.4" r="9" fill="url(#glow)"/>
+  <circle cx="19.2" cy="28.4" r="4.6" fill="#f6deaa"/>
+  <path d="M7 43 H57" stroke="url(#gold)" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M17 49.5 H47" stroke="#d9b26a" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+  <path d="M25 55 H39" stroke="#d9b26a" stroke-width="1.4" stroke-linecap="round" opacity="0.3"/>
+</svg>

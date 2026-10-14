@@ -1,0 +1,6 @@
+# Triển khai lên Cloudflare Workers (static assets): npx wrangler deploy
+name = "mot-doi"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"

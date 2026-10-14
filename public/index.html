@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Một Đời · Bạn sẽ sống một đời như thế nào?</title>
+  <meta name="description" content="Mô phỏng một đời người bằng số liệu thật: sinh ra ở một trong 63/34 tỉnh thành Việt Nam, thuộc một trong 54 dân tộc — hoặc ở bất kỳ đâu trong 195 quốc gia. Mỗi lựa chọn dẫn tới một ngã rẽ.">
+  <meta property="og:title" content="Một Đời — Bạn sẽ sống một đời như thế nào?">
+  <meta property="og:description" content="Bạn không được chọn nơi mình sinh ra. Hãy sống trọn một cuộc đời với những ngã rẽ, cám dỗ và thăng trầm.">
+  <meta name="theme-color" content="#0a1520">
+  <link rel="icon" href="logo.svg?v=2.3.0" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2.3.0">
+</head>
+<body>
+  <!-- ============ TRANG CHỦ ============ -->
+  <section id="home" class="screen active">
+    <div class="topbar"><div class="wrap">
+      <div class="brand" data-go="home"><img class="logo" src="logo.svg?v=2.3.0" alt="">Một Đời</div>
+      <nav class="navpills">
+        <span class="pill hide-sm" style="cursor:default"><span class="dot"></span>TRÒ CHƠI MÔ PHỎNG CUỘC SỐNG</span>
+        <a class="pill" href="#about">Giới thiệu</a>
+        <a class="pill" href="#tryLife">Thử một đời</a>
+        <button class="pill keep" id="jobsBtn">Nghề &amp; lương</button>
+        <button class="pill" data-go="memorial">Đài tưởng niệm</button>
+        <span class="pill gold hide-sm" style="cursor:default">✓ Tự lưu trên thiết bị</span>
+        <button class="pill keep" id="musicBtn" title="Bật nhạc nền lofi" aria-label="Nhạc nền">♪</button>
+        <button class="pill keep" id="themeBtn" title="Đổi giao diện sáng/tối" aria-label="Đổi giao diện sáng/tối">◐</button>
+      </nav>
+    </div></div>
+    <div class="wrap">
+
+      <div class="herobox">
+        <svg class="skyline" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true">
+          <g fill="#d9b26a" fill-opacity=".08"><rect x="300" y="60" width="40" height="140"/><rect x="345" y="20" width="55" height="180"/><rect x="405" y="90" width="35" height="110"/><rect x="445" y="40" width="50" height="160"/><rect x="500" y="100" width="30" height="100"/><rect x="535" y="70" width="65" height="130"/><rect x="250" y="110" width="45" height="90"/></g>
+          <g fill="#f0cf8e" fill-opacity=".25"><rect x="355" y="40" width="4" height="4"/><rect x="370" y="60" width="4" height="4"/><rect x="385" y="90" width="4" height="4"/><rect x="455" y="70" width="4" height="4"/><rect x="470" y="110" width="4" height="4"/><rect x="545" y="95" width="4" height="4"/><rect x="560" y="130" width="4" height="4"/><rect x="310" y="90" width="4" height="4"/></g>
+          <path d="M0 170 Q 150 140 300 160 T 600 150" stroke="#d9b26a" stroke-opacity=".25" fill="none"/>
+        </svg>
+        <div class="herogrid">
+          <div>
+            <span class="tagline">✦ Một lần sinh ra · Vạn ngã rẽ</span>
+            <h1 class="bigtitle">Một lần sinh ra.<br><span class="goldtxt">Vạn ngã rẽ.</span></h1>
+            <p class="lead">Mỗi lần chào đời là một xuất phát điểm khác: nơi sinh, gia đình, cơ hội, biến cố, nghề nghiệp, vận may — và các lựa chọn của chính bạn. Sống trọn một kiếp người, từ tiếng khóc chào đời đến những năm cuối cùng.</p>
+            <div class="statrow">
+              <div class="stile"><b>195</b><span>Quốc gia</span></div>
+              <div class="stile"><b>63/34</b><span>Tỉnh thành Việt Nam</span></div>
+              <div class="stile"><b>54</b><span>Dân tộc Việt Nam</span></div>
+              <div class="stile"><b id="statJobs">130+</b><span>Nghề nghiệp</span></div>
+              <div class="stile"><b>∞</b><span>Ngã rẽ cuộc đời</span></div>
+            </div>
+            <div class="cta-row">
+              <a class="btn gold big" href="#tryLife" style="text-decoration:none">Thử một đời ›</a>
+              <a class="btn big" href="#recentSection" style="text-decoration:none">Các cuộc đời đã lưu</a>
+            </div>
+          </div>
+          <div class="profile" id="heroProfile"></div>
+        </div>
+      </div>
+
+      <div class="features" id="about">
+        <div class="feat"><div class="ico">💼</div><h3>Ngành nghề sâu hơn</h3><p>Từ điều dưỡng, sale, tài xế công nghệ đến công an Đại tá, streamer triệu follow, tuyển thủ esports, kỳ thủ Đại kiện tướng.</p></div>
+        <div class="feat"><div class="ico">🇻🇳</div><h3>Việt Nam rất chi tiết</h3><p>63 hoặc 34 tỉnh thành, 54 dân tộc, vùng miền, bão lũ theo mùa, thi vào lớp 10, xuất khẩu lao động, Tết, mừng thọ.</p></div>
+        <div class="feat"><div class="ico">✦</div><h3>Không chỉ là may mắn</h3><p>Đạo đức, quyết định, kỹ năng sống, nợ nần và cám dỗ đều có hậu quả lâu dài — tốt hay xấu.</p></div>
+        <div class="feat"><div class="ico">📖</div><h3>Nhật ký sống động</h3><p>Năm nào cũng có một dòng đời: tuổi thơ, mối tình đầu, tháng lương đầu, đám cưới, và khúc cuối đầy hồi ức.</p></div>
+        <div class="feat"><div class="ico">⚡</div><h3>Ngã rẽ & chuyện thường ngày</h3><p>Lựa chọn thường ngày nhẹ nhàng, còn những ngã rẽ quyết định (học gì, làm gì, cưới ai, đi đâu) được đánh dấu rõ — có thể để AI lo phần vặt.</p></div>
+        <div class="feat"><div class="ico">🐾</div><h3>Thú cưng</h3><p>Nuôi chó, mèo, cá, chim, thỏ, rùa… mỗi loài một tuổi thọ, một chi phí. Chúng ốm, đi lạc, bị trộm, đẻ con — và ở bên bạn đến cuối đời.</p></div>
+      </div>
+
+      <div id="resumeBox"></div>
+
+      <div class="section" id="tryLife">
+        <div class="hero" style="padding-top:8px">
+          <div class="eyebrow"><span id="ver"></span> · Thử một đời · Số liệu thật</div>
+          <h2 id="heroTitle" style="font-size:clamp(34px,5vw,54px);margin:6px 0 10px">1 trong <em>100 triệu</em></h2>
+          <p class="lead" id="heroLead"></p>
+          <div class="counters">
+            <div class="counter"><b id="cntVN">0</b><span>em bé chào đời ở Việt Nam từ lúc bạn mở trang</span></div>
+            <div class="counter"><b id="cntW">0</b><span>em bé chào đời trên thế giới</span></div>
+            <div class="counter"><b id="cntD">0</b><span>người qua đời trên thế giới</span></div>
+          </div>
+        </div>
+        <div class="card pad" id="setup">
+          <div class="tabs" role="tablist">
+            <button class="tab on" data-mode="vn" role="tab">Việt Nam</button>
+            <button class="tab" data-mode="world" role="tab">Toàn thế giới</button>
+          </div>
+
+          <div id="vnOpts">
+            <div class="field">
+              <div class="label">Bản đồ hành chính</div>
+              <div class="chips" id="variantChips">
+                <button class="chip" data-variant="63">63 tỉnh thành (trước 1/7/2025)</button>
+                <button class="chip on" data-variant="34">34 tỉnh thành (sau sáp nhập)</button>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="field">
+                <label for="provSel">Tỉnh / thành phố</label>
+                <select id="provSel"></select>
+                <div class="hint" id="provHint">Ngẫu nhiên: quay theo dân số thực tế của từng tỉnh.</div>
+              </div>
+              <div class="field">
+                <label for="ethSel">Dân tộc</label>
+                <select id="ethSel"></select>
+                <div class="hint">Ngẫu nhiên: Kinh 86%, 53 dân tộc còn lại chia 14% theo dân số thực tế.</div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="nameInp">Tên nhân vật</label>
+              <input type="text" id="nameInp" maxlength="40" placeholder="Để trống để được đặt tên theo dân tộc & vùng miền" autocomplete="off">
+            </div>
+          </div>
+
+          <div id="worldOpts" class="hidden">
+            <p class="muted" style="margin-top:0">Quốc gia được quay theo số trẻ sinh ra mỗi năm ở 195 quốc gia. Tên, thành phố, gia đình, tôn giáo, đồng tiền — tất cả theo nơi bạn chào đời. Ra Hàn Quốc thì bạn mang tên Hàn, sống ở Hàn, nhận lương bằng won. Bạn chỉ được chọn giới tính.</p>
+          </div>
+
+          <div class="field">
+            <div class="label">Giới tính</div>
+            <div class="chips" id="genderChips">
+              <button class="chip on" data-g="random">Ngẫu nhiên</button>
+              <button class="chip" data-g="M">Nam</button>
+              <button class="chip" data-g="F">Nữ</button>
+              <button class="chip" data-g="lgbt">LGBTQ+ 🏳️‍🌈</button>
+            </div>
+            <div class="subchips chips hidden" id="lgbtChips">
+              <button class="chip sub" data-g="gay">Đồng tính nam</button>
+              <button class="chip sub" data-g="lesbian">Đồng tính nữ</button>
+              <button class="chip sub" data-g="bi">Song tính</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label">Độ dài một đời</div>
+            <div class="chips" id="lenChips">
+              <button class="chip" data-len="15">Khoảng 15 phút</button>
+              <button class="chip on" data-len="30">Khoảng 30 phút</button>
+              <button class="chip" data-len="60">Khoảng 1 giờ</button>
+            </div>
+            <div class="hint">Thời gian để sống đến tuổi thọ trung bình. Bạn có thể tạm dừng, tua nhanh hoặc bật chế độ tự động.</div>
+          </div>
+
+          <div class="go-row">
+            <button class="btn primary big" id="bornBtn">Chào đời</button>
+            <span class="muted small">Có thể để nguyên mọi thứ và chào đời ngay.</span>
+          </div>
+          <div class="notice">Bệnh tật, nghèo đói, tai nạn, tù tội, lừa đảo, chiến tranh, mất người thân… xảy ra ở đây theo tần suất gần với đời thật, nhưng không bao giờ được mô tả chi tiết. Dành cho người từ 15 tuổi.</div>
+        </div>
+      </div>
+
+      <div class="section" id="recentSection">
+        <h2>Những cuộc đời đã sống</h2>
+        <p class="sub">Tự động lưu những cuộc đời gần nhất bạn đã sống trọn trên thiết bị này. Bấm "Chia sẻ" để gửi đường link cho bạn bè.</p>
+        <div class="mem-list" id="recentList"></div>
+      </div>
+
+      <div class="section">
+        <h2 id="oddsTitle">Nếu bạn là em bé chào đời ngay lúc này</h2>
+        <p class="sub" id="oddsSub"></p>
+        <div class="card pad"><div class="bars" id="oddsBars"></div></div>
+      </div>
+
+      <div class="section" id="memSection">
+        <h2>Đài tưởng niệm</h2>
+        <p class="sub">Những cuộc đời bạn muốn lưu giữ mãi, kèm lời cuối gửi người ấy.</p>
+        <div class="mem-list" id="memPreview"></div>
+      </div>
+
+      <div class="section">
+        <div class="eyebrow" style="color:var(--accent);letter-spacing:.14em;font-weight:700">CÁCH CHƠI</div>
+        <h2>Từng năm, từng sự kiện, từng lựa chọn</h2>
+        <div class="steps">
+          <div class="step"><span class="n">01</span><b>Tạo hồ sơ</b><span>Chọn chế độ Việt Nam hay toàn thế giới, tỉnh thành, dân tộc, giới tính — hoặc để số phận quay ngẫu nhiên.</span></div>
+          <div class="step"><span class="n">02</span><b>Sống qua từng năm</b><span>Từ lễ thôi nôi, ngày đầu đi học, đến đại học, đi làm, lập gia đình. Tự chọn trọng tâm, tự viết hành động riêng.</span></div>
+          <div class="step"><span class="n">03</span><b>Nhận hậu quả dài hạn</b><span>Nghề nghiệp, tài chính, danh tiếng, nhân cách, các mối quan hệ và cả tuổi thọ đều có thể thay đổi.</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Bên trong trò chơi có gì</h2>
+        <div class="card pad">
+          <p style="margin-top:0"><b>Từng tuổi một.</b> Năm nào cũng có chuyện kể: lần đầu đi học, những trận đòn, mối tình đầu, tháng lương đầu, nợ nần, đám cưới, tiếng khóc của con… Mỗi năm làm việc, bạn biết rõ mình kiếm bao nhiêu mỗi tháng, tiêu vào đâu, để dành được bao nhiêu.</p>
+          <p><b>Ngã rẽ & hệ quả.</b> 18 tuổi: lên Hà Nội / TP.HCM học, học gần nhà, thi trường công an, du học, đi làm, đi nghĩa vụ hay xuất khẩu lao động — mỗi lựa chọn kéo theo những chuyện khác: bị lừa ở bến xe, phòng trọ ảo, lời mời đa cấp, "việc nhẹ lương cao" bên kia biên giới…</p>
+          <p><b>Việc bạn muốn làm.</b> Không chỉ chờ số phận: bạn có thể chủ động tìm người yêu, thi bằng lái, mua xe, vay tiền (ngân hàng, thẻ, ví trả sau, app đen…), đầu tư, mua vé số, đi concert thần tượng, làm từ thiện — hay bước vào con đường tội lỗi.</p>
+          <p><b>Hơn 130 nghề, lương theo thực tế.</b> Có thang bậc thật: công an từ Thiếu úy đến Thiếu tướng, bác sĩ từ thực hành đến giám đốc bệnh viện, thẩm phán, hải quan, cán bộ xã, phi công, tiếp viên, freelancer, chủ vườn sầu riêng; showbiz theo hạng — ca sĩ đám cưới lên hạng C, B, A rồi diva, diễn viên quần chúng lên vai chính… và cả đòi nợ thuê, buôn lậu, ăn xin. Thu nhập bố mẹ cũng thay đổi theo năm: tăng lương, mất việc, nghỉ hưu nhận lương hưu.</p>
+          <p><b>Sinh cùng một giây.</b> Đúng giây bạn chào đời, bốn em bé khác cũng ra đời. Cuộc đời họ chạy song song bên bạn — do máy tự quyết theo tính cách của từng người.</p>
+          <p style="margin-bottom:0"><b>Khúc cuối.</b> Khi về già, nhân vật phát bệnh, hồi tưởng lại những ký ức đẹp nhất, dặn dò di nguyện cho con cháu, chìm vào hôn mê rồi từ từ xuôi tay. Số liệu: GSO, NQ 202/2025/QH15, Tổng điều tra 2019, UN WPP 2024, World Bank — đã làm tròn để mô phỏng.</p>
+        </div>
+      </div>
+    </div>
+    <footer><div class="wrap">Một Đời <span id="ver2"></span> · Lấy cảm hứng từ <a href="https://1in8b.life/" target="_blank" rel="noopener">1 in 8 Billion</a> · Dữ liệu được lưu trên trình duyệt của bạn. Đường link chia sẻ chỉ chứa phần tóm tắt cuộc đời.</div></footer>
+  </section>
+
+  <!-- ============ GIẤY KHAI SINH ============ -->
+  <section id="birth" class="screen"><div class="wrap" id="birthWrap"></div></section>
+
+  <!-- ============ CUỘC ĐỜI ============ -->
+  <section id="life" class="screen">
+    <div class="lifebar">
+      <div class="wrap">
+        <div class="agebox"><span class="age" id="lbAge">0 tuổi</span><span class="meta" id="lbMeta"></span></div>
+        <button class="btn sm" id="pauseBtn">❚❚ Tạm dừng</button>
+        <div class="speeds" id="speeds"></div>
+        <button class="btn sm" id="skipBtn" title="Tua nhanh tới lựa chọn tiếp theo">Tới lựa chọn tiếp »</button>
+        <button class="btn sm toggle" id="musicBtn2" title="Nhạc nền lofi chill">♪ Lofi</button><input type="range" id="volRange" class="vol hidden" min="0" max="100" value="35" aria-label="Âm lượng nhạc">
+        <button class="btn sm toggle" id="minorBtn" title="Lựa chọn thường ngày do AI chọn theo tính cách; chỉ dừng lại ở những ngã rẽ quyết định">⚡ Chỉ ngã rẽ lớn</button>
+        <button class="btn sm toggle" id="autoBtn" title="Để AI tự quyết định theo tính cách nhân vật">Tự động</button>
+        <button class="btn sm ghost" id="exitBtn">Thoát</button>
+      </div>
+      <div class="yearprog"><i id="yearProg"></i></div>
+    </div>
+    <div class="wrap lifegrid">
+      <div class="col">
+        <div class="card panel idcard" id="idCard"></div>
+        <div class="card panel" id="statsPanel"></div>
+        <div class="card panel" id="finPanel"></div>
+        <div class="card panel" id="famPanel"></div>
+      </div>
+      <div class="col mid">
+        <div class="card scenecard" id="scenePanel"></div>
+        <div class="card panel focus" id="focusPanel"></div>
+        <div class="card panel" id="actPanel"></div>
+        <div class="card panel"><h3>Nhật ký cuộc đời <span class="muted small" style="text-transform:none;letter-spacing:0">· mới nhất ở trên</span></h3><ul class="loglist" id="logList"></ul></div>
+      </div>
+      <div class="col">
+        <div class="card panel"><h3>Sinh cùng một giây</h3><div class="cohort-live" id="cohortLive"></div></div>
+        <div class="card panel"><h3>Bản đồ đời người</h3><div class="lifemap" id="lifeMap"></div><div class="small muted" style="margin-top:8px" id="mapNote"></div></div>
+        <div class="card panel" id="placePanel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KẾT THÚC ============ -->
+  <section id="end" class="screen"><div class="wrap"><div class="end" id="endWrap"></div></div></section>
+
+  <!-- ============ CUỘC ĐỜI ĐƯỢC CHIA SẺ ============ -->
+  <section id="shared" class="screen"><div class="wrap"><div class="end" id="sharedWrap"></div></div></section>
+
+  <!-- ============ ĐÀI TƯỞNG NIỆM ============ -->
+  <section id="memorial" class="screen">
+    <div class="wrap">
+      <header class="top">
+        <div class="brand" data-go="home"><img class="logo" src="logo.svg?v=2.3.0" alt="">Một Đời</div>
+        <nav><button class="btn sm" data-go="home">← Trang chủ</button></nav>
+      </header>
+      <div class="section">
+        <h2>Đài tưởng niệm</h2>
+        <p class="sub">Những cuộc đời đã được sống trọn trên thiết bị này.</p>
+        <div class="mem-list" id="memAll"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="modalRoot"></div>
+
+  <script src="js/util.js?v=2.3.0"></script>
+  <script src="js/data-vn.js?v=2.3.0"></script>
+  <script src="js/data-world.js?v=2.3.0"></script>
+  <script src="js/names.js?v=2.3.0"></script>
+  <script src="js/currency.js?v=2.3.0"></script>
+  <script src="js/engine.js?v=2.3.0"></script>
+  <script src="js/careers.js?v=2.3.0"></script>
+  <script src="js/scenarios.js?v=2.3.0"></script>
+  <script src="js/expansion.js?v=2.3.0"></script>
+  <script src="js/finale.js?v=2.3.0"></script>
+  <script src="js/scene.js?v=2.3.0"></script>
+  <script src="js/music.js?v=2.3.0"></script>
+  <script src="js/card.js?v=2.3.0"></script>
+  <script src="js/app.js?v=2.3.0"></script>
+</body>
+</html>
