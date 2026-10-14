@@ -22,6 +22,8 @@ public/              ← CHỈ thư mục này được đưa lên Cloudflare
   js/careers.js      ← hơn 130 nghề (nhà nước, freelancer, showbiz theo hạng…), thang bậc, lương tham chiếu, danh tiếng, thi đấu, phạm pháp
   js/scenarios.js    ← hơn 130 tình huống (cả thú cưng), chuỗi sự kiện, hành động chủ động, câu chuyện mỗi năm
   js/expansion.js    ← tài sản (tiết kiệm, vàng, cổ phiếu, đất, hụi, bảo hiểm), tâm lý, đời con cái, khối thi & điểm THPT, sống tiếp đời con
+  js/wealth.js       ← xe & nhà theo mức giàu, nhà cho thuê, cửa hàng có chi nhánh / phá sản, anh chị em, chứng chỉ ngoại ngữ, kinh doanh sau nghỉ hưu
+  js/jobs.js         ← nghề mới, hướng đi giữa các nghề, sự kiện riêng theo nghề, công an theo ngành, gia đình tài phiệt / ngân hàng / chính trị
   js/music.js        ← nhạc nền lofi tự sinh bằng Web Audio (không dùng file nhạc)
   js/card.js         ← ảnh thẻ cuộc đời 1080×1350 (canvas)
   js/finale.js       ← khúc cuối đời, di nguyện, chia sẻ link, 10 đời gần đây

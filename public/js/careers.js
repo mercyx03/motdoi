@@ -212,7 +212,7 @@
     if (!l.job) return null;
     if (l.job.t) return l.job.t;
     var c = J(l), rk = Math.min(l.job.rank || 0, c.t.length - 1);
-    if (c.ladder) return (c.id === 'cong_an' ? (isVN(l) ? 'Công an' : 'Cảnh sát') : 'Quân đội') + ' · ' + c.t[rk];
+    if (c.ladder) return (c.id === 'cong_an' ? (isVN(l) ? 'Công an' : 'Cảnh sát') : 'Quân đội') + ' · ' + c.t[rk] + (c.id === 'cong_an' && l.job.br && E.POLICE_BR ? ' · ' + E.POLICE_BR[l.job.br] : '');
     if (c.id === 'streamer') return 'streamer ' + (l.game || 'game') + ' (' + fmtFollowers(l.fame) + ' người theo dõi)';
     if (c.id === 'youtuber') return 'YouTuber / TikToker (' + fmtFollowers(l.fame) + ' người đăng ký)';
     if (c.id === 'kol_live') return c.t[Math.min(fameTier(l.fame), c.t.length - 1)] + ' (' + fmtFollowers(l.fame) + ' người theo dõi)';
@@ -394,7 +394,8 @@
       var need = c.yrs[l.job.rank] || 3;
       if (l.job.yrs >= need) {
         var pp = c.ladder ? (l.job.rank >= 7 ? 0.04 + (l.st.kno - 70) / 300 : 0.85 - (l.karma < -20 ? 0.4 : 0)) :
-          (c.promo || 0.2) + (l.st.kno - 50) / 250 + (focus === 'work' ? 0.12 : 0) + ((l.tr && l.tr.amb) - 50) / 300 + (l.talent === 'ăn nói' ? 0.04 : 0) - l.job.rank * 0.06;
+          (c.promo || 0.2) + (l.st.kno - 50) / 250 + (focus === 'work' ? 0.12 : 0) + ((l.tr && l.tr.amb) - 50) / 300 + (l.talent === 'ăn nói' ? 0.04 : 0) - l.job.rank * 0.06 +
+          (l.flags.eliteBoost && l.flags.eliteBoost === c.id ? 0.3 : 0); // v2.5: con nhà có "ô dù" thăng tiến nhanh hơn
         if (r() < pp) {
           l.job.rank++; l.job.yrs = 0;
           log(c.ladder ? 'Được thăng quân hàm ' + c.t[l.job.rank] + '.' : 'Được thăng chức: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 5 });
@@ -425,8 +426,12 @@
     }
     // mất việc
     var lossP = c.loss != null ? c.loss : c.sec === 'formal' ? 0.02 : c.sec === 'farm' ? 0 : c.sec === 'crime' ? 0 : 0.03;
-    if (!c.fame && c.skillRank == null && c.id !== 'xkld' && c.id !== 'phu_giup' && r() < lossP) {
+    if (!c.fame && c.skillRank == null && c.id !== 'xkld' && c.id !== 'phu_giup' && H.isEmployee(l) && r() < lossP) {
       log('Mất việc ' + jobTitleOf(l) + '.', 'bad'); l.job = null; l.flags.needJob = true; H.fx(l, { hap: -6 }); return inc * 0.5;
+    }
+    // v2.5: chủ cơ sở không "bị cho nghỉ" nhưng có thể ế ẩm phải đóng cửa (cơ nghiệp gia đình thì không)
+    if (!c.fame && c.sec === 'inf' && !H.isEmployee(l) && !l.job.fam && r() < lossP * (c.cat === 'free' ? 1.5 : 1)) {
+      log(c.cat === 'free' ? 'Mất dần khách hàng, mấy tháng liền không có dự án — đành tạm gác nghề tự do.' : 'Làm ăn ế ẩm mấy năm liền, ' + (l.job.p || jobTitleOf(l)) + ' phải đóng cửa.', 'bad'); l.job = null; l.flags.needJob = true; H.fx(l, { hap: -8 }); return inc * 0.5;
     }
     // giải nghệ (thể thao / esports)
     if (c.maxAge && (a >= c.maxAge || (a >= c.maxAge - 6 && l.skill < 45 && r() < 0.3))) {
@@ -443,7 +448,7 @@
     if (c.ladder) { var rk2 = l.job.rank; retAge = (rk2 <= 3 ? 53 : rk2 === 4 ? 55 : rk2 === 5 ? 57 : rk2 === 6 ? 60 : 62) - (l.sex === 'F' && rk2 >= 6 ? 2 : 0); }
     else if (c.sec === 'crime') retAge = 70;
     // v2.4: chủ doanh nghiệp không có tuổi nghỉ hưu — còn khỏe, còn vốn thì còn làm (thường đến 70–78 rồi giao lại)
-    else if (c.cat === 'biz' && (/^(chủ|giám đốc)/.test(c.t[Math.min(l.job.rank || 0, c.t.length - 1)]) || /^kd_/.test(c.id))) retAge = 70 + (l.job.bizRet != null ? l.job.bizRet : (l.job.bizRet = U.randint(r, 0, 8)));
+    else if ((c.cat === 'biz' || c.owner) && (c.owner || /^(chủ|giám đốc)/.test(c.t[Math.min(l.job.rank || 0, c.t.length - 1)]) || /^kd_/.test(c.id))) retAge = 70 + (l.job.bizRet != null ? l.job.bizRet : (l.job.bizRet = U.randint(r, 0, 8)));
     else retAge = isVN(l) ? (formal ? (l.sex === 'M' ? 62 : 60) : 65 + U.randint(r, 0, 7)) : (l.gdp > 15 ? 65 : 68 + U.randint(r, 0, 5));
     if (l.flags.afterRet && !c.ladder) retAge = Math.max(retAge, l.flags.afterRet); // đã nghỉ hưu rồi đi làm/kinh doanh tiếp
     if (a >= retAge || (a >= 55 && l.st.hea < 25)) {

@@ -574,7 +574,7 @@
         log(hw === 'bố mẹ' || hw === 'mẹ' || hw === 'bố' ? 'Kể hết với ' + hw + '. ' + U.cap(hw) + ' bán đi chiếc xe, trả nợ thay bạn.' : 'Kể hết với ' + hw + '. Mọi người góp tiền trả nợ thay bạn, coi như cho vay không lấy lãi.', 'neutral');
         fx(l, { hap: -4, karma: 2 }); H.mem(l, 'Ngày thú nhận nợ app đen với ' + hw + '.', 6);
       } },
-      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp nhóm Zalo công ty.', 'bad'); if (l.job && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
+      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp nhóm Zalo công ty.', 'bad'); if (H.isEmployee(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
     ]
   });
   T('khung_bo', function (l, a) { return l.flags.thugDebt && free(l); }, 0.7);
@@ -844,7 +844,7 @@
     title: 'Xin tăng lương', text: function (l) { return 'Bạn đã làm ' + E.jobTitle(l) + ' được ' + l.job.yrs + ' năm ở vị trí này.'; },
     valid: function (l) { return !!l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime'; },
     opts: [
-      { k: 'ask', l: 'Mạnh dạn đề xuất tăng lương', ai: { amb: 1 }, run: function (l, r, log) { var c = E.jobDef(l); var need = (c.yrs && c.yrs[l.job.rank]) || 3; var p = 0.15 + (l.st.kno - 50) / 200 + Math.min(4, l.job.yrs) * 0.04; if (!c.ladder && l.job.yrs >= need - 1 && ch(r, p) && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; log('Sếp đồng ý — được nâng lên ' + E.jobTitle(l) + '.', 'good'); fx(l, { hap: 6 }); } else if (ch(r, 0.5)) { cashB(l, 0.05, 'Thưởng thêm'); log('Không lên chức, nhưng được tăng chút lương.', 'neutral'); } else if (ch(r, 0.15)) { log('Sếp phật ý, ít lâu sau bạn bị cho nghỉ việc.', 'bad'); l.job = null; l.flags.needJob = true; } else { log('Bị từ chối khéo: "Cố gắng thêm nhé em."', 'bad'); fx(l, { hap: -3 }); } } },
+      { k: 'ask', l: 'Mạnh dạn đề xuất tăng lương', ai: { amb: 1 }, run: function (l, r, log) { var c = E.jobDef(l); var need = (c.yrs && c.yrs[l.job.rank]) || 3; var p = 0.15 + (l.st.kno - 50) / 200 + Math.min(4, l.job.yrs) * 0.04; if (!c.ladder && l.job.yrs >= need - 1 && ch(r, p) && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; log('Sếp đồng ý — được nâng lên ' + E.jobTitle(l) + '.', 'good'); fx(l, { hap: 6 }); } else if (ch(r, 0.5)) { cashB(l, 0.05, 'Thưởng thêm'); log('Không lên chức, nhưng được tăng chút lương.', 'neutral'); } else if (H.isEmployee(l) && ch(r, 0.15)) { log('Sếp phật ý, ít lâu sau bạn bị cho nghỉ việc.', 'bad'); l.job = null; l.flags.needJob = true; } else { log('Bị từ chối khéo: "Cố gắng thêm nhé em."', 'bad'); fx(l, { hap: -3 }); } } },
       { k: 'no', l: 'Thôi, chờ thêm', ai: { w: 1 }, run: function () { } }
     ]
   });
@@ -946,7 +946,7 @@
     text: function (l, d) { return 'Một người quen cũ rủ bạn ' + d.t + ': "Một tháng bằng người ta làm cả năm."'; },
     opts: [
       { k: 'join', l: 'Nhận lời', h: 'Phạm pháp', ai: { bad: 1.6, risk: 1 }, run: function (l, r, log, d) { if (l.job) l.lastJob = l.job; E.startJob(l, d.id, r, log); } },
-      { k: 'no', l: 'Từ chối', ai: { w: 1.6 }, run: function (l, r, log) { log('Từ chối thẳng. Nghèo cũng không làm chuyện thất đức.', 'good'); fx(l, { karma: 3 }); } },
+      { k: 'no', l: 'Từ chối', ai: { w: 1.6 }, run: function (l, r, log) { log(l.fam.q <= 3 && l.money < l.base * 3 ? 'Từ chối thẳng. Nghèo cũng không làm chuyện thất đức.' : 'Từ chối thẳng. Không có đồng tiền nào đáng để đánh đổi cả cuộc đời.', 'good'); fx(l, { karma: 3 }); } },
       { k: 'report', l: 'Báo công an', ai: { w: 0.4 }, run: function (l, r, log) { log('Báo công an. Cả đường dây bị triệt phá.', 'good'); fx(l, { karma: 8 }); if (ch(r, 0.15)) { log('Bị đàn em của chúng chặn đường đánh trả thù.', 'bad'); fx(l, { hea: -10 }); } } }
     ]
   });

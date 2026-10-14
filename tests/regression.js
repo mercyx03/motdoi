@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -331,6 +331,14 @@ function templates() {
     l.ventures = [{ k: 'cafe', n: 'quán cà phê', cap: l.base * 1.5, unit: l.base * 1.5, br: 1, mu: 0.1, sd: 0.3, yrs: 3, bad: 0, good: 2 }];
   }));
   T.push(grow({ mode: 'vn', seed: 119 }, 9, l => { l.fam.sibs = 1; l.sibList = [sib('Lê Văn Hai', 'M', -2, { wed: false, kids: 0 })]; }));
+  // v2.5: mỗi nghề có sự kiện riêng một khuôn; gia đình siêu giàu
+  const adult = grow({ mode: 'vn', seed: 121, gender: 'M' }, 35, l => { l.indep = true; l.money = l.base * 50; l.edu = 5; l.ill = null; l.partner = null; });
+  if (adult) [['tham_tu', 1], ['cong_an', 3, l => { l.job.br = 'mt'; l.flags.revenge = 1; }], ['luat_su', 2], ['tham_phan', 2], ['bac_si', 2], ['giao_vien', 1], ['chu_nha_hang', 1], ['tiem_dt', 2], ['cam_do', 1],
+    ['ky_su_xd', 1], ['phong_vien', 1], ['sale_bds', 1], ['ngan_hang', 2], ['chinh_tri', 3, l => { l.flags.dirty = 1; }], ['dau_bep', 2],
+    ['tai_phiet', 2, l => { l.fam.elite = 'tp'; l.flags.eliteFollow = true; l.flags.eliteChoice = true; l.fam.fAlive = true; l.sibList = [sib('Phạm Văn Cả', 'M', -2)]; l.mkt.land = 'đóng băng'; }],
+    ['kd_tu_do', 1, l => { l.fam.elite = 'nh'; l.flags.eliteCut = true; l.flags.eliteChoice = true; l.fam.fAlive = true; }]]
+    .forEach(([id, rk, f]) => { const l = clone(adult); E.startJob(l, id, r(14), () => { }); l.job.rank = rk; l.job.yrs = 5; if (f) f(l); T.push(l); });
+  T.push(grow({ mode: 'vn', seed: 122 }, 17, l => { l.fam.elite = 'tp'; l.fam.q = 5; l.flags.eliteChoice = false; }));
   T.push(grow({ mode: 'vn', seed: 120 }, 61, l => { l.indep = true; l.retired = true; l.job = null; l.pensioned = true; l.pensionInc = l.base * 0.6; l.money = l.base * 5; l.st.hea = 70; }));
   return T.filter(Boolean);
 }
@@ -1022,6 +1030,80 @@ section('20. Bản 2.4: lỗi người chơi phản hồi, xe/nhà theo mức gi
   // bản đầy đủ chạy sạch với người giàu tự động tiêu tiền
   { let rich = 0; for (let i = 0; i < 200; i++) { const l = E.createLife({ mode: 'vn', seed: 47000 + i }); l.fam.q = 5; run1(l, 30); if (!l.alive) continue; l.money += l.base * 300; run1(l); checkLife(l, 'người giàu #' + i); if (l.vehTier >= 2 || l.houseTier >= 2 || (l.ventures || []).length || (l.props || []).length || l.log.some(e => /Khai trương|cho thuê|biệt thự|dinh thự|siêu xe|xe hạng sang/.test(e.t))) rich++; }
     ok(rich > 60, 'người giàu (AI) có tiêu tiền vào xe, nhà, đầu tư (' + rich + ')'); }
+}
+section('21. Bản 2.5: nghề mới, hướng đi giữa các nghề, sự kiện theo nghề, gia đình tài phiệt / chính trị');
+{
+  const run1 = (l, until) => { let g = 0; while (l.alive && g++ < 130 && (until == null || l.age < until)) { E.beginYear(l, { auto: true }); let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l); } return l; };
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; l.indep = true; l.edu = 5; if (setup) setup(l); return l; };
+  const play = (l, id, key) => { const d = E.DEC[id].make(l, R(l.rs)); l.pending.unshift(d); return E.resolve(l, key || E.autoKey(l)).map(e => e.t).join(' | '); };
+
+  // nghề mới
+  ['chu_quan_an', 'chu_nha_hang', 'tiem_dt', 'tham_tu', 'cong_chung', 'phong_kham', 'chu_dau_tu', 'tai_phiet', 'ngan_hang_cao', 'chinh_tri', 'chinh_khach'].forEach(id => ok(!!E.CAR[id], 'có nghề ' + id));
+  { const l = mk(50000, 40); const m = (id, rk) => E.monthlyEst(l, id, rk);
+    ok(m('tai_phiet', 3) > m('kd_tu_do', 3) * 10 && m('tai_phiet', 3) * 12 > 100000, 'chủ tịch tập đoàn gia đình kiếm hàng trăm tỷ mỗi năm (' + E.fmtMoney(l, m('tai_phiet', 3) * 12) + '/năm)');
+    ok(m('ngan_hang_cao', 3) > m('ngan_hang', 3) * 10, 'chủ tịch ngân hàng ≫ giám đốc chi nhánh'); }
+
+  // hướng đi giữa các nghề
+  Object.keys(E.jobs.PATHS).forEach(id => { ok(!!E.CAR[id], 'nghề nguồn tồn tại: ' + id); E.jobs.PATHS[id].forEach(p => ok(!!E.CAR[p[0]] && p[1] < E.CAR[p[0]].t.length, 'hướng đi ' + id + ' → ' + p[0] + ' hợp lệ')); });
+  { const l = mk(50100, 32, l => { E.startJob(l, 'dau_bep', R(1), () => { }); l.job.rank = 2; l.job.yrs = 5; l.money = l.base * 10; });
+    const t = play(l, 'chuyen_huong', 'go'); ok(['chu_quan_an', 'chu_nha_hang'].includes(E.resolveJob(l.job.id)) && l.job.rank >= 1, 'bếp trưởng mở quán / nhà hàng riêng: ' + t);
+    const p = mk(50101, 40, l => { E.startJob(l, 'cong_an', R(2), () => { }); l.job.rank = 4; l.job.yrs = 5; l.money = l.base; }); play(p, 'chuyen_huong', 'go'); ok(E.resolveJob(p.job.id) === 'tham_tu', 'công an lâu năm có thể chuyển sang làm thám tử tư'); }
+  { let n = 0; for (let i = 0; i < 400; i++) { const x = run1(E.createLife({ mode: 'vn', seed: 50200 + i }), 60); if (x.log.some(e => /^Rời vị trí .*chuyển sang làm/.test(e.t))) n++; } ok(n > 15, 'nhiều người rẽ hướng sự nghiệp trong đời (' + n + '/400)'); }
+
+  // công an theo ngành
+  { const brs = new Set(); for (let i = 0; i < 80; i++) { const l = mk(50300 + i, 25, l => E.startJob(l, 'cong_an', R(i), () => { })); E.jobs.policeBr(l, R(i + 9)); brs.add(l.job.br); if (i === 0) ok(/Cảnh sát|Công an khu vực/.test(E.jobTitle(l).split(' · ').pop()), 'danh xưng công an có ngành: ' + E.jobTitle(l)); }
+    ok(['gt', 'hs', 'mt', 'kt', 'cd', 'kv'].every(b => brs.has(b)), 'đủ 6 ngành công an: ' + [...brs].join(',')); }
+  { const l = mk(50400, 30, l => { E.startJob(l, 'cong_an', R(3), () => { }); l.job.br = 'gt'; }); const d = E.DEC.ca_chuyen_an.make(l, R(4)); ok(/xe|chốt|đua|rượu|cồn/.test(d.text), 'CSGT gặp tình huống giao thông: ' + d.text);
+    l.job.br = 'kt'; let kh = false; for (let i = 0; i < 40; i++) if (/Campuchia/.test(E.DEC.ca_chuyen_an.make(l, R(i)).text)) kh = true; ok(kh, 'cảnh sát kinh tế có chuyên án đường dây đưa người sang Campuchia');
+    let died = 0, medal = 0; for (let i = 0; i < 300; i++) { const c = clone(l); c.job.br = 'mt'; c.rs = 700 + i; const t = play(c, 'ca_chuyen_an', E.DEC.ca_chuyen_an.make(c, R(i)).opts.some(o => o.k === 'brave') ? 'brave' : 'law'); if (!c.alive) died++; if (/Huân chương/.test(t)) medal++; }
+    ok(died > 0 && died < 40 && medal > 100, 'chống ma túy: lập công nhiều (' + medal + '), có hy sinh nhưng hiếm (' + died + '/300)'); }
+
+  // thám tử: phần lớn là vụ ngoại tình
+  { const l = mk(50500, 35, l => E.startJob(l, 'tham_tu', R(5), () => { })); let love = 0; for (let i = 0; i < 400; i++) if (/chồng|vợ/.test(E.DEC.tt_vu.make(l, R(i)).text)) love++;
+    ok(love > 200, 'thám tử ở Việt Nam chủ yếu nhận vụ theo dõi ngoại tình (' + love + '/400)');
+    let ok1 = 0, caught = 0; for (let i = 0; i < 200; i++) { const c = clone(l); c.rs = 800 + i; const t = play(c, 'tt_vu', 'caught'); if (/Bị phát hiện/.test(t)) caught++; else ok1++; }
+    ok(caught > 20 && ok1 > 80, 'bám sát dễ bị phát hiện nhưng thường xong vụ (' + caught + ' bị lộ / ' + ok1 + ' xong)'); }
+
+  // tham nhũng → thanh tra
+  { const l = mk(50600, 45, l => { E.startJob(l, 'chinh_tri', R(6), () => { }); l.job.rank = 3; }); play(l, 'ct_co_che', 'yes'); ok(l.flags.dirty >= 2, 'nhận "quà cảm ơn" để lại vết');
+    const tk = E.TRIG.find(t => t.id === 'ct_ky_luat'); ok(tk.when(l, l.age) && tk.p(l) > 0.05, 'có vết thì đoàn thanh tra có thể tìm đến');
+    l.birthYear = 2031 - 45; ok(E.TRIG.find(t => t.id === 'ct_bau_cu').when(l, 45), 'năm 2031 có bầu cử đại biểu Quốc hội');
+    l.birthYear = 2032 - 45; ok(!E.TRIG.find(t => t.id === 'ct_bau_cu').when(l, 45), 'năm 2032 không có bầu cử'); }
+
+  // gia đình siêu giàu
+  { const kinds = {}; let n = 0, badParents = 0, richParents = 0;
+    for (let i = 0; i < 6000; i++) { const l = E.createLife({ mode: i % 4 ? 'vn' : 'world', seed: 51000 + i }); n++; if (l.fam.elite) { kinds[l.fam.elite] = (kinds[l.fam.elite] || 0) + 1; if (l.fam.q !== 5 || l.fam.vice || l.fam.noDad) badParents++; if (l.fam.fInc > 500 || l.fam.fJob === 'bí thư tỉnh ủy' || /nghị sĩ/.test(l.fam.fJob)) richParents++; } }
+    const tot = Object.values(kinds).reduce((a, b) => a + b, 0);
+    console.log('   Gia đình siêu giàu: ' + tot + '/' + n + ' ' + JSON.stringify(kinds));
+    ok(tot / n > 0.006 && tot / n < 0.02, 'khoảng 1% sinh ra trong gia đình siêu giàu (' + (tot / n * 100).toFixed(2) + '%)');
+    ok(kinds.tp && kinds.nh && kinds.ct, 'có cả tài phiệt, chủ ngân hàng, chính trị');
+    ok(badParents === 0 && richParents === tot, 'gia đình siêu giàu: nhóm giàu nhất, bố mẹ giữ chức cao (' + richParents + '/' + tot + ')'); }
+  { let follow = 0, cut = 0, inJob = 0, allow = 0, cutAllow = 0, inherit = 0, noWill = 0, lost = 0, n = 0;
+    for (let i = 0; i < 20000 && n < 60; i++) {
+      const l = E.createLife({ mode: 'vn', seed: 60000 + i }); if (!l.fam.elite) continue; n++;
+      run1(l, 40); if (!l.alive) continue;
+      if (l.fam.mLost || l.fam.fLost) lost++;
+      if (l.flags.eliteFollow && !l.flags.eliteCut) { follow++; if (l.job && E.resolveJob(l.job.id) === E.jobs.eliteJob(l)) inJob++; if (l.log.some(e => /gia nhập cơ nghiệp|nhận công tác/.test(e.t))) allow++; }
+      if (l.flags.eliteCut) { cut++; if ((l.yr.items || []).some(x => /Gia đình chu cấp/.test(x.t || ''))) cutAllow++; }
+      l.fam.mAlive = false; l.fam.fAlive = false; E.jobs.eliteYear(l, R(i), (t) => { if (/di chúc/.test(t)) noWill++; else if (/Thừa kế|thừa kế/.test(t)) inherit++; }, l.age);
+    }
+    ok(n >= 30, 'thử đủ đời con nhà siêu giàu (' + n + ')');
+    ok(follow > 5 && inJob >= follow * 0.6, 'nghe lời gia đình thì vào thẳng cơ nghiệp (' + inJob + '/' + follow + ')');
+    ok(cut > 0 && cutAllow === 0, 'từ chối sắp xếp thì bị cắt chu cấp (' + cut + ' người)');
+    ok(noWill > 0 && inherit > 0, 'nghe lời được thừa kế (' + inherit + '), bị cắt thì không có tên trong di chúc (' + noWill + ')');
+    ok(lost === 0, 'bố mẹ tài phiệt không bị "cắt giảm nhân sự" (' + lost + ')'); }
+  { const l = E.createLife({ mode: 'vn', seed: 61000 }); l.fam.elite = 'ct'; l.fam.q = 5; l.age = 17; l.edu = 3; l.school = null;
+    play(l, 'elite_dinh_huong', 'follow'); for (let a = 17; a < 27 && l.alive; a++) { l.age = a; E.jobs.eliteYear(l, R(a), () => { }, a); if (l.school && a >= l.schoolEnd - 1) { l.school = null; l.edu = 5; } }
+    ok(l.job && E.resolveJob(l.job.id) === 'chinh_tri', 'con nhà chính trị được đưa vào chính trường: ' + (l.job && E.jobTitle(l)));
+    ok(l.flags.eliteBoost === 'chinh_tri', 'có "ô dù" giúp thăng tiến nhanh hơn'); }
+  { const l = E.createLife({ mode: 'vn', seed: 61100 }); l.fam.elite = 'tp'; l.age = 26; l.indep = true; l.flags.eliteFollow = true; l.partner = { name: 'Người Yêu', sex: 'F', age: 25, status: 'dating', since: 24, alive: true };
+    let cutN = 0; for (let i = 0; i < 100; i++) { const c = clone(l); c.rs = 900 + i; play(c, 'elite_hon_nhan', 'love'); if (c.flags.eliteCut) cutN++; }
+    ok(cutN > 30 && cutN < 90, 'đòi cưới người mình yêu: nhiều khi bị gia đình cắt chu cấp (' + cutN + '/100)');
+    const y = clone(l); play(y, 'elite_hon_nhan', 'yes'); ok(y.partner && y.partner.status === 'married' && y.partner.name !== 'Người Yêu', 'hôn nhân sắp đặt môn đăng hộ đối'); }
+  { const l = mk(61200, 25); l.fam.elite = 'tp'; l.flags.eliteFollow = true; const k = { name: 'Bé', sex: 'M', born: 25, alive: true, kids: 0 }; l.kids = [k]; const o = E.childOpts(l, k); ok(o.parent.elite === 'tp', 'đời con của tài phiệt vẫn sinh trong gia đình tài phiệt');
+    const c = E.createLife(o); ok(c.fam.elite === 'tp' && c.fam.q === 5, 'sống tiếp đời con: vẫn là gia đình tài phiệt'); }
+  ok(!/Nghèo cũng không/.test(play(mk(61300, 30, l => { l.fam.q = 5; l.money = l.base * 50; }), 'ru_re', 'no')), 'con nhà giàu từ chối làm ăn phi pháp không nói "nghèo"');
 }
 function isVNx(l) { return E.isVN(l); }
 

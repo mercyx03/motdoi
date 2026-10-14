@@ -4,6 +4,45 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v2.5.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.4.0. Đời đang chơi dở vẫn chơi tiếp; công an đang tại ngũ được tự xếp vào một ngành.
+
+### Mới
+- **Nghề mới**: chủ quán ăn, chủ nhà hàng / chuỗi nhà hàng, tiệm điện thoại (bán → sửa → chủ tiệm → chủ chuỗi), thám tử tư, công chứng viên, chủ phòng khám tư, chủ đầu tư bất động sản. Ngoài ra có các vị trí chỉ vào được qua gia đình hoặc đi lên từ dưới: ban điều hành tập đoàn → chủ tịch tập đoàn (hàng trăm tỷ mỗi năm), lãnh đạo ngân hàng → chủ tịch HĐQT, chính trường (văn phòng tỉnh ủy → bí thư tỉnh ủy → ủy viên Trung ương; ở nước ngoài: hội đồng thành phố → thị trưởng → nghị sĩ → bộ trưởng).
+- **Hướng đi logic giữa các nghề**: làm lâu, có kinh nghiệm và vốn thì được mời rẽ hướng. Ví dụ:
+  - quản lý quán / bếp trưởng → mở quán ăn → nâng lên nhà hàng;
+  - pha chế → mở quán cà phê; thợ sửa xe, sửa điện thoại → mở tiệm riêng;
+  - nhân viên cầm đồ, tiệm vàng → tự mở tiệm;
+  - công an lâu năm → thám tử tư; thẩm phán, kiểm sát viên → luật sư; luật sư → công chứng viên;
+  - bác sĩ → phòng khám tư; giáo viên → trung tâm dạy thêm; kỹ sư xây dựng → chủ thầu;
+  - môi giới bất động sản → chủ đầu tư; ngân hàng → lãnh đạo khối; lập trình viên → startup; shipper → shop online.
+- **Sinh ra trong gia đình siêu giàu (~1%)**: tài phiệt, chủ ngân hàng, hoặc gia đình chính trị.
+  - Tuổi thơ gia giáo: trường quốc tế, vệ sĩ, lịch học kín, phải giữ thể diện gia đình.
+  - 17 tuổi gia đình vạch sẵn con đường: nghe theo (du học Mỹ ngành quản trị, hoặc học Luật để vào chính trường; chu cấp hằng năm), thỏa hiệp, hoặc **từ chối thì bị cắt chu cấp**.
+  - Ra trường vào thẳng cơ nghiệp gia đình. Có "ô dù" nên thăng tiến nhanh hơn.
+  - **Hôn nhân sắp đặt môn đăng hộ đối**: đòi cưới người mình yêu có thể bị gạch tên.
+  - Tranh quyền thừa kế với anh chị em. Gia đình có thể sa sút (bố bị kỷ luật, tập đoàn khủng hoảng).
+  - Bố mẹ mất: người nghe lời được thừa kế cổ phần, ngồi vào ghế của bố; người bị cắt không có tên trong di chúc. Bị cắt rồi về sau vẫn có cơ hội làm lành.
+  - Sống tiếp đời con: con cháu vẫn sinh ra trong gia đình đó.
+- **Sự kiện riêng theo từng nghề**:
+  - *Thám tử tư*: phần lớn là vụ theo dõi ngoại tình (thù lao vài chục triệu một vụ), xác minh đối tác, tìm người. Theo dõi đúng luật thì chậm; gắn định vị lén thì phạm luật; bám sát thì dễ bị phát hiện và bị đánh. Hoàn thành xuất sắc được thưởng thêm, uy tín tăng.
+  - *Công an chia 6 ngành*: CSGT (xe sang say rượu, đua xe, người quen xin bỏ qua), hình sự (truy bắt hung thủ, băng cướp), phòng chống ma túy (đường dây xuyên biên giới, trùm ma túy mua chuộc), kinh tế (giải cứu người bị lừa sang Campuchia, hàng giả, lừa đảo tiền ảo), cơ động, khu vực. Lập công thì được huân chương, thăng hàm vượt cấp. Có thể hy sinh, bị trả thù; nhận hối lộ thì có thể bị khởi tố.
+  - *Luật sư*: ly hôn đại gia, tranh chấp hợp đồng, bào chữa miễn phí cho người nghèo, "chạy án" (có thể bị tước thẻ).
+  - *Thẩm phán, kiểm sát viên*: phong bì trước phiên tòa.
+  - *Bác sĩ*: ca mổ cấp cứu nguy kịch, người nhà bệnh nhân hành hung.
+  - *Giáo viên*: dạy thêm, phụ huynh xin nâng điểm, học sinh cá biệt.
+  - *Chủ quán, nhà hàng*: khách tố ngộ độc, food reviewer, tăng tiền mặt bằng, bếp chính đòi tăng lương.
+  - *Tiệm điện thoại*: máy gian. *Cầm đồ*: xe không giấy tờ.
+  - *Xây dựng*: "rút ruột" công trình. *Nhà báo*: điều tra thực phẩm bẩn hoặc nhận tiền ém bài.
+  - *Môi giới*: thổi giá. *Ngân hàng*: gài bảo hiểm, duyệt vay cho "sân sau".
+  - *Chính trường*: bầu cử đại biểu Quốc hội (2026, 2031…), lời đề nghị "cơ chế", đoàn thanh tra. Sai phạm tích lại thì sớm muộn bị phát hiện.
+  - *Tập đoàn*: trái phiếu đến hạn khi thị trường đóng băng, cơ hội thâu tóm đối thủ.
+
+### Sửa / điều chỉnh
+- Bố mẹ trong gia đình siêu giàu không còn "bị cắt giảm nhân sự".
+- Con nhà giàu từ chối làm ăn phi pháp không còn nói "nghèo cũng không làm chuyện thất đức".
+
 ## v2.4.0 — 14/10/2026
 
 Giữ nguyên toàn bộ tính năng v2.3.0. Sửa các lỗi logic do người chơi thử phát hiện, thêm cách tiêu tiền cho người giàu và anh chị em ruột. Đời đang chơi dở tự được bổ sung anh chị em, hạng nhà, hạng xe.

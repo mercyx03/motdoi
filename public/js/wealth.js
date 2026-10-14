@@ -247,7 +247,7 @@
       if (Math.abs(prof) > l.base * 0.1 || ch(r, 0.25)) log(U.cap(v.n) + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : '') + (prof >= 0 ? ' lãi ' + mo(l, prof) + ' năm nay.' : ' lỗ ' + mo(l, -prof) + ' năm nay.'), prof >= 0 ? 'good' : 'bad');
       if (v.bad >= 3 || (v.bad >= 2 && l.money < 0)) {
         if (v.br > 1 && v.bad < 4) { v.br--; v.cap -= v.unit; v.bad = 1; log('Thua lỗ kéo dài, phải đóng bớt một chi nhánh ' + v.n + ', còn ' + v.br + ' cơ sở.', 'bad'); fx(l, { hap: -6 }); }
-        else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); l.mind && (l.mind.stress += 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }
+        else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); if (l.mind) l.mind.stress = Math.min(100, l.mind.stress + 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }
         continue;
       }
       if (v.good >= 2 && free(l) && a < 75 && ch(r, 0.6) && !(l.sched || []).some(function (s) { return s.id === 'mo_chi_nhanh'; })) H.sched(l, 'mo_chi_nhanh', 1);

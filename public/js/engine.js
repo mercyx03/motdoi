@@ -151,6 +151,13 @@
       l.loans.push({ type: type, name: T.name, bal: amt, rate: T.rate, minShare: T.minShare, late: 0, since: l.age });
       H.cash(l, amt, 'Vay ' + T.name);
     },
+    // v2.5: người làm thuê mới có thể bị "cắt giảm nhân sự" / cho nghỉ — chủ cơ sở, cơ nghiệp gia đình, nghệ sĩ, làm tự do thì không
+    isEmployee: function (l) {
+      if (!l.job || l.job.fam) return false;
+      var c = E.CAR[E.resolveJob ? E.resolveJob(l.job.id) : l.job.id]; if (!c) return true;
+      if (c.owner || c.fame || c.cat === 'free' || c.sec === 'farm' || c.sec === 'crime') return false;
+      return !/^(chủ|giám đốc công ty|chủ tịch)/.test(c.t[Math.min(l.job.rank || 0, c.t.length - 1)]);
+    },
     // v2.4: những nước đã từng đặt chân đến (du lịch, xuất khẩu lao động, du học, định cư)
     visit: function (l, name) { if (!name) return; l.visited = l.visited || []; if (l.visited.indexOf(name) < 0) l.visited.push(name); },
     visited: function (l, name) { return !!((l.visited && l.visited.indexOf(name) >= 0) || (l.abroad && l.abroad.name === name)); },
@@ -384,7 +391,7 @@
     'chủ chuỗi nhà hàng': 45, 'giám đốc kinh doanh': 40, 'cờ bạc, làm thuê lặt vặt': 3, 'giang hồ, đâm thuê chém mướn': 12, 'làm tay chân cho băng nhóm': 10,
     'bán hàng online': 8, 'bán tạp hóa': 9
   };
-  var PARENT_FORMAL = /công nhân|giáo viên|cán bộ xã|viên chức|văn phòng|y tá|kỹ sư|kế toán|công chức|công an|bác sĩ|ngân hàng|bảo vệ|giám đốc kinh doanh/;
+  var PARENT_FORMAL = /công nhân|giáo viên|cán bộ xã|viên chức|văn phòng|y tá|kỹ sư|kế toán|công chức|công an|bác sĩ|ngân hàng|bảo vệ|giám đốc kinh doanh|bí thư|tỉnh ủy|UBND tỉnh|bộ trưởng|nghị sĩ/;
   var PARENT_BIZ = /^chủ |doanh nhân|giám đốc công ty|^buôn bán$/;
   function parentKind(job) {
     if (/nội trợ|thất nghiệp/.test(job)) return 'none';
@@ -405,6 +412,7 @@
     var f = life.fam, M = who === 'm', alive = M ? f.mAlive : f.fAlive;
     if (!alive) return;
     var age = (M ? f.mAge : f.fAge) + life.age, P = M ? 'Mẹ' : 'Bố';
+    if (f.elite && age < 72) return; // v2.5: bố mẹ tài phiệt / chủ ngân hàng / chính khách không "bị cắt giảm nhân sự"
     var key = M ? 'mInc' : 'fInc', jobK = M ? 'mJob' : 'fJob', retK = M ? 'mRet' : 'fRet', lostK = M ? 'mLost' : 'fLost';
     var job = f[jobK], kind = parentKind(job), inc = f[key] || 0, sc = parentScale(life);
     var ref = PARENT_PAY[job] != null ? PARENT_PAY[job] * sc : ((M ? f.mInc0 : f.fInc0) || 7 * sc), show = function (v) { return fmtMoney(life, v); };
@@ -518,6 +526,7 @@
     setBase(life);
     f.mInc = parentMonthly(life, f.mJob, r); f.fInc = f.noDad ? 0 : parentMonthly(life, f.fJob, r);
     if (PA) applyParent(life, PA, r); // v2.3: "sống tiếp đời con" — bố mẹ chính là nhân vật đời trước
+    if (E.eliteBirth) E.eliteBirth(life, PA); // v2.5: ~1% sinh ra trong gia đình tài phiệt / chủ ngân hàng / chính trị (RNG riêng)
     f.mInc0 = f.mInc; f.fInc0 = f.fInc; // thu nhập lúc bạn chào đời (để so sánh về sau)
     life.money = 0; life.income = 0; life.indep = false; life.houseVal = 0; life.mortgage = 0; life.vehVal = 0;
     life.edu = 0; life.school = null; life.major = null; life.job = null; life.retired = false; life.workYrs = 0; life.uniTier = 1;
@@ -1298,7 +1307,7 @@
     life.pending = life.pending.filter(function (d) {
       var p = life.partner;
       switch (d.id) {
-        case 'job': return !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
+        case 'job': return !(life.job && life.job.fam) && !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
         case 'marry': return !!(p && p.status === 'dating');
         case 'kid': case 'divorce': return !!(p && p.status !== 'dating');
         case 'love': return !p;
@@ -1317,6 +1326,7 @@
     var s = life.st;
     s.hea = U.clamp(s.hea, 0, 100); s.hap = U.clamp(s.hap, 0, 100); s.kno = U.clamp(s.kno, 0, 100); s.soc = U.clamp(s.soc, 0, 100);
     life.karma = U.clamp(life.karma || 0, -100, 100);
+    if (life.mind && isFinite(life.mind.stress)) life.mind.stress = U.clamp(life.mind.stress, 0, 100); // v2.5: căng thẳng luôn trong 0–100
   }
 
   // ---------- Hành động chủ động của người chơi ----------
@@ -1375,7 +1385,7 @@
     { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log('Trông cháu giúp con những ngày con bận rộn.', 'good'); l.st.hap += 3; l.st.soc += 2; } },
     { c: function (l, a) { return l.partner && l.partner.sex === l.sex && l.flags.famTension; }, p: 0.12, run: function (l, a, r, log) { l.flags.famTension = false; log('Bố mẹ dần chấp nhận và đón ' + l.partner.name + ' về nhà ăn cơm.', 'good'); l.st.hap += 8; H.mem(l, 'Bữa cơm đầu tiên bố mẹ gắp thức ăn cho ' + l.partner.name + '.', 4); } },
     { c: function (l, a) { return l.partner && l.partner.status === 'married' && a - l.partner.since === 25; }, p: 1, run: function (l, a, r, log) { log('Kỷ niệm 25 năm ngày cưới với ' + l.partner.name + '.', 'good'); l.st.hap += 4; H.mem(l, 'Đám cưới bạc — 25 năm bên ' + l.partner.name + '.', 4); } },
-    { c: function (l, a) { return a >= 18 && l.job && !l.retired && !E.isCrime(l) && !/^(nong|xkld|phu_giup)/.test(l.job.id); }, p: 0.01, run: function (l, a, r, log) { log('Kinh tế khó khăn, công ty cắt giảm nhân sự — bạn mất việc.', 'bad'); l.job = null; l.flags.needJob = true; l.st.hap -= 7; } },
+    { c: function (l, a) { return a >= 18 && l.job && !l.job.fam && !l.retired && !E.isCrime(l) && !/^(nong|xkld|phu_giup)/.test(l.job.id); }, p: 0.01, run: function (l, a, r, log) { var jd = E.jobDef(l); log(H.isEmployee(l) ? 'Kinh tế khó khăn, công ty cắt giảm nhân sự — bạn mất việc.' : jd && (jd.fame || jd.cat === 'free') ? 'Kinh tế khó khăn, khách hàng cắt hết hợp đồng — mấy tháng liền không có việc, đành tạm nghỉ nghề.' : 'Kinh tế khó khăn, sức mua giảm mạnh — làm ăn thua lỗ, phải dừng kinh doanh.', 'bad'); l.job = null; l.flags.needJob = true; l.st.hap -= 7; } },
     { c: function (l, a) { return a >= 45 && a <= 75 && !l.flags.glasses; }, p: 0.08, run: function (l, a, r, log) { l.flags.glasses = true; log('Mắt kém đi, bắt đầu phải đeo kính lão.', 'neutral'); } },
     { c: function (l, a) { return a >= 70; }, p: 0.05, run: function (l, a, r, log) { log(U.pick(r, ['Trí nhớ bắt đầu kém đi, hay quên đồ đạc.', 'Chân yếu, đi lại khó khăn hơn trước.', 'Thính lực giảm, phải nói to mới nghe rõ.']), 'neutral'); l.st.hea -= 3; } }
   ];

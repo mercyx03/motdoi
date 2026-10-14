@@ -164,6 +164,7 @@
   var TEASERS = ['Chưa biết trước — đời còn dài', 'Những ngày tháng bình yên', 'Một tuổi thơ êm đềm', 'Mọi thứ tùy vào lựa chọn của bạn'];
   function eventTeaser(l) {
     var f = l.fam, vn = E.isVN(l);
+    if (f.elite && E.jobs) return 'Sinh ra trong gia đình ' + E.jobs.ELITE[f.elite].n + ' — giàu sang nhưng phải sống theo khuôn phép';
     if (f.vice) return 'Bố ' + E.VICE[f.vice] + ', gia đình nhiều sóng gió';
     if (f.noDad) return 'Lớn lên thiếu vắng bóng bố';
     if (f.fJob === 'thất nghiệp' || f.mJob === 'thất nghiệp') return (f.fJob === 'thất nghiệp' ? 'Bố' : 'Mẹ') + ' đang thất nghiệp, nhà túng thiếu';
