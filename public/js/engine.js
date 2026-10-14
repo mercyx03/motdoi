@@ -44,7 +44,7 @@
   var EDU = ['chưa từng đi học', 'tiểu học', 'trung học cơ sở', 'trung học phổ thông', 'trung cấp / cao đẳng nghề', 'đại học', 'sau đại học'];
   var TALENTS = ['thể thao', 'âm nhạc', 'hội họa', 'toán học', 'ngoại ngữ', 'ăn nói', 'khéo tay', 'game', 'cờ', 'diễn xuất', 'làm đẹp', 'kinh doanh'];
   var SUBS = {
-    'thể thao': ['bóng đá', 'bơi lội', 'điền kinh', 'cầu lông', 'bóng bàn', 'võ thuật', 'cử tạ', 'bắn cung', 'quần vợt'],
+    'thể thao': ['bóng đá', 'bóng đá', 'bóng rổ', 'bóng chuyền', 'bơi lội', 'điền kinh', 'cầu lông', 'bóng bàn', 'võ thuật', 'cử tạ', 'bắn cung', 'quần vợt', 'thể dục dụng cụ', 'đua xe đạp', 'bi-a', 'golf'], // v2.9: thêm bóng rổ, bóng chuyền, thể dục dụng cụ, đua xe đạp, bi-a, golf
     game: ['MOBA', 'FPS'], 'cờ': ['cờ vua', 'cờ tướng']
   };
   var QUINT = ['', 'một trong những gia đình nghèo nhất', 'một gia đình khó khăn', 'một gia đình bình thường', 'một gia đình khá giả', 'một trong những gia đình giàu nhất'];
@@ -1362,7 +1362,7 @@
     var x = a.avail ? a.avail(l) : true;
     return x === true || x === undefined ? true : (x || 'Chưa thể làm lúc này');
   }
-  function actions(l) { return ACT.map(function (a) { return { id: a.id, g: a.g, l: a.l, ok: actAvail(l, a) }; }); }
+  function actions(l) { return ACT.map(function (a) { return { id: a.id, g: a.g, l: typeof a.l === 'function' ? a.l(l) : a.l, ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
   function act(l, id) {
     var a = ACT.filter(function (x) { return x.id === id; })[0];
     if (!a || actAvail(l, a) !== true) return null;

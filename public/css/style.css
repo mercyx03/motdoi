@@ -389,3 +389,4 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
 .statlist.wb dd { text-align: right; color: var(--ink); }
 .statlist.wb dd.neg { color: var(--bad); }
 .statlist.wb dt[title] { cursor: help; text-decoration: underline dotted rgba(157, 176, 193, .5); text-underline-offset: 3px; }
+.joblist li.sub { margin-left: 14px; border-left: 2px solid var(--line); padding-left: 10px; }

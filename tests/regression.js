@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -193,7 +193,7 @@ section('5b. Các lỗi logic đã từng gặp (không được tái phát)');
     r.sort((a, b) => a - b);
     const med = r[Math.floor(r.length / 2)], neg = r.filter(x => x < -2).length / r.length;
     console.log('   Tài sản cuối đời (' + mode + '): trung vị ' + med.toFixed(1) + ' lần thu nhập cơ sở, nợ nặng ' + (neg * 100).toFixed(1) + '%');
-    ok(med > 4 && med < 60, mode + ': tài sản cuối đời trung vị hợp lý');
+    ok(med > 4 && med < 70, mode + ': tài sản cuối đời trung vị hợp lý (' + med.toFixed(1) + ')'); // v2.9: nới từ 60 lên 70 vì đã có kinh doanh, nhà cho thuê, rẽ hướng nghề
     ok(neg < 0.12, mode + ': tỷ lệ nợ nặng cuối đời hợp lý');
     // v1.0: tiền mặt âm tối đa 3 lần thu nhập cơ sở. v2.0 có thêm khoản vay (trần 4 lần mỗi khoản, vỡ nợ sau 3 năm) → nợ ròng không quá 8 lần
     ok(r[0] >= -8.01, mode + ': nợ không phình vô hạn (thấp nhất ' + r[0].toFixed(1) + ' lần thu nhập cơ sở)');
@@ -333,12 +333,18 @@ function templates() {
   T.push(grow({ mode: 'vn', seed: 119 }, 9, l => { l.fam.sibs = 1; l.sibList = [sib('Lê Văn Hai', 'M', -2, { wed: false, kids: 0 })]; }));
   // v2.5: mỗi nghề có sự kiện riêng một khuôn; gia đình siêu giàu
   const adult = grow({ mode: 'vn', seed: 121, gender: 'M' }, 35, l => { l.indep = true; l.money = l.base * 50; l.edu = 5; l.ill = null; l.partner = null; });
-  if (adult) [['tham_tu', 1], ['cong_an', 3, l => { l.job.br = 'mt'; l.flags.revenge = 1; }], ['luat_su', 2], ['tham_phan', 2], ['bac_si', 2], ['giao_vien', 1], ['chu_nha_hang', 1], ['tiem_dt', 2], ['cam_do', 1],
-    ['ky_su_xd', 1], ['phong_vien', 1], ['sale_bds', 1], ['ngan_hang', 2], ['chinh_tri', 3, l => { l.flags.dirty = 1; }], ['dau_bep', 2],
+  if (adult) [['tham_tu', 1], ['cong_an', 3, l => { l.job.br = 'mt'; l.flags.revenge = 1; }], ['luat_su', 2], ['tham_phan', 2], ['kiem_sat', 2], ['dieu_tra_vien', 1], ['chap_hanh_vien', 1], ['thua_phat_lai', 1], ['tro_giup_phap_ly', 1], ['bac_si', 2], ['giao_vien', 1], ['chu_nha_hang', 1], ['tiem_dt', 2], ['cam_do', 1],
+    ['ky_su_xd', 1], ['phong_vien', 1], ['sale_bds', 1], ['ngan_hang', 2], ['chinh_tri', 3, l => { l.flags.dirty = 1; }], ['dau_bep', 2], ['vdv', 2, l => { l.talent = 'thể thao'; l.talentSub = 'bóng đá'; l.skill = 80; l.job.club = 'Hà Nội FC'; }],
     ['tai_phiet', 2, l => { l.fam.elite = 'tp'; l.flags.eliteFollow = true; l.flags.eliteChoice = true; l.fam.fAlive = true; l.sibList = [sib('Phạm Văn Cả', 'M', -2)]; l.mkt.land = 'đóng băng'; }],
     ['kd_tu_do', 1, l => { l.fam.elite = 'nh'; l.flags.eliteCut = true; l.flags.eliteChoice = true; l.fam.fAlive = true; }]]
     .forEach(([id, rk, f]) => { const l = clone(adult); E.startJob(l, id, r(14), () => { }); l.job.rank = rk; l.job.yrs = 5; if (f) f(l); T.push(l); });
+  // v2.9: vừa trúng Jackpot (chưa nhận giải) và đã nhận giải công khai
+  if (adult) { const a = clone(adult); a.flags.lottoWin = { amt: 40000, gross: 44000, g: 'power', prize: 'Jackpot 1', y: a.age, pub: null }; T.push(a);
+    const b = clone(adult); b.money = 40000; b.flags.lottoWin = { amt: 40000, gross: 44000, g: 'power', prize: 'Jackpot 1', y: b.age - 1, pub: true }; T.push(b); }
   T.push(grow({ mode: 'vn', seed: 122 }, 17, l => { l.fam.elite = 'tp'; l.fam.q = 5; l.flags.eliteChoice = false; }));
+  // v2.9: học sinh theo đội tuyển toán; người trẻ đạt giải lớn âm nhạc
+  T.push(grow({ mode: 'vn', seed: 123 }, 9, l => { l.talent = 'toán học'; l.school = l.school || 'primary'; l.flags.nk = { lv: 0 }; }));
+  T.push(grow({ mode: 'vn', seed: 124 }, 20, l => { l.talent = 'âm nhạc'; l.school = null; l.indep = true; l.flags.nkCareer = 'âm nhạc'; l.job = null; }));
   T.push(grow({ mode: 'vn', seed: 120 }, 61, l => { l.indep = true; l.retired = true; l.job = null; l.pensioned = true; l.pensionInc = l.base * 0.6; l.money = l.base * 5; l.st.hea = 70; }));
   return T.filter(Boolean);
 }
@@ -940,8 +946,8 @@ section('20. Bản 2.4: lỗi người chơi phản hồi, xe/nhà theo mức gi
     ok(old === 0, 'năm 2100 không chọn thần tượng đã ngoài 50 (' + old + ')');
     ok(E.IDOL_BORN['Dua Lipa'] === 1995, 'Dua Lipa có năm sinh');
     const y = E.createLife({ mode: 'vn', seed: 41500 }); y.age = 30; y.idol = 'Dua Lipa'; y.idolBorn = 1995; y.birthYear = 2040;
-    ok(!E.TRIG.find(t => t.id === 'concert').when(y, 30), 'thần tượng 75 tuổi không còn tổ chức concert');
-    y.birthYear = 2000; ok(E.TRIG.find(t => t.id === 'concert').when(y, 30), 'thần tượng 35 tuổi vẫn tổ chức concert'); }
+    const cT = E.TRIG.filter(t => t.id === 'concert').pop(); ok(!cT.when(y, 30), 'thần tượng 75 tuổi không còn tổ chức concert');
+    y.birthYear = 2000; ok(cT.when(y, 30), 'thần tượng 35 tuổi vẫn tổ chức concert'); }
 
   // 7. bớt lặp lại
   { const l = mk(41600, 30, l => { l.money = l.base * 3; }); E.act(l, 've_so'); ok(E.actAvail(l, E.ACT.find(a => a.id === 've_so')) !== true, 'mỗi hành động chỉ làm một lần mỗi năm');
@@ -1235,6 +1241,95 @@ section('24. Bản 2.8: tiền bạc rõ ràng, mua xe theo ngân sách, lý do 
   { let bad = 0, dup = 0; for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: i % 4 ? 'vn' : 'world', seed: 90700 + i }); E.runHeadless(l); let md = null; const seen = {};
       l.log.forEach(e => { if (/^Mẹ qua đời/.test(e.t)) md = e.a; if (md != null && e.a > md && /(^|[.,] )Mẹ (cười|khóc|mua|dặn|nấu|ôm)/.test(e.t)) bad++; if (e.k !== 'money' && !/Căn hộ|Ki-ốt|bất động sản cho thuê/.test(e.t)) { const k = e.a + '|' + e.t; if (seen[k]) dup++; seen[k] = 1; } }); }
     ok(bad === 0, 'không nhắc mẹ đã mất (' + bad + ')'); ok(dup <= 3, 'hầu như không lặp tin trong cùng năm (' + dup + ')'); }
+}
+section('25. Bản 2.9: vận động viên chia theo từng môn');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const ath = (sp, seed, skill) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.talent = 'thể thao'; l.talentSub = sp; l.age = 18; l.skill = skill || 60; l.indep = true; l.school = null; E.startJob(l, 'vdv', R(seed), () => { }); return l; };
+  const want = ['bóng đá', 'bóng rổ', 'bóng chuyền', 'bơi lội', 'điền kinh', 'cầu lông', 'bóng bàn', 'quần vợt', 'võ thuật', 'cử tạ', 'bắn cung', 'thể dục dụng cụ', 'đua xe đạp', 'bi-a', 'golf'];
+  want.forEach(sp => { const S = E.SPORTS[sp]; ok(S && S.t.length === 4 && S.pay.length === 4 && S.max > S.peak, 'môn ' + sp + ': đủ 4 bậc danh xưng, thu nhập, tuổi đỉnh cao & giải nghệ'); });
+  { const seen = new Set(); for (let i = 0; i < 3000; i++) { const l = E.createLife({ mode: 'vn', seed: 95000 + i }); if (l.talent === 'thể thao') seen.add(l.talentSub); } ok(['bóng rổ', 'bóng chuyền', 'thể dục dụng cụ', 'đua xe đạp', 'bi-a', 'golf'].every(s => seen.has(s)), 'năng khiếu thể thao có đủ các môn mới (' + [...seen].join(', ') + ')'); }
+  // danh xưng theo môn
+  { const f = ath('bóng đá', 95500, 72); E.jobs && 0; const s = ath('bơi lội', 95501, 72);
+    ok(/cầu thủ|tuyển thủ/.test(E.jobTitle(f)) && /kình ngư|bơi/.test(E.jobTitle(s)), 'danh xưng theo môn: ' + E.jobTitle(f) + ' / ' + E.jobTitle(s));
+    E.sports.sportYear(f, R(1), () => { }, f.age); ok(!!f.job.club && E.jobTitle(f).indexOf(f.job.club) >= 0, 'cầu thủ chuyên nghiệp có câu lạc bộ: ' + E.jobTitle(f));
+    const v = ath('võ thuật', 95502, 60); E.sports.sportYear(v, R(2), () => { }, v.age); ok(E.SPORTS['võ thuật'].arts.includes(v.job.art) && E.jobTitle(v).indexOf(v.job.art) >= 0, 'võ sĩ có môn võ cụ thể: ' + E.jobTitle(v)); }
+  // thu nhập: bóng đá chuyên nghiệp ≫ thể dục dụng cụ cùng bậc
+  { const l = ath('bóng đá', 95600); ok(E.sportPay(l, 2) >= 3 * E.sportPay(ath('thể dục dụng cụ', 95601), 2), 'cầu thủ V.League kiếm nhiều hơn hẳn VĐV thể dục dụng cụ cùng bậc'); }
+  // tuổi giải nghệ theo môn
+  { const retire = sp => { let s = 0, n = 0; for (let i = 0; i < 40; i++) { const l = ath(sp, 96000 + i * 7 + sp.length, 70); for (let y = 0; y < 40 && l.job && E.resolveJob(l.job.id) === 'vdv'; y++) { l.st.hea = 80; E.careerYear(l, R(i * 31 + y), () => { }, 'work'); l.age++; } if (!l.job || E.resolveJob(l.job.id) !== 'vdv') { s += l.age; n++; } } return n ? s / n : 99; };
+    const gym = retire('thể dục dụng cụ'), golf = retire('golf'), bida = retire('bi-a');
+    ok(gym <= 28 && golf >= 38 && bida >= 38, 'tuổi giải nghệ khác nhau: thể dục dụng cụ ~' + gym.toFixed(1) + ', golf ~' + golf.toFixed(1) + ', bi-a ~' + bida.toFixed(1)); }
+  // giải đấu ghi rõ môn; môn đồng đội hiếm có huy chương Olympic
+  { let tagged = 0, all = 0, teamOly = 0; for (let i = 0; i < 300; i++) { const l = ath(i % 2 ? 'bóng đá' : 'bơi lội', 97000 + i, 85); l.job.rank = 2; for (let y = 0; y < 8; y++) { const lg = []; E.careerYear(l, R(i * 13 + y), t => lg.push(t), 'work'); lg.forEach(t => { if (/huy chương/.test(t)) { all++; if (/\((bóng đá|bơi lội)\)/.test(t)) tagged++; if (/Olympic.*bóng đá/.test(t)) teamOly++; } }); l.age++; } }
+    ok(all > 50 && tagged === all, 'huy chương ghi rõ môn (' + tagged + '/' + all + ')'); ok(teamOly <= 2, 'bóng đá Việt Nam gần như không có huy chương Olympic (' + teamOly + ')'); }
+  // sự kiện riêng
+  ['tt_tran_lon', 'tt_xuat_ngoai'].forEach(id => ok(!!E.DEC[id], 'có tình huống "' + id + '"'));
+  { let aff = 0; for (let i = 0; i < 200; i++) { const l = ath('bóng đá', 98000 + i, 88); l.job.rank = 3; l.birthYear = 2046 - l.age; const lg = []; E.sports.sportYear(l, R(i), t => lg.push(t), l.age); if (lg.some(t => /ASEAN Cup/.test(t))) aff++; } ok(aff > 20, 'tuyển thủ bóng đá có thể vô địch ASEAN Cup (' + aff + '/200)'); }
+}
+section('26. Bản 2.9: con đường năng khiếu, concert theo thể loại, sở thích → nghề, giải trí & tâm linh theo tôn giáo');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; if (age >= 18) l.indep = true; if (setup) setup(l); return l; };
+  const play = (l, id, key, arg) => { const d = E.DEC[id].make(l, R(l.rs), arg); l.pending.unshift(d); return E.resolve(l, key || E.autoKey(l)).map(e => e.t).join(' | '); };
+  // năng khiếu toán: trường → huyện → tỉnh → quốc gia → quốc tế
+  ok(E.talentTrack.TRACK['toán học'].st.length === 5 && /IMO/.test(E.talentTrack.TRACK['toán học'].st[4][0]) && /VMO/.test(E.talentTrack.TRACK['toán học'].st[3][0]), 'toán: 5 cấp thi đến VMO và IMO');
+  ['ngoại ngữ', 'âm nhạc', 'hội họa', 'ăn nói', 'khéo tay', 'kinh doanh'].forEach(t => ok(E.talentTrack.TRACK[t] && E.talentTrack.TRACK[t].st.length === 5, 'năng khiếu ' + t + ' có lộ trình 5 cấp'));
+  { const l = mk(99000, 8, l => { l.talent = 'toán học'; l.school = 'primary'; l.flags.nk = undefined; });
+    ok(E.DEC.nk_chon.valid(l), 'có năng khiếu thì được hỏi có theo đuổi không'); play(l, 'nk_chon', 'yes'); ok(l.flags.nk && l.flags.nk.lv === 0 && E.talentTrack.canSit(l), 'theo đuổi: đi thi từ cấp trường');
+    l.skill = 95; l.st.kno = 95; let guard = 0; while (l.flags.nk.lv < 4 && guard++ < 30) { l.age = Math.max(l.age, E.talentTrack.stage(l)[1]); play(l, 'nk_thi', 'hard'); }
+    ok(l.flags.nk.lv === 4, 'thi giỏi thì lên dần đến cấp quốc tế'); ok(l.flags.tuyenThang, 'đạt giải quốc gia được tuyển thẳng đại học');
+    const late = mk(99001, 12, l => { l.talent = 'toán học'; l.school = 'lower'; }); play(late, 'nk_chon', 'yes'); ok(late.flags.nk.lv >= 1 && E.talentTrack.canSit(late), 'bắt đầu muộn thì vào thẳng cấp hợp tuổi');
+    const no = mk(99002, 9, l => { l.talent = 'toán học'; l.school = 'primary'; }); play(no, 'nk_chon', 'no'); ok(!E.talentTrack.canSit(no), 'không theo đuổi thì không bị gọi đi thi'); }
+  { let imo = 0, n = 0; for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: 'vn', seed: 99100 + i }); l.talent = 'toán học'; E.runHeadless(l); if (l.flags.nk && !l.flags.nk.fun) n++; if (l.medals.some(m => /IMO/.test(m.ev))) imo++; }
+    ok(n > 50 && imo > 0 && imo < n * 0.2, 'huy chương IMO hiếm mà có (' + imo + '/' + n + ' người theo đuổi)'); }
+  // concert theo thể loại & tuổi
+  { const l = mk(99200, 20, l => { l.birthYear = 2010; });
+    ['vn', 'show', 'kr', 'us', 'rapvn', 'rapus'].forEach(c => ok(E.artistsOf(c, l).length >= 3, 'có nghệ sĩ ' + E.CONCERT_CATS[c].n));
+    ok(E.artistsOf('kr', l).some(a => a.n === 'IVE') && E.artistsOf('kr', l).some(a => a.n === 'CORTIS') && E.artistsOf('us', l).some(a => a.n === 'Dua Lipa'), 'K-pop có IVE, CORTIS; Âu Mỹ có Dua Lipa');
+    const shows = E.artistsOf('show', l).map(a => a.n).join(' / '); ok(/Anh trai "Say Hi"/.test(shows) && /Em xinh "Say Hi"/.test(shows) && /Tinh hà "Say Hi"/.test(shows) && /vượt ngàn chông gai/.test(shows), 'có concert các chương trình: ' + shows);
+    const fut = mk(99201, 20, l => { l.birthYear = 2060; }); ok(!E.artistsOf('kr', fut).some(a => a.n === 'BTS') && !E.artistsOf('us', fut).some(a => a.n === 'Dua Lipa'), 'năm 2080 không còn BTS, Dua Lipa biểu diễn');
+    let pre = 0; for (let i = 0; i < 300; i++) { const x = mk(99300 + i, 20); const n = E.H.pickIdol(R(i), x); if (/^(anh trai|em xinh|anh tài) /.test(n)) pre++; } ok(pre > 0, 'thần tượng từ chương trình gọi là "anh trai / em xinh / anh tài + tên" (' + pre + ')'); }
+  { const kid = mk(99400, 12, l => { l.fam.mAlive = true; l.fam.q = 3; }); const d = E.DEC.concert_di.make(kid, R(1), { cat: 'vn' }); ok(!d.opts.some(o => o.k === 'self') && d.opts.some(o => o.k === 'parents'), '12 tuổi không tự đi concert, phải xin bố mẹ đưa đi');
+    const a16 = mk(99401, 16); let far = null; for (let i = 0; i < 40 && !far; i++) { const x = E.DEC.concert_di.make(a16, R(i), { cat: 'us' }); if (x.data.far) far = x; } ok(far && !far.opts.some(o => o.k === 'self'), '16 tuổi muốn xem concert ở nước ngoài phải có người lớn');
+    ok(E.actAvail(mk(99402, 65), E.ACT.find(a => a.id === 'concert')) !== true, '65 tuổi không còn đi concert'); }
+  // sở thích → nghề (mê rap → rapper)
+  { const l = mk(99500, 19, l => { l.hobby = 'rap'; l.hobbySk = 90; l.school = null; l.indep = true; }); ok(E.DEC.so_thich_nghe.valid(l), 'mê rap lâu năm thì có casting rap');
+    let got = 0; for (let i = 0; i < 40; i++) { const c = JSON.parse(JSON.stringify(l)); c.rs = 100 + i; play(c, 'so_thich_nghe', 'go'); if (c.job && E.resolveJob(c.job.id) === 'rapper') got++; } ok(got > 15 && got < 40, 'casting rap có đỗ có trượt (' + got + '/40)');
+    let hb = 0; for (let i = 0; i < 300; i++) { const x = E.createLife({ mode: 'vn', seed: 99600 + i }); let g = 0; while (x.alive && x.age < 16 && g++ < 20) { E.beginYear(x, { auto: true }); let k = 0; while (x.pending.length && k++ < 30) E.resolve(x, E.autoKey(x)); if (x.alive) E.finishYear(x); k = 0; while (x.pending.length && k++ < 30) E.resolve(x, E.autoKey(x)); E.endYear(x); } if (x.hobby) hb++; } ok(hb > 150, 'phần lớn có một sở thích từ nhỏ (' + hb + '/300)'); }
+  // giải trí & tâm hồn
+  ['xem_phim', 'karaoke', 'cong_vien', 'da_bong_ban', 'xem_bong_da', 'phuot', 'show_rap', 'choi_game_nha', 'thien_yoga', 'doc_sach', 'leo_nui', 'massage'].forEach(id => ok(E.ACT.some(a => a.id === id) && !!E.DEC[id], 'có hoạt động "' + id + '"'));
+  { const k = mk(99700, 12, l => { l.fam.mAlive = true; }); const g = E.actions(k).filter(a => a.g === 'Giải trí' && a.ok === true); ok(g.length >= 4, '12 tuổi có nhiều việc giải trí (' + g.map(a => a.l).join(', ') + ')'); }
+  // tâm linh theo tôn giáo
+  { const lab = rel => { const l = mk(99800, 30, l => { l.religion = rel; }); return E.actions(l).find(a => a.id === 'di_chua').l; };
+    ok(/nhà thờ/.test(lab('Công giáo')) && /chùa/.test(lab('Phật giáo')) && /tổ tiên/.test(lab('Không theo tôn giáo (thờ cúng tổ tiên)')) && /Cao Đài/.test(lab('Cao Đài')) && /Hồi giáo/.test(lab('Hồi giáo (Islam)')), 'tên hành động theo tôn giáo: ' + [lab('Công giáo'), lab('Phật giáo'), lab('Cao Đài')].join(' / '));
+    let ruoc = 0, vu = 0, vuOk = true; for (let i = 0; i < 200; i++) { const l = E.createLife({ mode: 'vn', seed: 99900 + i }); l.religion = i % 2 ? 'Công giáo' : 'Phật giáo'; E.runHeadless(l); if (l.log.some(e => /Rước lễ lần đầu/.test(e.t))) ruoc++; let md = null; l.log.forEach(e => { if (/^Mẹ qua đời/.test(e.t)) md = e.a; if (/Vu Lan/.test(e.t)) { vu++; if (md != null && e.a > md && /hoa hồng đỏ/.test(e.t)) vuOk = false; } }); }
+    ok(ruoc > 20, 'người Công giáo có rước lễ lần đầu (' + ruoc + ')'); ok(vu > 20 && vuOk, 'Vu Lan cài hoa hồng đỏ khi còn mẹ, trắng khi mẹ đã mất'); }
+}
+section('27. Bản 2.9: nhóm nghề pháp luật, bảng nghề hiện từng môn thể thao, vé số theo tỉ lệ thật');
+{
+  const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8');
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; if (age >= 18) l.indep = true; if (setup) setup(l); return l; };
+  const play = (l, id, key) => { const d = E.DEC[id].make(l, R(l.rs)); l.pending.unshift(d); return E.resolve(l, key || E.autoKey(l)).map(e => e.t).join(' | '); };
+  // pháp luật
+  ok(E.CAT.law === 'Pháp luật & tòa án' && /'law'/.test(appSrc), 'có nhóm nghề "Pháp luật & tòa án" trong bảng nghề');
+  ['luat_su', 'tham_phan', 'kiem_sat', 'cong_chung', 'dieu_tra_vien', 'chap_hanh_vien', 'thua_phat_lai', 'tro_giup_phap_ly'].forEach(id => ok(E.CAR[id] && E.CAR[id].cat === 'law', 'nghề ' + id + ' thuộc nhóm pháp luật'));
+  ok(/công tố viên/.test(E.CAR.kiem_sat.t.join(' ')), 'kiểm sát viên ghi rõ là công tố viên');
+  ['ks_oan_sai', 'tp_dai_an', 'dtv_hoi_cung', 'chv_cuong_che', 'tpl_vi_bang', 'tgpl_vu_viec'].forEach(id => ok(!!E.DEC[id], 'có tình huống "' + id + '"'));
+  { const k = mk(99950, 40, l => { E.startJob(l, 'kiem_sat', R(1), () => { }); l.job.rank = 2; }); const t = play(k, 'ks_oan_sai', 'return'); ok(/hồ sơ|vô tội|lương tâm/.test(t) && k.karma > 0, 'kiểm sát viên trả hồ sơ có dấu hiệu oan sai: ' + t.slice(0, 80)); }
+  // bảng nghề hiện chi tiết từng môn
+  ok(/E\.SPORTS/.test(appSrc) && /theo từng môn/.test(appSrc) && /class="sub"/.test(appSrc), 'bảng "Nghề & lương" hiện chi tiết từng môn thể thao');
+  // vé số: tỉ lệ thật
+  const L = E.LOTTO; ok(Math.abs(1 / L.power.tiers[0][1] - 28989675) < 1 && Math.abs(1 / L.mega.tiers[0][1] - 8145060) < 1 && Math.abs(1 / L.xskt.tiers[0][1] - 1e6) < 1, 'tỉ lệ trúng thật: Power 1/28.989.675, Mega 1/8.145.060, xổ số kiến thiết 1/1.000.000');
+  { let jack = 0; for (let i = 0; i < 20000; i++) { const d = E.lottery.draw({}, R(i), 'power', 5); if (d.best && d.best.i === 0) jack++; } ok(jack === 0, 'mua 5 vé Power 6/55 thì gần như không bao giờ trúng Jackpot (' + jack + '/20000)'); }
+  { let small = 0; for (let i = 0; i < 2000; i++) { const d = E.lottery.draw({}, R(i), 'mega', 5); if (d.best) small++; } ok(small > 150 && small < 400, 'giải nhỏ (trùng 3 số) thỉnh thoảng có (' + small + '/2000 lượt mua 5 vé)'); }
+  { const sv = L.power.tiers[0][1]; L.power.tiers[0][1] = 1; const l = mk(99960, 35, l => { l.money = 50; }); const t = play(l, 've_so', 'power'); L.power.tiers[0][1] = sv;
+    const w = l.flags.lottoWin; ok(w && /TRÚNG JACKPOT 1/.test(t) && /thuế thu nhập cá nhân/.test(t) && Math.abs(w.amt - (w.gross - (w.gross - 10) * 0.1)) < 1e-6, 'trúng Jackpot: trừ thuế TNCN 10% phần vượt 10 triệu');
+    ok(w.gross >= 30000 && w.gross <= 300000, 'Jackpot 1 từ 30 tỷ, mua nhiều vé trúng cũng chỉ một giải (' + E.fmtMoney(l, w.gross) + ')');
+    ok(l.pending[0] && l.pending[0].id === 'ts_nhan_giai', 'trúng lớn: chọn đeo mặt nạ hay công khai'); const m0 = l.money; E.resolve(l, 'public'); ok(l.money > m0 + 10000 && w.pub === true, 'nhận giải công khai, tiền về tài khoản');
+    let strangers = 0, kin = 0, funny = 0; for (let y = 0; y < 5; y++) { E.beginYear(l, {}); let k = 0; while (l.pending.length && k++ < 10) { const p = l.pending[0]; if (p.id === 'ts_nguoi_la') { strangers++; if (/bế mày|nhát dao|thay tã/.test(p.text)) funny++; } if (p.id === 'ts_ho_hang') kin++; E.resolve(l, E.autoKey(l)); } E.finishYear(l); l.pending = []; E.endYear(l); }
+    ok(strangers >= 2 && kin >= 1, 'công khai thì người lạ "nhận vơ" (' + strangers + ', có ' + funny + ' câu hài) và họ hàng tìm đến (' + kin + ')'); }
 }
 function isVNx(l) { return E.isVN(l); }
 

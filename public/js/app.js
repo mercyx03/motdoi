@@ -204,7 +204,7 @@
   }
 
   // ---------- Sổ tay nghề nghiệp & mức lương tham chiếu ----------
-  var CAT_ORDER = ['state', 'uniform', 'edu', 'med', 'office', 'sale', 'biz', 'service', 'free', 'show', 'creator', 'media', 'beauty', 'worker', 'poor', 'farm', 'sport', 'esport', 'chess', 'other', 'crime'];
+  var CAT_ORDER = ['state', 'law', 'uniform', 'edu', 'med', 'office', 'sale', 'biz', 'service', 'free', 'show', 'creator', 'media', 'beauty', 'worker', 'poor', 'farm', 'sport', 'esport', 'chess', 'other', 'crime'];
   function jobCount() { return Object.keys(E.CAR).filter(function (k) { return k !== 'scam_kh' && k !== 'phu_giup'; }).length; }
   function fmtTr(x) { return x >= 1000 ? U.fmtNum(x / 1000, 1) + ' tỷ' : U.fmtNum(x, x < 10 && x % 1 ? 1 : 0); }
   function openJobs() {
@@ -220,7 +220,13 @@
           var tags = [];
           if (c.sigma >= 0.5) tags.push('bấp bênh'); if (c.haz) tags.push('nguy hiểm'); if (c.sec === 'crime') tags.push('phạm pháp'); if (c.hidden) tags.push('qua sự kiện');
           if (c.edu >= 5 && c.edu < 99) tags.push('cần đại học'); if (c.edu === 99) tags.push('qua trường công an / quân đội');
-          return '<li><div class="jt">' + esc(c.t.map(U.cap).join(' → ')) + '</div><div class="jp"><b>' + esc(pay) + '</b>' + (c.fame ? '' : ' triệu/tháng') + (tags.length ? ' <span class="muted small">· ' + esc(tags.join(' · ')) + '</span>' : '') + '</div></li>';
+          var li = '<li><div class="jt">' + esc(c.t.map(U.cap).join(' → ')) + '</div><div class="jp"><b>' + esc(pay) + '</b>' + (c.fame ? '' : ' triệu/tháng') + (tags.length ? ' <span class="muted small">· ' + esc(tags.join(' · ')) + '</span>' : '') + '</div></li>';
+          // v2.9: vận động viên — hiện chi tiết từng môn (danh xưng, thu nhập, tuổi giải nghệ)
+          if (c.id === 'vdv' && E.SPORTS) li = '<li><div class="jt">Vận động viên — theo từng môn (' + Object.keys(E.SPORTS).length + ' môn):</div></li>' + Object.keys(E.SPORTS).map(function (k) {
+            var S = E.SPORTS[k], lo = c.vn[0] * S.pay[0], hi = c.vn[3] * S.pay[3];
+            return '<li class="sub"><div class="jt"><b>' + esc(U.cap(k)) + '</b>: ' + esc(S.t.map(U.cap).join(' → ')) + '</div><div class="jp"><b>' + esc(fmtTr(lo) + ' → ' + fmtTr(hi)) + '</b> triệu/tháng <span class="muted small">· đỉnh cao ~' + S.peak + ' tuổi · giải nghệ ~' + S.max + ' tuổi' + (S.team ? ' · môn đồng đội, có câu lạc bộ' : '') + '</span></div></li>';
+          }).join('');
+          return li;
         }).join('') + '</ul></details>';
       }).join('') + '</div>' +
       '<div class="go-row" style="margin-top:12px"><button class="btn primary" id="jobsClose">Đóng</button></div>';

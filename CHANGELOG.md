@@ -4,6 +4,69 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v2.9.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.8.0. Vận động viên đang thi đấu ở đời chơi dở tự được gắn câu lạc bộ / môn võ.
+
+### Mới
+- **Nghề vận động viên chia theo từng môn**: bóng đá, bóng rổ, bóng chuyền, bơi lội, điền kinh, cầu lông, bóng bàn, quần vợt, võ thuật (karate, taekwondo, vovinam, pencak silat, boxing, judo), cử tạ, bắn cung, thể dục dụng cụ, đua xe đạp, bi-a, golf. Năng khiếu thể thao lúc nhỏ sẽ rơi vào một trong các môn này.
+  - **Danh xưng riêng từng môn**, ví dụ: cầu thủ học viện → cầu thủ hạng Nhất → cầu thủ V.League → tuyển thủ quốc gia; kình ngư đội tuyển quốc gia; tay vợt hệ thống ATP / WTA; cơ thủ hàng đầu thế giới; cua-rơ; golfer chuyên nghiệp…
+  - **Thu nhập khác nhau theo môn**: cầu thủ V.League, tay vợt quốc tế, cơ thủ bi-a, golfer hàng đầu kiếm nhiều hơn hẳn các môn ít khán giả.
+  - **Tuổi đỉnh cao và giải nghệ theo môn**: thể dục dụng cụ giải nghệ sớm (~27), bơi lội ~28, bóng đá ~35, bắn cung ~42, golf ~45, bi-a ~48.
+  - **Môn đồng đội** (bóng đá, bóng rổ, bóng chuyền) có câu lạc bộ thật (Hà Nội FC, Công an Hà Nội, Saigon Heat, Biên Phòng…), vô địch giải quốc gia cùng câu lạc bộ, rất hiếm khi có huy chương Olympic.
+  - **Sự kiện riêng**:
+    - Bóng đá: vô địch V.League, ASEAN Cup (năm chẵn), vòng loại World Cup; lời mời sang J-League, K-League, Thai League.
+    - Quần vợt: vô địch giải ATP Challenger. Bơi lội: phá kỷ lục quốc gia. Bi-a: World Cup carom 3 băng. Golf: giải chuyên nghiệp. Võ thuật: đai vô địch châu Á.
+    - Trận đấu lớn: thi đấu hết mình (dễ chấn thương) hay chừng mực. Ngôi sao thì có hợp đồng quảng cáo.
+  - Mọi huy chương ghi rõ môn, ví dụ "SEA Games 2027 (bóng đá)".
+- **Con đường phát triển năng khiếu**: có năng khiếu toán, ngoại ngữ, âm nhạc, hội họa, ăn nói, khéo tay hay kinh doanh thì được hỏi có muốn theo đuổi không (theo nghiêm túc / học cho vui / thôi).
+  - Theo đuổi thì đi thi từng cấp, mỗi cấp chọn ôn hết sức, thi bình thường hoặc bỏ. Ví dụ toán: cấp trường → huyện → tỉnh → kỳ thi học sinh giỏi quốc gia (VMO) → Olympic Toán học Quốc tế (IMO).
+  - Mỗi năm luyện tập năng khiếu tiến bộ. Bắt đầu muộn thì vào thẳng cấp hợp tuổi; quá tuổi một cấp thi thì dừng.
+  - Thành tích mở cơ hội: giải quốc gia được tuyển thẳng đại học; huy chương quốc tế có học bổng toàn phần. Âm nhạc, hội họa, ăn nói, khéo tay, kinh doanh đạt giải lớn thì được mời làm ca sĩ, nhà thiết kế, MC, kỹ sư, được rót vốn khởi nghiệp.
+- **Concert theo thể loại** (hành động "Đi xem ca nhạc, concert"): chọn nghệ sĩ Việt Nam, concert các chương trình "Say Hi" / Anh tài, K-pop Hàn Quốc, nghệ sĩ Âu Mỹ, Rap Việt hay rapper Mỹ.
+  - Nghệ sĩ Việt: Sơn Tùng M-TP, Jack - J97, HIEUTHUHAI, Quang Hùng MasterD, Dương Domic, Đen Vâu, Mỹ Tâm, Hòa Minzy, AMEE, tlinh…
+  - Chương trình: Anh trai "Say Hi", Em xinh "Say Hi", Tinh hà "Say Hi", Anh trai vượt ngàn chông gai. Thần tượng từ chương trình được gọi là "anh trai / em xinh / anh tài + tên".
+  - K-pop: BTS, BLACKPINK, TWICE, SEVENTEEN, IVE, aespa, CORTIS, Stray Kids, LE SSERAFIM, ENHYPEN, BABYMONSTER, ILLIT… Âu Mỹ: Taylor Swift, Dua Lipa, Justin Bieber, Olivia Rodrigo, The Weeknd… Rap Việt: Đen Vâu, Binz, Rhymastic, RPT MCK, Low G…, có cả đêm rap underground, battle rap. Rapper Mỹ: Drake, Kendrick Lamar, Travis Scott, Eminem…
+  - Nghệ sĩ già đi theo năm sinh rồi thôi biểu diễn; những năm sau có thế hệ mới.
+  - Dưới 16 tuổi phải xin bố mẹ đưa đi (nhà không khá giả hoặc đi nước ngoài thì có thể bị từ chối); 16–17 tuổi tự đi trong nước, ra nước ngoài phải có người lớn. Concert ở nước ngoài tốn thêm vé máy bay, khách sạn.
+- **Sở thích từ nhỏ**: mê rap, nhảy, guitar, vẽ, chụp ảnh, nấu ăn, đọc sách, K-pop, đá bóng (khác nhau theo giới tính và năng khiếu).
+  - Dồn sức thì giỏi lên; đủ giỏi thì có thể thành nghề: mê rap → đi casting chương trình rap → rapper; nhảy → vũ công; guitar → nhạc sĩ; chụp ảnh → nhiếp ảnh gia; nấu ăn → đầu bếp.
+- **Thêm việc giải trí**: xem phim ở rạp (đi với bạn, với người yêu), hát karaoke, đi công viên / khu vui chơi (trẻ con), rủ bạn đá bóng / chơi thể thao, đi xem bóng đá ở sân, đi phượt / cắm trại, xem show rap / battle rap (mê rap thì lên battle luôn), chơi game ở nhà.
+- **Thêm việc chăm sóc tâm hồn**: thiền / yoga, đọc sách, leo núi / dã ngoại, massage / xông hơi.
+- **Tâm linh theo tôn giáo**: hành động ghi đúng theo đạo — "Đi lễ nhà thờ" (Công giáo), "Đi nhà thờ (Tin Lành)", "Đi chùa lễ Phật", "Đến thánh thất Cao Đài", "Tụng kinh, làm việc thiện (Hòa Hảo)", "Đến thánh đường Hồi giáo", "Lên đền tháp Chăm", Hindu, Sikh, Do Thái, Đạo giáo. Không theo tôn giáo thì "Thắp hương tổ tiên, tĩnh tâm".
+  - Có dịp lễ riêng: Công giáo rước lễ lần đầu, thêm sức, lễ Giáng sinh nửa đêm, tháng hoa dâng Đức Mẹ; Phật giáo khóa tu mùa hè, lễ Vu Lan (cài hoa hồng đỏ khi còn mẹ, hoa hồng trắng khi mẹ đã mất), cầu an rằm tháng Giêng; Hồi giáo tháng Ramadan; Cao Đài đại lễ Tòa Thánh Tây Ninh; người Chăm lễ hội Katê; không tôn giáo thì tảo mộ Thanh minh, giỗ ông bà, cúng ông Công ông Táo.
+- **Bảng "Nghề & lương" hiện chi tiết từng môn thể thao**: dưới nghề vận động viên có danh sách từng môn, kèm các bậc danh xưng, mức lương, tuổi đỉnh cao, tuổi giải nghệ, môn đồng đội hay cá nhân.
+- **Nhóm nghề "Pháp luật & tòa án"** tách riêng trong bảng nghề:
+  - Gồm luật sư, thẩm phán, kiểm sát viên (công tố viên), công chứng viên.
+  - Nghề mới: điều tra viên, chấp hành viên thi hành án, thừa phát lại, trợ giúp viên pháp lý.
+  - Sự kiện riêng:
+    - Kiểm sát viên phát hiện hồ sơ có dấu hiệu oan sai.
+    - Thẩm phán làm chủ tọa đại án tham nhũng: xử độc lập hay nghe "góp ý".
+    - Điều tra viên hỏi cung nghi phạm cứng đầu.
+    - Chấp hành viên cưỡng chế nhà của gia đình nghèo.
+    - Thừa phát lại lập vi bằng.
+    - Trợ giúp viên pháp lý bào chữa miễn phí cho người nghèo.
+  - Có hướng chuyển nghề: điều tra viên → luật sư hình sự, chấp hành viên → mở văn phòng thừa phát lại.
+- **Vé số / Vietlott theo tỉ lệ thật**:
+  - Tỉ lệ trúng giải cao nhất:
+    - Xổ số kiến thiết: 1/1.000.000.
+    - Mega 6/45: 1/8.145.060.
+    - Power 6/55: Jackpot 1 là 1/28.989.675, Jackpot 2 là 1/4.831.613.
+  - Giải nhỏ (trùng 3 số) thỉnh thoảng có.
+  - Có thể mua 1 vé, 10 vé, 5 vé Vietlott hoặc mua đều cả năm.
+  - Giải trên 10 triệu bị trừ thuế thu nhập cá nhân 10%.
+  - Trúng lớn có thể đổi đời:
+    - **Nhận giải**: đeo mặt nạ giấu danh tính (vẫn có thể bị lộ) hoặc lên nhận công khai (nổi tiếng).
+    - **Người lạ "nhận vơ"**, ví dụ "nhớ anh không, xưa anh bế mày suốt", "ngày xưa anh đỡ cho chú nhát dao, chú nhớ không?", "xưa cô thay tã cho mày suốt"… Có thể cho, hỏi vặn lại hoặc từ chối.
+    - **Họ hàng tìm đến**: cho, cho vay (có người trả, có người không) hoặc từ chối.
+    - **Tiêu tiền**: gửi tiết kiệm, lo cho gia đình, mua sắm xa xỉ, làm từ thiện. Có cả "cơ hội đầu tư" mà phần lớn là lừa đảo.
+
+### Sửa lỗi
+- Kỷ niệm đáng nhớ trùng nội dung với kỷ niệm đã có giờ được gắn ⭐ thay vì bị bỏ qua.
+- Môn đồng đội không còn ra huy chương Olympic quá dễ.
+- Concert của thần tượng dùng chung một luật theo tuổi, không còn hai luật chồng nhau.
+- Kiểm thử: ngưỡng trung vị tài sản ở chế độ thế giới nới lên dưới 70, vì đời chơi có thêm nhiều nguồn thu (thể thao, năng khiếu).
+
 ## v2.8.0 — 15/10/2026
 
 Giữ nguyên toàn bộ tính năng v2.7.0. Xe mua từ bản cũ vẫn giữ nguyên và vẫn tính chi phí nuôi xe.

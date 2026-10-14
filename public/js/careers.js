@@ -219,7 +219,7 @@
     if (c.fame && c.t.length > 1) return c.t[Math.min(fameTier(l.fame), c.t.length - 1)];
     if (c.fame) return c.t[0] + ' ' + FAME_TIERS[fameTier(l.fame)][1];
     if (c.id === 'tuyen_thu_es' || c.id === 'coach_es') return c.t[rk] + ' ' + (l.game || '');
-    if (c.id === 'vdv') return c.t[rk] + (l.talentSub ? ' môn ' + l.talentSub : '');
+    if (c.id === 'vdv') return E.sportTitle ? E.sportTitle(l, rk) : c.t[rk] + (l.talentSub ? ' môn ' + l.talentSub : ''); // v2.9: danh xưng theo từng môn
     if (c.id === 'ky_thu') return (l.titles && l.titles.length ? l.titles[l.titles.length - 1] : 'kỳ thủ') + ' ' + (l.talentSub || 'cờ');
     if (c.prod && l.job.p) return c.t[rk] + ' (' + l.job.p + ')';
     return c.t[rk];
@@ -265,7 +265,7 @@
     if (c.talent && c.talent !== l.talent && !(c.soft && (c.major === l.major || (c.majors && c.majors.indexOf(l.major) >= 0)))) return false;
     if (c.rural && l.urban) return false;
     if (c.coast && !(l.coast && !l.urban)) return false;
-    if (c.maxAge && l.age > c.maxAge - 6) return false;
+    if (c.maxAge && l.age > (c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).max : c.maxAge) - 6) return false;
     return true;
   }
   function offers(l, r) {
@@ -324,10 +324,12 @@
   function sportYear(l, r, log, c, y) {
     var a = l.age, rk = l.job.rank, wealthy = l.gdp > 25;
     if (c.id === 'vdv') {
-      if (rk >= 1 && r() < 0.25 + (l.skill - 50) / 100) medal(l, r, log, 'Giải vô địch quốc gia', 0.4);
-      if (rk >= 2 && y % 2 === 1 && isVN(l) && r() < 0.35 + (l.skill - 70) / 60) medal(l, r, log, 'SEA Games ' + y, 2);
-      if (rk >= 2 && y % 4 === 2 && r() < 0.06 + (l.skill - 75) / 150 + (wealthy ? 0.08 : 0)) medal(l, r, log, 'ASIAD ' + y, 5);
-      if (rk >= 2 && y % 4 === 0 && r() < 0.015 + (l.skill - 85) / 300 + (wealthy ? 0.05 : 0)) medal(l, r, log, 'Thế vận hội Olympic ' + y, 20);
+      // v2.9: giải đấu ghi rõ môn; môn đồng đội (bóng đá, bóng rổ…) rất hiếm khi có huy chương Olympic, golf / bi-a không có ở SEA Games mọi kỳ
+      var SI = E.sportInfo ? E.sportInfo(l) : { team: false, n: l.talentSub || 'thể thao' }, mn = ' (' + SI.n + ')';
+      if (rk >= 1 && r() < (SI.team ? 0.15 : 0.25) + (l.skill - 50) / 100) medal(l, r, log, (SI.team ? 'Giải vô địch quốc gia cùng câu lạc bộ' : 'Giải vô địch quốc gia') + mn, 0.4);
+      if (rk >= 2 && y % 2 === 1 && isVN(l) && r() < (SI.sea === false ? 0 : (SI.team ? 0.25 : 0.35) + (l.skill - 70) / 60)) medal(l, r, log, 'SEA Games ' + y + mn, SI.n === 'bóng đá' ? 4 : 2);
+      if (rk >= 2 && y % 4 === 2 && r() < (SI.team ? 0.02 : 0.06) + (l.skill - 75) / 150 + (wealthy ? 0.08 : 0)) medal(l, r, log, 'ASIAD ' + y + mn, 5);
+      if (rk >= 2 && y % 4 === 0 && SI.olympic !== false && r() < (SI.team ? 0.002 : 0.015 + (l.skill - 85) / 300 + (wealthy ? 0.05 : 0))) medal(l, r, log, 'Thế vận hội Olympic ' + y + mn, 20);
     } else if (c.id === 'tuyen_thu_es') {
       var g = l.game || 'esports';
       if (rk >= 1 && r() < 0.2 + (l.skill - 50) / 120) { log('Cùng đội vô địch giải ' + g + ' quốc gia.', 'good'); H.cash(l, l.base * 0.3, 'Tiền thưởng giải đấu'); l.fame = (l.fame || 0) * 1.5 + 5000; H.mem(l, 'Nâng cúp vô địch ' + g + ' quốc gia giữa tiếng hò reo.', 4); }
@@ -366,7 +368,7 @@
     var inc = 0;
     // kỹ năng (thể thao, esports, cờ, danh tiếng)
     if (c.skillRank != null || c.fame) {
-      var peak = c.id === 'tuyen_thu_es' ? 22 : c.id === 'ky_thu' ? 35 : 27;
+      var peak = c.id === 'tuyen_thu_es' ? 22 : c.id === 'ky_thu' ? 35 : c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).peak : 27;
       var dg = a <= peak ? 3 + r() * 5 + (focus === 'work' ? 3 : focus === 'balance' ? 1.5 : 0) + (focus === 'health' && c.id === 'vdv' ? 2 : 0) + (l.talent === c.talent ? 2 : 0) : -(1 + r() * 4);
       l.skill = U.clamp((l.skill || 20) + dg, 0, 100);
       if (c.skillRank) { var nr = rankBySkill(l, c); if (nr > l.job.rank) { l.job.rank = nr; log('Được gọi lên: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 6 }); if (nr >= 2) H.mem(l, 'Lần đầu khoác áo đội tuyển quốc gia.', 5); } }
@@ -395,7 +397,7 @@
       if (c.sec === 'crime' || c.skillRank != null) eduM = 1;
       var qM = c.sec === 'formal' && c.cat !== 'state' ? [1, 0.95, 0.98, 1, 1.04, 1.08][l.fam.q] : 1;
       var focM = focus === 'work' ? 1.06 : focus === 'rest' ? 0.94 : 1;
-      inc = c.vn[rk] * 12 * scale(l) * eduM * qM * focM * Math.exp(U.normal(r) * c.sigma);
+      inc = c.vn[rk] * 12 * scale(l) * eduM * qM * focM * (c.id === 'vdv' && E.sportPay ? E.sportPay(l, rk) : 1) * Math.exp(U.normal(r) * c.sigma);
       if (c.id === 'scam_kh') inc = 0;
     }
     // thăng tiến theo thang bậc & số năm
@@ -443,7 +445,8 @@
       log(c.cat === 'free' ? 'Mất dần khách hàng, mấy tháng liền không có dự án — đành tạm gác nghề tự do.' : 'Làm ăn ế ẩm mấy năm liền, ' + (l.job.p || jobTitleOf(l)) + ' phải đóng cửa.', 'bad'); l.job = null; l.flags.needJob = true; H.fx(l, { hap: -8 }); return inc * 0.5;
     }
     // giải nghệ (thể thao / esports)
-    if (c.maxAge && (a >= c.maxAge || (a >= c.maxAge - 6 && l.skill < 45 && r() < 0.3))) {
+    var maxA = c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).max : c.maxAge; // v2.9: mỗi môn một tuổi giải nghệ
+    if (maxA && (a >= maxA || (a >= maxA - 6 && l.skill < 45 && r() < 0.3))) {
       log(c.cat === 'esport' ? 'Giải nghệ thi đấu esports.' : 'Giải nghệ sau những năm thi đấu.', 'big');
       H.mem(l, 'Trận đấu cuối cùng trước khi giải nghệ — bạn cúi chào khán giả.', 5);
       var next = c.id === 'tuyen_thu_es' ? U.wpick(r, ['coach_es', 'caster_es', 'streamer'], function (x) { return x === 'streamer' ? 2 : 1; }) : 'hlv_tt';

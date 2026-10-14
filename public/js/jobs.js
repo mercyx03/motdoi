@@ -44,6 +44,14 @@
   E.PARENT_PAY['chủ tịch HĐQT ngân hàng'] = 2500; E.PARENT_PAY['tổng giám đốc ngân hàng'] = 900;
   E.PARENT_PAY['bí thư tỉnh ủy'] = 45; E.PARENT_PAY['phó chủ tịch UBND tỉnh'] = 32; E.PARENT_PAY['bộ trưởng'] = 60; E.PARENT_PAY['nghị sĩ quốc hội'] = 45;
 
+  // v2.9: nhóm nghề Pháp luật & tòa án — gom thẩm phán, kiểm sát viên (công tố viên), luật sư, công chứng; thêm điều tra viên, chấp hành viên, thừa phát lại
+  E.CAT.law = 'Pháp luật & tòa án';
+  addJob('dieu_tra_vien', ['cán bộ điều tra', 'điều tra viên sơ cấp', 'điều tra viên trung cấp', 'điều tra viên cao cấp'], [9, 13, 18, 26], [3, 6, 7], { cat: 'law', sec: 'formal', edu: 5, major: 'law', promo: 0.2, loss: 0.002, w: 0.5 });
+  addJob('chap_hanh_vien', ['thẩm tra viên thi hành án', 'chấp hành viên sơ cấp', 'chấp hành viên trung cấp', 'chấp hành viên cao cấp'], [8, 12, 16, 22], [3, 6, 7], { cat: 'law', sec: 'formal', edu: 5, major: 'law', promo: 0.2, loss: 0.002, w: 0.4 });
+  addJob('thua_phat_lai', ['thư ký nghiệp vụ thừa phát lại', 'thừa phát lại', 'trưởng văn phòng thừa phát lại'], [8, 25, 60], [3, 6], { cat: 'law', sec: 'inf', edu: 5, major: 'law', sigma: 0.35, w: 0.3 });
+  addJob('tro_giup_phap_ly', ['trợ giúp viên pháp lý', 'trợ giúp viên pháp lý hạng II', 'giám đốc trung tâm trợ giúp pháp lý'], [9, 12, 18], [5, 7], { cat: 'law', sec: 'formal', edu: 5, major: 'law', promo: 0.2, loss: 0.003, w: 0.3 });
+  ['luat_su', 'tham_phan', 'kiem_sat', 'cong_chung'].forEach(function (id) { if (E.CAR[id]) E.CAR[id].cat = 'law'; });
+  if (E.CAR.kiem_sat) E.CAR.kiem_sat.t = ['kiểm tra viên viện kiểm sát', 'kiểm sát viên (công tố viên) sơ cấp', 'kiểm sát viên (công tố viên) trung cấp', 'kiểm sát viên (công tố viên) cao cấp', 'viện trưởng VKSND tỉnh'];
   // công an theo ngành
   var POLICE_BR = { gt: 'Cảnh sát giao thông', hs: 'Cảnh sát hình sự', mt: 'Cảnh sát điều tra tội phạm ma túy', kt: 'Cảnh sát kinh tế', cd: 'Cảnh sát cơ động', kv: 'Công an khu vực' };
   E.POLICE_BR = POLICE_BR;
@@ -241,6 +249,69 @@
     ]
   });
   T('tp_chay_an', function (l) { return hasJob(l, ['tham_phan', 'kiem_sat']) && l.job.rank >= 1 && free(l); }, 0.12, 2);
+
+  // ---- Kiểm sát viên (công tố viên): phát hiện oan sai ----
+  SC('ks_oan_sai', {
+    title: 'Hồ sơ có dấu hiệu oan sai', valid: function (l) { return hasJob(l, ['kiem_sat']) && rank(l) >= 1; },
+    text: 'Đọc lại hồ sơ một vụ cướp tài sản, bạn thấy lời khai mâu thuẫn, bị cáo khai bị ép cung. Cơ quan điều tra muốn truy tố cho kịp tiến độ.',
+    opts: [
+      { k: 'return', l: 'Trả hồ sơ, yêu cầu điều tra bổ sung', ai: { w: 1.4, smart: 1 }, run: function (l, r, log) { rep(l, 6); fx(l, { karma: 8 }); if (ch(r, 0.6)) { log('Điều tra bổ sung tìm ra hung thủ thật. Một người vô tội được trả tự do.', 'big'); H.mem(l, 'Ngày người bị oan bước ra khỏi trại tạm giam, gia đình họ ôm nhau khóc.', 6); } else log('Điều tra bổ sung không có gì mới, nhưng bạn đã làm đúng lương tâm.', 'good'); } },
+      { k: 'sign', l: 'Ký cáo trạng cho kịp chỉ tiêu', ai: { bad: 0.8 }, run: function (l, r, log) { fx(l, { karma: -10 }); if (ch(r, 0.25)) { log('Nhiều năm sau vụ án được minh oan. Bạn bị kỷ luật vì truy tố sai.', 'bad'); rep(l, -20); fx(l, { hap: -10 }); } else log('Vụ án khép lại. Đêm đó bạn mất ngủ.', 'bad'); } }
+    ]
+  });
+  T('ks_oan_sai', function (l) { return hasJob(l, ['kiem_sat']) && rank(l) >= 1 && free(l); }, 0.1, 3);
+  // ---- Thẩm phán: đại án, áp lực dư luận ----
+  SC('tp_dai_an', {
+    title: 'Xét xử đại án', valid: function (l) { return hasJob(l, ['tham_phan']) && rank(l) >= 2; },
+    text: 'Bạn được phân công làm chủ tọa một đại án tham nhũng hàng nghìn tỷ, hàng chục bị cáo, báo chí theo dõi từng phiên.',
+    opts: [
+      { k: 'fair', l: 'Xét xử độc lập, chỉ tuân theo pháp luật', ai: { w: 1.4 }, run: function (l, r, log) { rep(l, 10); fx(l, { karma: 6, hea: -3 }); if (l.mind) l.mind.stress += 10; log('Phiên tòa kéo dài hai tháng. Bản án được dư luận đánh giá nghiêm minh, thấu tình đạt lý.', 'big'); H.mem(l, 'Đọc bản án đại án trước hàng trăm phóng viên.', 5); if (rank(l) < E.CAR.tham_phan.t.length - 1 && ch(r, 0.3)) { l.job.rank++; l.job.yrs = 0; log('Được bổ nhiệm: ' + E.jobTitle(l) + '.', 'big'); } } },
+      { k: 'soft', l: 'Nghe "góp ý" từ bên ngoài', ai: { bad: 1 }, run: function (l, r, log) { fx(l, { karma: -10 }); l.flags.dirty = (l.flags.dirty || 0) + 1; log('Bản án nhẹ tay bất ngờ. Báo chí đặt nhiều câu hỏi.', 'bad'); } }
+    ]
+  });
+  T('tp_dai_an', function (l) { return hasJob(l, ['tham_phan']) && rank(l) >= 2 && free(l); }, 0.08, 4);
+  // ---- Điều tra viên ----
+  SC('dtv_hoi_cung', {
+    title: 'Phòng hỏi cung', valid: function (l) { return hasJob(l, ['dieu_tra_vien']); },
+    text: 'Nghi phạm một vụ giết người im lặng suốt ba ngày. Cấp trên giục phải có lời khai trước khi hết hạn tạm giữ.',
+    opts: [
+      { k: 'evidence', l: 'Thu thập thêm chứng cứ, camera, dấu vết', ai: { w: 1.4, smart: 1 }, run: function (l, r, log) { if (ch(r, 0.55 + (l.st.kno - 50) / 150)) { rep(l, 8); log('Dấu vết ADN và camera khớp hoàn toàn. Nghi phạm cúi đầu nhận tội trước chứng cứ.', 'big'); fx(l, { hap: 5 }); } else { log('Chưa đủ chứng cứ, phải tạm thả nghi phạm. Cả tổ chuyên án làm lại từ đầu.', 'neutral'); fx(l, { hap: -3 }); } } },
+      { k: 'force', l: 'Gây sức ép để có lời khai', ai: { bad: 1.2, risk: 0.8 }, run: function (l, r, log) { fx(l, { karma: -12 }); if (ch(r, 0.3)) { log('Luật sư phát hiện dấu hiệu bức cung. Bạn bị đình chỉ, điều tra tội dùng nhục hình.', 'bad'); l.job = null; l.flags.needJob = true; H.sched(l, 'bi_bat', 0, { why: 'dùng nhục hình', sev: 2 }); } else log('Có lời khai, vụ án được chuyển đi. Bạn không chắc đó là sự thật.', 'bad'); } }
+    ]
+  });
+  T('dtv_hoi_cung', function (l) { return hasJob(l, ['dieu_tra_vien']) && free(l); }, 0.25, 1);
+  // ---- Chấp hành viên: cưỡng chế thi hành án ----
+  SC('chv_cuong_che', {
+    title: 'Ngày cưỡng chế', valid: function (l) { return hasJob(l, ['chap_hanh_vien']); },
+    text: 'Bạn phụ trách cưỡng chế giao một căn nhà theo bản án. Gia đình bên trong có cụ già và con nhỏ, hàng xóm kéo đến đông.',
+    opts: [
+      { k: 'talk', l: 'Thuyết phục, gia hạn thêm vài ngày cho họ dọn đồ', ai: { w: 1.4, soc: 1 }, run: function (l, r, log) { fx(l, { karma: 5 }); rep(l, 3); log('Ngồi nói chuyện cả buổi. Gia đình tự nguyện dọn đi sau một tuần, không có xô xát.', 'good'); } },
+      { k: 'force', l: 'Cưỡng chế ngay theo kế hoạch', ai: { w: 0.8 }, run: function (l, r, log) { if (ch(r, 0.2)) { log('Người nhà chống đối, ném đồ đạc. Bạn bị thương nhẹ ở tay.', 'bad'); fx(l, { hea: -5 }); } else log('Cưỡng chế xong trong ngày, bàn giao nhà cho người được thi hành án.', 'neutral'); fx(l, { hap: -2 }); } }
+    ]
+  });
+  T('chv_cuong_che', function (l) { return hasJob(l, ['chap_hanh_vien']) && free(l); }, 0.25, 1);
+  // ---- Thừa phát lại: lập vi bằng, tống đạt ----
+  SC('tpl_vi_bang', {
+    title: 'Yêu cầu lập vi bằng', valid: function (l) { return hasJob(l, ['thua_phat_lai']) && rank(l) >= 1; },
+    text: 'Một khách muốn lập vi bằng "mua bán nhà bằng giấy tay" — thực chất là che giấu khoản vay nặng lãi để sau này siết nhà người vay.',
+    opts: [
+      { k: 'refuse', l: 'Từ chối, giải thích vi bằng không thay thế hợp đồng công chứng', ai: { w: 1.4 }, run: function (l, r, log) { fx(l, { karma: 5 }); rep(l, 4); log('Từ chối lập vi bằng trái quy định.', 'good'); } },
+      { k: 'do', l: 'Lập vi bằng, thu phí cao', ai: { bad: 1 }, run: function (l, r, log) { cashB(l, 0.2, 'Phí lập vi bằng'); fx(l, { karma: -8 }); if (ch(r, 0.25)) { log('Vụ siết nhà bị khởi kiện, văn phòng bị Sở Tư pháp xử phạt, bạn bị tạm đình chỉ hành nghề.', 'bad'); rep(l, -20); cashB(l, -0.3, 'Bị xử phạt'); } else log('Lập vi bằng, nhận phí. Vài tháng sau nghe tin người vay mất nhà.', 'bad'); } }
+    ]
+  });
+  T('tpl_vi_bang', function (l) { return hasJob(l, ['thua_phat_lai']) && rank(l) >= 1 && free(l); }, 0.2, 2);
+  // ---- Trợ giúp viên pháp lý ----
+  SC('tgpl_vu_viec', {
+    title: 'Người tìm đến trợ giúp pháp lý', valid: function (l) { return hasJob(l, ['tro_giup_phap_ly']); },
+    text: function (l) { return pick(H.rf(l), ['Một người mẹ đơn thân bị chồng cũ giành quyền nuôi con.', 'Một nhóm công nhân bị công ty nợ lương ba tháng rồi bỏ trốn.', 'Một cụ bà bị con cháu lừa ký giấy cho nhà.']) + ' Họ không có tiền thuê luật sư.'; },
+    opts: [
+      { k: 'help', l: 'Theo vụ việc đến cùng', ai: { w: 1.4 }, run: function (l, r, log) { fx(l, { karma: 8, hap: 3 }); log(ch(r, 0.6) ? 'Bảo vệ được quyền lợi cho họ. Một lá thư cảm ơn viết tay được gửi đến trung tâm.' : 'Thua kiện, nhưng họ biết đã có người đứng về phía mình.', 'good'); } },
+      { k: 'basic', l: 'Tư vấn cơ bản rồi chuyển nơi khác', ai: { w: 0.7 }, run: function (l, r, log) { log('Tư vấn cơ bản, hướng dẫn họ làm đơn.', 'neutral'); } }
+    ]
+  });
+  T('tgpl_vu_viec', function (l) { return hasJob(l, ['tro_giup_phap_ly']) && free(l); }, 0.3, 1);
+  PATHS.dieu_tra_vien = [['luat_su', 2, 0.2, 2, 'Một hãng luật mời bạn — người hiểu rõ quy trình điều tra — về làm luật sư hình sự.']];
+  PATHS.chap_hanh_vien = [['thua_phat_lai', 1, 0.5, 2, 'Có thể ra mở văn phòng thừa phát lại, thu nhập cao hơn nhiều.']];
 
   // ---- Bác sĩ, điều dưỡng ----
   SC('bs_ca_kho', {

@@ -6,7 +6,11 @@
   function pickMemories(l, n) {
     var m = (l.mem || []).slice().filter(function (x) { return x && x.t; });
     // v2.3: những dòng người chơi đánh dấu ⭐ được ưu tiên trong hồi tưởng
-    starred(l).forEach(function (e) { if (!m.some(function (x) { return x.t === e.t; })) m.push({ a: e.a, t: e.t.replace(/\.$/, ''), w: 10, star: true }); });
+    // v2.9: dòng đã có trong ký ức thì nâng lên thành khoảnh khắc ⭐ (trước đây bị bỏ qua)
+    starred(l).forEach(function (e) {
+      var t = e.t.replace(/\.$/, ''), same = m.filter(function (x) { return x.t === e.t || x.t === t; })[0];
+      if (same) { var i = m.indexOf(same); m[i] = { a: same.a, t: same.t, w: 10, star: true }; } else m.push({ a: e.a, t: t, w: 10, star: true });
+    });
     m.sort(function (a, b) { return b.w - a.w || a.a - b.a; });
     var top = m.slice(0, n);
     // luôn giữ một ký ức tuổi thơ để khúc hồi tưởng trọn vẹn
