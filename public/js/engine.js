@@ -79,7 +79,13 @@
     return l.money + (l.houseVal || 0) + (l.vehVal || 0) + assetTotal(l) - (l.mortgage || 0) - debt;
   }
   // v2.3: tài sản đầu tư (tiết kiệm, vàng, cổ phiếu, đất)
-  function assetTotal(l) { var A = l.assets; return A ? (A.save || 0) + (A.gold || 0) + (A.stock || 0) + (A.land || 0) : 0; }
+  // v2.4: cộng thêm bất động sản cho thuê (l.props) và vốn trong các cơ sở kinh doanh (l.ventures)
+  function assetTotal(l) {
+    var A = l.assets, s = A ? (A.save || 0) + (A.gold || 0) + (A.stock || 0) + (A.land || 0) : 0;
+    (l.props || []).forEach(function (p) { s += p.v || 0; });
+    (l.ventures || []).forEach(function (v) { s += v.cap || 0; });
+    return s;
+  }
   // v2.3: các module mở rộng đăng ký xử lý thêm vào vòng năm
   var HOOKS = { year: [], gradUpper: [] };
   function runHooks(name, args) { HOOKS[name].forEach(function (fn) { fn.apply(null, args); }); }
@@ -130,10 +136,13 @@
     partnerSex: function (l, r) { return l.orient === 'straight' ? (l.sex === 'M' ? 'F' : 'M') : l.orient === 'gay' ? l.sex : (r() < 0.5 ? 'M' : 'F'); },
     stranger: function (l, r, sex) { return strangerName(l, r, sex); },
     name: function (l, r, sex, sur) { return makeName(l, r, sex, sur); },
-    canBankLoan: function (l) { return !(l.credit && l.credit.bad) || (l.age - l.credit.since >= 5); },
+    canBankLoan: function (l) { var c = l.credit; return (!(c && c.bad) || (l.age - (c.last != null ? c.last : c.since) >= 5)) && l.age < 70; },
+    // v2.4: ngân hàng, công ty tài chính, app vay đều có giới hạn tuổi người vay
+    loanAgeOk: function (l, type) { return /^(bank|car|card|paylater|fin)$/.test(type) ? l.age < 70 : type === 'appden' ? l.age < 65 : type === 'home' ? l.age < 65 : true; },
     addLoan: function (l, type, amt, log) {
       var T = LOAN_TYPES[type];
       l.loans = l.loans || [];
+      if (!H.loanAgeOk(l, type)) return;
       if (type !== 'home' && type !== 'car') { // không ai cho vay thêm khi đã nợ quá nhiều
         var cur = l.loans.filter(function (x) { return x.type !== 'home' && x.type !== 'car'; }).reduce(function (s, x) { return s + x.bal; }, 0);
         amt = Math.max(0, Math.min(amt, l.base * 5 - cur));
@@ -142,6 +151,9 @@
       l.loans.push({ type: type, name: T.name, bal: amt, rate: T.rate, minShare: T.minShare, late: 0, since: l.age });
       H.cash(l, amt, 'Vay ' + T.name);
     },
+    // v2.4: những nước đã từng đặt chân đến (du lịch, xuất khẩu lao động, du học, định cư)
+    visit: function (l, name) { if (!name) return; l.visited = l.visited || []; if (l.visited.indexOf(name) < 0) l.visited.push(name); },
+    visited: function (l, name) { return !!((l.visited && l.visited.indexOf(name) >= 0) || (l.abroad && l.abroad.name === name)); },
     debtTotal: function (l) { return (l.loans || []).reduce(function (s, x) { return s + x.bal; }, 0); },
     hasLoan: function (l, type) { return (l.loans || []).some(function (x) { return x.type === type && x.bal > 0.5; }); },
     inBigCity: function (l) {
@@ -150,7 +162,17 @@
       return /Hà Nội|Hồ Chí Minh/.test(c || '') || (l.urban && /Hà Nội|Hồ Chí Minh/.test(l.prov.old));
     },
     aiW: aiW,
-    pickIdol: function (r, l) { return U.pick(r, isVN(l) || r() < 0.3 ? IDOLS.vn.concat(IDOLS.world) : IDOLS.world); },
+    // v2.4: thần tượng có năm sinh — chỉ chọn người đang ở độ tuổi biểu diễn; năm 2060 trở đi phần lớn là thế hệ ca sĩ mới (hư cấu)
+    pickIdol: function (r, l) {
+      var y = l.birthYear + l.age;
+      var pool = (isVN(l) || r() < 0.3 ? IDOLS.vn.concat(IDOLS.world) : IDOLS.world).filter(function (n) { var b = IDOL_BORN[n]; return b && y - b >= 16 && y - b <= 50; });
+      var name;
+      if (pool.length && r() < Math.min(1, pool.length / 6)) name = U.pick(r, pool);
+      else name = U.pick(r, isVN(l) ? IDOLS.next.concat(IDOLS.nextVN) : IDOLS.next);
+      l.idolBorn = IDOL_BORN[name] || (y - U.randint(r, 19, 26));
+      return name;
+    },
+    idolAge: function (l) { return l.idol && l.idolBorn ? l.birthYear + l.age - l.idolBorn : null; },
     sameSexLegal: sameSexLegal, partnerWord: partnerWord, QUINT: QUINT
   };
   var LOAN_TYPES = {
@@ -166,7 +188,17 @@
   };
   var IDOLS = {
     vn: ['Sơn Tùng M-TP', 'Đen Vâu', 'Mỹ Tâm', 'Hà Anh Tuấn', 'HIEUTHUHAI', 'Hoàng Thùy Linh', 'Tăng Duy Tân', 'Bích Phương', 'Vũ.', 'Soobin Hoàng Sơn', 'MONO', 'Tóc Tiên', 'Noo Phước Thịnh', 'Hồ Ngọc Hà', 'Phương Mỹ Chi', 'Anh Trai Say Hi'],
-    world: ['Taylor Swift', 'BTS', 'BLACKPINK', 'BIGBANG', 'G-Dragon', 'The Weeknd', 'Bruno Mars', 'Coldplay', 'Ed Sheeran', 'Billie Eilish', 'Ariana Grande', 'Justin Bieber', 'TWICE', 'SEVENTEEN', 'NewJeans', 'Lady Gaga', 'Dua Lipa', 'Olivia Rodrigo', 'Maroon 5', 'Adele']
+    world: ['Taylor Swift', 'BTS', 'BLACKPINK', 'BIGBANG', 'G-Dragon', 'The Weeknd', 'Bruno Mars', 'Coldplay', 'Ed Sheeran', 'Billie Eilish', 'Ariana Grande', 'Justin Bieber', 'TWICE', 'SEVENTEEN', 'NewJeans', 'Lady Gaga', 'Dua Lipa', 'Olivia Rodrigo', 'Maroon 5', 'Adele'],
+    // v2.4: thế hệ thần tượng tương lai (tên hư cấu) cho những năm mà các ngôi sao hôm nay đã về hưu
+    next: ['nhóm nhạc NOVA', 'Lyra', 'ARIA', 'Zeno', 'nhóm nhạc STELLAR', 'Kai Rivers', 'Mira', 'ban nhạc The Lanterns', 'nhóm nhạc ORBIT', 'Sena'],
+    nextVN: ['Minh Vy', 'Kai Phạm', 'Bảo Khang', 'nhóm nhạc Sao Mai', 'Lam Anh', 'Đông Nghi', 'Rin Trần']
+  };
+  // năm sinh (nhóm nhạc: năm sinh trung bình các thành viên) — làm tròn
+  var IDOL_BORN = {
+    'Sơn Tùng M-TP': 1994, 'Đen Vâu': 1989, 'Mỹ Tâm': 1981, 'Hà Anh Tuấn': 1984, 'HIEUTHUHAI': 1999, 'Hoàng Thùy Linh': 1988, 'Tăng Duy Tân': 1996, 'Bích Phương': 1989, 'Vũ.': 1995,
+    'Soobin Hoàng Sơn': 1992, 'MONO': 2000, 'Tóc Tiên': 1989, 'Noo Phước Thịnh': 1988, 'Hồ Ngọc Hà': 1984, 'Phương Mỹ Chi': 2003, 'Anh Trai Say Hi': 1998,
+    'Taylor Swift': 1989, 'BTS': 1995, 'BLACKPINK': 1996, 'BIGBANG': 1988, 'G-Dragon': 1988, 'The Weeknd': 1990, 'Bruno Mars': 1985, 'Coldplay': 1977, 'Ed Sheeran': 1991, 'Billie Eilish': 2001,
+    'Ariana Grande': 1993, 'Justin Bieber': 1994, 'TWICE': 1997, 'SEVENTEEN': 1997, 'NewJeans': 2005, 'Lady Gaga': 1986, 'Dua Lipa': 1995, 'Olivia Rodrigo': 2003, 'Maroon 5': 1979, 'Adele': 1988
   };
 
   // Trọng số lựa chọn của AI theo tính cách: ai = số | hàm | {w, risk, bad, cost, soc, smart, fun}
@@ -204,6 +236,8 @@
       },
       apply: function (l, dec, k, r, log) {
         var o = def.opts.filter(function (x) { return x.k === k; })[0];
+        // v2.4: hoàn cảnh đã đổi trong năm (bị bắt, mất việc, hết tiền…) thì lựa chọn không còn hợp lệ → lấy phương án cuối còn làm được (thường là "thôi / giữ nguyên")
+        if (o && o.req && !o.req(l, dec.data)) o = def.opts.filter(function (x) { return !x.req || x.req(l, dec.data); }).pop();
         if (o && o.run) o.run(l, r, log, dec.data);
       },
       valid: def.valid
@@ -621,13 +655,16 @@
     { n: 'ung thư dạ dày', m: 5, cure: 0.3, w: function (l) { return isVN(l) || l.pool === 'kr' || l.pool === 'jp' ? 1.5 : 0.7; } },
     { n: 'bệnh mạch vành', m: 3, cure: 0.3, f: 'nhồi máu cơ tim', w: function () { return 2; } },
     { n: 'tăng huyết áp nặng', m: 2.3, cure: 0.35, f: 'đột quỵ', w: function () { return 2.5; } },
-    { n: 'tiểu đường type 2', m: 1.8, cure: 0.08, f: 'biến chứng tiểu đường', w: function () { return 2; } },
+    { n: 'tiểu đường type 2', m: 1.8, cure: 0.08, f: 'biến chứng tiểu đường', w: function () { return 2; }, chronic: 1 },
     { n: 'lao phổi', m: 3.5, cure: 0.85, w: function (l) { return l.gdp < 6 ? 3 : l.gdp < 20 ? 1 : 0.1; } },
-    { n: 'suy thận mạn', m: 3, cure: 0.1, f: 'suy thận', w: function () { return 0.8; } },
-    { n: 'viêm gan B mạn tính', m: 2, cure: 0.2, f: 'xơ gan', w: function (l) { return isVN(l) || l.pool === 'cn' || /af/.test(l.pool) ? 2 : 0.3; } },
-    { n: 'xơ gan do rượu', m: 3.5, cure: 0.1, f: 'xơ gan', w: function (l) { return l.addict && l.addict.alcohol ? 4 : 0.2; } },
-    { n: 'HIV', m: 3, cure: 0, f: 'HIV/AIDS', w: function (l) { return l.pool === 'afs' ? 3 : /af|et|ao/.test(l.pool) ? 0.6 : l.addict && l.addict.drugs ? 2 : 0.1; }, young: 1 }
+    { n: 'suy thận mạn', m: 3, cure: 0.1, f: 'suy thận', w: function () { return 0.8; }, chronic: 1 },
+    { n: 'viêm gan B mạn tính', m: 2, cure: 0.2, f: 'xơ gan', w: function (l) { return isVN(l) || l.pool === 'cn' || /af/.test(l.pool) ? 2 : 0.3; }, chronic: 1 },
+    { n: 'xơ gan do rượu', m: 3.5, cure: 0.1, f: 'xơ gan', w: function (l) { return l.addict && l.addict.alcohol ? 4 : 0.2; }, chronic: 1 },
+    { n: 'HIV', m: 3, cure: 0, f: 'HIV/AIDS', w: function (l) { return l.pool === 'afs' ? 3 : /af|et|ao/.test(l.pool) ? 0.6 : l.addict && l.addict.drugs ? 2 : 0.1; }, young: 1, chronic: 1 }
   ];
+  ILLS.forEach(function (x) { if (/huyết áp/.test(x.n)) x.chronic = 1; });
+  // v2.4: tuổi càng cao, cơ thể càng khó vượt qua bệnh nặng (90 tuổi mắc ung thư gần như không thể khỏi hẳn)
+  function illAgeK(a) { return a < 60 ? 1 : Math.max(0.06, 1 - (a - 60) * 0.035); }
 
   // ================= QUYẾT ĐỊNH CỐT LÕI =================
   function opt(k, l, h) { return { k: k, l: l, h: h || '' }; }
@@ -944,6 +981,14 @@
         life.prevJob = life.job; life.school = null;
         life.job = { id: 'xkld', rank: 0, yrs: 0, t: c[2] + ' ở ' + c[1] }; life.indep = true; life.flags.needJob = false;
         log((life.money < 0 ? 'Vay tiền đóng phí, sang ' : 'Sang ') + c[1] + ' làm ' + c[2] + '.', 'big'); life.st.soc -= 8; life.st.hap -= 2;
+        // v2.4: tiếng bản xứ — có chứng chỉ sẵn thì được đơn hàng tốt hơn, chưa có thì phải học cấp tốc trước khi bay
+        var lk = { JP: 'ja', KR: 'ko', TW: 'zh', DE: 'de' }[c[0]];
+        if (lk && H.LANG) {
+          life.lang = life.lang || {};
+          if ((life.lang[lk] || 0) >= 2) { life.abroad.mult *= 1.1; log('Nhờ có sẵn ' + H.langCert(life, lk) + ', bạn được chọn vào đơn hàng lương cao hơn.', 'good'); }
+          else { life.lang[lk] = Math.max(life.lang[lk] || 0, 1); log('Trước khi bay, học tiếng cấp tốc 6 tháng ở trung tâm và thi đỗ ' + H.langCert(life, lk) + '.', 'neutral'); }
+        }
+        H.visit(life, c[1]);
         H.mem(life, 'Ở sân bay Nội Bài, ngoái lại nhìn gia đình lần cuối trước khi sang ' + c[1] + '.', 4);
       }
     },
@@ -986,6 +1031,7 @@
         var price = housePrice(life), can = H.canBankLoan(life);
         var o = [];
         if (life.money >= price) o.push(opt('cash', 'Mua bằng tiền tích lũy', ''));
+        else if (!H.loanAgeOk(life, 'home')) o.push(opt('old', 'Thử vay ngân hàng', 'Ngân hàng hiếm khi cho người trên 65 tuổi vay mua nhà')); // v2.4
         else if (can) o.push(opt('buy', 'Vay ngân hàng để mua', 'Trả góp nhiều năm'));
         else o.push(opt('denied', 'Thử vay ngân hàng', 'Hồ sơ đang có nợ xấu'));
         o.push(opt('no', 'Tiếp tục thuê / ở cùng gia đình', ''));
@@ -996,6 +1042,7 @@
       apply: function (life, d, k, r, log) {
         if (k === 'no') { life.flags.houseNo = life.age + 3; return; }
         if (k === 'denied') { log('Ngân hàng từ chối cho vay mua nhà vì bạn có tên trong danh sách nợ xấu (CIC).', 'bad'); life.st.hap -= 5; life.flags.houseNo = life.age + 3; return; }
+        if (k === 'old') { log('Ngân hàng từ chối: tuổi đã cao, thời hạn vay không đủ để trả góp.', 'neutral'); life.flags.houseNo = life.age + 5; return; }
         var price = d.data.price;
         if (k === 'cash') H.cash(life, -price, 'Mua nhà');
         else {
@@ -1154,10 +1201,16 @@
       if (life.addict && life.addict.alcohol) pIll *= 1.4;
       if (life.flags.checkupUntil >= a) pIll *= 0.6;
       if (r() < pIll) {
-        var cands = ILLS.filter(function (x) { return x.young ? a < 50 : a >= 30 || x.n === 'lao phổi'; });
-        var ill = U.wpick(r, cands, function (x) { return x.w(life); });
-        life.ill = { n: ill.n, m: ill.m, base: ill.cure, cure: ill.cure, mult: ill.m, f: ill.f || ill.n, since: a };
-        add('treat');
+        // v2.4: không chẩn đoán lại bệnh đã từng mắc / đang chung sống (tiểu đường không "khỏi" rồi mắc lại);
+        // đã từng bị ung thư thì ung thư mới hiếm hơn
+        var hist = life.illHist || [], hadCancer = hist.some(function (n) { return /^ung thư/.test(n); });
+        var cands = ILLS.filter(function (x) { return (x.young ? a < 50 : a >= 30 || x.n === 'lao phổi') && hist.indexOf(x.n) < 0; });
+        var ill = cands.length ? U.wpick(r, cands, function (x) { return x.w(life) * (hadCancer && /^ung thư/.test(x.n) ? 0.3 : 1); }) : null;
+        if (ill) {
+          var cure0 = ill.cure * illAgeK(a);
+          life.ill = { n: ill.n, m: ill.m, base: cure0, cure: cure0, mult: ill.m, f: ill.f || ill.n, since: a, chronic: !!ill.chronic };
+          add('treat');
+        }
       }
     }
     // học hành
@@ -1183,7 +1236,7 @@
     if (isVN(life) && !life.abroad && !life.flags.xkldAsked && a >= 19 && a <= 33 && !life.school && r() < (life.fam.q <= 3 ? 0.07 : 0.02) * (life.flags.famDebt ? 2 : 1)) add('xkld');
     if (!isVN(life) && !life.abroad && !life.flags.emigAsked && a >= 20 && a <= 40 && life.gdp < 25 && r() < 0.03) add('emig');
     // tài sản
-    if (!life.ownHouse && life.indep && a >= 25 && (life.flags.houseNo == null || a >= life.flags.houseNo) && life.money >= housePrice(life) * 0.35 && !(life.abroad && !life.abroad.perm) && r() < 0.5) add('house');
+    if (!life.ownHouse && life.indep && a >= 25 && (life.flags.houseNo == null || a >= life.flags.houseNo) && life.money >= housePrice(life) * (H.loanAgeOk(life, 'home') ? 0.35 : 1) && !(life.abroad && !life.abroad.perm) && r() < 0.5) add('house');
     if (life.job && !/^(kd_|xkld|phu_giup)/.test(life.job.id) && !E.isCrime(life) && a >= 25 && a <= 50 && (life.flags.bizAsked || 0) < 2 && life.money > life.base && r() < 0.04) add('biz');
     if (a >= 40 && a <= 70 && !life.flags.careDone && ((life.fam.mAlive && life.fam.mAge + a >= 72) || (life.fam.fAlive && life.fam.fAge + a >= 72)) && r() < 0.3) add('care');
 
@@ -1194,7 +1247,9 @@
     for (var t = 0; t < tr.length && q.length < cap; t++) {
       var T = tr[t];
       if (!DEC[T.id] || !T.when(life, a)) continue;
-      if (T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) continue; // thời gian chờ để tình huống không lặp lại quá dày
+      // thời gian chờ để tình huống không lặp lại quá dày (v2.4: tối thiểu 2 năm, trừ chuỗi đang diễn ra như nghiện ngập, đòi nợ)
+      var cdT = T.cd || (T.rep ? 0 : 2);
+      if (cdT && cdm[T.id] != null && a - cdm[T.id] < cdT) continue;
       var pr = typeof T.p === 'function' ? T.p(life, a) : T.p;
       if (r() < pr && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) cdm[T.id] = a; }
     }
@@ -1209,10 +1264,12 @@
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)
     if (opts && opts.auto && q.length < cap && a >= 12 && r() < 0.3) {
-      var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai; });
+      // v2.4: AI không lặp lại cùng một việc trong vòng 3 năm (trước đây năm nào cũng "xin tăng lương", "mua vé số"…)
+      var aAt = life.flags.actAt || (life.flags.actAt = {});
+      var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai && !(aAt[x.id] != null && a - aAt[x.id] < 3); });
       if (av.length) {
         var pick = U.wpick(r, av, function (x) { return aiW(life, x.ai); });
-        if (pick && r() < Math.min(1, aiW(life, pick.ai))) { life.acts++; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null); }
+        if (pick && r() < Math.min(1, aiW(life, pick.ai))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null); if (q.length > n1) { life.acts++; aAt[pick.id] = a; } }
       }
     }
 
@@ -1270,6 +1327,7 @@
     if (l.acts >= ACTS_PER_YEAR) return 'Đã hết lượt hành động năm nay';
     if (a.min != null && l.age < a.min) return 'Từ ' + a.min + ' tuổi';
     if (a.max != null && l.age > a.max) return 'Không còn phù hợp ở tuổi này';
+    if (l.flags && l.flags.actAt && l.flags.actAt[a.id] === l.age) return 'Đã làm việc này năm nay'; // v2.4: tránh lặp cùng một việc trong một năm
     var x = a.avail ? a.avail(l) : true;
     return x === true || x === undefined ? true : (x || 'Chưa thể làm lúc này');
   }
@@ -1279,7 +1337,7 @@
     if (!a || actAvail(l, a) !== true) return null;
     var D = DEC[a.sc || a.id];
     if (D.valid && !D.valid(l, {})) return null;
-    l.acts++;
+    l.acts++; (l.flags.actAt || (l.flags.actAt = {}))[a.id] = l.age;
     var d = DEC[a.sc || a.id].make(l, RF(l), a.arg ? a.arg(l) : null);
     l.pending.unshift(d);
     return d;
@@ -1375,6 +1433,7 @@
     var needy = pYear < b * 0.3;
     if (life.sendParents && parentsOld && income > 0) F.parents = Math.max(b * 0.03, income * (needy ? (life.fam.q <= 2 ? 0.12 : 0.09) : pYear > b ? 0.03 : 0.05));
     if (life.ill) F.health = b * (life.gdp > 40 ? 0.03 : 0.1);
+    if (life.flags.chronic) F.health += b * (life.gdp > 40 ? 0.01 : 0.025) * Math.min(2, life.flags.chronic); // thuốc men bệnh mạn tính
     F.pets = pets(life).reduce(function (s, pt) { return s + (PETS[pt.k] || PETS['chó']).cost * b; }, 0);
     if (life.jailUntil != null && a < life.jailUntil) F.pets = 0;
     F.food += F.pets; // gộp vào sinh hoạt để công thức cân đối không đổi; hiển thị riêng một dòng
@@ -1389,30 +1448,49 @@
       if (L.bal <= 0.5) return;
       L.bal *= 1 + L.rate;
       if (L.type !== 'home' && L.type !== 'car') L.bal = Math.min(L.bal, b * 4); // trần nợ tiêu dùng / tín dụng đen
-      // vỡ nợ sau 3 năm trễ hạn: bị xử lý như ngoài đời
-      if ((L.late || 0) >= 3) {
+      // vỡ nợ khi trễ hạn kéo dài: bị xử lý như ngoài đời. v2.4: tín dụng đen ra tay ngay năm sau,
+      // ngân hàng/công ty tài chính sau 3 năm trễ liên tiếp hoặc 5 năm trễ cộng dồn — không còn khoản nợ "treo" mấy chục năm
+      var lim = L.type === 'appden' || L.type === 'nong' ? 2 : 3;
+      if ((L.late || 0) >= lim || (L.lateTot || 0) >= 5) {
         if (L.type === 'home') { log('Không trả nổi nợ, ngân hàng phát mại căn nhà.', 'bad'); life.ownHouse = false; life.houseVal = 0; H.fx(life, { hap: -15 }); H.mem(life, 'Ngày ngân hàng niêm phong căn nhà của bạn.', 6); }
         else if (L.type === 'appden' || L.type === 'nong') { log('Bọn đòi nợ kéo đến tận nhà đập phá, đánh bạn một trận rồi "xí xóa" phần còn lại.', 'bad'); H.fx(life, { hea: -10, hap: -10 }); H.mem(life, 'Đêm bọn đòi nợ kéo đến đập phá nhà.', 5); }
         else if (L.type === 'family') { log('Người thân thương tình, xóa khoản nợ cho bạn.', 'neutral'); }
         else { var part = Math.min(L.bal * 0.2, Math.max(0, life.money)); life.money -= part; F.debt += part; log('Khoản ' + L.name + ' bị chuyển cho công ty thu hồi nợ. Trả được một phần, phần còn lại bị xóa — nhưng tên bạn nằm trong danh sách nợ xấu nhiều năm.', 'bad'); life.credit = { bad: true, since: a }; H.fx(life, { hap: -6 }); }
-        L.bal = 0; return;
+        L.bal = 0; L.closed = true; return;
       }
       var due = Math.min(L.bal, Math.max(L.bal * L.minShare, L.type === 'home' ? b * 0.25 : 0));
       var avail = life.money + income + F.partner - F.food - F.rent - F.kids;
       var paid = avail >= due ? due : Math.max(0, Math.min(due, avail * 0.6));
       L.bal -= paid; F.debt += paid;
       if (paid < due * 0.95) {
-        L.late = (L.late || 0) + 1;
-        if (/^(bank|home|car|card|paylater|fin)$/.test(L.type) && !(life.credit && life.credit.bad)) {
-          life.credit = { bad: true, since: a };
-          log('Trễ hạn ' + L.name + ' — bị ghi nhận nợ xấu trên CIC. Từ nay khó vay ngân hàng.', 'bad'); H.fx(life, { hap: -5 });
-          H.mem(life, 'Ngày ngân hàng gọi báo bạn đã thành nợ xấu.', 3);
+        L.late = (L.late || 0) + 1; L.lateTot = (L.lateTot || 0) + 1;
+        if (/^(bank|home|car|card|paylater|fin)$/.test(L.type)) {
+          if (!(life.credit && life.credit.bad)) {
+            life.credit = { bad: true, since: a, last: a };
+            log('Trễ hạn ' + L.name + ' — bị ghi nhận nợ xấu trên CIC. Từ nay khó vay ngân hàng.', 'bad'); H.fx(life, { hap: -5 });
+            H.mem(life, 'Ngày ngân hàng gọi báo bạn đã thành nợ xấu.', 3);
+          } else life.credit.last = a;
         }
         if (L.type === 'appden' || L.type === 'nong') life.flags.thugDebt = true;
       } else L.late = 0;
     });
+    // v2.4: hết nợ & không trễ hạn thêm 5 năm thì thông tin nợ xấu được xóa khỏi CIC (trước đây hiện "nợ xấu từ năm 2047" đến tận cuối đời)
+    if (life.credit && life.credit.bad && a - (life.credit.last != null ? life.credit.last : life.credit.since) >= 5 &&
+      !(life.loans || []).some(function (L) { return L.late > 0 && L.bal > 0.5; })) {
+      life.credit = { bad: false, since: null };
+      log('Đã 5 năm không còn trễ hạn: thông tin nợ xấu được xóa khỏi CIC, hồ sơ tín dụng sạch trở lại.', 'good'); H.fx(life, { hap: 3 });
+    }
+    // v2.4: ngân hàng không để khoản vay mua nhà kéo dài đến tuổi già — đến 75 tuổi phải tất toán
+    (life.loans || []).forEach(function (L) {
+      if (L.type !== 'home' || L.bal <= 0.5 || a < 75) return;
+      var kidsHelp = life.kids.filter(function (k) { return k.alive && a - k.born >= 25; }).length;
+      if (life.money >= L.bal) { life.money -= L.bal; F.debt += L.bal; log('Dùng tiền tích lũy tất toán khoản vay mua nhà trước khi quá già.', 'good'); }
+      else if (kidsHelp && life.money + life.base * kidsHelp * 2 >= L.bal) { var own = Math.max(0, Math.min(life.money, L.bal)); life.money -= own; F.debt += own; log('Các con góp tiền trả nốt khoản vay mua nhà cho ' + (life.sex === 'M' ? 'bố' : 'mẹ') + '.', 'good'); H.mem(life, 'Ngày các con góp tiền trả hết nợ nhà cho mình.', 4); }
+      else if (life.ownHouse) { var left = Math.max(0, life.houseVal * 0.9 - L.bal); life.money += left; life.ownHouse = false; life.houseVal = 0; log('Không trả nổi khoản vay mua nhà ở tuổi ' + a + ', phải bán nhà trả ngân hàng' + (left > 0 ? ', còn dư ' + fmtMoney(life, left) + '.' : '.'), 'bad'); H.fx(life, { hap: -10 }); H.mem(life, 'Ngày bán căn nhà đã ở mấy chục năm để trả nợ.', 5); }
+      L.bal = 0; L.closed = true;
+    });
     capUnsecured();
-    life.loans = (life.loans || []).filter(function (L) { if (L.bal <= 0.5) { if (L.type === 'home') { log('Trả hết khoản vay mua nhà.', 'good'); H.fx(life, { hap: 4 }); } return false; } return true; });
+    life.loans = (life.loans || []).filter(function (L) { if (L.bal <= 0.5) { if (L.type === 'home' && !L.closed) { log('Trả hết khoản vay mua nhà.', 'good'); H.fx(life, { hap: 4 }); } return false; } return true; });
     // tiêu dùng: một phần thu nhập dư
     var ess = F.food + F.rent + F.travel + F.kids + F.parents + F.health + F.debt;
     var surplus = income + F.partner - ess;
@@ -1531,13 +1609,15 @@
     var income = 0;
     if (inJail) log('Một năm nữa trôi qua sau song sắt' + (life.jailUntil - a > 1 ? ' — còn ' + (life.jailUntil - a - 1) + ' năm.' : '.'), 'bad');
     else income = E.careerYear(life, r, log, focus);
+    // v2.4: đã có lương hưu mà vẫn kinh doanh / làm thêm thì vẫn nhận lương hưu
+    if (!life.retired && life.job && life.pensioned && life.pensionInc) income += life.pensionInc;
     if (!life.alive) { clampSt(life); return out; } // mất giữa năm (tai nạn nghề nghiệp, thanh toán băng nhóm…)
     if (life.jailUntil != null && a + 1 >= life.jailUntil && inJail) {
       life.jailUntil = null; log('Mãn hạn tù, bước ra khỏi cổng trại giam.', 'big'); H.mem(life, 'Ngày ra tù, bầu trời bên ngoài rộng đến lạ.', 5);
       life.flags.needJob = true; H.sched(life, 'ra_tu', 1);
     }
     if (life.retired) {
-      income = life.pensioned ? (life.lastIncome || life.base) * 0.55 : life.base * 0.05;
+      income = life.pensioned ? (life.pensionInc != null ? life.pensionInc : (life.lastIncome || life.base) * 0.55) : life.base * 0.05;
       life.kids.forEach(function (k) { if (k.alive && a - k.born >= 25) income += E.kidSupport ? E.kidSupport(life, k) : life.base * 0.12; });
     }
     if (!life.indep && a >= 18 && !life.school && !(life.job && life.job.id === 'phu_giup')) life.indep = true;
@@ -1635,7 +1715,15 @@
     if (!life.alive) { clampSt(life); return out; }
 
     // ---- Bệnh: khỏi bệnh? ----
-    if (life.ill && life.ill.since < a && r() < life.ill.cure) { log('Đã khỏi ' + life.ill.n + '.', 'good'); life.ill = null; st.hap += 6; }
+    // v2.4: càng già, cơ hội khỏi càng giảm theo từng năm (không chỉ theo tuổi lúc phát bệnh)
+    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since))) {
+      var IL = life.ill, chronic = IL.chronic || ILLS.some(function (x) { return x.n === IL.n && x.chronic; });
+      life.illHist = life.illHist || []; if (life.illHist.indexOf(IL.n) < 0) life.illHist.push(IL.n);
+      // bệnh mạn tính không "khỏi": được kiểm soát ổn định, vẫn phải uống thuốc suốt đời
+      if (chronic) { log(U.cap(IL.n) + ' đã được kiểm soát ổn định — uống thuốc đều, tái khám định kỳ.', 'good'); life.flags.chronic = (life.flags.chronic || 0) + 1; st.hap += 3; }
+      else { log((/^ung thư/.test(IL.n) ? 'Điều trị thành công, ' + IL.n + ' thuyên giảm hoàn toàn.' : 'Đã khỏi ' + IL.n + '.'), 'good'); st.hap += 6; }
+      life.ill = null;
+    }
 
     // ---- Chỉ số ----
     var fH = { study: -0.5, health: 3, social: 0.5, work: -2, rest: 1.5, baby: 0 }[focus] || 0;
@@ -1811,7 +1899,7 @@
     actions: actions, act: act, actAvail: actAvail, parentMonthly: parentMonthly, PARENT_PAY: PARENT_PAY, parentKind: parentKind, parentYear: parentYear,
     isMajor: isMajor, MAJOR: MAJOR, PETS: PETS, GAME_SUB: GAME_SUB, ACTS_PER_YEAR: ACTS_PER_YEAR, talentText: talentText,
     EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,
-    LOAN_TYPES: LOAN_TYPES, IDOLS: IDOLS, VICE: VICE, CONSCRIPT: CONSCRIPT,
+    LOAN_TYPES: LOAN_TYPES, IDOLS: IDOLS, IDOL_BORN: IDOL_BORN, VICE: VICE, CONSCRIPT: CONSCRIPT,
     REFLECT_AGES: REFLECT_AGES, schoolName: schoolName, isVN: isVN, H: H, SC: SC, eduP: eduP, uniPlaces: uniPlaces, housePrice: housePrice
   };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

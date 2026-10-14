@@ -221,7 +221,6 @@
           return '<li><div class="jt">' + esc(c.t.map(U.cap).join(' → ')) + '</div><div class="jp"><b>' + esc(pay) + '</b>' + (c.fame ? '' : ' triệu/tháng') + (tags.length ? ' <span class="muted small">· ' + esc(tags.join(' · ')) + '</span>' : '') + '</div></li>';
         }).join('') + '</ul></details>';
       }).join('') + '</div>' +
-      '<p class="small muted">Nguồn tham khảo: Cục Thống kê (2025), Nghị định 73/2024/NĐ-CP, khảo sát lương CareerLink, TopCV, VCCI, báo cáo các hãng bay — đã làm tròn để mô phỏng.</p>' +
       '<div class="go-row" style="margin-top:12px"><button class="btn primary" id="jobsClose">Đóng</button></div>';
     modal(html, function (box) { $('#jobsClose', box).onclick = closeModal; }, 'jobs');
   }
@@ -650,13 +649,16 @@
     });
     if (l.hui) rows.push('<li><span>Dây hụi (' + l.hui.y + '/' + l.hui.n + ' năm' + (l.hui.got ? ', đã hốt' : '') + ')</span><b>' + esc(money(l, l.hui.c)) + '/năm</b></li>');
     if (l.ins) rows.push('<li><span>' + esc(U.cap(l.ins.name)) + '</span><b>' + esc(money(l, l.ins.prem)) + '/năm</b></li>');
+    // v2.4: nhà cho thuê, cơ sở kinh doanh
+    (l.props || []).forEach(function (p) { var g = p.v / (p.basis || p.v) - 1; rows.push('<li><span>🏠 ' + esc(U.cap(p.n)) + ' <small class="' + (g >= 0 ? 'pos' : 'neg') + '">' + (g >= 0 ? '+' : '−') + Math.abs(Math.round(g * 100)) + '%</small></span><b>' + esc(money(l, p.v)) + '</b></li>'); });
+    (l.ventures || []).forEach(function (v) { rows.push('<li><span>🏪 ' + esc(U.cap(v.n)) + (v.br > 1 ? ' · ' + v.br + ' chi nhánh' : '') + '</span><b>' + esc(money(l, v.cap)) + '</b></li>'); });
     if (!rows.length) return '';
     var M = l.mkt || {};
     return '<div class="small muted" style="margin-top:10px">Tài sản đầu tư · chứng khoán ' + esc(M.stock || '') + ' · đất ' + esc(M.land || '') + '</div><ul class="finev">' + rows.join('') + '</ul>';
   }
   function loansHtml(l) {
     var ls = (l.loans || []).filter(function (x) { return x.bal > 0.5; });
-    var credit = l.credit && l.credit.bad ? '<div class="small" style="color:var(--bad);margin-top:6px">⚠ Nợ xấu (CIC) từ năm ' + (l.birthYear + l.credit.since) + '</div>' : '';
+    var credit = l.credit && l.credit.bad ? '<div class="small" style="color:var(--bad);margin-top:6px">⚠ Nợ xấu (CIC) từ năm ' + (l.birthYear + l.credit.since) + ' · tự xóa sau 5 năm không trễ hạn</div>' : '';
     if (!ls.length) return credit;
     return '<div class="small muted" style="margin-top:10px">Các khoản nợ</div><ul class="finev">' + ls.map(function (x) {
       return '<li><span>' + esc(U.cap(x.name)) + (x.late ? ' · trễ hạn' : '') + '</span><b class="neg">' + esc(money(l, x.bal)) + '</b></li>';
@@ -679,7 +681,13 @@
     };
     row('Mẹ: ' + esc(f.mName) + ' · ' + (f.mAlive ? (f.mAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.mJob, f.mRet, f.mLost, f.mAlive) + pinc(f.mInc, f.mInc0, f.mRet, f.mAlive), !f.mAlive);
     if (!f.noDad) row('Bố: ' + esc(f.fName) + ' · ' + (f.fAlive ? (f.fAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.fJob, f.fRet, f.fLost, f.fAlive) + pinc(f.fInc, f.fInc0, f.fRet, f.fAlive), !f.fAlive);
-    if (f.sibs) row('Anh chị: ' + f.sibs);
+    // v2.4: từng anh chị em ruột (tên, tuổi, nghề, độ thân thiết)
+    if (l.sibList && l.sibList.length) l.sibList.slice().sort(function (x, y) { return x.born - y.born; }).forEach(function (s) {
+      var sa = a - s.born, w = s.born < 0 ? (s.sex === 'M' ? 'Anh trai' : 'Chị gái') : (s.sex === 'M' ? 'Em trai' : 'Em gái');
+      if (sa < 0) return;
+      row(w + ': ' + esc(s.n) + ' · ' + (s.alive ? sa + ' tuổi' + (sa >= 18 ? ' · ' + esc(sa >= 65 ? 'đã nghỉ ngơi' : s.job) : '') + (sa >= 8 ? ' · ' + (s.close >= 70 ? '❤ thân thiết' : s.close >= 40 ? 'bình thường' : 'xa cách') : '') : 'đã mất'), !s.alive);
+    });
+    else if (f.sibs) row('Anh chị: ' + f.sibs);
     if (l.gen > 1) row('🌳 Thế hệ thứ ' + l.gen + ' · ' + esc((l.lineage || []).map(function (x) { return x.n; }).join(' → ')) + ' → bạn');
     if (l.partner) {
       var p = l.partner, w = p.status === 'dating' ? 'Người yêu' : p.status === 'cohabit' ? 'Bạn đời' : (p.sex === l.sex ? 'Bạn đời' : p.sex === 'M' ? 'Chồng' : 'Vợ');
@@ -701,7 +709,8 @@
     if (l.bff) row('Bạn thân: ' + esc(l.bff.name) + (l.bff.alive ? ' · ' + (l.bff.close >= 70 ? 'thân thiết' : l.bff.close >= 40 ? 'vẫn giữ liên lạc' : 'đã xa cách') : ' · đã mất'), !l.bff.alive);
     if (l.idol) row('Thần tượng: ' + esc(l.idol));
     (l.pets || []).slice(-4).forEach(function (pt) { row('🐾 ' + esc(U.cap(E.H.petLabel(pt))) + ' ' + esc(pt.n) + ' · ' + (pt.alive ? Math.max(0, a - pt.since) + ' năm bên bạn' : pt.lost ? 'đã thất lạc' : 'đã mất'), !pt.alive); });
-    var home = l.age < 18 && !l.indep ? 'Sống cùng bố mẹ trong ' + (l.houseType ? l.houseType + ' ' : '') + '(' + f.home + ')' : (l.ownHouse ? 'Sống trong nhà riêng' : l.urban ? 'Thuê nhà' : 'Sống ở quê');
+    var home = l.age < 18 && !l.indep ? 'Sống cùng bố mẹ trong ' + (l.houseType ? l.houseType + ' ' : '') + '(' + f.home + ')' : (l.ownHouse ? 'Sống trong ' + (l.houseName && l.houseName !== 'nhà riêng' ? l.houseName : 'nhà riêng') : l.urban ? 'Thuê nhà' : 'Sống ở quê');
+    if (l.veh === 'ô tô' && l.vehName) home += ' · đi ' + l.vehName;
     $('#famPanel').innerHTML = '<h3>Gia đình & những người thân</h3><ul class="fam">' + li.join('') + '</ul><div class="small muted" style="margin-top:8px">' + esc(home) + '</div>';
   }
   function renderFocus() {

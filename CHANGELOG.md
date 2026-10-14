@@ -4,6 +4,46 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v2.4.0 — 14/10/2026
+
+Giữ nguyên toàn bộ tính năng v2.3.0. Sửa các lỗi logic do người chơi thử phát hiện, thêm cách tiêu tiền cho người giàu và anh chị em ruột. Đời đang chơi dở tự được bổ sung anh chị em, hạng nhà, hạng xe.
+
+### Sửa lỗi logic
+- **Bố mẹ đã mất vẫn xuất hiện**: "Về thăm bố mẹ" chỉ nhắc người còn sống (không còn chuyện bố đã mất mà vẫn "khoe cây cảnh"). Bỏ lựa chọn "mua tivi cho bố mẹ" khi bố mẹ đã khuất. "Bố mẹ cần đến bạn" không còn nhắc người đã mất. Lời đe dọa đòi nợ và chuyện nhờ người nhà trả nợ đổi theo hoàn cảnh: tuổi già thì là các con hoặc anh chị em.
+- **"Lần đầu đặt chân đến Hàn Quốc"** sau khi đã đi xuất khẩu lao động ở đó: game nhớ các nước đã từng đến (du lịch, XKLĐ, du học, định cư). Quay lại thì ghi "Quay lại…", và khi chọn điểm đến sẽ ưu tiên nơi chưa đi.
+- **Concert ở tuổi 71, thần tượng không già đi**: thần tượng có năm sinh, già đi theo thời gian, đến tuổi thì làm đêm diễn chia tay rồi giải nghệ. Những năm 2060+ có thế hệ ca sĩ mới (tên hư cấu). Hành động "Đi concert" chỉ còn đến 55 tuổi.
+- **Nợ treo 60 năm**:
+  - Tín dụng đen xử lý ngay năm sau. Ngân hàng và công ty tài chính xử lý sau 3 năm trễ hạn liên tiếp hoặc 5 năm trễ hạn cộng dồn.
+  - Thông tin nợ xấu được **xóa khỏi CIC sau 5 năm** không trễ hạn.
+  - Khoản vay mua nhà phải tất toán khi 75 tuổi (tự trả, con cái góp, hoặc bán nhà).
+  - Ngân hàng, app vay và công ty tài chính không cho người già vay.
+  - Sửa lỗi ngân hàng vừa phát mại nhà lại báo "Trả hết khoản vay mua nhà".
+- **90 tuổi mắc ung thư vẫn khỏi, rồi lại mắc bệnh khác**:
+  - Khả năng khỏi bệnh nặng giảm mạnh theo tuổi.
+  - Bệnh mạn tính (tiểu đường, huyết áp, suy thận, viêm gan B, xơ gan, HIV) không "khỏi" nữa: được kiểm soát và phải uống thuốc suốt đời (có chi phí thuốc men). Không bị chẩn đoán lại bệnh đã mắc.
+  - Đã từng bị ung thư thì ít bị ung thư mới hơn.
+- **Tình huống lặp đi lặp lại**: mỗi hành động chỉ làm được 1 lần mỗi năm. AI không chọn lại cùng một việc trong 3 năm. Mỗi tình huống ngẫu nhiên cách nhau ít nhất 2 năm.
+- Bỏ dòng "Nguồn tham khảo" ở bảng Nghề & lương.
+
+### Mới
+- **Chứng chỉ ngoại ngữ theo nơi định đến**: IELTS 4.5→8.5, JLPT N5→N1 (Nhật), TOPIK 1→6 (Hàn), HSK 1→6 (Trung/Đài), Goethe A1→C1 (Đức).
+  - Đi XKLĐ phải học tiếng cấp tốc. Có sẵn chứng chỉ thì được đơn hàng lương cao hơn.
+  - Sống ở nước ngoài lâu thì tiếng bản xứ tự lên.
+- **Xe theo mức giàu có**: xe máy, xe máy điện, ô tô điện, ô tô phổ thông, SUV 7 chỗ, xe hạng sang, xe thể thao, siêu xe. Đổi xe thì bán lại xe cũ. Xe sang tốn chi phí nuôi xe mỗi năm.
+- **Nhà theo mức giàu có**: hành động "Đổi nhà to hơn" để lên nhà phố nhiều tầng, căn hộ cao cấp, biệt thự, dinh thự. Bán nhà cũ, tất toán nợ cũ, vay thêm nếu thiếu. Nhà càng to chi phí duy trì càng cao.
+- **Đầu tư làm ăn**:
+  - Mua căn hộ, nhà mặt phố, ki-ốt cho thuê: thu tiền thuê hằng năm, giá lên xuống theo thị trường đất, có khi bỏ trống.
+  - Mở cửa hàng tiện lợi, quán cà phê, nhà hàng, spa, phòng gym: lãi lỗ theo năm và theo kinh tế. Lãi đều thì được mời **mở thêm chi nhánh**; lỗ liên tiếp thì đóng bớt chi nhánh hoặc **phá sản**.
+  - Có thể bán nhà cho thuê hoặc sang nhượng cửa hàng.
+- **Anh chị em ruột** có tên, tuổi, nghề và độ thân thiết.
+  - Mẹ có thể sinh thêm em khi bạn còn nhỏ.
+  - Tuổi nhỏ có giành đồ chơi, anh chị chở đi học, bênh vực. Lớn lên có đám cưới anh chị em và lên chức chú/cô/cậu/dì/bác.
+  - Anh chị em hỏi vay tiền (có thể trả lại sau vài năm), hành động "Gặp anh chị em" (tụ họp, du lịch chung, phụ giúp tiền).
+  - Bố mẹ mất thì **chia tài sản thừa kế**: chia đều, nhường, hoặc tranh chấp ra tòa. Anh chị em già đi rồi mất.
+- **Nghỉ hưu linh hoạt**:
+  - Chủ doanh nghiệp không có tuổi nghỉ hưu cố định: còn khỏe thì làm đến 70–78 tuổi, rồi giao lại cơ nghiệp cho con.
+  - Người nghỉ hưu còn khỏe, có vốn được hỏi muốn an hưởng, mở cửa hàng/quán nhỏ (vẫn nhận lương hưu) hay mua nhà cho thuê.
+
 ## v2.3.0 — 14/10/2026
 
 Giữ nguyên toàn bộ tính năng v2.2.0. Đời đang chơi dở được tự bổ sung tài sản, mức căng thẳng và chỉ số của con cái.

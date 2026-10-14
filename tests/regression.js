@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -322,6 +322,16 @@ function templates() {
   T.push(grow({ mode: 'world', country: 'KR', seed: 115 }, 40, l => { l.indep = true; l.money = l.base * 4; E.startJob(l, 'bac_si', r(9), () => { }); l.kids = [{ name: 'Kim Ji-woo', sex: 'F', born: 26, alive: true, kids: 0 }]; l.partner = { name: 'Lee Min-jun', sex: 'M', age: 41, status: 'married', since: 30, alive: true }; }));
   T.push(grow({ mode: 'vn', seed: 116 }, 17, l => { l.school = 'upper'; l.talent = 'cờ'; l.talentSub = 'cờ vua'; l.flags.track = 'cờ'; }));
   T.push(grow({ mode: 'vn', seed: 117, gender: 'gay' }, 30, l => { l.indep = true; l.money = -l.base * 2; l.job = null; l.realized = true; }));
+  // v2.4: người giàu có anh chị em, nhà cho thuê, chuỗi cửa hàng, bố mẹ đã mất; trẻ con có anh trai
+  const sib = (n, sex, born, extra) => Object.assign({ n, sex, born, alive: true, close: 70, job: 'kỹ sư', wed: true, kids: 1, q: 2 }, extra || {});
+  T.push(grow({ mode: 'vn', seed: 118 }, 45, l => {
+    l.indep = true; l.money = l.base * 400; l.ownHouse = true; l.houseVal = E.H.housePrice(l); l.houseTier = 1; l.income = l.base; E.startJob(l, 'kd_tu_do', r(13), () => { });
+    l.fam.mAlive = false; l.fam.fAlive = false; l.fam.sibs = 1; l.flags.inherit = false; l.sibList = [sib('Trần Văn Cả', 'M', -3), sib('Trần Thị Út', 'F', 6)];
+    l.props = [{ k: 'apt', n: 'căn hộ cho thuê', v: l.base * 10, basis: l.base * 9, y: 0.05, since: 40, empty: 0 }];
+    l.ventures = [{ k: 'cafe', n: 'quán cà phê', cap: l.base * 1.5, unit: l.base * 1.5, br: 1, mu: 0.1, sd: 0.3, yrs: 3, bad: 0, good: 2 }];
+  }));
+  T.push(grow({ mode: 'vn', seed: 119 }, 9, l => { l.fam.sibs = 1; l.sibList = [sib('Lê Văn Hai', 'M', -2, { wed: false, kids: 0 })]; }));
+  T.push(grow({ mode: 'vn', seed: 120 }, 61, l => { l.indep = true; l.retired = true; l.job = null; l.pensioned = true; l.pensionInc = l.base * 0.6; l.money = l.base * 5; l.st.hea = 70; }));
   return T.filter(Boolean);
 }
 
@@ -840,7 +850,7 @@ section('19. Bản 2.3: ⭐ khoảnh khắc, tài sản & hụi & bảo hiểm, 
     ok(c.gen === (p.gen || 1) + 1 && c.lineage.length >= 1 && c.lineage[c.lineage.length - 1].n === p.name, 'đời con: ghi nhận thế hệ & dòng họ');
     ok(c.fam.mName === p.name || c.fam.fName === p.name, 'đời con: bố/mẹ chính là nhân vật đời trước');
     ok(c.country === (p.abroad && p.abroad.perm ? p.abroad.code : p.country), 'đời con: sinh ra ở nơi bố/mẹ đang sống');
-    if (E.isVN(p) && p.mode === 'vn') ok(c.eth === p.eth, 'đời con: cùng dân tộc');
+    if (E.isVN(p) && p.mode === 'vn' && !(p.abroad && p.abroad.perm)) ok(c.eth === p.eth, 'đời con: cùng dân tộc'); // v2.4: định cư nước ngoài thì con sinh ở nước đó
     ok(isFinite(c.fam.mInc) && isFinite(c.fam.fInc) && !badText(c.log[0].t), 'đời con: giấy khai sinh hợp lệ');
     run1(c); checkLife(c, 'đời con #' + i);
   }
@@ -869,6 +879,149 @@ section('19. Bản 2.3: ⭐ khoảnh khắc, tài sản & hụi & bảo hiểm, 
   ok(/AudioContext/.test(musicSrc) && /resumeOnGesture/.test(musicSrc) && !/\.(mp3|ogg|wav)/.test(musicSrc), 'nhạc lofi tự sinh, không dùng file nhạc ngoài');
   ok(/#musicBtn/.test(appSrc) && /volRange/.test(appSrc), 'có nút bật/tắt nhạc & âm lượng');
   for (const f of ['card.js', 'music.js']) { try { new vm.Script(fs.readFileSync(path.join(ROOT, 'js', f), 'utf8')); ok(true, f + ' cú pháp hợp lệ'); } catch (e) { ok(false, f + ' lỗi cú pháp: ' + e.message); } }
+}
+section('20. Bản 2.4: lỗi người chơi phản hồi, xe/nhà theo mức giàu, đầu tư kinh doanh, anh chị em, ngoại ngữ, nghỉ hưu');
+{
+  const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8');
+  const run1 = (l, until) => { let g = 0; while (l.alive && g++ < 130 && (until == null || l.age < until)) { E.beginYear(l, { auto: true }); let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l); } return l; };
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed }); l.age = age; l.indep = true; if (setup) setup(l); return l; };
+  const playDec = (l, id, key, arg) => { const d = E.DEC[id].make(l, R(l.rs), arg); l.pending.unshift(d); const out = E.resolve(l, key || E.autoKey(l)); return { d, out }; };
+  const texts = out => out.map(e => e.t).join(' | ');
+
+  // 1. bỏ dòng nguồn ở bảng nghề
+  ok(!/Nguồn tham khảo/.test(appSrc), 'bảng Nghề & lương không còn dòng "Nguồn tham khảo"');
+
+  // 2 + 5. bố mẹ đã mất không còn xuất hiện
+  let badParent = 0;
+  for (let i = 0; i < 300; i++) {
+    const l = mk(40000 + i, 40, l => { l.fam.fAlive = false; l.fam.mAlive = true; });
+    const d = E.DEC.tham_bo_me.make(l, R(i)); l.pending.unshift(d); const out = E.resolve(l, 'go');
+    if (/Bố khoe|Bố rót|bố mẹ giờ|Bố mẹ giờ/.test(texts(out) + d.text)) badParent++;
+    const n = E.DEC.bo_me_can.make(l, R(i + 7)); if (/^Bố |chữa bệnh cho bố/.test(n.data.t + n.data.w)) badParent++;
+    l.fam.mAlive = false;
+    const s = E.DEC.mua_sam.make(l, R(i + 3)); if (/bố mẹ|cho mẹ|cho bố/.test(s.text)) badParent++;
+    const k = E.DEC.khung_bo.make(l, R(i)); if (/bố mẹ/.test(k.text)) badParent++;
+  }
+  ok(badParent === 0, 'không nhắc bố/mẹ đã mất (thăm nhà, mua sắm, bố mẹ cần, đòi nợ): ' + badParent + ' lỗi');
+  ok(!E.DEC.tham_bo_me.valid(mk(40500, 50, l => { l.fam.mAlive = false; l.fam.fAlive = false; })), 'bố mẹ đều mất: không có "Về thăm bố mẹ"');
+  { const l = mk(40501, 81, l => { l.fam.mAlive = false; l.fam.fAlive = false; l.kids = [{ name: 'Con', sex: 'M', born: 30, alive: true, kids: 0 }]; l.loans = [{ type: 'nong', name: 'vay nóng', bal: l.base, rate: 1.5, minShare: 0.4, late: 1 }]; l.flags.thugDebt = true; });
+    const { out } = playDec(l, 'khung_bo', 'family'); ok(/các con/.test(texts(out)) && !/bố mẹ|Bố mẹ/.test(texts(out)), 'tuổi già nhờ các con trả nợ, không phải bố mẹ: ' + texts(out)); }
+
+  // 3. nhớ các nước đã đến
+  { const l = mk(40600, 47, l => { l.money = l.base * 5; l.visited = []; });
+    E.H.visit(l, 'Hàn Quốc'); let first = 0, again = 0;
+    for (let i = 0; i < 200; i++) { const c = clone(l); c.rs = 900 + i; const d = E.DEC.du_lich.make(c, R(i)); if (d.data.far !== 'Hàn Quốc') continue; c.pending.unshift(d); const t = texts(E.resolve(c, 'far')); if (/Lần đầu đặt chân đến Hàn Quốc/.test(t)) first++; if (/Hàn Quốc/.test(t)) again++; }
+    ok(first === 0 && again > 0, 'đã từng ở Hàn Quốc thì không còn "lần đầu đặt chân đến Hàn Quốc" (' + again + ' lượt quay lại)'); }
+  { let xk = 0, marked = 0; for (let i = 0; i < 400 && xk < 20; i++) { const l = mk(40700 + i, 24, l => { l.money = l.base * 3; }); const d = E.DEC.xkld.make(l, R(i)); l.pending.unshift(d); E.resolve(l, 'check'); if (l.abroad) { xk++; if (E.H.visited(l, l.abroad.name)) marked++; } }
+    ok(xk > 5 && marked === xk, 'đi XKLĐ được ghi nhớ là nước đã đến (' + marked + '/' + xk + ')'); }
+
+  // 4. chứng chỉ ngoại ngữ theo nơi định đến
+  ok(E.H.LANG.ja.lv.join() === 'N5,N4,N3,N2,N1' && E.H.LANG.en.cert === 'IELTS' && E.H.LANG.ko.cert === 'TOPIK' && E.H.LANG.zh.cert === 'HSK', 'có JLPT N5→N1, IELTS, TOPIK, HSK');
+  { const l = mk(40800, 25, l => { l.abroad = { code: 'JP', name: 'Nhật Bản', until: 28, mult: 3.6, perm: false }; l.money = l.base * 3; });
+    const d = E.DEC.hoc_them.make(l, R(1)); ok(d.data.ctx === 'ja' && d.opts.some(o => /JLPT N5/.test(o.l)), 'ở Nhật thì gợi ý học tiếng Nhật thi JLPT: ' + d.opts.map(o => o.l).join(' / '));
+    let lv = 0; for (let i = 0; i < 30; i++) { E.H.studyLang(l, 'ja', R(i), () => { }); lv = l.lang.ja; } ok(lv === 5 && E.H.langCert(l, 'ja') === 'JLPT N1', 'học dần lên đến JLPT N1');
+    ok(E.H.langNext(l, 'ja') == null && !E.DEC.hoc_them.make(l, R(2)).opts.some(o => o.k === 'lang'), 'đã có N1 thì không học tiếp tiếng Nhật'); }
+  { const l = mk(40801, 25); const d = E.DEC.hoc_them.make(l, R(3)); ok(d.opts.some(o => /IELTS/.test(o.l)), 'IELTS vẫn là lựa chọn chung'); }
+  { let go = 0, cert = 0; for (let i = 0; i < 300 && go < 15; i++) { const l = mk(40900 + i, 23, l => { l.money = l.base * 3; }); const d = E.DEC.xkld.make(l, R(i)); if (d.data.c[0] !== 'JP') continue; l.pending.unshift(d); E.resolve(l, 'check'); if (l.abroad) { go++; if (l.lang && l.lang.ja >= 1) cert++; } }
+    ok(go > 3 && cert === go, 'đi XKLĐ Nhật phải học tiếng, có JLPT (' + cert + '/' + go + ')'); }
+
+  // 6. concert & thần tượng già đi
+  { const l = mk(41000, 71); ok(E.actAvail(l, E.ACT.find(a => a.id === 'concert')) !== true, '71 tuổi không còn "đi concert"');
+    let old = 0; for (let i = 0; i < 300; i++) { const x = E.createLife({ mode: 'vn', seed: 41100 + i, year: 2080 }); x.age = 20; const n = E.H.pickIdol(R(i), x); const b = E.IDOL_BORN[n]; if (b && 2100 - b > 50) old++; if (!x.idolBorn || !n) old++; }
+    ok(old === 0, 'năm 2100 không chọn thần tượng đã ngoài 50 (' + old + ')');
+    ok(E.IDOL_BORN['Dua Lipa'] === 1995, 'Dua Lipa có năm sinh');
+    const y = E.createLife({ mode: 'vn', seed: 41500 }); y.age = 30; y.idol = 'Dua Lipa'; y.idolBorn = 1995; y.birthYear = 2040;
+    ok(!E.TRIG.find(t => t.id === 'concert').when(y, 30), 'thần tượng 75 tuổi không còn tổ chức concert');
+    y.birthYear = 2000; ok(E.TRIG.find(t => t.id === 'concert').when(y, 30), 'thần tượng 35 tuổi vẫn tổ chức concert'); }
+
+  // 7. bớt lặp lại
+  { const l = mk(41600, 30, l => { l.money = l.base * 3; }); E.act(l, 've_so'); ok(E.actAvail(l, E.ACT.find(a => a.id === 've_so')) !== true, 'mỗi hành động chỉ làm một lần mỗi năm');
+    let same = 0, n = 0; for (let i = 0; i < 60; i++) { const x = run1(E.createLife({ mode: 'vn', seed: 41700 + i })); const byAge = {}; x.log.forEach(e => { if (e.k === 'money') return; const key = e.a + '|' + e.t; byAge[key] = (byAge[key] || 0) + 1; }); Object.values(byAge).forEach(c => { n++; if (c > 1) same++; }); }
+    ok(same / n < 0.01, 'hiếm khi một câu lặp lại trong cùng năm (' + same + '/' + n + ')'); }
+
+  // 10. nợ không treo vài chục năm, CIC tự xóa, người già không bị vay nợ app
+  { let longLate = 0, oldHome = 0, cleared = 0, oldApp = 0, lives = 0;
+    for (let i = 0; i < 700; i++) {
+      const l = E.createLife({ mode: 'vn', seed: 42000 + i }); let g = 0;
+      while (l.alive && g++ < 130) { E.beginYear(l, { auto: true }); let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l);
+        (l.loans || []).forEach(L => { if ((L.lateTot || 0) > 5) longLate++; if (L.type === 'home' && l.age > 76) oldHome++; if (L.type === 'appden' && L.since >= 65) oldApp++; }); }
+      lives++; if (l.log.some(e => /xóa khỏi CIC/.test(e.t))) cleared++;
+    }
+    ok(longLate === 0, 'không còn khoản nợ trễ hạn quá 5 năm (' + longLate + ')');
+    ok(oldHome === 0, 'không còn vay mua nhà sau 76 tuổi (' + oldHome + ')');
+    ok(oldApp === 0, 'người trên 65 không vay app đen mới (' + oldApp + ')');
+    ok(cleared > 0, 'có người được xóa nợ xấu CIC sau 5 năm (' + cleared + '/' + lives + ')'); }
+  { const l = mk(42900, 40, l => { l.credit = { bad: true, since: 30, last: 34 }; l.loans = []; }); ok(E.H.canBankLoan(l), 'nợ xấu đã quá 5 năm: được vay ngân hàng lại'); }
+  { const l = mk(42901, 50, l => { l.ownHouse = true; l.houseVal = l.base * 20; l.loans = [{ type: 'home', name: 'vay mua nhà', bal: l.base * 30, rate: 0.08, minShare: 0.06, late: 2, lateTot: 2 }]; l.money = 0; l.job = null; });
+    let msg = ''; for (let i = 0; i < 4 && l.alive; i++) { E.beginYear(l, {}); l.pending = []; E.finishYear(l); E.endYear(l); }
+    msg = l.log.map(e => e.t).join(' | '); ok(/phát mại/.test(msg) && !/Trả hết khoản vay mua nhà/.test(msg), 'bị phát mại nhà thì không báo "trả hết khoản vay mua nhà"'); }
+
+  // 11. bệnh tật tuổi già
+  { let reDiag = 0, chronCured = 0, oldCancer = 0, oldCured = 0;
+    for (let i = 0; i < 700; i++) {
+      const l = run1(E.createLife({ mode: 'vn', seed: 43000 + i }));
+      const diag = {}; l.log.forEach(e => { const m = /(?:Bắt đầu điều trị|Điều trị|Quyết định không điều trị) (.+?)(?: ở |\.)/.exec(e.t); if (m) { diag[m[1]] = (diag[m[1]] || 0) + 1; } });
+      Object.keys(diag).forEach(n => { if (diag[n] > 1) reDiag++; });
+      if (l.log.some(e => /^Đã khỏi (tiểu đường|tăng huyết áp|suy thận|viêm gan B|xơ gan|HIV)/.test(e.t))) chronCured++;
+      l.log.forEach(e => { if (e.a >= 85 && /Bắt đầu điều trị ung thư|Điều trị ung thư|không điều trị ung thư/.test(e.t)) oldCancer++; if (e.a >= 86 && /ung thư .*thuyên giảm/.test(e.t)) oldCured++; });
+    }
+    ok(reDiag === 0, 'không bị chẩn đoán lại cùng một bệnh (' + reDiag + ')');
+    ok(chronCured === 0, 'bệnh mạn tính không "khỏi" mà được kiểm soát (' + chronCured + ')');
+    ok(oldCured <= Math.max(1, oldCancer * 0.25), 'ung thư sau 85 tuổi hiếm khi khỏi (' + oldCured + '/' + oldCancer + ')'); }
+
+  // 8. xe & nhà theo mức giàu có, đầu tư kinh doanh
+  { const l = mk(44000, 40, l => { l.money = l.base * 5000; l.lic.B = true; l.income = l.base; });
+    const d = E.DEC.mua_xe.make(l, R(1)); ok(['car_ev', 'car_pt', 'car_lux', 'car_sport', 'car_super'].every(k => d.opts.some(o => o.k === k)), 'có xe điện, xe phổ thông, xe sang, xe thể thao, siêu xe');
+    l.pending.unshift(d); E.resolve(l, 'car_pt'); ok(l.veh === 'ô tô' && l.vehTier === 1, 'mua ô tô phổ thông');
+    const v0 = l.vehVal, m0 = l.money; playDec(l, 'mua_xe', 'car_super'); ok(l.vehTier === 4 && /siêu xe/.test(l.vehName) && l.money < m0 - l.base * 100, 'đổi sang siêu xe (bán lại xe cũ ' + E.fmtMoney(l, v0) + ')');
+    ok(!E.DEC.mua_xe.make(l, R(2)).opts.some(o => o.k === 'car_pt'), 'đã có siêu xe thì không còn "mua xe phổ thông"');
+    l.ownHouse = true; l.houseVal = E.H.housePrice(l); l.houseTier = 1;
+    playDec(l, 'doi_nha', 'h4'); ok(l.houseTier === 4 && /biệt thự/.test(l.houseName), 'đổi lên biệt thự');
+    playDec(l, 'doi_nha', 'h5'); ok(l.houseTier === 5 && /dinh thự/.test(l.houseName) && isFinite(E.netWorth(l)), 'đổi lên dinh thự');
+    const dt = E.DEC.dau_tu_lon.make(l, R(3)); ok(['p_apt', 'p_shop', 'p_kiot', 'b_store', 'b_cafe', 'b_rest'].every(k => dt.opts.some(o => o.k === k)), 'có nhà cho thuê, cửa hàng, nhà hàng để đầu tư');
+    playDec(l, 'dau_tu_lon', 'p_apt'); playDec(l, 'dau_tu_lon', 'b_rest'); ok(l.props.length === 1 && l.ventures.length === 1, 'mua nhà cho thuê & mở nhà hàng');
+    const nw = E.netWorth(l); ok(nw > l.base * 10 && isFinite(nw), 'tài sản ròng tính cả nhà cho thuê & vốn kinh doanh'); }
+  { let branch = 0, broke = 0, sims = 0;
+    for (let i = 0; i < 300; i++) {
+      const l = mk(44100 + i, 35, l => { l.money = l.base * 30; l.ventures = [{ k: 'rest', n: 'nhà hàng', cap: l.base * 5, unit: l.base * 5, br: 1, mu: 0.15, sd: 0.32, yrs: 0, bad: 0, good: 0 }]; });
+      for (let y = 0; y < 15 && l.alive; y++) { E.wealth.investYear(l, R(i * 31 + y), () => { }, l.age); if ((l.sched || []).some(s => s.id === 'mo_chi_nhanh')) { l.sched = []; playDec(l, 'mo_chi_nhanh', 'yes'); } l.age++; }
+      sims++; const v = l.ventures[0]; if (v && v.br > 1) branch++; if (!v) broke++;
+      cleanLife(l, 'đầu tư #' + i);
+    }
+    ok(branch > 10 && broke > 10 && branch + broke < sims, 'kinh doanh: có người mở chi nhánh (' + branch + '), có người phá sản (' + broke + ') trên ' + sims); }
+
+  // 9. anh chị em
+  { let withSib = 0, names = 0, younger = 0, events = 0;
+    for (let i = 0; i < 300; i++) {
+      const l = E.createLife({ mode: 'vn', seed: 45000 + i });
+      if (l.fam.sibs) { withSib++; if (l.sibList.length === l.fam.sibs && l.sibList.every(s => !badText(s.n) && s.n.length > 3 && s.born < 0)) names++; }
+      run1(l, 50); if ((l.sibList || []).some(s => s.born > 0)) younger++;
+      if (l.log.some(e => /Đám cưới của|lên chức|Mẹ sinh em bé|chở bạn đi học|giảng lại bài|bênh bạn/.test(e.t))) events++;
+      cleanLife(l, 'anh chị em #' + i);
+    }
+    ok(withSib > 50 && names === withSib, 'anh chị em có tên & tuổi (' + names + '/' + withSib + ')');
+    ok(younger > 5, 'mẹ có thể sinh thêm em (' + younger + ')');
+    ok(events > 50, 'có chuyện với anh chị em trong đời (' + events + ')');
+    ['sib_tre', 'sib_vay', 'sib_tra', 'sib_gap', 'chia_tai_san', 'doi_nha', 'dau_tu_lon', 'mo_chi_nhanh', 'quan_ly_dau_tu', 'sau_huu'].forEach(id => ok(!!E.DEC[id], 'có tình huống "' + id + '"'));
+    ok(/sibList/.test(appSrc), 'bảng gia đình hiện từng anh chị em');
+    const old = E.createLife({ mode: 'vn', seed: 45900 }); old.fam.sibs = 2; delete old.sibList; E.migrate(old); ok(old.sibList && old.sibList.length === 2, 'đời lưu từ bản cũ được bổ sung anh chị em'); }
+
+  // 12. nghỉ hưu: chủ doanh nghiệp làm tiếp; nghỉ hưu rồi kinh doanh vẫn có lương hưu
+  { let early = 0, n = 0;
+    for (let i = 0; i < 100; i++) {
+      const l = mk(46000 + i, 55, l => { E.startJob(l, 'kd_tu_do', R(i), () => { }); l.job.rank = 1; l.st.hea = 80; });
+      for (let y = 0; y < 15; y++) { l.st.hea = 80; if (!l.job) break; const j0 = l.job; E.careerYear(l, R(i * 17 + y), () => { }, 'work'); if (!l.job && l.retired && l.age < 70) early++; l.age++; }
+      n++;
+    }
+    ok(early === 0, 'chủ doanh nghiệp không phải nghỉ hưu trước 70 tuổi (' + early + '/' + n + ')');
+    const l = mk(46500, 61, l => { l.retired = true; l.job = null; l.pensioned = true; l.pensionInc = l.base * 0.6; l.money = l.base * 5; l.st.kno = 90; });
+    let opened = false; for (let t = 0; t < 10 && !opened; t++) { const c = clone(l); c.rs = 100 + t; playDec(c, 'sau_huu', 'shop'); if (c.job && !c.retired) { opened = true; E.beginYear(c, {}); c.pending = []; const before = c.money; E.finishYear(c); E.endYear(c); ok(c.fin && c.fin.inc >= c.pensionInc, 'mở cửa hàng sau nghỉ hưu vẫn nhận lương hưu'); } }
+    ok(opened, 'nghỉ hưu rồi vẫn mở cửa hàng được'); }
+
+  // bản đầy đủ chạy sạch với người giàu tự động tiêu tiền
+  { let rich = 0; for (let i = 0; i < 200; i++) { const l = E.createLife({ mode: 'vn', seed: 47000 + i }); l.fam.q = 5; run1(l, 30); if (!l.alive) continue; l.money += l.base * 300; run1(l); checkLife(l, 'người giàu #' + i); if (l.vehTier >= 2 || l.houseTier >= 2 || (l.ventures || []).length || (l.props || []).length || l.log.some(e => /Khai trương|cho thuê|biệt thự|dinh thự|siêu xe|xe hạng sang/.test(e.t))) rich++; }
+    ok(rich > 60, 'người giàu (AI) có tiêu tiền vào xe, nhà, đầu tư (' + rich + ')'); }
 }
 function isVNx(l) { return E.isVN(l); }
 

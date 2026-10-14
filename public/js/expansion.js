@@ -182,11 +182,11 @@
     if (interested && M.land !== pl && (M.land === 'sốt' || M.land === 'vỡ bong bóng' || l.assets.land > 0.5) && r() < 0.8)
       log(M.land === 'sốt' ? 'Thị trường đất nóng sốt: cò đất dựng lều ngoài bãi đất trống, người người đổ xô đi mua.' : M.land === 'vỡ bong bóng' ? 'Bong bóng đất vỡ — giá đất lao dốc, nhiều người ôm nợ ngân hàng.' : M.land === 'đóng băng' ? 'Thị trường đất đóng băng, rao bán mãi không ai hỏi.' : 'Thị trường đất trở lại bình thường.', 'neutral');
     if (interested && M.stock === 'sập' && ps !== 'sập' && (l.assets.stock > 0.5 || r() < 0.3)) log('Chứng khoán sập mạnh, bảng điện đỏ lửa nhiều phiên liền.', 'neutral');
-    var A = l.assets, before = E.assetTotal(l);
+    var A = l.assets, core = function () { return (A.save || 0) + (A.gold || 0) + (A.stock || 0) + (A.land || 0); }, before = core(); // v2.4: chỉ 4 loại tài sản tài chính (nhà cho thuê, cơ sở kinh doanh tính riêng)
     if (before > 0.5) {
       var g = { save: 0.025, gold: 0.03 + U.normal(r) * 0.13, stock: STOCK[M.stock][0] + U.normal(r) * STOCK[M.stock][1], land: LAND[M.land][0] + U.normal(r) * LAND[M.land][1] };
       Object.keys(g).forEach(function (k) { if (A[k] > 0) A[k] = Math.max(0, A[k] * (1 + Math.max(-0.7, g[k]))); });
-      var after = E.assetTotal(l), parts = Object.keys(ASSET_NAME).filter(function (k) { return A[k] > 0.5; }).map(function (k) { return ASSET_NAME[k] + ' ' + pct(g[k]); });
+      var after = core(), parts = Object.keys(ASSET_NAME).filter(function (k) { return A[k] > 0.5; }).map(function (k) { return ASSET_NAME[k] + ' ' + pct(g[k]); });
       log('Tài sản đầu tư: ' + parts.join(' · ') + ' — tổng ' + mo(l, after) + ' (' + (after >= before ? 'tăng ' + mo(l, after - before) : 'giảm ' + mo(l, before - after)) + ').', 'money');
       if (M.stock === 'sập' && A.stock > l.base * 0.5) { fx(l, { hap: -5 }); l.mind.stress += 6; }
     }
@@ -255,7 +255,7 @@
     title: 'Khủng hoảng tuổi trung niên',
     text: function (l) { return 'Bước qua tuổi ' + l.age + ', bạn chợt tự hỏi: mình đã sống đúng với điều mình muốn chưa? Ngày nào cũng giống ngày nào.'; },
     opts: [
-      { k: 'passion', l: 'Bỏ việc, theo đuổi đam mê bấy lâu', req: function (l) { return !!l.job; }, h: 'Mất thu nhập ổn định', ai: { risk: 1.2, w: 0.5 }, run: function (l, r, log) { log('Nghỉ ' + E.jobTitle(l) + ' để làm điều mình thích. Ai cũng bảo bạn điên.', 'big'); l.job = null; l.flags.needJob = true; fx(l, { hap: 8 }); l.mind.stress -= 15; H.mem(l, 'Ngày nộp đơn nghỉ việc ở tuổi ' + l.age + ' để sống cho mình.', 5); } },
+      { k: 'passion', l: 'Bỏ việc, theo đuổi đam mê bấy lâu', req: function (l) { return !!l.job; }, h: 'Mất thu nhập ổn định', ai: { risk: 1.2, w: 0.5 }, run: function (l, r, log) { if (!l.job) { log('Muốn bỏ hết để sống cho mình, nhưng hoàn cảnh đã khác rồi.', 'neutral'); return; } log('Nghỉ ' + E.jobTitle(l) + ' để làm điều mình thích. Ai cũng bảo bạn điên.', 'big'); l.job = null; l.flags.needJob = true; fx(l, { hap: 8 }); l.mind.stress -= 15; H.mem(l, 'Ngày nộp đơn nghỉ việc ở tuổi ' + l.age + ' để sống cho mình.', 5); } },
       { k: 'buy', l: 'Mua một món đồ chơi đắt tiền (mô tô phân khối lớn, máy ảnh…)', h: function (l) { return mb(l, 0.4); }, req: function (l) { return l.money > l.base * 0.4; }, ai: { w: 0.6 }, run: function (l, r, log) { cashB(l, -0.4, 'Mua đồ chơi tuổi trung niên'); log('Tậu một chiếc mô tô phân khối lớn. Vui được vài tháng rồi nó nằm phủ bạt trong gara.', 'neutral'); fx(l, { hap: 4 }); } },
       { k: 'trip', l: 'Một chuyến đi xa một mình', h: function (l) { return mb(l, 0.08); }, ai: { w: 1 }, run: function (l, r, log) { cashB(l, -0.08, 'Chuyến đi một mình'); log('Đi một mình suốt dọc Tây Bắc. Đứng trên đỉnh đèo, bạn thấy lòng nhẹ tênh.', 'good'); fx(l, { hap: 8 }); l.mind.stress -= 15; H.mem(l, 'Một mình trên đỉnh đèo lộng gió, năm ' + l.age + ' tuổi.', 4); } },
       { k: 'affair', l: 'Một mối quan hệ ngoài luồng', req: function (l) { return !!(l.partner && l.partner.status !== 'dating'); }, ai: { bad: 1.5, risk: 0.8, w: 0.3 }, run: function (l, r, log) { if (!l.partner) return; fx(l, { karma: -10 }); if (ch(r, 0.45)) { log('Bị phát hiện ngoại tình. Gia đình tan vỡ.', 'bad'); fx(l, { hap: -15 }); H.mem(l, 'Ánh mắt ' + l.partner.name + ' ngày mọi chuyện vỡ lở.', 5); H.endPartner(l, log, 'div'); } else { log('Một mối quan hệ lén lút. Mỗi đêm về nhà là một lần day dứt.', 'bad'); fx(l, { hap: -3 }); l.mind.stress += 10; } } },
@@ -515,7 +515,8 @@
   // ===================================================================
   E.childOpts = function (l, k) {
     initKid(k);
-    var VN = G.VN, vn = isVN(l) && l.mode === 'vn';
+    // v2.4: đã định cư hẳn ở nước ngoài thì con sinh ra ở nước đó (trước đây vẫn sinh ở Việt Nam)
+    var VN = G.VN, vn = isVN(l) && l.mode === 'vn' && !(l.abroad && l.abroad.perm);
     var vice = l.addict && l.addict.drugs ? 'drugs' : l.addict && l.addict.gamble ? 'gamble' : l.addict && l.addict.alcohol ? 'alcohol' : E.isCrime && l.job && E.isCrime(l) ? 'gang' : null;
     var me = { name: l.name, sex: l.sex, age: k.born, job: k.pJob || (l.peakTitle || 'làm công ăn lương'), inc: k.pInc != null ? k.pInc : l.base * 0.8 / 12 };
     // tuổi & thu nhập của bạn đời được ghi lại đúng lúc con chào đời

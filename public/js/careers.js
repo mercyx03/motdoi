@@ -442,13 +442,23 @@
     var retAge;
     if (c.ladder) { var rk2 = l.job.rank; retAge = (rk2 <= 3 ? 53 : rk2 === 4 ? 55 : rk2 === 5 ? 57 : rk2 === 6 ? 60 : 62) - (l.sex === 'F' && rk2 >= 6 ? 2 : 0); }
     else if (c.sec === 'crime') retAge = 70;
+    // v2.4: chủ doanh nghiệp không có tuổi nghỉ hưu — còn khỏe, còn vốn thì còn làm (thường đến 70–78 rồi giao lại)
+    else if (c.cat === 'biz' && (/^(chủ|giám đốc)/.test(c.t[Math.min(l.job.rank || 0, c.t.length - 1)]) || /^kd_/.test(c.id))) retAge = 70 + (l.job.bizRet != null ? l.job.bizRet : (l.job.bizRet = U.randint(r, 0, 8)));
     else retAge = isVN(l) ? (formal ? (l.sex === 'M' ? 62 : 60) : 65 + U.randint(r, 0, 7)) : (l.gdp > 15 ? 65 : 68 + U.randint(r, 0, 5));
+    if (l.flags.afterRet && !c.ladder) retAge = Math.max(retAge, l.flags.afterRet); // đã nghỉ hưu rồi đi làm/kinh doanh tiếp
     if (a >= retAge || (a >= 55 && l.st.hea < 25)) {
-      l.lastIncome = inc; l.pensioned = formal && l.workYrs >= 15;
-      log((l.pensioned ? 'Nghỉ hưu, nhận lương hưu hằng tháng' : 'Thôi làm việc vì tuổi cao sức yếu') + ' sau ' + l.workYrs + ' năm lao động' + (c.ladder ? ', quân hàm ' + c.t[l.job.rank] : '') + '.', 'big');
-      H.mem(l, 'Buổi chia tay đồng nghiệp ngày nghỉ hưu.', 3);
-      l.peakTitle = jobTitleOf(l);
-      l.retired = true; l.job = null;
+      var firstRet = !l.flags.retOnce;
+      l.lastIncome = inc; l.pensioned = l.pensioned || (formal && l.workYrs >= 15);
+      if (l.pensioned && l.pensionInc == null) l.pensionInc = inc * 0.55; // lương hưu tính theo lương lúc nghỉ hưu lần đầu
+      var kidHeir = c.cat === 'biz' ? l.kids.filter(function (k) { return k.alive && a - k.born >= 25; })[0] : null;
+      if (c.cat === 'biz' && !firstRet) log('Khép lại việc kinh doanh tuổi già sau ' + (l.job.yrs || 1) + ' năm, giờ chỉ vui với con cháu.', 'big');
+      else if (kidHeir) { log('Giao lại ' + (l.job.p || 'cơ nghiệp') + ' cho con ' + kidHeir.name + ' sau ' + l.workYrs + ' năm gây dựng, lui về làm "cố vấn".', 'big'); H.mem(l, 'Ngày trao chìa khóa cửa hàng cho con.', 5); }
+      else log((l.pensioned ? 'Nghỉ hưu, nhận lương hưu hằng tháng' : c.cat === 'biz' ? 'Sang nhượng lại việc kinh doanh, nghỉ ngơi tuổi già' : 'Thôi làm việc vì tuổi cao sức yếu') + ' sau ' + l.workYrs + ' năm lao động' + (c.ladder ? ', quân hàm ' + c.t[l.job.rank] : '') + '.', 'big');
+      if (firstRet) H.mem(l, 'Buổi chia tay đồng nghiệp ngày nghỉ hưu.', 3);
+      if (firstRet || !l.peakTitle) l.peakTitle = jobTitleOf(l);
+      l.retired = true; l.job = null; l.flags.retOnce = true;
+      // còn khỏe, có vốn: được hỏi có muốn kinh doanh / làm thêm sau khi nghỉ hưu không
+      if (firstRet && a <= 66 && l.st.hea >= 45 && c.cat !== 'biz' && E.netWorth(l) - (l.houseVal || 0) > l.base * 1.2) H.sched(l, 'sau_huu', 1);
     }
     return inc;
   }
