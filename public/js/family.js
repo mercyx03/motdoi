@@ -94,7 +94,7 @@
     var pw = f.mAlive && f.fAlive ? 'Bố mẹ' : f.mAlive ? 'Mẹ' : 'Bố';
     H.cash(l, amt, away ? 'Bố mẹ chu cấp' : 'Tiền tiêu vặt bố mẹ cho');
     if (!away && !l.flags.pocketNoted) { l.flags.pocketNoted = true; log(pw + ' cho tiền tiêu vặt hằng tháng, khoảng ' + mo(l, amt / 12) + '/tháng — đủ ăn sáng, mua sách vở, thỉnh thoảng đi chơi với bạn.', 'good'); }
-    if (away && !l.flags.allowNoted) { l.flags.allowNoted = true; log(pw + ' gửi tiền sinh hoạt đều đặn mỗi tháng' + (l.cityStudent ? ' lên ' + l.cityStudent.city : l.abroad && l.abroad.study ? ' sang ' + l.abroad.name : '') + ', khoảng ' + mo(l, amt / 12) + '/tháng — "con cứ lo học, tiền nong để bố mẹ".', 'good'); }
+    if (away && !l.flags.allowNoted) { l.flags.allowNoted = true; log(pw + ' gửi tiền sinh hoạt đều đặn mỗi tháng' + (l.cityStudent ? ' lên ' + l.cityStudent.city : l.abroad && l.abroad.study ? ' sang ' + l.abroad.name : '') + ', khoảng ' + mo(l, amt / 12) + '/tháng — ' + (studying ? '"con cứ lo học, tiền nong để bố mẹ".' : working ? '"mới đi làm lương còn thấp, bố mẹ đỡ thêm".' : '"trong lúc con chưa tìm được việc, bố mẹ lo cho".'), 'good'); }
   }
 
   E.HOOKS.year.push(function (l, r, log, a) { partnerYear(l, r, log, a); allowanceYear(l, r, log, a); });

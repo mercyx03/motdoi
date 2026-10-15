@@ -63,7 +63,7 @@
     title: 'Học tiếp tiến sĩ?', major: 1,
     text: function (l) { return 'Bạn vừa nhận bằng thạc sĩ. Thầy hướng dẫn muốn nhận bạn làm nghiên cứu sinh tiến sĩ (3–4 năm, có học bổng nhỏ và việc trợ giảng). Có học vị tiến sĩ thì làm giảng viên, nghiên cứu viên, chuyên gia được trả cao hơn hẳn.'; },
     opts: [
-      { k: 'yes', l: 'Làm nghiên cứu sinh tiến sĩ', h: '3–4 năm, thu nhập thấp trong lúc học', ai: { smart: 1.2, amb: 0.8, w: 0.8 }, run: function (l, r, log) { l.school = 'phd'; l.schoolEnd = l.age + U.randint(r, 3, 4); log('Trở thành nghiên cứu sinh tiến sĩ' + (l.major ? ' ngành ' + E.MAJORS[l.major] : '') + '.', 'good'); fx(l, { kno: 4 }); } },
+      { k: 'yes', l: 'Làm nghiên cứu sinh tiến sĩ', h: '3–4 năm, thu nhập thấp trong lúc học', ai: { smart: 1.2, amb: 0.8, w: 0.8 }, run: function (l, r, log) { l.school = 'phd'; l.schoolEnd = l.age + U.randint(r, 3, 4); log('Trở thành nghiên cứu sinh tiến sĩ' + (l.major ? ' ngành ' + (l.majorName || E.MAJORS[l.major]) : '') + '.', 'good'); fx(l, { kno: 4 }); } },
       { k: 'no', l: 'Đi làm luôn với bằng thạc sĩ', ai: { w: 1.2 }, run: function (l, r, log) { l.flags.needJob = true; log('Cầm bằng thạc sĩ đi xin việc.', 'neutral'); } }
     ]
   });
@@ -140,7 +140,7 @@
     if (job0 && fit !== 0 && !job0.fitNoted && l.job === job0) {
       job0.fitNoted = true;
       var tw = l.talent ? E.talentText(l) : (l.hobby && hobbyName(l)) || 'sở thích của bạn';
-      log(fit > 0 ? 'Công việc ' + E.jobTitle(l) + ' đúng sở trường (' + tw + ') — làm việc say mê, năng suất cao hơn đồng nghiệp, được cấp trên để ý.' : 'Công việc ' + E.jobTitle(l) + ' chẳng liên quan gì đến ' + tw + ' — đi làm chủ yếu vì đồng lương, nhiều hôm chán nản, dễ căng thẳng.', fit > 0 ? 'good' : 'neutral');
+      log(fit > 0 ? 'Công việc ' + E.jobTitle(l) + ' đúng sở trường (' + tw + ') — làm việc say mê, ' + (H.isEmployee(l) ? 'năng suất cao hơn đồng nghiệp, được cấp trên để ý.' : 'làm ra sản phẩm tốt, khách hàng tin tưởng quay lại.') : 'Công việc ' + E.jobTitle(l) + ' chẳng liên quan gì đến ' + tw + ' — đi làm chủ yếu vì đồng lương, nhiều hôm chán nản, dễ căng thẳng.', fit > 0 ? 'good' : 'neutral');
     }
     y.gross = inc;
     if (ins0) {
@@ -514,7 +514,7 @@
     var ed = [], e = l.edu || 0;
     if (e >= 1) ed.push('Tốt nghiệp tiểu học'); if (e >= 2) ed.push('Tốt nghiệp trung học cơ sở'); if (e >= 3) ed.push('Tốt nghiệp trung học phổ thông');
     if (e === 4) ed.push('Bằng trung cấp / cao đẳng nghề');
-    if (e >= 5) ed.push('Bằng cử nhân / kỹ sư' + (l.major && E.MAJORS[l.major] ? ' ngành ' + E.MAJORS[l.major] : '') + (l.uniCity ? ' (' + l.uniCity + ')' : ''));
+    if (e >= 5) ed.push('Bằng cử nhân / kỹ sư' + (l.major && (l.majorName || E.MAJORS[l.major]) ? ' ngành ' + (l.majorName || E.MAJORS[l.major]) : '') + (l.uniCity ? ' (' + l.uniCity + ')' : ''));
     if (e >= 6) ed.push('Bằng thạc sĩ'); if (e >= 7) ed.push('Học vị tiến sĩ');
     if (l.school) ed.push('Đang học: ' + E.schoolName(l.school) + (l.schoolEnd ? ' (dự kiến xong năm ' + yr(l, l.schoolEnd) + ')' : ''));
     P.eduLevel = l.age < 6 ? 'Chưa đến tuổi đi học' : U.cap(E.EDU[e] || '');

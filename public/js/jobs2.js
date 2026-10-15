@@ -606,7 +606,7 @@
     ['kien', 'Kiện tác giả', { smart: 1 }, function (l, r, log) { cB(l, -0.1, 'Phí kiện'); if (ch(r, 0.5)) log('Thắng kiện, tác giả phải xin lỗi công khai.', 'good'); }],
     ['phan_phao', 'Phản pháo', { risk: 1 }, function (l, r, log) { if (ch(r, 0.5)) fame(l, 2); else phot(l); }]], function (l) { return (l.fame || 0) >= 2e4; });
   J('cn_cuu_sep', '*', 0, 9, 0.03, 10, 'Sơ cứu sếp', 'Sếp lớn ngất ngay giữa cuộc họp, bạn là người biết sơ cứu.', [
-    ['so_cuu', 'Sơ cứu ngay, gọi cấp cứu', { w: 1 }, function (l, r, log) { fx(l, { soc: 5 }); rep(l, 10); if (ch(r, 0.5) && promote(l)) log('Sơ cứu kịp thời cứu sống sếp. Ít lâu sau bạn được thăng chức: ' + E.jobTitle(l) + '.', 'big'); else log('Sơ cứu kịp thời, cả công ty biết tên bạn.', 'good'); }]], function (l) { return H.isEmployee(l); });
+    ['so_cuu', 'Sơ cứu ngay, gọi cấp cứu', { w: 1 }, function (l, r, log) { fx(l, { soc: 5 }); rep(l, 10); if (ch(r, 0.5) && !/^chủ /.test((E.jobDef(l).t[l.job.rank + 1]) || 'chủ ') && promote(l)) log('Sơ cứu kịp thời cứu sống sếp. Ít lâu sau bạn được thăng chức: ' + E.jobTitle(l) + '.', 'big'); else log('Sơ cứu kịp thời, cả công ty biết tên bạn.', 'good'); }]], function (l) { return H.isEmployee(l); });
   J('cn_chuyen_nghe_tuoi_40', '*', 0, 9, 0.08, 5, 'Chán nghề tuổi 40', 'Chán nghề, có cơ hội học lại một nghề khác hoàn toàn.', [
     ['lam_lai', 'Bỏ hết, làm lại từ đầu', { risk: 0.8, amb: 1 }, function (l, r, log) { cB(l, -0.3, 'Học nghề mới'); fx(l, { hap: 8 }); l.flags.upgradeJob = true; log('Quyết định làm lại từ đầu với nghề mới.', 'big'); }],
     ['o_lai', 'Ở lại nghề cũ', MID, function (l, r, log) { log('Ở lại với nghề cũ.', 'neutral'); }]], function (l, a) { return a >= 38 && a <= 45; });

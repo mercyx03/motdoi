@@ -208,6 +208,8 @@
       midM: 'Văn:3,Đức:3,Minh:4,Quang:3,Hữu:2,Thành:2,Gia:3,Anh:2,Công:1,Trung:1,Tuấn:1,Hoàng:2,Ngọc:1,Xuân:1,Đình:1,Bảo:3,Nhật:2,Khánh:1,Thanh:1,Chí:1,Duy:1,Quốc:1,Đăng:1,Phúc:1',
       midF: 'Thị:3,Ngọc:3,Thu:2,Thanh:2,Thùy:2,Bảo:3,Khánh:2,Minh:3,Phương:2,Mai:1,Hồng:1,Diệu:1,Kim:1,Hoài:1,Tuệ:1,Gia:2,Như:1,Quỳnh:1,An:1,Hà:1,Tường:1',
       M: 'An,Bảo,Bình,Cường,Dũng,Duy,Đạt,Đức,Hải,Hiếu,Hoàng,Huy,Hùng,Khang,Khoa,Khôi,Kiên,Lâm,Long,Lộc,Minh,Nam,Nghĩa,Nhân,Phát,Phong,Phúc,Quân,Quang,Sơn,Tài,Thắng,Thịnh,Tiến,Toàn,Trí,Trung,Tuấn,Tùng,Việt,Vinh,Vũ,Đăng,Hưng,Khải,Nguyên,Thiện,Tâm',
+      fullM: 'Văn An,Văn Bình,Văn Cường,Văn Dũng,Văn Hải,Văn Hùng,Văn Long,Văn Nam,Văn Sơn,Văn Thắng,Văn Toàn,Văn Tuấn,Văn Hậu,Văn Đức,Văn Lâm,Văn Tài,Văn Tiến,Văn Thành,Văn Quyết,Văn Hưng,Văn Khánh,Văn Lực,Văn Phong,Văn Thanh,Đức Anh,Đức Minh,Đức Huy,Đức Thắng,Đức Trung,Đức Long,Đức Mạnh,Đức Tài,Đức Hiếu,Đức Phúc,Đức Duy,Đức Thịnh,Minh Anh,Minh Đức,Minh Hiếu,Minh Hoàng,Minh Khang,Minh Khôi,Minh Nhật,Minh Quân,Minh Tuấn,Minh Trí,Minh Hải,Minh Phúc,Minh Thành,Minh Châu,Minh Long,Quang Huy,Quang Minh,Quang Vinh,Quang Hải,Quang Dũng,Quang Trung,Quang Khải,Quang Đạt,Hữu Phước,Hữu Nghĩa,Hữu Thắng,Hữu Tài,Hữu Lộc,Hữu Trí,Hữu Đạt,Thành Đạt,Thành Long,Thành Nam,Thành Trung,Thành Công,Thành Luân,Gia Bảo,Gia Huy,Gia Khánh,Gia Hưng,Gia Phúc,Gia Khang,Gia Kiệt,Gia Minh,Anh Tuấn,Anh Dũng,Anh Khoa,Anh Quân,Anh Đức,Anh Tú,Công Minh,Công Danh,Công Thành,Công Hậu,Trung Kiên,Trung Hiếu,Trung Dũng,Trung Nghĩa,Trung Đức,Tuấn Anh,Tuấn Kiệt,Tuấn Hưng,Tuấn Khải,Hoàng Long,Hoàng Nam,Hoàng Phúc,Hoàng Anh,Hoàng Minh,Hoàng Việt,Hoàng Hải,Ngọc Hải,Ngọc Sơn,Ngọc Tú,Ngọc Quang,Xuân Trường,Xuân Bách,Xuân Hùng,Xuân Phúc,Đình Trọng,Đình Phong,Đình Khoa,Đình Tuấn,Bảo Long,Bảo Nam,Bảo Khang,Bảo Anh,Bảo Lâm,Nhật Minh,Nhật Huy,Nhật Nam,Nhật Quang,Nhật Duy,Khánh Duy,Khánh Toàn,Khánh Hưng,Khánh Nam,Thanh Tùng,Thanh Sơn,Thanh Bình,Thanh Phong,Thanh Hải,Thanh Tâm,Chí Thanh,Chí Công,Chí Bảo,Chí Hiếu,Duy Mạnh,Duy Khánh,Duy Anh,Duy Hưng,Quốc Bảo,Quốc Anh,Quốc Huy,Quốc Khánh,Quốc Việt,Quốc Trung,Đăng Khoa,Đăng Khôi,Đăng Quang,Phúc Thịnh,Phúc Lâm,Phúc An,Tiến Dũng,Tiến Đạt,Tiến Thành,Mạnh Hùng,Mạnh Cường,Mạnh Tuấn,Việt Hoàng,Việt Anh,Việt Dũng,Hải Đăng,Hải Nam,Hải Long,Thế Anh,Thế Vinh,Thế Hiển,Tấn Phát,Tấn Tài,Tấn Lộc,Phước Lộc,Phước Thiện,Trọng Nhân,Trọng Hiếu,Thiện Nhân,Nguyên Khang,Khôi Nguyên,Minh Nhân,Kim Long,Trường Giang,Sơn Tùng,Tùng Lâm',
+      fullF: 'Thị Lan,Thị Hoa,Thị Hồng,Thị Hương,Thị Mai,Thị Nga,Thị Thu,Thị Hạnh,Thị Huyền,Thị Thảo,Thị Hằng,Thị Dung,Thị Loan,Thị Yến,Thị Phương,Thị Ngọc,Thị Thủy,Thị Bích,Thị Liên,Thị Nhung,Thị Trang,Thị Vân,Thị Hà,Thị Thanh,Thị Oanh,Thị Hiền,Thị Tuyết,Thị Kim,Thị Lý,Ngọc Anh,Ngọc Ánh,Ngọc Hân,Ngọc Lan,Ngọc Mai,Ngọc Trâm,Ngọc Diệp,Ngọc Hà,Ngọc Huyền,Ngọc Linh,Ngọc Bích,Ngọc Quỳnh,Thu Hà,Thu Trang,Thu Hương,Thu Thủy,Thu Phương,Thu Hằng,Thu Uyên,Thu Huyền,Thanh Hương,Thanh Hà,Thanh Tâm,Thanh Thảo,Thanh Huyền,Thanh Mai,Thanh Vân,Thanh Nhàn,Thanh Trúc,Thùy Linh,Thùy Dung,Thùy Trang,Thùy Dương,Thùy Chi,Thùy Tiên,Bảo Anh,Bảo Ngọc,Bảo Châu,Bảo Trâm,Bảo Vy,Bảo Hân,Bảo Yến,Khánh Linh,Khánh Huyền,Khánh Ly,Khánh Vy,Khánh Chi,Khánh An,Khánh Ngân,Minh Anh,Minh Thư,Minh Châu,Minh Ngọc,Minh Hằng,Minh Tâm,Minh Khuê,Minh Thùy,Minh Trang,Phương Anh,Phương Linh,Phương Thảo,Phương Uyên,Phương Nhi,Phương Ly,Phương Mai,Mai Anh,Mai Linh,Mai Phương,Mai Chi,Mai Hương,Hồng Nhung,Hồng Hạnh,Hồng Ngọc,Hồng Vân,Hồng Nhung,Diệu Linh,Diệu Thúy,Diệu Hương,Kim Ngân,Kim Chi,Kim Oanh,Kim Thoa,Kim Liên,Hoài Thương,Hoài An,Hoài Linh,Tuệ An,Tuệ Lâm,Tuệ Nhi,Gia Hân,Gia Linh,Gia Như,Như Quỳnh,Như Ý,Quỳnh Anh,Quỳnh Chi,Quỳnh Như,Quỳnh Trang,Quỳnh Hương,Hà My,Hà Phương,Hà Vy,Hà Linh,Hà Anh,Lan Anh,Lan Hương,Lan Phương,Hải Yến,Hải Anh,Hải Vân,Huyền Trang,Huyền My,Mỹ Linh,Mỹ Duyên,Mỹ Hạnh,Cẩm Tú,Cẩm Ly,Cẩm Nhung,Tường Vy,Thảo Nguyên,Thảo Vy,Thảo My,Yến Nhi,Ánh Dương,Ánh Tuyết,Bích Ngọc,Bích Phương,Bích Hằng,Thúy Hằng,Thúy Kiều,Thúy Nga,Vân Anh,Vân Khánh,Trà My,Diễm My,Diễm Quỳnh,Kiều Trang,Kiều Oanh,Tú Anh,Tú Uyên,Nhã Uyên,Nhã Phương,An Nhiên,Đan Thanh,Uyên Nhi,Ngân Hà,Xuân Mai,Xuân Quỳnh,Hồng Ánh,Ngọc Châu,Thục Anh,Thục Trinh,Bảo Trân,Phương Trinh,Thanh Trúc,Ngọc Trinh,Thu Ngân',
       F: 'Anh,Châu,Chi,Dung,Duyên,Giang,Hà,Hân,Hằng,Hạnh,Hiền,Hoa,Hồng,Hương,Huyền,Lan,Linh,Loan,Ly,Mai,My,Nga,Ngân,Ngọc,Nhi,Nhung,Oanh,Phương,Quyên,Quỳnh,Tâm,Thảo,Thư,Thủy,Trang,Trâm,Uyên,Vân,Vy,Yến,An,Tú,Khuê,Diệp,Nhiên,Ngân'
     },
     hmong: {
@@ -282,12 +284,18 @@
   var NAMEP = {};
   Object.keys(NAMES).forEach(function (k) {
     var n = NAMES[k];
-    NAMEP[k] = { sur: parseW(n.sur), midM: parseW(n.midM), midF: parseW(n.midF), M: n.M.split(','), F: n.F.split(',') };
+    NAMEP[k] = { sur: parseW(n.sur), midM: parseW(n.midM), midF: parseW(n.midF), M: n.M.split(','), F: n.F.split(','), fullM: n.fullM ? n.fullM.split(',') : null, fullF: n.fullF ? n.fullF.split(',') : null };
   });
 
   function vnName(r, style, sex, surname) {
     var U = G.U, p = NAMEP[style] || NAMEP.kinh;
     var sur = surname || U.wpick(r, p.sur, function (x) { return x[1]; })[0];
+    var fl = sex === 'F' ? p.fullF : p.fullM;
+    if (fl && style === 'kinh') { // v3.5: tên đệm + tên gọi có thật, không ghép ngẫu nhiên; tránh trùng họ với tên gọi ("Hà Thu Hà")
+      var nm = '';
+      for (var t = 0; t < 6; t++) { nm = U.wpick(r, fl, function (x) { return /^(Văn|Thị) /.test(x) ? 0.55 : 1; }); var w = nm.split(' '); if (w[w.length - 1] !== sur && w[0] !== sur) break; }
+      return { full: sur + ' ' + nm, sur: sur };
+    }
     var mid = U.wpick(r, sex === 'F' ? p.midF : p.midM, function (x) { return x[1]; })[0];
     var given = U.pick(r, sex === 'F' ? p.F : p.M);
     if (mid === '—') mid = '';

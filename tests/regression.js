@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -1682,6 +1682,48 @@ section('32. Bản 3.4: hẹn hò qua mạng (người tử tế, đào mỏ, l�
   { const l = mk(32800, 30, x => { x.money = 5; x.ownHouse = false; }); const d = E.DEC.house.make(l, R(1)); ok(d.opts.length > 1 || (/tham khảo/.test(d.text) && /tích lũy/.test(d.text)), 'không đủ tiền mua nhà thì vẫn hiện giá tham khảo thay vì danh sách trống'); }
   { const l = mk(32810, 50, x => { x.fam.mAlive = true; x.fam.fAlive = false; }); const d = E.DEC.care.make(l, R(1)); l.fam.mAlive = false; l.pending.unshift(d); const t = E.resolve(l, 'no').map(e => e.t).join(' '); ok(!/chu cấp cho mẹ/.test(t), 'mẹ đã mất thì không còn "gửi tiền chu cấp cho mẹ"'); }
   { const l = mk(32820, 70, x => { x.job = null; x.retired = true; }); let bad = 0; const id = Object.keys(E.DEC).find(k => E.DEC[k].def && E.DEC[k].def.title === 'Rủ chơi hụi'); for (let i = 0; i < 30; i++) { const d = E.DEC[id].make(l, R(i)); if (/đồng nghiệp/.test(d.text + JSON.stringify(d.data))) bad++; } ok(!!id && bad === 0, 'người đã nghỉ hưu không được "chị đồng nghiệp ở công ty" rủ chơi hụi'); }
+}
+
+section('33. Bản 3.5: năng khiếu → trường chuyên ngành → nghề, sự kiện theo bối cảnh ngành, tên người Việt tự nhiên');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup, sex) => { const l = E.createLife({ mode: 'vn', seed, gender: sex || 'M' }); l.age = age; if (age >= 18) l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  const play = (l, id, key, arg) => { const d = E.DEC[id].make(l, R(l.rs), arg); l.pending.unshift(d); return E.resolve(l, key || E.autoKey(l)).map(e => e.t).join(' | '); };
+  // tên người Việt
+  { const h = { rs: 99 }, r = () => U.rand(h); let bad = 0, n = 0; const seen = new Set();
+    for (let i = 0; i < 3000; i++) { const s = i % 2 ? 'F' : 'M'; const v = G.VN.vnName(r, 'kinh', s); const w = v.full.split(' '); n++; seen.add(w.slice(1).join(' ')); if (w.length !== 3 || w[1] === w[2] || w[0] === w[2] || (s === 'M' && w[1] === 'Thị') || (s === 'F' && w[1] === 'Văn')) bad++; }
+    ok(bad === 0, 'tên người Kinh đủ họ – đệm – tên, không lặp chữ, không "Văn" cho nữ / "Thị" cho nam (' + bad + '/' + n + ' lỗi)');
+    ok(!seen.has('Tường Hà') && seen.size > 150, 'tên đệm + tên gọi lấy từ danh sách tên có thật (không còn kiểu "Tường Hà"), đủ đa dạng (' + seen.size + ' tên)'); }
+  // gợi ý trường theo năng khiếu
+  ok(['Học viện Âm nhạc Quốc gia Việt Nam', 'Nhạc viện TP. Hồ Chí Minh', 'Trường Đại học Sư phạm Nghệ thuật Trung ương', 'Trường Đại học Văn hóa Nghệ thuật Quân đội', 'Trường Cao đẳng Nghệ thuật Hà Nội'].every(n => E.TALENT_SCHOOLS['âm nhạc'].sch.some(s => s[1] === n)), 'năng khiếu ca hát có đủ 5 trường gợi ý: HV Âm nhạc QG, Nhạc viện TP.HCM, ĐH SP Nghệ thuật TW, ĐH VHNT Quân đội, CĐ Nghệ thuật Hà Nội');
+  ok(['âm nhạc', 'hội họa', 'diễn xuất', 'thể thao', 'ngoại ngữ', 'toán học', 'ăn nói', 'khéo tay', 'kinh doanh', 'làm đẹp', 'game', 'cờ'].every(t => E.TALENT_SCHOOLS[t] && E.TALENT_SCHOOLS[t].sug), 'mọi năng khiếu đều có gợi ý hướng đi');
+  ok(Object.values(E.TALENT_SCHOOLS).every(T => T.sch.every(s => s[7].every(id => !!E.CAR[id]))), 'mọi nghề gợi ý sau khi ra trường đều tồn tại');
+  { const l = mk(33100, 16, x => { x.talent = 'âm nhạc'; x.skill = 60; x.school = 'upper'; x.indep = false; }); const d = E.DEC.nk_dinh_huong.make(l, R(1));
+    ok(/Học viện Âm nhạc|Nhạc viện/.test(d.text) && /hướng khác/.test(d.text) && d.opts.map(o => o.k).join() === 'luyen,ca_hai,khac', 'tuổi 15–17 được định hướng: gợi ý trường, nghề; được chọn theo năng khiếu hoặc hướng khác');
+    play(l, 'nk_dinh_huong', 'luyen'); ok(l.flags.tPrep === 1 && l.skill > 60, 'chọn luyện thi năng khiếu thì năng khiếu tiến bộ, tăng cơ hội đỗ'); }
+  { const l = mk(33200, 18, x => { x.talent = 'âm nhạc'; x.skill = 70; x.st.kno = 60; x.edu = 3; x.school = null; }); const d = E.DEC.uni.make(l, R(1)); const nk = d.opts.filter(o => /^nk_/.test(o.k));
+    ok(nk.length === 3 && nk.every(o => /khả năng đỗ|khó đỗ/.test(o.h) && /ra trường có thể làm/.test(o.h)), 'ngã rẽ 18 tuổi có 3 trường chuyên ngành kèm khả năng đỗ và nghề sau này: ' + nk.map(o => o.l.replace(/^Thi năng khiếu vào /, '')).join('; '));
+    ok(d.opts.some(o => o.k === 'uni_big') && d.opts.some(o => o.k === 'work'), 'vẫn giữ các lựa chọn khác (đại học thường, đi làm…)'); }
+  { const pass = sk => { let n = 0; for (let i = 0; i < 150; i++) { const l = mk(33300 + i, 18, x => { x.talent = 'âm nhạc'; x.skill = sk; x.st.kno = 55; x.edu = 3; x.school = null; }); play(l, 'uni', 'nk_hvan'); if (l.flags.tSchool) n++; } return n; };
+    const lo = pass(30), hi = pass(85); ok(hi > lo * 2 && hi > 100, 'thi năng khiếu đỗ hay trượt tùy trình độ (năng khiếu thấp ' + lo + '/150, cao ' + hi + '/150)'); }
+  { const l = mk(33400, 18, x => { x.talent = 'âm nhạc'; x.skill = 95; x.st.kno = 70; x.edu = 3; x.school = null; x.flags.tPrep = 1; }); const t = play(l, 'uni', 'nk_hvan');
+    ok(l.school === 'uni' && l.majorName === 'Thanh nhạc' && l.flags.tSchool.id === 'hvan', 'đỗ Học viện Âm nhạc: ' + t.slice(0, 80));
+    let g = 0; while (l.school && g++ < 6) { E.beginYear(l, {}); l.pending = []; E.finishYear(l); if (l.school) { l.pending = []; E.endYear(l); } } const all = l.log.map(e => e.t).join(' ');
+    ok(/Tốt nghiệp đại học ngành Thanh nhạc/.test(all), 'ra trường ghi đúng ngành Thanh nhạc');
+    const rt = l.pending.find(d => d.id === 'nk_ra_truong'); ok(!!rt && rt.opts.some(o => /Ca sĩ/i.test(o.l)) && rt.opts.some(o => o.k === 'khac'), 'ra trường được gợi ý nghề đúng chuyên ngành (ca sĩ, nhạc công) hoặc chọn ngành khác');
+    l.pending = [rt]; E.resolve(l, rt.opts[0].k); ok(l.job && E.resolveJob(l.job.id) === 'ca_si', 'chọn làm ca sĩ sau khi tốt nghiệp'); }
+  { const l = mk(33500, 18, x => { x.talent = 'khéo tay'; x.skill = 50; x.edu = 3; x.school = null; }); let n = 0; for (let i = 0; i < 20; i++) { const L = JSON.parse(JSON.stringify(l)); L.rs = i * 7; play(L, 'uni', 'nk_cdn'); if (L.school === 'voc') n++; } ok(n >= 15, 'cao đẳng nghề học 3 năm theo hệ trường nghề'); }
+  // ngành âm nhạc: mua bài, tự sáng tác, may mắn
+  { let hits = 0, hitsYoung = 0; for (let i = 0; i < 200; i++) { const a = mk(33600 + i, 26, x => { E.startJob(x, 'ca_si', R(i), () => { }); x.money = 2000; x.skill = 60; }); const f0 = a.fame; play(a, 'am_mua_bai', 'hit'); if (a.fame > f0 * 2) hits++; const b = mk(33600 + i, 26, x => { E.startJob(x, 'ca_si', R(i), () => { }); x.money = 2000; x.skill = 60; }); const g0 = b.fame; play(b, 'am_mua_bai', 'tre'); if (b.fame > g0 * 2) hitsYoung++; }
+    ok(hits > 40 && hits < 140 && hitsYoung < hits, 'mua bài của nhạc sĩ hit-maker dễ thành hit hơn (' + hits + '/200) bài của nhạc sĩ trẻ (' + hitsYoung + '/200), nhưng vẫn cần may mắn'); }
+  { const l = mk(33700, 26, x => { E.startJob(x, 'nhac_si', R(1), () => { }); x.money = 100; }); play(l, 'am_ban_bai', 'ban_quyen'); const m0 = l.money; const hook = E.HOOKS.year.find(h => /royalty/.test(h.toString())); hook(l, R(2), () => { }, 27); ok(l.flags.royalty > 0 && l.money > m0, 'giữ quyền tác giả thì có tiền bản quyền hằng năm'); }
+  // sự kiện ngành có lựa chọn liêm chính
+  { const ids = ['mt_tranh_gia', 'hlv_khai_tuoi', 'pt_thuoc_tang_co', 'ks_an_toan', 'tm_go_lau', 'cc_ho_so_gia', 'xam_tre_vi_thanh_nien', 'nn_dich_sai'];
+    ok(ids.every(id => E.DEC[id] && E.DEC[id].def.opts.some(o => o.ai && o.ai.w >= 1.2)), 'các tình huống cám dỗ trong nghề đều có lựa chọn làm đúng');
+    const l = mk(33800, 35, x => { x.edu = 5; E.startJob(x, 'cong_chung', R(3), () => { }); }); play(l, 'cc_ho_so_gia', 'lam'); ok(l.flags.traps && l.flags.traps.cong_chung_gia === 35, 'làm sai thì có hậu quả đến sau (công chứng giấy tờ giả)'); }
+  { const cnt = {}; Object.keys(E.CAR).forEach(id => cnt[id] = 0); E.TRIG.forEach(t => { const j = E.JOBS2[t.id]; if (Array.isArray(j)) j.forEach(id => cnt[id] = (cnt[id] || 0) + 1); });
+    const need = ['ky_su', 'tho_han', 'tho_moc', 'phuc_vu', 'ban_rong', 've_so', 'cong_chung', 'dao_dien', 'bien_kich', 'hoa_si', 'van_cong', 'nhac_si'];
+    ok(need.every(id => cnt[id] >= 1), 'những nghề trước đây không có sự kiện riêng giờ đã có: ' + need.map(id => id + ' ' + cnt[id]).join(', ')); }
 }
 function isVNx(l) { return E.isVN(l); }
 

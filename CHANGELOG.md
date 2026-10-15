@@ -4,6 +4,64 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.5.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.4.0.
+
+### Năng khiếu → trường chuyên ngành → nghề
+- **Định hướng ở tuổi 15–17:** thầy cô và bố mẹ gợi ý hướng đi theo năng khiếu, kèm tên trường và nghề phù hợp. Ba lựa chọn:
+  - Theo năng khiếu, luyện thi năng khiếu từ sớm.
+  - Học văn hóa là chính, vẫn giữ năng khiếu để mở cả hai đường.
+  - Chọn hướng khác.
+- **Ngã rẽ 18 tuổi** có thêm 3 trường chuyên ngành hợp nhất với năng khiếu. Mỗi trường ghi rõ nội dung thi, khả năng đỗ và nghề có thể làm sau khi ra trường. Đỗ hay trượt tùy trình độ năng khiếu, sự chuẩn bị và điểm văn hóa. Các trường theo năng khiếu:
+  - **Ca hát:** Học viện Âm nhạc Quốc gia Việt Nam, Nhạc viện TP. HCM, ĐH Sư phạm Nghệ thuật Trung ương, ĐH Văn hóa Nghệ thuật Quân đội, CĐ Nghệ thuật Hà Nội.
+  - **Hội họa:** ĐH Mỹ thuật Việt Nam, ĐH Mỹ thuật TP. HCM, ĐH Mỹ thuật Công nghiệp, ĐH Kiến trúc Hà Nội.
+  - **Diễn xuất:** ĐH Sân khấu – Điện ảnh Hà Nội / TP. HCM, ĐH Văn hóa Nghệ thuật Quân đội.
+  - **Thể thao:** ĐH Thể dục Thể thao Bắc Ninh / TP. HCM, ĐH Sư phạm TDTT Hà Nội.
+  - **Ngoại ngữ:** ĐH Ngoại ngữ – ĐHQG HN, ĐH Hà Nội, Học viện Ngoại giao.
+  - **Toán:** ĐH Bách khoa Hà Nội, ĐH Công nghệ, ĐH Khoa học Tự nhiên.
+  - **Ăn nói:** Học viện Báo chí và Tuyên truyền, ĐH KHXH&NV, ĐH Luật.
+  - **Khéo tay:** Bách khoa, ĐH Sư phạm Kỹ thuật, cao đẳng nghề.
+  - **Kinh doanh:** NEU, Ngoại thương, UEH.
+  - **Làm đẹp:** thiết kế thời trang, cao đẳng chăm sóc sắc đẹp.
+- **Ra trường:** gợi ý nghề đúng chuyên ngành (VD Thanh nhạc → ca sĩ, nhạc công; Sư phạm Âm nhạc → giáo viên; trường quân đội → diễn viên đoàn văn công). Vẫn có thể chọn ngành khác.
+- Nhật ký, hồ sơ ghi đúng tên ngành ("Tốt nghiệp đại học ngành Thanh nhạc").
+- **Nghề mới:** họa sĩ; diễn viên đoàn văn công quân đội.
+
+### Sự kiện theo bối cảnh ngành (hơn 40 sự kiện)
+- **Ca hát:**
+  - Mua bài của nhạc sĩ hit-maker (đắt, dễ thành hit hơn), mua bài của nhạc sĩ trẻ, tự sáng tác, hoặc cover. Có bài hay vẫn cần may mắn.
+  - Thi các cuộc thi giọng hát / rap / sáng tác trên truyền hình.
+  - Clip hát đám cưới bị quay lén rồi lan truyền.
+  - Giữ quyền tác giả để nhận tiền bản quyền hằng năm.
+  - Hạt xơ dây thanh: nghỉ điều trị hay cố hát tiếp.
+  - Mùa show Tết, người hâm mộ quá khích.
+  - Đoàn văn công biểu diễn phục vụ bộ đội biên giới.
+- **Mỹ thuật, thiết kế:** triển lãm cá nhân, khách đặt vẽ chân dung, đơn "chép tranh" ký tên danh họa (có hậu quả về sau), đấu giá từ thiện, thi phương án kiến trúc, tuần lễ thời trang, mất thẻ nhớ ảnh cưới.
+- **Sân khấu – điện ảnh – truyền hình:** phim đầu tay (nghệ thuật hay thương mại), kịch bản bị sửa, sự cố ở đám cưới, dẫn thay chương trình lớn.
+- **Thể thao:** phát hiện học trò nghèo có năng khiếu, lời đề nghị khai gian tuổi, khách đòi thuốc tăng cơ.
+- **Ngoại ngữ, du lịch:** phiên dịch cabin, phát hiện mình dịch sai, khách mất hộ chiếu, hành khách gây rối trên máy bay.
+- **Kỹ thuật:** dự án gấp, sáng kiến – sáng chế, ép ký kiểm định khi chưa thử tải (có hậu quả về sau), rủ khởi nghiệp.
+- **Các nghề trước đây chưa có sự kiện riêng:** thợ hàn, thợ mộc, phục vụ, bán hàng rong, bán vé số, công chứng, đầu bếp, trang điểm, thợ xăm, spa.
+- Như mọi bản trước, tình huống cám dỗ nào cũng có lựa chọn làm đúng. Cán bộ, công an trong sự kiện làm việc tận tình.
+
+### Tên người Việt tự nhiên hơn
+- Trước đây tên đệm và tên gọi được ghép ngẫu nhiên, nên có những tên nghe không giống người Việt như "Trần Tường Hà".
+- Nay tên đệm + tên gọi lấy từ danh sách hơn 370 tên có thật, thường gặp (Nguyễn Minh Khôi, Trần Thu Hà, Lê Khánh Linh, Phạm Gia Bảo…).
+- Không ghép "Văn" cho nữ, "Thị" cho nam; không trùng họ với tên gọi.
+
+### Sửa lỗi logic
+- Trẻ chưa / không đi học không còn có chuyện "làm lớp trưởng", "bị cả lớp trêu" (trước đây dòng này lọt qua bộ lọc cuối năm).
+- Không còn "đạt giải học sinh giỏi cấp tỉnh" hai lần trong cùng một năm.
+- Học xong, chưa có việc mà bố mẹ vẫn gửi tiền kèm câu "con cứ lo học" → nay câu nói hợp hoàn cảnh.
+- Sơ cứu cứu sống sếp không còn được "thăng chức" thành chủ công ty.
+- Chủ tiệm, người làm tự do hợp sở trường: "khách hàng tin tưởng" thay vì "được cấp trên để ý".
+- Con cái làm chủ công ty: "trở thành chủ công ty" thay vì "được lên chủ công ty".
+- Chuyện mẹ chồng nàng dâu chỉ xảy ra khi có chồng (không xảy ra với cặp đôi nữ – nữ).
+- Lính nghĩa vụ ở nước ngoài không còn "gấp chăn vuông như bánh chưng".
+- Tiền "bao đậu" bằng lái hợp lý hơn.
+- Bố mẹ đều đã mất thì không còn "bố mẹ mua cho chiếc xe máy" khi 18 tuổi.
+
 ## v3.4.0 — 15/10/2026
 
 Giữ nguyên toàn bộ tính năng v3.3.0.

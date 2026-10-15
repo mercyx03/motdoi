@@ -884,7 +884,7 @@
         });
       },
       apply: function (life, d, k, r, log) {
-        life.major = k; life.school = life.abroad && life.abroad.study ? 'abroad' : 'uni'; life.schoolEnd = life.age + (k === 'med' ? 6 : 4);
+        life.major = k; life.majorName = null; life.school = life.abroad && life.abroad.study ? 'abroad' : 'uni'; life.schoolEnd = life.age + (k === 'med' ? 6 : 4);
         if (KHOI[life.khoi] && KHOI[life.khoi].m.indexOf(k) < 0) { life.st.kno -= 3; life.st.hap -= 2; log('Học trái khối — những năm đầu phải học bù vất vả.', 'neutral'); }
         if (life.abroad && life.abroad.study) life.abroad.until = life.schoolEnd;
         if (life.job) { life.job = null; }
@@ -1438,7 +1438,7 @@
   var CORE_EVENTS = [
     { c: function (l, a) { return a === 1; }, p: 1, run: function (l, a, r, log) { log(U.pick(r, ['Chập chững những bước đi đầu tiên.', 'Bập bẹ gọi tiếng "mẹ" đầu tiên.', 'Biết đi, biết gọi bố mẹ.']), 'good'); H.mem(l, 'Bước chân chập chững đầu tiên, mẹ dang tay đón bạn.', 2); } },
     { c: function (l, a) { return a === 3 && isVN(l); }, p: 0.85, run: function (l, a, r, log) { log('Bắt đầu đi mẫu giáo.', 'neutral'); l.st.soc += 3; } },
-    { c: function (l, a) { return a >= 7 && a <= 17 && l.school && l.st.kno > 62; }, p: 0.12, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Đạt danh hiệu học sinh giỏi.', 'Đạt giải học sinh giỏi cấp tỉnh.', 'Được nhà trường khen thưởng cuối năm.']) : 'Được trường khen thưởng vì học giỏi.', 'good'); l.st.hap += 4; l.st.kno += 2; } },
+    { c: function (l, a) { return a >= 7 && a <= 17 && l.school && l.st.kno > 62; }, p: 0.12, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Đạt danh hiệu học sinh giỏi.', 'Được tuyên dương học sinh tiêu biểu của trường.', 'Được nhà trường khen thưởng cuối năm.']) : 'Được trường khen thưởng vì học giỏi.', 'good'); l.st.hap += 4; l.st.kno += 2; } },
     { c: function (l, a) { return a >= 6 && a <= 12 && l.talent && !l.flags.talentSeen; }, p: 0.25, run: function (l, a, r, log) { l.flags.talentSeen = true; log('Năng khiếu ' + talentText(l) + ' được thầy cô phát hiện.', 'good'); l.st.hap += 3; l.st.kno += 2; l.skill += 8; H.mem(l, 'Lần đầu được khen có năng khiếu ' + talentText(l) + '.', 3); } },
     { c: function (l, a) { return a >= 6 && a <= 15 && !l.flags.brokeArm; }, p: 0.03, run: function (l, a, r, log) { l.flags.brokeArm = true; log(U.pick(r, ['Bị gãy tay khi chơi đùa.', 'Ngã từ trên cây xuống, gãy tay phải bó bột cả tháng.', 'Trượt chân ở cầu thang trường, gãy tay — cả lớp thay nhau ký tên lên lớp bột.']), 'bad'); l.st.hea -= 3; } },
     { c: function (l, a) { return a >= 7 && a <= 14 && !l.urban && l.fam.q <= 2; }, p: 0.15, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Sau giờ học phụ bố mẹ chăn trâu, cắt cỏ.', 'Theo mẹ ra đồng cấy lúa những ngày mùa.', 'Đi bộ hàng cây số đến trường mỗi ngày.']) : 'Phụ giúp gia đình việc đồng áng sau giờ học.', 'neutral'); } },
@@ -1620,7 +1620,7 @@
   function finishYear(life) {
     if (!life.alive) return [];
     var r = RF(life), a = life.age, out = [];
-    var log = function (t, k) { var e = { a: a, y: life.birthYear + a, t: famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); };
+    var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; var e = { a: a, y: life.birthYear + a, t: famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
     var f = life.fam, st = life.st;
     var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
     if (a >= 6 && life.focus === 'baby') life.focus = 'study';
@@ -1663,7 +1663,7 @@
         runHooks('gradUpper', [life, r, log]);
       } else if (sc === 'voc') { life.edu = Math.max(life.edu, 4); log('Hoàn thành chương trình học nghề.', 'good'); life.flags.needJob = true; }
       else if (sc === 'uni' || sc === 'abroad') {
-        life.edu = Math.max(life.edu, 5); log('Tốt nghiệp đại học ngành ' + MAJORS[life.major] + (sc === 'abroad' ? ' ở ' + (life.abroad ? life.abroad.name : 'nước ngoài') : life.uniCity ? ' ở ' + life.uniCity : '') + '.', 'big'); st.hap += 6;
+        life.edu = Math.max(life.edu, 5); log('Tốt nghiệp đại học ngành ' + (life.majorName || MAJORS[life.major]) + (sc === 'abroad' ? ' ở ' + (life.abroad ? life.abroad.name : 'nước ngoài') : life.uniCity ? ' ở ' + life.uniCity : '') + '.', 'big'); st.hap += 6;
         H.mem(life, 'Lễ tốt nghiệp — bố mẹ đứng dưới khán đài, mắt rưng rưng.', 4);
         if (sc === 'abroad') H.sched(life, 'du_hoc_ve', 1);
         else {
@@ -1671,9 +1671,9 @@
           life.cityStudent = null;
           if (r() < 0.25 + (st.kno - 60) / 100) life.flags.postNext = a + 1; else life.flags.needJob = true;
         }
-      } else if (sc === 'post') { life.edu = Math.max(life.edu, 6); log('Nhận bằng thạc sĩ' + (life.major ? ' ngành ' + MAJORS[life.major] : '') + '.', 'big'); life.flags.needJob = true; H.mem(life, 'Ngày nhận bằng thạc sĩ.', 3);
+      } else if (sc === 'post') { life.edu = Math.max(life.edu, 6); log('Nhận bằng thạc sĩ' + (life.major ? ' ngành ' + (life.majorName || MAJORS[life.major]) : '') + '.', 'big'); life.flags.needJob = true; H.mem(life, 'Ngày nhận bằng thạc sĩ.', 3);
         if (!life.job && r() < 0.18 + (st.kno - 70) / 120) { life.flags.needJob = false; life.pending.push(DEC.phd.make(life, r)); } } // v3.0: có thể học tiếp tiến sĩ
-      else if (sc === 'phd') { life.edu = 7; log('Bảo vệ thành công luận án, nhận học vị tiến sĩ' + (life.major ? ' ngành ' + MAJORS[life.major] : '') + '.', 'big'); st.hap += 6; life.flags.needJob = true; H.mem(life, 'Ngày bảo vệ luận án tiến sĩ, hội đồng đứng dậy bắt tay bạn.', 5); }
+      else if (sc === 'phd') { life.edu = 7; log('Bảo vệ thành công luận án, nhận học vị tiến sĩ' + (life.major ? ' ngành ' + (life.majorName || MAJORS[life.major]) : '') + '.', 'big'); st.hap += 6; life.flags.needJob = true; H.mem(life, 'Ngày bảo vệ luận án tiến sĩ, hội đồng đứng dậy bắt tay bạn.', 5); }
       else if (sc === 'police') {
         life.edu = Math.max(life.edu, 5);
         var tk = life.flags.policeTrack || 'cong_an';
@@ -1953,7 +1953,7 @@
     if (life.fam.vice && !life.fam.noDad) s.push('Lớn lên bên người bố ' + VICE[life.fam.vice] + '.');
     if (life.movedTo) s.push('Lên ' + life.movedTo + ' lập nghiệp.');
     if (life.death && life.death.age < 6) { s.push('Ra đi vì ' + life.death.cause + ' khi mới ' + (life.death.age === 0 ? 'chưa tròn một tuổi' : life.death.age + ' tuổi') + '.'); return s.join(' '); }
-    s.push(life.edu === 0 ? 'Chưa từng được đến trường.' : 'Học hết ' + EDU[life.edu] + (life.major ? ' ngành ' + MAJORS[life.major] : '') + (life.flags.studiedAbroad ? ' (du học ' + life.flags.studiedAbroad + ')' : '') + '.');
+    s.push(life.edu === 0 ? 'Chưa từng được đến trường.' : 'Học hết ' + EDU[life.edu] + (life.major ? ' ngành ' + (life.majorName || MAJORS[life.major]) : '') + (life.flags.studiedAbroad ? ' (du học ' + life.flags.studiedAbroad + ')' : '') + '.');
     var cs = E.careerSummary ? E.careerSummary(life) : '';
     if (cs) s.push(cs);
     else if (life.retired) s.push('Làm việc ' + life.workYrs + ' năm rồi nghỉ hưu.');

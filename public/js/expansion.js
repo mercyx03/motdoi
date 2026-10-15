@@ -330,7 +330,7 @@
         var c = E.CAR[k.job];
         if (c && (k.rank || 0) < c.t.length - 1 && k.jyrs >= (c.yrs[k.rank || 0] || 4) && r() < 0.25 + (k.study - 50) / 200) {
           k.rank = (k.rank || 0) + 1; k.jyrs = 0; k.inc = kidIncome(l, k);
-          if (k.rank === c.t.length - 1 || r() < 0.4) log('Con ' + k.name + ' được lên ' + kidTitle(k) + '.', 'good');
+          if (k.rank === c.t.length - 1 || r() < 0.4) log('Con ' + k.name + (/^(chủ|giám đốc|tổng giám đốc|chủ tịch)/.test(kidTitle(k)) ? ' trở thành ' : ' được lên ') + kidTitle(k) + '.', 'good');
           if (k.rank === c.t.length - 1 && c.t.length >= 3) { fx(l, { hap: 6 }); H.mem(l, 'Ngày ' + k.name + ' báo tin được bổ nhiệm ' + kidTitle(k) + ', bạn khoe khắp họ hàng.', 4); }
         }
         if (ka >= 60) { k.job = null; k.inc = k.inc * 0.5; }

@@ -508,7 +508,7 @@
     valid: function (l, d) { return !(l.lic.A1 && l.lic.B) && !(d && d.t && l.lic[d.t]); }, // v2.8: đã đỗ bằng này trong năm thì bỏ lượt thi trùng
     opts: [
       { k: 'self', l: 'Tự ôn luyện và đi thi', ai: { w: 1.4, smart: 0.5 }, run: function (l, r, log, d) { cashB(l, -d.cost, 'Học & thi ' + d.name); if (ch(r, U.clamp(0.45 + l.st.kno / 150, 0.4, 0.95))) { l.lic[d.t] = true; log('Thi đỗ ' + d.name + '.', 'good'); fx(l, { hap: 4 }); } else { log('Trượt phần thi sa hình. Hẹn lần sau.', 'bad'); fx(l, { hap: -3 }); } } },
-      { k: 'buy', l: 'Mua bằng "bao đậu"', ai: { bad: 1.2 }, run: function (l, r, log, d) { fx(l, { karma: -5 }); cashB(l, -d.cost * 2.5, 'Tiền "bao đậu" bằng lái'); if (ch(r, 0.3)) { log('Đưa tiền cho "cò" thi bằng, hóa ra là lừa đảo. Mất tiền, vẫn không có bằng.', 'bad'); fx(l, { hap: -6 }); } else { l.lic[d.t] = true; log('Có bằng ' + d.t + ' nhờ "bao đậu" — nhưng tay lái vẫn non.', 'neutral'); l.flags.weakDriver = true; } } }
+      { k: 'buy', l: 'Mua bằng "bao đậu"', ai: { bad: 1.2 }, run: function (l, r, log, d) { fx(l, { karma: -5 }); cashB(l, -d.cost * 1.6, 'Tiền "bao đậu" bằng lái'); if (ch(r, 0.3)) { log('Đưa tiền cho "cò" thi bằng, hóa ra là lừa đảo. Mất tiền, vẫn không có bằng.', 'bad'); fx(l, { hap: -6 }); } else { l.lic[d.t] = true; log('Có bằng ' + d.t + ' nhờ "bao đậu" — nhưng tay lái vẫn non.', 'neutral'); l.flags.weakDriver = true; } } }
     ]
   });
 
@@ -535,7 +535,7 @@
     if (v === 'ô tô') H.mem(l, 'Lần đầu lái chiếc ô tô của chính mình về quê, cả xóm ra xem.', 4);
     if ((v === 'xe máy' && !l.lic.A1) || (v === 'ô tô' && !l.lic.B)) log('Bạn chưa có bằng lái ' + (v === 'ô tô' ? 'ô tô' : 'xe máy') + ' — ra đường có nguy cơ bị phạt.', 'neutral');
   }
-  EV(function (l, a) { return a >= 15 && a <= 19 && !l.veh && l.fam.q >= 2 && (isVN(l) || l.gdp < 20); }, 0.3, function (l, a, r, log) {
+  EV(function (l, a) { return a >= 15 && a <= 19 && !l.veh && (l.fam.mAlive || l.fam.fAlive) && l.fam.q >= 2 && (isVN(l) || l.gdp < 20); }, 0.3, function (l, a, r, log) {
     l.veh = isVN(l) && a < 18 ? 'xe đạp' : 'xe máy'; l.vehVal = l.base * (l.veh === 'xe máy' ? 0.25 : 0.03);
     log(l.veh === 'xe máy' ? 'Bố mẹ mua cho chiếc xe máy cũ để đi học, đi làm.' : 'Được bố mẹ mua cho chiếc xe đạp điện để đi học.', 'good'); fx(l, { hap: 4 });
   });
@@ -706,14 +706,14 @@
 
   SC('me_chong', {
     title: 'Chuyện mẹ chồng nàng dâu', text: 'Mẹ chồng chê bạn nấu ăn không vừa miệng, tiêu tiền hoang, chuyện nhỏ thành to.',
-    valid: function (l) { return l.partner && l.partner.status === 'married' && l.sex === 'F'; },
+    valid: function (l) { return l.partner && l.partner.status === 'married' && l.sex === 'F' && l.partner.sex === 'M'; },
     opts: [
       { k: 'patient', l: 'Nhẫn nhịn, khéo léo chiều lòng', ai: { w: 1.3 }, run: function (l, r, log) { log('Nhẫn nhịn và khéo léo, dần dần mẹ chồng cũng thương.', 'good'); fx(l, { hap: -2, karma: 2 }); } },
       { k: 'argue', l: 'Nói thẳng quan điểm', ai: { risk: 1 }, run: function (l, r, log) { if (ch(r, 0.5)) { log('Nói chuyện thẳng thắn, hai mẹ con hiểu nhau hơn.', 'good'); fx(l, { hap: 3 }); } else { log('Cãi nhau to, chồng kẹt ở giữa.', 'bad'); fx(l, { hap: -8 }); } } },
       { k: 'move', l: 'Thuyết phục chồng ra ở riêng', ai: { w: 1 }, run: function (l, r, log) { cashB(l, -0.1, 'Chuyển ra ở riêng'); log('Ra ở riêng. Xa thơm gần thối.', 'neutral'); fx(l, { hap: 4 }); } }
     ]
   });
-  T('me_chong', function (l, a) { return isVN(l) && a >= 20 && a <= 45 && l.sex === 'F' && l.partner && l.partner.status === 'married' && free(l); }, 0.05);
+  T('me_chong', function (l, a) { return isVN(l) && a >= 20 && a <= 45 && l.sex === 'F' && l.partner && l.partner.status === 'married' && l.partner.sex === 'M' && free(l); }, 0.05);
 
   SC('con_om', {
     title: 'Con ốm giữa đêm', prep: function (l) { var k = l.kids.filter(function (k) { return k.alive && l.age - k.born <= 6; })[0]; return { n: k ? k.name : 'con', vac: k ? k.vac : true }; },

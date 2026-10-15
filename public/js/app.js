@@ -583,7 +583,7 @@
     return E.placeText(l).replace(/, Việt Nam$/, '');
   }
   function eduNow(l) {
-    if (l.school) return 'Đang học ' + E.schoolName(l.school) + (l.major ? ' · ' + E.MAJORS[l.major] : '');
+    if (l.school) return 'Đang học ' + E.schoolName(l.school) + (l.major ? ' · ' + (l.majorName || E.MAJORS[l.major]) : '');
     if (l.age < 6) return 'Chưa đến tuổi đi học';
     return U.cap(E.EDU[l.edu]);
   }
