@@ -122,12 +122,19 @@
     ['picnic', 'Picnic ở công viên, ngắm hoàng hôn', 0.15, 'Trải bạt picnic, ngồi ngắm hoàng hôn đến khi đèn đường bật sáng.', { hap: 5 }],
     ['nau_an', 'Nấu ăn cùng nhau ở nhà', 0.2, 'Cùng nhau vào bếp, món ăn hơi mặn nhưng ai cũng khen ngon.', { hap: 4, soc: 1 }],
     ['karaoke', 'Đi hát karaoke hai người', 0.3, 'Hát song ca những bài tình ca cũ, giọng ai cũng lệch tông.', { hap: 4 }],
+    ['mi_cay', 'Đi ăn mì cay 7 cấp độ', 0.25, 'Thách nhau ăn mì cay cấp 7, mặt đỏ như gấc, uống hết ba ly trà đá vẫn cười.', { hap: 5 }],
+    ['netflix', 'Ở nhà xem Netflix, gọi đồ ăn', 0.15, 'Cuộn chăn xem phim trên Netflix, gọi gà rán về ăn, tranh nhau chọn phim mất nửa tiếng.', { hap: 4 }],
+    ['ga_ran', 'Đi ăn gà rán (KFC / Jollibee)', 0.25, 'Ăn gà rán, khoai tây chiên, uống nước ngọt — đơn giản mà vui.', { hap: 3 }],
+    ['dookki', 'Đi buffet tokbokki (Dookki)', 0.35, 'Tự tay nấu nồi tokbokki ở Dookki, cháy đáy nồi vẫn khen ngon.', { hap: 4 }],
+    ['lau_sang', 'Đi lẩu Haidilao, được nhân viên hát mừng', 1.2, 'Đi lẩu Haidilao, nhân viên kéo mì múa ngay cạnh bàn, cả hai cười suốt bữa.', { hap: 6 }],
+    ['buffet_hs', 'Đi buffet hải sản sang (Cửu Vân Long)', 0.9, 'Ăn buffet hải sản Cửu Vân Long no căng bụng, cua ghẹ tôm hùm đủ cả.', { hap: 6 }],
+    ['pizza', "Ăn pizza ở Pizza 4P's", 0.8, "Ngồi Pizza 4P's, chia nhau miếng pizza phô mai burrata, nói chuyện tới khuya.", { hap: 5 }],
     ['cong_vien', 'Đi công viên giải trí, chơi tàu lượn', 0.7, 'Hét khản cổ trên tàu lượn siêu tốc, xuống tàu vẫn nắm chặt tay nhau.', { hap: 6 }]
   ];
   if (E.DEC.hen_ho) {
     var HH = E.DEC.hen_ho.def, old = HH.opts;
     var p0 = HH.prep;
-    HH.prep = function (l, r, arg) { var d = p0 ? p0.apply(this, arguments) || {} : {}; var ks = DATES.map(function (x) { return x[0]; }); for (var i = ks.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = ks[i]; ks[i] = ks[j]; ks[j] = t; } d.acts = ks.slice(0, 5); return d; };
+    HH.prep = function (l, r, arg) { var d = p0 ? p0.apply(this, arguments) || {} : {}; var ks = DATES.map(function (x) { return x[0]; }).filter(function (k) { return vnd(l) || !/^(dookki|buffet_hs|pizza)$/.test(k); }); for (var i = ks.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = ks[i]; ks[i] = ks[j]; ks[j] = t; } d.acts = ks.slice(0, 5); return d; };
     HH.text = function (l) { return 'Dạo này bạn và ' + l.partner.name + ' ít thời gian cho nhau. Cuối tuần này hai người đi đâu?'; };
     HH.opts = DATES.map(function (x) {
       return { k: x[0], l: x[1], h: function (l) { return x[2] ? '~' + mo(l, V(l, x[2])) : 'Không tốn tiền'; }, req: function (l, d) { return !d.acts || d.acts.indexOf(x[0]) >= 0; }, ai: { w: 1 },
@@ -158,7 +165,7 @@
       { k: 'thoi', l: 'Thôi, chơi một mình cho chắc', ai: { w: 0.5 }, run: function (l, r, log) { log('Từ chối, chơi một mình leo rank chậm rì.', 'neutral'); } }
     ]
   });
-  E.TRIG.push({ id: 'ghep_game', when: function (l, a) { return a >= 13 && a <= 35 && free(l); }, p: function (l) { return l.talent === 'game' || l.game ? 0.12 : l.sex === 'M' ? 0.04 : 0.02; }, cd: 4, max: 2 });
+  E.TRIG.push({ id: 'ghep_game', when: function (l, a) { return a >= 13 && a <= 35 && free(l); }, p: function (l) { return l.talent === 'game' || l.game ? 0.08 : l.sex === 'M' ? 0.03 : 0.015; }, cd: 5, max: 2 });
 
   // ===================================================================
   // 4. NGHỀ CÀY THUÊ RANK

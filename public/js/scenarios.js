@@ -439,7 +439,9 @@
       if (!l.lic.A1 && l.veh === 'xe máy') opts.push({ why: 'chạy xe máy không có bằng lái', f: 3 });
       if (!l.lic.B && l.veh === 'ô tô') opts.push({ why: 'lái ô tô không có bằng lái', f: 15 });
       if (l.addict && l.addict.alcohol) opts.push({ why: 'có nồng độ cồn khi lái xe', f: l.veh === 'ô tô' ? 35 : 7 });
-      opts.push({ why: 'không đội mũ bảo hiểm', f: 0.6 }, { why: 'đi sai làn', f: 1 });
+      // v3.8: lỗi theo đúng loại xe (đi ô tô thì không thể bị phạt vì không đội mũ bảo hiểm) — mức phạt theo Nghị định 168/2024
+      if (l.veh === 'ô tô') opts.push({ why: 'không thắt dây an toàn', f: 1 }, { why: 'chạy quá tốc độ 10–20 km/h', f: 5 }, { why: 'dùng điện thoại khi lái xe', f: 5 }, { why: 'đi sai làn đường', f: 5 });
+      else opts.push({ why: 'không đội mũ bảo hiểm', f: 0.6 }, { why: 'đi sai làn', f: 1 });
       return pick(r, opts);
     },
     text: function (l, d) { return 'Tổ CSGT ra hiệu dừng xe vì lỗi ' + d.why + '. Mức phạt khoảng ' + H.money(l, fine(l, d.f)) + '.'; },

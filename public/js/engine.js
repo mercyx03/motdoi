@@ -824,8 +824,9 @@
         if (life.flags.famHardship || /ruộng|nương|rẫy|chăn|cá|buôn/.test(f.fJob + f.mJob)) o.push(opt('home', 'Ở nhà phụ giúp bố mẹ', life.flags.famHardship ? 'Gia đình đang cần bạn' : 'Làm cùng bố mẹ'));
         if (life.sex === 'M' && CONSCRIPT.indexOf(life.country) >= 0) o.push(opt('military', 'Đi nghĩa vụ quân sự', '2 năm rèn luyện trong quân ngũ'));
         if (vn) o.push(opt('xkld', life.flags.famDebt ? 'Đi xuất khẩu lao động, kiếm tiền trả nợ cho nhà' : 'Đi xuất khẩu lao động', 'Thu nhập cao, xa nhà, tốn phí ban đầu'));
-        return { id: 'uni', title: 'Mười tám tuổi — ngã rẽ đầu tiên của đời người', data: { P: P },
-          text: 'Bạn vừa học xong phổ thông. Bạn bè xung quanh mỗi người chọn một ngả.' + (life.flags.famDebt ? ' Nhà vẫn còn nợ nần chưa trả hết.' : '') + (P.inCity ? '' : ' Ở quê, ai cũng bảo phải lên ' + P.big + ' mới có tương lai.'), opts: o };
+        var tries = life.flags.uniTries || 0; // v3.8: thi lại thì tiêu đề, lời kể theo đúng tuổi và số lần thi
+        return { id: 'uni', title: tries ? 'Thi lại đại học — lần thứ ' + (tries + 1) : life.age <= 18 ? 'Mười tám tuổi — ngã rẽ đầu tiên của đời người' : 'Ngã rẽ sau phổ thông', data: { P: P },
+          text: (tries ? 'Sau ' + (tries === 1 ? 'một năm' : tries + ' năm') + ' ôn thi lại' + (life.examScore != null ? ', điểm thi lần này của bạn là ' + U.fmtNum(life.examScore, 2) : '') + ', bạn lại đứng trước ngã rẽ.' : 'Bạn vừa học xong phổ thông.') + ' Bạn bè xung quanh mỗi người chọn một ngả.' + (life.flags.famDebt ? ' Nhà vẫn còn nợ nần chưa trả hết.' : '') + (P.inCity ? '' : ' Ở quê, ai cũng bảo phải lên ' + P.big + ' mới có tương lai.'), opts: o };
       },
       auto: function (life, d, r) {
         var p = eduP(life), ks = d.opts.map(function (o) { return o.k; });
@@ -861,13 +862,14 @@
       }
     },
     uniFail: {
-      make: function () {
-        return { id: 'uniFail', title: 'Thi trượt — giờ sao?', text: 'Kết quả không như mong đợi.',
-          opts: [opt('retry', 'Ôn thi lại một năm', 'Thử lại vào năm sau'), opt('voc', 'Học nghề', ''), opt('work', 'Đi làm', '')] };
+      make: function (life) {
+        var tries = (life && life.flags.uniTries) || 0, more = tries < 2; // v3.8: ôn thi lại tối đa 2 lần (thi 3 lần), tránh kẹt mãi ở ngã rẽ này
+        return { id: 'uniFail', title: 'Thi trượt — giờ sao?', text: 'Kết quả không như mong đợi.' + (tries ? ' Đây đã là lần thi thứ ' + (tries + 1) + '.' : '') + (more ? '' : ' Thi đến lần thứ ba vẫn chưa đỗ — đã đến lúc chọn một con đường khác: học nghề, đi làm, rồi học liên thông sau cũng được.'),
+          opts: (more ? [opt('retry', 'Ôn thi lại một năm', 'Học thêm một năm, điểm thi thường cao hơn lần trước')] : []).concat([opt('voc', 'Học nghề', ''), opt('work', 'Đi làm', '')]) };
       },
-      auto: function (life, d, r) { return r() < 0.3 && life.fam.q >= 3 ? 'retry' : r() < 0.5 ? 'voc' : 'work'; },
+      auto: function (life, d, r) { return r() < 0.3 && life.fam.q >= 3 && d.opts.some(function (o) { return o.k === 'retry'; }) ? 'retry' : r() < 0.5 ? 'voc' : 'work'; },
       apply: function (life, d, k, r, log) {
-        if (k === 'retry') { life.flags.retryUni = life.age + 1; log('Quyết định ôn thi lại.', 'neutral'); life.st.kno += 4; }
+        if (k === 'retry') { if ((life.flags.uniTries || 0) >= 2) { life.flags.needJob = true; life.pending.unshift(DEC.job.make(life, r)); return; } life.flags.uniTries = (life.flags.uniTries || 0) + 1; life.flags.retryUni = life.age + 1; life.st.kno += 4; if (life.examScore != null) life.examScore = Math.min(29.5, Math.round((life.examScore + 1 + r() * 2.5) * 4) / 4); log('Quyết định ôn thi lại một năm' + (life.examScore != null ? ' — lần thi sau đạt ' + U.fmtNum(life.examScore, 2) + ' điểm' : '') + '.', 'neutral'); }
         else if (k === 'voc') { life.school = 'voc'; life.schoolEnd = life.age + 2; log('Vào học trường nghề.', 'neutral'); }
         else { life.flags.needJob = true; log('Đi làm kiếm sống.', 'neutral'); life.pending.unshift(DEC.job.make(life, r)); }
       }
@@ -1298,7 +1300,7 @@
     // học hành
     if (a === 15 && life.school === 'lower') { life.school = null; life.edu = Math.max(life.edu, 2); add('hs'); }
     if (life.flags.uniNext === a) { life.flags.uniNext = null; add('uni'); }
-    if (life.flags.retryUni === a) { life.flags.retryUni = null; add('uni'); }
+    if (life.flags.retryUni != null && life.flags.retryUni <= a) { life.flags.retryUni = null; add('uni'); } // v3.8: không để cờ "ôn thi lại" treo mãi chặn việc tìm việc
     // việc làm
     var studyDecision = q.some(function (d) { return d.id === 'hs' || d.id === 'uni'; });
     if (!studyDecision && !life.school && (!life.job || life.flags.upgradeJob) && !life.retired && !(life.flags.selfRun && !life.job && (life.ventures || []).length && !life.flags.needJob) && a >= 15 && !life.flags.military && life.flags.retryUni == null &&
@@ -1388,6 +1390,7 @@
     var inMil = life.flags.military && life.age < life.flags.military;
     life.pending = life.pending.filter(function (d) {
       if (inMil && !/^(nv_|treat$|phau_thuat$)/.test(d.id)) return false; // v3.3: đang tại ngũ thì chỉ còn chuyện quân ngũ
+      if (life.abroad && life.abroad.trapped && !/^(kh_|treat$|phau_thuat$)/.test(d.id)) return false; // v3.8: bị giam trong trại lừa đảo thì không yêu đương, cưới hỏi, mua sắm, chuyển nhà…
       if (life.retired && life.flags.fullRetire && /^(job|nk_nghe|nk_ra_truong|sau_huu|len_chuyen|ru_re|so_thich_nghe|biz|xkld|city)$/.test(d.id)) return false; // v3.6: đã nghỉ hưu hẳn thì không còn bị hỏi nhận việc này việc kia
       var p = life.partner;
       switch (d.id) {
@@ -1420,6 +1423,7 @@
   function actAvail(l, a) {
     if (!l.alive) return 'Đã qua đời';
     if (l.jailUntil != null && l.age < l.jailUntil && !a.jail) return 'Đang ở trong trại giam';
+    if (l.abroad && l.abroad.trapped && !a.trap) return 'Đang bị giam giữ trong trại lừa đảo — không chi tiêu, đi lại được'; // v3.8
     if (l.flags && l.flags.military && l.age < l.flags.military && !a.mil) return 'Đang đi nghĩa vụ quân sự, sống trong doanh trại';
     if (l.acts >= actsLimit(l)) return 'Đã hết lượt hành động năm nay';
     if (a.min != null && l.age < a.min) return 'Từ ' + a.min + ' tuổi';
@@ -1809,7 +1813,7 @@
     }
 
     // ---- Sự kiện ngẫu nhiên kể chuyện (tối đa 2) ----
-    if (!inJail && !(life.flags.military && a < life.flags.military)) { // v3.3: trong quân ngũ không có chuyện đời thường bên ngoài
+    if (!inJail && !(life.flags.military && a < life.flags.military) && !(life.abroad && life.abroad.trapped)) { // v3.3: trong quân ngũ / v3.8: trong trại lừa đảo không có chuyện đời thường bên ngoài
       var n = 0;
       var evs = EVENTS.slice();
       for (var i = evs.length - 1; i > 0; i--) { var jj = Math.floor(r() * (i + 1)); var tmp = evs[i]; evs[i] = evs[jj]; evs[jj] = tmp; }

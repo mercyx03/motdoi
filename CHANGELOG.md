@@ -4,6 +4,62 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.8.0 — 16/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.7.0. Bản này làm theo góp ý của người chơi.
+
+### Sửa lỗi
+- **Thi trượt đại học bị kẹt ở ngã rẽ "Mười tám tuổi":**
+  - Lỗi cũ: ôn thi lại một năm mà điểm thi vẫn giữ nguyên, nên trượt mãi, lại được ôn thi lại không giới hạn.
+  - Nay mỗi năm ôn thi lại điểm thi tăng thêm khoảng 1–3,5 điểm. Được ôn thi lại tối đa 2 lần (thi 3 lần), sau đó phải chọn học nghề hoặc đi làm.
+  - Tiêu đề ghi đúng "Thi lại đại học — lần thứ 2 / 3" thay vì "Mười tám tuổi" khi đã 20 tuổi.
+- **Người 81 tuổi bị "đi học chứng chỉ":** học chứng chỉ, thi lại IELTS chỉ đến 60 tuổi; thi bằng lái đến 70 tuổi.
+- **Đi ô tô bị CSGT phạt "không đội mũ bảo hiểm":** nay lỗi theo đúng loại xe. Ô tô: không thắt dây an toàn, chạy quá tốc độ, dùng điện thoại khi lái, đi sai làn (mức phạt theo Nghị định 168/2024). Xe máy: không đội mũ bảo hiểm, đi sai làn.
+- **Trại lừa đảo:** bị giam thì không chi tiêu, mua sắm, đi chơi, yêu đương, cưới hỏi, chuyển nhà được; không có chuyện đời thường bên ngoài. Chi tiêu định kỳ cũng tạm dừng.
+
+### Ca sĩ tham gia show thực tế
+- Ca sĩ nam trẻ là tân binh tiềm năng hoặc đã có tiếng có thể được mời tham gia **Anh trai "Say Hi"**. Ca sĩ nữ có thể được mời **Em xinh "Say Hi"**. Nghệ sĩ nam từ 30 tuổi, có tên tuổi (ca sĩ, diễn viên, MC, vận động viên…) có thể được mời **Anh trai vượt ngàn chông gai**.
+- **Anh trai / Em xinh "Say Hi":** Bài nhóm liên quân → Livestage 1 → Livestage 2 → Livestage 3 → Livestage 4 (Dance battle) → Chung kết (nhóm Best 5, quán quân).
+- **Anh trai vượt ngàn chông gai:** Đêm Hội ngộ → Công diễn 1 → 2 → 3 → 4 → 5 → Đêm chung kết (Gia tộc Anh tài Toàn năng).
+- Mỗi vòng được ghép đội / "nhà" ngẫu nhiên với các anh trai, em xinh, anh tài thật của chương trình. Có thể được bầu làm đội trưởng. Mỗi vòng chọn cách trình diễn:
+  - "gánh" phần khó nhất;
+  - diễn chắc phần sở trường;
+  - thử ý tưởng mới / học nhạc cụ, võ thuật mới.
+- Trước vòng **Dance battle** có thể tập nhảy ngày đêm để không bị lộ điểm yếu.
+- **Kịch tính:** điểm thấp thì rơi vào nhóm có nguy cơ dừng chân, rồi có thể được fan bình chọn cứu (Say Hi) hoặc được các anh tài bỏ phiếu hồi sinh (Anh tài). Đủ mạnh thì vào Best 5, vô địch, hoặc được gọi tên vào Gia tộc Anh tài Toàn năng.
+- Dù dừng chân ở vòng nào cũng nổi tiếng hơn, cát-xê tăng.
+
+### Giữ nhịp game vừa phải
+- Bản này thêm nhiều sự kiện mới, nên để mỗi đời không bị dồn quá nhiều lựa chọn (giữ dưới 90 lựa chọn / đời):
+  - Các sự kiện mới phần lớn chỉ xảy ra 1 lần mỗi đời.
+  - "Mua sắm", "nhặt được ví" tối đa 1 lần; "anh chị em vay tiền", "bạn mượn tiền", "việc online", CSGT, đèn vàng tối đa 2 lần.
+  - Từ chối mua nhà thì lâu hơn mới bị hỏi lại.
+
+### Concert & thần tượng
+- **Concert theo từng chương trình, từng mùa**, với đầy đủ nghệ sĩ:
+  - Anh trai "Say Hi" mùa 1 (2024) — 30 anh trai;
+  - Anh trai "Say Hi" mùa 2 (2025) — 30 anh trai;
+  - Em xinh "Say Hi" — 30 em xinh;
+  - Tinh hà "Say Hi" (2026) — 24 anh trai;
+  - Anh trai vượt ngàn chông gai 2024 và 2026.
+- Chọn chương trình → hiện toàn bộ nghệ sĩ (10 người một trang) → chọn **bias** để ủng hộ (hoặc "thương hết cả đội hình"). Đi concert thì giơ banner tên bias, có lúc được bias bắn tim.
+- **Fanmeeting:** săn vé thường hoặc VIP (hi-touch, chụp ảnh nhóm). Có cơ hội được thần tượng bốc thăm gọi tên lên sân khấu, chụp polaroid ký tặng, hỏi han, đọc thư của bạn, tặng quà.
+- **Chuyện làm fan:** fan project sinh nhật thần tượng (màn hình LED, từ thiện), cày vote đêm chung kết, săn photocard bias, đón thần tượng ở sân bay (văn minh hay chen lấn), cãi nhau trên mạng.
+
+### Kỹ năng đã học thì có lúc dùng đến
+- Học bơi, học võ, học sơ cứu (khi nhỏ hoặc qua mục "Học bơi / học võ / học sơ cứu"). Nghề công an, quân đội, y tế, ngư dân cũng có sẵn kỹ năng phù hợp.
+- **Biết võ:** gặp người bị bắt nạt, giật đồ giữa phố → can thiệp, được ghi nhận "hành động dũng cảm".
+- **Biết bơi:** đi biển gặp đứa trẻ đuối nước → bơi ra cứu. Không biết bơi mà liều thì rất nguy hiểm.
+- **Biết sơ cứu:** gặp người ngưng tim → ép tim, hồi sức chờ xe cấp cứu.
+- **Năng khiếu có dịp thể hiện:** hát mừng đám cưới, vẽ chân dung tặng bà, đóng vai chính tiểu phẩm cuối năm, chỉ đường cho du khách nước ngoài, kèm toán cho em, làm MC bất đắc dĩ, sửa đồ cho hàng xóm, trang điểm cho cô dâu, vô địch giải game ở quán net, thắng cờ các cụ ở công viên…
+
+### Tương tác theo trend
+- **Mua nước "lấy lòng"** người yêu, vợ / chồng, anh chị em, bạn thân. Chọn món theo menu: trà sữa trân châu đường đen, trà sữa Đài Loan, matcha latte, trà đào cam sả, cà phê muối, bạc xỉu, hồng trà macchiato, sữa tươi trân châu đường đen, trà sữa nướng, trà vải, oolong sữa, kem ốc quế…, kèm quán hay bán.
+  - Mua trúng món tủ thì người ấy hết dỗi.
+  - Hỏi "uống gì?" có khi nhận về câu kinh điển "Gì cũng được".
+- **Hẹn hò thêm:** ăn mì cay 7 cấp độ, xem Netflix ở nhà, gà rán KFC / Jollibee, buffet tokbokki Dookki, lẩu Haidilao, buffet hải sản Cửu Vân Long, Pizza 4P's. Sống ở nước ngoài thì không hiện các thương hiệu chỉ có ở Việt Nam.
+- **Rủ hội bạn đi ăn:** Dookki, gà rán, mì cay, Haidilao, Cửu Vân Long, thịt nướng Hàn Quốc, quán ốc vỉa hè, trà sữa rồi về xem Netflix. Chi phí chia đều, thỉnh thoảng giành bao cả hội.
+
 ## v3.7.0 — 15/10/2026
 
 Gộp v3.6.0 (bên dưới) và giữ nguyên toàn bộ tính năng trước đó.

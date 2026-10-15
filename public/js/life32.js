@@ -96,7 +96,7 @@
           ai: function (l, d) { var p = d.pr[h.k]; return have(l) >= p ? 1 + h.t * 0.4 : 0.5; },
           run: function (l, r, log, d) { var p = d.pr[h.k], loan = have(l) < p; if (loan && !canLoan(l, p)) { log('Ngân hàng từ chối cho vay mua ' + h.n + ': ' + (H.canBankLoan(l) ? 'thu nhập không đủ.' : 'hồ sơ đang có nợ xấu.'), 'bad'); fx(l, { hap: -4 }); l.flags.houseNo = l.age + 3; return; } buyHome(l, h, p, loan, log); }
         };
-      }).concat([{ k: 'no', l: up ? 'Ở nhà cũ cho quen' : 'Tiếp tục thuê / ở cùng gia đình', ai: { w: 1 }, run: function (l) { if (!up) { l.flags.houseNoN = (l.flags.houseNoN || 0) + 1; l.flags.houseNo = l.age + 3 + Math.min(8, l.flags.houseNoN * 2); } } }])
+      }).concat([{ k: 'no', l: up ? 'Ở nhà cũ cho quen' : 'Tiếp tục thuê / ở cùng gia đình', ai: { w: 1 }, run: function (l) { if (!up) { l.flags.houseNoN = (l.flags.houseNoN || 0) + 1; l.flags.houseNo = l.age + 5 + Math.min(10, l.flags.houseNoN * 3); } } }])
     };
   }
   SC('house', homeDef(false));
