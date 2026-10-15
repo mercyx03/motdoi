@@ -4,6 +4,78 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.2.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.1.0.
+
+### Giao diện (ưu tiên điện thoại)
+- Đang có lựa chọn chờ (đã thu nhỏ) **vẫn làm được "Việc bạn muốn làm"**. Làm xong thì quay lại lựa chọn đang chờ, không còn báo "hãy chọn xong lựa chọn đang chờ trước đã".
+- Điện thoại:
+  - Thanh điều hướng cố định dưới cùng: Việc làm · Nhật ký · Hồ sơ · Tiền bạc · Gia đình, bấm là tới ngay.
+  - Các nút phụ (tốc độ, nhạc, tự động, thoát) gom vào nút "⋯" cho thanh trên gọn lại.
+  - Hộp lựa chọn trượt từ dưới lên như ứng dụng điện thoại; nút bấm to, dễ chạm hơn.
+
+### Mới
+- **Nhà ở chia theo loại**: nhà cấp 4, chung cư mini, chung cư cũ (khu tập thể), chung cư thương mại, nhà phố 3–4 tầng, chung cư cao cấp, biệt thự, dinh thự.
+  - Giá theo nơi ở (Hà Nội / TP.HCM, thành phố tỉnh, nông thôn) và mỗi lần xem mỗi khác, không còn "nhà 4 tỷ" y hệt.
+  - Ở quê nhà cấp 4 vài trăm triệu; Hà Nội chung cư mini ~1,3 tỷ, chung cư thương mại ~3,8 tỷ, nhà phố ~8 tỷ.
+  - Đủ tiền thì trả thẳng, chưa đủ thì vay ngân hàng 70%. Đổi nhà thì bán nhà cũ, trả nợ cũ.
+- **Bệnh viện công / tư**:
+  - Nhà nghèo lên bệnh viện công: dậy từ 4–5 giờ sáng xếp hàng lấy số, chờ khám cả ngày, nằm ghép giường, đứng đợi lấy thuốc.
+  - Nhà giàu vào bệnh viện tư / khoa quốc tế: phòng riêng, khám ngay.
+  - Khám sức khỏe cũng chọn công hay tư.
+- **Phẫu thuật**: bệnh nặng (ung thư…) hay tai nạn gãy xương phải mổ. Chọn mổ ở bệnh viện công theo bảo hiểm (chờ lịch, phòng đông), mổ dịch vụ, hay bệnh viện tư; có thể bị biến chứng.
+- **Răng khôn mọc lệch**: nhổ ở bệnh viện công (xếp hàng) hay nha khoa tư. Để đó thì vài năm sau sưng đau hơn.
+- **Nghề diễn viên**:
+  - Đi casting: web drama, phim truyền hình, phim điện ảnh; có thể trượt vai.
+  - Cát-xê vai chính: web drama từ 70 triệu, phim truyền hình vài trăm triệu, điện ảnh từ 400 triệu đến vài tỷ. Vai phụ ít hơn.
+  - Phim điện ảnh có doanh thu phòng vé: phim trăm tỷ thì nổi tiếng hẳn, nhãn hàng tìm đến ký hợp đồng quảng cáo, được mời đóng phim khác; phim thất bại thì bị chê.
+  - Học diễn xuất để nâng khả năng diễn (0–100). Người có năng khiếu diễn xuất có thể được mời casting rồi vào nghề.
+  - Hợp đồng quảng cáo: nhận nhãn hàng uy tín hay quảng cáo "thần dược" (có thể bị phạt, bị tẩy chay).
+- **Game show**: người nổi tiếng được mời tham gia Running Man Việt Nam hoặc 2 Ngày 1 Đêm, có cát-xê cả mùa. Trong game có "anh lớn" Tràng Dương hay bắt nạt người mới và anh cả biệt danh "Thánh Trần" hay nâng đỡ người mới (nhân vật trong game).
+- **Tình yêu**:
+  - Nhắn tin tán tỉnh: có thể bị "ghost" (đã xem rồi im bặt), mập mờ, hoặc thành đôi.
+  - Yêu người chênh tuổi có biệt danh hội bạn trêu: "hồng hài nhi", "ngưu ma vương", "phi công trẻ lái máy bay", "trâu già gặm cỏ non".
+  - Công khai xu hướng thì hội bạn thân gọi trìu mến là "bé liên" / "bột tôm".
+- **Thi lại chứng chỉ**: IELTS, TOPIK, HSK hết hạn mà lúc đó chọn không thi lại thì game không hỏi nữa. Muốn thi lại thì tự vào "Việc bạn muốn làm → Học tập".
+
+### Sửa lỗi
+- **Tiền mã hóa**:
+  - Trước đây chơi lâu thì trung bình vẫn lãi, nên nhiều người "spam" để làm giàu.
+  - Giờ phần lớn người chơi thua lỗ, thỉnh thoảng mới gặp sóng lớn. Mỗi lần chỉ bỏ vào 30% tiền mặt.
+- **Ít trùng lặp hơn**:
+  - Mỗi tình huống ngẫu nhiên tối đa 3 lần trong đời, cách nhau ít nhất 4 năm.
+  - Từ chối mua nhà nhiều lần thì càng lâu mới hỏi lại.
+  - Đổi bằng lái (10 năm) và thi lại IELTS (2 năm) vẫn được hỏi theo hạn.
+- Lỗi ở các bản trước: một số điều kiện bổ sung (không còn "cơn thèm mua sắm" khi đã rất giàu, về thăm bố mẹ…) không có tác dụng vì game chép điều kiện cũ lúc khởi động. Đã sửa để luôn dùng điều kiện mới nhất.
+- **Tài sản không còn phình to vô lý**: giàu lên thì chi tiêu rộng tay hơn. Về già có của thì thỉnh thoảng cho con tiền mua nhà, làm vốn, lo cho cháu ăn học (rất phổ biến ở Việt Nam).
+- Trốn khỏi trại lừa đảo về nước, đi làm lại thì không còn "vừa học đại học vừa đi làm".
+- Bố đã mất thì không còn tình huống "bố đi làm đến tối, bố nấu cháo cho mẹ".
+- Đã nghỉ học thì kết quả các lựa chọn cũng không còn kể chuyện trên lớp.
+
+## v3.1.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.0.0.
+
+### Mới
+- **Nhật ký ghi luôn số tiền**: lựa chọn hay chuyện kể nào tốn tiền (hoặc được tiền) thì dòng nhật ký ghi kèm, ví dụ "Chuyến đi Đà Lạt cùng vợ (chi 5 triệu đ)". Không cần kéo xuống bảng tài chính mới biết bị trừ bao nhiêu.
+- **Lựa chọn nào tốn tiền cũng hiện chi phí** ngay dưới lựa chọn, kể cả những lựa chọn trước đây chưa ghi giá (rủ anh chị em đi du lịch, đi nhậu…).
+- **Về thăm bố mẹ tốn tiền theo khoảng cách**:
+  - Ở gần: chạy xe sang, vài trăm nghìn. Học / làm ở tỉnh khác cùng miền: đi xe khách. Khác miền: vé máy bay. Đang ở nước ngoài: vé máy bay về nước.
+  - Có thêm lựa chọn: về ở với bố mẹ cả tuần, gọi video hỏi thăm (không tốn tiền), gửi tiền về biếu.
+  - Tết về quê khi đang sống xa nhà cũng phải mua vé (vé mùa Tết đắt hơn).
+- **Lựa chọn thường ngày theo nơi đang sống**:
+  - Dã ngoại, đi phượt, du lịch chọn địa điểm theo miền bạn đang sống. Ví dụ ở miền Nam thì núi Bà Đen, Cát Tiên, Langbiang; ở miền Bắc thì Cúc Phương, Ba Vì, Tam Đảo.
+  - Đang du học hay làm việc ở nước ngoài thì đi chơi ở nước đó: núi Phú Sĩ, Kyoto (Nhật Bản); đảo Jeju, núi Seorak (Hàn Quốc); Blue Mountains (Úc)…
+  - Đang ở nước ngoài thì không còn tảo mộ Thanh minh, cúng ông Công ông Táo hay giỗ ông cùng cả nhà. Thưởng cuối năm ở nước ngoài không gọi là "thưởng Tết".
+- "Tiền riêng" có giải thích ngay trên bảng: đó là tiền lì xì, tiền tiêu vặt, tiền làm thêm bạn tự để dành khi còn sống cùng bố mẹ.
+
+### Sửa lỗi logic (rà soát tự động hàng trăm đời)
+- Bố hoặc mẹ đã mất thì lời kể không còn "bố mẹ khoe với cả xóm", "bố mẹ mua cho", "tiền nong để bố mẹ"… Trẻ mồ côi mẹ thì lời kể tuổi thơ nhắc bố (hoặc ông bà).
+- Đã nghỉ học thì không còn chuyện "làm lớp trưởng", "cả lớp ký tên lên bó bột", "bạn cùng lớp"…
+- Không có bạn đời thì con ốm nằm viện là "một mình bạn thức trắng trông con", không phải "vợ chồng thay nhau trực".
+- Sửa lỗi ở bản 3.0: bộ lọc dòng nhật ký lặp bị sai (lọc nhầm theo chữ "d").
+
 ## v3.0.0 — 15/10/2026 (bản cập nhật lớn)
 
 Giữ nguyên toàn bộ tính năng v2.9.0. Đời đang chơi dở vẫn chơi tiếp được.

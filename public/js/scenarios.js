@@ -43,7 +43,7 @@
   EV(function (l, a) { return a >= 6 && a <= 10 && !l.bff; }, 0.35, function (l, a, r, log) {
     var s = r() < 0.6 ? l.sex : (l.sex === 'M' ? 'F' : 'M');
     l.bff = { name: H.stranger(l, r, s), sex: s, since: a, alive: true, close: 70, token: pick(r, ['chiếc ảnh chụp chung năm lớp 5', 'viên bi ve ngày bé', 'cuốn lưu bút cấp ba', 'chiếc vòng tay đôi', 'tấm thiệp sinh nhật tự vẽ']) };
-    log('Ngồi cạnh ' + l.bff.name + ' trong lớp — từ đó hai đứa thành đôi bạn thân.', 'good');
+    log(l.school ? 'Ngồi cạnh ' + l.bff.name + ' trong lớp — từ đó hai đứa thành đôi bạn thân.' : 'Chơi với ' + l.bff.name + ' ở xóm bên — từ đó hai đứa thành đôi bạn thân.', 'good');
     H.mem(l, 'Ngày quen ' + l.bff.name + ', người bạn thân nhất đời.', 4); fx(l, { soc: 6, hap: 3 });
   });
   EV(function (l, a) { return a >= 12 && a <= 28 && !l.idol; }, 0.12, function (l, a, r, log) {
@@ -363,6 +363,7 @@
     log(t + ' Bạn đặt chân về ' + l.countryName + ', gầy rộc, ôm chầm lấy người thân ở cửa khẩu.', 'big');
     H.mem(l, 'Giây phút bước qua cửa khẩu trở về sau địa ngục ở Campuchia.', 9);
     l.abroad = null; l.job = l.prevJob && E.resolveJob(l.prevJob.id) !== 'scam_kh' ? l.prevJob : null; l.prevJob = null;
+    if (l.job && l.school && l.school !== 'police') { l.school = null; l.schoolEnd = null; l.cityStudent = null; } // v3.2: không vừa đi làm vừa học đại học
     if (!l.job) l.flags.needJob = true;
     l.flags.cambodia = 'Từng bị lừa bán sang trại lừa đảo ở Campuchia và may mắn trở về.';
     fx(l, { hap: 10, hea: -5 }); H.sched(l, 'tram_cam', 1);
@@ -1368,7 +1369,7 @@
       { k: 'grand', l: 'Chạy đi gọi bà sang giúp', run: function (l, r, log) { log('Chạy đi gọi bà ngoại sang nấu cháo cho mẹ.', 'neutral'); fx(l, { karma: 1 }); } }
     ]
   });
-  CT('giup_nha', function (l, a) { return a >= 8 && a <= 14; }, 4);
+  CT('giup_nha', function (l, a) { return a >= 8 && a <= 14 && l.fam.fAlive && !l.fam.noDad; }, 4); // v3.2: lời kể có bố đi làm, bố nấu cháo
 
   SC('cho_chep_bai', {
     title: 'Bạn cùng bàn', text: 'Giờ kiểm tra 15 phút, đứa bạn cùng bàn nháy mắt, khều tay xin chép bài.',

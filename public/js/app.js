@@ -424,7 +424,7 @@
   function startLife() { S.paused = false; enterLife(); }
 
   function enterLife() {
-    show('life');
+    show('life'); document.body.classList.add('inlife');
     $('#logList').innerHTML = '';
     S.life.log.slice(-400).reverse().forEach(function (e) { addLog(e, true, true); });
     renderSpeeds(); renderAll();
@@ -549,7 +549,7 @@
             var x = b.dataset.x; closeModal();
             if (x === 'stay') { S.paused = was; renderTopbar(); return; }
             if (x === 'save') persist(); else LS.del(K.cur);
-            S.phase = 'idle'; S.life = null; show('home');
+            S.phase = 'idle'; S.life = null; document.body.classList.remove('inlife'); show('home');
           };
         });
       });
@@ -624,7 +624,7 @@
     var debt = (l.loans || []).reduce(function (s, x) { return s + x.bal; }, 0) + (l.mortgage || 0);
     var rows = [];
     function r(k, v, cls, tip) { rows.push('<dt' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' + esc(k) + '</dt><dd class="' + (cls || '') + '">' + esc(v) + '</dd>'); }
-    if (!l.indep) { if (l.money > 0.05) r('Tiền riêng', money(l, l.money), '', 'Tiền lì xì, tiền bố mẹ cho, tiền làm thêm — để dành được'); return rows.length ? '<dl class="statlist wb">' + rows.join('') + '</dl>' : ''; }
+    if (!l.indep) { if (l.money > 0.05) r('Tiền riêng (để dành)', money(l, l.money), '', 'Tiền lì xì, tiền tiêu vặt, tiền làm thêm bạn để dành được'); return rows.length ? '<dl class="statlist wb">' + rows.join('') + '</dl><div class="small muted">Tiền riêng là tiền lì xì, tiền tiêu vặt, tiền làm thêm bạn tự để dành. Chưa tự lập nên ăn ở, học hành vẫn do bố mẹ lo.</div>' : ''; }
     r('Tiền mặt / tài khoản', (l.money < 0 ? '−' : '') + money(l, Math.abs(l.money)), l.money < 0 ? 'neg' : '', 'Tiền tiêu được ngay. Âm nghĩa là đang tiêu lố, phải vay tạm người thân hoặc thấu chi.');
     if (fin > 0.5) r('Tiết kiệm & đầu tư', money(l, fin), '', 'Sổ tiết kiệm, vàng, cổ phiếu, đất — muốn tiêu phải bán / rút');
     if (l.ownHouse && l.houseVal > 0.5) r(U.cap(l.houseName && l.houseName !== 'nhà riêng' ? l.houseName : 'nhà ở'), money(l, l.houseVal), '', 'Giá trị căn nhà đang ở');
@@ -796,9 +796,11 @@
   }
   function doAction(id) {
     var l = S.life;
-    if (!l || !l.alive || S.phase === 'decision' || S.phase === 'decmin' || S.phase === 'reflect' || S.phase === 'dead') { if (S.phase === 'decmin') toast('Hãy chọn xong lựa chọn đang chờ trước đã'); return; }
+    if (!l || !l.alive || S.phase === 'decision' || S.phase === 'reflect' || S.phase === 'dead') return;
+    var waiting = S.phase === 'decmin';
     var d = E.act(l, id);
     if (!d) { toast('Chưa thể làm việc này lúc này'); return; }
+    if (waiting) { clearDecPill(); toast('Làm xong việc này sẽ quay lại lựa chọn đang chờ'); }
     d.manual = true; // người chơi tự bấm thì người chơi tự chọn, kể cả khi bật chế độ tự động
     S.skipping = false; renderTopbar(); showDecision();
   }
@@ -903,6 +905,15 @@
       }, 'profile');
   }
   $('#profBtn').onclick = openProfile;
+  // v3.2: điện thoại — nút "⋯" mở các nút phụ, thanh điều hướng dưới cùng cuộn tới từng bảng
+  $('#moreBtn').onclick = function () { var bar = $('#life .lifebar'), o = !bar.classList.contains('open'); bar.classList.toggle('open', o); this.setAttribute('aria-expanded', String(o)); this.textContent = o ? '✕' : '⋯'; };
+  $$('#mnav [data-to]').forEach(function (b) { b.onclick = function () {
+    var to = b.dataset.to; if (to === 'prof') { openProfile(); return; }
+    var el = document.getElementById(to); if (!el) return;
+    if (to === 'logCard' && $('#logCard').classList.contains('collapsed')) $('#logToggle').click();
+    var top = el.getBoundingClientRect().top + window.scrollY - ($('#life .lifebar').offsetHeight + 8);
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }; });
   $('#idCard').addEventListener('click', function (ev) { if (ev.target.closest('[data-prof]')) openProfile(); });
   // v3.0: nhật ký thu gọn / mở — không còn phải kéo hết đoạn nhật ký mới xem được hồ sơ
   function setLogCollapsed(c) {
@@ -938,10 +949,12 @@
     S.phase = 'decision';
     var major = E.isMajor(d);
     var aiPick = !d.manual && (S.auto || (S.minorOnly && !major));
+    // v3.1: lựa chọn nào tốn tiền mà chưa ghi giá thì ghi luôn chi phí ước tính
+    var costs = !aiPick && E.optCosts ? E.optCosts(l, d) : {};
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
       '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
-      '<div class="opts">' + d.opts.map(function (o) { return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (o.h ? '<span>' + esc(o.h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
+      '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {

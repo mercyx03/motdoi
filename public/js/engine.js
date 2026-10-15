@@ -116,7 +116,12 @@
       if (l.mem.length > 60) { l.mem.sort(function (x, y) { return y.w - x.w; }); l.mem.length = 50; l.mem.sort(function (x, y) { return x.a - y.a; }); }
     },
     sched: function (l, id, n, arg) { l.sched = l.sched || []; l.sched.push({ at: l.age + (n || 0), id: id, arg: arg || null }); },
-    chain: function (l, id, arg) { if (DEC[id] && (!DEC[id].valid || DEC[id].valid(l, arg || {}))) l.pending.unshift(DEC[id].make(l, RF(l), arg)); },
+    chain: function (l, id, arg) {
+      // v3.1: tình huống nối chuỗi cũng tính vào giới hạn lặp trong đời
+      var T = TRIG.filter(function (t) { return t.id === id; })[0], sc = l.flags.scN || (l.flags.scN = {});
+      if (T && !T.rep && (sc[id] || 0) >= (T.max || 3)) return;
+      if (DEC[id] && (!DEC[id].valid || DEC[id].valid(l, arg || {}))) { l.pending.unshift(DEC[id].make(l, RF(l), arg)); if (T && !T.rep) { sc[id] = (sc[id] || 0) + 1; (l.flags.cd || (l.flags.cd = {}))[id] = l.age; } }
+    },
     kill: function (l, cause, log, sudden) {
       if (!l.alive) return;
       l.alive = false; l.death = { age: l.age, cause: cause, year: l.birthYear + l.age, sudden: sudden !== false };
@@ -191,7 +196,8 @@
       return name;
     },
     idolAge: function (l) { return l.idol && l.idolBorn ? l.birthYear + l.age - l.idolBorn : null; },
-    sameSexLegal: sameSexLegal, partnerWord: partnerWord, QUINT: QUINT
+    sameSexLegal: sameSexLegal, partnerWord: partnerWord, QUINT: QUINT,
+    inVN: function (l) { return isVN(l) && !l.abroad; }, famFix: function (l, t) { return famFix(l, t); }, schoolOff: function (l, t) { return schoolOff(l, t); } // v3.1
   };
   var LOAN_TYPES = {
     bank: { name: 'vay ngân hàng', rate: 0.09, minShare: 0.12 },
@@ -234,6 +240,40 @@
     return Math.max(0, w);
   }
 
+  // v3.1: bố hoặc mẹ đã mất (hoặc gia đình không có bố) thì lời kể không còn nhắc "bố mẹ" như cả hai còn sống
+  var FAM_KEEP = /mất|qua đời|giỗ|bàn thờ|thắp hương|nén hương|(^|[^\p{L}])mộ(?![\p{L}])|nhớ|ngày xưa|thuở|hoa hồng|di ảnh|mẹ chồng|mẹ vợ|bố chồng|bố vợ|làm mẹ|làm bố|người mẹ|bà mẹ|ông bố|Đức Mẹ|mẹ đơn thân|mẹ bỉm|bố mẹ đẻ|để lại|hai bên|mẹ con|bố con|cha mẹ|(^|[^\p{L}])[Cc]on [A-ZĐ]|con trai|con gái|các con|cháu|làm cha|nuôi dạy con/u;
+  function famFix(l, t) {
+    if (!t || typeof t !== 'string' || !l || !l.fam) return t;
+    var f = l.fam, m = !!f.mAlive, b = !!f.fAlive && !f.noDad;
+    if ((m && b) || FAM_KEEP.test(t)) return t;
+    var pw = m ? 'mẹ' : b ? 'bố' : (l.age < 18 ? 'ông bà' : '');
+    if (pw) t = t.replace(/(^|[^\p{L}])([Bb])ố mẹ(?![\p{L}])/gu, function (x, p, B) { return p + (B === 'B' ? pw.charAt(0).toUpperCase() + pw.slice(1) : pw); });
+    if (l.age < 18) {
+      var hasM = /(^|[^\p{L}])[Mm]ẹ(?![\p{L}])/u.test(t), hasB = /(^|[^\p{L}])[Bb]ố(?![\p{L}])/u.test(t);
+      if (!m && hasM && !hasB) t = t.replace(/(^|[^\p{L}])([Mm])ẹ(?![\p{L}])/gu, function (x, p, M) { var w = b ? 'bố' : 'bà'; return p + (M === 'M' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
+      else if (!b && hasB && !hasM) t = t.replace(/(^|[^\p{L}])([Bb])ố(?![\p{L}])/gu, function (x, p, B) { var w = m ? 'mẹ' : 'ông'; return p + (B === 'B' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
+    }
+    return t;
+  }
+  // v3.1: chuyện trường lớp chỉ kể khi đang đi học
+  var SCHOOL_TXT = /lớp trưởng|cô giáo|thầy giáo|thầy cô|cô khen|giờ ra chơi|bài kiểm tra|điểm kém|sổ liên lạc|họp phụ huynh|bạn cùng (lớp|bàn)|trong lớp|cả lớp|nhất lớp|cầu thang trường|đến trường|tan học|giờ học|học thêm|cùng bàn|lưu bút|bài vở/;
+  function schoolOff(l, t) { return l.age >= 6 && l.age <= 17 && !l.school && SCHOOL_TXT.test(t || ''); }
+  // v3.1: lựa chọn nào tốn tiền / được tiền thì nhật ký ghi luôn số tiền
+  function moneyNote(life, items, i0, out, log) {
+    if (!life.alive) return; // đã qua đời giữa chừng thì không ghi thêm gì
+    var net = 0, loan = 0, why = [];
+    for (var i = i0; i < items.length; i++) { var x = items[i]; if (/^Vay /.test(x.t)) loan += x.v; else { net += x.v; if (why.indexOf(x.t) < 0) why.push(x.t); } }
+    if (Math.abs(net) < Math.max(life.base * 0.002, 1e-9) && !loan) return;
+    var txt = (net < 0 ? 'chi ' : 'thu về ') + fmtMoney(life, Math.abs(net)) + (loan > 0 ? ', vay thêm ' + fmtMoney(life, loan) : '');
+    for (var j = out.length - 1; j >= 0; j--) {
+      var e = out[j];
+      if (e.k === 'money' || e.k === 'death') continue;
+      if (!/\d/.test(e.t)) e.t = e.t.replace(/([.!…]*)$/, function (m) { return ' (' + txt + ')' + m; });
+      return;
+    }
+    if (Math.abs(net) >= life.base * 0.002) log(U.cap(why.slice(0, 3).join(', ')) + ': ' + txt + '.', 'money');
+  }
+
   // Định nghĩa tình huống gọn: SC(id, {title, text, prep, opts:[{k,l,h,req,ai,run}]})
   function val(x, l, d) { return typeof x === 'function' ? x(l, d) : x; }
   function SC(id, def) {
@@ -243,9 +283,9 @@
         var d = def.prep ? def.prep(l, r, arg) : (arg || {});
         if (d == null) d = {};
         var os = def.opts.filter(function (o) { return !o.req || o.req(l, d); }).map(function (o) {
-          return { k: o.k, l: val(o.l, l, d), h: val(o.h, l, d) || '' };
+          return { k: o.k, l: famFix(l, val(o.l, l, d)), h: famFix(l, val(o.h, l, d) || '') };
         });
-        return { id: id, title: val(def.title, l, d), text: val(def.text, l, d), opts: os, data: d, tone: def.tone || '' };
+        return { id: id, title: famFix(l, val(def.title, l, d)), text: famFix(l, val(def.text, l, d)), opts: os, data: d, tone: def.tone || '' };
       },
       auto: function (l, dec, r) {
         var os = def.opts.filter(function (o) { return dec.opts.some(function (x) { return x.k === o.k; }); });
@@ -258,7 +298,7 @@
         if (o && o.req && !o.req(l, dec.data)) o = def.opts.filter(function (x) { return !x.req || x.req(l, dec.data); }).pop();
         if (o && o.run) o.run(l, r, log, dec.data);
       },
-      valid: def.valid
+      valid: function (l, d) { return def.valid ? def.valid(l, d) : true; } // v3.2: luôn đọc điều kiện mới nhất (module sau có thể thay đổi)
     };
   }
 
@@ -1207,7 +1247,9 @@
     function add(id, arg) {
       if (q.length >= cap || !DEC[id]) return;
       if (DEC[id].valid && !DEC[id].valid(life, arg || {})) return; // tình huống hẹn trước không còn phù hợp
-      q.push(DEC[id].make(life, r, arg));
+      var dm = DEC[id].make(life, r, arg);
+      if (schoolOff(life, dm.title + ' ' + dm.text + ' ' + dm.opts.map(function (o) { return o.l; }).join(' '))) return; // v3.1: đã nghỉ học thì không có chuyện trên lớp
+      q.push(dm);
     }
 
     // trong tù: chỉ có chuyện trong trại giam
@@ -1265,7 +1307,7 @@
     if (isVN(life) && !life.abroad && !life.flags.xkldAsked && a >= 19 && a <= 33 && !life.school && r() < (life.fam.q <= 3 ? 0.07 : 0.02) * (life.flags.famDebt ? 2 : 1)) add('xkld');
     if (!isVN(life) && !life.abroad && !life.flags.emigAsked && a >= 20 && a <= 40 && life.gdp < 25 && r() < 0.03) add('emig');
     // tài sản
-    if (!life.ownHouse && life.indep && a >= 25 && (life.flags.houseNo == null || a >= life.flags.houseNo) && life.money >= housePrice(life) * (H.loanAgeOk(life, 'home') ? 0.35 : 1) && !(life.abroad && !life.abroad.perm) && r() < 0.5) add('house');
+    if (!life.ownHouse && life.indep && a >= 25 && (life.flags.houseNo == null || a >= life.flags.houseNo) && life.money >= (E.homeMin ? E.homeMin(life) : housePrice(life)) * (H.loanAgeOk(life, 'home') ? 0.35 : 1) && !(life.abroad && !life.abroad.perm) && r() < 0.5) add('house');
     if (life.job && !/^(kd_|xkld|phu_giup)/.test(life.job.id) && !E.isCrime(life) && a >= 25 && a <= 50 && (life.flags.bizAsked || 0) < 2 && life.money > life.base && r() < 0.04) add('biz');
     if (a >= 40 && a <= 70 && !life.flags.careDone && ((life.fam.mAlive && life.fam.mAge + a >= 72) || (life.fam.fAlive && life.fam.fAge + a >= 72)) && r() < 0.3) add('care');
 
@@ -1278,10 +1320,10 @@
       if (!DEC[T.id] || !T.when(life, a)) continue;
       // thời gian chờ để tình huống không lặp lại quá dày (v2.4: tối thiểu 2 năm, trừ chuỗi đang diễn ra như nghiện ngập, đòi nợ)
       // v3.0: chống lặp triệt để — chờ tối thiểu 3 năm, mỗi lần đã gặp thì lần sau hiếm hơn, mỗi tình huống chỉ gặp tối đa vài lần trong đời
-      var cdT = T.rep ? (T.cd || 0) : Math.max(3, T.cd || 0);
+      var cdT = T.rep ? (T.cd || 0) : Math.max(4, T.cd || 0);
       if (cdT && cdm[T.id] != null && a - cdm[T.id] < cdT) continue;
       var seenN = scN[T.id] || 0;
-      if (!T.rep && seenN >= (T.max || 5)) continue;
+      if (!T.rep && seenN >= (T.max || 3)) continue;
       var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN));
       if (r() < pr && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
@@ -1289,7 +1331,7 @@
     // nhịp tuổi thơ: từ 1 đến 14 tuổi, năm nào cũng nên có một lựa chọn hợp lứa tuổi
     if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.85)) {
       var kidT = TRIG.filter(function (T) {
-        return T.child && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
+        return T.child && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
       if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * Math.pow(0.45, scN[T.id] || 0); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
     }
@@ -1314,12 +1356,15 @@
     var d = life.pending[0];
     if (!d) return [];
     var r = RF(life), out = [];
-    var log = function (t, k) { var e = { a: life.age, y: life.birthYear + life.age, t: t, k: k || '' }; life.log.push(e); out.push(e); };
+    var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; var e = { a: life.age, y: life.birthYear + life.age, t: famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
     var valid = d.opts.some(function (o) { return o.k === key; });
     if (!valid) key = DEC[d.id] ? DEC[d.id].auto(life, d, r) : null;
     life.pending.shift();
     life.choices = (life.choices || 0) + 1;
+    if (!life.yr) life.yr = { items: [] };
+    var it0 = life.yr.items.length;
     if (DEC[d.id]) DEC[d.id].apply(life, d, key, r, log);
+    if (life.yr && life.yr.items) moneyNote(life, life.yr.items, it0, out, log);
     clampSt(life);
     prune(life);
     return out;
@@ -1404,7 +1449,7 @@
     { c: function (l, a) { return a >= 16 && a <= 30 && l.sex === 'M' && !l.flags.smoke && !l.flags.noSmoke; }, p: function (l) { return isVN(l) || /cn|id|ru|tr|ar|kr/.test(l.pool) ? 0.05 : 0.02; }, run: function (l, a, r, log) { l.flags.smoke = true; log('Bắt đầu hút thuốc lá.', 'bad'); } },
     { c: function (l, a) { return l.flags.smoke && a >= 25; }, p: 0.05, run: function (l, a, r, log) { l.flags.smoke = false; l.flags.noSmoke = true; log('Bỏ được thuốc lá sau nhiều lần thử.', 'good'); l.st.hea += 4; } },
     { c: function (l, a) { return isVN(l) && a >= 18 && l.indep; }, p: 0.07, run: function (l, a, r, log) { if (l.abroad && !l.abroad.perm) { log('Đón một cái Tết xa nhà ở ' + l.abroad.name + ', gọi video về nhà mà nghẹn ngào.', 'neutral'); l.st.hap -= 3; H.mem(l, 'Cái Tết xa nhà, nhìn mẹ qua màn hình điện thoại.', 2); } else { log(U.pick(r, ['Tết năm nay cả nhà sum họp đông đủ.', 'Về quê ăn Tết, gói bánh chưng cùng gia đình.', 'Mùng Một Tết đi chúc Tết họ hàng, lì xì cho bọn trẻ.']), 'good'); l.st.hap += 3; l.st.soc += 2; } } },
-    { c: function (l, a) { return l.job && !E.isCrime(l) && a >= 22; }, p: 0.05, run: function (l, a, r, log) { var x = Math.round(l.base * 0.15); H.cash(l, x, isVN(l) ? 'Thưởng Tết, lương tháng 13' : 'Thưởng cuối năm'); log((isVN(l) ? 'Được thưởng lương tháng 13 và thưởng Tết ' : 'Được thưởng cuối năm ') + fmtMoney(l, x) + '.', 'good'); l.st.hap += 2; } },
+    { c: function (l, a) { return l.job && !E.isCrime(l) && a >= 22; }, p: 0.05, run: function (l, a, r, log) { var x = Math.round(l.base * 0.15), vt = isVN(l) && !l.abroad; H.cash(l, x, vt ? 'Thưởng Tết, lương tháng 13' : 'Thưởng cuối năm'); log((vt ? 'Được thưởng lương tháng 13 và thưởng Tết ' : 'Được thưởng cuối năm ') + fmtMoney(l, x) + '.', 'good'); l.st.hap += 2; } },
     { c: function (l, a) { return a >= 35 && a <= 75 && !l.flags.exercise; }, p: 0.04, run: function (l, a, r, log) { l.flags.exercise = true; log(isVN(l) ? 'Bắt đầu tập thể dục, đi bộ mỗi sáng sớm.' : 'Bắt đầu tập thể dục đều đặn.', 'good'); l.st.hea += 5; } },
     { c: function (l, a) { return isVN(l) && [70, 75, 80, 85, 90, 95, 100].indexOf(a) >= 0; }, p: 1, run: function (l, a, r, log) { log('Con cháu tổ chức lễ mừng thọ ' + a + ' tuổi.', 'good'); l.st.hap += 5; H.mem(l, 'Lễ mừng thọ ' + a + ', con cháu quây quần chúc thọ.', 3); } },
     { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log('Trông cháu giúp con những ngày con bận rộn.', 'good'); l.st.hap += 3; l.st.soc += 2; } },
@@ -1532,6 +1577,7 @@
     var ess = F.food + F.rent + F.travel + F.kids + F.parents + F.health + F.debt;
     var surplus = income + F.partner - ess;
     var share = { save: 0.35, normal: 0.6, lavish: 0.95 }[life.spend] || 0.6;
+    if (life.money > b * 8) share = Math.min(0.97, share + Math.min(0.3, (life.money / b - 8) / 80)); // v3.2: giàu lên thì chi tiêu cũng rộng tay hơn
     F.life = life.money >= 0 && surplus > 0 ? surplus * share : 0;
     if (focus === 'rest') F.life += b * 0.06;
     if (life.money < 0) { F.life = 0; var cut = Math.max(0, ess - Math.max(ess * 0.8, income + F.partner)); F.food -= Math.min(cut, F.food * 0.2); }
@@ -1562,7 +1608,7 @@
   function finishYear(life) {
     if (!life.alive) return [];
     var r = RF(life), a = life.age, out = [];
-    var log = function (t, k) { var e = { a: a, y: life.birthYear + a, t: t, k: k || '' }; life.log.push(e); out.push(e); };
+    var log = function (t, k) { var e = { a: a, y: life.birthYear + a, t: famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); };
     var f = life.fam, st = life.st;
     var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
     if (a >= 6 && life.focus === 'baby') life.focus = 'study';
@@ -1696,7 +1742,7 @@
         st.hap -= 22; st.hea -= 4;
         return;
       }
-      if (ka >= 1 && ka <= 6 && r() < (k.vac === false ? 0.12 : 0.06)) { log('Con ' + k.name + ' ốm phải nhập viện nhi, vợ chồng thay nhau trực.', 'bad'); H.cash(life, -life.base * 0.04, 'Viện phí cho con'); st.hap -= 2; }
+      if (ka >= 1 && ka <= 6 && r() < (k.vac === false ? 0.12 : 0.06)) { log('Con ' + k.name + ' ốm phải nhập viện nhi, ' + (life.partner && life.partner.alive ? (life.partner.status === 'married' && life.partner.sex !== life.sex ? 'vợ chồng' : 'hai người') + ' thay nhau trực.' : 'một mình bạn thức trắng trông con.'), 'bad'); H.cash(life, -life.base * 0.04, 'Viện phí cho con'); st.hap -= 2; }
       if (ka === 6) log('Con ' + k.name + ' vào lớp 1.', 'good');
       // v2.3: chuyện con 18 tuổi đi học hay đi làm do module mở rộng xử lý (tình huống con_18)
       if (ka >= 23 && ka <= 35 && !k.married && r() < 0.15) { k.married = true; log('Con ' + k.name + ' lập gia đình.', 'good'); H.cash(life, -life.base * 0.25, 'Lo đám cưới cho con'); st.hap += 4; H.mem(life, 'Dắt tay ' + k.name + ' trong ngày cưới của con.', 4); }
@@ -1755,7 +1801,7 @@
         if (!ev.c(life, a)) continue;
         var pr = typeof ev.p === 'function' ? ev.p(life, a) : ev.p;
         if (pr < 1 && !ev.rep && evAt[ei] != null && a - evAt[ei] < (ev.cd || 3)) continue; // v3.0: chuyện kể ngẫu nhiên không lặp lại năm nào cũng như năm nào
-        if (r() < pr) { ev.run(life, a, r, log); if (pr < 1) { n++; evAt[ei] = a; } }
+        if (r() < pr) { var o0 = out.length, i0 = life.yr.items.length; ev.run(life, a, r, log); if (out.length > o0) moneyNote(life, life.yr.items, i0, out.slice(o0), log); if (pr < 1) { n++; evAt[ei] = a; } }
       }
     }
     if (!life.alive) { clampSt(life); return out; }
@@ -1813,7 +1859,7 @@
     // v3.0: một dòng nhật ký y hệt đã có trong 8 năm gần đây (hoặc vừa ghi trong năm) thì không ghi lại — tránh nhật ký lặp đi lặp lại
     var seenT = {}, li0 = life.log.length - out.length;
     for (var li = li0 - 1; li >= 0 && life.log[li].a >= a - 8; li--) seenT[life.log[li].t] = 1;
-    var dropT = out.filter(function (x) { var dup = /^(neutral|quiet|good|)$/.test(x.k || '') && !/d/.test(x.t) && seenT[x.t]; seenT[x.t] = 1; return dup; });
+    var dropT = out.filter(function (x) { var dup = (/^(neutral|quiet|good|)$/.test(x.k || '') && !/\d/.test(x.t) && seenT[x.t]) || (x.k !== 'big' && x.k !== 'death' && schoolOff(life, x.t)); seenT[x.t] = 1; return dup; });
     if (dropT.length && dropT.length === out.length) dropT.pop(); // năm nào cũng phải có ít nhất một dòng nhật ký
     if (dropT.length) { life.log = life.log.filter(function (x) { return dropT.indexOf(x) < 0; }); out = out.filter(function (x) { return dropT.indexOf(x) < 0; }); }
 

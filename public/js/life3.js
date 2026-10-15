@@ -541,4 +541,152 @@
     P.stress = l.mind ? { v: Math.round(l.mind.stress), label: E.stressLabel(l.mind.stress) } : null;
     return P;
   };
+
+  // ===================================================================
+  // 12. v3.1 — LỰA CHỌN THƯỜNG NGÀY THEO NƠI ĐANG SỐNG; VỀ THĂM BỐ MẸ TỐN TIỀN THEO KHOẢNG CÁCH; GỢI Ý CHI PHÍ
+  // ===================================================================
+  var ZONE_REG = { MNPB: 'N', DBSH: 'N', BTB: 'C', NTB: 'C', TN: 'S', DNB: 'S', DBSCL: 'S' };
+  function zoneOfCity(c) {
+    if (!c) return null;
+    if (/Hà Nội|Hải Phòng|Thái Nguyên|Bắc Ninh|Nam Định|Hạ Long|Lào Cai/.test(c)) return 'N';
+    if (/Đà Nẵng|Huế|Vinh|Quy Nhơn|Nha Trang|Thanh Hóa|Quảng/.test(c)) return 'C';
+    if (/Hồ Chí Minh|Cần Thơ|Thủ Dầu Một|Biên Hòa|Vũng Tàu|Buôn Ma Thuột|Đà Lạt/.test(c)) return 'S';
+    return null;
+  }
+  function homeZone(l) { return ZONE_REG[l.region] || 'S'; }
+  // bạn đang sống ở đâu: nước nào, miền nào (Việt Nam)
+  function where(l) {
+    if (l.abroad) return { vn: false, country: l.abroad.name, code: l.abroad.code, perm: !!l.abroad.perm };
+    if (!isVN(l)) return { vn: false, country: l.countryName, code: l.country, home: true };
+    var city = (l.cityStudent && l.cityStudent.city) || l.movedTo || null;
+    return { vn: true, city: city, zone: zoneOfCity(city) || homeZone(l), away: !!city };
+  }
+  E.where = where;
+  // chuyến về thăm bố mẹ: xa hay gần, đi bằng gì, tốn bao nhiêu
+  function trip(l) {
+    var w = where(l), home = isVN(l) ? (l.provLabel || (l.prov && l.prov.old) || 'quê nhà') : (l.city || l.countryName);
+    if (l.flags.caring) return { same: true, cost: 0, how: 'ở cùng nhà', to: home };
+    if (!isVN(l) && !l.abroad) return { same: false, cost: l.base * 0.01, how: 'về nhà bố mẹ', to: home, near: true };
+    if (!w.vn) { var farC = /Hoa Kỳ|Canada|Úc|Anh|Đức|Pháp|châu Âu|New Zealand|Ý|Hà Lan|Thụy|Ba Lan|Séc/.test(w.country); return { same: false, abroad: true, cost: isVN(l) ? V(l, farC ? 28 : 10) : l.base * (farC ? 0.25 : 0.1), how: 'mua vé máy bay từ ' + w.country + ' về', to: home }; }
+    if (!w.away) return { same: false, near: true, cost: V(l, 0.3), how: 'chạy xe sang nhà bố mẹ', to: home };
+    if (w.zone === homeZone(l)) return { same: false, mid: true, cost: V(l, 1.3), how: 'bắt xe khách từ ' + w.city + ' về quê', to: home };
+    return { same: false, flight: true, cost: V(l, 4), how: 'mua vé máy bay từ ' + w.city + ' về quê', to: home };
+  }
+  E.homeTrip = trip;
+  function pw(l) { return l.fam.mAlive && l.fam.fAlive && !l.fam.noDad ? 'bố mẹ' : l.fam.mAlive ? 'mẹ' : (l.fam.fAlive && !l.fam.noDad) ? 'bố' : ''; }
+  if (E.DEC.tham_bo_me) {
+    var TB = E.DEC.tham_bo_me.def, goOld = TB.opts.filter(function (o) { return o.k === 'go'; })[0];
+    TB.valid = function (l) { return !!pw(l); };
+    TB.text = function (l) {
+      var f = l.fam, a = l.age, p = pw(l), t = trip(l);
+      var ages = p === 'bố mẹ' ? (f.mAge + a) + ' và ' + (f.fAge + a) : p === 'mẹ' ? (f.mAge + a) : (f.fAge + a);
+      return U.cap(p) + ' giờ đã ' + ages + ' tuổi' + (p === 'bố mẹ' ? '' : ', ở một mình từ ngày ' + (p === 'mẹ' ? 'bố' : 'mẹ') + ' mất') + '. ' +
+        (t.same ? 'Bạn đang sống cùng nhà với ' + p + '.' : t.near ? 'Nhà ' + p + ' ở gần, chạy xe một lát là tới.' : 'Bạn đang ở ' + (where(l).city || where(l).country) + ', ' + p + ' ở ' + t.to + ' — muốn về phải ' + t.how + ' (đi lại, quà cáp khoảng ' + mo(l, t.cost) + ').') + ' Lâu rồi bạn chưa dành thời gian cho ' + p + '.';
+    };
+    TB.opts = [
+      { k: 'go', l: function (l) { var t = trip(l), p = pw(l); return t.same ? 'Dành một ngày ở nhà với ' + p : t.abroad ? 'Bay về Việt Nam thăm ' + p : t.flight ? 'Bay về quê thăm ' + p : t.mid ? 'Bắt xe khách về quê thăm ' + p : 'Về ăn cơm với ' + p; },
+        h: function (l) { var t = trip(l); return t.cost > 0 ? (t.abroad || t.flight ? 'Vé máy bay khứ hồi, quà cáp' : t.mid ? 'Vé xe khách, quà cáp' : 'Xăng xe, ít quà') + ' ~' + mo(l, t.cost) : 'Không tốn tiền'; },
+        run: function (l, r, log) {
+          var t = trip(l), p = pw(l);
+          if (t.cost > 0) H.cash(l, -t.cost, (t.abroad ? 'Vé máy bay về nước thăm ' : t.flight ? 'Vé máy bay về quê thăm ' : t.mid ? 'Vé xe về quê thăm ' : 'Về thăm ') + p);
+          var m0 = l.money, it = (l.yr || { items: [] }).items, n0 = it.length;
+          goOld.run(l, r, function (txt, k) { log((t.abroad ? 'Bay về Việt Nam sau bao lâu xa nhà. ' : t.flight || t.mid ? U.cap(t.how) + '. ' : '') + txt, k); });
+          l.money = m0; it.splice(n0, it.length - n0); // chi phí đã tính theo khoảng cách ở trên
+          if (t.abroad || t.flight) fx(l, { hap: 3 });
+        } },
+      { k: 'week', l: function (l) { return 'Xin nghỉ phép, về ở với ' + pw(l) + ' cả tuần'; }, req: function (l) { return !trip(l).same && !trip(l).near; }, h: function (l) { return 'Tiền đi lại & quà ~' + mo(l, trip(l).cost * 1.3) + (l.job ? ', mất vài ngày công' : ''); },
+        run: function (l, r, log) { var t = trip(l), p = pw(l); H.cash(l, -t.cost * 1.3, 'Về quê ở với ' + p + ' một tuần'); if (l.job && l.income > 0) H.cash(l, -l.income / 52, 'Nghỉ không lương'); log('Về ở với ' + p + ' trọn một tuần — ' + pick(r, ['sáng đi chợ, chiều nấu cơm, tối ngồi nghe kể chuyện ngày xưa.', 'sửa lại mái nhà dột, dọn khu vườn cỏ mọc um tùm.', 'đưa ' + p + ' đi khám sức khỏe, mua thêm ít đồ dùng trong nhà.']), 'good'); fx(l, { hap: 9, soc: 4, karma: 3 }); if (l.mind) l.mind.stress -= 8; H.mem(l, 'Một tuần ở nhà với ' + p + ', thấy mình như đứa trẻ ngày nào.', 4); } },
+      { k: 'call', l: 'Gọi video hỏi thăm', h: 'Không tốn tiền', run: function (l, r, log) { var p = pw(l); log('Gọi video cho ' + p + ' gần một tiếng. ' + pick(r, [U.cap(p) + ' cứ dặn đi dặn lại phải giữ sức khỏe.', U.cap(p) + ' khoe mấy chuyện ở quê, cười suốt.', 'Thấy ' + p + ' gầy đi, bạn hứa sẽ sớm về.']), 'good'); fx(l, { hap: 2, soc: 1 }); } },
+      { k: 'send', l: function (l) { return 'Gửi tiền về biếu ' + pw(l); }, req: function (l) { return l.indep && l.money > l.base * 0.12; }, h: function (l) { return '~' + mo(l, l.base * 0.1); }, run: function (l, r, log) { H.cash(l, -l.base * 0.1, 'Gửi tiền biếu ' + pw(l)); log('Chuyển khoản biếu ' + pw(l) + ' một khoản, ' + pw(l) + ' gọi lại mắng "tiêu xài hoang phí" mà giọng vui hẳn.', 'good'); fx(l, { hap: 3, karma: 2 }); } }
+    ];
+  }
+  // Tết về quê: xa nhà thì tốn tiền vé
+  E.EVENTS.forEach(function (ev) {
+    var src = ev.run.toString();
+    if (/Về quê ăn Tết, gói bánh chưng/.test(src)) {
+      var run0 = ev.run;
+      ev.run = function (l, a, r, log) {
+        run0.call(this, l, a, r, function (t, k) {
+          if (/^Về quê ăn Tết/.test(t)) { var tp = trip(l); if (!tp.same && !tp.near && !tp.abroad && tp.cost > 0) { H.cash(l, -tp.cost * 1.5, 'Vé xe / máy bay về quê ăn Tết'); t = U.cap(tp.how) + ' ăn Tết (vé mùa Tết đắt gấp rưỡi), gói bánh chưng cùng gia đình.'; } }
+          log(t, k);
+        });
+      };
+    }
+    // phong tục ở quê (tảo mộ, giỗ, ông Công ông Táo, hang đá cả xứ…) chỉ khi đang sống ở Việt Nam
+    if (/Thanh minh|ông Công ông Táo|Ngày giỗ ông|Rằm tháng Giêng|tảo mộ|hang đá Giáng sinh|xứ đạo|rước kiệu/.test(src)) {
+      var c0 = ev.c; ev.c = function (l, a) { return !(l.abroad && !l.abroad.perm) && c0.apply(this, arguments); };
+    }
+  });
+
+  // địa điểm du lịch, dã ngoại, đi phượt theo nơi đang sống
+  var VN_TRAVEL = { N: ['Sa Pa', 'Hạ Long', 'Ninh Bình', 'Hà Giang', 'Mộc Châu', 'Cát Bà'], C: ['Hội An', 'Huế', 'Quy Nhơn', 'Phong Nha', 'Nha Trang', 'Đà Lạt'], S: ['Vũng Tàu', 'Phú Quốc', 'Đà Lạt', 'Côn Đảo', 'Mũi Né', 'Cần Thơ'] };
+  var VN_NATURE = { N: ['vườn quốc gia Cúc Phương', 'vườn quốc gia Ba Vì', 'Tam Đảo', 'Fansipan', 'núi Mẫu Sơn'], C: ['vườn quốc gia Bạch Mã', 'Bà Nà', 'bán đảo Sơn Trà', 'Phong Nha – Kẻ Bàng'], S: ['núi Bà Đen', 'vườn quốc gia Cát Tiên', 'đỉnh Langbiang', 'Tà Năng – Phan Dũng', 'núi Chứa Chan'] };
+  var VN_PHUOT = { N: ['Hà Giang', 'Tà Xùa', 'Mộc Châu', 'Mù Cang Chải'], C: ['Măng Đen', 'đèo Hải Vân', 'Lý Sơn', 'Phú Yên'], S: ['Đà Lạt', 'Côn Đảo', 'Mũi Né', 'quần đảo Nam Du'] };
+  var SPOTS = {
+    'Nhật Bản': [['Kyoto', 'Hokkaido', 'Okinawa', 'Osaka'], ['núi Phú Sĩ', 'vườn quốc gia Nikko', 'rừng tre Arashiyama']],
+    'Hàn Quốc': [['đảo Jeju', 'Busan', 'Gyeongju'], ['núi Seorak', 'núi Bukhansan', 'núi Hallasan']],
+    'Đài Loan': [['Đài Trung', 'Cao Hùng', 'Hoa Liên'], ['núi A Lý', 'hẻm núi Thái Lỗ Các', 'Ngọc Sơn']],
+    'Trung Quốc': [['Quế Lâm', 'Thượng Hải', 'Tây An'], ['Trương Gia Giới', 'Hoàng Sơn']],
+    'Thái Lan': [['Phuket', 'Chiang Mai', 'Pattaya'], ['núi Doi Inthanon', 'vườn quốc gia Khao Yai']],
+    'Singapore': [['đảo Sentosa', 'Vịnh Marina'], ['khu bảo tồn MacRitchie', 'đồi Bukit Timah']],
+    'Malaysia': [['Penang', 'Langkawi', 'Malacca'], ['cao nguyên Cameron', 'núi Kinabalu']],
+    'Úc': [['Gold Coast', 'Melbourne', 'Tasmania'], ['dãy Blue Mountains', 'công viên Grampians']],
+    'Hoa Kỳ': [['Las Vegas', 'San Francisco', 'Hawaii', 'New York'], ['công viên Yosemite', 'hẻm núi Grand Canyon', 'Yellowstone']],
+    'Canada': [['Vancouver', 'Québec', 'Toronto'], ['công viên Banff', 'thác Niagara']],
+    'Anh': [['Edinburgh', 'Bath', 'Cornwall'], ['vùng hồ Lake District', 'vườn quốc gia Snowdonia']],
+    'Đức': [['Munich', 'Hamburg', 'Berlin'], ['Rừng Đen', 'dãy Alps vùng Bavaria']],
+    'Pháp': [['Nice', 'Lyon', 'Bordeaux'], ['dãy Alps', 'vùng Provence']]
+  };
+  function spots(w, i) { var s = SPOTS[w.country]; return s ? s[i] : [i ? 'một công viên quốc gia ở ' + w.country : 'một thành phố biển ở ' + w.country]; }
+  function vnPick(r, T, w) { return r() < 0.7 ? pick(r, T[w.zone]) : pick(r, [].concat(T.N, T.C, T.S)); }
+  function nearTrip(l, r) { var w = where(l); return w.vn ? vnPick(r, VN_TRAVEL, w) : pick(r, spots(w, 0)); }
+  function natureSpot(l, r) { var w = where(l); return w.vn ? vnPick(r, VN_NATURE, w) : pick(r, spots(w, 1)); }
+  function phuotSpot(l, r) { var w = where(l); return w.vn ? vnPick(r, VN_PHUOT, w) : pick(r, spots(w, 1).concat(spots(w, 0))); }
+  E.nearTrip = nearTrip; E.natureSpot = natureSpot;
+  if (E.DEC.leo_nui) E.DEC.leo_nui.def.prep = function (l, r) { return { p: natureSpot(l, r) }; };
+  if (E.DEC.phuot) E.DEC.phuot.def.prep = function (l, r) { return { p: phuotSpot(l, r) }; };
+  if (E.DEC.du_lich) {
+    var DL = E.DEC.du_lich.def, dl0 = DL.prep;
+    DL.prep = function (l, r) {
+      var d = dl0.apply(this, arguments), w = where(l);
+      d.near = nearTrip(l, r);
+      if (!w.vn && (d.far === w.country)) d.far = 'Việt Nam';
+      return d;
+    };
+  }
+  E.EVENTS.forEach(function (ev) {
+    if (/'Đi du lịch ' \+ dest/.test(ev.run.toString())) {
+      ev.run = function (l, a, r, log) {
+        var w = where(l), abroadTrip = l.money > l.base * 2 && r() < 0.5;
+        var dest = abroadTrip ? pick(r, ['Thái Lan', 'Hàn Quốc', 'Nhật Bản', 'Singapore', 'Đài Loan', 'châu Âu'].filter(function (x) { return x !== w.country; })) : nearTrip(l, r);
+        var cost = abroadTrip ? 0.15 : 0.05;
+        H.cash(l, -l.base * cost, 'Du lịch'); H.visit(l, dest);
+        log('Đi du lịch ' + dest + (l.partner ? ' cùng ' + H.partnerWord(l, l.partner) : '') + '.', 'good'); fx(l, { hap: 4 });
+      };
+    }
+  });
+
+  // gợi ý chi phí cho lựa chọn chưa ghi giá: chạy thử lựa chọn trên một bản sao của nhân vật
+  E.optCosts = function (l, d) {
+    var res = {}, D = E.DEC[d && d.id]; if (!D || !d.opts) return res;
+    var base;
+    try { base = JSON.stringify(l); } catch (e) { return res; }
+    d.opts.forEach(function (o) {
+      if (o.h && /\d/.test(o.h)) return; // đã ghi giá
+      var nets = [];
+      for (var t = 0; t < 3; t++) {
+        try {
+          var c = JSON.parse(base); c.pending = []; c.yr = { items: [] }; c.rs = (c.rs + 7919 * (t + 1)) | 0; c.log = c.log.slice(-30);
+          D.apply(c, JSON.parse(JSON.stringify(d)), o.k, function () { return U.rand(c); }, function () { });
+          var net = 0; c.yr.items.forEach(function (x) { if (!/^Vay /.test(x.t)) net += x.v; });
+          nets.push(net);
+        } catch (e) { return; }
+      }
+      if (!nets.length) return;
+      var lo = Math.min.apply(null, nets), hi = Math.max.apply(null, nets), thr = l.base * 0.002;
+      if (hi <= -thr) res[o.k] = 'Chi phí khoảng ' + mo(l, -hi) + (lo < hi * 1.3 ? ' – ' + mo(l, -lo) : '');
+      else if (lo <= -thr) res[o.k] = 'Có thể tốn đến ' + mo(l, -lo);
+    });
+    return res;
+  };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));
