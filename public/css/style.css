@@ -390,3 +390,31 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
 .statlist.wb dd.neg { color: var(--bad); }
 .statlist.wb dt[title] { cursor: help; text-decoration: underline dotted rgba(157, 176, 193, .5); text-underline-offset: 3px; }
 .joblist li.sub { margin-left: 14px; border-left: 2px solid var(--line); padding-left: 10px; }
+
+/* v3.0: nhật ký thu gọn được, cuộn trong khung — không phải kéo hết trang mới xem được hồ sơ */
+.loghead { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.loghead .logtog { margin-left: auto; text-transform: none; letter-spacing: 0; font-size: 12.5px; padding: 5px 10px; }
+.loglist { max-height: 62vh; overflow-y: auto; overscroll-behavior: contain; }
+#logCard.collapsed .loglist { max-height: none; overflow: visible; }
+#logCard.collapsed .loglist li:nth-child(n+4) { display: none; }
+.lognote { display: none; margin-top: 6px; }
+#logCard.collapsed .lognote { display: block; }
+@media (max-width: 1000px) { .loglist { max-height: 46vh; } }
+.idcard .profmore { margin-top: 10px; width: 100%; }
+/* hồ sơ chi tiết */
+.modal.profile { width: min(760px, 100%); }
+.prof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .prof-grid { grid-template-columns: 1fr; } }
+.prof-sec { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.prof-sec.wide { grid-column: 1 / -1; }
+.prof-sec h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.prof-sec ul { list-style: none; margin: 0; padding: 0; }
+.prof-sec li { padding: 5px 0; border-bottom: 1px dashed var(--line); font-size: 14px; display: flex; justify-content: space-between; gap: 10px; }
+.prof-sec li:last-child { border-bottom: 0; }
+.prof-sec li b.neg { color: var(--bad); } .prof-sec li b.pos { color: var(--good); }
+.prof-sec li .yr { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+.lvbar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 4px; }
+.lvbar i { display: block; height: 100%; background: var(--accent); }
+.prof-top { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; }
+.prof-top svg.avatar { width: 60px; height: 60px; border-radius: 10px; border: 1px solid var(--line); }
+.stresslbl { font-size: 11.5px; color: var(--muted); }

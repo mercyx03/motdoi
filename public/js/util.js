@@ -1,7 +1,7 @@
 /* Một Kiếp Người — tiện ích dùng chung (chạy được cả trên trình duyệt lẫn Node để test) */
 (function (G) {
   'use strict';
-  G.VERSION = '2.9.0';
+  G.VERSION = '3.0.0';
 
   // RNG có seed (mulberry32). Trạng thái lưu thẳng trong object để có thể lưu/tiếp tục.
   function rand(holder) {
@@ -29,7 +29,8 @@
       if (tot <= 0) return items[Math.floor(r() * items.length)];
       var t = r() * tot;
       for (i = 0; i < items.length; i++) { t -= ws[i]; if (t < 0) return items[i]; }
-      return items[items.length - 1];
+      for (i = items.length - 1; i > 0 && !(ws[i] > 0); i--); // v3.0: sai số làm tròn không được chọn phải mục có trọng số 0
+      return items[i];
     },
     // "a:3,b:1" -> chọn khóa theo trọng số
     wkey: function (r, spec) {

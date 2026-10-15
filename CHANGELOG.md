@@ -4,6 +4,74 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.0.0 — 15/10/2026 (bản cập nhật lớn)
+
+Giữ nguyên toàn bộ tính năng v2.9.0. Đời đang chơi dở vẫn chơi tiếp được.
+
+### Giao diện
+- **Nhật ký cuộc đời có nút "Thu gọn / Mở"** và tự cuộn trong khung riêng. Trên điện thoại không còn phải kéo hết đoạn nhật ký mới xem được hồ sơ nhân vật.
+- **Nút "👤 Hồ sơ"** trên thanh điều khiển và nút "Xem hồ sơ chi tiết" ở thẻ căn cước. Hồ sơ gồm:
+  - công việc, mức lương trước và sau bảo hiểm, số năm đóng BHXH, lương hưu;
+  - thu nhập năm vừa qua theo từng nguồn;
+  - tài sản;
+  - năng khiếu và sở thích (có cấp độ, EXP);
+  - học vấn, bằng cấp, chứng chỉ, bằng lái (kèm hạn dùng);
+  - thành tựu trong đời.
+- Mức căng thẳng hiện theo thang 0–100: thư thái, bình thường, căng thẳng, quá tải, báo động.
+
+### Mới
+- **HIV chỉ lây qua 3 đường**: quan hệ tình dục không an toàn, dùng chung kim tiêm, từ mẹ sang con. Không có đường lây thì không bao giờ mắc. Khi chẩn đoán có ghi rõ đường lây và việc điều trị ARV.
+- **Lương theo trình độ**:
+  - Thạc sĩ, tiến sĩ được trả cao hơn hẳn và vào làm ở bậc cao hơn. Có thể học tiếp tiến sĩ sau thạc sĩ (3–4 năm). Tiến sĩ được mời làm giảng viên, nghiên cứu viên.
+  - Có IELTS, JLPT, TOPIK… còn hạn thì lương ở nghề văn phòng, dịch vụ, giáo dục cao hơn.
+  - Lời mời việc làm ghi rõ có đúng sở trường không, có đóng BHXH không.
+- **Bảo hiểm xã hội**:
+  - Làm công ăn lương chính thức đóng BHXH 8%, BHYT 1,5%, BHTN 1%.
+  - Mất việc thì nhận trợ cấp thất nghiệp. Có BHYT thì viện phí được chi trả phần lớn.
+  - Lương hưu tính theo số năm đóng: đủ 15 năm mới có. Nam 20 năm, nữ 15 năm được 45%, mỗi năm thêm 2%, tối đa 75%.
+- **Thu nhập rõ ràng**:
+  - Lương không còn "quay số" mỗi năm. Mỗi người có mức năng lực riêng, cộng thâm niên. Thăng chức thì lương năm sau luôn cao hơn.
+  - Thu nhập ghi rõ đến từ đâu: lương, lợi nhuận cửa hàng, tiền cho thuê nhà, lãi tiền gửi, thưởng, gia đình cho.
+- **Kinh doanh lãi lỗ theo thực tế**:
+  - Cửa hàng tiện lợi, quán cà phê, nhà hàng, spa / thẩm mỹ viện, phòng gym có vốn, doanh thu mỗi tháng, chi phí mặt bằng, nhân viên, nguyên liệu như ngoài đời. Ví dụ spa vốn ~1,8 tỷ, làm ăn bình thường lãi khoảng 60–70 triệu/tháng.
+  - Năm vắng khách thì lãi ít hoặc lỗ.
+- **Làm đúng sở trường**:
+  - Năng suất cao, thu nhập cao hơn, vui hơn, bớt căng thẳng.
+  - Làm việc không thích thì kém hiệu quả, dễ căng thẳng. Căng thẳng kéo dài làm giảm sức khỏe, các mối quan hệ, dễ dẫn tới trầm cảm.
+- **Năng khiếu có cấp độ** (cấp 1 "Mới tập" đến cấp 10 "Huyền thoại", kèm EXP). Rèn giũa thì lên cấp.
+- **Bằng lái và chứng chỉ có hạn**:
+  - Bằng ô tô B hết hạn sau 10 năm, được hỏi có đổi không. Bằng xe máy A1 / A dùng vĩnh viễn.
+  - IELTS, TOPIK, HSK hết hạn sau 2 năm, được hỏi có thi lại không. JLPT, Goethe không thời hạn.
+- **Mua xe theo nhóm**:
+  - 1. Xe máy: xe số, xe tay ga, xe máy điện, côn tay. 2. Ô tô: phổ thông, xe thể thao, xe sang, siêu xe.
+  - Mẫu xe liệt kê từ rẻ đến đắt, có thêm nhiều mẫu (Toyota GR86, Ford Mustang, Porsche 718, Mercedes S 450, Range Rover, Ferrari 296, McLaren Artura…).
+- **Thuê xe chạy dịch vụ** (làm tài xế công nghệ):
+  - Có 3 lựa chọn: thuê VinFast VF 5 chạy Xanh SM, thuê ô tô xăng chạy Grab / Be, thuê xe máy điện.
+  - Xe điện 2 năm phải bảo dưỡng, kiểm tra pin hoặc đổi pin. Xe xăng tự đổ xăng.
+- **Xăng xe đổ hằng tuần**: tiền xăng / sạc mỗi tuần theo loại xe, cộng bảo hiểm, gửi xe, bảo dưỡng.
+- **Hẹn hò qua ứng dụng**:
+  - Có Tinder, Bumble, Hinge, Facebook Hẹn hò; Blued cho nam đồng tính / song tính; HER cho nữ đồng tính / song tính; nhóm kết bạn trung niên cho người lớn tuổi.
+  - Có cả lừa tình qua mạng và những buổi hẹn "qua đêm" (dùng bao cao su hay không).
+- Kết nạp Đội Thiếu niên Tiền phong (lớp 3), kết nạp Đoàn (cấp 3).
+
+### Sửa lỗi logic
+- **Tình huống lặp đi lặp lại**:
+  - Mỗi tình huống chờ ít nhất 3 năm mới gặp lại, mỗi lần gặp rồi thì lần sau hiếm hơn, tối đa vài lần trong đời.
+  - Hỏi chuyện cưới, sinh con: càng từ chối thì càng lâu mới hỏi lại.
+  - Chuyện kể ngẫu nhiên không lặp năm nào cũng như năm nào. Dòng nhật ký y hệt không ghi lại trong vòng 8 năm.
+- Lớp 1 không còn "quàng khăn đỏ" (khăn quàng đỏ từ lớp 3).
+- 15 tuổi còn ở với bố mẹ thì là **tiền tiêu vặt**, không phải "tiền sinh hoạt". Đi học xa mới là tiền sinh hoạt.
+- Đã yêu rồi chia tay thì không còn "mối tình đầu" lần nữa. Người yêu đầu tiên chính là mối tình đầu.
+- Thăng chức mà lương giảm: đã sửa. Lương không còn nhảy thất thường giữa các năm (kiểu 52 triệu xuống 4 triệu). Giờ chỉ giảm mạnh khi mất việc, phá sản hoặc nghỉ hưu, và nhật ký ghi rõ lý do.
+- 46 tuổi không còn chơi Free Fire: game theo lứa tuổi.
+- "Cơn thèm mua sắm":
+  - Món đồ hợp tuổi.
+  - Đủ tiền thì không gợi ý quẹt thẻ, ví trả sau, vay app.
+  - Tài khoản cả chục tỷ thì không còn phải đắn đo.
+- "Tìm một nửa" ở tuổi 73 không còn "bạn bè lần lượt có đôi" hay "để ý một người ở trường học". Lời lẽ và lựa chọn hợp tuổi.
+- Bố mẹ mất cùng năm không còn trùng đúng một căn bệnh. Nếu cùng mất trong một vụ tai nạn thì ghi rõ.
+- Chọn ngẫu nhiên theo trọng số không còn vì sai số làm tròn mà chọn nhầm mục có trọng số 0 (nguyên nhân HIV "tự nhiên").
+
 ## v2.9.0 — 15/10/2026
 
 Giữ nguyên toàn bộ tính năng v2.8.0. Vận động viên đang thi đấu ở đời chơi dở tự được gắn câu lạc bộ / môn võ.

@@ -226,10 +226,11 @@
   }
   // bằng cấp chỉ cộng thêm khi vượt yêu cầu của nghề (lương nghề cần đại học đã là lương của người có bằng đại học);
   // lương nhà nước theo hệ số, không phụ thuộc trường danh tiếng
-  var EDT = [0.8, 0.85, 0.92, 1, 1.05, 1.12, 1.25];
+  // v3.0: thạc sĩ, tiến sĩ được trả cao hơn hẳn ở nghề cần bằng đại học (nhà nước cũng xếp hệ số lương cao hơn); chứng chỉ ngoại ngữ còn hạn cộng thêm
+  var EDT = [0.8, 0.85, 0.92, 1, 1.05, 1.12, 1.27, 1.42];
   function eduMult(l, c) {
-    var need = Math.min(c.edu >= 99 ? 5 : c.edu || 0, 6), m = EDT[l.edu] / EDT[need];
-    m = U.clamp(m, 0.85, 1.12);
+    var need = Math.min(c.edu >= 99 ? 5 : c.edu || 0, 7), m = EDT[l.edu] / EDT[need];
+    m = U.clamp(m, 0.85, c.edu >= 5 ? 1.32 : 1.12) * (E.certBonus ? E.certBonus(l, c) : 1);
     if (l.edu >= 5 && c.cat !== 'state' && c.cat !== 'uniform') m *= 1 + ((l.uniTier || 1) - 1) * 0.5;
     return m;
   }
@@ -293,6 +294,8 @@
     if (!c || c.ladder || c.fame || c.skillRank != null || c.t.length < 2 || E.noStartRank) return 0;
     var exp = l.workYrs || 0, rk = 0;
     if (/thực tập|tập sự|học việc|học viên|^trợ lý|^phụ /.test(c.t[0]) && (l.age >= 25 || exp >= 2)) rk = 1;
+    if (l.edu >= 6 && c.edu >= 5 && c.t.length >= 3) rk = Math.max(rk, 1); // v3.0: có bằng thạc sĩ / tiến sĩ thì không vào ở bậc thấp nhất
+    if (l.edu >= 7 && c.edu >= 5 && c.t.length >= 4 && exp >= 3) rk = Math.max(rk, 2);
     return Math.min(rk, c.t.length - 1);
   }
   function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
@@ -397,7 +400,19 @@
       if (c.sec === 'crime' || c.skillRank != null) eduM = 1;
       var qM = c.sec === 'formal' && c.cat !== 'state' ? [1, 0.95, 0.98, 1, 1.04, 1.08][l.fam.q] : 1;
       var focM = focus === 'work' ? 1.06 : focus === 'rest' ? 0.94 : 1;
-      inc = c.vn[rk] * 12 * scale(l) * eduM * qM * focM * (c.id === 'vdv' && E.sportPay ? E.sportPay(l, rk) : 1) * Math.exp(U.normal(r) * c.sigma);
+      // v3.0: lương không còn "quay số" mỗi năm — mỗi người có mức năng lực / chỗ làm cố định, cộng thâm niên;
+      // nghề ổn định chỉ dao động nhẹ, nghề bấp bênh (buôn bán, tự do) thì lúc lời lúc lỗ nhưng có quán tính
+      var J0 = l.job;
+      if (J0.k == null) J0.k = Math.exp(U.normal(r) * c.sigma * 0.6);
+      J0.nz = (J0.nz || 0) * 0.5 + U.normal(r) * 0.5;
+      J0.sen = (J0.sen || 0) + 1;
+      var noise = Math.exp(J0.nz * c.sigma * (c.sigma >= 0.4 ? 0.9 : c.sec === 'formal' ? 0.25 : 0.5));
+      var senior = 1 + Math.min(10, J0.sen - 1) * 0.02;
+      inc = c.vn[rk] * 12 * scale(l) * eduM * qM * focM * (c.id === 'vdv' && E.sportPay ? E.sportPay(l, rk) : 1) * J0.k * noise * senior;
+      // vừa được thăng chức thì lương năm sau không thể thấp hơn trước; nghề ổn định không tự dưng tụt lương
+      if (J0.floor && J0.floorRk === rk) inc = Math.max(inc, J0.floor);
+      else if (J0.last && J0.lastRk === rk && c.sigma < 0.4) inc = Math.max(inc, J0.last * 0.97);
+      J0.floor = null; J0.last = inc; J0.lastRk = rk;
       if (c.id === 'scam_kh') inc = 0;
     }
     // thăng tiến theo thang bậc & số năm
@@ -409,6 +424,7 @@
           (l.flags.eliteBoost && l.flags.eliteBoost === c.id ? 0.3 : 0); // v2.5: con nhà có "ô dù" thăng tiến nhanh hơn
         if (r() < pp) {
           l.job.rank++; l.job.yrs = 0;
+          if (inc > 0 && !c.fame) { l.job.floor = inc * (1.08 + r() * 0.1); l.job.floorRk = Math.min(l.job.rank, c.vn.length - 1); } // v3.0: thăng chức là tăng lương
           log(c.ladder ? 'Được thăng quân hàm ' + c.t[l.job.rank] + '.' : 'Được thăng chức: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 5 });
           if (l.job.rank === c.t.length - 1) H.mem(l, 'Ngày nhận quyết định ' + (c.ladder ? 'thăng quân hàm ' : 'bổ nhiệm ') + c.t[l.job.rank] + '.', 5);
         }
@@ -465,8 +481,14 @@
     if (l.flags.afterRet && !c.ladder) retAge = Math.max(retAge, l.flags.afterRet); // đã nghỉ hưu rồi đi làm/kinh doanh tiếp
     if (a >= retAge || (a >= 55 && l.st.hea < 25)) {
       var firstRet = !l.flags.retOnce;
-      l.lastIncome = inc; l.pensioned = l.pensioned || (formal && l.workYrs >= 15);
-      if (l.pensioned && l.pensionInc == null) l.pensionInc = inc * 0.55; // lương hưu tính theo lương lúc nghỉ hưu lần đầu
+      l.lastIncome = inc;
+      // v3.0: đủ 15 năm đóng BHXH mới có lương hưu; mức hưởng theo số năm đóng (nam 20 năm, nữ 15 năm được 45%, mỗi năm thêm 2%, tối đa 75%)
+      var SIy = l.si ? l.si.yrs : null;
+      l.pensioned = l.pensioned || (SIy != null ? SIy >= 15 : formal && l.workYrs >= 15);
+      if (l.pensioned && l.pensionInc == null) {
+        if (SIy) { var avg = l.si.sum / Math.max(1, SIy), rt = l.sex === 'M' ? (SIy < 20 ? 0.4 + (SIy - 15) * 0.01 : 0.45 + (SIy - 20) * 0.02) : 0.45 + (SIy - 15) * 0.02; l.pensionRate = U.clamp(rt, 0.4, 0.75); l.pensionInc = avg * l.pensionRate; }
+        else l.pensionInc = inc * 0.55; // lương hưu tính theo lương lúc nghỉ hưu lần đầu
+      }
       var kidHeir = c.cat === 'biz' ? l.kids.filter(function (k) { return k.alive && a - k.born >= 25; })[0] : null;
       if (c.cat === 'biz' && !firstRet) log('Khép lại việc kinh doanh tuổi già sau ' + (l.job.yrs || 1) + ' năm, giờ chỉ vui với con cháu.', 'big');
       else if (kidHeir) { log('Giao lại ' + (l.job.p || 'cơ nghiệp') + ' cho con ' + kidHeir.name + ' sau ' + l.workYrs + ' năm gây dựng, lui về làm "cố vấn".', 'big'); H.mem(l, 'Ngày trao chìa khóa cửa hàng cho con.', 5); }
@@ -494,5 +516,5 @@
 
   E.resolveJob = resolveJob; E.jobLabel = jobLabel; E.jobTitleOf = jobTitleOf; E.offerHint = offerHint; E.offerAI = offerAI; E.offers = offers;
   E.startJob = startJob; E.startRank = startRank; E.offerLabel = offerLabel; E.careerYear = careerYear; E.isCrime = isCrime; E.careerSummary = careerSummary; E.monthlyEst = monthlyEst;
-  E.fameMonthly = fameMonthly; E.fmtFollowers = fmtFollowers; E.jobDef = J; E.CAT = CAT; E.JOB_ALIAS = ALIAS; E.medal = medal;
+  E.jobEligible = eligible; E.rankBySkill = rankBySkill; E.fameMonthly = fameMonthly; E.fmtFollowers = fmtFollowers; E.jobDef = J; E.CAT = CAT; E.JOB_ALIAS = ALIAS; E.medal = medal;
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

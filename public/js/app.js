@@ -603,7 +603,7 @@
       '<dt>Tôn giáo</dt><dd>' + esc(l.religion) + '</dd>' +
       '<dt>Học vấn</dt><dd>' + esc(eduNow(l)) + '</dd>' +
       '<dt>Công việc</dt><dd>' + esc(job) + '</dd>' +
-      (l.talent ? '<dt>Năng khiếu</dt><dd>' + esc(E.talentText(l)) + (l.game ? ' · ' + esc(l.game) : '') + '</dd>' : '') +
+      (l.talent ? '<dt>Năng khiếu</dt><dd>' + esc(E.talentText(l)) + (l.game && l.talent === 'game' ? ' · ' + esc(l.game) : '') + (E.talentLevel ? ' · <b>cấp ' + E.talentLevel(l).lv + '</b> ' + esc(E.talentLevel(l).name) : '') + '</dd>' : '') +
       (l.fame >= 1000 ? '<dt>Danh tiếng</dt><dd>' + esc(E.fmtFollowers(l.fame)) + ' người theo dõi</dd>' : '') +
       (med ? '<dt>Huy chương</dt><dd>' + Object.keys(med).map(function (k) { return med[k] + ' ' + k; }).join(' · ') + '</dd>' : '') +
       (l.titles && l.titles.length ? '<dt>Danh hiệu</dt><dd>' + esc(l.titles[l.titles.length - 1]) + '</dd>' : '') +
@@ -611,7 +611,8 @@
       (l.record ? '<dt>Tiền án</dt><dd style="color:var(--bad)">' + l.record + ' lần</dd>' : '') +
       (l.ill ? '<dt>Bệnh</dt><dd style="color:var(--bad)">' + esc(l.ill.n) + '</dd>' : '') +
       (!l.alive ? '<dt>Mất</dt><dd>' + esc(l.death.cause) + '</dd>' : '') +
-      '</dl><div class="mrz">' + esc(mrz.slice(0, 44)) + '</div>';
+      '</dl><div class="mrz">' + esc(mrz.slice(0, 44)) + '</div>' +
+      (E.profile ? '<button class="btn sm profmore" data-prof="1">Xem hồ sơ chi tiết ›</button>' : '');
   }
   function bar(label, v, color, txt) {
     return '<div class="stat"><div class="row"><span>' + label + '</span><b>' + (txt || Math.round(v)) + '</b></div><div class="track"><div class="fill" style="width:' + v + '%;background:' + color + '"></div></div></div>';
@@ -637,7 +638,7 @@
     var nw = E.netWorth(l);
     $('#statsPanel').innerHTML = '<h3>Tình trạng · 0–100</h3>' +
       bar('Sức khỏe', st.hea, 'var(--good)') + bar('Hạnh phúc', st.hap, 'var(--gold)') + bar('Kiến thức', st.kno, '#3d7cc9') + bar('Các mối quan hệ', st.soc, 'var(--accent)') +
-      (l.mind && l.age >= 12 ? bar('Căng thẳng', l.mind.stress, l.mind.stress >= 70 ? 'var(--bad)' : l.mind.stress >= 45 ? '#d08a3a' : '#6aa58a', Math.round(l.mind.stress) + (l.mind.stress >= 70 ? ' · quá tải' : '')) : '') +
+      (l.mind && l.age >= 12 ? bar('Căng thẳng', l.mind.stress, l.mind.stress >= 70 ? 'var(--bad)' : l.mind.stress >= 50 ? '#d08a3a' : '#6aa58a', Math.round(l.mind.stress) + '/100 · ' + (E.stressLabel ? E.stressLabel(l.mind.stress) : '')) + '<div class="stresslbl">0–29 thư thái · 30–49 bình thường · 50–69 căng thẳng · 70–84 quá tải · 85+ báo động</div>' : '') +
       '<div class="stat"><div class="row"><span>Nhân cách</span><b>' + karmaWord(k) + '</b></div><div class="track karma"><div class="fill" style="left:' + (k < 0 ? 50 + k / 2 : 50) + '%;width:' + Math.abs(k) / 2 + '%;background:' + (k < 0 ? 'var(--bad)' : 'var(--good)') + '"></div></div></div>' +
       '<div style="margin-top:14px" class="small muted">Tài sản ròng <span title="Tất cả những gì bạn có trừ đi tất cả những gì bạn nợ">ⓘ</span></div>' +
       '<div class="money">' + (l.indep ? esc(money(l, nw)) : '—') + '</div>' + wealthBreak(l) +
@@ -649,12 +650,14 @@
     if (!l.indep || !F) { p.innerHTML = '<h3>Tiền bạc</h3><p class="muted small" style="margin:0">' + (l.age < 18 ? 'Còn sống cùng bố mẹ. Thỉnh thoảng được cho ít tiền tiêu vặt.' : 'Chưa tự lập về tài chính.') + '</p>' + loansHtml(l); return; }
     var rows = [];
     function row(k, v, cls) { rows.push('<dt>' + esc(k) + '</dt><dd class="' + (cls || '') + '">' + esc(v) + '</dd>'); }
-    row(l.retired ? (l.pensioned ? 'Lương hưu / con biếu' : 'Trợ cấp / con biếu') : 'Thu nhập của bạn', money(l, F.inc / 12) + '/tháng', 'pos');
+    var Y = l.yr || {};
+    if (Y.si > 0) { row('Lương (trước bảo hiểm)', money(l, Y.gross / 12) + '/tháng', 'pos'); row('Đóng ' + (E.siLabel ? E.siLabel(l) : 'bảo hiểm'), '−' + money(l, Y.si / 12) + '/tháng'); row('Lương thực nhận', money(l, F.inc / 12) + '/tháng', 'pos'); }
+    else row(l.retired ? (l.pensioned ? 'Lương hưu / con biếu' : 'Trợ cấp / con biếu') : 'Thu nhập của bạn', money(l, F.inc / 12) + '/tháng', 'pos');
     if (F.partner) row((l.partner ? U.cap(E.H.partnerWord(l, l.partner)) : 'Bạn đời') + ' góp', money(l, F.partner / 12) + '/tháng', 'pos');
     row('Ăn uống & sinh hoạt', '−' + money(l, Math.max(0, F.food - (F.pets || 0))));
     if (F.pets) row('Nuôi thú cưng', '−' + money(l, F.pets));
     if (F.rent) row('Thuê nhà', '−' + money(l, F.rent));
-    if (F.travel) row('Đi lại', '−' + money(l, F.travel));
+    if (F.travel) row('Đi lại' + (E.fuelWeek && E.fuelWeek(l) > 0 && l.veh && l.veh !== 'xe đạp' ? ' (đổ xăng / sạc ~' + money(l, E.fuelWeek(l)) + '/tuần)' : l.rentVeh ? ' (thuê xe ' + l.rentVeh.n + ')' : ''), '−' + money(l, F.travel));
     if (F.kids) row('Con cái', '−' + money(l, F.kids));
     if (F.parents) row('Gửi bố mẹ', '−' + money(l, F.parents));
     if (F.health) row('Thuốc men', '−' + money(l, F.health));
@@ -666,9 +669,16 @@
       '<dl class="statlist fin">' + rows.join('') + '</dl>' +
       '<div class="finsave ' + (F.save >= 0 ? 'pos' : 'neg') + '">' + (F.save >= 0 ? 'Cả năm dư ra ' : 'Cả năm hụt ') + esc(money(l, Math.abs(F.save))) + '</div>' +
       '<div class="small muted">' + (F.save >= 0 ? 'Thu nhập trừ chi tiêu, đã cộng vào tiền mặt.' : 'Chi nhiều hơn thu, phần hụt bị trừ vào tiền mặt.') + ' Tiền mặt hiện có: <b class="' + (l.money < 0 ? 'neg' : '') + '">' + (l.money < 0 ? '−' : '') + esc(money(l, Math.abs(l.money))) + '</b></div>' +
+      otherIncome(l) +
       (ev ? '<div class="small muted" style="margin-top:10px">Khoản phát sinh</div><ul class="finev">' + ev + '</ul>' : '') +
       loansHtml(l) + assetsHtml(l) +
       '<div class="small muted" style="margin-top:8px">Cách chi tiêu: ' + { save: 'tằn tiện', normal: 'bình thường', lavish: 'thoải mái' }[l.spend] + (l.sendParents && (l.fam.mAlive || l.fam.fAlive) ? ' · có gửi tiền cho bố mẹ' : '') + '</div>';
+  }
+  // v3.0: các nguồn thu ngoài lương trong năm (kinh doanh, cho thuê, lãi tiền gửi, thưởng…)
+  function otherIncome(l) {
+    var ps = E.incomeParts ? E.incomeParts(l).filter(function (x) { return !/^(Lương \/|Đóng |Bạn đời|Thu nhập$|Lương hưu|Trợ cấp &)/.test(x.k); }) : [];
+    if (!ps.length) return '';
+    return '<div class="small muted" style="margin-top:10px">Nguồn thu khác trong năm</div><ul class="finev">' + ps.map(function (x) { return '<li><span>' + esc(x.k) + '</span><b class="' + (x.v >= 0 ? 'pos' : 'neg') + '">' + (x.v >= 0 ? '+' : '−') + esc(money(l, Math.abs(x.v))) + '</b></li>'; }).join('') + '</ul>';
   }
   // v2.3: danh mục đầu tư, hụi, bảo hiểm
   function assetsHtml(l) {
@@ -851,6 +861,56 @@
     html += '<p class="small muted" style="margin:10px 0 0">Số liệu làm tròn (GSO, UN WPP 2024, World Bank) — dùng để mô phỏng.</p>';
     $('#placePanel').innerHTML = html;
   }
+
+  // v3.0: hồ sơ chi tiết — công việc, mức lương, tài sản, sở thích, bằng cấp, chứng chỉ, học vấn, thành tựu
+  function lvHtml(t) {
+    if (!t || !t.lv) return '';
+    return ' · cấp ' + t.lv.lv + ' "' + esc(t.lv.name) + '"<div class="lvbar" title="EXP ' + t.lv.exp + '/100"><i style="width:' + t.lv.exp + '%"></i></div>' +
+      '<span class="small muted">EXP ' + t.lv.exp + '/100' + (t.lv.next ? ' tới "' + esc(t.lv.next) + '"' : '') + '</span>';
+  }
+  function openProfile() {
+    var l = S.life; if (!l || !E.profile) return;
+    if (S.phase === 'decision') minimizeDecision();
+    var P = E.profile(l), wasPaused = S.paused; S.paused = true; renderTopbar();
+    function li(k, v, cls) { return '<li><span>' + k + '</span>' + (v != null ? '<b class="' + (cls || '') + '">' + v + '</b>' : '') + '</li>'; }
+    function sec(t, body, wide) { return '<div class="prof-sec' + (wide ? ' wide' : '') + '"><h4>' + t + '</h4>' + body + '</div>'; }
+    function ul(a) { return a.length ? '<ul>' + a.join('') + '</ul>' : '<p class="muted small" style="margin:0">—</p>'; }
+    var job = [li(esc(P.job))].concat(P.jobInfo.map(function (x) { return li('<span class="muted small">' + esc(x) + '</span>'); }));
+    if (P.salary) {
+      job.push(li('Lương / thu nhập', esc(money(l, P.salary.gross)) + '/tháng', 'pos'));
+      if (P.salary.net < P.salary.gross - 1e-6) job.push(li('Thực nhận sau bảo hiểm', esc(money(l, P.salary.net)) + '/tháng'));
+    }
+    if (P.si) job.push(li('Đã đóng ' + esc(E.siLabel(l)), P.si.yrs + ' năm' + (P.si.yrs < 15 && !l.pensioned ? ' (cần 15 năm để có lương hưu)' : '')));
+    if (l.pensionInc) job.push(li('Lương hưu', esc(money(l, l.pensionInc / 12)) + '/tháng' + (l.pensionRate ? ' (' + Math.round(l.pensionRate * 100) + '% lương bình quân)' : ''), 'pos'));
+    var inc = P.income.map(function (x) { return li(esc(x.k), (x.v < 0 ? '−' : '+') + esc(money(l, Math.abs(x.v))), x.v < 0 ? 'neg' : 'pos'); });
+    var as = P.assets.map(function (x) { return li(esc(x[0]), (x[1] < 0 ? '−' : '') + esc(money(l, Math.abs(x[1]))), x[1] < 0 ? 'neg' : ''); });
+    if (l.indep) as.push(li('<b>Tài sản ròng</b>', esc(money(l, P.net)), P.net < 0 ? 'neg' : 'pos'));
+    var hob = (P.talent ? [li('Năng khiếu: ' + esc(P.talent.n) + lvHtml(P.talent))] : []).concat(P.hobbies.map(function (h) { return li('Sở thích: ' + esc(h.n) + lvHtml(h)); }));
+    if (P.stress) hob.push(li('Mức căng thẳng', P.stress.v + '/100 · ' + esc(P.stress.label), P.stress.v >= 70 ? 'neg' : ''));
+    var ed = [li('Trình độ học vấn', esc(P.eduLevel))].concat(P.edu.map(function (x) { return li(esc(x)); }));
+    var ct = P.certs.map(function (x) { return li(esc(x)); });
+    var ach = P.ach.slice().reverse().map(function (x) { return li(esc(x.t), x.y ? '<span class="yr">' + x.y + (x.a != null ? ' · ' + x.a + ' tuổi' : '') + '</span>' : null); });
+    modal('<div class="prof-top">' + E.art.avatar(l) + '<div><div class="agep">Hồ sơ chi tiết · ' + l.age + ' tuổi · năm ' + (l.birthYear + l.age) + '</div>' +
+      '<h2 style="margin:2px 0 0">' + esc(l.name) + '</h2><div class="small muted">' + esc(sexWord(l)) + ' · ' + esc(currentPlace(l)) + '</div></div></div>' +
+      '<div class="prof-grid">' + sec('Công việc & mức lương', ul(job)) + sec('Thu nhập năm vừa qua', ul(inc)) + sec('Tài sản', ul(as)) + sec('Năng khiếu & sở thích', ul(hob)) +
+      sec('Học vấn & bằng cấp', ul(ed)) + sec('Chứng chỉ & bằng lái', ul(ct)) + sec('Thành tựu trong đời', ul(ach), true) + '</div>' +
+      '<div class="opts" style="margin-top:14px"><button class="opt" data-x="close"><b>Đóng hồ sơ</b></button></div>',
+      function (box) {
+        $('[data-x="close"]', box).onclick = function () {
+          closeModal(); S.paused = wasPaused; S.last = performance.now(); renderTopbar();
+          if (S.phase === 'decmin') toast('Lựa chọn đang chờ — bấm "Mở lại" để chọn');
+        };
+      }, 'profile');
+  }
+  $('#profBtn').onclick = openProfile;
+  $('#idCard').addEventListener('click', function (ev) { if (ev.target.closest('[data-prof]')) openProfile(); });
+  // v3.0: nhật ký thu gọn / mở — không còn phải kéo hết đoạn nhật ký mới xem được hồ sơ
+  function setLogCollapsed(c) {
+    var card = $('#logCard'), b = $('#logToggle'); if (!card || !b) return;
+    card.classList.toggle('collapsed', c); b.textContent = c ? 'Mở ▾' : 'Thu gọn ▴'; b.setAttribute('aria-expanded', String(!c));
+  }
+  setLogCollapsed(!!LS.get('mkn.logc', false));
+  if ($('#logToggle')) $('#logToggle').onclick = function () { var c = !$('#logCard').classList.contains('collapsed'); LS.set('mkn.logc', c); setLogCollapsed(c); };
 
   // ---------- hộp thoại ----------
   function modal(html, bind, cls) {
