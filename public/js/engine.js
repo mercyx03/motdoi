@@ -1252,6 +1252,11 @@
       q.push(dm);
     }
 
+    // v3.3: đang đi nghĩa vụ quân sự — 2 năm sống trong doanh trại, chỉ có chuyện quân ngũ
+    if (life.flags.military && a < life.flags.military && E.milYear) {
+      E.milYear(life, r, a).forEach(function (x) { add(x[0], x[1]); });
+      life.pending = q; prune(life); return life.pending;
+    }
     // trong tù: chỉ có chuyện trong trại giam
     if (life.jailUntil != null && a < life.jailUntil) {
       if (r() < 0.35) add('trai_giam');
@@ -1372,7 +1377,9 @@
   // Bỏ các quyết định đã xếp hàng nhưng không còn phù hợp sau lựa chọn trước đó
   function prune(life) {
     if (!life.alive) { life.pending = []; return; }
+    var inMil = life.flags.military && life.age < life.flags.military;
     life.pending = life.pending.filter(function (d) {
+      if (inMil && !/^(nv_|treat$|phau_thuat$)/.test(d.id)) return false; // v3.3: đang tại ngũ thì chỉ còn chuyện quân ngũ
       var p = life.partner;
       switch (d.id) {
         case 'job': return !(life.job && life.job.fam) && !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
@@ -1404,6 +1411,7 @@
   function actAvail(l, a) {
     if (!l.alive) return 'Đã qua đời';
     if (l.jailUntil != null && l.age < l.jailUntil && !a.jail) return 'Đang ở trong trại giam';
+    if (l.flags && l.flags.military && l.age < l.flags.military && !a.mil) return 'Đang đi nghĩa vụ quân sự, sống trong doanh trại';
     if (l.acts >= actsLimit(l)) return 'Đã hết lượt hành động năm nay';
     if (a.min != null && l.age < a.min) return 'Từ ' + a.min + ' tuổi';
     if (a.max != null && l.age > a.max) return 'Không còn phù hợp ở tuổi này';
@@ -1506,6 +1514,7 @@
     }
     if (life.abroad && !life.abroad.perm) { F.food *= 1.5; F.rent = b * 0.2; }
     if (life.jailUntil != null && a < life.jailUntil) { F.food = 0; F.rent = 0; F.travel = 0; }
+    if (life.flags.military && a < life.flags.military) { F.food = b * 0.03; F.rent = 0; F.travel = 0; F.kids = 0; } // v3.3: ăn ở trong doanh trại, chỉ tiêu vặt
     // gửi tiền cho bố mẹ già
     var parentsOld = (life.fam.mAlive && life.fam.mAge + a >= 58) || (life.fam.fAlive && life.fam.fAge + a >= 58);
     // bố mẹ không có lương hưu thì con phải gửi nhiều hơn; bố mẹ có lương hưu khá thì chỉ biếu chút quà
@@ -1791,7 +1800,7 @@
     }
 
     // ---- Sự kiện ngẫu nhiên kể chuyện (tối đa 2) ----
-    if (!inJail) {
+    if (!inJail && !(life.flags.military && a < life.flags.military)) { // v3.3: trong quân ngũ không có chuyện đời thường bên ngoài
       var n = 0;
       var evs = EVENTS.slice();
       for (var i = evs.length - 1; i > 0; i--) { var jj = Math.floor(r() * (i + 1)); var tmp = evs[i]; evs[i] = evs[jj]; evs[jj] = tmp; }

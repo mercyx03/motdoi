@@ -535,7 +535,7 @@
     var others = [l.partner && l.partner.name, l.fam && l.fam.mName, l.fam && l.fam.fName, l.bff && l.bff.name].concat((l.kids || []).map(function (k) { return k.name; }), (l.sibList || []).map(function (s) { return s.n; })).filter(Boolean);
     var notMine = /^(Mẹ|Bố|Con |Anh |Chị |Em |Vợ |Chồng |Cháu |Người yêu |Bạn đời |Bạn thân )/;
     (l.log || []).forEach(function (x) {
-      if ((x.k === 'big' || x.k === 'good') && ACH.test(x.t) && !seen[x.t] && !notMine.test(x.t) && !others.some(function (n) { return x.t.indexOf(n) >= 0; })) { seen[x.t] = 1; ach.push({ y: x.y, a: x.a, t: x.t }); }
+      if ((x.k === 'big' || x.k === 'good') && ACH.test(x.t) && !seen[x.t] && !notMine.test(x.t) && !/^\p{Lu}\p{Ll}* \p{Lu}/u.test(x.t) && !others.some(function (n) { return x.t.indexOf(n) >= 0; })) { seen[x.t] = 1; ach.push({ y: x.y, a: x.a, t: x.t }); }
     });
     P.ach = ach.slice(-30);
     P.stress = l.mind ? { v: Math.round(l.mind.stress), label: E.stressLabel(l.mind.stress) } : null;

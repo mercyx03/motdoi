@@ -290,7 +290,11 @@
     { k: 'cafe', n: 'quán cà phê', cap: 450, rev: 85, vc: 0.35, mg: 0.17, sd: 0.2, cost: 'mặt bằng, pha chế, nguyên liệu' },
     { k: 'rest', n: 'nhà hàng', cap: 2200, rev: 550, vc: 0.45, mg: 0.12, sd: 0.18, cost: 'mặt bằng, đầu bếp, phục vụ, thực phẩm' },
     { k: 'spa', n: 'spa / thẩm mỹ viện', cap: 1800, rev: 320, vc: 0.25, mg: 0.2, sd: 0.2, cost: 'mặt bằng, kỹ thuật viên, máy móc, mỹ phẩm' },
-    { k: 'gym', n: 'phòng tập gym', cap: 1500, rev: 180, vc: 0.15, mg: 0.2, sd: 0.16, cost: 'mặt bằng, máy tập, huấn luyện viên' }
+    { k: 'gym', n: 'phòng tập gym', cap: 1500, rev: 180, vc: 0.15, mg: 0.2, sd: 0.16, cost: 'mặt bằng, máy tập, huấn luyện viên' },
+    // v3.3: có nhiều tiền thì mở khách sạn, resort — lãi trên vốn thấp hơn nhưng quy mô lớn; dễ điêu đứng khi du lịch đóng băng
+    { k: 'hotel', n: 'khách sạn mini', cap: 8000, rev: 900, vc: 0.3, mg: 0.18, sd: 0.15, cost: 'nhân viên lễ tân, buồng phòng, điện nước, khấu hao', tour: 1 },
+    { k: 'hotel4', n: 'khách sạn 4 sao', cap: 60000, rev: 5500, vc: 0.35, mg: 0.15, sd: 0.14, cost: 'hàng trăm nhân viên, nhà hàng, hồ bơi, khấu hao', tour: 1 },
+    { k: 'resort', n: 'resort nghỉ dưỡng ven biển', cap: 150000, rev: 11000, vc: 0.3, mg: 0.14, sd: 0.16, cost: 'nhân sự, bảo dưỡng biệt thự, bãi biển, khấu hao', tour: 1 }
   ];
   BIZ.forEach(function (b) { b.mu = b.mg * b.rev * 12 / b.cap; }); // tỉ suất lãi trên vốn khi làm ăn bình thường (để tương thích)
   function bizV(l, x) { return vnd(l) ? x : x / 90 * l.base; } // ra tiền đang dùng: VN là triệu đồng, nước khác quy theo mức sống
@@ -377,6 +381,7 @@
       var econ = l.mkt && l.mkt.stock === 'sập' ? 0.85 : l.mkt && l.mkt.stock === 'tăng mạnh' ? 1.05 : 1;
       // lượng khách năm nay: tay nghề quản lý × kinh tế × dao động; năm đầu còn ít người biết, năm thứ hai mới đông dần
       var dem = v.q * econ * Math.exp(U.normal(r) * B.sd) * (v.yrs === 1 ? 0.6 : v.yrs === 2 ? 0.88 : 1) * (v.br > 1 ? 1.03 : 1);
+      if (B.tour && ch(r, 0.03)) { dem *= 0.35; log('Du lịch đóng băng (dịch bệnh, khủng hoảng kinh tế) — ' + v.n + ' vắng khách, phòng trống hàng tháng liền.', 'bad'); }
       var R = v.R * v.br, rev = R * dem, cost = rev * B.vc + R * (1 - B.vc - B.mg);
       var prof = rev - cost, rate = prof / Math.max(1e-9, v.cap);
       v.last = { rev: rev, cost: cost, prof: prof };

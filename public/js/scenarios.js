@@ -256,7 +256,7 @@
   T('concert', function (l, a) { return a >= 14 && a <= 45 && l.idol && !(H.idolAge(l) > 58) && free(l); }, 0.12, 3);
   function IDOL_BORN_OF(name, l) { return E.IDOL_BORN[name] || (l.birthYear + l.age - 24); }
   // thần tượng già đi: đến tuổi thì làm tour chia tay rồi giải nghệ
-  EV(function (l, a) { return l.idol && H.idolAge(l) >= 55 && a >= 14; }, 0.35, function (l, a, r, log) {
+  EV(function (l, a) { return l.idol && H.idolAge(l) >= 55 && a >= 14 && (l.flags.idolAt == null || a - l.flags.idolAt >= 4); }, 0.35, function (l, a, r, log) { // v3.3: vừa mê thần tượng thì chưa có ngay tour chia tay
     var n = l.idol; l.idol = null; l.idolBorn = null;
     log(n + ' tổ chức đêm diễn chia tay sân khấu sau mấy chục năm ca hát. Bạn xem lại những bài hát cũ, thấy cả thanh xuân của mình trong đó.', 'neutral');
     fx(l, { hap: -1 }); H.mem(l, 'Ngày ' + n + ' giải nghệ — một phần thanh xuân khép lại.', 3);
@@ -1589,6 +1589,7 @@
   });
   L(function (l, a, r) {
     if (l.retired) return pick(r, ['Sáng tưới cây, chiều đánh cờ với hàng xóm.', 'Một năm thong thả tuổi già, cà phê sáng với mấy ông bạn cũ.', 'Ngồi hiên nhà nhìn lũ trẻ trong xóm chơi đùa.', 'Tập dưỡng sinh mỗi sáng ở công viên.']);
+    if (l.flags.military && a < l.flags.military) return pick(r, ['Một năm quân ngũ: sáng thao trường, chiều tăng gia, tối gác đêm.', 'Những bức thư gửi về nhà, những đêm hát với đồng đội bên ánh đèn doanh trại.', 'Da đen sạm, người rắn rỏi hẳn sau những ngày hành quân.']);
     if (a >= 18 && !l.job && !l.school) return pick(r, ['Một năm chật vật tìm việc.', 'Thất nghiệp, ngày nào cũng lướt tin tuyển dụng.', 'Sống nhờ vào những việc lặt vặt.']);
     return '';
   });

@@ -4,6 +4,45 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.3.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.2.0.
+
+### Lời lưu ý
+- Màn hình "Chào đời", ngay cạnh dòng cảnh báo 15+: "Nhân vật và tình huống đều hư cấu, không ám chỉ cá nhân hay tổ chức nào."
+- Chân trang:
+  - Ghi "Lấy cảm hứng từ 1 in 8 Billion" (chỉ nhắc tên, bỏ liên kết).
+  - Thêm khung **Lưu ý** nổi bật: game mang tính giải trí và tham khảo; nhân vật, sự kiện tạo ngẫu nhiên, không ám chỉ ai; hành vi tiêu cực đưa vào để cảnh báo hậu quả, không cổ xúy; số liệu làm tròn từ nguồn công khai.
+
+### Mới
+- **Nghĩa vụ quân sự 2 năm** (trước đây nhập ngũ xong vẫn làm được mọi việc như ở ngoài):
+  - Trong 2 năm chỉ có chuyện quân ngũ: không đi chơi, không tìm việc, không có chuyện đời thường bên ngoài. Ăn ở trong doanh trại, có phụ cấp khoảng 1 triệu/tháng.
+  - **3 tháng huấn luyện tân binh**: điều lệnh, gấp chăn màn, chạy, bắn đạn thật. Cố gắng thì được biểu dương.
+  - **Về đơn vị**: chọn bộ binh, lái xe quân sự (được thi bằng lái), quân y, anh nuôi, thông tin liên lạc.
+  - **Năm thứ hai**: diễn tập hành quân, cứu hộ lũ cùng bà con, về phép (người yêu có thể không đợi được), giúp đồng đội khó khăn, được giới thiệu kết nạp Đảng nếu rèn luyện tốt.
+  - **Ra quân**: xuất ngũ với trợ cấp, thi trường sĩ quan, hoặc ở lại làm quân nhân chuyên nghiệp.
+- **Hoạt động hợp tuổi**: người già không còn đi battle rap, cắm trại phượt, đu concert, giành mic karaoke. Vẫn đọc sách, đi chùa / nhà thờ, tập dưỡng sinh, du lịch.
+- **Có nhiều tiền thì mở rộng kinh doanh**: khách sạn mini, khách sạn 4 sao, resort ven biển. Vốn lớn, lãi trên vốn thấp hơn quán xá, dễ điêu đứng khi du lịch đóng băng.
+- **Đầu tư đa dạng**:
+  - **Cổ phiếu từng công ty**: ngân hàng, công nghệ, sữa, thép, bán lẻ, năng lượng, quỹ chỉ số VN30 (nước ngoài: S&P 500, Apple, Microsoft, NVIDIA…), cả "cổ phiếu penny" dễ mất trắng.
+    - Mỗi mã lên xuống theo thị trường và theo từng công ty; công ty lớn có cổ tức.
+  - **Tiền mã hóa theo chu kỳ** tăng mạnh / đi ngang / giảm sâu / sập: Bitcoin, Ethereum, altcoin, memecoin.
+    - Memecoin có thể tăng vọt nhưng phần lớn bị "rug pull" về 0; sàn giao dịch cũng có thể phá sản.
+  - Danh mục đầu tư được tính vào tài sản ròng, có việc "Bán cổ phiếu / tiền mã hóa".
+- **Sự kiện & cạm bẫy theo nhóm nghề** (theo tài liệu bạn gửi): gần 100 tình huống mới cho 21 nhóm nghề.
+  - Gồm: lao động tự do, nông dân, ngư dân, lao động nước ngoài, công nhân & thợ, buôn bán, sale, văn phòng, cơ quan nhà nước, công an & quân đội, y tế, giáo dục, showbiz, báo chí, sáng tạo nội dung, làm đẹp, thể thao & esports, freelancer, dịch vụ & hàng không, phi pháp.
+  - **"Cờ chờ nổ"**: lựa chọn sai (nhận phong bì, làm đẹp sổ sách, bán hàng giả, ký nghiệm thu ẩu…) có lợi trước mắt, nhưng vài năm sau mới bị thanh tra, kiểm tra phát hiện. Hậu quả vẫn tìm đến kể cả khi đã đổi nghề hay nghỉ hưu.
+  - Nghề phi pháp có "độ nóng": càng ở lâu càng dễ bị bắt. Có ngã rẽ hoàn lương ("Mẹ chỉ mong con làm ăn lương thiện").
+  - Người nổi tiếng dính "phốt" thì dễ bị scandal hơn.
+  - **Giữ cân bằng với cơ quan nhà nước, công an, quân đội**:
+    - Sự kiện nào cũng có lựa chọn liêm chính, tận tụy, và người làm đúng được ghi nhận, biểu dương.
+    - Sai phạm luôn bị cơ quan chức năng phát hiện và xử lý.
+    - Có thêm nhiều sự kiện tốt: cứu hộ lũ, ra đảo, công an tìm em bé đi lạc, cán bộ đề xuất cải cách thủ tục một cửa, nhân viên ngân hàng cứu sổ tiết kiệm của cụ già…
+
+### Sửa lỗi
+- Vừa mê một thần tượng thì không có ngay "đêm diễn chia tay sân khấu" trong cùng năm.
+- Thành tựu trong hồ sơ không còn lẫn chuyện của người khác.
+
 ## v3.2.0 — 15/10/2026
 
 Giữ nguyên toàn bộ tính năng v3.1.0.
