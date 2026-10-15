@@ -9,7 +9,7 @@
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;
   function T(id, when, p, cd) { E.TRIG.push({ id: id, when: when, p: p, cd: cd || 0 }); }
   function A(id, g, label, o) { var x = { id: id, g: g, l: label }; for (var k in o) x[k] = o[k]; E.ACT.push(x); }
-  function EV(c, p, run) { E.EVENTS.push({ c: c, p: p, run: run }); }
+  function EV(c, p, run, cd) { E.EVENTS.push({ c: c, p: p, run: run, cd: cd }); }
   function fx(l, o) { H.fx(l, o); }
   function cashB(l, x, why) { H.cash(l, x * l.base, why); }
   function mb(l, x) { return H.mb(l, x); }
@@ -285,7 +285,7 @@
   // các dịp lễ & nghi thức trong đời
   EV(function (l, a) { return rel(l) === 'cg' && a >= 8 && a <= 10 && !l.flags.ruocLe; }, 0.5, function (l, a, r, log) { l.flags.ruocLe = true; log('Rước lễ lần đầu ở nhà thờ giáo xứ, mặc áo trắng tinh, cả nhà đến dự.', 'good'); fx(l, { hap: 3 }); H.mem(l, 'Ngày rước lễ lần đầu, nến trắng trên tay.', 3); });
   EV(function (l, a) { return rel(l) === 'cg' && a >= 12 && a <= 15 && l.flags.ruocLe && !l.flags.themSuc; }, 0.4, function (l, a, r, log) { l.flags.themSuc = true; log('Lãnh bí tích Thêm sức, đức giám mục về giáo xứ làm lễ.', 'good'); fx(l, { hap: 2 }); });
-  EV(function (l, a) { return (rel(l) === 'cg' || rel(l) === 'tl') && a >= 3; }, 0.2, function (l, a, r, log) { log(pick(r, ['Đêm Giáng sinh đi lễ nửa đêm, cả xứ đạo rực rỡ đèn sao.', 'Cả nhà dựng hang đá Giáng sinh trước cửa, lũ trẻ tíu tít.', 'Tháng Năm kính Đức Mẹ, ' + (a < 18 ? 'bạn được chọn đi dâng hoa.' : 'cả xứ rước kiệu quanh nhà thờ.')]), 'good'); fx(l, { hap: 3, soc: 2 }); });
+  EV(function (l, a) { return (rel(l) === 'cg' || rel(l) === 'tl') && a >= 3; }, 0.14, function (l, a, r, log) { log(pick(r, isVN(l) && !l.abroad ? ['Đêm Giáng sinh đi lễ nửa đêm, cả xứ đạo rực rỡ đèn sao.', 'Cả nhà dựng hang đá Giáng sinh trước cửa, lũ trẻ tíu tít.', 'Tháng Năm kính Đức Mẹ, ' + (a < 18 ? 'bạn được chọn đi dâng hoa.' : 'cả xứ rước kiệu quanh nhà thờ.'), 'Lễ Phục sinh, cả nhà đi lễ sớm, về ăn bữa cơm sum họp.', 'Đi tĩnh tâm mùa Chay cùng giáo xứ.'] : ['Đêm Giáng sinh cả nhà đi lễ ở nhà thờ, về quây quần bên bữa tối ấm cúng.', 'Cả nhà trang trí cây thông Noel, trao quà cho nhau.', 'Lễ Phục sinh, đi nhà thờ rồi cùng lũ trẻ đi tìm trứng màu.', 'Chủ nhật đi lễ, ở lại uống cà phê với bà con trong giáo xứ.', 'Tham gia hội từ thiện của nhà thờ, nấu cơm cho người vô gia cư.']), 'good'); fx(l, { hap: 3, soc: 2 }); }, 5);
   EV(function (l, a) { return (rel(l) === 'pg' || rel(l) === 'hh') && a >= 4; }, 0.18, function (l, a, r, log) { var vu = l.fam.mAlive ? 'hoa hồng đỏ trên áo — vì còn mẹ' : 'hoa hồng trắng trên áo — mẹ không còn nữa'; log(pick(r, ['Lễ Vu Lan, bạn được cài ' + vu + '.', 'Rằm tháng Giêng, cả nhà lên chùa cầu an đầu năm.', 'Mùng Một, ngày Rằm cả nhà ăn chay.']), a >= 4 && !l.fam.mAlive ? 'neutral' : 'good'); fx(l, { hap: 2 }); });
   SC('khoa_tu', {
     title: 'Khóa tu mùa hè', valid: function (l) { return rel(l) === 'pg' || rel(l) === 'hh'; }, text: 'Chùa mở khóa tu mùa hè cho thanh thiếu niên: ăn chay, ngủ sớm, học cách sống chậm.',
@@ -295,7 +295,7 @@
     ]
   });
   T('khoa_tu', function (l, a) { return (rel(l) === 'pg' || rel(l) === 'hh') && a >= 10 && a <= 17 && free(l); }, 0.12, 99);
-  EV(function (l, a) { return rel(l) === 'hoi' && a >= 12; }, 0.25, function (l, a, r, log) { log('Tháng Ramadan, nhịn ăn uống từ sáng đến tối, chiều về quây quần ăn bữa xả chay.', 'neutral'); fx(l, { soc: 2, karma: 1 }); });
+  EV(function (l, a) { return rel(l) === 'hoi' && a >= 12; }, 0.16, function (l, a, r, log) { log(pick(r, ['Tháng Ramadan, nhịn ăn uống từ sáng đến tối, chiều về quây quần ăn bữa xả chay.', 'Lễ Eid al-Fitr khép lại tháng chay, cả nhà mặc áo mới đi thăm họ hàng.', 'Lễ Eid al-Adha, gia đình làm lễ hiến sinh, chia thịt cho hàng xóm nghèo.', 'Thứ Sáu đi lễ ở thánh đường, nghe giảng kinh rồi ở lại trò chuyện với bà con.', 'Tháng Ramadan năm nay rơi vào mùa nóng, nhịn khát cả ngày mệt rã rời mà lòng thấy thanh thản.']), 'neutral'); fx(l, { soc: 2, karma: 1 }); }, 5);
   EV(function (l, a) { return rel(l) === 'cd' && a >= 6; }, 0.12, function (l, a, r, log) { log('Đại lễ ở Tòa Thánh Tây Ninh, cả gia đình áo dài trắng đi dự.', 'good'); fx(l, { hap: 2 }); });
   EV(function (l, a) { return rel(l) === 'blm' && a >= 6; }, 0.15, function (l, a, r, log) { log('Lễ hội Katê ở đền tháp, tiếng trống Ginăng rộn ràng.', 'good'); fx(l, { hap: 2, soc: 2 }); });
   EV(function (l, a) { return rel(l) === 'none' && isVN(l) && a >= 5; }, 0.12, function (l, a, r, log) { log(pick(r, ['Tiết Thanh minh, cả nhà đi tảo mộ ông bà.', 'Ngày giỗ ông, họ hàng về đông đủ, mâm cỗ bày kín nhà.', 'Hai mươi ba tháng Chạp, cúng ông Công ông Táo, thả cá chép ra sông.']), 'good'); fx(l, { soc: 1, hap: 1 }); });

@@ -1882,6 +1882,26 @@ section('37. Bản 3.8: lỗi giao thông theo loại xe, ca sĩ tham gia Anh tr
   { const l = mk(37800, 24, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 4e4; }); const d = E.DEC.tv_moi.make(l, R(2)); l.pending = [d]; E.resolve(l, 'nhan'); const v = l.pending[0];
     ok(v && v.id === 'tv_vong' && /ghép đội với (anh trai .+, ){3}anh trai/.test(v.text), 'mỗi vòng ghép đội ngẫu nhiên với các anh trai thật của chương trình: ' + v.text.slice(v.text.indexOf('ghép'), v.text.indexOf('ghép') + 90)); }
 }
+
+section('38. Bản 3.8.1: sống cùng bố mẹ thì không "về thăm", tên con đồng nhất, các nước khác ít lặp câu');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup, sex, mode) => { const l = E.createLife({ mode: mode || 'vn', seed, gender: sex || 'M' }); l.age = age; if (age >= 18) l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  { const l = mk(38100, 46, x => { x.flags.caring = true; x.fam.mAlive = true; x.fam.fAlive = true; x.money = 100; x.partner = { name: 'Lan', sex: 'F', age: 44, status: 'married', since: 30, alive: true }; });
+    const d = E.DEC.tham_bo_me.make(l, R(1)); const ks = d.opts.map(o => o.k);
+    ok(/sống cùng nhà/.test(d.text) && !ks.includes('call') && ks.includes('an_toi'), 'đã đón bố mẹ về ở cùng: không còn "gọi video hỏi thăm", có "ăn cơm tối cùng bố mẹ"');
+    let bad = 0; for (let i = 0; i < 40; i++) { const L = JSON.parse(JSON.stringify(l)); L.rs = i * 11; const dd = E.DEC.tham_bo_me.make(L, R(i)); L.pending = [dd]; const t = E.resolve(L, 'go').map(e => e.t).join(' '); if (/năng về|Về thăm|Bay về|xe khách/.test(t)) bad++; } ok(bad === 0, 'dành một ngày với bố mẹ khi ở cùng nhà: không còn "mẹ dặn năng về hơn"');
+    ok(E.actions(l).find(a => a.id === 'tham_bo_me').l === 'Dành thời gian cho bố mẹ', 'tên hành động đổi thành "Dành thời gian cho bố mẹ"');
+    const far = mk(38101, 30, x => { x.movedTo = 'Hà Nội'; x.fam.mAlive = true; }); ok(E.DEC.tham_bo_me.make(far, R(2)).opts.some(o => o.k === 'call'), 'ở xa thì vẫn gọi video, về thăm như cũ'); }
+  { let mixed = 0, dup = 0, n = 0;
+    for (let i = 0; i < 160; i++) { const l = E.createLife({ mode: 'world', seed: 38200 + i, gender: 'F' }); E.runHeadless(l); const P = G.NAMES.P[l.pool]; if (!P || P.native || /patronym|bin|double/.test(P.style || '') || l.kids.length < 2) continue;
+      const exes = l.exes || 0; if (exes > 0) continue; n++;
+      const s = new Set(l.kids.map(k => { const w = k.name.split(' '); return w[w.length - 1].replace(/a$/, ''); })); if (s.size > 1) mixed++; const g = l.kids.map(k => k.name); if (new Set(g).size < g.length) dup++; }
+    ok(n > 20 && mixed <= n * 0.05 && dup === 0, 'nhân vật nữ ở nước khác: các con cùng mang họ cha, không trùng tên nhau (' + mixed + '/' + n + ' khác họ, ' + dup + ' trùng tên)'); }
+  { let reps = 0, lines = 0; for (let i = 0; i < 80; i++) { const l = E.createLife({ mode: 'world', seed: 38400 + i }); E.runHeadless(l); const seen = {}; l.log.forEach(e => { if (e.k === 'money' || e.k === 'quiet') return; lines++; if (seen[e.t]) reps++; seen[e.t] = 1; }); }
+    ok(reps / lines < 0.07, 'chơi ở nước khác ít lặp câu (' + (reps / lines * 100).toFixed(1) + '% dòng nhật ký lặp lại)'); }
+  { const w = E.createLife({ mode: 'world', seed: 38500 }); let t = ''; for (let i = 0; i < 80 && !/cò đất/.test(t); i++) { const l = E.createLife({ mode: 'world', seed: 38500 + i }); if (l.country === 'VN') continue; E.runHeadless(l); t = l.log.map(e => e.t).join(' '); } ok(!/cò đất dựng lều/.test(t), 'nước khác không còn tin "cò đất dựng lều" (chuyện ở Việt Nam)'); }
+}
 function isVNx(l) { return E.isVN(l); }
 
 console.log('\n' + '='.repeat(60));

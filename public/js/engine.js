@@ -1830,7 +1830,7 @@
 
     // ---- Bệnh: khỏi bệnh? ----
     // v2.4: càng già, cơ hội khỏi càng giảm theo từng năm (không chỉ theo tuổi lúc phát bệnh)
-    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since)) * (a >= 85 && /^ung thư/.test(life.ill.n) ? 0.6 : 1)) { // v3.4: ung thư ở tuổi rất cao hiếm khi thuyên giảm hoàn toàn
+    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since)) * (a >= 85 && /^ung thư/.test(life.ill.n) ? 0.45 : 1)) { // v3.4: ung thư ở tuổi rất cao hiếm khi thuyên giảm hoàn toàn
       var IL = life.ill, chronic = IL.chronic || ILLS.some(function (x) { return x.n === IL.n && x.chronic; });
       life.illHist = life.illHist || []; if (life.illHist.indexOf(IL.n) < 0) life.illHist.push(IL.n);
       // bệnh mạn tính không "khỏi": được kiểm soát ổn định, vẫn phải uống thuốc suốt đời

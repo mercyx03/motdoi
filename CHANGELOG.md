@@ -4,6 +4,30 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.8.1 — 16/10/2026
+
+Sửa lỗi theo góp ý người chơi.
+
+- **Đã đón bố mẹ về ở cùng mà vẫn bị hỏi "Về thăm nhà":**
+  - Trước đây vẫn có "gọi video hỏi thăm", và chọn "dành một ngày ở nhà" thì lại ra câu "mẹ dặn năng về hơn".
+  - Nay khi sống cùng nhà với bố mẹ (đã đón về ở cùng, hoặc chưa ra ở riêng, chưa lập gia đình), hành động đổi thành **"Dành thời gian cho bố mẹ"** với các lựa chọn:
+    - dành trọn một ngày đưa bố mẹ đi chợ, đi chùa, đi khám, xem lại album ảnh cũ…;
+    - về sớm ăn cơm tối cùng bố mẹ;
+    - biếu bố mẹ ít tiền tiêu.
+  - Ở xa thì vẫn về thăm, gọi video như cũ.
+- **Tên nhân vật không đồng nhất khi chơi ở các nước khác:**
+  - Trước đây nhân vật nữ sinh con thì mỗi đứa con mang một họ ngẫu nhiên.
+  - Nay con mang họ cha theo đúng kiểu đặt tên từng nước: phần lớn các nước là họ cha; nước dùng tên cha làm họ (Ethiopia, Somalia, Malaysia…) là tên cha; nước hai họ (Tây Ban Nha, Bồ Đào Nha, Mỹ Latinh) là họ cha + họ mẹ.
+  - Anh chị em không còn trùng tên nhau.
+- **Lặp câu khi chơi ở các nước khác:**
+  - Tin "cò đất dựng lều" là chuyện ở Việt Nam, nay ở nước khác đổi thành tin nhà đất chung.
+  - Tin thị trường đất, chứng khoán có nhiều cách kể và cách nhau ít nhất 8 năm.
+  - Ramadan, Eid, Giáng sinh, Phục sinh có nhiều câu kể khác nhau và thưa hơn.
+  - Vào bệnh viện tư có nhiều cách kể.
+  - Tỉ lệ dòng nhật ký lặp lại ở các nước khác giảm từ 5,2% xuống 3,8%.
+- **Trúng số nhận giải công khai:** người lạ "nhận vơ" và họ hàng chắc chắn tìm đến trong những năm ngay sau đó.
+- Người trên 85 tuổi mắc ung thư càng hiếm khi khỏi hẳn.
+
 ## v3.8.0 — 16/10/2026
 
 Giữ nguyên toàn bộ tính năng v3.7.0. Bản này làm theo góp ý của người chơi.

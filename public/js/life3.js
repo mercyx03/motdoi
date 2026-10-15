@@ -565,7 +565,7 @@
   // chuyến về thăm bố mẹ: xa hay gần, đi bằng gì, tốn bao nhiêu
   function trip(l) {
     var w = where(l), home = isVN(l) ? (l.provLabel || (l.prov && l.prov.old) || 'quê nhà') : (l.city || l.countryName);
-    if (l.flags.caring) return { same: true, cost: 0, how: 'ở cùng nhà', to: home };
+    if (livesWith(l)) return { same: true, cost: 0, how: 'ở cùng nhà', to: home };
     if (!isVN(l) && !l.abroad) return { same: false, cost: l.base * 0.01, how: 'về nhà bố mẹ', to: home, near: true };
     if (!w.vn) { var farC = /Hoa Kỳ|Canada|Úc|Anh|Đức|Pháp|châu Âu|New Zealand|Ý|Hà Lan|Thụy|Ba Lan|Séc/.test(w.country); return { same: false, abroad: true, cost: isVN(l) ? V(l, farC ? 28 : 10) : l.base * (farC ? 0.25 : 0.1), how: 'mua vé máy bay từ ' + w.country + ' về', to: home }; }
     if (!w.away) return { same: false, near: true, cost: V(l, 0.3), how: 'chạy xe sang nhà bố mẹ', to: home };
@@ -573,6 +573,9 @@
     return { same: false, flight: true, cost: V(l, 4), how: 'mua vé máy bay từ ' + w.city + ' về quê', to: home };
   }
   E.homeTrip = trip;
+  // v3.8.1: đang sống cùng nhà với bố mẹ (đã đón bố mẹ về ở cùng, hoặc chưa ra ở riêng, chưa lập gia đình)
+  function livesWith(l) { return !!(l.flags.caring || (!l.indep && !l.abroad && !l.cityStudent && !l.movedTo)); }
+  E.livesWithParents = livesWith;
   function pw(l) { return l.fam.mAlive && l.fam.fAlive && !l.fam.noDad ? 'bố mẹ' : l.fam.mAlive ? 'mẹ' : (l.fam.fAlive && !l.fam.noDad) ? 'bố' : ''; }
   if (E.DEC.tham_bo_me) {
     var TB = E.DEC.tham_bo_me.def, goOld = TB.opts.filter(function (o) { return o.k === 'go'; })[0];
@@ -584,10 +587,11 @@
         (t.same ? 'Bạn đang sống cùng nhà với ' + p + '.' : t.near ? 'Nhà ' + p + ' ở gần, chạy xe một lát là tới.' : 'Bạn đang ở ' + (where(l).city || where(l).country) + ', ' + p + ' ở ' + t.to + ' — muốn về phải ' + t.how + ' (đi lại, quà cáp khoảng ' + mo(l, t.cost) + ').') + ' Lâu rồi bạn chưa dành thời gian cho ' + p + '.';
     };
     TB.opts = [
-      { k: 'go', l: function (l) { var t = trip(l), p = pw(l); return t.same ? 'Dành một ngày ở nhà với ' + p : t.abroad ? 'Bay về Việt Nam thăm ' + p : t.flight ? 'Bay về quê thăm ' + p : t.mid ? 'Bắt xe khách về quê thăm ' + p : 'Về ăn cơm với ' + p; },
+      { k: 'go', l: function (l) { var t = trip(l), p = pw(l); return t.same ? 'Dành trọn một ngày cho ' + p + ' (đưa đi chơi, đi chùa, đi khám…)' : t.abroad ? 'Bay về Việt Nam thăm ' + p : t.flight ? 'Bay về quê thăm ' + p : t.mid ? 'Bắt xe khách về quê thăm ' + p : 'Về ăn cơm với ' + p; },
         h: function (l) { var t = trip(l); return t.cost > 0 ? (t.abroad || t.flight ? 'Vé máy bay khứ hồi, quà cáp' : t.mid ? 'Vé xe khách, quà cáp' : 'Xăng xe, ít quà') + ' ~' + mo(l, t.cost) : 'Không tốn tiền'; },
         run: function (l, r, log) {
           var t = trip(l), p = pw(l);
+          if (t.same) { var tx = pick(r, ['Sáng đưa ' + p + ' đi chợ, chiều cả nhà cùng nấu một bữa cơm thịnh soạn.', 'Đưa ' + p + ' đi chùa, rồi dạo công viên, chụp mấy tấm ảnh kỷ niệm.', 'Cả ngày ngồi nghe ' + p + ' kể chuyện ngày xưa, tiện tay sửa cái quạt, thay bóng đèn.', 'Đưa ' + p + ' đi khám sức khỏe định kỳ, trưa ghé quán bún quen ăn cùng nhau.', 'Tắt điện thoại, cả ngày chỉ ở bên ' + p + ': pha ấm trà, xem lại album ảnh cũ.']); H.cash(l, -V(l, 0.3), 'Đưa ' + p + ' đi chơi'); log(tx, 'good'); fx(l, { hap: 5, soc: 3, karma: 2 }); H.mem(l, tx, 3); return; }
           if (t.cost > 0) H.cash(l, -t.cost, (t.abroad ? 'Vé máy bay về nước thăm ' : t.flight ? 'Vé máy bay về quê thăm ' : t.mid ? 'Vé xe về quê thăm ' : 'Về thăm ') + p);
           var m0 = l.money, it = (l.yr || { items: [] }).items, n0 = it.length;
           goOld.run(l, r, function (txt, k) { log((t.abroad ? 'Bay về Việt Nam sau bao lâu xa nhà. ' : t.flight || t.mid ? U.cap(t.how) + '. ' : '') + txt, k); });
@@ -596,8 +600,9 @@
         } },
       { k: 'week', l: function (l) { return 'Xin nghỉ phép, về ở với ' + pw(l) + ' cả tuần'; }, req: function (l) { return !trip(l).same && !trip(l).near; }, h: function (l) { return 'Tiền đi lại & quà ~' + mo(l, trip(l).cost * 1.3) + (l.job ? ', mất vài ngày công' : ''); },
         run: function (l, r, log) { var t = trip(l), p = pw(l); H.cash(l, -t.cost * 1.3, 'Về quê ở với ' + p + ' một tuần'); if (l.job && l.income > 0) H.cash(l, -l.income / 52, 'Nghỉ không lương'); log('Về ở với ' + p + ' trọn một tuần — ' + pick(r, ['sáng đi chợ, chiều nấu cơm, tối ngồi nghe kể chuyện ngày xưa.', 'sửa lại mái nhà dột, dọn khu vườn cỏ mọc um tùm.', 'đưa ' + p + ' đi khám sức khỏe, mua thêm ít đồ dùng trong nhà.']), 'good'); fx(l, { hap: 9, soc: 4, karma: 3 }); if (l.mind) l.mind.stress -= 8; H.mem(l, 'Một tuần ở nhà với ' + p + ', thấy mình như đứa trẻ ngày nào.', 4); } },
-      { k: 'call', l: 'Gọi video hỏi thăm', h: 'Không tốn tiền', run: function (l, r, log) { var p = pw(l); log('Gọi video cho ' + p + ' gần một tiếng. ' + pick(r, [U.cap(p) + ' cứ dặn đi dặn lại phải giữ sức khỏe.', U.cap(p) + ' khoe mấy chuyện ở quê, cười suốt.', 'Thấy ' + p + ' gầy đi, bạn hứa sẽ sớm về.']), 'good'); fx(l, { hap: 2, soc: 1 }); } },
-      { k: 'send', l: function (l) { return 'Gửi tiền về biếu ' + pw(l); }, req: function (l) { return l.indep && l.money > l.base * 0.12; }, h: function (l) { return '~' + mo(l, l.base * 0.1); }, run: function (l, r, log) { H.cash(l, -l.base * 0.1, 'Gửi tiền biếu ' + pw(l)); log('Chuyển khoản biếu ' + pw(l) + ' một khoản, ' + pw(l) + ' gọi lại mắng "tiêu xài hoang phí" mà giọng vui hẳn.', 'good'); fx(l, { hap: 3, karma: 2 }); } }
+      { k: 'call', l: 'Gọi video hỏi thăm', h: 'Không tốn tiền', req: function (l) { return !trip(l).same; }, run: function (l, r, log) { var p = pw(l); log('Gọi video cho ' + p + ' gần một tiếng. ' + pick(r, [U.cap(p) + ' cứ dặn đi dặn lại phải giữ sức khỏe.', U.cap(p) + ' khoe mấy chuyện ở quê, cười suốt.', 'Thấy ' + p + ' gầy đi, bạn hứa sẽ sớm về.']), 'good'); fx(l, { hap: 2, soc: 1 }); } },
+      { k: 'an_toi', l: function (l) { return 'Tối nay về sớm, ăn cơm cùng ' + pw(l); }, h: 'Không tốn tiền', req: function (l) { return trip(l).same; }, run: function (l, r, log) { var p = pw(l); log('Về sớm ăn cơm tối cùng ' + p + '. ' + pick(r, [U.cap(p) + ' gắp cho bạn miếng ngon nhất, kể chuyện hàng xóm cả buổi.', 'Ăn xong cả nhà ngồi xem thời sự, ' + p + ' hỏi han chuyện công việc.', U.cap(p) + ' vui hẳn, bảo lâu lắm rồi mới thấy bạn về sớm.']), 'good'); fx(l, { hap: 3, soc: 2, karma: 1 }); } },
+      { k: 'send', l: function (l) { return (trip(l).same ? 'Biếu ' : 'Gửi tiền về biếu ') + pw(l); }, req: function (l) { return l.indep && l.money > l.base * 0.12; }, h: function (l) { return '~' + mo(l, l.base * 0.1); }, run: function (l, r, log) { H.cash(l, -l.base * 0.1, 'Gửi tiền biếu ' + pw(l)); if (trip(l).same) { log('Dúi vào tay ' + pw(l) + ' một khoản tiền tiêu vặt, ' + pw(l) + ' mắng "bày vẽ" mà mắt cười.', 'good'); fx(l, { hap: 3, karma: 2 }); return; } log('Chuyển khoản biếu ' + pw(l) + ' một khoản, ' + pw(l) + ' gọi lại mắng "tiêu xài hoang phí" mà giọng vui hẳn.', 'good'); fx(l, { hap: 3, karma: 2 }); } }
     ];
   }
   // Tết về quê: xa nhà thì tốn tiền vé

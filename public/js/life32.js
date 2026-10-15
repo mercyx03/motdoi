@@ -123,7 +123,7 @@
   var ta0 = E.DEC.treat.apply;
   E.DEC.treat.apply = function (l, d, k, r, log) {
     var x = ta0.apply(this, arguments), ill = l.ill;
-    if (k === 'best' && d.data.priv) { H.cash(l, -d.data.cost * 0.8, 'Phụ phí bệnh viện tư'); log('Vào bệnh viện tư: phòng riêng, bác sĩ khám ngay trong ngày, không phải xếp hàng chờ đợi.', 'neutral'); }
+    if (k === 'best' && d.data.priv) { H.cash(l, -d.data.cost * 0.8, 'Phụ phí bệnh viện tư'); log(pick(r, ['Vào bệnh viện tư: phòng riêng, bác sĩ khám ngay trong ngày, không phải xếp hàng chờ đợi.', 'Chữa ở bệnh viện tư: đặt lịch qua điện thoại, đến là có bác sĩ khám, y tá chăm sóc tận tình.', 'Nằm phòng dịch vụ ở bệnh viện tư, người nhà được ở cùng, thuốc men đầy đủ — đắt nhưng yên tâm.']), 'neutral'); }
     else if (k === 'best') log(pick(r, ['Bệnh viện tuyến trên quá tải: 4 giờ sáng đã phải dậy xếp hàng lấy số, chờ khám đến chiều, nằm ghép giường với hai người lạ.', 'Mỗi lần tái khám lại dậy từ tờ mờ sáng bắt xe lên viện, xếp hàng lấy số, chờ kết quả xét nghiệm, rồi đứng đợi lấy thuốc cả tiếng.']), 'neutral');
     else if (k === 'basic') log('Bệnh viện gần nhà đông bệnh nhân, ít máy móc; nhiều xét nghiệm phải chuyển lên tuyến trên.', 'neutral');
     if (ill && k !== 'none' && BIG_ILL.test(ill.n) && ch(r, 0.6)) H.chain(l, 'phau_thuat', { why: 'mổ ' + ill.n, ill: true });

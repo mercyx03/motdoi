@@ -95,7 +95,9 @@
       { k: 'no', l: 'Lịch sự từ chối, đóng cửa', ai: { w: 1 }, run: function (l, r, log) { log('Từ chối khéo. Người đó đứng chửi trước cổng một lúc rồi bỏ đi.', 'neutral'); fx(l, { hap: -1 }); } }
     ]
   });
-  T('ts_nguoi_la', function (l) { return known(l) && free(l); }, function (l) { return l.flags.lottoWin.pub ? 0.7 : 0.35; }, 1);
+  T('ts_nguoi_la', function (l) { return known(l) && free(l) && ((l.flags.scN || {}).ts_nguoi_la || 0) < 4; }, function (l) { return l.flags.lottoWin.pub ? 0.7 : 0.35; }, 1);
+  E.TRIG.forEach(function (t) { if (t.id === 'ts_nguoi_la') t.rep = true; });
+  (function () { var D = E.DEC.ts_nhan_giai, ap = D.apply; D.apply = function (l, d, k) { var x = ap.apply(this, arguments); if (k === 'public') { H.sched(l, 'ts_nguoi_la', 1); H.sched(l, 'ts_ho_hang', 2); H.sched(l, 'ts_nguoi_la', 3); } return x; }; })(); // nhận giải công khai thì chắc chắn có người lạ tìm đến // v3.8.1: chuỗi người lạ tìm đến ngay những năm sau khi trúng số (không giãn 4 năm như chuyện thường)
   // họ hàng, bạn bè hỏi vay / xin
   SC('ts_ho_hang', {
     title: 'Họ hàng, bạn bè hỏi vay', prep: function (l, r) { return { who: pick(r, ['Ông chú họ', 'Bà dì bên ngoại', 'Người bạn thân thời cấp ba', 'Anh họ', 'Đồng nghiệp cũ']), why: pick(r, ['làm ăn thua lỗ', 'mua nhà cho con', 'chữa bệnh', 'trả nợ', 'mở quán']), x: pick(r, [0.5, 1, 3]) }; },

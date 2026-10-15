@@ -1459,7 +1459,7 @@
   A('bo_thuoc', G6, 'Cai thuốc lá / rượu', { min: 14, sc: 'cai_nghien', avail: function (l) { return l.flags.smoke || (l.addict && (l.addict.alcohol || l.addict.drugs || l.addict.gamble)) ? true : 'Không có thói quen xấu'; }, ai: { w: 0.8 } });
   A('tu_thien', G6, 'Làm việc thiện', { min: 14, ai: { w: 0.15 } });
   A('di_chua', G6, 'Đi chùa / nhà thờ, tĩnh tâm', { min: 8, sc: 'di_chua' });
-  A('tham_bo_me', G7, 'Về thăm bố mẹ', { min: 18, sc: 'tham_bo_me', avail: function (l) { return (l.fam.mAlive || l.fam.fAlive) ? true : 'Bố mẹ đã khuất'; } });
+  A('tham_bo_me', G7, function (l) { return E.livesWithParents && E.livesWithParents(l) ? 'Dành thời gian cho bố mẹ' : 'Về thăm bố mẹ'; }, { min: 18, sc: 'tham_bo_me', avail: function (l) { return (l.fam.mAlive || l.fam.fAlive) ? true : 'Bố mẹ đã khuất'; } });
   A('gap_ban', G7, 'Hẹn gặp bạn thân', { min: 10, sc: 'gap_ban', avail: function (l) { return bff(l) ? true : 'Không có bạn thân'; } });
   var G9 = 'Thú cưng';
   A('nuoi_pet', G9, 'Nuôi thú cưng', { min: 6, avail: function (l) { return H.pets(l).length >= 3 ? 'Nhà đã có 3 thú cưng' : l.jailUntil != null && l.age < l.jailUntil ? 'Không áp dụng' : true; }, ai: { w: 0.1 } });

@@ -270,4 +270,39 @@
   E.TRIG.forEach(function (t) { if (/^(mua_sam|nhat_vi)$/.test(t.id) && !t.rep) t.max = 1; });
   T('ru_ban_an', function (l, a) { return a >= 15 && a <= 45 && l.urban; }, 0.02, 5, 1);
   A('ru_ban_an', 'Gia đình & bạn bè', 'Rủ bạn bè đi ăn uống', { min: 14, max: 70, sc: 'ru_ban_an' });
+
+  // ===================================================================
+  // 5. v3.8.1: TÊN CON ĐỒNG NHẤT — con mang họ cha (đúng kiểu đặt tên từng nước), anh chị em không trùng tên
+  // ===================================================================
+  function kidSur(l) {
+    var P = G.NAMES && G.NAMES.P && G.NAMES.P[l.pool], p = l.partner;
+    var dad = l.sex === 'M' ? String(l.name || '') : p && p.sex === 'M' ? String(p.name || '') : null;
+    if (!dad) return l.sur;
+    var w = dad.split(' ');
+    if (l.pool === 'vn') return l.sex === 'M' ? l.sur : w[0];
+    if (!P) return l.sex === 'M' ? l.sur : w[w.length - 1];
+    if (P.style === 'patronym' || P.style === 'bin') return w[0];   // họ của con là tên của cha
+    if (l.sex === 'M') return l.sur;
+    if (P.style === 'double') return w[1] || w[w.length - 1];       // con lấy họ thứ nhất của cha
+    if (P.native) return w[0];                                      // họ đứng trước tên
+    return w[w.length - 1];
+  }
+  function givenOf(l, n) { var w = String(n).split(' '); var P = G.NAMES && G.NAMES.P && G.NAMES.P[l.pool]; return l.pool === 'vn' || (P && P.native) ? w[w.length - 1] : w[0]; }
+  var ka0 = E.DEC.kid.apply;
+  E.DEC.kid.apply = function (l, d, k, r, log) {
+    var n0 = l.kids.length;
+    var lg = [], x = ka0.call(this, l, d, k, r, function (t, kk) { lg.push([t, kk]); });
+    var kid = l.kids.length > n0 ? l.kids[l.kids.length - 1] : null;
+    if (kid && !(l.partner && l.partner.sex === l.sex)) {
+      var old = kid.name, sur = kidSur(l), taken = l.kids.slice(0, -1).map(function (c) { return givenOf(l, c.name); }).concat([givenOf(l, l.name)]);
+      var nm = old, t = 0;
+      if (l.pool !== 'vn' || l.sex === 'F') { nm = H.name(l, r, kid.sex, sur).full; }
+      while (taken.indexOf(givenOf(l, nm)) >= 0 && t++ < 8) nm = H.name(l, r, kid.sex, sur).full;
+      var P2 = G.NAMES && G.NAMES.P && G.NAMES.P[l.pool];
+      if (P2 && P2.style === 'double') { var mom = l.sex === 'F' ? String(l.name).split(' ') : l.partner ? String(l.partner.name).split(' ') : null; if (mom && mom.length >= 3) { var ww = nm.split(' '); ww[ww.length - 1] = mom[mom.length - 2]; nm = ww.join(' '); } } // họ thứ hai của con là họ thứ nhất của mẹ
+      if (nm !== old) { kid.name = nm; lg.forEach(function (e) { e[0] = e[0].split(old).join(nm); }); (l.mem || []).forEach(function (m) { if (m && m.t) m.t = m.t.split(old).join(nm); }); }
+    }
+    lg.forEach(function (e) { log(e[0], e[1]); });
+    return x;
+  };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));
