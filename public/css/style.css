@@ -448,3 +448,8 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
 /* v3.3: lời lưu ý ở chân trang, làm nổi bật */
 footer .disclaimer { margin: 12px 0 0; padding: 12px 14px; border: 1px solid var(--accent); border-left: 4px solid var(--accent); border-radius: 10px; background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--ink); font-size: 13.5px; line-height: 1.55; }
 footer .disclaimer b { color: var(--accent); }
+
+/* v3.6: chi tiêu định kỳ */
+.recur-h{font-size:.8rem;font-weight:600;margin:.6rem 0 .3rem;color:var(--ink)}
+.chips.recur .chip.recur-c small{opacity:.75;font-weight:400}
+.chips.recur .chip.recur-c.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}

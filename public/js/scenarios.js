@@ -575,7 +575,7 @@
         log(hw === 'bố mẹ' || hw === 'mẹ' || hw === 'bố' ? 'Kể hết với ' + hw + '. ' + U.cap(hw) + ' bán đi chiếc xe, trả nợ thay bạn.' : 'Kể hết với ' + hw + '. Mọi người góp tiền trả nợ thay bạn, coi như cho vay không lấy lãi.', 'neutral');
         fx(l, { hap: -4, karma: 2 }); H.mem(l, 'Ngày thú nhận nợ app đen với ' + hw + '.', 6);
       } },
-      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp nhóm Zalo công ty.', 'bad'); if (H.isEmployee(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
+      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp ' + (isVN(l) ? 'nhóm Zalo ' : 'các nhóm chat ') + (H.isEmployee(l) ? 'công ty' : 'họ hàng, hàng xóm') + '.', 'bad'); if (H.isEmployee(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
     ]
   });
   T('khung_bo', function (l, a) { return l.flags.thugDebt && free(l); }, 0.7);
@@ -603,7 +603,7 @@
       { k: 'quit', l: 'Nhờ gia đình giám sát, quyết cai', ai: { w: 0.8, smart: 1 }, run: function (l, r, log) { if (ch(r, 0.45)) { l.addict.gamble = false; log('Đốt hết sổ sách lô đề, xóa ứng dụng cá cược. Cai được cờ bạc.', 'good'); fx(l, { hap: 8, karma: 5 }); H.mem(l, 'Ngày bỏ được cờ bạc.', 5); } else log('Cai được vài tháng rồi lại tái nghiện.', 'bad'); } }
     ]
   });
-  T('nghien_bac', function (l, a) { return l.addict && l.addict.gamble && free(l); }, 0.4);
+  T('nghien_bac', function (l, a) { return l.addict && l.addict.gamble && free(l) && ((l.flags.scN || {}).nghien_bac || 0) < 5; }, function (l) { return 0.4 * Math.pow(0.75, (l.flags.scN || {}).nghien_bac || 0); }, 3); // v3.7: cách ít nhất 3 năm mới hỏi lại
 
   SC('ve_so', {
     title: 'Mua vé số', text: 'Cô bán vé số đi ngang qua: "Mua giùm cô vài tờ đi con, hôm nay ngày đẹp!"',
@@ -1125,7 +1125,7 @@
   // =====================================================================
   // TUỔI THƠ (1–14 tuổi): năm nào cũng có điều để chọn
   // =====================================================================
-  function CT(id, when, cd, cw) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: 0.1, cd: cd || 3, child: true, cw: cw || 1 }); }
+  function CT(id, when, cd, cw) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: function (l, a) { var w = typeof cw === 'function' ? cw(l, a) : (cw || 1); return 0.1 * Math.min(1.5, w); }, cd: cd || 3, child: true, cw: cw || 1 }); } // v3.7: xác suất xuất hiện cũng theo trọng số (giới tính, hoàn cảnh)
   function giveTalent(l, t, p, r) { if (!l.talent && r() < p) { l.talent = t; if (t === 'game') { if (l.talentSub !== 'FPS' && l.talentSub !== 'MOBA') l.talentSub = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = l.game || E.gameFor(l, r); } } if (l.talent === t) l.skill = Math.min(100, (l.skill || 20) + 4); }
 
   SC('thoi_noi', {

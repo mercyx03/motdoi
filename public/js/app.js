@@ -22,7 +22,7 @@
   };
   S.set.name = '';
   S.minorOnly = !!S.set.minorOnly;
-  if (['random', 'M', 'F', 'lgbt', 'gay', 'lesbian', 'bi'].indexOf(S.set.gender) < 0) S.set.gender = 'random';
+  if (['random', 'M', 'F', 'lgbt', 'gay', 'top', 'lesbian', 'bi'].indexOf(S.set.gender) < 0) S.set.gender = 'random';
 
   function migrate(life) { return E.migrate(life); }
 
@@ -118,7 +118,7 @@
     $('#vnOpts').classList.toggle('hidden', !vn);
     $('#worldOpts').classList.toggle('hidden', vn);
     $$('#variantChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.variant === S.set.variant); });
-    var g = S.set.gender, lg = ['lgbt', 'gay', 'lesbian', 'bi'].indexOf(g) >= 0;
+    var g = S.set.gender, lg = ['lgbt', 'gay', 'top', 'lesbian', 'bi'].indexOf(g) >= 0;
     $$('#genderChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.g === g || (c.dataset.g === 'lgbt' && lg)); });
     $('#lgbtChips').classList.toggle('hidden', !lg);
     $$('#lgbtChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.g === g); });
@@ -271,7 +271,7 @@
 
   $('#bornBtn').onclick = function () {
     var g = S.set.gender;
-    if (g === 'lgbt') g = ['gay', 'lesbian', 'bi'][Math.floor(Math.random() * 3)];
+    if (g === 'lgbt') g = ['gay', 'top', 'lesbian', 'bi'][Math.floor(Math.random() * 4)];
     var opts = { mode: S.set.mode, variant: S.set.variant, gender: g, lifeMin: S.set.lifeMin };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
     bornWith(opts);
@@ -780,6 +780,9 @@
     var l = S.life, p = $('#actPanel');
     if (!l.alive || l.age < 8) { p.innerHTML = '<h3>Việc bạn muốn làm</h3><p class="muted small" style="margin:0">' + (l.alive ? 'Từ 8 tuổi, bạn có thể chủ động làm những việc mình muốn.' : '—') + '</p>'; return; }
     var acts = E.actions(l), groups = {};
+    // v3.6: mục "Chi tiêu" gom mọi việc tiêu tiền + chi tiêu định kỳ tự động mỗi năm
+    var SPEND = '💰 Chi tiêu', spendIds = E.SPEND_ACTS || [];
+    if (E.recurList && l.age >= 16) groups[SPEND] = spendIds.map(function (id) { return acts.filter(function (x) { return x.id === id; })[0]; }).filter(function (x) { return x && (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok)); });
     acts.forEach(function (x) { if (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok)) (groups[x.g] = groups[x.g] || []).push(x); });
     // v2.7: gọn hơn — chỉ hiện hàng nhóm việc; bấm một nhóm mới mở danh sách việc của nhóm đó
     var lim = E.actsLimit(l), left = lim === Infinity ? null : Math.max(0, lim - (l.acts || 0));
@@ -790,11 +793,20 @@
         var n = groups[g].filter(function (x) { return x.ok === true; }).length;
         return '<button class="chip sm' + (g === sel ? ' on' : '') + (n ? '' : ' off') + '" data-ag="' + esc(g) + '">' + esc(g) + (n ? ' <small>' + n + '</small>' : '') + '</button>';
       }).join('') + '</div>' +
+      (sel === SPEND ? recurHtml(l) + '<div class="recur-h">Chi tiêu một lần</div>' : '') +
       (sel ? '<div class="chips actlist">' + groups[sel].map(function (x) {
         return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + '</button>';
       }).join('') + '</div>' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
     $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });
+    $$('[data-recur]', p).forEach(function (b) { b.onclick = function () { var on = E.recurToggle(S.life, b.dataset.recur); toast(on ? 'Đã bật — từ năm nay sẽ tự động chi mỗi kỳ' : 'Đã tắt khoản chi định kỳ này'); persist(); renderActions(); }; });
+  }
+  function recurHtml(l) {
+    var L = E.recurList(l);
+    return '<div class="recur-h">Chi tiêu định kỳ <span class="muted small">· tự động mỗi kỳ, không tốn lượt; bấm để bật / tắt</span></div><div class="chips recur">' + L.map(function (x) {
+      var off = x.ok !== true;
+      return '<button class="chip act recur-c' + (x.on ? ' on' : '') + (off && !x.on ? ' off' : '') + '" data-recur="' + x.id + '"' + (off && !x.on ? ' disabled title="' + esc(x.ok) + '"' : '') + '>' + (x.on ? '✓ ' : '') + esc(x.l) + ' <small>' + esc(x.per) + ' · ~' + esc(x.cost) + '</small></button>';
+    }).join('') + '</div>';
   }
   function doAction(id) {
     var l = S.life;

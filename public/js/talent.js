@@ -76,7 +76,7 @@
     var s = stage(l), n = nk(l), tr = track(l);
     var p = U.clamp(0.35 + (skillOf(l) - 100 * s[3]) / 45 + bonus + (l.st.hea < 40 ? -0.1 : 0), 0.04, 0.92);
     l.skill = Math.min(100, (l.skill || 20) + 3);
-    if (!ch(r, p)) { log('Thi ' + s[0] + ' nhưng không có giải. ' + pick(r, ['Về nhà buồn mấy hôm.', 'Thầy động viên: "Năm sau làm lại."', 'Biết thêm mình còn thiếu ở đâu.']), 'neutral'); n.fail = (n.fail || 0) + 1; if (n.fail >= 3) { n.stop = true; log('Sau mấy lần không đạt, bạn dừng việc đi thi.', 'neutral'); } return; }
+    if (!ch(r, p)) { log('Thi ' + s[0] + ' nhưng không có giải. ' + pick(r, ['Về nhà buồn mấy hôm.', 'Thầy động viên: "Năm sau làm lại."', 'Biết thêm mình còn thiếu ở đâu.']), 'neutral'); n.fail = (n.fail || 0) + 1; if (n.fail >= 2) { n.stop = true; log('Sau mấy lần không đạt, bạn dừng việc đi thi.', 'neutral'); } return; }
     var q = U.clamp(Math.floor((p - 0.04) * 4 + r() * 1.5), 0, 3), intl = n.lv === 4;
     var prize = intl ? ['bằng khen', 'huy chương Đồng', 'huy chương Bạc', 'huy chương Vàng'][q] : PRIZE[q];
     log((intl ? 'Giành ' : 'Đạt ') + prize + ' ' + s[0] + '!', q >= 2 || n.lv >= 3 ? 'big' : 'good');

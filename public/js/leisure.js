@@ -160,6 +160,7 @@
     ]
   });
   T('so_thich', function (l, a) { return !!hob(l) && a >= 10 && a <= 40 && free(l); }, 0.22, 2);
+  E.TRIG.forEach(function (t) { if (t.id === 'so_thich') { t.cd = 6; t.max = 2; } }); // v3.7: chuyện sở thích chỉ hỏi tối đa 2 lần trong đời
   // đi casting / theo nghề từ sở thích
   SC('so_thich_nghe', {
     title: function (l) { return l.hobby === 'rap' ? 'Casting chương trình rap' : 'Biến đam mê thành nghề?'; },

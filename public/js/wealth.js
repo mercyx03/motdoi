@@ -137,7 +137,9 @@
   var CARS = MODELS.filter(function (m) { return m.t >= 1; }).map(function (m) { return { k: m.k, n: m.n, p: m.p / 100, t: m.t, up: m.up || 0 }; }); // tương thích cũ
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
   // giá theo tiền đang dùng: ở VN là triệu đồng; nước khác quy đổi theo mức sống
-  function priceOf(l, m) { return vnd(l) ? m.p : m.p / 100 * l.base * (m.t >= 1 ? 0.55 : 0.6); }
+  // v3.6: ở nước ngoài giá xe quy theo đô la Mỹ thực tế (giá ở VN gồm nhiều thuế phí, xe sang / siêu xe đắt gấp đôi, gấp ba) rồi đổi theo mức giá nước đó
+  function usdOf(m) { var u = m.p * 1e6 / 25400; return u * (m.t === 0 ? 0.9 : m.t === 1 ? 0.8 : m.t === 2 ? 0.6 : 0.42); }
+  function priceOf(l, m) { if (vnd(l)) return m.p; var W = G.W, c = W && W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country], g = (c && c.gdp) || l.gdp || 20; return usdOf(m) / G.CUR.priceLevel(g); }
   // phân khúc cũ (A, B, C, D, L, S) vẫn dùng được
   var OLDSEG = { A: 'pho', B: 'pho', C: 'pho', D: 'pho', L: 'sang', S: 'super' };
   function seg(k) { return SEGS.filter(function (s) { return s.k === k; })[0] || SEGS.filter(function (s) { return s.k === OLDSEG[k]; })[0] || SEGS[0]; }
@@ -305,7 +307,7 @@
     if (v.q == null) v.q = 1;
     return b;
   }
-  function propPrice(l, p) { return H.housePrice(l) * p.mult; }
+  function propPrice(l, p) { return (!vnd(l) && E.homeMin ? E.homeMin(l) * 1.6 : H.housePrice(l)) * p.mult; } // v3.6: ở nước ngoài giá nhà cho thuê theo giá nhà nơi đó
   SC('dau_tu_lon', {
     title: 'Đầu tư làm ăn',
     text: function (l) {
@@ -395,7 +397,7 @@
         else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); if (l.mind) l.mind.stress = Math.min(100, l.mind.stress + 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }
         continue;
       }
-      if (v.good >= 2 && free(l) && a < 75 && (cash(l) >= v.unit || (H.canBankLoan(l) && cash(l) >= v.unit * 0.3)) && ch(r, 0.6) && !(l.sched || []).some(function (s) { return s.id === 'mo_chi_nhanh'; })) H.sched(l, 'mo_chi_nhanh', 1);
+      if (v.good >= 2 && free(l) && a < 75 && (cash(l) >= v.unit || (H.canBankLoan(l) && cash(l) >= v.unit * 0.3)) && ch(r, 0.6) && (v.askAt == null || a - v.askAt >= 4) && (l.flags.branchAt == null || a - l.flags.branchAt >= 3) && (l.flags.branchN || 0) < 6 && !(l.sched || []).some(function (s) { return s.id === 'mo_chi_nhanh'; })) { v.askAt = a; l.flags.branchAt = a; l.flags.branchN = (l.flags.branchN || 0) + 1; H.sched(l, 'mo_chi_nhanh', 1); } // v3.7: không hỏi mở chi nhánh năm nào cũng như năm nào
       v.cap *= 1 + Math.max(-0.1, Math.min(0.05, rate * 0.1)); v.unit = v.cap / v.br;
     }
     // về già hoặc nợ nần: bán bớt
@@ -445,7 +447,7 @@
     sibs(l).forEach(function (s) {
       var sa = sibAge(l, s), w = sibCall(l, s);
       // anh chị em lập gia đình, sinh con
-      if (!s.wed && sa >= 22 && sa <= 38 && ch(r, 0.14)) { s.wed = true; log('Đám cưới của ' + w + '. Cả nhà tất bật mấy ngày liền.', 'good'); fx(l, { hap: 2, soc: 2 }); s.close += 2; }
+      if (!s.wed && sa >= 22 && sa <= 38 && ch(r, 0.14)) { s.wed = true; log('Đám cưới của ' + w + '. Cả nhà tất bật mấy ngày liền.', 'good'); fx(l, { hap: 2, soc: 2 }); s.close = Math.min(100, s.close + 2); }
       // cháu gọi bạn: con của anh/chị → chú/cô (bên nội) hoặc cậu/dì (bên ngoại); con của em → bác
       if (s.wed && s.kids < 3 && sa >= 24 && sa <= 42 && ch(r, 0.1)) { s.kids++; if (s.kids === 1 && a >= 6) log(U.cap(w) + ' sinh con đầu lòng — bạn lên chức ' + (s.born > 0 ? 'bác' : s.sex === 'M' ? (l.sex === 'M' ? 'chú' : 'cô') : (l.sex === 'M' ? 'cậu' : 'dì')) + '.', 'good'); }
       // anh chị em mất (tuổi già, bệnh tật, tai nạn hiếm)
@@ -461,7 +463,7 @@
     valid: function (l) { return sibs(l).some(function (s) { return Math.abs(sibAge(l, s) - l.age) <= 8 && sibAge(l, s) >= 3; }); },
     text: function (l, d) { var s = l.sibList[d.i]; return 'Bạn với ' + sibCall(l, s) + ' ' + d.t + '.'; },
     opts: [
-      { k: 'give', l: 'Nhường', ai: { w: 1.2 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close += 6; log('Nhường ' + sibCall(l, s) + '. Mẹ khen bạn biết điều.', 'good'); fx(l, { karma: 1 }); } },
+      { k: 'give', l: 'Nhường', ai: { w: 1.2 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close = Math.min(100, s.close + 6); log('Nhường ' + sibCall(l, s) + '. Mẹ khen bạn biết điều.', 'good'); fx(l, { karma: 1 }); } },
       { k: 'tell', l: 'Mách bố mẹ', ai: { w: 0.8 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close -= 2; log('Mách bố mẹ, cả hai cùng bị mắng.', 'neutral'); } },
       { k: 'fight', l: 'Không nhường, cãi đến cùng', ai: { risk: 1 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close -= 5; var two = s.born < 0 ? (s.sex === 'M' ? 'Hai anh em' : 'Hai chị em') : (l.sex === 'M' ? 'Hai anh em' : 'Hai chị em'); log(two + ' ' + pick(r, ['giận nhau cả tuần không nói chuyện.', 'cãi nhau to, bị mẹ phạt đứng mỗi đứa một góc.', 'chiến tranh lạnh mấy ngày, rồi lại chia nhau gói bim bim.']), 'bad'); fx(l, { hap: -2 }); } }
     ]
@@ -470,7 +472,7 @@
   EV(function (l, a) { return a >= 6 && a <= 15 && sibs(l).some(function (s) { return s.born < 0 && sibAge(l, s) >= 12; }); }, 0.06, function (l, a, r, log) {
     var s = pick(r, sibs(l).filter(function (s) { return s.born < 0 && sibAge(l, s) >= 12; })), w = sibCall(l, s);
     var t = pick(r, [U.cap(w) + ' chở bạn đi học bằng chiếc xe đạp cũ.', U.cap(w) + ' giảng lại bài toán khó cho bạn đến khuya.', U.cap(w) + ' đứng ra bênh bạn khi bị đám trẻ trong xóm bắt nạt.']);
-    log(t, 'good'); s.close += 4; fx(l, { hap: 2 }); H.mem(l, t, 2);
+    log(t, 'good'); s.close = Math.min(100, s.close + 4); fx(l, { hap: 2 }); H.mem(l, t, 2);
   });
   // lớn lên: vay tiền, gặp khó khăn, chia tài sản
   SC('sib_vay', {
@@ -478,8 +480,8 @@
     valid: function (l) { return l.indep && sibs(l).some(function (s) { return sibAge(l, s) >= 22; }); },
     text: function (l, d) { var s = l.sibList[d.i]; return U.cap(sibCall(l, s)) + ' ngập ngừng hỏi vay ' + mb(l, d.x) + ' để ' + d.why + '. Tiền mặt của bạn: ' + mo(l, l.money) + '.'; },
     opts: [
-      { k: 'lend', l: 'Cho vay', req: function (l, d) { return l.money >= d.x * l.base; }, ai: { w: 1, soc: 0.6 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; cashB(l, -d.x, 'Cho ' + sibCall(l, s) + ' vay'); s.close += 6; if (ch(r, 0.6)) { H.sched(l, 'sib_tra', U.randint(r, 1, 4), { i: d.i, x: d.x }); log('Cho ' + sibCall(l, s) + ' vay ' + mb(l, d.x) + '. "Người nhà cả, khi nào có thì trả."', 'good'); } else { log('Cho ' + sibCall(l, s) + ' vay ' + mb(l, d.x) + ' — mà trong lòng biết khó đòi.', 'neutral'); } fx(l, { karma: 2 }); } },
-      { k: 'gift', l: 'Cho luôn, không cần trả', req: function (l, d) { return l.money >= d.x * l.base * 2; }, ai: { w: 0.5, soc: 1 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; cashB(l, -d.x, 'Giúp ' + sibCall(l, s)); s.close += 12; log('Đưa ' + sibCall(l, s) + ' ' + mb(l, d.x) + ', dặn cứ cầm lấy mà lo việc.', 'good'); fx(l, { karma: 4, hap: 2 }); H.mem(l, 'Lần giúp ' + sibCall(l, s) + ' lúc khó khăn.', 3); } },
+      { k: 'lend', l: 'Cho vay', req: function (l, d) { return l.money >= d.x * l.base; }, ai: { w: 1, soc: 0.6 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; cashB(l, -d.x, 'Cho ' + sibCall(l, s) + ' vay'); s.close = Math.min(100, s.close + 6); if (ch(r, 0.6)) { H.sched(l, 'sib_tra', U.randint(r, 1, 4), { i: d.i, x: d.x }); log('Cho ' + sibCall(l, s) + ' vay ' + mb(l, d.x) + '. "Người nhà cả, khi nào có thì trả."', 'good'); } else { log('Cho ' + sibCall(l, s) + ' vay ' + mb(l, d.x) + ' — mà trong lòng biết khó đòi.', 'neutral'); } fx(l, { karma: 2 }); } },
+      { k: 'gift', l: 'Cho luôn, không cần trả', req: function (l, d) { return l.money >= d.x * l.base * 2; }, ai: { w: 0.5, soc: 1 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; cashB(l, -d.x, 'Giúp ' + sibCall(l, s)); s.close = Math.min(100, s.close + 12); log('Đưa ' + sibCall(l, s) + ' ' + mb(l, d.x) + ', dặn cứ cầm lấy mà lo việc.', 'good'); fx(l, { karma: 4, hap: 2 }); H.mem(l, 'Lần giúp ' + sibCall(l, s) + ' lúc khó khăn.', 3); } },
       { k: 'no', l: 'Từ chối khéo', ai: { w: 0.8 }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close -= 8; log('Từ chối cho ' + sibCall(l, s) + ' vay. Bữa cơm gia đình sau đó có phần gượng gạo.', 'neutral'); } }
     ]
   });
@@ -488,17 +490,17 @@
     title: 'Trả nợ', prep: function (l, r, arg) { if (arg && arg.i != null) return arg; var s = sibs(l)[0]; return s ? { i: l.sibList.indexOf(s), x: 0.2 } : {}; },
     valid: function (l, d) { var s = d && l.sibList && l.sibList[d.i]; return !!(s && s.alive); },
     text: function (l, d) { return U.cap(sibCall(l, l.sibList[d.i])) + ' mang tiền sang trả.'; },
-    opts: [{ k: 'ok', l: 'Nhận lại', run: function (l, r, log, d) { var s = l.sibList[d.i]; cashB(l, d.x, sibCall(l, s) + ' trả nợ'); s.close += 3; log(U.cap(sibCall(l, s)) + ' trả lại ' + mb(l, d.x) + ' đã vay, kèm túi quà quê.', 'good'); } }]
+    opts: [{ k: 'ok', l: 'Nhận lại', run: function (l, r, log, d) { var s = l.sibList[d.i]; cashB(l, d.x, sibCall(l, s) + ' trả nợ'); s.close = Math.min(100, s.close + 3); log(U.cap(sibCall(l, s)) + ' trả lại ' + mb(l, d.x) + ' đã vay, kèm túi quà quê.', 'good'); } }]
   });
   SC('sib_gap', {
     title: 'Anh chị em', prep: function (l, r) { var s = pick(r, sibs(l)); return s ? { i: l.sibList.indexOf(s) } : null; },
     valid: function (l) { return sibs(l).length > 0; },
     text: function (l, d) { var s = l.sibList[d.i]; return U.cap(sibCall(l, s)) + ' năm nay ' + sibAge(l, s) + ' tuổi, ' + (sibAge(l, s) >= 18 ? 'đang ' + (sibAge(l, s) >= 65 ? 'nghỉ ngơi tuổi già' : 'làm ' + s.job) : 'còn đi học') + (s.kids ? ', có ' + s.kids + ' con' : '') + '.'; },
     opts: [
-      { k: 'meal', l: 'Rủ cả nhà tụ họp ăn một bữa', run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close += 8; var t = pick(r, ['Anh chị em ngồi ôn lại chuyện hồi bé, cười chảy nước mắt.', 'Bữa cơm đông đủ, lũ trẻ con chạy khắp nhà.', 'Cả nhà nâng ly, hẹn năm nào cũng tụ họp như thế này.']); log('Tụ họp với ' + sibCall(l, s) + '. ' + t, 'good'); cashB(l, -0.01, 'Họp mặt gia đình'); fx(l, { hap: 5, soc: 4 }); if (ch(r, 0.3)) H.mem(l, t, 3); } },
-      { k: 'trip', l: 'Rủ đi du lịch chung', req: function (l) { return l.money > l.base * 0.15 && l.indep; }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close += 12; cashB(l, -0.12, 'Du lịch cùng anh chị em'); log('Hai nhà cùng đi du lịch một chuyến — lâu lắm mới được gần nhau như thế.', 'good'); fx(l, { hap: 8, soc: 4 }); H.mem(l, 'Chuyến du lịch cùng ' + sibCall(l, s) + '.', 3); } },
-      { k: 'help', l: function (l, d) { return 'Phụ giúp ' + sibCall(l, l.sibList[d.i]) + ' một khoản'; }, h: function (l) { return mb(l, 0.2); }, req: function (l, d) { var s = l.sibList[d.i]; return l.indep && l.money > l.base * 0.4 && s.q <= 2 && sibAge(l, s) >= 18; }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close += 10; cashB(l, -0.2, 'Giúp ' + sibCall(l, s)); log('Gửi ' + sibCall(l, s) + ' ít tiền trang trải, nhà ' + sibWord(l, s) + ' đang khó.', 'good'); fx(l, { karma: 3 }); } },
-      { k: 'call', l: 'Chỉ gọi điện hỏi thăm', run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close += 2; log('Gọi điện hỏi thăm ' + sibCall(l, s) + '.', 'neutral'); fx(l, { soc: 1 }); } }
+      { k: 'meal', l: 'Rủ cả nhà tụ họp ăn một bữa', run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close = Math.min(100, s.close + 8); var t = pick(r, ['Anh chị em ngồi ôn lại chuyện hồi bé, cười chảy nước mắt.', 'Bữa cơm đông đủ, lũ trẻ con chạy khắp nhà.', 'Cả nhà nâng ly, hẹn năm nào cũng tụ họp như thế này.']); log('Tụ họp với ' + sibCall(l, s) + '. ' + t, 'good'); cashB(l, -0.01, 'Họp mặt gia đình'); fx(l, { hap: 5, soc: 4 }); if (ch(r, 0.3)) H.mem(l, t, 3); } },
+      { k: 'trip', l: 'Rủ đi du lịch chung', req: function (l) { return l.money > l.base * 0.15 && l.indep; }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close = Math.min(100, s.close + 12); cashB(l, -0.12, 'Du lịch cùng anh chị em'); log('Hai nhà cùng đi du lịch một chuyến — lâu lắm mới được gần nhau như thế.', 'good'); fx(l, { hap: 8, soc: 4 }); H.mem(l, 'Chuyến du lịch cùng ' + sibCall(l, s) + '.', 3); } },
+      { k: 'help', l: function (l, d) { return 'Phụ giúp ' + sibCall(l, l.sibList[d.i]) + ' một khoản'; }, h: function (l) { return mb(l, 0.2); }, req: function (l, d) { var s = l.sibList[d.i]; return l.indep && l.money > l.base * 0.4 && s.q <= 2 && sibAge(l, s) >= 18; }, run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close = Math.min(100, s.close + 10); cashB(l, -0.2, 'Giúp ' + sibCall(l, s)); log('Gửi ' + sibCall(l, s) + ' ít tiền trang trải, nhà ' + sibWord(l, s) + ' đang khó.', 'good'); fx(l, { karma: 3 }); } },
+      { k: 'call', l: 'Chỉ gọi điện hỏi thăm', run: function (l, r, log, d) { var s = l.sibList[d.i]; s.close = Math.min(100, s.close + 2); log('Gọi điện hỏi thăm ' + sibCall(l, s) + '.', 'neutral'); fx(l, { soc: 1 }); } }
     ]
   });
   A('gap_anh_chi', 'Gia đình & bạn bè', 'Gặp anh chị em', { min: 8, sc: 'sib_gap', avail: function (l) { return sibs(l).length ? true : 'Không có anh chị em'; }, ai: { w: 0.2, soc: 1 } });
@@ -508,8 +510,8 @@
     valid: function (l) { return !l.fam.mAlive && !l.fam.fAlive && sibs(l).length > 0 && !l.flags.inherit; },
     text: function (l, d) { return 'Bố mẹ đều đã khuất, để lại căn nhà và mảnh đất ở quê trị giá khoảng ' + mo(l, d.v) + '. Anh chị em ' + (sibs(l).length + 1) + ' người ngồi lại bàn chuyện chia.'; },
     opts: [
-      { k: 'equal', l: 'Chia đều cho tất cả', ai: { w: 1.4 }, run: function (l, r, log, d) { l.flags.inherit = true; H.cash(l, d.v / (sibs(l).length + 1), 'Phần tài sản bố mẹ để lại'); sibs(l).forEach(function (s) { s.close += 3; }); log('Anh chị em chia đều phần tài sản bố mẹ để lại, êm thấm.', 'good'); } },
-      { k: 'yield', l: 'Nhường phần mình cho anh chị em khó khăn hơn', ai: { w: 0.6, soc: 1 }, run: function (l, r, log) { l.flags.inherit = true; sibs(l).forEach(function (s) { s.close += 10; }); log('Nhường phần thừa kế cho anh chị em. "Mình còn lo được, để các anh chị em giữ lấy hương hỏa."', 'good'); fx(l, { karma: 6, hap: 3 }); H.mem(l, 'Ngày nhường phần đất hương hỏa cho anh chị em.', 4); } },
+      { k: 'equal', l: 'Chia đều cho tất cả', ai: { w: 1.4 }, run: function (l, r, log, d) { l.flags.inherit = true; H.cash(l, d.v / (sibs(l).length + 1), 'Phần tài sản bố mẹ để lại'); sibs(l).forEach(function (s) { s.close = Math.min(100, s.close + 3); }); log('Anh chị em chia đều phần tài sản bố mẹ để lại, êm thấm.', 'good'); } },
+      { k: 'yield', l: 'Nhường phần mình cho anh chị em khó khăn hơn', ai: { w: 0.6, soc: 1 }, run: function (l, r, log) { l.flags.inherit = true; sibs(l).forEach(function (s) { s.close = Math.min(100, s.close + 10); }); log('Nhường phần thừa kế cho anh chị em. "Mình còn lo được, để các anh chị em giữ lấy hương hỏa."', 'good'); fx(l, { karma: 6, hap: 3 }); H.mem(l, 'Ngày nhường phần đất hương hỏa cho anh chị em.', 4); } },
       { k: 'more', l: 'Đòi phần hơn vì đã chăm bố mẹ nhiều hơn', ai: { risk: 1, bad: 0.6 }, run: function (l, r, log, d) { l.flags.inherit = true; if (ch(r, 0.5)) { H.cash(l, d.v / (sibs(l).length + 1) * 1.5, 'Phần tài sản bố mẹ để lại'); log('Được chia phần hơn, nhưng anh chị em từ đó ít qua lại.', 'neutral'); sibs(l).forEach(function (s) { s.close -= 20; }); } else { cashB(l, -0.15, 'Án phí tranh chấp thừa kế'); log('Anh chị em kéo nhau ra tòa vì chuyện chia đất. Tình thân sứt mẻ.', 'bad'); sibs(l).forEach(function (s) { s.close -= 35; }); fx(l, { hap: -10, karma: -4 }); H.mem(l, 'Phiên tòa chia thừa kế giữa anh chị em ruột.', 5); } } }
     ]
   });

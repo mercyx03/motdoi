@@ -20,7 +20,9 @@
   var GAMES = {
     xskt: { n: 'xổ số kiến thiết', price: 0.01, tiers: [['giải Đặc biệt', 1 / 1e6, function () { return 2000; }], ['giải Nhất', 1 / 1e5, function () { return 30; }], ['giải Nhì', 1 / 5e4, function () { return 15; }], ['giải Năm', 1 / 1e4, function () { return 1; }], ['giải Tám', 1 / 100, function () { return 0.1; }]] },
     mega: { n: 'Vietlott Mega 6/45', price: 0.01, tiers: [['Jackpot', 1 / 8145060, function (r) { return Math.round(12000 + r() * r() * 70000); }], ['giải Nhất (trùng 5 số)', 1 / 34808, function () { return 10; }], ['giải Nhì (trùng 4 số)', 1 / 733, function () { return 0.3; }], ['giải Ba (trùng 3 số)', 1 / 45, function () { return 0.03; }]] },
-    power: { n: 'Vietlott Power 6/55', price: 0.01, tiers: [['Jackpot 1', 1 / 28989675, function (r) { return Math.round(30000 + r() * r() * 270000); }], ['Jackpot 2', 1 / 4831613, function (r) { return Math.round(3000 + r() * 4000); }], ['giải Nhất (trùng 5 số)', 1 / 96633, function () { return 40; }], ['giải Nhì (trùng 4 số)', 1 / 1643, function () { return 0.5; }], ['giải Ba (trùng 3 số)', 1 / 78, function () { return 0.05; }]] }
+    power: { n: 'Vietlott Power 6/55', price: 0.01, tiers: [['Jackpot 1', 1 / 28989675, function (r) { return Math.round(30000 + r() * r() * 270000); }], ['Jackpot 2', 1 / 4831613, function (r) { return Math.round(3000 + r() * 4000); }], ['giải Nhất (trùng 5 số)', 1 / 96633, function () { return 40; }], ['giải Nhì (trùng 4 số)', 1 / 1643, function () { return 0.5; }], ['giải Ba (trùng 3 số)', 1 / 78, function () { return 0.05; }]] },
+    // v3.6: sống ở nước ngoài thì chơi xổ số quốc gia nơi đó (kiểu 6 số / 45), giải thưởng quy theo mức thu nhập nước đó
+    loto: { n: 'xổ số quốc gia', price: 0.01, tiers: [['Jackpot', 1 / 8145060, function (r) { return Math.round(5000 + r() * r() * 45000); }], ['giải Nhất (trùng 5 số)', 1 / 34808, function () { return 10; }], ['giải Nhì (trùng 4 số)', 1 / 733, function () { return 0.3; }], ['giải Ba (trùng 3 số)', 1 / 45, function () { return 0.03; }]] }
   };
   E.LOTTO = GAMES;
   function odds(p) { return '1/' + U.fmtNum(Math.round(1 / p)); }
@@ -47,17 +49,20 @@
     l.pending.unshift(E.DEC.ts_nhan_giai.make(l, r));
   }
   SC('ve_so', {
-    title: 'Mua vé số', text: function (l) { return (isVN(l) ? 'Cô bán vé số đi ngang qua: "Mua giùm cô vài tờ đi con, hôm nay ngày đẹp!" Trên điện thoại, Vietlott đang quảng cáo Jackpot hàng chục tỷ.' : 'Xổ số quốc gia đang có giải Jackpot rất lớn.') + ' Vé 10.000 đ/tờ.'; },
+    title: 'Mua vé số', text: function (l) { if (!vnd(l)) return 'Xổ số quốc gia ở ' + (l.abroad && l.abroad.perm ? l.abroad.name : l.countryName || 'nước bạn đang sống') + ' đang có giải Jackpot rất lớn. Mỗi vé khoảng ' + mo(l, V(l, 0.01)) + ', chọn 6 số.'; return (isVN(l) ? 'Cô bán vé số đi ngang qua: "Mua giùm cô vài tờ đi con, hôm nay ngày đẹp!" Trên điện thoại, Vietlott đang quảng cáo Jackpot hàng chục tỷ.' : 'Xổ số quốc gia đang có giải Jackpot rất lớn.') + ' Vé 10.000 đ/tờ.'; },
     opts: [
-      { k: 'xskt1', l: 'Mua 1 tờ xổ số kiến thiết', h: 'Giải Đặc biệt 2 tỷ · xác suất ' + odds(1e-6), ai: { w: 1.5 }, run: function (l, r, log) { play(l, r, log, 'xskt', 1, 'Dò tờ vé số'); } },
-      { k: 'xskt10', l: 'Mua cả xấp 10 tờ xổ số kiến thiết', h: 'Đặc biệt 2 tỷ · 10 tờ = ' + odds(1e-5), ai: { risk: 0.8 }, run: function (l, r, log) { play(l, r, log, 'xskt', 10, 'Dò cả xấp vé số'); } },
-      { k: 'mega', l: 'Mua 5 vé Vietlott Mega 6/45', h: 'Jackpot từ 12 tỷ · mỗi vé ' + odds(1 / 8145060), ai: { w: 0.8 }, run: function (l, r, log) { play(l, r, log, 'mega', 5, 'Dò 5 vé Mega 6/45'); } },
-      { k: 'power', l: 'Mua 5 vé Vietlott Power 6/55', h: 'Jackpot 1 từ 30 tỷ · mỗi vé ' + odds(1 / 28989675), ai: { w: 0.8, risk: 0.5 }, run: function (l, r, log) { play(l, r, log, 'power', 5, 'Dò 5 vé Power 6/55'); } },
-      { k: 'year', l: 'Mua Power 6/55 đều đặn mỗi kỳ trong cả năm (156 vé)', h: 'Tốn ~1,56 triệu đ · cả năm vẫn chỉ ' + odds(156 / 28989675) + ' trúng Jackpot', req: function (l) { return l.indep; }, ai: { risk: 1, w: 0.3 }, run: function (l, r, log) { play(l, r, log, 'power', 156, 'Cả năm mua đều Power 6/55'); } },
+      { k: 'loto1', l: 'Mua 1 vé xổ số quốc gia', h: 'Jackpot rất lớn · xác suất ' + odds(1 / 8145060), req: function (l) { return !vnd(l); }, ai: { w: 1.5 }, run: function (l, r, log) { play(l, r, log, 'loto', 1, 'Dò vé xổ số'); } },
+      { k: 'loto10', l: 'Mua 10 vé xổ số quốc gia', h: '10 vé = ' + odds(10 / 8145060) + ' trúng Jackpot', req: function (l) { return !vnd(l); }, ai: { risk: 0.8 }, run: function (l, r, log) { play(l, r, log, 'loto', 10, 'Dò 10 vé xổ số'); } },
+      { k: 'loto_year', l: 'Mua đều đặn mỗi kỳ trong cả năm (104 vé)', h: 'Cả năm vẫn chỉ ' + odds(104 / 8145060) + ' trúng Jackpot', req: function (l) { return !vnd(l) && l.indep; }, ai: { risk: 1, w: 0.3 }, run: function (l, r, log) { play(l, r, log, 'loto', 104, 'Cả năm mua vé số đều đặn'); } },
+      { k: 'xskt1', req: function (l) { return vnd(l); }, l: 'Mua 1 tờ xổ số kiến thiết', h: 'Giải Đặc biệt 2 tỷ · xác suất ' + odds(1e-6), ai: { w: 1.5 }, run: function (l, r, log) { play(l, r, log, 'xskt', 1, 'Dò tờ vé số'); } },
+      { k: 'xskt10', req: function (l) { return vnd(l); }, l: 'Mua cả xấp 10 tờ xổ số kiến thiết', h: 'Đặc biệt 2 tỷ · 10 tờ = ' + odds(1e-5), ai: { risk: 0.8 }, run: function (l, r, log) { play(l, r, log, 'xskt', 10, 'Dò cả xấp vé số'); } },
+      { k: 'mega', req: function (l) { return vnd(l); }, l: 'Mua 5 vé Vietlott Mega 6/45', h: 'Jackpot từ 12 tỷ · mỗi vé ' + odds(1 / 8145060), ai: { w: 0.8 }, run: function (l, r, log) { play(l, r, log, 'mega', 5, 'Dò 5 vé Mega 6/45'); } },
+      { k: 'power', req: function (l) { return vnd(l); }, l: 'Mua 5 vé Vietlott Power 6/55', h: 'Jackpot 1 từ 30 tỷ · mỗi vé ' + odds(1 / 28989675), ai: { w: 0.8, risk: 0.5 }, run: function (l, r, log) { play(l, r, log, 'power', 5, 'Dò 5 vé Power 6/55'); } },
+      { k: 'year', l: 'Mua Power 6/55 đều đặn mỗi kỳ trong cả năm (156 vé)', h: 'Tốn ~1,56 triệu đ · cả năm vẫn chỉ ' + odds(156 / 28989675) + ' trúng Jackpot', req: function (l) { return vnd(l) && l.indep; }, ai: { risk: 1, w: 0.3 }, run: function (l, r, log) { play(l, r, log, 'power', 156, 'Cả năm mua đều Power 6/55'); } },
       { k: 'no', l: 'Thôi, không mua', ai: { w: 0.5 }, run: function (l, r, log) { log('Không mua vé số. Tiền nào của nấy.', 'neutral'); } }
     ]
   });
-  E.ACT.forEach(function (a) { if (a.id === 've_so') a.l = 'Mua vé số, Vietlott'; });
+  E.ACT.forEach(function (a) { if (a.id === 've_so') a.l = function (l) { return vnd(l) ? 'Mua vé số, Vietlott' : 'Mua vé số'; }; });
 
   // ---------- nhận giải ----------
   SC('ts_nhan_giai', {

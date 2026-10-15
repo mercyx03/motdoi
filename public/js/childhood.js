@@ -17,7 +17,7 @@
   function poor(l) { return l.fam.q <= 2; }
   function talent(l, t, p, r) { if (!l.talent && r() < p) l.talent = t; if (l.talent === t) l.skill = Math.min(100, (l.skill || 20) + 4); }
   // tình huống tuổi thơ: cw có thể là hàm (theo giới tính, hoàn cảnh)
-  function CT(id, when, cd, cw) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: 0.1, cd: cd || 3, child: true, cw: cw || 1 }); }
+  function CT(id, when, cd, cw) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: function (l, a) { var w = typeof cw === 'function' ? cw(l, a) : (cw || 1); return 0.1 * Math.min(1.5, w); }, cd: cd || 3, child: true, cw: cw || 1 }); } // v3.7: xác suất xuất hiện cũng theo trọng số (giới tính, hoàn cảnh)
   // chọn câu chưa dùng trong đời này → không lặp lại
   function fresh(l, r, arr) {
     var seen = l.flags.kidSeen || (l.flags.kidSeen = []);

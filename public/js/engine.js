@@ -309,7 +309,8 @@
     life.orient = 'straight'; life.chosenOrient = false;
     if (g === 'M') life.sex = 'M';
     else if (g === 'F') life.sex = 'F';
-    else if (g === 'gay') { life.sex = 'M'; life.orient = 'gay'; life.chosenOrient = true; }
+    else if (g === 'gay') { life.sex = 'M'; life.orient = 'gay'; life.chosenOrient = true; life.role = 'bot'; } // v3.7: "bột tôm" (bottom)
+    else if (g === 'top') { life.sex = 'M'; life.orient = 'gay'; life.chosenOrient = true; life.role = 'top'; } // v3.7: "tóp mỡ" (top)
     else if (g === 'lesbian') { life.sex = 'F'; life.orient = 'gay'; life.chosenOrient = true; }
     else if (g === 'bi') { life.sex = r() < 0.5 ? 'M' : 'F'; life.orient = 'bi'; life.chosenOrient = true; }
     else {
@@ -317,10 +318,13 @@
       var x = r();
       life.orient = x < 0.025 ? 'gay' : x < 0.06 ? 'bi' : 'straight';
     }
+    if (life.orient === 'gay' && life.sex === 'M' && !life.role) life.role = r() < 0.5 ? 'bot' : 'top';
   }
   function orientLabel(life) {
-    if (life.orient === 'gay') return life.sex === 'M' ? 'Đồng tính nam' : 'Đồng tính nữ';
-    if (life.orient === 'bi') return 'Song tính';
+    // v3.7: ở Việt Nam dùng thêm cách gọi quen thuộc của cộng đồng
+    var vn = isVN(life);
+    if (life.orient === 'gay') return life.sex === 'M' ? 'Đồng tính nam' + (vn ? (life.role === 'top' ? ' (tóp mỡ)' : ' (bột tôm)') : '') : 'Đồng tính nữ' + (vn ? ' (bé Liên)' : '');
+    if (life.orient === 'bi') return 'Song tính' + (vn ? ' (bi)' : '');
     return 'Dị tính';
   }
 
@@ -738,7 +742,7 @@
   // ================= QUYẾT ĐỊNH CỐT LÕI =================
   function opt(k, l, h) { return { k: k, l: l, h: h || '' }; }
   function partnerWord(life, p) {
-    if (p.sex === life.sex) return p.status === 'married' ? 'người bạn đời' : 'người yêu';
+    if (p.sex === life.sex) return p.status === 'married' || p.status === 'cohabit' ? 'người bạn đời' : 'người yêu';
     if (p.status === 'married') return p.sex === 'M' ? 'chồng' : 'vợ';
     return 'người yêu';
   }
@@ -965,7 +969,7 @@
             log((k === 'marry' ? (isVN(life) ? 'Tổ chức đám cưới với ' : 'Kết hôn với ') : 'Đăng ký kết hôn, làm vài mâm cơm thân mật với ') + p.name + '.', 'big');
           } else log('Về chung sống với ' + p.name + '. Một đám cưới nhỏ chỉ có bạn bè thân.', 'big');
           life.st.hap += 10; life.st.soc += 5;
-          H.mem(life, 'Ngày cưới ' + p.name + ' — bạn cười không ngớt.', 5);
+          H.mem(life, p.status === 'cohabit' ? 'Ngày cùng ' + p.name + ' dọn về chung một nhà — chìa khóa có hai cái tên.' : 'Ngày cưới ' + p.name + ' — bạn cười không ngớt.', 5);
         } else if (k === 'split') { log('Chia tay ' + p.name + '.', 'bad'); life.partner = null; life.exes++; life.st.hap -= 8; }
         else { life.flags.marryWait = (life.flags.marryWait || 0) + 1; log(life.flags.marryWait >= 2 ? 'Vẫn chưa sẵn sàng — hai bạn cứ yêu nhau thêm một thời gian nữa.' : 'Hai bạn quyết định chưa vội.', 'neutral'); } // v3.0: càng hoãn thì càng lâu mới hỏi lại
       }
@@ -1348,10 +1352,11 @@
     if (opts && (opts.auto || (life.prevActs === 0 && a >= 8)) && q.length < cap && a >= 8 && r() < (opts.auto ? 0.3 : 0.45)) { // v2.7: không tự chọn việc gì thì game tự chọn ngẫu nhiên
       // v2.4: AI không lặp lại cùng một việc trong vòng 3 năm (trước đây năm nào cũng "xin tăng lương", "mua vé số"…)
       var aAt = life.flags.actAt || (life.flags.actAt = {});
-      var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai && !(aAt[x.id] != null && a - aAt[x.id] < 3); });
+      var aN = life.flags.actN || (life.flags.actN = {});
+      var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai && !(aAt[x.id] != null && a - aAt[x.id] < 3) && (aN[x.id] || 0) < 3; }); // v3.7: game tự chọn thì mỗi việc tối đa 3 lần một đời
       if (av.length) {
         var pick = U.wpick(r, av, function (x) { return aiW(life, x.ai); });
-        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null); if (q.length > n1) { life.acts++; aAt[pick.id] = a; } }
+        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null); if (q.length > n1) { life.acts++; aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
       }
     }
 
@@ -1383,6 +1388,7 @@
     var inMil = life.flags.military && life.age < life.flags.military;
     life.pending = life.pending.filter(function (d) {
       if (inMil && !/^(nv_|treat$|phau_thuat$)/.test(d.id)) return false; // v3.3: đang tại ngũ thì chỉ còn chuyện quân ngũ
+      if (life.retired && life.flags.fullRetire && /^(job|nk_nghe|nk_ra_truong|sau_huu|len_chuyen|ru_re|so_thich_nghe|biz|xkld|city)$/.test(d.id)) return false; // v3.6: đã nghỉ hưu hẳn thì không còn bị hỏi nhận việc này việc kia
       var p = life.partner;
       switch (d.id) {
         case 'job': return !(life.job && life.job.fam) && !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
@@ -1443,7 +1449,7 @@
     { c: function (l, a) { return a >= 6 && a <= 15 && !l.flags.brokeArm; }, p: 0.03, run: function (l, a, r, log) { l.flags.brokeArm = true; log(U.pick(r, ['Bị gãy tay khi chơi đùa.', 'Ngã từ trên cây xuống, gãy tay phải bó bột cả tháng.', 'Trượt chân ở cầu thang trường, gãy tay — cả lớp thay nhau ký tên lên lớp bột.']), 'bad'); l.st.hea -= 3; } },
     { c: function (l, a) { return a >= 7 && a <= 14 && !l.urban && l.fam.q <= 2; }, p: 0.15, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Sau giờ học phụ bố mẹ chăn trâu, cắt cỏ.', 'Theo mẹ ra đồng cấy lúa những ngày mùa.', 'Đi bộ hàng cây số đến trường mỗi ngày.']) : 'Phụ giúp gia đình việc đồng áng sau giờ học.', 'neutral'); } },
     { c: function (l, a) { return a >= 7 && a <= 14 && l.gdp < 3 && !l.school; }, p: 0.25, run: function (l, a, r, log) { log('Phải đi làm thuê để phụ giúp gia đình dù còn nhỏ.', 'bad'); l.st.hea -= 2; l.st.hap -= 3; } },
-    { c: function (l, a) { return a >= 12 && a <= 17 && l.orient !== 'straight' && !l.realized; }, p: 0.35, run: function (l, a, r, log) { l.realized = true; log(l.orient === 'bi' ? 'Nhận ra mình có thể rung động với cả bạn nam lẫn bạn nữ.' : 'Nhận ra mình rung động với người cùng giới.', 'big'); } },
+    { c: function (l, a) { return a >= 12 && a <= 17 && l.orient !== 'straight' && !l.realized; }, p: function (l, a) { return a <= 13 ? 0.8 : 0.4; }, run: function (l, a, r, log) { l.realized = true; log(E.realizeText ? E.realizeText(l, r) : l.orient === 'bi' ? 'Nhận ra mình có thể rung động với cả bạn nam lẫn bạn nữ.' : 'Nhận ra mình rung động với người cùng giới.', 'big'); } }, // v3.7: phần lớn nhận ra khoảng 12–13 tuổi
     { c: function (l, a) { return a >= 15 && a <= 17 && l.sex === 'F' && !l.partner && earlyMarriageRisk(l) > 0; }, p: function (l) { return earlyMarriageRisk(l); }, run: function (l, a, r, log) {
       var nm = strangerName(l, r, 'M');
       l.partner = { name: nm, sex: 'M', age: a + U.randint(r, 3, 12), status: 'married', since: a, alive: true };

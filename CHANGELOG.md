@@ -4,6 +4,82 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.7.0 — 15/10/2026
+
+Gộp v3.6.0 (bên dưới) và giữ nguyên toàn bộ tính năng trước đó.
+
+### LGBT+
+- **Tạo nhân vật:** mục LGBTQ+ giờ có 4 lựa chọn:
+  - **Bột tôm** — đồng tính nam (bottom);
+  - **Tóp mỡ** — đồng tính nam (top), lựa chọn mới;
+  - **Bé Liên** — đồng tính nữ;
+  - **Bi** — song tính, rung động với cả nam lẫn nữ.
+- **Tuổi thơ như mọi bạn khác.** Phần lớn nhận ra mình vào khoảng 12–13 tuổi, mỗi kiểu có lời kể riêng (VD tóp mỡ: "lúc nào cũng muốn đứng ra che chắn cho cậu ấy"; bột tôm: "thích được cậu ấy quan tâm"; bé Liên: rung động với cô bạn cùng lớp; bi: thích cả bạn nam lẫn bạn nữ).
+- **Hẹn hò, chung sống:**
+  - Nam hẹn hò với nam, nữ với nữ; Bi có thể quen cả nam lẫn nữ.
+  - Ở Việt Nam, luật chưa công nhận hôn nhân cùng giới nên cặp đôi **về chung một nhà**. Ở nước đã công nhận thì đăng ký kết hôn.
+  - Hai người gọi nhau là "người bạn đời". Muốn có con thì nhận con nuôi.
+  - Người yêu của tóp mỡ thường là bột tôm và ngược lại.
+- **Tình huống mới:**
+  - thầm thương bạn cùng lớp;
+  - nói thật với bạn thân;
+  - đi VietPride / Pride;
+  - Tết bị họ hàng giục "bao giờ lấy vợ / lấy chồng", bị mai mối;
+  - đưa người yêu cùng giới về ra mắt gia đình;
+  - hàng xóm, bà chủ nhà dò hỏi "hai đứa là anh em họ à?";
+  - hội bạn trêu "trong nhà ai là tóp mỡ, ai là bột tôm";
+  - song tính bị hiểu lầm là "chưa quyết định";
+  - câu đùa kỳ thị ở chỗ làm;
+  - hội chị em bé Liên;
+  - bàn chuyện nhận con nuôi.
+- Hồ sơ ghi cách gọi quen thuộc: "Đồng tính nam (tóp mỡ)", "Đồng tính nữ (bé Liên)", "Song tính (bi)".
+
+### Sửa lỗi logic
+- Biệt danh sau khi công khai: nữ đồng tính trước đây bị gọi nhầm "bột tôm" (đã sửa thành "bé Liên"); tóp mỡ được gọi là "tóp mỡ"; thêm biệt danh "bi".
+- Đòi nợ app: người không đi làm không còn bị "ảnh ghép lan khắp nhóm Zalo công ty"; ở nước ngoài không còn nhắc Zalo.
+- Mức thân thiết với con, anh chị em không còn vượt quá 100 (vài lựa chọn cộng thêm mà chưa chặn trên).
+
+### Chống lặp lựa chọn (theo góp ý người chơi)
+- Đo lại trên 300 đời người: không có lựa chọn nào bị hỏi hai lần trong cùng một năm. Những lựa chọn lặp lại nhiều qua các năm đã được giới hạn:
+  - Lời mời casting của diễn viên: cách năm một lần, tối đa 8 lần một đời (trước đây có đời tới 15 lần).
+  - "Mở thêm chi nhánh?": cách nhau ít nhất 3–4 năm, tối đa 6 lần (trước đây tới 11 lần).
+  - Chuyện sở thích: tối đa 2 lần một đời, cách nhau 6 năm.
+  - Cơn nghiện cờ bạc: cách nhau ít nhất 3 năm, càng về sau càng thưa.
+  - Thi năng khiếu: trượt 2 lần (trước đây 3 lần) thì dừng.
+  - Trầm cảm (do nhiều biến cố cùng gây ra): cách nhau ít nhất 3 năm, tối đa 4 lần một đời.
+  - Khi game tự chọn việc thay bạn (chế độ tự động), mỗi việc tối đa 3 lần một đời.
+- Chuyện tuổi thơ riêng theo giới (VD bé gái mê K-pop, bé trai đá bóng) giờ xuất hiện đúng theo trọng số ở mọi lượt, không chỉ ở "nhịp tuổi thơ".
+
+## v3.6.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.5.0. Bản này làm theo góp ý của người chơi.
+
+### Sống ở nước ngoài: mua sắm theo nơi đang sống
+- Trước đây, du học rồi định cư Úc vẫn chỉ mua được "nhà cấp 4, chung cư mini ở TP. HCM", xe Wave, VinFast theo giá Việt Nam, vé Vietlott.
+- **Nhà:** giá theo thành phố đang sống (VD "Giá nhà ở Brisbane, Úc"), loại nhà kiểu nước ngoài: căn hộ studio, căn hộ 2 phòng ngủ, nhà liền kề (townhouse), nhà riêng có sân vườn, biệt thự, dinh thự. Giá tính theo thu nhập trung bình nước đó.
+- **Xe:** giá theo thị trường quốc tế (không gồm thuế nhập khẩu, tiêu thụ đặc biệt như ở Việt Nam), đổi theo mức giá nước đó.
+- **Vé số:** xổ số quốc gia nơi đang sống, không còn Vietlott.
+- **Nhà cho thuê:** giá theo giá nhà nơi đó.
+- Áp dụng cho cả người định cư ở nước ngoài và người sinh ra ở nước khác.
+
+### Mục "💰 Chi tiêu"
+- Một mục riêng ở đầu "Việc bạn muốn làm", gom mọi việc tiêu tiền: đầu tư (cổ phiếu, tiền mã hóa, vàng, đất), tìm việc mới, mua nhà, đổi nhà, chuyển chỗ ở, mua xe, du lịch, nhà cho thuê, kinh doanh, bảo hiểm, biếu bố mẹ, từ thiện, khám sức khỏe, vay, trả nợ…
+- **Chi tiêu định kỳ:** bật một lần, tự động chi mỗi kỳ, không tốn lượt, khỏi phải chọn lại mỗi năm.
+  - Du lịch trong nước 1 lần/năm; du lịch nước ngoài 1 lần/2 năm.
+  - Khám sức khỏe định kỳ 1 lần/năm (phát hiện bệnh sớm).
+  - Tập gym, biếu bố mẹ hằng tháng, làm từ thiện, học thêm một khóa kỹ năng.
+  - Đầu tư đều đặn 10% thu nhập vào quỹ chỉ số.
+- Không đủ tiền thì năm đó tạm bỏ qua, không đẩy vào nợ.
+
+### Chế độ nghỉ hưu
+- Từ 55 tuổi (nữ từ 50) có thể tự chọn **"Nghỉ hưu"**, có ghi rõ đã đóng BHXH bao nhiêu năm và có lương hưu hay không.
+- Trước đây bấm "Nghỉ việc" lúc đến tuổi chỉ là thất nghiệp, nên game cứ hỏi nhận việc mới.
+- Đã nghỉ hưu (tự chọn hay đến tuổi) thì **nghỉ hẳn**: không còn bị hỏi nhận việc này việc kia.
+- Muốn đi làm lại thì tự bấm "Đi làm lại (đang nghỉ hưu)".
+
+### Mới
+- **Chuyển chỗ ở** sang thành phố khác (trong nước, hoặc trong nước đang định cư). Người làm công có thể phải nghỉ việc để tìm việc mới ở nơi ở mới.
+
 ## v3.5.0 — 15/10/2026
 
 Giữ nguyên toàn bộ tính năng v3.4.0.

@@ -35,18 +35,31 @@
     { k: 'bt', n: 'biệt thự có sân vườn', t: 4, p: { big: 30000, urb: 12000, rur: 6000 }, d: 'sân vườn rộng, gara ô tô' },
     { k: 'dt', n: 'dinh thự', t: 5, p: { big: 100000, urb: 45000, rur: 20000 }, d: 'hàng nghìn m², có người giúp việc, bảo vệ riêng' }
   ];
-  function cls(l) { return H.inBigCity(l) ? 'big' : (l.urban || l.movedTo) ? 'urb' : 'rur'; }
+  // v3.6: sống ở nước ngoài (định cư, hoặc sinh ra ở nước khác) thì mua nhà theo kiểu và giá của nước đó — giá tính theo số năm thu nhập trung bình ở đó
+  var HTW = [
+    { k: 'w_studio', n: 'căn hộ studio', t: 1, m: { big: 7, urb: 4.5, rur: 3 }, d: 'một phòng, gọn cho người độc thân' },
+    { k: 'w_apt', n: 'căn hộ 2 phòng ngủ', t: 2, m: { big: 11, urb: 7, rur: 4.5 }, d: 'chung cư có thang máy, gần phương tiện công cộng' },
+    { k: 'w_town', n: 'nhà liền kề (townhouse)', t: 2, m: { big: 14, urb: 9, rur: 6 }, d: '2 tầng, có sân sau nhỏ, gara một xe' },
+    { k: 'w_house', n: 'nhà riêng có sân vườn ở ngoại ô', t: 3, m: { big: 20, urb: 12, rur: 8 }, d: '3–4 phòng ngủ, gara, sân vườn rộng' },
+    { k: 'w_villa', n: 'biệt thự', t: 4, m: { big: 50, urb: 30, rur: 18 }, d: 'khu nhà giàu, hồ bơi riêng' },
+    { k: 'w_mansion', n: 'dinh thự', t: 5, m: { big: 150, urb: 90, rur: 55 }, d: 'hàng nghìn m², nhân viên phục vụ riêng' }
+  ];
+  function abroadRes(l) { return !vnd(l); }
+  function resCity(l) { var W = G.W, c = W && W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country]; return { place: l.place || l.city || (c && c.cities[0]) || 'thành phố', big: !!(c && (l.place || l.city) && c.cities.slice(0, 2).indexOf(l.place || l.city) >= 0) }; }
+  function cls(l) { if (abroadRes(l)) { var rc = resCity(l); return rc.big ? 'big' : l.urban ? 'urb' : 'rur'; } return H.inBigCity(l) ? 'big' : (l.urban || l.movedTo) ? 'urb' : 'rur'; }
   function hPrice(l, h, r) {
-    var c = cls(l), p = h.p[c] != null ? h.p[c] : h.p.urb;
+    var c = cls(l);
+    if (h.m) { var g = (G.W && G.W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country] || {}).gdp || l.gdp || 20; return h.m[c] * g * 1000 * 0.55 * (l.urban ? 1.1 : 0.8) * (g < 8 ? 1.6 : g < 20 ? 1.25 : 1) * (r ? rng(r, 0.9, 1.15) : 1); } // nước thu nhập thấp: giá nhà / thu nhập cao hơn
+    var p = h.p[c] != null ? h.p[c] : h.p.urb;
     if (!vnd(l)) return p / 90 * l.base * 0.35 * (r ? rng(r, 0.9, 1.15) : 1);
     return Math.round(p * (c !== 'big' && l.cityWealth ? Math.min(1.3, Math.max(0.7, l.cityWealth)) : 1) * (r ? rng(r, 0.88, 1.18) : 1));
   }
-  function avail(l) { var c = cls(l); return HT.filter(function (h) { return h.p[c] != null; }); }
+  function avail(l) { if (abroadRes(l)) return HTW; var c = cls(l); return HT.filter(function (h) { return h.p[c] != null; }); }
   function homeDebt(l) { return (l.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (l.mortgage || 0); }
   function have(l) { return Math.max(0, l.money) + (l.ownHouse ? Math.max(0, (l.houseVal || 0) - homeDebt(l)) : 0); }
   function canLoan(l, price) { return l.indep && H.canBankLoan(l) && H.loanAgeOk(l, 'home') && (l.income || 0) > 0 && price * 0.7 <= Math.max(l.income || 0, l.base * 0.5) * 9; }
   E.homeMin = function (l) { return Math.min.apply(null, avail(l).map(function (h) { return hPrice(l, h); })); };
-  E.HOME_TYPES = HT;
+  E.HOME_TYPES = HT; E.HOME_TYPES_W = HTW;
   function buyHome(l, h, price, loan, log) {
     if (l.ownHouse) {
       var sold = l.houseVal || 0, debt = homeDebt(l);
@@ -71,10 +84,10 @@
       valid: function (l) { return up ? !!l.ownHouse && l.indep : !l.ownHouse; },
       text: function (l, d) {
         return (l.ownHouse ? 'Bạn đang ở ' + (l.houseName || 'nhà riêng') + ' trị giá khoảng ' + mo(l, l.houseVal) + (homeDebt(l) > 0.5 ? ' (còn nợ ngân hàng ' + mo(l, homeDebt(l)) + ')' : '') + '. ' : '') +
-          'Tiền mặt hiện có ' + mo(l, Math.max(0, l.money)) + '. Giá nhà ' + (cls(l) === 'big' ? 'ở ' + (!isVN(l) ? (l.city || 'thủ đô') : /Hà Nội/.test(l.movedTo || (l.prov && l.prov.old) || '') ? 'Hà Nội' : 'TP. Hồ Chí Minh') : cls(l) === 'urb' ? 'ở thành phố tỉnh' : 'ở quê') + ' tham khảo (từ rẻ đến đắt):' +
-          (HT.some(function (h) { return okH(l, d, h); }) ? '' : ' ' + HT.filter(function (h) { return d.pr[h.k] != null; }).slice(0, 5).map(function (h) { return h.n + ' ~' + mo(l, d.pr[h.k]); }).join('; ') + '. Hiện chưa đủ tiền trả trước 30% (hoặc chưa vay được ngân hàng) cho loại nào — hãy tích lũy thêm.');
+          'Tiền mặt hiện có ' + mo(l, Math.max(0, l.money)) + '. Giá nhà ' + (abroadRes(l) ? 'ở ' + resCity(l).place + (l.abroad && l.abroad.perm ? ', ' + l.abroad.name : '') : cls(l) === 'big' ? 'ở ' + (/Hà Nội/.test(l.movedTo || (l.prov && l.prov.old) || '') ? 'Hà Nội' : 'TP. Hồ Chí Minh') : cls(l) === 'urb' ? 'ở thành phố tỉnh' : 'ở quê') + ' tham khảo (từ rẻ đến đắt):' +
+          (avail(l).some(function (h) { return okH(l, d, h); }) ? '' : ' ' + HT.filter(function (h) { return d.pr[h.k] != null; }).slice(0, 5).map(function (h) { return h.n + ' ~' + mo(l, d.pr[h.k]); }).join('; ') + '. Hiện chưa đủ tiền trả trước 30% (hoặc chưa vay được ngân hàng) cho loại nào — hãy tích lũy thêm.');
       },
-      opts: HT.slice().map(function (h) {
+      opts: HT.concat(HTW).map(function (h) {
         return {
           k: 'n_' + h.k,
           l: function (l, d) { return U.cap(h.n) + ' — ' + mo(l, d.pr[h.k]); },
@@ -89,8 +102,8 @@
   SC('house', homeDef(false));
   SC('doi_nha', homeDef(true));
   E.ACT.forEach(function (a) {
-    if (a.id === 'doi_nha') { a.l = 'Đổi nhà (nhà phố, chung cư cao cấp, biệt thự…)'; a.avail = function (l) { return !l.ownHouse ? 'Chưa có nhà riêng' : (l.houseTier || 1) >= 5 ? 'Đã ở dinh thự' : true; }; }
-    if (a.id === 'mua_nha') a.l = 'Mua nhà (nhà cấp 4, chung cư, nhà phố…)';
+    if (a.id === 'doi_nha') { a.l = function (l) { return abroadRes(l) ? 'Đổi nhà (nhà rộng hơn, biệt thự…)' : 'Đổi nhà (nhà phố, chung cư cao cấp, biệt thự…)'; }; a.avail = function (l) { return !l.ownHouse ? 'Chưa có nhà riêng' : (l.houseTier || 1) >= 5 ? 'Đã ở dinh thự' : true; }; }
+    if (a.id === 'mua_nha') a.l = function (l) { return abroadRes(l) ? 'Mua nhà (căn hộ, nhà riêng…)' : 'Mua nhà (nhà cấp 4, chung cư, nhà phố…)'; };
   });
 
   // ===================================================================
@@ -245,7 +258,7 @@
     ]
   });
   A('hoc_dien', 'Công việc', 'Học diễn xuất / đi casting', { min: 14, avail: function (l) { var c = jobC(l); return isActor(l) || l.talent === 'diễn xuất' || (c && c.cat === 'show') ? true : 'Dành cho người mê diễn xuất'; }, ai: function (l) { return isActor(l) ? 0.5 : 0.08; } });
-  T('casting', function (l, a) { return isActor(l) && free(l); }, 0.45, 1, 99);
+  T('casting', function (l, a) { return isActor(l) && free(l) && ((l.flags.scN || {}).casting || 0) < 8; }, 0.5, 2, 99); // v3.7: casting cách năm một lần, không năm nào cũng hỏi
   T('casting', function (l, a) { return !isActor(l) && l.talent === 'diễn xuất' && a >= 16 && a <= 35 && !l.school && free(l); }, 0.1, 4, 3);
   T('gameshow', function (l, a) { var c = jobC(l); return (l.fame || 0) >= 1e5 && a >= 18 && a <= 55 && c && /^(show|media|creator|sport)$/.test(c.cat) && free(l); }, 0.2, 3, 3);
   E.TRIG.forEach(function (t) { if (t.id === 'casting' && t.max === 99) t.rep = true; });
@@ -293,9 +306,9 @@
   function wrapAfter(id, f) { var D = E.DEC[id], ap = D.apply; D.apply = function (l, dec, k, r, log) { var x = ap.apply(this, arguments), t = f(l, dec, k); if (t) log(t, 'neutral'); return x; }; }
   // biệt danh hội bạn thân đặt sau khi bạn công khai
   E.HOOKS.year.push(function (l, r, log, a) {
-    if (!l.alive || l.flags.nick || !l.out || !(l.orient === 'gay' || l.orient === 'lesbian')) return;
+    if (!l.alive || l.flags.nick || !l.out || l.orient === 'straight' || !isVN(l)) return;
     l.flags.nick = true;
-    log(l.orient === 'lesbian' ? 'Từ ngày công khai, hội bạn thân gọi bạn trìu mến là "bé liên" — ai cũng bênh bạn chằm chặp.' : 'Từ ngày công khai, hội bạn thân đặt cho bạn biệt danh "bột tôm" — gọi riết thành quen, cả hội cười suốt.', 'good');
+    log(l.orient === 'bi' ? 'Từ ngày công khai, hội bạn thân gọi bạn là "bi" — "thích ai thì thích, miễn người ta tử tế".' : l.sex === 'F' ? 'Từ ngày công khai, hội bạn thân gọi bạn trìu mến là "bé Liên" — ai cũng bênh bạn chằm chặp.' : 'Từ ngày công khai, hội bạn thân đặt cho bạn biệt danh "' + (l.role === 'top' ? 'tóp mỡ' : 'bột tôm') + '" — gọi riết thành quen, cả hội cười suốt.', 'good');
     fx(l, { soc: 3 });
   });
 
