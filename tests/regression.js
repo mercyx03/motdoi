@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -1635,6 +1635,53 @@ section('31. Bản 3.3: lời lưu ý, nghĩa vụ quân sự 2 năm, hoạt đ�
   { const l = mk(31600, 35, x => { x.edu = 5; E.startJob(x, 'ke_toan', R(6), () => { }); x.job.rank = 2; }); play(l, 'kt_lam_dep_so', 'lam'); ok(l.flags.traps && l.flags.traps.so_sach === 35, 'chọn sai thì có "cờ chờ nổ": hậu quả đến vài năm sau');
     const hook = E.HOOKS.year.find(h => /TRAPS|traps/.test(h.toString())); let boom = 0; for (let i = 0; i < 50; i++) { const x = mk(31700 + i, 40, y => { y.flags.traps = { so_sach: 35 }; }); hook(x, R(i), () => { }, 40); if (x.sched.some(s => s.id === 'bi_bat')) boom++; } ok(boom > 3 && boom < 25, 'sai phạm sổ sách năm nào đó có thể bị thanh tra phát hiện (' + boom + '/50 trong một năm)');
     const h = mk(31800, 30, x => { E.startJob(x, 'hai_quan', R(7), () => { }); }); const t = play(h, 'hq_hang_lau_quen', 'kiem'); ok(/biểu dương/.test(t) && h.karma > 0, 'cán bộ hải quan làm đúng được biểu dương: ' + t.slice(0, 80)); }
+}
+
+section('32. Bản 3.4: hẹn hò qua mạng (người tử tế, đào mỏ, lừa đầu tư), hoạt động hẹn hò, rủ chơi game, nghề cày thuê rank, chuyện tuổi thơ, nhớ chuyện đời trước');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup, sex) => { const l = E.createLife({ mode: 'vn', seed, gender: sex || 'M' }); l.age = age; if (age >= 18) l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  const play = (l, id, key, arg) => { const d = E.DEC[id].make(l, R(l.rs), arg); l.pending.unshift(d); return E.resolve(l, key || E.autoKey(l)).map(e => e.t).join(' | '); };
+  const kidLife = (l) => { let g = 0; while (l.alive && l.age <= 14 && g++ < 20) { E.beginYear(l, { auto: true }); const ids = l.pending.map(d => d.id); let k = 0; while (l.pending.length && k++ < 20) E.resolve(l, E.autoKey(l)); E.finishYear(l); k = 0; while (l.pending.length && k++ < 20) E.resolve(l, E.autoKey(l)); E.endYear(l); } };
+  // hẹn hò qua mạng
+  ['tot', 'dao_mo', 'dau_tu', 'catfish', 'qua_tang'].forEach((t, i) => { const d = E.DEC.hen_online.make(mk(32100 + i, 28), R(i), { t, app: 'Tinder' }); ok(d.opts.length === 4 && !badText(d.text) && /Tinder/.test(d.title), 'hẹn hò qua mạng — kiểu "' + t + '": ' + d.text.slice(0, 70)); });
+  { let lost = 0, safe = 0; for (let i = 0; i < 200; i++) { const l = mk(32200 + i, 30, x => { x.money = 300; }); const m0 = l.money; play(l, 'hen_online', 'chieu', { t: 'dau_tu' }); if (l.money < m0 - 10) lost++; const l2 = mk(32200 + i, 30, x => { x.money = 300; }); play(l2, 'hen_online', 'kiem_tra', { t: 'dau_tu' }); if (l2.money >= 300 - 0.01) safe++; }
+    ok(lost > 60 && safe > 150, 'nghe lời "sàn đầu tư" thì nhiều người mất tiền (' + lost + '/200); gọi video, tra trên mạng thì đa số thoát (' + safe + '/200)'); }
+  { const naive = mk(32300, 19, x => { x.st.kno = 20; }), sage = mk(32301, 40, x => { x.st.kno = 90; x.flags.scamOnline = true; }); ok(E.datingSavvy(sage) > E.datingSavvy(naive) + 0.3, 'càng hiểu biết, từng trải, từng bị lừa thì càng tinh ý (' + E.datingSavvy(naive).toFixed(2) + ' → ' + E.datingSavvy(sage).toFixed(2) + ')'); }
+  { const l = mk(32310, 26); play(l, 'hen_online', 'gap', { t: 'tot', n: 'Trần Thu Hà', s: 'F' }); ok(l.pending[0] && l.pending[0].id === 'love' && l.pending[0].data.p.name === 'Trần Thu Hà', 'gặp người tử tế qua app thì có thể thành người yêu'); }
+  { let n = 0; for (let i = 0; i < 60; i++) { const l = mk(32400 + i, 27); play(l, 'app_hen_ho', 'tinder'); if (l.pending.some(d => d.id === 'hen_online')) n++; } ok(n > 15, 'quẹt Tinder dẫn vào tình huống hẹn hò qua mạng (' + n + '/60)'); }
+  // hoạt động hẹn hò
+  { const l = mk(32500, 25, x => { x.partner = { name: 'Lan', sex: 'F', age: 24, status: 'dating', since: 24, alive: true }; x.money = 100; }); const d = E.DEC.hen_ho.make(l, R(5)); const all = E.DEC.hen_ho.def.opts.map(o => o.k);
+    ok(['phim', 'to_tuong', 'thuy_cung', 'nha_sach', 'bao_tang'].every(k => all.includes(k)) && all.length >= 15, 'có nhiều hoạt động hẹn hò: xem phim, tô tượng, thủy cung, nhà sách, bảo tàng… (' + all.length + ')');
+    ok(d.opts.length >= 6 && d.opts.length <= 9, 'mỗi lần chỉ hiện vài hoạt động khác nhau (' + d.opts.map(o => o.k).join(', ') + ')');
+    const t = play(l, 'hen_ho', d.opts[0].k); ok(!badText(t) && /Lan/.test(t), 'đi hẹn hò: ' + t.slice(0, 90)); }
+  // rủ chơi game
+  { const seen = new Set(); let bad = 0; for (let i = 0; i < 40; i++) { const l = mk(32600 + i, 20, x => { x.talent = 'game'; x.game = 'Liên Quân Mobile'; }); const t = play(l, 'ghep_game', 'choi'); if (/giả gái/.test(t)) seen.add('nam giả nữ'); if (/lớp 5/.test(t)) seen.add('học sinh lớp 5'); if (badText(t)) bad++; }
+    ok(bad === 0 && seen.size === 2, 'rủ người lạ chơi game có tình huống trớ trêu: nam giả nữ, đồng đội là học sinh lớp 5'); }
+  // nghề cày thuê
+  ok(!!E.CAR.cay_thue && E.CAR.cay_thue.talent === 'game', 'có nghề cày thuê rank');
+  { const B = E.BOOST['Liên Quân Mobile'].tiers.map(t => t[1]); ok(JSON.stringify(B) === JSON.stringify([3, 6.5, 10, 13, 15, 25]), 'giá cày thuê Liên Quân theo bảng giá: 3k, 6–7k, 10k, 13k, 15k, 25k / sao');
+    ok(!!E.BOOST['Liên Minh Huyền Thoại'] && !!E.BOOST['Liên Minh: Tốc Chiến'], 'có giá cày thuê Liên Minh Huyền Thoại và Tốc Chiến'); }
+  { const l = mk(32700, 22, x => { E.startJob(x, 'cay_thue', R(1), () => { }); x.boostGame = 'Liên Quân Mobile'; }); l.skill = 20; const lo = E.boostMonth(l); l.skill = 95; const hi = E.boostMonth(l);
+    ok(lo.tier === 'Đồng → Vàng' && hi.tier === 'Chiến Thần' && hi.month > lo.month * 4, 'trình càng cao nhận đơn càng đắt: ' + lo.tier + ' ~' + lo.month.toFixed(1) + ' tr/tháng → ' + hi.tier + ' ~' + hi.month.toFixed(1) + ' tr/tháng');
+    const out = []; const inc = E.careerYear(l, R(3), (t) => out.push(t)); ok(inc > 0 && isFinite(inc) && out.some(t => /Cày thuê Liên Quân/.test(t)), 'thu nhập cày thuê tính từ giá theo sao: ' + (out.find(t => /Cày thuê/.test(t)) || '').slice(0, 110)); }
+  { const l = mk(32710, 16, x => { x.talent = 'game'; x.game = 'Liên Quân Mobile'; x.school = 'high'; x.indep = false; }); const a = E.ACT.find(x => x.id === 'cay_thue_them'); ok(a && E.actAvail(l, a) === true, 'học sinh giỏi game có thể nhận cày thuê kiếm thêm');
+    const d = E.DEC.cay_them.make(l, R(1)); ok(/vi phạm điều khoản/.test(d.text) && !d.opts.some(o => o.k === 'nghe'), 'nhắc rủi ro bị khóa tài khoản; học sinh chưa thể làm nghề toàn thời gian'); }
+  // chuyện tuổi thơ
+  { const kid = E.TRIG.filter(t => t.child && /^k_/.test(t.id)); ok(kid.length >= 30 && kid.every(t => t.max === 1), 'thêm ' + kid.length + ' chuyện tuổi thơ mới, mỗi chuyện chỉ gặp tối đa 1 lần trong đời'); }
+  { const kidIds = new Set(E.TRIG.filter(t => t.child).map(t => t.id)); const per = [], freq = {}; const N = 120;
+    for (let i = 0; i < N; i++) { const l = E.createLife({ mode: 'vn', seed: 33000 + i }); kidLife(l); const seen = Object.keys(l.flags.scN || {}).filter(id => kidIds.has(id)); per.push(seen.length); seen.forEach(k => freq[k] = (freq[k] || 0) + 1); }
+    const avg = per.reduce((a, b) => a + b) / N, top = Object.keys(freq).filter(k => k !== 'thoi_noi').sort((a, b) => freq[b] - freq[a])[0];
+    ok(avg >= 14, 'tuổi thơ có nhiều chuyện khác nhau (trung bình ' + avg.toFixed(1) + ' chuyện / đời)'); ok(freq[top] / N < 0.75, 'không chuyện tuổi thơ nào xuất hiện ở gần như mọi đời (nhiều nhất: ' + top + ' ' + Math.round(freq[top] / N * 100) + '%)'); }
+  // nhớ chuyện đời trước
+  { const run = prev => { const c = {}; for (let i = 0; i < 80; i++) { const l = E.createLife({ mode: 'vn', seed: 34000 + i }); if (prev) l.flags.prevSeen = prev; kidLife(l); Object.keys(l.flags.scN || {}).forEach(id => c[id] = (c[id] || 0) + 1); } return c; };
+    const ids = ['sinh_nhat', 'li_xi', 'thu_cung', 'choi_le_hoi', 'k_mat_dien', 'k_an_co']; const a = run(null), b = run(Object.fromEntries(ids.map(x => [x, 1])));
+    const sa = ids.reduce((s, x) => s + (a[x] || 0), 0), sb = ids.reduce((s, x) => s + (b[x] || 0), 0); ok(sb < sa * 0.7, 'chuyện đã gặp ở đời trước thì đời sau ít gặp lại (' + sa + ' → ' + sb + ')');
+    const app = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8'); ok(/mkn\.seen/.test(app) && /prevSeen/.test(app), 'trò chơi lưu những chuyện đã gặp của 3 đời gần nhất'); }
+  // rà soát logic
+  { const l = mk(32800, 30, x => { x.money = 5; x.ownHouse = false; }); const d = E.DEC.house.make(l, R(1)); ok(d.opts.length > 1 || (/tham khảo/.test(d.text) && /tích lũy/.test(d.text)), 'không đủ tiền mua nhà thì vẫn hiện giá tham khảo thay vì danh sách trống'); }
+  { const l = mk(32810, 50, x => { x.fam.mAlive = true; x.fam.fAlive = false; }); const d = E.DEC.care.make(l, R(1)); l.fam.mAlive = false; l.pending.unshift(d); const t = E.resolve(l, 'no').map(e => e.t).join(' '); ok(!/chu cấp cho mẹ/.test(t), 'mẹ đã mất thì không còn "gửi tiền chu cấp cho mẹ"'); }
+  { const l = mk(32820, 70, x => { x.job = null; x.retired = true; }); let bad = 0; const id = Object.keys(E.DEC).find(k => E.DEC[k].def && E.DEC[k].def.title === 'Rủ chơi hụi'); for (let i = 0; i < 30; i++) { const d = E.DEC[id].make(l, R(i)); if (/đồng nghiệp/.test(d.text + JSON.stringify(d.data))) bad++; } ok(!!id && bad === 0, 'người đã nghỉ hưu không được "chị đồng nghiệp ở công ty" rủ chơi hụi'); }
 }
 function isVNx(l) { return E.isVN(l); }
 

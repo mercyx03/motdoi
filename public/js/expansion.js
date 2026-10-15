@@ -108,7 +108,7 @@
 
   // ---------- Hụi / họ ----------
   SC('choi_hui', {
-    title: 'Rủ chơi hụi', prep: function (l, r) { return { c: Math.round(l.base * U.pick(r, [0.06, 0.08, 0.12]) * 10) / 10, who: pick(r, ['Cô Ba bán tạp hóa đầu hẻm', 'Bà chủ hụi trong xóm', 'Chị đồng nghiệp ở công ty', 'Dì hàng xóm']) }; },
+    title: 'Rủ chơi hụi', prep: function (l, r) { return { c: Math.round(l.base * U.pick(r, [0.06, 0.08, 0.12]) * 10) / 10, who: pick(r, ['Cô Ba bán tạp hóa đầu hẻm', 'Bà chủ hụi trong xóm', 'Dì hàng xóm'].concat(l.job && !l.retired ? ['Chị đồng nghiệp ở công ty'] : [l.age >= 55 ? 'Bà bạn cùng hội người cao tuổi' : 'Chị bạn cùng xóm'])) }; },
     valid: function (l) { return !l.hui && l.indep; },
     text: function (l, d) { return d.who + ' rủ bạn vào một dây hụi 5 phần, mỗi năm góp ' + mo(l, d.c) + '. "Hốt hụi sớm thì có vốn làm ăn, hốt cuối thì như gửi tiết kiệm lãi cao!"'; },
     opts: [

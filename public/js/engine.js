@@ -264,7 +264,8 @@
     var net = 0, loan = 0, why = [];
     for (var i = i0; i < items.length; i++) { var x = items[i]; if (/^Vay /.test(x.t)) loan += x.v; else { net += x.v; if (why.indexOf(x.t) < 0) why.push(x.t); } }
     if (Math.abs(net) < Math.max(life.base * 0.002, 1e-9) && !loan) return;
-    var txt = (net < 0 ? 'chi ' : 'thu về ') + fmtMoney(life, Math.abs(net)) + (loan > 0 ? ', vay thêm ' + fmtMoney(life, loan) : '');
+    var tiny = Math.abs(net) < life.base * 0.002; // v3.4: không ghi "thu về 0 đ" khi chỉ có khoản vay
+    var txt = (tiny ? '' : (net < 0 ? 'chi ' : 'thu về ') + fmtMoney(life, Math.abs(net))) + (loan > 0 ? (tiny ? 'vay thêm ' : ', vay thêm ') + fmtMoney(life, loan) : '');
     for (var j = out.length - 1; j >= 0; j--) {
       var e = out[j];
       if (e.k === 'money' || e.k === 'death') continue;
@@ -1165,6 +1166,7 @@
       auto: function (life, d, r) { return r() < 0.7 ? 'yes' : 'no'; },
       apply: function (life, d, k, r, log) {
         life.flags.careDone = true;
+        if (!(d.data.who === 'Mẹ' ? life.fam.mAlive : life.fam.fAlive)) return; // v3.4: bố/mẹ đã mất trước khi kịp quyết định
         if (k === 'yes') { log('Đón ' + d.data.who.toLowerCase() + ' về ở cùng để chăm sóc.', 'good'); life.st.soc += 5; life.st.hap += 2; H.cash(life, -life.base * 0.15, 'Chăm sóc ' + d.data.who.toLowerCase()); life.flags.caring = true; life.flags.caredParents = true; life.karma += 5; H.mem(life, 'Những buổi tối ngồi bóp chân cho ' + d.data.who.toLowerCase() + '.', 4); }
         else { log('Gửi tiền chu cấp cho ' + d.data.who.toLowerCase() + ' hằng tháng.', 'neutral'); H.cash(life, -life.base * 0.1, 'Chu cấp cho ' + d.data.who.toLowerCase()); }
       }
@@ -1329,7 +1331,8 @@
       if (cdT && cdm[T.id] != null && a - cdm[T.id] < cdT) continue;
       var seenN = scN[T.id] || 0;
       if (!T.rep && seenN >= (T.max || 3)) continue;
-      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN));
+      var pv = life.flags.prevSeen || {}; // v3.4: chuyện đã gặp ở các đời trước thì đời này ít gặp lại hơn
+      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.6 : 1);
       if (r() < pr && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
 
@@ -1338,7 +1341,7 @@
       var kidT = TRIG.filter(function (T) {
         return T.child && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
-      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * Math.pow(0.45, scN[T.id] || 0); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
+      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
     }
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)
@@ -1817,7 +1820,7 @@
 
     // ---- Bệnh: khỏi bệnh? ----
     // v2.4: càng già, cơ hội khỏi càng giảm theo từng năm (không chỉ theo tuổi lúc phát bệnh)
-    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since))) {
+    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since)) * (a >= 85 && /^ung thư/.test(life.ill.n) ? 0.6 : 1)) { // v3.4: ung thư ở tuổi rất cao hiếm khi thuyên giảm hoàn toàn
       var IL = life.ill, chronic = IL.chronic || ILLS.some(function (x) { return x.n === IL.n && x.chronic; });
       life.illHist = life.illHist || []; if (life.illHist.indexOf(IL.n) < 0) life.illHist.push(IL.n);
       // bệnh mạn tính không "khỏi": được kiểm soát ổn định, vẫn phải uống thuốc suốt đời

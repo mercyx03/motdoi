@@ -278,6 +278,8 @@
   };
   function bornWith(opts) {
     var life = E.createLife(opts);
+    // v3.4: nhớ những chuyện đã gặp ở 3 đời gần nhất để đời mới ít trùng lặp
+    var seen = LS.get('mkn.seen', []); if (Array.isArray(seen) && seen.length) { life.flags.prevSeen = {}; seen.forEach(function (ids) { (ids || []).forEach(function (id) { life.flags.prevSeen[id] = 1; }); }); }
     var cohort = E.makeCohort(life);
     S.life = life; S.cohort = cohort; S.speed = 1; S.auto = false; S.skipping = false; S.preview = null;
     persist();
@@ -1048,6 +1050,7 @@
     closeModal();
     if (S.phase === 'finale') return;
     S.phase = 'finale';
+    if (!l.flags.seenSaved) { l.flags.seenSaved = true; var seen = LS.get('mkn.seen', []); if (!Array.isArray(seen)) seen = []; seen.push(Object.keys(l.flags.scN || {})); LS.set('mkn.seen', seen.slice(-3)); }
     var stages = E.finale(l), i = 0;
     var sum = E.share.summary(l);
     sum.fin = stages;

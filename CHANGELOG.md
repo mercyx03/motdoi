@@ -4,6 +4,40 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v3.4.0 — 15/10/2026
+
+Giữ nguyên toàn bộ tính năng v3.3.0.
+
+### Mới
+- **Hẹn hò qua mạng** (Tinder, Bumble, Facebook Hẹn hò…): sau khi match có thể gặp:
+  - **Người tử tế** (gần một nửa): hẹn cà phê, gọi video, rồi thành người yêu.
+  - **Người "đào mỏ"**: hỏi lương, hỏi xe, đòi đi nhà hàng sang, xin điện thoại mới, rồi "mẹ nằm viện cần tiền gấp".
+  - **Lừa đầu tư kiểu "sát heo"**: khoe lãi từ "sàn của anh họ", cho rút thử ít tiền, đến khi nạp nhiều thì đòi "thuế 20%" rồi biến mất.
+  - **Ảnh ảo (catfish)**: không bao giờ chịu gọi video; gặp ngoài đời thì khác hẳn ảnh.
+  - **"Việt kiều / kỹ sư nước ngoài gửi quà"**: bắt đóng "phí hải quan", "phí chống rửa tiền".
+  - Có độ **tinh ý**: hiểu biết, từng trải, từng bị lừa thì dễ nhận ra dấu hiệu. Hẹn ở quán bình thường, gọi video, tra ảnh trên mạng là cách thoát; chiều theo thì dễ mất tiền.
+- **14 hoạt động hẹn hò**: xem phim, tô tượng, thủy cung, nhà sách – cà phê sách, bảo tàng, workshop gốm / nến thơm, bowling, trượt patin, lẩu nướng, chợ đêm, picnic ngắm hoàng hôn, nấu ăn ở nhà, karaoke, công viên giải trí. Mỗi lần hiện ngẫu nhiên 5 hoạt động, có gợi ý chi phí.
+- **Rủ người lạ chơi game cùng** (13–35 tuổi), với các tình huống trớ trêu: "bé Mèo 2k5" hóa ra là anh trai mét tám dùng phần mềm đổi giọng; đồng đội cực hay hóa ra học lớp 5; đứa toxic thành bạn thân; người leo rank cùng hóa ra học cùng trường.
+- **Nghề cày thuê rank** cho Liên Quân Mobile, Liên Minh Huyền Thoại, Liên Minh: Tốc Chiến:
+  - Liên Quân theo bảng giá thị trường: Đồng → Vàng 3.000 đ/sao; Bạch Kim → Tinh Anh 6.000–7.000 đ; Cao Thủ dưới 25 sao 10.000 đ; 25–50 sao 13.000 đ; trên 50 sao 15.000 đ; Chiến Thần 25.000 đ/sao.
+  - Liên Minh Huyền Thoại (theo bậc) và Tốc Chiến (theo sao) dùng giá tham khảo ước lượng.
+  - Thu nhập = giá theo mức rank kéo nổi × số sao leo được mỗi ngày × 26 ngày. Trình càng cao càng nhận đơn đắt.
+  - Sự cố nghề: tài khoản khách bị khóa, khách quỵt tiền, khách lộ mật khẩu ngân hàng, đơn lớn của streamer. Luôn có lựa chọn làm ăn tử tế.
+  - Học sinh giỏi game có thể nhận cày thuê kiếm thêm dịp nghỉ hè (có nhắc rủi ro vi phạm điều khoản của nhà phát hành).
+- **35 chuyện tuổi thơ mới**, mỗi chuyện gặp tối đa 1 lần trong đời. Ví dụ: mất điện cả xóm, răng sữa ném lên mái nhà, sâu răng, tiêm phòng, tập xe đạp, học bơi, về quê hè, trò chơi dân gian, thuê truyện tranh, mưa đá, bài văn tả mẹ, ăn cỗ đám cưới, sao đỏ ghi tên, bầu lớp trưởng, Kế hoạch nhỏ, ngày 20/11, cắm trại, xem bóng đá đêm khuya cùng bố, nuôi tằm, đàn gà con, cuốn nhật ký có khóa…
+
+### Chống lặp
+- Những chuyện tuổi thơ quen thuộc nhất (sinh nhật, lì xì, thú cưng, lễ hội…) xuất hiện thưa hơn.
+- Trung bình mỗi tuổi thơ có khoảng 26 chuyện khác nhau (trước đây khoảng 20).
+- **Nhớ chuyện đời trước**: game ghi lại các chuyện đã gặp ở 3 đời gần nhất; đời mới sẽ ít gặp lại các chuyện đó.
+
+### Sửa lỗi logic
+- "Mua nhà" khi chưa đủ tiền không còn hiện danh sách lựa chọn trống. Thay vào đó hiện giá tham khảo từng loại nhà và nhắc tích lũy thêm.
+- Nhật ký không còn ghi "thu về 0 triệu đ, vay thêm…" khi chỉ có khoản vay.
+- Bố / mẹ mất trước khi kịp quyết định chuyện chăm sóc thì không còn "gửi tiền chu cấp cho mẹ".
+- Người đã nghỉ hưu hoặc không đi làm không còn được "chị đồng nghiệp ở công ty" rủ chơi hụi.
+- Ung thư phát hiện ở tuổi trên 85 hiếm khi thuyên giảm hoàn toàn (trước đây khỏi hơi dễ).
+
 ## v3.3.0 — 15/10/2026
 
 Giữ nguyên toàn bộ tính năng v3.2.0.

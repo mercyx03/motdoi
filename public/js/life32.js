@@ -63,6 +63,7 @@
     fx(l, { hap: 6 + h.t * 2 });
     H.mem(l, first ? 'Ngày nhận chìa khóa ' + h.n + ' — căn nhà đầu tiên của chính mình.' : 'Ngày chuyển về ' + h.n + '.', first ? 5 : 3);
   }
+  function okH(l, d, h) { var p = d.pr[h.k]; if (p == null) return false; if (d.up && !(h.t > (l.houseTier || 1) || (h.t === (l.houseTier || 1) && p > (l.houseVal || 0) * 1.3 && h.k !== l.houseK))) return false; return have(l) >= p || (have(l) >= p * 0.3 && canLoan(l, p)); }
   function homeDef(up) {
     return {
       title: up ? 'Đổi nhà' : 'Mua nhà', major: up ? 0 : 1,
@@ -70,14 +71,15 @@
       valid: function (l) { return up ? !!l.ownHouse && l.indep : !l.ownHouse; },
       text: function (l, d) {
         return (l.ownHouse ? 'Bạn đang ở ' + (l.houseName || 'nhà riêng') + ' trị giá khoảng ' + mo(l, l.houseVal) + (homeDebt(l) > 0.5 ? ' (còn nợ ngân hàng ' + mo(l, homeDebt(l)) + ')' : '') + '. ' : '') +
-          'Tiền mặt hiện có ' + mo(l, Math.max(0, l.money)) + '. Giá nhà ' + (cls(l) === 'big' ? 'ở ' + (!isVN(l) ? (l.city || 'thủ đô') : /Hà Nội/.test(l.movedTo || (l.prov && l.prov.old) || '') ? 'Hà Nội' : 'TP. Hồ Chí Minh') : cls(l) === 'urb' ? 'ở thành phố tỉnh' : 'ở quê') + ' tham khảo (từ rẻ đến đắt):';
+          'Tiền mặt hiện có ' + mo(l, Math.max(0, l.money)) + '. Giá nhà ' + (cls(l) === 'big' ? 'ở ' + (!isVN(l) ? (l.city || 'thủ đô') : /Hà Nội/.test(l.movedTo || (l.prov && l.prov.old) || '') ? 'Hà Nội' : 'TP. Hồ Chí Minh') : cls(l) === 'urb' ? 'ở thành phố tỉnh' : 'ở quê') + ' tham khảo (từ rẻ đến đắt):' +
+          (HT.some(function (h) { return okH(l, d, h); }) ? '' : ' ' + HT.filter(function (h) { return d.pr[h.k] != null; }).slice(0, 5).map(function (h) { return h.n + ' ~' + mo(l, d.pr[h.k]); }).join('; ') + '. Hiện chưa đủ tiền trả trước 30% (hoặc chưa vay được ngân hàng) cho loại nào — hãy tích lũy thêm.');
       },
       opts: HT.slice().map(function (h) {
         return {
           k: 'n_' + h.k,
           l: function (l, d) { return U.cap(h.n) + ' — ' + mo(l, d.pr[h.k]); },
           h: function (l, d) { var p = d.pr[h.k]; return h.d + ' · ' + (have(l) >= p ? 'trả thẳng được' : 'trả trước ' + mo(l, p * 0.3) + ', vay ngân hàng ' + mo(l, p * 0.7) + ' (trả góp ~' + mo(l, p * 0.7 * 0.12) + '/năm)'); },
-          req: function (l, d) { var p = d.pr[h.k]; if (p == null) return false; if (d.up && !(h.t > (l.houseTier || 1) || (h.t === (l.houseTier || 1) && p > (l.houseVal || 0) * 1.3 && h.k !== l.houseK))) return false; return have(l) >= p || (have(l) >= p * 0.3 && canLoan(l, p)); },
+          req: function (l, d) { return okH(l, d, h); },
           ai: function (l, d) { var p = d.pr[h.k]; return have(l) >= p ? 1 + h.t * 0.4 : 0.5; },
           run: function (l, r, log, d) { var p = d.pr[h.k], loan = have(l) < p; if (loan && !canLoan(l, p)) { log('Ngân hàng từ chối cho vay mua ' + h.n + ': ' + (H.canBankLoan(l) ? 'thu nhập không đủ.' : 'hồ sơ đang có nợ xấu.'), 'bad'); fx(l, { hap: -4 }); l.flags.houseNo = l.age + 3; return; } buyHome(l, h, p, loan, log); }
         };
