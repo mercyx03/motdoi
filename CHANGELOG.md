@@ -4,6 +4,46 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v4.1.0 — 16/10/2026
+
+Giữ nguyên toàn bộ tính năng v4.0.0. Bản này làm theo góp ý của người chơi.
+
+### Sửa lỗi câu chữ
+- Nhật ký tuổi 14 không còn câu "mấy chục năm sau đọc lại vẫn còn bật cười" (nhân vật mới 14 tuổi). Các câu "lớn lên nhớ lại…" trong sự kiện tuổi nhỏ cũng được viết lại cho đúng thời điểm.
+
+### Nghĩa vụ quân sự đủ 24 tháng
+- Nhập ngũ năm 18 tuổi thì ra quân năm 20 tuổi (trước đây ra quân ngay năm 19 tuổi).
+- Thêm các sự kiện trong quân ngũ: kiểm tra bắn đạn thật, hành quân dã ngoại, Tết trong quân ngũ (đứng gác đêm giao thừa, văn nghệ), chiếc điện thoại lén, thư / quà từ hậu phương (người yêu có thể chờ hoặc chia tay), hội thao quân sự, tăng gia sản xuất. Năm đầu: huấn luyện tân binh, về đơn vị và 2 chuyện; năm sau: 3 chuyện, không lặp lại.
+- Trợ cấp xuất ngũ và trợ cấp tạo việc làm theo mức lương cơ sở:
+  - năm 2026: khoảng 25,3 triệu đồng (lương cơ sở 2,53 triệu);
+  - từ 2027: khoảng 45,5 triệu đồng theo mức đề xuất mới (sửa Nghị định 27/2016/NĐ-CP).
+  - Áp dụng cả khi thi trượt trường sĩ quan rồi xuất ngũ.
+
+### Con thành tài / phá gia chi tử
+- Con học giỏi (18–45 tuổi) có thể thành tài: đỗ thủ khoa, học bổng du học, giải Olympic, giám đốc chi nhánh, bác sĩ giỏi, khởi nghiệp thành công, bảo vệ luận án tiến sĩ.
+- Con ham chơi có thể thành phá gia chi tử: cờ bạc, cá độ, vay tín dụng đen, bị đòi nợ tận nhà. Có thể:
+  - trả nợ cho con;
+  - trình báo công an về nhóm cho vay nặng lãi và bắt con tự chịu trách nhiệm;
+  - bán đất, bán nhà trả nợ.
+
+### Đất, vàng mất giá
+- Khi lô đất hoặc số vàng tích trữ giảm từ 15% so với giá mua, bạn được hỏi: bán ngay cắt lỗ, bán một nửa, giữ chờ thị trường hồi, hay mua thêm khi giá rẻ. Không hỏi lại trong vòng 3 năm.
+
+### Cặp đôi đồng giới
+- Ở Việt Nam pháp luật chưa công nhận hôn nhân cùng giới: hai bạn có thể về chung sống với nhau, hoặc cùng sang một nước đã công nhận hôn nhân đồng giới.
+- Danh sách nước được chọn (bấm để chọn, có trang "Xem thêm"): Thái Lan (từ 2025), Úc, Canada, Hoa Kỳ, Hà Lan, Đức, Pháp, Vương quốc Anh, Tây Ban Nha, New Zealand, các nước Bắc Âu, Ireland, Bỉ, Thụy Sĩ, Áo, Bồ Đào Nha, Brazil, Argentina, Mexico, Chile, Colombia, Nam Phi… (chỉ những nước đã hợp pháp hóa).
+- Sang đó thì đăng ký kết hôn hợp pháp. Cuộc sống chuyển hẳn sang nước đó: tiền tiết kiệm, khoản vay, vàng, đất, cổ phiếu được quy đổi theo tỉ giá thực; mua sắm, nhà cửa, việc làm tính theo nước đó.
+- **Làm việc từ xa:** khi định cư nước ngoài có thể nhận việc online cho công ty Việt Nam (lập trình, biên dịch, viết nội dung, dạy học online). Vẫn gửi tiền về cho bố mẹ được như trước.
+- **Về Việt Nam sống một thời gian:**
+  - Bán nhà bên đó, trả vé máy bay (tính bằng tiền nước sở tại, khoảng 15 triệu đồng), đổi tiền sang tiền Việt.
+  - Về sống ở quê cũ, mua sắm bằng tiền Việt. Việc làm từ xa vẫn giữ được.
+  - Muốn quay lại thì đổi tiền Việt sang tiền nước đó, trả vé máy bay (khoảng 25 triệu đồng), tìm chỗ ở và việc làm lại.
+  - Hoặc chỉ bay về thăm nhà rồi quay lại.
+
+### Sửa lỗi logic
+- Di cư từ Việt Nam: tiền tiết kiệm, khoản vay, giá trị xe, vàng, đất, cổ phiếu, tiền mã hóa được quy đổi theo tỉ giá danh nghĩa và mức giá của nước đến (trước đây quy đổi lệch).
+- Ra quân không còn ghi hai lần dòng "xuất ngũ".
+
 ## v4.0.0 — 16/10/2026
 
 Bản lớn, gộp toàn bộ v3.9.0 (đại học theo ngành, bảo vệ tốt nghiệp, ngành Y, số liệu nghề — xem bên dưới) cùng các nội dung mới.

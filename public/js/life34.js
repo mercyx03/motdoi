@@ -250,7 +250,7 @@
     ['khoc', 'Khóc ầm cả phòng tiêm', { w: 1 }, 'Khóc ầm lên, cô y tá phải dỗ mãi. Ra về được cho kẹo.', null, 'neutral']]);
   KID('k_ve_que_ngoai', 6, 12, 'Mùa hè về quê', 'Hè này được gửi về quê chơi với ông bà cả tháng.', [
     ['bat_ca', 'Theo anh em họ đi bắt cá, trèo cây', { soc: 1 }, 'Một tháng đen nhẻm vì nắng, biết bắt cá, bắt cào cào, leo cây ổi nhà hàng xóm.', { hap: 6, hea: 2 }, 'good'],
-    ['nho_nha', 'Nhớ nhà, đòi về sớm', { w: 0.5 }, 'Nhớ nhà quá, khóc đòi về sớm. Lớn lên lại tiếc mùa hè ấy.', { hap: -1 }, 'neutral']], function (l) { return l.urban; });
+    ['nho_nha', 'Nhớ nhà, đòi về sớm', { w: 0.5 }, 'Nhớ nhà quá, khóc đòi về sớm. Về đến nhà lại thấy nhớ những buổi chiều ở quê.', { hap: -1 }, 'neutral']], function (l) { return l.urban; });
   KID('k_ban_hang', 4, 8, 'Chơi bán hàng', 'Bạn bày một "cửa hàng" bằng lá cây, sỏi đá và đồ chơi cũ trước cửa.', [
     ['ban', 'Gọi các bạn trong xóm đến mua', { soc: 1 }, 'Cả buổi chiều mua bán bằng tiền lá cây, bạn "giàu" nhất xóm.', { hap: 4, soc: 2 }, 'good'],
     ['ba', 'Mời ông bà, bố mẹ đến mua', { w: 1 }, 'Cả nhà đóng vai khách, trả tiền bằng kẹo thật.', { hap: 4 }, 'good']]);
@@ -335,7 +335,7 @@
     ['gom', 'Đi gom giấy báo cũ khắp xóm', { amb: 1 }, 'Gom được cả bao tải giấy vụn, lớp bạn đứng nhất trường.', { karma: 2, soc: 2 }, 'good'],
     ['vo', 'Lấy luôn sách vở cũ của anh chị nộp', { risk: 0.6 }, 'Lấy nhầm cả quyển vở anh chị đang dùng, bị mắng một trận.', null, 'neutral']], function (l) { return isVN(l) && school(l); });
   KID('k_nhat_ky', 10, 14, 'Cuốn nhật ký có khóa', 'Bạn bắt đầu viết nhật ký vào một cuốn sổ có ổ khóa nhỏ.', [
-    ['viet', 'Viết đều mỗi tối', { w: 1 }, 'Viết nhật ký mỗi tối, mấy chục năm sau đọc lại vẫn còn bật cười.', { hap: 2, kno: 1 }, 'good'],
+    ['viet', 'Viết đều mỗi tối', { w: 1 }, 'Viết nhật ký mỗi tối, kể đủ chuyện trường lớp, bạn bè, cả những điều chưa dám nói với ai.', { hap: 2, kno: 1 }, 'good'],
     ['bi_doc', 'Giấu dưới gối', { w: 0.8 }, function (l) { return 'Một hôm thấy ổ khóa bị cạy — hóa ra ' + ((l.sibList || []).some(function (s) { return s.alive; }) ? 'anh chị em' : m(l)) + ' đọc trộm. Giận cả tuần.'; }, { hap: -2 }, 'neutral']]);
   KID('k_ga_con', 5, 10, 'Đàn gà con', 'Ông bà mua cho đàn gà con lông vàng.', [
     ['cham', 'Ngày nào cũng cho gà ăn', { w: 1 }, 'Chăm đàn gà lớn phổng phao, Tết đến được ông bà cho một con mang ra chợ bán lấy tiền mua truyện.', { karma: 1, hap: 3 }, 'good'],

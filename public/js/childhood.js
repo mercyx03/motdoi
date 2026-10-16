@@ -104,7 +104,7 @@
     opts: [
       { k: 'friend', l: 'Rủ bạn ấy chơi cùng', run: function (l, r, log, d) { fx(l, { karma: 4, soc: 3 }); log('Rủ ' + d.n + ' chơi cùng nhóm. Bạn ấy cười lần đầu tiên từ ngày chuyển đến.', 'good'); if (!l.bff && ch(r, 0.4)) { l.bff = { name: d.n, sex: d.s, since: l.age, alive: true, close: 70, token: 'chiếc ảnh chụp chung năm lớp ' + Math.max(1, l.age - 5) }; log('Từ đó ' + d.n + ' thành bạn thân nhất của bạn.', 'good'); H.mem(l, 'Ngày quen ' + d.n + ' — người bạn mới chuyển đến.', 4); } } },
       { k: 'ignore', l: 'Mặc kệ, không phải việc của mình', run: function (l, r, log) { log('Không tham gia, cũng không bênh.', 'neutral'); } },
-      { k: 'join', l: 'Hùa theo cả lớp trêu', run: function (l, r, log, d) { fx(l, { karma: -5 }); log('Hùa theo trêu ' + d.n + '. Lớn lên nhớ lại vẫn thấy áy náy.', 'bad'); H.mem(l, 'Lần hùa theo cả lớp trêu ' + d.n + ' — điều bạn ân hận.', 3); } }
+      { k: 'join', l: 'Hùa theo cả lớp trêu', run: function (l, r, log, d) { fx(l, { karma: -5 }); log('Hùa theo trêu ' + d.n + '. Tối về nằm nghĩ mãi, thấy áy náy.', 'bad'); H.mem(l, 'Lần hùa theo cả lớp trêu ' + d.n + ' — điều bạn ân hận.', 3); } }
     ]
   });
   CT('ban_moi', function (l, a) { return a >= 7 && a <= 13 && l.school; }, 99);

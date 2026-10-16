@@ -1585,7 +1585,7 @@
       creator: ['Quay, dựng, đăng video — vòng lặp không hồi kết.'],
       show: ['Chạy show, tập luyện, xuất hiện trước ống kính.'],
       crime: ['Một năm làm ăn mờ ám, ngủ không yên giấc.'],
-      biz: ['Một năm buôn bán, lúc lời lúc lỗ.']
+      biz: ['Một năm buôn bán, lúc lời lúc lỗ.', 'Sáng mở hàng, tối ngồi tính sổ, năm nay buôn bán cũng tạm ổn.', 'Một năm chạy hàng, đòi nợ khách, xoay vốn liên tục.']
     }[c.cat] || ['Một năm làm việc bình thường.'];
     return pick(r, lines);
   });

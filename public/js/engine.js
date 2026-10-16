@@ -1194,7 +1194,7 @@
       life.money += life.houseVal - homeDebt; life.houseVal = 0; life.ownHouse = false; life.mortgage = 0;
       life.loans = (life.loans || []).filter(function (x) { return x.type !== 'home'; });
     }
-    if (life.cur === 'vnd') { life.cur = 'usd'; life.money = life.money / (C.priceLevel(life.gdp) * C.VND / 1e6); (life.loans || []).forEach(function (x) { x.bal = x.bal / (C.priceLevel(life.gdp) * C.VND / 1e6); }); }
+    if (life.cur === 'vnd') { var fx2 = 1e6 / C.VND / C.priceLevel(cc.gdp); life.cur = 'usd'; life.money = life.money * fx2; (life.loans || []).forEach(function (x) { x.bal = x.bal * fx2; }); if (life.vehVal) life.vehVal *= fx2; [life.assets, life.basis].forEach(function (A) { if (A) Object.keys(A).forEach(function (k) { if (typeof A[k] === 'number') A[k] *= fx2; }); }); [life.port, life.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { P[k].v *= fx2; P[k].basis *= fx2; }); }); } // v4.1: đổi tiền theo tỉ giá thật (trước đây đổi theo sức mua nên tiền mang sang bị thổi phồng)
     setBase(life);
     if (life.job) life.job = { id: E.resolveJob(life.job.id) === 'nong' ? 'phu_ho' : E.resolveJob(life.job.id), rank: 0, yrs: 0 };
     else life.flags.needJob = true;
@@ -1261,6 +1261,7 @@
     }
 
     // v3.3: đang đi nghĩa vụ quân sự — 2 năm sống trong doanh trại, chỉ có chuyện quân ngũ
+    if (life.flags.military && a === life.flags.military && DEC.nv_xuat_ngu) add('nv_xuat_ngu'); // v4.1: đủ 24 tháng mới ra quân (nhập ngũ 18 tuổi → ra quân năm 20 tuổi)
     if (life.flags.military && a < life.flags.military && E.milYear) {
       E.milYear(life, r, a).forEach(function (x) { add(x[0], x[1]); });
       life.pending = q; prune(life); return life.pending;
@@ -1695,8 +1696,8 @@
     if (life.alive && life.flags.postNext === a + 1 && !life.school) { life.flags.postNext = null; life.pending.push(DEC.post.make(life, r)); }
 
     // ---- Nghĩa vụ quân sự ----
-    if (life.flags.military && a + 1 >= life.flags.military) {
-      life.flags.military = null; log('Hoàn thành nghĩa vụ quân sự, xuất ngũ trở về.', 'good');
+    if (life.flags.military && a >= life.flags.military) {
+      life.flags.military = null; if (!life.flags.milVet) log('Hoàn thành nghĩa vụ quân sự, xuất ngũ trở về.', 'good');
       if (isVN(life) && !life.job && r() < 0.12) { E.startJob(life, 'quan_doi', r, log, true); }
       else if (!life.job) life.flags.needJob = true;
     }
@@ -1888,6 +1889,8 @@
     // ---- Một dòng kể về năm nay nếu năm trôi qua lặng lẽ ----
     if (life.alive && !out.some(function (x) { return x.k !== 'money'; })) {
       var line = yearLine(life, a, r);
+      for (var tries = 0; line && seenT[line] && tries < 6; tries++) line = yearLine(life, a, r); // v4.1: chọn câu khác nếu câu này đã có trong 8 năm gần đây
+      if (line && seenT[line]) line = ['Một năm bình lặng trôi qua.', 'Ngày tháng cứ thế trôi, không có gì đặc biệt.', 'Một năm nữa, cơm áo gạo tiền.', 'Một năm trôi qua, không có gì đáng kể.'].filter(function (t) { return !seenT[t]; })[0] || line;
       var hasYr = false; for (var lj = life.log.length - 1; lj >= 0 && life.log[lj].a === a; lj--) if (life.log[lj].k !== 'money') hasYr = true;
       if (line && (!seenT[line] || !hasYr)) log(line, 'quiet');
     }

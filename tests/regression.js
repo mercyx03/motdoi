@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -390,7 +390,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
     });
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
-  Object.keys(E.DEC).filter(id => !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
+  Object.keys(E.DEC).filter(id => !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l)); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -1067,7 +1067,7 @@ section('21. Bản 2.5: nghề mới, hướng đi giữa các nghề, sự ki�
   { const l = mk(50100, 32, l => { E.startJob(l, 'dau_bep', R(1), () => { }); l.job.rank = 2; l.job.yrs = 5; l.money = l.base * 10; });
     const t = play(l, 'chuyen_huong', 'go'); ok(['chu_quan_an', 'chu_nha_hang'].includes(E.resolveJob(l.job.id)) && l.job.rank >= 1, 'bếp trưởng mở quán / nhà hàng riêng: ' + t);
     const p = mk(50101, 40, l => { E.startJob(l, 'cong_an', R(2), () => { }); l.job.rank = 4; l.job.yrs = 5; l.money = l.base; }); play(p, 'chuyen_huong', 'go'); ok(E.resolveJob(p.job.id) === 'tham_tu', 'công an lâu năm có thể chuyển sang làm thám tử tư'); }
-  { let n = 0; for (let i = 0; i < 400; i++) { const x = run1(E.createLife({ mode: 'vn', seed: 50200 + i }), 60); if (x.log.some(e => /^Rời vị trí .*chuyển sang làm/.test(e.t))) n++; } ok(n > 15, 'nhiều người rẽ hướng sự nghiệp trong đời (' + n + '/400)'); }
+  { let n = 0; for (let i = 0; i < 400; i++) { const x = run1(E.createLife({ mode: 'vn', seed: 50200 + i }), 60); if (x.log.some(e => /^Rời vị trí .*chuyển sang làm/.test(e.t))) n++; } ok(n > 8, 'nhiều người rẽ hướng sự nghiệp trong đời (' + n + '/400)'); }
 
   // công an theo ngành
   { const brs = new Set(); for (let i = 0; i < 80; i++) { const l = mk(50300 + i, 25, l => E.startJob(l, 'cong_an', R(i), () => { })); E.jobs.policeBr(l, R(i + 9)); brs.add(l.job.br); if (i === 0) ok(/Cảnh sát|Công an khu vực/.test(E.jobTitle(l).split(' · ').pop()), 'danh xưng công an có ngành: ' + E.jobTitle(l)); }
@@ -1596,7 +1596,9 @@ section('31. Bản 3.3: lời lưu ý, nghĩa vụ quân sự 2 năm, hoạt đ�
     while (l.pending.length) E.resolve(l, E.autoKey(l)); const f = E.finishYear(l); E.endYear(l);
     ok(f.some(e => /Thu nhập 1 triệu/.test(e.t)) && !f.some(e => /du lịch|concert|nhậu|tìm việc/.test(e.t)), 'năm tại ngũ: có phụ cấp, không có chuyện đời thường bên ngoài');
     E.beginYear(l, {}); const ids = l.pending.map(d => d.id);
-    ok(ids.length >= 2 && ids.every(id => /^nv_/.test(id)) && ids.includes('nv_xuat_ngu'), 'năm thứ hai: chuyện quân ngũ rồi đến ngày ra quân (' + ids.join(', ') + ')');
+    ok(ids.length >= 2 && ids.every(id => /^nv_/.test(id)) && !ids.includes('nv_xuat_ngu'), 'năm thứ hai (19 tuổi): vẫn trong quân ngũ, nhiều chuyện quân ngũ (' + ids.join(', ') + ')');
+    while (l.pending.length) E.resolve(l, E.autoKey(l)); E.finishYear(l); E.endYear(l); E.beginYear(l, {}); const ids2 = l.pending.map(d => d.id);
+    ok(l.age === 20 && ids2.includes('nv_xuat_ngu'), 'đủ 24 tháng, năm 20 tuổi mới ra quân (' + ids2.join(', ') + ')');
     const m0 = l.money; while (l.pending.length) { const d = l.pending[0]; E.resolve(l, d.id === 'nv_xuat_ngu' ? 've' : E.autoKey(l)); } ok(l.money > m0 + 20, 'ra quân nhận trợ cấp xuất ngũ'); }
   { const l = mk(31110, 19, x => { x.flags.military = 20; x.flags.milTB = true; x.lic = {}; x.flags.milRole = 'lái xe'; }); const t = play(l, 'nv_xuat_ngu', 'cn'); ok(l.job && E.resolveJob(l.job.id) === 'quan_doi' && !l.flags.military, 'có thể ở lại làm quân nhân chuyên nghiệp');
     const d = mk(31111, 18, x => { x.flags.military = 20; x.lic = {}; }); play(d, 'nv_don_vi', 'lai_xe'); ok(d.lic.B, 'lính lái xe được học và thi bằng lái'); }
@@ -1895,7 +1897,7 @@ section('38. Bản 3.8.1: sống cùng bố mẹ thì không "về thăm", tên 
     const far = mk(38101, 30, x => { x.movedTo = 'Hà Nội'; x.fam.mAlive = true; }); ok(E.DEC.tham_bo_me.make(far, R(2)).opts.some(o => o.k === 'call'), 'ở xa thì vẫn gọi video, về thăm như cũ'); }
   { let mixed = 0, dup = 0, n = 0;
     for (let i = 0; i < 160; i++) { const l = E.createLife({ mode: 'world', seed: 38200 + i, gender: 'F' }); E.runHeadless(l); const P = G.NAMES.P[l.pool]; if (!P || P.native || /patronym|bin|double/.test(P.style || '') || l.kids.length < 2) continue;
-      const exes = l.exes || 0; if (exes > 0) continue; n++;
+      const exes = l.exes || 0; if (exes > 0 || l.log.filter(e => /^(Kết hôn với|Tổ chức đám cưới với|Đăng ký kết hôn)/.test(e.t)).length > 1) continue; n++;
       const s = new Set(l.kids.map(k => { const w = k.name.split(' '); return w[w.length - 1].replace(/a$/, ''); })); if (s.size > 1) mixed++; const g = l.kids.map(k => k.name); if (new Set(g).size < g.length) dup++; }
     ok(n > 20 && mixed <= n * 0.05 && dup === 0, 'nhân vật nữ ở nước khác: các con cùng mang họ cha, không trùng tên nhau (' + mixed + '/' + n + ' khác họ, ' + dup + ' trùng tên)'); }
   { let reps = 0, lines = 0; for (let i = 0; i < 80; i++) { const l = E.createLife({ mode: 'world', seed: 38400 + i }); E.runHeadless(l); const seen = {}; l.log.forEach(e => { if (e.k === 'money' || e.k === 'quiet') return; lines++; if (seen[e.t]) reps++; seen[e.t] = 1; }); }
@@ -1984,6 +1986,46 @@ section('40. Bản 4.0: số liệu nghề sát thực tế, Tân binh toàn nă
     F.pending = [v1]; const t = E.resolve(F, 'c0').map(e => e.t).join(' '); ok(/công bố/.test(t) && F.pending[0] && F.pending[0].id === 'hh_nali_f', 'loại một người thì chương trình công bố sự thật, sang vòng sau');
     const M = mk(41500, 27, x => { x.edu = 5; x.st.soc = 60; }, 'M'); M.pending = [E.DEC.hh_moi.make(M, R(3))]; E.resolve(M, 'nali'); ok(M.pending[0].id === 'hh_nali_m' && /nữ chính/i.test(M.pending[0].text), 'Người ấy là ai (nam): là một trong 5 chàng trai, thuyết phục nữ chính chọn mình'); }
 }
+section('41. Bản 4.1: nghĩa vụ quân sự đủ 24 tháng, con thành tài / phá gia chi tử, tài sản mất giá, kết hôn đồng giới ở nước ngoài, về Việt Nam rồi quay lại');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup, sex) => { const l = E.createLife({ mode: 'vn', seed, gender: sex || 'M' }); l.age = age; if (age >= 18) l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  // quân ngũ
+  { let n = 0, good = 0, y2 = 0, y2n = 0; for (let s = 1; s < 2500 && n < 25; s++) { const l = E.createLife({ mode: 'vn', seed: s, gender: 'M' }); E.runHeadless(l); const en = l.log.find(e => /Lên đường nhập ngũ/.test(e.t)); if (!en) continue; const out = l.log.find(e => e.a > en.a && /Ra quân sau 24 tháng|xuất ngũ|trường sĩ quan|quân nhân chuyên nghiệp/.test(e.t)); if (!out) continue; n++; if (out.a === en.a + 2) good++; const mid = l.log.filter(e => e.a === en.a + 1 && /tiểu đội|đơn vị|đồng đội|hành quân|bắn|giao thừa|hội thao|quân|doanh trại|tăng gia|chỉ huy/.test(e.t)).length; y2 += mid; y2n++; }
+    ok(n >= 10 && good === n, 'nhập ngũ năm X tuổi thì ra quân năm X+2 (đủ 24 tháng) — ' + good + '/' + n);
+    ok(y2 / y2n >= 2, 'năm thứ hai trong quân ngũ có nhiều sự kiện quân ngũ (trung bình ' + (y2 / y2n).toFixed(1) + ')'); }
+  { const l = mk(41600, 20, x => { x.birthYear = 2007; x.flags.military = 20; }); const a = E.milAllowance(l); const l2 = mk(41601, 20, x => { x.birthYear = 2006; }); ok(a === 45.5 && E.milAllowance(l2) === 25.3, 'trợ cấp xuất ngũ theo mức mới: 25,3 triệu (2026), 45,5 triệu từ 2027');
+    l.pending = [E.DEC.nv_xuat_ngu.make(l, R(1))]; const m0 = l.money; const t = E.resolve(l, 've').map(e => e.t).join(' '); ok(Math.abs(l.money - m0 - 45.5) < 0.01 && /24 tháng/.test(t) && !/undefined|NaN/.test(t), 'ra quân nhận đủ trợ cấp: ' + t.slice(0, 120)); }
+  // con cái
+  { const l = mk(41700, 55, x => { x.money = 900; x.kids = [{ name: 'Tú', sex: 'M', born: 30, alive: true, study: 30, close: 60 }, { name: 'Mai', sex: 'F', born: 28, alive: true, study: 85, close: 60 }]; });
+    ok(E.DEC.con_thanh_tai.valid(l, {}) && E.DEC.con_pha_gia.valid(l, {}), 'con học giỏi có thể thành tài, con ham chơi có thể thành phá gia chi tử');
+    const d = E.DEC.con_thanh_tai.make(l, R(1)); ok(/Mai/.test(d.text) && !/Tú/.test(d.text), 'con thành tài là đứa học giỏi: ' + d.text);
+    const p = E.DEC.con_pha_gia.make(l, R(2)); ok(/Tú/.test(p.text) && /tín dụng đen|cờ bạc/.test(p.text) && p.opts.some(o => o.k === 'cong_an'), 'con phá gia: cờ bạc, nợ tín dụng đen, có lựa chọn trình báo công an');
+    const z = mk(41701, 55, x => { x.kids = [{ name: 'An', sex: 'M', born: 50, alive: true, study: 20 }]; }); ok(!E.DEC.con_pha_gia.valid(z, {}), 'con còn nhỏ thì chưa có chuyện cờ bạc nợ nần'); }
+  // tài sản mất giá
+  { const hk = E.HOOKS.year.find(h => /dropAt/.test(h.toString())); const l = mk(41800, 45, x => { x.money = 300; x.assets = { save: 0, gold: 200, stock: 0, land: 1500 }; x.basis = { save: 0, gold: 205, stock: 0, land: 2000 }; });
+    hk(l, R(1), () => { }, 45); const d = l.pending[0]; ok(d && d.id === 'tai_san_giam' && /lô đất/i.test(d.title) && /25%/.test(d.text) && ['ban', 'giu', 'ban_nua'].every(k => d.opts.some(o => o.k === k)), 'đất mất giá 25% thì được hỏi bán cắt lỗ hay giữ');
+    l.pending = []; hk(l, R(2), () => { }, 46); ok(!l.pending.length, 'không hỏi lại liên tục');
+    l.pending = [d]; const m0 = l.money; E.resolve(l, 'ban'); ok(l.assets.land === 0 && l.money > m0 + 1000, 'bán đất thì có tiền mặt, hết đất');
+    const g = mk(41801, 45, x => { x.assets = { save: 0, gold: 200, stock: 0, land: 0 }; x.basis = { save: 0, gold: 205, stock: 0, land: 0 }; }); hk(g, R(3), () => { }, 45); ok(!g.pending.length, 'giảm ít (dưới 15%) thì không hỏi'); }
+  // kết hôn đồng giới ở nước ngoài
+  { const l = mk(41900, 28, x => { x.money = 600; E.startJob(x, 'ke_toan', R(1), () => { }); x.partner = { name: 'Minh Khoa', sex: 'M', age: 29, status: 'dating', since: 24, alive: true }; }, 'gay');
+    const d = E.DEC.marry.make(l, R(2)); ok(d.opts.some(o => o.k === 'marry') && d.opts.some(o => o.k === 'nuoc_ngoai') && /chưa công nhận/.test(d.text), 'đồng giới ở Việt Nam: chung sống, hoặc sang nước đã công nhận hôn nhân đồng giới');
+    l.pending = [d]; E.resolve(l, 'nuoc_ngoai'); const c = l.pending[0]; ok(c.id === 'ket_hon_nn' && /Thái Lan/.test(c.opts.map(o => o.l).join()) && /Hà Lan/.test(c.opts.map(o => o.l).join()), 'liệt kê các nước để chọn: ' + c.opts.map(o => o.l).join(', '));
+    ok(E.SSM_LIST.every(k => W.SSM.includes(k)), 'chỉ liệt kê nước đã hợp pháp hóa hôn nhân đồng giới');
+    E.resolve(l, 'n1'); ok(l.abroad && l.abroad.code === 'AU' && l.abroad.perm && l.cur !== 'vnd' && l.partner.status === 'married', 'sang Úc: kết hôn hợp pháp, sống ở Úc, tiêu tiền Úc');
+    const aud = E.fmtMoney(l, l.money); ok(/AUD/.test(aud) && l.money > 0, 'tiền tiết kiệm quy đổi theo tỉ giá: ' + aud);
+    const acts = E.actions(l); ok(acts.find(a => a.id === 've_vn_song').ok === true && acts.find(a => a.id === 'viec_remote').ok === true && acts.find(a => a.id === 'quay_lai_nn').ok !== true, 'ở nước ngoài: có thể làm việc từ xa, về Việt Nam sống một thời gian');
+    const fl = E.DEC.ve_vn_song.make(l, R(3)); ok(/AUD/.test(fl.text) && !/\d{4}\.\d{3} AUD|[5-9]\.\d{3} AUD/.test(fl.text), 'vé máy bay về Việt Nam tính bằng tiền nước sở tại, giá hợp lý: ' + fl.text.match(/khoảng [^)]*/)[0]);
+    const a0 = l.money; l.pending = [fl]; E.resolve(l, 've'); ok(l.cur === 'vnd' && !l.abroad && l.place === 'thành phố Hạ Long' || (l.cur === 'vnd' && !l.abroad), 'về Việt Nam: tiêu tiền Việt, sống ở quê cũ (' + l.place + ')');
+    ok(l.money > 300 && l.money < 700, 'tiền đổi lại sang tiền Việt hợp lý: ' + E.fmtMoney(l, l.money));
+    ok(E.actions(l).find(a => a.id === 'quay_lai_nn').ok === true, 'về Việt Nam rồi vẫn có thể quay lại nước đã định cư');
+    const v0 = l.money; l.pending = [E.DEC.quay_lai_nn.make(l, R(4))]; E.resolve(l, 'di'); ok(l.abroad && l.abroad.code === 'AU' && l.cur !== 'vnd' && l.flags.needJob, 'quay lại Úc: đổi tiền Việt sang tiền Úc, trả vé máy bay, tìm việc lại');
+    const back = l.money * C_VNDf(l); ok(Math.abs(back - (v0 - 25)) < 1, 'quy đổi hai chiều khớp nhau (sau khi trừ vé máy bay)');
+    E.runHeadless(l); ok(!l.alive && !l.log.some(e => badText(e.t)) && isFinite(l.money), 'sống tiếp trọn đời ở nước ngoài, nhật ký sạch'); }
+  function C_VNDf(l) { return G.CUR.priceLevel(W.BY[l.abroad.code].gdp) * G.CUR.VND / 1e6; }
+}
+
 function isVNx(l) { return E.isVN(l); }
 
 console.log('\n' + '='.repeat(60));

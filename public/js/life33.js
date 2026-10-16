@@ -28,7 +28,6 @@
       for (var i = pool.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
       L.push([pool[0]], [pool[1]]);
     }
-    if (a + 1 >= l.flags.military) L.push(['nv_xuat_ngu']);
     return L;
   };
   var MV = function (l) { return isVN(l) ? 'Quân đội nhân dân Việt Nam' : 'quân đội'; };
@@ -95,7 +94,7 @@
     text: function (l) { return 'Hai năm nghĩa vụ sắp hết' + (l.flags.milRole ? ' (bạn là lính ' + l.flags.milRole + ')' : '') + '. Ra quân được nhận trợ cấp xuất ngũ, trợ cấp tạo việc làm và được ưu tiên khi học nghề, tuyển dụng. Bạn tính sao?'; },
     opts: [
       { k: 've', l: 'Xuất ngũ về địa phương', h: function (l) { return 'Trợ cấp khoảng ' + mo(l, V(l, 25)) + ', được hỗ trợ học nghề'; }, ai: { w: 1.4 }, run: function (l, r, log) { H.cash(l, V(l, 25), 'Trợ cấp xuất ngũ, tạo việc làm'); l.flags.milVet = true; log('Nhận trợ cấp xuất ngũ ' + mo(l, V(l, 25)) + ', chia tay đồng đội trong nước mắt rồi về quê.', 'good'); H.mem(l, 'Buổi chia tay đồng đội ngày ra quân, ai cũng khóc.', 5); } },
-      { k: 'si_quan', l: 'Thi vào trường sĩ quan quân đội', h: 'Học 4 năm, ra trường mang quân hàm Thiếu úy', req: function (l) { return l.edu >= 3; }, ai: { amb: 1.2, w: 0.5 }, run: function (l, r, log) { if (ch(r, 0.35 + (l.st.kno - 60) / 150 + (l.flags.milGood ? 0.15 : 0))) { l.flags.military = null; l.school = 'police'; l.schoolEnd = l.age + 4; l.flags.policeTrack = 'quan_doi'; log('Thi đỗ trường sĩ quan — từ người lính nghĩa vụ trở thành học viên sĩ quan.', 'big'); fx(l, { hap: 8 }); } else { H.cash(l, V(l, 25), 'Trợ cấp xuất ngũ, tạo việc làm'); log('Thi trượt trường sĩ quan, đành xuất ngũ về địa phương với trợ cấp ' + mo(l, V(l, 25)) + '.', 'neutral'); } } },
+      { k: 'si_quan', l: 'Thi vào trường sĩ quan quân đội', h: 'Học 4 năm, ra trường mang quân hàm Thiếu úy', req: function (l) { return l.edu >= 3; }, ai: { amb: 1.2, w: 0.5 }, run: function (l, r, log) { if (ch(r, 0.35 + (l.st.kno - 60) / 150 + (l.flags.milGood ? 0.15 : 0))) { l.flags.military = null; l.school = 'police'; l.schoolEnd = l.age + 4; l.flags.policeTrack = 'quan_doi'; log('Thi đỗ trường sĩ quan — từ người lính nghĩa vụ trở thành học viên sĩ quan.', 'big'); fx(l, { hap: 8 }); } else { var x = V(l, E.milAllowance ? E.milAllowance(l) : 25); H.cash(l, x, 'Trợ cấp xuất ngũ, tạo việc làm'); l.flags.milVet = true; log('Thi trượt trường sĩ quan, đành xuất ngũ về địa phương với trợ cấp ' + mo(l, x) + '.', 'neutral'); } } },
       { k: 'cn', l: 'Ở lại làm quân nhân chuyên nghiệp', h: 'Có lương, chế độ, BHXH', ai: { w: 0.5 }, run: function (l, r, log) { l.flags.military = null; E.startJob(l, 'quan_doi', r, log, true); log('Đăng ký ở lại đơn vị làm quân nhân chuyên nghiệp ' + (l.flags.milRole ? 'ngành ' + l.flags.milRole : '') + '.', 'big'); fx(l, { hap: 4 }); } }
     ]
   });
