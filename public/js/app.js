@@ -909,7 +909,7 @@
     modal('<div class="prof-top">' + E.art.avatar(l) + '<div><div class="agep">Hồ sơ chi tiết · ' + l.age + ' tuổi · năm ' + (l.birthYear + l.age) + '</div>' +
       '<h2 style="margin:2px 0 0">' + esc(l.name) + '</h2><div class="small muted">' + esc(sexWord(l)) + ' · ' + esc(currentPlace(l)) + '</div></div></div>' +
       '<div class="prof-grid">' + sec('Công việc & mức lương', ul(job)) + sec('Thu nhập năm vừa qua', ul(inc)) + sec('Tài sản', ul(as)) + sec('Năng khiếu & sở thích', ul(hob)) +
-      sec('Học vấn & bằng cấp', ul(ed)) + sec('Chứng chỉ & bằng lái', ul(ct)) + sec('Thành tựu trong đời', ul(ach), true) + '</div>' +
+      sec('Học vấn & bằng cấp', ul(ed)) + sec('Chứng chỉ & bằng lái', ul(ct)) + ((P.workStats && P.workStats.length) || P.medSpec ? sec('Số liệu nghề nghiệp', ul((P.medSpec ? [li('Chuyên khoa: ' + esc(P.medSpec))] : []).concat((P.workStats || []).map(function (x) { return li(esc(x)); })))) : '') + sec('Thành tựu trong đời', ul(ach), true) + '</div>' +
       '<div class="opts" style="margin-top:14px"><button class="opt" data-x="close"><b>Đóng hồ sơ</b></button></div>',
       function (box) {
         $('[data-x="close"]', box).onclick = function () {

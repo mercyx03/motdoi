@@ -138,7 +138,7 @@
     var d = um0.apply(this, arguments), S = schoolsFor(l);
     if (!S.length) return d;
     d.data.ts = S.map(function (s) { return s[0]; });
-    var add = S.map(function (s) { var p = admitP(l, s); return { k: 'nk_' + s[0], l: (s[6] === 'cd' ? 'Học ' : 'Thi năng khiếu vào ') + s[1] + ' — ngành ' + s[4], h: (s[6] === 'cd' ? '3 năm · ' : '4 năm · ') + s[8] + ' · ' + pctTxt(p) + ' · ra trường có thể làm: ' + jobNames(s[7]) }; });
+    var add = S.map(function (s) { var p = admitP(l, s); return { k: 'nk_' + s[0], l: (s[6] === 'cd' ? 'Học ' : 'Thi năng khiếu vào ') + s[1] + ' — ngành ' + s[4], h: (s[6] === 'cd' ? '2 năm · ' : '4 năm · ') + s[8] + ' · ' + pctTxt(p) + ' · ra trường có thể làm: ' + jobNames(s[7]) }; });
     var i = d.opts.findIndex(function (o) { return o.k === 'police'; }); if (i < 0) i = d.opts.findIndex(function (o) { return o.k === 'voc'; });
     Array.prototype.splice.apply(d.opts, [i < 0 ? d.opts.length : i, 0].concat(add));
     d.text += ' Thầy cô gợi ý: với năng khiếu ' + E.talentText(l) + ', bạn có thể thi vào trường chuyên ngành' + (l.flags.tDinhHuong === 'khac' ? ' — dù trước đây bạn đã chọn hướng khác, cánh cửa vẫn mở.' : '.');
@@ -159,7 +159,7 @@
     var p = admitP(l, s);
     if (!ch(r, p)) { log('Trượt kỳ thi năng khiếu vào ' + s[1] + '. ' + pick(r, ['Phần thi năng khiếu chưa đủ điểm chuẩn.', 'Thiếu nửa điểm, về nhà khóc cả buổi.', 'Hội đồng nhận xét: "Có tố chất nhưng cần luyện thêm."']), 'bad'); fx(l, { hap: -6 }); l.pending.unshift(E.DEC.uniFail.make(l)); return; }
     var city = s[2] || (l.city || 'tỉnh nhà');
-    l.school = s[6] === 'cd' ? 'voc' : 'uni'; l.schoolEnd = l.age + (s[6] === 'cd' ? 3 : 4);
+    l.school = s[6] === 'cd' ? 'voc' : 'uni'; l.schoolEnd = l.age + (s[6] === 'cd' ? 2 : 4); // v3.9: cao đẳng 2 năm
     l.major = s[3]; l.majorName = s[4]; l.uniTier = s[5] >= 0.55 ? 1.2 : 1.05; l.uniCity = city;
     if (s[2] && s[2] !== homeCity(l)) l.cityStudent = { city: city, since: l.age };
     l.flags.tSchool = { id: s[0], n: s[1], mn: s[4], jobs: s[7], cd: s[6] === 'cd', at: l.age };

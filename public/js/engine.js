@@ -1338,7 +1338,7 @@
       var seenN = scN[T.id] || 0;
       if (!T.rep && seenN >= (T.max || 3)) continue;
       var pv = life.flags.prevSeen || {}; // v3.4: chuyện đã gặp ở các đời trước thì đời này ít gặp lại hơn
-      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.6 : 1);
+      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
       if (r() < pr && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
 
@@ -1665,7 +1665,7 @@
       if (r() < eduP(life).lower) { life.school = 'lower'; log('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.', 'neutral'); }
       else { life.school = null; log('Học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
-    if (life.school && life.schoolEnd != null && a + 1 >= life.schoolEnd) {
+    if (life.school && life.schoolEnd != null && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
       var sc = life.school; life.school = null; life.schoolEnd = null;
       if (sc === 'upper' || sc === 'priv') {
         life.edu = Math.max(life.edu, 3);

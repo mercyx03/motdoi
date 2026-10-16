@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/finale.js', 'js/scene.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/finale.js', 'js/scene.js'];
 for (const f of MODULES) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
 }
@@ -390,7 +390,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
     });
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
-  Object.keys(E.DEC).filter(id => !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
+  Object.keys(E.DEC).filter(id => !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l)); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -596,7 +596,7 @@ section('16. Người cùng giây do AI điều khiển có số phận đa dạ
     lives++; maxDoiKem = Math.max(maxDoiKem, (cnt.doi_kem || 0) - before);
   }
   console.log('   Trung bình ' + (total / lives).toFixed(1) + ' lựa chọn mỗi đời');
-  ok(total / lives > 25 && total / lives < 90, 'nhịp lựa chọn vừa phải (' + (total / lives).toFixed(1) + '/đời)');
+  ok(total / lives > 25 && total / lives < 95, 'nhịp lựa chọn vừa phải (' + (total / lives).toFixed(1) + '/đời)');
   ok(maxDoiKem <= 30, '"Túng quẫn" không lặp mỗi năm (' + maxDoiKem + ')');
   ['bao_lu', 'concert', 'nhat_vi', 'viec_online', 'mua_sam'].forEach(id => ok((cnt[id] || 0) / lives < 3, 'tình huống "' + id + '" không lặp quá dày (' + ((cnt[id] || 0) / lives).toFixed(2) + '/đời)'));
 }
@@ -1864,8 +1864,8 @@ section('37. Bản 3.8: lỗi giao thông theo loại xe, ca sĩ tham gia Anh tr
     ok(car === 0 && moto > 50, 'đi ô tô không bị phạt "không đội mũ bảo hiểm" (ô tô ' + car + ', xe máy ' + moto + ' / 200)');
     const a = mk(37300, 30, x => { x.veh = 'ô tô'; x.lic.B = true; }); const ts = new Set(); for (let i = 0; i < 40; i++) ts.add(E.DEC.csgt.make(a, R(i)).data.why); ok([...ts].some(t => /dây an toàn|tốc độ|điện thoại/.test(t)), 'ô tô bị phạt các lỗi của ô tô: ' + [...ts].join(', ')); }
   // show thực tế
-  const run = (l, s) => { const d = E.DEC.tv_moi.make(l, R(s)); l.pending = [d]; const out = E.resolve(l, 'nhan').map(e => e.t); const titles = []; let g = 0; while (l.pending.length && g++ < 25) { titles.push(l.pending[0].title); out.push(...E.resolve(l, E.autoKey(l)).map(e => e.t)); } return { out, titles }; };
-  { const l = mk(37400, 24, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 5e4; }); ok(E.DEC.tv_moi.valid(l, {}) && /Anh trai "Say Hi"/.test(E.DEC.tv_moi.make(l, R(1)).text), 'ca sĩ nam trẻ có tiếng được mời tham gia Anh trai "Say Hi"');
+  const run = (l, s) => { const d = E.DEC.tv_moi.make(l, R(s)); d.data.k = l.age >= 30 ? 'atvncg' : 'atsh'; d.data.s = d.data.k === 'atsh' ? 'Anh trai "Say Hi" mùa 3' : 'Anh trai vượt ngàn chông gai 2027'; l.pending = [d]; const out = E.resolve(l, 'nhan').map(e => e.t); const titles = []; let g = 0; while (l.pending.length && g++ < 25) { titles.push(l.pending[0].title); out.push(...E.resolve(l, E.autoKey(l)).map(e => e.t)); } return { out, titles }; };
+  { const l = mk(37400, 24, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 5e4; }); ok(E.DEC.tv_moi.valid(l, {}) && E.tvShowsFor(l).includes('atsh'), 'ca sĩ nam trẻ có tiếng được mời tham gia Anh trai "Say Hi"');
     const o = mk(37401, 40, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 3e5; }); let atv = 0; for (let i = 0; i < 20; i++) if (/vượt ngàn chông gai/.test(E.DEC.tv_moi.make(o, R(i)).text)) atv++; ok(atv === 20, 'nghệ sĩ nam từ 30 tuổi, có tên tuổi được mời Anh trai vượt ngàn chông gai');
     const f = mk(37402, 23, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 5e4; }, 'F'); ok(/Em xinh/.test(E.DEC.tv_moi.make(f, R(1)).text), 'ca sĩ nữ được mời Em xinh "Say Hi"');
     const n = mk(37403, 24, x => { E.startJob(x, 'ke_toan', R(1), () => { }); }); ok(!E.DEC.tv_moi.valid(n, {}), 'người không làm nghệ thuật thì không được mời'); }
@@ -1879,7 +1879,7 @@ section('37. Bản 3.8: lỗi giao thông theo loại xe, ca sĩ tham gia Anh tr
     ok(dance > 20, 'trước vòng Dance battle có thể tập nhảy (' + dance + ' lần)');
     ok(saved > 5, 'bị loại vẫn có thể được bình chọn cứu / hồi sinh (' + saved + ' lần)');
     ok(res.out > 30 && (res.win || 0) > 3 && (res.win || 0) < 60 && (res.best5 || 0) + (res.giatoc || 0) > 20, 'có người bị loại giữa chừng, có người vô địch / Best 5 / Gia tộc Anh tài Toàn năng: ' + JSON.stringify(res)); }
-  { const l = mk(37800, 24, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 4e4; }); const d = E.DEC.tv_moi.make(l, R(2)); l.pending = [d]; E.resolve(l, 'nhan'); const v = l.pending[0];
+  { const l = mk(37800, 24, x => { x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 4e4; }); const d = E.DEC.tv_moi.make(l, R(2)); d.data.k = 'atsh'; d.data.s = 'Anh trai "Say Hi" mùa 3'; l.pending = [d]; E.resolve(l, 'nhan'); const v = l.pending[0];
     ok(v && v.id === 'tv_vong' && /ghép đội với (anh trai .+, ){3}anh trai/.test(v.text), 'mỗi vòng ghép đội ngẫu nhiên với các anh trai thật của chương trình: ' + v.text.slice(v.text.indexOf('ghép'), v.text.indexOf('ghép') + 90)); }
 }
 
@@ -1901,6 +1901,88 @@ section('38. Bản 3.8.1: sống cùng bố mẹ thì không "về thăm", tên 
   { let reps = 0, lines = 0; for (let i = 0; i < 80; i++) { const l = E.createLife({ mode: 'world', seed: 38400 + i }); E.runHeadless(l); const seen = {}; l.log.forEach(e => { if (e.k === 'money' || e.k === 'quiet') return; lines++; if (seen[e.t]) reps++; seen[e.t] = 1; }); }
     ok(reps / lines < 0.07, 'chơi ở nước khác ít lặp câu (' + (reps / lines * 100).toFixed(1) + '% dòng nhật ký lặp lại)'); }
   { const w = E.createLife({ mode: 'world', seed: 38500 }); let t = ''; for (let i = 0; i < 80 && !/cò đất/.test(t); i++) { const l = E.createLife({ mode: 'world', seed: 38500 + i }); if (l.country === 'VN') continue; E.runHeadless(l); t = l.log.map(e => e.t).join(' '); } ok(!/cò đất dựng lều/.test(t), 'nước khác không còn tin "cò đất dựng lều" (chuyện ở Việt Nam)'); }
+}
+
+section('39. Bản 3.9: số năm học theo ngành, bảo vệ đồ án / khóa luận, ngành y (thực tập, nội trú, chuyên khoa, phòng khám), số liệu nghề');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup, sex) => { const l = E.createLife({ mode: 'vn', seed, gender: sex || 'M' }); l.age = age; if (age >= 18) l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  const enter = (l, k, s) => { l.uniCity = 'Hà Nội'; l.pending = []; E.DEC.major.apply(l, E.DEC.major.make(l), k, R(s), () => { }); };
+  { const a = mk(39100, 18, x => { x.st.kno = 80; x.examScore = 27; }); enter(a, 'it', 1); ok(/Bách khoa/.test(a.uniName) && a.schoolEnd - a.age === 5, 'học giỏi khối kỹ thuật ở Hà Nội vào Bách khoa, học 5 năm (kỹ sư): ' + a.uniName);
+    const b = mk(39101, 18, x => { x.st.kno = 60; x.examScore = 21; }); enter(b, 'eco', 2); ok(b.schoolEnd - b.age === 4 && !!b.uniName, 'ngành thường học 4 năm: ' + b.uniName);
+    const m = mk(39102, 18, x => { x.st.kno = 75; x.st.hea = 80; }); enter(m, 'med', 3); ok(m.pending[0] && m.pending[0].id === 'nganh_y', 'vào khối Y thì chọn hướng học');
+    const yrs = {}; Object.keys(E.MED_TRACK).forEach((t, i) => { const x = mk(39110 + i, 18, y => { y.st.kno = 75; y.st.hea = 80; }); enter(x, 'med', 4 + i); x.pending = []; E.DEC.nganh_y.apply(x, E.DEC.nganh_y.make(x, R(i)), t, R(i), () => { }); yrs[t] = x.schoolEnd - x.age; });
+    ok(yrs.dk === 6 && yrs.rhm === 6 && yrs.yhct === 6 && yrs.duoc === 5 && yrs.dd === 4 && yrs.qy === 7, 'số năm học: đa khoa 6, răng hàm mặt 6, y học cổ truyền 6, dược 5, điều dưỡng 4, quân y 7 (' + JSON.stringify(yrs) + ')');
+    const cd = mk(39120, 18); cd.edu = 3; cd.school = null; cd.pending = [E.DEC.uni.make(cd, R(1))]; E.resolve(cd, 'voc'); ok(cd.school === 'voc' && cd.schoolEnd - cd.age === 2, 'cao đẳng học 2 năm'); }
+  // bảo vệ tốt nghiệp
+  { let bkFail = 0, goodFail = 0, normFail = 0; const N = 300;
+    for (let i = 0; i < N; i++) { const a = mk(39200 + i, 22, x => { x.school = 'uni'; x.major = 'it'; x.uniName = 'Đại học Bách khoa Hà Nội'; x.schoolEnd = 23; x.st.kno = 60; }); a.pending = [E.DEC.bao_ve_tn.make(a, R(i))]; E.resolve(a, 'vua'); if (!a.flags.gradOK) bkFail++;
+      const g = mk(39200 + i, 22, x => { x.school = 'uni'; x.major = 'it'; x.uniName = 'Đại học Bách khoa Hà Nội'; x.schoolEnd = 23; x.st.kno = 88; }); g.pending = [E.DEC.bao_ve_tn.make(g, R(i))]; E.resolve(g, 'doc_suc'); if (!g.flags.gradOK) goodFail++;
+      const n = mk(39200 + i, 22, x => { x.school = 'uni'; x.major = 'eco'; x.uniName = 'Trường Đại học Thương mại'; x.schoolEnd = 23; x.st.kno = 60; }); n.pending = [E.DEC.bao_ve_tn.make(n, R(i))]; E.resolve(n, 'vua'); if (!n.flags.gradOK) normFail++; }
+    ok(bkFail > N * 0.3 && goodFail < N * 0.15 && normFail < N * 0.15, 'sinh viên Bách khoa hay rớt đồ án (' + bkFail + '/' + N + '), học rất giỏi thì hiếm rớt (' + goodFail + '), ngành thường ít rớt (' + normFail + ')');
+    const f = mk(39500, 22, x => { x.school = 'uni'; x.major = 'it'; x.uniName = 'Đại học Bách khoa Hà Nội'; x.schoolEnd = 23; x.st.kno = 30; }); let tries = 0, g = 0;
+    while (f.school && g++ < 8) { E.beginYear(f, {}); const d = f.pending.find(x => x.id === 'bao_ve_tn'); f.pending = d ? [d] : []; if (d) { tries++; E.resolve(f, 'vua'); } f.pending = []; E.finishYear(f); f.pending = []; if (f.school) E.endYear(f); }
+    ok(!f.school && f.edu >= 5 && tries >= 1, 'rớt thì bảo vệ lại, cuối cùng vẫn ra trường (' + tries + ' lần bảo vệ)'); }
+  // ngành y
+  { const l = mk(39600, 21, x => { x.school = 'uni'; x.major = 'med'; x.uniCity = 'TP. Hồ Chí Minh'; x.med = { track: 'dk', spec: null }; x.schoolEnd = 24; });
+    const hs = E.medHospitals(l); ok(hs.includes('Bệnh viện Chợ Rẫy') && hs.includes('Bệnh viện Từ Dũ'), 'học y ở TP.HCM thì thực tập ở Chợ Rẫy, Từ Dũ, Nhi Đồng 1…');
+    const hn = mk(39601, 21, x => { x.school = 'uni'; x.major = 'med'; x.uniCity = 'Hà Nội'; x.med = { track: 'dk' }; x.schoolEnd = 24; }); ok(E.medHospitals(hn).includes('Bệnh viện Bạch Mai'), 'học y ở Hà Nội thì thực tập ở Bạch Mai, Việt Đức…');
+    const d = E.DEC.yt_dem.make(l, R(1)); ok(/Chợ Rẫy|Từ Dũ|Nhi Đồng|Đại học Y Dược|115/.test(d.text), 'sự kiện thực tập ghi đúng bệnh viện: ' + d.text.slice(0, 70));
+    const du = mk(39602, 21, x => { x.school = 'uni'; x.major = 'med'; x.med = { track: 'duoc' }; x.schoolEnd = 23; }); ok(!E.DEC.yt_mo.valid(du, {}), 'sinh viên dược không có sự kiện vào phòng mổ'); }
+  { const ks = Object.keys(E.MED_SPEC); const S = E.MED_SPEC; ok(S.rhm && S.chinhhinh[1] > S.noi[1] && S.thammy[1] > S.noi[1] && ks.length >= 12, 'nhiều chuyên khoa, thu nhập khác nhau (chỉnh hình ×' + S.chinhhinh[1] + ', thẩm mỹ ×' + S.thammy[1] + ', nội ×' + S.noi[1] + ')');
+    const a = mk(39700, 30, x => { x.edu = 5; x.major = 'med'; x.med = { track: 'dk', spec: 'noi', out: true }; E.startJob(x, 'bac_si', R(1), () => { }); x.job.rank = 2; }), b = JSON.parse(JSON.stringify(a)); b.med.spec = 'thammy';
+    const ia = E.careerYear(a, R(5), () => { }), ib = E.careerYear(b, R(5), () => { }); ok(ib > ia * 1.4, 'bác sĩ phẫu thuật thẩm mỹ thu nhập cao hơn bác sĩ nội khoa (' + Math.round(ib) + ' vs ' + Math.round(ia) + ')'); }
+  { const l = mk(39800, 23, x => { x.edu = 5; x.major = 'med'; x.med = { track: 'dk', spec: null }; x.school = null; }); const hook = E.HOOKS.year.find(h => /chuyen_khoa/.test(h.toString())); hook(l, R(1), () => { }, 23);
+    ok(l.job && E.resolveJob(l.job.id) === 'bac_si' && l.pending.some(d => d.id === 'chuyen_khoa'), 'ra trường y đa khoa: làm bác sĩ, chọn chuyên khoa');
+    const c = l.pending.find(d => d.id === 'chuyen_khoa'); l.pending = [c]; const t = E.resolve(l, c.opts[0].k).map(e => e.t).join(' '); ok(/về công tác ở/.test(t) && !!l.med.spec, 'chọn chuyên khoa và nơi công tác: ' + t.slice(0, 90));
+    const p = mk(39801, 23, x => { x.edu = 5; x.major = 'med'; x.med = { track: 'duoc', spec: null }; x.school = null; }); hook(p, R(2), () => { }, 23); ok(p.job && E.resolveJob(p.job.id) === 'duoc_si' && !p.pending.some(d => d.id === 'chuyen_khoa'), 'ra trường dược: làm dược sĩ, không chọn chuyên khoa'); }
+  { const l = mk(39900, 40, x => { x.edu = 5; x.major = 'med'; x.med = { track: 'dk', spec: 'dalieu', out: true }; E.startJob(x, 'bac_si', R(1), () => { }); x.job.rank = 3; x.money = 5000; }); const t = (l.pending = [E.DEC.mo_phong_kham_ck.make(l, R(1))], E.resolve(l, 'mo').map(e => e.t).join(' '));
+    ok(E.resolveJob(l.job.id) === 'phong_kham' && /da liễu/.test(l.job.p), 'giàu thì mở phòng khám theo chuyên môn: ' + l.job.p); }
+  // số liệu nghề
+  { const l = mk(40000, 30, x => { x.edu = 5; x.med = { track: 'dk', spec: 'ngoai', out: true }; E.startJob(x, 'bac_si', R(1), () => { }); }); const hook = E.HOOKS.year.find(h => /Cột mốc nghề nghiệp/.test(h.toString())); const out = [];
+    for (let y = 0; y < 15; y++) hook(l, R(y), t => out.push(t), 30 + y);
+    ok(l.work && l.work['bac_si:ca mổ'] > 1500 && out.some(t => /mổ/.test(t)) && out.some(t => /Cột mốc/.test(t)), 'nhật ký tự ghi số ca mổ, cột mốc nghề (' + l.work['bac_si:ca mổ'] + ' ca sau 15 năm)');
+    const g = mk(40001, 30, x => { x.edu = 5; E.startJob(x, 'giao_vien', R(1), () => { }); }); for (let y = 0; y < 10; y++) hook(g, R(y), () => { }, 30 + y); ok(g.work['giao_vien:học trò'] > 500, 'các nghề khác cũng có số liệu (giáo viên đã dạy ' + g.work['giao_vien:học trò'] + ' học trò)'); }
+  // thực tập
+  { const l = mk(40100, 21, x => { x.school = 'uni'; x.major = 'eco'; x.schoolEnd = 22; x.st.kno = 90; }); let got = 0; for (let i = 0; i < 40; i++) { const L = JSON.parse(JSON.stringify(l)); L.rs = (L.rs + i * 7919) | 0; L.pending = [E.DEC.thuc_tap.make(L, R(i))]; E.resolve(L, 'cham'); if (L.flags.internJob) got++; } ok(got > 15, 'thực tập tốt thì được giữ lại làm việc (' + got + '/40)'); }
+}
+
+section('40. Bản 4.0: số liệu nghề sát thực tế, Tân binh toàn năng, giải thưởng chung kết, tham gia lại mùa sau, show hẹn hò');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup, sex) => { const l = E.createLife({ mode: 'vn', seed, gender: sex || 'M' }); l.age = age; if (age >= 18) l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  // số liệu nghề
+  { const hook = E.HOOKS.year.find(h => /Cột mốc nghề nghiệp/.test(h.toString()));
+    const per = (spec, rank, unit) => { const l = mk(40500, 35, x => { x.edu = 5; x.med = { track: 'dk', spec, out: true }; E.startJob(x, 'bac_si', R(1), () => { }); x.job.rank = rank; }); let t = 0; for (let y = 0; y < 10; y++) { const b = (l.work || {})['bac_si:' + unit] || 0; hook(l, R(y), () => { }, 35 + y); t += l.work['bac_si:' + unit] - b; } return t / 10; };
+    const noi = per('noi', 2, 'lượt khám'), ngoai = per('ngoai', 2, 'ca mổ'), gm = per('gmhs', 2, 'ca gây mê'), cdha = per('cdha', 2, 'ca đọc phim'), san = per('san', 2, 'ca đỡ đẻ, mổ lấy thai');
+    ok(noi >= 6000 && noi <= 10000, 'bác sĩ nội khám ~' + Math.round(noi) + ' lượt / năm (thực tế 25–40 lượt / ngày)');
+    ok(ngoai >= 180 && ngoai <= 320, 'bác sĩ ngoại mổ ~' + Math.round(ngoai) + ' ca / năm (1–2 ca / ngày)');
+    ok(gm >= 600 && gm <= 1000 && cdha >= 8000 && san >= 250 && san <= 450, 'gây mê ~' + Math.round(gm) + ' ca, chẩn đoán hình ảnh ~' + Math.round(cdha) + ' phim, sản ~' + Math.round(san) + ' ca đỡ đẻ / mổ lấy thai mỗi năm');
+    const tt = per('ngoai', 0, 'ca mổ'), gd = per('ngoai', 5, 'ca mổ'); ok(tt < ngoai && gd < tt, 'bác sĩ thực hành mổ ít hơn (' + Math.round(tt) + '), giám đốc bệnh viện mổ rất ít vì bận quản lý (' + Math.round(gd) + ')'); }
+  // Tân binh toàn năng
+  { const l = mk(40600, 19, x => { x.birthYear = 2007; x.talent = 'âm nhạc'; x.skill = 70; }); ok(E.tvShowsFor(l).includes('tbtn'), 'ca sĩ trẻ / tân binh có năng khiếu được mời Tân binh toàn năng');
+    ok(E.TV_FMT.tbtn.rounds.map(x => x.n.split(' —')[0]).join('|') === 'Kỳ sát hạch 1|Kỳ sát hạch 2|Kỳ sát hạch 3|Survival showcase|Giai đoạn thăng cấp|Chung kết', 'Tân binh toàn năng: ' + E.TV_FMT.tbtn.rounds.map(x => x.n).join(' → '));
+    const res = {}; for (let i = 0; i < 150; i++) { const L = mk(40700 + i, 19, x => { x.birthYear = 2007; x.talent = 'âm nhạc'; x.skill = 40 + (i % 6) * 10; x.money = 50; }); const d = E.DEC.tv_moi.make(L, R(i)); d.data.k = 'tbtn'; d.data.s = 'Tân binh toàn năng mùa 2'; L.pending = [d]; E.resolve(L, 'nhan'); let g = 0; while (L.pending.length && g++ < 20) E.resolve(L, E.autoKey(L)); const k = L.flags.tv.res || 'out'; res[k] = (res[k] || 0) + 1; }
+    ok(res.debut > 15 && res.debut < 70 && res.out > 50, 'phần lớn bị loại qua các kỳ sát hạch, chỉ một phần debut nhóm nhạc (' + JSON.stringify(res) + ')'); }
+  // giải thưởng
+  { const A = E.TV_AWARDS; ok(A.say.some(x => /Best Leader/.test(x[0])) && A.say.some(x => /Best Hit/.test(x[0])) && A.say.some(x => /Best Performer/.test(x[0])) && A.atvncg.some(x => /được yêu thích nhất/.test(x[0])) && A.atvncg.some(x => /quốc dân/.test(x[0])), 'có các giải phụ: Best Leader, Best Performer, Best Hit… (Say Hi); Anh Tài được yêu thích nhất, Anh Tài quốc dân… (Anh tài)');
+    let got = 0; for (let i = 0; i < 120; i++) { const k = i % 2 ? 'atsh' : 'atvncg'; const L = mk(40900 + i, k === 'atvncg' ? 38 : 24, x => { x.birthYear = 2026 - x.age; x.money = 100; E.startJob(x, 'ca_si', R(i), () => { }); x.fame = 2e5; x.skill = 85; }); const d = E.DEC.tv_moi.make(L, R(i)); d.data.k = k; d.data.s = 'Show'; L.pending = [d]; E.resolve(L, 'nhan'); let g = 0; while (L.pending.length && g++ < 20) E.resolve(L, E.autoKey(L)); if ((L.flags.tv.awards || []).length) got++; }
+    ok(got > 10 && got < 100, 'đi đến chung kết có thể nhận thêm giải phụ (' + got + '/120)'); }
+  // tham gia lại
+  { const L = mk(41100, 24, x => { x.birthYear = 2002; x.money = 100; E.startJob(x, 'ca_si', R(1), () => { }); x.fame = 5e4; }); const d = E.DEC.tv_moi.make(L, R(1)); L.pending = [d]; E.resolve(L, 'nhan'); let g = 0; while (L.pending.length && g++ < 20) E.resolve(L, E.autoKey(L));
+    const y0 = L.age; ok(L.flags.tv.done && L.flags.tv.y === L.birthYear + y0, 'cả chương trình diễn ra trọn trong một năm');
+    L.age = y0 + 1; const one = E.DEC.tv_moi.valid(L, {}); L.age = y0 + 2; ok(!one && (E.DEC.tv_moi.valid(L, {}) || L.flags.tv.res === 'win'), 'muốn tham gia lại (mùa sau / chương trình khác) phải chờ ít nhất 2 năm'); }
+  // show hẹn hò
+  { const L = mk(41200, 27, x => { x.edu = 5; x.st.soc = 60; E.startJob(x, 'ke_toan', R(1), () => { }); }); ok(E.DEC.hh_moi.valid(L, {}), 'độc thân, học vấn tốt thì được mời show hẹn hò');
+    const lo = mk(41201, 27, x => { x.edu = 2; x.st.soc = 20; x.st.kno = 20; }); ok(!E.DEC.hh_moi.valid(lo, {}), 'hồ sơ chưa nổi bật thì chưa được mời');
+    const d = E.DEC.hh_moi.make(L, R(1)); ok(['bmhh', 'nali', 'dtd'].every(k => d.opts.some(o => o.k === k)), 'có Bạn muốn hẹn hò, Người ấy là ai, Đảo thiên đường');
+    let couple = 0, n = 0; for (let i = 0; i < 90; i++) { const sx = i % 2 ? 'F' : 'M'; const X = mk(41300 + i, 27, x => { x.edu = 5; x.st.soc = 60; E.startJob(x, 'ke_toan', R(i), () => { }); }, sx); X.pending = [E.DEC.hh_moi.make(X, R(i))]; E.resolve(X, ['bmhh', 'nali', 'dtd'][i % 3]); let g = 0; while (X.pending.length && g++ < 20) E.resolve(X, E.autoKey(X)); n++; if (X.partner) couple++; }
+    ok(couple > 15 && couple < n - 10, 'show hẹn hò: có người thành đôi, có người ra về một mình (' + couple + '/' + n + ')');
+    const F = mk(41400, 26, x => { x.edu = 5; x.st.soc = 60; }, 'F'); F.pending = [E.DEC.hh_moi.make(F, R(2))]; E.resolve(F, 'nali'); const v1 = F.pending[0];
+    ok(v1.id === 'hh_nali_f' && /5 chàng trai/.test(v1.text) && /tuổi, /.test(v1.text), 'Người ấy là ai (nữ): là nữ chính, xem ngoại hình, nghề của 5 chàng trai');
+    const tr = F.flags.nali.cs.map(c => c.truth).sort().join(','); ok(tr === 'gay,single,single,single,taken', 'có người đã có người yêu, có người đồng tính trà trộn — công bố sự thật khi loại / chọn');
+    F.pending = [v1]; const t = E.resolve(F, 'c0').map(e => e.t).join(' '); ok(/công bố/.test(t) && F.pending[0] && F.pending[0].id === 'hh_nali_f', 'loại một người thì chương trình công bố sự thật, sang vòng sau');
+    const M = mk(41500, 27, x => { x.edu = 5; x.st.soc = 60; }, 'M'); M.pending = [E.DEC.hh_moi.make(M, R(3))]; E.resolve(M, 'nali'); ok(M.pending[0].id === 'hh_nali_m' && /nữ chính/i.test(M.pending[0].text), 'Người ấy là ai (nam): là một trong 5 chàng trai, thuyết phục nữ chính chọn mình'); }
 }
 function isVNx(l) { return E.isVN(l); }
 

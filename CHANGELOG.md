@@ -4,6 +4,119 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v4.0.0 — 16/10/2026
+
+Bản lớn, gộp toàn bộ v3.9.0 (đại học theo ngành, bảo vệ tốt nghiệp, ngành Y, số liệu nghề — xem bên dưới) cùng các nội dung mới.
+
+### Số liệu nghề sát thực tế
+- Số liệu theo thực tế bệnh viện công ở Việt Nam (~250 ngày làm việc / năm):
+
+  | Chuyên khoa | Mỗi năm |
+  |---|---|
+  | Nội | 6.000–10.000 lượt khám (25–40 lượt / ngày) |
+  | Nhi | 7.000–12.000 lượt khám |
+  | Da liễu | 8.000–14.000 lượt khám |
+  | Ngoại | 180–320 ca mổ |
+  | Chấn thương chỉnh hình | 220–380 ca mổ |
+  | Phẫu thuật thẩm mỹ | 150–300 ca |
+  | Sản | 250–450 ca đỡ đẻ, mổ lấy thai |
+  | Gây mê hồi sức | 600–1.000 ca gây mê |
+  | Chẩn đoán hình ảnh | 8.000–14.000 phim |
+
+- Bác sĩ thực hành làm dưới sự giám sát nên ít ca hơn. Trưởng khoa, giám đốc bệnh viện bận quản lý nên ít ca chuyên môn.
+- Các nghề khác chỉnh lại cho sát thực tế:
+  - nha sĩ 1.200–2.500 ca răng;
+  - điều dưỡng 60–100 ca trực đêm;
+  - dược sĩ 12.000–25.000 đơn thuốc;
+  - giáo viên 120–250 học trò mỗi năm học;
+  - tài xế công nghệ 4.000–7.000 cuốc;
+  - shipper 9.000–16.000 đơn;
+  - đầu bếp 25.000–60.000 suất ăn.
+
+### Tân binh toàn năng
+- Nam ca sĩ trẻ / tân binh 16–24 tuổi (hoặc có năng khiếu âm nhạc) có thể được mời.
+- Thể thức: Kỳ sát hạch 1 (đánh giá đầu vào) → Kỳ sát hạch 2 → Kỳ sát hạch 3 (vũ đạo, có thể tập nhảy trước) → Survival showcase (chọn đội hình thăng cấp) → Giai đoạn thăng cấp (đối đầu nhóm nhạc quốc tế) → Chung kết – Sân khấu tinh hoa (chọn đội hình debut 7 thành viên).
+- Phần lớn bị loại qua các kỳ sát hạch; chỉ khoảng 1/4 được debut nhóm nhạc.
+
+### Giải thưởng chung kết
+- **Anh trai / Em xinh / Tinh hà "Say Hi":** quán quân, Best 5, cùng các giải phụ: The Best Leader, The Best Performer, The Best Group Performance, The Best Transformer, The Best Showcase, The Best Hit. Quán quân Tinh hà nhận giải 1 tỷ đồng.
+- **Anh trai vượt ngàn chông gai:**
+  - Gia tộc Anh tài Toàn năng, Thủ lĩnh Gia tộc, danh hiệu Chiến tướng (từ 2026).
+  - Các giải bình chọn: Anh Tài được yêu thích nhất, Anh Tài quốc dân, Anh Tài có điệu nhảy sexy, Nam thần giải trí, Anh Tài truyền cảm hứng, Anh Tài năng lượng, Anh Tài ấm áp.
+- **Tân binh toàn năng:** Tân binh dẫn đầu bảng điểm cá nhân (được diễn solo ở chung kết), Tân binh được yêu thích nhất.
+
+### Tham gia show
+- Cả chương trình (các vòng thi, nhật ký) diễn ra trọn trong một năm.
+- Có thể tham gia lại mùa sau hoặc chương trình khác sau ít nhất 2 năm, tối đa 3 lần trong đời. Đã vô địch / debut thì không thi lại chính chương trình đó.
+- Tinh hà "Say Hi" có trong danh sách chương trình từ năm 2026.
+- Chuyện đã gặp ở 3 đời gần nhất giờ càng ít gặp lại ở đời mới.
+
+### Show hẹn hò trên truyền hình
+- Độc thân, 20–42 tuổi, hồ sơ nổi bật (học vấn, việc làm, giao tiếp, danh tiếng) thì được bạn bè đăng ký hoặc tự đăng ký.
+- **Bạn muốn hẹn hò:** ngồi sau hàng rào trái tim, giới thiệu bản thân, người thân góp ý, 2 phút trò chuyện rồi cùng bấm nút. Cả hai bấm thì thành đôi.
+- **Người ấy là ai:**
+  - Nữ tham gia: là nữ chính, xem ngoại hình, phong cách, nghề nghiệp của 5 chàng trai.
+  - Mini game 3 vòng (ngoại hình & nghề → tài năng → câu hỏi riêng) để loại dần, có ban cố vấn đoán giúp (đúng hay sai tùy độ tinh ý).
+  - Mỗi lần loại, chương trình công bố sự thật: độc thân thật, đã có người yêu, hay là người đồng tính trà trộn.
+  - Chung cuộc chọn người ấy; độc thân và hợp nhau thì về với nhau.
+  - Nam tham gia: là một trong 5 chàng trai, qua 3 vòng (giới thiệu bản thân → tài năng → thuyết phục) cố gắng để nữ chính chọn mình.
+- **Đảo thiên đường** (đến 35 tuổi): sống chung trên đảo Phú Quốc với các bạn trẻ độc thân, thử thách vận động, thắng thì được hẹn hò ở khu nghỉ dưỡng "thiên đường". Ngày cuối cả hai cùng chọn nhau mới thành đôi.
+
+## v3.9.0 — 16/10/2026 (gộp vào v4.0.0)
+
+Giữ nguyên toàn bộ tính năng v3.8.1. Bản này làm theo góp ý của người chơi.
+
+### Sự kiện
+- Không xóa sự kiện nào. Mọi sự kiện vẫn xuất hiện ngẫu nhiên để mỗi đời mỗi khác.
+- Đã rà soát lại: sự kiện nghề nghiệp chỉ xảy ra với đúng nghề (hoặc nghề gần, VD người mẫu được mời đóng phim).
+
+### Đại học: số năm học theo ngành, bảo vệ tốt nghiệp
+- **Số năm học:**
+  - Ngành thường: 4 năm.
+  - Kỹ sư Bách khoa, Kiến trúc: 5 năm.
+  - Dược: 5 năm.
+  - Y đa khoa, Răng – Hàm – Mặt, Y học cổ truyền: 6 năm.
+  - Bác sĩ quân y (Học viện Quân y): 7 năm.
+  - Điều dưỡng: 4 năm.
+  - Cao đẳng: 2 năm.
+- **Có tên trường theo ngành và nơi học,** VD Đại học Bách khoa Hà Nội, Kinh tế Quốc dân, Đại học Y Hà Nội, Đại học Y Dược TP.HCM, Đại học Huế, Đại học Cần Thơ…
+- **Năm cuối phải bảo vệ đồ án / khóa luận** (ngành y thi tốt nghiệp lý thuyết, lâm sàng):
+  - Có thể rớt và phải học thêm một năm để bảo vệ lại.
+  - Sinh viên Bách khoa hay "dính" 1–2 lần, trừ khi học rất giỏi.
+  - Thuê người làm hộ thì dễ bị hội đồng phát hiện.
+- **Thực tập cuối khóa** (ngân hàng, công ty kiểm toán, văn phòng luật, trường THPT, công ty thiết kế…): thực tập tốt có thể được giữ lại làm chính thức sau khi ra trường.
+
+### Ngành Y
+- **Chọn hướng học:** bác sĩ đa khoa, răng hàm mặt, y học cổ truyền, dược, điều dưỡng, bác sĩ quân y.
+- **Thực tập ở bệnh viện lớn theo nơi học:**
+  - Hà Nội: Bạch Mai, Việt Đức, Bệnh viện K, Nhi Trung ương, Phụ sản Trung ương.
+  - TP.HCM: Chợ Rẫy, Từ Dũ, Nhi Đồng 1, Bệnh viện Đại học Y Dược, Nhân dân 115.
+  - Các tỉnh khác: Trung ương Huế, Đa khoa Trung ương Cần Thơ, Trung ương Thái Nguyên, Việt Tiệp…
+  - Quân y: Bệnh viện 108, 103, 175.
+- **Tình huống khi thực tập:** ca trực đêm đầu tiên, lần đầu vào phòng mổ (có khi choáng ngã), bệnh nhân đầu tiên ra đi, người nhà bệnh nhân quát tháo, tự tay ép tim cấp cứu.
+- **Thi bác sĩ nội trú** (năm cuối, học giỏi): đỗ thì học thêm 3 năm, ra trường chuyên môn vững.
+- **Chọn chuyên khoa** (bác sĩ đa khoa, quân y), thu nhập khác nhau:
+  - Cao hơn: phẫu thuật thẩm mỹ, chấn thương chỉnh hình, da liễu, tim mạch.
+  - Trung bình: nội, ngoại, sản, nhi, chẩn đoán hình ảnh, gây mê hồi sức, ung bướu, tâm thần.
+  - Răng hàm mặt vốn thu nhập cao.
+- **Về công tác đúng nơi theo chuyên khoa** (sản → Từ Dũ / Phụ sản Trung ương, nhi → Nhi Đồng 1 / Nhi Trung ương, ung bướu → Bệnh viện K…). Ra trường phải thực hành 18 tháng mới có chứng chỉ hành nghề.
+- **Giàu thì mở phòng khám** theo chuyên môn (nha khoa, da liễu, sản…).
+
+### Số liệu nghề tự ghi trong nhật ký (không phải lựa chọn)
+- Bác sĩ: đã khám bao nhiêu lượt bệnh nhân, mổ bao nhiêu ca. Nha sĩ: điều trị bao nhiêu ca răng. Có cột mốc (VD 10.000 lượt bệnh nhân, 1.000 ca mổ).
+- Các nghề khác cũng vậy:
+  - giáo viên, giảng viên (số học trò);
+  - luật sư, công an (vụ việc);
+  - tài xế công nghệ (cuốc xe), shipper (đơn hàng);
+  - đầu bếp (suất ăn), ca sĩ (show diễn);
+  - lập trình viên (dự án), kỹ sư xây dựng, kiến trúc sư (công trình);
+  - thợ tóc (lượt khách), nông dân (tấn lúa), phóng viên (bài báo);
+  - hướng dẫn viên (đoàn khách), môi giới nhà đất (giao dịch)…
+- Hồ sơ có mục "Số liệu nghề nghiệp" và chuyên khoa.
+
+### Sửa lỗi
+- Dược sĩ, nha sĩ, bác sĩ thú y có câu kể riêng thay vì "những ca trực đêm ở bệnh viện".
+
 ## v3.8.1 — 16/10/2026
 
 Sửa lỗi theo góp ý người chơi.

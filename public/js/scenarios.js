@@ -1579,7 +1579,7 @@
       worker: ['Ca sáng, ca đêm nối nhau ở xưởng.', 'Một năm tăng ca đều đặn, lưng bắt đầu đau mỏi.'],
       office: ['Một năm họp hành, deadline, cà phê sáng với đồng nghiệp.', 'Kẹt xe mỗi sáng, chạy KPI mỗi tháng.'],
       sale: ['Một năm chạy doanh số, có tháng thưởng đậm, có tháng trắng tay.'],
-      med: ['Những ca trực đêm ở bệnh viện, thấy đủ sinh ly tử biệt.'],
+      med: c.id === 'duoc_si' ? ['Một năm đứng quầy thuốc, tư vấn cho đủ kiểu khách.', 'Một năm kiểm kê, nhập thuốc, đối chiếu đơn từng hộp.'] : c.id === 'nha_si' ? ['Một năm cúi người bên ghế nha, tiếng máy khoan quen như tiếng nhạc.'] : c.id === 'thu_y' ? ['Một năm chữa cho đủ loài chó mèo, có hôm cả con lợn nái ở quê.'] : ['Những ca trực đêm ở bệnh viện, thấy đủ sinh ly tử biệt.', 'Một năm chạy đi chạy lại giữa phòng khám và khu nội trú.'],
       uniform: ['Một năm làm nhiệm vụ, kỷ luật và vất vả.'],
       edu: ['Thêm một khóa học trò ra trường, có đứa về thăm thầy cô.'],
       creator: ['Quay, dựng, đăng video — vòng lặp không hồi kết.'],
