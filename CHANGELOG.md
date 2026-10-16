@@ -4,6 +4,164 @@
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
 
+## v4.4.0 — 16/10/2026
+
+Bản lớn, gộp toàn bộ v4.2.0 và v4.3.0 (xem bên dưới) cùng các sửa lỗi mới theo góp ý của người chơi.
+
+### Thăng tiến đúng đặc thù từng nghề
+- Freelancer, làm tự do không còn "Được thăng chức". Thay vào đó: "Làm tự do không có ai thăng chức cho mình — nhưng tay nghề, uy tín lên dần, khách tìm đến đông hơn, nhận được việc lớn hơn."
+- Rà lại các nghề khác có cùng đặc thù:
+  - từ thợ, nhân viên lên chủ (thợ tóc → chủ salon, phụ hồ → chủ thầu…): "tích cóp đủ vốn và kinh nghiệm, mở cơ sở riêng";
+  - đã làm chủ (chủ quán → chủ chuỗi quán…): "làm ăn phát đạt, mở rộng quy mô";
+  - thợ thủ công, làm đẹp (thợ phụ → thợ chính): "lên tay nghề, được giao làm việc chính";
+  - tài xế công nghệ: "dành dụm mua được ô tô, chuyển sang chạy ô tô công nghệ";
+  - nghề tự do khác (nhiếp ảnh, xăm, makeup, MC, DJ, streamer, nông dân, ngư dân…): như freelancer;
+  - người làm thuê trong công ty, cơ quan vẫn "được thăng chức" như cũ.
+
+### Mua trả góp rõ ràng
+- Khi chọn mua xe trả góp, ghi rõ: trả trước bao nhiêu (30%), vay ai, lãi suất mỗi năm, góp mấy năm, mỗi năm và mỗi tháng phải góp bao nhiêu, tổng phải trả và tổng tiền lãi.
+  - ô tô: vay ngân hàng, lãi 10%/năm, góp 5 năm;
+  - xe máy: vay công ty tài chính, lãi 30%/năm, góp 2 năm.
+- Mỗi năm trừ đúng khoản góp và ghi vào nhật ký, ví dụ: "Góp tiền trả góp Toyota Vios năm thứ 2/5: 148 triệu đ · còn nợ 367 triệu đ". Không đủ tiền góp thì bị trễ hạn, ghi nợ xấu như trước.
+
+### Xưng hô, danh xưng
+- Nhân vật nam được mời làm phù rể, nhân vật nữ làm phù dâu (trước đây dựa theo giới tính của bạn thân).
+- Vợ chồng, người yêu nói chuyện xưng hô đúng: vợ xưng "em" gọi chồng "anh", chồng xưng "anh" gọi vợ "em". Cặp đồng giới xưng theo tuổi.
+
+### Cho con tiền không bị trùng
+- "Cho con tiền mua nhà, làm vốn" giờ là một lựa chọn (cho, cho mượn trả dần, hoặc giữ lại dưỡng già), không còn tự động trừ tiền.
+- Vừa cho con một khoản thì trong 8 năm không hỏi lại chuyện cho tiền hay "con xin vốn" với chính người con đó.
+- Cho mượn thì con trả dần mỗi năm.
+
+### Đi học
+- Sửa lỗi sinh ra trong gia đình khá giả mà nghỉ học năm 11 tuổi không lý do: nhà có điều kiện thì con luôn được đi học tiểu học, trung học cơ sở.
+- Trường hợp phải nghỉ học thì nói rõ lý do: nhà nghèo phải ở nhà phụ giúp bố mẹ, học lực yếu không đỗ lớp 6, trường cấp hai ở xa.
+
+### Hệ quả các mối quan hệ
+- **Ly hôn khi con còn nhỏ:**
+  - Phải quyết định quyền nuôi con: giành nuôi con, để con ở với người kia và cấp dưỡng hằng tháng, hoặc cùng nuôi con đi lại hai nhà.
+  - Cấp dưỡng được trừ mỗi năm đến khi con đủ 18 tuổi.
+  - Con có thể buồn, học sa sút sau ngày bố mẹ chia tay; ngồi nói chuyện với con, cùng người cũ đưa con đi chơi thì con đỡ hơn.
+  - Vài năm sau ly hôn vẫn còn căng thẳng.
+- **Bố hoặc mẹ mất khi còn nhỏ:**
+  - Người còn lại gà trống nuôi con / mẹ một mình làm thêm ca đêm nuôi con.
+  - Mồ côi cả bố lẫn mẹ thì về ở với ông bà, cô dì; gia cảnh sa sút.
+- **Bố / mẹ già ở một mình** sau khi người kia mất: đón về ở cùng, về thăm thường xuyên, hoặc thuê người chăm. Bố / mẹ có thể muốn đi bước nữa: ủng hộ hay phản đối.
+- **Ngày giỗ bố mẹ**: họ hàng về đông đủ, nấu lại món người đã khuất thích nhất.
+- **Góa bụa**: những ngày một mình — dọn về ở với con cháu, đi sinh hoạt câu lạc bộ, hay ở một mình với kỷ niệm.
+
+### Sửa lỗi khác
+- Người vừa trúng số hoặc đang có nhiều tiền thì không còn "ham" lời mời việc nhẹ lương cao rồi bị lừa sang trại lừa đảo.
+
+### Hồi tưởng cuối đời
+- Sửa lỗi hồi tưởng sau khi mất không có mặt vợ / chồng: hồi tưởng luôn có ít nhất một ký ức về người bạn đời, kể cả khi mất đột ngột.
+- Người bạn đời đã mất trước thì trong cơn mê nhân vật khẽ gọi tên người ấy.
+
+## v4.3.0 — 16/10/2026 (gộp vào v4.4.0)
+
+Giữ nguyên toàn bộ tính năng v4.2.0. Bản này làm theo góp ý của người chơi.
+
+### Mất mát người thân
+- Sửa lỗi: bố mất khi mới 10 tuổi mà nhân vật không có cảm giác gì, đến 20 tuổi ông mất mới "lần đầu hiểu thế nào là mất mát".
+- Giờ lần mất người thân đầu tiên trong đời (bố mẹ, ông bà, anh chị em, vợ chồng, bạn thân…) mới là "lần đầu hiểu thế nào là mất mát". Mất bố / mẹ khi còn nhỏ: "Mới 10 tuổi, lần đầu bạn hiểu thế nào là mất mát — một khoảng trống chẳng gì lấp được."
+- Những lần sau là nỗi đau chồng lên nỗi đau:
+  - lần thứ hai: "vết thương cũ chưa kịp lành đã có thêm vết mới";
+  - các lần sau: "đã qua bao lần tiễn biệt, nhưng chưa lần nào bớt đau", "căn nhà mỗi năm lại thêm một chỗ trống"…
+- Một số trường hợp riêng:
+  - mất cả bố lẫn mẹ: "không còn ai để gọi bố ơi, mẹ ơi";
+  - mất vợ / chồng: "một nửa của bạn đã đi xa";
+  - mất con: "người đầu bạc tiễn kẻ đầu xanh";
+  - mất người thân khi còn quá nhỏ để nhớ.
+- Sau mất mát có thể ngồi lại với gia đình, lao vào công việc, hoặc tìm đến chuyên gia tâm lý.
+
+### Sức khỏe tinh thần, phòng chống tự tử
+- **Tin nhắn lúc nửa đêm:** một người bạn nhắn "mệt quá, chắc không ai cần mình nữa". Bạn có thể:
+  - gọi ngay, hỏi thẳng và lắng nghe (hỏi thẳng không làm ý nghĩ tự tử lớn thêm);
+  - gọi người nhà bạn ấy cùng đến;
+  - chỉ nhắn "cố lên" — đôi khi là chưa đủ.
+- **Những ngày tăm tối:** căng thẳng kéo dài, buồn bã thì nhân vật có thể nói thật với người thân, gọi đường dây hỗ trợ, đi khám chuyên khoa, hoặc giữ trong lòng (nặng dần lên).
+- Kèm thông tin hỗ trợ thật: Đường dây nóng Ngày Mai 096 306 1414 (miễn phí); khi nguy cấp gọi 115. Ở nước ngoài: findahelpline.com.
+
+### Định kiến nghề nghiệp — một người lạ tử tế, một ký ức về sau
+- 12 tình huống theo nghề:
+  - thợ xăm ở trạm xe buýt và bà cụ;
+  - shipper / xe ôm và ông cụ đầu ngõ;
+  - người nhặt ve chai, bán vé số, phụ hồ;
+  - nam điều dưỡng, nam giáo viên mầm non ("con trai mà làm nghề con gái");
+  - ca sĩ, diễn viên, vũ công ("xướng ca vô loài");
+  - streamer, TikToker ("nghề ảo");
+  - tuyển thủ esports ("chơi game mà cũng gọi là nghề");
+  - thợ nail, thợ tóc, spa;
+  - bartender, DJ;
+  - người giúp việc;
+  - nông dân;
+  - công nhân.
+- Mỗi tình huống có 3 lựa chọn: ngồi lại tâm sự, cảm ơn và tự tin với nghề, hoặc vẫn giữ nỗi buồn. Lời người tử tế được lưu thành ký ức.
+- Vài năm sau có một tình huống nghề nghiệp ý nghĩa, và lời năm xưa được nhắc lại. Ví dụ: thợ xăm gặp cô gái muốn xăm nét chữ của người mẹ vừa mất; shipper đội mưa giao thuốc cho bà cụ neo đơn; nam giáo viên mầm non ở bên một bé vừa mất bố.
+- Nếu năm xưa chọn giữ nỗi buồn, đến lúc này nhân vật mới hiểu ra giá trị nghề của mình.
+
+## v4.2.0 — 16/10/2026 (gộp vào v4.4.0)
+
+Giữ nguyên toàn bộ tính năng v4.1.0. Bản này làm theo góp ý của người chơi.
+
+### Sửa lỗi logic
+- **Bạn thân đã mất:** các tình huống thường ngày không còn lựa chọn "Đưa cho bạn thân xem", mà đổi thành "bạn bè".
+- **Không làm chủ khi chưa 18 tuổi:** dưới 18 tuổi không được mời làm chủ tạp hóa, chủ quán, chủ xưởng… Riêng con nhà buôn bán thì được "phụ giúp tiệm của gia đình". Từ 18 đến 21 tuổi muốn làm chủ phải có vốn.
+- **Con nhà có điều kiện nghe theo gia đình:**
+  - Chuyện "con đường gia đình vạch sẵn" luôn được bàn ở năm 17 tuổi.
+  - Đã chọn nghe theo thì năm 18 tuổi không hiện bảng "ngã rẽ đầu tiên của đời người", không bị hỏi tìm việc. Gia đình sắp xếp việc học và chỗ làm luôn.
+  - Thêm chuyện xoay quanh hướng đi đó: kỳ thực tập do bố sắp xếp, bài học từ bố, áp lực "con của ông ấy".
+- **Giới hạn tuổi:**
+  - thi bằng lái xe đến 60 tuổi;
+  - tìm người yêu / một nửa còn lại chỉ đến 55 tuổi.
+- **Mục Tình cảm:** đã có người yêu thì không còn hiện "Tìm người yêu" và "Đăng ký show hẹn hò".
+- **Giá skin giới hạn:**
+  - Liên Quân / Free Fire / PUBG / Mobile Legends khoảng 2,5 triệu đồng (skin SSS giới hạn vài nghìn Quân Huy ≈ 2,4–3 triệu, quay vòng có khi tốn hơn). Trước đây chỉ khoảng 100 nghìn.
+  - Thêm lựa chọn mua skin thường vài trăm nghìn.
+
+### Hẹn hò với người yêu
+- Thêm nhiều kiểu hẹn hò: đu concert cùng người yêu, ở bên nhau cả ngày (skinship), chụp photobooth, cà phê mèo, đi biển, cắm trại glamping, escape room, vườn hoa, ăn kem – trà sữa – chè, xem bóng đá, đi lễ chùa / nhà thờ, về quê ra mắt.
+- Các kiểu cũ vẫn giữ: mì cay, gà rán KFC / Jollibee, tô tượng, thủy cung, bảo tàng, Dookki, Haidilao…
+- Mỗi lần hiện 8 gợi ý; bấm "Nghĩ thêm chỗ khác" để đổi bộ gợi ý.
+
+### Đại học
+- **Ngày hội câu lạc bộ:** gợi ý câu lạc bộ theo sở trường và sở thích (âm nhạc, bóng đá, tình nguyện, tiếng Anh, dance, nhiếp ảnh, khởi nghiệp, học thuật, MC, kịch, esports, cờ, võ, sách, ẩm thực…).
+- Sinh hoạt câu lạc bộ trong suốt những năm học: chiến dịch Mùa hè xanh, giải bóng đá sinh viên, đêm nhạc gây quỹ… Có thể lên làm chủ nhiệm, có thể gặp người thương trong câu lạc bộ.
+- **Lễ khai giảng mỗi năm:** trường mời ca sĩ về diễn, vé miễn phí cho sinh viên. Chọn đi từ sớm (có khi được chụp ảnh cùng ca sĩ), đi cùng bạn, hoặc không đi.
+
+### Bệnh tật thường gặp (tỉ lệ thấp, ngẫu nhiên)
+- Viêm ruột thừa cấp phải mổ (chần chừ thì có thể vỡ, viêm phúc mạc).
+- Sốt xuất huyết (ở nước nhiệt đới): nhập viện theo dõi hay tự truyền dịch ở nhà (nguy cơ sốc).
+- Sốt siêu vi, thủy đậu, tay chân miệng, sỏi thận, viêm loét dạ dày.
+- **Dị ứng:** khoảng 1/10 người có cơ địa dị ứng: tôm cua hải sản, cá, đậu phộng, sữa bò, trứng, phấn hoa – bụi nhà, kháng sinh penicillin. Về sau đi ăn cỗ phải kiêng, ăn liều có thể phải đi cấp cứu.
+- Có BHYT thì được chi trả phần lớn viện phí. Trẻ chưa tự lập thì bố mẹ lo viện phí.
+
+### Con đường xấu và cái giá phải trả
+- Đàn em thân tín ôm tiền bỏ trốn hoặc khai hết với công an.
+- Người thương bỏ theo đại ca băng đối thủ.
+- Bị băng đối thủ trả thù, có thể mất mạng.
+- Mẹ khóc xin bỏ nghề; con bị bạn bè xa lánh vì "bố nó là dân xã hội đen".
+- Bị truy nã (ra đầu thú được giảm nhẹ, bỏ trốn thì án nặng hơn); bị rủ thử ma túy.
+- Lúc nào cũng có thể chọn rửa tay gác kiếm, ra đầu thú.
+
+### Trong tù
+- Cả cuộc sống chỉ xoay quanh trại giam, mỗi năm 2 chuyện, không lặp lại: thăm nuôi, luật buồng giam và "đại ca", lao động cải tạo, lớp học văn hóa / học nghề, bị rủ trốn trại, xét đặc xá dịp Quốc khánh 2/9, Tết trong trại, ốm trong trại, đơn ly hôn, thư của con, bạn tù rủ làm ăn, thư viện trại.
+- Cải tạo tốt thì có điểm thi đua, được giảm án hoặc đặc xá. Trốn trại, đánh nhau thì bị tăng án.
+- "Việc bạn muốn làm" trong tù: viết thư về nhà, xung phong lao động, học nghề / đọc sách, tập thể dục, gọi điện về nhà.
+- **Ra tù:**
+  - Trong 10 năm, phần lớn nơi làm việc chính thức từ chối; việc chân tay và việc phi pháp lại dễ tìm.
+  - Bạn tù cũ tìm đến rủ "làm một phi vụ".
+
+### Chống "farm tiền"
+- Tài sản đầu tư vượt khoảng 250 năm thu nhập cơ sở (≈ vài chục tỷ đồng) thì mỗi năm chịu thêm chi phí: thuế, phí quản lý, bảo trì, nhân sự… khoảng 2,5–9%. Càng lớn càng nặng.
+- Tiền mặt quá lớn cũng hao dần.
+- Thu nhập của chủ tịch tập đoàn, chủ tịch ngân hàng, chủ đầu tư bất động sản giảm cho sát thực tế (trước đây chủ tịch tập đoàn khoảng 20 tỷ đồng / tháng).
+- Mô phỏng người chơi dồn toàn bộ tiền vào đất: tối đa khoảng 560 tỷ (trước đây gần 12.000 tỷ). Người chơi bình thường gần như không bị ảnh hưởng.
+
+### Đổi tôn giáo
+- Từ 16 tuổi có thể tìm hiểu và đổi tôn giáo: Phật giáo, Công giáo, Tin Lành, Cao Đài, Hòa Hảo, Hồi giáo, hoặc thôi theo đạo (ở nước ngoài: Kitô giáo, Hồi giáo, Phật giáo, Hindu giáo, Do Thái giáo…).
+- Đổi xong thì các hoạt động, ngày lễ, nơi sinh hoạt tôn giáo đổi theo. Gia đình có thể buồn một thời gian.
+
 ## v4.1.0 — 16/10/2026
 
 Giữ nguyên toàn bộ tính năng v4.0.0. Bản này làm theo góp ý của người chơi.

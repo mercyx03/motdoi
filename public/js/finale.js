@@ -18,6 +18,12 @@
       var kid = m.filter(function (x) { return x.a < 16 && x.a > 0; })[0] || m.filter(function (x) { return x.a < 16; })[0];
       if (kid) { top = top.slice(0, n - 1); top.push(kid); }
     }
+    // v4.4: hồi tưởng luôn có người bạn đời (còn sống hay đã mất)
+    var sp = E.spousesOf ? E.spousesOf(l) : [];
+    if (n >= 3 && sp.length && !top.some(function (x) { return sp.some(function (s) { return x.t.indexOf(s) >= 0; }); })) {
+      var sm = m.filter(function (x) { return sp.some(function (s) { return x.t.indexOf(s) >= 0; }); })[0];
+      if (sm) { var drop = top.filter(function (x) { return !(x.a < 16) && !x.star; }).sort(function (a, b) { return a.w - b.w; })[0] || top[top.length - 1]; top.splice(top.indexOf(drop), 1, sm); }
+    }
     top.sort(function (a, b) { return a.a - b.a; });
     return top;
   }
@@ -88,7 +94,9 @@
     }
     if (d.sudden) {
       st.push({ h: 'Khoảnh khắc ấy', x: suddenText(l, d.cause) });
-      if (mems.length) st.push({ h: 'Những hình ảnh cuối cùng lướt qua', list: mems.slice(-4).map(function (m) { return (m.a === 0 ? 'Lúc chào đời' : m.a + ' tuổi') + ' — ' + m.t; }) });
+      var last4 = mems.slice(-4), sp4 = E.spousesOf ? E.spousesOf(l) : [], spm = mems.filter(function (x) { return sp4.some(function (s) { return x.t.indexOf(s) >= 0; }); })[0];
+      if (spm && last4.indexOf(spm) < 0) { last4[0] = spm; last4.sort(function (a, b) { return a.a - b.a; }); }
+      if (mems.length) st.push({ h: 'Những hình ảnh cuối cùng lướt qua', list: last4.map(function (m) { return (m.a === 0 ? 'Lúc chào đời' : m.a + ' tuổi') + ' — ' + m.t; }) });
       st.push({ h: 'Lặng im', x: name + ' ra đi ở tuổi ' + a + (a < 50 ? ', khi còn quá nhiều điều dang dở.' : '.') + ' Không kịp nói lời từ biệt.' });
       return st;
     }
@@ -97,7 +105,8 @@
     var comp = companions(l);
     st.push({ h: 'Phát bệnh', x: season + ' năm ' + d.year + ', ' + name + ' trở bệnh nặng vì ' + d.cause + ', phải ' + where + '. ' +
       (comp.length ? U.cap(comp.join(', ')) + ' thay nhau túc trực bên giường.' : 'Bên giường bệnh chỉ có một cô y tá trực đêm.') });
-    if (mems.length) st.push({ h: 'Hồi tưởng', x: 'Trong cơn mê, ký ức ùa về như một thước phim cũ:', list: mems.map(function (m) { return (m.a === 0 ? 'Lúc chào đời' : m.a + ' tuổi') + ' — ' + m.t; }) });
+    var late = l.flags && l.flags.lateSpouse && !(l.partner && l.partner.status !== 'dating') ? l.flags.lateSpouse : null;
+    if (mems.length) st.push({ h: 'Hồi tưởng', x: 'Trong cơn mê, ký ức ùa về như một thước phim cũ' + (late ? ' — có lúc ' + name + ' khẽ gọi tên ' + late + ', như thể người ấy đang ngồi ngay bên giường' : '') + ':', list: mems.map(function (m) { return (m.a === 0 ? 'Lúc chào đời' : m.a + ' tuổi') + ' — ' + m.t; }) });
     st.push({ h: 'Di nguyện', x: 'Lúc còn tỉnh táo, ' + name + ' nắm tay ' + (comp[0] || 'người bên cạnh') + ', thều thào dặn dò:', list: wishes(l, r).map(function (w) { return '“' + w + '”'; }) });
     st.push({ h: 'Hôn mê', x: 'Những ngày cuối, ' + name + ' chìm vào trạng thái mê man. Tiếng ' + (l.kids.some(function (k) { return k.alive; }) ? 'con cháu gọi' : 'người thân gọi') + ' văng vẳng, xa dần, xa dần…' });
     var t = U.pick(r, ['Rạng sáng', 'Lúc gà gáy canh tư', 'Một buổi chiều lặng gió', 'Nửa đêm']);

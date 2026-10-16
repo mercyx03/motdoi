@@ -70,7 +70,7 @@
       { k: 'nha', l: 'Về nhà với gia đình', ai: { w: 1.2 }, run: function (l, r, log) { H.cash(l, -V(l, 1), 'Tàu xe về phép'); fx(l, { hap: 8, soc: 3 }); log('Về phép, mẹ nấu cả mâm cơm, hàng xóm sang hỏi chuyện quân ngũ. Mười ngày trôi qua nhanh như chớp.', 'good'); H.mem(l, 'Mười ngày phép đầu tiên, khoác ba lô về đến đầu ngõ.', 4); } },
       { k: 'nguoi_yeu', l: function (l) { return l.partner ? 'Dành thời gian cho ' + l.partner.name : 'Ở lại đơn vị, nhường phép cho đồng đội'; }, ai: { w: 0.8 }, run: function (l, r, log) {
         if (!l.partner) { fx(l, { karma: 3, soc: 3 }); log('Nhường suất phép cho đồng đội có bố ốm nặng.', 'good'); return; }
-        if (l.partner.status === 'dating' && ch(r, 0.15)) { log(l.partner.name + ' nói lời chia tay: "Hai năm xa quá, em không đợi được."', 'bad'); l.partner = null; l.exes = (l.exes || 0) + 1; fx(l, { hap: -10 }); }
+        if (l.partner.status === 'dating' && ch(r, 0.15)) { log(l.partner.name + ' nói lời chia tay: "Hai năm xa quá, ' + E.xung(l).me + ' không đợi được."', 'bad'); l.partner = null; l.exes = (l.exes || 0) + 1; fx(l, { hap: -10 }); }
         else { log('Mười ngày phép bên ' + l.partner.name + ', hứa ngày ra quân sẽ về ngay.', 'good'); fx(l, { hap: 8 }); } } }
     ]
   });

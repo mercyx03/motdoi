@@ -244,6 +244,8 @@
   var FAM_KEEP = /mất|qua đời|giỗ|bàn thờ|thắp hương|nén hương|(^|[^\p{L}])mộ(?![\p{L}])|nhớ|ngày xưa|thuở|hoa hồng|di ảnh|mẹ chồng|mẹ vợ|bố chồng|bố vợ|làm mẹ|làm bố|người mẹ|bà mẹ|ông bố|Đức Mẹ|mẹ đơn thân|mẹ bỉm|bố mẹ đẻ|để lại|hai bên|mẹ con|bố con|cha mẹ|(^|[^\p{L}])[Cc]on [A-ZĐ]|con trai|con gái|các con|cháu|làm cha|nuôi dạy con/u;
   function famFix(l, t) {
     if (!t || typeof t !== 'string' || !l || !l.fam) return t;
+    // v4.2: bạn thân đã mất thì các chuyện thường ngày không còn nhắc "bạn thân" nữa
+    if (l.bff && !l.bff.alive && l.age > l.bff.died && !/qua đời|mộ|giỗ|nhớ|thuở|ngày xưa|di ảnh/.test(t)) t = t.replace(/(^|[^p{L}])([Nn])gười bạn thân(?! nhất)(?![p{L}])/gu, function (x, p, N) { return p + (N === 'N' ? 'M' : 'm') + 'ột người bạn'; }).replace(/(^|[^p{L}])([Bb])ạn thân(?![p{L}])/gu, function (x, p, B) { return p + B + 'ạn bè'; });
     var f = l.fam, m = !!f.mAlive, b = !!f.fAlive && !f.noDad;
     if ((m && b) || FAM_KEEP.test(t)) return t;
     var pw = m ? 'mẹ' : b ? 'bố' : (l.age < 18 ? 'ông bà' : '');
@@ -1268,7 +1270,8 @@
     }
     // trong tù: chỉ có chuyện trong trại giam
     if (life.jailUntil != null && a < life.jailUntil) {
-      if (r() < 0.35) add('trai_giam');
+      if (E.jailYear) E.jailYear(life, r, a).forEach(function (x) { add(x[0], x[1]); }); // v4.2: trong tù chỉ có chuyện trong trại giam
+      else if (r() < 0.35) add('trai_giam');
       life.pending = q; prune(life); return life.pending;
     }
 
@@ -1310,7 +1313,7 @@
     if (life.orient !== 'straight' && life.realized && !life.out && a >= 16 && a <= 40 && (life.flags.outAskedAt == null || a - life.flags.outAskedAt >= 3) && r() < 0.2) add('out');
     // tình cảm
     var p = life.partner;
-    if (!p && a >= 17 && a <= 60 && !(life.flags.earlyMarried && a < 18)) {
+    if (!p && a >= 17 && a <= (E.LOVE_MAX || 60) && !(life.flags.earlyMarried && a < 18)) {
       var pm = 0.13 + (life.focus === 'social' ? 0.07 : 0) - (a > 40 ? 0.08 : 0) + (life.st.soc - 50) / 400;
       if (r() < pm) add('love');
     } else if (p && p.status === 'dating' && a - p.since >= 1 && (life.flags.marryAskAt == null || a - life.flags.marryAskAt >= 2 + Math.min(4, life.flags.marryWait || 0)) && r() < 0.4) { add('marry'); life.flags.marryAskAt = a; } // v3.0: không hỏi chuyện cưới năm nào cũng như năm nào
@@ -1372,7 +1375,7 @@
     var d = life.pending[0];
     if (!d) return [];
     var r = RF(life), out = [];
-    var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; var e = { a: life.age, y: life.birthYear + life.age, t: famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
+    var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; var e = { a: life.age, y: life.birthYear + life.age, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
     var valid = d.opts.some(function (o) { return o.k === key; });
     if (!valid) key = DEC[d.id] ? DEC[d.id].auto(life, d, r) : null;
     life.pending.shift();
@@ -1395,10 +1398,10 @@
       if (life.retired && life.flags.fullRetire && /^(job|nk_nghe|nk_ra_truong|sau_huu|len_chuyen|ru_re|so_thich_nghe|biz|xkld|city)$/.test(d.id)) return false; // v3.6: đã nghỉ hưu hẳn thì không còn bị hỏi nhận việc này việc kia
       var p = life.partner;
       switch (d.id) {
-        case 'job': return !(life.job && life.job.fam) && !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
+        case 'job': return !(life.job && life.job.fam) && !(life.fam && life.fam.elite && life.flags.eliteFollow && !life.flags.eliteCut && !life.flags.eliteJobDone && life.age <= 24) && !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
         case 'marry': return !!(p && p.status === 'dating');
         case 'kid': case 'divorce': return !!(p && p.status !== 'dating');
-        case 'love': return !p;
+        case 'love': return !p && life.age <= (E.LOVE_MAX || 120); // v4.2: chỉ tìm một nửa khi dưới 55 tuổi
         case 'house': return !life.ownHouse;
         case 'biz': return !!life.job;
         case 'city': return !life.urban;
@@ -1563,10 +1566,11 @@
         else { var part = Math.min(L.bal * 0.2, Math.max(0, life.money)); life.money -= part; F.debt += part; log('Khoản ' + L.name + ' bị chuyển cho công ty thu hồi nợ. Trả được một phần, phần còn lại bị xóa — nhưng tên bạn nằm trong danh sách nợ xấu nhiều năm.', 'bad'); life.credit = { bad: true, since: a }; H.fx(life, { hap: -6 }); }
         L.bal = 0; L.closed = true; return;
       }
-      var due = Math.min(L.bal, Math.max(L.bal * L.minShare, L.type === 'home' ? b * 0.25 : 0));
+      var due = L.pay ? Math.min(L.bal, L.pay) : Math.min(L.bal, Math.max(L.bal * L.minShare, L.type === 'home' ? b * 0.25 : 0)); // v4.4: trả góp có kỳ hạn, số tiền cố định mỗi năm
       var avail = life.money + income + F.partner - F.food - F.rent - F.kids;
       var paid = avail >= due ? due : Math.max(0, Math.min(due, avail * 0.6));
       L.bal -= paid; F.debt += paid;
+      if (L.pay && paid > 0.01) { L.paidN = (L.paidN || 0) + 1; log('Góp tiền trả góp ' + (E.loanWhat ? E.loanWhat(life, L) : L.name) + ' năm thứ ' + L.paidN + (L.term ? '/' + L.term : '') + ': ' + fmtMoney(life, paid) + (L.bal > 0.5 ? ' · còn nợ ' + fmtMoney(life, L.bal) : ' · đã trả xong') + '.', 'money'); }
       if (paid < due * 0.95) {
         L.late = (L.late || 0) + 1; L.lateTot = (L.lateTot || 0) + 1;
         if (/^(bank|home|car|card|paylater|fin)$/.test(L.type)) {
@@ -1631,7 +1635,7 @@
   function finishYear(life) {
     if (!life.alive) return [];
     var r = RF(life), a = life.age, out = [];
-    var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; var e = { a: a, y: life.birthYear + a, t: famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
+    var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
     var f = life.fam, st = life.st;
     var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
     if (a >= 6 && life.focus === 'baby') life.focus = 'study';
@@ -1657,14 +1661,14 @@
 
     // ---- Học hành ----
     if (a === 6) {
-      if (r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : 'Bắt đầu đi học tiểu học.', 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
+      if (life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : 'Bắt đầu đi học tiểu học.', 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
       else { life.school = null; log('Không được đến trường — nhà quá nghèo, trường lại xa.', 'bad'); st.hap -= 4; }
     }
     if (life.school) life.yearsInSchool++;
     if (a === 11 && life.school === 'primary') {
       life.edu = 1;
-      if (r() < eduP(life).lower) { life.school = 'lower'; log('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.', 'neutral'); }
-      else { life.school = null; log('Học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
+      if (life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.', 'neutral'); }
+      else { life.school = null; log(f.q <= 2 ? 'Nhà nghèo, học hết tiểu học thì phải nghỉ ở nhà phụ giúp bố mẹ.' : life.urban ? 'Học lực yếu, thi không đỗ vào lớp 6 trường công, gia đình đành cho nghỉ học.' : 'Trường cấp hai ở xa, đường sá cách trở, học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
     if (life.school && life.schoolEnd != null && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
       var sc = life.school; life.school = null; life.schoolEnd = null;

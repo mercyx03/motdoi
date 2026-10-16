@@ -425,8 +425,9 @@
         if (r() < pp) {
           l.job.rank++; l.job.yrs = 0;
           if (inc > 0 && !c.fame) { l.job.floor = inc * (1.08 + r() * 0.1); l.job.floorRk = Math.min(l.job.rank, c.vn.length - 1); } // v3.0: thăng chức là tăng lương
-          log(c.ladder ? 'Được thăng quân hàm ' + c.t[l.job.rank] + '.' : 'Được thăng chức: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 5 });
-          if (l.job.rank === c.t.length - 1) H.mem(l, 'Ngày nhận quyết định ' + (c.ladder ? 'thăng quân hàm ' : 'bổ nhiệm ') + c.t[l.job.rank] + '.', 5);
+          var ru = !c.ladder && E.rankUpText ? E.rankUpText(l, c) : null; // v4.4: nghề tự do, tự kinh doanh không có "thăng chức"
+          log(c.ladder ? 'Được thăng quân hàm ' + c.t[l.job.rank] + '.' : ru ? ru.t : 'Được thăng chức: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 5 });
+          if (l.job.rank === c.t.length - 1) H.mem(l, c.ladder ? 'Ngày nhận quyết định thăng quân hàm ' + c.t[l.job.rank] + '.' : ru ? ru.m : 'Ngày nhận quyết định bổ nhiệm ' + c.t[l.job.rank] + '.', 5);
         }
       }
     }

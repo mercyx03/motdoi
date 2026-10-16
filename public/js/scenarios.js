@@ -522,7 +522,7 @@
     text: function (l, d) { return 'Bạn tính mua xe. Xe máy khoảng ' + mb(l, d.moto) + ', xe máy điện ' + mb(l, d.ev) + ', ô tô khoảng ' + mb(l, d.car) + '. Hiện bạn có ' + H.money(l, l.money) + '.'; },
     opts: [
       { k: 'moto', l: 'Mua xe máy (trả thẳng)', req: function (l, d) { return l.money >= d.moto * l.base && l.veh !== 'xe máy' && l.veh !== 'ô tô'; }, ai: { w: 2 }, run: function (l, r, log, d) { buyVeh(l, 'xe máy', d.moto, false, log); } },
-      { k: 'moto_tg', l: 'Mua xe máy trả góp', req: function (l) { return l.veh !== 'xe máy' && l.veh !== 'ô tô'; }, h: 'Trả góp qua công ty tài chính, lãi cao', ai: { w: 1 }, run: function (l, r, log, d) { buyVeh(l, 'xe máy', d.moto, 'fin', log); } },
+      { k: 'moto_tg', l: 'Mua xe máy trả góp', req: function (l) { return l.veh !== 'xe máy' && l.veh !== 'ô tô'; }, h: function (l, d) { return E.loanPlan ? E.loanPlan(l, d.moto * l.base, 'fin') : 'Trả góp qua công ty tài chính, lãi cao'; }, ai: { w: 1 }, run: function (l, r, log, d) { buyVeh(l, 'xe máy', d.moto, 'fin', log); } },
       { k: 'ev', l: 'Mua xe máy điện', req: function (l, d) { return l.money >= d.ev * l.base && !vehicle(l); }, ai: { w: 0.8 }, run: function (l, r, log, d) { buyVeh(l, 'xe máy', d.ev, false, log, 'xe máy điện'); } },
       { k: 'car', l: 'Mua ô tô (trả thẳng)', req: function (l, d) { return l.money >= d.car * l.base && l.veh !== 'ô tô'; }, ai: { w: 1.2 }, run: function (l, r, log, d) { buyVeh(l, 'ô tô', d.car, false, log); } },
       { k: 'car_loan', l: 'Mua ô tô, vay ngân hàng 70%', req: function (l, d) { return l.money >= d.car * 0.3 * l.base && l.veh !== 'ô tô'; }, ai: { w: 0.7, amb: 1 }, run: function (l, r, log, d) { if (!H.canBankLoan(l)) { log('Ngân hàng từ chối cho vay mua xe vì bạn đang có nợ xấu.', 'bad'); fx(l, { hap: -4 }); return; } buyVeh(l, 'ô tô', d.car, 'car', log); } },
@@ -791,7 +791,7 @@
     opts: [{ k: 'ok', l: 'Nhận lại tiền', run: function (l, r, log) { cashB(l, l.bff.owe, l.bff.name + ' trả nợ'); l.bff.owe = 0; l.bff.close += 5; log(l.bff.name + ' trả đủ tiền như đã hứa.', 'good'); fx(l, { hap: 4 }); } }]
   });
   SC('ban_cuoi', {
-    title: 'Đám cưới bạn thân', text: function (l) { return l.bff.name + ' sắp cưới, mời bạn làm ' + (l.bff.sex === 'M' ? 'phù rể' : 'phù dâu') + '.'; },
+    title: 'Đám cưới bạn thân', text: function (l) { return l.bff.name + ' sắp cưới, mời bạn làm ' + (l.sex === 'M' ? 'phù rể' : 'phù dâu') + '.'; },
     valid: function (l) { return !!bff(l) && !l.bff.wed; },
     opts: [
       { k: 'go', l: 'Đến dự, mừng một phong bì dày', h: function (l) { return mb(l, 0.04); }, ai: { w: 2 }, run: function (l, r, log) { l.bff.wed = true; cashB(l, -0.04, 'Mừng cưới ' + l.bff.name); log('Đứng cạnh ' + l.bff.name + ' trong ngày cưới, hai đứa ôm nhau khóc như con nít.', 'good'); fx(l, { hap: 6, soc: 4 }); H.mem(l, 'Đám cưới ' + l.bff.name + ', bạn đọc bài phát biểu run cả giọng.', 4); } },

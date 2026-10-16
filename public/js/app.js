@@ -603,6 +603,7 @@
       '<dt>Sống tại</dt><dd>' + esc(currentPlace(l)) + '</dd>' +
       (l.eth ? '<dt>Dân tộc</dt><dd>' + esc(l.eth) + '</dd>' : '') +
       '<dt>Tôn giáo</dt><dd>' + esc(l.religion) + '</dd>' +
+      (l.allergy ? '<dt>Dị ứng</dt><dd>' + esc(l.allergy) + '</dd>' : '') +
       '<dt>Học vấn</dt><dd>' + esc(eduNow(l)) + '</dd>' +
       '<dt>Công việc</dt><dd>' + esc(job) + '</dd>' +
       (l.talent ? '<dt>Năng khiếu</dt><dd>' + esc(E.talentText(l)) + (l.game && l.talent === 'game' ? ' · ' + esc(l.game) : '') + (E.talentLevel ? ' · <b>cấp ' + E.talentLevel(l).lv + '</b> ' + esc(E.talentLevel(l).name) : '') + '</dd>' : '') +

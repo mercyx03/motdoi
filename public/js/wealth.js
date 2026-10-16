@@ -222,7 +222,7 @@
         run: function (l, r, log) { buyModel(l, m, false, log); }
       }, {
         k: 'g_' + m.k, l: function (l) { return m.n + ' — ' + mo(l, priceOf(l, m)) + ' · trả góp'; },
-        h: function (l) { return 'Trả trước ' + mo(l, priceOf(l, m) * 0.3) + ', vay ' + mo(l, priceOf(l, m) * 0.7) + (m.t >= 1 ? ' ngân hàng (lãi ~10%/năm, trả mỗi năm ~' : ' công ty tài chính (lãi cao, trả mỗi năm ~') + mo(l, priceOf(l, m) * 0.7 * (m.t >= 1 ? 0.25 : 0.4)) + ') · ' + m.sp; },
+        h: function (l) { if (E.loanPlan) return E.loanPlan(l, priceOf(l, m), m.t >= 1 ? 'car' : 'fin'); return 'Trả trước ' + mo(l, priceOf(l, m) * 0.3) + ', vay ' + mo(l, priceOf(l, m) * 0.7) + (m.t >= 1 ? ' ngân hàng (lãi ~10%/năm, trả mỗi năm ~' : ' công ty tài chính (lãi cao, trả mỗi năm ~') + mo(l, priceOf(l, m) * 0.7 * (m.t >= 1 ? 0.25 : 0.4)) + ') · ' + m.sp; },
         req: function (l, d) { return members(d.s).indexOf(m.s) >= 0 && suits(l, m) && !affordCash(l, m) && affordLoan(l, m); },
         ai: { w: 0.4, risk: 0.8 },
         run: function (l, r, log) {
