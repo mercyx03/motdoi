@@ -30,7 +30,7 @@
     prep: function (l, r, arg) {
       var a = arg || {}, s = a.s || H.partnerSex(l, r), t = a.t;
       if (!t) { var tot = 0, ws = TYPES.map(function (x) { var w = x[1] * (x[0] === 'qua_tang' && l.age >= 40 ? 2.5 : 1) * (x[0] === 'dao_mo' && (l.money > l.base * 10 || (l.vehTier || 0) >= 2) ? 2 : 1); tot += w; return w; }), y = r() * tot; for (var i = 0; i < TYPES.length; i++) { y -= ws[i]; if (y < 0) { t = TYPES[i][0]; break; } } t = t || 'tot'; }
-      return { app: a.app || 'Tinder', s: s, n: a.n || H.stranger(l, r, s), age: Math.max(18, l.age + U.randint(r, -4, 4)), t: t };
+      return { app: a.app || 'Tinder', s: s, n: a.n || H.stranger(l, r, s), age: a.age || Math.max(18, l.age + U.randint(r, -4, 4)), t: t, job: a.job || null };
     },
     valid: function (l) { return l.age >= 18 && !l.partner; },
     text: function (l, d) {

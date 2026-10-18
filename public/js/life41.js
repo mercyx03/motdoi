@@ -70,17 +70,17 @@
   function truthText(c) { return c.truth === 'single' ? c.n + ' độc thân thật' : c.truth === 'taken' ? c.n + ' đã có người yêu — tham gia vì "thử thách" của chương trình' : c.n + ' là người đồng tính — tham gia để góp vui và chúc bạn tìm được người phù hợp'; }
   function hint(l, r, c) { var right = ch(r, 0.45 + l.st.kno / 250); var t = right ? c.truth : pick(r, ['single', 'taken', 'gay']); return t === 'single' ? 'cố vấn cho rằng ' + c.n + ' "nhìn ánh mắt là biết độc thân"' : t === 'taken' ? 'cố vấn nghi ' + c.n + ' "có vẻ đã có chủ"' : 'cố vấn đoán ' + c.n + ' "không hứng thú với con gái"'; }
   SC('hh_nali_f', {
-    title: function (l, d) { return 'Người ấy là ai · ' + ['', 'Vòng 1: Ngoại hình & nghề nghiệp', 'Vòng 2: Tài năng', 'Vòng 3: Câu hỏi riêng', 'Chung cuộc: chọn người ấy'][d.v]; }, valid: function (l) { return !!l.flags.nali; },
+    title: function (l, d) { return 'Người ấy là ai · ' + ['', 'Vòng 1: Ngoại hình & nghề nghiệp', 'Vòng 2: Tài năng & câu hỏi riêng', 'Chung cuộc: chọn 1 trong 3 người'][d.v]; }, valid: function (l) { return !!l.flags.nali; },
     prep: function (l, r, a) { var N = l.flags.nali; return { v: (a && a.v) || 1, cs: N.cs, h: N.cs.map(function (c) { return hint(l, r, c); }) }; },
     text: function (l, d) {
-      var intro = { 1: 'Bạn là "nữ chính". 5 chàng trai lần lượt bước ra — nhưng có người đã có người yêu, có người là người đồng tính trà trộn. Loại một người không phải "người ấy".', 2: 'Các chàng trai còn lại trình diễn tài năng: hát, nhảy, nấu ăn, chơi nhạc cụ. Ban cố vấn đưa ra nhận định. Loại thêm một người.', 3: 'Bạn được hỏi riêng mỗi người một câu. Loại thêm một người.', 4: 'Chỉ còn hai chàng trai. Chọn người ấy — rồi chương trình công bố sự thật.' }[d.v];
+      var intro = { 1: 'Bạn là "nữ chính". 5 chàng trai lần lượt bước ra — nhưng có người đã có người yêu, có người là người đồng tính trà trộn. Loại một người không phải "người ấy".', 2: 'Các chàng trai còn lại trình diễn tài năng: hát, nhảy, nấu ăn, chơi nhạc cụ, rồi trả lời câu hỏi riêng của bạn. Ban cố vấn đưa ra nhận định. Loại thêm một người.', 3: 'Chỉ còn ba chàng trai. Chọn một người là "người ấy" — rồi chương trình công bố sự thật.' }[d.v];
       return intro + ' ' + d.cs.map(function (c, i) { return c.n + ' (' + c.age + ' tuổi, ' + c.job + ', ' + c.st + ')' + (d.v >= 2 ? ' — ' + d.h[i] : ''); }).join('; ') + '.';
     },
     opts: [0, 1, 2, 3, 4].map(function (i) {
-      return { k: 'c' + i, l: function (l, d) { var c = d.cs[i]; return c ? (d.v < 4 ? 'Loại ' : 'Chọn ') + c.n : ''; }, req: function (l, d) { return !!d.cs[i]; }, ai: { w: 1 },
+      return { k: 'c' + i, l: function (l, d) { var c = d.cs[i]; return c ? (d.v < 3 ? 'Loại ' : 'Chọn ') + c.n : ''; }, req: function (l, d) { return !!d.cs[i]; }, ai: { w: 1 },
         run: function (l, r, log, d) {
           var N = l.flags.nali, c = d.cs[i];
-          if (d.v < 4) { N.cs = N.cs.filter(function (x) { return x !== c; }); log('Người ấy là ai, ' + ['', 'vòng 1', 'vòng 2', 'vòng 3'][d.v] + ': loại ' + c.n + '. Chương trình công bố: ' + truthText(c) + '.', c.truth === 'single' ? 'neutral' : 'good'); l.pending.unshift(E.DEC.hh_nali_f.make(l, r, { v: d.v + 1 })); return; }
+          if (d.v < 3) { N.cs = N.cs.filter(function (x) { return x !== c; }); log('Người ấy là ai, ' + ['', 'vòng 1', 'vòng 2'][d.v] + ': loại ' + c.n + '. Chương trình công bố: ' + truthText(c) + '.', c.truth === 'single' ? 'neutral' : 'good'); l.pending.unshift(E.DEC.hh_nali_f.make(l, r, { v: d.v + 1 })); return; }
           l.flags.nali = null; l.fame = (l.fame || 0) + 5000;
           log('Người ấy là ai — công bố sự thật: ' + truthText(c) + '.', c.truth === 'single' ? 'good' : 'bad');
           if (c.truth !== 'single') { fx(l, { hap: -4 }); log('Bạn chọn nhầm người, ra về tay trắng nhưng được khán giả khen "chơi đẹp".', 'neutral'); return; }
@@ -106,11 +106,11 @@
     var txt = [['kể về công việc, gia đình — nữ chính gật gù', 'pha trò khiến cả trường quay cười nghiêng ngả', 'khoe cơ bắp, nữ chính cười nhưng có vẻ chưa ấn tượng'], ['trình diễn sở trường tự tin', 'hát bản tình ca, nữ chính đỏ mặt', 'nấu món ăn ngay trên sân khấu, thơm cả trường quay'], ['nói thật lòng về mong muốn có tổ ấm', 'hứa hẹn "không phải lo gì", nữ chính hơi chau mày', 'hỏi ngược lại khiến nữ chính bật cười, cuộc trò chuyện rất duyên']][d.v - 1][k];
     if (!stay) { l.flags.nali = null; l.fame = (l.fame || 0) + 3000; log('Người ấy là ai: bạn ' + txt + ', nhưng ' + d.n + ' quyết định dừng bạn ở vòng ' + d.v + '. Chương trình công bố: bạn độc thân thật — cả trường quay tiếc nuối.', 'neutral'); return; }
     log('Người ấy là ai, vòng ' + d.v + ': bạn ' + txt + ' — và được đi tiếp.', 'good');
-    N.left = Math.max(2, N.left - 1);
+    N.left = Math.max(3, N.left - 1);
     if (d.v < 3) { l.pending.unshift(E.DEC.hh_nali_m.make(l, r, { v: d.v + 1 })); return; }
     l.flags.nali = null; l.fame = (l.fame || 0) + 5000;
     if (N.score + r() * 0.3 > 0.55) { log('Chung cuộc: ' + d.n + ' chọn bạn! Chương trình công bố bạn độc thân thật — hai người nắm tay rời sân khấu.', 'big'); fx(l, { hap: 10 }); H.mem(l, 'Ngày được nữ chính chọn trên sân khấu Người ấy là ai.', 6); becomeCouple(l, r, log, N.leadProfile || { n: d.n, s: 'F', age: N.leadAge }, 'chương trình Người ấy là ai'); }
-    else log('Chung cuộc: ' + d.n + ' chọn chàng trai còn lại. Bạn ôm hoa ra về, nhưng nhận về cả nghìn lời nhắn làm quen trên mạng.', 'neutral');
+    else log('Chung cuộc: ' + d.n + ' chọn một trong hai chàng trai còn lại. Bạn ôm hoa ra về, nhưng nhận về cả nghìn lời nhắn làm quen trên mạng.', 'neutral');
   }
 
   // ---------- Đảo thiên đường ----------

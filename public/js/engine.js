@@ -479,6 +479,30 @@
   };
   var PARENT_FORMAL = /công nhân|giáo viên|cán bộ xã|viên chức|văn phòng|y tá|kỹ sư|kế toán|công chức|công an|bác sĩ|ngân hàng|bảo vệ|giám đốc kinh doanh|bí thư|tỉnh ủy|UBND tỉnh|bộ trưởng|nghị sĩ/;
   var PARENT_BIZ = /^chủ |doanh nhân|giám đốc công ty|^buôn bán$/;
+  // v6.1.0: lý do mất việc của bố / mẹ theo đúng nghề; k = hệ số rủi ro (1 = bình thường), crop = không "thất nghiệp" mà mất mùa / ế ẩm
+  var PARENT_LOSS = [
+    [/bác sĩ|y tá/, 0.15, [' nghỉ việc khi phòng khám tư nơi đang làm đóng cửa, phải xin vào bệnh viện khác.', ' chuyển công tác, mấy tháng chờ quyết định ở bệnh viện mới.']],
+    [/giáo viên/, 0.15, [' mất việc khi trường tư thục nơi đang dạy giải thể.', ' hết hợp đồng giảng dạy, chờ đợt tuyển dụng viên chức mới.']],
+    [/công nhân/, 1.2, [' mất việc sau khi nhà máy thu hẹp sản xuất, cắt giảm công nhân.', ' bị cho nghỉ khi xưởng hết đơn hàng xuất khẩu.']],
+    [/kỹ sư phần mềm/, 1, [' bị công ty công nghệ cắt giảm nhân sự sau khi dự án lớn dừng lại.']],
+    [/kỹ sư/, 0.8, [' tạm nghỉ việc khi công trình kết thúc mà công ty chưa có dự án mới.']],
+    [/ngân hàng/, 0.6, [' mất vị trí khi ngân hàng sáp nhập, cơ cấu lại các phòng ban.']],
+    [/văn phòng|kế toán/, 1, [' bị công ty cho nghỉ việc trong đợt tái cơ cấu.', ' mất việc khi công ty làm ăn thua lỗ, cắt giảm nhân sự.']],
+    [/bảo vệ/, 1, [' mất việc khi công ty bảo vệ hết hợp đồng với tòa nhà.']],
+    [/giám đốc kinh doanh/, 0.6, [' rời công ty khi ban lãnh đạo mới thay đổi bộ máy.']],
+    [/thợ xây|phụ hồ/, 1, [' hết việc khi công trình xong, chưa có chỗ mới thuê.', ' nghỉ việc mấy tháng vì thị trường xây dựng đóng băng.']],
+    [/xe ôm|tài xế công nghệ|lái xe|shipper/, 1, [' chạy xe cả ngày mà ít cuốc, đành tạm nghỉ.', ' bán xe trả nợ, mấy tháng chưa có việc.']],
+    [/giúp việc/, 1, [' mất việc khi nhà chủ chuyển đi nơi khác.']],
+    [/thợ may|thợ mộc|thợ sửa xe/, 1, [' vắng khách mấy tháng liền, gần như không có thu nhập.']],
+    [/vé số|hàng rong|ve chai|làm thuê/, 1, [' không có việc làm một thời gian, mất nguồn thu nhập.', ' hết việc, ngày ngày đi hỏi khắp nơi xem ai cần người.']],
+    [/chăn nuôi/, 1, null, 'crop', [' gặp dịch bệnh trên đàn lợn, gà, phải tiêu hủy gần hết, thu nhập sụt mạnh.', ' giá lợn hơi xuống thấp, nuôi ra bán lỗ cả năm.']],
+    [/nuôi trồng thủy sản/, 1, null, 'crop', [' gặp dịch bệnh tôm, cả ao tôm chết trắng, thu nhập sụt mạnh.', ' nước ao nhiễm mặn, cá chết hàng loạt, năm nay gần như mất trắng.']],
+    [/trồng cây ăn trái/, 1, null, 'crop', [' mất mùa vì hạn mặn, vườn cây ra ít trái, thu nhập giảm hẳn.', ' được mùa mất giá, thương lái ép giá, bán không đủ tiền phân bón.']],
+    [/làm ruộng|làm nương|ruộng bậc thang|trồng rẫy|trang trại/, 1, null, 'crop', [' mất mùa vì hạn hán, thu nhập năm nay giảm hẳn.', ' lúa bị sâu bệnh, năng suất giảm một nửa.', ' được mùa mất giá, bán không đủ tiền phân bón.', ' lũ về ngập ruộng, vụ này mất trắng.']],
+    [/buôn bán|bán tạp hóa|bán hàng online/, 1, null, 'crop', [' buôn bán ế ẩm cả năm, chợ vắng khách, thu nhập giảm hẳn.', ' bị khách quỵt tiền hàng, vốn liếng hao hụt.']],
+    [/đánh cá/, 1, null, 'crop', [' biển động nhiều tháng, tàu nằm bờ, thu nhập giảm hẳn.']]
+  ];
+  function parentLoss(job) { for (var i = 0; i < PARENT_LOSS.length; i++) if (PARENT_LOSS[i][0].test(job || '')) return PARENT_LOSS[i]; return null; }
   function parentKind(job) {
     if (/nội trợ|thất nghiệp/.test(job)) return 'none';
     if (/cờ bạc|giang hồ|băng nhóm/.test(job)) return 'vice';
@@ -539,9 +563,11 @@
     if (kind === 'formal' && age < 52 && x < 0.05) { inc *= 1.2 + r() * 0.2; log(P + ' được thăng chức, lương tăng lên ' + show(inc) + '/tháng.', 'good'); }
     else if (kind === 'biz' && x < 0.05) { inc *= 1.5 + r() * 0.5; log('Việc làm ăn của ' + P.toLowerCase() + ' phát đạt, thu nhập lên ' + show(inc) + '/tháng.', 'good'); }
     else if (kind === 'biz' && x < 0.09) { inc *= 0.4 + r() * 0.2; log('Việc làm ăn của ' + P.toLowerCase() + ' thua lỗ, thu nhập chỉ còn ' + show(inc) + '/tháng.', 'bad'); if (!life.indep) life.st.hap -= 3; }
-    else if (!stableParent(job) && kind !== 'biz' && x < (kind === 'formal' ? 0.065 : 0.08) && x >= (kind === 'formal' ? 0.05 : 0.05)) {
+    else if (!stableParent(job) && kind !== 'biz' && x >= 0.05 && x < 0.05 + ((kind === 'formal' ? 0.015 : 0.03) * ((parentLoss(job) || [0, 1])[1]))) {
+      var PL = parentLoss(job);
+      if (PL && PL[3] === 'crop') { inc *= 0.45 + r() * 0.2; log(P + U.pick(r, PL[4]), 'bad'); if (!life.indep) life.st.hap -= 2; f[key] = U.clamp(inc, ref * 0.3, Math.max(ref * 3.5, 1)); return; }
       f[lostK] = inc; f[key] = 0;
-      log(P + (kind === 'formal' ? U.pick(r, [' bị cắt giảm nhân sự, mất việc.', ' bị công ty cho nghỉ việc trong đợt tái cơ cấu.', ' mất việc sau khi nơi làm thu hẹp sản xuất.']) : U.pick(r, [' không có việc làm một thời gian, mất nguồn thu nhập.', ' thất nghiệp mấy tháng liền, phải đi làm thuê lặt vặt.', ' hết việc, ngày ngày đi hỏi khắp nơi xem ai cần người.'])), 'bad');
+      log(P + U.pick(r, PL && PL[2] ? PL[2] : kind === 'formal' ? [' bị cắt giảm nhân sự, mất việc.', ' bị công ty cho nghỉ việc trong đợt tái cơ cấu.'] : [' không có việc làm một thời gian, mất nguồn thu nhập.', ' thất nghiệp mấy tháng liền, phải đi làm thuê lặt vặt.', ' hết việc, ngày ngày đi hỏi khắp nơi xem ai cần người.']), 'bad');
       if (!life.indep) { life.st.hap -= 3; if (!(M ? f.fInc : f.mInc)) { life.flags.famHardship = true; H.mem(life, 'Năm ' + P.toLowerCase() + ' mất việc, bữa cơm nhà mình chỉ còn rau với nước mắm.', 3); } }
       return;
     }
@@ -1523,7 +1549,7 @@
     { c: function (l, a) { return a >= 16 && a <= 30 && l.sex === 'M' && !l.flags.smoke && !l.flags.noSmoke; }, p: function (l) { return isVN(l) || /cn|id|ru|tr|ar|kr/.test(l.pool) ? 0.05 : 0.02; }, run: function (l, a, r, log) { l.flags.smoke = true; log('Bắt đầu hút thuốc lá.', 'bad'); } },
     { c: function (l, a) { return l.flags.smoke && a >= 25; }, p: 0.05, run: function (l, a, r, log) { l.flags.smoke = false; l.flags.noSmoke = true; log('Bỏ được thuốc lá sau nhiều lần thử.', 'good'); l.st.hea += 4; } },
     { c: function (l, a) { return isVN(l) && a >= 18 && l.indep; }, p: 0.07, run: function (l, a, r, log) { if (l.abroad && !l.abroad.perm) { log('Đón một cái Tết xa nhà ở ' + l.abroad.name + ', gọi video về nhà mà nghẹn ngào.', 'neutral'); l.st.hap -= 3; H.mem(l, 'Cái Tết xa nhà, nhìn mẹ qua màn hình điện thoại.', 2); } else { log(U.pick(r, ['Tết năm nay cả nhà sum họp đông đủ.', 'Về quê ăn Tết, gói bánh chưng cùng gia đình.', 'Mùng Một Tết đi chúc Tết họ hàng, lì xì cho bọn trẻ.']), 'good'); l.st.hap += 3; l.st.soc += 2; } } },
-    { c: function (l, a) { return l.job && !E.isCrime(l) && a >= 22; }, p: 0.05, run: function (l, a, r, log) { var x = Math.round(l.base * 0.15), vt = isVN(l) && !l.abroad; H.cash(l, x, vt ? 'Thưởng Tết, lương tháng 13' : 'Thưởng cuối năm'); log((vt ? 'Được thưởng lương tháng 13 và thưởng Tết ' : 'Được thưởng cuối năm ') + fmtMoney(l, x) + '.', 'good'); l.st.hap += 2; } },
+    { c: function (l, a) { return l.job && !E.isCrime(l) && a >= 22 && !E.tetBonus; }, p: 0.05, run: function (l, a, r, log) { var x = Math.round(l.base * 0.15), vt = isVN(l) && !l.abroad; H.cash(l, x, vt ? 'Thưởng Tết, lương tháng 13' : 'Thưởng cuối năm'); log((vt ? 'Được thưởng lương tháng 13 và thưởng Tết ' : 'Được thưởng cuối năm ') + fmtMoney(l, x) + '.', 'good'); l.st.hap += 2; } },
     { c: function (l, a) { return a >= 35 && a <= 75 && !l.flags.exercise; }, p: 0.04, run: function (l, a, r, log) { l.flags.exercise = true; log(isVN(l) ? 'Bắt đầu tập thể dục, đi bộ mỗi sáng sớm.' : 'Bắt đầu tập thể dục đều đặn.', 'good'); l.st.hea += 5; } },
     { c: function (l, a) { return isVN(l) && [70, 75, 80, 85, 90, 95, 100].indexOf(a) >= 0; }, p: 1, run: function (l, a, r, log) { log('Con cháu tổ chức lễ mừng thọ ' + a + ' tuổi.', 'good'); l.st.hap += 5; H.mem(l, 'Lễ mừng thọ ' + a + ', con cháu quây quần chúc thọ.', 3); } },
     { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log(U.pick(r, ['Trông cháu giúp con những ngày con bận rộn.', 'Đón cháu đi học về, ông bà cháu ríu rít cả buổi chiều.', 'Cuối tuần các cháu về chơi, căn nhà rộn tiếng cười.', 'Dạy cháu đọc chữ, kể chuyện ngày xưa cho cháu nghe.']), 'good'); l.st.hap += 3; l.st.soc += 2; } },

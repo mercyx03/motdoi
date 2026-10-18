@@ -93,7 +93,9 @@
   }
   function boundary(l, r, log) {
     var s = state(l);
-    if (r() < 0.55) { s.control = Math.max(0, s.control - 15); log(s.name + ' đồng ý lùi lại, tôn trọng giới hạn bạn đặt ra.', 'good'); H.fx(l, { hap: 3, soc: 2 }); }
+    var x = r();
+    if (x < 0.55) { s.control = Math.max(0, s.control - 15); log(s.name + ' đồng ý lùi lại, tôn trọng giới hạn bạn đặt ra, vẫn chu cấp đều đặn như cũ.', 'good'); H.fx(l, { hap: 3, soc: 2 }); }
+    else if (x < 0.8) { s.control = Math.max(0, s.control - 5); log(s.name + ' không vui, giận dỗi mấy hôm, nhưng vẫn gửi khoản chu cấp như đã hứa. Bạn không phải đổi quyền riêng tư lấy tiền.', 'neutral'); H.fx(l, { hap: 1 }); }
     else { s.withheldUntil = l.age; log(s.name + ' không đồng ý và ngừng khoản chu cấp trong năm nay. Bạn vẫn có thể tự đi làm hoặc chấm dứt quan hệ.', 'bad'); H.fx(l, { hap: -3 }); }
   }
   E.SC('sn_loi_moi', {

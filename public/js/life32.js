@@ -134,14 +134,14 @@
     prep: function (l, r, arg) { return arg && arg.why ? arg : { why: 'mổ cấp cứu' }; },
     text: function (l, d) { return 'Bác sĩ chỉ định ' + d.why + '. Bạn chọn mổ ở đâu?' + (E.hasBHYT && E.hasBHYT(l) ? ' (Bạn có bảo hiểm y tế.)' : ' (Bạn không có bảo hiểm y tế.)'); },
     opts: [
-      { k: 'cong', l: 'Bệnh viện công, theo bảo hiểm', h: function (l) { return 'Chờ lịch mổ vài tuần, nằm phòng đông · ~' + mo(l, V(l, 18) * (E.hasBHYT && E.hasBHYT(l) ? 0.3 : 1)); }, ai: function (l) { return rich(l) ? 0.3 : 1.5; }, run: function (l, r, log, d) { op(l, r, log, d, V(l, 18) * (E.hasBHYT && E.hasBHYT(l) ? 0.3 : 1), 0.08, 'Chờ ba tuần mới đến lịch mổ, sau mổ nằm phòng tám giường, người nhà trải chiếu ngủ dưới gầm giường.'); } },
-      { k: 'dichvu', l: 'Mổ dịch vụ ở bệnh viện công, tự chọn bác sĩ', h: function (l) { return 'Mổ sớm hơn, phòng ít người · ~' + mo(l, V(l, 45)); }, ai: { w: 1 }, run: function (l, r, log, d) { op(l, r, log, d, V(l, 45), 0.05, 'Mổ dịch vụ, được chọn bác sĩ giỏi, nằm phòng hai giường.'); } },
-      { k: 'tu', l: 'Bệnh viện tư / quốc tế', h: function (l) { return 'Mổ ngay, phòng riêng, chăm sóc chu đáo · ~' + mo(l, V(l, 140)); }, req: function (l) { return l.money > V(l, 140) * 0.5; }, ai: function (l) { return rich(l) ? 2 : 0.2; }, run: function (l, r, log, d) { op(l, r, log, d, V(l, 140), 0.04, 'Mổ ở bệnh viện tư: phòng riêng như khách sạn, y tá túc trực cả ngày.'); } }
+      { k: 'cong', l: 'Bệnh viện công, theo bảo hiểm', h: function (l) { return 'Chờ lịch mổ vài tuần, nằm phòng đông · viện phí ~' + mo(l, V(l, 18)) + (E.medNote ? E.medNote(l, V(l, 18), 1) : ''); }, ai: function (l) { return rich(l) ? 0.3 : 1.5; }, run: function (l, r, log, d) { op(l, r, log, d, V(l, 18), 0.08, 1, 'Chờ ba tuần mới đến lịch mổ, sau mổ nằm phòng tám giường, người nhà trải chiếu ngủ dưới gầm giường.'); } },
+      { k: 'dichvu', l: 'Mổ dịch vụ ở bệnh viện công, tự chọn bác sĩ', h: function (l) { return 'Mổ sớm hơn, phòng ít người · ~' + mo(l, V(l, 45)) + (E.medNote ? E.medNote(l, V(l, 45), 0.5) : ''); }, ai: { w: 1 }, run: function (l, r, log, d) { op(l, r, log, d, V(l, 45), 0.05, 0.5, 'Mổ dịch vụ, được chọn bác sĩ giỏi, nằm phòng hai giường.'); } },
+      { k: 'tu', l: 'Bệnh viện tư / quốc tế', h: function (l) { return 'Mổ ngay, phòng riêng, chăm sóc chu đáo · ~' + mo(l, V(l, 140)); }, req: function (l) { return l.money > V(l, 140) * 0.5; }, ai: function (l) { return rich(l) ? 2 : 0.2; }, run: function (l, r, log, d) { op(l, r, log, d, V(l, 140), 0.04, 0, 'Mổ ở bệnh viện tư: phòng riêng như khách sạn, y tá túc trực cả ngày.'); } }
     ]
   });
-  function op(l, r, log, d, cost, risk, txt) {
-    H.cash(l, -cost, 'Phẫu thuật: ' + d.why);
-    if (ch(r, risk)) { log(txt + ' Sau mổ bị biến chứng, phải nằm viện thêm một tháng.', 'bad'); fx(l, { hea: -8, hap: -6 }); H.cash(l, -cost * 0.3, 'Điều trị biến chứng sau mổ'); }
+  function op(l, r, log, d, cost, risk, cover, txt) {
+    if (E.medBill) E.medBill(l, cost, 'Phẫu thuật: ' + d.why, log, cover); else H.cash(l, -cost, 'Phẫu thuật: ' + d.why);
+    if (ch(r, risk)) { log(txt + ' Sau mổ bị biến chứng, phải nằm viện thêm một tháng.', 'bad'); fx(l, { hea: -8, hap: -6 }); if (E.medBill) E.medBill(l, cost * 0.3, 'Điều trị biến chứng sau mổ', log, cover); else H.cash(l, -cost * 0.3, 'Điều trị biến chứng sau mổ'); }
     else { log(txt + ' Ca mổ thành công.', 'good'); fx(l, { hea: d.ill ? 3 : 6, hap: 2 }); }
     if (d.ill && l.ill) { l.ill.cure = Math.min(0.95, l.ill.cure * 1.35); l.ill.mult = Math.max(1, l.ill.mult * 0.85); }
     H.mem(l, 'Lần nằm trên bàn mổ — ' + d.why + '.', 3);
@@ -151,8 +151,8 @@
     title: 'Răng khôn mọc lệch', prep: function (l, r, arg) { return { worse: !!(arg && arg.worse) }; },
     text: function (l, d) { return (d.worse ? 'Chiếc răng khôn để lâu giờ sưng tấy, há miệng không nổi, ăn gì cũng đau.' : 'Chiếc răng khôn mọc lệch đâm vào răng bên cạnh, cứ vài tuần lại sưng đau.') + ' Nha sĩ bảo nên nhổ.'; },
     opts: [
-      { k: 'public', l: 'Nhổ ở khoa răng hàm mặt bệnh viện công', h: function (l) { return 'Xếp hàng lấy số từ sáng sớm · ~' + mo(l, V(l, 1.5)); }, ai: function (l) { return rich(l) ? 0.3 : 1.4; }, run: function (l, r, log) { H.cash(l, -V(l, 1.5), 'Nhổ răng khôn'); l.flags.wisdom = true; log('Dậy từ 5 giờ sáng xếp hàng lấy số, chờ cả buổi mới đến lượt nhổ răng khôn. Má sưng như quả bóng mất ba ngày.', 'neutral'); fx(l, { hea: 1, hap: -1 }); } },
-      { k: 'private', l: 'Nhổ ở nha khoa tư (máy siêu âm, ít đau)', h: function (l) { return 'Hẹn giờ, không phải chờ · ~' + mo(l, V(l, 4)); }, ai: function (l) { return rich(l) ? 2 : 0.6; }, run: function (l, r, log) { H.cash(l, -V(l, 4), 'Nhổ răng khôn ở nha khoa tư'); l.flags.wisdom = true; log('Nhổ răng khôn ở nha khoa tư, hẹn đúng giờ, làm nhanh, về nhà vẫn ăn cháo được.', 'good'); } },
+      { k: 'public', l: 'Nhổ ở khoa răng hàm mặt bệnh viện công', h: function (l) { return 'Xếp hàng lấy số từ sáng sớm · ~' + mo(l, V(l, 1.5)) + (E.medNote ? E.medNote(l, V(l, 1.5), 1) : ''); }, ai: function (l) { return rich(l) ? 0.3 : 1.4; }, run: function (l, r, log) { if (E.medBill) E.medBill(l, V(l, 1.5), 'Nhổ răng khôn', log, 1); else H.cash(l, -V(l, 1.5), 'Nhổ răng khôn'); l.flags.wisdom = true; log('Dậy từ 5 giờ sáng xếp hàng lấy số, chờ cả buổi mới đến lượt nhổ răng khôn. Má sưng như quả bóng mất ba ngày.', 'neutral'); fx(l, { hea: 1, hap: -1 }); } },
+      { k: 'private', l: 'Nhổ ở nha khoa tư (máy siêu âm, ít đau)', h: function (l) { return 'Hẹn giờ, không phải chờ · ~' + mo(l, V(l, 4)); }, ai: function (l) { return rich(l) ? 2 : 0.6; }, run: function (l, r, log) { if (E.medBill) E.medBill(l, V(l, 4), 'Nhổ răng khôn ở nha khoa tư', log, 0); else H.cash(l, -V(l, 4), 'Nhổ răng khôn ở nha khoa tư'); l.flags.wisdom = true; log('Nhổ răng khôn ở nha khoa tư, hẹn đúng giờ, làm nhanh, về nhà vẫn ăn cháo được.', 'good'); } },
       { k: 'wait', l: 'Uống thuốc giảm đau, để đó tính sau', ai: { w: 0.5 }, run: function (l, r, log, d) { log('Uống thuốc giảm đau cho qua.', 'neutral'); fx(l, { hap: -2 }); if (!d.worse) H.sched(l, 'rang_khon', 2, { worse: true }); } }
     ]
   });
@@ -160,10 +160,10 @@
   if (E.DEC.kham) {
     E.DEC.kham.def.text = function (l) { return 'Lâu rồi bạn chưa khám sức khỏe. Bệnh viện công thì rẻ nhưng đông, bệnh viện tư thì nhanh mà đắt.'; };
     var go0 = E.DEC.kham.def.opts.filter(function (o) { return o.k === 'go'; })[0];
-    var runGo = function (l, r, log, cost, txt) { var m0 = l.money, it = l.yr.items, n0 = it.length; go0.run(l, r, function () { }); l.money = m0; it.splice(n0, it.length - n0); H.cash(l, -cost, 'Khám sức khỏe tổng quát'); log(txt + (l.ill && l.ill.treated ? '' : ''), 'neutral'); if (l.ill && !l.ill.treated) log('Đi khám phát hiện sớm ' + l.ill.n + ', điều trị kịp thời.', 'good'); };
+    var runGo = function (l, r, log, cost, txt, cover) { var m0 = l.money, it = l.yr.items, n0 = it.length; go0.run(l, r, function () { }); l.money = m0; it.splice(n0, it.length - n0); if (E.medBill) E.medBill(l, cost, 'Khám sức khỏe', log, cover); else H.cash(l, -cost, 'Khám sức khỏe tổng quát'); log(txt + (l.ill && l.ill.treated ? '' : ''), 'neutral'); if (l.ill && !l.ill.treated) log('Đi khám phát hiện sớm ' + l.ill.n + ', điều trị kịp thời.', 'good'); };
     E.DEC.kham.def.opts = [
-      { k: 'go', l: 'Khám ở bệnh viện công', h: function (l) { return 'Dậy từ 5 giờ sáng xếp hàng lấy số, chờ cả buổi · ~' + mo(l, V(l, 0.8)); }, ai: function (l) { return rich(l) ? 0.4 : 1.2; }, run: function (l, r, log) { runGo(l, r, log, V(l, 0.8), 'Khám tổng quát ở bệnh viện công: 5 giờ sáng đã xếp hàng lấy số, chờ xét nghiệm, chờ kết quả, rồi đứng đợi lấy thuốc đến trưa.'); } },
-      { k: 'private', l: 'Gói khám ở bệnh viện tư / khoa quốc tế', h: function (l) { return 'Hẹn giờ, khám nhanh, có kết quả trong ngày · ~' + mo(l, V(l, 4)); }, ai: function (l) { return rich(l) ? 1.5 : 0.3; }, run: function (l, r, log) { runGo(l, r, log, V(l, 4), 'Mua gói khám ở bệnh viện tư: có người hướng dẫn từng phòng, xong trong một buổi sáng.'); } },
+      { k: 'go', l: 'Khám ở bệnh viện công', h: function (l) { return 'Dậy từ 5 giờ sáng xếp hàng lấy số, chờ cả buổi · ~' + mo(l, V(l, 0.8)) + (E.medNote ? E.medNote(l, V(l, 0.8), 1) : ''); }, ai: function (l) { return rich(l) ? 0.4 : 1.2; }, run: function (l, r, log) { runGo(l, r, log, V(l, 0.8), 'Khám tổng quát ở bệnh viện công: 5 giờ sáng đã xếp hàng lấy số, chờ xét nghiệm, chờ kết quả, rồi đứng đợi lấy thuốc đến trưa.', 1); } },
+      { k: 'private', l: 'Gói khám ở bệnh viện tư / khoa quốc tế', h: function (l) { return 'Hẹn giờ, khám nhanh, có kết quả trong ngày · ~' + mo(l, V(l, 4)); }, ai: function (l) { return rich(l) ? 1.5 : 0.3; }, run: function (l, r, log) { runGo(l, r, log, V(l, 4), 'Mua gói khám ở bệnh viện tư: có người hướng dẫn từng phòng, xong trong một buổi sáng.', 0); } },
       { k: 'no', l: 'Thôi, khỏe mà', run: function () { } }
     ];
   }

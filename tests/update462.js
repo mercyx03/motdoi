@@ -19,7 +19,7 @@ for(let seed=1;seed<=120;seed++){
  E.DEC.hh_bmhh.apply(l,d,'that',()=>0,()=>{});const love=l.pending.find(x=>x.id==='love');if(love){ok(love.data.p.job===c.job&&love.data.p.jobId===c.jobId&&love.data.p.inc===c.inc,'giữ đúng nghề và thu nhập người được ghép đôi');}
 }
 for(const sex of ['M','F']){
- const l=life();l.sex=sex;l.edu=5;l.orient='straight';const d=E.DEC.hh_moi.make(l,()=>.5);run(l,d,'nali');let rounds=0;while(l.pending.some(d=>/^hh_nali/.test(d.id))&&rounds++<6){const d=l.pending[0];ok(d.opts.every(o=>o.l&&!/undefined|NaN/.test(o.l)),'vòng show có lựa chọn hợp lệ');E.resolve(l,d.opts[0].k);}ok(rounds>=(sex==='F'?4:1)&&rounds<=4,'show diễn ra nhiều vòng và kết thúc');
+ const l=life();l.sex=sex;l.edu=5;l.orient='straight';const d=E.DEC.hh_moi.make(l,()=>.5);run(l,d,'nali');let rounds=0;while(l.pending.some(d=>/^hh_nali/.test(d.id))&&rounds++<6){const d=l.pending[0];ok(d.opts.every(o=>o.l&&!/undefined|NaN/.test(o.l)),'vòng show có lựa chọn hợp lệ');E.resolve(l,d.opts[0].k);}ok(rounds>=(sex==='F'?3:1)&&rounds<=4,'show diễn ra nhiều vòng và kết thúc');
 }
 {
  const l=life();l.flags.dtd={win:0,picks:[{n:'An',s:'F',age:25,job:'nhân viên',inc:5},{n:'Bình',s:'F',age:25}],focus:0,bond:.1};const d=E.DEC.hh_dtd.make(l,()=>.5,{v:3});ok(/ở lại đảo/.test(d.text),'thua thì ở lại đảo');const logs=run(l,d,'a');ok(logs.some(e=>/sinh hoạt trên đảo/.test(e.t))&&!logs.some(e=>/Ở khu nghỉ dưỡng/.test(e.t)),'lời kể theo kết quả thực tế');

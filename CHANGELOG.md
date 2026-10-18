@@ -1,3 +1,38 @@
+## v6.2.0 — Ứng dụng hẹn hò 5 hồ sơ, Người ấy là ai chọn 1 trong 3, chu cấp khi đặt ranh giới (gộp v6.1.0)
+
+- **Ứng dụng hẹn hò (Tinder, Bumble, Hinge, Facebook Hẹn hò, Blued, HER):**
+  - Mỗi lần mở app hiện 5 hồ sơ ngẫu nhiên: tên, tuổi, nghề, khoảng cách, lời giới thiệu, sở thích. Hồ sơ đúng xu hướng tính dục.
+  - Bạn chọn nhắn tin với người mình thích, lướt thêm 5 hồ sơ khác (tối đa 2 lần), hoặc thoát app.
+  - Có người chỉ "seen" không trả lời. Có người tử tế, người đào mỏ, người rủ đầu tư, ảnh ảo, "Việt kiều gửi quà". Hồ sơ chỉ có vài dấu hiệu, không nói thẳng.
+  - Trên Tinder, Blued có người chỉ muốn gặp qua đêm.
+- **Người ấy là ai:** chung cuộc chọn 1 trong 3 chàng trai (trước đây chỉ còn 2). Hai vòng loại: ngoại hình & nghề nghiệp, tài năng & câu hỏi riêng. Khi bạn là chàng trai dự thi, nữ chính cũng chọn 1 trong 3 người vào chung cuộc.
+- **Chu cấp khi đặt ranh giới:** không để người chu cấp kiểm soát thì 55% người ấy tôn trọng và vẫn chu cấp đều; 25% giận dỗi nhưng vẫn gửi tiền; chỉ khoảng 20% ngừng chu cấp năm đó.
+
+## v6.1.0 — Viện phí có BHYT, nha khoa, thưởng Tết theo ngành, rà soát cách tính tiền
+
+- **Rà soát cách tính tiền:**
+  - Đối chiếu tự động 805 lựa chọn có ghi giá (nhân vật ở Việt Nam, Mỹ, Nhật, sinh viên, trẻ em, người nghèo): số tiền hiển thị khớp số tiền thật bị trừ.
+  - Đối chiếu 2.328 năm sống: tiền thay đổi trong năm bằng "để dành / hụt" cộng các khoản lẻ đã ghi trong nhật ký, không trừ hai lần.
+- **Bảo hiểm y tế (BHYT) thống nhất:**
+  - Khám chữa bệnh ở bệnh viện công, đúng tuyến: BHYT trả 80%, bạn trả 20%.
+  - Trẻ dưới 6 tuổi và hộ nghèo được 100%; người hưởng lương hưu được 95%.
+  - Mổ dịch vụ: BHYT trả phần chuẩn. Bệnh viện tư: tự trả phần chênh.
+  - Nhật ký ghi rõ: "Viện phí X: BHYT chi trả 80% (Y), bạn trả Z". Trước đây mỗi chỗ một kiểu (60%, 70%), khám sức khỏe không được BHYT.
+  - Trẻ chưa tự lập thì bố mẹ trả viện phí, không trừ tiền riêng.
+- **Áp dụng cho:** điều trị bệnh, phẫu thuật (kể cả biến chứng sau mổ), khám sức khỏe, nhổ răng khôn (bệnh viện công 1,5 triệu đ → bạn trả 300k đ), khám chữa bệnh trong trại giam.
+- **Nha khoa mới:**
+  - Trám răng sâu, lấy cao răng: BHYT trả.
+  - Niềng răng mắc cài / trong suốt, bọc răng sứ, tẩy trắng: thẩm mỹ, tự trả.
+- **Bố mẹ mất việc đúng lý do theo nghề** (người chơi phản ánh: bố là bác sĩ mà lý do là "thu hẹp sản xuất"):
+  - Bác sĩ, y tá, giáo viên hiếm khi mất việc; nếu có thì do phòng khám tư / trường tư đóng cửa, hết hợp đồng.
+  - Công nhân: nhà máy thu hẹp sản xuất. Kỹ sư phần mềm: công ty công nghệ cắt giảm. Thợ xây: hết công trình. Ngân hàng: sáp nhập. Bảo vệ: hết hợp đồng tòa nhà.
+  - Nông dân, người chăn nuôi, nuôi tôm cá, đánh cá, buôn bán nhỏ không "thất nghiệp" mà mất mùa, dịch bệnh, biển động, ế ẩm: thu nhập giảm một năm.
+- **Thưởng Tết cuối năm theo ngành nghề** (thay cho sự kiện thưởng ngẫu nhiên cũ):
+  - Người làm công ăn lương được thưởng theo số tháng lương. Trung bình: ngân hàng ~4–5 tháng, dầu khí / doanh nghiệp nhà nước lớn 2,5–5, hàng không 2–4, công nghệ ~2,5, kinh doanh theo doanh số 1–4, văn phòng 1–2,5, sản xuất ~1,5, dịch vụ ~1. Khu vực nhà nước không thưởng Tết như doanh nghiệp, chỉ có thưởng theo quy định và quà Tết (~0,6 tháng).
+  - Năm công ty làm ăn tốt thì thưởng nhiều hơn; năm khó khăn chỉ có hộp bánh, giỏ quà. Uy tín, cấp bậc càng cao thì thưởng càng nhiều. Mới vào làm thì thưởng ít.
+  - Chủ cơ sở, người làm tự do (tài xế công nghệ, freelancer…) không có thưởng từ công ty.
+  - Ở nước ngoài: Nhật thưởng hai kỳ (2,5–5 tháng), Hàn, Trung Quốc, Singapore (AWS), Philippines (lương tháng 13 bắt buộc), Đức (Weihnachtsgeld), Áo (lương tháng 13 và 14)…
+
 ## v6.0.0 — Sinh viên lên thành phố, chuyện nghề chi tiết, quà cho nam (gộp v5.9.2)
 
 - **Sinh viên lên thành phố học: chọn chỗ ở theo điều kiện gia đình.**

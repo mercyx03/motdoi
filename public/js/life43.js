@@ -184,8 +184,9 @@
   function medPay(l, tr, why, log) {
     var x = V(l, tr);
     if (!l.indep && l.age < 18) { log((parent(l) ? U.cap(parent(l)) : 'Gia đình') + ' lo toàn bộ viện phí ' + mo(l, x) + '.', 'neutral'); return; }
+    if (E.medBill) { E.medBill(l, x, why, log, 1); return; }
     H.cash(l, -x, why);
-    if (E.hasBHYT && E.hasBHYT(l)) { var b = x * (isVN(l) ? 0.7 : 0.75); H.cash(l, b, isVN(l) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); }
+    if (E.hasBHYT && E.hasBHYT(l)) { var b = x * 0.8; H.cash(l, b, isVN(l) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); }
   }
   function tropical(l) { return isVN(l) || /^(TH|ID|PH|MY|KH|LA|MM|IN|BD|LK|BR|MX|CO|PE|NG)$/.test(l.abroad && l.abroad.perm ? l.abroad.code : l.country); }
   SC('ruot_thua', {

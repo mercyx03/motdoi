@@ -189,7 +189,9 @@
   var ta0 = E.DEC.treat.apply;
   E.DEC.treat.apply = function (l, d, k, r, log) {
     var m0 = l.money, x = ta0.apply(this, arguments), spent = m0 - l.money;
-    if (spent > 0 && bhyt(l)) { var back = spent * (isVN(l) ? 0.6 : 0.7); H.cash(l, back, isVN(l) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); log((isVN(l) ? 'Bảo hiểm y tế' : 'Bảo hiểm') + ' chi trả ' + mo(l, back) + ' viện phí.', 'good'); }
+    var share = E.bhytShare ? E.bhytShare(l) : (bhyt(l) ? 0.8 : 0), priv = k === 'best' && d.data && d.data.priv;
+    if (spent > 0 && share > 0 && priv) { H.cash(l, spent * share, isVN(l) ? 'BHYT chi trả phần viện phí chuẩn' : 'Bảo hiểm chi trả phần chuẩn'); }
+    else if (spent > 0 && share > 0) { var back = spent * share; H.cash(l, back, isVN(l) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); log('Viện phí ' + mo(l, spent) + ': ' + (isVN(l) ? 'BHYT' : 'bảo hiểm') + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, back) + '), bạn trả ' + mo(l, spent - back) + '.', 'good'); }
     return x;
   };
 
