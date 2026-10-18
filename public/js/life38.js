@@ -45,7 +45,7 @@
     prep: function (l, r, arg) { var s = showByK(arg && arg.k) || SHOWS[0], p = (arg && arg.p) || 0; return { s: s, p: p, m: s.m.slice(p * PER, p * PER + PER) }; },
     text: function (l, d) { return 'Đội hình ' + d.s.n + ' có ' + d.s.m.length + ' ' + d.s.pre + '. Bạn "đu" ai nhất, muốn cầm banner, lightstick cổ vũ ai? (' + (d.p * PER + 1) + '–' + Math.min(d.s.m.length, d.p * PER + PER) + ' / ' + d.s.m.length + ')'; },
     opts: Array.apply(null, Array(PER)).map(function (_, i) {
-      return { k: 'b' + i, l: function (l, d) { return d.m[i] ? U.cap(d.s.pre) + ' ' + d.m[i] : ''; }, req: function (l, d) { return !!d.m[i]; }, ai: { w: 1 },
+      return { k: 'b' + i, l: function (l, d) { return d.m[i] ? U.cap(E.memberName(d.s.pre, d.m[i])) : ''; }, req: function (l, d) { return !!d.m[i]; }, ai: { w: 1 },
         run: function (l, r, log, d) { pickBias(l, r, log, d.s, d.m[i]); } };
     }).concat([
       { k: 'more', l: 'Xem thêm các nghệ sĩ khác ›', req: function (l, d) { return d.s.m.length > (d.p + 1) * PER; }, ai: { w: 0.3 }, run: function (l, r, log, d) { l.pending.unshift(E.DEC.bias_chon.make(l, r, { k: d.s.k, p: d.p + 1 })); } },
@@ -55,8 +55,8 @@
   });
   function pickBias(l, r, log, s, name) {
     var was = l.bias && l.bias.n;
-    l.bias = { n: name, show: s.n, pre: s.pre }; l.idol = s.pre + ' ' + name; l.idolCat = 'show'; l.idolBorn = s.b;
-    log(was && was !== name ? 'Chuyển bias sang ' + s.pre + ' ' + name + ' — "đu" thêm một người nữa thôi mà.' : 'Chọn ' + s.pre + ' ' + name + ' làm bias, cày view, bình chọn nhiệt tình.', 'good'); fx(l, { hap: 2 });
+    l.bias = { n: name, show: s.n, pre: s.pre }; l.idol = E.memberName(s.pre, name); l.idolCat = 'show'; l.idolBorn = s.b;
+    log(was && was !== name ? 'Chuyển bias sang ' + E.memberName(s.pre, name) + ' — "đu" thêm một người nữa thôi mà.' : 'Chọn ' + E.memberName(s.pre, name) + ' làm bias, cày view, bình chọn nhiệt tình.', 'good'); fx(l, { hap: 2 });
     l.pending.unshift(E.DEC.concert_di.make(l, r, { cat: 'show', name: s.n }));
   }
   if (E.DEC.concert_chon) E.DEC.concert_chon.def.opts.forEach(function (o) { if (o.k === 'show') o.run = function (l, r) { l.pending.unshift(E.DEC.show_chon.make(l, r)); }; });
@@ -66,7 +66,7 @@
     var went = false, lg = function (t, kk) { if (/Săn được vé|kịp đi xem|đưa bạn đi xem|rủ bạn đi xem|Đi xem /.test(t)) went = true; log(t, kk); };
     var x = cda.call(this, l, d, k, r, lg);
     if (went && l.bias && !l.bias.all && d.data.cat === 'show' && l.bias.show === d.data.name) {
-      if (ch(r, 0.12)) { log(U.cap(l.bias.pre || 'anh trai') + ' ' + l.bias.n + ' nhìn thấy tấm banner bạn giơ, chỉ thẳng xuống và bắn tim! Bạn hét đến lạc giọng.', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Khoảnh khắc ' + l.bias.n + ' bắn tim về phía mình giữa biển lightstick.', 7); }
+      if (ch(r, 0.12)) { log(U.cap(E.memberName(l.bias.pre || 'anh trai', l.bias.n)) + ' nhìn thấy tấm banner bạn giơ, chỉ thẳng xuống và bắn tim! Bạn hét đến lạc giọng.', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Khoảnh khắc ' + l.bias.n + ' bắn tim về phía mình giữa biển lightstick.', 7); }
       else { log('Cả đêm giơ cao banner tên ' + l.bias.n + ', hát theo từng bài của bias.', 'good'); fx(l, { hap: 2 }); }
     }
     return x;

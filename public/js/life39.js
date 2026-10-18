@@ -63,7 +63,7 @@
     var all = []; S.forEach(function (s) { if (ids.indexOf(s.k) >= 0 && yr(l) >= s.from && yr(l) - s.b <= 65) s.m.forEach(function (m) { if (m !== l.name && all.indexOf(m) < 0) all.push(m); }); });
     return all;
   }
-  function team(l, r, n) { var T = l.flags.tv, a = T.k === 'tbtn' ? [] : pool(T.k, l), tries = 0; while (a.length < n && tries++ < 50) { var m = H.stranger(l, r, T.k === 'exsh' ? 'F' : 'M'); if (m !== l.name && a.indexOf(m) < 0) a.push(m); } return shuffle(r, a).slice(0, n).map(function (m) { return FMT[T.k].pre + ' ' + m; }); }
+  function team(l, r, n) { var T = l.flags.tv, a = T.k === 'tbtn' ? [] : pool(T.k, l), tries = 0; while (a.length < n && tries++ < 50) { var m = H.stranger(l, r, T.k === 'exsh' ? 'F' : 'M'); if (m !== l.name && a.indexOf(m) < 0) a.push(m); } return shuffle(r, a).slice(0, n).map(function (m) { return E.memberName ? E.memberName(FMT[T.k].pre, m) : FMT[T.k].pre + ' ' + m; }); }
   function base(l) { return Math.min(1, (l.skill || 40) / 100) * 0.55 + Math.min(0.3, Math.log10((l.fame || 0) + 10) / 22) + (l.st.hea >= 60 ? 0.05 : 0); }
 
   // ---------- lời mời ----------

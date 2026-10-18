@@ -179,9 +179,9 @@
     if (pl === 'sốt' && M.landYrs >= 3) lt = { 'vỡ bong bóng': 0.6, 'bình thường': 0.4 };
     M.land = next(r, lt);
     var interested = l.indep && a >= 20;
-    var newsOk = l.flags.landNewsAt == null || a - l.flags.landNewsAt >= 8 || l.assets.land > 0.5; // v3.8.1: tin thị trường đất không nhắc năm nào cũng như năm nào
+    var newsOk = l.flags.landNewsAt == null || a - l.flags.landNewsAt >= (l.assets.land > 0.5 ? 4 : 8); // v5.6.1: người có đất cũng không nghe tin năm nào cũng như năm nào // v3.8.1: tin thị trường đất không nhắc năm nào cũng như năm nào
     if (interested && newsOk && M.land !== pl && (M.land === 'sốt' || M.land === 'vỡ bong bóng' || l.assets.land > 0.5) && r() < 0.8 && (l.flags.landNewsAt = a) != null)
-      log(M.land === 'sốt' ? (isVN(l) && !(l.abroad && l.abroad.perm) ? pick(r, ['Thị trường đất nóng sốt: cò đất dựng lều ngoài bãi đất trống, người người đổ xô đi mua.', 'Sốt đất lan về tận vùng ven, mảnh ruộng cũ của hàng xóm bỗng có giá cả tỷ.', 'Đi đâu cũng nghe bàn chuyện đất nền, phân lô; bạn bè rủ nhau góp vốn "lướt sóng".']) : pick(r, ['Giá nhà đất tăng vọt, đi đâu cũng nghe người ta bàn chuyện mua nhà, mua đất.', 'Giá nhà tăng chóng mặt, người trẻ than thở không biết bao giờ mới mua nổi một căn.', 'Thị trường bất động sản nóng lên, ngân hàng đua nhau mời vay mua nhà.'])) : M.land === 'vỡ bong bóng' ? 'Bong bóng đất vỡ — giá đất lao dốc, nhiều người ôm nợ ngân hàng.' : M.land === 'đóng băng' ? 'Thị trường đất đóng băng, rao bán mãi không ai hỏi.' : 'Thị trường đất trở lại bình thường.', 'neutral');
+      log(M.land === 'sốt' ? (isVN(l) && !(l.abroad && l.abroad.perm) ? pick(r, ['Thị trường đất nóng sốt: cò đất dựng lều ngoài bãi đất trống, người người đổ xô đi mua.', 'Sốt đất lan về tận vùng ven, mảnh ruộng cũ của hàng xóm bỗng có giá cả tỷ.', 'Đi đâu cũng nghe bàn chuyện đất nền, phân lô; bạn bè rủ nhau góp vốn "lướt sóng".']) : pick(r, ['Giá nhà đất tăng vọt, đi đâu cũng nghe người ta bàn chuyện mua nhà, mua đất.', 'Giá nhà tăng chóng mặt, người trẻ than thở không biết bao giờ mới mua nổi một căn.', 'Thị trường bất động sản nóng lên, ngân hàng đua nhau mời vay mua nhà.', 'Báo chí liên tục đưa tin giá nhà lập đỉnh mới, môi giới gọi điện mời chào mỗi ngày.', 'Khu ngoại ô vắng vẻ ngày nào giờ mọc lên toàn dự án, giá rao bán đội lên từng tháng.', 'Người thuê nhà than tiền thuê tăng liên tục vì giá nhà đất leo thang.'])) : M.land === 'vỡ bong bóng' ? pick(r, ['Bong bóng đất vỡ — giá đất lao dốc, nhiều người ôm nợ ngân hàng.', 'Giá nhà đất sụt mạnh, nhiều người mua lúc đỉnh giờ cắt lỗ không ai mua.', 'Thị trường nhà đất lao dốc, dự án bỏ dở nằm phơi nắng.']) : M.land === 'đóng băng' ? pick(r, ['Thị trường đất đóng băng, rao bán mãi không ai hỏi.', 'Nhà đất ế ẩm, biển rao bán treo kín các con phố.', 'Giao dịch nhà đất gần như đứng im, môi giới chuyển nghề hàng loạt.']) : pick(r, ['Thị trường đất trở lại bình thường.', 'Giá nhà đất chững lại, người mua người bán đều dè chừng.', 'Thị trường bất động sản dần ổn định sau những biến động.']), 'neutral');
     if (interested && M.stock === 'sập' && ps !== 'sập' && (l.assets.stock > 0.5 || (r() < 0.3 && (l.flags.stockNewsAt == null || a - l.flags.stockNewsAt >= 8)))) { l.flags.stockNewsAt = a; log(pick(r, ['Chứng khoán sập mạnh, bảng điện đỏ lửa nhiều phiên liền.', 'Thị trường chứng khoán lao dốc, nhà đầu tư ngồi nhìn tài khoản bốc hơi.', 'Cổ phiếu giảm sàn hàng loạt, các nhóm đầu tư trên mạng im bặt.']), 'neutral'); }
     var A = l.assets, core = function () { return (A.save || 0) + (A.gold || 0) + (A.stock || 0) + (A.land || 0); }, before = core(); // v2.4: chỉ 4 loại tài sản tài chính (nhà cho thuê, cơ sở kinh doanh tính riêng)
     if (before > 0.5) {
@@ -236,7 +236,7 @@
     text: function (l) { return 'Sáng nào mở mắt ra cũng thấy sợ phải đi làm. Đau đầu, mất ngủ, cáu gắt với cả người thân. Công việc ' + E.jobTitle(l) + ' đang vắt kiệt bạn.'; },
     opts: [
       { k: 'leave', l: 'Xin nghỉ phép dài ngày', h: 'Mất một phần thu nhập năm nay', ai: { w: 1 }, run: function (l, r, log) { cashB(l, -0.05, 'Nghỉ phép không lương'); l.mind.stress -= 30; fx(l, { hap: 6, hea: 3 }); log('Xin nghỉ phép hai tuần, tắt điện thoại, ngủ bù và đi bộ mỗi sáng.', 'good'); } },
-      { k: 'therapy', l: 'Gặp chuyên gia tâm lý', h: function (l) { return mb(l, 0.05); }, ai: { smart: 1 }, run: function (l, r, log) { cashB(l, -0.05, 'Trị liệu tâm lý'); l.mind.therapyUntil = l.age + 1; l.mind.stress -= 25; fx(l, { hap: 8 }); log('Bắt đầu đi trị liệu tâm lý. Lần đầu tiên có người giúp bạn gỡ từng nút thắt.', 'good'); H.mem(l, 'Buổi trị liệu đầu tiên, bạn khóc như một đứa trẻ rồi thấy nhẹ nhõm lạ thường.', 4); } },
+      { k: 'therapy', l: 'Gặp chuyên gia tâm lý', h: function (l) { return mb(l, 0.05); }, ai: { smart: 1 }, run: function (l, r, log) { cashB(l, -0.05, 'Trị liệu tâm lý'); l.mind.therapyUntil = l.age + 1; l.mind.stress -= 25; fx(l, { hap: 8 }); l.flags.therapyN = (l.flags.therapyN || 0) + 1; log(l.flags.therapyN === 1 ? 'Bắt đầu đi trị liệu tâm lý. Lần đầu tiên có người giúp bạn gỡ từng nút thắt.' : pick(r, ['Quay lại gặp chuyên gia tâm lý, cùng nhau gỡ những nút thắt mới.', 'Lại đi trị liệu một đợt. Lần này bạn biết mình cần gì hơn.', 'Hẹn lại chuyên gia tâm lý quen, nói hết những gì dồn nén mấy tháng nay.']), 'good'); H.mem(l, 'Buổi trị liệu đầu tiên, bạn khóc như một đứa trẻ rồi thấy nhẹ nhõm lạ thường.', 4); } },
       { k: 'quit', l: 'Nghỉ việc, nghỉ ngơi một thời gian', h: 'Không có thu nhập cho đến khi tìm việc mới', ai: { risk: 0.8, w: 0.5 }, run: function (l, r, log) { log('Nộp đơn nghỉ việc ' + E.jobTitle(l) + '. Cần thời gian để sống lại.', 'neutral'); l.job = null; l.flags.needJob = true; l.mind.stress -= 40; fx(l, { hap: 5 }); } },
       { k: 'push', l: 'Gồng tiếp, ai mà chẳng mệt', ai: { amb: 1, w: 0.7 }, run: function (l, r, log) { l.mind.stress += 5; if (ch(r, 0.25)) { log('Ngất xỉu ngay tại chỗ làm, phải nhập viện truyền dịch.', 'bad'); fx(l, { hea: -10, hap: -5 }); cashB(l, -0.03, 'Viện phí'); H.mem(l, 'Ngày tỉnh dậy trong bệnh viện vì làm việc quá sức.', 4); } else { log('Gồng mình làm tiếp. Mắt thâm quầng, tóc bắt đầu bạc.', 'bad'); fx(l, { hea: -4, hap: -3 }); } } }
     ]
@@ -450,8 +450,13 @@
   E.rollExamScore = function (l, r) {
     var lt = l.flags.luyenThi || 0;
     var knowledge = U.clamp(l.st.kno, 0, 100);
-    var s = 12 + (knowledge - 40) * .28 + (l.focus === 'study' ? .6 : 0) + lt * .45 + (KHOI_TALENT[l.talent] === l.khoi ? .4 : 0) - (l.mind && l.mind.stress > 80 ? 1 : 0) + U.clamp(U.normal(r), -1.5, 1.5);
-    if (knowledge >= 95) s = Math.max(26, s); else if (knowledge >= 90) s = Math.max(24, s);
+    // v5.6.1: điểm sát thực tế — năng lực làm bài cố định theo từng người; trung bình ~23–24, học sinh siêu giỏi vẫn có thể đạt 30, học kém có thể trượt tốt nghiệp (dưới 15)
+    if (l.flags.examApt == null) { var ah = { rs: (l.rs ^ 0x3e1a7) | 0 }; l.flags.examApt = U.clamp(U.normal(function () { return U.rand(ah); }), -2.6, 2.6); }
+    var apt = l.flags.examApt;
+    var s = 16 + (knowledge - 50) * .14 + apt * 2 + (l.focus === 'study' ? .6 : 0) + lt * .45 + (KHOI_TALENT[l.talent] === l.khoi ? .4 : 0) - (l.mind && l.mind.stress > 80 ? 1 : 0) + U.clamp(U.normal(r), -1.2, 1.2) * .8;
+    if (apt > 1.8 && knowledge >= 95) s += (apt - 1.8) * 4.5; // học siêu giỏi: có cơ hội chạm điểm tuyệt đối
+    if (apt < -1.7 && knowledge < 85) s -= (-1.7 - apt) * 4; // học rất kém: có thể trượt tốt nghiệp
+    if (knowledge >= 95) s = Math.max(20, s);
     s = Math.round(U.clamp(s, 5, 30) * 4) / 4;
     return s;
   };
@@ -466,7 +471,32 @@
     if (s >= 27) { l.flags.scholar = true; H.mem(l, 'Ngày tra điểm thi: ' + txt + ' điểm, cả nhà vỡ òa.', 5); fx(l, { hap: 8 }); }
     else if (s < 15) fx(l, { hap: -5 });
     if (s >= 29) { l.fame = Math.max(l.fame || 0, 3000); }
+    if (s >= 30) H.mem(l, 'Ngày nhận tin thủ khoa với điểm tuyệt đối 30/30.', 6);
+    if (s < 15) failHS(l, log);
   });
+  // v5.6.1: điểm quá thấp thì trượt tốt nghiệp THPT, chưa có bằng; năm sau được thi lại, học nghề hoặc đi làm
+  function failHS(l, log) {
+    for (var i = l.log.length - 1; i >= 0 && l.log[i].a === l.age; i--) if (/^Tốt nghiệp (THPT|trung học phổ thông)\.$/.test(l.log[i].t)) { l.log.splice(i, 1); break; }
+    l.edu = Math.min(l.edu, 2); l.flags.uniNext = null; l.flags.hsFail = (l.flags.hsFail || 0) + 1;
+    log('Trượt tốt nghiệp THPT — chưa có bằng tốt nghiệp. Cầm tờ giấy báo điểm mà không dám về nhà.', 'bad');
+    H.mem(l, 'Năm trượt tốt nghiệp THPT, cả nhà không ai nói câu nào.', 4);
+    H.sched(l, 'thi_lai_tn', 1);
+  }
+  SC('thi_lai_tn', {
+    title: 'Thi lại tốt nghiệp THPT', valid: function (l) { return l.edu < 3 && !!l.flags.hsFail && !l.school; },
+    text: 'Năm ngoái bạn trượt tốt nghiệp THPT. Năm nay có thể đăng ký thi lại (hệ giáo dục thường xuyên hoặc thí sinh tự do), học nghề, hoặc đi làm luôn.',
+    opts: [
+      { k: 'thi', l: 'Ôn kỹ rồi thi lại', ai: { w: 1.3, smart: 1 }, run: function (l, r, log) {
+        var s = Math.min(30, Math.max(E.rollExamScore(l, r), 12) + 2.5 + r() * 2); s = Math.round(s * 4) / 4; l.examScore = s;
+        if (s >= 15) { l.edu = Math.max(l.edu, 3); log('Thi lại tốt nghiệp THPT: ' + U.fmtNum(s, 2).replace(/,?0+$/, '') + ' điểm — đỗ, có bằng tốt nghiệp.', 'good'); fx(l, { hap: 6 }); if (E.DEC.uni) l.pending.unshift(E.DEC.uni.make(l, r)); }
+        else if ((l.flags.hsFail || 0) < 2) { l.flags.hsFail++; log('Thi lại vẫn trượt tốt nghiệp. Năm sau còn một cơ hội nữa.', 'bad'); fx(l, { hap: -6 }); H.sched(l, 'thi_lai_tn', 1); }
+        else { l.flags.needJob = true; log('Thi lại vẫn trượt. Bạn quyết định thôi, đi làm kiếm sống.', 'bad'); fx(l, { hap: -5 }); }
+      } },
+      { k: 'nghe', l: 'Học trung cấp nghề', ai: { w: 0.8 }, run: function (l, r, log) { l.school = 'voc'; l.schoolEnd = l.age + 2; log('Đăng ký học trung cấp nghề, vừa học nghề vừa học văn hóa.', 'neutral'); } },
+      { k: 'lam', l: 'Đi làm luôn', ai: { w: 0.7 }, run: function (l, r, log) { l.flags.needJob = true; log('Thôi không thi nữa, đi làm kiếm tiền.', 'neutral'); } }
+    ]
+  });
+  if (E.MAJOR) E.MAJOR.thi_lai_tn = 1;
   // học bổng đại học
   EV(function (l, a) { return (l.school === 'uni' || l.school === 'abroad') && (l.flags.scholar || l.st.kno >= 72) && !l.flags.scholarGot; }, 0.5, function (l, a, r, log) {
     l.flags.scholarGot = true; var full = !!l.flags.scholar && r() < 0.6;

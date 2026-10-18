@@ -267,6 +267,8 @@
   function famFix(l, t) {
     if (!t || typeof t !== 'string' || !l || !l.fam) return t;
     if (E.famLogic) { var t2 = E.famLogic(l, t, false); if (t2 != null) t = t2; }
+    // v5.6.1: đang có người yêu thì gọi "người yêu", đã cưới thì gọi "vợ" / "chồng" (cùng giới: "người bạn đời")
+    if (l.partner && l.partner.alive !== false && /[Nn]gười yêu \/ bạn đời/.test(t)) { var pw = partnerWord(l, l.partner); t = t.replace(/Người yêu \/ bạn đời/g, U.cap(pw)).replace(/người yêu \/ bạn đời/g, pw); }
     // v4.2: bạn thân đã mất thì các chuyện thường ngày không còn nhắc "bạn thân" nữa
     if (l.bff && !l.bff.alive && l.age > l.bff.died && !/qua đời|mộ|giỗ|nhớ|thuở|ngày xưa|di ảnh/.test(t)) t = t.replace(/(^|[^p{L}])([Nn])gười bạn thân(?! nhất)(?![p{L}])/gu, function (x, p, N) { return p + (N === 'N' ? 'M' : 'm') + 'ột người bạn'; }).replace(/(^|[^p{L}])([Bb])ạn thân(?![p{L}])/gu, function (x, p, B) { return p + B + 'ạn bè'; });
     var f = l.fam, m = !!f.mAlive, b = !!f.fAlive && !f.noDad;
@@ -535,7 +537,7 @@
     else if (kind === 'biz' && x < 0.09) { inc *= 0.4 + r() * 0.2; log('Việc làm ăn của ' + P.toLowerCase() + ' thua lỗ, thu nhập chỉ còn ' + show(inc) + '/tháng.', 'bad'); if (!life.indep) life.st.hap -= 3; }
     else if (!stableParent(job) && kind !== 'biz' && x < (kind === 'formal' ? 0.065 : 0.08) && x >= (kind === 'formal' ? 0.05 : 0.05)) {
       f[lostK] = inc; f[key] = 0;
-      log(P + (kind === 'formal' ? ' bị cắt giảm nhân sự, mất việc.' : ' không có việc làm một thời gian, mất nguồn thu nhập.'), 'bad');
+      log(P + (kind === 'formal' ? U.pick(r, [' bị cắt giảm nhân sự, mất việc.', ' bị công ty cho nghỉ việc trong đợt tái cơ cấu.', ' mất việc sau khi nơi làm thu hẹp sản xuất.']) : U.pick(r, [' không có việc làm một thời gian, mất nguồn thu nhập.', ' thất nghiệp mấy tháng liền, phải đi làm thuê lặt vặt.', ' hết việc, ngày ngày đi hỏi khắp nơi xem ai cần người.'])), 'bad');
       if (!life.indep) { life.st.hap -= 3; if (!(M ? f.fInc : f.mInc)) { life.flags.famHardship = true; H.mem(life, 'Năm ' + P.toLowerCase() + ' mất việc, bữa cơm nhà mình chỉ còn rau với nước mắm.', 3); } }
       return;
     }
@@ -1340,7 +1342,7 @@
     // học hành
     if (a === 15 && life.school === 'lower') { life.school = null; life.edu = Math.max(life.edu, 2); add('hs'); }
     if (life.flags.uniNext === a) { life.flags.uniNext = null; add('uni'); }
-    if (life.flags.retryUni != null && life.flags.retryUni <= a) { life.flags.retryUni = null; if (life.flags.retryExamPending) { delete life.flags.retryExamPending; var previousExam = life.examScore; life.examScore = E.rollExamScore ? E.rollExamScore(life, r) : Math.min(30, (previousExam || 15) + 1 + r() * 2.5); if (previousExam != null) life.examScore = Math.min(30, Math.max(life.examScore, Math.round((previousExam + 1 + r() * 2.5) * 4) / 4)); life.log.push({a:a,y:life.birthYear+a,t:'Thi lại tốt nghiệp THPT: '+U.fmtNum(life.examScore,2)+' điểm.',k:'neutral'}); } add('uni'); } // v3.8: không để cờ "ôn thi lại" treo mãi chặn việc tìm việc
+    if (life.flags.retryUni != null && life.flags.retryUni <= a) { life.flags.retryUni = null; if (life.flags.retryExamPending) { delete life.flags.retryExamPending; var previousExam = life.examScore; life.examScore = E.rollExamScore ? E.rollExamScore(life, r) : Math.min(30, (previousExam || 15) + 1 + r() * 2.5); if (previousExam != null) life.examScore = Math.min(30, Math.max(life.examScore, Math.round((previousExam + 1 + r() * 2.5) * 4) / 4)); life.log.push({a:a,y:life.birthYear+a,t:'Thi lại tốt nghiệp THPT: '+U.fmtNum(life.examScore,2)+' điểm.',k:'neutral'}); if (life.examScore >= 27) life.flags.scholar = true; } add('uni'); } // v3.8: không để cờ "ôn thi lại" treo mãi chặn việc tìm việc
     // việc làm
     var studyDecision = q.some(function (d) { return d.id === 'hs' || d.id === 'uni'; });
     if (!studyDecision && !life.school && (!life.job || life.flags.upgradeJob) && !life.retired && !(life.flags.selfRun && !life.job && (life.ventures || []).length && !life.flags.needJob) && a >= 15 && !life.flags.military && life.flags.retryUni == null &&
@@ -1475,7 +1477,7 @@
     var x = a.avail ? a.avail(l) : true;
     return x === true || x === undefined ? true : (x || 'Chưa thể làm lúc này');
   }
-  function actions(l) { return ACT.map(function (a) { return { id: a.id, g: a.g, l: typeof a.l === 'function' ? a.l(l) : a.l, ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
+  function actions(l) { return ACT.map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
   function act(l, id) {
     var a = ACT.filter(function (x) { return x.id === id; })[0];
     if (!a || actAvail(l, a) !== true) return null;
@@ -1517,7 +1519,7 @@
     { c: function (l, a) { return l.job && !E.isCrime(l) && a >= 22; }, p: 0.05, run: function (l, a, r, log) { var x = Math.round(l.base * 0.15), vt = isVN(l) && !l.abroad; H.cash(l, x, vt ? 'Thưởng Tết, lương tháng 13' : 'Thưởng cuối năm'); log((vt ? 'Được thưởng lương tháng 13 và thưởng Tết ' : 'Được thưởng cuối năm ') + fmtMoney(l, x) + '.', 'good'); l.st.hap += 2; } },
     { c: function (l, a) { return a >= 35 && a <= 75 && !l.flags.exercise; }, p: 0.04, run: function (l, a, r, log) { l.flags.exercise = true; log(isVN(l) ? 'Bắt đầu tập thể dục, đi bộ mỗi sáng sớm.' : 'Bắt đầu tập thể dục đều đặn.', 'good'); l.st.hea += 5; } },
     { c: function (l, a) { return isVN(l) && [70, 75, 80, 85, 90, 95, 100].indexOf(a) >= 0; }, p: 1, run: function (l, a, r, log) { log('Con cháu tổ chức lễ mừng thọ ' + a + ' tuổi.', 'good'); l.st.hap += 5; H.mem(l, 'Lễ mừng thọ ' + a + ', con cháu quây quần chúc thọ.', 3); } },
-    { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log('Trông cháu giúp con những ngày con bận rộn.', 'good'); l.st.hap += 3; l.st.soc += 2; } },
+    { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log(U.pick(r, ['Trông cháu giúp con những ngày con bận rộn.', 'Đón cháu đi học về, ông bà cháu ríu rít cả buổi chiều.', 'Cuối tuần các cháu về chơi, căn nhà rộn tiếng cười.', 'Dạy cháu đọc chữ, kể chuyện ngày xưa cho cháu nghe.']), 'good'); l.st.hap += 3; l.st.soc += 2; } },
     { c: function (l, a) { return l.partner && l.partner.sex === l.sex && l.flags.famTension; }, p: 0.12, run: function (l, a, r, log) { l.flags.famTension = false; log('Bố mẹ dần chấp nhận và đón ' + l.partner.name + ' về nhà ăn cơm.', 'good'); l.st.hap += 8; H.mem(l, 'Bữa cơm đầu tiên bố mẹ gắp thức ăn cho ' + l.partner.name + '.', 4); } },
     { c: function (l, a) { return l.partner && l.partner.status === 'married' && a - l.partner.since === 25; }, p: 1, run: function (l, a, r, log) { log('Kỷ niệm 25 năm ngày cưới với ' + l.partner.name + '.', 'good'); l.st.hap += 4; H.mem(l, 'Đám cưới bạc — 25 năm bên ' + l.partner.name + '.', 4); } },
     { c: function (l, a) { return a >= 18 && l.job && !stableService(l) && !l.job.fam && !l.retired && !E.isCrime(l) && !/^(nong|xkld|phu_giup)/.test(l.job.id); }, p: 0.01, run: function (l, a, r, log) { if(stableService(l))return; var jd = E.jobDef(l); log(H.isEmployee(l) ? 'Kinh tế khó khăn, công ty cắt giảm nhân sự — bạn mất việc.' : jd && (jd.fame || jd.cat === 'free') ? 'Kinh tế khó khăn, khách hàng cắt hết hợp đồng — mấy tháng liền không có việc, đành tạm nghỉ nghề.' : 'Kinh tế khó khăn, sức mua giảm mạnh — làm ăn thua lỗ, phải dừng kinh doanh.', 'bad'); l.job = null; l.flags.needJob = true; l.st.hap -= 7; } },
@@ -1878,7 +1880,7 @@
 
     // ---- Bệnh: khỏi bệnh? ----
     // v2.4: càng già, cơ hội khỏi càng giảm theo từng năm (không chỉ theo tuổi lúc phát bệnh)
-    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since)) * (a >= 85 && /^ung thư/.test(life.ill.n) ? 0.45 : 1)) { // v3.4: ung thư ở tuổi rất cao hiếm khi thuyên giảm hoàn toàn
+    if (life.ill && life.ill.since < a && r() < life.ill.cure * Math.min(1, illAgeK(a) / illAgeK(life.ill.since)) * (a >= 85 && /^ung thư/.test(life.ill.n) ? 0.3 : 1)) { // v3.4: ung thư ở tuổi rất cao hiếm khi thuyên giảm hoàn toàn
       var IL = life.ill, chronic = IL.chronic || ILLS.some(function (x) { return x.n === IL.n && x.chronic; });
       life.illHist = life.illHist || []; if (life.illHist.indexOf(IL.n) < 0) life.illHist.push(IL.n);
       // bệnh mạn tính không "khỏi": được kiểm soát ổn định, vẫn phải uống thuốc suốt đời

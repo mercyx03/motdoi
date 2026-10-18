@@ -60,7 +60,7 @@
         run: function (l, r, log, d) { log('Gọi cho người nhà ' + d.n + ' rồi cùng chạy đến. Cả nhà ngồi bên ' + d.n + ' đến sáng, hôm sau đưa đi khám ở chuyên khoa tâm thần. ' + hotline(l), 'good'); fx(l, { karma: 6 }); H.mem(l, 'Đêm cùng gia đình ' + d.n + ' chạy đến bên bạn ấy.', 5); } }
     ]
   });
-  T('ban_khung_hoang', function (l, a) { return a >= 15 && a <= 80; }, 0.005, 8, 1);
+  T('ban_khung_hoang', function (l, a) { return a >= 15 && a <= 80; }, 0.012, 8, 1);
   SC('nhung_ngay_toi', {
     title: 'Những ngày tăm tối', valid: function (l) { return !!l.mind && l.mind.stress >= 60 && l.st.hap < 40; },
     text: 'Đã mấy tuần nay bạn mất ngủ, chẳng muốn ăn, chẳng muốn gặp ai. Có những đêm bạn nghĩ giá như mình biến mất thì mọi người sẽ nhẹ nhõm hơn.',

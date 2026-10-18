@@ -4,7 +4,7 @@
   'use strict';
   var W = 1080, H = 1350;
   var C = { bg1: '#0a1520', bg2: '#13283b', gold: '#d9b26a', gold2: '#f0cf8e', text: '#f3ede2', muted: '#9fb0c2', line: 'rgba(217,178,106,.35)', tile: 'rgba(255,255,255,.05)' };
-  var FD = '"Playfair Display", Georgia, serif', FB = '"Be Vietnam Pro", system-ui, sans-serif', FL = 'Lora, Georgia, serif';
+  var FD = '"Playfair Display", Lora, "Noto Serif", "Times New Roman", serif', FB = '"Be Vietnam Pro", system-ui, sans-serif', FL = 'Lora, "Noto Serif", "Times New Roman", serif';
 
   function wrap(ctx, text, maxW, maxLines) {
     var words = String(text || '').split(/\s+/), lines = [], cur = '';

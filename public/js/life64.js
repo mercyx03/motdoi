@@ -55,9 +55,9 @@
   var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);birth(l);family(l);l.pending=(l.pending||[]).filter(function(d){return d.id!=='me_chong'&&!H.schoolOff(l,(d.title||'')+' '+(d.text||''))&&!(d.id==='kham'&&l.recur&&l.recur.kham_dk&&!(d.data&&d.data.requested));});};
   E.astroText=function(l){var a=birth(l);return a.sign+' · giờ '+a.hour+' ('+l.birthHour+'h) · '+a.theme;};
   E.SC('van_hoi51',{title:'Một dịp đáng thử',valid:function(l){return free(l)&&l.age>=16;},text:function(l){return 'Bạn đang thiên về '+birth(l).theme+'. Một người quen rủ bạn thử một việc mới.';},opts:[
-    {k:'learn',l:'Học một kỹ năng mới cùng họ',run:function(l,r,log){H.fx(l,{kno:2,hap:1});log('Buổi học mở ra một sở thích mới, bạn muốn dành thời gian luyện thêm.','good');}},
+    {k:'learn',l:'Học một kỹ năng mới cùng họ',run:function(l,r,log){H.fx(l,{kno:2,hap:1});log(U.pick(r,['Buổi học mở ra một sở thích mới, bạn muốn dành thời gian luyện thêm.','Học xong buổi đầu, bạn hẹn họ tuần sau học tiếp.','Buổi học vụng về nhưng vui, bạn ghi lại vài mẹo để tự tập ở nhà.']),'good');}},
     {k:'meet',l:'Đến gặp gỡ, mở rộng quan hệ',run:function(l,r,log){H.fx(l,{soc:3,hap:1});if(l.job)l.job.rep=U.clamp((l.job.rep||50)+2,0,100);log('Bạn quen thêm vài người và có một cuộc trò chuyện hữu ích.','good');}},
-    {k:'rest',l:'Giữ lịch riêng, nghỉ ngơi',run:function(l,r,log){H.fx(l,{hea:1,hap:2});log('Bạn dành ngày rảnh cho bản thân.','good');}}
+    {k:'rest',l:'Giữ lịch riêng, nghỉ ngơi',run:function(l,r,log){H.fx(l,{hea:1,hap:2});log(U.pick(H.rf(l),['Bạn dành ngày rảnh cho bản thân.','Bạn để ngày rảnh cho riêng mình, ngủ nướng rồi đọc sách.','Bạn nghỉ ngơi, đi dạo một vòng cho thư thái.']),'good');}}
   ]});
   E.TRIG.push({id:'van_hoi51',when:function(l){return free(l)&&l.age>=16;},p:function(l){return .06+(birth(l).trait==='soc'?.04:0);},cd:5,max:3});
 
@@ -75,9 +75,9 @@
     var low=l.sex==='M'&&p.sex==='F'&&earned<l.base*.5&&E.netWorth(l)<l.base*5,job=E.jobDef(l),bias=f.strict&&l.sex==='M'&&p.sex==='F'&&job&&/^(poor|service|free|worker)$/.test(job.cat);
     return{pid:pid(l),at:l.age,caseId:own?'own':p.status==='dating'&&f.strict?'oppose':f.strict?'boundary':'warm',reason:low?'income':bias?'job':'fit',name:p.name};},
     text:function(l,d){return d.caseId==='own'?(l.fam.mAlive&&l.fam.fAlive&&!l.fam.noDad?'Bố mẹ':l.fam.mAlive?'Mẹ':'Bố')+' lo hai người chưa hợp nhau, muốn bạn hoãn chuyện cưới xin.':d.caseId==='oppose'?'Gia đình '+d.name+(d.reason==='income'?' lo thu nhập của bạn chưa ổn định, phản đối chuyện cưới.':d.reason==='job'?' có định kiến với công việc bạn đang làm, phản đối chuyện cưới.':' chưa đồng ý chuyện cưới, muốn tìm hiểu hai người thêm.'):d.caseId==='boundary'?(l.sex==='F'&&l.partner.sex==='M'&&l.partner.status==='married'?'Mẹ chồng':'Mẹ của '+d.name)+' muốn bạn làm theo nếp sinh hoạt nhà bà, khiến bạn thấy ngột ngạt.':'Mẹ của '+d.name+' hỏi bạn thích ăn gì và chủ động giúp hai người một việc trong nhà.';},opts:[
-      {k:'talk',l:'Ngồi lại nói chuyện, lắng nghe nhau',run:function(l,r,log,d){H.fx(l,{soc:2,hap:1});l.partner.close=U.clamp((l.partner.close||50)+2,0,100);log(d.caseId==='warm'?'Bạn cảm ơn và cùng chuẩn bị một bữa cơm.':'Hai người giải thích dự định của mình. Gia đình '+(r()<.6?'dần bớt căng thẳng.':'vẫn cần thêm thời gian để chấp nhận.'),'neutral');family(l).lastTalk=l.age;}},
-      {k:'boundary',l:'Cùng người ấy đặt ranh giới rõ ràng',run:function(l,r,log){l.partner.close=U.clamp((l.partner.close||50)+3,0,100);if(l.mind)l.mind.stress=Math.max(0,l.mind.stress-3);family(l).boundaries=pid(l);log('Hai người thống nhất tự quyết việc riêng, vẫn giữ liên lạc với gia đình.','good');}},
-      {k:'wait',l:'Tạm nhường một bước, hẹn nói sau',run:function(l,r,log){H.fx(l,{hap:-1});log('Bạn tránh tranh luận lúc này, hẹn một dịp bình tĩnh hơn.','neutral');}}
+      {k:'talk',l:'Ngồi lại nói chuyện, lắng nghe nhau',run:function(l,r,log,d){H.fx(l,{soc:2,hap:1});l.partner.close=U.clamp((l.partner.close||50)+2,0,100);log(d.caseId==='warm'?U.pick(H.rf(l),['Bạn cảm ơn và cùng chuẩn bị một bữa cơm.','Bạn cảm ơn, xắn tay vào bếp phụ một tay, bữa cơm hôm ấy ấm cúng hẳn.','Bạn nhận lời, cả nhà quây quần bên mâm cơm, chuyện trò rôm rả.']):'Hai người giải thích dự định của mình. Gia đình '+(r()<.6?'dần bớt căng thẳng.':'vẫn cần thêm thời gian để chấp nhận.'),'neutral');family(l).lastTalk=l.age;}},
+      {k:'boundary',l:'Cùng người ấy đặt ranh giới rõ ràng',run:function(l,r,log){l.partner.close=U.clamp((l.partner.close||50)+3,0,100);if(l.mind)l.mind.stress=Math.max(0,l.mind.stress-3);family(l).boundaries=pid(l);log(U.pick(H.rf(l),['Hai người thống nhất tự quyết việc riêng, vẫn giữ liên lạc với gia đình.','Hai người ngồi lại, thống nhất chuyện nhà mình thì mình quyết, vẫn thăm hỏi gia đình đều đặn.','Hai bạn nhẹ nhàng đặt ranh giới với gia đình mà vẫn giữ hòa khí.']),'good');}},
+      {k:'wait',l:'Tạm nhường một bước, hẹn nói sau',run:function(l,r,log){H.fx(l,{hap:-1});log(U.pick(r,['Bạn tránh tranh luận lúc này, hẹn một dịp bình tĩnh hơn.','Bạn im lặng cho qua, để mọi người nguôi giận rồi nói chuyện sau.','Bạn xin phép nói chuyện vào hôm khác, khi ai cũng bình tĩnh hơn.','Bạn nhường một bước, giữ hòa khí trước đã.']),'neutral');}}
     ]});guarded('gia_dinh_hai_ben51');
   E.TRIG.push({id:'gia_dinh_hai_ben51',when:function(l){return couple(l)&&(l.partner.status!=='dating'||l.partner.since!=null&&l.age-l.partner.since>=1)&&((l.partner.status==='dating'&&family(l).strict&&(l.fam.mAlive||l.fam.fAlive&&!l.fam.noDad))||mother(l));},p:function(l){return family(l).boundaries===pid(l)?.08:.22;},cd:3,max:12,rep:true});
   var V=E.DEC.vr_vong,vm=V.make,va=V.apply,vu=V.auto;
@@ -91,15 +91,30 @@
     {title:'Đoán từ bằng hành động',text:'Đồng đội làm động tác mở ô, chỉ lên trời rồi giả vờ ướt áo. Bạn đoán gì?',labels:['Trời mưa','Đi câu cá','Tưới cây'],answer:0},
     {title:'Vòng cuối xé bảng tên',text:'Đối thủ đang giữ lối tắt. Bạn bàn với đội kế hoạch nào?',labels:['Chia hai hướng hỗ trợ nhau','Dụ đối thủ rời lối tắt','Chạy đua thẳng tới đích'],strategies:['team','mind','hard']}
   ];
+  // v5.6.1: thử thách có đáp án được sinh đề mới mỗi lần, không lặp nguyên câu đố trong cùng mùa quay
+  function mix(r,a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function quiz(r,text,right,wrong){var labels=mix(r,[right].concat(mix(r,wrong).slice(0,2)));return{text:text,labels:labels,answer:labels.indexOf(right)};}
+  var ITEMS=['chiếc nón','chiếc quạt','chiếc giỏ','đèn lồng','cái trống','chiếc khăn','ấm trà','chiếc ô','bình hoa','con diều'];
+  var CLUES=[['có mái che và tiếng nước','Quanh giếng có mái'],['có tiếng chuông vào giờ chiều','Trong sân đình'],['có bóng mát và tiếng lá xào xạc','Dưới gốc đa đầu làng'],['có thuyền neo và mùi sông nước','Ở bến đò'],['thơm mùi bánh mới ra lò','Trước lò bánh đầu ngõ'],['ồn ào tiếng mặc cả từ sáng sớm','Giữa chợ phiên']];
+  var ACTS=[['mở ô, chỉ lên trời rồi giả vờ ướt áo','Trời mưa'],['quăng cần ra xa rồi giật mạnh','Đi câu cá'],['khom lưng cắm mạ, lau mồ hôi','Cấy lúa'],['đạp hai chân, tay giữ tay lái','Đạp xe'],['chụm tay thổi rồi xoa xoa hai vai','Trời lạnh'],['vẫy tay chào rồi kéo vali','Đi du lịch'],['múa tay theo nhịp, miệng hát không thành tiếng','Hát karaoke']];
+  var GEN={
+    'Mật mã chiếc hộp':function(r){var a=3+Math.floor(r()*7),b=3+Math.floor(r()*7),s=a+b;return quiz(r,'Mật mã là tổng số chấm trên hai thẻ: '+a+' và '+b+'. Bạn nhập số nào?',String(s),[String(s-1),String(s+1),String(s+2)]);},
+    'Nhớ thứ tự vật phẩm':function(r){var x=mix(r,ITEMS).slice(0,3);return quiz(r,'Ê-kíp vừa cho xem: '+x.join(', ')+'. Vật đứng giữa là gì?',U.cap(x[1]),[U.cap(x[0]),U.cap(x[2])]);},
+    'Ghép bản đồ':function(r){var n=1+Math.floor(r()*3),m=1+Math.floor(r()*2),e=r()<.5,up=r()<.5;var lab=function(n,e,m,up){return n+' ô '+(e?'phải':'trái')+', '+m+' ô '+(up?'lên':'xuống');};
+      return quiz(r,'Từ vạch xuất phát, đi '+n+' ô về '+(e?'đông':'tây')+' rồi '+m+' ô về '+(up?'bắc':'nam')+'. Bạn chọn mảnh đường nào?',lab(n,e,m,up),[lab(n,!e,m,up),lab(n,e,m,!up),lab(m,e,n,up)].filter(function(x){return x!==lab(n,e,m,up);}));},
+    'Truy tìm vật phẩm':function(r){var c=U.pick(r,CLUES);return quiz(r,'Manh mối nhắc đến một chỗ '+c[0]+'. Đội bạn tìm ở đâu trước?',c[1],CLUES.filter(function(x){return x!==c;}).map(function(x){return x[1];}));},
+    'Đoán từ bằng hành động':function(r){var c=U.pick(r,ACTS);return quiz(r,'Đồng đội '+c[0]+'. Bạn đoán gì?',c[1],ACTS.filter(function(x){return x!==c;}).map(function(x){return x[1];}));}
+  };
+  function challengeOf(v){var c=challenges[v.challenge51.index];return v.challenge51.q?Object.assign({},c,v.challenge51.q):c;}
   V.make=function(l,r){var d=vm.apply(this,arguments),v=l.flags.variety;if(!v.compact)return d;var key=v.ep+':'+v.stage;
-    if(!v.challenge51||v.challenge51.key!==key){var seen=v.usedChallenges51||(v.usedChallenges51=[]),pool=challenges.map(function(c,i){return i;}).filter(function(i){return seen.indexOf(i)<0;});if(!pool.length){seen.length=0;pool=challenges.map(function(c,i){return i;});}var index=U.pick(r,pool);seen.push(index);v.challenge51={key:key,index:index,token:v.token};}
-    var c=challenges[v.challenge51.index];v.challengeName51=c.title;d.data.challenge51=v.challenge51.index;d.title=E.VARIETY.titles[v.k]+' · Tập '+(v.ep+1)+'/'+v.total+' · '+c.title;
+    if(!v.challenge51||v.challenge51.key!==key){var seen=v.usedChallenges51||(v.usedChallenges51=[]),pool=challenges.map(function(c,i){return i;}).filter(function(i){return seen.indexOf(i)<0;});if(!pool.length){seen.length=0;pool=challenges.map(function(c,i){return i;});}var index=U.pick(r,pool);seen.push(index);v.challenge51={key:key,index:index,token:v.token};var gen=GEN[challenges[index].title];if(gen)v.challenge51.q=gen(r);}
+    var c=challengeOf(v);v.challengeName51=c.title;d.data.challenge51=v.challenge51.index;d.title=E.VARIETY.titles[v.k]+' · Tập '+(v.ep+1)+'/'+v.total+' · '+c.title;
     d.text=v.location+' · Khách mời: '+v.guests.join(', ')+'. Đội bạn: '+v.team.join(', ')+'. '+c.text;
     d.opts=c.labels.map(function(label,i){return{k:'pick'+i,l:label,h:''};}).filter(function(o,i){return !c.strategies||c.strategies[i]!=='hard'||!v.injured&&l.st.hea>=55;});d.opts.push({k:'quit',l:'Xin dừng quay để giữ sức',h:''});return d;};
   V.apply=function(l,d,k,r,log){var v=l.flags.variety;if(!v||!v.compact)return va.apply(this,arguments);if(!E.VARIETY.valid(l,d.data)||!v.challenge51||d.data.challenge51!==v.challenge51.index||!d.opts.some(function(o){return o.k===k;}))return;
-    if(k==='quit')return va.call(this,l,d,k,r,log);var i=+k.slice(4),c=challenges[d.data.challenge51];if(!c||!c.labels[i])return;
+    if(k==='quit')return va.call(this,l,d,k,r,log);var i=+k.slice(4),c=challengeOf(v);if(!c||!c.labels[i])return;
     var first=true,rr=c.strategies?r:function(){if(first){first=false;return i===c.answer?0:.999999;}return r();};
-    if(!c.strategies)log(i===c.answer?'Đáp án đúng!':'Chưa đúng, đáp án là '+c.labels[c.answer]+'.',i===c.answer?'good':'neutral');
+    if(!c.strategies)log((c.title?c.title+': ':'')+(i===c.answer?'trả lời đúng — '+c.labels[c.answer]+'.':'chưa đúng, đáp án là '+c.labels[c.answer]+'.'),i===c.answer?'good':'neutral');
     return va.call(this,l,d,c.strategies?c.strategies[i]:'team',rr,log);
   };
   V.auto=function(l,d,r){if(l.flags.variety&&l.flags.variety.compact)return U.pick(r,d.opts.filter(function(o){return o.k!=='quit';})).k;return vu.apply(this,arguments);};

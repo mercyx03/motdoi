@@ -1,3 +1,38 @@
+## v5.6.1 — Rà soát lỗi logic
+
+- **Tên nhân vật bị lệch dấu** (ví dụ "Lê Hoàng Yế n", "Hô` Anh Khoa"): khi phông chữ chính chưa tải kịp, trang rơi về phông Georgia vốn không có sẵn các chữ hai dấu chồng (ế, ồ, ẫ…). Giờ phông dự phòng là Noto Serif / Times New Roman hỗ trợ đủ tiếng Việt, cả trên trang chơi, trang đánh giá và ảnh thẻ chia sẻ.
+- **Pháp Kiều** được gọi thẳng tên, không thêm "anh trai" (trong chọn bias, concert, đội hình show); các nghệ sĩ khác giữ cách gọi cũ.
+- **Gọi đúng người thương:** các lựa chọn "người yêu / bạn đời" giờ ghi đúng "người yêu" khi đang yêu, "vợ" / "chồng" khi đã cưới, "người bạn đời" với cặp cùng giới. Áp dụng cho mời đi chơi quê hương, du lịch, tặng quà và tên các mục trong "Việc bạn muốn làm".
+- **Giá món ăn địa phương sát thực tế:**
+  - Trước đây món nào cũng 180 nghìn đồng mỗi người, cộng 200 nghìn đi lại ngay trong tỉnh (mì Quảng ở Đà Nẵng cho 2 người 560 nghìn).
+  - Giờ giá theo từng loại món: món nước, bánh mì, xôi khoảng 25–60 nghìn; đặc sản chế biến (bê chao, dê núi, vịt quay…) 100–300 nghìn; cua Năm Căn khoảng 400 nghìn; đặc sản mua làm quà theo phần thông thường.
+  - Đi lại trong tỉnh khoảng 60 nghìn cho 2 người. Ví dụ: mì Quảng ở Đà Nẵng cho 2 người khoảng 160 nghìn.
+  - Địa danh tự nhiên, phố cổ, chợ gần như miễn phí; khu du lịch, cáp treo đắt hơn.
+- **Trường chuyên:** sửa nhật ký "Đỗ lớp chuyên … · THPT chuyên tại undefined"; giờ ghi đúng tỉnh / thành nơi nhân vật sống.
+- **Esports:** sửa lỗi game dừng (crash) khi nhận lời mời chiêu mộ lúc chưa có mùa giải.
+- **Di chúc:** các lựa chọn không còn phần gợi ý trống (undefined).
+- **Điểm thi THPT sát thực tế:**
+  - Trước đây kiến thức năm 18 tuổi thường chạm 100 nên điểm trung vị lên tới 28,8 và một phần tư học sinh đạt 30/30.
+  - Giờ mỗi người có năng lực làm bài cố định. Điểm trung bình khoảng 23–24 (cao hơn mức trung bình một chút); khoảng 1/10 đạt từ 27 trở lên.
+  - Học siêu giỏi (kiến thức gần tuyệt đối, năng lực làm bài rất cao) vẫn có thể đạt 30 điểm.
+  - Học rất kém, chểnh mảng ôn thi có thể dưới 15 điểm: **trượt tốt nghiệp THPT**, chưa có bằng, chưa được xét đại học. Năm sau chọn thi lại (tối đa 3 lần), học trung cấp nghề hoặc đi làm; thi lại đỗ thì được xét đại học ngay. Vẫn có thể trượt đại học như trước.
+  - Tuyển thẳng và thi lại đạt từ 27 điểm cũng được ghi nhận học bổng, không còn lệch cờ học bổng. Đã trượt tốt nghiệp thì không được tuyển thẳng.
+- **Bằng lái:**
+  - Không còn thi bằng lái sau 60 tuổi (trước đây có người thi đỗ ở tuổi 73, 83, 95 sau khi bị phạt lái xe không bằng).
+  - Người trên 60 tuổi bị phạt vì không có bằng thì nhờ con cháu / thuê tài xế lái, không bị phạt lặp lại.
+- **Ung thư sau 85 tuổi** hiếm khi khỏi hẳn hơn trước.
+- **Rủ đi net:** bé gái hầu như không bị rủ (khoảng 0,25% mỗi năm, tức khoảng 2% cả tuổi thơ); bé trai như cũ.
+- **Trị liệu tâm lý:** chỉ lần đầu mới là "lần đầu tiên có người giúp bạn gỡ từng nút thắt"; các lần sau có lời kể khác.
+- **Bớt lặp câu:**
+  - mini game show ghi rõ thử thách và đáp án;
+  - lời mở đầu chuyến du lịch có nhiều cách nói;
+  - tin nhà đất không còn năm nào cũng như năm nào (người có đất cũng cách ít nhất 4 năm) và có thêm biến thể;
+  - thêm biến thể cho bố mẹ mất việc, trông cháu, tránh tranh luận;
+  - việc từ chối hoạt động tùy chọn ở nước ngoài không còn tính như một sự kiện.
+  - mini game Running Man / 2 Ngày 1 Đêm sinh đề mới mỗi lần (mật mã, thứ tự vật phẩm, bản đồ, manh mối, đoán động tác), không còn lặp nguyên câu đố trong cùng mùa quay;
+  - thêm biến thể cho các ngày lễ Phục sinh, Ramadan, Eid, lễ Chủ nhật; sốt siêu vi / cảm cúm hiếm hơn và đa dạng hơn.
+- **Kiểm thử:** cập nhật các bài kiểm tra cũ cho khớp cơ chế mới (du lịch nhiều bước v5.0, hẹn hò có xem phim / tặng quà, điểm thi mới, tình huống nhiều bước của trường chuyên / esports có bộ kiểm tra riêng).
+
 ## v5.6.0 — Esports, chiêu mộ và gaming house
 
 - Thêm Nghịch Thủy Hàn và TFT vào Game khác; ngoại trang 1 triệu, linh thú TFT 2,5 / 2,5 / 7 triệu theo cấu hình yêu cầu. Chỉ mua vật phẩm của game đã chơi; Nghịch Thủy Hàn không có đường thi đấu chuyên nghiệp.

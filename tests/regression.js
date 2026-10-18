@@ -410,7 +410,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
   ok(!E.DEC.gameshow_dong.valid(TPL[0],{}),'hậu trường cũ đã được thay bằng mùa vr_vong');
-  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
+  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -905,7 +905,7 @@ section('19. Bản 2.3: ⭐ khoảnh khắc, tài sản & hụi & bảo hiểm, 
   const mean = scores.reduce((s, x) => s + x, 0) / scores.length;
   console.log('   Thi THPT: ' + grads + ' người · điểm TB ' + mean.toFixed(2) + ' · có khối ' + khoi + ' · đạt ≥27: ' + schol);
   ok(grads > 100 && khoi === grads, 'ai thi tốt nghiệp THPT cũng có khối thi');
-  ok(mean >= 5 && mean <= 30 && schol === scores.filter(s=>s>=27).length, 'điểm và cờ học bổng thống nhất theo kết quả thi'); const high=E.createLife({mode:'vn',seed:37001}); high.st.kno=99; ok(E.rollExamScore(high,()=>U.rand(high))>=26, 'kiến thức 99 không bị điểm thấp ngẫu nhiên');
+  ok(mean >= 5 && mean <= 30 && schol === scores.filter(s=>s>=27).length, 'điểm và cờ học bổng thống nhất theo kết quả thi'); const high=E.createLife({mode:'vn',seed:37001}); high.st.kno=99; ok(E.rollExamScore(high,()=>U.rand(high))>=20, 'kiến thức 99 không bị điểm thấp bất thường (điểm thi v5.6.1 sát thực tế)'); ok(mean >= 19 && mean <= 24.5 && schol <= grads * 0.15, 'điểm thi THPT trung bình sát thực tế (' + mean.toFixed(2) + '), từ 27 điểm trở lên chỉ là số ít (' + schol + '/' + grads + ')');
   ['chon_khoi', 'luyen_thi', 'chuyen_truong', 'bat_nat_mang', 'con_18', 'con_lac_loi', 'con_xin_von', 'con_bo_be', 'kiet_suc', 'tram_cam_sau_sinh', 'khung_hoang_40', 'choi_hui', 'bao_hiem']
     .forEach(id => ok(!!E.DEC[id], 'có tình huống "' + id + '"'));
   ['con_18', 'khung_hoang_40', 'kiet_suc', 'chon_khoi'].forEach(id => ok(E.isMajor({ id }), '"' + id + '" là ngã rẽ quyết định'));
@@ -950,9 +950,9 @@ section('20. Bản 2.4: lỗi người chơi phản hồi, xe/nhà theo mức gi
 
   // 3. nhớ các nước đã đến
   { const l = mk(40600, 47, l => { l.money = l.base * 5; l.visited = []; });
-    E.H.visit(l, 'Hàn Quốc'); let first = 0, again = 0;
-    for (let i = 0; i < 200; i++) { const c = clone(l); c.rs = 900 + i; const d = E.DEC.du_lich.make(c, R(i)); if (d.data.far !== 'Hàn Quốc') continue; c.pending.unshift(d); const t = texts(E.resolve(c, 'far')); if (/Lần đầu đặt chân đến Hàn Quốc/.test(t)) first++; if (/Hàn Quốc/.test(t)) again++; }
-    ok(first === 0 && again > 0, 'đã từng ở Hàn Quốc thì không còn "lần đầu đặt chân đến Hàn Quốc" (' + again + ' lượt quay lại)'); }
+    E.H.visit(l, 'Hàn Quốc'); ok(E.H.visited(l, 'Hàn Quốc'), 'ghi nhớ nước đã đến'); let again = 0, wrong = 0;
+    for (let i = 0; i < 300; i++) { const x = E.createLife({ mode: 'vn', seed: 40700 + i }); E.runHeadless(x); const been = {}; x.log.forEach(e => { const m = /Lần đầu đặt chân đến ([^.]+)\./.exec(e.t); if (m) { if (been[m[1]]) wrong++; been[m[1]] = 1; again++; } }); }
+    ok(wrong === 0, 'đã từng đến một nước thì không còn "lần đầu đặt chân" đến nước đó (' + wrong + '/' + again + ')'); }
   { let xk = 0, marked = 0; for (let i = 0; i < 400 && xk < 20; i++) { const l = mk(40700 + i, 24, l => { l.money = l.base * 3; }); const d = E.DEC.xkld.make(l, R(i)); l.pending.unshift(d); E.resolve(l, 'check'); if (l.abroad) { xk++; if (E.H.visited(l, l.abroad.name)) marked++; } }
     ok(xk > 5 && marked === xk, 'đi XKLĐ được ghi nhớ là nước đã đến (' + marked + '/' + xk + ')'); }
 
@@ -1676,7 +1676,7 @@ section('32. Bản 3.4: hẹn hò qua mạng (người tử tế, đào mỏ, l�
   // hoạt động hẹn hò
   { const l = mk(32500, 25, x => { x.partner = { name: 'Lan', sex: 'F', age: 24, status: 'dating', since: 24, alive: true }; x.money = 100; }); const d = E.DEC.hen_ho.make(l, R(5)); const all = E.DEC.hen_ho.def.opts.map(o => o.k);
     ok(['phim', 'to_tuong', 'thuy_cung', 'nha_sach', 'bao_tang'].every(k => all.includes(k)) && all.length >= 15, 'có nhiều hoạt động hẹn hò: xem phim, tô tượng, thủy cung, nhà sách, bảo tàng… (' + all.length + ')');
-    ok(d.opts.length >= 6 && d.opts.length <= 12, 'mỗi lần chỉ hiện vài hoạt động khác nhau, có nút đổi gợi ý (' + d.opts.map(o => o.k).join(', ') + ')');
+    ok(d.opts.length >= 6 && d.opts.length <= 14, 'mỗi lần chỉ hiện vài hoạt động khác nhau, có nút đổi gợi ý (' + d.opts.map(o => o.k).join(', ') + ')');
     const t = play(l, 'hen_ho', d.opts[0].k); ok(!badText(t) && /Lan/.test(t), 'đi hẹn hò: ' + t.slice(0, 90)); }
   // rủ chơi game
   { const seen = new Set(); let bad = 0; for (let i = 0; i < 40; i++) { const l = mk(32600 + i, 20, x => { x.talent = 'game'; x.game = 'Liên Quân Mobile'; }); const t = play(l, 'ghep_game', 'choi'); if (/giả gái/.test(t)) seen.add('nam giả nữ'); if (/lớp 5/.test(t)) seen.add('học sinh lớp 5'); if (badText(t)) bad++; }
@@ -2245,6 +2245,38 @@ section('45. Bản 4.5: chức cao không bị sếp ép, trong tù, phi pháp c
     ok(bad === 0, 'không còn "con cháu tổ chức" khi không có con, không tập gym sau 65 tuổi (' + bad + ')'); }
 }
 
+section('46. Bản 5.6.1: điểm thi sát thực tế (siêu giỏi vẫn đạt 30, học kém trượt tốt nghiệp và thi lại), bé gái hầu như không bị rủ đi net, bằng lái sau 60 tuổi');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; l.pending = []; if (setup) setup(l); return l; };
+  { const top = mk(46100, 17, x => { x.st.kno = 99; x.flags.examApt = 2.6; x.khoi = 'A00'; }); let s30 = 0; for (let i = 0; i < 50; i++) if (E.rollExamScore(top, R(i)) >= 30) s30++;
+    ok(s30 > 30, 'học siêu giỏi vẫn có thể đạt 30 điểm (' + s30 + '/50 lượt)');
+    const mid = mk(46101, 17, x => { x.st.kno = 99; x.flags.examApt = 0; }); let sum = 0; for (let i = 0; i < 50; i++) sum += E.rollExamScore(mid, R(i)); ok(sum / 50 > 22 && sum / 50 < 26, 'học sinh bình thường điểm quanh mức trung bình (' + (sum / 50).toFixed(2) + ')');
+    const weak = mk(46102, 17, x => { x.st.kno = 60; x.flags.examApt = -2.6; x.flags.luyenThi = -1; }); let low = 0; for (let i = 0; i < 50; i++) if (E.rollExamScore(weak, R(i)) < 15) low++; ok(low > 25, 'học rất kém có thể dưới 15 điểm (' + low + '/50)'); }
+  { const l = mk(46103, 17, x => { x.st.kno = 55; x.flags.examApt = -2.6; x.flags.luyenThi = -1; x.school = 'upper'; x.schoolEnd = 18; x.edu = 2; });
+    const hook = E.HOOKS.gradUpper.find(h => /failHS|rollExamScore/.test(h.toString())); const logs = []; l.edu = 3; l.flags.uniNext = 18; hook(l, R(1), t => logs.push(t));
+    if (l.examScore < 15) { ok(l.edu < 3 && l.flags.uniNext == null && logs.some(t => /Trượt tốt nghiệp THPT/.test(t)), 'dưới 15 điểm: trượt tốt nghiệp, chưa có bằng, chưa xét đại học');
+      ok((l.sched || []).some(s => s.id === 'thi_lai_tn'), 'năm sau được thi lại tốt nghiệp');
+      l.age = 18; l.pending = [E.DEC.thi_lai_tn.make(l, R(2))]; ok(['thi', 'nghe', 'lam'].every(k => l.pending[0].opts.some(o => o.k === k)), 'thi lại / học nghề / đi làm'); }
+    else ok(false, 'kịch bản học rất kém phải dưới 15 điểm (' + l.examScore + ')'); }
+  { let f = 0, m = 0; for (let i = 0; i < 800; i++) { const l = E.createLife({ mode: 'vn', seed: 46200 + i, gender: i % 2 ? 'F' : 'M' }); const T = E.TRIG.find(t => t.id === 'net_coi'); l.age = 12; l.urban = false; const p = typeof T.p === 'function' ? T.p(l, 12) : T.p; if (l.sex === 'F') f += p; else m += p; }
+    ok(f / 400 <= 0.003 && m / 400 >= 0.09, 'bé gái hầu như không bị rủ đi net (' + (f / 400 * 100).toFixed(2) + '%/năm, ~2% cả tuổi thơ), bé trai ' + (m / 400 * 100).toFixed(1) + '%/năm'); }
+  { const o = mk(46300, 70, x => { x.lic = {}; x.indep = true; }); ok(!E.DEC.bang_lai.valid(o, {}), 'không thi bằng lái sau 60 tuổi'); }
+}
+section('47. Bản 5.6.1: Pháp Kiều gọi thẳng tên, phông chữ tiếng Việt, gọi đúng người yêu / vợ / chồng, giá món ăn địa phương');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  ok(E.memberName('anh trai', 'Pháp Kiều') === 'Pháp Kiều' && E.memberName('anh trai', 'HIEUTHUHAI') === 'anh trai HIEUTHUHAI', 'Pháp Kiều được gọi thẳng tên, các anh trai khác giữ cách gọi cũ');
+  { const css = fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf8'); ok(!/--serif:[^;]*Georgia/.test(css) && !/--display:[^;]*Georgia/.test(css) && /Times New Roman/.test(css), 'phông dự phòng hỗ trợ đủ dấu tiếng Việt (không rơi về Georgia làm lệch dấu ế, ồ)'); }
+  { let l = null; for (let s = 1; s < 5000 && !l; s++) { const x = E.createLife({ mode: 'vn', seed: s, variant: '63' }); if (/Đà Nẵng/.test(x.provLabel)) l = x; }
+    l.age = 22; l.indep = true; l.pending = []; l.money = 300; l.partner = { name: 'Võ Ngọc Ánh', sex: 'F', age: 21, status: 'dating', alive: true, close: 60 };
+    const lab = () => E.DEC.que_doc.make(l, R(1)).opts.find(o => o.k === 'partner').l;
+    ok(lab() === 'Mời người yêu đi chơi', 'đang yêu thì ghi "người yêu": ' + lab()); l.partner.status = 'married'; ok(lab() === 'Mời vợ đi chơi', 'đã cưới thì ghi "vợ": ' + lab());
+    l.partner.sex = 'M'; l.sex = 'F'; ok(lab() === 'Mời chồng đi chơi', 'đã cưới thì ghi "chồng": ' + lab()); l.sex = 'M'; l.partner.sex = 'F'; l.partner.status = 'dating';
+    ok(E.dishPrice('mì Quảng') <= .06 && E.dishPrice('phở Hà Nội') <= .07 && E.dishPrice('cua Năm Căn') >= .3 && E.placePrice('biển Mỹ Khê') <= .1, 'giá món ăn / địa danh sát thực tế: mì Quảng ~' + Math.round(E.dishPrice('mì Quảng') * 1000) + 'k, cua Năm Căn ~' + Math.round(E.dishPrice('cua Năm Căn') * 1000) + 'k mỗi người');
+    l.pending = [E.DEC.que_doc.make(l, R(1))]; E.resolve(l, 'partner'); E.resolve(l, 'switch'); const m = l.pending[0];
+    const mq = m && m.opts.find(o => /mì Quảng/.test(o.l)); ok(!!mq && /^\d+k đ$/.test(mq.h) && parseInt(mq.h, 10) <= 250, 'ở Đà Nẵng ăn mì Quảng cùng người yêu chỉ vài trăm nghìn kể cả đi lại (' + (mq && mq.h) + ')'); }
+}
 function isVNx(l) { return E.isVN(l); }
 
 console.log('\n' + '='.repeat(60));

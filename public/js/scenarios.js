@@ -91,7 +91,7 @@
       { k: 'study', l: 'Thôi, ở nhà học bài', ai: { w: 0.8, smart: 1 }, run: function (l, r, log) { log('Ở nhà học bài, nghe tiếng tụi bạn í ới ngoài ngõ.', 'neutral'); fx(l, { kno: 2 }); } }
     ]
   });
-  T('net_coi', function (l, a) { return a >= 9 && a <= 17 && (!l.urban || l.fam.q <= 3) && isVN(l) && free(l); }, function (l) { return l.talent === 'game' ? 0.25 : 0.1; });
+  T('net_coi', function (l, a) { return a >= 9 && a <= 17 && (!l.urban || l.fam.q <= 3) && isVN(l) && free(l); }, function (l) { return l.sex === 'F' ? 0.0025 : l.talent === 'game' ? 0.25 : 0.1; }); // v5.6.1: bé gái hầu như không bị rủ đi net (~2% cả tuổi thơ)
   function pick2(l, arr) { return arr[(l.rs >>> 3) % arr.length]; }
   function skillGame(l, x) { if (l.talent === 'game') l.skill = Math.min(100, (l.skill || 20) + x); }
 
@@ -436,8 +436,8 @@
     title: 'CSGT ra hiệu dừng xe', prep: function (l, r, arg) {
       if (arg && arg.why) return arg;
       var opts = [];
-      if (!l.lic.A1 && l.veh === 'xe máy') opts.push({ why: 'chạy xe máy không có bằng lái', f: 3 });
-      if (!l.lic.B && l.veh === 'ô tô') opts.push({ why: 'lái ô tô không có bằng lái', f: 15 });
+      if (!l.lic.A1 && l.veh === 'xe máy' && !l.flags.driverHired) opts.push({ why: 'chạy xe máy không có bằng lái', f: 3 });
+      if (!l.lic.B && l.veh === 'ô tô' && !l.flags.driverHired) opts.push({ why: 'lái ô tô không có bằng lái', f: 15 });
       if (l.addict && l.addict.alcohol) opts.push({ why: 'có nồng độ cồn khi lái xe', f: l.veh === 'ô tô' ? 35 : 7 });
       // v3.8: lỗi theo đúng loại xe (đi ô tô thì không thể bị phạt vì không đội mũ bảo hiểm) — mức phạt theo Nghị định 168/2024
       if (l.veh === 'ô tô') opts.push({ why: 'không thắt dây an toàn', f: 1 }, { why: 'chạy quá tốc độ 10–20 km/h', f: 5 }, { why: 'dùng điện thoại khi lái xe', f: 5 }, { why: 'đi sai làn đường', f: 5 });
@@ -446,7 +446,7 @@
     },
     text: function (l, d) { return 'Tổ CSGT ra hiệu dừng xe vì lỗi ' + d.why + '. Mức phạt khoảng ' + H.money(l, fine(l, d.f)) + '.'; },
     opts: [
-      { k: 'stop', l: 'Dừng xe, chấp hành', ai: { w: 1.5 }, run: function (l, r, log, d) { H.cash(l, -fine(l, d.f), 'Nộp phạt giao thông: ' + d.why); log('Dừng xe chấp hành, nộp phạt ' + H.money(l, fine(l, d.f)) + ' vì ' + d.why + '.' + (/bằng lái|nồng độ/.test(d.why) ? ' Xe bị tạm giữ.' : ''), 'bad'); fx(l, { hap: -4 }); if (/bằng lái/.test(d.why)) H.sched(l, 'bang_lai', 1); } },
+      { k: 'stop', l: 'Dừng xe, chấp hành', ai: { w: 1.5 }, run: function (l, r, log, d) { H.cash(l, -fine(l, d.f), 'Nộp phạt giao thông: ' + d.why); log('Dừng xe chấp hành, nộp phạt ' + H.money(l, fine(l, d.f)) + ' vì ' + d.why + '.' + (/bằng lái|nồng độ/.test(d.why) ? ' Xe bị tạm giữ.' : ''), 'bad'); fx(l, { hap: -4 }); if (/bằng lái/.test(d.why)) { if (l.age > 60) { l.flags.driverHired = true; log(l.veh === 'ô tô' ? 'Tuổi đã cao, không đi thi bằng nữa — từ nay nhờ con cháu hoặc thuê tài xế lái xe.' : 'Tuổi đã cao, không đi thi bằng nữa — từ nay nhờ người nhà chở đi.', 'neutral'); } else H.sched(l, 'bang_lai', 1); } } },
       { k: 'flee', l: 'Rồ ga bỏ chạy', ai: { risk: 1.5, bad: 0.6 }, run: function (l, r, log, d) {
         var x = r();
         if (x < 0.03) { log('Bỏ chạy, mất lái tông vào cột điện.', 'bad'); fx(l, { hea: -22 }); if (ch(r, 0.15)) { H.kill(l, 'tai nạn khi bỏ chạy CSGT', log, true); } return; }
@@ -507,7 +507,7 @@
   SC('bang_lai', {
     title: 'Thi bằng lái', prep: function (l) { return { t: !l.lic.A1 ? 'A1' : 'B', name: !l.lic.A1 ? 'bằng lái xe máy (A1)' : 'bằng lái ô tô (B)', cost: !l.lic.A1 ? 0.01 : 0.18 }; },
     text: function (l, d) { return 'Bạn đăng ký thi ' + d.name + '. Học phí khoảng ' + mb(l, d.cost) + '.'; },
-    valid: function (l, d) { return !(l.lic.A1 && l.lic.B) && !(d && d.t && l.lic[d.t]); }, // v2.8: đã đỗ bằng này trong năm thì bỏ lượt thi trùng
+    valid: function (l, d) { return l.age <= 60 && !(l.lic.A1 && l.lic.B) && !(d && d.t && l.lic[d.t]); }, // v5.6.1: không thi bằng lái sau 60 tuổi // v2.8: đã đỗ bằng này trong năm thì bỏ lượt thi trùng
     opts: [
       { k: 'self', l: 'Tự ôn luyện và đi thi', ai: { w: 1.4, smart: 0.5 }, run: function (l, r, log, d) { cashB(l, -d.cost, 'Học & thi ' + d.name); if (ch(r, U.clamp(0.45 + l.st.kno / 150, 0.4, 0.95))) { l.lic[d.t] = true; log('Thi đỗ ' + d.name + '.', 'good'); fx(l, { hap: 4 }); } else { log('Trượt phần thi sa hình. Hẹn lần sau.', 'bad'); fx(l, { hap: -3 }); } } },
       { k: 'buy', l: 'Mua bằng "bao đậu"', ai: { bad: 1.2 }, run: function (l, r, log, d) { fx(l, { karma: -5 }); cashB(l, -d.cost * 1.6, 'Tiền "bao đậu" bằng lái'); if (ch(r, 0.3)) { log('Đưa tiền cho "cò" thi bằng, hóa ra là lừa đảo. Mất tiền, vẫn không có bằng.', 'bad'); fx(l, { hap: -6 }); } else { l.lic[d.t] = true; log('Có bằng ' + d.t + ' nhờ "bao đậu" — nhưng tay lái vẫn non.', 'neutral'); l.flags.weakDriver = true; } } }

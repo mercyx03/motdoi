@@ -24,7 +24,7 @@ for(const p of VN.P63){const c=T.data[p.name];ok(c.places.length>=2&&c.foods.len
 for(const status of ['dating','cohabit','married']){const l=life();l.partner.status=status;ok(T.eligible(l,'mine')&&T.eligible(l,'theirs'),'đang yêu / chung nhà / đã cưới đều được mời nhau');}
 {
  const l=life();ok(E.DEC.que_loi_moi.valid(l,{})&&E.TRIG.find(t=>t.id==='que_loi_moi').when(l),'lời mời ngẫu nhiên có thể xếp trước khi chuẩn bị dữ liệu');const d=E.DEC.que_loi_moi.make(l,()=>.5);ok(d.text.includes(l.partner.home63),'người yêu mời về đúng quê mình');run(l,d,'go');ok(l.pending[0].id==='que_chuyen_di'&&l.pending[0].data.side==='theirs','nhận lời mới lên kế hoạch');
- const q=life('Hà Nội','Hà Nội'),offer=E.DEC.que_loi_moi.make(q,()=>.5);ok(/cùng quê/.test(offer.text)&&T.transport(q,'Hà Nội').v===.2,'cùng quê là đi chơi địa phương');
+ const q=life('Hà Nội','Hà Nội'),offer=E.DEC.que_loi_moi.make(q,()=>.5);ok(/cùng quê/.test(offer.text)&&T.transport(q,'Hà Nội').v===.06,'cùng quê là đi chơi địa phương (đi lại trong tỉnh vài chục nghìn — v5.6.1)');
 }
 for(const reason of ['breakup','death','sameNameNewPartner','jail','military','trapped','year','move','origin','currency','young','partnerYoung']){
  const l=life(),d=invoice(l,'theirs'),before=l.money;

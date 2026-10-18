@@ -111,7 +111,7 @@
   T('nk_nghe', function (l, a) { return !!(l.flags.nkCareer && CAREER[l.flags.nkCareer]) && a >= 17 && !l.school && free(l); }, 0.6);
 
   // tuyển thẳng: được vào đại học không cần thi (giữ tương thích với điểm thi THPT)
-  E.HOOKS.gradUpper.push(function (l, r, log) { if (l.flags.tuyenThang && l.examScore != null && l.examScore < 27) { l.examScore = 27; log('Nhờ giải quốc gia, bạn được tuyển thẳng mà không cần xét điểm thi.', 'good'); } });
+  E.HOOKS.gradUpper.push(function (l, r, log) { if (l.flags.tuyenThang && l.edu >= 3 && l.examScore != null && l.examScore < 27) { l.examScore = 27; l.flags.scholar = true; l.flags.admitDirect = true; log('Nhờ giải quốc gia, bạn được tuyển thẳng mà không cần xét điểm thi.', 'good'); } });
 
   // đã theo đội tuyển năng khiếu thì không gặp thêm lời mời "đội tuyển học sinh giỏi" chung chung
   if (E.DEC.thi_hsg) { var hv = E.DEC.thi_hsg.valid; E.DEC.thi_hsg.valid = function (l, d) { return !(nk(l) && !nk(l).stop && /toán học|ngoại ngữ/.test(l.talent || '')) && (!hv || hv(l, d)); }; }

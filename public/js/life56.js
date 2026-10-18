@@ -99,7 +99,7 @@
   function transport(l,name){
     var c=current(l),p=profile(name),from=profile(c.province);
     if(c.code!=='VN')return{v:/^(CN|LA|KH|TH|SG|MY|JP|KR|TW|PH|ID)$/.test(c.code)?18:40,text:'vé khứ hồi về Việt Nam cho hai người'};
-    if(c.province===name)return{v:.2,text:'đi lại tại địa phương cho hai người'};
+    if(c.province===name)return{v:.06,text:'đi lại tại địa phương cho hai người'}; // v5.6.1: đi lại trong tỉnh chỉ vài chục nghìn
     if(from&&from.region===p.region)return{v:1.2,text:'đi lại khứ hồi liên tỉnh cho hai người'};
     return{v:4,text:'đi lại khứ hồi đường dài cho hai người'};
   }
