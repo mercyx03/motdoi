@@ -1800,7 +1800,7 @@ section('35. Bản 3.7: LGBT+ — Bột tôm, Tóp mỡ, Bé Liên, Bi; nhận r
 {
   const R = s => { const h = { rs: s }; return () => U.rand(h); };
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  ok(/id="orientChips"/.test(html) && /data-g="X"/.test(html) && !/data-g="(gay|top|lesbian|bi)"/.test(html), 'màn tạo nhân vật tách giới tính sinh học và xu hướng, không gán vai trò tình dục');
+  ok(/id="orientChips"/.test(html) && !/data-g="X"/.test(html) && !/data-g="(gay|top|lesbian|bi)"/.test(html) && /id="lgbtSub"/.test(html), 'màn tạo nhân vật tách giới tính sinh học (nam / nữ) và xu hướng tính dục (dị tính / LGBTQ+ có tóp mỡ, bột tôm, bé Liên, bi tùy chọn)');
   const mkG = (g, s) => E.createLife({ mode: 'vn', seed: s, gender: g });
   { const a = mkG('gay', 35001), b = mkG('top', 35002), c = mkG('lesbian', 35003), d = mkG('bi', 35004);
     ok(a.sex === 'M' && a.orient === 'gay' && b.sex === 'M' && b.orient === 'gay' && c.sex === 'F' && c.orient === 'gay' && d.orient === 'bi', 'tương thích lựa chọn cũ khi đọc dữ liệu nhân vật');
@@ -2233,10 +2233,13 @@ section('45. Bản 4.5: chức cao không bị sếp ép, trong tù, phi pháp c
     E.resolve(l, 'a0'); ok(l.pending[0] && l.pending[0].id === 'concert_di' && /Sơn Tùng/.test(l.pending[0].text), 'chọn nghệ sĩ xong mới đi concert');
     const kr = E.artistsOf('kr', l).map(a => a.n); ok(['IU', 'Hwasa', 'PSY', 'BTS'].every(x => kr.includes(x)), 'K-pop có cả IU, Hwasa, PSY'); }
   // giới tính & xu hướng
-  { const x = E.createLife({ mode: 'vn', seed: 46400, gender: 'X' }); ok(x.intersex && (x.sex === 'M' || x.sex === 'F'), 'chọn được giới tính liên giới');
+  { const html0 = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'); ok(!/data-g="X"|Liên giới/.test(html0), 'giới tính chỉ còn Nam / Nữ / Ngẫu nhiên (v5.6.2 bỏ liên giới)');
+    const sub = { top: ['M', 'Đồng tính nam (tóp mỡ)'], bot: ['M', 'Đồng tính nam (bột tôm)'], les: ['F', 'Đồng tính nữ (bé Liên)'], bi: [null, 'Song tính (bi)'] };
+    ok(Object.keys(sub).every(o => { const z = E.createLife({ mode: 'vn', seed: 46410, gender: 'random', orient: o }); return (!sub[o][0] || z.sex === sub[o][0]) && E.orientLabel(z) === sub[o][1]; }), 'chọn tóp mỡ / bột tôm / bé Liên / bi: đúng giới tính và hồ sơ ghi đúng cách gọi');
+    ok(/data-o="top" data-tip="Top">Tóp mỡ/.test(html0) && /data-o="bot" data-tip="Bot">Bột tôm/.test(html0) && /data-o="les" data-tip="Les">Bé Liên/.test(html0) && /data-o="bi" data-tip="Bisexual">Bi/.test(html0), 'bấm LGBTQ+ hiện tóp mỡ / bột tôm / bé Liên / bi, rê chuột hoặc ấn giữ thấy Top / Bot / Les / Bisexual');
     const y = E.createLife({ mode: 'vn', seed: 46401, gender: 'F', orient: 'lgbt' }); ok(y.orient !== 'straight' && !/bột tôm|tóp mỡ|bé Liên/.test(E.orientLabel(y)), 'xu hướng LGBTQ+ gọn, không còn "bột tôm / tóp mỡ": ' + E.orientLabel(y));
     const z = E.createLife({ mode: 'vn', seed: 46402, gender: 'M', orient: 'straight' }); ok(z.orient === 'straight', 'chọn dị tính');
-    ok(/id="orientChips"/.test(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')) && !/Tóp mỡ/.test(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')), 'trang chọn: giới tính sinh học riêng, xu hướng tính dục riêng (bỏ chọn được)'); }
+    ok(/id="orientChips"/.test(html0) && /id="lgbtSub"/.test(html0), 'trang chọn: giới tính sinh học riêng, xu hướng tính dục riêng (bỏ chọn được)'); }
   // lời kể gia đình
   { const l = mk(46500, 70, x => { x.kids = []; x.fam.mAlive = false; x.fam.fAlive = false; x.sibList = []; x.fam.sibs = 0; x.partner = null; });
     ok(!/[Cc]on cháu/.test(E.famLogic(l, 'Con cháu tổ chức lễ mừng thọ 70 tuổi.', true)), 'không con cháu thì không có "con cháu tổ chức mừng thọ"');

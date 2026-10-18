@@ -349,6 +349,10 @@
   function orientLabel(life) {
     // v3.7: ở Việt Nam dùng thêm cách gọi quen thuộc của cộng đồng
     var vn = isVN(life);
+    // v5.6.2: người chơi tự chọn tóp mỡ / bột tôm / bé Liên / bi thì hồ sơ ghi đúng cách gọi đã chọn; còn lại ghi trung tính
+    var sub = life.orientSub;
+    if (life.orient === 'gay' && sub) return life.sex === 'M' ? 'Đồng tính nam' + (vn ? (sub === 'top' ? ' (tóp mỡ)' : sub === 'bot' ? ' (bột tôm)' : '') : '') : 'Đồng tính nữ' + (vn ? ' (bé Liên)' : '');
+    if (life.orient === 'bi' && sub) return 'Song tính' + (vn ? ' (bi)' : '');
     if (life.orient === 'gay') return 'LGBTQ+ (đồng tính)';
     if (life.orient === 'bi') return 'LGBTQ+ (song tính)';
     return 'Dị tính';
@@ -557,6 +561,9 @@
     setSex(life, opts.gender || 'random', r);
     if (opts.orient === 'straight') { life.orient = 'straight'; life.chosenOrient = true; }
     else if (opts.orient === 'lgbt') { life.orient = r() < 0.55 ? 'gay' : 'bi'; life.chosenOrient = true; }
+    else if (opts.orient === 'top' || opts.orient === 'bot') { life.sex = 'M'; life.intersex = false; life.orient = 'gay'; life.role = opts.orient; life.orientSub = opts.orient; life.chosenOrient = true; } // v5.6.2: tóp mỡ (top) / bột tôm (bot)
+    else if (opts.orient === 'les') { life.sex = 'F'; life.intersex = false; life.orient = 'gay'; life.orientSub = 'les'; life.chosenOrient = true; } // bé Liên (les)
+    else if (opts.orient === 'bi') { life.orient = 'bi'; life.orientSub = 'bi'; life.chosenOrient = true; } // bi (bisexual)
     if (life.mode === 'vn') setupVN(life, opts, r); else setupWorld(life, opts, r);
 
     var nm = makeName(life, r, life.sex);

@@ -22,8 +22,9 @@
   };
   S.set.name = '';
   S.minorOnly = !!S.set.minorOnly;
-  if (['random', 'M', 'F', 'X'].indexOf(S.set.gender) < 0) S.set.gender = 'random'; // v4.5: giới tính sinh học nam / nữ / liên giới
-  if (['straight', 'lgbt'].indexOf(S.set.orient) < 0) S.set.orient = null; // xu hướng tính dục: không bắt buộc
+  if (['random', 'M', 'F'].indexOf(S.set.gender) < 0) S.set.gender = 'random'; // v5.6.2: giới tính sinh học nam / nữ
+  var LGBT_SUB = ['top', 'bot', 'les', 'bi'];
+  if (['straight', 'lgbt'].concat(LGBT_SUB).indexOf(S.set.orient) < 0) S.set.orient = null; // xu hướng tính dục: không bắt buộc
 
   function migrate(life) { return E.migrate(life); }
 
@@ -122,7 +123,10 @@
     $$('#variantChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.variant === S.set.variant); });
     var g = S.set.gender;
     $$('#genderChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.g === g); });
-    $$('#orientChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.o === S.set.orient); });
+    var fam = S.set.orient === 'lgbt' || LGBT_SUB.indexOf(S.set.orient) >= 0;
+    $$('#orientChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.o === S.set.orient || (c.dataset.o === 'lgbt' && fam)); });
+    $('#lgbtSub').classList.toggle('hidden', !fam);
+    $$('#lgbtSub .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.o === S.set.orient); });
     $$('#lenChips .chip').forEach(function (c) { c.classList.toggle('on', +c.dataset.len === +S.set.lifeMin); });
     $('#heroTitle').innerHTML = vn ? '1 trong <em>100 triệu</em>' : '1 trong <em>8 tỷ</em>';
     $('#heroLead').textContent = vn
@@ -262,8 +266,17 @@
   $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); };
   $('#ethSel').onchange = function () { S.set.eth = this.value; saveSettings(); };
   $('#nameInp').oninput = function () { S.set.name = this.value; };
-  $$('#genderChips .chip').forEach(function (c) { c.onclick = function () { S.set.gender = c.dataset.g; saveSettings(); syncSetupUI(); }; });
-  $$('#orientChips .chip').forEach(function (c) { c.onclick = function () { S.set.orient = S.set.orient === c.dataset.o ? null : c.dataset.o; saveSettings(); syncSetupUI(); }; }); // bấm lần nữa để bỏ chọn
+  $$('#genderChips .chip').forEach(function (c) { c.onclick = function () { S.set.gender = c.dataset.g; if ((c.dataset.g === 'F' && /^(top|bot)$/.test(S.set.orient)) || (c.dataset.g === 'M' && S.set.orient === 'les')) S.set.orient = 'lgbt'; saveSettings(); syncSetupUI(); }; });
+  $$('#orientChips .chip').forEach(function (c) { c.onclick = function () { var fam = S.set.orient === 'lgbt' || LGBT_SUB.indexOf(S.set.orient) >= 0; S.set.orient = c.dataset.o === 'lgbt' ? (fam ? null : 'lgbt') : (S.set.orient === c.dataset.o ? null : c.dataset.o); saveSettings(); syncSetupUI(); }; }); // bấm lần nữa để bỏ chọn
+  // v5.6.2: tóp mỡ / bột tôm / bé Liên / bi — bấm lần nữa để bỏ chọn; chọn tóp mỡ, bột tôm thì là nam, bé Liên thì là nữ
+  $$('#lgbtSub .chip').forEach(function (c) {
+    c.onclick = function () { if (c.dataset.held) { delete c.dataset.held; return; } S.set.orient = S.set.orient === c.dataset.o ? 'lgbt' : c.dataset.o; if (/^(top|bot)$/.test(S.set.orient)) S.set.gender = 'M'; else if (S.set.orient === 'les') S.set.gender = 'F'; saveSettings(); syncSetupUI(); };
+    // điện thoại: ấn giữ để xem chú thích (Top / Bot / Les / Bisexual)
+    var t = null;
+    c.addEventListener('touchstart', function () { t = setTimeout(function () { c.classList.add('tipshow'); c.dataset.held = '1'; }, 450); }, { passive: true });
+    ['touchend', 'touchcancel', 'touchmove'].forEach(function (ev) { c.addEventListener(ev, function () { clearTimeout(t); setTimeout(function () { c.classList.remove('tipshow'); }, ev === 'touchend' ? 1200 : 0); }, { passive: true }); });
+    c.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  });
   $$('#lenChips .chip').forEach(function (c) { c.onclick = function () { S.set.lifeMin = +c.dataset.len; saveSettings(); syncSetupUI(); }; });
   $$('[data-go]').forEach(function (b) { b.onclick = function () { show(b.dataset.go); }; });
   document.addEventListener('click', function (e) {

@@ -1,3 +1,10 @@
+## v5.6.2 — Xu hướng tính dục: tóp mỡ, bột tôm, bé Liên, bi
+
+- Bỏ lựa chọn Liên giới; giới tính sinh học còn Ngẫu nhiên / Nam / Nữ.
+- Xu hướng tính dục: Dị tính / LGBTQ+. Bấm LGBTQ+ thì hiện thêm Tóp mỡ, Bột tôm, Bé Liên, Bi (không bắt buộc, bấm lần nữa để bỏ chọn).
+- Rê chuột (máy tính) hoặc ấn giữ (điện thoại) vào từng lựa chọn để xem chú thích ngắn: Top / Bot / Les / Bisexual.
+- Chọn Tóp mỡ / Bột tôm thì nhân vật là nam, Bé Liên là nữ, Bi giữ giới tính đã chọn. Hồ sơ ghi đúng cách gọi đã chọn, ví dụ "Đồng tính nam (tóp mỡ)"; chọn LGBTQ+ chung hoặc bản lưu cũ vẫn ghi trung tính.
+
 ## v5.6.1 — Rà soát lỗi logic
 
 - **Tên nhân vật bị lệch dấu** (ví dụ "Lê Hoàng Yế n", "Hô` Anh Khoa"): khi phông chữ chính chưa tải kịp, trang rơi về phông Georgia vốn không có sẵn các chữ hai dấu chồng (ế, ồ, ẫ…). Giờ phông dự phòng là Noto Serif / Times New Roman hỗ trợ đủ tiếng Việt, cả trên trang chơi, trang đánh giá và ảnh thẻ chia sẻ.

@@ -465,3 +465,8 @@ footer .disclaimer b { color: var(--accent); }
 .modal.family-profile{background:#102130}body:has(.family-profile) #decPill{visibility:hidden}
 
 
+
+/* v5.6.2: chú thích ngắn cho tóp mỡ / bột tôm / bé Liên / bi — rê chuột hoặc ấn giữ trên điện thoại */
+#lgbtSub { margin-top: 8px; }
+.chip[data-tip] { position: relative; -webkit-touch-callout: none; user-select: none; }
+.chip[data-tip]:hover::after, .chip[data-tip].tipshow::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); padding: 3px 9px; border-radius: 8px; font-size: 12px; font-weight: 600; white-space: nowrap; background: #f3e3bf; color: #10202c; box-shadow: 0 4px 12px rgba(0,0,0,.35); pointer-events: none; z-index: 5; }
