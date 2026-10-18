@@ -254,7 +254,7 @@
     opts: [
       { k: 'danh', l: 'Kéo người sang "nói chuyện" với ' + 'băng kia', ai: { bad: 1.2, risk: 1.2 }, run: function (l, r, log, d) { log('Hai băng hỗn chiến. ' + l.partner.name + ' vẫn bỏ đi, còn bạn mang thêm mấy vết chém.', 'bad'); H.endPartner(l, log, 'split'); l.exes++; fx(l, { hea: -15, hap: -10, karma: -6 }); if (ch(r, 0.4)) H.jail(l, U.randint(r, 2, 6), 'gây rối trật tự công cộng, cố ý gây thương tích', log); else if (ch(r, 0.05)) H.kill(l, 'bị chém trong một vụ hỗn chiến', log); } },
       { k: 'buong', l: 'Buông tay', ai: { w: 1 }, run: function (l, r, log) { log('Buông tay. Ngồi một mình trong quán nhậu, hiểu ra: sống bằng dao búa thì người thương cũng chẳng giữ nổi.', 'bad'); H.endPartner(l, log, 'split'); l.exes++; fx(l, { hap: -12 }); } },
-      { k: 'giu', l: 'Hứa bỏ nghề để níu kéo', ai: { w: 0.6 }, run: function (l, r, log) { if (ch(r, 0.4)) { log(l.partner.name + ' khóc, cho bạn một cơ hội cuối.', 'good'); quitCrime(l, log); } else { log(l.partner.name + ' lắc đầu: "Anh hứa câu đó cả chục lần rồi."', 'bad'); H.endPartner(l, log, 'split'); l.exes++; fx(l, { hap: -10 }); } } }
+      { k: 'giu', l: 'Hứa bỏ nghề để níu kéo', ai: { w: 0.6 }, run: function (l, r, log) { if (ch(r, 0.4)) { log(l.partner.name + ' khóc, cho bạn một cơ hội cuối.', 'good'); quitCrime(l, log); } else { log(l.partner.name + ' lắc đầu: "' + (E.callYou ? U.cap(E.callYou(l, l.partner)) : 'Anh') + ' hứa câu đó cả chục lần rồi."', 'bad'); H.endPartner(l, log, 'split'); l.exes++; fx(l, { hap: -10 }); } } }
     ]
   });
   T('toi_cuop_nguoi_yeu', function (l) { return crime(l) && !!l.partner; }, 0.1, 6, 1);

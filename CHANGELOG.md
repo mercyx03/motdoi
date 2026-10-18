@@ -1,3 +1,50 @@
+## v6.0.0 — Sinh viên lên thành phố, chuyện nghề chi tiết, quà cho nam (gộp v5.9.2)
+
+- **Sinh viên lên thành phố học: chọn chỗ ở theo điều kiện gia đình.**
+  - Các lựa chọn: ký túc xá (~400 nghìn/tháng), trọ ghép (~1,6 triệu), trọ riêng khép kín (~3,5 triệu), căn hộ dịch vụ (~6 triệu), thuê chung cư (~12 triệu).
+  - Nhà giàu có thể mua hẳn căn chung cư (~4 tỷ), ra trường được sang tên. Gia đình tài phiệt mua nhà phố / biệt thự.
+  - Nhà khá giả trả tiền nhà; nhà khó khăn thì tự lo từ tiền gia đình gửi và tiền làm thêm.
+  - Nhà ở sẵn thành phố đó thì không cần tìm chỗ ở.
+- **Làm thêm khi đi học:** phục vụ quán cà phê, gia sư, giao đồ ăn, bán hàng online, lễ tân ca đêm, nhân viên sự kiện.
+  - Có thu nhập hằng năm nhưng tốn thời gian học, mệt hơn.
+  - Thiếu tiền trọ thì phải tính chuyện đi làm thêm. Ra trường thì nghỉ làm thêm.
+- **"Cơ hội" ở thành phố, hiện ra như chuyện bình thường, có cái là bẫy:**
+  - Việc làm tại nhà "làm nhiệm vụ".
+  - Buổi chia sẻ "tự do tài chính tuổi 20".
+  - Ứng dụng vay tiền sinh viên.
+  - Phòng trọ giá rẻ chuyển cọc trước.
+  - Kèo bóng đá cùng phòng.
+  - Lời mời làm mẫu ảnh đóng phí.
+  - Bữa tiệc có "kẹo".
+- **Chuyện nghề chi tiết:** khách đặt yêu cầu cụ thể, chọn cách làm. Làm khéo thì được khen, có tiền boa, tăng uy tín; tay nghề chưa tới thì phải làm lại. Các nghề:
+  - Thợ cắt tóc / barber: side part, undercut, two-block, textured crop, mullet, burst fade, uốn con sâu, buzz cut, nhuộm bạch kim. Barber chỉ nhận khách nam, thợ tóc nhận cả khách nữ (layer, bob, uốn sóng nước, mái thưa).
+  - Nail: French tip, hoa nổi 3D, mắt mèo, ombre. Makeup: cô dâu, Hàn, Douyin, kỷ yếu.
+  - Đầu bếp: phở, bún chả, cơm tấm, bò Wellington. Barista: latte art thiên nga, cà phê muối, V60. Bartender: mojito, old fashioned, flair.
+  - Thợ may: áo dài, vest. Thợ sửa xe. Lập trình viên: rollback, hotfix, API, cloud. Thiết kế. Nhiếp ảnh. Thợ xăm.
+  - Giáo viên (học trò gọi "cô" / "thầy" đúng giới tính). Bác sĩ, điều dưỡng. PT gym.
+  - Tài xế / shipper. Văn phòng, kế toán, marketing. Luật sư. Nhà sáng tạo nội dung.
+  - Có thêm hành động "Nhận một ca / đơn đặc biệt trong nghề".
+- **Quà tặng thêm:**
+  - Nước hoa nữ Chanel / Dior / YSL cho bạn gái; nước hoa nam Bleu de Chanel / Dior Sauvage cho bạn trai; bộ nước hoa mini chiết.
+  - Cho bạn trai: mô hình Gundam (HG / MG / PG), Lego Technic / Star Wars, mô hình xe, figure anime, bàn phím cơ, chuột gaming, tay cầm chơi game, máy console, thắt lưng da, cà vạt, áo sơ mi may đo.
+  - Nhóm mới "Đồ thể thao": áo đấu, giày đá bóng, vợt cầu lông / pickleball, đồ tập yoga, vé xem bóng, gói tập gym.
+  - Mỹ phẩm Hoa Biết.
+
+## v5.9.2 — Quà tặng đa dạng, rà soát xưng hô
+
+- **Tặng quà người yêu / bạn đời:** từ 6 nhóm 18 món lên 10 nhóm 62 món.
+  - Hoa: hồng đỏ 99 bông, tulip, hướng dương, baby, hoa hồng bất tử trong hộp kính, hoa sáp, hoa len, hộp hoa kèm thiệp ghi âm lời nhắn, bó hoa tiền, bó hoa gấu bông, giỏ mẫu đơn.
+  - Mỹ phẩm: son, bộ trang điểm Hoa Biết, Judydoll, Perfect Diary, 3CE, Romand, Dior, MAC, Laneige, Innisfree.
+  - Nhóm mới: thời trang / nước hoa, đồ ăn ngọt, đồ công nghệ, trải nghiệm (lớp làm gốm, spa, vé concert, bữa tối bất ngờ, chuyến đi nghỉ).
+  - Thêm món cho các nhóm cũ: nhẫn đôi, lắc tay vàng, gấu bông 1m8, lọ 365 ngôi sao giấy, hộp 100 lá thư tay, bộ lego…
+  - Món hợp với người nhận: túi xách, son, bông tai cho bạn gái; ví da, đồng hồ cơ, đồ chăm sóc da nam cho bạn trai.
+  - Nhật ký ghi "Tặng … cho người ấy" thay vì "cùng người ấy".
+- **Xưng hô đúng giới tính:**
+  - Người yêu không tin lời hứa bỏ đường dây phạm pháp: gọi bạn "anh" hay "em" đúng theo giới tính, không còn luôn là "Anh hứa…".
+  - Cô dâu nghèo cảm ơn thợ trang điểm, bà chủ nhà khen người giúp việc: gọi "anh" nếu bạn là nam.
+  - Tài xế say rượu hỏi cảnh sát: "Chị biết tôi là ai không?" nếu bạn là nữ.
+- Không còn ai trong gia đình thì tháng Ramadan không còn "chiều về quây quần", mà đến thánh đường cùng bà con.
+
 ## v5.9.1 — Mua nước cho người thân: xưng hô đúng từng người
 
 - Theo góp ý người chơi: trước đây mua đồ uống cho vợ, chồng hay người nhà, câu phản hồi lúc nào cũng tự xưng "anh" ("Anh không uống được trân châu đâu…"). Nay người nhận xưng hô và gọi bạn đúng theo quan hệ, tuổi, giới tính:
