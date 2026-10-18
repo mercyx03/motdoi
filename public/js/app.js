@@ -250,7 +250,7 @@
       rb.innerHTML = '<div class="card resume"><div><b>Bạn đang sống dở cuộc đời của ' + esc(l.name) + '</b><div class="muted small">' + ageStr(l.age) + ' · ' + esc(E.placeText(l)) + '</div></div>' +
         '<div style="display:flex;gap:8px"><button class="btn primary" id="resumeBtn">Tiếp tục sống</button><button class="btn" id="dropBtn">Bỏ</button></div></div>';
       $('#resumeBtn').onclick = function () { resumeLife(cur); };
-      $('#dropBtn').onclick = function () { if (confirm('Bỏ cuộc đời đang sống dở? Không thể hoàn tác.')) { LS.del(K.cur); renderHome(); } };
+      $('#dropBtn').onclick = function () { ask('Bỏ cuộc đời đang sống dở?', 'Tiến trình sẽ bị xóa, không thể hoàn tác.', 'Bỏ cuộc đời này', function () { LS.del(K.cur); renderHome(); }); };
     } else rb.innerHTML = '';
     var rec = LS.get(K.recent, []);
     $('#recentSection').classList.toggle('hidden', !rec.length);
@@ -629,6 +629,7 @@
       (l.allergy ? '<dt>Dị ứng</dt><dd>' + esc(l.allergy) + '</dd>' : '') +
       '<dt>Học vấn</dt><dd>' + esc(eduNow(l)) + '</dd>' +
       '<dt>Công việc</dt><dd>' + esc(job) + '</dd>' +
+      (function () { var P = E.promoProgress && E.promoProgress(l); if (!P) return ''; if (P.top) return '<dt>Thăng tiến</dt><dd>Đã ở vị trí cao nhất của nghề</dd>'; return '<dt>Thăng tiến</dt><dd>Lên ' + esc(P.next) + ': ' + P.done + '/' + P.need + ' năm' + (P.chance ? ' · cơ hội mỗi năm ~' + Math.round(P.chance * 100) + '%' : '') + '<div style="height:8px;margin:5px 0 4px;background:var(--surface-2);border-radius:6px;overflow:hidden"><div style="height:100%;width:' + P.pct + '%;background:var(--accent);border-radius:6px"></div></div><span class="small muted">' + esc(P.why.join(' · ')) + '</span></dd>'; })() +
       (l.talent ? '<dt>Năng khiếu</dt><dd>' + esc(E.talentText(l)) + (l.game && l.talent === 'game' && l.flags.gamePicked ? ' · ' + esc(l.game) : '') + (E.talentLevel ? ' · <b>cấp ' + E.talentLevel(l).lv + '</b> ' + esc(E.talentLevel(l).name) : '') + '</dd>' : '') +
       (l.fame >= 1000 ? '<dt>Danh tiếng</dt><dd>' + esc(E.fmtFollowers(l.fame)) + ' người theo dõi</dd>' : '') +
       (l.flags.tvAudience && l.flags.tvAudience.episodes > 0 ? '<dt>Xuất hiện trên game show</dt><dd>' + esc(l.flags.tvAudience.episodes) + ' tập hoàn thành · thu hút ' + esc(E.fmtFollowers(l.flags.tvAudience.followers)) + ' người theo dõi</dd>' : '') +
@@ -1020,6 +1021,12 @@
     if (bind) bind($('.modal', root));
     var f = $('.modal button, .modal textarea', root); if (f) f.focus();
   }
+  // v6.3.0: hộp xác nhận riêng của game thay cho confirm() — confirm() bị chặn trong trình duyệt tích hợp (Facebook, Zalo, Messenger…) khiến bấm nút không có tác dụng
+  function ask(title, text, yes, onYes, no) {
+    modal('<h2>' + esc(title) + '</h2><p>' + esc(text) + '</p><div class="opts"><button class="opt" data-ask="y"><b>' + esc(yes) + '</b></button><button class="opt" data-ask="n"><b>' + esc(no || 'Thôi') + '</b></button></div>', function (box) {
+      $$('[data-ask]', box).forEach(function (b) { b.onclick = function () { closeModal(); if (b.dataset.ask === 'y') onYes(); }; });
+    });
+  }
   function closeModal() { $('#modalRoot').innerHTML = ''; if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; } }
 
   // v2.5: thu nhỏ hộp lựa chọn để xem các bảng, đổi trọng tâm năm nay… rồi mở lại để chọn (đời tạm dừng trong lúc đó)
@@ -1279,8 +1286,7 @@
       b.onclick = function () {
         var k = kidsLive[+b.dataset.heir]; if (!k) return;
         l.finalWords = words(); updRecent();
-        if (!confirm('Bắt đầu cuộc đời của ' + k.name + ' từ lúc chào đời, là con của ' + l.name + '?')) return;
-        bornWith(E.childOpts(l, k));
+        ask('Sống tiếp đời con', 'Bắt đầu cuộc đời của ' + k.name + ' từ lúc chào đời, là con của ' + l.name + '?', 'Bắt đầu đời của ' + k.name, function () { try { bornWith(E.childOpts(l, k)); } catch (e) { toast('Chưa bắt đầu được đời con, hãy thử lại'); if (window.console) console.error(e); } });
       };
     });
     $('#saveMem').onclick = function () {
@@ -1351,9 +1357,10 @@
       function (box) {
         $('#memClose', box).onclick = closeModal;
         $('#memDel', box).onclick = function () {
-          if (!confirm('Xóa ' + m.name + ' khỏi đài tưởng niệm?')) return;
-          mem.splice(i, 1); LS.set(K.mem, mem); closeModal();
-          if ($('#memorial').classList.contains('active')) renderMemorial(); else renderHome();
+          ask('Xóa khỏi đài tưởng niệm?', 'Xóa ' + m.name + ' khỏi đài tưởng niệm?', 'Xóa', function () {
+            mem.splice(i, 1); LS.set(K.mem, mem);
+            if ($('#memorial').classList.contains('active')) renderMemorial(); else renderHome();
+          });
         };
       });
   }

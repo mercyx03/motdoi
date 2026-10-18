@@ -1,3 +1,44 @@
+## v6.4.0 — Những cuộc đời không màu hồng, ôn thi chuyên theo từng môn (gộp v6.3.0)
+
+- **Những cuộc đời không màu hồng** (theo góp ý: đời thật đâu phải lúc nào cũng thuận lợi):
+  - Khoảng 1/6 số đời gặp "vận đen". Nhà nghèo và ở quê dễ gặp hơn (tới khoảng 30%), nhà khá giả ít gặp (2–5%). Game không báo trước, chỉ là chuyện khó khăn đến thường hơn.
+  - **Trường năng khiếu thể thao:** vào trường năng khiếu của tỉnh, hai năm sau có thể bị chấn thương hoặc không được giữ lại, kiến thức văn hóa hổng. Lúc đó chọn bỏ học đi làm công nhân, học bổ túc, hoặc về phụ gia đình.
+  - **Xin việc mãi không được:** khăn gói lên Đà Nẵng, TP.HCM, Bình Dương, Hà Nội, Bắc Ninh lập nghiệp (có khi mấy tháng vẫn chưa có việc ổn định), vào khu công nghiệp, đi xuất khẩu lao động, hoặc ở nhà chờ.
+  - **Đời công nhân:** tăng ca mùa cao điểm; ngoài 35 tuổi bị cho nghỉ, xưởng nào cũng tuyển dưới 35 (chạy xe ôm, bán hàng rong, về quê làm ruộng); chủ xưởng bỏ trốn nợ lương; tai nạn lao động; bệnh phổi nghề nghiệp sau nhiều năm hít bụi.
+  - **Nợ nần vì người thân:** bố mẹ ốm nặng phải vay họ hàng, vay nóng hoặc bán xe; tiền học của con dồn vào một lúc.
+  - **Ở trọ thành phố:** chủ trọ tăng giá 30%, dãy trọ cháy giữa đêm; Tết không đủ tiền vé về quê.
+  - **Bị lừa phí môi giới** đi làm nước ngoài; nông dân mất mùa vì hạn mặn, nợ đại lý phân bón.
+  - **Về già không lương hưu:** nhặt ve chai, bán vé số, nhờ con cái hoặc xin trợ cấp.
+  - **Chi phí bất ngờ dồn dập:** xe hỏng, đám hiếu hỷ, mất trộm, mái nhà dột, thuốc men… Đời vận đen hay kẹt ở việc lương thấp.
+  - Kết quả mô phỏng 400 đời: tài sản cuối đời của đời vận đen chỉ bằng khoảng một nửa người khác, tỉ lệ chết khi còn nợ cao hơn. Mỗi chuyện chỉ gặp một, hai lần trong đời, không lặp lại.
+- **Ôn thi chuyên & đội tuyển theo đúng từng môn** (trước đây môn nào cũng chung lựa chọn):
+  - **Toán:** chuyên đề số học, hình học phẳng, bất đẳng thức, lò luyện thầy nổi tiếng.
+  - **Tiếng Anh:** nghe podcast, xem phim không phụ đề, từ vựng học thuật, viết lại câu, viết essay nhờ chữa.
+  - **Ngữ văn:** đọc tác phẩm ghi dẫn chứng, mỗi ngày một bài nghị luận xã hội, nhờ cô chấm từng đoạn.
+  - **Tin học:** thuật toán trên VNOI, Codeforces, quy hoạch động.
+  - **Vật lý, Hóa học, Sinh học, Lịch sử, Địa lý:** mỗi môn có cách ôn riêng.
+  - Lúc làm bài cũng theo dạng đề từng môn, ví dụ Tin: "làm chắc subtask nhỏ", Anh: "dồn sức cho đọc hiểu và bài viết luận".
+  - Thi vào THPT chuyên có thêm bước ôn thi ba tháng theo môn đã chọn, ghi rõ dạng đề (chuyên Anh: nghe hiểu, ngữ âm, đọc hiểu, viết luận…), rồi mới vào phòng thi.
+- **Sửa lỗi tính tiền:** tình huống "vay app sinh viên" trước đây cộng tiền vay hai lần; khoản chủ động chu cấp cho người yêu (bản 6.3.0) có thể tăng không giới hạn và vẫn trừ khi đã hết tiền — nay tối đa gấp đôi mức ban đầu, không còn dư dả thì tự dừng chu cấp.
+
+## v6.3.0 — Quay lại với người cũ, chủ động chu cấp, tiến độ thăng chức, sửa nút "Sống tiếp đời con"
+
+- **Sửa lỗi không bấm được "Sống tiếp đời con":** nút này (và "Bỏ cuộc đời đang sống dở", "Xóa khỏi đài tưởng niệm") dùng hộp xác nhận của trình duyệt. Trình duyệt tích hợp trong Facebook, Zalo, Messenger… thường chặn hộp này nên bấm không có tác dụng. Nay dùng hộp xác nhận riêng của game.
+- **Quay lại với người cũ:**
+  - Chia tay, ly hôn thì game nhớ người cũ (người yêu cũ, vợ cũ, chồng cũ, người bạn đời cũ).
+  - Khi độc thân, có lúc gặp lại hoặc được nhắn tin hỏi thăm. Có con chung thì gặp nhau mỗi lần đưa đón con, dễ quay lại hơn.
+  - Lựa chọn: cho nhau thêm một cơ hội (có thể quay lại, tính chuyện tái hôn), chỉ làm bạn và cùng chăm con, hoặc khép lại quá khứ.
+  - Có hành động "Liên lạc lại với người cũ".
+- **Người giàu chủ động chu cấp:**
+  - Có người yêu thu nhập thấp hơn nhiều: chọn gửi một khoản nhỏ (~10 triệu/tháng), lo tiền nhà và sinh hoạt (~30 triệu), hoặc bao trọn chi tiêu (~80 triệu). Mỗi năm trừ đúng số tiền.
+  - Người ấy có thể đòi hỏi thêm, hoặc chỉ yêu tiền rồi qua lại với người khác.
+  - Chưa có người yêu: có thể quen một người đang khó khăn và chủ động lo cho người ấy.
+  - Có hành động "Chu cấp cho người yêu / bạn đời" và "Xem / dừng khoản chu cấp".
+- **Tiến độ thăng chức:**
+  - Ô Căn cước có thêm dòng "Thăng tiến": chức tiếp theo, số năm đã làm / cần làm (có thanh tiến độ), cơ hội mỗi năm.
+  - Kèm lý do: kiến thức, có đang chọn trọng tâm "Công việc" không, chức càng cao càng khó lên. Nghề tự do không có thăng chức thì không hiện.
+  - Khi được thăng chức, nhật ký ghi thêm lý do: đủ số năm kinh nghiệm, kiến thức vững, tập trung công việc, uy tín tốt.
+
 ## v6.2.0 — Ứng dụng hẹn hò 5 hồ sơ, Người ấy là ai chọn 1 trong 3, chu cấp khi đặt ranh giới (gộp v6.1.0)
 
 - **Ứng dụng hẹn hò (Tinder, Bumble, Hinge, Facebook Hẹn hò, Blued, HER):**

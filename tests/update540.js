@@ -7,9 +7,9 @@ function life(age=16){let l=E.createLife({mode:'vn',seed:540});l.age=age;l.count
 function pick(l,id,k,r=()=>.5){let d=E.DEC[id].make(l,r);ok(d.opts.some(x=>x.k===k),'offered '+id+':'+k);E.DEC[id].apply(l,d,k,r,()=>{});return d;}
 function add(l,region,school,major){pick(l,'study_wishes54','region_'+region);pick(l,'study_wishes54','school_'+school);pick(l,'study_wishes54','major_'+major);}
 {
- let l=life(15),d=E.DEC.hs.make(l,()=>.5);ok(d.opts.some(x=>x.k==='special54'),'specialized option');E.DEC.hs.apply(l,d,'special54',()=>.5,()=>{});pick(l,'study_special54','math');ok(l.school==='upper'&&A.state(l).special.subject==='math','specialized admission');ok(l.edu===2&&l.schoolEnd===18,'no instant graduation');
+ let l=life(15),d=E.DEC.hs.make(l,()=>.5);ok(d.opts.some(x=>x.k==='special54'),'specialized option');E.DEC.hs.apply(l,d,'special54',()=>.5,()=>{});pick(l,'study_special54','math');if(l.pending[0]&&l.pending[0].id==='chuyen_on'){const on=l.pending.shift();E.DEC.chuyen_on.apply(l,on,'o0',()=>.5,()=>{});}ok(l.school==='upper'&&A.state(l).special.subject==='math','specialized admission');ok(l.edu===2&&l.schoolEnd===18,'no instant graduation');
  let before=l.st.kno;E.DEC.study_special54.apply(l,d,'math',()=>.5,()=>{});ok(l.st.kno===before,'stale decision ignored');
- l=life(15);l.st.kno=10;l.fam.q=1;d=E.DEC.hs.make(l);E.DEC.hs.apply(l,d,'special54',()=>.99,()=>{});pick(l,'study_special54','math',()=>.99);ok(!A.state(l).special&&l.school==='voc','failed specialist uses regular fallback');
+ l=life(15);l.st.kno=10;l.fam.q=1;d=E.DEC.hs.make(l);E.DEC.hs.apply(l,d,'special54',()=>.99,()=>{});pick(l,'study_special54','math',()=>.99);if(l.pending[0]&&l.pending[0].id==='chuyen_on'){const on=l.pending.shift();E.DEC.chuyen_on.apply(l,on,'o0',()=>.99,()=>{});}ok(!A.state(l).special&&l.school==='voc','failed specialist uses regular fallback');
  l=life(16);ok(!E.DEC.hs.make(l).opts.some(x=>x.k==='special54'),'no late entry');
 }
 {

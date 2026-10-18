@@ -1,7 +1,7 @@
 /* Một Kiếp Người — tiện ích dùng chung (chạy được cả trên trình duyệt lẫn Node để test) */
 (function (G) {
   'use strict';
-  G.VERSION = '6.2.0';
+  G.VERSION = '6.4.0';
 
   // RNG có seed (mulberry32). Trạng thái lưu thẳng trong object để có thể lưu/tiếp tục.
   function rand(holder) {
