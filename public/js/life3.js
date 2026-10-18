@@ -140,7 +140,7 @@
     if (job0 && fit !== 0 && !job0.fitNoted && l.job === job0) {
       job0.fitNoted = true;
       var tw = l.talent ? E.talentText(l) : (l.hobby && hobbyName(l)) || 'sở thích của bạn';
-      log(fit > 0 ? 'Công việc ' + E.jobTitle(l) + ' đúng sở trường (' + tw + ') — làm việc say mê, ' + (H.isEmployee(l) ? 'năng suất cao hơn đồng nghiệp, được cấp trên để ý.' : 'làm ra sản phẩm tốt, khách hàng tin tưởng quay lại.') : 'Công việc ' + E.jobTitle(l) + ' chẳng liên quan gì đến ' + tw + ' — đi làm chủ yếu vì đồng lương, nhiều hôm chán nản, dễ căng thẳng.', fit > 0 ? 'good' : 'neutral');
+      log(fit > 0 ? 'Công việc ' + E.jobTitle(l) + ' đúng sở trường (' + tw + ') — làm việc say mê, ' + (H.isEmployee(l) ? (E.hasBoss && !E.hasBoss(l) ? 'năng suất cao, cả đơn vị nể phục.' : 'năng suất cao hơn đồng nghiệp, được cấp trên để ý.') : 'làm ra sản phẩm tốt, khách hàng tin tưởng quay lại.') : 'Công việc ' + E.jobTitle(l) + ' chẳng liên quan gì đến ' + tw + ' — đi làm chủ yếu vì đồng lương, nhiều hôm chán nản, dễ căng thẳng.', fit > 0 ? 'good' : 'neutral');
     }
     y.gross = inc;
     if (ins0 && (!l.si || l.si.last !== l.age)) {
@@ -466,7 +466,7 @@
       else if (R.ev && a - R.bat >= 2) { R.bat = a; var bc = V(l, R.car ? 3 : 3.5); H.cash(l, -bc, R.car ? 'Bảo dưỡng 2 năm, kiểm tra pin xe điện' : 'Đổi pin xe máy điện'); log(R.car ? 'Tròn 2 năm thuê xe: đưa ' + R.n + ' đi bảo dưỡng, kiểm tra và cân bằng pin, tốn ' + mo(l, bc) + '.' : 'Pin xe máy điện chai sau 2 năm chạy liên tục, phải đổi pin mới ' + mo(l, bc) + '.', 'neutral'); }
     }
     // xe điện của mình: 3 năm thay / bảo dưỡng pin
-    if (l.vehK && /^(evo|feliz|theon|yadea)$/.test(l.vehK)) { l.vehBat = l.vehBat == null ? a : l.vehBat; if (a - l.vehBat >= 3) { l.vehBat = a; var pc = V(l, 4); H.cash(l, -pc, 'Thay pin xe máy điện'); log('Pin ' + l.vehName + ' chai sau 3 năm, thay pin mới hết ' + mo(l, pc) + '.', 'neutral'); } }
+    if (l.vehK && /^(evo|feliz|theon|yadea)$/.test(l.vehK)) { l.vehBat = l.vehBat == null ? a : l.vehBat; if (a - l.vehBat >= 3) { l.vehBat = a; var pc = V(l, 4); H.cash(l, -pc, 'Thay pin xe máy điện'); l.vehBatN = (l.vehBatN || 0) + 1; log(l.vehBatN === 1 ? 'Pin ' + l.vehName + ' chai sau 3 năm, thay pin mới hết ' + mo(l, pc) + '.' : U.pick(r, ['Lại đến kỳ thay pin ' + l.vehName + ' (lần thứ ' + l.vehBatN + '), hết ' + mo(l, pc) + '.', 'Pin xe yếu dần, đi được nửa quãng đã báo hết — thay bộ pin mới ' + mo(l, pc) + '.', 'Cửa hàng kiểm tra pin ' + l.vehName + ' thấy dung lượng còn thấp, thay mới hết ' + mo(l, pc) + '.']) , 'neutral'); } }
     // tổng thu nhập trong năm đến từ đâu (khi có nhiều nguồn)
     if (l.indep && F) {
       var rows = incomeParts(l).filter(function (x) { return !/^Bạn đời/.test(x.k); });

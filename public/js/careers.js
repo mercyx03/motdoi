@@ -303,7 +303,7 @@
     var history = l.jobsHist || [];
     var experience = history.reduce(function (n, h, i) { var end = h.to == null ? (history[i + 1] ? history[i + 1].from : l.age) : h.to; return n + (resolveJob(h.id) === c.id ? Math.max(0, end - h.from) : 0); }, 0);
     if (experience >= (c.yrs[0] || 3) && /trưởng|quản lý/.test(c.t[1] || '') && !/chủ|giám đốc/.test(c.t[1])) rk = Math.max(rk, 1);
-    while (rk > 0 && /trưởng|quản lý|giám đốc|chủ |chủ tịch/.test(c.t[rk]) && experience < c.yrs.slice(0, rk).reduce(function (a, y) { return a + y; }, 0)) rk--;
+    while (rk > 0 && (/trưởng|quản lý|giám đốc|chủ |chủ tịch/.test(c.t[rk]) || rk >= 2 && /giáo sư|cấp cao|bậc cao/.test(c.t[rk])) && experience < c.yrs.slice(0, rk).reduce(function (a, y) { return a + y; }, 0)) rk--;
     return rk;
   }
   function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
@@ -481,7 +481,7 @@
     }
     // mất việc
     var lossP = c.loss != null ? c.loss : c.sec === 'formal' ? 0.02 : c.sec === 'farm' ? 0 : c.sec === 'crime' ? 0 : 0.03;
-    if (!E.isStableService(l) && !c.fame && c.skillRank == null && c.id !== 'xkld' && c.id !== 'phu_giup' && H.isEmployee(l) && r() < lossP) {
+    if (!E.isStableService(l) && !c.fame && c.skillRank == null && c.id !== 'xkld' && c.id !== 'phu_giup' && H.isEmployee(l) && r() < lossP * E.layoffRisk(l)) { // v5.6.3: chức cao nhất, mới thăng chức, sắp nghỉ hưu… ít / không bị cắt giảm
       log('Mất việc ' + jobTitleOf(l) + '.', 'bad'); l.job = null; l.flags.needJob = true; H.fx(l, { hap: -6 }); return inc * 0.5;
     }
     // v2.5: chủ cơ sở không "bị cho nghỉ" nhưng có thể ế ẩm phải đóng cửa (cơ nghiệp gia đình thì không)
@@ -544,6 +544,23 @@
   }
 
   E.resolveJob = resolveJob; E.jobLabel = jobLabel; E.jobTitleOf = jobTitleOf; E.offerHint = offerHint; E.offerAI = offerAI; E.offers = offers;
+  // v5.6.3: nguy cơ bị cắt giảm nhân sự (0–1) theo vị trí, thâm niên, tuổi và đặc thù nghề
+  var NOT_STAFF = /^(tx_cn|xe_om|shipper|ve_chai|ve_so|ban_rong|makeup|stylist|nhiep_anh|mc_su_kien|dj|tho_xam|hoa_si|cay_thue|gia_su|pt_gym|nhac_si|bien_kich|dao_dien|streamer|youtuber|kol_live|fl_)/;
+  var SECURE = /^(phi_cong|bac_si|dieu_duong|duoc_si|nha_si|giang_vien|nghien_cuu|kiem_toan|luat_su)$/;
+  function layoffRisk(l) {
+    if (!l.job || l.job.fam || E.isStableService(l) || !H.isEmployee(l)) return 0;
+    var c = CAR[resolveJob(l.job.id)]; if (!c || c.fame || c.sec === 'crime' || NOT_STAFF.test(c.id)) return 0;
+    var n = c.t.length, rk = l.job.rank || 0, k = 1;
+    if (n > 1 && rk >= n - 1) return 0; // người đứng đầu (giám đốc, cơ trưởng huấn luyện, tổng quản lý…) không nằm trong danh sách cắt giảm
+    if (n >= 4 && rk >= n - 2) k *= 0.35;
+    if (rk > 0 && (l.job.yrs || 0) < 1) k *= 0.3; // vừa được đề bạt
+    if ((l.job.yrs || 0) >= 8) k *= 0.7;
+    if (l.age >= 57) k *= 0.5;
+    if (SECURE.test(c.id)) k *= 0.4;
+    return k;
+  }
+  E.layoffRisk = layoffRisk;
+  E.isFreelanceJob = function (l) { return !!(l.job && NOT_STAFF.test(resolveJob(l.job.id))); };
   E.startJob = startJob; E.startRank = startRank; E.offerLabel = offerLabel; E.careerYear = careerYear; E.isCrime = isCrime; E.careerSummary = careerSummary; E.monthlyEst = monthlyEst;
   E.jobEligible = eligible; E.rankBySkill = rankBySkill; E.fameMonthly = fameMonthly; E.fmtFollowers = fmtFollowers; E.jobDef = J; E.CAT = CAT; E.JOB_ALIAS = ALIAS; E.medal = medal;
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

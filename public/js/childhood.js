@@ -46,7 +46,7 @@
       else L.push('Nhảy dây, chơi ô ăn quan với đám bạn gái giờ ra chơi.', 'Sưu tầm cả hộp giấy viết thư thơm.', 'Học tết tóc cho em, cho bạn.', 'Chơi đồ hàng, nấu "cơm" bằng lá cây với hoa dại.', 'Được bà dạy thêu chiếc khăn tay đầu tiên.');
       if (!l.urban) L.push('Đi bắt cá, mò cua ngoài ruộng về khoe ' + m + '.', 'Chăn trâu, thả diều trên bờ đê lộng gió.', 'Mùa gặt theo ' + m + ' ra đồng, nằm trên đống rơm ngắm trời.');
       else L.push('Đi học thêm tiếng Anh mỗi tối, ngồi sau xe ' + m + ' ngủ gật.', 'Được dẫn đi siêu thị, chọn được một món đồ ăn vặt.');
-      if (poor(l)) L.push('Mặc lại quần áo cũ của anh chị, ống quần xắn mấy vòng.', 'Mơ ước có một đôi giày mới đi học.');
+      if (poor(l)) L.push(E.hasOlderSib && !E.hasOlderSib(l) ? 'Mặc lại quần áo cũ người quen cho, ống quần xắn mấy vòng.' : 'Mặc lại quần áo cũ của anh chị, ống quần xắn mấy vòng.', 'Mơ ước có một đôi giày mới đi học.');
       if (rich(l)) L.push('Được đi du lịch nước ngoài cùng gia đình dịp hè.', 'Học piano mỗi tối thứ Ba, thứ Năm.');
     }
     if (a >= 10 && a <= 15) {

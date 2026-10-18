@@ -76,7 +76,7 @@
     title: 'Sau ngày tiễn biệt', valid: function (l) { return l.flags.lossAt != null && l.age - l.flags.lossAt <= 1; },
     text: 'Người thân mất đã mấy tháng, nhưng bạn vẫn hay vô thức gọi tên, vẫn để nguyên đồ đạc của người ấy, có những đêm khóc một mình.',
     opts: [
-      { k: 'chia_se', l: 'Ngồi lại với gia đình, cùng kể về người đã khuất', ai: { w: 1.3, soc: 1 }, run: function (l, r, log) { log('Cả nhà ngồi lại kể chuyện về người đã khuất, vừa khóc vừa cười. Nỗi đau vẫn còn, nhưng không còn phải mang một mình.', 'good'); stress(l, -12); fx(l, { hap: 5, soc: 2 }); } },
+      { k: 'chia_se', l: function (l) { return E.hasFamily && !E.hasFamily(l) ? 'Ngồi lại với bạn bè thân, cùng kể về người đã khuất' : 'Ngồi lại với gia đình, cùng kể về người đã khuất'; }, ai: { w: 1.3, soc: 1 }, run: function (l, r, log) { log((E.hasFamily && !E.hasFamily(l) ? 'Mấy người bạn thân' : 'Cả nhà') + ' ngồi lại kể chuyện về người đã khuất, vừa khóc vừa cười. Nỗi đau vẫn còn, nhưng không còn phải mang một mình.', 'good'); stress(l, -12); fx(l, { hap: 5, soc: 2 }); } },
       { k: 'viec', l: 'Lao vào công việc cho quên', ai: { w: 0.8 }, run: function (l, r, log) { log('Lao vào làm việc từ sáng đến tối. Đến lúc dừng lại, nỗi buồn vẫn ở đó.', 'neutral'); stress(l, 6); } },
       { k: 'tu_van', l: 'Tìm đến chuyên gia tâm lý', ai: { w: 0.5, smart: 1 }, run: function (l, r, log) { H.cash(l, -(isVN(l) && l.cur === 'vnd' ? 2 : 2 / 90 * l.base), 'Tư vấn tâm lý'); log('Đi gặp chuyên gia tâm lý vài buổi, học cách sống cùng nỗi nhớ.', 'good'); stress(l, -18); fx(l, { hap: 4 }); } }
     ]

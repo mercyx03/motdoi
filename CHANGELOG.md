@@ -1,3 +1,49 @@
+## v5.6.4 — Rà soát logic: sếp, gia đình, ngồi tù, lương hưu, sân bóng
+
+- **Chức cao, nghề tự do không có "sếp":**
+  - Tổng giám đốc trong gia đình chủ ngân hàng, cơ trưởng, giám đốc… vẫn không bị sếp ép, sếp mắng, cướp công (kiểm tra lại toàn bộ nghề ở chức cao nhất và sát cao nhất).
+  - Nay thêm: MC sự kiện, makeup, nhiếp ảnh, tài xế ứng dụng, freelancer… làm tự do nên cũng không còn "sếp ép làm ngoài giờ".
+  - Người không có sếp: "làm việc đúng sở trường" ghi "cả đơn vị nể phục" thay vì "được cấp trên để ý"; bị đòi nợ thì chủ nợ dọa gọi "cho đối tác" thay vì "cho sếp".
+- **Gia đình đúng hoàn cảnh:**
+  - Không có anh chị em: bố mẹ già yếu không còn lựa chọn "nhờ anh chị em", thay bằng "gửi tiền về, thuê người chăm sóc".
+  - Con một: không còn "nghe anh chị kể chuyện ma", "dùng sách cũ của anh chị", "mặc lại quần áo cũ của anh chị", "lấy vở anh chị nộp kế hoạch nhỏ".
+  - Không còn ai trong gia đình: "cả nhà lên chùa", "cả nhà ăn chay", "về ăn bữa cơm sum họp" thành chuyện của riêng bạn; sau mất mát thì ngồi lại với bạn bè thân.
+  - Không con cháu: các chuyện về quê ở với con cháu, con cháu chu cấp, lì xì con cháu, con cháu tổ chức mừng thọ đã được lọc (rà lại qua 300 đời mô phỏng, không còn trường hợp nào).
+  - Bố mẹ mất cùng năm vì tuổi già thì ghi "cùng năm với mẹ", không lặp hai câu giống nhau.
+- **Ngồi tù:** bị bắt giữa năm thì phần còn lại của năm đó chưa tính là một năm thụ án, phải chạy hết thanh năm sau mới ra tù. Trong tù vẫn không thi bằng lái, hẹn hò, nhận việc.
+- **Nhận việc:** tiến sĩ mới vào nghề không vào thẳng chức phó giáo sư, chuyên gia cấp cao. Bartender trưởng, quản lý… vẫn cần đủ năm kinh nghiệm trong nghề.
+- **Lương hưu cho đa số nghề:** chủ quán, chủ cơ sở kinh doanh tự đóng BHXH tự nguyện nên có lương hưu. Vé số, xe ôm, tài xế ứng dụng, bán rong, freelancer, streamer, nông dân… vẫn không có.
+- **Tuổi già:** khoản chi "tập gym" đổi thành "tập thể dục, thể thao", từ 60 tuổi là đi bộ, tập dưỡng sinh.
+- **Tuổi học trò:** đã nghỉ học (do nhà nghèo…) thì thư tỏ tình không còn "bạn ngồi bàn trên", "nằm trong cặp".
+- **Đi xem bóng đá ở sân gần nơi sống:** Mỹ Đình hoặc Hàng Đẫy (Hà Nội), Thống Nhất (TP.HCM), Lạch Tray, Thiên Trường, Thanh Hóa, Vinh, Gò Đậu, Hòa Xuân, Pleiku, Quy Nhơn, Việt Trì… Nơi khác là sân vận động tỉnh.
+- **Ít lặp câu:** trò chơi giải đố trong show thực tế có nhiều cách báo đúng / sai hơn.
+- Đã kiểm tra lại: bé gái bốc trúng cây bút là "cô giáo"; vợ / chồng góp khoảng 55% thu nhập thật mỗi tháng, không có trường hợp lương cao mà chỉ góp 10 triệu.
+
+## v5.6.3 — Nhập quốc tịch, visa esports, cắt giảm nhân sự hợp lý
+
+- **Nhập quốc tịch:**
+  - Định cư ở nước ngoài đủ số năm theo luật nước đó thì được xét nhập quốc tịch, đã tính cả thời gian chờ thẻ thường trú. Ví dụ:
+    - Mỹ 6 năm;
+    - Canada, Úc 4 năm;
+    - Anh 6 năm; Đức, Pháp, Hà Lan 5 năm;
+    - Thụy Điển 8 năm (luật mới từ 6/6/2026);
+    - Bồ Đào Nha 10 năm (luật mới năm 2026); Tây Ban Nha, Ý, Thụy Sĩ 10 năm;
+    - Nhật, Hàn, Đài Loan, Singapore 5 năm; Thái Lan 10 năm.
+  - Trung Quốc và các nước vùng Vịnh gần như không xét nhập quốc tịch. Nước chưa có dữ liệu mặc định 10 năm.
+  - Có thi ngôn ngữ, hiểu biết xã hội, chứng minh thu nhập, lý lịch; có thể trượt và nộp lại sau vài năm. Có tiền án gần đây thì chưa đủ điều kiện.
+  - Nước không chấp nhận hai quốc tịch (Nhật, Hàn, Singapore, Áo, Hà Lan…) ghi rõ phải thôi quốc tịch gốc. Có thể chọn chưa vội hoặc không nhập.
+- **Visa esports:**
+  - Trước mỗi giải quốc tế (First Stand, MSI, EWC, Chung kết thế giới, Masters, Champions, APL, AIC…), đội phải xin visa cho tuyển thủ.
+  - Rất hiếm khi bị từ chối (khoảng 4%, đã từng được cấp thì còn khoảng 2%). Khi đó tuyển thủ dự bị lên đánh thay, bạn lỡ giải đó.
+- **Cắt giảm nhân sự hợp lý hơn:**
+  - Không còn rơi vào người đứng đầu (cơ trưởng huấn luyện, giám đốc marketing, tổng quản lý khách sạn, giám đốc chi nhánh…).
+  - Không còn rơi vào người không làm thuê cho công ty: tài xế công nghệ, xe ôm, shipper theo ứng dụng, freelancer, makeup artist, nhiếp ảnh, MC, DJ, streamer…
+  - Ít hơn với người sát chức cao nhất, vừa được thăng chức, làm lâu năm, trên 57 tuổi, và các nghề ổn định (phi công, bác sĩ, điều dưỡng, dược sĩ, giảng viên…).
+  - Người giúp việc thì "nhà chủ không thuê nữa"; tài xế ứng dụng thì "ứng dụng ít cuốc, đành tạm nghỉ chạy xe".
+  - Sự kiện "nhà máy cắt giảm công nhân" không rơi vào quản đốc; "công ty tự động hóa bằng AI" không rơi vào freelancer.
+  - Các trường hợp bị sa thải có lý do cụ thể (HLV thua liên tiếp, từ chối làm sai…) vẫn giữ nguyên.
+- **Ít lặp câu hơn:** thêm cách viết khác cho giúp bạn cũ, gặp gỡ mở rộng quan hệ, tìm hiểu văn hóa ở nước ngoài, công việc tạm hoãn, thay pin xe máy điện.
+
 ## v5.6.2 — Xu hướng tính dục: tóp mỡ, bột tôm, bé Liên, bi
 
 - Bỏ lựa chọn Liên giới; giới tính sinh học còn Ngẫu nhiên / Nam / Nữ.

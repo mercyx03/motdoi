@@ -15,9 +15,10 @@
   city.valid=function(l){return free(l)&&l.age>=18&&l.age<=35&&!l.urban&&!l.school&&!l.abroad&&!l.flags.cityAsked;};
   city.apply=function(l){if(!city.valid(l))return;return cityApply.apply(this,arguments);};
   // Sân đấu theo nơi đang sống, không theo quốc tịch lúc sinh.
-  E.DEC.xem_bong_da.def.text=function(l){var code=l.abroad&&l.abroad.code||l.country,city=l.cityStudent&&l.cityStudent.city||l.movedTo||l.prov&&l.prov.old||'';
+  E.DEC.xem_bong_da.def.text=function(l){var r=function(){return ((l.age*7+(l.rs||0))%10)/10;},code=l.abroad&&l.abroad.code||l.country,city=l.cityStudent&&l.cityStudent.city||l.movedTo||l.prov&&l.prov.old||'';
     if(code!=='VN')return 'Câu lạc bộ địa phương ở '+(G.W.BY[code]&&G.W.BY[code].name||code)+' có trận đấu sân nhà cuối tuần này.';
-    var stadium=/Hà Nội/.test(city)?'sân Hàng Đẫy':/Hồ Chí Minh/.test(city)?'sân Thống Nhất':'sân bóng địa phương ở '+(city||'nơi bạn sống');
+    var S=[[/Hà Nội/,'sân Mỹ Đình (đội tuyển Việt Nam)','sân Hàng Đẫy'],[/Hồ Chí Minh/,'sân Thống Nhất'],[/Hải Phòng/,'sân Lạch Tray'],[/Nam Định/,'sân Thiên Trường'],[/Thanh Hóa/,'sân vận động Thanh Hóa'],[/Nghệ An/,'sân Vinh'],[/Hà Tĩnh/,'sân Hà Tĩnh'],[/Bình Dương/,'sân Gò Đậu'],[/Đà Nẵng/,'sân Hòa Xuân'],[/Gia Lai/,'sân Pleiku'],[/Bình Định/,'sân Quy Nhơn'],[/Khánh Hòa/,'sân 19 tháng 8 (Nha Trang)'],[/Phú Thọ/,'sân Việt Trì (đội tuyển Việt Nam)'],[/Quảng Ninh/,'sân Cẩm Phả'],[/Quảng Nam/,'sân Tam Kỳ'],[/Ninh Bình/,'sân Ninh Bình'],[/Cần Thơ/,'sân Cần Thơ']].filter(function(x){return x[0].test(city);})[0];
+    var stadium=S?(S[2]&&r()<.5?S[2]:S[1]):'sân vận động tỉnh '+(city||'nơi bạn sống');
     return 'Cuối tuần có trận bóng ở '+stadium+'. Bạn muốn ra sân hay xem ở nhà?';};
   E.DEC.xem_bong_da.def.opts.forEach(function(o){if(o.k==='stadium')o.run=function(l,r,log){var bill=E.childExpense(l,l.base*.005,'Vé bóng đá',false);log(bill.note,'neutral');if(!bill.ok)return;log(r()<.55?'Đội nhà thắng, khán đài vỡ òa tiếng reo hò!':'Đội nhà thua sát nút, bạn vẫn giơ khăn cổ vũ đến hết trận.','good');H.fx(l,{hap:6,soc:3});};if(o.k==='cafe')o.run=function(l,r,log){var bill=E.childExpense(l,l.base*.001,'Đồ uống xem bóng đá',false);log(bill.note,'neutral');if(bill.ok){log('Xem bóng ở quán cà phê, hò hét cùng cả quán.','good');H.fx(l,{hap:3,soc:2});}};});
   ['xem_bong_da','phuot','leo_nui'].forEach(function(id){var D=E.DEC[id],make=D.make,valid=D.valid;D.make=function(l){var d=make.apply(this,arguments);d.data.outing51=snapshot(l);return d;};D.valid=function(l,d){return free(l)&&(!d||!d.outing51||d.outing51===snapshot(l))&&valid.call(this,l,d);};});
@@ -56,7 +57,7 @@
   E.astroText=function(l){var a=birth(l);return a.sign+' · giờ '+a.hour+' ('+l.birthHour+'h) · '+a.theme;};
   E.SC('van_hoi51',{title:'Một dịp đáng thử',valid:function(l){return free(l)&&l.age>=16;},text:function(l){return 'Bạn đang thiên về '+birth(l).theme+'. Một người quen rủ bạn thử một việc mới.';},opts:[
     {k:'learn',l:'Học một kỹ năng mới cùng họ',run:function(l,r,log){H.fx(l,{kno:2,hap:1});log(U.pick(r,['Buổi học mở ra một sở thích mới, bạn muốn dành thời gian luyện thêm.','Học xong buổi đầu, bạn hẹn họ tuần sau học tiếp.','Buổi học vụng về nhưng vui, bạn ghi lại vài mẹo để tự tập ở nhà.']),'good');}},
-    {k:'meet',l:'Đến gặp gỡ, mở rộng quan hệ',run:function(l,r,log){H.fx(l,{soc:3,hap:1});if(l.job)l.job.rep=U.clamp((l.job.rep||50)+2,0,100);log('Bạn quen thêm vài người và có một cuộc trò chuyện hữu ích.','good');}},
+    {k:'meet',l:'Đến gặp gỡ, mở rộng quan hệ',run:function(l,r,log){H.fx(l,{soc:3,hap:1});if(l.job)l.job.rep=U.clamp((l.job.rep||50)+2,0,100);log(U.pick(r,['Bạn quen thêm vài người và có một cuộc trò chuyện hữu ích.','Một người lạ hóa ra cùng ngành, hai bên trao đổi danh thiếp.','Buổi gặp gỡ đông người, bạn nhớ được dăm cái tên và một lời khuyên hay.','Bạn kết nối được với một người có thể giúp công việc sau này.','Ngồi cùng bàn với vài người thú vị, câu chuyện kéo dài đến tối.']),'good');}},
     {k:'rest',l:'Giữ lịch riêng, nghỉ ngơi',run:function(l,r,log){H.fx(l,{hea:1,hap:2});log(U.pick(H.rf(l),['Bạn dành ngày rảnh cho bản thân.','Bạn để ngày rảnh cho riêng mình, ngủ nướng rồi đọc sách.','Bạn nghỉ ngơi, đi dạo một vòng cho thư thái.']),'good');}}
   ]});
   E.TRIG.push({id:'van_hoi51',when:function(l){return free(l)&&l.age>=16;},p:function(l){return .06+(birth(l).trait==='soc'?.04:0);},cd:5,max:3});
@@ -114,7 +115,7 @@
   V.apply=function(l,d,k,r,log){var v=l.flags.variety;if(!v||!v.compact)return va.apply(this,arguments);if(!E.VARIETY.valid(l,d.data)||!v.challenge51||d.data.challenge51!==v.challenge51.index||!d.opts.some(function(o){return o.k===k;}))return;
     if(k==='quit')return va.call(this,l,d,k,r,log);var i=+k.slice(4),c=challengeOf(v);if(!c||!c.labels[i])return;
     var first=true,rr=c.strategies?r:function(){if(first){first=false;return i===c.answer?0:.999999;}return r();};
-    if(!c.strategies)log((c.title?c.title+': ':'')+(i===c.answer?'trả lời đúng — '+c.labels[c.answer]+'.':'chưa đúng, đáp án là '+c.labels[c.answer]+'.'),i===c.answer?'good':'neutral');
+    if(!c.strategies)log((c.title?c.title+': ':'')+(i===c.answer?U.pick(r,['trả lời đúng — ','đoán trúng — ','chính xác — '])+c.labels[c.answer]+'.':U.pick(r,['chưa đúng, đáp án là ','trượt mất rồi, đáp án đúng là ','tiếc quá, đáp án là '])+c.labels[c.answer]+'.'),i===c.answer?'good':'neutral');
     return va.call(this,l,d,c.strategies?c.strategies[i]:'team',rr,log);
   };
   V.auto=function(l,d,r){if(l.flags.variety&&l.flags.variety.compact)return U.pick(r,d.opts.filter(function(o){return o.k!=='quit';})).k;return vu.apply(this,arguments);};

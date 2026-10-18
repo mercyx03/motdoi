@@ -149,7 +149,7 @@
 
   SC('to_tinh', {
     title: 'Rung động tuổi học trò', prep: function (l, r) { return { n: H.stranger(l, r, H.partnerSex(l, r)) }; },
-    text: function (l, d) { return 'Bạn thầm thích ' + d.n + ' ngồi bàn trên đã lâu. Lá thư viết xong rồi, vẫn nằm trong cặp.'; },
+    text: function (l, d) { return l.school ? 'Bạn thầm thích ' + d.n + ' ngồi bàn trên đã lâu. Lá thư viết xong rồi, vẫn nằm trong cặp.' : 'Bạn thầm thích ' + d.n + ' ' + (l.job ? 'làm cùng chỗ' : 'ở xóm bên') + ' đã lâu. Lá thư viết xong rồi, vẫn nằm trong túi áo.'; }, // v5.6.4: đã nghỉ học thì không còn "bàn trên", "trong cặp"
     opts: [
       { k: 'yes', l: 'Đưa thư tỏ tình', ai: { risk: 0.8, soc: 0.6 }, run: function (l, r, log, d) { if (ch(r, 0.5)) { log(d.n + ' gật đầu. Mối tình đầu trong trẻo.', 'good'); fx(l, { hap: 8 }); l.flags.firstLove = d.n; H.mem(l, 'Nụ cười của ' + d.n + ' khi nhận lá thư tỏ tình.', 5); } else { log(d.n + ' từ chối khéo. Bạn trùm chăn khóc cả đêm.', 'bad'); fx(l, { hap: -6 }); H.mem(l, 'Lá thư tỏ tình bị từ chối năm ' + l.age + ' tuổi.', 3); } } },
       { k: 'no', l: 'Giữ kín trong lòng', ai: { w: 1 }, run: function (l, r, log, d) { log('Giữ kín tình cảm với ' + d.n + ' — một mối tình câm.', 'neutral'); H.mem(l, 'Mối tình câm với ' + d.n + ' năm ' + l.age + ' tuổi.', 3); } }
@@ -566,7 +566,7 @@
   SC('khung_bo', {
     title: 'Cuộc gọi đòi nợ', tone: 'dark', valid: function (l) { return H.hasLoan(l, 'appden') || H.hasLoan(l, 'nong'); },
     text: function (l) {
-      var who = [l.job ? 'cho sếp' : '', parentsWord(l) ? 'cho ' + parentsWord(l) + ' bạn' : '', l.kids.some(function (k) { return k.alive; }) ? 'cho con cái bạn' : ''].filter(Boolean);
+      var who = [l.job && (!E.hasBoss || E.hasBoss(l)) ? 'cho sếp' : l.job ? 'cho đối tác' : '', parentsWord(l) ? 'cho ' + parentsWord(l) + ' bạn' : '', l.kids.some(function (k) { return k.alive; }) ? 'cho con cái bạn' : ''].filter(Boolean);
       return 'Đầu dây là giọng đe dọa: không trả nợ thì sẽ gửi "ảnh ghép" cho toàn bộ danh bạ' + (who.length ? ', gọi điện ' + who.join(', ') : '') + '. ' + (l.job ? 'Đồng nghiệp' : 'Hàng xóm') + ' đã bắt đầu nhận tin nhắn bôi nhọ.';
     },
     opts: [
@@ -767,7 +767,7 @@
     valid: function (l) { return l.fam.mAlive || l.fam.fAlive; },
     opts: [
       { k: 'all', l: 'Lo toàn bộ', ai: { w: 1.4, cost: 0.3 }, run: function (l, r, log, d) { cashB(l, -d.c, 'Lo ' + d.w); log('Lo trọn chuyện ' + d.w + '. Bố mẹ khoe với cả xóm.', 'good'); fx(l, { hap: 5, karma: 6 }); H.mem(l, 'Ngày lo được chuyện ' + d.w + ', thấy mình thật sự trưởng thành.', 4); } },
-      { k: 'share', l: 'Chia với anh chị em', req: function (l) { return l.fam.sibs > 0; }, ai: { w: 1.2 }, run: function (l, r, log, d) { cashB(l, -d.c / (l.fam.sibs + 1), 'Góp tiền ' + d.w); log('Anh chị em mỗi người góp một phần lo cho bố mẹ.', 'good'); fx(l, { hap: 3, karma: 3, soc: 2 }); } },
+      { k: 'share', l: 'Chia với anh chị em', req: function (l) { return H.sibs ? H.sibs(l).length > 0 : l.fam.sibs > 0; }, ai: { w: 1.2 }, run: function (l, r, log, d) { cashB(l, -d.c / (l.fam.sibs + 1), 'Góp tiền ' + d.w); log('Anh chị em mỗi người góp một phần lo cho bố mẹ.', 'good'); fx(l, { hap: 3, karma: 3, soc: 2 }); } },
       { k: 'loan', l: 'Vay mượn để lo cho bố mẹ', ai: { w: 0.6 }, run: function (l, r, log, d) { H.addLoan(l, H.canBankLoan(l) && l.income > 0 ? 'bank' : 'fin', d.c * l.base); cashB(l, -d.c, 'Lo ' + d.w); log('Vay tiền lo chuyện ' + d.w + '.', 'neutral'); fx(l, { karma: 4 }); } },
       { k: 'cant', l: 'Lực bất tòng tâm', ai: { w: 0.4 }, run: function (l, r, log, d) { log('Không lo nổi chuyện ' + d.w + '. Đêm nằm trằn trọc mãi.', 'bad'); fx(l, { hap: -6 }); } }
     ]
@@ -1061,7 +1061,7 @@
     var dest = isVN(l) ? (l.money > l.base * 2 ? pick(r, ['Thái Lan', 'Hàn Quốc', 'Nhật Bản', 'Singapore']) : pick(r, ['Đà Lạt', 'Phú Quốc', 'Sa Pa', 'Hội An', 'Hạ Long', 'Nha Trang', 'Côn Đảo'])) : 'nước ngoài';
     log('Đi du lịch ' + dest + (l.partner ? ' cùng ' + pw(l) : '') + '.', 'good'); cashB(l, -0.05, 'Du lịch'); fx(l, { hap: 4 });
   });
-  EV(function (l, a) { return a >= 25 && a <= 60; }, 0.03, function (l, a, r, log) { log('Giúp đỡ một người bạn cũ đang gặp khó khăn.', 'good'); fx(l, { soc: 4, hap: 2, karma: 2 }); });
+  EV(function (l, a) { return a >= 25 && a <= 60; }, 0.03, function (l, a, r, log) { log(U.pick(r, ['Giúp đỡ một người bạn cũ đang gặp khó khăn.', 'Người bạn cũ gọi điện nhờ vả lúc túng quẫn, bạn giúp được chút nào hay chút ấy.', 'Nghe tin bạn học cũ gặp chuyện, bạn ghé thăm và góp một tay.', 'Một người quen cũ vừa mất việc, bạn giới thiệu cho chỗ làm tạm.', 'Bạn cho người bạn cũ ở nhờ vài hôm khi họ gặp khó.', 'Góp tiền cùng nhóm bạn cũ giúp một người đang nằm viện.']), 'good'); fx(l, { soc: 4, hap: 2, karma: 2 }); });
   EV(function (l, a) { return a >= 40 && (!l.bff || !l.bff.alive); }, 0.015, function (l, a, r, log) { log('Một người bạn cũ qua đời đột ngột vì ' + pick(r, a < 60 ? ['tai nạn giao thông', 'nhồi máu cơ tim', 'đột quỵ', 'ung thư phát hiện muộn'] : ['đột quỵ', 'nhồi máu cơ tim', 'viêm phổi', 'ung thư']) + '.', 'bad'); fx(l, { hap: -5 }); });
 
   var CONFLICT = { UA: 0.3, SD: 0.3, MM: 0.2, PS: 0.35, SY: 0.12, YE: 0.15, SS: 0.12, CD: 0.1, SO: 0.12, AF: 0.06, ML: 0.08, BF: 0.1, NE: 0.06, NG: 0.04, ET: 0.06, HT: 0.15, CF: 0.08, LY: 0.05, IL: 0.08, LB: 0.08, RU: 0.06, IQ: 0.03, MZ: 0.03, CM: 0.03, CO: 0.02, MX: 0.03 };

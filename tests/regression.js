@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -2279,6 +2279,49 @@ section('47. Bản 5.6.1: Pháp Kiều gọi thẳng tên, phông chữ tiếng 
     ok(E.dishPrice('mì Quảng') <= .06 && E.dishPrice('phở Hà Nội') <= .07 && E.dishPrice('cua Năm Căn') >= .3 && E.placePrice('biển Mỹ Khê') <= .1, 'giá món ăn / địa danh sát thực tế: mì Quảng ~' + Math.round(E.dishPrice('mì Quảng') * 1000) + 'k, cua Năm Căn ~' + Math.round(E.dishPrice('cua Năm Căn') * 1000) + 'k mỗi người');
     l.pending = [E.DEC.que_doc.make(l, R(1))]; E.resolve(l, 'partner'); E.resolve(l, 'switch'); const m = l.pending[0];
     const mq = m && m.opts.find(o => /mì Quảng/.test(o.l)); ok(!!mq && /^\d+k đ$/.test(mq.h) && parseInt(mq.h, 10) <= 250, 'ở Đà Nẵng ăn mì Quảng cùng người yêu chỉ vài trăm nghìn kể cả đi lại (' + (mq && mq.h) + ')'); }
+}
+section('48. Bản 5.6.3: nhập quốc tịch theo số năm cư trú, visa esports, cắt giảm nhân sự đúng đối tượng');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; l.indep = true; l.pending = []; if (setup) setup(l); return l; };
+  ok(E.NATURALIZE.US[0] === 6 && E.NATURALIZE.SE[0] === 8 && E.NATURALIZE.PT[0] === 10 && E.NATURALIZE.JP[1] === 1, 'số năm nhập quốc tịch theo từng nước (Mỹ 6 kể cả chờ thẻ xanh, Thụy Điển 8, Bồ Đào Nha 10, Nhật buộc thôi quốc tịch gốc)');
+  { const l = mk(48000, 30, x => { x.abroad = { code: 'JP', name: 'Nhật Bản', perm: true, pool: 'ja', base: x.base }; x.money = x.base * 5; E.startJob(x, 'ke_toan', R(1), () => { }); });
+    const hook = E.HOOKS.year.find(h => /nhap_quoc_tich/.test(h.toString()));
+    for (let y = 0; y < 4; y++) hook(l, R(y), () => { }, 30 + y); ok(!l.pending.some(d => d.id === 'nhap_quoc_tich'), 'chưa đủ 5 năm ở Nhật thì chưa được xét nhập quốc tịch');
+    hook(l, R(9), () => { }, 34); const d = l.pending.find(d => d.id === 'nhap_quoc_tich'); ok(!!d && /5 năm/.test(d.text) && /thôi quốc tịch/.test(d.text), 'đủ 5 năm: được xét nhập quốc tịch, ghi rõ phải thôi quốc tịch gốc: ' + (d && d.text.slice(0, 120)));
+    let got = 0; for (let i = 0; i < 40; i++) { const c = JSON.parse(JSON.stringify(l)); c.rs = 4800 + i * 7919; c.pending = [E.DEC.nhap_quoc_tich.make(c, R(i), { code: 'JP' })]; E.resolve(c, 'nop'); if (E.isCitizenOf(c, 'JP')) got++; } ok(got > 15 && got < 40, 'nộp hồ sơ: phần lớn đỗ, vẫn có người trượt thi (' + got + '/40)'); }
+  { const s = { season: { token: 't' } }; let deny = 0; for (let i = 0; i < 2000; i++) { const t = { season: { token: 't' + i } }; if (!E.esVisa({ flags: {}, st: {}, mem: [] }, R(i), () => { }, t, { id: 'msi', name: 'MSI' })) deny++; }
+    ok(deny > 20 && deny < 160, 'đi giải quốc tế phải xin visa, hiếm khi bị từ chối (' + deny + '/2000)'); }
+  { const top = mk(48100, 45, x => { E.startJob(x, 'phi_cong', R(1), () => { }); x.job.rank = E.CAR.phi_cong.t.length - 1; }); const mkt = mk(48101, 45, x => { E.startJob(x, 'marketing', R(1), () => { }); x.job.rank = 3; x.job.yrs = 3; });
+    const drv = mk(48102, 35, x => { E.startJob(x, 'tx_cn', R(1), () => { }); }); const fl = mk(48103, 30, x => { E.startJob(x, 'fl_dich', R(1), () => { }); }); const emp = mk(48104, 30, x => { E.startJob(x, 'ke_toan', R(1), () => { }); x.job.yrs = 3; });
+    ok(E.layoffRisk(top) === 0 && E.layoffRisk(mkt) === 0 && E.layoffRisk(drv) === 0 && E.layoffRisk(fl) === 0 && E.layoffRisk(emp) > 0.5, 'cắt giảm nhân sự: không rơi vào cơ trưởng huấn luyện, giám đốc marketing, tài xế công nghệ, freelancer; nhân viên làm thuê vẫn có thể bị');
+    ok(!E.DEC.vp_sa_thai_ai.valid(fl, {}) && !E.DEC.cn_cat_giam.valid(mk(48105, 40, x => { E.startJob(x, 'cong_nhan', R(1), () => { }); x.job.rank = E.CAR.cong_nhan.t.length - 1; }), {}), 'freelancer không bị "công ty cắt giảm vì AI", quản đốc không nằm trong danh sách cắt giảm công nhân'); }
+}
+section('49. Bản 5.6.4: chức cao / nghề tự do không có "sếp", gia đình đúng hoàn cảnh, ngồi tù đủ năm, lương hưu đa số nghề, sân bóng theo nơi sống');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; l.indep = true; l.school = null; l.pending = []; if (setup) setup(l); return l; };
+  { const mc = mk(49000, 30, x => E.startJob(x, 'mc_su_kien', R(1), () => { })); const kt = mk(49001, 30, x => E.startJob(x, 'ke_toan', R(1), () => { }));
+    ok(!E.hasBoss(mc) && E.hasBoss(kt) && !E.DEC.sep_ep.valid(mc, {}), 'MC sự kiện làm tự do không bị "sếp ép làm ngoài giờ"; kế toán làm thuê thì có sếp');
+    const cap = mk(49002, 45, x => { E.startJob(x, 'phi_cong', R(1), () => { }); x.job.rank = E.CAR.phi_cong.t.length - 1; }); ok(!E.hasBoss(cap) && !E.DEC.vp_cuop_cong.valid(cap, {}), 'cơ trưởng huấn luyện không bị sếp mắng / cướp công'); }
+  { const l = mk(49010, 40, x => { x.sibList = []; x.fam.sibs = 0; x.fam.mAlive = true; x.fam.mAge = 34; }); const d = E.DEC.care.make(l, R(1), { who: 'Mẹ' });
+    ok(!d.opts.some(o => /anh chị/.test(o.l)), 'không có anh chị em: không còn "nhờ anh chị em" chăm bố mẹ: ' + d.opts.map(o => o.l).join(' / '));
+    const k = mk(49011, 8, x => { x.sibList = []; x.fam.sibs = 0; x.school = 'primary'; }); const m = E.DEC.k_mat_dien.make(k, R(2)); ok(!m.opts.some(o => /^Ngồi nghe anh chị/.test(o.l)), 'con một không "nghe anh chị kể chuyện ma"'); }
+  { const l = mk(49020, 15, x => { x.school = null; }); const d = E.DEC.to_tinh.make(l, R(1)); ok(!/bàn trên|trong cặp/.test(d.text), 'đã nghỉ học: thư tỏ tình không còn "ngồi bàn trên", "trong cặp": ' + d.text); }
+  { const hn = mk(49030, 25, x => { x.movedTo = 'Hà Nội'; }), hcm = mk(49031, 25, x => { x.movedTo = 'TP. Hồ Chí Minh'; }), np = mk(49032, 25, x => { x.movedTo = null; x.city = null; x.prov.old = 'Nam Định'; });
+    const t = l => E.DEC.xem_bong_da.make(l, R(1)).text; ok(/Mỹ Đình|Hàng Đẫy/.test(t(hn)) && /Thống Nhất/.test(t(hcm)) && !/Mỹ Đình/.test(t(hcm)) && /Thiên Trường/.test(t(np)), 'đi xem bóng ở sân gần nơi sống: ' + [t(hn), t(hcm), t(np)].join(' | ')); }
+  { const l = mk(49040, 30); l._yearRun = true; E.H.jail(l, 1, 'trộm cắp tài sản', () => { }); ok(l.jailUntil === 32, 'bị bắt giữa năm: chạy hết thanh năm sau mới ra tù (' + l.jailUntil + ')');
+    const b = mk(49041, 30); b._yearRun = false; E.H.jail(b, 1, 'trộm cắp tài sản', () => { }); ok(b.jailUntil === 31, 'bị kết án đầu năm: đúng 1 năm');
+    const c = mk(49042, 30); c.pending = []; E.beginYear(c, { auto: true }); E.finishYear(c); E.endYear(c); ok(!c._yearRun, 'kết thúc năm thì xóa cờ đang chạy năm'); }
+  { const own = mk(49050, 40, x => { E.startJob(x, 'bartender', R(1), () => { }); x.job.rank = 2; }); const vs = mk(49051, 40, x => E.startJob(x, 've_so', R(1), () => { })); const fl = mk(49052, 40, x => E.startJob(x, 'fl_dev', R(1), () => { }));
+    ok(E.pensionCovered(own) && !E.pensionCovered(vs) && !E.pensionCovered(fl), 'chủ quán tự đóng BHXH tự nguyện có lương hưu; vé số, freelancer vẫn không');
+    let n = 0, pen = 0; for (let i = 0; i < 60; i++) { const l = E.createLife({ mode: 'vn', seed: 49100 + i }); E.runHeadless(l); if (l.death && l.death.age >= 66) { n++; if (l.pensioned) pen++; } } ok(n > 15 && pen / n > 0.7, 'đa số người sống đến tuổi hưu có lương hưu (' + pen + '/' + n + ')'); }
+  { const old = mk(49060, 76); const g = E.RECUR.find(x => x.id === 'gym'); ok(/dưỡng sinh/.test(g.run(old)) && !/gym/.test(g.l), '76 tuổi không còn "tập gym", chuyển sang đi bộ, dưỡng sinh'); }
+  { const l = mk(49070, 32, x => { x.edu = 7; x.workYrs = 5; x.jobsHist = []; }); E.startJob(l, 'nghien_cuu', R(1), () => { }); ok(!/giáo sư/.test(E.jobTitle(l)), 'tiến sĩ mới vào nghề nghiên cứu không vào thẳng phó giáo sư: ' + E.jobTitle(l)); }
+  { const l = mk(49080, 80, x => { x.kids = []; x.sibList = []; x.fam.sibs = 0; x.fam.mAlive = false; x.fam.fAlive = false; x.partner = null; });
+    ok(E.famLogic(l, 'Mùng Một, ngày Rằm cả nhà ăn chay.', true) === 'Mùng Một, ngày Rằm bạn ăn chay.' && E.famLogic(l, 'Rằm tháng Giêng, cả nhà lên chùa cầu an đầu năm.', true) === 'Rằm tháng Giêng, bạn lên chùa cầu an đầu năm.', 'không còn ai trong gia đình: không còn "cả nhà ăn chay", "cả nhà lên chùa"');
+    const d = E.DEC.sau_mat_mat.make(l, R(1)); ok(!d.opts.some(o => /với gia đình/.test(o.l)), 'không còn gia đình: sau mất mát ngồi lại với bạn bè thân'); }
+  { let bad = 0; for (let i = 0; i < 40; i++) { const l = E.createLife({ mode: 'vn', seed: 49200 + i, gender: 'F' }); l.age = 1; l.pending = [E.DEC.thoi_noi.make(l, R(i))]; if (/thầy giáo/.test(E.resolve(l, 'but').map(e => e.t).join(' '))) bad++; } ok(bad === 0, 'bé gái bốc trúng cây bút: "sau này làm cô giáo"'); }
 }
 function isVNx(l) { return E.isVN(l); }
 

@@ -152,7 +152,7 @@
       if (!l.yrs.length || l.yrs[l.yrs.length - 1].a !== l.age) l.yrs.push({ a: l.age, hap: Math.round(l.st.hap), hea: Math.round(l.st.hea) });
     },
     jail: function (l, years, why, log) {
-      l.jailUntil = l.age + years; l.record = (l.record || 0) + 1;
+      l.jailUntil = l.age + years + (l._yearRun ? 1 : 0); l.record = (l.record || 0) + 1; // v5.6.4: bị bắt giữa năm thì phần còn lại của năm chưa tính là một năm thụ án
       if (l.job && !/^(xkld)$/.test(l.job.id)) { l.lastJob = l.job; }
       l.job = null; l.school = null;
       log('Bị kết án ' + years + ' năm tù vì ' + why + '.', 'bad');
@@ -1203,7 +1203,7 @@
       make: function (life) {
         var who = life.fam.mAlive ? 'Mẹ' : 'Bố';
         return { id: 'care', title: who + ' đã già yếu', data: { who: who }, text: who + ' bạn đã ngoài 70, tóc bạc trắng, đi lại chậm chạp và cần người chăm sóc.',
-          opts: [opt('yes', 'Đón ' + who.toLowerCase() + ' về ở cùng chăm sóc', 'Tốn thời gian & tiền bạc'), opt('no', 'Gửi tiền về / nhờ anh chị em', '')] };
+          opts: [opt('yes', 'Đón ' + who.toLowerCase() + ' về ở cùng chăm sóc', 'Tốn thời gian & tiền bạc'), opt('no', H.sibs && H.sibs(life).length ? 'Gửi tiền về / nhờ anh chị em' : 'Gửi tiền về, thuê người chăm sóc', '')] };
       },
       auto: function (life, d, r) { return r() < 0.7 ? 'yes' : 'no'; },
       apply: function (life, d, k, r, log) {
@@ -1529,7 +1529,7 @@
     { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log(U.pick(r, ['Trông cháu giúp con những ngày con bận rộn.', 'Đón cháu đi học về, ông bà cháu ríu rít cả buổi chiều.', 'Cuối tuần các cháu về chơi, căn nhà rộn tiếng cười.', 'Dạy cháu đọc chữ, kể chuyện ngày xưa cho cháu nghe.']), 'good'); l.st.hap += 3; l.st.soc += 2; } },
     { c: function (l, a) { return l.partner && l.partner.sex === l.sex && l.flags.famTension; }, p: 0.12, run: function (l, a, r, log) { l.flags.famTension = false; log('Bố mẹ dần chấp nhận và đón ' + l.partner.name + ' về nhà ăn cơm.', 'good'); l.st.hap += 8; H.mem(l, 'Bữa cơm đầu tiên bố mẹ gắp thức ăn cho ' + l.partner.name + '.', 4); } },
     { c: function (l, a) { return l.partner && l.partner.status === 'married' && a - l.partner.since === 25; }, p: 1, run: function (l, a, r, log) { log('Kỷ niệm 25 năm ngày cưới với ' + l.partner.name + '.', 'good'); l.st.hap += 4; H.mem(l, 'Đám cưới bạc — 25 năm bên ' + l.partner.name + '.', 4); } },
-    { c: function (l, a) { return a >= 18 && l.job && !stableService(l) && !l.job.fam && !l.retired && !E.isCrime(l) && !/^(nong|xkld|phu_giup)/.test(l.job.id); }, p: 0.01, run: function (l, a, r, log) { if(stableService(l))return; var jd = E.jobDef(l); log(H.isEmployee(l) ? 'Kinh tế khó khăn, công ty cắt giảm nhân sự — bạn mất việc.' : jd && (jd.fame || jd.cat === 'free') ? 'Kinh tế khó khăn, khách hàng cắt hết hợp đồng — mấy tháng liền không có việc, đành tạm nghỉ nghề.' : 'Kinh tế khó khăn, sức mua giảm mạnh — làm ăn thua lỗ, phải dừng kinh doanh.', 'bad'); l.job = null; l.flags.needJob = true; l.st.hap -= 7; } },
+    { c: function (l, a) { return a >= 18 && l.job && !stableService(l) && !l.job.fam && !l.retired && !E.isCrime(l) && !/^(nong|xkld|phu_giup)/.test(l.job.id); }, p: function (l) { return H.isEmployee(l) && E.layoffRisk ? 0.01 * E.layoffRisk(l) : 0.006; }, run: function (l, a, r, log) { if(stableService(l))return; var jd = E.jobDef(l), jid0 = E.resolveJob(l.job.id); if (H.isEmployee(l) && E.layoffRisk && !E.layoffRisk(l) && !/^(tx_cn|xe_om|shipper)/.test(jid0)) return; log(jid0 === 'giup_viec' ? 'Kinh tế khó khăn, nhà chủ không thuê người giúp việc nữa — bạn phải tìm chỗ làm mới.' : /^(tx_cn|xe_om|shipper)/.test(jid0) ? 'Kinh tế khó khăn, ứng dụng ít cuốc, chạy cả ngày không đủ tiền xăng — đành tạm nghỉ chạy xe.' : H.isEmployee(l) ? 'Kinh tế khó khăn, công ty cắt giảm nhân sự — bạn mất việc.' : jd && (jd.fame || jd.cat === 'free') ? 'Kinh tế khó khăn, khách hàng cắt hết hợp đồng — mấy tháng liền không có việc, đành tạm nghỉ nghề.' : 'Kinh tế khó khăn, sức mua giảm mạnh — làm ăn thua lỗ, phải dừng kinh doanh.', 'bad'); l.job = null; l.flags.needJob = true; l.st.hap -= 7; } },
     { c: function (l, a) { return a >= 45 && a <= 75 && !l.flags.glasses; }, p: 0.08, run: function (l, a, r, log) { l.flags.glasses = true; log('Mắt kém đi, bắt đầu phải đeo kính lão.', 'neutral'); } },
     { c: function (l, a) { return a >= 70; }, p: 0.05, run: function (l, a, r, log) { log(U.pick(r, ['Trí nhớ bắt đầu kém đi, hay quên đồ đạc.', 'Chân yếu, đi lại khó khăn hơn trước.', 'Thính lực giảm, phải nói to mới nghe rõ.']), 'neutral'); l.st.hea -= 3; } }
   ];
@@ -1686,6 +1686,7 @@
 
   function finishYear(life) {
     if (!life.alive) return [];
+    life._yearRun = true;
     var r = RF(life), a = life.age, out = [];
     var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death' && k !== 'money') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
     var f = life.fam, st = life.st;
@@ -1838,7 +1839,7 @@
     var mCause = null;
     if (f.mAlive && r() < qBase(life.mortF, f.mAge + a)) { f.mAlive = false; mCause = H.deathCause(f.mAge + a, r); log('Mẹ qua đời ở tuổi ' + (f.mAge + a) + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(mCause) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày mẹ ra đi. Từ nay không còn ai gọi bạn về ăn cơm.', 7); }
     if (f.fAlive && r() < qBase(life.mortM, f.fAge + a) * (f.vice === 'alcohol' || f.vice === 'drugs' ? 1.8 : f.vice === 'gang' ? 1.5 : 1)) { f.fAlive = false; var fCause = H.deathCause(f.fAge + a, r, f.vice), tries = 0; while (mCause && fCause === mCause && !/tai nạn|tuổi già|thanh thản/.test(fCause) && tries++ < 8) fCause = H.deathCause(f.fAge + a, r, f.vice); // v3.0: bố mẹ mất cùng năm không trùng một bệnh
-      log('Bố qua đời ở tuổi ' + (f.fAge + a) + (mCause && fCause === mCause && /tai nạn/.test(fCause) ? ' — cùng mẹ, trong một vụ ' + fCause : (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(fCause)) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày bố ra đi, bạn mới hiểu những lời bố nói năm xưa.', 7); }
+      log('Bố qua đời ở tuổi ' + (f.fAge + a) + (mCause && fCause === mCause && /tai nạn/.test(fCause) ? ' — cùng mẹ, trong một vụ ' + fCause : mCause && fCause === mCause ? ', cùng năm với mẹ, ' + (/thanh thản/.test(fCause) ? fCause : 'vì ' + fCause) : (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(fCause)) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày bố ra đi, bạn mới hiểu những lời bố nói năm xưa.', 7); }
     if (!f.mAlive && !f.fAlive) life.flags.caring = false;
 
     // ---- Thú cưng ----
@@ -1981,6 +1982,7 @@
   }
 
   function endYear(life) {
+    life._yearRun = false;
     if (!life.alive) return false;
     life.age++;
     // Chỉ mở cổng trại khi thanh thời gian đã hoàn thành cả năm.

@@ -30,6 +30,7 @@
   var TOPT = /^(tổng giám đốc|chủ tịch|phó tổng giám đốc|giám đốc|cơ trưởng|bí thư|bộ trưởng|thứ trưởng|giám đốc bệnh viện|hiệu trưởng|viện trưởng|tổng biên tập|chánh án|trưởng khoa|bác sĩ trưởng khoa|tổng đạo diễn|giám đốc sáng tạo)/;
   function hasBoss(l) {
     if (!l.job || l.job.fam || !H.isEmployee(l)) return false;
+    if (E.isFreelanceJob && E.isFreelanceJob(l)) return false; // v5.6.4: MC, makeup, tài xế ứng dụng… làm tự do, không có sếp
     var c = E.CAR[jid(l)]; if (!c) return true;
     var rk = l.job.rank || 0, n = c.t.length;
     if (n > 1 && rk >= n - 1) return false;
@@ -252,9 +253,10 @@
   function kidsAlive(l) { return (l.kids || []).some(function (k) { return k.alive; }); }
   function sibsAlive(l) { return H.sibs ? H.sibs(l).length > 0 : (l.fam && l.fam.sibs > 0); }
   function nobody(l) { return !kidsAlive(l) && !sibsAlive(l) && !(l.fam && (l.fam.mAlive || l.fam.fAlive)) && !(l.partner && l.partner.alive && l.partner.status !== 'dating'); }
+  E.hasFamily = function (l) { return !nobody(l); };
   E.famLogic = function (l, t, isLog) {
     if (typeof t !== 'string' || !l || !l.fam || l.age < 1) return t;
-    if (!/con cháu|đàn cháu|các con|các cháu|anh chị em|cả nhà|sum vầy|Đám cưới|Về quê ăn Tết|Tết năm nay/i.test(t)) return t;
+    if (!/con cháu|đàn cháu|các con|các cháu|anh chị em|cả nhà|cả gia đình|sum vầy|Đám cưới|Về quê ăn Tết|Tết năm nay/i.test(t)) return t;
     if (!kidsAlive(l) && /[Cc]on cháu|đàn cháu|các con\b|các cháu/.test(t) && !/(cụ già|người ta|nhà người|của cụ|bà cụ|ông cụ)/.test(t)) {
       t = t.replace(/Con cháu tổ chức lễ mừng thọ (\d+) tuổi\./, function (x, n) { return (l.partner && l.partner.alive !== false && l.partner.status !== 'dating' ? (l.partner.sex === l.sex ? 'Bạn và người bạn đời làm mâm cơm, mời hàng xóm, bạn bè đến mừng thọ ' : 'Hai vợ chồng làm mâm cơm, mời hàng xóm, bạn bè đến mừng thọ ') : 'Hàng xóm, bạn bè đến chúc thọ ') + n + ' tuổi.'; })
         .replace('giờ chỉ vui với con cháu', 'giờ chỉ vui với vườn tược, bạn bè').replace('Ở lại gần con cháu', 'Ở lại thành phố').replace('Ở lại thành phố gần con cháu.', 'Ở lại thành phố.').replace('qua con cháu giới thiệu', 'qua bạn bè giới thiệu')
@@ -266,6 +268,8 @@
     if (nobody(l)) {
       t = t.replace('Tiết Thanh minh, cả nhà đi tảo mộ ông bà.', 'Tiết Thanh minh, một mình đi tảo mộ ông bà, bố mẹ.').replace('Tết năm nay cả nhà sum họp đông đủ.', 'Tết năm nay đón một mình, thắp nén hương cho bố mẹ rồi sang chúc Tết hàng xóm.').replace('Về quê ăn Tết, gói bánh chưng cùng gia đình.', 'Về quê ăn Tết, thắp hương tưởng nhớ ông bà, bố mẹ rồi ghé chúc Tết hàng xóm.');
       if (isLog && /[Cc]ả nhà (sum họp|quây quần|sum vầy|đoàn tụ)|sum vầy/.test(t)) return null;
+      // v5.6.4: không còn ai trong gia đình thì "cả nhà lên chùa", "cả nhà ăn chay"… thành chuyện của riêng bạn
+      if (isLog) t = t.replace('ngày Rằm cả nhà ăn chay', 'ngày Rằm bạn ăn chay').replace('về ăn bữa cơm sum họp', 'ở lại dùng bữa với bà con trong giáo xứ').replace(/^(Cả nhà|Cả gia đình) /, 'Bạn ').replace(/([,:;—] )(cả nhà|cả gia đình) /g, '$1bạn ');
     }
     return t;
   };

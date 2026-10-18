@@ -15,7 +15,7 @@ for(const id of ['ve_so','xe_om','tx_cn','ban_rong','ve_chai','nong','fl_dev','f
   const l=life(id);ok(!E.pensionCovered(l),'ngoại lệ không tự có hưu: '+id);year(l);ok(!l.si||!l.si.yrs,'không cộng năm đóng cho ngoại lệ: '+id);
 }
 {
-  const l=life('bartender');l.job.rank=2;ok(!E.pensionCovered(l),'lên chủ quán là kinh doanh riêng');
+  const l=life('bartender');l.job.rank=2;ok(E.pensionCovered(l)&&E.pensionPolicy(l).voluntary,'lên chủ quán: tự đóng BHXH tự nguyện để có lương hưu');
   const bank=life('ngan_hang');bank.job.rank=3;ok(E.pensionCovered(bank),'giám đốc chi nhánh vẫn có chế độ');
 }
 {
