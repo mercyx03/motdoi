@@ -1,3 +1,30 @@
+## v5.9.0 — Con ngoài hôn nhân, nhiều bạn thân, hẹn hò với bạn thân, định cư nước ngoài
+
+- **Con ngoài hôn nhân (có thai khi chưa cưới):** khi đang hẹn hò với người khác giới, có thể có tin bất ngờ. Có thể chọn:
+  - Cưới chạy bầu.
+  - Sinh con khi chưa cưới, cùng nhau nuôi (con ngoài giá thú).
+  - Làm mẹ đơn thân.
+  - Nhận con nhưng không chung sống: con ở với mẹ, mỗi năm gửi tiền chu cấp đến khi con 18 tuổi, không tính chi phí nuôi con hai lần.
+  - Chưa giữ thai, được tư vấn ở cơ sở y tế uy tín.
+  - Bố mẹ có phản ứng; ở quê thì còn bị dị nghị.
+- **Nhiều bạn thân hơn:**
+  - Ngoài bạn thân đầu tiên, có thể có thêm tới 4 bạn thân, quen ở trường, giảng đường, chỗ làm hoặc trong xóm.
+  - Có chuyện cùng bạn thân: hẹn đi ăn, tâm sự, bạn gặp chuyện gọi lúc nửa đêm, cho bạn vay tiền.
+  - Lâu không gặp hoặc ở xa thì dần xa cách. Về già có thể mất bạn.
+  - Hồ sơ hiện đủ danh sách bạn thân. Có thêm hành động "Hẹn gặp bạn thân".
+- **Hẹn hò với bạn thân:**
+  - Tỏ tình với bạn thân, có khi thành người yêu, có khi bị từ chối và ngại ngùng một thời gian. Hoặc chờ, có khi người ấy tỏ tình trước.
+  - Đúng xu hướng tính dục, chênh lệch tuổi hợp lý. Đang có người yêu thì không có chuyện này.
+  - Chia tay rồi thì không còn thân như trước. Có thêm hành động "Tỏ tình với bạn thân".
+- **Định cư nước ngoài:**
+  - Những ngày đầu sốc văn hóa.
+  - Học tiếng bản xứ, có giúp ích khi thi quốc tịch.
+  - Xin thường trú, tên giấy tờ theo từng nước: thẻ xanh, PR, ILR, Niederlassungserlaubnis, vĩnh trú, F-5…
+  - Công nhận bằng cấp, gặp kỳ thị.
+  - Tết xa nhà: đón cùng hội đồng hương, bay về, hay gọi video.
+  - Gửi tiền về cho bố mẹ, bảo lãnh bố mẹ sang ở cùng.
+  - Dạy con tiếng mẹ đẻ. Có thêm hành động "Sinh hoạt cùng cộng đồng đồng hương".
+
 ## v5.8.0 — Xem tivi chọn thần tượng, trại lừa đảo, đám cưới theo điều kiện, đồ công nghệ (gộp v5.7.0)
 
 - **Xem tivi, chọn thần tượng (Việt Nam):**

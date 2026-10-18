@@ -45,7 +45,7 @@
     opts: [
       { k: 'nop', l: function (l, d) { return 'Nộp hồ sơ nhập quốc tịch ' + d.name; }, h: function (l) { return 'Lệ phí, thi cử khoảng ' + H.money(l, l.base * 0.06); }, ai: { w: 1.1, smart: 0.6 }, run: function (l, r, log, d) {
         H.cash(l, -l.base * 0.06, 'Hồ sơ nhập quốc tịch');
-        var p = 0.7 + (l.st.kno - 50) / 250 + (l.job ? 0.08 : -0.1) + (l.lang && l.lang[d.code] ? 0.1 : 0); if (U.clamp(p, 0.3, 0.97) > r()) {
+        var p = 0.7 + (l.st.kno - 50) / 250 + (l.job ? 0.08 : -0.1) + (l.lang && E.langOf && l.lang[E.langOf(d.code)] || (l.flags.localLang || {})[d.code] >= 1 ? 0.1 : 0); if (U.clamp(p, 0.3, 0.97) > r()) {
           (l.flags.citizen = l.flags.citizen || []).push(d.code); if (d.renounce) l.flags.renounced = l.country;
           log('Tuyên thệ nhập quốc tịch ' + d.name + ' sau ' + d.yrs + ' năm sinh sống' + (d.renounce ? ', thôi quốc tịch gốc.' : ', vẫn giữ quốc tịch gốc.') + ' Cầm cuốn hộ chiếu mới, bạn chợt nhớ những ngày đầu đặt chân đến đây.', 'big');
           H.fx(l, { hap: 6 }); H.mem(l, 'Ngày tuyên thệ nhập quốc tịch ' + d.name + '.', 5);

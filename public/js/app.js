@@ -785,6 +785,7 @@
     });
     if (l.grand) row('Cháu: ' + l.grand + (l.ggrand ? ' · Chắt: ' + l.ggrand : ''));
     if (l.bff) row('Bạn thân: ' + esc(l.bff.name) + (l.bff.alive ? ' · ' + (l.bff.close >= 70 ? 'thân thiết' : l.bff.close >= 40 ? 'vẫn giữ liên lạc' : 'đã xa cách') : ' · đã mất'), !l.bff.alive);
+    (l.friends || []).forEach(function (f) { row('Bạn thân: ' + esc(f.name) + (f.from ? ' (quen ở ' + esc(f.from) + ')' : '') + (f.alive === false ? ' · đã mất' : f.lover ? ' · người yêu' : ' · ' + (f.close >= 70 ? 'thân thiết' : f.close >= 40 ? 'vẫn giữ liên lạc' : 'đã xa cách')), f.alive === false); });
     if (l.idol) row('Thần tượng: ' + esc(l.idol));
     (l.pets || []).slice(-4).forEach(function (pt) { row('🐾 ' + esc(U.cap(E.H.petLabel(pt))) + ' ' + esc(pt.n) + ' · ' + (pt.alive ? Math.max(0, a - pt.since) + ' năm bên bạn' : pt.lost ? 'đã thất lạc' : 'đã mất'), !pt.alive); });
     var home = l.age < 18 && !l.indep ? 'Sống cùng bố mẹ trong ' + (l.houseType ? l.houseType + ' ' : '') + '(' + f.home + ')' : (l.ownHouse ? 'Sống trong ' + (l.houseName && l.houseName !== 'nhà riêng' ? l.houseName : 'nhà riêng') : l.urban ? 'Thuê nhà' : 'Sống ở quê');
