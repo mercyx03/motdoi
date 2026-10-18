@@ -321,6 +321,7 @@ blockquote.words { margin: 10px 0; padding: 8px 14px; border-left: 3px solid var
 
 /* ===================== v2.1: tranh pixel ===================== */
 svg.px { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+svg.art2d { display: block; width: 100%; height: auto; image-rendering: auto; }
 .scenecard { padding: 0; overflow: hidden; }
 .scenecard svg.scene { border-bottom: 1px solid var(--line); }
 .scenecard .cap { padding: 10px 16px 12px; font-size: 13.5px; color: var(--muted); }
@@ -453,3 +454,14 @@ footer .disclaimer b { color: var(--accent); }
 .recur-h{font-size:.8rem;font-weight:600;margin:.6rem 0 .3rem;color:var(--ink)}
 .chips.recur .chip.recur-c small{opacity:.75;font-weight:400}
 .chips.recur .chip.recur-c.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.market-controls{padding:14px;margin:12px 0;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)}.market-controls input,.market-controls select{width:100%;min-height:44px;box-sizing:border-box}.market-controls #marketTotal{font-weight:700;overflow-wrap:anywhere}.market-controls a{text-decoration:underline}
+
+#marketTotal{white-space:pre-line;line-height:1.65}
+
+/* V5.3 family cards */
+.family-form{display:grid;gap:10px;margin:18px 0;padding:16px;border:1px solid var(--line,#294255);border-radius:12px}.family-form input:not([type=checkbox]),.family-form select,.family-form textarea{box-sizing:border-box;min-width:0;width:100%;padding:10px;border:1px solid #385367;border-radius:8px;background:#102334;color:#f4eedb;font:inherit}.family-form label{font-weight:600}.family-form textarea{resize:vertical}.family-open{margin:5px 0}.family-facts li{gap:14px}.family-facts b{overflow-wrap:anywhere}.family-profile h2{overflow-wrap:anywhere}
+
+.modal.family-profile{background:#102130}body:has(.family-profile) #decPill{visibility:hidden}
+
+

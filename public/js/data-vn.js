@@ -70,15 +70,16 @@
     ['Cà Mau', 'DBSCL', 1210, 23, 0.75, 'Cà Mau', 'thành phố Cà Mau', 1]
   ];
 
-  // 34 đơn vị hành chính cấp tỉnh theo Nghị quyết 202/2025/QH15 (hiệu lực 1/7/2025)
+  // 34 đơn vị sau sáp nhập 2025; cập nhật loại đơn vị đến tháng 10/2026.
+  // Giữ thứ tự / ID để tương thích bản lưu cũ.
   var NEW34 = [
     ['Hà Nội', 'Thành phố'], ['Huế', 'Thành phố'], ['Hải Phòng', 'Thành phố'], ['Đà Nẵng', 'Thành phố'],
     ['TP. Hồ Chí Minh', 'Thành phố'], ['Cần Thơ', 'Thành phố'],
-    ['Lai Châu', 'Tỉnh'], ['Điện Biên', 'Tỉnh'], ['Sơn La', 'Tỉnh'], ['Lạng Sơn', 'Tỉnh'], ['Quảng Ninh', 'Tỉnh'],
+    ['Lai Châu', 'Tỉnh'], ['Điện Biên', 'Tỉnh'], ['Sơn La', 'Tỉnh'], ['Lạng Sơn', 'Tỉnh'], ['Quảng Ninh', 'Thành phố'],
     ['Thanh Hóa', 'Tỉnh'], ['Nghệ An', 'Tỉnh'], ['Hà Tĩnh', 'Tỉnh'], ['Cao Bằng', 'Tỉnh'],
-    ['Tuyên Quang', 'Tỉnh'], ['Lào Cai', 'Tỉnh'], ['Thái Nguyên', 'Tỉnh'], ['Phú Thọ', 'Tỉnh'], ['Bắc Ninh', 'Tỉnh'],
+    ['Tuyên Quang', 'Tỉnh'], ['Lào Cai', 'Tỉnh'], ['Thái Nguyên', 'Tỉnh'], ['Phú Thọ', 'Tỉnh'], ['Bắc Ninh', 'Thành phố'],
     ['Hưng Yên', 'Tỉnh'], ['Ninh Bình', 'Tỉnh'], ['Quảng Trị', 'Tỉnh'], ['Quảng Ngãi', 'Tỉnh'], ['Gia Lai', 'Tỉnh'],
-    ['Khánh Hòa', 'Tỉnh'], ['Lâm Đồng', 'Tỉnh'], ['Đắk Lắk', 'Tỉnh'], ['Đồng Nai', 'Tỉnh'], ['Tây Ninh', 'Tỉnh'],
+    ['Khánh Hòa', 'Tỉnh'], ['Lâm Đồng', 'Tỉnh'], ['Đắk Lắk', 'Tỉnh'], ['Đồng Nai', 'Thành phố'], ['Tây Ninh', 'Tỉnh'],
     ['Vĩnh Long', 'Tỉnh'], ['Đồng Tháp', 'Tỉnh'], ['Cà Mau', 'Tỉnh'], ['An Giang', 'Tỉnh']
   ];
 

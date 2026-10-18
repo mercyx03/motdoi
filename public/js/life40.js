@@ -27,6 +27,8 @@
   // ===================================================================
   var LOCAL = { 'Huế': 'Đại học Huế', 'Đà Nẵng': 'Đại học Đà Nẵng', 'Cần Thơ': 'Trường Đại học Cần Thơ', 'Thái Nguyên': 'Đại học Thái Nguyên', 'Vinh': 'Trường Đại học Vinh', 'Quy Nhơn': 'Trường Đại học Quy Nhơn', 'Hải Phòng': 'Trường Đại học Hải Phòng', 'Thanh Hóa': 'Trường Đại học Hồng Đức', 'Đà Lạt': 'Trường Đại học Đà Lạt', 'Buôn Ma Thuột': 'Trường Đại học Tây Nguyên', 'Nha Trang': 'Trường Đại học Nha Trang' };
   function uniFor(l, k, r) {
+    var chosen=l.flags.study54&&l.flags.study54.admitted;
+    if(chosen&&chosen.age===l.age&&chosen.major===k&&E.EDUCATION54){var named=E.EDUCATION54.schools.filter(function(s){return s.id===chosen.school;})[0];if(named)return named.name;}
     var c = city(l), hn = /Hà Nội/.test(c), sg = /Hồ Chí Minh/.test(c), strong = (l.examScore != null ? l.examScore >= 24 : l.st.kno >= 66);
     if (!isVN(l) || l.school === 'abroad') return null;
     if (k === 'it') return hn ? (strong ? 'Đại học Bách khoa Hà Nội' : pick(r, ['Trường Đại học Công nghiệp Hà Nội', 'Học viện Công nghệ Bưu chính Viễn thông', 'Trường Đại học Thủy lợi'])) : sg ? (strong ? 'Trường Đại học Bách khoa – ĐHQG TP.HCM' : pick(r, ['Trường Đại học Công nghiệp TP.HCM', 'Trường Đại học Sư phạm Kỹ thuật TP.HCM', 'Trường Đại học Công nghệ Thông tin – ĐHQG TP.HCM'])) : /Đà Nẵng/.test(c) && strong ? 'Trường Đại học Bách khoa – Đại học Đà Nẵng' : LOCAL[c] || 'trường đại học ở ' + c;

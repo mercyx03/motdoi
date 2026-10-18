@@ -1,0 +1,5 @@
+'use strict';
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
+const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+const E=G.E;let n=0;for(const i of process.argv[2]?process.argv[2].split(',').map(Number):Array.from({length:800},(_,i)=>i)){const l=E.createLife({mode:'vn',variant:i%2?'63':'34',seed:777000+i});while(l.alive&&l.age<115){E.beginYear(l,{auto:true});let g=0;while(l.pending.length&&l.alive&&g++<80)E.resolve(l,E.autoKey(l));if(l.alive)E.finishYear(l);g=0;while(l.pending.length&&l.alive&&g++<80)E.resolve(l,E.autoKey(l));if(l.school==='uni'&&l.job){console.log(JSON.stringify({seed:777000+i,age:l.age,job:l.job,school:l.school,edu:l.edu,talent:l.talent,flags:l.flags,log:l.log.slice(-12)},null,2));n++;break;}E.endYear(l);}}console.log('bad lives '+n);

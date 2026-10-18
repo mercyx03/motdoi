@@ -396,8 +396,8 @@
 
   // các tình huống con cái có sẵn (bản cũ) giờ ảnh hưởng đến đứa con cụ thể
   function wrapApply(id, fn) { var D = E.DEC[id]; if (!D) return; var old = D.apply; D.apply = function (l, dec, k, r, log) { old.call(D, l, dec, k, r, log); fn(l, dec, k, r, log); }; }
-  wrapApply('con_hoc', function (l, dec, k) { var c = kidByName(l, dec.data && dec.data.n); if (!c) return; if (k === 'intl') { c.study += 10; c.boost = 1.1; } else if (k === 'extra') { c.study += 5; c.tutor = true; } else if (k === 'free') c.close = Math.min(100, c.close + 5); });
-  wrapApply('con_hu', function (l, dec, k) { var c = kidByName(l, dec.data && dec.data.n); if (!c) return; if (k === 'strict') c.close -= 6; else if (k === 'talk') { c.close = Math.min(100, c.close + 8); c.study += 4; } else if (k === 'ignore') { c.close -= 10; c.study -= 5; } });
+  wrapApply('con_hoc', function (l, dec, k) { var c = kidByName(l, dec.data && dec.data.n); if (!c) return; if (k === 'intl') { c.study = U.clamp(c.study + 10, 0, 100); c.boost = 1.1; } else if (k === 'extra') { c.study = U.clamp(c.study + 5, 0, 100); c.tutor = true; } else if (k === 'free') c.close = Math.min(100, c.close + 5); });
+  wrapApply('con_hu', function (l, dec, k) { var c = kidByName(l, dec.data && dec.data.n); if (!c) return; if (k === 'strict') c.close = U.clamp(c.close - 6, 0, 100); else if (k === 'talk') { c.close = Math.min(100, c.close + 8); c.study = U.clamp(c.study + 4, 0, 100); } else if (k === 'ignore') { c.close = U.clamp(c.close - 10, 0, 100); c.study = U.clamp(c.study - 5, 0, 100); } });
   // sinh con: khởi tạo đời con, trầm cảm sau sinh
   wrapApply('kid', function (l, dec, k, r) {
     if (k !== 'yes') return;
@@ -447,16 +447,22 @@
     ]
   });
   T('luyen_thi', function (l, a) { return isVN(l) && a === 17 && (l.school === 'upper' || l.school === 'priv') && !l.flags.luyenThi; }, 0.9, 99);
+  E.rollExamScore = function (l, r) {
+    var lt = l.flags.luyenThi || 0;
+    var knowledge = U.clamp(l.st.kno, 0, 100);
+    var s = 12 + (knowledge - 40) * .28 + (l.focus === 'study' ? .6 : 0) + lt * .45 + (KHOI_TALENT[l.talent] === l.khoi ? .4 : 0) - (l.mind && l.mind.stress > 80 ? 1 : 0) + U.clamp(U.normal(r), -1.5, 1.5);
+    if (knowledge >= 95) s = Math.max(26, s); else if (knowledge >= 90) s = Math.max(24, s);
+    s = Math.round(U.clamp(s, 5, 30) * 4) / 4;
+    return s;
+  };
   // điểm thi tốt nghiệp THPT (thang 30 điểm cho 3 môn của khối)
   E.HOOKS.gradUpper.push(function (l, r, log) {
     if (!isVN(l)) return;
     if (!l.khoi) l.khoi = KHOI_TALENT[l.talent] || (r() < 0.5 ? 'A00' : 'D01');
-    var lt = l.flags.luyenThi || 0;
-    var s = 18.8 + (l.st.kno - 90) * 0.25 + (l.focus === 'study' ? 0.8 : 0) + lt * 0.7 + (KHOI_TALENT[l.talent] === l.khoi ? 0.6 : 0) - (l.mind.stress > 80 ? 1.5 : 0) + U.normal(r) * 2.6; // TB cả nước ~19–20 điểm/3 môn
-    s = Math.round(U.clamp(s, 5, 30) * 4) / 4;
+    var s = E.rollExamScore(l, r);
     l.examScore = s;
     var txt = U.fmtNum(s, 2).replace(/,?0+$/, '');
-    log('Thi tốt nghiệp THPT khối ' + l.khoi + ': ' + txt + ' điểm' + (s >= 29 ? ' — thủ khoa cả tỉnh!' : s >= 27 ? ' — điểm rất cao!' : s < 15 ? ' — thấp hơn mong đợi.' : '.'), s >= 27 ? 'big' : s < 15 ? 'bad' : 'neutral');
+    log('Thi tốt nghiệp THPT khối ' + l.khoi + ': ' + txt + ' điểm' + (s >= 29 ? ' — điểm thi xuất sắc!' : s >= 27 ? ' — điểm rất cao!' : s < 15 ? ' — thấp hơn mong đợi.' : '.'), s >= 27 ? 'big' : s < 15 ? 'bad' : 'neutral');
     if (s >= 27) { l.flags.scholar = true; H.mem(l, 'Ngày tra điểm thi: ' + txt + ' điểm, cả nhà vỡ òa.', 5); fx(l, { hap: 8 }); }
     else if (s < 15) fx(l, { hap: -5 });
     if (s >= 29) { l.fame = Math.max(l.fame || 0, 3000); }

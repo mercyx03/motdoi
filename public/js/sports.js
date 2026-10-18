@@ -44,6 +44,8 @@
   };
   E.sportPay = function (l, rk) { var S = info(l); return (S.pay[Math.min(rk, 3)] || 1) * (l.job && l.job.abroadUntil > l.age ? 2 : 1); };
 
+  function result(l, tier, kind, key) { if (E.recordSportResult) E.recordSportResult(l, tier, kind, key); }
+
   // ---------- mỗi năm: câu lạc bộ, chuyển nhượng, giải đấu riêng của từng môn ----------
   function sportYear(l, r, log, a) {
     if (!l.job || E.resolveJob(l.job.id) !== 'vdv') return;
@@ -52,15 +54,15 @@
     if (S.team && rk >= 1 && !l.job.club && S.club) { l.job.club = pick(r, S.club); log('Ký hợp đồng chuyên nghiệp với câu lạc bộ ' + l.job.club + '.', 'good'); }
     if (l.job.abroadUntil && a >= l.job.abroadUntil) { l.job.abroadUntil = null; log('Hết hợp đồng thi đấu ở nước ngoài, trở về khoác áo câu lạc bộ trong nước.', 'neutral'); }
     if (S.n === 'bóng đá') {
-      if (rk >= 2 && l.job.club && ch(r, 0.1)) { log(l.job.club + ' vô địch V.League! Bạn cùng đồng đội diễu hành trên xe buýt mui trần.', 'big'); cashB(l, 0.3, 'Thưởng vô địch V.League'); l.fame = (l.fame || 0) + 3e4; H.mem(l, 'Mùa giải vô địch V.League cùng ' + l.job.club + '.', 5); }
-      if (rk >= 3 && isVN(l) && y % 2 === 0 && ch(r, 0.3 + (l.skill - 80) / 100)) { log('Đội tuyển Việt Nam vô địch ASEAN Cup ' + y + '! Cả nước xuống đường mừng chiến thắng, bạn được thưởng nóng.', 'big'); cashB(l, 2, 'Thưởng vô địch ASEAN Cup'); l.fame = (l.fame || 0) * 1.5 + 2e5; fx(l, { hap: 12 }); l.medals.push({ ev: 'ASEAN Cup ' + y, m: 'vàng', y: y }); H.mem(l, 'Đêm vô địch ASEAN Cup ' + y + ', biển cờ đỏ sao vàng trên khắp phố.', 8); }
+      if (rk >= 2 && l.job.club && ch(r, 0.1)) { log(l.job.club + ' vô địch V.League! Bạn cùng đồng đội diễu hành trên xe buýt mui trần.', 'big'); cashB(l, 0.3, 'Thưởng vô địch V.League'); result(l, 'national', 'win', 'vleague'); l.fame = (l.fame || 0) + 3e4; H.mem(l, 'Mùa giải vô địch V.League cùng ' + l.job.club + '.', 5); }
+      if (rk >= 3 && isVN(l) && y % 2 === 0 && ch(r, 0.3 + (l.skill - 80) / 100)) { log('Đội tuyển Việt Nam vô địch ASEAN Cup ' + y + '! Cả nước xuống đường mừng chiến thắng, bạn được thưởng nóng.', 'big'); cashB(l, 2, 'Thưởng vô địch ASEAN Cup'); l.fame = (l.fame || 0) * 1.5 + 2e5; fx(l, { hap: 12 }); l.medals.push({ ev: 'ASEAN Cup ' + y, m: 'vàng', y: y, career: 'vdv', sport: S.n }); H.mem(l, 'Đêm vô địch ASEAN Cup ' + y + ', biển cờ đỏ sao vàng trên khắp phố.', 8); }
       if (rk >= 3 && y % 4 === 1 && ch(r, 0.05)) { log('Đội tuyển lọt vào vòng loại cuối World Cup — thành tích lịch sử!', 'big'); fx(l, { hap: 8 }); l.fame = (l.fame || 0) + 1e5; }
     }
-    if (S.n === 'quần vợt' && rk >= 2 && ch(r, 0.15 + (l.skill - 80) / 100)) { log('Vô địch một giải ATP Challenger, điểm xếp hạng thế giới tăng vọt.', 'big'); cashB(l, 0.6, 'Tiền thưởng giải quần vợt'); l.fame = (l.fame || 0) + 5e4; }
-    if (S.n === 'bơi lội' && rk >= 2 && ch(r, 0.12 + (l.skill - 80) / 120)) { log('Phá kỷ lục quốc gia nội dung ' + pick(r, ['200 m tự do', '400 m hỗn hợp', '1.500 m tự do', '100 m bướm']) + '.', 'good'); fx(l, { hap: 6 }); H.mem(l, 'Nhìn lên bảng điện tử thấy chữ "KỶ LỤC" cạnh tên mình.', 4); }
-    if (S.n === 'bi-a' && rk >= 2 && ch(r, 0.12 + (l.skill - 80) / 100)) { log('Vô địch một giải bi-a carom 3 băng World Cup, cả làng bi-a Việt Nam tự hào.', 'big'); cashB(l, 0.8, 'Tiền thưởng giải bi-a'); l.fame = (l.fame || 0) + 8e4; }
-    if (S.n === 'golf' && rk >= 1 && ch(r, 0.15)) { log('Về nhất một giải golf chuyên nghiệp, nhận tấm séc tiền thưởng.', 'good'); cashB(l, 0.5, 'Tiền thưởng giải golf'); }
-    if (S.n === 'võ thuật' && rk >= 2 && ch(r, 0.15)) { log('Giành đai vô địch ' + (l.job.art || 'võ thuật') + ' châu Á.', 'good'); fx(l, { hap: 6 }); }
+    if (S.n === 'quần vợt' && rk >= 2 && ch(r, 0.15 + (l.skill - 80) / 100)) { log('Vô địch một giải ATP Challenger, điểm xếp hạng thế giới tăng vọt.', 'big'); cashB(l, 0.6, 'Tiền thưởng giải quần vợt'); result(l, 'regional', 'win', 'challenger'); l.fame = (l.fame || 0) + 5e4; }
+    if (S.n === 'bơi lội' && rk >= 2 && ch(r, 0.12 + (l.skill - 80) / 120)) { log('Phá kỷ lục quốc gia nội dung ' + pick(r, ['200 m tự do', '400 m hỗn hợp', '1.500 m tự do', '100 m bướm']) + '.', 'good'); fx(l, { hap: 6 }); result(l, 'national', 'record', 'swim-record'); H.mem(l, 'Nhìn lên bảng điện tử thấy chữ "KỶ LỤC" cạnh tên mình.', 4); }
+    if (S.n === 'bi-a' && rk >= 2 && ch(r, 0.12 + (l.skill - 80) / 100)) { log('Vô địch một giải bi-a carom 3 băng World Cup, cả làng bi-a Việt Nam tự hào.', 'big'); cashB(l, 0.8, 'Tiền thưởng giải bi-a'); result(l, 'world', 'win', 'billiards-world-cup'); l.fame = (l.fame || 0) + 8e4; }
+    if (S.n === 'golf' && rk >= 1 && ch(r, 0.15)) { log('Về nhất một giải golf chuyên nghiệp, nhận tấm séc tiền thưởng.', 'good'); cashB(l, 0.5, 'Tiền thưởng giải golf'); result(l, 'national', 'win', 'golf-pro'); }
+    if (S.n === 'võ thuật' && rk >= 2 && ch(r, 0.15)) { log('Giành đai vô địch ' + (l.job.art || 'võ thuật') + ' châu Á.', 'good'); result(l, 'regional', 'win', 'martial-title'); fx(l, { hap: 6 }); }
     if (rk >= 3 && (l.fame || 0) >= 1e5 && ch(r, 0.2)) { var b = pick(r, ['một hãng đồ uống thể thao', 'một hãng giày', 'một ngân hàng', 'một hãng sữa']); log('Ký hợp đồng quảng cáo với ' + b + '.', 'good'); cashB(l, 1 + (l.fame || 0) / 1e6, 'Hợp đồng quảng cáo'); }
   }
 
@@ -78,7 +80,7 @@
     opts: [
       { k: 'all', l: 'Thi đấu hết mình', ai: { w: 1.4, amb: 1 }, run: function (l, r, log, d) {
         if (ch(r, 0.12)) { log('Dốc hết sức thì dính chấn thương, phải nghỉ thi đấu mấy tháng.', 'bad'); fx(l, { hea: -10 }); l.skill = Math.max(0, l.skill - 6); return; }
-        if (ch(r, 0.4 + (l.skill - 60) / 100)) { log('Chiến thắng! Bạn là nhân tố quyết định của trận đấu.', 'big'); l.fame = (l.fame || 0) + 2e4; fx(l, { hap: 8 }); cashB(l, 0.1, 'Thưởng trận thắng'); H.mem(l, 'Khoảnh khắc ' + (d.n === 'bóng đá' ? 'ghi bàn quyết định' : 'giành điểm quyết định') + ' giữa tiếng hò reo.', 4); }
+        if (ch(r, 0.4 + (l.skill - 60) / 100)) { log('Chiến thắng! Bạn là nhân tố quyết định của trận đấu.', 'big'); l.fame = (l.fame || 0) + 2e4; fx(l, { hap: 8 }); cashB(l, 0.1, 'Thưởng trận thắng'); result(l, 'national', 'win', 'big-match'); H.mem(l, 'Khoảnh khắc ' + (d.n === 'bóng đá' ? 'ghi bàn quyết định' : 'giành điểm quyết định') + ' giữa tiếng hò reo.', 4); }
         else { log('Thua sát nút. Ngồi lặng trong phòng thay đồ rất lâu.', 'bad'); fx(l, { hap: -5 }); }
       } },
       { k: 'safe', l: 'Thi đấu chừng mực, tránh chấn thương', ai: { w: 0.8, smart: 0.5 }, run: function (l, r, log) { log(ch(r, 0.35) ? 'Thắng nhẹ nhàng nhờ đồng đội tỏa sáng.' : 'Thua trận, bị huấn luyện viên phê bình thiếu quyết tâm.', 'neutral'); } }

@@ -39,9 +39,9 @@
     if (l.grand) w.push('Dạy các cháu sống tử tế, học hành tới nơi tới chốn.');
     if (E.H.debtTotal(l) > 0.5 || l.money < 0) w.push('Khoản nợ ' + me + ' còn để lại, ' + (kids.length ? 'các con' : 'mọi người') + ' thu xếp trả giúp, đừng để người ta chê cười.');
     if (l.record || (l.addict && (l.addict.gamble || l.addict.drugs))) w.push('Đừng bao giờ đi vào con đường ' + me + ' từng đi. Cái giá phải trả đắt lắm.');
-    if (l.flags.will === 'equal' && kids.length > 1) w.push('Tài sản chia đều cho các con. Đừng vì nó mà mất lòng nhau.');
-    else if (l.flags.will && l.flags.will !== 'charity' && l.flags.will !== 'none' && kids.length === 1) w.push('Ngôi nhà này để lại cho con, giữ lấy hương hỏa tổ tiên.');
-    if (l.flags.will === 'charity') w.push('Phần tài sản đã hứa, nhớ mang tặng ngôi trường trên bản cho ' + me + '.');
+    if (!l.flags.will70 && l.flags.will === 'equal' && kids.length > 1) w.push('Tài sản chia đều cho các con. Đừng vì nó mà mất lòng nhau.');
+    else if (!l.flags.will70 && l.flags.will && l.flags.will !== 'charity' && l.flags.will !== 'none' && kids.length === 1) w.push('Ngôi nhà này để lại cho con, giữ lấy hương hỏa tổ tiên.');
+    if (!l.flags.will70 && l.flags.will === 'charity') w.push('Phần tài sản đã hứa, nhớ mang tặng ngôi trường trên bản cho ' + me + '.');
     if (l.movedTo || (l.abroad && l.abroad.perm)) w.push('Đưa ' + me + ' về quê, cho ' + me + ' nằm cạnh ông bà.');
     if (/Phật/.test(l.religion || '')) w.push('Làm lễ theo nghi thức nhà Phật, đừng làm linh đình tốn kém.');
     else if (/Công giáo|Tin Lành|Kitô|Chính Thống/.test(l.religion || '')) w.push('Cho ' + me + ' được an nghỉ trong nghĩa trang của giáo xứ.');

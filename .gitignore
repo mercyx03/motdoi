@@ -4,6 +4,7 @@ dist/
 
 # Cloudflare Wrangler
 .wrangler/
+.local/
 .dev.vars
 .env
 .env.*
@@ -22,3 +23,7 @@ desktop.ini
 
 # Cấu hình cục bộ của Claude Code
 .claude/
+
+# Bản đóng gói & tư liệu quảng bá (không đưa lên repo)
+mot-doi-*.zip
+promo/

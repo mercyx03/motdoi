@@ -57,13 +57,13 @@
     return 'Anh trai vượt ngàn chông gai ' + y;
   }
   // bạn diễn: nghệ sĩ thật của chương trình cùng vũ trụ
-  function pool(k) {
+  function pool(k, l) {
     var S = E.SHOWS || [];
-    var ids = k === 'atsh' ? ['atsh1', 'atsh2', 'thsh'] : k === 'exsh' ? ['exsh'] : ['atvncg24', 'atvncg26'];
-    var all = []; S.forEach(function (s) { if (ids.indexOf(s.k) >= 0) s.m.forEach(function (m) { if (all.indexOf(m) < 0) all.push(m); }); });
-    return all.length ? all : ['nghệ sĩ khách mời'];
+    var ids = k === 'thsh' ? ['thsh'] : k === 'atsh' ? ['atsh1', 'atsh2'] : k === 'exsh' ? ['exsh'] : ['atvncg24', 'atvncg26'];
+    var all = []; S.forEach(function (s) { if (ids.indexOf(s.k) >= 0 && yr(l) >= s.from && yr(l) - s.b <= 65) s.m.forEach(function (m) { if (m !== l.name && all.indexOf(m) < 0) all.push(m); }); });
+    return all;
   }
-  function team(l, r, n) { var T = l.flags.tv; if (T.k === 'tbtn') { var a = []; for (var i = 0; i < n; i++) a.push('tân binh ' + H.stranger(l, r, 'M').split(' ').pop()); return a; } return shuffle(r, pool(T.k === 'thsh' ? 'atsh' : T.k)).slice(0, n).map(function (m) { return FMT[T.k].pre + ' ' + m; }); }
+  function team(l, r, n) { var T = l.flags.tv, a = T.k === 'tbtn' ? [] : pool(T.k, l), tries = 0; while (a.length < n && tries++ < 50) { var m = H.stranger(l, r, T.k === 'exsh' ? 'F' : 'M'); if (m !== l.name && a.indexOf(m) < 0) a.push(m); } return shuffle(r, a).slice(0, n).map(function (m) { return FMT[T.k].pre + ' ' + m; }); }
   function base(l) { return Math.min(1, (l.skill || 40) / 100) * 0.55 + Math.min(0.3, Math.log10((l.fame || 0) + 10) / 22) + (l.st.hea >= 60 ? 0.05 : 0); }
 
   // ---------- lời mời ----------
@@ -71,7 +71,7 @@
   function canEXSH(l) { return l.sex === 'F' && l.age >= 18 && l.age <= 33 && /^(ca_si|rapper|nhac_si)$/.test(jid(l)) && ((l.fame || 0) > 2e4 || (l.job && l.job.rank >= 1)); }
   function canATV(l) { return l.sex === 'M' && l.age >= 30 && l.age <= 55 && /^(ca_si|rapper|nhac_si|dien_vien|mc_tv|dv_hai|dao_dien|vdv|hlv_tt|youtuber|streamer)$/.test(jid(l)) && (l.fame || 0) > 6e4; }
   function canTBTN(l) { return l.sex === 'M' && l.age >= 16 && l.age <= 24 && (l.fame || 0) < 3e5 && (/^(ca_si|rapper|vu_cong)$/.test(jid(l)) || (l.talent === 'âm nhạc' && (l.skill || 0) >= 50)); }
-  function shows(l) { var o = []; if (canATSH(l)) { o.push('atsh'); if (yr(l) >= 2026) o.push('thsh'); } if (canEXSH(l)) o.push('exsh'); if (canATV(l)) o.push('atvncg'); if (canTBTN(l) && yr(l) >= 2025) o.push('tbtn'); var H0 = (l.flags.tvHist || []).filter(function (h) { return h.res === 'win' || h.res === 'debut'; }).map(function (h) { return h.k; }); return o.filter(function (k) { return H0.indexOf(k) < 0; }); }
+  function shows(l) { var o = []; if (canATSH(l)) { o.push('atsh'); if (yr(l) >= 2026) o.push('thsh'); } if (canEXSH(l)) o.push('exsh'); if (canATV(l)) o.push('atvncg'); if (canTBTN(l) && yr(l) >= 2025) o.push('tbtn'); var H0 = (l.flags.tvHist || []).concat(l.flags.tv ? [l.flags.tv] : []).filter(function (h) { return h.res === 'win' || h.res === 'debut'; }).map(function (h) { return h.k; }); return o.filter(function (k) { return H0.indexOf(k) < 0; }); }
   function canInvite(l) { var T = l.flags.tv; return isVN(l) && shows(l).length > 0 && (!T || ((T.done || T.no) && yr(l) - T.y >= 2 && (l.flags.tvN || 0) < 3)); }
   E.tvShowsFor = shows;
   SC('tv_moi', {
@@ -163,7 +163,6 @@
       fx(l, { hap: 10 }); H.cash(l, V(l, 200), 'Cát-xê chương trình, show diễn sau chung kết'); awards(l, r, log, avg); return;
     }
     var win = avg >= 0.9 && ch(r, 0.22 + (avg - 0.9) * 2.5), best = win || (avg >= 0.84 && ch(r, 0.6)) || ch(r, 0.08);
-    if (win && T.k === 'thsh') H.cash(l, V(l, 1000), 'Giải thưởng 1 tỷ đồng của quán quân');
     if (win) { T.res = 'win'; log('QUÁN QUÂN ' + T.s.toUpperCase() + '! Pháo hoa rực trời, cả nước gọi tên ' + FMT[T.k].pre + ' ' + given(l) + '.', 'big'); l.fame = (l.fame || 0) * 3 + 1e6; promote(l); promote(l); H.cash(l, V(l, 1000), 'Giải quán quân và hợp đồng sau chương trình'); H.mem(l, 'Đêm đăng quang quán quân ' + T.s + ', tay run run cầm cúp.', 10); fx(l, { hap: 20 }); }
     else if (best) { T.res = 'best5'; log('Chung kết ' + T.s + ': bạn lọt vào nhóm "Best 5" — sẽ ra mắt nhóm nhạc và đi tour cùng các ' + FMT[T.k].pre + ' khác.', 'big'); l.fame = (l.fame || 0) * 2 + 3e5; promote(l); H.cash(l, V(l, 400), 'Hợp đồng nhóm Best 5'); H.mem(l, 'Ngày được gọi tên vào Best 5 ' + T.s + '.', 8); fx(l, { hap: 14 }); }
     else { T.res = 'final'; log('Chung kết ' + T.s + ': không vào Best 5, nhưng bạn đã đi đến chặng cuối và có cả một cộng đồng fan.', 'good'); l.fame = (l.fame || 0) * 1.6 + 1e5; promote(l); fx(l, { hap: 8 }); }

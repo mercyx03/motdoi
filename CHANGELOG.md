@@ -1,8 +1,406 @@
+## v5.6.0 — Esports, chiêu mộ và gaming house
+
+- Thêm Nghịch Thủy Hàn và TFT vào Game khác; ngoại trang 1 triệu, linh thú TFT 2,5 / 2,5 / 7 triệu theo cấu hình yêu cầu. Chỉ mua vật phẩm của game đã chơi; Nghịch Thủy Hàn không có đường thi đấu chuyên nghiệp.
+- Thêm đi xem esports, chọn game, giải/khu vực, đội và tuyển thủ; xem trực tuyến hoặc mua vé khi đang ở nước tổ chức. Dùng danh mục tham chiếu mùa 2026 gồm 60 đội LMHT (kể cả 2 khách mời Versus), 62 đội Valorant (kể cả 14 đội Challengers/Nationals vào Stage 2), 34 đội Liên Quân (có Super Nova mùa Xuân) và 40 tuyển thủ TFT.
+- Thử việc, học viện/đội trẻ, tuyển trạch và lời mời ký hợp đồng; Việt Nam LMHT có hướng đội trẻ/VCS B đến chiêu mộ LCP. Giữ tiến trình chuyên nghiệp của save cũ.
+- Chuỗi mùa giải có lựa chọn chiến thuật, đối thủ, thứ hạng và điều kiện vé quốc tế; không tự dự tất cả giải hay nhận thêm tiền từ lượt random vô địch cũ. TFT thi đấu cá nhân, có lựa chọn tự do hoặc nhận hợp đồng đội.
+- Phản xạ, kinh nghiệm, phong độ được tách riêng; luyện tập theo từng game có giới hạn tăng trong năm. Giải nghệ thi đấu ở tuổi 26–29 theo cân bằng game, chuyển sang công việc hậu thi đấu.
+- Hợp đồng đội có gaming house bao ăn ở của tuyển thủ; không miễn tiền nuôi con, nhà ở gia đình, xe cộ, quà tặng hay chi tiêu riêng. Độc lập TFT không tự có lương hoặc bảo hiểm theo hợp đồng đội.
+- Bảng thưởng sử dụng các mức đã công bố theo giải, ghi tiền đội và phần cá nhân riêng, chống nhận hai lần. Lương và tỷ lệ chia theo hợp đồng mô phỏng vì thông tin riêng không công khai đầy đủ; chưa xác minh được thưởng thì không tự tạo tiền. Không hiện nguồn trong các menu esports.
+
+## v5.5.3 — Ổn định việc làm công vụ và lực lượng vũ trang
+
+- Loại công chức, viên chức, nhóm công vụ, công an/quân đội và các nghề thực thi công vụ khỏi thất nghiệp kinh tế chung và mất việc ngẫu nhiên hằng năm.
+- Áp dụng cùng điều kiện cho các nghề công vụ của bố mẹ; doanh nghiệp nhà nước vẫn được phân biệt với biên chế công vụ.
+- Sự kiện sắp xếp bộ máy hiếm hơn, tối đa một lần; nhận phân công tại đơn vị mới giữ việc và bậc nghề.
+- Giữ các trường hợp tự nghỉ, nghỉ hưu và kỷ luật từ sai phạm cụ thể. Không cho công vụ bị đuổi việc vì xin tăng lương hoặc bị tung tin bôi nhọ trong sự kiện chung.
+
+## v5.5.2 — Đồng bộ đầu trang đánh giá
+
+- Trang đánh giá dùng logo SVG, kiểu chữ thương hiệu và thanh điều hướng như trang chủ; thêm liên kết Trang chủ và Chơi ngay.
+- Giữ font nội dung hỗ trợ tiếng Việt và bố cục phù hợp điện thoại.
+
+## v5.5.1 — Di chúc chủ động và review bằng chữ
+
+- Từ 70 tuổi có thể viết, sửa, hủy di chúc nhiều lần trong năm ở mục Tiền bạc; không tiêu hao lượt hoặc thu phí.
+- Lưu lời nhắn riêng và chọn để lại di sản cho các con, bạn đời, chia hai phần hoặc từ thiện; phần kết ghi nhận bản mới nhất và chỉ tính di sản ròng còn lại.
+- Trang đánh giá dùng font hệ thống hỗ trợ tiếng Việt; thêm review tối đa 1.000 ký tự, hiển thị công khai cùng số sao.
+- Tự nâng cấp bảng D1 cũ để giữ đánh giá đã có và lưu thêm review. Vẫn cần gắn binding REVIEWS_DB nếu chưa thiết lập.
+
+## v5.5.0 — Trang đánh giá game công khai
+
+- Xóa biểu mẫu góp ý, API chuyển thư và email nhận khỏi bản phát hành.
+- Thêm trang reviews.html: chọn 1–5 sao, điểm trung bình, phân bố số sao và danh sách đánh giá mới nhất.
+- Lưu chung bằng Cloudflare D1 qua binding REVIEWS_DB; gửi lại bằng cùng trình duyệt cập nhật đánh giá cũ.
+- Gửi thành công sẽ tải lại danh sách công khai. Khi chưa có D1, hiện lỗi cấu hình và không báo thành công giả.
+- Mở trang đánh giá từ màn chơi sẽ tạm dừng cuộc đời và giữ tiến trình.
+
+## v5.4.2 — Hiện nút góp ý trên điện thoại
+
+- Đưa nút Góp ý ra thanh điều khiển chính khi đang chơi; không còn bị gom vào menu mở rộng trên điện thoại.
+- Bốc bút trong lễ thôi nôi: nhân vật nữ được gọi là cô giáo, nam là thầy giáo; sửa lời chúc bốc tiền không còn hiện “Thằng/con”.
+
+## v5.4.1 — Khôi phục góp ý, sửa hẹn hò và rút gọn lời kể
+
+- Khôi phục biểu mẫu góp ý gửi qua API cùng tên miền; địa chỉ nhận chỉ nằm trong Worker, không hiển thị cho người chơi.
+- Sửa vòng lặp tính thử giá khi mở hẹn hò ở mức chi tiêu tiết kiệm/thoải mái và chọn đổi địa điểm.
+- Rút gọn lời dẫn thế giới ngầm, bỏ câu nhắc hư cấu và cảnh báo vốn lặp trong từng sự kiện; số tiền cần góp vẫn hiện ngay trên lựa chọn có thu tiền.
+- Giữ các tính năng trường chuyên, đội tuyển và nguyện vọng của V5.4.0.
+
+## v5.4.0 — Trường chuyên, đội tuyển và nguyện vọng đại học
+
+- Thêm lựa chọn thi lớp chuyên khi vào lớp 10; chưa đỗ vẫn xét phương án học phổ thông thường.
+- Chọn một trong 9 môn học sinh giỏi, ôn luyện và thi từng vòng; quốc gia dành cho THPT, Olympic quốc tế chỉ mở cho Toán/Lý/Hóa/Sinh/Tin sau vòng tuyển chọn.
+- Thêm 27 đại học ở ba miền, chọn trường/ngành, lập tối đa 5 nguyện vọng và xét theo thứ tự ưu tiên; điểm chuẩn là mô phỏng, không phải điểm thật của trường.
+- Thành tích đúng môn hỗ trợ xét tuyển nhóm ngành phù hợp. Chỉ nhập học sau khi trúng tuyển, vẫn cần hoàn thành khóa học để có bằng.
+- Hiển thị trường đại học hoặc lớp chuyên trong thẻ thông tin nhân vật.
+
+## v5.3.3 — Gỡ mục góp ý
+
+- Xóa nút và biểu mẫu góp ý ở trang chủ và màn hình cuộc đời.
+- Gỡ mã gửi thư, địa chỉ nhận và route Functions dành cho góp ý; giữ API bảng giá.
+
+## v5.3.2 — Chẩn đoán lỗi gửi góp ý
+
+- Phân biệt HTTP 502/nội dung không hợp lệ với lỗi mạng, giữ bản nháp khi gửi thất bại.
+- Bổ sung mã lỗi an toàn theo bước xử lý; không đưa địa chỉ nhận hoặc phản hồi thô của dịch vụ ra trình duyệt.
+- Bỏ phụ thuộc AbortSignal.timeout ở trình duyệt. Chưa xác nhận chuyển thư thành công trên web thật.
+
+## v5.3.1 — Gửi góp ý trực tiếp và ẩn email
+
+- Trình duyệt gửi POST về /api/feedback cùng tên miền; không mở email, không đưa địa chỉ nhận vào HTML/JS hay phản hồi API.
+- Cloudflare Worker chuyển thư qua FormSubmit. Chủ website cần xác nhận email kích hoạt lần đầu; không cần người chơi đăng nhập email hay mở ứng dụng mail.
+- Giữ bản nháp khi mạng/dịch vụ lỗi, chỉ xóa khi API xác nhận thành công. Chặn bấm gửi lặp khi chờ phản hồi, giới hạn tần suất cơ bản phía máy chủ.
+- Giới hạn nội dung, kiểm tra nguồn trang, chỉ chuyển các trường được cho phép; không chuyển địa chỉ nhận tùy ý từ dữ liệu người chơi.
+- Chặn truy cập các tệp cấu hình và mã Worker qua máy chủ thử nghiệm; cập nhật định tuyến Cloudflare Pages/Workers cho API mới.
+
+## v5.3.0 — Thẻ gia đình và góp ý
+
+- Thẻ hồ sơ riêng cho bạn đời và từng người con trong bảng Gia đình; có chân dung anime, tuổi, học vấn, quan hệ và năng khiếu/kỹ năng.
+- Đặt tên cho bé 0–2 tuổi; đặt tên gọi ở nhà khi con lớn hơn, giữ nguyên danh tính dùng trong các sự kiện. Từ 18 tuổi không áp đặt đổi tên.
+- Chọn trường công/tư/quốc tế theo tuổi và quyền chăm sóc; học phí bổ sung tự đóng theo năm, không thu trùng khi bấm lại hoặc chạy lại vòng năm. Thiếu ngân sách chuyển sang lựa chọn miễn phí.
+- Chọn hoạt động và cách học cho con 4–17 tuổi; phân biệt sở thích, thiên hướng bẩm sinh và kỹ năng tích lũy. Tăng kỹ năng mỗi năm, không cộng điểm bằng thao tác lặp.
+- Mục Góp ý trên trang chủ và màn chơi: mở thư nháp tới hộp thư của tác giả; có lưu nháp, sao chép dự phòng và tùy chọn đính kèm thông tin ngắn về lượt chơi. Không tự gửi thư hay tải toàn bộ bản lưu lên mạng.
+
+## v5.2.0 — Thu nhập và mức sống toàn thế giới
+
+- Hồ sơ kinh tế cho 194 quốc gia ngoài Việt Nam: 129 mốc lương ILOSTAT, 65 ước tính/tham chiếu được đánh dấu. Ghi năm quan sát riêng cho từng nước; không coi dữ liệu khác năm là giá lương hiện tại.
+- Lương theo thị trường lao động nơi đang sống thay vì nhân toàn bộ theo GDP. Phân biệt mô phỏng việc chính thức, việc tự do/nông nghiệp và đô thị/nông thôn. Nghề, cấp bậc, học vấn, kỹ năng và thành tích vẫn quyết định thu nhập cá nhân.
+- Chi phí sống dùng GDP PPP và giá tiêu dùng World Bank, có giới hạn tương quan với tiền lương để tránh GDP cao do thuế/tài nguyên làm sai ngân sách hộ gia đình.
+- Bản lưu cũ giữ tiền và tài sản; cập nhật nền chi phí khi tải lại, bỏ mốc lương sàn cũ khi tính lương năm tiếp theo ở thị trường mới.
+- Thêm hai ô giới thiệu: Một đời khắp thế giới; Gia đình qua từng thế hệ.
+- Công bố nguồn, năm dữ liệu và phương pháp ước tính trong world-economy-sources.md, world-economy-countries.csv và world-economy-data.json.
+
+## v5.1.1 — Rà soát tài sản và cân bằng kinh doanh
+
+- Đồng bộ đổi tiền khi định cư/về nước: lương hưu, mức đóng bảo hiểm, lương bạn đời/bố mẹ, mức lương lưu, bất động sản và vốn/doanh thu kinh doanh. Giữ nguyên đơn vị gốc của danh mục thị trường VND/USD.
+- Đổi giữa hai quốc gia dùng USD PPP theo mức giá tương ứng, tránh tự tăng giá trị tài sản chỉ vì chuyển nơi ở.
+- Cơ sở kinh doanh có cạnh tranh kéo dài, chi phí quản lý chuỗi, thuê quản lý khi bận/đã cao tuổi và tái đầu tư trang thiết bị. Nhà cho thuê trừ chi phí bảo trì/quản lý.
+- Lợi nhuận kinh doanh chỉ hạch toán một lần mỗi tuổi. Không đặt trần tài sản 500 tỷ và không cắt tiền đã tích lũy của bản lưu cũ.
+- Thêm kiểm thử đổi tiền khứ hồi, lương hưu, bảo hiểm, doanh nghiệp, chi phí cho thuê và hạch toán trùng.
+
+## v5.1.0 — Sinh hoạt và sự kiện theo hoàn cảnh
+
+- Chặn thư trong ngăn bàn sau khi nghỉ học; dọn cảnh lớp học đang chờ. Bóng đá dùng nơi đang sống, kể cả ở nước ngoài.
+- Tiền dưới một triệu hiển thị bằng k, khoản tỷ hiển thị bằng tỷ; nhật ký ghi cả khoản chi nhỏ.
+- Học bơi có khóa trả phí và tự luyện miễn phí, tiến độ kỹ năng, cứu hộ / đuối nước; kiểm tra người trả tiền và hoàn cảnh trước khi áp dụng.
+- Khám định kỳ tự động không phát thêm lời mời khám tổng quát; thao tác chủ động giữ đúng lựa chọn, chặn bộ hẹn giờ tự chọn cũ.
+- Quê hương 63/34 có địa danh và món ăn của các tỉnh thành viên, đi một mình / bố mẹ / bạn thân / người yêu, ghi nhận tiền và kỷ niệm. Ghi nhớ chỉ tăng kiến thức một lần.
+- Show khách mời còn 4 lượt chọn, cố định 12 lượt chọn; thêm giải mã, ghi nhớ, đoán hành động và chiến thuật vận động. Bản lưu lịch quay cũ giữ nguyên tiến trình.
+- Ngày / giờ sinh, cung hoàng đạo tạo thiên hướng tính cách và cơ hội nhập vai nhỏ. Đây là cơ chế văn hóa tâm linh trong game, không phải mô hình dự báo đời thực. Bản lưu người trưởng thành không đổi tính cách hồi tố.
+- Gia đình hai bên có phản đối cưới, quan tâm và đặt ranh giới; dựa trên người thân còn sống, tuổi, người yêu hiện tại và bối cảnh nghiêm khắc.
+- Rút gọn phần dẫn quê hương / show / thế giới ngầm, giữ chi phí ở lựa chọn; làm mới lời kể trong bản lưu cũ.
+- Chặn lời mời lên thành phố ở sai hoàn cảnh; khôi phục mốc thu nhập nước ngoài bị thiếu để tránh tiền / dư nợ thành số không hợp lệ.
+
+## v5.0.0
+
+- Sổ xe hằng năm tách xăng / sạc, bảo dưỡng, bảo hiểm, gửi xe, đường bộ và thuê xe. Xe sang bảo dưỡng cao hơn, xe điện sạc rẻ hơn, xe đã bán không còn chịu phí cũ. Gộp phí xe sang vào đúng một khoản, giữ phí nhà riêng, tránh thu trùng. Xe để lại khi tại ngũ / trong tù không đổ xăng nhưng vẫn bảo trì.
+- Bình thường giữ giá gói thường dù giàu; thoải mái nâng mức dịch vụ ×1,5–5 theo tài chính, tiết kiệm ×0,82. Áp dụng sinh hoạt và các dịch vụ giải trí / hẹn hò; không nhân giá tài sản, skin, học phí, thuế, phạt. Có thể chọn nếp chi tiêu từ nhỏ, gia đình thanh toán hoạt động của trẻ theo ngân sách thực.
+- 95 điểm đến với địa danh, món ăn, hoạt động và 6 kiểu chuyện dọc đường. Chọn châu lục → điểm đến → bạn đồng hành → ai trả → khám phá. Gói châu Á không quá 50 triệu VND/người; châu Âu / châu Mỹ cao hơn, giá đôi ghi rõ hai suất. Thu một lần, các lựa chọn trong gói không thu thêm; đi chơi không biến thành định cư.
+- Xem phim theo thể loại, hoạt hình tách anime / Trung Quốc / Disney-Pixar. 58 phim thật có năm phát hành và ngưỡng tuổi mô phỏng; phim cũ là suất tuyển chọn. Thêm phim hư cấu cho 10 thể loại người đóng. Cả tuổi người yêu cũng được kiểm tra.
+- Tặng quà: trang sức, mỹ phẩm, handmade, gấu bông, hoa, sách / đồ sở thích; mỗi loại 3 mức. Gu ổn định theo từng người, có thể hỏi; món / phim hợp gu và cách quan tâm tăng tình cảm, không hợp có thể giảm. Không cộng vô hạn khi lặp lại, giá cao không đảm bảo được yêu hơn.
+- Thanh toán rõ bạn / chia đôi / người ấy / gia đình khi phù hợp. Ngân sách người ấy dùng thu nhập thực, không trùng tiền góp sinh hoạt, dùng chung với đi quê. Quyết định giữ mã bước / năm / người yêu / nơi ở / tiền tệ để chặn trừ tiền từ lựa chọn cũ.
+- Tên địa danh / phim có nguồn; giá gói và giá quà là dự toán game, công thức và nguồn trong leisure-v5-sources.md.
+- Sửa lỗi người đang đi làm thi lại đỗ trường năng khiếu vẫn giữ việc khi nhập học toàn thời gian. Giữ tiền riêng của trẻ tách khỏi chi của gia đình; dịch vụ giải trí không đủ ngân sách thì chưa diễn ra.
+
+## v4.10.0
+
+- Thêm T-ara vào Kpop và thần tượng, dùng cùng bộ lọc thế hệ / concert lưu trữ hiện có.
+- Năng khiếu đạo diễn xuất hiện ngẫu nhiên. Ngã rẽ đại học gợi ý ba ngành ở hai trường Sân khấu – Điện ảnh Hà Nội / TP.HCM; cần tốt nghiệp THPT và đủ 18 tuổi, đỗ rồi học 4 năm, ra trường bắt đầu từ trợ lý.
+- Sinh viên đạo diễn thực tập tại đoàn phim / xưởng phim và bảo vệ đồ án phim; không dùng tình huống thực tập kiến trúc của nhóm ngành nghệ thuật chung.
+- Công việc → Đạo diễn: dự án phim / tuyển diễn viên. Trợ lý làm phim ngắn đầu tay; bậc đạo diễn mở truyền hình, điện ảnh, web drama. Chọn riêng người đóng / hoạt hình, kịch bản gốc / chuyển thể có phép / phạm vi công cộng và 10 thể loại.
+- Một dự án có 16 chặng trong năm: chọn dự án, vốn, hai vai diễn, kịch bản, mini game storyboard, tiền kỳ, sản xuất, mini game nối cảnh, biến cố, dựng, âm thanh và phát hành. Dự án hoạt hình dùng diễn viên lồng tiếng và lịch diễn hoạt / render.
+- Mỗi dự án có 6 diễn viên hư cấu với tên, tuổi theo năm hiện tại, quê, diễn xuất, giọng, kỷ luật, sở trường, điểm mạnh / yếu. Không chọn một người cho cả hai vai. Năng lực và lựa chọn ảnh hưởng chất lượng / khán giả / uy tín.
+- Phân biệt vốn hãng và vốn tự góp; ghi rõ ai trả, không trừ hai lần tiền diễn viên, không cộng ngân sách hãng vào ví. Hãng trả cát-xê sau hoàn tất; tự đầu tư có thể lỗ, kết quả ghi vốn / thu hồi / lãi lỗ.
+- Không nhận show chồng lịch phim; dự án kiểm tra tuổi, nghề, cấp bậc, nơi sống, tiền tệ, năm, tù / nghĩa vụ / sức khỏe. Bản lưu giữ hồ sơ và mini game, không phát tiền hai lần khi bấm lại. Tối đa một dự án / năm, luôn được dừng.
+- Tên trường / ngành đối chiếu nguồn chính thức trong film-sources.md. Thông số kinh tế và kết quả tác phẩm là mô phỏng.
+
+## v4.9.0
+
+- Mở rộng nghề phi pháp ra các nước ngoài Việt Nam: 64 tình huống, gồm 28 chuyện riêng cho đủ 7 nghề, 28 chuyện theo 14 hồ sơ tổ chức / khu vực và 8 chuyện chung.
+- Nhật có lựa chọn nhóm Yakuza hư cấu; Ý / Nga / Mỹ có nhóm kiểu Mafia hư cấu; Mexico / Colombia có nhóm kiểu cartel hư cấu. Các khu vực khác có băng nhóm địa phương / mạng có tổ chức hoặc xuyên biên giới hư cấu; không gán một nhãn cho toàn bộ cư dân hay quốc gia.
+- Đường tối → Tổ chức / nghề phi pháp nơi đang sống: xem tổ chức, chọn nghề, xử lý tình huống, rút lui. Gia nhập tổ chức và nhận nghề là hai quyết định riêng.
+- Dùng quốc gia đang sống, không dùng nhầm quốc gia sinh ra. Chuyển nước không tự gia nhập tổ chức mới; sự đe dọa cũ không tự biến mất. Cảnh mang bối cảnh Việt Nam được thay bằng bộ mới ở nước ngoài.
+- Gọi đúng hoạt động trái phép (cưỡng đoạt / cưỡng ép / cá cược không phép); không coi dịch vụ cho vay hoặc casino có phép là tội phạm, không coi người bị ép làm trong trại lừa đảo là tự nguyện gia nhập.
+- Tối đa 2 tình huống mới/năm; cùng chuyện cách 5 năm. Lời mời và lựa chọn có dấu thời điểm / quốc gia / nghề / cấp bậc; mất điều kiện thì không thu tiền hay áp hậu quả cũ. Vốn tự góp ghi rõ, chỉ làm khi đủ tiền, rút lui luôn có.
+- Giữ cơ chế thăng bậc theo thâm niên, điều tra, tù, đánh úp và truy sát hiện có; không thêm lượt đánh úp độc lập làm chồng rủi ro. Cấp cao không được miễn truy cứu.
+
+## v4.8.1
+
+- Trước khi bán hiện giá vốn bình quân, giá bán được hiện tại, chênh lệch trên mỗi chỉ / cổ phiếu, phần trăm tăng giảm và tổng lãi / lỗ dự kiến theo số lượng. Nhật ký bán ghi lại các số liệu này; vàng giải thích chênh mua–bán, giá vốn 0 không chia để tạo % vô hạn.
+
+- Giá vàng và cổ phiếu mới lấy giá thị trường thật làm mốc khởi đầu, sau đó biến động ngẫu nhiên mỗi năm trong game theo yêu cầu người chơi.
+- Ba loại vàng cùng một xu hướng; cổ phiếu cùng thị trường có xu hướng chung và biến động riêng từng mã, ETF dao động nhẹ hơn. Có cả tăng và giảm, không bảo đảm lợi nhuận.
+- Giữ nguyên số lượng và giá vốn; cập nhật giá mua / bán, tài sản ròng và lãi / lỗ. Ghi rõ giá mô phỏng theo năm, tách khỏi thời điểm nguồn giá thật.
+- Lưu RNG riêng cho thị trường: tải lại giữ nguyên giá, mỗi tuổi chỉ chạy một lần, cập nhật giá ngoài đời không đặt lại giá mô phỏng hoặc tạo cơ hội bán / mua chênh lệch do nút làm mới.
+
+## v4.8.0
+
+- Mua / bán vàng theo chỉ hoặc lượng (1 lượng = 10 chỉ), cổ phiếu / ETF theo số nguyên; nhập số lượng, xem tổng tiền, điền tối đa hoặc bán hết.
+- Bảng giá 3 loại vàng và 13 mã cổ phiếu / ETF Việt Nam, Mỹ. Đúng chiều vàng: người chơi mua giá bán ra, bán giá mua vào. Cổ phiếu dùng giá phiên gần nhất nguồn công bố.
+- Cloudflare Pages `_worker.js` lấy nguồn Vang.today, VNDIRECT, Yahoo Finance và ExchangeRate-API; cache 5 phút, có thời điểm từng mã, nguồn lỗi giữ bảng dự phòng và ghi rõ thời điểm.
+- Danh mục mới lưu số lượng / giá vốn, cộng vào tài sản ròng và hồ sơ; không chạy lợi suất ngẫu nhiên hoặc tự cộng cổ tức giả định của cơ chế cũ. Hỗ trợ đổi đơn vị tiền khi chuyển nước.
+- Khoản cũ giữ nguyên, có lựa chọn xem quy đổi sang số lượng theo giá đang lưu mà giữ nguyên tổng giá trị; phần lẻ không đủ đơn vị vẫn ở khoản cũ.
+- Kiểm tra lại giá, tiền, số lượng, độ tuổi, tự lập, tù / nghĩa vụ / mắc kẹt; chặn xác nhận hai lần hoặc hóa đơn cũ sau khi đổi giá, đổi tiền hay qua năm.
+- Giá ngoài đời tại thời điểm nguồn cập nhật, không phải giá dự báo cho năm tương lai trong game. Giao dịch chưa cộng phí môi giới / thuế thực tế.
+
+## v4.7.0
+
+- Mở rộng đời sống thế giới: 136 tình huống, gồm 106 tình huống riêng tại 53 quốc gia và 30 tình huống chung được lọc cho 194 nước ngoài Việt Nam.
+- Thêm tuổi thơ 5–7 tuổi, trường học, học tiếp khi trưởng thành, công việc, nhà ở, cộng đồng, gia đình, tình yêu, nuôi con và tuổi già; các hoạt động văn hóa là tự nguyện.
+- Gia đình & bạn bè → Chuyện đời sống / văn hóa nơi đang sống: chọn chủ đề phù hợp, đồng thời có sự kiện xuất hiện tự nhiên trong năm.
+- Mỗi năm tối đa hai chuyện, cùng tình huống cách ít nhất tám năm; ưu tiên chuyện riêng của quốc gia khi có điều kiện phù hợp.
+- Tính theo quốc gia hiện cư trú, gồm nhân vật Việt Nam đang ở nước ngoài; kiểm tra lại tuổi, nơi ở, tiền, công việc và người thân trước khi giải quyết. Trẻ em không có lựa chọn tự chi tiền.
+- Phương án miễn phí, nghỉ hoặc từ chối luôn có; học thêm dùng tiền riêng với ngân sách mô phỏng ghi trước. Không tự cấp bằng, nhận việc, chuyển nhà hay thêm người thân.
+- Chặn xác nhận trùng / sai năm / đổi nơi ở / đổi tiền tệ, bị giam, nghĩa vụ hoặc mắc kẹt. Bộ đếm và lịch sử giữ trong bản lưu.
+
+## v4.6.6
+
+- Công chức xã / phường yêu cầu đại học khi nhận việc mới. Giữ công việc trong bản lưu đang chơi.
+- Bảng nghề hiện đủ yêu cầu học vấn ở các bậc, thay vì chỉ ghi từ đại học.
+
+## v4.6.5
+
+- Cập nhật Đồng Nai, Quảng Ninh và Bắc Ninh thành thành phố trực thuộc trung ương trong danh sách 34 đơn vị và mục tạo nhân vật.
+- Đồng bộ loại đơn vị khi mở bản lưu cũ; giữ nguyên ID, ranh giới sáp nhập và bộ 63 địa phương lịch sử.
+- Gợi ý tạo nhân vật ghi rõ loại đơn vị; số dân ghi rõ là số liệu 2023 phục vụ mô phỏng.
+
+## v4.6.4
+
+- Thêm bộ giới thiệu 63 tỉnh/thành trước sáp nhập: 126 địa danh và 126 món ăn / sản vật. Hiện nét đặc trưng quê sinh ra ở màn xuất phát và bảng thông tin địa phương.
+- Người yêu / bạn đời có quê quán được lưu cố định; hỗ trợ bản lưu cũ, gặp gỡ thông thường, show hẹn hò và quan hệ chu cấp.
+- Thêm hành động mời nhau về quê chơi, người yêu ngẫu nhiên ngỏ lời dẫn về quê; chọn địa danh, ẩm thực hoặc lịch kết hợp rồi thống nhất người trả tiền.
+- Ngân sách mô phỏng tính đi lại khứ hồi, nơi đang sống và đơn vị tiền; mỗi hướng tối đa một chuyến/năm, cả đôi tối đa hai chuyến/năm.
+- Kiểm tra lại danh tính người yêu, độ tuổi, trạng thái, điểm đến, năm và nơi sống trước khi thu phí; người yêu chỉ trả trong phần ngân sách riêng từ thu nhập. Hỗ trợ dị ứng, ăn chay / kiêng kỵ; không tự tạo người thân hay đổi nơi ở sau chuyến đi.
+
+## v4.6.3
+
+- Running Man Việt Nam / 2 Ngày 1 Đêm: chọn chương trình rồi chọn khách mời 2 tập hoặc thành viên cố định 6 tập mô phỏng trong năm.
+- Khách mời có 6 chặng lựa chọn; cố định có 30 chặng, nhiều nhiệm vụ và địa điểm hơn. Báo giá riêng theo vai trò trước khi nhận lịch.
+- Quyết toán cát-xê theo số tập thực sự hoàn thành, kể cả khi rút lui hoặc lịch quay bị gián đoạn; chặn xác nhận lại từ lời mời cũ.
+- Mỗi tập hoàn thành đều thu hút thêm người theo dõi dù thắng hay thua; nhật ký phản hồi khán giả thay đổi theo hành trình, căn cước có thống kê số tập và người theo dõi thu hút qua game show.
+- Bản lưu lịch cũ 3 chuyến tiếp tục đúng lịch và hợp đồng cũ; hỗ trợ lưu giữa màn chọn vai trò hoặc giữa tập.
+
+## v4.6.2
+
+- Tách hàm nuôi dạy con khỏi hàm cập nhật thu nhập bố mẹ; bổ sung kiểm tra trợ cấp bố mẹ.
+- Concert lưu trữ có nội dung dự phòng khi thiếu tên chương trình; nhật ký quan hệ chu cấp nêu rõ từng bối cảnh, tránh câu lặp trong cùng năm.
+- Rà soát logic: bạn đời không thu nhập không tự tạo tiền đóng góp; thăng chức của bạn đời cần đủ thâm niên.
+- Ôn thi lại chỉ công bố kết quả khi đến năm thi, không hiện trước điểm tương lai.
+- Hồ sơ khách mời hẹn hò đúng tuổi và giữ nguyên nghề / thu nhập sau ghép đôi; vòng show hết hạn khi qua năm.
+- Thua thử thách trên đảo không còn kể như được hẹn hò tại khu nghỉ dưỡng.
+- Sửa cả hồ sơ người yêu và cảnh hẹn hò đang chờ khi mở bản lưu cũ.
+
+## v4.6.1
+
+- Thêm hướng dẫn mở quan hệ chu cấp và Người ấy là ai; giới hạn đăng ký show hẹn hò một lần mỗi năm, chặn vòng show khi hoàn cảnh thay đổi.
+- Sửa hồ sơ người yêu dưới 18 tuổi thành học sinh; kiểm tra lại sau khi sự kiện thay đổi tuổi và khi mở bản lưu.
+- Điểm thi phù hợp kiến thức; xét đại học trong game theo ngưỡng điểm 23 / 18, bỏ lượt may rủi thứ hai.
+- Thêm 28 tình huống cho 14 nhóm nghề; tối đa hai tình huống mới mỗi năm, cùng chuyện cách ít nhất bốn năm. Kiểm tra lại công việc, chức vụ và trạng thái trước khi giải quyết.
+- Sự kiện nghề cũ kiểm tra lại chức vụ và điều kiện ban đầu.
+
 # Nhật ký phiên bản — Một Đời
+
+## v4.6.0 — Nuôi dạy và đồng hành cùng con
+
+- Thêm mục chủ động trong Gia đình & bạn bè: chọn đúng từng con để chăm sóc / đồng hành; trẻ nhỏ, học sinh, tuổi mới lớn và con trưởng thành có nội dung riêng. Bao gồm cả con nuôi.
+- 19 tình huống: nhịp ngủ, khám phá, thời gian bên bé, làm quen nhóm trẻ, cảm xúc, chia sẻ, học đầu cấp, bài khó, sở thích, bị trêu chọc, màn hình, áp lực điểm, quyền riêng tư, bạn bè, quản lý tiền, hướng nghiệp, tự lập, ranh giới khi trưởng thành và hỗ trợ từ xa.
+- Lựa chọn ảnh hưởng gắn kết, áp lực, học tập, giao tiếp và tự lập; không tự trao bằng cấp hay bảo đảm thành tài. Phí ghi rõ người chơi chi, kiểm tra số dư trước khi trừ.
+- Mỗi con tối đa hai tình huống mỗi năm; cùng chuyện cách tối thiểu ba năm. Tình huống tự phát được luân phiên giữa các con, tối đa một lần cho cả nhà mỗi năm.
+- Danh tính con ổn định khi lưu/tải, kể cả hai con trùng tên; lựa chọn cũ không chuyển sang con khác khi mất người thân hoặc mảng con thay đổi. Cảnh hết năm, sai tuổi, đổi quyền chăm sóc hoặc cha mẹ bị giam / tại ngũ được hủy.
+- Con ở với người cũ, cha mẹ ở nước ngoài hoặc con đang thụ án chỉ có nội dung liên lạc từ xa. Con trưởng thành được tôn trọng quyền tự quyết.
+- Bỏ suy diễn học lực thấp / chơi game thành nợ cờ bạc. Sự kiện thành tài không tự tạo nghề bác sĩ / tiến sĩ / doanh nghiệp chỉ từ điểm học.
+- Sửa chuỗi học hành cũ vượt 100 điểm, học thêm thiếu tiền và việc kể giáo viên phổ thông gọi về khi con đã trưởng thành; thêm kiểm tra mục tiêu còn sống / không trùng tên mơ hồ.
+- Kiểm tra: 7.361 kiểm tra cập nhật và 134 kiểm tra bộ file / phiên bản đều đạt. Mô phỏng 200 cuộc đời VN / thế giới với 2.547 lựa chọn nuôi dạy con không phát hiện sai tuổi / mục tiêu, vượt lượt hay dữ liệu nhật ký và chỉ số không hợp lệ trong mẫu. Chưa chạy toàn bộ hồi quy.
+
+## v4.5.9 — Chi phí tuổi thơ ghi rõ người trả
+
+- Sửa tiệc sinh nhật trẻ còn phụ thuộc: bố mẹ chi từ ngân sách gia đình, không trừ tiền tiết kiệm của trẻ; ghi rõ ai thanh toán và số tiền trong nhật ký / gợi ý lựa chọn. Không tổ chức nếu gia đình thiếu ngân sách.
+- Nếu không còn bố mẹ hoặc đã tự lập, chỉ dùng tiền riêng khi đủ; không tự tạo người trả hộ hoặc làm âm tiền vì tiệc sinh nhật.
+- Sửa tương tự việc lỡ nạp game trên điện thoại và bố mẹ bồi thường cửa kính: ghi khoản chi gia đình riêng, đúng người thân còn sống.
+- Các khoản thật sự trừ vào ví nhân vật được chú thích là tự chi từ tiền riêng; sự kiện có số tuổi / số buổi vẫn được ghi số tiền, không bỏ qua chỉ vì nội dung đã có chữ số.
+
+## v4.5.8 — Lương hưu cho nghề theo hợp đồng, lương thi đấu theo thành tích
+
+- Phân loại 159 nghề: 106 nghề ở bậc đầu có tích lũy bảo hiểm hưu trí, bổ sung dịch vụ, thợ, lao động theo hợp đồng, vận động viên và huấn luyện viên. Chủ cơ sở và vị trí tự doanh được xét theo bậc nghề.
+- Ngoại lệ không tự động tích lũy: freelancer, sáng tạo nội dung / nghệ sĩ hoạt động tự do, vé số, hàng rong, ve chai, xe ôm / tài xế nền tảng tự do, nông ngư nghiệp tự doanh, phụ giúp nhà, kinh doanh riêng và phi pháp. Giữ quyền đã đóng đủ từ nghề cũ và cơ chế BHXH tự nguyện hiện có.
+- Lương hưu dựa số năm đóng thực tế và mức bình quân; tính cả năm đóng thứ 15 khi nghỉ, không thay số năm đóng bằng tổng số năm lao động. Đủ điều kiện vẫn nhận khi đang thất nghiệp hoặc chuyển nghề. Không tự tạo năm đóng cho lịch sử cũ chưa có dữ liệu đóng.
+- Vận động viên, esports và kỳ thủ có hệ số hợp đồng theo huy chương / giải đấu. Chức vô địch, kỷ lục, thành tích trong sự kiện môn được ghi nhận, tách khỏi tiền thưởng một lần. Thành tích lớn có trọng số cao hơn, hệ số tối đa 3,5 lần nền theo bậc / môn; không nhân dồn khi mở hồ sơ.
+- Thành tích và hợp đồng tách theo nghề, môn và game; thành tích khác môn không được chuyển sang. Hồ sơ và ước tính lời mời việc phản ánh cơ chế mới.
+- Chặn cộng hai năm bảo hiểm trong một năm; BHXH tự nguyện không trừ tiền khi không đủ tiền hoặc đang bị giam / tại ngũ.
+- Kiểm tra: 6.941 kiểm tra cập nhật và 177 kiểm tra hồi quy liên quan đều đạt; mô phỏng thêm 240 cuộc đời không phát hiện tiền / nhật ký không hợp lệ hoặc lương hưu thiếu điều kiện đóng. Chưa chạy toàn bộ hồi quy.
+
+## v4.5.7 — Rà soát quân ngũ, lịch hẹn và sự kiện lặp
+
+- Chặn nhập ngũ lần hai từ ngã rẽ sau phổ thông, từ lựa chọn cũ và từ save thiếu cờ nhưng còn nhật ký phục vụ. Không gọi người đang bị giam, sức khỏe quá thấp hoặc đang làm quân đội / công an.
+- Giảm tần suất gọi khám tuyển ngẫu nhiên tại VN, mỗi đời tối đa một thông báo tự động. Chuyển từ nhập ngũ cuối năm sang lịch khám tuyển năm sau để không mất một năm phục vụ.
+- Xếp đủ bốn chuyện năm đầu; tân binh, phân đơn vị và chuyện quân ngũ không phát lại. Ra quân sau đủ hai năm, khóa trợ cấp một lần, xử lý save cũ đã nhận trợ cấp.
+- Thư hậu phương và về phép đúng người thân còn sống; không trừ âm tiền tàu xe.
+- Bỏ lựa chọn đã hết hiệu lực trước khi áp dụng. Không xếp trùng ID trong hàng đợi năm, giữ lại lịch hẹn quá số ô thay vì xóa mất.
+- Thêm câu kể năm bình thường, ưu tiên câu chưa từng gặp rồi tránh lặp trong 12 năm gần nhất.
+- Mô phỏng 400 cuộc đời VN / thế giới: không phát hiện nhập ngũ hai lần, xuất ngũ sớm hay dữ liệu nhật ký / tiền không hợp lệ. Các bộ kiểm tra cập nhật và kiểm tra quân ngũ liên quan đều đạt; không tuyên bố đã chạy xong toàn bộ hồi quy.
+
+## v4.5.6 — Nhân vật và phong cảnh anime 2D
+
+- Đổi nét mặt sang anime với mắt nhiều lớp, tóc chia lọn, cằm thuôn, bóng cel và ánh sáng trên chân dung. Giữ khác biệt tuổi, tóc bạc, trang phục nghề và biểu cảm.
+- Phong cảnh có mây nhiều lớp, nắng xiên, tán cây, mái ngói, kính cửa sổ và chiều sâu màu; giữ nguyên bố cục, tỷ lệ khung hình và logic người thân hiện diện.
+- Ngoại hình vẫn cố định theo danh tính, không đổi theo RNG hành động. Dùng SVG tự chứa, thư mục public không cần dịch vụ tạo ảnh hoặc tải tài nguyên ngoài.
+- Đã render ảnh xem trước để kiểm tra trực quan và chạy các bộ kiểm tra cập nhật.
+
+## v4.5.5 — Bối cảnh gia đình cụ thể và đa dạng
+
+- Nhãn luôn là Bối cảnh gia đình; nội dung mô tả mức sống thực tế thay câu chung chung về biến cố.
+- Kết hợp 20 mô tả kinh tế với 8 nếp nuôi dạy, cùng gia đình đơn thân, đông anh chị em, thất nghiệp, gia thế và bất ổn nghiêm trọng nếu có trong dữ liệu.
+- Biến thể cố định theo nhân vật, không đổi khi vẽ lại, không tiêu hao RNG mô phỏng. Đây là mô tả xuất phát điểm, không tự thêm biến cố hoặc thay đổi kinh tế gia đình.
+
+## v4.5.4 — Đồng bộ game ở nhà và vật phẩm
+
+- Chọn FPS / MOBA / Game khác rồi chọn game; đủ 12 game yêu cầu, gồm PUBG Mobile.
+- Chỉ ghi lịch sử khi thật sự chơi; lịch sử giải trí riêng với game thi đấu / năng khiếu.
+- Cửa hàng và sự kiện skin chỉ hiện game đã chơi, kiểm tra tiền và hoàn cảnh khi mua.
+- Bỏ giá 2,5 triệu áp chung. Dùng bậc VP / RP / Quân Huy và Minecoins có nguồn; Minecraft / Roblox có diện mạo miễn phí. Giá chưa xác minh ghi ngân sách mô phỏng, VNĐ ghi ước tính. Nguồn: public/game-prices.md.
+- Bộ test:update đạt 5.561 kiểm tra, gồm 105 kiểm tra mới cho game / skin.
 
 **Nguyên tắc cập nhật:** bản mới = toàn bộ tính năng bản trước + tính năng mới + sửa lỗi.
 Trước khi phát hành, bộ kiểm thử hồi quy (`node tests/regression.js`) phải đạt 100%.
 Mỗi lỗi đã sửa đều được bổ sung một bài kiểm thử để không tái phát.
+
+## v4.5.3 — 16/10/2026
+
+- Giữ nguyên bố cục, màu, nút và các bảng hiện tại; thay chân dung / khung cảnh pixel bằng SVG minh họa 2D mềm, rõ ở mọi kích thước. Chân dung có trẻ sơ sinh, thiếu nhi, thiếu niên, người lớn, tuổi già và trang phục theo nghề; ảnh thẻ chia sẻ cũng được làm mịn.
+- Danh tính hình ảnh cố định theo tên / ngày sinh, không đổi tóc, da hay quần áo ngẫu nhiên mỗi lần RNG chạy. Cảnh gia đình chỉ vẽ người còn sống, đúng người ở cùng; trại giam không vẽ con cháu đứng chung; căn hộ không tự bị vẽ thành biệt thự vì gia đình giàu.
+- Bartender chỉ xuất hiện trong tuyển dụng từ 18 tuổi. Người mới vào nghề bắt đầu ở bartender, không được gọi là bartender trưởng. Thăng bậc cần số năm công tác thật, không chỉ điểm kinh nghiệm; chặn cả một số đường tắt qua sự kiện nghề.
+- Tuổi 25 hoặc kinh nghiệm nghề khác không tự cho vị trí quản lý / trưởng. Người thực sự từng làm cùng nghề vẫn có thể ứng tuyển bậc phù hợp. Xin xét lương tối đa một lần trong năm, không bấm lặp để nhận thưởng / nhảy chức.
+- Dòng xuất phát điểm dùng "Bối cảnh gia đình" cho hoàn cảnh bình thường; không xếp tuổi thơ êm đềm, vùng biển, gia đình mẹ đơn thân hay nghèo khó mặc nhiên thành biến cố nặng. "Biến cố gia đình" dành cho dữ liệu nghiêm trọng đã có như nghiện ngập, giang hồ hoặc không còn bố mẹ.
+- Thêm lời đề nghị tìm hiểu và chu cấp từ người lớn tuổi, thành đạt; chỉ từ 18 tuổi, phù hợp xu hướng tình cảm, không tự chèn quan hệ khi đã có vợ / chồng. Người chơi tự chọn nhận hoặc từ chối.
+- Chuỗi sự kiện tiền bạc đi kèm kiểm soát: điện thoại / lịch trình, bạn bè, quần áo / mạng xã hội, yêu cầu nghỉ việc, trì hoãn tiền. Có lựa chọn nhượng bộ, đặt ranh giới, ngừng nhận chu cấp hoặc chia tay; không tự cưỡng ép nhân vật mất việc hay mất tài sản riêng.
+- Chỉ cộng tiền thực nhận một lần mỗi năm, trong khả năng người chu cấp; không trả khi đã chia tay, người ấy mất, bị cắt khoản tiền hoặc nhân vật ở tù. Khoản chu cấp khi hẹn hò không cộng trùng với đóng góp gia đình khi đã kết hôn / chung sống.
+- Người yêu đang hẹn hò cũng có diễn biến tuổi già / qua đời, không sống mãi vì chưa cưới; mất người đang hẹn hò không tự biến nhân vật thành người góa.
+- Nhật ký Running Man / 2 Ngày 1 Đêm ghi rõ chuyến quay ở từng kết quả, tránh ba chuyến trong cùng năm bị hiện thành các dòng sự kiện trùng nhau.
+- Kiểm tra: `node tests/update453.js`; bản xem trước minh họa được render từ chính SVG dùng trong game. Cache key toàn bộ tài nguyên là 4.5.3, thư mục tải lên Cloudflare vẫn là `public`.
+
+## v4.5.2 — 16/10/2026
+
+- Running Man / 2 Ngày 1 Đêm chuyển từ một lựa chọn hậu trường sang chuỗi mùa quay trong cùng năm: 3 chuyến, mỗi chuyến 5 lượt lựa chọn. Địa điểm, nhiệm vụ, khách mời, đội chơi được bốc ngẫu nhiên bằng RNG của cuộc đời.
+- Running Man: gặp khách mời, thử thách phối hợp / giải đố / thể lực, săn manh mối, đổi một đồng đội, cuộc đua xé bảng tên. Tham khảo đặc trưng trò chơi từ [HTV](https://www.htv.com.vn/running-man-vietnam); mọi tình huống và kết quả trong game là mô phỏng.
+- 2 Ngày 1 Đêm: chia đội, nhiệm vụ địa phương, trò giành bữa tối / chỗ ngủ, nhiệm vụ buổi sáng. Đội thua vẫn có suất ăn cơ bản và nơi nghỉ có hỗ trợ.
+- Mỗi đội có 4 người, luôn có người chơi, không trùng thành viên giữa hai đội. Khách mời thay đổi; năm quá xa dùng nghệ sĩ thế hệ mới. Lưu / tải giữa chuyến giữ nguyên RNG và đội đã bốc.
+- Có cách phối hợp, giải đố, xung phong vận động và xin dừng. Chấn thương chặn phần vận động mạnh. Người chơi chủ động nhận show được tự chọn các vòng tiếp theo dù đang bật tự động.
+- Cát-xê quyết toán một lần theo số chuyến thực sự hoàn thành; rút lui / bị gián đoạn không nhận cả mùa. Không nhận lại hai mùa trong một năm hoặc chồng lịch với show âm nhạc đang diễn ra.
+- Vào tù, qua đời, hết năm hoặc sức khỏe quá thấp thì dừng quay, dọn lựa chọn cũ. Chặn bấm lại vòng đã qua để nhảy vòng / nhận tiền hai lần.
+- Sửa show âm nhạc: Tinh Hà không bị trộn đội hình với Anh trai Say Hi; không dùng nghệ sĩ thật ở năm quá xa; loại quán quân mùa hiện tại khỏi lời mời thi lại cùng show; bỏ khoản 1 tỷ bị cộng trùng; chặn trả thưởng lần hai ở chung kết đã hoàn tất.
+- Cập nhật các kiểm tra cũ còn đòi biệt danh / vai trò riêng tư trái với phần chọn giới tính mới. Bản `public` vẫn tải trực tiếp được lên Cloudflare; cache key mới là 4.5.2.
+- Sửa mừng thọ: cặp đôi cùng giới dùng "người bạn đời", không tự gọi "hai vợ chồng"; bạn đời đã mất không xuất hiện như còn sống.
+- Kiểm tra bổ sung: `node tests/update452.js` (70 mùa quay, mọi vòng / đội / khách mời, lưu giữa mùa, rút lui, gián đoạn, trao giải và chống lặp tiền).
+
+## v4.5.1 — 16/10/2026
+
+- Sửa nguyên nhân Anh Tài 2024 / 2026 biến mất: bỏ ngưỡng 50 tuổi trung bình khỏi cả hai màn lọc show. Giữ đầy đủ 33 thành viên K24 và 34 thành viên K26, chọn được từng người qua phân trang.
+- Với năm trong game quá xa (tuổi trung bình trên 65), chuyển sang bản ghi concert lưu trữ, không phát sinh vé máy bay, săn vé hay gặp nghệ sĩ trực tiếp. Không xuất hiện show trước năm ra mắt.
+- Đối chiếu đội hình: [K24](https://www.sggp.org.vn/se-thanh-lap-gia-toc-toan-nang-voi-chuong-trinh-anh-trai-vuot-ngan-chong-gai-2024-post746435.html), [K26 — VTV](https://vtv.vn/anh-trai-vuot-ngan-chong-gai-2026-luat-choi-doi-dau-duoc-day-len-cao-trao-100260622214738312.htm).
+- Thêm hành động làm ăn bất chính / liên kết xã hội đen từ 18 tuổi, góp vốn có lời hoặc mất vốn, tối đa một thương vụ mỗi năm. Có lựa chọn dừng hợp tác.
+- Thêm trạng thái thù địch và bị truy sát lưu cùng cuộc đời. Nguy cơ đánh úp tăng khi quan hệ băng nhóm, thù địch và truy sát tăng; tỷ lệ là thiết kế trò chơi, không phải thống kê thực tế.
+- Đánh úp có đúng hai lựa chọn: chống trả rồi chạy, hoặc chạy ngay. Cả hai có xác suất tử vong; sống sót bị thương và tiếp tục bị truy sát. Hiển thị nguy cơ trước lựa chọn.
+- Thêm sự kiện truy sát nối tiếp, phản bội, chia phần, đe dọa, điều tra, mất vốn, người thân can ngăn, hỗ trợ người cùng nhóm gặp nạn và cơ hội làm lại. Bỏ nghề không tự xóa truy sát. Khóa các sự kiện ngoài đường khi đang ở tù, bị giam giữ hoặc nhập ngũ.
+- Tắt nguồn đánh úp ngẫu nhiên cũ để không cộng chồng hai cơ chế. Dừng liên kết khi bỏ nghề; tử vong dọn lựa chọn đang chờ.
+- Đổi toàn bộ khóa cache tài nguyên sang 4.5.1. Bản tải lên Cloudflare vẫn là toàn bộ thư mục `public`.
+- Kiểm tra bổ sung: `node tests/update451.js` (đi xuyên giao diện chọn show / thành viên bằng engine, mọi lựa chọn chuỗi mới, hai kết cục của cả hai cách thoát đánh úp, khóa trong tù, chống lặp tiền, 60 cuộc đời mô phỏng).
+
+## v4.5.0 — 16/10/2026
+
+Giữ nguyên toàn bộ tính năng v4.4.0. Bản này làm theo góp ý của người chơi.
+
+### Chức vụ cao không bị "sếp" ép
+- Sửa lỗi tổng giám đốc ngân hàng (bố là chủ tịch HĐQT), cơ trưởng… vẫn bị "sếp liên tục giao việc ngoài giờ".
+- Người giữ chức cao nhất hoặc gần cao nhất của nghề, chủ cơ sở, cơ nghiệp gia đình, người làm tự do không còn các chuyện bị sếp ép, bị cướp công, sơ cứu "sếp lớn"… và không còn mục "Xin tăng lương".
+
+### Giao diện
+- Khi bấm vào "Việc bạn muốn làm" lúc thanh cuộc đời đang chạy, game tự tạm dừng để bạn chọn. Đóng nhóm việc thì chạy tiếp.
+
+### Giới tính và xu hướng tính dục
+- Giới tính (sinh học): Nam / Nữ / Liên giới / Ngẫu nhiên.
+- Xu hướng tính dục tách riêng, không bắt buộc: Dị tính / LGBTQ+. Bấm lần nữa để bỏ chọn, không chọn thì để cuộc đời quyết định.
+- Bỏ các lựa chọn "bột tôm / tóp mỡ / bé Liên / bi" và mọi nội dung "top / bot" (đó là chuyện riêng tư, không phải xu hướng tính dục). Hồ sơ ghi gọn "LGBTQ+ (đồng tính)" / "LGBTQ+ (song tính)".
+
+### Tài chính gia đình
+- Vợ / chồng góp vào chi tiêu chung khoảng một nửa thu nhập thật, thay vì luôn khoảng 10 triệu đồng mỗi tháng. Ví dụ vợ lương 136 triệu / tháng thì góp khoảng 75 triệu / tháng.
+- Không lấy mức thu nhập giả định cao hơn lương thật của người phối ngẫu. Không ghi "con cái biếu" nếu không có khoản con cái đóng góp.
+
+### Trong tù
+- Án tính trọn năm: chỉ ra tù và mở khóa thao tác sau khi thanh thời gian của năm cuối hoàn tất; án một năm không bị cộng thêm một năm.
+- Trong thời gian ở tù không còn thi bằng lái, hẹn hò, mua nhà, nhận việc mới… Anh chị em cưới thì "chỉ biết gửi lời chúc qua thư".
+- Mỗi năm có 3–4 chuyện trong trại, không lặp lại. Thêm các chuyện mới:
+  - khám xét buồng giam;
+  - sinh nhật trong trại;
+  - tin dữ từ nhà;
+  - tổ nhà bếp;
+  - kháng cáo;
+  - tiễn bạn tù;
+  - cắt cơn nghiện;
+  - giải bóng đá phân trại;
+  - viết sổ tay;
+  - bênh vực phạm nhân mới.
+
+### Phi pháp có đường dây
+- Buôn lậu có ba cấp:
+  - chân rết vận chuyển hàng lậu (mốc lương 200 triệu / tháng);
+  - đầu nậu đường dây (mốc lương 650 triệu / tháng);
+  - trùm đường dây (mốc lương 1,8 tỷ / tháng; thu nhập thực tế biến động theo nhân vật và địa phương).
+- Ma túy, lừa đảo, đòi nợ thuê cũng chia cấp tương tự.
+- Càng lên cao càng có đàn em, có người chống lưng, ít trực tiếp nhúng tay nên ít bị bắt hơn: trùm chỉ còn khoảng 1/4 nguy cơ.
+- Thêm các chuyện:
+  - được rủ vào đường dây;
+  - lô hàng bị bắt (mất vốn, có thể bị khai ra);
+  - tranh giành địa bàn;
+  - tiền bẩn và cửa hàng bình phong.
+- Lên cấp có lời kể riêng: "được anh lớn tin tưởng, giao quản lý cả một mối hàng…".
+
+### Chủ động mở rộng kinh doanh
+- Mục mới "Mở thêm chi nhánh / mở rộng quy mô": chủ quán, chủ tiệm, chủ xưởng… có đủ vốn thì tự mở rộng (ví dụ chủ quán → chủ chuỗi quán); cơ sở kinh doanh đầu tư thì mở thêm chi nhánh.
+
+### Năng khiếu game
+- Năng khiếu chỉ là thể loại: MOBA hoặc FPS. Khi bộc lộ năng khiếu, bạn tự chọn game:
+  - MOBA: Liên Minh Huyền Thoại, Liên Minh: Tốc Chiến, Liên Quân Mobile, Mobile Legends: Bang Bang.
+  - FPS: Valorant, Counter-Strike 2, Delta Force, Đột Kích, Apex Legends, Overwatch 2, Free Fire, Call of Duty Mobile (không có PUBG).
+
+### Đi xem ca nhạc
+- Các nhóm chỉ ghi tên nhóm, không ghi tên nghệ sĩ ở dưới. Bấm vào nhóm thì chọn nghệ sĩ (8 người mỗi trang, có "Xem thêm"):
+  - **Nghệ sĩ Việt Nam:** Sơn Tùng M-TP, Jack - J97, Mỹ Tâm, Hà Anh Tuấn, Đen Vâu, Hồ Ngọc Hà, Noo Phước Thịnh, Hoàng Thùy Linh, Đông Nhi, Tóc Tiên, Vũ.… Loại người tham gia Say Hi / Anh Tài khỏi mục này; SOOBIN và Hoàng Dũng nằm trong mục chương trình Anh Tài.
+  - **Concert chương trình "Say Hi" / Anh tài:** thêm Anh trai vượt ngàn chông gai 2024, 2026 sau Tinh hà "Say Hi".
+  - **K-pop Hàn Quốc:** các nhóm top đầu (BTS, BLACKPINK, TWICE, SEVENTEEN, Stray Kids, NewJeans, aespa, IVE…) cùng IU, Hwasa, PSY, G-Dragon.
+  - **Nghệ sĩ US/UK** (đổi tên từ "Âu Mỹ"): hơn 30 nghệ sĩ như Taylor Swift, Ed Sheeran, Coldplay, Adele, Bruno Mars, The Weeknd, Billie Eilish…
+  - **Rap Việt:** MCK, Dangrangto, B Ray, Wxrdie, Binz, Karik, Rhymastic, Suboi, tlinh, Low G, Obito, Andree Right Hand…
+
+### Lời kể đúng hoàn cảnh gia đình
+- Không có con cháu:
+  - không còn "con cháu tổ chức mừng thọ" (đổi thành hàng xóm, bạn bè đến chúc thọ);
+  - không còn "lì xì con cháu", "về ở với con cháu", "con cháu chu cấp".
+- Không còn anh chị em thì không có "anh chị em mỗi người góp một phần"; lựa chọn "chia với anh chị em" chỉ hiện khi còn anh chị em.
+- Cả nhà đã mất:
+  - không còn "cả nhà sum họp";
+  - tảo mộ thì "một mình đi tảo mộ ông bà, bố mẹ";
+  - Tết thì "đón một mình, thắp nén hương cho bố mẹ".
+- Tập gym đến 65 tuổi, đá bóng đến 60, leo núi đến 65, đi phượt đến 55.
 
 ## v4.4.0 — 16/10/2026
 

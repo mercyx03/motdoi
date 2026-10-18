@@ -22,7 +22,7 @@
     var cls = l.school ? 'cùng lớp' : 'trong xóm';
     if (l.orient === 'bi') return pick(r, ['Năm ' + l.age + ' tuổi, bạn nhận ra mình có thể rung động với cả bạn nam lẫn bạn nữ — thích ai là thích con người ấy.', 'Bạn bối rối khi thấy mình vừa để ý một bạn nam ' + cls + ', vừa thấy tim đập nhanh khi cô bạn ngồi cạnh cười. Hóa ra mình thích được cả hai.']);
     if (l.sex === 'F') return pick(r, ['Năm ' + l.age + ' tuổi, bạn nhận ra mình rung động với cô bạn ' + cls + ' chứ không phải mấy bạn nam như đám bạn gái hay bàn tán.', 'Cả lớp gán ghép bạn với một bạn nam, nhưng người khiến bạn đỏ mặt lại là cô bạn thân.']);
-    if (l.role === 'top') return pick(r, ['Năm ' + l.age + ' tuổi, bạn nhận ra mình để ý một bạn nam ' + cls + ' — lúc nào cũng muốn đứng ra che chắn, lo lắng cho cậu ấy.', 'Đám con trai bàn tán về con gái, còn bạn chỉ để ý cậu bạn hiền lành bàn bên — muốn làm "chỗ dựa" cho cậu ấy.']);
+    if (false) return pick(r, ['Năm ' + l.age + ' tuổi, bạn nhận ra mình để ý một bạn nam ' + cls + ' — lúc nào cũng muốn đứng ra che chắn, lo lắng cho cậu ấy.', 'Đám con trai bàn tán về con gái, còn bạn chỉ để ý cậu bạn hiền lành bàn bên — muốn làm "chỗ dựa" cho cậu ấy.']);
     return pick(r, ['Năm ' + l.age + ' tuổi, bạn nhận ra mình hay để ý một bạn nam ' + cls + ' — tim đập nhanh mỗi lần cậu ấy hỏi han, thích được cậu ấy quan tâm.', 'Đám con trai bàn tán về con gái, còn bạn chỉ để ý anh lớp trên đá bóng giỏi, thích được anh ấy chở đi học.']);
   };
 
@@ -102,7 +102,7 @@
   T('lg_hang_xom', function (l, a) { return same(l) && l.partner.status !== 'dating'; }, 0.08, 5, 1);
 
   SC('lg_hoi_ban_treu', {
-    title: 'Hội bạn trêu', valid: function (l) { return same(l) && l.sex === 'M'; },
+    title: 'Hội bạn trêu', valid: function (l) { return false; }, // v4.5: bỏ chuyện "top / bot" — đó là chuyện riêng tư, không phải xu hướng tính dục
     text: function (l) { return 'Trong bữa nhậu, hội bạn thân trêu bạn và ' + l.partner.name + ': "Thế rốt cuộc trong nhà ai là tóp mỡ, ai là bột tôm?" Cả bàn cười ồ.'; },
     opts: [
       { k: 'cuoi', l: 'Cười, đáp lại cho vui', ai: { w: 1.2 }, run: function (l, r, log) { var me = l.role === 'top', pr = l.partner.role; log(me && pr === 'bot' ? '"Tóp mỡ thì đi làm nuôi nhà, bột tôm thì quản lý tài chính!" — ' + l.partner.name + ' gật đầu xác nhận, cả bàn vỗ tay.' : !me && pr === 'top' ? '"Hỏi ' + l.partner.name + ' ấy, người ta lo hết từ bữa sáng đến cái bóng đèn!" Cả bàn cười nghiêng ngả.' : '"Nhà này hai bột tôm / hai tóp mỡ, nên việc gì cũng chia đôi!" Cả bàn cười không ngớt.', 'good'); fx(l, { hap: 4, soc: 3 }); } },

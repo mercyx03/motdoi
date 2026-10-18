@@ -30,12 +30,12 @@
   // 1. CONCERT THEO CHƯƠNG TRÌNH, CHỌN BIAS
   // ===================================================================
   var SHOWS = E.SHOWS || [];
-  function showsOpen(l) { var y = yr(l); return SHOWS.filter(function (s) { return y >= s.from && y - s.b <= 50; }); }
+  function showsOpen(l) { var y = yr(l); return SHOWS.filter(function (s) { return y >= s.from; }); }
   function showByK(k) { return SHOWS.filter(function (s) { return s.k === k; })[0]; }
   SC('show_chon', {
     title: 'Concert chương trình nào?', text: function (l) { return 'Các chương trình truyền hình thực tế âm nhạc tổ chức concert liên tục. Bạn muốn đi concert của chương trình nào?' + (l.bias ? ' Bias hiện tại của bạn: ' + l.bias.n + ' (' + l.bias.show + ').' : ''); },
     opts: [0, 1, 2, 3, 4, 5].map(function (i) {
-      return { k: 's' + i, l: function (l) { var s = showsOpen(l)[i]; return s ? s.n : ''; }, h: function (l) { var s = showsOpen(l)[i]; return s ? s.m.length + ' nghệ sĩ · ' + s.m.slice(0, 4).join(', ') + '…' : ''; }, req: function (l) { return !!showsOpen(l)[i]; }, ai: { w: 1 },
+      return { k: 's' + i, l: function (l) { var s = showsOpen(l)[i]; return s ? s.n : ''; }, h: function (l) { var s = showsOpen(l)[i]; return s ? s.m.length + ' nghệ sĩ' + (yr(l) - s.b > 65 ? ' · concert lưu trữ' : ' · concert / tái hợp') : ''; }, req: function (l) { return !!showsOpen(l)[i]; }, ai: { w: 1 },
         run: function (l, r, log) { var s = showsOpen(l)[i]; l.pending.unshift(E.DEC.bias_chon.make(l, r, { k: s.k, p: 0 })); } };
     }).concat([{ k: 'no', l: 'Thôi, để dịp khác', ai: { w: 0.2 }, run: function () { } }])
   });

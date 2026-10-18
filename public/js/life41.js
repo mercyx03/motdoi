@@ -22,10 +22,12 @@
   function becomeCouple(l, r, log, d, where) {
     var lv = E.DEC.love.make(l, r, { where: where });
     lv.data.p.name = d.n; lv.data.p.sex = d.s; lv.data.p.age = d.age;
+    if (d.job && d.inc != null) { lv.data.p.job = d.job; lv.data.p.jobId = d.jobId || null; lv.data.p.inc = d.inc; } else H.partnerJob(l, lv.data.p, r);
     lv.text = 'Sau ' + where + ', bạn và ' + d.n + ' (' + (d.s === 'M' ? 'nam' : 'nữ') + ', ' + d.age + ' tuổi) nhắn tin mỗi ngày. Hai người quyết định chính thức tìm hiểu nhau.';
     l.pending.unshift(lv);
   }
-  function person(l, r) { var s = H.partnerSex(l, r); return { s: s, n: H.stranger(l, r, s), age: Math.max(20, l.age + U.randint(r, -4, 4)), job: pick(r, ['kỹ sư phần mềm', 'giáo viên', 'bác sĩ', 'nhân viên ngân hàng', 'kiến trúc sư', 'chủ quán cà phê', 'tiếp viên hàng không', 'nhân viên marketing', 'dược sĩ', 'kinh doanh tự do']) }; }
+  function profile(l, r, p) { var q = { age:p.age, sex:p.s || 'M' }; H.partnerJob(l,q,r); p.job=q.job; p.jobId=q.jobId; p.inc=q.inc; return p; }
+  function person(l, r) { var s = H.partnerSex(l, r); return profile(l,r,{s:s,n:H.stranger(l,r,s),age:Math.max(20,l.age+U.randint(r,-4,4))}); }
 
   // ---------- lời mời / đăng ký ----------
   var SHOWS = { bmhh: 'Bạn muốn hẹn hò', nali: 'Người ấy là ai', dtd: 'Đảo thiên đường' };
@@ -64,7 +66,7 @@
   // nữ: là "nữ chính", chọn 1 trong 5 chàng trai qua mini game; nam: là một trong 5 ứng viên, thuyết phục nữ chính chọn mình
   var STYLE = ['cao 1m80, vai rộng, phong cách lịch lãm với sơ mi trắng', 'da rám nắng, cơ bắp, mê thể thao', 'đeo kính, thư sinh, nói chuyện nhỏ nhẹ', 'tóc nhuộm, phong cách đường phố, đeo khuyên tai', 'mặc vest chỉn chu, giọng trầm ấm', 'cười rất duyên, má lúm đồng tiền', 'để râu nhẹ, phong cách bụi bặm, thích phượt'];
   var JOBS = ['kỹ sư phần mềm', 'bác sĩ nội trú', 'phi công', 'chủ chuỗi cà phê', 'giáo viên tiếng Anh', 'kiến trúc sư', 'huấn luyện viên thể hình', 'nhân viên ngân hàng', 'đầu bếp nhà hàng', 'nhiếp ảnh gia'];
-  function cand(l, r, i) { return { n: H.stranger(l, r, 'M'), age: Math.max(21, l.age + U.randint(r, -2, 6)), st: STYLE[(i + Math.floor(r() * 7)) % STYLE.length], job: pick(r, JOBS), truth: ['single', 'single', 'taken', 'gay', 'single'][i], fit: r() }; }
+  function cand(l, r, i) { return profile(l,r,{s:'M',n:H.stranger(l,r,'M'),age:Math.max(21,l.age+U.randint(r,-2,6)),st:STYLE[(i+Math.floor(r()*7))%STYLE.length],truth:['single','single','taken','gay','single'][i],fit:r()}); }
   function truthText(c) { return c.truth === 'single' ? c.n + ' độc thân thật' : c.truth === 'taken' ? c.n + ' đã có người yêu — tham gia vì "thử thách" của chương trình' : c.n + ' là người đồng tính — tham gia để góp vui và chúc bạn tìm được người phù hợp'; }
   function hint(l, r, c) { var right = ch(r, 0.45 + l.st.kno / 250); var t = right ? c.truth : pick(r, ['single', 'taken', 'gay']); return t === 'single' ? 'cố vấn cho rằng ' + c.n + ' "nhìn ánh mắt là biết độc thân"' : t === 'taken' ? 'cố vấn nghi ' + c.n + ' "có vẻ đã có chủ"' : 'cố vấn đoán ' + c.n + ' "không hứng thú với con gái"'; }
   SC('hh_nali_f', {
@@ -82,14 +84,14 @@
           l.flags.nali = null; l.fame = (l.fame || 0) + 5000;
           log('Người ấy là ai — công bố sự thật: ' + truthText(c) + '.', c.truth === 'single' ? 'good' : 'bad');
           if (c.truth !== 'single') { fx(l, { hap: -4 }); log('Bạn chọn nhầm người, ra về tay trắng nhưng được khán giả khen "chơi đẹp".', 'neutral'); return; }
-          if (c.fit + appeal(l) * 0.5 > 0.45) { log(c.n + ' bước ra tặng hoa: "Mình cũng chọn bạn." Hai bạn nắm tay rời sân khấu trong tiếng vỗ tay.', 'big'); fx(l, { hap: 10 }); H.mem(l, 'Đêm chọn đúng "người ấy" trên sân khấu truyền hình.', 6); becomeCouple(l, r, log, { n: c.n, s: 'M', age: c.age }, 'chương trình Người ấy là ai'); }
+          if (c.fit + appeal(l) * 0.5 > 0.45) { log(c.n + ' bước ra tặng hoa: "Mình cũng chọn bạn." Hai bạn nắm tay rời sân khấu trong tiếng vỗ tay.', 'big'); fx(l, { hap: 10 }); H.mem(l, 'Đêm chọn đúng "người ấy" trên sân khấu truyền hình.', 6); becomeCouple(l, r, log, c, 'chương trình Người ấy là ai'); }
           else { log(c.n + ' độc thân thật, nhưng thẳng thắn nói hai người chưa hợp, chỉ muốn làm bạn.', 'neutral'); fx(l, { hap: -2 }); }
         } };
     })
   });
   SC('hh_nali_m', {
     title: function (l, d) { return 'Người ấy là ai · ' + ['', 'Vòng 1: Giới thiệu bản thân', 'Vòng 2: Tài năng', 'Vòng 3: Thuyết phục nữ chính', 'Chung cuộc'][d.v]; }, valid: function (l) { return !!l.flags.nali; },
-    prep: function (l, r, a) { return { v: (a && a.v) || 1, n: l.flags.nali.lead }; },
+    prep: function (l, r, a) { var N=l.flags.nali; if(!N.leadProfile) { N.leadProfile=profile(l,r,{s:'F',n:N.lead,age:N.leadAge}); N.leadJob=N.leadProfile.job; } return { v: (a && a.v) || 1, n: N.lead }; },
     text: function (l, d) { var N = l.flags.nali; return { 1: 'Bạn là một trong 5 chàng trai. Nữ chính hôm nay là ' + d.n + ', ' + N.leadJob + '. Đoạn clip giới thiệu bạn sẽ thể hiện phong cách nào?', 2: 'Bạn còn trụ lại cùng ' + (N.left - 1) + ' chàng trai khác. Vòng tài năng: bạn sẽ trình diễn gì?', 3: 'Chỉ còn ' + N.left + ' người. Bạn có một phút nói chuyện riêng để thuyết phục ' + d.n + '.' }[d.v]; },
     opts: [
       { k: 'a', l: function (l, d) { return ['', 'Lịch lãm, chân thành: kể về công việc và gia đình', 'Trình diễn đúng sở trường của mình', 'Nói thật lòng: mình tìm một người để cùng xây tổ ấm'][d.v]; }, ai: { w: 1.2 }, run: function (l, r, log, d) { mstep(l, r, log, d, 0); } },
@@ -107,7 +109,7 @@
     N.left = Math.max(2, N.left - 1);
     if (d.v < 3) { l.pending.unshift(E.DEC.hh_nali_m.make(l, r, { v: d.v + 1 })); return; }
     l.flags.nali = null; l.fame = (l.fame || 0) + 5000;
-    if (N.score + r() * 0.3 > 0.55) { log('Chung cuộc: ' + d.n + ' chọn bạn! Chương trình công bố bạn độc thân thật — hai người nắm tay rời sân khấu.', 'big'); fx(l, { hap: 10 }); H.mem(l, 'Ngày được nữ chính chọn trên sân khấu Người ấy là ai.', 6); becomeCouple(l, r, log, { n: d.n, s: 'F', age: N.leadAge }, 'chương trình Người ấy là ai'); }
+    if (N.score + r() * 0.3 > 0.55) { log('Chung cuộc: ' + d.n + ' chọn bạn! Chương trình công bố bạn độc thân thật — hai người nắm tay rời sân khấu.', 'big'); fx(l, { hap: 10 }); H.mem(l, 'Ngày được nữ chính chọn trên sân khấu Người ấy là ai.', 6); becomeCouple(l, r, log, N.leadProfile || { n: d.n, s: 'F', age: N.leadAge }, 'chương trình Người ấy là ai'); }
     else log('Chung cuộc: ' + d.n + ' chọn chàng trai còn lại. Bạn ôm hoa ra về, nhưng nhận về cả nghìn lời nhắn làm quen trên mạng.', 'neutral');
   }
 
@@ -119,7 +121,7 @@
       var P = d.ps;
       return [, 'Bạn cùng 4 nam 5 nữ độc thân đặt chân lên một hòn đảo hoang sơ ở Phú Quốc. Không ai được tiết lộ nghề nghiệp, tuổi tác. Bạn chú ý ' + P[0].n + ' và ' + P[1].n + '.',
         'Thử thách vận động: chạy bộ, kéo co, bơi tiếp sức trên bãi biển. Người thắng được chọn một người để cùng sang khu nghỉ dưỡng "thiên đường" hẹn hò.',
-        'Ở khu nghỉ dưỡng, hai người lần đầu được kể về công việc, gia đình của nhau. Ở lại đảo thì sống thiếu thốn, ra "thiên đường" thì có bữa tối sang trọng.',
+        l.flags.dtd.win > 0 ? 'Ở khu nghỉ dưỡng, hai người lần đầu được kể về công việc, gia đình của nhau.' : 'Bạn ở lại đảo. Trong lúc sinh hoạt chung, hai người có thời gian trò chuyện và hiểu nhau hơn.',
         'Ngày cuối cùng: mỗi người chọn đối tượng mình quan tâm nhất. Chỉ khi cả hai chọn nhau, một cặp đôi mới thành hình.'][d.v];
     },
     opts: [
@@ -132,7 +134,7 @@
     var D = l.flags.dtd, P = D.picks;
     if (d.v === 1) { D.focus = k === 2 ? 0 : k; D.bond = k === 0 ? 0.2 : 0.1; log('Đảo thiên đường, ngày đầu: ' + (k === 0 ? 'bạn chủ động bắt chuyện với ' + P[0].n + ', hai người nói chuyện bên đống lửa đến khuya.' : 'bạn lặng lẽ quan sát mọi người, giữ năng lượng cho những ngày sau.'), 'neutral'); }
     else if (d.v === 2) { var w = ch(r, (k === 0 ? 0.45 : 0.15) + l.st.hea / 400); if (w) { D.win++; D.bond += 0.2; log('Thử thách trên bãi biển: bạn về nhất, chọn ' + P[D.focus].n + ' cùng sang khu nghỉ dưỡng hẹn hò.', 'good'); } else log('Thử thách: bạn thua, phải ở lại đảo ăn mì gói, nhìn người khác đi "thiên đường".', 'neutral'); }
-    else if (d.v === 3) { D.bond += k === 0 ? 0.2 : 0.08; log(k === 0 ? 'Ở "thiên đường", bạn kể thật về gia đình, công việc. ' + P[D.focus].n + ' lặng nghe rồi bảo: "Mình thích sự thẳng thắn của bạn."' : 'Bạn giữ chút bí ẩn, buổi hẹn vui nhưng còn khoảng cách.', 'neutral'); }
+    else if (d.v === 3) { D.bond += k === 0 ? 0.2 : 0.08; log(k === 0 ? (D.win > 0 ? 'Ở khu nghỉ dưỡng' : 'Trong buổi sinh hoạt trên đảo') + ', bạn kể thật về gia đình, công việc. ' + P[D.focus].n + ' lặng nghe rồi bảo: "Mình thích sự thẳng thắn của bạn."' : 'Bạn giữ chút bí ẩn, buổi hẹn vui nhưng còn khoảng cách.', 'neutral'); }
     else {
       l.flags.dtd = null; l.fame = (l.fame || 0) + 4e4;
       if (k === 2) { log('Đảo thiên đường khép lại, bạn không chọn ai — ra về với một mùa hè đáng nhớ và nhiều người theo dõi trên mạng.', 'neutral'); return; }

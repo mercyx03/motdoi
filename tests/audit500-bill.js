@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
+const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+const {E,U,W}=G,T=E.TRAVEL50,D=E.DATE50,L=E.LIFESTYLE,B=E.LEISURE_BILL;let n=0;
+function ok(v,t){assert.ok(v,t);n++;}function near(a,b,t){ok(Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b)),t);}
+function life(country='VN',seed=50001){const l=E.createLife({mode:country==='VN'?'vn':'world',country,seed});l.age=30;l.alive=true;l.indep=true;l.school=null;l.pending=[];l.flags={};l.job=null;l.money=L.unit(l,10000);l.yr={items:[]};l.partner={name:'Minh An',age:28,alive:true,since:28,status:'dating',sex:'F',inc:L.unit(l,30),close:60};return l;}
+function startTrip(l,code){l.pending=[E.DEC.du_lich.make(l,()=>.3)];const p=T.data.find(p=>p.code===code);choose(l,p.region);let guard=0;while(!l.pending[0].opts.some(o=>o.k===code)){ok(guard++<12,'pagination bounded');choose(l,'next');}choose(l,code);}
+function choose(l,k){ok(l.pending[0]&&l.pending[0].opts.some(o=>o.k===k),'option available '+k+' / '+JSON.stringify(l.pending[0]&&l.pending[0].opts.map(x=>x.k)));return E.resolve(l,k);}
+function finishTrip(l){let guard=0;while(l.pending[0]&&l.pending[0].id==='travel50_step'){ok(guard++<8,'trip bounded');const o=l.pending[0].opts.find(o=>!['cancel','next','prev','back'].includes(o.k));choose(l,o?o.k:'cancel');}}
+function movie(l,group='anime',id){D.init(l,'movie',true);l.pending=[E.DEC.date50_step.make(l)];if(['anime','china','disney'].includes(group)){choose(l,'animation');choose(l,group);}else choose(l,group);let guard=0;while(id&&!l.pending[0].opts.some(o=>o.k===id)){ok(guard++<10,'film pages bounded');choose(l,'next');}choose(l,id||l.pending[0].opts[0].k);choose(l,'care');}
+function gift(l,type='handmade',idx=1,approach='care'){D.init(l,'gift',true);l.pending=[E.DEC.date50_step.make(l)];choose(l,type);choose(l,'g'+idx);choose(l,approach);}
+const young=life();young.age=20;young.indep=false;young.veh='xe máy';young.money=10;E.finishYear(young);console.log(JSON.stringify({indep:young.indep,fin:young.fin,items:young.yr.items,flags:young.flags,money:young.money},null,2));

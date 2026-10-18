@@ -1,0 +1,11 @@
+const {chromium}=require('playwright'),assert=require('assert');
+(async()=>{const b=await chromium.launch({headless:true,channel:'chrome'});try{for(const width of [1280,390]){
+ const c1=await b.newContext({viewport:{width,height:900}}),c2=await b.newContext({viewport:{width,height:900}}),p=await c1.newPage(),q=await c2.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));q.on('pageerror',e=>errors.push(e.message));
+ await p.goto('http://localhost:8085/reviews.html');await p.waitForFunction(()=>document.querySelector('#total').textContent.includes('lượt'));const initial=await p.evaluate(async()=>await(await fetch('/api/reviews')).json());
+ await p.locator('[name=stars][value="5"]').check();await p.locator('#ratingSend').click();await p.locator('#ratingStatus').filter({hasText:'Đã lưu đánh giá 5 sao'}).waitFor();await p.waitForFunction(n=>document.querySelector('#total').textContent.startsWith(String(n)),initial.total+1);
+ await q.goto('http://localhost:8085/reviews.html');await q.waitForFunction(n=>document.querySelector('#total').textContent.startsWith(String(n)),initial.total+1);assert.equal(await q.locator('[name=stars]:checked').count(),0);await q.locator('[name=stars][value="1"]').check();await q.locator('#ratingSend').click();await q.locator('#ratingStatus').filter({hasText:'Đã lưu đánh giá 1 sao'}).waitFor();
+ await p.locator('#refreshReviews').click();await p.waitForFunction(n=>document.querySelector('#total').textContent.startsWith(String(n)),initial.total+2);assert(await p.locator('#reviewList').textContent().then(x=>x.includes('1/5')&&x.includes('5/5')));assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await p.screenshot({path:'v550-reviews-'+width+'.png',fullPage:true});
+ await p.reload();assert(await p.locator('[name=stars][value="5"]').isChecked());
+ await p.goto('http://localhost:8085/');assert.equal(await p.locator('#feedbackBtn').count(),0);const popup=p.waitForEvent('popup');await p.locator('#reviewsBtn').click();const opened=await popup;await opened.waitForLoadState();assert(opened.url().includes('/reviews.html'));await opened.close();
+ assert.deepEqual(errors,[]);await c1.close();await c2.close();console.log('V5.5 browser '+width+' passed, two clients share real local DB');
+ }}finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1);});

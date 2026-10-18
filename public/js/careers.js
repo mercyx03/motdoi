@@ -88,7 +88,7 @@
     // --- cơ quan nhà nước: lương = hệ số × lương cơ sở 2,34 triệu + phụ cấp (đã gồm phụ cấp công vụ, thâm niên) ---
     ['cong_chuc', ['chuyên viên', 'phó phòng', 'trưởng phòng', 'phó giám đốc sở', 'giám đốc sở'], [8, 11, 15, 20, 28], [4, 5, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
     ['vien_chuc', ['viên chức hạng III', 'viên chức hạng II', 'trưởng phòng đơn vị sự nghiệp', 'giám đốc trung tâm'], [7, 10, 14, 20], [4, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
-    ['can_bo_xa', ['công chức xã / phường', 'phó chủ tịch UBND xã / phường', 'chủ tịch UBND xã / phường', 'bí thư đảng ủy xã / phường'], [6.5, 9, 11, 13], [5, 5, 5], { cat: 'state', sec: 'formal', edu: 4, promo: 0.2, loss: 0.004, w: 1.2 }],
+    ['can_bo_xa', ['công chức xã / phường', 'phó chủ tịch UBND xã / phường', 'chủ tịch UBND xã / phường', 'bí thư đảng ủy xã / phường'], [6.5, 9, 11, 13], [5, 5, 5], { cat: 'state', sec: 'formal', edu: 5, promo: 0.2, loss: 0.004, w: 1.2 }],
     ['thue', ['công chức thuế', 'kiểm soát viên thuế', 'đội trưởng thuế', 'trưởng thuế cơ sở', 'cục trưởng thuế'], [9, 13, 17, 23, 32], [3, 5, 6, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'eco', promo: 0.22, loss: 0.003 }],
     ['hai_quan', ['nhân viên hải quan', 'kiểm tra viên hải quan', 'đội trưởng hải quan', 'chi cục trưởng hải quan', 'cục trưởng hải quan'], [10, 14, 19, 26, 35], [3, 5, 6, 7], { cat: 'state', sec: 'formal', edu: 5, majors: ['eco', 'law'], promo: 0.22, loss: 0.003 }],
     ['tham_phan', ['thư ký tòa án', 'thẩm phán sơ cấp', 'thẩm phán trung cấp', 'thẩm phán cao cấp', 'chánh án tòa án tỉnh'], [8, 13, 18, 25, 32], [3, 6, 7, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'law', promo: 0.2, loss: 0.002 }],
@@ -149,14 +149,14 @@
     ['hdv', ['hướng dẫn viên du lịch', 'hướng dẫn viên quốc tế', 'chủ công ty lữ hành'], [10, 20, 45], [3, 6], { cat: 'service', sec: 'inf', edu: 3, w: 0.7, sigma: 0.35 }],
     ['le_tan', ['lễ tân khách sạn', 'giám sát tiền sảnh', 'quản lý khách sạn', 'tổng quản lý khách sạn'], [7, 12, 25, 60], [3, 4, 6], { cat: 'service', sec: 'formal', edu: 3 }],
     ['barista', ['nhân viên pha chế', 'barista chính', 'quản lý quán cà phê'], [5, 8, 14], [2, 4], { cat: 'service', sec: 'inf', edu: 1 }],
-    ['bartender', ['bartender', 'bartender trưởng', 'chủ quán bar'], [8, 16, 40], [3, 6], { cat: 'service', sec: 'inf', edu: 1, sigma: 0.35 }],
+    ['bartender', ['bartender', 'bartender trưởng', 'chủ quán bar'], [8, 16, 40], [3, 6], { cat: 'service', sec: 'inf', edu: 1, minAge: 18, sigma: 0.35 }],
     ['thu_ngan', ['thu ngân siêu thị', 'giám sát ngành hàng', 'quản lý siêu thị'], [6.5, 10, 20], [3, 5], { cat: 'service', sec: 'formal', edu: 2 }],
     ['sau_rieng', ['làm thuê vườn sầu riêng', 'chủ vườn sầu riêng', 'chủ vựa sầu riêng xuất khẩu'], [7, 40, 120], [5, 6], { cat: 'farm', sec: 'farm', rural: 1, vn: 1, sigma: 0.8, fail: 0.04, w: 0.5 }],
     ['nuoi_tom', ['công nhân trại tôm', 'chủ đầm tôm', 'chủ trang trại tôm công nghệ cao'], [7, 35, 100], [4, 6], { cat: 'farm', sec: 'farm', coast: 1, sigma: 0.8, fail: 0.05, w: 0.6 }],
     // --- thể thao, esports, cờ ---
     ['vdv', ['vận động viên năng khiếu', 'vận động viên đội tuyển tỉnh', 'vận động viên đội tuyển quốc gia', 'ngôi sao thể thao'], [3, 7, 15, 40], [], { cat: 'sport', sec: 'formal', edu: 1, talent: 'thể thao', skillRank: 1, maxAge: 36 }],
     ['hlv_tt', ['trợ lý huấn luyện viên', 'huấn luyện viên', 'HLV đội tuyển quốc gia'], [9, 18, 40], [4, 8], { cat: 'sport', sec: 'formal', edu: 1, hidden: 1 }],
-    ['tuyen_thu_es', ['tuyển thủ học viện', 'tuyển thủ chuyên nghiệp', 'tuyển thủ đội tuyển quốc gia', 'ngôi sao esports'], [5, 15, 40, 100], [], { cat: 'esport', sec: 'inf', edu: 1, talent: 'game', skillRank: 1, maxAge: 30 }],
+    ['tuyen_thu_es', ['tuyển thủ học viện', 'tuyển thủ chuyên nghiệp', 'tuyển thủ chủ lực', 'ngôi sao esports'], [5, 15, 40, 100], [], { cat: 'esport', sec: 'inf', edu: 1, talent: 'game', skillRank: 1, maxAge: 30 }],
     ['coach_es', ['trợ lý HLV esports', 'HLV esports', 'HLV trưởng đội tuyển esports'], [10, 25, 50], [3, 5], { cat: 'esport', sec: 'inf', edu: 1, hidden: 1 }],
     ['caster_es', ['MC / caster esports', 'caster esports nổi tiếng'], [10, 40], [5], { cat: 'esport', sec: 'inf', edu: 2, hidden: 1 }],
     ['dau_tu_es', ['nhà đầu tư esports'], [40], [], { cat: 'esport', sec: 'inf', hidden: 1, sigma: 0.8, fail: 0.08 }],
@@ -179,7 +179,7 @@
     var o = x[4] || {};
     CAR[x[0]] = { id: x[0], t: x[1], vn: x[2], yrs: x[3], cat: o.cat || 'other', sec: o.sec || 'inf', edu: o.edu || 0, major: o.major, majors: o.majors, soft: o.soft,
       talent: o.talent, sex: o.sex, haz: o.haz, crime: o.crime, fame: o.fame, sigma: o.sigma || 0.12, fail: o.fail || 0, hidden: o.hidden, w: o.w || 1,
-      rural: o.rural, coast: o.coast, vnOnly: o.vn, ladder: o.ladder, skillRank: o.skillRank, maxAge: o.maxAge, prod: o.prod, promo: o.promo, loss: o.loss, tag: o.tag };
+      rural: o.rural, coast: o.coast, vnOnly: o.vn, ladder: o.ladder, skillRank: o.skillRank, minAge: o.minAge, maxAge: o.maxAge, prod: o.prod, promo: o.promo, loss: o.loss, tag: o.tag };
   });
   // tương thích ngược với bản 1.0
   var ALIAS = { farm: 'nong', fish: 'ngu_dan', labor: 'phu_ho', factory: 'cong_nhan', vendor: 'ban_rong', driver: 'tx_cn', ship: 'shipper', tailor: 'tho_may', hair: 'tho_toc', guard: 'bao_ve',
@@ -189,7 +189,8 @@
   function resolveJob(id) { return CAR[id] ? id : ALIAS[id] || 'cong_nhan'; }
   function J(l) { return l.job ? CAR[resolveJob(l.job.id)] : null; }
 
-  function scale(l) {
+  function scale(l, c, monthly) {
+    if (G.WEC) { var local = G.WEC.scale(l, c, monthly); if (local != null) return local; }
     if (l.cur === 'vnd') return Math.pow(l.base / 90, 0.45); // chênh lệch vùng miền: Hà Nội/TP.HCM cao hơn ~20–30%
     return l.base / 90;
   }
@@ -239,7 +240,7 @@
     var m = c.fame ? fameIncome(c, l.fame || 500) : c.id === 'xkld' ? 20 : c.vn[Math.min(rk, c.vn.length - 1)];
     var eduM = eduMult(l, c);
     if (c.sec === 'crime' || c.fame || c.skillRank != null) eduM = 1;
-    return m * scale(l) * eduM;
+    return m * scale(l, c, m) * eduM;
   }
   function offerHint(l, id) {
     var c = CAR[resolveJob(id)];
@@ -259,6 +260,7 @@
   }
   function eligible(l, c) {
     if (c.hidden) return false;
+    if (c.minAge && l.age < c.minAge) return false;
     if (c.edu > l.edu) return false;
     if (c.vnOnly && !isVN(l)) return false;
     if (c.major && !c.soft && c.major !== l.major) return false;
@@ -293,22 +295,31 @@
   function startRank(l, c) {
     if (!c || c.ladder || c.fame || c.skillRank != null || c.t.length < 2 || E.noStartRank) return 0;
     var exp = l.workYrs || 0, rk = 0;
-    if (/thực tập|tập sự|học việc|học viên|^trợ lý|^phụ /.test(c.t[0]) && (l.age >= 25 || exp >= 2)) rk = 1;
+    if (/thực tập|tập sự|học việc|học viên|^trợ lý|^phụ /.test(c.t[0]) && exp >= 2) rk = 1;
     if (l.edu >= 6 && c.edu >= 5 && c.t.length >= 3) rk = Math.max(rk, 1); // v3.0: có bằng thạc sĩ / tiến sĩ thì không vào ở bậc thấp nhất
     if (l.edu >= 7 && c.edu >= 5 && c.t.length >= 4 && exp >= 3) rk = Math.max(rk, 2);
-    return Math.min(rk, c.t.length - 1);
+    rk = Math.min(rk, c.t.length - 1);
+    // Bằng cấp / tuổi không tự biến người mới thành quản lý, trưởng bộ phận.
+    var history = l.jobsHist || [];
+    var experience = history.reduce(function (n, h, i) { var end = h.to == null ? (history[i + 1] ? history[i + 1].from : l.age) : h.to; return n + (resolveJob(h.id) === c.id ? Math.max(0, end - h.from) : 0); }, 0);
+    if (experience >= (c.yrs[0] || 3) && /trưởng|quản lý/.test(c.t[1] || '') && !/chủ|giám đốc/.test(c.t[1])) rk = Math.max(rk, 1);
+    while (rk > 0 && /trưởng|quản lý|giám đốc|chủ |chủ tịch/.test(c.t[rk]) && experience < c.yrs.slice(0, rk).reduce(function (a, y) { return a + y; }, 0)) rk--;
+    return rk;
   }
   function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
   function startJob(l, id, r, log, quiet) {
     id = resolveJob(id);
     var c = CAR[id];
+    if (c.minAge && l.age < c.minAge) { if (!quiet) log('Công việc này chỉ nhận từ ' + c.minAge + ' tuổi.', 'neutral'); return false; }
     if (l.job && resolveJob(l.job.id) === id && l.job.yrs === 0 && l.jobsHist && l.jobsHist.length && l.jobsHist[l.jobsHist.length - 1].from === l.age) return; // v2.8: vừa nhận đúng việc này trong năm
     if (l.school && l.school !== 'police') { if (!quiet) log('Bỏ dở việc học để đi làm.', 'bad'); l.school = null; l.schoolEnd = null; l.cityStudent = null; if (l.abroad && l.abroad.study) l.abroad = null; }
-    l.job = { id: id, rank: startRank(l, c), yrs: 0 };
+    l.job = { id: id, rank: startRank(l, c), yrs: 0, since: l.age, rankSince: l.age };
+    l.job.rankTracked = l.job.rank;
     if (c.prod) l.job.p = U.pick(r, c.prod);
     if (c.fame && !l.fame) l.fame = U.randint(r, 200, 3000) * (l.talent === c.talent ? 2 : 1);
     if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) { if (l.talent !== 'game' && !l.gameType) l.gameType = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = E.gameFor(l, r); } // v2.8: game khớp thể loại sở trường
-    if (c.skillRank != null) l.job.rank = rankBySkill(l, c);
+    if (c.skillRank != null) l.job.rank = c.id === 'tuyen_thu_es' ? 0 : rankBySkill(l, c);
+    if (id === 'tuyen_thu_es' && E.ESPORTS) E.ESPORTS.init(l, r);
     l.flags.needJob = false; l.indep = true;
     l.jobsHist = l.jobsHist || [];
     l.jobsHist.push({ id: id, from: l.age });
@@ -334,12 +345,13 @@
       if (rk >= 2 && y % 4 === 2 && r() < (SI.team ? 0.02 : 0.06) + (l.skill - 75) / 150 + (wealthy ? 0.08 : 0)) medal(l, r, log, 'ASIAD ' + y + mn, 5);
       if (rk >= 2 && y % 4 === 0 && SI.olympic !== false && r() < (SI.team ? 0.002 : 0.015 + (l.skill - 85) / 300 + (wealthy ? 0.05 : 0))) medal(l, r, log, 'Thế vận hội Olympic ' + y + mn, 20);
     } else if (c.id === 'tuyen_thu_es') {
+      if (E.ESPORTS && E.ESPORTS.managed(l)) return;
       var g = l.game || 'esports';
       if (rk >= 1 && r() < 0.2 + (l.skill - 50) / 120) { log('Cùng đội vô địch giải ' + g + ' quốc gia.', 'good'); H.cash(l, l.base * 0.3, 'Tiền thưởng giải đấu'); l.fame = (l.fame || 0) * 1.5 + 5000; H.mem(l, 'Nâng cúp vô địch ' + g + ' quốc gia giữa tiếng hò reo.', 4); }
       if (rk >= 2 && y % 2 === 1 && /Liên Quân|Liên Minh|Mobile Legends|Valorant|PUBG|Free Fire/.test(g) && r() < 0.3 + (l.skill - 70) / 80) medal(l, r, log, 'SEA Games ' + y + ' (' + g + ')', 1.5);
       if (rk >= 3 && r() < 0.08 + (l.skill - 88) / 100) {
         var wt = /Liên Minh/.test(g) ? 'Chung kết Thế giới Liên Minh Huyền Thoại' : /Liên Quân/.test(g) ? 'AWC — giải Liên Quân thế giới' : /Mobile Legends/.test(g) ? 'M-Series thế giới' : /Valorant/.test(g) ? 'Valorant Champions' : /CS2/.test(g) ? 'CS2 Major' : 'giải thế giới ' + g;
-        log('Lên ngôi vô địch ' + wt + '!', 'big'); H.cash(l, l.base * 6, 'Tiền thưởng ' + wt); l.fame = (l.fame || 0) * 3 + 2e5; l.medals.push({ ev: wt, m: 'vàng', y: y }); H.mem(l, 'Khoảnh khắc nâng cúp ' + wt + '.', 7);
+        log('Lên ngôi vô địch ' + wt + '!', 'big'); H.cash(l, l.base * 6, 'Tiền thưởng ' + wt); l.fame = (l.fame || 0) * 3 + 2e5; l.medals.push({ ev: wt, m: 'vàng', y: y, career: c.id, sport: l.game }); H.mem(l, 'Khoảnh khắc nâng cúp ' + wt + '.', 7);
       }
     } else if (c.id === 'ky_thu') {
       var chess = l.talentSub === 'cờ vua';
@@ -353,7 +365,7 @@
   }
   function medal(l, r, log, ev, bonus) {
     var x = r(), m = x < 0.33 ? 'vàng' : x < 0.66 ? 'bạc' : 'đồng';
-    l.medals.push({ ev: ev, m: m, y: l.birthYear + l.age });
+    l.medals.push({ ev: ev, m: m, y: l.birthYear + l.age, career: l.job && resolveJob(l.job.id), sport: l.job && resolveJob(l.job.id) === 'tuyen_thu_es' ? l.game : l.talentSub });
     var mult = m === 'vàng' ? 1 : m === 'bạc' ? 0.5 : 0.3;
     H.cash(l, l.base * bonus * mult, 'Thưởng huy chương ' + m + ' ' + ev);
     log('Giành huy chương ' + m + ' tại ' + ev + '!', m === 'vàng' ? 'big' : 'good');
@@ -367,15 +379,27 @@
     if (!l.job || l.flags.military) return 0;
     var c = J(l), a = l.age, y = l.birthYear + a;
     if (!c) return 0;
+    if (G.WEC && l.cur !== 'vnd') {
+      var market = G.WEC.context(l), key = market.code + ':' + (market.data && market.data.usd) + ':' + l.urban + ':' + c.id;
+      if (market.data && l.job.market52 !== key) {
+        ['last', 'lastRk', 'floor', 'floorRk', 'sportPrevSalary', 'sportPaidFactor'].forEach(function (k) { delete l.job[k]; });
+        l.job.market52 = key;
+      }
+    }
     l.job.yrs++; l.workYrs++;
     var inc = 0;
     // kỹ năng (thể thao, esports, cờ, danh tiếng)
     if (c.skillRank != null || c.fame) {
+      if (c.id === 'tuyen_thu_es' && E.ESPORTS && E.ESPORTS.managed(l)) {
+        E.ESPORTS.annual(l, r, log, focus);
+      } else {
       var peak = c.id === 'tuyen_thu_es' ? 22 : c.id === 'ky_thu' ? 35 : c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).peak : 27;
       var dg = a <= peak ? 3 + r() * 5 + (focus === 'work' ? 3 : focus === 'balance' ? 1.5 : 0) + (focus === 'health' && c.id === 'vdv' ? 2 : 0) + (l.talent === c.talent ? 2 : 0) : -(1 + r() * 4);
       l.skill = U.clamp((l.skill || 20) + dg, 0, 100);
       if (c.skillRank) { var nr = rankBySkill(l, c); if (nr > l.job.rank) { l.job.rank = nr; log('Được gọi lên: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 6 }); if (nr >= 2) H.mem(l, 'Lần đầu khoác áo đội tuyển quốc gia.', 5); } }
+      }
       sportYear(l, r, log, c, y);
+      if (E.sportPromote && !(c.id === 'tuyen_thu_es' && E.ESPORTS && E.ESPORTS.managed(l))) E.sportPromote(l, log);
     }
     if (c.fame) {
       var f0 = l.fame || 300;
@@ -408,22 +432,25 @@
       J0.sen = (J0.sen || 0) + 1;
       var noise = Math.exp(J0.nz * c.sigma * (c.sigma >= 0.4 ? 0.9 : c.sec === 'formal' ? 0.25 : 0.5));
       var senior = 1 + Math.min(10, J0.sen - 1) * 0.02;
-      inc = c.vn[rk] * 12 * scale(l) * eduM * qM * focM * (c.id === 'vdv' && E.sportPay ? E.sportPay(l, rk) : 1) * J0.k * noise * senior;
+      inc = c.vn[rk] * 12 * scale(l, c, c.vn[rk]) * eduM * qM * focM * (E.athletePay && /^(vdv|tuyen_thu_es|ky_thu)$/.test(c.id) ? E.athletePay(l, rk) : c.id === 'vdv' && E.sportPay ? E.sportPay(l, rk) : 1) * J0.k * noise * senior;
+      if (c.id === 'tuyen_thu_es' && E.esportsIncome) inc = E.esportsIncome(l, inc, r, log);
       // vừa được thăng chức thì lương năm sau không thể thấp hơn trước; nghề ổn định không tự dưng tụt lương
+      if (c.id === 'tuyen_thu_es' && E.ESPORTS && E.ESPORTS.managed(l)) { J0.floor = null; J0.last = null; }
       if (J0.floor && J0.floorRk === rk) inc = Math.max(inc, J0.floor);
       else if (J0.last && J0.lastRk === rk && c.sigma < 0.4) inc = Math.max(inc, J0.last * 0.97);
       J0.floor = null; J0.last = inc; J0.lastRk = rk;
+      if (E.sportSalary && /^(vdv|tuyen_thu_es|ky_thu)$/.test(c.id) && !(c.id === 'tuyen_thu_es' && E.ESPORTS && E.ESPORTS.managed(l))) inc = E.sportSalary(l, inc, log);
       if (c.id === 'scam_kh') inc = 0;
     }
     // thăng tiến theo thang bậc & số năm
     if (!c.fame && c.skillRank == null && l.job.rank < c.t.length - 1) {
       var need = c.yrs[l.job.rank] || 3;
-      if (l.job.yrs >= need) {
+      if (l.job.yrs >= need && (!E.canAdvance || E.canAdvance(l, c, true))) {
         var pp = c.ladder ? (l.job.rank >= 7 ? 0.04 + (l.st.kno - 70) / 300 : 0.85 - (l.karma < -20 ? 0.4 : 0)) :
           (c.promo || 0.2) + (l.st.kno - 50) / 250 + (focus === 'work' ? 0.12 : focus === 'balance' ? 0.06 : 0) + ((l.tr && l.tr.amb) - 50) / 300 + (l.talent === 'ăn nói' ? 0.04 : 0) - l.job.rank * 0.06 +
           (l.flags.eliteBoost && l.flags.eliteBoost === c.id ? 0.3 : 0); // v2.5: con nhà có "ô dù" thăng tiến nhanh hơn
         if (r() < pp) {
-          l.job.rank++; l.job.yrs = 0;
+          l.job.rank++; l.job.yrs = 0; l.job.rankSince = l.age + 1; l.job.rankTracked = l.job.rank;
           if (inc > 0 && !c.fame) { l.job.floor = inc * (1.08 + r() * 0.1); l.job.floorRk = Math.min(l.job.rank, c.vn.length - 1); } // v3.0: thăng chức là tăng lương
           var ru = !c.ladder && E.rankUpText ? E.rankUpText(l, c) : null; // v4.4: nghề tự do, tự kinh doanh không có "thăng chức"
           log(c.ladder ? 'Được thăng quân hàm ' + c.t[l.job.rank] + '.' : ru ? ru.t : 'Được thăng chức: ' + jobTitleOf(l) + '.', 'good'); H.fx(l, { hap: 5 });
@@ -444,7 +471,7 @@
     if (c.crime) {
       H.fx(l, { karma: -3 });
       if (c.crime[1] && r() < c.crime[1]) { H.kill(l, c.crime[2], log, true); return inc; }
-      var pa = c.crime[0] * (1.15 - l.st.kno / 250) * (l.job.rank >= 1 ? 0.85 : 1);
+      var pa = c.crime[0] * (1.15 - l.st.kno / 250) * (E.crimeRankK ? E.crimeRankK(l, c) : (l.job.rank >= 1 ? 0.85 : 1)); // v4.5: ông trùm có đàn em, có người chống lưng — ít bị bắt hơn
       if (r() < pa) H.sched(l, 'bi_bat', 0, { why: c.crime[3], sev: c.id === 'ma_tuy' ? 3 : c.id === 'lua_dao' || c.id === 'cho_vay' ? 2 : 1 });
     }
     // nguy hiểm nghề nghiệp
@@ -454,7 +481,7 @@
     }
     // mất việc
     var lossP = c.loss != null ? c.loss : c.sec === 'formal' ? 0.02 : c.sec === 'farm' ? 0 : c.sec === 'crime' ? 0 : 0.03;
-    if (!c.fame && c.skillRank == null && c.id !== 'xkld' && c.id !== 'phu_giup' && H.isEmployee(l) && r() < lossP) {
+    if (!E.isStableService(l) && !c.fame && c.skillRank == null && c.id !== 'xkld' && c.id !== 'phu_giup' && H.isEmployee(l) && r() < lossP) {
       log('Mất việc ' + jobTitleOf(l) + '.', 'bad'); l.job = null; l.flags.needJob = true; H.fx(l, { hap: -6 }); return inc * 0.5;
     }
     // v2.5: chủ cơ sở không "bị cho nghỉ" nhưng có thể ế ẩm phải đóng cửa (cơ nghiệp gia đình thì không)
@@ -462,7 +489,7 @@
       log(c.cat === 'free' ? 'Mất dần khách hàng, mấy tháng liền không có dự án — đành tạm gác nghề tự do.' : 'Làm ăn ế ẩm mấy năm liền, ' + (l.job.p || jobTitleOf(l)) + ' phải đóng cửa.', 'bad'); l.job = null; l.flags.needJob = true; H.fx(l, { hap: -8 }); return inc * 0.5;
     }
     // giải nghệ (thể thao / esports)
-    var maxA = c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).max : c.maxAge; // v2.9: mỗi môn một tuổi giải nghệ
+    var maxA = c.id === 'tuyen_thu_es' && E.ESPORTS && E.ESPORTS.managed(l) ? E.ESPORTS.init(l, r).retire : c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).max : c.maxAge; // v2.9: mỗi môn một tuổi giải nghệ
     if (maxA && (a >= maxA || (a >= maxA - 6 && l.skill < 45 && r() < 0.3))) {
       log(c.cat === 'esport' ? 'Giải nghệ thi đấu esports.' : 'Giải nghệ sau những năm thi đấu.', 'big');
       H.mem(l, 'Trận đấu cuối cùng trước khi giải nghệ — bạn cúi chào khán giả.', 5);
@@ -472,7 +499,7 @@
       return inc;
     }
     // nghỉ hưu
-    var formal = c.sec === 'formal';
+    var formal = c.sec === 'formal' || E.pensionCovered && E.pensionCovered(l, c);
     var retAge;
     if (c.ladder) { var rk2 = l.job.rank; retAge = (rk2 <= 3 ? 53 : rk2 === 4 ? 55 : rk2 === 5 ? 57 : rk2 === 6 ? 60 : 62) - (l.sex === 'F' && rk2 >= 6 ? 2 : 0); }
     else if (c.sec === 'crime') retAge = 70;
@@ -486,7 +513,7 @@
       l.lastIncome = inc;
       // v3.0: đủ 15 năm đóng BHXH mới có lương hưu; mức hưởng theo số năm đóng (nam 20 năm, nữ 15 năm được 45%, mỗi năm thêm 2%, tối đa 75%)
       var SIy = l.si ? l.si.yrs : null;
-      l.pensioned = l.pensioned || (SIy != null ? SIy >= 15 : formal && l.workYrs >= 15);
+      l.pensioned = l.pensioned || (SIy != null ? SIy >= 15 : !E.pensionCovered && formal && l.workYrs >= 15);
       if (l.pensioned && l.pensionInc == null) {
         if (SIy) { var avg = l.si.sum / Math.max(1, SIy), rt = l.sex === 'M' ? (SIy < 20 ? 0.4 + (SIy - 15) * 0.01 : 0.45 + (SIy - 20) * 0.02) : 0.45 + (SIy - 15) * 0.02; l.pensionRate = U.clamp(rt, 0.4, 0.75); l.pensionInc = avg * l.pensionRate; }
         else l.pensionInc = inc * 0.55; // lương hưu tính theo lương lúc nghỉ hưu lần đầu

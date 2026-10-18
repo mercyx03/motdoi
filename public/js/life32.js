@@ -308,7 +308,7 @@
   E.HOOKS.year.push(function (l, r, log, a) {
     if (!l.alive || l.flags.nick || !l.out || l.orient === 'straight' || !isVN(l)) return;
     l.flags.nick = true;
-    log(l.orient === 'bi' ? 'Từ ngày công khai, hội bạn thân gọi bạn là "bi" — "thích ai thì thích, miễn người ta tử tế".' : l.sex === 'F' ? 'Từ ngày công khai, hội bạn thân gọi bạn trìu mến là "bé Liên" — ai cũng bênh bạn chằm chặp.' : 'Từ ngày công khai, hội bạn thân đặt cho bạn biệt danh "' + (l.role === 'top' ? 'tóp mỡ' : 'bột tôm') + '" — gọi riết thành quen, cả hội cười suốt.', 'good');
+    log(true ? 'Từ ngày công khai, hội bạn thân vẫn quý bạn như xưa: "Mày vẫn là mày, có gì đâu mà phải giấu."' : l.orient === 'bi' ? 'Từ ngày công khai, hội bạn thân gọi bạn là "bi" — "thích ai thì thích, miễn người ta tử tế".' : l.sex === 'F' ? 'Từ ngày công khai, hội bạn thân gọi bạn trìu mến là "bé Liên" — ai cũng bênh bạn chằm chặp.' : 'Từ ngày công khai, hội bạn thân đặt cho bạn biệt danh "' + (l.role === 'top' ? 'tóp mỡ' : 'bột tôm') + '" — gọi riết thành quen, cả hội cười suốt.', 'good');
     fx(l, { soc: 3 });
   });
 

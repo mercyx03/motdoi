@@ -71,7 +71,7 @@
     title: 'Chiếc ví rơi trên đường', prep: function (l, r) { return { x: pick(r, [0.005, 0.01, 0.02]) }; },
     text: 'Trên đường đi học về, bạn nhặt được một chiếc ví, bên trong có kha khá tiền và tấm thẻ căn cước.',
     opts: [
-      { k: 'return', l: 'Mang đến đồn công an / trả lại', run: function (l, r, log) { fx(l, { karma: 5, hap: 2 }); log('Mang ví đến công an phường. Người mất tìm đến cảm ơn, còn viết thư khen gửi nhà trường.', 'good'); H.mem(l, 'Lá thư khen của nhà trường vì nhặt được của rơi trả người đánh mất.', 3); } },
+      { k: 'return', l: 'Mang đến đồn công an / trả lại', run: function (l, r, log) { fx(l, { karma: 5, hap: 2 }); log('Mang ví đến công an phường. Người mất tìm đến cảm ơn'+(l.school?', còn viết thư khen gửi nhà trường.':', gửi tặng bạn một lá thư cảm ơn.'), 'good'); H.mem(l, l.school?'Lá thư khen của nhà trường vì nhặt được của rơi trả người đánh mất.':'Lá thư cảm ơn vì nhặt được của rơi trả người đánh mất.', 3); } },
       { k: 'keep', l: 'Giữ lại tiền, vứt ví đi', run: function (l, r, log, d) { cashB(l, d.x, 'Tiền nhặt được'); fx(l, { karma: -5 }); log('Giữ lại tiền. Mấy hôm liền không dám nhìn vào mắt ' + mom(l) + '.', 'neutral'); } },
       { k: 'parent', l: function (l) { return 'Mang về đưa ' + (l.fam.mAlive && l.fam.fAlive ? 'bố mẹ' : mom(l)); }, run: function (l, r, log) { fx(l, { karma: 3 }); log('Mang về nhà. Cả nhà cùng đi tìm người đánh rơi.', 'good'); } }
     ]

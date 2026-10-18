@@ -112,7 +112,7 @@
   // người làm công ăn lương ở khu vực chính thức đóng BHXH 8% · BHYT 1,5% · BHTN 1% (tối đa trên 46,8 triệu/tháng)
   function insured(l) {
     var c = jobC(l);
-    return !!(c && c.sec === 'formal' && H.isEmployee(l) && c.id !== 'xkld' && !(l.abroad && !l.abroad.perm) && !(l.jailUntil != null && l.age < l.jailUntil));
+    return !!(c && (E.pensionCovered ? E.pensionCovered(l, c) : c.sec === 'formal' && H.isEmployee(l)) && c.id !== 'xkld' && !l.pensioned && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && !l.abroad.perm) && !(l.jailUntil != null && l.age < l.jailUntil));
   }
   E.insured = insured;
   function siRate(l) { return isVN(l) ? 0.105 : 0.08; }
@@ -143,7 +143,7 @@
       log(fit > 0 ? 'Công việc ' + E.jobTitle(l) + ' đúng sở trường (' + tw + ') — làm việc say mê, ' + (H.isEmployee(l) ? 'năng suất cao hơn đồng nghiệp, được cấp trên để ý.' : 'làm ra sản phẩm tốt, khách hàng tin tưởng quay lại.') : 'Công việc ' + E.jobTitle(l) + ' chẳng liên quan gì đến ' + tw + ' — đi làm chủ yếu vì đồng lương, nhiều hôm chán nản, dễ căng thẳng.', fit > 0 ? 'good' : 'neutral');
     }
     y.gross = inc;
-    if (ins0) {
+    if (ins0 && (!l.si || l.si.last !== l.age)) {
       var capY = V(l, 46.8 * 12), basis = Math.min(inc, capY), si = basis * siRate(l);
       inc -= si; y.si = si;
       l.si = l.si || { yrs: 0, sum: 0 }; l.si.yrs++; l.si.sum += basis; l.si.last = l.age; l.si.m = basis / 12;
@@ -180,7 +180,7 @@
     if (!c) return s;
     var fake = { job: { id: id, rank: 0 } }; for (var k in l) if (!(k in fake)) fake[k] = l[k];
     if (fitOf(l, c) > 0) s += ' · đúng sở trường';
-    if (c.sec === 'formal' && H.isEmployee(fake)) s += ' · có đóng ' + E.siLabel(l);
+    if (E.pensionCovered ? E.pensionCovered(fake, c) : c.sec === 'formal' && H.isEmployee(fake)) s += ' · có đóng ' + E.siLabel(l);
     return s;
   };
   // BHYT chi trả phần lớn viện phí

@@ -1,0 +1,20 @@
+function context(l){var code=l.abroad&&l.abroad.perm?l.abroad.code:l.country;return{code:code,country:G.W.BY[code],data:DATA.countries[code]};}
+function factor(l){return l.urban?1.04:.83;}
+function scale(l,c,monthly){var x=context(l);if(l.cur==='vnd'||!x.data)return null;
+ var p=G.CUR.priceLevel(x.country?x.country.gdp:l.gdp),sector=c && c.sec === 'farm' ? .82 : c && c.sec === 'inf' ? .90 : 1;
+ var premium=1;
+ if(monthly>DATA.vnMonthlyMillion*1.5 && !(c&&(c.fame||c.sec==='crime'))){
+  var relative=monthly/DATA.vnMonthlyMillion,ratio=x.data.usd/(DATA.vnMonthlyMillion*1e6/G.CUR.VND);
+  var exponent=Math.max(.35,Math.min(.85,.85-Math.log(Math.max(1,ratio))*.17));
+  premium=1.5*Math.pow(relative/1.5,exponent)/relative;
+ }
+ return x.data.usd/p/DATA.vnMonthlyMillion*factor(l)*sector*premium;
+}
+function baseFor(code,urban,gdp){var d=DATA.countries[code],c=G.W.BY[code];if(!d||!c)return null;
+ var p=G.CUR.priceLevel(gdp||c.gdp),annual=d.usd*12/p;
+ // Household prices determine expenses; wage bounds prevent GDP-heavy tax havens from imposing implausible household budgets.
+ var raw=d.gdpPPP*.55*d.consumptionPLI/p;
+ return Math.max(annual*.45,Math.min(annual*.90,raw))*(urban?1.1:.8);
+}
+G.WEC={data:DATA,context:context,scale:scale,baseFor:baseFor};
+})(typeof window!=='undefined'?(window.G=window.G||{}):(globalThis.G=globalThis.G||{}));

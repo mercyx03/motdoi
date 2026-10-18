@@ -166,10 +166,19 @@
   // tiền nước ngoài ↔ triệu đồng theo tỉ giá thực
   function toVNDf(l) { return C.priceLevel(resGdp(l)) * C.VND / 1e6; }
   function convertAll(l, f) {
-    l.money *= f; if (l.mortgage) l.mortgage *= f; (l.loans || []).forEach(function (x) { x.bal *= f; }); if (l.vehVal) l.vehVal *= f;
-    [l.assets, l.basis].forEach(function (A) { if (A) Object.keys(A).forEach(function (k) { if (typeof A[k] === 'number') A[k] *= f; }); });
-    [l.port, l.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { P[k].v *= f; P[k].basis *= f; }); });
-    if (l.income) l.income *= f; if (l.lastIncome) l.lastIncome *= f; if (l.pensionInc) l.pensionInc *= f;
+    if (!(isFinite(f) && f > 0)) throw new Error('Invalid currency conversion');
+    function fields(o, names) { if (o) names.forEach(function (k) { if (typeof o[k] === 'number' && isFinite(o[k])) o[k] *= f; }); }
+    fields(l, ['money', 'mortgage', 'houseVal', 'vehVal', 'income', 'lastIncome', 'pensionInc']);
+    (l.loans || []).forEach(function (x) { fields(x, ['bal']); });
+    [l.assets, l.basis].forEach(function (A) { if (A) fields(A, Object.keys(A)); });
+    [l.port, l.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { fields(P[k], ['v', 'basis']); }); });
+    fields(l.si, ['sum', 'm']);
+    fields(l.partner, ['inc']);
+    fields(l.fam, ['mInc', 'fInc', 'mInc0', 'fInc0', 'mLost', 'fLost']);
+    [l.job, l.lastJob].forEach(function (j, i, all) { if (!i || j !== all[0]) fields(j, ['last', 'floor', 'sportPrevSalary']); });
+    (l.props || []).forEach(function (p) { fields(p, ['v', 'basis']); });
+    (l.ventures || []).forEach(function (v) { fields(v, ['cap', 'unit', 'R']); fields(v.last, ['rev', 'cost', 'prof']); });
+    // marketBook prices and positions retain their explicitly named VND/USD currencies.
   }
   E.abroadConvert = convertAll;
   function flight(l) { return 15 / toVNDf(l); } // vé máy bay khứ hồi ~15 triệu đồng, tính ra tiền nước sở tại

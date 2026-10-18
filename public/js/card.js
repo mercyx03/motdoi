@@ -46,7 +46,7 @@
       var y = 180;
       if (av) {
         var s = 160; ctx.fillStyle = 'rgba(255,255,255,.06)'; round(ctx, W / 2 - s / 2 - 12, y, s + 24, s + 24, 20); ctx.fill();
-        ctx.imageSmoothingEnabled = false; ctx.drawImage(av, W / 2 - s / 2, y + 12, s, s); ctx.imageSmoothingEnabled = true; y += s + 50;
+        ctx.imageSmoothingEnabled = true; ctx.drawImage(av, W / 2 - s / 2, y + 12, s, s); y += s + 50;
       } else y += 30;
       // tên
       ctx.fillStyle = C.text; fit(ctx, sum.n, '800 %px ' + FD, 76, W - 160, 40); ctx.fillText(sum.n, W / 2, y + 40); y += 70;

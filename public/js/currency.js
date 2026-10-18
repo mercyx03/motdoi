@@ -42,9 +42,13 @@
   }
   function fmtVND(trieu) { // số đo bằng triệu đồng
     var U = G.U, neg = trieu < 0, v = Math.abs(trieu), s;
-    if (v >= 1000) s = U.fmtNum(v / 1000, v >= 10000 ? 0 : 1) + ' tỷ đ';
-    else s = U.fmtNum(v, v < 10 ? 1 : 0) + ' triệu đ';
-    return (neg ? '−' : '') + s;
+    if (!isFinite(v)) return '—';
+    v = Math.round(v * 1e6) / 1e6;
+    if (v >= 999.95) s = U.fmtNum(v / 1000, 2) + ' tỷ đ';
+    else if (v >= .99995) s = U.fmtNum(v, 2) + ' triệu đ';
+    else if (v >= .001) s = U.fmtNum(v * 1000, 1) + 'k đ';
+    else s = U.fmtNum(v * 1e6, 0) + ' đ';
+    return (neg && v ? '−' : '') + s;
   }
   // v: USD PPP → chuỗi tiền bản địa (+ ≈ VND nếu muốn)
   function fmtLocal(code, gdpk, v, withVnd) {

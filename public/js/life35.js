@@ -21,7 +21,7 @@
   function rk(l) { return l.job ? l.job.rank || 0 : 0; }
   function rep(l, d) { if (l.job) l.job.rep = U.clamp((l.job.rep || 50) + d, 0, 100); }
   function stress(l, d) { if (l.mind) l.mind.stress = U.clamp(l.mind.stress + d, 0, 100); }
-  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; return true; } return false; }
+  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1 && (!E.canAdvance || E.canAdvance(l, c, false))) { l.job.rank++; l.job.yrs = 0; l.job.rankSince = l.age; l.job.rankTracked = l.job.rank; return true; } return false; }
   function sk(l) { return l.skill || 20; }
   function cap(s) { return U.cap(s); }
 
@@ -159,6 +159,8 @@
     var p = admitP(l, s);
     if (!ch(r, p)) { log('Trượt kỳ thi năng khiếu vào ' + s[1] + '. ' + pick(r, ['Phần thi năng khiếu chưa đủ điểm chuẩn.', 'Thiếu nửa điểm, về nhà khóc cả buổi.', 'Hội đồng nhận xét: "Có tố chất nhưng cần luyện thêm."']), 'bad'); fx(l, { hap: -6 }); l.pending.unshift(E.DEC.uniFail.make(l)); return; }
     var city = s[2] || (l.city || 'tỉnh nhà');
+    if (l.job) { l.lastJob = l.job; var history=l.jobsHist||[];if(history.length&&history[history.length-1].to==null)history[history.length-1].to=l.age;l.job=null;l.income=0;log('Dừng công việc hiện tại để theo học chương trình chuyên ngành toàn thời gian.','neutral'); }
+    l.flags.needJob = false;
     l.school = s[6] === 'cd' ? 'voc' : 'uni'; l.schoolEnd = l.age + (s[6] === 'cd' ? 2 : 4); // v3.9: cao đẳng 2 năm
     l.major = s[3]; l.majorName = s[4]; l.uniTier = s[5] >= 0.55 ? 1.2 : 1.05; l.uniCity = city;
     if (s[2] && s[2] !== homeCity(l)) l.cityStudent = { city: city, since: l.age };

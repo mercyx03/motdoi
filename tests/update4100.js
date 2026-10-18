@@ -1,0 +1,44 @@
+'use strict';
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
+const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+const {E,U}=G,F=E.FILM;let count=0;function ok(v,t){assert.ok(v,t);count++;}function near(a,b,t){ok(Math.abs(a-b)<1e-7*Math.max(1,Math.abs(b)),t);}
+function life(seed=41001,country='VN'){let l=E.createLife({mode:country==='VN'?'vn':'world',country,seed});l.age=30;l.edu=5;l.school=null;l.major='art';l.pending=[];l.flags={};l.alive=true;l.st.hea=90;l.indep=true;l.money=l.base*1000;E.startJob(l,'dao_dien',()=>.5,()=>{},true);l.job.rank=1;l.job.rankSince=25;return l;}
+function run(l,k){return E.resolve(l,k);}
+function start(l){F.start(l,()=>.35,()=>{});ok(l.pending[0].id==='film_step','project begins');}
+function through(l,until,config={}){let n=0;while(l.pending[0]&&l.pending[0].id==='film_step'&&F.stages[F.project(l).stage]!==until){ok(n++<25,'bounded chain');const p=F.project(l),s=F.stages[p.stage],d=l.pending[0],key=config[s]||d.opts.find(o=>o.k!=='quit').k;run(l,key);}return l.pending[0];}
+ok(E.CONCERT_CATS.kr.a.filter(a=>a.n==='T-ara').length===1,'T-ara concert once');ok(E.IDOLS.world.includes('T-ara')&&E.IDOL_BORN['T-ara']===1989,'T-ara idol cohort');
+let talents=0;for(let i=0;i<400;i++){const l=E.createLife({mode:'vn',seed:10000+i});if(l.talent==='đạo diễn')talents++;}ok(talents>0&&talents<80,'innate directing random');
+for(const talent of ['đạo diễn','âm nhạc','diễn xuất',null]){const l=life();l.age=18;l.edu=3;l.job=null;l.talent=talent;l.skill=95;l.st.kno=95;const d=E.DEC.uni.make(l,()=>.2),schools=d.opts.filter(o=>/^nk_dd_/.test(o.k));ok(schools.length===(talent==='đạo diễn'?3:0),'only directing talent offered director schools');if(talent==='đạo diễn'){ok(d.text.includes('4 năm'),'degree duration clear');for(const o of schools){const a=JSON.parse(JSON.stringify(l));E.DEC.uni.apply(a,d,o.k,()=>0,()=>{});ok(a.school==='uni'&&a.schoolEnd===22&&a.edu===3&&!a.job,'admitted not instantly qualified');ok(a.major==='art'&&a.flags.tSchool.jobs.includes('dao_dien'),'proper degree career link');}}}
+for(const change of [l=>l.age=17,l=>l.edu=2,l=>l.school='upper',l=>l.jailUntil=20,l=>l.flags.military=20,l=>l.talent='âm nhạc']){const l=life();l.age=18;l.edu=3;l.job=null;l.talent='đạo diễn';const d=E.DEC.uni.make(l,()=>.2);change(l);const before=JSON.stringify(l);E.DEC.uni.apply(l,d,'nk_dd_hn',()=>0,()=>{});ok(JSON.stringify(l)===before,'invalid school attempt ignored');}
+{
+ const l=life();l.age=18;l.edu=3;l.job=null;l.talent='đạo diễn';l.skill=95;l.flags.uniNext=18;E.beginYear(l);const d=l.pending.find(x=>x.id==='uni');ok(d&&d.opts.some(o=>o.k==='nk_dd_hn'),'school proposal naturally appears at age 18');l.pending=[];E.DEC.uni.apply(l,d,'nk_dd_hn',()=>0,()=>{});for(let age=18;age<21;age++){l.age=age;E.finishYear(l);l.pending=[];ok(l.edu<5&&l.school==='uni','not graduate before four academic years');}l.age=21;l.st.kno=0;const defense=E.DEC.bao_ve_tn.make(l,()=>0);ok(defense.title.includes('đồ án phim'),'film-specific graduation defense');ok(E.DEC.thuc_tap.make(l,()=>0).data.p[1]==='dao_dien','film internship not architecture');E.DEC.bao_ve_tn.apply(l,defense,'doc_suc',()=>0,()=>{});E.finishYear(l);ok(l.edu>=5&&!l.school,'fourth academic year completed after defense');const graduation=l.pending.find(d=>d.id==='nk_ra_truong');ok(graduation&&graduation.data.jobs.includes('dao_dien'),'graduation suggests assistant route');l.pending=[graduation];run(l,'j0');ok(l.job.id==='dao_dien'&&l.job.rank===0,'graduate begins as assistant');
+}
+{
+ const l=life();l.job.rank=0;start(l);ok(l.pending[0].opts.filter(o=>o.k!=='quit').length===1&&l.pending[0].opts[0].k==='short','assistant only short first film');const d=l.pending[0];E.DEC.film_step.apply(l,d,'cinema',()=>.5,()=>{});ok(F.project(l).stage===0,'cannot forge feature entry');
+}
+for(const format of Object.keys(F.formats))for(const medium of ['live','animation'])for(const source of ['original','adapt','public'])for(const genre of Object.keys(F.genres)){
+ const l=life(),before=l.money;start(l);through(l,'cast1',{format,medium,source,genre,fund:'studio'});let p=F.project(l);near(l.money,before,'studio budget never added/subtracted');ok(p.candidates.length===6,'six stable cast candidates');ok(new Set(p.candidates.map(a=>a.name)).size===6,'distinct names');for(const a of p.candidates){ok(l.birthYear+l.age-a.born>=18&&a.home&&a.strength&&a.weakness,'coherent adult actor profile');ok(a.acting>=35&&a.voice<=95&&a.reliable<=95,'bounded cast abilities');ok(!/undefined|NaN|\[object/.test(F.actorText(l,a)),'profile rendered clean');}
+ run(l,l.pending[0].opts[0].k);ok(!l.pending[0].opts.some(o=>o.k===p.cast[0]),'actor cannot be cast twice');through(l,'board');run(l,'b'+p.board.correct);ok(p.boardWon,'storyboard correct result');through(l,'shoot2');run(l,'c'+p.continuity.correct);ok(p.continuityWon,'continuity correct result');through(l,'release');const d=JSON.parse(JSON.stringify(l.pending[0]));run(l,'target');p=F.project(l);ok(p.done&&p.status==='released'&&p.history.length===16,'full production released');near(l.money,before+p.fee,'studio pays exactly director fee');ok(p.cast.length===2&&p.score>=0&&p.score<=100&&p.audience>0,'outcomes coherent');ok(l.job.rank===1,'no instant promotion');const snap=JSON.stringify(l);E.DEC.film_step.apply(l,d,'viral',()=>.5,()=>{});ok(JSON.stringify(l)===snap,'release cannot replay');ok(!F.canStart(l),'one film per year');l.age++;ok(F.canStart(l),'new year can film');
+}
+for(const country of ['VN','US','JP','FR'])for(const funding of ['studio','self']){
+ const l=life(41005,country),before=l.money;start(l);through(l,'cast1',{fund:funding,medium:'animation',source:'adapt'});const p=F.project(l);near(l.money,before-(funding==='self'?p.budget:0),'funding single charge');const saved=JSON.parse(JSON.stringify(l));E.migrate(saved);ok(JSON.stringify(saved.flags.film)===JSON.stringify(p),'save preserves project and cast');through(saved,'release');run(saved,'festival');near(saved.money,before-(funding==='self'?p.budget:0)+F.project(saved).payout,'net settlement reconciles');ok(Number.isFinite(E.netWorth(saved)),'world net worth finite');
+}
+{
+ const l=life();l.money=0;start(l);through(l,'fund');ok(!l.pending[0].opts.some(o=>o.k==='self'),'self funding hidden without funds');const d=l.pending[0];E.DEC.film_step.apply(l,d,'self',()=>.5,()=>{});ok(F.stages[F.project(l).stage]==='fund'&&l.money===0,'no forged debt');run(l,'studio');ok(l.money===0,'zero wealth can work for studio');
+}
+for(const change of [l=>l.age++,l=>l.cur='usd',l=>l.abroad={code:'JP'},l=>l.job=null,l=>l.job.rank++,l=>l.jailUntil=40,l=>l.flags.military=40,l=>l.alive=false,l=>l.st.hea=10,l=>l.flags.variety={done:false}]){
+ const l=life();start(l);through(l,'release');const d=JSON.parse(JSON.stringify(l.pending[0]));change(l);ok(!F.valid(l,d.data),'stale context invalid');const before=JSON.stringify(l);E.DEC.film_step.apply(l,d,'target',()=>0,()=>{});ok(JSON.stringify(l)===before,'stale no payout or mutation');
+}
+for(let stage=0;stage<16;stage++){
+ const l=life();start(l);through(l,F.stages[stage],{fund:'self'});const p=F.project(l),before=l.money,d=l.pending[0];run(l,'quit');ok(p.done&&p.status==='cancelled','cancel stage '+stage);near(l.money,before,'cancel never magically refunds');E.DEC.film_step.apply(l,d,d.opts[0].k,()=>.5,()=>{});near(l.money,before,'cancel cannot resume payout');
+}
+{
+ const l=life();start(l);through(l,'cast1');ok(!E.DEC.gameshow.valid(l)&&!E.DEC.tv_moi.valid(l),'shows blocked while filming');const d=JSON.parse(JSON.stringify(l.pending[0]));run(l,d.opts[0].k);const before=JSON.stringify(l);E.DEC.film_step.apply(l,d,d.opts[1].k,()=>.5,()=>{});ok(JSON.stringify(l)===before,'old casting stage cannot double select');
+ const interrupted=life();start(interrupted);through(interrupted,'cast1',{fund:'self'});const money=interrupted.money;interrupted.age++;F.year(interrupted,()=>.5,()=>{});ok(F.project(interrupted).done,'expired year project cancelled');near(interrupted.money,money,'expired no money created');
+}
+// Every meaningful branch, including wrong mini game answers, resolves without loops.
+for(let i=0;i<120;i++){
+ const l=life(41050+i),r=()=>U.rand(l);start(l);let guard=0;while(l.pending.length){const d=l.pending[0];ok(!/undefined|NaN|\[object/.test(d.text+d.title+JSON.stringify(d.opts)),'clean decision');ok(guard++<25,'bounded season');const opts=d.opts.filter(o=>o.k!=='quit');run(l,opts[Math.floor(r()*opts.length)].k);}ok(F.project(l).done&&Number.isFinite(l.money),'random production ends');
+}
+console.log('4.10.0: '+count+' checks passed; 240 format / medium / rights / genre combinations, 120 random productions.');

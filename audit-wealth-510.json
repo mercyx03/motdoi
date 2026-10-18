@@ -1,0 +1,6287 @@
+[
+  {
+    "seed": 880182,
+    "q": 1,
+    "age": 83,
+    "net": 10147806.859747762,
+    "cash": 8457574.10695061,
+    "house": 1042235.8030092084,
+    "assets": 647996.9497879426,
+    "job": "chủ chuỗi tiệm vàng",
+    "flow": {
+      "salary": 18008708.23260007,
+      "partner": 1002.8949520725149,
+      "interest": 2073956.1739437752,
+      "other": {
+        "Tiền nhặt được": 0.5535,
+        "Tiền bo": 1,
+        "Trợ cấp thất nghiệp (BHTN)": 7.151083827623812,
+        "Làm chui lương cao": 22.14,
+        "Vay vay mua nhà": 312.9,
+        "Vay vay ngân hàng": 16.604999999999997,
+        "Lãi găm vàng": 13200,
+        "Thưởng cuối năm": 4950,
+        "BHYT chi trả viện phí": 2566.666666666667,
+        "Lãi phòng tập gym": 1214805.556058804,
+        "Con Nguyễn Văn Nam trả nợ": 525609.0232460437
+      }
+    }
+  },
+  {
+    "seed": 880180,
+    "q": 5,
+    "age": 83,
+    "net": 8143662.1728117075,
+    "cash": 6567407.040134207,
+    "house": 1576249.7673301464,
+    "assets": 0,
+    "job": "giám đốc dự án xây dựng",
+    "flow": {
+      "salary": 12279610.225205567,
+      "partner": 464289.85533557634,
+      "interest": 2950821.673096326,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 51.79116710951563,
+        "Bố mẹ chu cấp": 26071.490322834146,
+        "Học bổng khuyến khích": 4.968,
+        "Phạm Đức Long trả nợ": 3300,
+        "Bán lại startup": 733333.3333333333,
+        "Quà cảm ơn": 660,
+        "Hốt hụi": 22770,
+        "Tăng lương": 9900,
+        "Thưởng cuối năm": 4950,
+        "Vay vay ngân hàng": 49500,
+        "BHYT chi trả viện phí": 21780,
+        "Phần tài sản bố mẹ để lại": 118800,
+        "Con Hồ Duy Hưng trả nợ": 509972.62801932154
+      }
+    }
+  },
+  {
+    "seed": 880089,
+    "q": 1,
+    "age": 77,
+    "net": 2689869.983196313,
+    "cash": 2353259.5914347135,
+    "house": 336610.39176159946,
+    "assets": 0,
+    "job": "nhân viên bảo vệ",
+    "flow": {
+      "salary": 5066568.537845871,
+      "partner": 476541.8211241483,
+      "interest": 698479.521103207,
+      "other": {
+        "Thưởng cuối năm": 4083,
+        "BHYT chi trả viện phí": 6130.966666666667,
+        "chị Hằng trả nợ": 3630.000000000001,
+        "Phần tài sản bố mẹ để lại": 16335,
+        "Hốt hụi": 4174.5,
+        "Con Triệu Thị Mai trả nợ": 131386.2421022159
+      }
+    }
+  },
+  {
+    "seed": 880195,
+    "q": 1,
+    "age": 91,
+    "net": 2113682.2049650634,
+    "cash": 1005153.8771072367,
+    "house": 767575.3688290322,
+    "assets": 308085.11870062765,
+    "job": "kiểm soát viên thị trường",
+    "flow": {
+      "salary": 3158495.456928323,
+      "partner": 1816403.0020396775,
+      "interest": 278443.76131295925,
+      "other": {
+        "Tiền mừng cưới": 7541.998956265101,
+        "BHYT chi trả viện phí": 16162.966666666665,
+        "Vay vay mua nhà": 244072.4894207202,
+        "Làm thêm": 957.0000000000001,
+        "Thưởng cuối năm": 7178,
+        "em Hiền trả nợ": 9570.000000000002,
+        "Phần tài sản bố mẹ để lại": 64597.5,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 371840.83514456236,
+        "Con Lê Khánh Ly trả nợ": 61100.92690636763
+      }
+    }
+  },
+  {
+    "seed": 880226,
+    "q": 5,
+    "elite": "tp",
+    "age": 89,
+    "net": 637312.13240668,
+    "cash": 548314.7447428657,
+    "house": 9849.279623513135,
+    "assets": 79148.10780594565,
+    "job": "chủ tịch tập đoàn (tập đoàn hàng không)",
+    "flow": {
+      "salary": 1149697.7372117082,
+      "partner": 1934.5131173682644,
+      "interest": 309384.05714277516,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 3091.3342250967567,
+        "Gia đình chu cấp": 9315,
+        "Học bổng khuyến khích": 6.21,
+        "Thưởng Tết, lương tháng 13": 24,
+        "BHYT chi trả viện phí": 56.6,
+        "Phần tài sản bố mẹ để lại": 1170,
+        "Lợi nhuận sau thâu tóm": 388.125
+      }
+    }
+  },
+  {
+    "seed": 880092,
+    "q": 5,
+    "age": 71,
+    "net": 598238.4747835968,
+    "cash": 276452.07136466255,
+    "house": 279778.0735783788,
+    "assets": 0,
+    "job": "trưởng phòng nhân sự",
+    "flow": {
+      "salary": 1767169.981405319,
+      "partner": 730807.2990343359,
+      "interest": 109142.23824836774,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 54.45058169521626,
+        "Tiền mừng cưới": 48.56673984282184,
+        "Bố mẹ chu cấp": 10459.080296890343,
+        "Học bổng toàn phần": 29.497499999999995,
+        "Thưởng cuối năm": 6064,
+        "Bán bản quyền giọng": 8085.000000000002,
+        "BHYT chi trả viện phí": 26680.8,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 30318.750000000007,
+        "Trợ cấp thất nghiệp (BHTN)": 2422.4293627355682,
+        "Con Quách Xuân Mai trả nợ": 30081.336546900056
+      }
+    }
+  },
+  {
+    "seed": 880160,
+    "q": 4,
+    "age": 93,
+    "net": 278903.8532321616,
+    "cash": 269568.1533519832,
+    "house": 9335.696328389686,
+    "assets": 0,
+    "job": "phó giáo sư",
+    "flow": {
+      "salary": 49610.30203259534,
+      "partner": 309170.39999999997,
+      "interest": 130020.92368620823,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 4.81549250910906,
+        "Học bổng toàn phần": 48.12749999999999,
+        "BHYT chi trả viện phí": 219.6,
+        "Bố mẹ chu cấp": 157.37456499076077,
+        "Học bổng & trợ giảng nghiên cứu sinh": 112.29749999999999,
+        "Tiền mừng cưới": 103.97189857596298,
+        "Vẽ chân dung theo đơn": 16,
+        "Thắng cá độ lớn": 128.34,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Phần tài sản bố mẹ để lại": 1612,
+        "Con Nguyễn Thùy Chi trả nợ": 40937.681770287476,
+        "Tiền phi vụ": 49
+      }
+    }
+  },
+  {
+    "seed": 880010,
+    "q": 3,
+    "age": 88,
+    "net": 270243.4524135368,
+    "cash": 136943.66037032634,
+    "house": 133290.53269041475,
+    "assets": 0,
+    "job": "chủ tịch HĐQT ngân hàng",
+    "flow": {
+      "salary": 495059.5318359498,
+      "partner": 15559.929516119875,
+      "interest": 48860.594747349896,
+      "other": {
+        "Tiền nhặt được": 0.7011000000000001,
+        "Bố mẹ chu cấp": 11.948203012451115,
+        "Chu cấp tình cảm từ Phan Thị Hằng": 1689.6000000000001,
+        "Học bổng khuyến khích": 5.6088000000000005,
+        "Đập heo đất": 1.4022000000000001,
+        "Tiền mừng cưới": 64.16674811753444,
+        "Hốt hụi": 55.199999999999996,
+        "Vay vay ngân hàng": 67.37849999999999,
+        "Con Lê Phương Anh trả nợ": 4308.860294932614,
+        "Phần tài sản bố mẹ để lại": 1209,
+        "BHYT chi trả viện phí": 109.8,
+        "Bán xe đạp cũ": 0.002401501409043051,
+        "Bán căn hộ chung cư mini": 2797.0987635037995
+      }
+    }
+  },
+  {
+    "seed": 880173,
+    "q": 1,
+    "age": 95,
+    "net": 260848.68092335245,
+    "cash": 233597.35750689675,
+    "house": 1185.7311131071838,
+    "assets": 24824.587605137483,
+    "job": "chủ đại lý",
+    "flow": {
+      "salary": 27204.372875962945,
+      "partner": 0,
+      "interest": 75344.11145046724,
+      "other": {
+        "Đập heo đất": 0.9594,
+        "Vay vay mua nhà": 288.4,
+        "Thưởng Tết, lương tháng 13": 120,
+        "Làm thêm": 16.0425,
+        "anh Khương trả nợ": 64.17,
+        "Lãi nhà hàng": 183148.76433746572,
+        "BHYT chi trả viện phí": 215.39999999999998
+      }
+    }
+  },
+  {
+    "seed": 880020,
+    "q": 1,
+    "age": 87,
+    "net": 239737.08186019398,
+    "cash": 98989.17472908231,
+    "house": 2662.433307371826,
+    "assets": 138085.47382373986,
+    "job": null,
+    "flow": {
+      "salary": 55594.56219561634,
+      "partner": 1675.2895224559502,
+      "interest": 42830.44344810214,
+      "other": {
+        "Tiền mừng cưới": 105.51846931390465,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Vay vay mua nhà": 1595.3,
+        "Lợi nhuận sau thâu tóm": 828,
+        "Lãi spa / thẩm mỹ viện": 196217.07951539813,
+        "Tiền nhặt được": 9.936,
+        "Con Phan Thành Long trả nợ": 9663.914353613904,
+        "BHYT chi trả viện phí": 218.4
+      }
+    }
+  },
+  {
+    "seed": 880238,
+    "q": 4,
+    "age": 86,
+    "net": 205725.4203907038,
+    "cash": 43935.29508203647,
+    "house": 7772.535151580133,
+    "assets": 154017.5901570872,
+    "job": null,
+    "flow": {
+      "salary": 189697.57535589475,
+      "partner": 12223.084781403799,
+      "interest": 67635.63955677113,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 21.63013606763396,
+        "Bố mẹ chu cấp": 240.16744801920876,
+        "Đập heo đất": 3.312,
+        "Thưởng huy chương vàng Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 264.96,
+        "Hà Thành Long trả nợ": 99.35999999999999,
+        "Thưởng trận thắng": 33.12,
+        "Thưởng vô địch V.League": 49.68,
+        "Thưởng vô địch ASEAN Cup": 993.5999999999999,
+        "Thưởng huy chương bạc Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 66.24,
+        "Thưởng huy chương bạc SEA Games 2049 (bóng đá)": 331.2,
+        "Hợp đồng quảng cáo": 1283.75604,
+        "Thưởng huy chương bạc SEA Games 2051 (bóng đá)": 331.2,
+        "Thưởng huy chương đồng SEA Games 2053 (bóng đá)": 198.72,
+        "Thưởng huy chương bạc SEA Games 2055 (bóng đá)": 331.2,
+        "Cát-xê 2 Ngày 1 Đêm (2/2 tập)": 1075,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Trợ cấp thất nghiệp (BHTN)": 58.963143093386094,
+        "Lãi quán cà phê": 16499.13338628116,
+        "Con Nguyễn Hoàng Phúc trả nợ": 8265.86144110675,
+        "Vay vay ngân hàng": 412.6339390155824,
+        "Phần tài sản bố mẹ để lại": 1664,
+        "BHYT chi trả viện phí": 218.4,
+        "Con Nguyễn Minh Anh trả nợ": 7919.469092831061
+      }
+    }
+  },
+  {
+    "seed": 880023,
+    "q": 5,
+    "elite": "ct",
+    "age": 91,
+    "net": 168393.26380444548,
+    "cash": 152706.89027152778,
+    "house": 1572.190818265946,
+    "assets": 14214.726894411227,
+    "job": "ủy viên Trung ương Đảng",
+    "flow": {
+      "salary": 26597.949457384348,
+      "partner": 4147.832356798872,
+      "interest": 35472.8239044794,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 28.003851215582383,
+        "Gia đình chu cấp": 1863,
+        "Học bổng toàn phần": 23.287499999999998,
+        "Tiền nhặt được": 4.6575,
+        "Của hồi môn & quà cưới": 1552.5,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Con phụ giúp": 3.88125,
+        "Con Nguyễn Anh Khoa trả nợ": 667.6388373948164,
+        "Lãi spa / thẩm mỹ viện": 107942.95307503689,
+        "Vay vay ngân hàng": 388.125,
+        "Thừa kế": 4657.5,
+        "BHYT chi trả viện phí": 102
+      }
+    }
+  },
+  {
+    "seed": 880199,
+    "q": 3,
+    "age": 93,
+    "net": 163834.71461827567,
+    "cash": 150586.32269935022,
+    "house": 13248.391698943718,
+    "assets": 0,
+    "job": "kíp trưởng không lưu",
+    "flow": {
+      "salary": 26578.766786705084,
+      "partner": 189868.79999999993,
+      "interest": 70774.24759889735,
+      "other": {
+        "Bố mẹ chu cấp": 42.92692605355671,
+        "Học bổng toàn phần": 24.84,
+        "Trợ cấp thất nghiệp (BHTN)": 12.788726597995279,
+        "Truy lĩnh lương làm thêm": 4.14,
+        "Hốt hụi": 42.074999999999996,
+        "BHYT chi trả viện phí": 110.6,
+        "Chu cấp tình cảm từ Lương Hà My": 3492,
+        "Tiền mừng cưới": 52.71266031827777,
+        "Lê Quang Khải trả nợ": 8.28,
+        "Vay vay ngân hàng": 12.42,
+        "Bán nhà phố 3–4 tầng": 6792.803692750731
+      }
+    }
+  },
+  {
+    "seed": 880037,
+    "q": 5,
+    "age": 82,
+    "net": 138287.73534284174,
+    "cash": 136901.26674896828,
+    "house": 1383.2036138342437,
+    "assets": 3.2637,
+    "job": "ca sĩ hát đám cưới, phòng trà",
+    "flow": {
+      "salary": 321132.2800894633,
+      "partner": 9195.832105811587,
+      "interest": 110947.02350565774,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 35.58953070509805,
+        "Bố mẹ chu cấp": 713.2771861889667,
+        "Chu cấp tình cảm từ Nguyễn Kiều Oanh": 1512,
+        "Học bổng khuyến khích": 9.4464,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 229,
+        "Vẫn chạy show": 20,
+        "Thưởng Tết, lương tháng 13": 96,
+        "Giải quán quân và hợp đồng sau chương trình": 1000,
+        "Tiền mừng cưới": 90.80000817636726,
+        "Show Tết": 84,
+        "Tiền bản quyền tác giả": 1822.261814397238,
+        "Doanh thu album & show": 481.275,
+        "Cát-xê phim": 32.085,
+        "Show diễn nhờ bài hit": 269.1361360512674,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Vay vay ngân hàng": 72.19124999999998,
+        "Con Lê Thị Nga trả nợ": 14626.057271286709,
+        "Con Lê Minh Hằng trả nợ": 19106.953895577004
+      }
+    }
+  },
+  {
+    "seed": 880024,
+    "q": 1,
+    "age": 83,
+    "net": 132471.93475725403,
+    "cash": 54834.46198705593,
+    "house": 11602.938339057011,
+    "assets": 66034.53443114109,
+    "job": "trưởng nhóm telesale",
+    "flow": {
+      "salary": 10542.093396241842,
+      "partner": 252911.99999999983,
+      "interest": 48158.92795887088,
+      "other": {
+        "Tiền nhặt được": 1.107,
+        "Chu cấp tình cảm từ Đỗ Thành Công": 1848,
+        "Tiền mừng cưới": 31.402265096311456,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Con Đỗ Mỹ Duyên trả nợ": 9404.35135380682,
+        "Con phụ giúp": 2.7675,
+        "Vay vay ngân hàng": 83.02499999999999,
+        "BHYT chi trả viện phí": 73.2,
+        "Đỗ Văn Sơn trả nợ": 35.9775
+      }
+    }
+  },
+  {
+    "seed": 880233,
+    "q": 5,
+    "age": 87,
+    "net": 129015.7241383596,
+    "cash": 118291.59339766047,
+    "house": 10724.130095091521,
+    "assets": 0,
+    "job": "luật sư điều hành hãng luật",
+    "flow": {
+      "salary": 66877.65710435923,
+      "partner": 146902.80000000002,
+      "interest": 54614.24995934479,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 69.78079005701046,
+        "Bố mẹ chu cấp": 1362.7800050029934,
+        "Phạm Hà Vy trả nợ": 33.12,
+        "Vay vay mua nhà": 870.8,
+        "Chu cấp tình cảm từ Hoàng Ngọc Quang": 3996,
+        "Thù lao luật sư": 511.70399999999995,
+        "Hốt hụi": 84.575,
+        "Quà cảm ơn": 3.312,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Tiền mừng cưới": 84.95971632421016,
+        "BHYT chi trả viện phí": 327.6,
+        "Vay vay ngân hàng": 8.28,
+        "Bán căn hộ chung cư mini": 2223.289557028736,
+        "Con Hoàng Trung Nghĩa trả nợ": 7218.872167134658
+      }
+    }
+  },
+  {
+    "seed": 880059,
+    "q": 4,
+    "age": 65,
+    "net": 128899.63950896167,
+    "cash": 114363.98457167558,
+    "house": 14535.64310472122,
+    "assets": 0,
+    "job": "chủ tiệm nail",
+    "flow": {
+      "salary": 16593.169205033264,
+      "partner": 190476.0000000001,
+      "interest": 37256.92245483907,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 5.075172526509299,
+        "Bố mẹ chu cấp": 132.37743770849158,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Tiền mừng cưới": 58.88241672977339,
+        "Bán căn hộ chung cư mini": 1869.8051991934292,
+        "Phần tài sản bố mẹ để lại": 2418,
+        "Hốt hụi": 54.4
+      }
+    }
+  },
+  {
+    "seed": 880049,
+    "q": 3,
+    "age": 69,
+    "net": 118345.69024815393,
+    "cash": 83765.55767045653,
+    "house": 34979.945,
+    "assets": 0,
+    "job": "hướng dẫn viên du lịch",
+    "flow": {
+      "salary": 303057.7038712914,
+      "partner": 7250.945667177854,
+      "interest": 21534.533658438653,
+      "other": {
+        "Thắng cá độ": 2.8044000000000002,
+        "Tiền mừng cưới": 38.27050806225277,
+        "Bố mẹ chu cấp": 2.4677387330937757,
+        "Vay nợ thẻ tín dụng": 8.4132,
+        "Thưởng Tết, lương tháng 13": 36,
+        "Quà cảm ơn": 3.312,
+        "Vay vay mua nhà": 1571.5,
+        "Con Nguyễn Khánh An trả nợ": 9844.769928852482,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Lợi nhuận sau thâu tóm": 828
+      }
+    }
+  },
+  {
+    "seed": 880063,
+    "q": 3,
+    "age": 80,
+    "net": 116656.9607025577,
+    "cash": 94660.6986580303,
+    "house": 19454.84616687499,
+    "assets": 2541.4153144351462,
+    "job": "diễn viên lồng tiếng",
+    "flow": {
+      "salary": 6746.142586970656,
+      "partner": 227541.60000000018,
+      "interest": 43455.532220263296,
+      "other": {
+        "Bố mẹ chu cấp": 14.442238581165153,
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Thưởng Tết, lương tháng 13": 18,
+        "Hốt hụi": 20.125,
+        "Con Vũ Ngọc Sơn trả nợ": 5707.63128581557,
+        "BHYT chi trả viện phí": 82.2,
+        "Lãi nhà hàng": 6370.189396901309,
+        "Bán biệt thự có sân vườn": 14096.703248387577
+      }
+    }
+  },
+  {
+    "seed": 880040,
+    "q": 3,
+    "age": 92,
+    "net": 107241.29562255234,
+    "cash": 104856.22221119392,
+    "house": 2385.073267113124,
+    "assets": 0,
+    "job": "thợ làm tóc",
+    "flow": {
+      "salary": 9081.92461957769,
+      "partner": 116209.74845733336,
+      "interest": 58424.90933686315,
+      "other": {
+        "Tiền nhặt được": 0.7011000000000001,
+        "Bố mẹ chu cấp": 16.896055667971734,
+        "Thưởng Tết, lương tháng 13": 33,
+        "Tiền bo": 1,
+        "Vay vay mua nhà": 343.7,
+        "Trợ cấp thất nghiệp (BHTN)": 72.69713816773607,
+        "Hốt hụi": 24.15,
+        "Vay vay ngân hàng": 105.16499999999999,
+        "BHYT chi trả viện phí": 50.39999999999999,
+        "Tiền mừng cưới": 27.563502374592236,
+        "Con Phạm Thanh Hà trả nợ": 9451.122926994238,
+        "Trang điểm cô dâu": 1.5,
+        "Bán nhà cấp 4": 851.7753259040588
+      }
+    }
+  },
+  {
+    "seed": 880022,
+    "q": 5,
+    "elite": "nh",
+    "age": 95,
+    "net": 100285.66952217516,
+    "cash": 50138.72616683979,
+    "house": 9452.695,
+    "assets": 40694.24815304016,
+    "job": "viên chức hạng II",
+    "flow": {
+      "salary": 21189.733778289403,
+      "partner": 14190.5911532279,
+      "interest": 67545.02725791153,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 2018.6965179989984,
+        "Bố mẹ chu cấp": 32358.517714983947,
+        "Học bổng toàn phần": 29.497499999999995,
+        "Gia đình chu cấp": 496.79999999999995,
+        "Tiền mừng cưới": 98.90389867052436,
+        "Trợ cấp thất nghiệp (BHTN)": 230.92986378102873,
+        "Hốt hụi": 56.1,
+        "BHYT chi trả viện phí": 113.4,
+        "Con H'Thoa A trả nợ": 17921.284245922223,
+        "Bán bớt lô đất": 29815.17468676772,
+        "Bán căn hộ chung cư mini": 3545.0187559956994
+      }
+    }
+  },
+  {
+    "seed": 880172,
+    "q": 3,
+    "age": 88,
+    "net": 99055.68103953499,
+    "cash": 93703.84756956414,
+    "house": 5351.833187517522,
+    "assets": 0,
+    "job": "đạo diễn lồng tiếng",
+    "flow": {
+      "salary": 11706.504579099907,
+      "partner": 218064.00000000015,
+      "interest": 65964.95981005754,
+      "other": {
+        "Bố mẹ chu cấp": 40.338761899311294,
+        "Tiền mừng cưới": 30.556288478476922,
+        "BHYT chi trả viện phí": 105.8,
+        "Thưởng Tết, lương tháng 13": 22,
+        "Tiền nhặt được": 4.3469999999999995,
+        "Trợ cấp thất nghiệp (BHTN)": 18.202247732260922,
+        "Lý Tú Dĩnh trả nợ": 28.979999999999997,
+        "Bán giải pháp kỹ thuật": 150,
+        "Lời đơn sỉ": 18.112499999999997,
+        "Con Nguyễn Thiên Kiệt trả nợ": 7376.023854439435,
+        "Bồi thường giọng nói": 10.867499999999998,
+        "Bán nhà phố 3–4 tầng": 3201.3351081165597
+      }
+    }
+  },
+  {
+    "seed": 880189,
+    "q": 1,
+    "age": 55,
+    "net": 91884.44352424375,
+    "cash": 77243.8487890649,
+    "house": 14640.594735178845,
+    "assets": 0,
+    "job": "chủ xưởng gỗ",
+    "flow": {
+      "salary": 24088.892871210217,
+      "partner": 154440.00000000003,
+      "interest": 18732.858836636107,
+      "other": {
+        "Đập heo đất": 1.1808,
+        "Thắng cá độ": 2.3616,
+        "chị Ngọc trả nợ": 132.48,
+        "Nguyễn Thanh Tùng trả nợ": 16.56,
+        "Hốt hụi": 75.89999999999999,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880204,
+    "q": 5,
+    "age": 90,
+    "net": 87516.79225640747,
+    "cash": 72066.58390833274,
+    "house": 2916.9941751543283,
+    "assets": 12533.209297237963,
+    "job": "freelancer lập trình hàng đầu",
+    "flow": {
+      "salary": 82882.9712383461,
+      "partner": 0,
+      "interest": 22317.2674463111,
+      "other": {
+        "Tiền nhặt được": 3.0015,
+        "Tiền tiêu vặt bố mẹ cho": 98.97701890870823,
+        "Bố mẹ chu cấp": 1219.7477016778869,
+        "Học bổng khuyến khích": 12.006,
+        "Chu cấp tình cảm từ Trần Công Minh": 936,
+        "Vẽ chân dung theo đơn": 22,
+        "anh Quyết trả nợ": 30.015,
+        "Bồi thường bản quyền": 45.022499999999994,
+        "BHYT chi trả viện phí": 207.8,
+        "Nguyễn Thành Long trả nợ": 30.015,
+        "Phần tài sản bố mẹ để lại": 1508,
+        "Đáo hạn bảo hiểm": 195.4978893882345,
+        "Làm thêm": 30.015,
+        "Hốt hụi": 69,
+        "Thưởng Tết, lương tháng 13": 46,
+        "Lãi khách sạn mini": 32220.36184642335,
+        "Lãi spa / thẩm mỹ viện": 863.4343284089596
+      }
+    }
+  },
+  {
+    "seed": 880170,
+    "q": 4,
+    "age": 91,
+    "net": 86254.26160152466,
+    "cash": 28440.471657357888,
+    "house": 1823.2903691104118,
+    "assets": 55990.49918788847,
+    "job": null,
+    "flow": {
+      "salary": 49907.57125866716,
+      "partner": 5068.747760485706,
+      "interest": 6869.683169724454,
+      "other": {
+        "Tiền nhặt được": 3.312,
+        "Tiền tiêu vặt bố mẹ cho": 11.62760315316622,
+        "Bố mẹ chu cấp": 186.65686254727513,
+        "Trợ cấp thất nghiệp (BHTN)": 8.268871466413005,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Tiền mừng cưới": 83.96157704427837,
+        "Lời đơn sỉ": 41.4,
+        "Quà cảm ơn": 3.312,
+        "Vay vay mua nhà": 1325.8,
+        "Lãi spa / thẩm mỹ viện": 27732.62217668842,
+        "BHYT chi trả viện phí": 113.4
+      }
+    }
+  },
+  {
+    "seed": 880095,
+    "q": 4,
+    "age": 65,
+    "net": 84461.20051885355,
+    "cash": 81045.24587970892,
+    "house": 3415.9486644351978,
+    "assets": 0,
+    "job": "đạo diễn nổi tiếng",
+    "flow": {
+      "salary": 19563.315352647936,
+      "partner": 127116.00000000001,
+      "interest": 28189.622899456757,
+      "other": {
+        "Bố mẹ chu cấp": 71.66480706786678,
+        "Học bổng toàn phần": 18.819,
+        "Nhuận bút kịch bản": 10,
+        "Chu cấp tình cảm từ Trần Mạnh Cường": 1716,
+        "Tiền mừng cưới": 61.29813107237219,
+        "Vay vay mua nhà": 1358,
+        "Vay vay ngân hàng": 69.55199999999999,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #1": 459.99999999999994,
+        "Cát-xê đạo diễn phim Phía bên kia cửa #2": 73.6,
+        "Cát-xê đạo diễn phim Mùa gió trở lại #3": 459.99999999999994,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #4": 73.6,
+        "Hốt hụi": 75.89999999999999,
+        "Cát-xê đạo diễn phim Chuyến xe cuối ngày #5": 459.99999999999994,
+        "Cát-xê 2 Ngày 1 Đêm (2/2 tập)": 163,
+        "Con Trần Bảo Nam trả nợ": 12237.614374153178,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #6": 11.04,
+        "Thu hồi ròng phim Chuyến xe cuối ngày #7": 694.3755329244436,
+        "BHYT chi trả viện phí": 114.8,
+        "Cát-xê đạo diễn phim Chuyến xe cuối ngày #8": 459.99999999999994
+      }
+    }
+  },
+  {
+    "seed": 880167,
+    "q": 4,
+    "age": 85,
+    "net": 78722.44988355765,
+    "cash": 57885.50215309476,
+    "house": 4634.787914483418,
+    "assets": 16336.465740521,
+    "job": null,
+    "flow": {
+      "salary": 24391.37087787184,
+      "partner": 0,
+      "interest": 14096.951996132284,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 45.39203692936381,
+        "Bố mẹ chu cấp": 769.9487752397215,
+        "Học bổng khuyến khích": 8.560799999999999,
+        "Vay vay mua nhà": 1327.8999999999999,
+        "Làm thêm": 16.56,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Quà cảm ơn": 3.312,
+        "Lãi cửa hàng tiện lợi": 56368.55913994891,
+        "Hợp đồng gala": 99.36,
+        "Vay vay ngân hàng": 577.134151201248,
+        "Hốt hụi": 56.925,
+        "Vay vay tiêu dùng (công ty tài chính)": 248.39999999999998,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 3153.478795399711,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880135,
+    "q": 4,
+    "age": 88,
+    "net": 77067.10361722858,
+    "cash": 73964.89594871791,
+    "house": 0,
+    "assets": 0,
+    "job": "chủ tịch UBND xã / phường",
+    "flow": {
+      "salary": 573416.4389719933,
+      "partner": 2469.8492609648506,
+      "interest": 42822.78435682295,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 27.642421197090805,
+        "Học bổng khuyến khích": 12.834,
+        "Bố mẹ chu cấp": 174.70895054570158,
+        "Vay nợ ví trả sau": 56.14874999999999,
+        "Thưởng cuối năm": 2722,
+        "BHYT chi trả viện phí": 6130.966666666667,
+        "Hốt hụi": 3085.5,
+        "Quà cảm ơn": 181.50000000000003,
+        "Bán xe đạp cũ": 0.6512062701862547
+      }
+    }
+  },
+  {
+    "seed": 880138,
+    "q": 3,
+    "age": 83,
+    "net": 75429.88434604682,
+    "cash": 72992.92214190646,
+    "house": 2436.96177234648,
+    "assets": 0,
+    "job": "kỹ thuật viên spa",
+    "flow": {
+      "salary": 20372.90734968938,
+      "partner": 114285.60000000006,
+      "interest": 30892.602784343326,
+      "other": {
+        "Bố mẹ chu cấp": 2.198637645492056,
+        "Tiền thưởng giải đấu": 125.7525,
+        "Tiền thưởng giải thế giới Counter-Strike 2": 838.3499999999999,
+        "Làm thêm": 5.5889999999999995,
+        "Chu cấp tình cảm từ Nguyễn Hoàng Anh": 1320,
+        "Tiền mừng cưới": 76.918854317246,
+        "Vay vay ngân hàng": 16.767,
+        "BHYT chi trả viện phí": 277.2,
+        "Thưởng Tết, lương tháng 13": 21,
+        "Quà cảm ơn": 2.7944999999999998,
+        "Con phụ giúp": 6.98625,
+        "Con Nguyễn Quang Khải trả nợ": 5038.309826546644
+      }
+    }
+  },
+  {
+    "seed": 880039,
+    "q": 3,
+    "age": 88,
+    "net": 74690.54024753888,
+    "cash": 10626.867817914885,
+    "house": 1973.5025535149364,
+    "assets": 62090.16972905605,
+    "job": "thợ may",
+    "flow": {
+      "salary": 28133.764271201264,
+      "partner": 1480.0726660416005,
+      "interest": 6772.418553718729,
+      "other": {
+        "Doanh thu album": 334.79999999999995,
+        "Bố mẹ chu cấp": 5.307745901193146,
+        "Cát-xê phim": 50.085,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 306,
+        "Thưởng Tết, lương tháng 13": 42,
+        "Cát-xê & thưởng doanh thu phim": 209.58749999999998,
+        "Vay vay ngân hàng": 16.767,
+        "Cát-xê 2 Ngày 1 Đêm (2/2 tập)": 130,
+        "Tiền mừng cưới": 49.01730215471936,
+        "Hốt hụi": 64.39999999999999,
+        "Con phụ giúp": 13.9725,
+        "Con Nguyễn Kim Long trả nợ": 790.2075585808559,
+        "Con Nguyễn Thu Uyên trả nợ": 603.0158659994019,
+        "BHYT chi trả viện phí": 92.39999999999999,
+        "Lãi nhà hàng": 1128.2485991883723
+      }
+    }
+  },
+  {
+    "seed": 880057,
+    "q": 2,
+    "age": 86,
+    "net": 74382.79037457524,
+    "cash": 47012.70831219524,
+    "house": 17939.15438013198,
+    "assets": 9430.927442362527,
+    "job": "rapper underground",
+    "flow": {
+      "salary": 92369.1765386341,
+      "partner": 0,
+      "interest": 22967.22711773665,
+      "other": {
+        "Làm thêm": 6.417,
+        "Giải quán quân và hợp đồng sau chương trình": 1000,
+        "Cát-xê & thưởng doanh thu phim": 240.6375,
+        "Show diễn nhờ bài hit": 228.92965399473906,
+        "Tiền bản quyền tác giả": 1210.7246617510211,
+        "Show Tết": 300,
+        "BHYT chi trả viện phí": 316.79999999999995,
+        "Doanh thu album": 160.42499999999998,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 150,
+        "Cát-xê phim": 64.17,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Cát-xê 2 Ngày 1 Đêm (6/6 tập)": 2870,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 240.6375,
+        "Tiền cho thuê nhà mặt phố cho thuê": 5880.625168466378,
+        "Phần tài sản bố mẹ để lại": 1209
+      }
+    }
+  },
+  {
+    "seed": 880052,
+    "q": 3,
+    "age": 80,
+    "net": 72165.7862721323,
+    "cash": 62390.646483074386,
+    "house": 9774.135508487892,
+    "assets": 0,
+    "job": "affiliate có thu nhập ổn định",
+    "flow": {
+      "salary": 117459.235628624,
+      "partner": 5156.8135733382915,
+      "interest": 38706.188482698184,
+      "other": {
+        "Thưởng trận thắng": 16.56,
+        "Thưởng huy chương đồng Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 99.35999999999999,
+        "Thưởng Tết, lương tháng 13": 100,
+        "Thưởng huy chương bạc Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 66.24,
+        "Thưởng huy chương vàng SEA Games 2049 (bóng đá)": 662.4,
+        "Thưởng huy chương vàng SEA Games 2051 (bóng đá)": 662.4,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 1365,
+        "Hợp đồng quảng cáo": 638.8848,
+        "Thưởng huy chương đồng SEA Games 2053 (bóng đá)": 198.72,
+        "Quà cảm ơn": 3.312,
+        "Thưởng vô địch V.League": 49.68,
+        "em Khánh trả nợ": 99.35999999999999,
+        "Tiền mừng cưới": 72.7247521944344,
+        "Thưởng huy chương vàng SEA Games 2059 (bóng đá)": 662.4,
+        "Bán xe đạp cũ": 0.02630093241791768,
+        "BHYT chi trả viện phí": 219.8,
+        "Trợ cấp thất nghiệp (BHTN)": 64.6261047691546,
+        "Phan Thanh Bình trả nợ": 107.64,
+        "Phần tài sản bố mẹ để lại": 1248,
+        "Con Phan Thanh Bình trả nợ": 1641.486193775323
+      }
+    }
+  },
+  {
+    "seed": 880207,
+    "q": 1,
+    "age": 76,
+    "net": 61743.238523016524,
+    "cash": 51152.48192190937,
+    "house": 10590.756601107156,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 6973.293201000253,
+      "partner": 80387.99999999999,
+      "interest": 23746.955585015236,
+      "other": {
+        "Công ty trả lại chuyên cần": 5.535,
+        "BHYT chi trả viện phí": 1.4,
+        "Trợ cấp thất nghiệp (BHTN)": 22.26911882954968,
+        "Nguyễn Trà My trả nợ": 11.07,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Chu cấp tình cảm từ Phạm Xuân Trường": 1416,
+        "Tiền mừng cưới": 37.10721040138509,
+        "Bán tranh": 80,
+        "Con Phạm Hà My trả nợ": 2475.683955506388,
+        "chị Anh trả nợ": 22.14,
+        "Phạm Ngọc Bích trả nợ": 35.9775,
+        "Phần tài sản bố mẹ để lại": 157.5,
+        "Con Phạm Ngọc Bích trả nợ": 3543.6363416803465
+      }
+    }
+  },
+  {
+    "seed": 880083,
+    "q": 5,
+    "age": 70,
+    "net": 52320.44539801485,
+    "cash": 36561.32621447785,
+    "house": 15759.115735486548,
+    "assets": 0,
+    "job": "chủ xe tải",
+    "flow": {
+      "salary": 44754.32073939972,
+      "partner": 0,
+      "interest": 15468.024739106651,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 18.255683573396748,
+        "Bố mẹ chu cấp": 942.5989393069835,
+        "Cát-xê & thưởng doanh thu phim": 171.58499999999998,
+        "Cát-xê phim điện ảnh chiếu rạp": 1594.97429699637,
+        "Hợp đồng quảng cáo": 5568.976857000962,
+        "Đập heo đất": 3.2085,
+        "Cát-xê phim truyền hình dài tập": 2724.6843685675412,
+        "Chu cấp tình cảm từ Võ Thị Nga": 2299.2000000000003,
+        "Cát-xê 2 Ngày 1 Đêm (2/2 tập)": 351,
+        "Hốt hụi": 54.4,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 150,
+        "Cát-xê phim": 64.17,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Thưởng Tết, lương tháng 13": 24
+      }
+    }
+  },
+  {
+    "seed": 880056,
+    "q": 4,
+    "age": 72,
+    "net": 46661.72425098538,
+    "cash": 36247.587308015805,
+    "house": 2825.792018838077,
+    "assets": 7588.342769674498,
+    "job": "MC truyền hình",
+    "flow": {
+      "salary": 66918.2023556521,
+      "partner": 0,
+      "interest": 11813.342193807186,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 14.503034422287243,
+        "Quà cảm ơn": 1.107,
+        "Bố mẹ chu cấp": 315.23554440641436,
+        "Học bổng toàn phần": 16.604999999999997,
+        "Làm thêm": 6.624,
+        "Trợ cấp thất nghiệp (BHTN)": 13.164752375033416,
+        "Hoa hồng môi giới": 82.8,
+        "Vay vay mua nhà": 1012.1999999999999,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Tiền cho thuê căn hộ cho thuê": 6211.635220901538,
+        "BHYT chi trả viện phí": 218.4
+      }
+    }
+  },
+  {
+    "seed": 880081,
+    "q": 4,
+    "age": 74,
+    "net": 44205.76481727599,
+    "cash": 41111.06448038997,
+    "house": 1795.7717847781669,
+    "assets": 0,
+    "job": "diễn viên vai phụ",
+    "flow": {
+      "salary": 57680.73502026691,
+      "partner": 8016.128342620784,
+      "interest": 21449.27127798999,
+      "other": {
+        "Tiền nhặt được": 0.8797499999999999,
+        "Tiền tiêu vặt bố mẹ cho": 6.41470894077068,
+        "Bố mẹ chu cấp": 119.27522807831241,
+        "Cát-xê phim web drama": 535.4249187372625,
+        "Cát-xê phim điện ảnh chiếu rạp": 8642.970645679161,
+        "Tiền mừng cưới": 45.94586510544642,
+        "Thưởng Tết, lương tháng 13": 26,
+        "Cát-xê phim": 52.785,
+        "Cát-xê phim truyền hình dài tập": 1392.8411090443842,
+        "Cát-xê Running Man Việt Nam (6/6 tập)": 911,
+        "Cát-xê & thưởng doanh thu phim": 131.96249999999998,
+        "em Anh trả nợ": 17.595,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Con La Huyền My trả nợ": 6568.257586902041,
+        "BHYT chi trả viện phí": 116.39999999999999,
+        "Phần tài sản bố mẹ để lại": 884
+      }
+    }
+  },
+  {
+    "seed": 880015,
+    "q": 5,
+    "age": 92,
+    "net": 42687.43662410332,
+    "cash": 41534.23319373009,
+    "house": 1153.200696225023,
+    "assets": 0,
+    "job": "cơ trưởng huấn luyện",
+    "flow": {
+      "salary": 68984.1054733567,
+      "partner": 2208.413241535714,
+      "interest": 18020.072788797523,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 177.46119156822877,
+        "Đập heo đất": 2.1735,
+        "Học bổng khuyến khích": 8.694,
+        "Bố mẹ chu cấp": 171.1408314948203,
+        "Chu cấp tình cảm từ Nguyễn Ngọc Hân": 1080,
+        "BHYT chi trả viện phí": 149.60000000000002,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 163.0125,
+        "Tiền mừng cưới": 43.08463171011535,
+        "Thưởng Tết, lương tháng 13": 16
+      }
+    }
+  },
+  {
+    "seed": 880096,
+    "q": 5,
+    "age": 75,
+    "net": 40229.71869713253,
+    "cash": 24983.114379496143,
+    "house": 3344.19912582816,
+    "assets": 11902.405191808226,
+    "job": null,
+    "flow": {
+      "salary": 5570.7718521689285,
+      "partner": 5976.860291939523,
+      "interest": 5442.360881178593,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 59.394108490535956,
+        "Bố mẹ chu cấp": 967.597567831939,
+        "Học bổng toàn phần": 45.022499999999994,
+        "Tiền mừng cưới": 55.69508124701678,
+        "Thưởng Tết, lương tháng 13": 23,
+        "Vay vay mua nhà": 1234.1,
+        "Hốt hụi": 127.5,
+        "Lãi cửa hàng tiện lợi": 21801.432707050248,
+        "Trợ cấp thất nghiệp (BHTN)": 106.12229269355088,
+        "Vay vay tiêu dùng (công ty tài chính)": 90.04499999999999,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 5529.453192117221,
+        "Phần tài sản bố mẹ để lại": 2262,
+        "Con phụ giúp": 7.50375
+      }
+    }
+  },
+  {
+    "seed": 880230,
+    "q": 2,
+    "age": 88,
+    "net": 39555.63219427412,
+    "cash": 31718.58611563481,
+    "house": 2634.154227832503,
+    "assets": 5202.891660913965,
+    "job": "người livestream bán hàng (596 người theo dõi)",
+    "flow": {
+      "salary": 4164.2903026378,
+      "partner": 14075.675911508757,
+      "interest": 4663.840978752395,
+      "other": {
+        "Thắng cá độ lớn": 44.28,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Tiền mừng cưới": 30.96143089028075,
+        "Quà cảm ơn": 1.107,
+        "BHYT chi trả viện phí": 109.80000000000001,
+        "Lãi phòng tập gym": 28584.697461468102,
+        "Con Nguyễn Khánh Huyền trả nợ": 490.243850300507
+      }
+    }
+  },
+  {
+    "seed": 880171,
+    "q": 2,
+    "age": 84,
+    "net": 39555.428483361444,
+    "cash": 36647.214666029286,
+    "house": 2908.2134584634596,
+    "assets": 0,
+    "job": "chủ chuỗi nhà hàng (nhà hàng tiệc cưới)",
+    "flow": {
+      "salary": 22270.63907369826,
+      "partner": 54641.39999999999,
+      "interest": 20279.117013937645,
+      "other": {
+        "BHYT chi trả viện phí": 464.09999999999997,
+        "Phụ cấp công tác đảo": 49.68,
+        "Tiền mừng cưới": 61.49819451481103,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Trợ cấp thất nghiệp (BHTN)": 76.10875711751375,
+        "Phần tài sản bố mẹ để lại": 1248,
+        "Con Hoàng Minh Thành trả nợ": 4872.270620611118
+      }
+    }
+  },
+  {
+    "seed": 880134,
+    "q": 2,
+    "age": 72,
+    "net": 38040.123273865705,
+    "cash": 33378.91274292318,
+    "house": 4671.135800915046,
+    "assets": 0,
+    "job": "trưởng nhóm giao hàng",
+    "flow": {
+      "salary": 13302.080822222899,
+      "partner": 62780.8390311195,
+      "interest": 11344.548184493095,
+      "other": {
+        "Tiền mừng cưới": 146.39793824790047,
+        "Vay nợ thẻ tín dụng": 37.26,
+        "Bán xe đạp cũ": 0.8739620509188096,
+        "Thưởng Tết, lương tháng 13": 57,
+        "Vay vay mua nhà": 840.6999999999999,
+        "Con Trần Thu Ngân trả nợ": 4842.982215858252,
+        "Bán căn hộ chung cư cũ (khu tập thể)": 1742.5853702836564
+      }
+    }
+  },
+  {
+    "seed": 880108,
+    "q": 4,
+    "age": 73,
+    "net": 37519.33658952007,
+    "cash": 36789.24725673449,
+    "house": 2489.9936216150354,
+    "assets": 0,
+    "job": "chủ quán (quán ăn)",
+    "flow": {
+      "salary": 54700.63939079609,
+      "partner": 13338.97053035328,
+      "interest": 11751.012494173629,
+      "other": {
+        "Bố mẹ chu cấp": 25.29786268942175,
+        "Cát-xê phim truyền hình dài tập": 687.5301879467443,
+        "Cát-xê & thưởng doanh thu phim": 481.275,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Vay vay mua nhà": 1680.6999999999998,
+        "Tiền mừng cưới": 187.03344896895345,
+        "Cát-xê phim": 64.17,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Cát-xê phim điện ảnh chiếu rạp": 2898.762714676559,
+        "Hợp đồng quảng cáo": 720.0807641958818,
+        "Con Nguyễn Thị Nga trả nợ": 3250.5306385234567,
+        "Quảng cáo thực phẩm chức năng": 1055.2879348921124
+      }
+    }
+  },
+  {
+    "seed": 880003,
+    "q": 2,
+    "age": 77,
+    "net": 37431.02039631151,
+    "cash": 35617.40932000879,
+    "house": 1813.6102545269932,
+    "assets": 0,
+    "job": "chủ tịch tập đoàn (đại lý đồ nhựa)",
+    "flow": {
+      "salary": 55437.993944822345,
+      "partner": 24900.5551910325,
+      "interest": 10618.957697523738,
+      "other": {
+        "Làm thêm": 2.0664,
+        "BHYT chi trả viện phí": 8.549999999999999,
+        "Tiền thưởng giải cờ": 233.892,
+        "Thưởng huy chương bạc SEA Games 2049 (cờ vua)": 104.79374999999999,
+        "Thưởng Tết, lương tháng 13": 42,
+        "Thưởng huy chương vàng SEA Games 2051 (cờ vua)": 209.58749999999998,
+        "Vay vay mua nhà": 689.5,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 209.58749999999998,
+        "Thắng cá độ lớn": 111.78,
+        "Con Lù Thị Xuân trả nợ": 2864.255043029949,
+        "Lời đơn sỉ": 55.89,
+        "Thắng kiện": 41.9175,
+        "Lợi nhuận sau thâu tóm": 698.625,
+        "Quà cảm ơn": 2.7944999999999998
+      }
+    }
+  },
+  {
+    "seed": 880021,
+    "q": 5,
+    "age": 99,
+    "net": 36821.78990741422,
+    "cash": 31984.09732087569,
+    "house": 4837.692428312461,
+    "assets": 0,
+    "job": "tài xế ô tô công nghệ",
+    "flow": {
+      "salary": 51651.35050174534,
+      "partner": 3660.236528386717,
+      "interest": 16101.151931832615,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 172.66578247252275,
+        "Quà cảm ơn": 3.312,
+        "Bố mẹ chu cấp": 1417.9309349511866,
+        "Trang điểm cô dâu": 3,
+        "Hốt hụi": 75.89999999999999,
+        "BHYT chi trả viện phí": 226.8,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Thưởng Tết, lương tháng 13": 75,
+        "Con Nguyễn Duy Mạnh trả nợ": 1851.7388001918093,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999,
+        "Con Nguyễn Hoàng Minh trả nợ": 974.1185347098715
+      }
+    }
+  },
+  {
+    "seed": 880179,
+    "q": 5,
+    "age": 89,
+    "net": 36179.80199637576,
+    "cash": 24329.27119848788,
+    "house": 3400.961927760103,
+    "assets": 8449.568301993082,
+    "job": "chủ xe tải",
+    "flow": {
+      "salary": 36194.14494050063,
+      "partner": 4217.528746003674,
+      "interest": 9851.689785018843,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 50.953316164092406,
+        "Bố mẹ chu cấp": 558.5715139094342,
+        "anh Tùng trả nợ": 264.96,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Vay vay mua nhà": 974.4,
+        "Tiền mừng cưới": 114.29891337879002,
+        "Nguyễn Thành Trung trả nợ": 66.24,
+        "Con Nguyễn Trung Hiếu trả nợ": 1972.925501656996,
+        "Phần tài sản bố mẹ để lại": 2496,
+        "Tiền cho thuê căn hộ cho thuê": 6437.798079881733,
+        "BHYT chi trả viện phí": 4.199999999999999
+      }
+    }
+  },
+  {
+    "seed": 880065,
+    "q": 3,
+    "age": 84,
+    "net": 35991.31835152158,
+    "cash": 14202.37848641987,
+    "house": 2041.8413085324446,
+    "assets": 19747.098060938086,
+    "job": "giám đốc sáng tạo thương hiệu",
+    "flow": {
+      "salary": 69370.5656260572,
+      "partner": 11510.505032672201,
+      "interest": 10474.937659742925,
+      "other": {
+        "Làm thêm": 2.3616,
+        "Bố mẹ chu cấp": 8.567257848400958,
+        "Học bổng khuyến khích": 4.7232,
+        "Vay vay mua nhà": 1241.8,
+        "Trần Duy Mạnh trả nợ": 49.67999999999999,
+        "Vay vay ngân hàng": 19.872,
+        "Phần tài sản bố mẹ để lại": 832,
+        "Tiền mừng cưới": 114.97258577048778,
+        "BHYT chi trả viện phí": 9.799999999999999,
+        "Con Nguyễn Quốc Huy trả nợ": 1406.3401270947877,
+        "Đáo hạn bảo hiểm": 215.72180898012084,
+        "Con Nguyễn Hữu Thắng trả nợ": 1530.8365129272704
+      }
+    }
+  },
+  {
+    "seed": 880127,
+    "q": 3,
+    "age": 81,
+    "net": 33791.26920379639,
+    "cash": 30282.49426483936,
+    "house": 3503.1056388222523,
+    "assets": 5.6649,
+    "job": "chủ sạp chợ",
+    "flow": {
+      "salary": 62419.40437897388,
+      "partner": 8466.84475076715,
+      "interest": 14211.01119942829,
+      "other": {
+        "Thưởng huy chương vàng Giải vô địch quốc gia (quần vợt)": 66.42,
+        "Đập heo đất": 1.107,
+        "Thưởng huy chương bạc Giải vô địch quốc gia (quần vợt)": 22.14,
+        "Thưởng huy chương bạc SEA Games 2047 (quần vợt)": 55.349999999999994,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Thưởng huy chương đồng SEA Games 2049 (quần vợt)": 33.209999999999994,
+        "Hợp đồng quảng cáo": 202.30424999999997,
+        "Thưởng huy chương bạc SEA Games 2051 (quần vợt)": 55.349999999999994,
+        "Tiền mừng cưới": 24.324868927043862,
+        "Lợi nhuận sau thâu tóm": 276.75,
+        "Thắng kiện": 16.604999999999997,
+        "Lời đơn sỉ": 13.837499999999999,
+        "Hốt hụi": 18.7,
+        "Con Phan Ngân Hà trả nợ": 1641.0375138434313
+      }
+    }
+  },
+  {
+    "seed": 880051,
+    "q": 1,
+    "age": 55,
+    "net": 32663.807444408492,
+    "cash": 29981.275462571877,
+    "house": 3154.014530510851,
+    "assets": 1969.0731493626126,
+    "job": "chủ quán bar",
+    "flow": {
+      "salary": 29441.886499117307,
+      "partner": 12321.985654716584,
+      "interest": 7085.859302828117,
+      "other": {
+        "Tiền nhặt được": 0.31365,
+        "Đập heo đất": 1.2546,
+        "Chu cấp tình cảm từ Trần Hồng Nhung": 10368,
+        "Vay vay mua nhà": 1391.6,
+        "BHYT chi trả viện phí": 114.8,
+        "Tiền bo": 1.5,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 2140.4013241032376,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Tiền mừng cưới": 108.17212702922524,
+        "Vay vay ngân hàng": 248.39999999999998,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998
+      }
+    }
+  },
+  {
+    "seed": 880161,
+    "q": 4,
+    "age": 90,
+    "net": 32640.50333097001,
+    "cash": 22374.970392892126,
+    "house": 3563.810622883216,
+    "assets": 6701.72186210725,
+    "job": "điều dưỡng hạng III",
+    "flow": {
+      "salary": 31177.214271637575,
+      "partner": 2458.9126812101154,
+      "interest": 6760.482863377722,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 16.192947262364576,
+        "Bố mẹ chu cấp": 199.05965978987328,
+        "Vay vay mua nhà": 933.8,
+        "Làm thêm": 6.003,
+        "Thưởng Tết, lương tháng 13": 23,
+        "Tiền cho thuê căn hộ cho thuê": 10007.35860374934,
+        "Tiền mừng cưới": 73.90803694312926,
+        "BHYT chi trả viện phí": 103.2
+      }
+    }
+  },
+  {
+    "seed": 880120,
+    "q": 5,
+    "age": 98,
+    "net": 31829.536812056413,
+    "cash": 30465.647994654388,
+    "house": 1363.8886518456065,
+    "assets": 0,
+    "job": "giám đốc dữ liệu",
+    "flow": {
+      "salary": 44371.28208882839,
+      "partner": 0,
+      "interest": 15160.026487534571,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 124.82265163955425,
+        "Học bổng khuyến khích": 9.4464,
+        "Bố mẹ chu cấp": 364.43762333490514,
+        "Thưởng Tết, lương tháng 13": 36,
+        "BHYT chi trả viện phí": 397,
+        "Hốt hụi": 54.05,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999,
+        "Tăng lương": 70.848,
+        "Phần tài sản bố mẹ để lại": 672
+      }
+    }
+  },
+  {
+    "seed": 880190,
+    "q": 2,
+    "age": 87,
+    "net": 30011.2598378484,
+    "cash": 26427.769586926042,
+    "house": 3581.785050922359,
+    "assets": 1.7052,
+    "job": "chủ sạp chợ",
+    "flow": {
+      "salary": 42849.37245340659,
+      "partner": 4478.863545168305,
+      "interest": 16151.306118947654,
+      "other": {
+        "Vay vay mua nhà": 996.0999999999999,
+        "Trợ cấp thất nghiệp (BHTN)": 148.4628382543729,
+        "Cát-xê 2 Ngày 1 Đêm (6/6 tập)": 594,
+        "Giải quán quân và hợp đồng sau chương trình": 1000,
+        "Cát-xê & thưởng doanh thu phim": 248.39999999999998,
+        "Thưởng Tết, lương tháng 13": 50,
+        "BHYT chi trả viện phí": 336,
+        "Cát-xê phim": 33.12,
+        "Show Tết": 42,
+        "Nguyễn Công Danh trả nợ": 66.24,
+        "Tiền mừng cưới": 77.00572400204837,
+        "Phần tài sản bố mẹ để lại": 624,
+        "Con phụ giúp": 8.28,
+        "Con Trần Duy Khánh trả nợ": 3293.7053628385215
+      }
+    }
+  },
+  {
+    "seed": 880079,
+    "q": 2,
+    "age": 90,
+    "net": 28186.702571054535,
+    "cash": 21215.79287501733,
+    "house": 6970.909151305786,
+    "assets": 0,
+    "job": "công chức xã / phường",
+    "flow": {
+      "salary": 38985.9332814875,
+      "partner": 22665.476578171103,
+      "interest": 11292.654559940649,
+      "other": {
+        "Tiền mừng cưới": 59.716492128968234,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Vay vay mua nhà": 1967.6999999999998,
+        "Phần tài sản bố mẹ để lại": 499.2,
+        "chị Thùy trả nợ": 66.24,
+        "BHYT chi trả viện phí": 219.8,
+        "Con Nguyễn Mai Hương trả nợ": 950.3299343012106,
+        "Con phụ giúp": 8.28,
+        "Con Nguyễn Ngọc Hà trả nợ": 1320.2321861140597
+      }
+    }
+  },
+  {
+    "seed": 880192,
+    "q": 2,
+    "age": 88,
+    "net": 28080.60810709502,
+    "cash": 14422.528647239438,
+    "house": 13658.07886540014,
+    "assets": 0,
+    "job": "giám đốc nhân sự",
+    "flow": {
+      "salary": 21331.368800162254,
+      "partner": 12117.6,
+      "interest": 6543.034975280672,
+      "other": {
+        "Tiền nhặt được": 1.1808,
+        "Học bổng toàn phần": 35.424,
+        "Chu cấp tình cảm từ Nguyễn Văn Thành": 1101.6000000000001,
+        "Thưởng Tết, lương tháng 13": 90,
+        "Chu cấp tình cảm từ Nguyễn Công Minh": 1512,
+        "Tiền mừng cưới": 53.33978616562486,
+        "BHYT chi trả viện phí": 82.2,
+        "Trợ cấp thất nghiệp (BHTN)": 207.8285713638797,
+        "anh Lộc trả nợ": 23.616,
+        "Nguyễn Minh Tuấn trả nợ": 76.752,
+        "Phần tài sản bố mẹ để lại": 336,
+        "Con Nguyễn Minh Tuấn trả nợ": 2464.4423788398385
+      }
+    }
+  },
+  {
+    "seed": 880084,
+    "q": 2,
+    "age": 84,
+    "net": 27408.66853906351,
+    "cash": 16368.441403534178,
+    "house": 11040.226614209949,
+    "assets": 0,
+    "job": "điều tra viên sơ cấp",
+    "flow": {
+      "salary": 14735.419634150321,
+      "partner": 45723.152603124094,
+      "interest": 6461.672551250651,
+      "other": {
+        "Học bổng khuyến khích": 4.968,
+        "Thưởng Tết, lương tháng 13": 72,
+        "Tiền nhặt được": 9.625499999999999,
+        "Vay vay mua nhà": 1274.6999999999998,
+        "Tiền mừng cưới": 64.12545183082808,
+        "Trần Thị Hiền trả nợ": 64.17,
+        "Con Võ Tuệ Nhi trả nợ": 2342.9903678739,
+        "Phần tài sản bố mẹ để lại": 1813.5,
+        "Bán căn hộ chung cư cũ (khu tập thể)": 3112.3430988759083,
+        "BHYT chi trả viện phí": 211.2
+      }
+    }
+  },
+  {
+    "seed": 880221,
+    "q": 3,
+    "age": 95,
+    "net": 25282.49635688017,
+    "cash": 18198.02429376924,
+    "house": 7084.4705447394845,
+    "assets": 0,
+    "job": "cơ phó",
+    "flow": {
+      "salary": 42609.491532880704,
+      "partner": 0,
+      "interest": 7933.5736221335155,
+      "other": {
+        "Bố mẹ chu cấp": 11.884975559871451,
+        "Học bổng toàn phần": 26.567999999999994,
+        "Thưởng chỉ tiêu": 16.0425,
+        "Nguyễn Chí Công trả nợ": 32.085,
+        "Thưởng công việc trong năm": 8.02125,
+        "Vay vay mua nhà": 1912.3999999999999,
+        "Lời đơn sỉ": 40.106249999999996,
+        "Thưởng Tết, lương tháng 13": 72,
+        "BHYT chi trả viện phí": 211.2,
+        "Bán lại startup": 2000,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 240.6375,
+        "Lương làm từ xa": 160.42499999999998,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999
+      }
+    }
+  },
+  {
+    "seed": 880062,
+    "q": 5,
+    "age": 85,
+    "net": 23441.333837826023,
+    "cash": 20108.403489783974,
+    "house": 3332.929400669885,
+    "assets": 0,
+    "job": "kỹ thuật viên",
+    "flow": {
+      "salary": 35749.58071734766,
+      "partner": 18958.62048595129,
+      "interest": 8005.412437813331,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 64.97520361453584,
+        "Bố mẹ chu cấp": 445.0691031855693,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Tiền mừng cưới": 74.13716874986886,
+        "BHYT chi trả viện phí": 218.4,
+        "Quà cảm ơn": 3.312,
+        "Con Nguyễn Kim Long trả nợ": 769.7893200135808,
+        "Con Nguyễn Kim Thoa trả nợ": 938.8870966438601
+      }
+    }
+  },
+  {
+    "seed": 880031,
+    "q": 3,
+    "age": 91,
+    "net": 23006.893281543096,
+    "cash": 19671.348496313713,
+    "house": 3335.5445953365393,
+    "assets": 0,
+    "job": "đạo diễn nổi tiếng",
+    "flow": {
+      "salary": 48740.88474330483,
+      "partner": 1729.5744039687777,
+      "interest": 8410.13050995121,
+      "other": {
+        "Bố mẹ chu cấp": 9.647244220969338,
+        "Học bổng toàn phần": 16.604999999999997,
+        "Tiền mừng cưới": 101.36648388119414,
+        "Trợ cấp thất nghiệp (BHTN)": 14.050111155491258,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #1": 10.694999999999999,
+        "Thưởng cuối năm": 24,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #2": 71.29999999999998,
+        "BHYT chi trả viện phí": 428,
+        "Cát-xê đạo diễn phim Mùa gió trở lại #3": 445.62499999999994,
+        "Vay vay mua nhà": 1014.3,
+        "Vay vay ngân hàng": 8.02125,
+        "Cát-xê đạo diễn phim Một lời chưa nói #4": 445.62499999999994,
+        "Thu hồi ròng phim Ngày mai bắt đầu #5": 116.98331798116384,
+        "Thu hồi ròng phim Ánh sáng cuối phố #6": 54.64421575697274,
+        "Cát-xê đạo diễn phim Một lời chưa nói #7": 445.62499999999994,
+        "Cát-xê đạo diễn phim Chuyến xe cuối ngày #8": 178.25,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #9": 178.25,
+        "Cát-xê đạo diễn phim Phía bên kia cửa #10": 445.62499999999994,
+        "Thu hồi ròng phim Phía bên kia cửa #11": 59.35803133303656,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Thu hồi ròng phim Ánh sáng cuối phố #12": 803.3882854159906,
+        "Con Hoàng Ngọc Trâm trả nợ": 751.4380077895314,
+        "Thu hồi ròng phim Mùa gió trở lại #13": 1866.0259185287696,
+        "Thu hồi ròng phim Một lời chưa nói #14": 37.55036624355686,
+        "Con Hoàng Xuân Quỳnh trả nợ": 924.2859130780571,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #15": 71.29999999999998,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #16": 445.62499999999994
+      }
+    }
+  },
+  {
+    "seed": 880080,
+    "q": 3,
+    "age": 82,
+    "net": 22451.326534084175,
+    "cash": 17730.179289914005,
+    "house": 4721.139495998954,
+    "assets": 0,
+    "job": "nghiên cứu viên chính",
+    "flow": {
+      "salary": 46400.32979443189,
+      "partner": 7672.991862787793,
+      "interest": 8308.607081208216,
+      "other": {
+        "Tiền nhặt được": 1.3284,
+        "Bố mẹ chu cấp": 16.83087734899186,
+        "Học bổng khuyến khích": 5.3136,
+        "Tiền mừng cưới": 35.67945860764012,
+        "Làm thêm": 16.56,
+        "BHYT chi trả viện phí": 110.60000000000001,
+        "Thu nhập ổn định": 49.68,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Hốt hụi": 56.925,
+        "Con Nguyễn Công Minh trả nợ": 826.2450687889233,
+        "Thưởng sáng kiến": 30
+      }
+    }
+  },
+  {
+    "seed": 880197,
+    "q": 3,
+    "age": 82,
+    "net": 21149.208253855755,
+    "cash": 20089.850090288393,
+    "house": 1021.7391446564905,
+    "assets": 0,
+    "job": "phó tổng giám đốc tập đoàn (Vinacomin)",
+    "flow": {
+      "salary": 47420.53026321257,
+      "partner": 1984.4124627435458,
+      "interest": 7305.450076920715,
+      "other": {
+        "Học bổng toàn phần": 21.032999999999998,
+        "Bố mẹ chu cấp": 7.857118362091506,
+        "Học bổng & trợ giảng nghiên cứu sinh": 24.5385,
+        "Thưởng Tết, lương tháng 13": 22,
+        "Tiền mừng cưới": 30.254906880126335,
+        "Đáo hạn bảo hiểm": 91.33004847582296,
+        "BHYT chi trả viện phí": 46.199999999999996
+      }
+    }
+  },
+  {
+    "seed": 880014,
+    "q": 5,
+    "age": 74,
+    "net": 20631.748551682846,
+    "cash": 14723.84668540817,
+    "house": 2139.8427016983183,
+    "assets": 3768.052718721251,
+    "job": "đội trưởng kỹ thuật",
+    "flow": {
+      "salary": 22834.538650441824,
+      "partner": 12662.241975604655,
+      "interest": 3635.3565045159876,
+      "other": {
+        "Tiền nhặt được": 1.656,
+        "Tiền tiêu vặt bố mẹ cho": 101.59478771495235,
+        "Học bổng toàn phần": 49.68,
+        "Tiền mừng cưới": 60.65528247714042,
+        "Bố mẹ chu cấp": 180.8630211641109,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 4708.144717042424,
+        "Hốt hụi": 114.425,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880200,
+    "q": 2,
+    "age": 83,
+    "net": 19456.20157112124,
+    "cash": 17080.896324648795,
+    "house": 2375.3046832551945,
+    "assets": 0,
+    "job": "đạo diễn",
+    "flow": {
+      "salary": 38731.851174606745,
+      "partner": 1489.638907369235,
+      "interest": 7410.766342377078,
+      "other": {
+        "Học bổng khuyến khích": 4.7232,
+        "Tiền mừng cưới": 20.103318784341216,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #1": 10.694999999999999,
+        "Vay nợ thẻ tín dụng": 40.106249999999996,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #2": 445.62499999999994,
+        "Cát-xê đạo diễn phim Một lời chưa nói #3": 445.62499999999994,
+        "Phần tài sản bố mẹ để lại": 1209,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 151,
+        "Thu hồi ròng phim Chuyến xe cuối ngày #4": 1138.2397513152716,
+        "Thu hồi ròng phim Chuyến xe cuối ngày #5": 644.3843392485222,
+        "Cát-xê đạo diễn phim Mùa gió trở lại #6": 445.62499999999994,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #7": 10.694999999999999,
+        "Cát-xê đạo diễn phim Phía bên kia cửa #8": 445.62499999999994,
+        "Con Phan Thị Hương trả nợ": 1040.2141331117018,
+        "Cát-xê đạo diễn phim Mùa gió trở lại #9": 445.62499999999994,
+        "Thu hồi ròng phim Phía bên kia cửa #10": 1240.3099419285243,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Cát-xê đạo diễn phim Một lời chưa nói #11": 178.25,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999,
+        "Thu hồi ròng phim Ngày mai bắt đầu #12": 106.1059054684172,
+        "Con Phan Văn Ọn trả nợ": 654.9253832245076,
+        "Hốt hụi": 55.199999999999996,
+        "BHYT chi trả viện phí": 105.6
+      }
+    }
+  },
+  {
+    "seed": 880107,
+    "q": 3,
+    "age": 88,
+    "net": 18929.44196371921,
+    "cash": 7211.581113288075,
+    "house": 11717.860673197813,
+    "assets": 0,
+    "job": "diễn viên quần chúng",
+    "flow": {
+      "salary": 12918.572770561734,
+      "partner": 8498.441545593283,
+      "interest": 4190.096400158025,
+      "other": {
+        "Bố mẹ chu cấp": 6.862587665996825,
+        "Tiền mừng cưới": 24.315587993469084,
+        "Vay vay mua nhà": 1134,
+        "chị Kim trả nợ": 41.327999999999996,
+        "Cát-xê phim điện ảnh chiếu rạp": 2786.397274583578,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 250,
+        "Cát-xê phim truyền hình dài tập": 459.5590114337392,
+        "Nguyễn Bảo Trân trả nợ": 5.1659999999999995,
+        "Cát-xê phim web drama": 35.11913981358521,
+        "Bán nhà phố 3–4 tầng": 2457.899931757802,
+        "Con Trần Thị Kim trả nợ": 200.5907439671506,
+        "Phần tài sản bố mẹ để lại": 220.5,
+        "Con Trần Thảo Nguyên trả nợ": 329.4809809582447,
+        "Thưởng Tết, lương tháng 13": 8,
+        "BHYT chi trả viện phí": 68.39999999999999,
+        "Con Trần Nhã Phương trả nợ": 483.02412885650244
+      }
+    }
+  },
+  {
+    "seed": 880183,
+    "q": 5,
+    "age": 88,
+    "net": 18582.279719378763,
+    "cash": 12094.226094260908,
+    "house": 6488.04732904033,
+    "assets": 0,
+    "job": "bán hàng rong",
+    "flow": {
+      "salary": 31380.27980835764,
+      "partner": 10728.002572629022,
+      "interest": 4388.687611923335,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 46.630255015006185,
+        "Bố mẹ chu cấp": 778.6348689490941,
+        "Học bổng toàn phần": 45.022499999999994,
+        "Tiền mừng cưới": 80.68498103550401,
+        "Thưởng Tết, lương tháng 13": 46,
+        "Vay vay mua nhà": 1751.3999999999999,
+        "Con phụ giúp": 7.50375,
+        "BHYT chi trả viện phí": 207.8,
+        "Quà cảm ơn": 3.0015,
+        "Con Đinh Minh Châu trả nợ": 1465.7643405166111
+      }
+    }
+  },
+  {
+    "seed": 880118,
+    "q": 5,
+    "age": 87,
+    "net": 18444.764649715315,
+    "cash": 10830.006473200183,
+    "house": 5050.256876219137,
+    "assets": 2564.5002573791908,
+    "job": "trưởng phòng kinh doanh",
+    "flow": {
+      "salary": 20819.34280589536,
+      "partner": 5593.575168621689,
+      "interest": 4044.127179515742,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 48.607331059362515,
+        "Bố mẹ chu cấp": 1260.9637627752602,
+        "Học bổng khuyến khích": 12.834,
+        "Tiền mừng cưới": 143.07531381397274,
+        "Thưởng Tết, lương tháng 13": 72,
+        "Truy lĩnh lương làm thêm": 8.02125,
+        "chị My trả nợ": 96.255,
+        "Phần tài sản bố mẹ để lại": 3627,
+        "Con Nguyễn Văn Lực trả nợ": 378.9965376950728,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 3135.173222386127,
+        "BHYT chi trả viện phí": 211.2,
+        "Con Nguyễn Tuấn Anh trả nợ": 563.3162508938609,
+        "Con Nguyễn Kim Chi trả nợ": 602.4488408379775
+      }
+    }
+  },
+  {
+    "seed": 880006,
+    "q": 1,
+    "age": 65,
+    "net": 18397.237630179432,
+    "cash": 13811.108251144238,
+    "house": 1670.609347341,
+    "assets": 4255.2369947581265,
+    "job": "MC sự kiện có tiếng",
+    "flow": {
+      "salary": 42986.02982824435,
+      "partner": 2936.1717187832037,
+      "interest": 2991.5729125976814,
+      "other": {
+        "Tiền nhặt được": 0.3321,
+        "Học bổng khuyến khích": 2.6568,
+        "Tiền bo đám cưới": 4,
+        "Hốt hụi": 82.02499999999999,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Tiền mừng cưới": 50.22985964405815,
+        "Vay vay mua nhà": 1409.8,
+        "Thắng kiện": 16.0425,
+        "Lãi phòng tập gym": 8972.05327191748,
+        "BHYT chi trả viện phí": 105.6,
+        "Con Nguyễn Quốc Việt trả nợ": 626.5648626170221,
+        "Vay vay nóng (tín dụng đen)": 48.12749999999999
+      }
+    }
+  },
+  {
+    "seed": 880235,
+    "q": 4,
+    "age": 87,
+    "net": 18069.595491044853,
+    "cash": 16703.915191664015,
+    "house": 1365.6799194022221,
+    "assets": 0,
+    "job": "thiết kế đồ họa",
+    "flow": {
+      "salary": 47115.45387704137,
+      "partner": 16591.55239462641,
+      "interest": 7371.215048316779,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 10.771884410329115,
+        "Bố mẹ chu cấp": 116.51578881146663,
+        "Học bổng khuyến khích": 5.3136,
+        "Vẽ chân dung theo đơn": 16,
+        "Vay vay mua nhà": 818.3,
+        "Vay vay nóng (tín dụng đen)": 41.9175,
+        "Hoàng Thu Hà trả nợ": 13.9725,
+        "Phần tài sản bố mẹ để lại": 3159,
+        "Thưởng Tết, lương tháng 13": 42,
+        "Tiền mừng cưới": 49.008038879488595,
+        "Con Trần Ánh Tuyết trả nợ": 546.3267041851127,
+        "BHYT chi trả viện phí": 184.79999999999998,
+        "Con Trần Mỹ Hạnh trả nợ": 1593.422548764581
+      }
+    }
+  },
+  {
+    "seed": 880201,
+    "q": 1,
+    "age": 70,
+    "net": 17741.252736735456,
+    "cash": 14133.60034536088,
+    "house": 1999.0482863531774,
+    "assets": 3033.6260945369786,
+    "job": "thợ phụ sửa xe",
+    "flow": {
+      "salary": 33837.61980335239,
+      "partner": 7055.630253469472,
+      "interest": 3896.621041394487,
+      "other": {
+        "Thưởng Tết, lương tháng 13": 33,
+        "Vay vay ngân hàng": 32.60249999999999,
+        "Vay vay mua nhà": 771.4,
+        "BHYT chi trả viện phí": 97.4,
+        "Con Nguyễn Đức Phúc trả nợ": 889.8603907555656
+      }
+    }
+  },
+  {
+    "seed": 880026,
+    "q": 4,
+    "age": 100,
+    "net": 17508.738295206367,
+    "cash": 11519.761389644287,
+    "house": 5988.97690556208,
+    "assets": 0,
+    "job": "chủ chuỗi quán (quán ăn)",
+    "flow": {
+      "salary": 38745.632681180155,
+      "partner": 2492.1783183435123,
+      "interest": 5227.935238379853,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 22.70782376069915,
+        "Bố mẹ chu cấp": 224.8929937000237,
+        "Tiền thưởng giải cờ": 1357.92,
+        "Hốt hụi": 56.925,
+        "Thưởng Tết, lương tháng 13": 75,
+        "Làm thêm": 6.624,
+        "Vay vay ngân hàng": 24.84,
+        "Con Nguyễn Thị Dung trả nợ": 608.3888132630149,
+        "Con Nguyễn Thanh Vân trả nợ": 471.35254502787683,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880154,
+    "q": 2,
+    "age": 67,
+    "net": 16976.45612603216,
+    "cash": 15370.904984284087,
+    "house": 1609.8997910984313,
+    "assets": 1.3874,
+    "job": "chủ tiệm sửa xe",
+    "flow": {
+      "salary": 19716.805173395638,
+      "partner": 18160.290002088845,
+      "interest": 3112.824257275718,
+      "other": {
+        "Vay nợ ví trả sau": 37.26,
+        "Tiền bo": 1,
+        "Trợ cấp thất nghiệp (BHTN)": 50.10326136965636,
+        "Thưởng Tết, lương tháng 13": 57,
+        "Vay vay ngân hàng": 18.63,
+        "Đi làm sớm": 24.84,
+        "Đáo hạn bảo hiểm": 96.92288495771214,
+        "Tiền mừng cưới": 59.52375253435224,
+        "Phần tài sản bố mẹ để lại": 624,
+        "BHYT chi trả viện phí": 82.2
+      }
+    }
+  },
+  {
+    "seed": 880184,
+    "q": 3,
+    "age": 78,
+    "net": 16647.72010713537,
+    "cash": 15744.570154120074,
+    "house": 903.1489984406024,
+    "assets": 0,
+    "job": "chủ kênh affiliate lớn",
+    "flow": {
+      "salary": 26517.01337009876,
+      "partner": 9744.276724935604,
+      "interest": 4053.9857066165714,
+      "other": {
+        "Thưởng Tết, lương tháng 13": 24,
+        "Vay vay mua nhà": 300.29999999999995,
+        "Phần tài sản bố mẹ để lại": 110.25,
+        "BHYT chi trả viện phí": 107.6,
+        "em Huyền trả nợ": 15.498,
+        "Tiền mừng cưới": 47.53047029029671,
+        "Hốt hụi": 19.55,
+        "Con Phạm Gia Khang trả nợ": 973.2507504350365
+      }
+    }
+  },
+  {
+    "seed": 880008,
+    "q": 3,
+    "age": 88,
+    "net": 16432.003825613214,
+    "cash": 14555.588485009033,
+    "house": 1875.5896747839138,
+    "assets": 0,
+    "job": "cơ trưởng",
+    "flow": {
+      "salary": 37136.15144025191,
+      "partner": 4966.312303788495,
+      "interest": 5447.296733165994,
+      "other": {
+        "Học bổng khuyến khích": 6.624,
+        "Tiền mừng cưới": 27.11274895124137,
+        "Vay vay ngân hàng": 130.82399999999998,
+        "BHYT chi trả viện phí": 120.4,
+        "Vay vay mua nhà": 578.9,
+        "Thưởng Tết, lương tháng 13": 12,
+        "Con Trịnh Đình Trọng trả nợ": 663.3115654750342
+      }
+    }
+  },
+  {
+    "seed": 880208,
+    "q": 1,
+    "age": 78,
+    "net": 15932.576981067697,
+    "cash": 11572.754746469775,
+    "house": 4359.822234597923,
+    "assets": 0,
+    "job": "giám đốc dự án",
+    "flow": {
+      "salary": 27883.77684346016,
+      "partner": 9222.95390862667,
+      "interest": 3600.443755647005,
+      "other": {
+        "Tiền mừng cưới": 96.38246567385039,
+        "Bán giải pháp kỹ thuật": 150,
+        "Vay vay mua nhà": 1471.3999999999999,
+        "Phần tài sản bố mẹ để lại": 604.5,
+        "Thưởng sáng kiến": 30,
+        "BHYT chi trả viện phí": 105.6,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Con Quách Văn Hùng trả nợ": 1882.0366927878595
+      }
+    }
+  },
+  {
+    "seed": 880217,
+    "q": 4,
+    "age": 93,
+    "net": 15663.032834012756,
+    "cash": 6826.647978990544,
+    "house": 3953.3264566514213,
+    "assets": 4883.058164640178,
+    "job": "quản lý khách sạn",
+    "flow": {
+      "salary": 23362.894201802672,
+      "partner": 13054.332964402038,
+      "interest": 2601.4270001197133,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 22.07816000158202,
+        "Bố mẹ chu cấp": 372.9482112227708,
+        "Đập heo đất": 1.7594999999999998,
+        "Học bổng toàn phần": 26.3925,
+        "Tiền mừng cưới": 83.82160536803305,
+        "Vay vay mua nhà": 1051.3999999999999,
+        "BHYT chi trả viện phí": 114.8,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Con Tôn Hoài An trả nợ": 227.21204142765947,
+        "Con Tôn Văn Khánh trả nợ": 476.32601046167605
+      }
+    }
+  },
+  {
+    "seed": 880223,
+    "q": 3,
+    "age": 95,
+    "net": 15605.665065536678,
+    "cash": 11380.998610522121,
+    "house": 1274.3005306734738,
+    "assets": 2950.3657362087874,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 13138.24227589819,
+      "partner": 10810.837299182234,
+      "interest": 6238.80487475256,
+      "other": {
+        "Tiền nhặt được": 2.3616,
+        "Tiền mừng cưới": 74.10543154522776,
+        "BHYT chi trả viện phí": 235.4,
+        "Thưởng Tết, lương tháng 13": 36,
+        "Vũ Ánh Tuyết trả nợ": 11.808,
+        "Tiền cho thuê căn hộ cho thuê": 3325.057133107565,
+        "Con Bùi Mạnh Cường trả nợ": 696.4897163510165
+      }
+    }
+  },
+  {
+    "seed": 880034,
+    "q": 2,
+    "age": 70,
+    "net": 15170.845707786892,
+    "cash": 10769.818255125785,
+    "house": 4401.024299616247,
+    "assets": 0,
+    "job": "kỹ sư xây dựng",
+    "flow": {
+      "salary": 35439.45749353683,
+      "partner": 1338.1301519690185,
+      "interest": 2287.47968858523,
+      "other": {
+        "Học bổng khuyến khích": 5.0184,
+        "Lương làm từ xa": 160.42499999999998,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999,
+        "Thưởng Tết, lương tháng 13": 24,
+        "BHYT chi trả viện phí": 105.6
+      }
+    }
+  },
+  {
+    "seed": 880157,
+    "q": 3,
+    "age": 67,
+    "net": 15164.828127171588,
+    "cash": 12213.787005475604,
+    "house": 2941.419989721889,
+    "assets": 9.6146,
+    "job": "chủ văn phòng thám tử",
+    "flow": {
+      "salary": 10470.87457301205,
+      "partner": 26594.4998613839,
+      "interest": 2779.7575492596466,
+      "other": {
+        "Tiền nhặt được": 0.8855999999999999,
+        "Tiền mừng cưới": 39.634189139172435,
+        "Đập heo đất": 1.7711999999999999,
+        "Thưởng Tết, lương tháng 13": 65,
+        "Thù lao vụ thám tử": 148.78079999999997,
+        "Con Nguyễn Tấn Phát trả nợ": 1015.0914194677698
+      }
+    }
+  },
+  {
+    "seed": 880133,
+    "q": 1,
+    "age": 73,
+    "net": 15112.486775156634,
+    "cash": 778.0274718058273,
+    "house": 14334.459303350806,
+    "assets": 0,
+    "job": "thợ sửa xe",
+    "flow": {
+      "salary": 55894.62616427766,
+      "partner": 2998.423202755785,
+      "interest": 3746.704897807412,
+      "other": {
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Thưởng huy chương bạc SEA Games 2045 (bóng đá)": 331.2,
+        "Tiền mừng cưới": 89.36914648354053,
+        "Thưởng huy chương vàng Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 198.71999999999997,
+        "Thưởng huy chương vàng SEA Games 2047 (bóng đá)": 662.4,
+        "Thắng cá độ lớn": 132.48,
+        "Thưởng huy chương bạc Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 33.12,
+        "Thưởng huy chương vàng SEA Games 2051 (bóng đá)": 662.4,
+        "Thưởng vô địch ASEAN Cup": 662.4,
+        "Thưởng huy chương đồng Giải vô địch quốc gia cùng câu lạc bộ (bóng đá)": 39.74399999999999,
+        "Thưởng huy chương vàng SEA Games 2053 (bóng đá)": 662.4,
+        "Cát-xê Running Man Việt Nam (6/6 tập)": 486,
+        "Thưởng Tết, lương tháng 13": 50,
+        "BHYT chi trả viện phí": 109.2,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Trần Hữu Tài trả nợ": 16.56,
+        "Hốt hụi": 56.925
+      }
+    }
+  },
+  {
+    "seed": 880053,
+    "q": 4,
+    "age": 91,
+    "net": 15109.329705500662,
+    "cash": 4966.685641632712,
+    "house": 10142.643676700065,
+    "assets": 0,
+    "job": "nhà thiết kế thời trang",
+    "flow": {
+      "salary": 19956.02723887895,
+      "partner": 16822.27776993513,
+      "interest": 1800.1913486075484,
+      "other": {
+        "Bố mẹ chu cấp": 100.18221634635879,
+        "Tiền mừng cưới": 114.22105991922318,
+        "Vay vay mua nhà": 2779,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999,
+        "anh Kiệt trả nợ": 33.12,
+        "Trần Thanh Phong trả nợ": 107.64,
+        "Phần tài sản bố mẹ để lại": 1664,
+        "BHYT chi trả viện phí": 218.4,
+        "Con Trần Thanh Phong trả nợ": 107.02016644090165
+      }
+    }
+  },
+  {
+    "seed": 880068,
+    "q": 4,
+    "age": 55,
+    "net": 14661.103832946557,
+    "cash": 13182.289760992451,
+    "house": 1478.7960123403677,
+    "assets": 0,
+    "job": "makeup artist",
+    "flow": {
+      "salary": 14058.082554655446,
+      "partner": 14636.465312842622,
+      "interest": 2707.220596662868,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 18.534742173440346,
+        "Bố mẹ chu cấp": 172.29207721160708,
+        "Tiền mừng cưới": 41.88574590808711,
+        "Vay vay ngân hàng": 31.049999999999994,
+        "Trợ cấp thất nghiệp (BHTN)": 120.67844927290953,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Phần tài sản bố mẹ để lại": 1560,
+        "Khách trúng số \"lại quả\"": 20,
+        "Trang điểm cô dâu": 1.5
+      }
+    }
+  },
+  {
+    "seed": 880211,
+    "q": 4,
+    "age": 89,
+    "net": 14493.833155434886,
+    "cash": 13118.255985152593,
+    "house": 1375.5766200485386,
+    "assets": 0,
+    "job": "giám đốc sáng tạo",
+    "flow": {
+      "salary": 25377.6996842006,
+      "partner": 1502.188349003993,
+      "interest": 5044.8777742827215,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 21.399339419043695,
+        "Bố mẹ chu cấp": 287.8582192380567,
+        "Học bổng toàn phần": 37.26,
+        "Hốt hụi": 42.074999999999996,
+        "Vay vay mua nhà": 765.0999999999999,
+        "Thưởng Tết, lương tháng 13": 38,
+        "Thưởng sáng kiến": 30,
+        "Vẽ chân dung theo đơn": 30,
+        "Tiền mừng cưới": 80.12962188201024,
+        "Phần tài sản bố mẹ để lại": 1872,
+        "BHYT chi trả viện phí": 82.2
+      }
+    }
+  },
+  {
+    "seed": 880032,
+    "q": 4,
+    "age": 71,
+    "net": 14432.325302438365,
+    "cash": 12837.978017898422,
+    "house": 1594.3418249006686,
+    "assets": 0,
+    "job": "người livestream bán hàng (8 nghìn người theo dõi)",
+    "flow": {
+      "salary": 28832.12339582397,
+      "partner": 0,
+      "interest": 3649.093144245642,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 11.447264339482278,
+        "Bố mẹ chu cấp": 226.68932100745587,
+        "Thưởng Tết, lương tháng 13": 54,
+        "Vay vay ngân hàng": 54.3375,
+        "Cát-xê Running Man Việt Nam (6/6 tập)": 1113,
+        "Cát-xê chương trình, show diễn sau chung kết": 200,
+        "Tiền bo": 1,
+        "BHYT chi trả viện phí": 4.199999999999999
+      }
+    }
+  },
+  {
+    "seed": 880054,
+    "q": 3,
+    "age": 86,
+    "net": 14413.34293581833,
+    "cash": 13524.429879967183,
+    "house": 888.9130558511464,
+    "assets": 0,
+    "job": "chủ thương hiệu riêng (nước hoa chiết)",
+    "flow": {
+      "salary": 29499.803440256237,
+      "partner": 4346.1629308711645,
+      "interest": 4379.193136233782,
+      "other": {
+        "Tiền nhặt được": 1.107,
+        "BHYT chi trả viện phí": 78.80000000000001,
+        "Tiền mừng cưới": 18.99127778807189,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Vay vay ngân hàng": 6.6419999999999995,
+        "Hốt hụi": 56.925,
+        "Con Nguyễn Thu Thủy trả nợ": 392.6337118078917,
+        "Con Nguyễn Văn Tiến trả nợ": 823.992672053543
+      }
+    }
+  },
+  {
+    "seed": 880110,
+    "q": 3,
+    "age": 97,
+    "net": 14394.196374894833,
+    "cash": 6032.412464153917,
+    "house": 2801.6087346480954,
+    "assets": 5560.175176092821,
+    "job": "kiến trúc sư",
+    "flow": {
+      "salary": 23467.748657343116,
+      "partner": 8099.22307084355,
+      "interest": 2650.675423872807,
+      "other": {
+        "Tiền mừng cưới": 31.877915696695446,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Phần tài sản bố mẹ để lại": 624,
+        "Trợ cấp thất nghiệp (BHTN)": 144.9781289737324,
+        "Con Nguyễn Hải Long trả nợ": 545.3980469629878,
+        "BHYT chi trả viện phí": 436.8,
+        "Tiền cho thuê căn hộ cho thuê": 2121.8141573606727
+      }
+    }
+  },
+  {
+    "seed": 880087,
+    "q": 2,
+    "age": 93,
+    "net": 14217.41631374636,
+    "cash": 11523.942531128068,
+    "house": 2690.3873316863896,
+    "assets": 0,
+    "job": "diễn viên quần chúng",
+    "flow": {
+      "salary": 15960.60024388608,
+      "partner": 19544.463902132535,
+      "interest": 8154.992279155239,
+      "other": {
+        "Đập heo đất": 1.107,
+        "Học bổng toàn phần": 16.604999999999997,
+        "Cát-xê phim web drama": 320.0540594570339,
+        "Cát-xê phim": 32.085,
+        "Vay vay mua nhà": 1452.5,
+        "Cát-xê phim điện ảnh chiếu rạp": 2665.1941997930408,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 203,
+        "BHYT chi trả viện phí": 216.79999999999998,
+        "Cát-xê & thưởng doanh thu phim": 240.6375,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Phần tài sản bố mẹ để lại": 806,
+        "Thắng cá độ": 6.417,
+        "Con Nguyễn Ngân Hà trả nợ": 1992.31603733039,
+        "Nguyễn Thế Hiển trả nợ": 104.27624999999999,
+        "Bán xe đạp cũ": 0.0010005386382569922,
+        "Con Nguyễn Thế Hiển trả nợ": 1477.6020894565436
+      }
+    }
+  },
+  {
+    "seed": 880078,
+    "q": 2,
+    "age": 78,
+    "net": 13542.390526064599,
+    "cash": 12475.389492901275,
+    "house": 1067.0003058683196,
+    "assets": 0,
+    "job": "chủ chuỗi quán (quán cà phê)",
+    "flow": {
+      "salary": 33123.859403584844,
+      "partner": 3978.598849976288,
+      "interest": 2440.283554051164,
+      "other": {
+        "Tiền nhặt được": 3.5423999999999998,
+        "Vay vay nóng (tín dụng đen)": 17.712,
+        "Tiền mừng cưới": 19.77278030924499,
+        "Vay vay mua nhà": 764.4,
+        "Thưởng Tết, lương tháng 13": 100,
+        "Doanh thu tăng sau clip review": 82.8,
+        "BHYT chi trả viện phí": 113.4
+      }
+    }
+  },
+  {
+    "seed": 880150,
+    "q": 3,
+    "age": 96,
+    "net": 13521.151259126753,
+    "cash": 12286.493614731136,
+    "house": 1234.6569114635479,
+    "assets": 0,
+    "job": "người bán vé số dạo",
+    "flow": {
+      "salary": 19690.76112219275,
+      "partner": 4413.495458548427,
+      "interest": 7702.379865480495,
+      "other": {
+        "Đập heo đất": 1.2546,
+        "Vẽ chân dung theo đơn": 30,
+        "Vay vay mua nhà": 300.29999999999995,
+        "Hốt hụi": 143.17499999999998,
+        "Làm thêm": 16.56,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Trợ cấp thất nghiệp (BHTN)": 22.525555882453954,
+        "Gia đình cụ cảm ơn": 33.12,
+        "Phần tài sản bố mẹ để lại": 832,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880212,
+    "q": 2,
+    "age": 84,
+    "net": 13276.784209702708,
+    "cash": 12738.124834058297,
+    "house": 538.6593756444103,
+    "assets": 0,
+    "job": "viện trưởng VKSND tỉnh",
+    "flow": {
+      "salary": 18992.363578682038,
+      "partner": 13590.175769074558,
+      "interest": 5086.930458333146,
+      "other": {
+        "Tiền nhặt được": 0.31365,
+        "Đập heo đất": 1.2546,
+        "Học bổng khuyến khích": 5.0184,
+        "Học bổng & trợ giảng nghiên cứu sinh": 21.955499999999997,
+        "BHYT chi trả viện phí": 88.4,
+        "Vay vay mua nhà": 327.59999999999997,
+        "Tiền mừng cưới": 29.76258324578963,
+        "Thưởng Tết, lương tháng 13": 9,
+        "chị Hương trả nợ": 12.546,
+        "Con Phạm Hồng Nhung trả nợ": 1293.8153304673601
+      }
+    }
+  },
+  {
+    "seed": 880017,
+    "q": 2,
+    "age": 98,
+    "net": 13228.284941272039,
+    "cash": 9769.32790576485,
+    "house": 3458.9570355071887,
+    "assets": 0,
+    "job": "kiểm toán trưởng",
+    "flow": {
+      "salary": 24628.405719479284,
+      "partner": 5839.615452968508,
+      "interest": 4466.755150154287,
+      "other": {
+        "Đập heo đất": 1.476,
+        "Vay nợ thẻ tín dụng": 22.139999999999997,
+        "Học bổng & trợ giảng nghiên cứu sinh": 51.66,
+        "Thưởng sáng kiến": 30,
+        "BHYT chi trả viện phí": 150,
+        "Trợ cấp thất nghiệp (BHTN)": 69.64722441207876,
+        "Tiền mừng cưới": 28.285380835141986,
+        "Thưởng Tết, lương tháng 13": 33,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 110.69999999999999,
+        "Con Lê Khánh Hưng trả nợ": 420.2813149024719
+      }
+    }
+  },
+  {
+    "seed": 880101,
+    "q": 4,
+    "age": 83,
+    "net": 13226.861985544576,
+    "cash": 4018.0816531407077,
+    "house": 1654.8503834237572,
+    "assets": 7553.929350561781,
+    "job": "tổng quản lý khách sạn",
+    "flow": {
+      "salary": 36131.553904591434,
+      "partner": 15292.77758899529,
+      "interest": 3125.417825328852,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 13.887971188269734,
+        "Bố mẹ chu cấp": 198.0211122003127,
+        "Học bổng khuyến khích": 5.0184,
+        "Tiền mừng cưới": 57.87036913249874,
+        "Phiên dịch hội nghị": 25,
+        "Vay vay mua nhà": 1068.2,
+        "Vay vay ngân hàng": 19.250999999999998,
+        "Con Lâm Quang Vinh trả nợ": 433.32475696138414,
+        "BHYT chi trả viện phí": 318.2,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 882.9866809652816,
+        "Con Lâm Đình Khoa trả nợ": 79.10228171087941
+      }
+    }
+  },
+  {
+    "seed": 880082,
+    "q": 3,
+    "age": 89,
+    "net": 13167.114536748042,
+    "cash": 6151.380500110353,
+    "house": 4991.02422750894,
+    "assets": 2024.7094821782557,
+    "job": "chuyên viên chính tập đoàn (Vinacomin)",
+    "flow": {
+      "salary": 21937.870937162665,
+      "partner": 0,
+      "interest": 1966.3522004400802,
+      "other": {
+        "Bố mẹ chu cấp": 44.50875142587106,
+        "Học bổng toàn phần": 22.139999999999997,
+        "Vay nợ thẻ tín dụng": 41.4,
+        "Tiền nhặt được": 9.936,
+        "Trợ cấp thất nghiệp (BHTN)": 167.5942043112717,
+        "Phần tài sản bố mẹ để lại": 832,
+        "BHYT chi trả viện phí": 222.60000000000002,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 2454.9752701834555
+      }
+    }
+  },
+  {
+    "seed": 880210,
+    "q": 1,
+    "age": 86,
+    "net": 13159.271511116924,
+    "cash": 9671.984382107657,
+    "house": 3487.287129009266,
+    "assets": 0,
+    "job": "phó tổng giám đốc tập đoàn (Vietcombank)",
+    "flow": {
+      "salary": 26203.559052162367,
+      "partner": 9873.696075174252,
+      "interest": 2930.553906360178,
+      "other": {
+        "Học bổng khuyến khích": 5.904,
+        "Quà cảm ơn": 3.2085,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Trợ cấp thất nghiệp (BHTN)": 42.0300422449838,
+        "Tiền mừng cưới": 102.85902999732875,
+        "Thắng cá độ": 6.417,
+        "Con Nguyễn Diệu Thúy trả nợ": 150.3270218846699,
+        "BHYT chi trả viện phí": 211.2
+      }
+    }
+  },
+  {
+    "seed": 880088,
+    "q": 1,
+    "age": 95,
+    "net": 13107.265144581193,
+    "cash": 853.6168125800381,
+    "house": 3089.8432483013694,
+    "assets": 6523.805083699786,
+    "job": "chủ khóa học online",
+    "flow": {
+      "salary": 11453.355921607908,
+      "partner": 15059.564795423068,
+      "interest": 3035.337565827367,
+      "other": {
+        "BHYT chi trả viện phí": 92.6,
+        "Thưởng Tết, lương tháng 13": 9,
+        "Quà cảm ơn": 1.2546,
+        "Trợ cấp thất nghiệp (BHTN)": 143.37841565888777,
+        "Bùi Đình Trọng trả nợ": 12.546,
+        "Con Châu Ngọc Mai trả nợ": 215.84839008992085,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 343.9856181197294,
+        "Con Châu Duy Mạnh trả nợ": 433.3486120994682
+      }
+    }
+  },
+  {
+    "seed": 880218,
+    "q": 3,
+    "age": 87,
+    "net": 12833.538843524595,
+    "cash": 9285.149378749971,
+    "house": 3548.3887542455,
+    "assets": 0,
+    "job": "quản lý ngôi sao hạng A",
+    "flow": {
+      "salary": 15308.462446927431,
+      "partner": 14781.128125513022,
+      "interest": 3083.9613276194864,
+      "other": {
+        "Bố mẹ chu cấp": 11.56675922204151,
+        "Học bổng khuyến khích": 9.936,
+        "Thưởng Tết, lương tháng 13": 72,
+        "Tiền mừng cưới": 88.9340249570785,
+        "Trợ cấp thất nghiệp (BHTN)": 23.041266819566975,
+        "Hốt hụi": 55.199999999999996,
+        "BHYT chi trả viện phí": 325.2,
+        "Con phụ giúp": 8.02125,
+        "Phần tài sản bố mẹ để lại": 1209,
+        "Con Đinh Nhã Uyên trả nợ": 734.3398460316903,
+        "Con Đinh Nhã Phương trả nợ": 324.07567076184404
+      }
+    }
+  },
+  {
+    "seed": 880007,
+    "q": 1,
+    "age": 64,
+    "net": 12730.249597247106,
+    "cash": 8495.529732315843,
+    "house": 4234.719864931263,
+    "assets": 0,
+    "job": "chủ thương hiệu riêng (nước hoa)",
+    "flow": {
+      "salary": 40246.33506346589,
+      "partner": 838.7410704150286,
+      "interest": 2606.4932172093777,
+      "other": {
+        "Tiền nhặt được": 10.732499999999998,
+        "Vay vay mua nhà": 1683.5,
+        "Doanh thu tăng sau clip review": 80.21249999999999,
+        "Tiền mừng cưới": 65.2774872220354,
+        "BHYT chi trả viện phí": 109.8,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Lời hàng xách tay": 48.12749999999999,
+        "Trần Xuân Bách trả nợ": 16.0425,
+        "Con Lê Công Minh trả nợ": 170.0300411012849
+      }
+    }
+  },
+  {
+    "seed": 880033,
+    "q": 3,
+    "age": 66,
+    "net": 12548.138234820604,
+    "cash": 9303.697052679938,
+    "house": 3244.441182140667,
+    "assets": 0,
+    "job": "giám đốc thiết kế",
+    "flow": {
+      "salary": 29082.230409805637,
+      "partner": 6143.623105838842,
+      "interest": 2228.304531959153,
+      "other": {
+        "Đập heo đất": 2.2878,
+        "Học bổng toàn phần": 34.31699999999999,
+        "Vay vay mua nhà": 1389.5,
+        "Giải nhất phương án kiến trúc": 100,
+        "Con phụ giúp": 8.28,
+        "BHYT chi trả viện phí": 4.199999999999999,
+        "Con Cao Quỳnh Chi trả nợ": 609.495759386374,
+        "Con Cao Tấn Tài trả nợ": 393.5116738951472
+      }
+    }
+  },
+  {
+    "seed": 880042,
+    "q": 2,
+    "age": 58,
+    "net": 12496.410770086897,
+    "cash": 10890.25511506174,
+    "house": 0,
+    "assets": 1606.155655025157,
+    "job": "chuyên viên chính tập đoàn (Vietcombank)",
+    "flow": {
+      "salary": 25346.67076922263,
+      "partner": 4236.831459968484,
+      "interest": 1641.416647768337,
+      "other": {
+        "Đập heo đất": 1.107,
+        "Làm thêm": 2.214,
+        "Thưởng Tết, lương tháng 13": 75,
+        "Tiền mừng cưới": 102.40866680793464,
+        "A Tlang Ksor trả nợ": 33.12,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 2280.190905089947
+      }
+    }
+  },
+  {
+    "seed": 880121,
+    "q": 2,
+    "age": 82,
+    "net": 12283.869292787109,
+    "cash": 11249.68587578892,
+    "house": 1034.1824567127744,
+    "assets": 0,
+    "job": "chủ công ty lữ hành",
+    "flow": {
+      "salary": 22526.64443922687,
+      "partner": 7857.053344798333,
+      "interest": 3703.271638466642,
+      "other": {
+        "Tiền mừng cưới": 54.887656944774086,
+        "BHYT chi trả viện phí": 221,
+        "Vay vay mua nhà": 319.2,
+        "Thưởng Tết, lương tháng 13": 17,
+        "Trợ cấp thất nghiệp (BHTN)": 38.29416408371257,
+        "Hốt hụi": 110.975,
+        "Phần tài sản bố mẹ để lại": 604.5,
+        "Con Đặng Thùy Dung trả nợ": 948.8294406955313,
+        "Con Đặng Hải Yến trả nợ": 538.643489064714
+      }
+    }
+  },
+  {
+    "seed": 880209,
+    "q": 2,
+    "age": 79,
+    "net": 12261.712963694019,
+    "cash": 8119.917610788379,
+    "house": 4129.838544026886,
+    "assets": 0,
+    "job": "chủ chuỗi quán (tiệm trà sữa)",
+    "flow": {
+      "salary": 16847.498186466044,
+      "partner": 6393.954441295591,
+      "interest": 2739.1529132242576,
+      "other": {
+        "Tiền mừng cưới": 16.480937062734736,
+        "Làm thêm": 3.69,
+        "Thưởng Tết, lương tháng 13": 12,
+        "Vay vay ngân hàng": 11.069999999999999,
+        "Hốt hụi": 17.25,
+        "Phần tài sản bố mẹ để lại": 157.5,
+        "Con Nguyễn Quốc Trung trả nợ": 263.4601658136051,
+        "Bán xe đạp cũ": 0.0021076503076873196,
+        "Doanh thu tăng sau clip review": 18.45,
+        "BHYT chi trả viện phí": 24.599999999999998
+      }
+    }
+  },
+  {
+    "seed": 880185,
+    "q": 3,
+    "age": 88,
+    "net": 12217.303425374554,
+    "cash": 9649.122038479041,
+    "house": 2537.2026221572296,
+    "assets": 30.9784,
+    "job": "trưởng phòng nhân sự",
+    "flow": {
+      "salary": 27372.721721282007,
+      "partner": 8957.788483849232,
+      "interest": 4466.59662311978,
+      "other": {
+        "Bố mẹ chu cấp": 32.226508017502915,
+        "Đập heo đất": 1.4489999999999998,
+        "Chu cấp tình cảm từ Nguyễn Quang Khải": 864,
+        "Thưởng sáng kiến": 30,
+        "BHYT chi trả viện phí": 114.80000000000001,
+        "Vay vay mua nhà": 1411.1999999999998,
+        "anh Hiếu trả nợ": 264.96,
+        "Trợ cấp thất nghiệp (BHTN)": 397.8621560268446,
+        "Phần tài sản bố mẹ để lại": 832,
+        "Con Nguyễn Kim Liên trả nợ": 660.2626126957877
+      }
+    }
+  },
+  {
+    "seed": 880029,
+    "q": 4,
+    "age": 68,
+    "net": 12189.974255264915,
+    "cash": 11957.190027931765,
+    "house": 863.0803189176473,
+    "assets": 0,
+    "job": "cục trưởng hải quan",
+    "flow": {
+      "salary": 12547.984526009968,
+      "partner": 16214.286973959584,
+      "interest": 3064.983525108013,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 44.94779213189681,
+        "Học bổng khuyến khích": 5.0184,
+        "Bố mẹ chu cấp": 133.81737899294038,
+        "Vay vay mua nhà": 318.5,
+        "BHYT chi trả viện phí": 5.6,
+        "Vay vay ngân hàng": 94.095,
+        "Tiền mừng cưới": 20.835692994137293,
+        "Thưởng Tết, lương tháng 13": 18,
+        "Con Võ Xuân Hùng trả nợ": 584.8257967845942,
+        "Con Võ Diễm Quỳnh trả nợ": 450.88724418398135
+      }
+    }
+  },
+  {
+    "seed": 880106,
+    "q": 5,
+    "age": 94,
+    "net": 12111.283072118918,
+    "cash": 5112.732269977115,
+    "house": 3547.812308994908,
+    "assets": 0,
+    "job": "MC sự kiện có tiếng",
+    "flow": {
+      "salary": 45355.3262565091,
+      "partner": 6651.198035287348,
+      "interest": 9422.551989856258,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 133.23166251377702,
+        "Bố mẹ chu cấp": 1119.3091298918032,
+        "Vay vay mua nhà": 889,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Tiền mừng cưới": 92.71782470986246,
+        "Tiền bo đám cưới": 2,
+        "Thắng kiện": 16.56,
+        "Hốt hụi": 75.89999999999999,
+        "BHYT chi trả viện phí": 327.6,
+        "Quà cảm ơn": 3.312,
+        "Con Nguyễn Hải Anh trả nợ": 1925.0632994121402
+      }
+    }
+  },
+  {
+    "seed": 880152,
+    "q": 5,
+    "age": 100,
+    "net": 11930.498635635458,
+    "cash": 9994.082142295945,
+    "house": 1936.414994986612,
+    "assets": 0,
+    "job": "trưởng nhóm sự kiện",
+    "flow": {
+      "salary": 29135.514733479336,
+      "partner": 12904.454360611255,
+      "interest": 6579.402187467674,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 67.97068338289552,
+        "Bố mẹ chu cấp": 1088.8684527923149,
+        "Học bổng khuyến khích": 13.248,
+        "Tiền mừng cưới": 60.83783879332245,
+        "BHYT chi trả viện phí": 329,
+        "Mã Vĩnh Huy trả nợ": 107.64,
+        "Con Mã Vĩnh Huy trả nợ": 914.2198304968807,
+        "Con Mã Vĩnh Cường trả nợ": 443.562381651884
+      }
+    }
+  },
+  {
+    "seed": 880085,
+    "q": 4,
+    "age": 86,
+    "net": 11850.550794344921,
+    "cash": 1880.3445665538675,
+    "house": 9970.206227791054,
+    "assets": 0,
+    "job": "chủ đại lý",
+    "flow": {
+      "salary": 31545.688359488486,
+      "partner": 8121.445121995669,
+      "interest": 2512.7835090651974,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 26.70267120915429,
+        "Tiền mừng cưới": 83.35553790405392,
+        "Bố mẹ chu cấp": 132.59491641973312,
+        "Vay vay ngân hàng": 24.84,
+        "BHYT chi trả viện phí": 251.3,
+        "Vay vay mua nhà": 5879.299999999999,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Con phụ giúp": 8.28,
+        "Hốt hụi": 56.1,
+        "Con Võ Thảo My trả nợ": 1099.7242114109338,
+        "Phần tài sản bố mẹ để lại": 2496
+      }
+    }
+  },
+  {
+    "seed": 880220,
+    "q": 3,
+    "age": 69,
+    "net": 11799.382496224553,
+    "cash": 9670.753390925738,
+    "house": 2128.6168640658266,
+    "assets": 0,
+    "job": "thợ sửa xe",
+    "flow": {
+      "salary": 22702.11047147544,
+      "partner": 5776.698099601854,
+      "interest": 2903.8182887037083,
+      "other": {
+        "Bố mẹ chu cấp": 4.555884381468819,
+        "Vay vay mua nhà": 797.3,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Tiền mừng cưới": 114.57386918373405,
+        "anh Chá trả nợ": 33.12,
+        "Phần tài sản bố mẹ để lại": 1248,
+        "Trợ cấp thất nghiệp (BHTN)": 31.70273288772018,
+        "Con Mùa Mí Chơ trả nợ": 700.8243573291168
+      }
+    }
+  },
+  {
+    "seed": 880196,
+    "q": 5,
+    "age": 86,
+    "net": 11755.797087566607,
+    "cash": 10540.66128616685,
+    "house": 1215.135355439286,
+    "assets": 0,
+    "job": "chủ studio hậu kỳ",
+    "flow": {
+      "salary": 22698.294733712617,
+      "partner": 4757.949376753634,
+      "interest": 5039.630773421009,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 23.926931646782595,
+        "Bố mẹ chu cấp": 1171.5494743535783,
+        "Tiền thưởng giải cờ": 22.878,
+        "Đập heo đất": 2.2878,
+        "Quà cảm ơn": 2.2878,
+        "Tiền mừng cưới": 49.62230954077933,
+        "Vay vay ngân hàng": 5.7195,
+        "BHYT chi trả viện phí": 5.6,
+        "Doanh thu tăng sau clip review": 82.8,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Trợ cấp thất nghiệp (BHTN)": 64.78429349282044,
+        "Con Nguyễn Gia Khánh trả nợ": 544.409632065317,
+        "Con Nguyễn Hữu Trí trả nợ": 764.4839547087163
+      }
+    }
+  },
+  {
+    "seed": 880153,
+    "q": 5,
+    "age": 73,
+    "net": 11617.902096888718,
+    "cash": 1586.4560849592317,
+    "house": 4461.426491741444,
+    "assets": 0,
+    "job": "đạo diễn nổi tiếng",
+    "flow": {
+      "salary": 37149.96799346674,
+      "partner": 19042.418383424905,
+      "interest": 4702.031901803807,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 147.7696038027926,
+        "Thắng cá độ": 12.42,
+        "Bố mẹ chu cấp": 2571.2744697309454,
+        "Học bổng khuyến khích": 12.006,
+        "Cát-xê đạo diễn phim Mùa gió trở lại #1": 10.694999999999999,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #2": 178.25,
+        "em Dương trả nợ": 64.17,
+        "Tiền mừng cưới": 69.84648795624263,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #3": 10.694999999999999,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Thu hồi ròng phim Mùa gió trở lại #4": 60.13555242274671,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #5": 10.694999999999999,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #6": 10.694999999999999,
+        "Thu hồi ròng phim Mùa gió trở lại #7": 113.22556547641507,
+        "Thu hồi ròng phim Ngày mai bắt đầu #8": 4551.015644504307,
+        "Vay vay ngân hàng": 24.063749999999995,
+        "Cát-xê 2 Ngày 1 Đêm (6/6 tập)": 1190,
+        "Thu hồi ròng phim Một lời chưa nói #9": 8559.874573778929,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #10": 71.29999999999998,
+        "Thu hồi ròng phim Chuyến xe cuối ngày #11": 1023.2291708623245,
+        "Phần tài sản bố mẹ để lại": 1209,
+        "Bán Honda City cũ": 5.296757862650599,
+        "BHYT chi trả viện phí": 105.6
+      }
+    }
+  },
+  {
+    "seed": 880156,
+    "q": 3,
+    "age": 97,
+    "net": 11554.174048159437,
+    "cash": 4989.68345548592,
+    "house": 2936.9874593049176,
+    "assets": 2876.695290950926,
+    "job": "YouTuber / TikToker (14 nghìn người đăng ký)",
+    "flow": {
+      "salary": 19988.077699458063,
+      "partner": 29780.73208505132,
+      "interest": 5866.594653195393,
+      "other": {
+        "Quà cảm ơn": 1.7711999999999999,
+        "Tiền mừng cưới": 56.518341415822505,
+        "Tiền thưởng giải cờ": 1490.3999999999999,
+        "Thưởng huy chương bạc SEA Games 2057 (cờ tướng)": 124.19999999999999,
+        "BHYT chi trả viện phí": 228.2,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Hốt hụi": 98.175,
+        "Thưởng huy chương vàng SEA Games 2073 (cờ tướng)": 248.39999999999998,
+        "Phần tài sản bố mẹ để lại": 1248,
+        "Con Nguyễn Minh Khôi trả nợ": 723.5522217442715,
+        "Tiền cho thuê căn hộ cho thuê": 1777.1468510814923
+      }
+    }
+  },
+  {
+    "seed": 880016,
+    "q": 4,
+    "age": 92,
+    "net": 10962.188481912988,
+    "cash": 7253.48900242897,
+    "house": 907.3043604549632,
+    "assets": 1059.8797935890561,
+    "job": "giám đốc thiết kế",
+    "flow": {
+      "salary": 28763.38016069306,
+      "partner": 4058.7056430952484,
+      "interest": 4164.869239116823,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 63.33349371097425,
+        "Tiền mừng cưới": 46.69672272856626,
+        "Đập heo đất": 2.2878,
+        "Học bổng toàn phần": 34.31699999999999,
+        "Bố mẹ chu cấp": 91.78479331820452,
+        "BHYT chi trả viện phí": 228.2,
+        "Trợ cấp thất nghiệp (BHTN)": 35.3421874389626,
+        "Thưởng Tết, lương tháng 13": 34,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 171.58499999999998,
+        "Con Võ Bảo Châu trả nợ": 325.5062060241581,
+        "Thắng cá độ": 4.5756,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 358.27731888010965,
+        "Con Võ Hoàng Hải trả nợ": 865.9004948957074,
+        "Tiền cho thuê căn hộ cho thuê": 32.09263994264748
+      }
+    }
+  },
+  {
+    "seed": 880109,
+    "q": 2,
+    "age": 93,
+    "net": 10813.395911881365,
+    "cash": 5784.785562555535,
+    "house": 3873.554998837954,
+    "assets": 1155.0550204272552,
+    "job": "copywriter có tiếng",
+    "flow": {
+      "salary": 21905.21763757178,
+      "partner": 577.7911133991392,
+      "interest": 1025.7284105586334,
+      "other": {
+        "Tiền nhặt được": 9.625499999999999,
+        "Tiền mừng cưới": 73.68160941895796,
+        "BHYT chi trả viện phí": 212.6,
+        "Làm thêm": 16.0425,
+        "Hoàng Bích Ngọc trả nợ": 104.27624999999999,
+        "Con Hoàng Phúc Thịnh trả nợ": 273.52281803959943,
+        "Lãi cửa hàng tiện lợi": 4600.187872252035
+      }
+    }
+  },
+  {
+    "seed": 880076,
+    "q": 2,
+    "age": 96,
+    "net": 10607.462414639522,
+    "cash": 1020.5553028368653,
+    "house": 3832.7547149141838,
+    "assets": 0,
+    "job": "thợ chụp ảnh",
+    "flow": {
+      "salary": 35444.095381022955,
+      "partner": 17436.63454171057,
+      "interest": 7759.515458986549,
+      "other": {
+        "Tiền mừng cưới": 72.67333553945878,
+        "Vay vay mua nhà": 960.4,
+        "BHYT chi trả viện phí": 216.79999999999998,
+        "chị Dương trả nợ": 64.17,
+        "Vay vay ngân hàng": 24.063749999999995,
+        "Trợ cấp thất nghiệp (BHTN)": 67.05553729488601,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Con phụ giúp": 8.02125,
+        "Tiền chênh lệch vật liệu": 80.21249999999999,
+        "Phần tài sản bố mẹ để lại": 1813.5,
+        "Con Đặng Hồng Nhung trả nợ": 1720.1471550352996,
+        "Hốt hụi": 54.4,
+        "Đặng Minh Khuê trả nợ": 104.27624999999999,
+        "Con Đặng Minh Khuê trả nợ": 1306.8054460618403
+      }
+    }
+  },
+  {
+    "seed": 880151,
+    "q": 3,
+    "age": 75,
+    "net": 10552.820029931123,
+    "cash": 7359.096251948693,
+    "house": 3193.7237779824295,
+    "assets": 0,
+    "job": "bartender",
+    "flow": {
+      "salary": 28226.21652958768,
+      "partner": 2112.00360774856,
+      "interest": 1360.0669500046142,
+      "other": {
+        "Bố mẹ chu cấp": 2.070009098592005,
+        "Tiền mừng cưới": 103.57574226049705,
+        "Vay nợ ví trả sau": 40.106249999999996,
+        "Vay vay mua nhà": 1288.6999999999998,
+        "Hốt hụi": 54.4,
+        "Con Bùi Thành Nam trả nợ": 197.187094357361,
+        "BHYT chi trả viện phí": 105.6,
+        "Phần tài sản bố mẹ để lại": 1813.5,
+        "Bùi Hồng Ánh trả nợ": 104.27624999999999
+      }
+    }
+  },
+  {
+    "seed": 880018,
+    "q": 5,
+    "age": 86,
+    "net": 10529.848935974283,
+    "cash": 3891.91679649128,
+    "house": 6637.931632709742,
+    "assets": 0,
+    "job": "trưởng phòng kinh doanh",
+    "flow": {
+      "salary": 19764.68593204346,
+      "partner": 9163.055360600096,
+      "interest": 2646.0827426505766,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 27.75249910091516,
+        "Trợ cấp thất nghiệp (BHTN)": 7.4664678900174275,
+        "Bố mẹ chu cấp": 487.1115984773778,
+        "Thưởng Tết, lương tháng 13": 68,
+        "Hợp đồng lớn": 57.19499999999999,
+        "Tiền mừng cưới": 66.4227370839687,
+        "Con Nguyễn Khánh Huyền trả nợ": 211.96743111356488,
+        "BHYT chi trả viện phí": 151.2,
+        "Bán nhà cấp 4": 1002.6129931801619
+      }
+    }
+  },
+  {
+    "seed": 880229,
+    "q": 4,
+    "age": 74,
+    "net": 10472.176603874648,
+    "cash": 9513.854286668538,
+    "house": 958.3208529191907,
+    "assets": 0,
+    "job": "nhân viên bảo vệ",
+    "flow": {
+      "salary": 13650.086454934024,
+      "partner": 9304.966310736912,
+      "interest": 3284.475894840358,
+      "other": {
+        "Bố mẹ chu cấp": 42.060585115572486,
+        "Tiền mừng cưới": 31.279609240732153,
+        "Vay vay mua nhà": 333.2,
+        "Thưởng Tết, lương tháng 13": 9,
+        "Làm thêm": 2.5092,
+        "Lê Ngọc Quang trả nợ": 12.546,
+        "Con Trịnh Thị Mai trả nợ": 506.5910206200853,
+        "Trợ cấp thất nghiệp (BHTN)": 23.06600512511637,
+        "Con Trịnh Gia Linh trả nợ": 722.4739917443796
+      }
+    }
+  },
+  {
+    "seed": 880237,
+    "q": 5,
+    "age": 44,
+    "net": 10204.828337219446,
+    "cash": 7877.052054431274,
+    "house": 2336.2379070358375,
+    "assets": 0,
+    "job": "nhà sản xuất chương trình",
+    "flow": {
+      "salary": 20700.66025632677,
+      "partner": 0,
+      "interest": 1075.895971045048,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 110.5301142483438,
+        "Bố mẹ chu cấp": 1436.8745534857844,
+        "Đập heo đất": 2.5875,
+        "Học bổng toàn phần": 38.8125,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Vay vay ngân hàng": 12.834
+      }
+    }
+  },
+  {
+    "seed": 880046,
+    "q": 5,
+    "age": 44,
+    "net": 10191.098504902982,
+    "cash": 9846.820924721007,
+    "house": 678.814923301227,
+    "assets": 0,
+    "job": "trợ lý nghệ sĩ",
+    "flow": {
+      "salary": 25367.32921390667,
+      "partner": 1687.3737370153851,
+      "interest": 914.0488853653494,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 25.539854515836904,
+        "Bố mẹ chu cấp": 147.00521477169653,
+        "Vay vay mua nhà": 352.79999999999995,
+        "Tiền mừng cưới": 75.26592769518122,
+        "Doanh thu tăng sau clip review": 57.19499999999999,
+        "Thưởng Tết, lương tháng 13": 17
+      }
+    }
+  },
+  {
+    "seed": 880162,
+    "q": 2,
+    "age": 82,
+    "net": 10185.204141145403,
+    "cash": 8542.843713202568,
+    "house": 1642.3597015711596,
+    "assets": 0,
+    "job": "chủ chuỗi cửa hàng điện thoại",
+    "flow": {
+      "salary": 29248.39419605595,
+      "partner": 2047.9719617788808,
+      "interest": 1692.0060107045988,
+      "other": {
+        "Làm thêm": 3.933,
+        "Trợ cấp thất nghiệp (BHTN)": 35.0520023690933,
+        "Thưởng Tết, lương tháng 13": 45,
+        "Tiền mừng cưới": 64.939685702892,
+        "Vay vay mua nhà": 579.5999999999999,
+        "Tiền bo": 1,
+        "Đáo hạn bảo hiểm": 76.73061725818874,
+        "em Hằng trả nợ": 39.33,
+        "BHYT chi trả viện phí": 64.8,
+        "Cát-xê phim": 39.33,
+        "Con Nguyễn Thu Hằng trả nợ": 511.96788768177754
+      }
+    }
+  },
+  {
+    "seed": 880194,
+    "q": 3,
+    "age": 62,
+    "net": 10076.913999204326,
+    "cash": 9211.27797765527,
+    "house": 865.5149976179476,
+    "assets": 0,
+    "job": "chủ phòng gym",
+    "flow": {
+      "salary": 19544.65861862782,
+      "partner": 7514.520872909035,
+      "interest": 1878.8788520900644,
+      "other": {
+        "Bố mẹ chu cấp": 17.179453648645694,
+        "Trợ cấp thất nghiệp (BHTN)": 7.737994763144081,
+        "chị Châu trả nợ": 23.616,
+        "Tiền mừng cưới": 71.93457183399796,
+        "Vay vay mua nhà": 359.79999999999995,
+        "Nguyễn Công Danh trả nợ": 11.808,
+        "Hốt hụi": 81.64999999999999,
+        "Con Phạm Ngọc Lan trả nợ": 289.921154203244,
+        "Thưởng Tết, lương tháng 13": 18
+      }
+    }
+  },
+  {
+    "seed": 880030,
+    "q": 2,
+    "age": 68,
+    "net": 9943.978522735735,
+    "cash": 9132.679259723587,
+    "house": 2750.005516799196,
+    "assets": 0,
+    "job": "cai thầu xây dựng",
+    "flow": {
+      "salary": 15158.847407163079,
+      "partner": 20045.70129605435,
+      "interest": 2154.8836535372234,
+      "other": {
+        "Trợ cấp thất nghiệp (BHTN)": 95.53227988406604,
+        "Tiền mừng cưới": 80.02610852055251,
+        "Vay vay mua nhà": 1126.3,
+        "Trang điểm cô dâu": 3,
+        "Hốt hụi": 75.89999999999999,
+        "Thưởng Tết, lương tháng 13": 25,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880202,
+    "q": 3,
+    "age": 76,
+    "net": 9711.551551484967,
+    "cash": 8852.25228888043,
+    "house": 837.8971128547058,
+    "assets": 21.3998,
+    "job": "trưởng nhóm giao hàng",
+    "flow": {
+      "salary": 11057.770904082532,
+      "partner": 12121.891251498742,
+      "interest": 2577.4833620705726,
+      "other": {
+        "Thưởng cuối năm": 17,
+        "Huỳnh Thị Dung trả nợ": 11.439,
+        "Thưởng Tết, lương tháng 13": 51,
+        "Tiền mừng cưới": 68.97358198083657,
+        "anh Hiếu trả nợ": 68.634,
+        "BHYT chi trả viện phí": 77,
+        "Nguyễn Diệu Thúy trả nợ": 74.3535,
+        "Phần tài sản bố mẹ để lại": 325.5,
+        "Con Nguyễn Diệu Thúy trả nợ": 563.2966720433766
+      }
+    }
+  },
+  {
+    "seed": 880067,
+    "q": 2,
+    "age": 75,
+    "net": 9575.815464401767,
+    "cash": 8675.879705462947,
+    "house": 899.9357589388202,
+    "assets": 0,
+    "job": "chủ thương hiệu riêng (quần áo)",
+    "flow": {
+      "salary": 22693.410100245383,
+      "partner": 1392.3929915681372,
+      "interest": 1552.8449553643115,
+      "other": {
+        "Tiền nhặt được": 4.649399999999999,
+        "Thưởng Tết, lương tháng 13": 36,
+        "Vay vay mua nhà": 312.9,
+        "Đáo hạn bảo hiểm": 100.94373778906743,
+        "Trang điểm cô dâu": 3.5,
+        "Tiền mừng cưới": 50.113735058533024,
+        "Trợ cấp thất nghiệp (BHTN)": 213.580287028045,
+        "BHYT chi trả viện phí": 8.399999999999999,
+        "Hốt hụi": 39.525
+      }
+    }
+  },
+  {
+    "seed": 880164,
+    "q": 5,
+    "age": 87,
+    "net": 9154.270190883915,
+    "cash": 8207.727159807198,
+    "house": 946.5430310767166,
+    "assets": 0,
+    "job": "chuyên gia dữ liệu cấp cao",
+    "flow": {
+      "salary": 17543.285740129097,
+      "partner": 4967.879699638179,
+      "interest": 3165.6383457843094,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 58.426534165457056,
+        "Học bổng khuyến khích": 9.1512,
+        "Tiền mừng cưới": 68.21124955444503,
+        "Bố mẹ chu cấp": 106.78022044622315,
+        "Thưởng Tết, lương tháng 13": 51,
+        "Con Nguyễn Tiến Dũng trả nợ": 202.87235162496972,
+        "Chế độ khi tinh giản": 137.26799999999997,
+        "Nguyễn Minh Trang trả nợ": 74.3535,
+        "BHYT chi trả viện phí": 155.39999999999998,
+        "em Nga trả nợ": 45.756,
+        "Con Nguyễn Minh Trang trả nợ": 427.62327408359573
+      }
+    }
+  },
+  {
+    "seed": 880231,
+    "q": 2,
+    "age": 66,
+    "net": 9026.718025812883,
+    "cash": 7904.85709361431,
+    "house": 3799.101693555999,
+    "assets": 0,
+    "job": "giám đốc sở",
+    "flow": {
+      "salary": 12584.036352813815,
+      "partner": 10486.1142356478,
+      "interest": 2056.1347618819254,
+      "other": {
+        "Học bổng toàn phần": 17.712,
+        "Chu cấp tình cảm từ Phạm Khánh Toàn": 1939.2000000000003,
+        "Vay vay mua nhà": 1603,
+        "Tiền mừng cưới": 50.638664203695946,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Hốt hụi": 55.199999999999996,
+        "Phần tài sản bố mẹ để lại": 1209,
+        "Con Nguyễn Hữu Lộc trả nợ": 381.86519354253164
+      }
+    }
+  },
+  {
+    "seed": 880066,
+    "q": 1,
+    "age": 58,
+    "net": 8905.961810009238,
+    "cash": 2941.1046200012493,
+    "house": 5964.857190007989,
+    "assets": 0,
+    "job": "quản đốc phân xưởng mỏ",
+    "flow": {
+      "salary": 8707.417469537098,
+      "partner": 0,
+      "interest": 911.8414136203445,
+      "other": {
+        "Thưởng Tết, lương tháng 13": 32,
+        "Vay vay mua nhà": 341.59999999999997,
+        "Trợ cấp thất nghiệp (BHTN)": 143.31701289714815,
+        "Chu cấp tình cảm từ Nguyễn Gia Hân": 4380,
+        "Thắng cá độ lớn": 132.48,
+        "BHYT chi trả viện phí": 114.8,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Phần tài sản bố mẹ để lại": 832
+      }
+    }
+  },
+  {
+    "seed": 880035,
+    "q": 4,
+    "age": 91,
+    "net": 8895.711913486071,
+    "cash": 7900.3659710530965,
+    "house": 995.3458437388309,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 8279.33004676631,
+      "partner": 5149.381153786063,
+      "interest": 3660.1064483321566,
+      "other": {
+        "Quà cảm ơn": 0.9594,
+        "Tiền tiêu vặt bố mẹ cho": 16.440204814698056,
+        "Bố mẹ chu cấp": 260.01776205211627,
+        "Thưởng huy chương đồng SEA Games 2045 (cờ vua)": 21.586499999999997,
+        "Tiền thưởng giải cờ": 307.008,
+        "Thưởng huy chương vàng SEA Games 2049 (cờ vua)": 71.955,
+        "Thưởng huy chương bạc SEA Games 2053 (cờ vua)": 35.9775,
+        "Thưởng huy chương đồng SEA Games 2055 (cờ vua)": 21.586499999999997,
+        "Thưởng Tết, lương tháng 13": 21,
+        "Tiền mừng cưới": 32.94430401003174,
+        "Đáo hạn bảo hiểm": 62.4889805360894,
+        "BHYT chi trả viện phí": 31.799999999999997
+      }
+    }
+  },
+  {
+    "seed": 880140,
+    "q": 3,
+    "age": 93,
+    "net": 8827.737532726052,
+    "cash": 6004.388336790278,
+    "house": 3213.9529622051627,
+    "assets": 6.836,
+    "job": "chủ salon tóc",
+    "flow": {
+      "salary": 27428.783793010232,
+      "partner": 16446.650716612156,
+      "interest": 3689.795233529259,
+      "other": {
+        "Bố mẹ chu cấp": 90.50616515640108,
+        "Học bổng toàn phần": 26.3925,
+        "Truy lĩnh lương làm thêm": 8.28,
+        "Bồi thường bản quyền": 49.68,
+        "Vẽ chân dung theo đơn": 24,
+        "BHYT chi trả viện phí": 117.60000000000001,
+        "Tiền nhặt được": 9.936,
+        "Con phụ giúp": 8.28,
+        "Trợ cấp thất nghiệp (BHTN)": 54.95004098114531,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Trang điểm cô dâu": 1.5,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Con Nguyễn Văn Sơn trả nợ": 264.4004670229682,
+        "Con Nguyễn Đức Thịnh trả nợ": 690.4698440757905
+      }
+    }
+  },
+  {
+    "seed": 880236,
+    "q": 1,
+    "age": 79,
+    "net": 8681.216249135003,
+    "cash": 7359.007459811982,
+    "house": 844.2200222254837,
+    "assets": 479.6181670315448,
+    "job": "chủ sạp chợ",
+    "flow": {
+      "salary": 7037.370899849507,
+      "partner": 14086.706085300253,
+      "interest": 3157.625302601684,
+      "other": {
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 867.3434862704461,
+        "Tiền nhặt được": 3.3209999999999997,
+        "Thưởng Tết, lương tháng 13": 8,
+        "Vay vay ngân hàng": 4.428,
+        "Phần tài sản bố mẹ để lại": 157.5,
+        "BHYT chi trả viện phí": 40.8
+      }
+    }
+  },
+  {
+    "seed": 880187,
+    "q": 4,
+    "age": 74,
+    "net": 8673.467931065816,
+    "cash": 6830.770642153076,
+    "house": 1842.6958487434877,
+    "assets": 0,
+    "job": "bartender trưởng",
+    "flow": {
+      "salary": 14942.941714111812,
+      "partner": 1287.278879271281,
+      "interest": 2945.4187047671876,
+      "other": {
+        "Làm thêm": 2.8044000000000002,
+        "Bố mẹ chu cấp": 53.17258225234478,
+        "Tiền mừng cưới": 31.352027019680477,
+        "Thưởng Tết, lương tháng 13": 86,
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Vay vay mua nhà": 650.3,
+        "Phần tài sản bố mẹ để lại": 2496,
+        "BHYT chi trả viện phí": 242.89999999999998,
+        "Con phụ giúp": 8.28,
+        "Tiền bo": 0.5,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Con Lê Hải Đăng trả nợ": 847.7861479317619,
+        "Con Lê Thùy Linh trả nợ": 476.1408792357159
+      }
+    }
+  },
+  {
+    "seed": 880114,
+    "q": 4,
+    "age": 82,
+    "net": 8591.137474820589,
+    "cash": 3015.761053499425,
+    "house": 1920.947383638217,
+    "assets": 1610.013037682947,
+    "job": "tổng quản lý khách sạn",
+    "flow": {
+      "salary": 12112.434264913909,
+      "partner": 7941.163895320752,
+      "interest": 2105.9576204359,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 14.983824484951295,
+        "Bố mẹ chu cấp": 171.9674975295065,
+        "Đập heo đất": 1.4489999999999998,
+        "Vay vay mua nhà": 567,
+        "em Uyên trả nợ": 28.979999999999997,
+        "Tiền mừng cưới": 23.342435643696223,
+        "Thưởng Tết, lương tháng 13": 11,
+        "BHYT chi trả viện phí": 96,
+        "Con Nguyễn Kim Ngân trả nợ": 651.3370302596176,
+        "Hốt hụi": 33.349999999999994,
+        "Phần tài sản bố mẹ để lại": 1092,
+        "Tiền cho thuê căn hộ cho thuê": 352.14313074498
+      }
+    }
+  },
+  {
+    "seed": 880159,
+    "q": 3,
+    "age": 85,
+    "net": 8576.292679389062,
+    "cash": 8123.5656090706025,
+    "house": 837.7464978644443,
+    "assets": 0,
+    "job": "giám đốc logistics",
+    "flow": {
+      "salary": 36923.91561424015,
+      "partner": 5924.693219469276,
+      "interest": 4159.422461771859,
+      "other": {
+        "BHYT chi trả viện phí": 109.8,
+        "Bố mẹ chu cấp": 14.262902234911401,
+        "Học bổng toàn phần": 23.246999999999996,
+        "Tiền mừng cưới": 161.29683192713884,
+        "Vay vay mua nhà": 989.0999999999999,
+        "Tiền nhặt được": 9.625499999999999,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Vay vay nóng (tín dụng đen)": 48.12749999999999,
+        "Đáo hạn bảo hiểm": 208.98050244949206,
+        "Con Lý Công Danh trả nợ": 580.1346564615684
+      }
+    }
+  },
+  {
+    "seed": 880215,
+    "q": 4,
+    "age": 62,
+    "net": 8296.695382402568,
+    "cash": 7400.009248494654,
+    "house": 3020.968996638179,
+    "assets": 0,
+    "job": "giám đốc thiết kế",
+    "flow": {
+      "salary": 13151.93536870656,
+      "partner": 14209.75893923796,
+      "interest": 1283.52962948214,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 31.052159333338786,
+        "Bố mẹ chu cấp": 725.7166782173108,
+        "Đập heo đất": 2.3616,
+        "Học bổng toàn phần": 35.424,
+        "Thưởng Tết, lương tháng 13": 72,
+        "Vay vay nóng (tín dụng đen)": 48.12749999999999,
+        "Hốt hụi": 128,
+        "Tiền mừng cưới": 54.65507458785083,
+        "Vay vay mua nhà": 1501.5,
+        "BHYT chi trả viện phí": 105.6,
+        "Giải nhất phương án kiến trúc": 100,
+        "Quà cảm ơn": 3.2085,
+        "Bồi thường bản quyền": 48.12749999999999
+      }
+    }
+  },
+  {
+    "seed": 880000,
+    "q": 3,
+    "age": 55,
+    "net": 8284.122336452501,
+    "cash": 5574.0195001148295,
+    "house": 2710.0727216912314,
+    "assets": 0,
+    "job": "chủ chuỗi quán (quán ăn)",
+    "flow": {
+      "salary": 20863.767914315482,
+      "partner": 2488.0753170453977,
+      "interest": 1316.1204731281691,
+      "other": {
+        "Tiền nhặt được": 0.7748999999999999,
+        "Bố mẹ chu cấp": 10.396287026061955,
+        "Học bổng khuyến khích": 6.199199999999999,
+        "Tiền mừng cưới": 47.61421864151303,
+        "Hốt hụi": 40.8,
+        "Vay vay mua nhà": 1269.1,
+        "Thưởng Tết, lương tháng 13": 24,
+        "BHYT chi trả viện phí": 107,
+        "Phần tài sản bố mẹ để lại": 1209,
+        "Doanh thu tăng sau clip review": 80.21249999999999,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 240.6375,
+        "Con Trần Việt Dũng trả nợ": 77.35957388589951
+      }
+    }
+  },
+  {
+    "seed": 880061,
+    "q": 1,
+    "age": 81,
+    "net": 8220.951790739566,
+    "cash": 1728.0868278038733,
+    "house": 2114.3932440728454,
+    "assets": 4378.4717188628465,
+    "job": "chủ salon tóc",
+    "flow": {
+      "salary": 15281.163483494596,
+      "partner": 8072.42976240092,
+      "interest": 534.3920395055885,
+      "other": {
+        "Trợ cấp thất nghiệp (BHTN)": 46.61387410315108,
+        "Vay nợ thẻ tín dụng": 66.24,
+        "Tiền mừng cưới": 75.42596915759145,
+        "Hoa hồng affiliate": 33.12,
+        "Quà cảm ơn": 3.312,
+        "Trang điểm cô dâu": 4,
+        "Vay vay mua nhà": 961.0999999999999,
+        "Thắng cá độ lớn": 132.48,
+        "Con Phạm Khánh Ngân trả nợ": 220.91219786459675,
+        "Tiền cho thuê căn hộ cho thuê": 2306.5736291387534,
+        "BHYT chi trả viện phí": 113.4,
+        "Bán sổ tiết kiệm để trang trải": 101.36110183753546
+      }
+    }
+  },
+  {
+    "seed": 880181,
+    "q": 2,
+    "age": 86,
+    "net": 7837.787433380431,
+    "cash": 5764.60091210753,
+    "house": 2073.1862597125073,
+    "assets": 0,
+    "job": "chủ tiệm sửa xe",
+    "flow": {
+      "salary": 22825.228647567103,
+      "partner": 6861.037848709085,
+      "interest": 2609.787669646144,
+      "other": {
+        "Tiền nhặt được": 0.2952,
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "BHYT chi trả viện phí": 110.60000000000001,
+        "Thưởng Tết, lương tháng 13": 75,
+        "Tiền mừng cưới": 104.27042387388646,
+        "chị An trả nợ": 132.48,
+        "Con Nguyễn Thùy Tiên trả nợ": 375.69310063275617
+      }
+    }
+  },
+  {
+    "seed": 880142,
+    "q": 2,
+    "age": 91,
+    "net": 7565.2030901384205,
+    "cash": 723.344292305627,
+    "house": 2222.3198348588176,
+    "assets": 4619.538824940208,
+    "job": "stylist",
+    "flow": {
+      "salary": 18876.07411065052,
+      "partner": 10468.055928468168,
+      "interest": 2281.537505229612,
+      "other": {
+        "Thưởng Tết, lương tháng 13": 75,
+        "Trợ cấp thất nghiệp (BHTN)": 38.95662199562452,
+        "Vay vay mua nhà": 1413.3,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 496.79999999999995,
+        "Lời hàng xách tay": 49.68,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880105,
+    "q": 5,
+    "age": 87,
+    "net": 7534.470552847938,
+    "cash": 7222.140914239371,
+    "house": 312.32699986815703,
+    "assets": 0,
+    "job": "điều dưỡng hạng III",
+    "flow": {
+      "salary": 19424.475074475507,
+      "partner": 5245.200592492263,
+      "interest": 4399.733442899716,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 25.394677451930086,
+        "Bố mẹ chu cấp": 412.37091300308384,
+        "Tiền mừng cưới": 56.042075880146584,
+        "Học bổng toàn phần": 16.604999999999997,
+        "Thưởng Tết, lương tháng 13": 32,
+        "Tiền nhặt được": 3.3209999999999997,
+        "Cát-xê đạo diễn phim Ngày mai bắt đầu #1": 153.74999999999997,
+        "Cát-xê đạo diễn phim Ánh sáng cuối phố #2": 153.74999999999997,
+        "BHYT chi trả viện phí": 146.4,
+        "Thu hồi ròng phim Mùa gió trở lại #3": 323.65205442607487,
+        "Cát-xê đạo diễn phim Mùa gió trở lại #4": 61.49999999999999,
+        "Con Nguyễn Thanh Phong trả nợ": 769.9302420540959,
+        "Trợ cấp thất nghiệp (BHTN)": 197.31705614773523
+      }
+    }
+  },
+  {
+    "seed": 880149,
+    "q": 4,
+    "age": 60,
+    "net": 7404.043277625417,
+    "cash": 4054.01670397034,
+    "house": 3350.0265736550773,
+    "assets": 0,
+    "job": "hiệu trưởng",
+    "flow": {
+      "salary": 10222.734652497487,
+      "partner": 6042.425407147537,
+      "interest": 1026.8368758963718,
+      "other": {
+        "Tiền nhặt được": 11.592,
+        "Tiền tiêu vặt bố mẹ cho": 11.255963799258883,
+        "Bố mẹ chu cấp": 177.14030079459894,
+        "Học bổng toàn phần": 49.68,
+        "Dạy thêm": 32.085,
+        "Quà phụ huynh": 24.063749999999995,
+        "Thưởng Tết, lương tháng 13": 72,
+        "Phần tài sản bố mẹ để lại": 2418,
+        "BHYT chi trả viện phí": 107
+      }
+    }
+  },
+  {
+    "seed": 880097,
+    "q": 3,
+    "age": 78,
+    "net": 7316.682094679536,
+    "cash": 3157.4936714977584,
+    "house": 530.2826160767183,
+    "assets": 3628.9050322879375,
+    "job": "thợ làm tóc",
+    "flow": {
+      "salary": 8627.032093527763,
+      "partner": 7859.382878058036,
+      "interest": 1346.4043145877336,
+      "other": {
+        "Bố mẹ chu cấp": 12.261662496396847,
+        "Hoa hồng bảo hiểm": 5.535,
+        "Tiền mừng cưới": 33.86255558128003,
+        "Trợ cấp thất nghiệp (BHTN)": 65.11997341578291,
+        "Tiền bo": 1,
+        "Vay vay mua nhà": 363.29999999999995,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Quà cảm ơn": 1.107,
+        "Con Trần Phúc Thịnh trả nợ": 174.52836325386315,
+        "BHYT chi trả viện phí": 73.2,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 83.02499999999999
+      }
+    }
+  },
+  {
+    "seed": 880093,
+    "q": 5,
+    "age": 88,
+    "net": 7309.839610799262,
+    "cash": 4150.585746292403,
+    "house": 3159.245969738803,
+    "assets": 0,
+    "job": "công chức xã / phường",
+    "flow": {
+      "salary": 13894.674500917781,
+      "partner": 6535.86734492229,
+      "interest": 2080.8094231915265,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 73.25282850392934,
+        "Học bổng khuyến khích": 13.248,
+        "Bố mẹ chu cấp": 201.34125817795032,
+        "Tiền mừng cưới": 72.434323810637,
+        "Vay vay mua nhà": 975.0999999999999,
+        "Làm thêm": 16.56,
+        "BHYT chi trả viện phí": 113.4,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Nguyễn Quỳnh Anh trả nợ": 107.64,
+        "Hoàng Uyên Nhi trả nợ": 16.56,
+        "Con Nguyễn Quỳnh Anh trả nợ": 520.362152129881
+      }
+    }
+  },
+  {
+    "seed": 880122,
+    "q": 4,
+    "age": 72,
+    "net": 7089.837147125372,
+    "cash": 4477.362958404159,
+    "house": 2161.531682436777,
+    "assets": 0,
+    "job": "phó tổng giám đốc tập đoàn (VNPT)",
+    "flow": {
+      "salary": 31563.88994284821,
+      "partner": 5020.989207574947,
+      "interest": 819.558789074966,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 31.215828850324925,
+        "Bố mẹ chu cấp": 851.3612581640479,
+        "Đập heo đất": 2.3616,
+        "Học bổng khuyến khích": 9.4464,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Học bổng & trợ giảng nghiên cứu sinh": 115.91999999999999,
+        "Tiền mừng cưới": 60.20719597108662,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Vay vay mua nhà": 872.1999999999999,
+        "BHYT chi trả viện phí": 109.2,
+        "Quà cảm ơn": 3.312,
+        "Con Nguyễn Bảo Trân trả nợ": 160.45295058203794,
+        "Phạm Lan Phương trả nợ": 33.12,
+        "Nguyễn Quỳnh Hương trả nợ": 107.64
+      }
+    }
+  },
+  {
+    "seed": 880168,
+    "q": 4,
+    "age": 82,
+    "net": 7078.799789176406,
+    "cash": 2336.3075845340586,
+    "house": 4742.490858259644,
+    "assets": 0,
+    "job": "nhân viên nhân sự",
+    "flow": {
+      "salary": 25727.97066971754,
+      "partner": 0,
+      "interest": 2206.143230096915,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 13.558572080499783,
+        "Đập heo đất": 4.968,
+        "Học bổng khuyến khích": 9.936,
+        "Bố mẹ chu cấp": 91.44860528122388,
+        "Tiền nhặt được": 7.451999999999999,
+        "Châu Thùy Dương trả nợ": 24.84,
+        "Đơn hàng sau show diễn": 90,
+        "Thắng cá độ lớn": 99.36,
+        "Trợ cấp thất nghiệp (BHTN)": 336.9599999999999,
+        "Chu cấp tình cảm từ Phạm Phương Thảo": 996,
+        "BHYT chi trả viện phí": 170,
+        "Thưởng Tết, lương tháng 13": 19,
+        "Vay vay nóng (tín dụng đen)": 37.26,
+        "Vay vay ngân hàng": 14.903999999999998
+      }
+    }
+  },
+  {
+    "seed": 880193,
+    "q": 4,
+    "age": 85,
+    "net": 6963.208507250311,
+    "cash": 4994.934339776369,
+    "house": 1968.2734640501096,
+    "assets": 0,
+    "job": "chủ chuỗi quán ăn (quán bánh mì)",
+    "flow": {
+      "salary": 20484.034665436342,
+      "partner": 3672.2904072606734,
+      "interest": 1305.7534641595319,
+      "other": {
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Vay vay ngân hàng": 209.58749999999998,
+        "Thưởng Tết, lương tháng 13": 42,
+        "Vay vay mua nhà": 748.3,
+        "Tiền nhặt được": 8.3835,
+        "BHYT chi trả viện phí": 184.79999999999998
+      }
+    }
+  },
+  {
+    "seed": 880086,
+    "q": 3,
+    "age": 97,
+    "net": 6871.856427817998,
+    "cash": 1441.7568474865723,
+    "house": 1345.0772579178024,
+    "assets": 4079.71109729191,
+    "job": "trưởng phòng kinh doanh showroom",
+    "flow": {
+      "salary": 15927.589745798723,
+      "partner": 9478.078702906307,
+      "interest": 1144.7219255173047,
+      "other": {
+        "Tiền nhặt được": 1.9665,
+        "Bố mẹ chu cấp": 13.974451158981326,
+        "Trợ cấp thất nghiệp (BHTN)": 181.63879914022522,
+        "BHYT chi trả viện phí": 359.09999999999997,
+        "Tiền mừng cưới": 186.03254687681795,
+        "Chế độ khi tinh giản": 198.72,
+        "Con Nguyễn Công Minh trả nợ": 198.22980214952898
+      }
+    }
+  },
+  {
+    "seed": 880132,
+    "q": 3,
+    "age": 93,
+    "net": 6848.451067807708,
+    "cash": 3842.8243046319226,
+    "house": 1609.5784039876496,
+    "assets": 1384.3895723355922,
+    "job": "nhiếp ảnh gia có tiếng",
+    "flow": {
+      "salary": 20802.583964240377,
+      "partner": 1989.8423278374091,
+      "interest": 1442.8926757165332,
+      "other": {
+        "Tiền nhặt được": 0.5535,
+        "Bố mẹ chu cấp": 2.0276148990276375,
+        "Trợ cấp thất nghiệp (BHTN)": 61.29370810062696,
+        "Tiền mừng cưới": 54.44631187501363,
+        "BHYT chi trả viện phí": 206.59999999999997,
+        "Vẽ chân dung theo đơn": 6,
+        "Thu nhập ổn định": 31.049999999999994,
+        "Bồi thường bản quyền ảnh": 20.7,
+        "Huỳnh Quốc Anh trả nợ": 67.27499999999999,
+        "Con Huỳnh Quốc Anh trả nợ": 441.65882573847125,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 820.0097191189197
+      }
+    }
+  },
+  {
+    "seed": 880239,
+    "q": 5,
+    "age": 85,
+    "net": 6629.854839214406,
+    "cash": 3993.868558607022,
+    "house": 2496.3732520586427,
+    "assets": 0,
+    "job": "dược sĩ",
+    "flow": {
+      "salary": 29166.103974313646,
+      "partner": 2812.8394952838767,
+      "interest": 1618.9325681415462,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 245.41851956854663,
+        "Học bổng khuyến khích": 12.834,
+        "Tiền mừng cưới": 56.18392887443303,
+        "Bố mẹ chu cấp": 437.9351561996018,
+        "Vay vay ngân hàng": 24.063749999999995,
+        "Vay vay mua nhà": 1611.3999999999999,
+        "Quà cảm ơn": 3.2085,
+        "Thưởng Tết, lương tháng 13": 48,
+        "BHYT chi trả viện phí": 105.6,
+        "Con Nguyễn Ngọc Mai trả nợ": 219.55505064885756
+      }
+    }
+  },
+  {
+    "seed": 880234,
+    "q": 1,
+    "age": 87,
+    "net": 6250.174170843076,
+    "cash": 4224.200257587874,
+    "house": 2025.9739132552018,
+    "assets": 0,
+    "job": "chủ tiệm sửa xe",
+    "flow": {
+      "salary": 14748.031339574813,
+      "partner": 4005.2201441716047,
+      "interest": 2011.0955025444332,
+      "other": {
+        "Tiền mừng cưới": 42.80416451206197,
+        "Vay vay mua nhà": 555.0999999999999,
+        "Trợ cấp thất nghiệp (BHTN)": 76.84263928696944,
+        "Báo giá khống": 8.7975,
+        "Quà cảm ơn": 1.7594999999999998,
+        "BHYT chi trả viện phí": 63.8,
+        "Thắng cá độ lớn": 70.38,
+        "Thắng cá độ": 3.5189999999999997,
+        "Thưởng Tết, lương tháng 13": 26,
+        "Con phụ giúp": 4.39875
+      }
+    }
+  },
+  {
+    "seed": 880012,
+    "q": 1,
+    "age": 78,
+    "net": 6075.088839464941,
+    "cash": 2876.549314381691,
+    "house": 3198.5395250832503,
+    "assets": 0,
+    "job": "stylist",
+    "flow": {
+      "salary": 14206.992594930627,
+      "partner": 0,
+      "interest": 1015.9073422732749,
+      "other": {
+        "Trợ cấp, hàng xóm giúp đỡ": 3.6224999999999996,
+        "Trợ cấp thất nghiệp (BHTN)": 14.14600259616208,
+        "Thưởng Tết, lương tháng 13": 22,
+        "BHYT chi trả viện phí": 97.4,
+        "Vay vay ngân hàng": 3.6224999999999996
+      }
+    }
+  },
+  {
+    "seed": 880047,
+    "q": 2,
+    "age": 92,
+    "net": 5949.824856806575,
+    "cash": 4591.315582763288,
+    "house": 1358.5091146142852,
+    "assets": 0,
+    "job": "kỹ thuật viên điện",
+    "flow": {
+      "salary": 11004.660490700213,
+      "partner": 0,
+      "interest": 2419.3422269026228,
+      "other": {
+        "Vay vay mua nhà": 350.7,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Thu nhập ổn định": 23.246999999999996,
+        "BHYT chi trả viện phí": 154.4,
+        "Thắng kiện": 7.749,
+        "Trợ cấp thất nghiệp (BHTN)": 112.93438606518191
+      }
+    }
+  },
+  {
+    "seed": 880222,
+    "q": 3,
+    "age": 90,
+    "net": 5805.569212286611,
+    "cash": 4345.720171473774,
+    "house": 1283.5699643624068,
+    "assets": 0,
+    "job": "chủ đại lý",
+    "flow": {
+      "salary": 16374.725912563623,
+      "partner": 2480.423556132249,
+      "interest": 2183.268246745608,
+      "other": {
+        "Tiền nhặt được": 0.8797499999999999,
+        "Bố mẹ chu cấp": 32.42904125478713,
+        "Thưởng Tết, lương tháng 13": 65,
+        "Trợ cấp thất nghiệp (BHTN)": 17.698875560279753,
+        "chị Lan trả nợ": 70.38,
+        "BHYT chi trả viện phí": 62.39999999999999,
+        "Tiền mừng cưới": 58.787039771305864,
+        "Phần tài sản bố mẹ để lại": 265.2,
+        "Hoàng Huyền Trang trả nợ": 35.19
+      }
+    }
+  },
+  {
+    "seed": 880174,
+    "q": 3,
+    "age": 34,
+    "net": 5791.36690630365,
+    "cash": 5594.732737692992,
+    "house": 645.4436411100461,
+    "assets": 0,
+    "job": "chủ công ty nhỏ (đại lý đồ nhựa)",
+    "flow": {
+      "salary": 23598.74807389154,
+      "partner": 1185.7183994401705,
+      "interest": 519.7478253058841,
+      "other": {
+        "Tiền mừng cưới": 173.15739694875663,
+        "Show diễn nhờ bài hit": 65.32213928177953,
+        "Vay vay mua nhà": 790.3,
+        "Show Tết": 42,
+        "Hốt hụi": 71.3,
+        "Thưởng Tết, lương tháng 13": 16
+      }
+    }
+  },
+  {
+    "seed": 880050,
+    "q": 4,
+    "age": 86,
+    "net": 5716.9985311808805,
+    "cash": 4755.3385647347095,
+    "house": 961.6594618090081,
+    "assets": 0,
+    "job": "trưởng thuế cơ sở",
+    "flow": {
+      "salary": 12552.010228269204,
+      "partner": 6160.189043161816,
+      "interest": 2060.136664653546,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 5.074983816714447,
+        "Bố mẹ chu cấp": 11.084776657858454,
+        "Tiền mừng cưới": 29.29548048761208,
+        "Vay vay mua nhà": 567.6999999999999,
+        "Hốt hụi": 27.025,
+        "Nguyễn Phương Trinh trả nợ": 46.575,
+        "Con Dương Trung Đức trả nợ": 229.49730659805525,
+        "Con Dương Hữu Đạt trả nợ": 235.11064767529737,
+        "BHYT chi trả viện phí": 51
+      }
+    }
+  },
+  {
+    "seed": 880169,
+    "q": 5,
+    "age": 61,
+    "net": 5512.011665526946,
+    "cash": 3659.44305898378,
+    "house": 1852.5606189637133,
+    "assets": 0,
+    "job": "viên chức hạng III",
+    "flow": {
+      "salary": 10547.285535075633,
+      "partner": 1080.3769851019433,
+      "interest": 1083.222017408811,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 21.88517800202973,
+        "Bố mẹ chu cấp": 559.7367999124763,
+        "Tiền mừng cưới": 35.21781239055097,
+        "Thưởng Tết, lương tháng 13": 11
+      }
+    }
+  },
+  {
+    "seed": 880124,
+    "q": 1,
+    "age": 65,
+    "net": 5502.31593012388,
+    "cash": 3711.6353759753797,
+    "house": 650.7195278645925,
+    "assets": 1242.520774925515,
+    "job": "chuyền trưởng",
+    "flow": {
+      "salary": 7529.167652992646,
+      "partner": 558.8269467823666,
+      "interest": 1546.740479452788,
+      "other": {
+        "BHYT chi trả viện phí": 6.1499999999999995,
+        "Đập heo đất": 0.738,
+        "Lời hàng xách tay": 11.069999999999999,
+        "Thưởng Tết, lương tháng 13": 6,
+        "Tiền cho thuê căn hộ cho thuê": 1074.3198351984074,
+        "Vay vay ngân hàng": 55.349999999999994,
+        "Vay vay nóng (tín dụng đen)": 11.069999999999999,
+        "Tiền nhặt được": 2.214,
+        "Tiền mừng cưới": 13.408154214899985
+      }
+    }
+  },
+  {
+    "seed": 880074,
+    "q": 4,
+    "age": 88,
+    "net": 5265.706453989684,
+    "cash": 4401.094250903366,
+    "house": 864.6122030863178,
+    "assets": 0,
+    "job": "tài xế ô tô công nghệ",
+    "flow": {
+      "salary": 16107.774947077434,
+      "partner": 295.2374293678034,
+      "interest": 2247.487573735046,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 5.530646589627635,
+        "Bố mẹ chu cấp": 111.1592569936672,
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Vay vay mua nhà": 480.9,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Tiền mừng cưới": 49.42959062799812,
+        "Hốt hụi": 28.749999999999996,
+        "Vẽ chân dung theo đơn": 6,
+        "Con Hà Lan Hương trả nợ": 451.80532316195064,
+        "Phần tài sản bố mẹ để lại": 1248,
+        "BHYT chi trả viện phí": 109.2
+      }
+    }
+  },
+  {
+    "seed": 880044,
+    "q": 2,
+    "age": 91,
+    "net": 5247.53764579776,
+    "cash": 1291.9492378357652,
+    "house": 3952.9921400293915,
+    "assets": 0,
+    "job": "copywriter có tiếng",
+    "flow": {
+      "salary": 18355.033958736745,
+      "partner": 9352.076309190403,
+      "interest": 1055.9105053375047,
+      "other": {
+        "Tiền nhặt được": 0.5904,
+        "Quà cảm ơn": 1.1808,
+        "Học bổng toàn phần": 17.712,
+        "Giải nhất phương án kiến trúc": 100,
+        "Tiền mừng cưới": 103.22184864208101,
+        "Bồi thường bản quyền": 49.68,
+        "Làm thêm": 16.56,
+        "BHYT chi trả viện phí": 338.8,
+        "Vay vay mua nhà": 1571.5,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Trần Minh Thư trả nợ": 107.64,
+        "Trần Minh Khang trả nợ": 107.64,
+        "Con Trần Minh Thư trả nợ": 285.6549475551242
+      }
+    }
+  },
+  {
+    "seed": 880131,
+    "q": 4,
+    "age": 86,
+    "net": 5229.704077172636,
+    "cash": 4010.761060922766,
+    "house": 1185.5381299960868,
+    "assets": 0,
+    "job": "đội trưởng bảo vệ",
+    "flow": {
+      "salary": 22830.29552692553,
+      "partner": 1234.715400567618,
+      "interest": 3102.9950463676346,
+      "other": {
+        "Học bổng khuyến khích": 9.4464,
+        "Bố mẹ chu cấp": 55.06565494446057,
+        "Tiền thưởng giải đấu": 177.12,
+        "Thưởng Tết, lương tháng 13": 36,
+        "Thưởng huy chương bạc SEA Games 2053 (Liên Minh Huyền Thoại)": 88.56,
+        "Vay vay ngân hàng": 70.848,
+        "Cát-xê Running Man Việt Nam (2/2 tập)": 164,
+        "Tiền mừng cưới": 77.40192210745812,
+        "Trợ cấp thất nghiệp (BHTN)": 35.76611626601519,
+        "BHYT chi trả viện phí": 234
+      }
+    }
+  },
+  {
+    "seed": 880064,
+    "q": 2,
+    "age": 76,
+    "net": 5177.085940882178,
+    "cash": 3787.30919124935,
+    "house": 1389.7755169692255,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 12214.22960224348,
+      "partner": 5655.6874582895525,
+      "interest": 1623.959496836284,
+      "other": {
+        "Tiền bo": 1,
+        "Tiền mừng cưới": 83.18131536985003,
+        "Thưởng Tết, lương tháng 13": 36,
+        "BHYT chi trả viện phí": 4.199999999999999,
+        "Trợ cấp thất nghiệp (BHTN)": 54.18256830554995,
+        "Phần tài sản bố mẹ để lại": 220.5
+      }
+    }
+  },
+  {
+    "seed": 880144,
+    "q": 2,
+    "age": 61,
+    "net": 4946.565948225441,
+    "cash": 1661.7875144254542,
+    "house": 3284.7784337999874,
+    "assets": 0,
+    "job": "tổ trưởng",
+    "flow": {
+      "salary": 14249.791663505554,
+      "partner": 2000.3463238168003,
+      "interest": 675.6417725444514,
+      "other": {
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Làm thêm": 18.4041,
+        "Tiền mừng cưới": 96.7019037216995,
+        "Hốt hụi": 54.4,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Thưởng sáng kiến": 30,
+        "Trợ cấp thất nghiệp (BHTN)": 128.51771474125655
+      }
+    }
+  },
+  {
+    "seed": 880148,
+    "q": 3,
+    "age": 56,
+    "net": 4898.099864028921,
+    "cash": 1851.3912989111134,
+    "house": 1224.0051359603217,
+    "assets": 2684.743334639845,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 17799.761907946144,
+      "partner": 1907.5172355035552,
+      "interest": 2238.73536199486,
+      "other": {
+        "Đập heo đất": 1.2546,
+        "BHYT chi trả viện phí": 1.4,
+        "Thưởng Tết, lương tháng 13": 9,
+        "Vay vay mua nhà": 1080.1,
+        "Nguyễn Thu Phương trả nợ": 40.774499999999996
+      }
+    }
+  },
+  {
+    "seed": 880041,
+    "q": 3,
+    "age": 96,
+    "net": 4831.162824003818,
+    "cash": 1682.3421060340534,
+    "house": 3148.820504183065,
+    "assets": 0,
+    "job": "điều tra viên cao cấp",
+    "flow": {
+      "salary": 14375.746647739164,
+      "partner": 1228.8140981284123,
+      "interest": 729.0824574904692,
+      "other": {
+        "Học bổng toàn phần": 35.424,
+        "Bố mẹ chu cấp": 14.629647894390384,
+        "BHYT chi trả viện phí": 324.6,
+        "anh Vinh trả nợ": 23.616,
+        "Trợ cấp thất nghiệp (BHTN)": 60.424082974498475,
+        "Tiền mừng cưới": 81.61598978215457,
+        "Vay vay mua nhà": 1162,
+        "Thắng cá độ": 4.7232,
+        "Con phụ giúp": 5.904,
+        "Quà cảm ơn": 2.3616,
+        "Trần Tuệ An trả nợ": 76.752
+      }
+    }
+  },
+  {
+    "seed": 880009,
+    "q": 1,
+    "age": 88,
+    "net": 4563.674787158732,
+    "cash": 1972.9128404437336,
+    "house": 2572.7452467149988,
+    "assets": 18.0167,
+    "job": "quản đốc",
+    "flow": {
+      "salary": 14582.26736187868,
+      "partner": 3820.7965999104895,
+      "interest": 720.480012526701,
+      "other": {
+        "Quà cảm ơn": 3.312,
+        "Tiền mừng cưới": 107.8351093621552,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Trợ cấp thất nghiệp (BHTN)": 45.12768232085748,
+        "Phần tài sản bố mẹ để lại": 1248,
+        "Con phụ giúp": 8.28,
+        "BHYT chi trả viện phí": 222.60000000000002
+      }
+    }
+  },
+  {
+    "seed": 880060,
+    "q": 4,
+    "age": 78,
+    "net": 4512.288088681596,
+    "cash": 1630.3016532983079,
+    "house": 2881.9747420963567,
+    "assets": 0,
+    "job": "giám đốc sở",
+    "flow": {
+      "salary": 17791.463149540596,
+      "partner": 2806.4314945413307,
+      "interest": 274.6566862643882,
+      "other": {
+        "Bố mẹ chu cấp": 109.22908132762686,
+        "Học bổng toàn phần": 23.287499999999998,
+        "Tiền mừng cưới": 24.06348662314704,
+        "Vay vay mua nhà": 1349.6,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Thắng cá độ": 6.624,
+        "BHYT chi trả viện phí": 113.4,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 248.39999999999998,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 546.798513864412,
+        "Bán ki-ốt ở chợ cho thuê": 1582.7762576646496
+      }
+    }
+  },
+  {
+    "seed": 880119,
+    "q": 2,
+    "age": 78,
+    "net": 4463.629710358411,
+    "cash": 2187.684481731891,
+    "house": 1076.5545086265197,
+    "assets": 0,
+    "job": "giám đốc marketing",
+    "flow": {
+      "salary": 20820.78789577441,
+      "partner": 1304.4212713724198,
+      "interest": 2182.2533653733535,
+      "other": {
+        "Tiền nhặt được": 0.5535,
+        "Tiền bo": 0.5,
+        "Hốt hụi": 43.125,
+        "BHYT chi trả viện phí": 246.60000000000002,
+        "Thắng cá độ": 4.968,
+        "Con Nguyễn Thanh Nhàn trả nợ": 267.46096551812275
+      }
+    }
+  },
+  {
+    "seed": 880188,
+    "q": 2,
+    "age": 88,
+    "net": 4457.463400343672,
+    "cash": 3124.021534147191,
+    "house": 1173.0744744927117,
+    "assets": 160.36476,
+    "job": "trưởng nhóm kinh doanh bảo hiểm",
+    "flow": {
+      "salary": 11034.770040366819,
+      "partner": 1028.6021481657835,
+      "interest": 1652.3195757728067,
+      "other": {
+        "Học bổng toàn phần": 18.819,
+        "Thưởng chỉ tiêu": 6.273,
+        "Tiền \"cảm ơn\"": 25.092,
+        "Con Bùi Phương Ly trả nợ": 255.10699325862956,
+        "Quà cảm ơn": 1.2546,
+        "BHYT chi trả viện phí": 41.4
+      }
+    }
+  },
+  {
+    "seed": 880090,
+    "q": 2,
+    "age": 79,
+    "net": 4293.8077004608,
+    "cash": 3516.297753955935,
+    "house": 742.8391301738361,
+    "assets": 26.90598,
+    "job": "Đại kiện tướng quốc tế cờ tướng",
+    "flow": {
+      "salary": 7963.999203123449,
+      "partner": 1005.9619156703686,
+      "interest": 1355.1704366455538,
+      "other": {
+        "Đập heo đất": 2.07,
+        "Tiền thưởng giải cờ": 931.4999999999999,
+        "Thưởng huy chương vàng SEA Games 2047 (cờ tướng)": 155.24999999999997,
+        "Tiền mừng cưới": 60.86717681488953,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Thưởng huy chương bạc SEA Games 2057 (cờ tướng)": 77.62499999999999,
+        "Hốt hụi": 26.349999999999998,
+        "Thưởng huy chương đồng SEA Games 2061 (cờ tướng)": 46.57499999999999,
+        "BHYT chi trả viện phí": 78.19999999999999,
+        "Thưởng huy chương đồng SEA Games 2063 (cờ tướng)": 46.57499999999999,
+        "Thưởng huy chương vàng SEA Games 2065 (cờ tướng)": 155.24999999999997,
+        "Phần tài sản bố mẹ để lại": 780,
+        "Con Ngô Thanh Thảo trả nợ": 419.35568576070193
+      }
+    }
+  },
+  {
+    "seed": 880100,
+    "q": 3,
+    "age": 61,
+    "net": 4269.624899904557,
+    "cash": 3273.0694568752333,
+    "house": 996.5448010408451,
+    "assets": 0,
+    "job": "chủ shop cày thuê, có thợ phụ",
+    "flow": {
+      "salary": 5605.279099960438,
+      "partner": 9581.903116655942,
+      "interest": 386.0858687208449,
+      "other": {
+        "Tiền nhặt được": 0.491625,
+        "Bố mẹ chu cấp": 18.614245425922803,
+        "Đập heo đất": 1.9665,
+        "Học bổng toàn phần": 29.497499999999995,
+        "Tiền mừng cưới": 84.93133149550061,
+        "Đơn cày thuê lớn": 4,
+        "Thưởng Tết, lương tháng 13": 45,
+        "Quà cảm ơn": 1.9665,
+        "em Hưng trả nợ": 39.33,
+        "Hốt hụi": 25.075
+      }
+    }
+  },
+  {
+    "seed": 880178,
+    "q": 1,
+    "age": 68,
+    "net": 4236.587377785252,
+    "cash": 3776.9446076767695,
+    "house": 459.6427701084827,
+    "assets": 0,
+    "job": "Đại kiện tướng (GM) cờ vua",
+    "flow": {
+      "salary": 15897.738985697822,
+      "partner": 1910.7870209900175,
+      "interest": 1487.4620100049706,
+      "other": {
+        "Vay vay nóng (tín dụng đen)": 23.246999999999996,
+        "Tiền mừng cưới": 48.769271148953585,
+        "Tiền thưởng giải cờ": 573.426,
+        "Thưởng huy chương đồng SEA Games 2049 (cờ vua)": 34.87049999999999,
+        "Thưởng huy chương vàng SEA Games 2051 (cờ vua)": 116.23499999999999,
+        "Vay vay mua nhà": 347.9,
+        "Thưởng huy chương bạc SEA Games 2061 (cờ vua)": 58.11749999999999,
+        "Phần tài sản bố mẹ để lại": 147,
+        "Đáo hạn bảo hiểm": 100.94373778906743
+      }
+    }
+  },
+  {
+    "seed": 880227,
+    "q": 3,
+    "age": 81,
+    "net": 4095.3886371099056,
+    "cash": 372.30947698578586,
+    "house": 3723.0786954698874,
+    "assets": 0,
+    "job": "thợ cắt tóc nam",
+    "flow": {
+      "salary": 15789.746757662238,
+      "partner": 1676.7482297872334,
+      "interest": 1972.36367717733,
+      "other": {
+        "Bố mẹ chu cấp": 2.146497630094615,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Vay vay mua nhà": 1313.8999999999999,
+        "Thưởng giải game": 2.5,
+        "Tiền mừng cưới": 30.562430504439398,
+        "Làm thêm": 2.214,
+        "Vay vay ngân hàng": 83.02499999999999,
+        "BHYT chi trả viện phí": 73.2,
+        "Phần tài sản bố mẹ để lại": 157.5,
+        "Tiền cho thuê căn hộ cho thuê": 52.89999069934417,
+        "Bán căn hộ cho thuê": 562.5029952501437
+      }
+    }
+  },
+  {
+    "seed": 880036,
+    "q": 3,
+    "age": 90,
+    "net": 4057.1685844715767,
+    "cash": 976.6210732581465,
+    "house": 343.29060347863054,
+    "assets": 2737.255114302369,
+    "job": "kỹ thuật viên",
+    "flow": {
+      "salary": 7345.503675211001,
+      "partner": 2771.984481322503,
+      "interest": 900.36692027241,
+      "other": {
+        "Bố mẹ chu cấp": 17.324146579963255,
+        "Trợ cấp thất nghiệp (BHTN)": 5.667459601043953,
+        "Tiền thưởng giải cờ": 627.2999999999998,
+        "Thưởng Tết, lương tháng 13": 36,
+        "Tiền nhặt được": 3.7638,
+        "Vay vay mua nhà": 359.79999999999995,
+        "Thưởng huy chương vàng SEA Games 2051 (cờ vua)": 94.095,
+        "Thưởng huy chương vàng SEA Games 2055 (cờ vua)": 94.095,
+        "Tiền mừng cưới": 30.659867630288936,
+        "Thưởng huy chương đồng SEA Games 2063 (cờ vua)": 28.2285,
+        "Thưởng huy chương đồng SEA Games 2065 (cờ vua)": 28.2285,
+        "Thưởng huy chương bạc SEA Games 2067 (cờ vua)": 47.0475,
+        "em Quỳnh trả nợ": 50.184,
+        "Hốt hụi": 37.4,
+        "BHYT chi trả viện phí": 87,
+        "Phần tài sản bố mẹ để lại": 178.5
+      }
+    }
+  },
+  {
+    "seed": 880013,
+    "q": 2,
+    "age": 86,
+    "net": 3989.215757901506,
+    "cash": 2976.5680393990715,
+    "house": 1012.6475713747133,
+    "assets": 0,
+    "job": "đội trưởng bảo vệ",
+    "flow": {
+      "salary": 6315.653761463723,
+      "partner": 2506.4297517093364,
+      "interest": 1406.0919190280458,
+      "other": {
+        "Tiền mừng cưới": 13.521893455655313,
+        "Tiền nhặt được": 1.9926,
+        "Thắng cá độ lớn": 26.568,
+        "Vay vay mua nhà": 298.9,
+        "Vay vay ngân hàng": 4.9815,
+        "Phần tài sản bố mẹ để lại": 63,
+        "BHYT chi trả viện phí": 70.8,
+        "Con Lý Văn Chàn trả nợ": 188.35590062375937
+      }
+    }
+  },
+  {
+    "seed": 880176,
+    "q": 3,
+    "age": 75,
+    "net": 3914.765071387596,
+    "cash": 2134.457550458424,
+    "house": 1780.288056128278,
+    "assets": 0,
+    "job": "kiểm toán viên chính",
+    "flow": {
+      "salary": 9898.703111776427,
+      "partner": 1271.3877453111872,
+      "interest": 537.5361855911143,
+      "other": {
+        "Tiền nhặt được": 4.649399999999999,
+        "Học bổng toàn phần": 23.246999999999996,
+        "Bố mẹ chu cấp": 5.870248667639938,
+        "Vay vay mua nhà": 637.6999999999999,
+        "Vay vay ngân hàng": 15.524999999999997,
+        "Trợ cấp thất nghiệp (BHTN)": 284.00874523866577,
+        "Đỗ Tú Anh trả nợ": 41.4,
+        "Tiền mừng cưới": 49.820176482014354
+      }
+    }
+  },
+  {
+    "seed": 880072,
+    "q": 1,
+    "age": 64,
+    "net": 3870.460815107949,
+    "cash": 2329.1308903579497,
+    "house": 1541.3299247499995,
+    "assets": 0,
+    "job": "quản lý quán cà phê",
+    "flow": {
+      "salary": 8652.413189668208,
+      "partner": 2648.3501618818173,
+      "interest": 842.8267244464515,
+      "other": {
+        "Tiền mừng cưới": 26.78083348081447,
+        "Lê Minh Châu trả nợ": 11.07,
+        "Con phụ giúp": 2.7675,
+        "BHYT chi trả viện phí": 4.199999999999999
+      }
+    }
+  },
+  {
+    "seed": 880075,
+    "q": 2,
+    "age": 89,
+    "net": 3800.045495346189,
+    "cash": 1590.4172382683607,
+    "house": 2004.8624818730077,
+    "assets": 0,
+    "job": "chủ đại lý",
+    "flow": {
+      "salary": 21206.72574667648,
+      "partner": 0,
+      "interest": 2009.4022991555446,
+      "other": {
+        "Tiền nhặt được": 0.6273,
+        "Đập heo đất": 1.2546,
+        "BHYT chi trả viện phí": 206.59999999999997,
+        "Trợ cấp thất nghiệp (BHTN)": 36.302804814934575,
+        "Quà cảm ơn": 2.07,
+        "Làm thêm": 10.35,
+        "Vay vay mua nhà": 618.8,
+        "Thu nhập ổn định": 31.049999999999994,
+        "Vẽ chân dung theo đơn": 48,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Phần tài sản bố mẹ để lại": 780
+      }
+    }
+  },
+  {
+    "seed": 880004,
+    "q": 1,
+    "age": 71,
+    "net": 3794.2701916056285,
+    "cash": 3214.0188039063605,
+    "house": 580.2513876992682,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 6465.693207782794,
+      "partner": 3641.947754342978,
+      "interest": 908.9324300494533,
+      "other": {
+        "Đập heo đất": 0.8855999999999999,
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Thưởng cuối năm": 7,
+        "Tiền mừng cưới": 18.55675372700393,
+        "Vay vay ngân hàng": 3.5423999999999998,
+        "Thắng cá độ": 1.7711999999999999,
+        "Phan Chí Công trả nợ": 8.856,
+        "Con Nguyễn Thùy Linh trả nợ": 122.33067122955293,
+        "Con Nguyễn Minh Quân trả nợ": 149.35815098732945,
+        "Thưởng Tết, lương tháng 13": 14,
+        "Quà cảm ơn": 0.8855999999999999,
+        "BHYT chi trả viện phí": 29.4,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 66.41999999999999
+      }
+    }
+  },
+  {
+    "seed": 880055,
+    "q": 2,
+    "age": 76,
+    "net": 3721.6915785258198,
+    "cash": 1834.7173365855856,
+    "house": 1886.6854745663002,
+    "assets": 0,
+    "job": "làm nông",
+    "flow": {
+      "salary": 11105.897186712837,
+      "partner": 0,
+      "interest": 801.4188157325184,
+      "other": {
+        "Vay vay nóng (tín dụng đen)": 83.025,
+        "Trợ cấp, hàng xóm giúp đỡ": 2.7675,
+        "Đồ ăn trộm": 1.107,
+        "Bán xe đạp cũ": 0.1133378565758681,
+        "anh Nhân trả nợ": 22.14,
+        "Tiền bo": 0.5,
+        "Trợ cấp thất nghiệp (BHTN)": 37.10769177319006,
+        "Thưởng Tết, lương tháng 13": 16,
+        "BHYT chi trả viện phí": 73.2
+      }
+    }
+  },
+  {
+    "seed": 880158,
+    "q": 2,
+    "age": 44,
+    "net": 3714.260864710703,
+    "cash": 3744.752960876512,
+    "house": 0,
+    "assets": 0,
+    "job": "chủ công ty nhỏ (đại lý đồ nhựa)",
+    "flow": {
+      "salary": 12619.0740572097,
+      "partner": 2596.967364952939,
+      "interest": 402.17306115335697,
+      "other": {
+        "Học bổng toàn phần": 26.567999999999994,
+        "Vay vay ngân hàng": 96.25499999999998,
+        "Trợ cấp thất nghiệp (BHTN)": 14.467874699524101,
+        "Thưởng Tết, lương tháng 13": 48,
+        "BHYT chi trả viện phí": 105.6
+      }
+    }
+  },
+  {
+    "seed": 880094,
+    "q": 2,
+    "age": 50,
+    "net": 3699.1615258823813,
+    "cash": 1188.905255651062,
+    "house": 1382,
+    "assets": 1128.228493292085,
+    "job": "trộm vặt",
+    "flow": {
+      "salary": 9844.118915936642,
+      "partner": 0,
+      "interest": 645.154774856828,
+      "other": {
+        "Đập heo đất": 1.107,
+        "Huỳnh Minh Thùy trả nợ": 11.07,
+        "Thưởng doanh số": 8.302499999999998,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Hốt hụi": 56.1
+      }
+    }
+  },
+  {
+    "seed": 880011,
+    "q": 3,
+    "age": 93,
+    "net": 3611.110227828081,
+    "cash": 2424.9754640585074,
+    "house": 1186.134703642064,
+    "assets": 0,
+    "job": "xe ôm truyền thống",
+    "flow": {
+      "salary": 3466.1302724120387,
+      "partner": 3847.337926944631,
+      "interest": 1124.511600504858,
+      "other": {
+        "Bố mẹ chu cấp": 14.100250002930458,
+        "Thưởng Tết, lương tháng 13": 15,
+        "Tiền mừng cưới": 21.00877029952314,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 49.815,
+        "Con phụ giúp": 1.6605,
+        "Phần tài sản bố mẹ để lại": 94.5,
+        "Quà cảm ơn": 0.6642,
+        "Con Nguyễn Hữu Phước trả nợ": 99.8761253227529,
+        "Con Nguyễn Bảo Anh trả nợ": 115.3197110644493,
+        "BHYT chi trả viện phí": 26.4
+      }
+    }
+  },
+  {
+    "seed": 880219,
+    "q": 4,
+    "age": 45,
+    "net": 3514.434005354194,
+    "cash": 3216.6045973552104,
+    "house": 1164.7332725643553,
+    "assets": 0,
+    "job": "diễn viên hài có tiếng",
+    "flow": {
+      "salary": 9072.520492179672,
+      "partner": 1583.8621572490756,
+      "interest": 574.3341051670385,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 8.729067438873699,
+        "Bố mẹ chu cấp": 117.46522015172951,
+        "Đập heo đất": 1.5525,
+        "Làm thêm": 7.7625,
+        "Vay vay mua nhà": 596.4,
+        "Vay vay ngân hàng": 116.4375,
+        "Bán xe đạp cũ": 0.837498899640877,
+        "Tiền mừng cưới": 29.7977332074428,
+        "Hốt hụi": 19.974999999999998,
+        "BHYT chi trả viện phí": 1.4,
+        "Cát-xê & thưởng doanh thu phim": 116.4375
+      }
+    }
+  },
+  {
+    "seed": 880203,
+    "q": 5,
+    "age": 95,
+    "net": 3388.182464133709,
+    "cash": 2736.850445262948,
+    "house": 594.3045506228965,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 13898.291986735709,
+      "partner": 5836.8185838740055,
+      "interest": 2475.2347394956473,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 61.61775753916717,
+        "Bố mẹ chu cấp": 804.7858870553989,
+        "Tiền mừng cưới": 49.183043729513884,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Chế độ nghỉ hưu trước tuổi": 155.24999999999997,
+        "Con phụ giúp": 5.175,
+        "Con Phan Đình Tuấn trả nợ": 240.11038384133585,
+        "Con Phan Vân Anh trả nợ": 430.0068156958225,
+        "BHYT chi trả viện phí": 209.39999999999998
+      }
+    }
+  },
+  {
+    "seed": 880111,
+    "q": 2,
+    "age": 71,
+    "net": 3286.9184669729366,
+    "cash": 747.1292019572518,
+    "house": 839.4451963380562,
+    "assets": 1700.3421968013054,
+    "job": "chủ chuỗi quán (tiệm trà sữa)",
+    "flow": {
+      "salary": 11412.41992936778,
+      "partner": 73.75309855386048,
+      "interest": 160.70501797937,
+      "other": {
+        "Tiền nhặt được": 0.3105,
+        "Trợ cấp thất nghiệp (BHTN)": 6.3031044064642625,
+        "Vay vay mua nhà": 610.4,
+        "Thưởng Tết, lương tháng 13": 27,
+        "Hốt hụi": 31.875,
+        "Tiền mừng cưới": 24.750805780515073,
+        "BHYT chi trả viện phí": 40.8,
+        "Phần tài sản bố mẹ để lại": 702
+      }
+    }
+  },
+  {
+    "seed": 880069,
+    "q": 1,
+    "age": 51,
+    "net": 3188.2836330083232,
+    "cash": 3020.1376226148413,
+    "house": 565.9619423023979,
+    "assets": 0,
+    "job": "đội trưởng kỹ thuật",
+    "flow": {
+      "salary": 3793.794116412178,
+      "partner": 5562.010195929034,
+      "interest": 473.1536752580248,
+      "other": {
+        "Làm thêm": 1.9188,
+        "Thưởng Tết, lương tháng 13": 7,
+        "Vay vay mua nhà": 289.79999999999995,
+        "Hốt hụi": 16.674999999999997
+      }
+    }
+  },
+  {
+    "seed": 880145,
+    "q": 4,
+    "age": 91,
+    "net": 3167.6430644266156,
+    "cash": 1061.4662385466645,
+    "house": 2106.17345000714,
+    "assets": 0,
+    "job": "thiết kế chính",
+    "flow": {
+      "salary": 14334.382160403638,
+      "partner": 0,
+      "interest": 570.7830870653446,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 13.037661408829788,
+        "Bố mẹ chu cấp": 220.18410184857447,
+        "Học bổng khuyến khích": 9.4464,
+        "BHYT chi trả viện phí": 348.79999999999995,
+        "Trợ cấp thất nghiệp (BHTN)": 58.74971981140781,
+        "Thưởng Tết, lương tháng 13": 72,
+        "Làm thêm": 16.0425,
+        "Vay vay mua nhà": 2738.3999999999996,
+        "Vẽ chân dung theo đơn": 8,
+        "Phần tài sản bố mẹ để lại": 1612,
+        "Tiền nhặt được": 9.625499999999999
+      }
+    }
+  },
+  {
+    "seed": 880228,
+    "q": 2,
+    "age": 58,
+    "net": 2975.544660739909,
+    "cash": 1765.6768643236765,
+    "house": 827.8391899932067,
+    "assets": 382.0162993019325,
+    "job": "nhiếp ảnh gia có tiếng",
+    "flow": {
+      "salary": 10069.466857636107,
+      "partner": 0,
+      "interest": 401.2641391619995,
+      "other": {
+        "Vay vay mua nhà": 349.29999999999995,
+        "Thưởng Tết, lương tháng 13": 24,
+        "Thắng cá độ lớn": 61.992,
+        "Vay vay nóng (tín dụng đen)": 30.996,
+        "Trợ cấp thất nghiệp (BHTN)": 7.587837489872438,
+        "BHYT chi trả viện phí": 55.2,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 249.9786722897751,
+        "Bồi thường bản quyền ảnh": 15.498
+      }
+    }
+  },
+  {
+    "seed": 880141,
+    "q": 2,
+    "age": 83,
+    "net": 2946.098283934971,
+    "cash": 2400.8368623689735,
+    "house": 545.2577869373334,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 10143.224909520217,
+      "partner": 1087.3798839285444,
+      "interest": 1173.7215625880174,
+      "other": {
+        "Đập heo đất": 2.3616,
+        "Tiền mừng cưới": 21.73200987406075,
+        "em Ánh trả nợ": 11.808,
+        "Phần tài sản bố mẹ để lại": 84,
+        "Lê Hoàng Phúc trả nợ": 38.376,
+        "Con Lê Hoàng Phúc trả nợ": 275.9043630600645,
+        "Tiết kiệm tiền phân": 5.904,
+        "BHYT chi trả viện phí": 82.2,
+        "Tiền nhặt được": 3.5423999999999998
+      }
+    }
+  },
+  {
+    "seed": 880070,
+    "q": 4,
+    "age": 83,
+    "net": 2942.5783831489784,
+    "cash": 1385.9377045061822,
+    "house": 1495.3916041389039,
+    "assets": 0,
+    "job": "xe ôm truyền thống",
+    "flow": {
+      "salary": 9948.422758021494,
+      "partner": 6251.504289511124,
+      "interest": 614.6091460182272,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 28.698583685672183,
+        "Bố mẹ chu cấp": 212.84352723882353,
+        "BHYT chi trả viện phí": 1.4,
+        "Trợ cấp thất nghiệp (BHTN)": 85.30901981960669,
+        "Nhiều đơn hơn": 33.12,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Bồi thường tai nạn lao động": 99.36,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Tiền mừng cưới": 72.49799572572111
+      }
+    }
+  },
+  {
+    "seed": 880213,
+    "q": 4,
+    "age": 98,
+    "net": 2869.52890952102,
+    "cash": -113.22571760187861,
+    "house": 2982.754543065301,
+    "assets": 0,
+    "job": "tài xế ô tô công nghệ",
+    "flow": {
+      "salary": 6832.376031300226,
+      "partner": 0,
+      "interest": 413.0981432758829,
+      "other": {
+        "Vay vay nóng (tín dụng đen)": 26.3925,
+        "Bố mẹ chu cấp": 28.88914270358383,
+        "Trợ cấp xuất ngũ, tạo việc làm": 45.5,
+        "Cát-xê phim truyền hình dài tập": 92.98501286655664,
+        "Vay vay mua nhà": 770,
+        "Cát-xê phim điện ảnh chiếu rạp": 302.6121724676341,
+        "Thưởng Tết, lương tháng 13": 13,
+        "Phần tài sản bố mẹ để lại": 884,
+        "BHYT chi trả viện phí": 116.39999999999999
+      }
+    }
+  },
+  {
+    "seed": 880104,
+    "q": 2,
+    "age": 57,
+    "net": 2856.8135957027957,
+    "cash": 1897.1969127369414,
+    "house": 959.5880267007103,
+    "assets": 0,
+    "job": "hiệu trưởng trường mầm non",
+    "flow": {
+      "salary": 6928.123859459704,
+      "partner": 5858.612801720023,
+      "interest": 261.9193383376866,
+      "other": {
+        "Đập heo đất": 2.7944999999999998,
+        "Tiền mừng cưới": 64.29933105301112,
+        "BHYT chi trả viện phí": 8.399999999999999,
+        "Thưởng Tết, lương tháng 13": 42
+      }
+    }
+  },
+  {
+    "seed": 880058,
+    "q": 3,
+    "age": 48,
+    "net": 2796.7312731986217,
+    "cash": 2964.4012731986218,
+    "house": 0,
+    "assets": 0,
+    "job": "trưởng nhóm giao hàng",
+    "flow": {
+      "salary": 8298.035269798871,
+      "partner": 3685.8518502165643,
+      "interest": 575.0943281248825,
+      "other": {
+        "Bố mẹ chu cấp": 47.93374915402163,
+        "BHYT chi trả viện phí": 1.4,
+        "Tiền mừng cưới": 50.899717129245396,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Trợ cấp thất nghiệp (BHTN)": 232.85051134309458,
+        "Đi làm sớm": 33.12,
+        "Vay vay nóng (tín dụng đen)": 49.68
+      }
+    }
+  },
+  {
+    "seed": 880126,
+    "q": 4,
+    "age": 42,
+    "net": 2497.594510828252,
+    "cash": 2195.300242857873,
+    "house": 1011.99159942193,
+    "assets": 0,
+    "job": "chủ chuỗi cửa hàng điện thoại",
+    "flow": {
+      "salary": 5706.511894356184,
+      "partner": 1805.4929752437308,
+      "interest": 143.32400614203254,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 10.934009104396406,
+        "Đập heo đất": 1.3455,
+        "Bố mẹ chu cấp": 82.50014161099828,
+        "Thưởng Tết, lương tháng 13": 10,
+        "Tiền mừng cưới": 46.69313196458621,
+        "Vay vay mua nhà": 610.4
+      }
+    }
+  },
+  {
+    "seed": 880043,
+    "q": 2,
+    "age": 88,
+    "net": 2457.9905760386123,
+    "cash": 1182.7906945266209,
+    "house": 1275.1996663000998,
+    "assets": 0,
+    "job": "thợ mộc lành nghề",
+    "flow": {
+      "salary": 6806.12247681946,
+      "partner": 200.66373895807385,
+      "interest": -8.57787738764009,
+      "other": {
+        "Làm thêm": 2.5092,
+        "Tiền mừng cưới": 29.424266559865323,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Trợ cấp thất nghiệp (BHTN)": 77.0332665914844,
+        "BHYT chi trả viện phí": 5.6,
+        "Truy lĩnh lương làm thêm": 5.175,
+        "Phần tài sản bố mẹ để lại": 780
+      }
+    }
+  },
+  {
+    "seed": 880206,
+    "q": 2,
+    "age": 90,
+    "net": 2383.605891783912,
+    "cash": 1512.0394699119356,
+    "house": 871.5661595938868,
+    "assets": 0,
+    "job": "chi cục trưởng hải quan",
+    "flow": {
+      "salary": 10820.574201818492,
+      "partner": 0,
+      "interest": 570.6851368572927,
+      "other": {
+        "Học bổng khuyến khích": 5.382,
+        "Vay vay tiêu dùng (công ty tài chính)": 10.091249999999999,
+        "Thưởng Tết, lương tháng 13": 20,
+        "Vay vay mua nhà": 613.9,
+        "BHYT chi trả viện phí": 143,
+        "Vay vay ngân hàng": 3.3637499999999996
+      }
+    }
+  },
+  {
+    "seed": 880002,
+    "q": 2,
+    "age": 90,
+    "net": 2383.2979309553007,
+    "cash": 1348.2389930583658,
+    "house": 1035.0586241838262,
+    "assets": 0,
+    "job": "đội trưởng bảo vệ",
+    "flow": {
+      "salary": 9704.599763875256,
+      "partner": 0,
+      "interest": 659.6412695326234,
+      "other": {
+        "Hốt hụi": 39.949999999999996,
+        "Thưởng bảo vệ tài sản": 47.232,
+        "Lê Quang Minh trả nợ": 11.808,
+        "Thưởng Tết, lương tháng 13": 36,
+        "BHYT chi trả viện phí": 238.2,
+        "Quà cảm ơn": 2.3616
+      }
+    }
+  },
+  {
+    "seed": 880025,
+    "q": 1,
+    "age": 89,
+    "net": 2335.755449245443,
+    "cash": 937.7852716348041,
+    "house": 1343.8364166106385,
+    "assets": 54.133761,
+    "job": "kỹ thuật viên spa",
+    "flow": {
+      "salary": 10391.067547760584,
+      "partner": 3196.177117381696,
+      "interest": 1776.3242472777235,
+      "other": {
+        "Trợ cấp thất nghiệp (BHTN)": 95.51436244610115,
+        "Vay vay mua nhà": 368.2,
+        "Thưởng Tết, lương tháng 13": 16,
+        "BHYT chi trả viện phí": 43.99999999999999,
+        "Vay vay nóng (tín dụng đen)": 20.663999999999998,
+        "Tiền mừng cưới": 20.088640400016676,
+        "em Thanh trả nợ": 10.331999999999999,
+        "Phần tài sản bố mẹ để lại": 98,
+        "Con Lò Văn Quý trả nợ": 61.5110476394743
+      }
+    }
+  },
+  {
+    "seed": 880165,
+    "q": 2,
+    "age": 73,
+    "net": 2305.64793307384,
+    "cash": 1492.3323088441298,
+    "house": 813.314676749939,
+    "assets": 0,
+    "job": "đội trưởng bảo vệ",
+    "flow": {
+      "salary": 6147.924773088536,
+      "partner": 2658.978710941135,
+      "interest": 479.1482363735895,
+      "other": {
+        "BHYT chi trả viện phí": 38.2,
+        "Vay vay nóng (tín dụng đen)": 12.177000000000001,
+        "Vay vay mua nhà": 361.9,
+        "Trợ cấp thất nghiệp (BHTN)": 59.13019898911912,
+        "Lời hàng xách tay": 12.177000000000001,
+        "Thưởng Tết, lương tháng 13": 6,
+        "Con phụ giúp": 2.0295
+      }
+    }
+  },
+  {
+    "seed": 880112,
+    "q": 3,
+    "age": 70,
+    "net": 2266.674855755288,
+    "cash": 1563.3881860299698,
+    "house": 703.2838950458407,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 5838.193342682889,
+      "partner": 1985.1419203704654,
+      "interest": 569.5647996162321,
+      "other": {
+        "Bố mẹ chu cấp": 10.189823522488794,
+        "Vay vay ngân hàng": 94.095,
+        "Hốt hụi": 50,
+        "BHYT chi trả viện phí": 49.8,
+        "Thưởng Tết, lương tháng 13": 36,
+        "Bán được giá": 18.819,
+        "Con Vũ Phước Thiện trả nợ": 84.4110224869813
+      }
+    }
+  },
+  {
+    "seed": 880216,
+    "q": 3,
+    "age": 48,
+    "net": 2029.954091662984,
+    "cash": 1807.687852792001,
+    "house": 749.0594734508072,
+    "assets": 0,
+    "job": "chuyền trưởng",
+    "flow": {
+      "salary": 3942.088907206298,
+      "partner": 2767.0670552819843,
+      "interest": 216.56350682989705,
+      "other": {
+        "Bố mẹ chu cấp": 1.8936014152456553,
+        "Vay vay mua nhà": 366.79999999999995,
+        "Nguyễn Mỹ Hạnh trả nợ": 11.808,
+        "Thưởng Tết, lương tháng 13": 9,
+        "Hốt hụi": 14.875,
+        "Tiền mừng cưới": 28.400958200633525,
+        "BHYT chi trả viện phí": 4.199999999999999
+      }
+    }
+  },
+  {
+    "seed": 880005,
+    "q": 2,
+    "age": 46,
+    "net": 1949.2665595573612,
+    "cash": 1477.8414097325624,
+    "house": 560.8491327719413,
+    "assets": 364.2997200992794,
+    "job": "giám đốc sáng tạo",
+    "flow": {
+      "salary": 4625.736596280273,
+      "partner": 1203.450073451455,
+      "interest": 169.37420014941952,
+      "other": {
+        "Thưởng Tết, lương tháng 13": 18,
+        "Tiền cho thuê ki-ốt ở chợ cho thuê": 322.8105192643579,
+        "Vẽ chân dung theo đơn": 6,
+        "Vay vay mua nhà": 300.29999999999995,
+        "Tiền mừng cưới": 22.094397552654147,
+        "Thưởng cuối năm": 9,
+        "Làm chui lương cao": 23.616,
+        "Truy lĩnh lương làm thêm": 2.952,
+        "Vay vay nóng (tín dụng đen)": 17.712
+      }
+    }
+  },
+  {
+    "seed": 880019,
+    "q": 2,
+    "age": 66,
+    "net": 1924.6741936036008,
+    "cash": 1055.3750876529543,
+    "house": 869.2873948343988,
+    "assets": 0,
+    "job": "chi cục trưởng quản lý thị trường",
+    "flow": {
+      "salary": 8396.414156874202,
+      "partner": 2273.4917931053624,
+      "interest": -2.053641686215826,
+      "other": {
+        "Học bổng khuyến khích": 11.177999999999999,
+        "Đập heo đất": 2.7944999999999998,
+        "BHYT chi trả viện phí": 24.499999999999996,
+        "anh Khánh trả nợ": 55.89,
+        "Thưởng Tết, lương tháng 13": 21,
+        "Trợ cấp thất nghiệp (BHTN)": 49.53460188928395,
+        "Phần tài sản bố mẹ để lại": 1053
+      }
+    }
+  },
+  {
+    "seed": 880116,
+    "q": 3,
+    "age": 62,
+    "net": 1879.0700033831265,
+    "cash": 1841.427278353282,
+    "house": 1459.6305408723408,
+    "assets": 0,
+    "job": "Quân đội · Thiếu tướng",
+    "flow": {
+      "salary": 15631.813700906752,
+      "partner": 3006.7561867333584,
+      "interest": 373.61114867813666,
+      "other": {
+        "Tiền mừng cưới": 52.29754112519324,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Vay vay mua nhà": 829.5
+      }
+    }
+  },
+  {
+    "seed": 880146,
+    "q": 3,
+    "age": 80,
+    "net": 1857.664547527519,
+    "cash": 522.0456370752424,
+    "house": 1311.1108245634493,
+    "assets": 0,
+    "job": "Đại kiện tướng quốc tế cờ tướng",
+    "flow": {
+      "salary": 7037.118322200634,
+      "partner": 360.18398092669,
+      "interest": 345.41650422109745,
+      "other": {
+        "Bố mẹ chu cấp": 64.22402099362883,
+        "Tiền thưởng giải cờ": 621,
+        "Thưởng huy chương đồng SEA Games 2053 (cờ tướng)": 55.88999999999999,
+        "Thưởng huy chương bạc SEA Games 2055 (cờ tướng)": 93.14999999999999,
+        "Thưởng huy chương đồng SEA Games 2057 (cờ tướng)": 55.88999999999999,
+        "Vay vay mua nhà": 462.7,
+        "Thưởng huy chương đồng SEA Games 2067 (cờ tướng)": 55.88999999999999,
+        "Bán xe đạp cũ": 0.004834391329909283
+      }
+    }
+  },
+  {
+    "seed": 880186,
+    "q": 4,
+    "age": 35,
+    "net": 1802.3319282671475,
+    "cash": 1244.2137277280422,
+    "house": 557.6138303646765,
+    "assets": 0,
+    "job": "trưởng phòng nhân sự",
+    "flow": {
+      "salary": 5049.257896435234,
+      "partner": 0,
+      "interest": 70.55033921796078,
+      "other": {
+        "Bố mẹ chu cấp": 34.64387794523509,
+        "Đập heo đất": 2.2878,
+        "Học bổng toàn phần": 34.31699999999999,
+        "Vay vay mua nhà": 346.5
+      }
+    }
+  },
+  {
+    "seed": 880175,
+    "q": 2,
+    "age": 72,
+    "net": 1774.4898396272706,
+    "cash": 13.625253042158846,
+    "house": 1760.8636391053406,
+    "assets": 0,
+    "job": "Đại kiện tướng quốc tế cờ tướng",
+    "flow": {
+      "salary": 5323.822563010199,
+      "partner": 0,
+      "interest": 333.9755849972715,
+      "other": {
+        "Trợ cấp thất nghiệp (BHTN)": 9.226984252035273,
+        "Tiền thưởng giải cờ": 866.2950000000002,
+        "Vay vay ngân hàng": 24.063749999999995,
+        "Thưởng Tết, lương tháng 13": 96,
+        "Thưởng huy chương đồng SEA Games 2061 (cờ tướng)": 72.19125,
+        "Thưởng huy chương bạc SEA Games 2069 (cờ tướng)": 120.31875,
+        "Đáo hạn bảo hiểm": 208.98050244949206,
+        "BHYT chi trả viện phí": 105.6
+      }
+    }
+  },
+  {
+    "seed": 880205,
+    "q": 3,
+    "age": 96,
+    "net": 1636.6903967308112,
+    "cash": 200.25637024866364,
+    "house": 1041.3834273429961,
+    "assets": 395.0504023804322,
+    "job": "bí thư đảng ủy xã / phường",
+    "flow": {
+      "salary": 9072.252732266772,
+      "partner": 0,
+      "interest": 255.92458657137755,
+      "other": {
+        "Học bổng khuyến khích": 8.694,
+        "Bố mẹ chu cấp": 14.735238823544119,
+        "BHYT chi trả viện phí": 91.4,
+        "Thưởng Tết, lương tháng 13": 16,
+        "Vay vay mua nhà": 569.8,
+        "Hồ Kim Chi trả nợ": 10.8675
+      }
+    }
+  },
+  {
+    "seed": 880103,
+    "q": 5,
+    "age": 31,
+    "net": 1419.7595962238772,
+    "cash": 285.06337669603397,
+    "house": 1133.9006647085178,
+    "assets": 0,
+    "job": "thợ cắt tóc nam",
+    "flow": {
+      "salary": 2435.105982912841,
+      "partner": 0,
+      "interest": 79.35307053440957,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 112.66522768341531,
+        "Bố mẹ chu cấp": 817.0266353130728,
+        "Thưởng sáng kiến": 30,
+        "BHYT chi trả viện phí": 92.39999999999999
+      }
+    }
+  },
+  {
+    "seed": 880091,
+    "q": 4,
+    "age": 73,
+    "net": 1404.1849182070507,
+    "cash": 1123.3639266508717,
+    "house": 280.8192688656861,
+    "assets": 0,
+    "job": "đội trưởng bảo vệ",
+    "flow": {
+      "salary": 7086.379465875388,
+      "partner": 2440.256300818453,
+      "interest": 291.50913691128613,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 21.92352551845908,
+        "Bố mẹ chu cấp": 298.90203853418205,
+        "Đập heo đất": 1.476,
+        "Tiền bo": 2,
+        "Vay vay mua nhà": 1184.3999999999999,
+        "Trợ cấp thất nghiệp (BHTN)": 87.81816334342227,
+        "Hốt hụi": 51.175,
+        "Vay vay ngân hàng": 44.279999999999994,
+        "BHYT chi trả viện phí": 97.2,
+        "Thưởng Tết, lương tháng 13": 11,
+        "Thưởng bảo vệ tài sản": 14.76,
+        "Phan Phước Lộc trả nợ": 47.97
+      }
+    }
+  },
+  {
+    "seed": 880128,
+    "q": 3,
+    "age": 72,
+    "net": 1364.2670731425853,
+    "cash": 898.0790867824734,
+    "house": 1571.54170778454,
+    "assets": 0,
+    "job": "tư vấn bán ô tô",
+    "flow": {
+      "salary": 11130.515621752116,
+      "partner": 4269.921447282979,
+      "interest": 274.72821418700926,
+      "other": {
+        "Tiền mừng cưới": 23.232220939680936,
+        "Vay vay ngân hàng": 11.232,
+        "Thưởng Tết, lương tháng 13": 75,
+        "Quà cảm ơn": 3.312,
+        "Hốt hụi": 56.925,
+        "em Nhung trả nợ": 132.48,
+        "Bán xe đạp cũ": 0.056143534699916814,
+        "Vay vay mua nhà": 879.9,
+        "Huỳnh Thanh Tùng trả nợ": 107.64
+      }
+    }
+  },
+  {
+    "seed": 880191,
+    "q": 4,
+    "age": 75,
+    "net": 1337.1804061601424,
+    "cash": 1337.1783470961873,
+    "house": 0,
+    "assets": 0,
+    "job": "kiểm toán viên chính",
+    "flow": {
+      "salary": 10670.071727253795,
+      "partner": 1751.4782634122887,
+      "interest": 309.2940681294342,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 15.270930723311892,
+        "Bố mẹ chu cấp": 199.1430336813291,
+        "Học bổng toàn phần": 23.287499999999998,
+        "Đập heo đất": 1.5525,
+        "Tiền mừng cưới": 101.02477338284253,
+        "Vay vay mua nhà": 899.4999999999999,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Truy lĩnh lương làm thêm": 8.28,
+        "Trợ cấp thất nghiệp (BHTN)": 89.23184558221341,
+        "Quà cảm ơn": 3.312
+      }
+    }
+  },
+  {
+    "seed": 880214,
+    "q": 4,
+    "age": 39,
+    "net": 1325.9994518524504,
+    "cash": 838.6089434832387,
+    "house": 490.4231578749999,
+    "assets": 0,
+    "job": "chủ chuỗi quán (quán ăn)",
+    "flow": {
+      "salary": 3491.0326775379835,
+      "partner": 1784.637679519106,
+      "interest": 317.1768733996006,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 6.123984143034953,
+        "Bố mẹ chu cấp": 280.986316243408,
+        "Tiền thưởng giải cờ": 495.93600000000004,
+        "Thưởng huy chương vàng SEA Games 2045 (cờ vua)": 132.83999999999997,
+        "Tiền mừng cưới": 56.00643469655513,
+        "Thưởng huy chương bạc SEA Games 2055 (cờ vua)": 66.41999999999999,
+        "Vay vay ngân hàng": 4.428,
+        "BHYT chi trả viện phí": 8.399999999999999
+      }
+    }
+  },
+  {
+    "seed": 880045,
+    "q": 5,
+    "age": 42,
+    "net": 1315.3509648303313,
+    "cash": 1315.1448410485054,
+    "house": 0,
+    "assets": 0,
+    "job": "công chứng viên",
+    "flow": {
+      "salary": 4651.0759214865375,
+      "partner": 1842.7948684049547,
+      "interest": 191.28137718973474,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 44.090006190836945,
+        "Đập heo đất": 2.2878,
+        "Bố mẹ chu cấp": 205.17258610139908,
+        "Tiền mừng cưới": 51.24613007493317,
+        "Thưởng Tết, lương tháng 13": 25
+      }
+    }
+  },
+  {
+    "seed": 880117,
+    "q": 2,
+    "age": 41,
+    "net": 1170.4127014615476,
+    "cash": 679.8957266446691,
+    "house": 490.27518738951653,
+    "assets": 0,
+    "job": "MC đài địa phương",
+    "flow": {
+      "salary": 3567.4366970417695,
+      "partner": 0,
+      "interest": 71.20961423776497,
+      "other": {
+        "Học bổng khuyến khích": 9.4464,
+        "Vay vay mua nhà": 282.79999999999995,
+        "Làm thêm": 6.624,
+        "Thưởng Tết, lương tháng 13": 25,
+        "Trợ cấp thất nghiệp (BHTN)": 238.3187634191762
+      }
+    }
+  },
+  {
+    "seed": 880113,
+    "q": 4,
+    "age": 100,
+    "net": 1127.4530748566808,
+    "cash": -310.49999999999994,
+    "house": 1437.9530748566808,
+    "assets": 0,
+    "job": "YouTuber / TikToker (54 người đăng ký)",
+    "flow": {
+      "salary": 1146.2632837894062,
+      "partner": 478.9599379878923,
+      "interest": -710.1591062890833,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 17.432618574793448,
+        "Đập heo đất": 2.1401999999999997,
+        "Bố mẹ chu cấp": 131.61804128505108,
+        "Tiền mừng cưới": 54.577502408483994,
+        "Vay vay ngân hàng": 62.09999999999999,
+        "BHYT chi trả viện phí": 8.399999999999999,
+        "Thưởng Tết, lương tháng 13": 48,
+        "Trúng Vietlott Power 6/55": 0.1,
+        "Vay vay nóng (tín dụng đen)": 31.049999999999994,
+        "Phần tài sản bố mẹ để lại": 2340,
+        "Trợ cấp, hàng xóm giúp đỡ": 5.175,
+        "Bán đồ đạc": 8.28,
+        "Bán xe": 0.00017049489286808395
+      }
+    }
+  },
+  {
+    "seed": 880139,
+    "q": 3,
+    "age": 49,
+    "net": 1078.1429865833652,
+    "cash": 761.4269591192599,
+    "house": 1061.8583885292744,
+    "assets": 0,
+    "job": "chuyên viên tuyển dụng",
+    "flow": {
+      "salary": 4028.6306378502036,
+      "partner": 484.34666411489866,
+      "interest": 160.19826614044345,
+      "other": {
+        "Học bổng khuyến khích": 7.037999999999999,
+        "Tiền nhặt được": 5.278499999999999,
+        "Chu cấp tình cảm từ Phạm Ánh Dương": 636,
+        "Tiền mừng cưới": 101.9936394502921,
+        "Thưởng Tết, lương tháng 13": 52,
+        "Hốt hụi": 29.75,
+        "chị Vy trả nợ": 70.38,
+        "Vay vay mua nhà": 1225,
+        "BHYT chi trả viện phí": 58.199999999999996
+      }
+    }
+  },
+  {
+    "seed": 880163,
+    "q": 2,
+    "age": 61,
+    "net": 968.9557939236967,
+    "cash": 258.4890234283351,
+    "house": 1202.8336985554965,
+    "assets": 0,
+    "job": "chủ chuỗi quán (quán ăn)",
+    "flow": {
+      "salary": 6449.020776471628,
+      "partner": 2216.5727062794826,
+      "interest": 56.220000315385334,
+      "other": {
+        "Thưởng cuối năm": 13,
+        "Tiền mừng cưới": 59.443481766285835,
+        "Vẽ chân dung theo đơn": 24,
+        "Bán xe đạp cũ": 0.38790074390587215,
+        "Thưởng Tết, lương tháng 13": 13,
+        "Vay vay mua nhà": 580.3,
+        "BHYT chi trả viện phí": 12.599999999999998,
+        "Bồi thường bản quyền": 26.3925
+      }
+    }
+  },
+  {
+    "seed": 880155,
+    "q": 1,
+    "age": 81,
+    "net": 949.7960285937843,
+    "cash": -125.22075955125614,
+    "house": 1075.0167881450404,
+    "assets": 0,
+    "job": "xe ôm truyền thống",
+    "flow": {
+      "salary": 4353.208399693373,
+      "partner": 0,
+      "interest": 66.48277469516896,
+      "other": {
+        "Vay vay mua nhà": 326.9,
+        "Thưởng Tết, lương tháng 13": 8,
+        "BHYT chi trả viện phí": 86.55000000000001,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 83.02499999999999
+      }
+    }
+  },
+  {
+    "seed": 880001,
+    "q": 2,
+    "age": 85,
+    "net": 834.7266066907516,
+    "cash": 467.05455225620716,
+    "house": 500.51177578355714,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 9140.043450362873,
+      "partner": 419.49140019279764,
+      "interest": 767.8266967602904,
+      "other": {
+        "Đập heo đất": 1.107,
+        "Bán được giá": 33.209999999999994,
+        "Hốt hụi": 56.64999999999999,
+        "Vay vay ngân hàng": 8.302499999999998,
+        "Vay vay mua nhà": 313.59999999999997,
+        "Thưởng Tết, lương tháng 13": 32,
+        "Tiền mừng cưới": 22.111403418034314,
+        "Vay vay nóng (tín dụng đen)": 16.604999999999997,
+        "Con Nguyễn Ngọc Lan trả nợ": 283.2631817140092,
+        "Bảo hiểm chi trả bệnh hiểm nghèo": 83.02499999999999,
+        "BHYT chi trả viện phí": 36.6
+      }
+    }
+  },
+  {
+    "seed": 880073,
+    "q": 2,
+    "age": 66,
+    "net": 758.8063306628097,
+    "cash": 758.8031691873482,
+    "house": 0,
+    "assets": 0,
+    "job": "quản đốc",
+    "flow": {
+      "salary": 7429.119671021655,
+      "partner": 3559.441302448126,
+      "interest": 8.362576335335671,
+      "other": {
+        "Đập heo đất": 1.107,
+        "Tiền mừng cưới": 33.55821103499271,
+        "Tiền bo": 0.5,
+        "Trợ cấp thất nghiệp (BHTN)": 22.44201840861329,
+        "Trang điểm cô dâu": 2,
+        "Vay vay nóng (tín dụng đen)": 74.52,
+        "Thưởng Tết, lương tháng 13": 19
+      }
+    }
+  },
+  {
+    "seed": 880125,
+    "q": 2,
+    "age": 46,
+    "net": 680.3111847192204,
+    "cash": 529.8725230802058,
+    "house": 505.0562479663648,
+    "assets": 0,
+    "job": "điều dưỡng hạng III",
+    "flow": {
+      "salary": 2936.4998654183087,
+      "partner": 978.2495101145782,
+      "interest": 122.87791681105286,
+      "other": {
+        "Tiền nhặt được": 4.1328,
+        "Tiền mừng cưới": 17.850269205562768,
+        "Tiền bo": 1.5,
+        "Thưởng cuối năm": 8,
+        "Vay vay mua nhà": 278.59999999999997,
+        "Thưởng Tết, lương tháng 13": 8,
+        "Truy lĩnh lương làm thêm": 2.5829999999999997
+      }
+    }
+  },
+  {
+    "seed": 880130,
+    "q": 1,
+    "age": 90,
+    "net": 646.0788407039925,
+    "cash": -81.78775200615226,
+    "house": 727.8665927101447,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 6687.421354088436,
+      "partner": 1624.757964905638,
+      "interest": 185.54867965536815,
+      "other": {
+        "Tiền nhặt được": 3.5977499999999996,
+        "Trợ cấp thất nghiệp (BHTN)": 43.48324191798005,
+        "Tiền mừng cưới": 27.71603503692895,
+        "Vay vay mua nhà": 337.4,
+        "Bán được giá": 33.209999999999994,
+        "Phần tài sản bố mẹ để lại": 236.25,
+        "Thưởng Tết, lương tháng 13": 8,
+        "Tiết kiệm tiền phân": 5.535,
+        "Vay vay nóng (tín dụng đen)": 16.604999999999997,
+        "BHYT chi trả viện phí": 9.15
+      }
+    }
+  },
+  {
+    "seed": 880115,
+    "q": 1,
+    "age": 88,
+    "net": 644.0236042304248,
+    "cash": 165.96428820677752,
+    "house": 468.6209160236473,
+    "assets": 9.4384,
+    "job": "YouTuber / TikToker (63 người đăng ký)",
+    "flow": {
+      "salary": 3786.4772125361646,
+      "partner": 0,
+      "interest": 90.74926828968432,
+      "other": {
+        "Đập heo đất": 0.738,
+        "Vay vay ngân hàng": 2.952,
+        "Vay vay mua nhà": 299.59999999999997,
+        "Thào Thị Dua trả nợ": 7.38,
+        "Trợ cấp thất nghiệp (BHTN)": 56.678021977452694,
+        "BHYT chi trả viện phí": 30.199999999999996,
+        "Phần tài sản bố mẹ để lại": 105,
+        "Thưởng Tết, lương tháng 13": 6
+      }
+    }
+  },
+  {
+    "seed": 880198,
+    "q": 2,
+    "age": 79,
+    "net": 623.9016654729844,
+    "cash": 623.8997871284475,
+    "house": 0,
+    "assets": 0,
+    "job": "đội trưởng kỹ thuật",
+    "flow": {
+      "salary": 15980.05452090493,
+      "partner": 0,
+      "interest": 151.2822491131773,
+      "other": {
+        "Học bổng khuyến khích": 9.4464,
+        "Vay vay nóng (tín dụng đen)": 48.12749999999999,
+        "Vay vay mua nhà": 2525.6,
+        "BHYT chi trả viện phí": 105.6,
+        "Tiền nhặt được": 9.625499999999999,
+        "Hốt hụi": 82.02499999999999
+      }
+    }
+  },
+  {
+    "seed": 880129,
+    "q": 3,
+    "age": 40,
+    "net": 509.7184564898612,
+    "cash": 204.15519956249912,
+    "house": 1017.9956787305979,
+    "assets": 0,
+    "job": "công nhân",
+    "flow": {
+      "salary": 2454.272595187827,
+      "partner": 585.9846333610514,
+      "interest": 54.5767357875246,
+      "other": {
+        "BHYT chi trả viện phí": 39,
+        "Vay vay mua nhà": 651.6999999999999,
+        "Trợ cấp thất nghiệp (BHTN)": 23.682808374511414,
+        "Tiền mừng cưới": 76.81296622985042
+      }
+    }
+  },
+  {
+    "seed": 880123,
+    "q": 1,
+    "age": 33,
+    "net": 321.4790120263627,
+    "cash": 321.4790120263627,
+    "house": 0,
+    "assets": 0,
+    "job": "thuyền trưởng",
+    "flow": {
+      "salary": 1410.514989551837,
+      "partner": 0,
+      "interest": 3.917940476932942,
+      "other": {
+        "Đập heo đất": 1.107,
+        "Trợ cấp, hàng xóm giúp đỡ": 2.7675,
+        "Mẻ cá lớn": 22.14,
+        "em Long trả nợ": 22.14
+      }
+    }
+  },
+  {
+    "seed": 880147,
+    "q": 2,
+    "age": 78,
+    "net": 291.2409009831738,
+    "cash": 291.2394918491022,
+    "house": 0,
+    "assets": 0,
+    "job": "kỳ thủ cờ tướng",
+    "flow": {
+      "salary": 6541.709665845595,
+      "partner": 3345.4068998820244,
+      "interest": 339.63891552976764,
+      "other": {
+        "Trợ cấp thất nghiệp (BHTN)": 7.728288668147009,
+        "Vay nợ ví trả sau": 57.959999999999994,
+        "Tiền mừng cưới": 61.40200943134725,
+        "BHYT chi trả viện phí": 228.2,
+        "Quà cảm ơn": 3.312,
+        "Thưởng Tết, lương tháng 13": 25
+      }
+    }
+  },
+  {
+    "seed": 880099,
+    "q": 3,
+    "age": 51,
+    "net": 174.1904780625651,
+    "cash": 174.1904780625651,
+    "house": 0,
+    "assets": 0,
+    "job": "chuyên viên tuyển dụng",
+    "flow": {
+      "salary": 3274.4697274045993,
+      "partner": 2073.271740010924,
+      "interest": -683.8273016119545,
+      "other": {
+        "Bố mẹ chu cấp": 30.389713268165053,
+        "Tiền mừng cưới": 31.914488630807025,
+        "Học bổng khuyến khích": 5.795999999999999,
+        "Bán đồ đạc": 18.63,
+        "Bán xe": 15.938999999999998,
+        "Truy lĩnh lương làm thêm": 8.02125,
+        "Trợ cấp thất nghiệp (BHTN)": 92.48717901406809,
+        "Vay vay ngân hàng": 24.063749999999995,
+        "Chế độ khi tinh giản": 192.50999999999996,
+        "Hoa hồng bảo hiểm": 16.0425
+      }
+    }
+  },
+  {
+    "seed": 880225,
+    "q": 3,
+    "age": 41,
+    "net": 156.1320841023296,
+    "cash": 156.0165432084552,
+    "house": 0,
+    "assets": 0,
+    "job": "thợ nail chính",
+    "flow": {
+      "salary": 2329.313837014802,
+      "partner": 0,
+      "interest": 58.655258696167714,
+      "other": {
+        "Thưởng Tết, lương tháng 13": 24
+      }
+    }
+  },
+  {
+    "seed": 880143,
+    "q": 1,
+    "age": 74,
+    "net": 8.745666239432976,
+    "cash": -6.875118482856443,
+    "house": 0,
+    "assets": 0,
+    "job": "thợ làm tóc",
+    "flow": {
+      "salary": 6191.500039507877,
+      "partner": 0,
+      "interest": 231.47189344148916,
+      "other": {
+        "Trợ cấp thất nghiệp (BHTN)": 53.68467392722182,
+        "Bán được giá": 21.032999999999998,
+        "Hốt hụi": 17.849999999999998,
+        "Vay vay mua nhà": 353.5,
+        "BHYT chi trả viện phí": 17.15,
+        "Trang điểm cô dâu": 3.5,
+        "chị Pùa trả nợ": 28.044
+      }
+    }
+  },
+  {
+    "seed": 880102,
+    "q": 4,
+    "age": 25,
+    "net": 0.8695787593401254,
+    "cash": -0.7146391990598744,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 105.94858919544563,
+      "partner": 0,
+      "interest": 0.42110802772911804,
+      "other": {
+        "Tiền tiêu vặt bố mẹ cho": 27.448696279156092,
+        "Học bổng khuyến khích": 6.199199999999999,
+        "Bố mẹ chu cấp": 62.56373637721087
+      }
+    }
+  },
+  {
+    "seed": 880027,
+    "q": 1,
+    "age": 0,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880028,
+    "q": 3,
+    "age": 0,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880038,
+    "q": 1,
+    "age": 4,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880048,
+    "q": 1,
+    "age": 8,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880071,
+    "q": 5,
+    "age": 5,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880077,
+    "q": 3,
+    "age": 0,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880136,
+    "q": 3,
+    "age": 0,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880166,
+    "q": 2,
+    "age": 0,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880177,
+    "q": 2,
+    "age": 17,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880224,
+    "q": 4,
+    "age": 3,
+    "net": 0,
+    "cash": 0,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880098,
+    "q": 1,
+    "age": 4,
+    "net": -0.13283999999999999,
+    "cash": -0.13283999999999999,
+    "house": 0,
+    "assets": 0,
+    "job": null,
+    "flow": {
+      "salary": 0,
+      "partner": 0,
+      "interest": 0,
+      "other": {}
+    }
+  },
+  {
+    "seed": 880137,
+    "q": 2,
+    "age": 79,
+    "net": -76.95648682840113,
+    "cash": -76.95712684800525,
+    "house": 0,
+    "assets": 0,
+    "job": "chủ trang trại",
+    "flow": {
+      "salary": 9579.367444815309,
+      "partner": 669.850402887474,
+      "interest": 246.6740943564376,
+      "other": {
+        "Đập heo đất": 1.1808,
+        "Làm thêm": 2.3616,
+        "Bán được giá": 17.712,
+        "Vay vay ngân hàng": 35.424,
+        "Vay vay mua nhà": 1304.1,
+        "Tiền mừng cưới": 20.75750446727872,
+        "Thưởng Tết, lương tháng 13": 18,
+        "Lê Quang Dũng trả nợ": 11.808,
+        "BHYT chi trả viện phí": 39,
+        "Phần tài sản bố mẹ để lại": 168
+      }
+    }
+  },
+  {
+    "seed": 880232,
+    "q": 1,
+    "age": 61,
+    "net": -226.64885126603144,
+    "cash": -238.535609120858,
+    "house": 0,
+    "assets": 0,
+    "job": "đội trưởng bảo vệ",
+    "flow": {
+      "salary": 8164.679716023574,
+      "partner": 1095.4216634515362,
+      "interest": -131.57903229164492,
+      "other": {
+        "BHYT chi trả viện phí": 11.75,
+        "Vay vay nóng (tín dụng đen)": 49.68,
+        "Vay vay app đen": 62.1,
+        "Tiền mừng cưới": 95.40329928942025,
+        "Trợ cấp thất nghiệp (BHTN)": 6.789397617086315,
+        "Tiền chênh lệch vật liệu": 82.8,
+        "Vay vay mua nhà": 942.9,
+        "Thưởng Tết, lương tháng 13": 50,
+        "Con phụ giúp": 8.28,
+        "Thắng cá độ lớn": 132.48
+      }
+    }
+  }
+]

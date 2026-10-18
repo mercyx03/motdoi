@@ -45,7 +45,7 @@
   function active(a, y) { return y - a.b >= 16 && y - a.b <= 58; }
   function artistsOf(cat, l) {
     var y = yr(l), C = CATS[cat];
-    if (cat === 'show') return C.shows.filter(function (s) { return y >= s.from && y - s.b <= 50; }).map(function (s) { return { n: s.n, b: s.b, show: s }; });
+    if (cat === 'show') return C.shows.filter(function (s) { return y >= s.from; }).map(function (s) { return { n: s.n, b: s.b, show: s, archive: y - s.b > 65 }; });
     var a = C.a.filter(function (x) { return active(x, y); });
     if (a.length < 3 && NEXTGEN[cat]) a = a.concat(NEXTGEN[cat].map(function (n) { return { n: n, b: y - 24, next: true }; }));
     return a;
@@ -56,9 +56,9 @@
     var w = !isVN(l) ? { us: 4, kr: 3, rapus: 2 } : l.sex === 'F' ? { kr: 3.5, vn: 3, show: 2, us: 2, rapvn: 0.8 } : { vn: 3, rapvn: 2.5, show: 1.2, us: 2, kr: 1.2, rapus: 1.5 };
     if (l.hobby === 'rap') { w.rapvn = (w.rapvn || 0) + 4; w.rapus = (w.rapus || 0) + 2; }
     if (l.hobby === 'kpop') w.kr = (w.kr || 0) + 5;
-    var cats = Object.keys(w).filter(function (c) { return artistsOf(c, l).length; });
+    var cats = Object.keys(w).filter(function (c) { return artistsOf(c, l).some(function (a) { return !a.archive; }); });
     var cat = U.wpick(r, cats, function (c) { return w[c]; }) || 'vn';
-    var a = pick(r, artistsOf(cat, l));
+    var a = pick(r, artistsOf(cat, l).filter(function (a) { return !a.archive; }));
     l.idolCat = cat; l.idolBorn = a.b;
     return a.show ? showMember(a.show, r) : a.n;
   };
@@ -95,6 +95,7 @@
     if (how === 'parents') {
       var ok = l.fam.q >= (d.far ? 4 : 3) || (!d.far && d.cat === 'rapvn');
       if (!ok || ch(r, l.age < 13 ? 0.35 : 0.2)) { log(U.cap(pw(l)) + ' bảo ' + (d.far ? '"đi nước ngoài xem ca nhạc tốn kém lắm, đợi lớn đã".' : '"tập trung học đi con, năm sau tính".') + ' Bạn dỗi cả tuần.', 'neutral'); fx(l, { hap: -3 }); return; }
+      if(E.childExpense){var bill=E.childExpense(l,cost*l.base,'Vé concert '+d.what,false);log(bill.note,'neutral');if(!bill.ok)return;}
       if (l.age < 16) log(U.cap(pw(l)) + ' đưa bạn đi xem ' + d.what + ' ở ' + d.city + '. ' + pick(r, ['Cả buổi bạn nắm chặt tay người lớn, mắt dán lên sân khấu.', 'Về nhà vẫn còn hát mãi những bài hôm ấy.']), 'good');
       else log('Được ' + pw(l) + ' cho tiền, rủ bạn đi xem ' + d.what + ' ở ' + d.city + '.', 'good');
       fx(l, { hap: 10, soc: 2 }); H.mem(l, 'Lần đầu đi xem ' + d.what + ', biển lightstick rực sáng.', 5); return;
@@ -189,19 +190,19 @@
     SC(id, { title: o.title, prep: o.prep, text: o.text, valid: o.valid, opts: o.opts });
     A(id, g, label, { min: o.min, max: o.max, avail: o.avail, ai: o.ai || { w: 0.15 } });
   }
-  function paidBy(l, x, why) { if (l.indep) cashB(l, -x, why); else if (l.money >= x * l.base) cashB(l, -x, why); }
+  function paidBy(l, x, why, log) { if(E.childExpense){var bill=E.childExpense(l,x*l.base,why,false);if(log)log(bill.note,'neutral');return bill.ok;}if(l.money<x*l.base)return false;cashB(l,-x,why);return true; }
   simple('xem_phim', G5, 'Xem phim ở rạp', { min: 6, title: 'Đi xem phim',
     prep: function (l, r) { return { g: pick(r, l.age < 13 ? ['phim hoạt hình', 'phim siêu anh hùng'] : ['phim kinh dị', 'phim tình cảm', 'phim hành động', 'phim Việt đang gây sốt', 'phim hoạt hình']) }; },
     text: function (l, d) { return 'Rạp đang chiếu ' + d.g + ' mà ai cũng bàn tán.'; },
     opts: [
-      { k: 'friends', l: function (l) { return l.age < 12 ? 'Xin ' + pw(l) + ' đưa đi' : 'Rủ bạn bè đi xem'; }, run: function (l, r, log, d) { paidBy(l, 0.002, 'Vé xem phim'); log(d.g === 'phim kinh dị' ? 'Xem phim kinh dị, cả nhóm hét ầm, về nhà không dám tắt đèn.' : 'Xem ' + d.g + ' cùng ' + (l.age < 12 ? pw(l) : 'bạn bè') + ', ăn hết cả xô bắp rang.', 'good'); fx(l, { hap: 4, soc: 2 }); } },
+      { k: 'friends', l: function (l) { return l.age < 12 ? 'Xin ' + pw(l) + ' đưa đi' : 'Rủ bạn bè đi xem'; }, run: function (l, r, log, d) { if(!paidBy(l, 0.002, 'Vé xem phim', log))return; log(d.g === 'phim kinh dị' ? 'Xem phim kinh dị, cả nhóm hét ầm, về nhà không dám tắt đèn.' : 'Xem ' + d.g + ' cùng ' + (l.age < 12 ? pw(l) : 'bạn bè') + ', ăn hết cả xô bắp rang.', 'good'); fx(l, { hap: 4, soc: 2 }); } },
       { k: 'date', l: function (l) { return 'Đi cùng ' + (l.partner ? l.partner.name : 'người ấy'); }, req: function (l) { return !!l.partner; }, run: function (l, r, log) { var w = H.datePay ? H.datePay(l, r, 0.004, 'Xem phim') : ''; log('Hẹn ' + l.partner.name + ' đi xem phim, ngồi hàng ghế cuối.' + w, 'good'); fx(l, { hap: 5 }); } },
       { k: 'home', l: 'Đợi lên mạng rồi xem ở nhà', run: function (l, r, log) { log('Đợi phim lên mạng, nằm nhà xem.', 'neutral'); fx(l, { hap: 1 }); } }
     ] });
   simple('karaoke', G5, 'Đi hát karaoke', { min: 14, title: 'Karaoke', text: 'Cả nhóm rủ nhau đi hát karaoke.',
     opts: [
-      { k: 'sing', l: 'Cầm mic hát hết mình', run: function (l, r, log) { paidBy(l, 0.004, 'Hát karaoke'); log(l.talent === 'âm nhạc' ? 'Hát một bài, cả phòng im phăng phắc rồi vỗ tay rần rần.' : pick(r, ['Hát lạc tông nhưng vui nhất hội.', 'Giành mic suốt buổi, khàn cả giọng.']), 'good'); fx(l, { hap: 5, soc: 3 }); } },
-      { k: 'listen', l: 'Ngồi nghe, vỗ tay cổ vũ', run: function (l, r, log) { paidBy(l, 0.004, 'Hát karaoke'); log('Ngồi nghe bạn bè hát, cười nghiêng ngả.', 'good'); fx(l, { hap: 3, soc: 2 }); } }
+      { k: 'sing', l: 'Cầm mic hát hết mình', run: function (l, r, log) { if(!paidBy(l, 0.004, 'Hát karaoke', log))return; log(l.talent === 'âm nhạc' ? 'Hát một bài, cả phòng im phăng phắc rồi vỗ tay rần rần.' : pick(r, ['Hát lạc tông nhưng vui nhất hội.', 'Giành mic suốt buổi, khàn cả giọng.']), 'good'); fx(l, { hap: 5, soc: 3 }); } },
+      { k: 'listen', l: 'Ngồi nghe, vỗ tay cổ vũ', run: function (l, r, log) { if(!paidBy(l, 0.004, 'Hát karaoke', log))return; log('Ngồi nghe bạn bè hát, cười nghiêng ngả.', 'good'); fx(l, { hap: 3, soc: 2 }); } }
     ] });
   simple('cong_vien', G5, 'Đi công viên, khu vui chơi', { min: 4, max: 15, title: 'Khu vui chơi', text: function (l) { return 'Cuối tuần, bạn muốn được đi khu vui chơi ' + (l.urban ? 'trong thành phố' : 'ở thị trấn') + '.'; },
     valid: function (l) { return parents(l); },
@@ -217,19 +218,19 @@
     ] });
   simple('xem_bong_da', G5, 'Đi xem bóng đá ở sân', { min: 10, title: 'Trận cầu lớn', text: function (l) { return isVN(l) ? 'Đội tuyển Việt Nam đá trên sân Mỹ Đình, vé bán hết rất nhanh.' : 'Đội bóng thành phố đá trận quan trọng trên sân nhà.'; },
     opts: [
-      { k: 'stadium', l: 'Ra sân cổ vũ', run: function (l, r, log) { paidBy(l, 0.005, 'Vé bóng đá'); log(ch(r, 0.55) ? 'Ra sân cổ vũ, đội nhà thắng! Cả đoàn đi bão đến khuya.' : 'Ra sân cổ vũ nhưng đội nhà thua. Về nhà vẫn mặc nguyên áo cờ đỏ.', 'good'); fx(l, { hap: 6, soc: 3 }); } },
+      { k: 'stadium', l: 'Ra sân cổ vũ', run: function (l, r, log) { if(!paidBy(l, 0.005, 'Vé bóng đá', log))return; log(ch(r, 0.55) ? 'Ra sân cổ vũ, đội nhà thắng! Cả đoàn đi bão đến khuya.' : 'Ra sân cổ vũ nhưng đội nhà thua. Về nhà vẫn mặc nguyên áo cờ đỏ.', 'good'); fx(l, { hap: 6, soc: 3 }); } },
       { k: 'cafe', l: 'Xem ở quán cà phê với hội bạn', run: function (l, r, log) { log('Xem bóng ở quán cà phê, hò hét cùng cả quán.', 'good'); fx(l, { hap: 3, soc: 2 }); } }
     ] });
   simple('phuot', G5, 'Đi phượt, cắm trại', { min: 17, title: 'Chuyến đi bụi', prep: function (l, r) { return { p: isVN(l) ? pick(r, ['Hà Giang', 'Tà Xùa', 'Mộc Châu', 'Đà Lạt', 'Măng Đen', 'Phú Yên', 'Côn Đảo']) : 'vùng núi gần thành phố' }; },
     text: function (l, d) { return 'Hội bạn rủ đi ' + d.p + ' cuối tuần.'; },
     opts: [
-      { k: 'moto', l: 'Đi xe máy, cắm trại qua đêm', run: function (l, r, log, d) { cashB(l, -0.02, 'Đi phượt'); if (ch(r, 0.04)) { log('Đổ đèo ' + d.p + ' thì trượt bánh, xây xát khắp người.', 'bad'); fx(l, { hea: -8 }); return; } log('Cắm trại ở ' + d.p + ', ngắm biển mây lúc bình minh.', 'good'); fx(l, { hap: 8, soc: 3 }); H.visit(l, d.p); if (ch(r, 0.3)) H.mem(l, 'Bình minh trên ' + d.p + '.', 3); } },
+      { k: 'moto', l: 'Đi xe máy, cắm trại qua đêm', run: function (l, r, log, d) { cashB(l, -0.02, 'Đi phượt'); if (ch(r, 0.04)) { log('Trên đường tới ' + d.p + ', xe trượt bánh, bạn bị xây xát.', 'bad'); fx(l, { hea: -8 }); return; } log('Cắm trại ở ' + d.p + ', cùng đón bình minh.', 'good'); fx(l, { hap: 8, soc: 3 }); H.visit(l, d.p); if (ch(r, 0.3)) H.mem(l, 'Bình minh trên ' + d.p + '.', 3); } },
       { k: 'tour', l: 'Đi tour cho an toàn', run: function (l, r, log, d) { cashB(l, -0.04, 'Tour du lịch'); log('Đi tour ' + d.p + ', ăn ngon ngủ yên.', 'good'); fx(l, { hap: 5 }); } },
       { k: 'no', l: 'Không đi', run: function (l, r, log) { log('Ở nhà nghỉ ngơi.', 'neutral'); } }
     ] });
   simple('show_rap', G5, 'Đi xem show rap, battle rap', { min: 14, title: 'Đêm rap', text: 'Cuối tuần có ' + 'đêm rap underground ở một quán bar nhỏ, các rapper trẻ đấu battle.',
     opts: [
-      { k: 'watch', l: 'Đi xem', run: function (l, r, log) { paidBy(l, 0.003, 'Vé show rap'); log('Đi xem battle rap, cả quán gào lên sau mỗi câu punchline.', 'good'); fx(l, { hap: 5 }); if (l.hobby === 'rap') l.hobbySk = Math.min(100, (l.hobbySk || 10) + 4); } },
+      { k: 'watch', l: 'Đi xem', run: function (l, r, log) { if(!paidBy(l, 0.003, 'Vé show rap', log))return; log('Đi xem battle rap, cả quán gào lên sau mỗi câu punchline.', 'good'); fx(l, { hap: 5 }); if (l.hobby === 'rap') l.hobbySk = Math.min(100, (l.hobbySk || 10) + 4); } },
       { k: 'battle', l: 'Đăng ký lên battle luôn', req: function (l) { return l.hobby === 'rap' && (l.hobbySk || 0) >= 25; }, run: function (l, r, log) { if (ch(r, 0.3 + ((l.hobbySk || 0) - 30) / 100)) { log('Thắng battle! Clip màn đối đáp của bạn được chia sẻ khắp hội mê rap.', 'big'); l.hobbySk = Math.min(100, l.hobbySk + 10); l.fame = (l.fame || 0) + 3000; fx(l, { hap: 8 }); } else { log('Thua battle, bị đối thủ "đè" tơi tả. Về viết lại cả quyển lyric.', 'neutral'); l.hobbySk += 4; } } },
       { k: 'no', l: 'Không đi', run: function (l, r, log) { log('Ở nhà nghe rap qua tai nghe.', 'neutral'); } }
     ], ai: function (l) { return l.hobby === 'rap' ? 0.4 : 0.04; } });
@@ -242,7 +243,7 @@
   simple('thien_yoga', G6, 'Thiền, tập yoga', { min: 12, title: 'Tĩnh tâm', text: 'Bạn muốn tìm lại sự bình yên trong đầu.',
     opts: [
       { k: 'thien', l: 'Ngồi thiền mỗi sáng', run: function (l, r, log) { log('Mỗi sáng ngồi thiền mười lăm phút, đầu óc nhẹ hẳn.', 'good'); fx(l, { hap: 3 }); if (l.mind) l.mind.stress -= 8; } },
-      { k: 'yoga', l: 'Đăng ký lớp yoga', run: function (l, r, log) { cashB(l, -0.01, 'Lớp yoga'); log('Tập yoga ba buổi mỗi tuần, người dẻo hơn, ngủ ngon hơn.', 'good'); fx(l, { hea: 3, hap: 2 }); if (l.mind) l.mind.stress -= 6; } }
+      { k: 'yoga', l: 'Đăng ký lớp yoga', h: function(l){return 'Học phí '+mb(l,.01)+(l.age<18?' · xin gia đình chi trả':'');}, run: function (l, r, log) { if(!paidBy(l,.01,'Lớp yoga',log))return; log('Tập yoga ba buổi mỗi tuần, người dẻo hơn, ngủ ngon hơn.', 'good'); fx(l, { hea: 3, hap: 2 }); if (l.mind) l.mind.stress -= 6; } }
     ] });
   simple('doc_sach', G6, 'Đọc sách', { min: 7, title: 'Một cuốn sách hay', prep: function (l, r) { return { b: pick(r, l.age < 13 ? ['Dế Mèn phiêu lưu ký', 'Kính vạn hoa', 'Harry Potter', 'Doraemon'] : ['Đắc nhân tâm', 'Nhà giả kim', 'Tôi thấy hoa vàng trên cỏ xanh', 'Sapiens', 'Cho tôi xin một vé đi tuổi thơ', 'Hành trình về phương Đông']) }; },
     text: function (l, d) { return 'Bạn tìm được cuốn "' + d.b + '".'; },

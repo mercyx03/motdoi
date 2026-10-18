@@ -10,12 +10,13 @@
   // 1. NGHỀ NGHIỆP & THU NHẬP CỦA NGƯỜI YÊU / BẠN ĐỜI
   // ===================================================================
   function partnerJob(l, p, r) {
+    if (p.age < 18) { p.job = p.age < 15 ? 'học sinh THCS' : 'học sinh THPT'; p.jobId = null; p.inc = 0; return p; }
     if (p.age < 22 && r() < 0.65) { p.job = 'sinh viên'; p.jobId = null; p.inc = 0; return p; }
     if (p.age >= 62) { p.job = 'đã nghỉ hưu'; p.jobId = null; p.inc = l.base / 12 * (0.2 + r() * 0.3); return p; }
-    var cands = Object.keys(E.CAR).map(function (k) { return E.CAR[k]; }).filter(function (c) { return !c.hidden && !c.fame && c.sec !== 'crime' && !c.skillRank && !(c.vnOnly && !H.isVN(l)); });
+    var cands = Object.keys(E.CAR).map(function (k) { return E.CAR[k]; }).filter(function (c) { return !c.hidden && !c.fame && c.sec !== 'crime' && c.skillRank == null && (c.minAge == null || p.age >= c.minAge) && (p.age >= 24 || c.cat !== 'med') && (p.age >= 22 || (c.edu || 0) <= (p.age >= 20 ? 4 : 3)) && !(c.vnOnly && !H.isVN(l)); });
     var c = U.wpick(r, cands, function (c) { var w = c.w || 1; if (c.sex) w *= p.sex === 'M' ? c.sex[0] : c.sex[1]; if (c.edu >= 5) w *= 1.3; if (c.rural && l.urban) w *= 0.3; return w; });
-    var rk = Math.max(0, Math.min(c.t.length - 1, Math.floor((p.age - 22) / 6 + r() * 1.2)));
-    p.jobId = c.id; p.job = c.t[rk];
+    var rk = Math.max(0, Math.min(c.t.length - 1, Math.floor((p.age - 22) / 6)));
+    p.jobId = c.id; p.job = c.t[rk]; p.rankSince = l.age;
     p.inc = Math.max(0, E.monthlyEst(l, c.id, rk) * Math.exp(U.normal(r) * 0.25));
     return p;
   }
@@ -49,7 +50,8 @@
     else if (p.jobId && p.age >= 62 && p.job !== 'đã nghỉ hưu') { p.job = 'đã nghỉ hưu'; p.inc *= 0.5; p.jobId = null; }
     else if (p.jobId && p.inc > 0 && p.age < 55) {
       var c = E.CAR[p.jobId], rk = c ? c.t.indexOf(p.job) : -1;
-      if (c && rk >= 0 && rk < c.t.length - 1 && r() < 0.08) { p.job = c.t[rk + 1]; p.inc = Math.max(p.inc * 1.15, E.monthlyEst(l, c.id, rk + 1)); if (p.incKnown && r() < 0.6) log(p.name + ' được thăng chức lên ' + p.job + '.', 'good'); }
+      if (p.rankSince == null) p.rankSince = a;
+      if (c && rk >= 0 && rk < c.t.length - 1 && a - p.rankSince >= Math.max(1, (c.yrs && c.yrs[rk]) || 3) && r() < 0.08) { p.job = c.t[rk + 1]; p.rankSince = a; p.inc = Math.max(p.inc * 1.15, E.monthlyEst(l, c.id, rk + 1)); if (p.incKnown && r() < 0.6) log(p.name + ' được thăng chức lên ' + p.job + '.', 'good'); }
       else p.inc *= 1.01;
     }
   }

@@ -577,7 +577,7 @@
         log(hw === 'bố mẹ' || hw === 'mẹ' || hw === 'bố' ? 'Kể hết với ' + hw + '. ' + U.cap(hw) + ' bán đi chiếc xe, trả nợ thay bạn.' : 'Kể hết với ' + hw + '. Mọi người góp tiền trả nợ thay bạn, coi như cho vay không lấy lãi.', 'neutral');
         fx(l, { hap: -4, karma: 2 }); H.mem(l, 'Ngày thú nhận nợ app đen với ' + hw + '.', 6);
       } },
-      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp ' + (isVN(l) ? 'nhóm Zalo ' : 'các nhóm chat ') + (H.isEmployee(l) ? 'công ty' : 'họ hàng, hàng xóm') + '.', 'bad'); if (H.isEmployee(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
+      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp ' + (isVN(l) ? 'nhóm Zalo ' : 'các nhóm chat ') + (H.isEmployee(l) ? 'công ty' : 'họ hàng, hàng xóm') + '.', 'bad'); if (H.isEmployee(l) && !E.isStableService(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
     ]
   });
   T('khung_bo', function (l, a) { return l.flags.thugDebt && free(l); }, 0.7);
@@ -845,9 +845,9 @@
 
   SC('tang_luong', {
     title: 'Xin tăng lương', text: function (l) { return 'Bạn đã làm ' + E.jobTitle(l) + ' được ' + l.job.yrs + ' năm ở vị trí này.'; },
-    valid: function (l) { return !!l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' && H.isEmployee(l); },
+    valid: function (l) { return !!l.job && !E.isStableService(l) && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' && H.isEmployee(l); },
     opts: [
-      { k: 'ask', l: 'Mạnh dạn đề xuất tăng lương', ai: { amb: 1 }, run: function (l, r, log) { var c = E.jobDef(l); var need = (c.yrs && c.yrs[l.job.rank]) || 3; var p = 0.15 + (l.st.kno - 50) / 200 + Math.min(4, l.job.yrs) * 0.04; if (!c.ladder && l.job.yrs >= need - 1 && ch(r, p) && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; log('Sếp đồng ý — được nâng lên ' + E.jobTitle(l) + '.', 'good'); fx(l, { hap: 6 }); } else if (ch(r, 0.5)) { cashB(l, 0.05, 'Thưởng thêm'); log('Không lên chức, nhưng được tăng chút lương.', 'neutral'); } else if (H.isEmployee(l) && ch(r, 0.15)) { log('Sếp phật ý, ít lâu sau bạn bị cho nghỉ việc.', 'bad'); l.job = null; l.flags.needJob = true; } else { log('Bị từ chối khéo: "Cố gắng thêm nhé em."', 'bad'); fx(l, { hap: -3 }); } } },
+      { k: 'ask', l: 'Mạnh dạn đề xuất tăng lương', ai: { amb: 1 }, run: function (l, r, log) { var c = E.jobDef(l); var need = (c.yrs && c.yrs[l.job.rank]) || 3; var p = 0.15 + (l.st.kno - 50) / 200 + Math.min(4, l.job.yrs) * 0.04; if (!c.ladder && l.job.yrs >= need - 1 && ch(r, p) && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; log('Sếp đồng ý — được nâng lên ' + E.jobTitle(l) + '.', 'good'); fx(l, { hap: 6 }); } else if (ch(r, 0.5)) { cashB(l, 0.05, 'Thưởng thêm'); log('Không lên chức, nhưng được tăng chút lương.', 'neutral'); } else if (H.isEmployee(l) && !E.isStableService(l) && ch(r, 0.15)) { log('Sếp phật ý, ít lâu sau bạn bị cho nghỉ việc.', 'bad'); l.job = null; l.flags.needJob = true; } else { log('Bị từ chối khéo: "Cố gắng thêm nhé em."', 'bad'); fx(l, { hap: -3 }); } } },
       { k: 'no', l: 'Thôi, chờ thêm', ai: { w: 1 }, run: function () { } }
     ]
   });
@@ -1134,8 +1134,8 @@
     title: function (l) { return isVN(l) ? 'Lễ thôi nôi' : 'Sinh nhật đầu tiên'; },
     text: function (l) { return (isVN(l) ? 'Bà bày một mâm đồ vật trước mặt bạn để "bốc thôi nôi" đoán nghề tương lai.' : 'Cả nhà bày đồ chơi trước mặt bạn trong sinh nhật đầu tiên.') + ' Cả nhà nín thở chờ xem bé chọn gì…'; },
     opts: [
-      { k: 'but', l: '✏️ Cây bút', h: 'Học giỏi, chữ đẹp', run: function (l, r, log) { giveTalent(l, 'toán học', 0.4, r); fx(l, { kno: 3 }); log('Bốc trúng cây bút — ông nội cười: "Sau này làm thầy giáo!"', 'good'); H.mem(l, 'Ngày thôi nôi bạn bốc trúng cây bút, cả nhà vỗ tay.', 2); } },
-      { k: 'tien', l: '💰 Tờ tiền', h: 'Buôn bán giỏi', run: function (l, r, log) { giveTalent(l, 'kinh doanh', 0.4, r); log('Nắm chặt tờ tiền không buông — "Thằng/con này sau giàu to!"', 'good'); H.mem(l, 'Ngày thôi nôi bạn nắm chặt tờ tiền, cả họ cười vang.', 2); } },
+      { k: 'but', l: '✏️ Cây bút', h: 'Học giỏi, chữ đẹp', run: function (l, r, log) { giveTalent(l, 'toán học', 0.4, r); fx(l, { kno: 3 }); log('Bốc trúng cây bút — ông nội cười: "Sau này làm ' + (l.sex === 'F' ? 'cô giáo' : 'thầy giáo') + '!"', 'good'); H.mem(l, 'Ngày thôi nôi bạn bốc trúng cây bút, cả nhà vỗ tay.', 2); } },
+      { k: 'tien', l: '💰 Tờ tiền', h: 'Buôn bán giỏi', run: function (l, r, log) { giveTalent(l, 'kinh doanh', 0.4, r); log('Nắm chặt tờ tiền không buông — "Bé này sau giàu to!"', 'good'); H.mem(l, 'Ngày thôi nôi bạn nắm chặt tờ tiền, cả họ cười vang.', 2); } },
       { k: 'bong', l: '⚽ Quả bóng', h: 'Thể thao', run: function (l, r, log) { giveTalent(l, 'thể thao', 0.4, r); if (!l.talentSub && l.talent === 'thể thao') l.talentSub = 'bóng đá'; fx(l, { hea: 2 }); log('Ôm quả bóng lăn khắp chiếu.', 'good'); } },
       { k: 'mic', l: '🎤 Cái micro', h: 'Ca hát', run: function (l, r, log) { giveTalent(l, 'âm nhạc', 0.4, r); log('Cầm micro bi bô như đang hát.', 'good'); } },
       { k: 'may', l: '🎮 Máy chơi game đồ chơi', h: 'Game thủ', run: function (l, r, log) { giveTalent(l, 'game', 0.4, r); log('Bấm lia lịa vào chiếc máy chơi game đồ chơi.', 'good'); } },
@@ -1439,7 +1439,7 @@
   A('bang_lai', G2, 'Thi bằng lái xe', { min: 18, avail: function (l) { return l.lic.A1 && l.lic.B ? 'Đã có đủ bằng' : true; }, ai: { w: 0.5, smart: 0.5 } });
   A('hoc_them', G2, 'Học chứng chỉ (ngoại ngữ, tin học…)', { min: 15, sc: 'hoc_them', avail: function (l) { return l.money > -l.base ? true : 'Không đủ tiền'; }, ai: { w: 0.06, smart: 1, amb: 1 } });
   A('tim_viec', G3, 'Tìm việc / nhảy việc', { min: 15, sc: 'job', avail: function (l) { return l.school ? 'Đang đi học' : l.abroad && !l.abroad.perm ? 'Đang ở nước ngoài theo hợp đồng' : true; }, arg: null });
-  A('tang_luong', G3, 'Xin tăng lương', { min: 16, avail: function (l) { return l.job && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' && H.isEmployee(l) ? true : 'Không áp dụng'; }, ai: { w: 0.2, amb: 1 } });
+  A('tang_luong', G3, 'Xin tăng lương', { min: 16, avail: function (l) { return l.job && !E.isStableService(l) && !E.jobDef(l).fame && E.jobDef(l).sec !== 'crime' && H.isEmployee(l) ? true : 'Không áp dụng'; }, ai: { w: 0.2, amb: 1 } });
   A('nghi_viec', G3, 'Nghỉ việc', { min: 15, avail: function (l) { return l.job ? true : 'Chưa có việc'; } });
   A('khoi_nghiep', G3, 'Khởi nghiệp / kinh doanh', { min: 20, sc: 'biz', avail: function (l) { return l.money > l.base * 0.8 ? true : 'Cần ít nhất ' + mb(l, 0.8) + ' vốn'; }, ai: { w: 0.15, risk: 1, amb: 1 } });
   A('mua_xe', G4, 'Mua xe', { min: 16, ai: { w: 0.4 }, avail: function (l) { return l.veh === 'ô tô' ? 'Đã có ô tô' : true; } });

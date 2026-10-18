@@ -157,7 +157,7 @@
     H.cash(l, -price, 'Mua ' + m.n);
     if (loan) H.addLoan(l, isCar ? 'car' : 'fin', price * 0.7);
     var first = isCar && l.veh !== 'ô tô';
-    l.veh = isCar ? 'ô tô' : 'xe máy'; l.vehVal = price; l.vehTier = isCar ? m.t : 0; l.vehName = m.n; l.vehK = m.k; l.vehUp = m.up || 0; l.vehSeg = m.s;
+    l.veh = isCar ? 'ô tô' : 'xe máy'; l.vehVal = price; l.vehTier = isCar ? m.t : 0; l.vehName = m.n; l.vehK = m.k; l.vehUp = m.up || 0; l.vehSeg = m.s; l.vehBoughtAt = l.age;
     log('Mua ' + m.n + (loan ? ' trả góp (trả trước 30%, vay ' + (isCar ? 'ngân hàng' : 'công ty tài chính') + ' 70%)' : ' bằng tiền mặt') + ' — ' + m.sp + '.', m.t >= 3 ? 'big' : 'good');
     fx(l, { hap: isCar ? 6 + m.t * 3 : 4, soc: m.t >= 2 ? 3 : 0 });
     if (first) H.mem(l, 'Lần đầu lái chiếc ' + m.n + ' của chính mình về quê, cả xóm ra xem.', 4);
@@ -366,14 +366,19 @@
   function closeVen(l, i, log, k, how) { var v = l.ventures[i]; if (!v) return; var got = v.cap * k; if (got > 0) H.cash(l, got, how + ' ' + v.n); l.ventures.splice(i, 1); log(how + ' ' + v.n + (got > 0 ? ', thu về ' + mo(l, got) + '.' : '.'), k >= 0.6 ? 'neutral' : 'bad'); }
 
   function investYear(l, r, log, a) {
+    if (a == null) a = l.age;
+    if (l.wealthPaidAge === a) return;
+    l.wealthPaidAge = a;
     var mkt = l.mkt ? l.mkt.land : 'bình thường';
     // nhà cho thuê: giá theo thị trường đất, tiền thuê theo năm; thỉnh thoảng bỏ trống
     var empties = [];
     (l.props || []).forEach(function (p) {
       var g = { 'bình thường': 0.03, 'sốt': 0.15, 'vỡ bong bóng': -0.2, 'đóng băng': -0.02 }[mkt] || 0.02;
       p.v = Math.max(p.basis * 0.3, p.v * (1 + g + U.normal(r) * 0.03));
-      if (ch(r, 0.12)) { p.empty++; empties.push(p.n); H.cash(l, p.v * p.y * 0.4, 'Tiền cho thuê ' + p.n); }
-      else H.cash(l, p.v * p.y, 'Tiền cho thuê ' + p.n);
+      var occupied = ch(r, 0.12) ? 0.4 : 1;
+      if (occupied < 1) { p.empty++; empties.push(p.n); }
+      H.cash(l, p.v * p.y * occupied, 'Tiền cho thuê ' + p.n);
+      H.cash(l, -p.v * .012, 'Bảo trì và quản lý ' + p.n);
     });
     if (empties.length) log((empties.length === 1 ? U.cap(empties[0]) : empties.length + ' bất động sản cho thuê') + ' bỏ trống mấy tháng chưa có khách thuê.', 'neutral');
     // cơ sở kinh doanh: lãi lỗ mỗi năm; lãi đều thì được mời mở chi nhánh; lỗ liên tiếp thì phá sản
@@ -384,14 +389,22 @@
       // lượng khách năm nay: tay nghề quản lý × kinh tế × dao động; năm đầu còn ít người biết, năm thứ hai mới đông dần
       var dem = v.q * econ * Math.exp(U.normal(r) * B.sd) * (v.yrs === 1 ? 0.6 : v.yrs === 2 ? 0.88 : 1) * (v.br > 1 ? 1.03 : 1);
       if (B.tour && ch(r, 0.03)) { dem *= 0.35; log('Du lịch đóng băng (dịch bệnh, khủng hoảng kinh tế) — ' + v.n + ' vắng khách, phòng trống hàng tháng liền.', 'bad'); }
-      var R = v.R * v.br, rev = R * dem, cost = rev * B.vc + R * (1 - B.vc - B.mg);
+      // Competition persists across years; multiple branches require paid management.
+      v.market = U.clamp((v.market == null ? 1 : v.market) * .8 + .2 + U.normal(r) * .10, .55, 1.2);
+      dem *= v.market;
+      if (ch(r, .08)) { dem *= .65; log('Khách giảm vì đối thủ mới hoặc nhu cầu chững lại: ' + v.n + '.', 'neutral'); }
+      var R = v.R * v.br, rev = R * dem;
+      var overhead = R * Math.min(.12, Math.max(0, v.br - 1) * .02);
+      var renewal = v.cap * .025;
+      var manager = a >= 65 || l.job ? rev * .03 : 0;
+      var cost = rev * B.vc + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
       var prof = rev - cost, rate = prof / Math.max(1e-9, v.cap);
       v.last = { rev: rev, cost: cost, prof: prof };
       H.cash(l, prof, prof >= 0 ? 'Lãi ' + v.n : 'Lỗ ' + v.n);
       if (prof >= R * B.mg * 0.8) { v.good++; v.bad = 0; } else if (prof < 0) { v.bad++; v.good = 0; } else { v.good = Math.max(0, v.good - 1); }
       // tay nghề quản lý khá lên theo năm (hoặc mất khách dần nếu bỏ bê)
       v.q = U.clamp(1 + (v.q - 1) * 0.92 + U.normal(r) * 0.05 + (v.yrs <= 3 ? 0.02 : 0), 0.45, 1.45);
-      log(U.cap(v.n) + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : '') + ': doanh thu ~' + mo(l, rev / 12) + '/tháng, chi phí ' + B.cost + ' ~' + mo(l, cost / 12) + '/tháng → ' + (prof >= 0 ? 'lãi ' + mo(l, prof) + ' cả năm.' : 'lỗ ' + mo(l, -prof) + ' cả năm.'), prof >= 0 ? 'good' : 'bad');
+      log(U.cap(v.n) + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : '') + ': doanh thu ~' + mo(l, rev / 12) + '/tháng, chi phí ' + B.cost + ', quản lý và tái đầu tư ~' + mo(l, cost / 12) + '/tháng → ' + (prof >= 0 ? 'lãi ' + mo(l, prof) + ' cả năm.' : 'lỗ ' + mo(l, -prof) + ' cả năm.'), prof >= 0 ? 'good' : 'bad');
       if (v.bad >= 3 || (v.bad >= 2 && l.money < 0)) {
         if (v.br > 1 && v.bad < 4) { v.br--; v.cap -= v.unit; v.bad = 1; log('Thua lỗ kéo dài, phải đóng bớt một chi nhánh ' + v.n + ', còn ' + v.br + ' cơ sở.', 'bad'); fx(l, { hap: -6 }); }
         else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); if (l.mind) l.mind.stress = Math.min(100, l.mind.stress + 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }
@@ -404,8 +417,8 @@
     if (l.money < -l.base * 1.5 && (l.props || []).length) { log('Nợ nần dồn dập, phải bán bất động sản cho thuê.', 'bad'); sellProp(l, 0, log); }
     // chi phí duy trì nhà to, xe sang
     var hu = HOMES.filter(function (h) { return h.t === homeTier(l); })[0], vup = l.vehUp != null ? l.vehUp : ({ suv: 0.02, lux: 0.12, sport: 0.4, super: 1.2 }[l.vehK] || 0); // xe mua từ bản cũ
-    var upk = (hu ? hu.up : 0) + vup;
-    if (upk > 0 && l.indep) H.cash(l, -upk * l.base, 'Chi phí duy trì nhà, xe');
+    var upk = (hu ? hu.up : 0) + (E.vehicleAnnual ? 0 : vup);
+    if (upk > 0 && l.indep) H.cash(l, -upk * l.base, E.vehicleAnnual ? 'Chi phí duy trì nhà' : 'Chi phí duy trì nhà, xe');
   }
 
   // ===================================================================

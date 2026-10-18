@@ -23,7 +23,7 @@
   function heat(l, d) { l.heat = U.clamp((l.heat || 0) + d, 0, 100); }
   function fire(l, log, t) { if (t) log(t, 'bad'); l.job = null; l.flags.needJob = true; fx(l, { hap: -6 }); }
   function arrest(l, why, sev) { if ((l.sched || []).some(function (s) { return s.id === 'bi_bat'; }) || (l.jailUntil != null && l.age < l.jailUntil)) return; H.sched(l, 'bi_bat', 0, { why: why, sev: sev || 1 }); } // không bị bắt hai lần cùng lúc
-  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; return true; } return false; }
+  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1 && (!E.canAdvance || E.canAdvance(l, c, false))) { l.job.rank++; l.job.yrs = 0; l.job.rankSince = l.age; l.job.rankTracked = l.job.rank; return true; } return false; }
 
   // ---------- cơ chế "cờ chờ nổ": lựa chọn sai lúc này, hậu quả đến vài năm sau (giữ cả khi đổi nghề, nghỉ hưu) ----------
   var TRAPS = {}, JOBS2 = {};
@@ -59,7 +59,7 @@
   function J(id, jobs, rmin, rmax, p, cd, title, text, opts, extra) {
     var when = function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); };
     JOBS2[id] = jobs;
-    SC(id, { title: title, valid: function (l) { return !!l.job && okJob(l, jobs); }, text: text, opts: opts.map(function (o) { var fn = typeof o[3] === 'function'; return { k: o[0], l: o[1], h: fn ? '' : o[3] || '', ai: o[2], run: fn ? o[3] : o[4] }; }) });
+    SC(id, { title: title, valid: function (l) { return when(l, l.age); }, text: text, opts: opts.map(function (o) { var fn = typeof o[3] === 'function'; return { k: o[0], l: o[1], h: fn ? '' : o[3] || '', ai: o[2], run: fn ? o[3] : o[4] }; }) });
     E.TRIG.push({ id: id, when: when, p: p, cd: cd, max: 2 });
   }
   // o(k, nhãn, ai, chạy) hoặc o(k, nhãn, ai, gợi ý, chạy)
@@ -249,10 +249,11 @@
   // ===================================================================
   // CƠ QUAN NHÀ NƯỚC — mô phỏng có cân bằng: phần lớn cán bộ làm đúng; sai phạm bị thanh tra, kiểm tra phát hiện
   // ===================================================================
-  J('nn_tinh_gian', ['cong_chuc', 'vien_chuc', 'can_bo_xa'], 0, 9, 0.06, 5, 'Sắp xếp bộ máy', 'Đơn vị sáp nhập theo chủ trương tinh gọn bộ máy, phòng của bạn giải thể.', [
+  J('nn_tinh_gian', ['cong_chuc', 'vien_chuc', 'can_bo_xa'], 0, 9, 0.012, 10, 'Sắp xếp bộ máy', 'Đơn vị sáp nhập theo chủ trương tinh gọn bộ máy, phòng của bạn giải thể.', [
     ['nghi', 'Nghỉ hưởng chế độ một lần', MID, function (l, r, log) { cB(l, 1.2, 'Chế độ khi tinh giản'); fire(l, log, 'Nghỉ việc, nhận chế độ hỗ trợ theo quy định.'); }],
-    ['o_lai', 'Ở lại nhận vị trí mới thấp hơn', MID, function (l, r, log) { if (l.job) l.job.rank = Math.max(0, l.job.rank - 1); log('Ở lại đơn vị mới, nhận vị trí thấp hơn.', 'neutral'); }],
+    ['o_lai', 'Nhận phân công tại đơn vị mới', MID, function (l, r, log) { log('Bạn tiếp tục công tác tại đơn vị mới, giữ bậc nghề hiện tại.', 'neutral'); }],
     ['giu', 'Ứng tuyển vị trí ở đơn vị mới', { amb: 1 }, function (l, r, log) { if (ch(r, 0.35 + rk(l) * 0.05 + (l.st.soc - 50) / 200)) log('Năng lực được ghi nhận, giữ được vị trí ở đơn vị mới.', 'good'); else { if (l.job) l.job.rank = Math.max(0, l.job.rank - 1); log('Không giữ được vị trí, chuyển sang việc khác.', 'neutral'); } }]]);
+  E.TRIG.filter(function(t){return t.id==='nn_tinh_gian';}).forEach(function(t){t.max=1;});
   J('xa_dat_dai', ['can_bo_xa'], 1, 9, 0.12, 2, 'Hồ sơ đất thiếu giấy', 'Người dân xin xác nhận nguồn gốc đất để làm sổ; hồ sơ thiếu một giấy, họ "gửi" phong bì.', [
     ['huong_dan', 'Hướng dẫn bổ sung đúng quy định', HON, function (l, r, log) { fx(l, { karma: 2, soc: 2 }); log('Hướng dẫn người dân bổ sung giấy tờ, trả lại phong bì. Họ cảm ơn mãi.', 'good'); }],
     ['nhan', 'Nhận phong bì, ký cho xong', BAD, function (l, r, log) { cB(l, 0.1, 'Phong bì'); trap(l, 'dat_dai'); log('Nhận phong bì, ký xác nhận.', 'neutral'); }]]);
@@ -509,7 +510,7 @@
   J('fl_bhxh_tu_nguyen', 'free', 0, 9, 0.1, 5, 'Bảo hiểm xã hội tự nguyện', 'Bạn nhận ra mình đã ngoài 35 tuổi mà chưa có năm nào đóng bảo hiểm xã hội.', [
     ['dong', 'Đóng BHXH tự nguyện', { smart: 1, w: 1.2 }, function (l, r, log) { l.flags.bhxhTN = true; log('Đăng ký đóng BHXH tự nguyện — về già sẽ có lương hưu.', 'good'); }],
     ['tu_dau_tu', 'Tự đầu tư cho tuổi già', MID, function (l, r, log) { log('Tự để dành, tự đầu tư cho tuổi già.', 'neutral'); }]], function (l, a) { return a >= 35 && !l.flags.bhxhTN; });
-  E.HOOKS.year.push(function (l, r, log, a) { if (l.flags.bhxhTN && l.job && cat(l) === 'free' && l.alive) { var m = Math.min((l.income || l.base) / 12, l.base / 6); H.cash(l, -m * 12 * 0.22, 'BHXH tự nguyện'); l.si = l.si || { yrs: 0, sum: 0 }; l.si.yrs++; l.si.sum += m * 12; } });
+  E.HOOKS.year.push(function (l, r, log, a) { if (l.flags.bhxhTN && l.job && cat(l) === 'free' && l.alive && !l.retired && !l.pensioned && (!l.si || l.si.last !== a) && !(l.jailUntil != null && a < l.jailUntil) && !(l.flags.military && a < l.flags.military)) { var m = Math.min((l.income || l.base) / 12, l.base / 6); if (l.money < m * 12 * 0.22) return; H.cash(l, -m * 12 * 0.22, 'BHXH tự nguyện'); l.si = l.si || { yrs: 0, sum: 0 }; l.si.yrs++; l.si.sum += m * 12; l.si.last = a; } });
   J('fl_hop_dong_doc_quyen', ['fl_dev', 'fl_thiet_ke', 'fl_video'], 1, 9, 0.08, 3, 'Hợp đồng độc quyền', 'Một khách lớn đề nghị trả lương cố định, đổi lại bạn không được nhận việc nơi khác.', [
     ['nhan', 'Nhận', MID, function (l, r, log) { cB(l, 0.3, 'Thu nhập ổn định'); trap(l, 'fl_docquyen'); log('Thu nhập ổn định hơn hẳn.', 'good'); }],
     ['tu_do', 'Giữ tự do', MID, function (l, r, log) { log('Giữ tự do, thu nhập thất thường.', 'neutral'); }]]);
