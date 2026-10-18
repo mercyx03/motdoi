@@ -1,3 +1,13 @@
+## v5.9.1 — Mua nước cho người thân: xưng hô đúng từng người
+
+- Theo góp ý người chơi: trước đây mua đồ uống cho vợ, chồng hay người nhà, câu phản hồi lúc nào cũng tự xưng "anh" ("Anh không uống được trân châu đâu…"). Nay người nhận xưng hô và gọi bạn đúng theo quan hệ, tuổi, giới tính:
+  - Chồng xưng "anh", gọi bạn "em"; vợ xưng "em", gọi bạn "anh".
+  - Anh chị xưng "anh" / "chị", gọi bạn "em"; em xưng "em".
+  - Bố mẹ xưng "bố" / "mẹ", gọi bạn "con"; con xưng "con".
+  - Bạn thân xưng "tớ", gọi bạn "cậu".
+- Hành động "Mua trà sữa / đồ uống cho người thân" giờ cho chọn người muốn mua: người yêu / vợ / chồng, bố, mẹ, anh chị em, con, các bạn thân.
+- Thêm nhiều câu phản hồi hơn (khen, chê, dặn ít đường…).
+
 ## v5.9.0 — Con ngoài hôn nhân, nhiều bạn thân, hẹn hò với bạn thân, định cư nước ngoài
 
 - **Con ngoài hôn nhân (có thai khi chưa cưới):** khi đang hẹn hò với người khác giới, có thể có tin bất ngờ. Có thể chọn:

@@ -218,35 +218,50 @@
     ['bạc xỉu', 30, 'quán cà phê vỉa hè'], ['hồng trà macchiato', 50, 'Phúc Long'], ['sữa tươi trân châu đường đen', 45, 'Tiger Sugar'], ['trà sữa nướng', 40, 'TocoToco'], ['trà vải', 40, 'The Coffee House'],
     ['sinh tố bơ', 40, 'quán sinh tố'], ['trà chanh giã tay', 25, 'quán trà chanh'], ['kem ốc quế', 10, 'Mixue'], ['trà sữa khoai môn', 40, 'Ding Tea'], ['oolong sữa', 50, 'Phê La'],
     ['cacao đá', 30, 'quán quen'], ['yakult đào', 40, 'quán trà trái cây'], ['trà xanh kem phô mai', 55, 'Gong Cha'], ['nước ép dưa hấu', 35, 'quán nước ép'], ['Phindi hạnh nhân', 45, 'Highlands']];
-  function target(l, r) {
-    var c = [];
-    if (l.partner) c.push({ k: 'p', n: l.partner.name, w: E.H.partnerWord ? E.H.partnerWord(l, l.partner) : 'người yêu' });
-    (l.sibList || []).filter(function (s) { return s.alive; }).forEach(function (s) { c.push({ k: 's', n: s.n.split(' ').pop(), w: s.born < 0 ? (s.sex === 'M' ? 'anh' : 'chị') : 'em', s: s }); });
-    if (l.bff && l.bff.alive) c.push({ k: 'b', n: l.bff.name, w: 'bạn thân' });
-    if (!c.length) return null;
-    return c.filter(function (x) { return x.k === 'p'; })[0] && ch(r, 0.6) ? c[0] : pick(r, c);
+  // v5.9.1: người nhận tự xưng (I) và gọi bạn (U) đúng quan hệ, tuổi, giới tính — không còn câu nào cũng "anh"
+  function you(l) { return l.sex === 'F' ? 'chị' : 'anh'; }
+  function people(l) {
+    var c = [], p = l.partner, f = l.fam || {};
+    if (p && p.alive !== false) { var I = p.sex !== l.sex ? (p.sex === 'M' ? 'anh' : 'em') : (p.age > l.age ? (p.sex === 'M' ? 'anh' : 'chị') : 'em'); c.push({ k: 'p', n: p.name, w: E.H.partnerWord ? E.H.partnerWord(l, p) : 'người yêu', I: I, U: I === 'em' ? you(l) : 'em' }); }
+    if (!f.noMom && f.mAlive) c.push({ k: 'mom', n: '', w: 'mẹ', I: 'mẹ', U: 'con' });
+    if (!f.noDad && f.fAlive) c.push({ k: 'dad', n: '', w: 'bố', I: 'bố', U: 'con' });
+    (l.sibList || []).filter(function (x) { return x.alive; }).forEach(function (x) { var old = x.born < 0, I = old ? (x.sex === 'M' ? 'anh' : 'chị') : 'em'; c.push({ k: 's', n: x.n.split(' ').pop(), w: I, I: I, U: old ? 'em' : you(l), s: x }); });
+    (l.kids || []).filter(function (k) { return k.alive !== false && l.age - k.born >= 6 && k.custody !== 'other'; }).forEach(function (k) { c.push({ k: 'kid', n: k.name.split(' ').pop(), w: 'con', I: 'con', U: l.sex === 'F' ? 'mẹ' : 'bố', kid: k }); });
+    if (l.bff && l.bff.alive) c.push({ k: 'b', n: l.bff.name, w: 'bạn thân', I: 'tớ', U: 'cậu' });
+    (l.friends || []).filter(function (x) { return x.alive !== false && !x.lover; }).forEach(function (x) { c.push({ k: 'f', n: x.name, w: 'bạn thân', I: 'tớ', U: 'cậu', fr: x }); });
+    return c;
   }
+  function target(l, r) { var c = people(l); if (!c.length) return null; return c[0].k === 'p' && ch(r, 0.5) ? c[0] : pick(r, c); }
+  function whoOf(t) { return (t.w + (t.n ? ' ' + t.n : '')).trim(); }
+  function fill(t, x) { return x.replace(/\{I\}/g, t.I).replace(/\{U\}/g, t.U).replace(/\{Ic\}/g, U.cap(t.I)).replace(/\{Uc\}/g, U.cap(t.U)); }
+  SC('mua_nuoc_ai', {
+    title: 'Mua nước cho ai?', valid: function (l) { return people(l).length > 0; },
+    text: 'Bạn muốn mua đồ uống "lấy lòng" ai?',
+    opts: [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return { k: 'p' + i, l: function (l) { var t = people(l)[i]; return t ? U.cap(whoOf(t)) : ''; }, req: function (l) { return !!people(l)[i]; }, ai: { w: 1 }, run: function (l, r) { var t = people(l)[i]; if (t) l.pending.unshift(E.DEC.mua_nuoc.make(l, r, { t: t })); } }; })
+  });
   SC('mua_nuoc', {
     title: 'Mua nước "lấy lòng"',
-    valid: function (l) { return !!(l.partner || (l.sibList || []).some(function (s) { return s.alive; }) || (l.bff && l.bff.alive)); },
-    prep: function (l, r) { return { t: target(l, r) || { k: 'b', n: 'đứa bạn', w: 'bạn' }, d: shuffle(r, DRINKS).slice(0, 5), like: Math.floor(r() * 5), mood: pick(r, ['đang dỗi vì bạn quên trả lời tin nhắn', 'vừa thi xong / chạy deadline mệt rã rời', 'nhắn "nóng quá đi"', 'đang buồn chuyện gì đó', 'vừa giúp bạn một việc lớn']) }; },
-    text: function (l, d) { return (d.t.k === 'p' ? U.cap(d.t.w) + ' ' + d.t.n : U.cap(d.t.w) + ' ' + d.t.n) + ' ' + d.mood + '. Một ly nước mát lúc này là "lấy lòng" chuẩn bài. Mua gì đây?'; },
+    valid: function (l) { return people(l).length > 0; },
+    prep: function (l, r, a) { return { t: (a && a.t) || target(l, r) || { k: 'b', n: 'đứa bạn', w: 'bạn', I: 'tớ', U: 'cậu' }, d: shuffle(r, DRINKS).slice(0, 5), like: Math.floor(r() * 5), mood: pick(r, ['đang dỗi vì bạn quên trả lời tin nhắn', 'vừa thi xong / chạy deadline mệt rã rời', 'nhắn "nóng quá đi"', 'đang buồn chuyện gì đó', 'vừa giúp bạn một việc lớn']) }; },
+    text: function (l, d) { return U.cap(whoOf(d.t)) + ' ' + d.mood + '. Một ly nước mát lúc này là "lấy lòng" chuẩn bài. Mua gì đây?'; },
     opts: [0, 1, 2, 3, 4].map(function (i) {
       return { k: 'd' + i, l: function (l, d) { var x = d.d[i]; return U.cap(x[0]) + (vnd(l) ? ' (' + x[2] + ')' : ''); }, h: function (l, d) { return '~' + mo(l, V(l, d.d[i][1] * 2 / 1000)) + ' cho 2 ly'; }, ai: { w: 1 },
         run: function (l, r, log, d) { buy(l, r, log, d, d.d[i], i === d.like); } };
     }).concat([
-      { k: 'hoi', l: 'Hỏi "uống gì?" trước cho chắc', ai: { w: 0.8 }, run: function (l, r, log, d) { if (ch(r, 0.5)) { log('Hỏi "uống gì?", nhận về câu trả lời kinh điển: "Gì cũng được." Mua đại ' + d.d[0][0] + ' thì bị chê "biết em không thích mà".', 'neutral'); H.cash(l, -V(l, d.d[0][1] * 2 / 1000), 'Mua nước'); } else buy(l, r, log, d, d.d[d.like], true); } },
+      { k: 'hoi', l: 'Hỏi "uống gì?" trước cho chắc', ai: { w: 0.8 }, run: function (l, r, log, d) { if (ch(r, 0.5)) { log('Hỏi "uống gì?", nhận về câu trả lời kinh điển: "Gì cũng được." Mua đại ' + d.d[0][0] + ' thì bị chê "' + fill(d.t, '{Uc} biết {I} không thích món này mà') + '".', 'neutral'); H.cash(l, -V(l, d.d[0][1] * 2 / 1000), 'Mua nước'); } else buy(l, r, log, d, d.d[d.like], true); } },
       { k: 'khong', l: 'Thôi, nhắn tin hỏi han là được', ai: { w: 0.4 }, run: function (l, r, log, d) { log('Chỉ nhắn tin hỏi han ' + d.t.n + '.', 'neutral'); } }
     ])
   });
+  var GOOD = ['{Uc} biết đúng món tủ của {I} luôn!', 'Thương {U} ghê, uống một ngụm là hết mệt.', 'Đúng ly {I} đang thèm, {U} giỏi thật!', 'Cảm ơn {U} nha, để {I} chụp ảnh đăng story.'];
+  var MEH = ['{Ic} dặn ít đường rồi mà!', '{Ic} không uống được trân châu đâu…', 'Lần sau nhớ size L nhé.', 'Ủa sao không mua cho cả nhà luôn?', '{Ic} đang giảm cân mà {U} lại mua trà sữa…', 'Đá nhiều quá, uống buốt cả răng.', 'Lần sau mua ít ngọt thôi {U} ơi.'];
   function buy(l, r, log, d, x, liked) {
     H.cash(l, -V(l, x[1] * 2 / 1000), 'Mua ' + x[0]);
-    var who = d.t.w + ' ' + d.t.n;
-    if (liked || ch(r, 0.6)) { log('Mua ly ' + x[0] + ' cho ' + who + '. ' + pick(r, ['Người ấy cười tít mắt: "Sao biết đúng món tủ vậy?"', 'Uống một ngụm là hết dỗi, còn chụp ảnh đăng story khoe.', '"Thương ghê!" — chỉ một ly nước mà cả buổi chiều vui vẻ.']), 'good'); fx(l, { hap: 3, soc: 1 }); if (d.t.s) d.t.s.close = Math.min(100, (d.t.s.close || 50) + 4); if (d.t.k === 'b' && l.bff) l.bff.close = Math.min(100, (l.bff.close || 60) + 3); }
-    else log('Mua ' + x[0] + ' cho ' + who + ', nhận lại câu: "' + pick(r, ['Em dặn ít đường rồi mà!', 'Anh không uống được trân châu đâu…', 'Lần sau nhớ size L nhé.', 'Ủa sao không mua cho cả nhà luôn?']) + '" Cười trừ, rút kinh nghiệm.', 'neutral');
+    var t = d.t, who = whoOf(t); if (!t.I) { t.I = 'tớ'; t.U = 'cậu'; }
+    if (liked || ch(r, 0.6)) { log('Mua ly ' + x[0] + ' cho ' + who + '. ' + U.cap(who) + ' cười tít mắt: "' + fill(t, pick(r, GOOD)) + '"', 'good'); fx(l, { hap: 3, soc: 1 }); if (t.s) t.s.close = Math.min(100, (t.s.close || 50) + 4); if (t.kid) t.kid.close = Math.min(100, (t.kid.close || 50) + 3); if (t.fr) t.fr.close = Math.min(100, (t.fr.close || 50) + 3); if (t.k === 'b' && l.bff) l.bff.close = Math.min(100, (l.bff.close || 60) + 3); }
+    else log('Mua ' + x[0] + ' cho ' + who + ', nhận lại câu: "' + fill(t, pick(r, MEH.filter(function (m) { return !(t.k === 'mom' || t.k === 'dad') || !/cả nhà/.test(m); }))) + '" Cười trừ, rút kinh nghiệm.', 'neutral');
   }
   T('mua_nuoc', function (l, a) { return a >= 14 && a <= 55 && !!(l.partner || (l.bff && l.bff.alive)); }, 0.015, 5, 1);
-  A('mua_nuoc', 'Tình cảm', 'Mua trà sữa / đồ uống cho người thân', { min: 12, max: 70, sc: 'mua_nuoc', avail: function (l) { return l.partner || (l.sibList || []).some(function (s) { return s.alive; }) || (l.bff && l.bff.alive) ? true : 'Chưa có ai để mua cho'; } });
+  A('mua_nuoc', 'Tình cảm', 'Mua trà sữa / đồ uống cho người thân', { min: 12, max: 70, sc: 'mua_nuoc_ai', avail: function (l) { return people(l).length ? true : 'Chưa có ai để mua cho'; } });
 
   // [mã, tên (VN), tên chung (nước ngoài), giá mỗi người (triệu đồng), lời kể]
   var EATS = [['dookki', 'buffet tokbokki Dookki', 'buffet tokbokki Hàn Quốc', 0.15, 'Cả hội tự nấu tokbokki, cãi nhau chuyện cho bao nhiêu phô mai.'],

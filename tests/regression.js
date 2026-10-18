@@ -410,7 +410,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
   ok(!E.DEC.gameshow_dong.valid(TPL[0],{}),'hậu trường cũ đã được thay bằng mùa vr_vong');
-  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|cn_|dc_|co_bau_som|ban_than_|yeu_ban_than)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
+  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|cn_|dc_|co_bau_som|mua_nuoc_ai|ban_than_|yeu_ban_than)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -2407,6 +2407,20 @@ section('52. Bản 5.9.0: con ngoài hôn nhân, nhiều bạn thân, hẹn hò 
     const ids = ['dc_van_hoa', 'dc_hoc_tieng', 'dc_thuong_tru', 'dc_bang_cap', 'dc_ky_thi', 'dc_tet', 'dc_gui_tien', 'dc_bao_lanh', 'dc_hoi']; ok(ids.every(id => E.DEC[id].valid(a, E.DEC[id].make(a, R(5)).data)), 'định cư nước ngoài: đủ các chuyện học tiếng, thường trú, bằng cấp, kỳ thị, Tết xa nhà, gửi tiền, bảo lãnh bố mẹ, cộng đồng');
     ok(/thường trú nhân \(PR\)/.test(E.DEC.dc_thuong_tru.make(a, R(6)).title) && /tiếng Anh/.test(E.DEC.dc_hoc_tieng.make(a, R(7)).title), 'tên giấy tờ, ngôn ngữ đúng theo nước (Canada: PR, tiếng Anh)');
     const home = mk(52301, 30, 'F', x => { x.indep = true; }); ok(!ids.some(id => E.DEC[id].valid(home, {})), 'ở trong nước thì không có chuyện định cư nước ngoài'); }
+}
+section('53. Bản 5.9.1: mua nước cho người thân — xưng hô đúng từng người');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  const mk = (sex, f) => { const l = E.createLife({ mode: 'vn', seed: 53000, gender: sex }); l.age = 30; l.indep = true; l.money = 100; l.pending = []; l.bff = null; l.sibList = []; f(l); return l; };
+  const say = (l, k) => { const out = []; for (let i = 0; i < 12; i++) { const c = JSON.parse(JSON.stringify(l)); c.rs = 11 + i * 7919; c.pending = [E.DEC.mua_nuoc_ai.make(c, R(3))]; E.resolve(c, k); E.resolve(c, 'd' + (i % 5)); out.push(c.log.slice(-1)[0].t); } return out.join(' '); };
+  const wife = mk('M', x => { x.partner = { name: 'Lan', sex: 'F', age: 28, status: 'married', alive: true }; x.fam.mAlive = false; x.fam.fAlive = false; });
+  const t1 = say(wife, 'p0'); ok(/vợ Lan/.test(t1) && !/Anh dặn|Anh không uống|anh đang thèm|của anh|Anh đang giảm/.test(t1), 'mua nước cho vợ: vợ tự xưng "em", không còn câu "anh…"');
+  const hus = mk('F', x => { x.partner = { name: 'Hùng', sex: 'M', age: 32, status: 'married', alive: true }; x.fam.mAlive = false; x.fam.fAlive = false; });
+  const t2 = say(hus, 'p0'); ok(/chồng Hùng/.test(t2) && !/Em dặn|Em không uống|em đang thèm|của em|Em đang giảm/.test(t2), 'mua nước cho chồng: chồng tự xưng "anh"');
+  const mom = mk('F', x => { x.partner = null; x.fam.mAlive = true; x.fam.noMom = false; x.fam.fAlive = false; });
+  const t3 = say(mom, 'p0'); ok(/cho mẹ/.test(t3) && /con|Mẹ dặn|mẹ đang thèm|của mẹ/.test(t3) && !/(Anh|Em) (dặn|không uống|đang giảm)|(anh|em) đang thèm/.test(t3), 'mua nước cho mẹ: mẹ xưng "mẹ", gọi bạn là "con"');
+  const ai = E.DEC.mua_nuoc_ai.make(mk('M', x => { x.partner = { name: 'Lan', sex: 'F', age: 28, status: 'married', alive: true }; x.fam.mAlive = true; x.fam.noMom = false; x.sibList = [{ n: 'Vũ Thu Hà', sex: 'F', born: -3, alive: true }]; }), R(1));
+  ok(ai.opts.some(o => /Vợ Lan/.test(o.l)) && ai.opts.some(o => o.l === 'Mẹ') && ai.opts.some(o => /Chị Hà/.test(o.l)), 'chọn được người muốn mua nước: ' + ai.opts.map(o => o.l).join(', '));
 }
 function isVNx(l) { return E.isVN(l); }
 
