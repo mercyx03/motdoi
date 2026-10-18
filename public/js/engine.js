@@ -1475,7 +1475,7 @@
   function actAvail(l, a) {
     if (!l.alive) return 'Đã qua đời';
     if (l.jailUntil != null && l.age < l.jailUntil && !a.jail) return 'Đang ở trong trại giam';
-    if (l.abroad && l.abroad.trapped && !a.trap) return 'Đang bị giam giữ trong trại lừa đảo — không chi tiêu, đi lại được'; // v3.8
+    if (l.abroad && l.abroad.trapped && !a.trap) return 'Không áp dụng — đang bị giam giữ trong trại lừa đảo'; // v3.8
     if (l.flags && l.flags.military && l.age < l.flags.military && !a.mil) return 'Đang đi nghĩa vụ quân sự, sống trong doanh trại';
     if (l.acts >= actsLimit(l)) return 'Đã hết lượt hành động năm nay';
     if (a.min != null && l.age < a.min) return 'Từ ' + a.min + ' tuổi';
@@ -1566,8 +1566,9 @@
     F.partner = p && !(life.jailUntil != null && a < life.jailUntil) && p.inc > 0 && isFinite(p.inc) ? p.inc * 12 * 0.55 : 0; // chỉ góp từ thu nhập thực, không tự tạo thu nhập khi thất nghiệp / đang học
     if (E.sponsorContributionAllowed && !E.sponsorContributionAllowed(life)) F.partner = 0;
     var styleK = E.lifestyleFactor ? E.lifestyleFactor(life) : ({ save: 0.82, normal: 1, lavish: 1.25 }[life.spend] || 1);
-    F.food = (b * 0.3 + (p ? b * 0.22 : 0)) * styleK;
-    var util = (b * 0.15 + (p ? b * 0.13 : 0)) * styleK;
+    var wealthK = E.wealthLivingK ? E.wealthLivingK(life, income) : 1; // v5.8.0: nhà giàu chi tiêu sinh hoạt nhiều hơn nhà bình thường, nhà nghèo
+    F.food = (b * 0.3 + (p ? b * 0.22 : 0)) * styleK * wealthK;
+    var util = (b * 0.15 + (p ? b * 0.13 : 0)) * styleK * wealthK;
     F.food += util;
     F.rent = !life.ownHouse && life.urban ? b * 0.12 : 0;
     F.travel = E.travelCost ? E.travelCost(life, b, a) : life.veh === 'ô tô' ? b * 0.12 : life.veh === 'xe máy' ? b * 0.03 : b * 0.01; // v3.0: xăng xe đổ hằng tuần, bảo hiểm, gửi xe, thuê xe chạy dịch vụ
@@ -1800,7 +1801,7 @@
     var p = life.partner;
     if (p) {
       p.age++;
-      if (p.status === 'dating' && a - p.since >= 1 && r() < 0.12) { log('Chia tay ' + p.name + '.', 'bad'); H.mem(life, 'Cuộc chia tay với ' + p.name + ' dưới cơn mưa.', 2); life.partner = null; life.exes++; st.hap -= 7; }
+      if (p.status === 'dating' && a - p.since >= 1 && r() < 0.12) { var why = E.breakupWhy ? E.breakupWhy(life, p, r) : null; log('Chia tay ' + p.name + (why ? '. ' + why.t : '.'), 'bad'); H.mem(life, why && why.m ? why.m : 'Cuộc chia tay với ' + p.name + ' dưới cơn mưa.', 2); life.partner = null; life.exes++; st.hap -= 7; }
       else if (r() < qBase(p.sex === 'M' ? life.mortM : life.mortF, p.age)) {
         log((partnerWord(life, p) === 'người bạn đời' ? 'Người bạn đời ' : U.cap(partnerWord(life, p)) + ' ') + p.name + ' qua đời ở tuổi ' + p.age + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(p.age, r)) + '.', 'bad');
         H.mem(life, 'Ngày tiễn ' + p.name + ' về với đất — một nửa của bạn đã đi xa.', 6);

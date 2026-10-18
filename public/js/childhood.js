@@ -198,7 +198,7 @@
       { k: 'no', l: 'Thôi, nghe nhạc thôi là đủ', run: function (l, r, log) { log('Chỉ nghe nhạc, dán poster trong phòng.', 'neutral'); } }
     ]
   });
-  CT('kpop', function (l, a) { return a >= 11 && a <= 15; }, 4, function (l) { return girl(l) ? 1.6 : 0.4; });
+  CT('kpop', function (l, a) { return a >= 11 && a <= 15 && (!!l.idol || !isVN(l)); }, 4, function (l) { return girl(l) ? 1.6 : 0.4; });
 
   SC('nau_com', {
     title: 'Lần đầu vào bếp', text: function (l) { return (l.fam.mAlive ? 'Mẹ' : 'Bố') + ' về muộn. Lần đầu tiên bạn tự nấu bữa tối cho cả nhà.'; },

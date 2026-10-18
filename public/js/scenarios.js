@@ -46,7 +46,7 @@
     log(l.school ? 'Ngồi cạnh ' + l.bff.name + ' trong lớp — từ đó hai đứa thành đôi bạn thân.' : 'Chơi với ' + l.bff.name + ' ở xóm bên — từ đó hai đứa thành đôi bạn thân.', 'good');
     H.mem(l, 'Ngày quen ' + l.bff.name + ', người bạn thân nhất đời.', 4); fx(l, { soc: 6, hap: 3 });
   });
-  EV(function (l, a) { return a >= 12 && a <= 28 && !l.idol; }, 0.12, function (l, a, r, log) {
+  EV(function (l, a) { return a >= 12 && a <= 28 && !l.idol && !isVN(l); }, 0.12, function (l, a, r, log) {
     l.idol = H.pickIdol(r, l);
     log('Mê mẩn ' + l.idol + ' — dán đầy poster trong phòng, thuộc lòng mọi bài hát.', 'good'); fx(l, { hap: 3 });
   });
@@ -360,7 +360,7 @@
     ]
   });
   function khFree(l, log, t) {
-    log(t + ' Bạn đặt chân về ' + l.countryName + ', gầy rộc, ôm chầm lấy người thân ở cửa khẩu.', 'big');
+    log(E.khReturn ? E.khReturn(l, t) : t + ' Bạn đặt chân về ' + l.countryName + ', gầy rộc, ôm chầm lấy người thân ở cửa khẩu.', 'big');
     H.mem(l, 'Giây phút bước qua cửa khẩu trở về sau địa ngục ở Campuchia.', 9);
     l.abroad = null; l.job = l.prevJob && E.resolveJob(l.prevJob.id) !== 'scam_kh' ? l.prevJob : null; l.prevJob = null;
     if (l.job && l.school && l.school !== 'police') { l.school = null; l.schoolEnd = null; l.cityStudent = null; } // v3.2: không vừa đi làm vừa học đại học
@@ -368,6 +368,7 @@
     l.flags.cambodia = 'Từng bị lừa bán sang trại lừa đảo ở Campuchia và may mắn trở về.';
     fx(l, { hap: 10, hea: -5 }); H.sched(l, 'tram_cam', 1);
   }
+  E.khFree = khFree;
   function khEscape(l, r, log) {
     var x = r();
     if (x < 0.1) { H.kill(l, 'bị đánh khi bỏ trốn khỏi trại lừa đảo ở Campuchia', log, true); l.flags.cambodia = 'Bỏ mạng khi cố trốn khỏi trại lừa đảo ở Campuchia.'; return; }
@@ -382,6 +383,7 @@
     fx(l, { hea: -15, hap: -12 }); l.flags.khSince = l.flags.khSince || l.age; H.sched(l, 'kh_song', 1);
   }
 
+  E.khEscape = khEscape; E.khPhone = khPhone;
   var STUDY = [['US', 'Hoa Kỳ', 'en', 3.5], ['AU', 'Úc', 'en', 3], ['JP', 'Nhật Bản', 'jp', 2], ['KR', 'Hàn Quốc', 'kr', 1.8], ['GB', 'Vương quốc Anh', 'en', 3.5], ['CA', 'Canada', 'en', 3], ['DE', 'Đức', 'de', 1.2], ['SG', 'Singapore', 'sg', 3], ['FR', 'Pháp', 'fr', 1.5]];
   SC('du_hoc', {
     title: 'Du học', prep: function (l, r) { var c = pick(r, STUDY); return { c: c, cost: c[3] }; },

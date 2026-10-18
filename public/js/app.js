@@ -948,7 +948,7 @@
       ]);
     }
     var home=E.HOMETOWN&&E.HOMETOWN.own(l);
-    if(home)html+='<h3 style="margin-top:14px">Dấu ấn quê hương · '+esc(home.name)+'</h3><p class="small muted">Theo địa giới 63 tỉnh/thành trước sáp nhập.</p>'+dl([['Địa danh',home.places.join(' · ')],['Ẩm thực / sản vật',home.foods.join(' · ')]]);
+    if(home)html+='<h3 style="margin-top:14px">Dấu ấn quê hương · '+esc(home.name)+'</h3>'+dl([['Địa danh',home.places.join(' · ')],['Ẩm thực / sản vật',home.foods.join(' · ')]]);
     html += '<p class="small muted" style="margin:10px 0 0">Số liệu làm tròn (GSO, UN WPP 2024, World Bank) — dùng để mô phỏng.</p>';
     $('#placePanel').innerHTML = html;
   }

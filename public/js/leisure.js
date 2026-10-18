@@ -155,7 +155,7 @@
     var k = U.wpick(r, ks, function (k) { var h = HOBBY[k], w = h.w[l.sex === 'M' ? 0 : 1]; if (h.talent && l.talent === h.talent) w *= 3; if (k === 'bongda' && l.talent === 'thể thao') w *= 3; if (k === 'guitar' && l.talent === 'âm nhạc') w *= 3; return w; });
     l.hobby = k; l.hobbySk = 10;
     log('Bắt đầu mê ' + HOBBY[k].n + '.', 'good'); fx(l, { hap: 3 });
-    if (k === 'rap' && !l.idol) { l.idol = H.pickIdol(r, l); }
+    if (k === 'rap' && !l.idol && !isVN(l)) { l.idol = H.pickIdol(r, l); }
   });
   SC('so_thich', {
     title: function (l) { return 'Niềm đam mê ' + hob(l).n; }, prep: function (l, r) { var h = hob(l); return { i: Math.min(h.step.length - 1, Math.floor((l.hobbySk || 10) / 18)) }; },
@@ -291,7 +291,7 @@
   EV(function (l, a) { return rel(l) === 'cg' && a >= 8 && a <= 10 && !l.flags.ruocLe; }, 0.5, function (l, a, r, log) { l.flags.ruocLe = true; log('Rước lễ lần đầu ở nhà thờ giáo xứ, mặc áo trắng tinh, cả nhà đến dự.', 'good'); fx(l, { hap: 3 }); H.mem(l, 'Ngày rước lễ lần đầu, nến trắng trên tay.', 3); });
   EV(function (l, a) { return rel(l) === 'cg' && a >= 12 && a <= 15 && l.flags.ruocLe && !l.flags.themSuc; }, 0.4, function (l, a, r, log) { l.flags.themSuc = true; log('Lãnh bí tích Thêm sức, đức giám mục về giáo xứ làm lễ.', 'good'); fx(l, { hap: 2 }); });
   EV(function (l, a) { return (rel(l) === 'cg' || rel(l) === 'tl') && a >= 3; }, 0.14, function (l, a, r, log) { log(pick(r, isVN(l) && !l.abroad ? ['Đêm Giáng sinh đi lễ nửa đêm, cả xứ đạo rực rỡ đèn sao.', 'Cả nhà dựng hang đá Giáng sinh trước cửa, lũ trẻ tíu tít.', 'Tháng Năm kính Đức Mẹ, ' + (a < 18 ? 'bạn được chọn đi dâng hoa.' : 'cả xứ rước kiệu quanh nhà thờ.'), 'Lễ Phục sinh, cả nhà đi lễ sớm, về ăn bữa cơm sum họp.', 'Đi tĩnh tâm mùa Chay cùng giáo xứ.'] : ['Đêm Giáng sinh cả nhà đi lễ ở nhà thờ, về quây quần bên bữa tối ấm cúng.', 'Cả nhà trang trí cây thông Noel, trao quà cho nhau.', 'Lễ Phục sinh, đi nhà thờ rồi cùng lũ trẻ đi tìm trứng màu.', 'Mùa Chay khép lại bằng thánh lễ Phục sinh rộn rã tiếng chuông.', 'Phục sinh năm nay cả nhà nhuộm trứng, làm bánh, mời hàng xóm sang chung vui.', 'Chủ nhật đi lễ, ở lại uống cà phê với bà con trong giáo xứ.', 'Sáng Chủ nhật đi lễ sớm, chiều phụ giáo xứ chuẩn bị buổi quyên góp.', 'Tham gia ca đoàn nhà thờ vào các buổi lễ Chủ nhật.', 'Tham gia hội từ thiện của nhà thờ, nấu cơm cho người vô gia cư.']), 'good'); fx(l, { hap: 3, soc: 2 }); }, 5);
-  EV(function (l, a) { return (rel(l) === 'pg' || rel(l) === 'hh') && a >= 4; }, 0.18, function (l, a, r, log) { var vu = l.fam.mAlive ? 'hoa hồng đỏ trên áo — vì còn mẹ' : 'hoa hồng trắng trên áo — mẹ không còn nữa'; log(pick(r, ['Lễ Vu Lan, bạn được cài ' + vu + '.', 'Rằm tháng Giêng, cả nhà lên chùa cầu an đầu năm.', 'Mùng Một, ngày Rằm cả nhà ăn chay.']), a >= 4 && !l.fam.mAlive ? 'neutral' : 'good'); fx(l, { hap: 2 }); });
+  EV(function (l, a) { return (rel(l) === 'pg' || rel(l) === 'hh') && a >= 4 && l.country === 'VN'; }, 0.18, function (l, a, r, log) { var vu = l.fam.mAlive ? 'hoa hồng đỏ trên áo — vì còn mẹ' : 'hoa hồng trắng trên áo — mẹ không còn nữa'; log(pick(r, ['Lễ Vu Lan, bạn được cài ' + vu + '.', 'Rằm tháng Giêng, cả nhà lên chùa cầu an đầu năm.', 'Mùng Một, ngày Rằm cả nhà ăn chay.']), a >= 4 && !l.fam.mAlive ? 'neutral' : 'good'); fx(l, { hap: 2 }); });
   SC('khoa_tu', {
     title: 'Khóa tu mùa hè', valid: function (l) { return rel(l) === 'pg' || rel(l) === 'hh'; }, text: 'Chùa mở khóa tu mùa hè cho thanh thiếu niên: ăn chay, ngủ sớm, học cách sống chậm.',
     opts: [

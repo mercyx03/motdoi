@@ -1,3 +1,69 @@
+## v5.8.0 — Xem tivi chọn thần tượng, trại lừa đảo, đám cưới theo điều kiện, đồ công nghệ (gộp v5.7.0)
+
+- **Xem tivi, chọn thần tượng (Việt Nam):**
+  - Không còn tự nhiên "mê" một thần tượng ngẫu nhiên (ví dụ tự dưng thích Seachains hay anh tài Đỗ Hoàng Hiệp).
+  - Từ 7 tuổi, mở tivi chọn xem phim, xem game hay gameshow ca nhạc. Gameshow có Anh trai "Say Hi", Em xinh "Say Hi", Tinh hà "Say Hi", Anh trai vượt ngàn chông gai, Chị đẹp đạp gió rẽ sóng, Rap Việt.
+  - Chọn chương trình thì hiện tất cả người tham gia, gộp mọi mùa. Bạn thích ai thì chọn người đó.
+  - Về sau fanmeeting, photocard bias, sinh nhật thần tượng… đều là của đúng người bạn đã chọn. Có thêm hành động "Mở tivi xem phim, gameshow".
+- **Trại lừa đảo ở Campuchia:**
+  - "Việc bạn muốn làm" đổi thành danh sách riêng trong trại: làm đủ chỉ tiêu, lén làm chậm, đùm bọc người cùng phòng, ghi nhớ giờ đổi ca, nghĩ về gia đình, mượn điện thoại cầu cứu, liều trốn, nhắn gia đình chuộc. Về nước thì trở lại bình thường.
+  - Mỗi năm trong trại có chuyện mới: chỉ tiêu tháng, bà cụ sắp chuyển tiền dưỡng già, ốm trong trại, bị bán sang công ty khác, người mới vào phòng, cơ hội trốn đêm mất điện, ba phút gọi về nhà. Từ chối lừa đảo thì bị đánh, chích điện, sức khỏe giảm.
+  - Ngày trở về có hồn hơn: bố mẹ ra cửa khẩu đón ra sao, cảm giác như được sống lại sau những tháng ngày tăm tối.
+- **Quan hệ chu cấp có kiểm soát:** mỗi năm còn nhận chu cấp thì căng thẳng tăng, hạnh phúc giảm, càng bị kiểm soát càng nặng.
+- **Chi phí sinh hoạt theo mức sống:** nhà giàu chi ăn uống, sinh hoạt nhiều hơn nhà bình thường, nhà khó khăn chi ít hơn.
+- **Đám cưới theo điều kiện:**
+  - Chọn nơi tổ chức: mâm cơm thân mật, cỗ ở nhà / ở quê, nhà hàng, khách sạn 5 sao, cưới ở nước ngoài. Gia đình tài phiệt có thêm siêu đám cưới lo trọn gói.
+  - Bố mẹ lo một phần theo điều kiện gia đình, nhà bên kia góp thêm, có tiền mừng cưới.
+  - Sau đó chọn nhẫn cưới: vàng trơn, đính kim cương, 1 carat, thương hiệu xa xỉ, nhẫn gia truyền.
+- **Chia tay có lý do cụ thể:**
+  - Với người chu cấp: ngỏ lời cưới nhưng bạn không muốn bị ràng buộc, đòi cắt đứt bạn bè, gia đình người ấy phát hiện, có "người mới".
+  - Thường gặp: hết yêu, cãi vã, ngoại tình, gia đình phản đối, yêu xa, chênh lệch tuổi, tiền bạc, quan điểm sống.
+- **Mua điện thoại, laptop, PC:**
+  - Điện thoại: iPhone (Pro Max, Pro, Fold, Air, đời thường, bản "e", đời trước); Android gồm Samsung, Xiaomi, OPPO, Huawei, vivo, Google Pixel; điện thoại gaming (ROG Phone, RedMagic…).
+  - Laptop gaming, laptop văn phòng / MacBook; PC gaming, PC đồ họa, PC văn phòng, iMac.
+  - Mỗi năm lên một đời, đặt tên theo năm nhân vật đang sống (ví dụ năm 2046 có iPhone 38 Pro Max, iPhone Fold 21). Giá tính theo mặt bằng 2026 và tăng nhẹ mỗi năm. Dưới 18 tuổi thì bố mẹ cân nhắc ngân sách.
+- **Sửa lỗi:**
+  - Lựa chọn "bồi dưỡng kỹ năng / học lập hợp đồng" từng hiện "tự chi 132 triệu đ" trong khi tiền thật chỉ khoảng 800 nghìn; nay hiển thị đúng.
+  - Bỏ dòng "Mỗi năm tối đa hai tình huống; cùng chuyện chỉ trở lại sau ít nhất bốn năm."
+  - Quê người ấy không còn ghi "(địa giới 63 tỉnh/thành trước sáp nhập)". Chơi 63 tỉnh thì ghi tên cũ, chơi 34 tỉnh thì tự dùng tên sau sáp nhập.
+
+## v5.7.0 — Đời sống từng quốc gia (chế độ Thế giới)
+
+- **Chỉ áp dụng cho nhân vật sinh ra và đang sống ngoài Việt Nam.** Đời ở Việt Nam, kể cả người Việt định cư nước ngoài, giữ nguyên hoàn toàn: đã so sánh lại từng dòng nhật ký, không khác gì so với bản trước.
+- **Hơn 420 chuyện đời thường mới**, gồm 382 chuyện riêng của 67 quốc gia, còn lại là chuyện theo vùng (châu Âu, Trung Đông, châu Phi, Nam Á, Đông Á, Đông Nam Á, Trung Á, Mỹ Latinh, châu Đại Dương) cho các nước còn lại. Ví dụ:
+  - Ấn Độ: cricket, IPL, gió mùa, vé tàu Tatkal, UPI.
+  - Trung Quốc: Xuân Vãn, lì xì WeChat, 11/11, tàu cao tốc.
+  - Nhật Bản: hanami, Obon, konbini, cảnh báo động đất, cặp randoseru.
+  - Hàn Quốc: Chuseok, hagwon, chimaek, jeonse.
+  - Nigeria: máy phát điện, tiệc owambe, cơm jollof.
+  - Mỹ: khai thuế, Tạ ơn, tiền tip, Super Bowl.
+  - Mexico: Día de Muertos, El Grito, posada.
+  - Đức: Pfand, Feierabend, tàu trễ.
+  - Brazil: Festa Junina, Pix, churrasco.
+  - Nga: dacha, Maslenitsa.
+  - Iran: Nowruz, đêm Yalda.
+  - …
+- **Lọc đúng hoàn cảnh:** tuổi, đang đi học (tiểu học, cấp ba, đại học), đi làm, có con, tuổi già, thành thị / nông thôn, còn gia đình, còn anh chị em, tôn giáo. Mỗi chuyện chỉ kể một lần trong đời.
+- **Lễ hội theo tôn giáo:** Diwali, Holi, Navratri, Raksha Bandhan, Ganesh Chaturthi (Hindu); Vaisakhi (Sikh); Hanukkah, Lễ Vượt Qua, Yom Kippur (Do Thái); Vesak (Phật giáo ở nước ngoài).
+- **14 tình huống lựa chọn mang đặc trưng quốc gia:**
+  - Kỳ thi đại học: gaokao, Suneung, kỳ thi chung Nhật, JEE / NEET, YKS, Konkur, ENEM, JAMB…
+  - Về quê dịp lễ: xuân vận, mudik, Chuseok, Obon, Eid, Diwali, Giáng sinh, Songkran.
+  - Mất điện triền miên: mua máy phát hoặc lắp điện mặt trời.
+  - Góp hụi xoay vòng: ajo, susu, chama, equb, tanda, paluwagan, stokvel, arisan…
+  - Tiệc công ty: nomikai, hoesik, tiệc tiếp khách.
+  - Thiên tai theo nước: động đất, bão, lũ gió mùa, cháy rừng.
+  - Khám bệnh công hay tư: NHS, Medicare, SUS, IMSS, BPJS…
+  - Lễ quinceañera của con gái 15 tuổi.
+  - Lễ hội đường phố: Carnaval, Las Fallas, Karneval.
+  - Đình công giao thông.
+  - Mai mối ở Nam Á.
+  - Tăng ca 996 / làm thêm giờ.
+  - Khai thuế ở Mỹ, Canada, Úc, Đức, Pháp.
+  - Cho con học thêm: hagwon, juku, coaching.
+- **Sửa lỗi chế độ Thế giới:**
+  - Người theo đạo Phật ở Thái Lan, Nhật, Sri Lanka… không còn gặp phong tục riêng của Việt Nam (Vu Lan cài hoa hồng, Rằm tháng Giêng lên chùa).
+  - Chi phí "buổi tìm hiểu có hướng dẫn" từng hiển thị sai số tiền (ví dụ 1,8 tỷ JPY); nay hiển thị đúng số tiền thật.
+
 ## v5.6.4 — Rà soát logic: sếp, gia đình, ngồi tù, lương hưu, sân bóng
 
 - **Chức cao, nghề tự do không có "sếp":**

@@ -62,14 +62,14 @@
   function cost(l){return l.cur==='vnd'?.8:l.base*.8/90;}
   function outcome(l,r,log,d,k){if(!valid(l,d))return;var s=state(l),c=cases.filter(function(x){return x.id===d.caseId;})[0];if(k==='learn'&&l.money<cost(l))return;if(s.at!==l.age){s.at=l.age;s.count=0;}s.count++;s.seen[l.job.id+':'+c.id]=l.age;
     var rep=k==='care'?3:k==='learn'?4:k==='rush'?-4:0;l.job.rep=U.clamp((l.job.rep==null?50:l.job.rep)+rep,0,100);
-    if(k==='learn'){H.cash(l,-cost(l),'Bồi dưỡng kỹ năng nghề');H.fx(l,{kno:1});log(c.title+': bạn tự chi '+H.mb(l,cost(l))+' từ tiền riêng để bồi dưỡng kỹ năng; chưa đồng nghĩa được thăng chức.','neutral');}
+    if(k==='learn'){H.cash(l,-cost(l),'Bồi dưỡng kỹ năng nghề');H.fx(l,{kno:1});log(c.title+': bạn tự chi '+H.money(l,cost(l))+' từ tiền riêng để bồi dưỡng kỹ năng; chưa đồng nghĩa được thăng chức.','neutral');}
     else if(k==='care'){H.fx(l,{kno:.5});log(c.title+' · '+d.role+': bạn xử lý cẩn thận, giữ uy tín trong nghề.','good');}
     else if(k==='rush'){if(l.mind)l.mind.stress=U.clamp(l.mind.stress+3,0,100);log(c.title+' · '+d.role+': làm vội khiến chất lượng giảm, bạn cần khắc phục.','bad');}
     else log(c.title+': '+U.pick(r,['bạn tạm hoãn để thu xếp công việc, chưa có kết quả mới.','việc này để sang tuần sau, trước mắt chưa có gì thay đổi.','bạn gác lại để lo việc gấp hơn, chưa có kết quả.','bạn xin dời lịch, mọi chuyện vẫn đang chờ.']),'neutral');
   }
-  E.SC('nghe_chuyen_moi',{title:function(l,d){return d.title||'Tình huống trong nghề';},valid:valid,prep:function(l,r){var p=pool(l);if(!p.length)return{};var c=U.pick(r,p),j=E.jobDef(l);return{caseId:c.id,at:l.age,job:l.job.id,rank:l.job.rank||0,token:token(l),title:c.title,role:j.t[l.job.rank||0]};},text:function(l,d){var c=cases.filter(function(x){return x.id===d.caseId;})[0];return c?d.role+': '+c.text+' Mỗi năm tối đa hai tình huống; cùng chuyện chỉ trở lại sau ít nhất bốn năm.':'';},opts:[
+  E.SC('nghe_chuyen_moi',{title:function(l,d){return d.title||'Tình huống trong nghề';},valid:valid,prep:function(l,r){var p=pool(l);if(!p.length)return{};var c=U.pick(r,p),j=E.jobDef(l);return{caseId:c.id,at:l.age,job:l.job.id,rank:l.job.rank||0,token:token(l),title:c.title,role:j.t[l.job.rank||0]};},text:function(l,d){var c=cases.filter(function(x){return x.id===d.caseId;})[0];return c?d.role+': '+c.text+'':'';},opts:[
     {k:'care',l:function(l,d){var c=cases.filter(function(x){return x.id===d.caseId;})[0];return c?c.care:'Xử lý cẩn thận';},run:function(l,r,log,d){outcome(l,r,log,d,'care');}},
-    {k:'learn',l:function(l,d){var c=cases.filter(function(x){return x.id===d.caseId;})[0];return(c?c.learn:'Bồi dưỡng kỹ năng')+' · tự chi '+H.mb(l,cost(l));},req:function(l){return l.money>=cost(l);},run:function(l,r,log,d){outcome(l,r,log,d,'learn');}},
+    {k:'learn',l:function(l,d){var c=cases.filter(function(x){return x.id===d.caseId;})[0];return(c?c.learn:'Bồi dưỡng kỹ năng')+' · tự chi '+H.money(l,cost(l));},req:function(l){return l.money>=cost(l);},run:function(l,r,log,d){outcome(l,r,log,d,'learn');}},
     {k:'rush',l:'Làm qua loa để xong sớm',run:function(l,r,log,d){outcome(l,r,log,d,'rush');}},
     {k:'later',l:'Tạm hoãn để sắp xếp lại',run:function(l,r,log,d){outcome(l,r,log,d,'later');}}
   ]});
