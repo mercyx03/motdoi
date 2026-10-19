@@ -1,12 +1,12 @@
 {
   "name": "mot-doi",
-  "version": "6.8.0",
+  "version": "6.9.0",
   "private": true,
   "description": "Một Đời — mô phỏng một đời người bằng số liệu thật (Việt Nam 63/34 tỉnh, 54 dân tộc; 195 quốc gia)",
   "scripts": {
     "dev": "node tools/serve.js",
     "test": "node tests/regression.js",
-    "test:update": "node tests/update451.js && node tests/update452.js && node tests/update453.js && node tests/update454.js && node tests/update455.js && node tests/update457.js && node tests/update458.js && node tests/update459.js && node tests/update460.js && node tests/update461.js && node tests/update462.js && node tests/update463.js && node tests/update464.js && node tests/update465.js && node tests/update466.js && node tests/update470.js && node tests/update480.js && node tests/update481.js && node tests/update490.js && node tests/update4100.js && node tests/update500.js && node tests/update510.js && node tests/update511.js && node tests/update520.js && node tests/update530.js && node tests/update540.js && node tests/update550.js && node tests/update551.js && node tests/update553.js && node tests/update560.js && node tests/update651.js && node tests/update660.js",
+    "test:update": "node tests/update451.js && node tests/update452.js && node tests/update453.js && node tests/update454.js && node tests/update455.js && node tests/update457.js && node tests/update458.js && node tests/update459.js && node tests/update460.js && node tests/update461.js && node tests/update462.js && node tests/update463.js && node tests/update464.js && node tests/update465.js && node tests/update466.js && node tests/update470.js && node tests/update480.js && node tests/update481.js && node tests/update490.js && node tests/update4100.js && node tests/update500.js && node tests/update510.js && node tests/update511.js && node tests/update520.js && node tests/update530.js && node tests/update540.js && node tests/update550.js && node tests/update551.js && node tests/update553.js && node tests/update560.js && node tests/update651.js && node tests/update660.js && node tests/update690.js",
     "deploy": "node tests/regression.js && node tools/build.js && npx wrangler deploy",
     "deploy:pages": "node tests/regression.js && node tools/build.js && npx wrangler pages deploy dist --project-name mot-doi",
     "build": "node tools/build.js",

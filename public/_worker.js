@@ -91,12 +91,117 @@ async function reviews(request, env, url) {
   if (ip) reviewIPs.set(ip, now + 60000);
   return ratingJson(200, { ok: true, edited, left: Math.max(0, PER_DAY - rows.length - (edited ? 0 : 1)) });
 }
+// ===================== v6.9: tài khoản & lưu tiến trình =====================
+// Không thu email hay thông tin cá nhân: chỉ tên đăng nhập + mật khẩu (băm PBKDF2-SHA256, 100.000 vòng, salt riêng).
+// Phiên đăng nhập: mã ngẫu nhiên 256 bit, máy chủ chỉ lưu SHA-256 của mã; hết hạn sau 180 ngày.
+const accountSchemas = new WeakMap(), accountIPs = new Map();
+const ACC = { iter: 100000, sessionDays: 180, maxSave: 1500000, maxBody: 1600000 };
+function accJson(status, body) { return Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } }); }
+const hex = buf => Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, '0')).join('');
+async function sha256(text) { return hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))); }
+async function pbkdf2(password, saltHex) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+  const salt = new Uint8Array(saltHex.match(/../g).map(h => parseInt(h, 16)));
+  return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt, iterations: ACC.iter }, key, 256));
+}
+function sameHex(a, b) { if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; }
+async function initAccounts(db) {
+  if (!accountSchemas.has(db)) accountSchemas.set(db, db.batch([
+    db.prepare('CREATE TABLE IF NOT EXISTS game_accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pass_hash TEXT NOT NULL, salt TEXT NOT NULL, created_at INTEGER NOT NULL, fail_count INTEGER NOT NULL DEFAULT 0, lock_until INTEGER NOT NULL DEFAULT 0)'),
+    db.prepare('CREATE TABLE IF NOT EXISTS game_sessions (token_hash TEXT PRIMARY KEY, account_id INTEGER NOT NULL, created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL)'),
+    db.prepare('CREATE INDEX IF NOT EXISTS game_sessions_account ON game_sessions(account_id)'),
+    db.prepare('CREATE TABLE IF NOT EXISTS game_saves (account_id INTEGER PRIMARY KEY, data TEXT NOT NULL, rev INTEGER NOT NULL, updated_at INTEGER NOT NULL)')
+  ]).catch(e => { accountSchemas.delete(db); throw e; }));
+  await accountSchemas.get(db);
+}
+async function readJsonBody(request, limit) {
+  const reader = request.body?.getReader(); if (!reader) throw Error('empty');
+  const chunks = []; let size = 0;
+  while (true) { const part = await reader.read(); if (part.done) break; size += part.value.length; if (size > limit) { await reader.cancel(); const e = Error('large'); e.large = true; throw e; } chunks.push(part.value); }
+  const buffer = new Uint8Array(size); let at = 0; for (const c of chunks) { buffer.set(c, at); at += c.length; }
+  return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(buffer));
+}
+async function newSession(db, accountId, now) {
+  const token = hex(crypto.getRandomValues(new Uint8Array(32)));
+  await db.batch([
+    db.prepare('DELETE FROM game_sessions WHERE expires_at < ?').bind(now),
+    db.prepare('INSERT INTO game_sessions(token_hash, account_id, created_at, expires_at) VALUES (?, ?, ?, ?)').bind(await sha256(token), accountId, now, now + ACC.sessionDays * 86400000)
+  ]);
+  return token;
+}
+async function sessionAccount(db, request, now) {
+  const m = /^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('Authorization') || ''); if (!m) return null;
+  const row = await db.prepare('SELECT s.account_id AS id, a.username AS username, s.token_hash AS th FROM game_sessions s JOIN game_accounts a ON a.id = s.account_id WHERE s.token_hash = ? AND s.expires_at > ?').bind(await sha256(m[1]), now).first();
+  return row || null;
+}
+async function account(request, env, url) {
+  if (request.method !== 'POST') return accJson(405, { ok: false, code: 'METHOD_NOT_ALLOWED' });
+  if (request.headers.get('Origin') !== url.origin) return accJson(403, { ok: false, code: 'ORIGIN' });
+  if (!(request.headers.get('Content-Type') || '').toLowerCase().startsWith('application/json')) return accJson(415, { ok: false, code: 'CONTENT_TYPE' });
+  const db = env.REVIEWS_DB; if (!db) return accJson(503, { ok: false, code: 'ACCOUNTS_NOT_CONFIGURED' });
+  let body; try { body = await readJsonBody(request, ACC.maxBody); } catch (e) { return e.large ? accJson(413, { ok: false, code: 'BODY_TOO_LARGE' }) : accJson(400, { ok: false, code: 'INVALID_JSON' }); }
+  if (!body || typeof body.action !== 'string') return accJson(400, { ok: false, code: 'INVALID_ACTION' });
+  await initAccounts(db);
+  const now = Date.now(), ip = request.headers.get('CF-Connecting-IP') || '', action = body.action;
+  if (action === 'register' || action === 'login') {
+    const username = typeof body.username === 'string' ? body.username.trim().toLowerCase() : '', password = typeof body.password === 'string' ? body.password : '';
+    if (!/^[a-z0-9_.]{3,24}$/.test(username)) return accJson(400, { ok: false, code: 'INVALID_USERNAME' });
+    if (password.length < 8 || password.length > 128) return accJson(400, { ok: false, code: 'INVALID_PASSWORD' });
+    // chống dò mật khẩu: tối đa 10 lần đăng nhập / đăng ký mỗi 10 phút trên một IP (bộ nhớ worker) và khóa tài khoản 15 phút sau 8 lần sai
+    for (const [k, v] of accountIPs) if (v.until <= now) accountIPs.delete(k);
+    if (ip) { const v = accountIPs.get(ip) || { n: 0, until: now + 600000 }; v.n++; accountIPs.set(ip, v); if (v.n > 10) return accJson(429, { ok: false, code: 'RATE_LIMIT' }); }
+    if (action === 'register') {
+      const exists = await db.prepare('SELECT id FROM game_accounts WHERE username = ?').bind(username).first();
+      if (exists) return accJson(409, { ok: false, code: 'USERNAME_TAKEN' });
+      const salt = hex(crypto.getRandomValues(new Uint8Array(16))), hash = await pbkdf2(password, salt);
+      let res; try { res = await db.prepare('INSERT INTO game_accounts(username, pass_hash, salt, created_at) VALUES (?, ?, ?, ?)').bind(username, hash, salt, now).run(); } catch (e) { return accJson(409, { ok: false, code: 'USERNAME_TAKEN' }); }
+      const row = await db.prepare('SELECT id FROM game_accounts WHERE username = ?').bind(username).first();
+      return accJson(200, { ok: true, username, token: await newSession(db, row.id, now) });
+    }
+    const acc = await db.prepare('SELECT id, pass_hash, salt, fail_count, lock_until FROM game_accounts WHERE username = ?').bind(username).first();
+    if (acc && acc.lock_until > now) return accJson(429, { ok: false, code: 'LOCKED' });
+    const hash = await pbkdf2(password, acc ? acc.salt : '00'.repeat(16));
+    if (!acc || !sameHex(hash, acc.pass_hash)) {
+      if (acc) await db.prepare('UPDATE game_accounts SET fail_count = fail_count + 1, lock_until = CASE WHEN fail_count + 1 >= 8 THEN ? ELSE lock_until END WHERE id = ?').bind(now + 900000, acc.id).run();
+      return accJson(401, { ok: false, code: 'WRONG_LOGIN' });
+    }
+    await db.prepare('UPDATE game_accounts SET fail_count = 0, lock_until = 0 WHERE id = ?').bind(acc.id).run();
+    return accJson(200, { ok: true, username, token: await newSession(db, acc.id, now) });
+  }
+  const me = await sessionAccount(db, request, now);
+  if (!me) return accJson(401, { ok: false, code: 'NOT_LOGGED_IN' });
+  if (action === 'me') return accJson(200, { ok: true, username: me.username });
+  if (action === 'logout') { await db.prepare('DELETE FROM game_sessions WHERE token_hash = ?').bind(me.th).run(); return accJson(200, { ok: true }); }
+  if (action === 'load') { const s = await db.prepare('SELECT data, rev, updated_at FROM game_saves WHERE account_id = ?').bind(me.id).first(); return accJson(200, { ok: true, username: me.username, rev: s ? s.rev : 0, updatedAt: s ? s.updated_at : 0, data: s ? JSON.parse(s.data) : null }); }
+  if (action === 'save') {
+    if (!body.data || typeof body.data !== 'object' || Array.isArray(body.data)) return accJson(400, { ok: false, code: 'INVALID_SAVE' });
+    const text = JSON.stringify(body.data); if (text.length > ACC.maxSave) return accJson(413, { ok: false, code: 'SAVE_TOO_LARGE' });
+    const base = Number.isInteger(body.rev) ? body.rev : -1;
+    const cur = await db.prepare('SELECT rev FROM game_saves WHERE account_id = ?').bind(me.id).first();
+    if ((cur ? cur.rev : 0) !== base) return accJson(409, { ok: false, code: 'CONFLICT', rev: cur ? cur.rev : 0 });
+    const rev = base + 1;
+    const r = cur ? await db.prepare('UPDATE game_saves SET data = ?, rev = ?, updated_at = ? WHERE account_id = ? AND rev = ?').bind(text, rev, now, me.id, base).run()
+      : await db.prepare('INSERT OR IGNORE INTO game_saves(account_id, data, rev, updated_at) VALUES (?, ?, ?, ?)').bind(me.id, text, rev, now).run();
+    if (!r.meta.changes) return accJson(409, { ok: false, code: 'CONFLICT' });
+    return accJson(200, { ok: true, rev, updatedAt: now });
+  }
+  if (action === 'delete') {
+    const acc = await db.prepare('SELECT pass_hash, salt FROM game_accounts WHERE id = ?').bind(me.id).first();
+    const password = typeof body.password === 'string' ? body.password : '';
+    if (!acc || !sameHex(await pbkdf2(password, acc.salt), acc.pass_hash)) return accJson(401, { ok: false, code: 'WRONG_LOGIN' });
+    await db.batch([db.prepare('DELETE FROM game_saves WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_sessions WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_accounts WHERE id = ?').bind(me.id)]);
+    return accJson(200, { ok: true });
+  }
+  return accJson(400, { ok: false, code: 'INVALID_ACTION' });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     let decodedPath;try{decodedPath=decodeURIComponent(url.pathname);}catch{return new Response('Bad request',{status:400});}
     if (['/_worker.js', '/_headers', '/_routes.json', '/.assetsignore'].includes(decodedPath)) return new Response('Not found', { status: 404 });
     if (url.pathname === '/api/feedback') return new Response('Not found', { status: 404 });
+    if (url.pathname === '/api/account') { try { return await account(request, env, url); } catch { return accJson(503, { ok: false, code: 'ACCOUNTS_UNAVAILABLE' }); } }
     if (url.pathname === '/api/reviews') { try { return await reviews(request, env, url); } catch { return ratingJson(503, { ok: false, code: 'REVIEWS_UNAVAILABLE' }); } }
     if (url.pathname !== '/api/market') return env.ASSETS.fetch(request);
     if (request.method !== 'GET') return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET' } });

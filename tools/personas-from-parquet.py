@@ -5,7 +5,7 @@ Chạy: .cache/venv/Scripts/python tools/personas-from-parquet.py .cache/shard-0
 import json, os, sys
 import pyarrow.parquet as pq
 
-COLS = ['occupation', 'region', 'zone', 'age', 'sex', 'education_level', 'marital_status', 'hobbies_and_interests_list', 'skills_and_expertise_list',
+COLS = ['persona', 'occupation', 'region', 'zone', 'age', 'sex', 'education_level', 'marital_status', 'hobbies_and_interests_list', 'skills_and_expertise_list',
         'culinary_persona', 'cultural_background', 'arts_persona', 'sports_persona', 'travel_persona', 'hobbies_and_interests', 'career_goals_and_ambitions']
 root = os.path.join(os.path.dirname(__file__), '..', '.cache', 'personas')
 os.makedirs(root, exist_ok=True)

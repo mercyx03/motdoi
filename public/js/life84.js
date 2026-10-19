@@ -331,7 +331,7 @@
     ['ty_phu', '💎', 'Tỷ phú', 'Tài sản cuối đời gấp 2.000 lần thu nhập năm bình thường', function (l) { return nw(l) >= 2000; }],
     ['trang_tay', '🕳️', 'Nợ nần chồng chất', 'Ra đi khi tài sản ròng còn âm', function (l) { return dAge(l) >= 25 && E.netWorth(l) < 0; }],
     ['khong_no', '🧾', 'Không nợ ai đồng nào', 'Sống tới 60 tuổi, cuối đời không còn khoản vay nào', function (l) { return dAge(l) >= 60 && !(l.loans || []).some(function (x) { return x.bal > 0; }) && E.netWorth(l) > 0; }],
-    ['an_cu', '🏠', 'An cư lạc nghiệp', 'Có nhà riêng của mình', function (l) { return !!l.ownHouse; }],
+    ['an_cu', '🏠', 'An cư lạc nghiệp', 'Có nhà riêng, trả hết nợ mua nhà, sống tới 40 tuổi', function (l) { return !!l.ownHouse && !((l.mortgage || 0) > 0) && !(l.loans || []).some(function (x) { return x.type === 'home' && x.bal > 0; }) && dAge(l) >= 40; }],
     ['biet_thu', '🏯', 'Biệt thự', 'Sống trong biệt thự', function (l) { return /biệt thự/.test(l.houseType || ''); }],
     ['co_xe', '🚗', 'Có xe riêng', 'Sở hữu xe riêng', function (l) { return !!l.veh; }],
     ['nha_dau_tu', '📈', 'Nhà đầu tư', 'Danh mục cổ phiếu gấp 20 lần thu nhập năm', function (l) { return (l.assets && l.assets.stock || 0) >= l.base * 20; }],

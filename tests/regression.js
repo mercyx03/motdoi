@@ -42,7 +42,7 @@ section('0. Phiên bản & trang');
 {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const refs = html.match(/(?:src|href)="(?:js|css)\/[^"]+"/g) || [];
-  const UI_SCRIPTS = ['js/music.js', 'js/card.js', 'js/app.js']; // chỉ chạy trên trình duyệt
+  const UI_SCRIPTS = ['js/music.js', 'js/card.js', 'js/app.js', 'js/account.js']; // chỉ chạy trên trình duyệt
   ok(refs.length === MODULES.length + UI_SCRIPTS.length + 1, 'index.html nạp đủ ' + (MODULES.length + UI_SCRIPTS.length) + ' script + 1 stylesheet (' + refs.length + ')');
   UI_SCRIPTS.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp ' + m));
   MODULES.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp module ' + m));
@@ -2699,6 +2699,23 @@ section('63. Bản 6.8.0: khai thác sâu Nemotron-Personas-Vietnam, đối chi�
   ok(ids.length >= 120 && new Set(ids).size === ids.length, 'có ' + ids.length + ' thành tựu, không trùng mã');
   ok(ts.includes('Doanh nhân đầu tàu') && ts.includes('Mưu sinh xứ người') && ts.includes('Lá lành đùm lá rách') && !ts.includes('Thuyền trưởng doanh nghiệp') && !ts.includes('Xứ người mưu sinh') && !ts.includes('Bàn tay chìa ra'), 'đổi tên thành tựu theo góp ý');
   ok(fs.existsSync(path.join(ROOT, '..', 'docs', 'persona-calibration.md')), 'có báo cáo đối chiếu mô phỏng');
+}
+section('64. Bản 6.9.0: toàn bộ 1 triệu persona, số liệu theo 34 tỉnh, món đặc trưng đúng tỉnh, tài khoản');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); }, PV = G.PERSONAS_VN;
+  ok(PV.sampled === 1000000, 'dùng toàn bộ 1.000.000 persona');
+  ok(Object.keys(PV.provinces || {}).length === 34 && G.VN.P34.every(p => PV.provinces[p.name] && PV.provinces[p.name].n >= 3000), 'có số liệu cho đủ 34 tỉnh, thành, mỗi nơi từ 3.000 persona');
+  const SP = E.PROVINCE_SPECIALTIES; ok(Object.keys(SP).every(k => G.VN.P34.some(p => p.name === k)), 'đặc sản gắn với đúng tên 34 tỉnh, thành sau sắp xếp');
+  ok(SP['Huế'].includes('cơm hến') && SP['Hải Phòng'].includes('bánh đa cua') && SP['Thanh Hóa'].includes('nem chua') && !(SP['Gia Lai'] || []).includes('cao lầu'), 'đặc sản theo danh sách đã biết rộng rãi, không lấy món sai tỉnh từ dữ liệu tổng hợp');
+  const at = name => { const l = E.createLife({ mode: 'vn', variant: '34', prov: String(G.VN.P34.findIndex(p => p.name === name)), seed: 64000 }); l.age = 30; l.school = null; l.indep = true; l.movedTo = name === 'Hà Nội' ? 'TP. Hồ Chí Minh' : 'Hà Nội'; return l; };
+  let hit = 0; for (let i = 0; i < 30; i++) { const d = E.DEC.pv_mon_que.make(at('Huế'), R(i)); if (/bún bò Huế|cơm hến|bánh bèo|bánh nậm|bánh lọc/.test(d.text)) hit++; ok(!badText(d.text), 'món quê sạch #' + i); }
+  ok(hit >= 15, 'người Huế xa quê nhớ món của Huế (' + hit + '/30)');
+  for (let i = 0; i < 20; i++) { const d = E.DEC.pv_mon_que.make(at('Gia Lai'), R(i)); ok(!/cao lầu/.test(d.text) || !/đặc trưng của Gia Lai/.test(d.text), 'không gán cao lầu là đặc trưng của Gia Lai #' + i); }
+  // tài khoản: tệp và định tuyến
+  const idx = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'), wk = fs.readFileSync(path.join(ROOT, '_worker.js'), 'utf8'), acc = fs.readFileSync(path.join(ROOT, 'js/account.js'), 'utf8');
+  ok(/id="accountBtn"/.test(idx) && /js\/account\.js/.test(idx), 'có nút Tài khoản và mã tài khoản trên trang');
+  ok(/PBKDF2/.test(wk) && /iterations: ACC\.iter/.test(wk) && /sha256\(token\)/.test(wk) && !/console\.log/.test(wk), 'mật khẩu băm PBKDF2, mã phiên chỉ lưu bản băm');
+  ok(!/confirm\(/.test(acc.replace(/\/\/[^\n]*/g, '')) && /Không cần email/.test(acc), 'không dùng hộp confirm của trình duyệt, không thu email');
 }
 function isVNx(l) { return E.isVN(l); }
 

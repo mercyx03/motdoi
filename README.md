@@ -81,6 +81,10 @@ Cloudflare **Workers & Pages** → **Create** → **Pages** → **Connect to Git
 4. Chạy `node tests/regression.js` → đạt 100% mới triển khai.
 5. Dữ liệu cũ của người chơi được nâng cấp qua `E.migrate()` trong `engine.js`.
 
+## Tài khoản người chơi
+- API `/api/account` trong `public/_worker.js`, dùng chung D1 `REVIEWS_DB` (bảng game_accounts, game_sessions, game_saves tự tạo). Không cần cấu hình thêm.
+- Mật khẩu băm PBKDF2-SHA256 100.000 vòng; mã phiên chỉ lưu bản băm. Không thu email.
+
 ## Sao lưu đánh giá
 - `npm run backup:reviews` — tải toàn bộ đánh giá công khai về `backups/reviews-NGÀY.json`.
 - `npm run backup:reviews -- --d1` — xuất nguyên database D1 (cần `npx wrangler login` trước) về `backups/reviews-NGÀY.sql`.

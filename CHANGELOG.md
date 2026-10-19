@@ -1,3 +1,28 @@
+## v6.9.0 — Tài khoản & lưu tiến trình; dùng toàn bộ 1 triệu persona Nemotron-Personas-Vietnam, số liệu theo 34 tỉnh
+
+- **Tài khoản và lưu tiến trình** (nút 👤 Tài khoản trên trang chủ):
+  - Tạo tài khoản chỉ với tên đăng nhập và mật khẩu, không cần email hay thông tin cá nhân.
+  - Lưu lên tài khoản: thành tựu, gia phả, đài tưởng niệm, các đời gần đây và cuộc đời đang chơi. Chơi tiếp trên điện thoại, máy tính khác chỉ cần đăng nhập.
+  - Tự đồng bộ mỗi khi một đời khép lại hoặc khi lưu vào đài tưởng niệm; có nút "Đồng bộ ngay".
+  - Khi đăng nhập trên máy đã có dữ liệu, hai bên được **gộp lại**, không mất cái nào (thành tựu cộng dồn, gia phả và đài tưởng niệm gộp theo từng đời); cuộc đời đang chơi lấy bản mới hơn. Đang chơi dở thì không bị ghi đè.
+  - Bảo mật:
+    - Mật khẩu băm PBKDF2-SHA256 (100.000 vòng, salt riêng từng tài khoản); máy chủ không lưu mật khẩu gốc.
+    - Mã phiên đăng nhập ngẫu nhiên, máy chủ chỉ lưu bản băm.
+    - Sai mật khẩu 8 lần thì khóa 15 phút; giới hạn số lần đăng nhập trên một địa chỉ IP.
+    - Chặn lưu đè bản cũ khi chơi trên hai máy cùng lúc.
+  - Có thể đăng xuất, hoặc xóa vĩnh viễn tài khoản (phải nhập mật khẩu, bấm hai lần để xác nhận). Dữ liệu trên máy vẫn giữ nguyên.
+  - Dùng chung database D1 của trang đánh giá (`REVIEWS_DB`), không cần cài đặt thêm.
+- **Toàn bộ 1.000.000 persona Nemotron-Personas-Vietnam** (trước: 181.819):
+  - Có số liệu riêng cho **đủ 34 tỉnh, thành** (mỗi nơi từ 4.400 persona trở lên), dựa vào địa danh được nhắc trong mô tả persona.
+  - **Món quê theo đúng tỉnh**, ví dụ:
+    - Huế: bún bò Huế, cơm hến, bánh bèo, bánh nậm, bánh lọc.
+    - Hải Phòng: bánh đa cua. Thanh Hóa: nem chua. Đà Nẵng: mì Quảng, cao lầu.
+    - Lào Cai, Tuyên Quang: thắng cố. Sơn La, Điện Biên, Lai Châu: thịt trâu gác bếp, cơm lam.
+    - Cần Thơ: bánh pía, bún nước lèo. TP. Hồ Chí Minh: cơm tấm, bánh khọt…
+  - Món đặc trưng lấy theo danh sách đặc sản đã được biết rộng rãi của 34 tỉnh sau sắp xếp. Dữ liệu tổng hợp đôi khi gán nhầm món của tỉnh khác (ví dụ cao lầu ở Gia Lai), nên chỉ dùng để xếp món nào hay được nhắc hơn.
+- Thành tựu "An cư lạc nghiệp" nay cần có nhà riêng, đã trả hết nợ mua nhà và sống tới 40 tuổi (trước đây gần 9/10 số đời đều mở được).
+- Thêm mục kiểm thử hồi quy 64 và tests/update690.js (34 kiểm tra cho tài khoản: băm mật khẩu, khóa khi sai nhiều lần, chống ghi đè, xóa sạch dữ liệu, gộp dữ liệu hai máy).
+
 ## v6.8.0 — Khai thác sâu Nemotron-Personas-Vietnam, đối chiếu mô phỏng với dữ liệu thật, thêm thành tựu
 
 - **Dữ liệu lớn hơn nhiều:**

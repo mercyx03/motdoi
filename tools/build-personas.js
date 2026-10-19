@@ -33,9 +33,17 @@ const ARTS = [['chèo', /\bchèo\b/], ['tuồng', /\btuồng\b/], ['cải lươn
 const GOALS = [['mở cửa hàng, cơ sở riêng', /mở (một |thêm )?(cửa hàng|quán|tiệm|xưởng|cơ sở|doanh nghiệp|công ty|tiệm)/], ['thăng tiến lên vị trí quản lý', /thăng (chức|tiến)|vị trí quản lý|trưởng (phòng|nhóm|bộ phận)/], ['nâng cao tay nghề, học thêm', /nâng cao (tay nghề|trình độ|kỹ năng|chuyên môn)|học thêm|chứng chỉ/], ['ổn định thu nhập cho gia đình', /ổn định (thu nhập|công việc|cuộc sống)/], ['lo cho con ăn học đến nơi đến chốn', /cho (các )?con (ăn học|học|đi học)|con cái (ăn học|học hành)/], ['có nhà riêng', /mua nhà|xây nhà|căn hộ riêng|nhà riêng/], ['nghỉ hưu an nhàn, giữ sức khỏe', /nghỉ hưu|an nhàn|tuổi già/], ['mở rộng việc làm ăn, bán hàng online', /mở rộng|kinh doanh online|bán hàng online|thương hiệu riêng/], ['đi làm việc hoặc học ở nước ngoài', /nước ngoài|xuất khẩu lao động|du học/], ['truyền nghề cho thế hệ sau', /truyền (nghề|lại kinh nghiệm|kinh nghiệm)|thế hệ (sau|trẻ)/], ['làm nông nghiệp sạch, hữu cơ', /hữu cơ|nông nghiệp sạch|vietgap|nông nghiệp công nghệ cao/], ['tìm được công việc ổn định', /tìm (được |kiếm )?(việc làm|công việc)/], ['có khoản tiết kiệm dự phòng', /tiết kiệm|dự phòng/]];
 function hits(text, dict) { const t = String(text || '').toLowerCase(); return dict.filter(d => d[1].test(t)).map(d => d[0]); }
 function placeHits(text) { const t = String(text || ''); return PLACES.filter(p => t.includes(p)); }
+// v6.9: tỉnh / thành phố (34 đơn vị sau sắp xếp 2025) được nhắc trong phần mô tả persona
+const vmod = require('vm'), vctx = { console, Math, JSON }; vctx.globalThis = vctx; vmod.createContext(vctx);
+['util', 'data-vn'].forEach(f => vmod.runInContext(fs.readFileSync(path.join(__dirname, '..', 'public', 'js', f + '.js'), 'utf8'), vctx));
+const VN = vctx.G.VN, PROV = {};
+VN.P34.forEach(p => { PROV[p.name] = p.name; }); VN.P63.forEach(p => { if (!PROV[p.name]) PROV[p.name] = p.newName || p.name; });
+PROV['Thành phố Hồ Chí Minh'] = PROV['TP. Hồ Chí Minh'] || 'TP. Hồ Chí Minh'; PROV['TP.HCM'] = PROV['Thành phố Hồ Chí Minh']; PROV['Sài Gòn'] = PROV['Thành phố Hồ Chí Minh'];
+const PROV_RE = new RegExp('(?:tỉnh|thành phố|TP\\.?|ở|tại|vùng|quê|đất|miền)\\s+(' + Object.keys(PROV).sort((a, b) => b.length - a.length).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')(?![\\p{L}])', 'u');
+function provinceOf(x) { const m = PROV_RE.exec(String(x.persona || '') + ' ' + String(x.cultural_background || '')); return m ? PROV[m[1]] : null; }
 async function pool(n, conc, fn) { let i = 0; const run = async () => { while (i < n) { const k = i++; await fn(k); } }; await Promise.all(Array.from({ length: conc }, run)); }
 (async () => {
-  const agg = {}, skills = {}, goalsJob = {}, edu = {}, mar = {}, CACHE = path.join(__dirname, '..', '.cache', 'personas'); let n = 0, done = 0;
+  const agg = {}, prov = {}, skills = {}, goalsJob = {}, edu = {}, mar = {}, CACHE = path.join(__dirname, '..', '.cache', 'personas'); let n = 0, done = 0;
   fs.mkdirSync(CACHE, { recursive: true });
   function add(x) {
     const R = REG[x.region]; if (!R) return; n++;
@@ -52,10 +60,11 @@ async function pool(n, conc, fn) { let i = 0; const run = async () => { while (i
     const sk = skills[x.occupation] || (skills[x.occupation] = {}); list(x.skills_and_expertise_list).forEach(s => { s = norm(s); if (s.length <= 45) inc(sk, s); });
     const ek = R + '_' + b, ed = edu[ek] || (edu[ek] = {}); inc(ed, x.education_level);
     const mk = z + '_' + b, mr = mar[mk] || (mar[mk] = {}); inc(mr, x.marital_status);
+    const pv = provinceOf(x); if (pv) { const q = prov[pv] || (prov[pv] = { n: 0, job: {}, hob: {}, dish: {}, sport: {}, art: {} }); q.n++; inc(q.job, x.occupation); list(x.hobbies_and_interests_list).forEach(h => { h = norm(h); if (h.length <= 40) inc(q.hob, h); }); DISHES.forEach(d => { if (food.includes(d.toLowerCase())) inc(q.dish, d); }); hits(x.sports_persona, SPORTS).forEach(t => inc(q.sport, t)); hits(String(x.arts_persona || ''), ARTS).forEach(t => inc(q.art, t)); }
   }
   // ưu tiên dữ liệu đọc từ file parquet (tools/personas-from-parquet.py); không có thì lấy mẫu qua API
   const local = fs.existsSync(CACHE) ? fs.readdirSync(CACHE).filter(f => /^rows-.*\.jsonl$/.test(f)) : [];
-  if (local.length) { for (const f of local) { const lines = fs.readFileSync(path.join(CACHE, f), 'utf8').split('\n'); for (const ln of lines) if (ln.trim()) add(JSON.parse(ln)); console.log('Đọc ' + f + ' · ' + n + ' persona'); } }
+  if (local.length) { const readline = require('readline'); for (const f of local) { const rl = readline.createInterface({ input: fs.createReadStream(path.join(CACHE, f), { encoding: 'utf8' }), crlfDelay: Infinity }); for await (const ln of rl) if (ln.trim()) add(JSON.parse(ln)); console.log('Đọc ' + f + ' · ' + n + ' persona'); } }
   else await pool(PAGES, +process.env.CONC || 1, async i => {
     const file = path.join(CACHE, 'p' + i + '.json'); let rows;
     if (fs.existsSync(file)) rows = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -71,6 +80,7 @@ async function pool(n, conc, fn) { let i = 0; const run = async () => { while (i
   });
   Object.keys(skills).sort().forEach(j => { const t = top(skills[j], 6, 2); if (t.length) out.skills[j] = t.map(x => x[0]); });
   Object.keys(goalsJob).sort().forEach(j => { const t = top(goalsJob[j], 3, 3); if (t.length) out.goalsByJob[j] = t.map(x => x[0]); });
+  out.provinces = {}; Object.keys(prov).sort().forEach(k => { const q = prov[k]; if (q.n < 300) return; ['bún', 'bánh', 'cháo', 'mắm'].forEach(g => { delete q.dish[g]; }); out.provinces[k] = { n: q.n, job: top(q.job, 25, 3), hob: top(q.hob, 25, 3), dish: top(q.dish, 20, 3), sport: top(q.sport, 12, 3), art: top(q.art, 15, 3) }; });
   Object.keys(edu).sort().forEach(k => { out.edu[k] = edu[k]; }); Object.keys(mar).sort().forEach(k => { out.marital[k] = mar[k]; });
   const js = '/* Dữ liệu được chọn lọc, chuyển đổi và điều chỉnh từ Nemotron-Personas-Vietnam (NVIDIA Corporation cùng FPT Smart Cloud và Viện Quantum AI & Cyber Security, FPT Corporation), giấy phép CC BY 4.0: https://creativecommons.org/licenses/by/4.0/\n   NVIDIA và các đơn vị phát triển dữ liệu không tài trợ, bảo trợ hoặc xác nhận trò chơi Một Đời.\n   Số liệu tổng hợp từ ' + out.source + '\n   Lấy mẫu ' + n + ' persona (' + out.builtAt + '), tạo bằng tools/build-personas.js. Chỉ gồm tần suất, không chép nội dung persona. */\n' +
     '(function (G) { G.PERSONAS_VN = ' + JSON.stringify(out) + '; })(typeof window !== \'undefined\' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));\n';

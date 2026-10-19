@@ -1,5 +1,9 @@
 {
   "version": 1,
-  "include": ["/api/market", "/api/reviews"],
+  "include": [
+    "/api/market",
+    "/api/reviews",
+    "/api/account"
+  ],
   "exclude": []
 }

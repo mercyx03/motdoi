@@ -87,6 +87,25 @@
     ] });
   T('vn_giuc_cuoi', function (l, a) { var p = l.partner; return vn(l) && a >= 23 && a <= 45 && !!p && p.alive !== false && p.status === 'dating' && a - (p.since || a) >= 2; }, 0.35, 2, 4, true);
 
+
+  // 7. v6.9: số liệu theo từng tỉnh / thành (34 đơn vị) — món đặc trưng của đúng tỉnh mình
+  var PR = PV.provinces || {};
+  function provKey(l) { if (!l.prov) return null; if (l.prov.neu && PR[l.prov.neu]) return l.prov.neu; var p = G.VN && G.VN.byName && G.VN.byName[l.prov.old]; return p && PR[p.newName] ? p.newName : PR[l.prov.old] ? l.prov.old : null; }
+  // đặc sản đã được biết rộng rãi của từng tỉnh (34 đơn vị sau sắp xếp 2025, kể cả phần sáp nhập); dữ liệu persona chỉ dùng để xếp món nào hay được nhắc hơn
+  var SPECIAL = { 'Hà Nội': ['phở', 'bún chả', 'chả cá', 'bánh cuốn'], 'Huế': ['bún bò Huế', 'cơm hến', 'bánh bèo', 'bánh nậm', 'bánh lọc'], 'Hải Phòng': ['bánh đa cua'], 'Đà Nẵng': ['mì Quảng', 'cao lầu', 'bánh tráng'], 'Thanh Hóa': ['nem chua'], 'Nghệ An': ['lươn'], 'Khánh Hòa': ['bún cá', 'bánh căn'], 'Lâm Đồng': ['bánh căn'], 'Gia Lai': ['bún cá', 'bánh xèo'], 'Tây Ninh': ['bánh tráng'], 'Đắk Lắk': ['cà phê'], 'Lào Cai': ['thắng cố', 'lẩu thắng cố'], 'Tuyên Quang': ['thắng cố', 'lẩu thắng cố'], 'Sơn La': ['thịt trâu gác bếp', 'cơm lam'], 'Điện Biên': ['thịt trâu gác bếp', 'cơm lam'], 'Lai Châu': ['thịt trâu gác bếp', 'cơm lam'], 'Lạng Sơn': ['heo quay', 'vịt'], 'Ninh Bình': ['phở'], 'Vĩnh Long': ['bún nước lèo'], 'Cần Thơ': ['bánh pía', 'bún nước lèo'], 'Đồng Tháp': ['hủ tiếu'], 'Cà Mau': ['bánh tằm'], 'An Giang': ['bún cá', 'nước mắm'], 'TP. Hồ Chí Minh': ['cơm tấm', 'hủ tiếu', 'bánh khọt'], 'Thái Nguyên': ['trà'], 'Phú Thọ': ['cơm lam'] };
+  E.PROVINCE_SPECIALTIES = SPECIAL;
+  function signature(k) { var sp = SPECIAL[k]; if (!sp) return []; var q = PR[k], cnt = {}; (q && q.dish || []).forEach(function (x) { cnt[x[0]] = x[1]; }); return sp.map(function (dn) { return [dn, (cnt[dn] || 0) + 1]; }).sort(function (a, b) { return b[1] - a[1]; }); }
+  E.PERSONA.province = provKey; E.PERSONA.signatureDishes = signature;
+  var MQ = E.DEC.pv_mon_que;
+  if (MQ) {
+    var mqMake = MQ.make;
+    MQ.make = function (l, r) {
+      var d = mqMake.apply(this, arguments), k = provKey(l) || (l.prov && (l.prov.neu || l.prov.old)), sig = k ? signature(k) : [];
+      if (d.data && !d.data.none && sig.length && r() < 0.7) { var dish = wpick(r, sig); if (dish) { d.data.d = dish; d.data.prov = k; d.text = d.text.replace(/món [^—]+ —/, 'món ' + dish + ' —').replace(/món quen thuộc của [^.]+\./, 'món đặc trưng của ' + (l.variant === '63' && l.prov && l.prov.old && l.prov.old !== k ? 'quê bạn' : k) + '.'); } }
+      return d;
+    };
+  }
+
   // 5. thêm thành tựu
   function lg(l, re) { return (l.log || []).some(function (e) { return e && re.test(e.t); }); }
   function dAge(l) { return l.death ? l.death.age : l.age; }

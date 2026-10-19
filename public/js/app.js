@@ -433,7 +433,9 @@
     ['balance', 'Cân bằng', 'Cân bằng công việc, sức khỏe, gia đình và trau dồi kỹ năng: mọi chỉ số tăng nhẹ, thăng tiến đều đặn mà không kiệt sức.', null, null, 21]
   ];
 
-  function persist() { if (S.life) LS.set(K.cur, { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto }); }
+  function persist() { if (S.life) LS.set(K.cur, { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto, at: Date.now() }); }
+  // v6.9: cho phần tài khoản biết người chơi đang ở giữa một đời (không ghi đè) và làm mới trang chủ sau khi đồng bộ
+  window.G.App = { inLife: function () { var el = document.getElementById('life'); return !!(S.life && S.life.alive && el && el.classList.contains('active')); }, refresh: function () { var h = document.getElementById('home'); if (h && h.classList.contains('active')) renderHome(); } };
 
   function resumeLife(cur) {
     S.life = migrate(cur.life); S.cohort = cur.cohort || []; S.speed = cur.speed || 1; S.auto = !!cur.auto; S.skipping = false; S.paused = false;
@@ -1252,6 +1254,7 @@
         got.forEach(function (a) { if (!store[a.id]) { store[a.id] = { at: Date.now(), n: l.name }; S.newAch.push(a.id); } }); LS.set(K.ach, store); S.lifeAch = got; }
       if (E.treeRecord) { var tree = LS.get(K.tree, []); if (!Array.isArray(tree)) tree = []; var rec = E.treeRecord(l); tree = tree.filter(function (x) { return x && x.id !== rec.id; }); tree.push(rec);
         if (rec.pid) tree.forEach(function (x) { if (x.id === rec.pid) x.cont = rec.n; }); if (tree.length > 400) tree = tree.slice(-400); LS.set(K.tree, tree); }
+      if (G.Account) G.Account.autoSync();
     } catch (e) { if (window.console) console.error(e); }
   }
   function lineage(id) { var tree = LS.get(K.tree, []); if (!Array.isArray(tree)) return []; var by = {}; tree.forEach(function (x) { if (x && x.id) by[x.id] = x; }); var out = [], cur = by[id], guard = 0; while (cur && guard++ < 50) { out.unshift(cur); cur = cur.pid ? by[cur.pid] : null; } return out; }
@@ -1351,7 +1354,7 @@
       if (mem.some(function (m) { return m.id === l.id; })) mem = mem.filter(function (m) { return m.id !== l.id; });
       mem.push({ id: l.id, name: l.name, sub: l.nameSub, where: memWhere(l), years: lifeYears(l), age: l.death.age, cause: l.death.cause, summary: E.obituary(l), words: l.finalWords, refl: l.refl, yrs: l.yrs, e0sex: l.e0sex, age2: l.age, savedAt: Date.now(), fin: stages });
       if (mem.length > 60) mem = mem.slice(-60);
-      if (LS.set(K.mem, mem)) { toast('Đã lưu vào đài tưởng niệm'); this.disabled = true; this.textContent = 'Đã lưu ✓'; }
+      if (LS.set(K.mem, mem)) { toast('Đã lưu vào đài tưởng niệm'); this.disabled = true; this.textContent = 'Đã lưu ✓'; if (G.Account) G.Account.autoSync(); }
       else toast('Không lưu được (bộ nhớ trình duyệt bị chặn hoặc đầy)');
     };
   }
