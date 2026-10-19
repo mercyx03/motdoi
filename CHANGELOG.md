@@ -1,3 +1,13 @@
+## v6.5.1 — Xem hết review, lọc theo số sao
+
+- **Trang đánh giá:**
+  - Xem được toàn bộ review: nút **"Xem tất cả"** tải hết các đánh giá; vẫn giữ nút "Xem thêm" để tải từng trang.
+  - Lọc theo số sao: bấm các nút **Tất cả · 5 ★ · 4 ★ · 3 ★ · 2 ★ · 1 ★** (có ghi số lượt), hoặc bấm thẳng vào thanh sao ở bảng điểm.
+  - Tích **"Chỉ xem đánh giá có viết nội dung"** để bỏ qua các lượt chỉ chấm sao.
+  - Hiện "Đang hiện X / Y" để biết đã xem tới đâu. Mở được thẳng bộ lọc qua đường dẫn, ví dụ `reviews.html?stars=5`.
+- Máy chủ hỗ trợ lọc theo sao, chỉ review có nội dung, và tải tối đa 100 review mỗi lần; tham số sai bị chặn.
+- Thêm bài kiểm thử tests/update651.js.
+
 ## v6.5.0 — Chú mèo đi theo bạn, tuổi thơ đa dạng hơn, di chúc chia theo tỉ lệ, các con khi bạn ra đi, thừa kế đời con
 
 - **Sửa lỗi chú mèo trên cây:** trước đây game báo "được mang mèo về nuôi" nhưng nhiều khi nhà lại không có mèo. Nay cứu mèo xong, chú mèo mến bạn và lẽo đẽo đi theo, có vẻ muốn về với bạn. Bạn chọn ôm mèo về (nhà có mèo thật, hiện trong mục gia đình và được đặt tên), nhờ bạn cùng lớp nuôi giúp, hoặc để nó ở lại trường.

@@ -32,14 +32,24 @@ async function reviews(request, env, url) {
   if (request.method === 'GET') {
     const raw = url.searchParams.get('offset') || '0';
     if (!/^\d{1,7}$/.test(raw)) return ratingJson(400, { ok: false, code: 'INVALID_OFFSET' });
+    // v6.5.1: lọc theo số sao (?stars=1..5), chỉ review có nội dung (?text=1), số dòng mỗi trang (?limit=1..100)
+    const starsRaw = url.searchParams.get('stars') || '', limitRaw = url.searchParams.get('limit') || '20', textOnly = url.searchParams.get('text') === '1';
+    if (starsRaw && !/^[1-5]$/.test(starsRaw)) return ratingJson(400, { ok: false, code: 'INVALID_STARS' });
+    if (!/^\d{1,3}$/.test(limitRaw) || +limitRaw < 1 || +limitRaw > 100) return ratingJson(400, { ok: false, code: 'INVALID_LIMIT' });
     await initRatings(db);
+    const where = [], args = [];
+    if (starsRaw) { where.push('stars = ?'); args.push(Number(starsRaw)); }
+    if (textOnly) where.push("review_text <> ''");
+    const cond = where.length ? ' WHERE ' + where.join(' AND ') : '';
     const rows = await db.batch([
       db.prepare('SELECT stars, COUNT(*) AS count FROM game_ratings GROUP BY stars'),
-      db.prepare('SELECT stars, updated_at, review_text FROM game_ratings ORDER BY updated_at DESC, voter_hash LIMIT 20 OFFSET ?').bind(Number(raw))
+      db.prepare('SELECT stars, updated_at, review_text FROM game_ratings' + cond + ' ORDER BY updated_at DESC, voter_hash LIMIT ? OFFSET ?').bind(...args, Number(limitRaw), Number(raw)),
+      db.prepare('SELECT COUNT(*) AS count FROM game_ratings' + cond).bind(...args)
     ]);
     const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; let total = 0, sum = 0;
     for (const row of rows[0].results) { distribution[row.stars] = row.count; total += row.count; sum += row.stars * row.count; }
-    return ratingJson(200, { ok: true, total, average: total ? sum / total : 0, distribution, reviews: rows[1].results.map(x => ({ stars: x.stars, updatedAt: x.updated_at, review: x.review_text || '' })) });
+    const matched = Number((rows[2].results[0] || {}).count || 0);
+    return ratingJson(200, { ok: true, total, matched, average: total ? sum / total : 0, distribution, reviews: rows[1].results.map(x => ({ stars: x.stars, updatedAt: x.updated_at, review: x.review_text || '' })) });
   }
   if (!(request.headers.get('Content-Type') || '').toLowerCase().startsWith('application/json')) return ratingJson(415, { ok: false, code: 'CONTENT_TYPE' });
   let data;
