@@ -349,7 +349,7 @@
     ['phi_cong', '🛫', 'Bầu trời', 'Làm phi công', function (l) { return /phi công|cơ trưởng/.test(titles(l)); }],
     ['giao_vien', '🍎', 'Người lái đò', 'Làm thầy cô giáo', function (l) { return /giáo viên|giảng viên/.test(titles(l)); }],
     ['nguoi_linh', '🎖️', 'Người lính', 'Phục vụ trong quân đội hoặc công an', function (l) { return /quân đội|công an|sĩ quan|chiến sĩ|thiếu úy|đại úy|thiếu tá|đại tá|binh/.test(titles(l)) || !!(royal(l) && royal(l).mil); }],
-    ['ceo', '🏢', 'Thuyền trưởng doanh nghiệp', 'Làm tổng giám đốc / chủ tịch', function (l) { return /tổng giám đốc|chủ tịch tập đoàn|chủ tịch hội đồng quản trị/.test(titles(l)); }],
+    ['ceo', '🏢', 'Doanh nhân đầu tàu', 'Làm tổng giám đốc / chủ tịch', function (l) { return /tổng giám đốc|chủ tịch tập đoàn|chủ tịch hội đồng quản trị/.test(titles(l)); }],
     ['ong_chu', '🧰', 'Ông chủ', 'Tự làm chủ cơ sở kinh doanh', function (l) { return /^chủ |chủ quán|chủ nhà hàng|chủ tiệm|chủ chuỗi|chủ xưởng|chủ doanh nghiệp/.test(titles(l)); }],
     ['nong_dan', '🌾', 'Gắn bó ruộng đồng', 'Làm nông', function (l) { return /nông dân|làm nông|chủ trang trại|làm ruộng|làm nương|chăn nuôi/.test(titles(l)); }],
     ['nghe_si', '🎤', 'Người của công chúng', 'Trở nên nổi tiếng', function (l) { return (l.fame || 0) >= 100000; }],
@@ -378,7 +378,7 @@
     ['sa_nga', '🍾', 'Sa ngã', 'Từng nghiện rượu, cờ bạc hoặc ma túy', function (l) { var a = l.addict || {}; return !!(a.alcohol || a.gamble || a.drugs) || lg(l, /cai nghiện/); }],
     ['len_pho', '🌆', 'Lên phố lập nghiệp', 'Rời quê lên thành phố sống', function (l) { return !!l.movedTo; }],
     ['la_rung', '🍂', 'Lá rụng về cội', 'Về già trở về quê sống', function (l) { return lg(l, /Trở về quê, dựng lại căn nhà/); }],
-    ['xkld', '🧳', 'Xứ người mưu sinh', 'Đi làm việc ở nước ngoài', function (l) { return lg(l, /xuất khẩu lao động/) || !!(l.abroad && !l.abroad.perm && !l.abroad.study); }],
+    ['xkld', '🧳', 'Mưu sinh xứ người', 'Đi làm việc ở nước ngoài', function (l) { return lg(l, /xuất khẩu lao động/) || !!(l.abroad && !l.abroad.perm && !l.abroad.study); }],
     ['quoc_tich', '🛂', 'Công dân mới', 'Nhập quốc tịch nước khác', function (l) { return (l.flags.citizen || []).length > 0; }],
     ['fan_cung', '💖', 'Fan cứng', 'Có thần tượng để theo đuổi', function (l) { return !!l.idol; }],
     ['tien_tri_tien', '💵', 'Đúng lời tiên tri', 'Thôi nôi bốc tờ tiền, lớn lên giàu thật', function (l) { return lg(l, /Nắm chặt tờ tiền/) && nw(l) >= 100; }],
@@ -386,10 +386,11 @@
     ['thu_20_nam', '✉️', 'Thư từ quá khứ', 'Đọc lại lá thư viết gửi chính mình 20 năm trước', function (l) { return lg(l, /lá thư (bạn viết|năm lớp|viết vội)/); }],
     ['nguoi_hung', '🦸', 'Người hùng thầm lặng', 'Cứu một người gặp nạn', function (l) { return lg(l, /Người bị nạn được cứu kịp|Xe cấp cứu đến kịp lúc|qua cơn nguy kịch/); }],
     ['chu_toan', '🖋️', 'Chu toàn', 'Viết di chúc trước khi ra đi', function (l) { return !!l.flags.will70; }],
-    ['tu_tu', '🤝', 'Bàn tay chìa ra', 'Ủng hộ, quyên góp từ thiện thời thơ ấu', function (l) { return lg(l, /Đập heo đất ủng hộ|Góp một nửa số tiền để dành|Gom cả thùng sách vở/); }],
+    ['tu_tu', '🤝', 'Lá lành đùm lá rách', 'Ủng hộ, quyên góp từ thiện thời thơ ấu', function (l) { return lg(l, /Đập heo đất ủng hộ|Góp một nửa số tiền để dành|Gom cả thùng sách vở/); }],
     ['ca_si_nhi', '🎶', 'Ca sĩ nhí', 'Lên sân khấu hát khi còn nhỏ', function (l) { return lg(l, /Hát lạc tông nhưng cả hội trường/); }]
   );
   E.ACHIEVEMENTS = ACH.map(function (a) { return { id: a[0], icon: a[1], t: a[2], d: a[3] }; });
+  E.addAchievements = function (list) { list.forEach(function (a) { if (ACH.some(function (x) { return x[0] === a[0]; })) return; ACH.push(a); E.ACHIEVEMENTS.push({ id: a[0], icon: a[1], t: a[2], d: a[3] }); }); };
   E.achievementsOf = function (l) { return ACH.filter(function (a) { try { return !!a[4](l); } catch (e) { return false; } }).map(function (a) { return { id: a[0], icon: a[1], t: a[2], d: a[3] }; }); };
   // ảnh thẻ / link chia sẻ có kèm thành tựu và danh hiệu
   if (E.share && E.share.summary) {

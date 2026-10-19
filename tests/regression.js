@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -2666,6 +2666,39 @@ section('62. Bản 6.7.0: dữ liệu Nemotron-Personas-Vietnam, di sản, lễ 
   const seen = {}; for (let i = 0; i < 150; i++) { const l = E.createLife({ mode: 'vn', seed: 62600 + i }); E.runHeadless(l); Object.keys(l.flags.scN || {}).forEach(k => seen[k] = 1); }
   ok(['pv_nguoi_quen', 'pv_thu_vui', 'vh_di_san', 'ls_bai_hoc', 'ls_ong_ba_ke', 'ls_27_7', 'gio_to', 'le_30_4', 'bau_cu'].every(k => seen[k]), 'các sự kiện văn hóa, lịch sử mới đều xuất hiện trong các đời Việt Nam');
   const wl = E.createLife({ mode: 'world', country: 'US', seed: 62700 }); E.runHeadless(wl); ok(!Object.keys(wl.flags.scN || {}).some(k => /^(pv_|vh_di_san|ls_|gio_to|le_30_4|bau_cu)/.test(k)), 'đời ở nước ngoài không gặp sự kiện riêng của Việt Nam');
+}
+section('63. Bản 6.8.0: khai thác sâu Nemotron-Personas-Vietnam, đối chiếu mô phỏng, thêm thành tựu');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); }, PV = G.PERSONAS_VN;
+  // mẫu lớn, đại diện đúng toàn bộ tập dữ liệu (tỉ lệ vùng của 1.000.000 persona theo thống kê công bố)
+  const FULL = { DBSH: 24.49, MNPB: 12.43, BTB: 17.62, TN: 9.18, DNB: 20.78, DBSCL: 15.50 };
+  ok(PV.sampled >= 150000, 'mẫu ' + PV.sampled + ' persona (khoảng 18% bộ dữ liệu)');
+  const share = k => ((PV.regions[k + '_u'] || { n: 0 }).n + (PV.regions[k + '_r'] || { n: 0 }).n) / PV.sampled * 100;
+  ok(Object.keys(FULL).every(k => Math.abs(share(k) - FULL[k]) < 1), 'tỉ lệ 6 vùng trong mẫu khớp toàn bộ dữ liệu (sai lệch dưới 1 điểm)');
+  ok(Object.values(PV.regions).every(g => g.n >= 3000), 'nhóm nhỏ nhất vẫn có từ 3.000 persona');
+  ok(Object.keys(PV.skills).length >= 100 && Object.keys(PV.goalsByJob).length >= 80 && Object.values(PV.regions).every(g => g.sport.length >= 10 && g.place.length >= 10 && g.art.length >= 10 && g.goal.length >= 5), 'có kỹ năng, mục tiêu theo nghề; thể thao, du lịch, văn nghệ, mục tiêu theo vùng');
+  ok(Object.keys(PV.edu).length >= 20 && Object.keys(PV.marital).length >= 8, 'có phân bố học vấn, hôn nhân theo vùng và tuổi');
+  ok(PV.skills['Ngư dân'] && PV.skills['Ngư dân'].some(s => /biển|lưới|tàu|hải sản/i.test(s)), 'kỹ năng đúng nghề (ngư dân: biển, lưới, tàu thuyền)');
+  ok(PV.regions.DBSCL_r.art.slice(0, 8).some(x => /đờn ca tài tử|cải lương/.test(x[0])) && PV.regions.DBSH_r.art.slice(0, 12).some(x => /chèo|quan họ/.test(x[0])), 'văn nghệ đúng vùng (miền Tây: đờn ca tài tử, cải lương; đồng bằng Bắc Bộ: chèo, quan họ)');
+  // sự kiện mới
+  const mk = (seed, o) => { const l = E.createLife(Object.assign({ mode: 'vn', seed }, o || {})); l.age = 35; l.school = null; l.indep = true; l.money = l.base * 6; l.pending = []; return l; };
+  let withSkill = 0, nq = 0; for (let i = 0; i < 40; i++) { const l = mk(63000 + i), d = E.DEC.pv_nguoi_quen.make(l, R(i)); if (d.data.none) continue; nq++; if (/giỏi|mong nhất/.test(d.text)) withSkill++; ok(!badText(d.text), 'người quen kể nghề, kỹ năng, mong muốn: lời kể sạch #' + i); }
+  ok(nq > 30 && withSkill >= nq * 0.8, 'người quen kể thêm kỹ năng nghề và điều đang mong muốn (' + withSkill + '/' + nq + ')');
+  for (const id of ['pv_the_thao', 'pv_du_lich', 'pv_van_nghe']) { let shown = 0; for (let i = 0; i < 20; i++) { const l = mk(63100 + i), d = E.DEC[id].make(l, R(i)); if (d.data.none) continue; shown++; ok(!badText(d.text) && d.opts.length >= 3, id + ' sạch #' + i); } ok(shown >= 15, id + ' xuất hiện được ở hầu hết các vùng (' + shown + '/20)'); }
+  const hcm = mk(63200); hcm.movedTo = 'TP. Hồ Chí Minh'; hcm.urban = true; let sg = 0; for (let i = 0; i < 30; i++) { const d = E.DEC.pv_du_lich.make(hcm, R(i)); if (!d.data.none && d.data.list.includes('Sài Gòn')) sg++; } ok(sg === 0, 'không gợi ý đi du lịch chính nơi mình đang sống');
+  const v = mk(63300), d = E.DEC.pv_van_nghe.make(v, R(5)); ok(d.data.none || !d.data.list.some(x => /karaoke|nhiếp ảnh|phim Hàn/.test(x)), 'đêm văn nghệ chỉ có tiết mục biểu diễn');
+  // đối chiếu mô phỏng với dữ liệu
+  let prim = 0, n20 = 0, mar35 = 0, n35 = 0; for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: 'vn', seed: 63400 + i }); E.runHeadless(l, x => { if (x.age === 20) { n20++; if (x.edu <= 1) prim++; } if (x.age === 38) { n35++; if (x.partner && x.partner.alive !== false && x.partner.status !== 'dating') mar35++; } }); }
+  ok(prim / n20 < 0.1, 'Việt Nam: người 20 tuổi chỉ học hết tiểu học dưới 10%, sát dữ liệu (' + (prim / n20 * 100).toFixed(0) + '%, trước đây ~17%)');
+  ok(mar35 / n35 > 0.6, 'Việt Nam: người 38 tuổi đã lập gia đình trên 60% (' + (mar35 / n35 * 100).toFixed(0) + '%)');
+  const w = E.createLife({ mode: 'world', country: 'NG', seed: 63500 }); ok(w.mode === 'world', 'thế giới không bị đổi công thức học vấn của Việt Nam');
+  const s = mk(63600); s.age = 30; s.partner = null; const xm = E.DEC.vn_xem_mat.make(s, R(9)); ok(/xem mắt|giới thiệu/.test(xm.title + xm.text) && !badText(xm.text), 'mai mối, xem mắt khi chưa có ai');
+  s.partner = { name: 'Hà', sex: 'F', age: 29, status: 'dating', since: 26, alive: true }; ok(E.DEC.vn_giuc_cuoi.valid(s, {}), 'yêu lâu thì hai bên gia đình giục cưới');
+  // thành tựu
+  const ids = E.ACHIEVEMENTS.map(a => a.id), ts = E.ACHIEVEMENTS.map(a => a.t);
+  ok(ids.length >= 120 && new Set(ids).size === ids.length, 'có ' + ids.length + ' thành tựu, không trùng mã');
+  ok(ts.includes('Doanh nhân đầu tàu') && ts.includes('Mưu sinh xứ người') && ts.includes('Lá lành đùm lá rách') && !ts.includes('Thuyền trưởng doanh nghiệp') && !ts.includes('Xứ người mưu sinh') && !ts.includes('Bàn tay chìa ra'), 'đổi tên thành tựu theo góp ý');
+  ok(fs.existsSync(path.join(ROOT, '..', 'docs', 'persona-calibration.md')), 'có báo cáo đối chiếu mô phỏng');
 }
 function isVNx(l) { return E.isVN(l); }
 

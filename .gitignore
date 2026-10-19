@@ -30,3 +30,6 @@ promo/
 
 # Bản sao lưu đánh giá (tạo bằng npm run backup:reviews)
 backups/
+
+# Bộ nhớ đệm dữ liệu tải về (tools/build-personas.js)
+.cache/

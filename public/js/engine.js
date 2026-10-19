@@ -774,7 +774,8 @@
     var vf = life.fam.vice ? 0.8 : 1;
     return {
       prim: U.clamp(0.6 + 0.2 * g, 0.6, 0.995),
-      lower: U.clamp((0.35 + 0.25 * g) * Math.sqrt(qf * uf * ef * vf), 0.25, 0.99),
+      // v6.8: Việt Nam theo Nemotron-Personas-Vietnam: người 18–29 tuổi chỉ học hết tiểu học khoảng 2% (trước đây game ra ~17%)
+      lower: isVN(life) && life.mode === 'vn' ? U.clamp(0.995 - (1 - qf) * 0.06 - (life.urban ? 0 : 0.02) - (ef < 1 ? 0.06 : 0) - (vf < 1 ? 0.04 : 0), 0.8, 0.995) : U.clamp((0.35 + 0.25 * g) * Math.sqrt(qf * uf * ef * vf), 0.25, 0.99),
       upper: U.clamp((0.15 + 0.25 * g) * qf * uf * ef * kf * vf, 0.08, 0.96),
       uni: U.clamp((g - 0.5) * 0.17 * qf * uf * ef * kf * vf, 0.02, 0.85)
     };

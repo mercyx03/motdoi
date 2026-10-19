@@ -1,3 +1,23 @@
+## v6.8.0 — Khai thác sâu Nemotron-Personas-Vietnam, đối chiếu mô phỏng với dữ liệu thật, thêm thành tựu
+
+- **Dữ liệu lớn hơn nhiều:**
+  - Dùng 181.819 persona (khoảng 18% bộ Nemotron-Personas-Vietnam của NVIDIA & FPT, CC BY 4.0), gấp 26 lần bản trước.
+  - Tỉ lệ 6 vùng trong mẫu khớp toàn bộ 1 triệu persona tới 0,1 điểm phần trăm. Nhóm nhỏ nhất (thành thị Tây Nguyên) nay có gần 4.900 persona, trước chỉ 162.
+- **Dùng thêm các trường dữ liệu:**
+  - **Người quen** kể kỹ năng nghề thật (ngư dân giỏi dự báo thời tiết biển, sửa lưới; lập trình viên giỏi phân tích dữ liệu…) và điều họ đang mong nhất (ổn định thu nhập, mở rộng làm ăn, truyền nghề cho thế hệ sau…).
+  - **Thể thao** người cùng vùng, cùng tuổi hay chơi: cầu lông, pickleball, đạp xe, nhảy dân vũ, bóng đá… Môn đã chọn giúp sức khỏe tốt dần.
+  - **Du lịch** đến nơi người cùng vùng hay đi (Ninh Bình, Yên Tử, Đà Lạt, Côn Đảo, Phú Quốc…), đi nước ngoài khi có điều kiện; không gợi ý đi chính nơi mình đang sống.
+  - **Đêm văn nghệ** với tiết mục được ưa chuộng ở vùng: chèo, quan họ, múa rối nước ở miền Bắc; đờn ca tài tử, cải lương ở miền Tây…
+- **Đối chiếu mô phỏng với dữ liệu thật** (báo cáo ở docs/persona-calibration.md):
+  - Học vấn: game có quá nhiều người chỉ học hết tiểu học (17% người 18–29 tuổi so với 2% thực tế). Đã sửa tỉ lệ học tiếp lên lớp 6 cho chế độ Việt Nam, nay khoảng 5%. Chế độ thế giới giữ nguyên.
+  - Hôn nhân: game có quá nhiều người 30–44 tuổi chưa lập gia đình (31% so với 12%). Thêm hai tập quán quen thuộc: đi xem mắt khi bố mẹ, họ hàng mai mối, và hai bên gia đình giục cưới khi yêu nhau lâu. Tỉ lệ độc thân 30–44 tuổi nay khoảng 21%, nhóm 45–59 tuổi khớp dữ liệu (6%).
+  - Người già trong game học cao hơn dữ liệu là hợp lý: dữ liệu mô tả người sinh từ thập niên 1960–1980, nhân vật trong game sinh từ năm 2026.
+- **Thành tựu:**
+  - Đổi tên: "Thuyền trưởng doanh nghiệp" thành **Doanh nhân đầu tàu**, "Xứ người mưu sinh" thành **Mưu sinh xứ người**, "Bàn tay chìa ra" thành **Lá lành đùm lá rách**.
+  - Thêm 30 thành tựu, nâng tổng số lên 122: Khỏe như thanh niên, Xê dịch, Xuyên Việt, Ra thế giới, Giữ hồn quê, Người con của di sản, Công dân gương mẫu, Mê sử, Tâm hồn nghệ sĩ, Sống chậm, Bán anh em xa mua láng giềng gần, Hương vị quê nhà, Giữ lễ của dân tộc mình, Uống nước nhớ nguồn, Về nguồn, Cày cả ngày lễ, Vượt số phận, Chắt đàn, Vườn thú tại gia, Học sinh giỏi, Thủ khoa, Một đời trọn vẹn, Xe hơi đầu tiên, Ra đi thanh thản, Một đời bên quê, Không chịu ngồi yên, Buôn bán giỏi, Thợ lành nghề, Đại gia đình, Trái tim thiện nguyện.
+- Công cụ mới: `tools/personas-from-parquet.py` (đọc file parquet), `npm run calibrate` (đối chiếu mô phỏng).
+- Thêm mục kiểm thử hồi quy 63.
+
 ## v6.7.0 — Sửa số lượt đánh giá; con người, văn hóa, lịch sử Việt Nam sát thực tế hơn với Nemotron-Personas-Vietnam
 
 - **Sửa lỗi số đánh giá đứng yên ở 35:**

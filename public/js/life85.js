@@ -75,8 +75,8 @@
     valid: function (l, d) { return !d || !d.none; },
     text: function (l, d) { if (!d || d.none) return ''; return 'Sống xa quê, có hôm bạn thèm đến quặn lòng món ' + d.d + ' — món ' + mom(l) + ' vẫn nấu, món quen thuộc của ' + (REG_NAME[d.reg] || 'quê nhà') + '.'; },
     opts: [
-      { k: 'nau', l: 'Tự vào bếp nấu theo trí nhớ', ai: { w: 1.1 }, run: function (l, r, log, d) { log(ch(r, 0.5) ? 'Nấu theo trí nhớ, vị không giống hẳn nhưng ăn vào thấy như được về nhà.' : 'Nấu hỏng một lần, lần thứ hai thì ra đúng vị ngày xưa. Bạn chụp ảnh gửi về cho gia đình.', 'good'); H.fx(l, { hap: 3 }); } },
-      { k: 'goi', l: function (l) { return 'Gọi điện hỏi ' + mom(l) + ' cách nấu'; }, req: function (l) { return l.fam.mAlive || l.fam.fAlive; }, ai: { soc: 1 }, run: function (l, r, log, d) { log('Cuộc gọi hỏi cách nấu ' + d.d + ' kéo dài cả tiếng, toàn chuyện ở nhà.', 'good'); H.fx(l, { hap: 4 }); H.mem(l, 'Cuộc gọi về nhà hỏi cách nấu ' + d.d + '.', 2); } },
+      { k: 'nau', l: 'Tự vào bếp nấu theo trí nhớ', ai: { w: 1.1 }, run: function (l, r, log, d) { l.flags.homeDish = (l.flags.homeDish || 0) + 1; log(ch(r, 0.5) ? 'Nấu theo trí nhớ, vị không giống hẳn nhưng ăn vào thấy như được về nhà.' : 'Nấu hỏng một lần, lần thứ hai thì ra đúng vị ngày xưa. Bạn chụp ảnh gửi về cho gia đình.', 'good'); H.fx(l, { hap: 3 }); } },
+      { k: 'goi', l: function (l) { return 'Gọi điện hỏi ' + mom(l) + ' cách nấu'; }, req: function (l) { return l.fam.mAlive || l.fam.fAlive; }, ai: { soc: 1 }, run: function (l, r, log, d) { l.flags.homeDish = (l.flags.homeDish || 0) + 1; log('Cuộc gọi hỏi cách nấu ' + d.d + ' kéo dài cả tiếng, toàn chuyện ở nhà.', 'good'); H.fx(l, { hap: 4 }); H.mem(l, 'Cuộc gọi về nhà hỏi cách nấu ' + d.d + '.', 2); } },
       { k: 'quan', l: 'Đi tìm quán của người cùng quê', run: function (l, r, log, d) { log('Tìm được một quán nhỏ của người cùng quê. Ăn bát ' + d.d + ', nghe giọng nói quen thuộc, bạn ngồi lâu hơn dự định.', 'good'); H.fx(l, { hap: 2, soc: 1 }); } }
     ] });
   T('pv_mon_que', function (l, a) { return a >= 18 && H.isVN(l) && (!!l.movedTo || !!l.abroad) && !!homeRegion(l); }, 0.06, 7, 3, true);
@@ -141,7 +141,7 @@
     valid: function (l, d) { return !d || !d.none; },
     text: function (l, d) { if (!d || d.none) return ''; return d.f[1]; },
     opts: [
-      { k: 've', l: function (l) { return l.movedTo || l.abroad ? 'Thu xếp về quê dự lễ' : 'Cùng gia đình tham gia trọn vẹn'; }, ai: { soc: 1, w: 1.3 }, run: function (l, r, log, d) { log(pick(r, ['Bạn mặc trang phục truyền thống, cùng gia đình dự lễ. Thấy mình thuộc về nơi này.', 'Gặp lại họ hàng, bạn bè cũ trong ngày lễ, ai cũng hỏi han rối rít.']), 'good'); H.fx(l, { hap: 4, soc: 2 }); H.mem(l, d.f[0] + ' cùng gia đình.', 3); } },
+      { k: 've', l: function (l) { return l.movedTo || l.abroad ? 'Thu xếp về quê dự lễ' : 'Cùng gia đình tham gia trọn vẹn'; }, ai: { soc: 1, w: 1.3 }, run: function (l, r, log, d) { l.flags.ethFest = (l.flags.ethFest || 0) + 1; log(pick(r, ['Bạn mặc trang phục truyền thống, cùng gia đình dự lễ. Thấy mình thuộc về nơi này.', 'Gặp lại họ hàng, bạn bè cũ trong ngày lễ, ai cũng hỏi han rối rít.']), 'good'); H.fx(l, { hap: 4, soc: 2 }); H.mem(l, d.f[0] + ' cùng gia đình.', 3); } },
       { k: 'ban', l: 'Bận việc, chỉ gọi điện chúc mừng', run: function (l, r, log) { log('Năm nay bận, bạn chỉ gọi điện về chúc mừng. Nhìn ảnh mọi người gửi lên mà nhớ.', 'neutral'); H.fx(l, { hap: -1 }); } }
     ] });
   T('vh_le_dan_toc', function (l, a) { return H.isVN(l) && !!FEST[l.eth] && a >= 5; }, 0.1, 4, 3, true);
@@ -168,8 +168,8 @@
     prep: function (l, r) { var seen = l.flags.lsSeen || [], a = HIST.map(function (x, i) { return i; }).filter(function (i) { return seen.indexOf(i) < 0; }); return { i: a.length ? pick(r, a) : Math.floor(r() * HIST.length) }; },
     text: function (l, d) { if (!d || d.i == null) return ''; var h = HIST[d.i]; return 'Tiết Lịch sử hôm nay: ' + h[0] + ', ' + low(h[1]); },
     opts: [
-      { k: 'chu_y', l: 'Chăm chú nghe, ghi chép', ai: { smart: 1, w: 1.2 }, run: function (l, r, log, d) { (l.flags.lsSeen || (l.flags.lsSeen = [])).push(d.i); log(pick(r, ['Bạn ghi chép cẩn thận, về nhà kể lại cho cả nhà nghe.', 'Bài học khiến bạn tò mò, tối ấy tìm đọc thêm sách về giai đoạn này.']), 'good'); H.fx(l, { kno: 2 }); } },
-      { k: 'hoi', l: 'Giơ tay hỏi thêm thầy cô', ai: { soc: 1 }, run: function (l, r, log, d) { (l.flags.lsSeen || (l.flags.lsSeen = [])).push(d.i); log('Thầy cô khen câu hỏi hay, kể thêm nhiều chi tiết không có trong sách giáo khoa.', 'good'); H.fx(l, { kno: 2, soc: 1 }); } },
+      { k: 'chu_y', l: 'Chăm chú nghe, ghi chép', ai: { smart: 1, w: 1.2 }, run: function (l, r, log, d) { (l.flags.lsSeen || (l.flags.lsSeen = [])).push(d.i); l.flags.lsGood = (l.flags.lsGood || 0) + 1; log(pick(r, ['Bạn ghi chép cẩn thận, về nhà kể lại cho cả nhà nghe.', 'Bài học khiến bạn tò mò, tối ấy tìm đọc thêm sách về giai đoạn này.']), 'good'); H.fx(l, { kno: 2 }); } },
+      { k: 'hoi', l: 'Giơ tay hỏi thêm thầy cô', ai: { soc: 1 }, run: function (l, r, log, d) { (l.flags.lsSeen || (l.flags.lsSeen = [])).push(d.i); l.flags.lsGood = (l.flags.lsGood || 0) + 1; log('Thầy cô khen câu hỏi hay, kể thêm nhiều chi tiết không có trong sách giáo khoa.', 'good'); H.fx(l, { kno: 2, soc: 1 }); } },
       { k: 'ngu_gat', l: 'Lơ đãng nhìn ra cửa sổ', ai: { w: 0.6 }, run: function (l, r, log) { log('Bạn lơ đãng cả tiết. Đến bài kiểm tra mới cuống cuồng học thuộc.', 'neutral'); } }
     ] });
   E.TRIG.push({ id: 'ls_bai_hoc', when: function (l, a) { return a >= 10 && a <= 17 && !!l.school && H.isVN(l) && l.mode === 'vn' && free(l); }, p: 0.1, cd: 3, max: 3, rep: false });
@@ -197,14 +197,14 @@
 
   // Ngày Thương binh – Liệt sĩ 27/7
   SC('ls_27_7', { title: 'Ngày Thương binh – Liệt sĩ 27/7', text: 'Ngày 27/7, địa phương tổ chức thắp nến tri ân ở nghĩa trang liệt sĩ, thăm hỏi các gia đình thương binh, liệt sĩ.', opts: [
-    { k: 'thap', l: 'Đến nghĩa trang thắp nén nhang', ai: { moral: 1, w: 1.3 }, run: function (l, r, log) { log(pick(r, ['Hàng nghìn ngọn nến sáng lên giữa những hàng bia mộ. Bạn đứng lặng rất lâu trước những ngôi mộ ghi "Liệt sĩ chưa xác định được thông tin".', 'Bạn thắp nhang, dọn cỏ quanh những ngôi mộ ít người lui tới. Một cụ bà cảm ơn, bảo con bà nằm ở hàng thứ ba.']), 'good'); H.fx(l, { karma: 3, hap: 1 }); H.mem(l, 'Đêm thắp nến tri ân ở nghĩa trang liệt sĩ.', 3); } },
-    { k: 'tham', l: 'Cùng Đoàn thanh niên thăm gia đình chính sách', ai: { soc: 1 }, run: function (l, r, log) { log('Bạn theo đoàn đến thăm một bác thương binh. Bác kể chuyện ngày xưa, giọng vẫn sang sảng.', 'good'); H.fx(l, { karma: 3, soc: 1 }); } },
+    { k: 'thap', l: 'Đến nghĩa trang thắp nén nhang', ai: { moral: 1, w: 1.3 }, run: function (l, r, log) { log(pick(r, ['Hàng nghìn ngọn nến sáng lên giữa những hàng bia mộ. Bạn đứng lặng rất lâu trước những ngôi mộ ghi "Liệt sĩ chưa xác định được thông tin".', 'Bạn thắp nhang, dọn cỏ quanh những ngôi mộ ít người lui tới. Một cụ bà cảm ơn, bảo con bà nằm ở hàng thứ ba.']), 'good'); H.fx(l, { karma: 3, hap: 1 }); l.flags.triAn = (l.flags.triAn || 0) + 1; H.mem(l, 'Đêm thắp nến tri ân ở nghĩa trang liệt sĩ.', 3); } },
+    { k: 'tham', l: 'Cùng Đoàn thanh niên thăm gia đình chính sách', ai: { soc: 1 }, run: function (l, r, log) { l.flags.triAn = (l.flags.triAn || 0) + 1; log('Bạn theo đoàn đến thăm một bác thương binh. Bác kể chuyện ngày xưa, giọng vẫn sang sảng.', 'good'); H.fx(l, { karma: 3, soc: 1 }); } },
     { k: 'ban', l: 'Bận, chỉ dành một phút tưởng niệm', run: function (l, r, log) { log('Bận việc, bạn dành một phút lặng im tưởng niệm.', 'neutral'); } }] });
   T('ls_27_7', function (l, a) { return vn(l) && a >= 12; }, 0.04, 10, 3);
 
   // Giỗ Tổ Hùng Vương
   SC('gio_to', { title: 'Giỗ Tổ Hùng Vương', text: function (l) { return 'Mùng 10 tháng 3 âm lịch, cả nước nghỉ lễ Giỗ Tổ Hùng Vương.' + (l.prov && l.prov.old === 'Phú Thọ' ? ' Quê bạn có Đền Hùng, những ngày này người các nơi đổ về rất đông.' : ''); }, opts: [
-    { k: 'den_hung', l: 'Về Đền Hùng dâng hương', ai: { w: 1 }, run: function (l, r, log) { if (l.prov && l.prov.old !== 'Phú Thọ' && l.indep) H.cash(l, -l.base * 0.01, 'Đi lễ Đền Hùng'); log(pick(r, ['Leo hết mấy trăm bậc đá lên đền Thượng, đông nghịt người mà ai cũng vui vẻ nhường nhau.', 'Bạn dâng hương ở Đền Hùng, ăn bánh chưng, bánh giầy, nghe hát Xoan dưới chân núi.']), 'good'); H.fx(l, { hap: 2 }); } },
+    { k: 'den_hung', l: 'Về Đền Hùng dâng hương', ai: { w: 1 }, run: function (l, r, log) { if (l.prov && l.prov.old !== 'Phú Thọ' && l.indep) H.cash(l, -l.base * 0.01, 'Đi lễ Đền Hùng'); l.flags.denHung = true; log(pick(r, ['Leo hết mấy trăm bậc đá lên đền Thượng, đông nghịt người mà ai cũng vui vẻ nhường nhau.', 'Bạn dâng hương ở Đền Hùng, ăn bánh chưng, bánh giầy, nghe hát Xoan dưới chân núi.']), 'good'); H.fx(l, { hap: 2 }); } },
     { k: 'nha', l: 'Ở nhà thắp hương, nghỉ ngơi cùng gia đình', ai: { w: 1.2 }, run: function (l, r, log) { log('Ngày nghỉ lễ, bạn thắp nén hương, cả nhà quây quần ăn bữa cơm.', 'good'); H.fx(l, { hap: 2 }); } }] });
   T('gio_to', function (l, a) { return vn(l) && a >= 10; }, 0.03, 10, 2);
 
@@ -212,7 +212,7 @@
   SC('le_30_4', { title: 'Kỳ nghỉ 30/4 – 1/5', text: 'Kỳ nghỉ lễ Ngày Giải phóng miền Nam, thống nhất đất nước và Quốc tế Lao động. Công ty hỏi ai muốn đi làm, làm ngày lễ được trả ít nhất 300% lương, chưa kể tiền lương ngày lễ.', opts: [
     { k: 'du_lich', l: 'Đi du lịch biển', h: function (l) { return 'Khoảng ' + H.money(l, l.base * 0.08); }, ai: { w: 1.1 }, run: function (l, r, log) { H.cash(l, -l.base * 0.08, 'Du lịch dịp 30/4'); log(pick(r, ['Kẹt xe cả tiếng ra khỏi thành phố, nhưng ra tới biển thì quên hết mệt.', 'Biển đông nghịt người, giá phòng tăng gấp đôi, vẫn vui vì cả nhà được đi cùng nhau.']), 'good'); H.fx(l, { hap: 4 }); } },
     { k: 've_que', l: 'Về quê thăm bố mẹ', req: function (l) { return l.fam.mAlive || l.fam.fAlive; }, ai: { soc: 1, w: 1.1 }, run: function (l, r, log) { log('Về quê mấy ngày, ăn cơm mẹ nấu, ngủ trưa trên chiếc chõng tre.', 'good'); H.fx(l, { hap: 3 }); } },
-    { k: 'tang_ca', l: 'Đi làm ngày lễ lấy lương 300%', ai: { amb: 1 }, run: function (l, r, log) { var x = (l.income || l.base) / 365 * 2 * 3; H.cash(l, x, 'Lương làm ngày lễ 30/4 – 1/5'); log('Đi làm hai ngày lễ, cuối tháng nhận thêm khoản lương gấp ba. Mệt nhưng đáng.', 'neutral'); H.fx(l, { hea: -1 }); } }] });
+    { k: 'tang_ca', l: 'Đi làm ngày lễ lấy lương 300%', ai: { amb: 1 }, run: function (l, r, log) { var x = (l.income || l.base) / 365 * 2 * 3; H.cash(l, x, 'Lương làm ngày lễ 30/4 – 1/5'); l.flags.tangCaLe = (l.flags.tangCaLe || 0) + 1; log('Đi làm hai ngày lễ, cuối tháng nhận thêm khoản lương gấp ba. Mệt nhưng đáng.', 'neutral'); H.fx(l, { hea: -1 }); } }] });
   T('le_30_4', function (l, a) { return vn(l) && a >= 20 && a <= 62 && !!l.job && l.indep; }, 0.05, 8, 3);
 
   // bầu cử đại biểu Quốc hội và HĐND các cấp (5 năm một lần; năm 2026, 2031, 2036…)
