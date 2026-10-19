@@ -83,7 +83,8 @@ Cloudflare **Workers & Pages** → **Create** → **Pages** → **Connect to Git
 
 ## Tài khoản người chơi
 - API `/api/account` trong `public/_worker.js`, dùng chung D1 `REVIEWS_DB` (bảng game_accounts, game_sessions, game_saves tự tạo). Không cần cấu hình thêm.
-- Mật khẩu băm PBKDF2-SHA256 100.000 vòng; mã phiên chỉ lưu bản băm. Không thu email.
+- Mật khẩu băm PBKDF2-SHA256 100.000 vòng; mã phiên chỉ lưu bản băm. Không thu email. Không ai xem được mật khẩu gốc (kể cả quản trị viên).
+- Người chơi quên mật khẩu: `npm run reset:password -- <tên đăng nhập>` tạo mật khẩu tạm và file SQL, rồi chạy `npx wrangler d1 execute motdoi-reviews --remote --file backups/reset-<tên>.sql`. Tiến trình giữ nguyên.
 
 ## Sao lưu đánh giá
 - `npm run backup:reviews` — tải toàn bộ đánh giá công khai về `backups/reviews-NGÀY.json`.

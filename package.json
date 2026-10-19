@@ -14,6 +14,7 @@
     "build:personas": "node tools/build-personas.js",
     "restore:reviews": "node tools/restore-reviews.js",
     "calibrate": "node tools/persona-calibration.js",
-    "audit": "node tools/logic-audit.js"
+    "audit": "node tools/logic-audit.js",
+    "reset:password": "node tools/admin-reset-password.js"
   }
 }
