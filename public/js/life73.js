@@ -176,7 +176,7 @@
     if (!E.sponsorActive || !E.sponsorActive(l) || !free(l)) return;
     var s = l.flags.sponsor, c = s.control || 35;
     stress(l, Math.round(4 + c / 10)); fx(l, { hap: -Math.round(1 + c / 20) });
-    if (s.feltAt == null || a - s.feltAt >= 2) { s.feltAt = a; log(U.pick(r, c >= 60 ? ['Sống bằng tiền chu cấp của ' + s.name + ', bạn phải báo cáo từng cuộc gặp, từng tin nhắn. Bạn thấy mình như sống trong chiếc lồng mạ vàng.', 'Mỗi lần ra ngoài đều phải xin phép ' + s.name + '. Tiền thì đủ, nhưng bạn mất ngủ triền miên.'] : ['Khoản chu cấp của ' + s.name + ' giúp đỡ chật vật, nhưng bạn luôn thấy mình nợ người ấy điều gì đó.', 'Bạn bè hỏi chuyện tình cảm, bạn chỉ cười trừ. Những ràng buộc với ' + s.name + ' khiến bạn ngày càng ít nói về mình.']), 'bad'); }
+    if (s.feltAt == null || a - s.feltAt >= ((s.feltN = s.feltN || 0) >= 3 ? 5 : 2)) { s.feltAt = a; s.feltN++; log(U.pick(r, c >= 60 ? ['Sống bằng tiền chu cấp của ' + s.name + ', bạn phải báo cáo từng cuộc gặp, từng tin nhắn. Bạn thấy mình như sống trong chiếc lồng mạ vàng.', 'Mỗi lần ra ngoài đều phải xin phép ' + s.name + '. Tiền thì đủ, nhưng bạn mất ngủ triền miên.'] : ['Khoản chu cấp của ' + s.name + ' giúp đỡ chật vật, nhưng bạn luôn thấy mình nợ người ấy điều gì đó.', 'Bạn bè hỏi chuyện tình cảm, bạn chỉ cười trừ. Những ràng buộc với ' + s.name + ' khiến bạn ngày càng ít nói về mình.']), 'bad'); }
   });
   var snA = E.DEC.sn_loi_moi; if (snA) { var snAp = snA.apply; snA.apply = function (l, d, k) { var r0 = snAp.apply(this, arguments); if (k === 'accept' && E.sponsorActive && E.sponsorActive(l)) stress(l, 4); return r0; }; }
 

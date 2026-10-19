@@ -410,9 +410,9 @@
       l.fame = Math.min(5e7, Math.max(50, f0 * g));
       [[1e4, 'Cán mốc 10 nghìn người theo dõi.', 1], [1e5, c.cat === 'creator' ? 'Nhận nút bạc YouTube — 100 nghìn người đăng ký!' : 'Được 100 nghìn người hâm mộ biết tên.', 2], [1e6, c.cat === 'creator' ? 'Nhận nút vàng — 1 triệu người đăng ký!' : 'Trở thành người nổi tiếng với hơn 1 triệu người hâm mộ.', 3], [1e7, c.cat === 'creator' ? 'Nút kim cương — 10 triệu người đăng ký!' : 'Cán mốc 10 triệu người hâm mộ — đứng trên đỉnh cao.', 4]].forEach(function (m) {
         if (c.t.length > 1) m[1] = 'Lên hạng: giờ bạn là ' + c.t[Math.min(m[2], c.t.length - 1)] + ' (' + fmtFollowers(m[0]) + ' người hâm mộ).';
-        if (f0 < m[0] && l.fame >= m[0]) { log(m[1], 'big'); H.fx(l, { hap: 6 }); if (m[0] >= 1e5) H.mem(l, m[1], m[0] >= 1e6 ? 6 : 4); if (m[0] >= 1e6 && c.cat === 'creator' && !l.flags.mediaCo) { l.flags.mediaCo = true; log('Thành lập công ty truyền thông riêng.', 'good'); } }
+        if (f0 < m[0] && l.fame >= m[0] && !(l.flags.fameHit || (l.flags.fameHit = {}))[m[0]]) { l.flags.fameHit[m[0]] = 1; log(m[1], 'big'); H.fx(l, { hap: 6 }); if (m[0] >= 1e5) H.mem(l, m[1], m[0] >= 1e6 ? 6 : 4); if (m[0] >= 1e6 && c.cat === 'creator' && !l.flags.mediaCo) { l.flags.mediaCo = true; log('Thành lập công ty truyền thông riêng.', 'good'); } }
       });
-      var t0 = fameTier(f0), t1 = fameTier(l.fame);
+      var t0 = fameTier(f0), t1 = fameTier(l.fame * 1.25); // v6.9.1: chỉ báo tụt hạng khi giảm hẳn dưới mốc (tránh báo lên / xuống liên tục)
       if (c.t.length > 1 && t1 < t0) { log('Danh tiếng đi xuống, tụt hạng thành ' + c.t[Math.min(t1, c.t.length - 1)] + '.', 'bad'); H.fx(l, { hap: -4 }); }
       inc = fameIncome(c, l.fame) * 12 * scale(l) * Math.exp(U.normal(r) * 0.3);
       if (l.fame < 1e4 && l.job.yrs >= 4 && !l.flags.creatorWarned) { l.flags.creatorWarned = true; H.sched(l, 'creator_nghi', 0); }

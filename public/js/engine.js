@@ -293,6 +293,13 @@
     if (Math.abs(net) < 1e-9 && !loan) return;
     var tiny = Math.abs(net) < 1e-9;
     var txt = (tiny ? '' : (net < 0 ? 'bạn tự chi ' : 'bạn nhận ') + fmtMoney(life, Math.abs(net)) + (net < 0 ? ' từ tiền riêng' : '')) + (loan > 0 ? (tiny ? 'vay thêm ' : ', vay thêm ') + fmtMoney(life, loan) : '');
+    // v6.9.1: trẻ chưa tự lập thì bố mẹ trả; dưới 15 tuổi chưa có tiền tiêu vặt nên bố mẹ trả toàn bộ, 15–17 tuổi tự trả bằng tiền tiêu vặt nếu đủ, thiếu thì bố mẹ bù
+    if (net < 0 && life.age < 18 && !life.indep) {
+      var fm = life.fam || {}, who = fm.mAlive && fm.fAlive && !fm.noDad ? 'bố mẹ' : fm.mAlive ? 'mẹ' : fm.fAlive && !fm.noDad ? 'bố' : 'gia đình';
+      var cost = -net, before = life.money + cost, self = life.age >= 15 ? Math.min(cost, Math.max(0, before)) : 0, famPay = cost - self;
+      if (famPay > 1e-9) { life.money += famPay; if (life.yr) (life.yr.familyExpenses || (life.yr.familyExpenses = [])).push({ t: why.slice(0, 2).join(', '), amount: famPay, payer: who }); }
+      txt = (self > 1e-9 ? 'bạn tự chi ' + fmtMoney(life, self) + ' từ tiền tiêu vặt' : '') + (famPay > 1e-9 ? (self > 1e-9 ? ', ' : '') + who + ' chi ' + fmtMoney(life, famPay) : '') + (loan > 0 ? ', vay thêm ' + fmtMoney(life, loan) : '');
+    }
     for (var j = out.length - 1; j >= 0; j--) {
       var e = out[j];
       if (e.k === 'money' || e.k === 'death') continue;

@@ -2717,6 +2717,28 @@ section('64. Bản 6.9.0: toàn bộ 1 triệu persona, số liệu theo 34 tỉ
   ok(/PBKDF2/.test(wk) && /iterations: ACC\.iter/.test(wk) && /sha256\(token\)/.test(wk) && !/console\.log/.test(wk), 'mật khẩu băm PBKDF2, mã phiên chỉ lưu bản băm');
   ok(!/confirm\(/.test(acc.replace(/\/\/[^\n]*/g, '')) && /Không cần email/.test(acc), 'không dùng hộp confirm của trình duyệt, không thu email');
 }
+section('65. Bản 6.9.1: trẻ chưa tự lập thì bố mẹ chi tiền, bớt câu lặp');
+{
+  let kidOwn = 0, kidNeg = 0, kidParent = 0, teen = 0, n = 0;
+  for (let i = 0; i < 250; i++) {
+    const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 65000 + i }); const ind = {};
+    E.runHeadless(l, x => { ind[x.age] = x.indep; if (x.age < 15 && !x.indep && x.money < -1e-6) kidNeg++; }); n++;
+    l.log.forEach(e => { if (e.a < 18 && !ind[e.a] && /từ tiền riêng/.test(e.t)) kidOwn++; if (e.a < 15 && /\((bố mẹ|mẹ|bố|gia đình) chi /.test(e.t)) kidParent++; if (e.a >= 15 && e.a < 18 && /từ tiền tiêu vặt/.test(e.t)) teen++; });
+  }
+  ok(kidOwn === 0, 'trẻ chưa tự lập không bao giờ "tự chi từ tiền riêng" (' + kidOwn + ')');
+  ok(kidNeg === 0, 'trẻ dưới 15 tuổi không bị âm tiền vì các khoản bố mẹ lo');
+  ok(kidParent > 50, 'khoản chi lúc nhỏ ghi rõ bố mẹ chi (' + kidParent + ' lần)');
+  // 4 tuổi mua gấu bông: bố mẹ trả, tiền của bé không đổi
+  const k = E.createLife({ mode: 'vn', seed: 65500 }); k.age = 4; k.money = 0; k.pending = []; const out = [];
+  const D = { id: 't', title: 'Gấu bông', text: '', opts: [{ k: 'buy', l: 'Mua' }] }; E.DEC.t = { make: () => D, auto: () => 'buy', apply: (l, d, kk, r, log) => { E.H.cash(l, -0.34, 'Mua gấu bông'); log('Trúng một con gấu bông to, ôm về khoe cả xóm!', 'good'); }, valid: () => true };
+  k.pending = [D]; E.resolve(k, 'buy'); delete E.DEC.t;
+  const last = k.log[k.log.length - 1]; ok(Math.abs(k.money) < 1e-9 && /\(bố mẹ chi |\(mẹ chi |\(bố chi /.test(last.t) && !/tiền riêng/.test(last.t), '4 tuổi mua gấu bông: bố mẹ chi, bé không mất tiền — ' + last.t);
+  // 16 tuổi có tiền tiêu vặt: tự chi phần mình có, thiếu thì bố mẹ bù
+  const t = E.createLife({ mode: 'vn', seed: 65600 }); t.age = 16; t.money = 0.2; t.pending = []; E.DEC.t2 = { make: () => ({ id: 't2', title: 'Album', text: '', opts: [{ k: 'buy', l: 'Mua' }] }), auto: () => 'buy', apply: (l, d, kk, r, log) => { E.H.cash(l, -0.5, 'Mua album'); log('Ôm album về.', 'good'); }, valid: () => true };
+  t.pending = [E.DEC.t2.make()]; E.resolve(t, 'buy'); delete E.DEC.t2; const tl = t.log[t.log.length - 1];
+  ok(Math.abs(t.money) < 1e-9 && /tự chi [^)]* từ tiền tiêu vặt, (bố mẹ|mẹ|bố) chi /.test(tl.t), '16 tuổi: tự chi bằng tiền tiêu vặt, thiếu thì bố mẹ bù — ' + tl.t);
+  ok(/placeholder="vd: mercy"/.test(fs.readFileSync(path.join(ROOT, 'js/account.js'), 'utf8')), 'gợi ý tên đăng nhập "mercy"');
+}
 function isVNx(l) { return E.isVN(l); }
 
 console.log('\n' + '='.repeat(60));

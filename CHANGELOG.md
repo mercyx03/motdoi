@@ -1,3 +1,10 @@
+## v6.9.1 — Trẻ chưa tự lập thì bố mẹ chi tiền
+
+- Sửa lỗi mới vài tuổi đã "tự chi từ tiền riêng": dưới 15 tuổi mọi khoản do bố mẹ chi (ghi rõ "bố mẹ chi …"), 15–17 tuổi tự chi bằng tiền tiêu vặt nếu đủ, thiếu thì bố mẹ bù.
+- Gợi ý tên đăng nhập đổi thành "mercy".
+- Bớt câu lặp: hẹn về quê chơi (khất tối đa vài lần), thay pin xe máy điện, chu cấp, báo lên / tụt hạng danh tiếng (có khoảng đệm, mỗi mốc chỉ báo một lần), luyện thể thao.
+- Thêm mục kiểm thử hồi quy 65.
+
 ## v6.9.0 — Tài khoản & lưu tiến trình; dùng toàn bộ 1 triệu persona Nemotron-Personas-Vietnam, số liệu theo 34 tỉnh
 
 - **Tài khoản và lưu tiến trình** (nút 👤 Tài khoản trên trang chủ):
