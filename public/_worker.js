@@ -21,6 +21,14 @@ async function initRatings(db) {
       try { await db.prepare("ALTER TABLE game_ratings ADD COLUMN review_text TEXT NOT NULL DEFAULT ''").run(); }
       catch (e) { const retry = await db.prepare('PRAGMA table_info(game_ratings)').all(); if (!retry.results.some(x => x.name === 'review_text')) throw e; }
     }
+    // v6.7: mỗi lần đánh giá là một dòng riêng (trước đây mỗi trình duyệt chỉ giữ một dòng, gửi lại là ghi đè).
+    // Chép các đánh giá cũ sang bảng mới; chạy lại nhiều lần cũng không nhân đôi.
+    await db.batch([
+      db.prepare("CREATE TABLE IF NOT EXISTS game_reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, voter_hash TEXT NOT NULL, stars INTEGER NOT NULL CHECK(stars BETWEEN 1 AND 5), created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, review_text TEXT NOT NULL DEFAULT '')"),
+      db.prepare('CREATE INDEX IF NOT EXISTS game_reviews_recent ON game_reviews(updated_at DESC)'),
+      db.prepare('CREATE INDEX IF NOT EXISTS game_reviews_voter ON game_reviews(voter_hash, created_at DESC)'),
+      db.prepare('INSERT INTO game_reviews(voter_hash, stars, created_at, updated_at, review_text) SELECT r.voter_hash, r.stars, r.updated_at, r.updated_at, r.review_text FROM game_ratings r WHERE NOT EXISTS (SELECT 1 FROM game_reviews g WHERE g.voter_hash = r.voter_hash AND g.created_at = r.updated_at)')
+    ]);
   }).catch(e => { reviewSchemas.delete(db); throw e; }));
   await reviewSchemas.get(db);
 }
@@ -42,9 +50,9 @@ async function reviews(request, env, url) {
     if (textOnly) where.push("review_text <> ''");
     const cond = where.length ? ' WHERE ' + where.join(' AND ') : '';
     const rows = await db.batch([
-      db.prepare('SELECT stars, COUNT(*) AS count FROM game_ratings GROUP BY stars'),
-      db.prepare('SELECT stars, updated_at, review_text FROM game_ratings' + cond + ' ORDER BY updated_at DESC, voter_hash LIMIT ? OFFSET ?').bind(...args, Number(limitRaw), Number(raw)),
-      db.prepare('SELECT COUNT(*) AS count FROM game_ratings' + cond).bind(...args)
+      db.prepare('SELECT stars, COUNT(*) AS count FROM game_reviews GROUP BY stars'),
+      db.prepare('SELECT stars, updated_at, review_text FROM game_reviews' + cond + ' ORDER BY updated_at DESC, id DESC LIMIT ? OFFSET ?').bind(...args, Number(limitRaw), Number(raw)),
+      db.prepare('SELECT COUNT(*) AS count FROM game_reviews' + cond).bind(...args)
     ]);
     const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; let total = 0, sum = 0;
     for (const row of rows[0].results) { distribution[row.stars] = row.count; total += row.count; sum += row.stars * row.count; }
@@ -70,11 +78,18 @@ async function reviews(request, env, url) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data.voter));
   const voterHash = Array.from(new Uint8Array(digest)).map(x => x.toString(16).padStart(2, '0')).join('');
   await initRatings(db);
-  const result = await db.prepare('INSERT INTO game_ratings(voter_hash, stars, updated_at, review_text) VALUES (?, ?, ?, ?) ON CONFLICT(voter_hash) DO UPDATE SET stars=excluded.stars, updated_at=excluded.updated_at, review_text=excluded.review_text WHERE game_ratings.updated_at <= ?').bind(voterHash, data.stars, now, review, now - 60000).run();
+  // v6.7: mỗi lần đánh giá là một lượt mới; mỗi trình duyệt tối đa 5 lượt trong 24 giờ, quá 5 lượt thì sửa lượt gần nhất; cách nhau ít nhất 1 phút
+  const DAY = 86400000, PER_DAY = 5;
+  const recent = await db.prepare('SELECT id, created_at, updated_at FROM game_reviews WHERE voter_hash = ? AND created_at > ? ORDER BY created_at DESC').bind(voterHash, now - DAY).all();
+  const rows = recent.results || [], last = rows[0];
+  if (last && now - Math.max(last.created_at, last.updated_at) < 60000) return ratingJson(429, { ok: false, code: 'RATE_LIMIT' });
+  let result, edited = false;
+  if (rows.length >= PER_DAY) { edited = true; result = await db.prepare('UPDATE game_reviews SET stars = ?, review_text = ?, updated_at = ? WHERE id = ? AND updated_at <= ?').bind(data.stars, review, now, last.id, now - 60000).run(); }
+  else result = await db.prepare('INSERT INTO game_reviews(voter_hash, stars, created_at, updated_at, review_text) VALUES (?, ?, ?, ?, ?)').bind(voterHash, data.stars, now, now, review).run();
   if (!result.success) throw Error('database');
   if (!result.meta.changes) return ratingJson(429, { ok: false, code: 'RATE_LIMIT' });
   if (ip) reviewIPs.set(ip, now + 60000);
-  return ratingJson(200, { ok: true });
+  return ratingJson(200, { ok: true, edited, left: Math.max(0, PER_DAY - rows.length - (edited ? 0 : 1)) });
 }
 export default {
   async fetch(request, env, ctx) {

@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -2634,6 +2634,38 @@ section('61. Bản 6.6.0: hoàng tộc, nghề khoa học, con đường chính 
   const app = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8'), card = fs.readFileSync(path.join(ROOT, 'js/card.js'), 'utf8'), idx = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   ok(/legacyBtn/.test(idx) && /function openLegacy/.test(app) && /treeHtml/.test(app) && /cardStory/.test(app) && /1920/.test(card), 'giao diện: nút Thành tựu, gia phả ở màn kết thúc, ảnh thẻ khổ dọc 9:16');
   ok(!fs.readdirSync(ROOT).some(f => /\.(md|csv)$/.test(f)), 'thư mục public không còn tài liệu nội bộ (.md, .csv)');
+}
+section('62. Bản 6.7.0: dữ liệu Nemotron-Personas-Vietnam, di sản, lễ tết dân tộc, lịch sử, bầu cử, ngày lễ');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); }, PV = G.PERSONAS_VN;
+  ok(PV && PV.sampled >= 5000 && Object.keys(PV.regions).length === 12 && /Nemotron-Personas-Vietnam/.test(PV.source) && /CC BY 4.0/.test(PV.source), 'có số liệu tổng hợp từ Nemotron-Personas-Vietnam (' + (PV && PV.sampled) + ' persona, 6 vùng × thành thị / nông thôn), ghi nguồn và giấy phép');
+  const dish = k => PV.regions[k].dish.slice(0, 12).map(x => x[0]);
+  ok(dish('DBSCL_r').some(d => /hủ tiếu|lẩu mắm|cá kho/.test(d)) && dish('DBSH_u').some(d => /bún chả|bún riêu|bánh cuốn/.test(d)) && PV.regions.TN_r.job.slice(0, 6).some(x => /cà phê|cao su|hồ tiêu/.test(x[0])), 'số liệu phản ánh khác biệt vùng miền (món ăn, nghề nghiệp)');
+  ok(/Nemotron-Personas-Vietnam/.test(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')), 'trang chủ ghi công bộ dữ liệu');
+  // người quen theo vùng
+  const mk = (seed, o) => { const l = E.createLife(Object.assign({ mode: 'vn', seed }, o || {})); l.age = 30; l.school = null; l.indep = true; l.pending = []; return l; };
+  let okJob = 0, tried = 0, retiredYoung = 0;
+  for (let i = 0; i < 80; i++) { const l = mk(62000 + i); const d = E.DEC.pv_nguoi_quen.make(l, R(i)); if (d.data.none) continue; tried++; const g = E.PERSONA.group(l); if (g.job.some(x => x[0] === d.data.job)) okJob++; if (d.data.age < 55 && /^Nghỉ hưu/.test(d.data.job)) retiredYoung++; ok(!badText(d.text) && d.opts.length === 3, 'người quen: lời kể sạch #' + i); }
+  ok(tried > 60 && okJob === tried && retiredYoung === 0, 'người quen có nghề theo đúng vùng, không có người trẻ "nghỉ hưu" (' + okJob + '/' + tried + ')');
+  const t = mk(62100); const d1 = E.DEC.pv_thu_vui.make(t, R(1)); E.resolve(Object.assign(t, { pending: [d1] }), 'h0'); ok((t.flags.hobbies || []).length === 1, 'chọn thú vui phổ biến theo vùng, tuổi');
+  // di sản UNESCO đúng địa phương
+  const her = (prov, eth) => { const l = mk(62200); l.prov = Object.assign({}, l.prov, { old: prov, region: G.VN.byName[prov] ? G.VN.byName[prov].region : l.prov.region }); if (eth) l.eth = eth; return E.heritageFor(l).map(h => h.id); };
+  ok(her('Bắc Ninh').includes('quan_ho') && her('Phú Thọ').includes('xoan') && her('Phú Thọ').includes('hung_vuong') && her('An Giang').includes('ba_chua_xu') && her('Ninh Thuận').includes('gom_cham') && her('Gia Lai').includes('cong_chieng') && her('Sơn La', 'Thái').includes('xoe') && !her('Cà Mau').includes('quan_ho'), 'di sản UNESCO gắn đúng địa phương, dân tộc');
+  ok(E.HERITAGE_VN.length === 16, 'đủ 16 di sản văn hóa phi vật thể của Việt Nam được UNESCO ghi danh');
+  const kh = mk(62300, { eth: 'Khmer' }); const f = E.DEC.vh_le_dan_toc.make(kh, R(3)); ok(!f.data.none && /Chôl Chnăm Thmây|Sene Dolta|Ok Om Bok/.test(f.title), 'người Khmer có lễ tết của dân tộc mình');
+  // lịch sử: các mốc chính xác
+  const H2 = E.HISTORY_VN.map(x => x.join(' ')).join(' | ');
+  ok(/938.*Ngô Quyền.*Bạch Đằng/.test(H2) && /1288.*Bạch Đằng/.test(H2) && /1789.*Ngọc Hồi – Đống Đa/.test(H2) && /2\/9\/1945.*Tuyên ngôn Độc lập/.test(H2) && /7\/5\/1954.*Điện Biên Phủ/.test(H2) && /30\/4\/1975.*thống nhất/.test(H2) && /1986.*Đổi mới/.test(H2) && /1\/7\/2025.*34 tỉnh/.test(H2), 'bài học lịch sử dùng đúng các mốc chính thức');
+  // bầu cử: đúng chu kỳ 5 năm, đúng luật
+  const vt = mk(62400); vt.birthYear = 2026 - 30; const tr = E.TRIG.find(x => x.id === 'bau_cu');
+  ok(tr.when(vt, 30) === true, 'năm 2026 có bầu cử'); vt.birthYear = 2027 - 30; ok(tr.when(vt, 30) === false, 'năm 2027 không có bầu cử'); vt.birthYear = 2031 - 30; ok(tr.when(vt, 30) === true, 'năm 2031 có bầu cử (5 năm một lần)');
+  vt.pending = [E.DEC.bau_cu.make(vt, R(4))]; E.resolve(vt, 'nho'); ok(vt.log.some(e => /tự mình đi bầu, không được nhờ người khác bầu thay/.test(e.t)) && tr.when(vt, 30) === false, 'nhờ bầu hộ: được giải thích đúng Luật Bầu cử, không bầu lại trong cùng năm');
+  // ngày lễ: làm ngày lễ được trả ít nhất 300%
+  const w = mk(62500); E.startJob(w, 'ke_toan', R(5), () => { }); w.income = 120; const m0 = w.money; w.pending = [E.DEC.le_30_4.make(w, R(6))]; E.resolve(w, 'tang_ca'); ok(Math.abs((w.money - m0) - 120 / 365 * 2 * 3) < 1e-6, 'đi làm ngày lễ 30/4 – 1/5 được trả gấp 3 (Bộ luật Lao động 2019)');
+  // chạy nhiều đời không lỗi, các sự kiện mới đều xuất hiện
+  const seen = {}; for (let i = 0; i < 150; i++) { const l = E.createLife({ mode: 'vn', seed: 62600 + i }); E.runHeadless(l); Object.keys(l.flags.scN || {}).forEach(k => seen[k] = 1); }
+  ok(['pv_nguoi_quen', 'pv_thu_vui', 'vh_di_san', 'ls_bai_hoc', 'ls_ong_ba_ke', 'ls_27_7', 'gio_to', 'le_30_4', 'bau_cu'].every(k => seen[k]), 'các sự kiện văn hóa, lịch sử mới đều xuất hiện trong các đời Việt Nam');
+  const wl = E.createLife({ mode: 'world', country: 'US', seed: 62700 }); E.runHeadless(wl); ok(!Object.keys(wl.flags.scN || {}).some(k => /^(pv_|vh_di_san|ls_|gio_to|le_30_4|bau_cu)/.test(k)), 'đời ở nước ngoài không gặp sự kiện riêng của Việt Nam');
 }
 function isVNx(l) { return E.isVN(l); }
 

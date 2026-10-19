@@ -1,3 +1,26 @@
+## v6.7.0 — Sửa số lượt đánh giá; con người, văn hóa, lịch sử Việt Nam sát thực tế hơn với Nemotron-Personas-Vietnam
+
+- **Sửa lỗi số đánh giá đứng yên ở 35:**
+  - Trước đây mỗi trình duyệt chỉ giữ được một đánh giá. Ai gửi lại thì đánh giá mới ghi đè cái cũ, nên tổng số không tăng (ví dụ review "Dev có tâm…" đã bị thay bằng review mới của cùng trình duyệt).
+  - Từ bản này, mỗi lần gửi là một lượt đánh giá riêng. Mỗi trình duyệt gửi tối đa 5 lượt mỗi ngày, cách nhau ít nhất 1 phút; quá 5 lượt thì lần gửi sau sửa lượt gần nhất.
+  - Toàn bộ đánh giá cũ được tự động chép sang cách lưu mới, không mất cái nào.
+  - Thêm công cụ `npm run restore:reviews -- backups/<file>.json`: tạo lệnh SQL thêm lại những đánh giá có trong bản sao lưu mà máy chủ không còn.
+- **Kết hợp bộ dữ liệu Nemotron-Personas-Vietnam** (NVIDIA & FPT, CC BY 4.0, 1 triệu persona dựng theo phân bố dân số thật của Việt Nam):
+  - Lấy mẫu 6.900 persona trải đều toàn bộ tập dữ liệu, tổng hợp nghề nghiệp, thú vui, món ăn, lễ hội theo 6 vùng × thành thị / nông thôn × nhóm tuổi. Game chỉ dùng số liệu tần suất, không chép nội dung persona.
+  - **Người quanh ta:** người quen ở xóm, khu phố có nghề nghiệp và sở thích đúng với vùng miền. Ví dụ: Tây Nguyên trồng cà phê, cao su; miền Tây trồng lúa, cây ăn trái, nuôi thủy sản; miền Bắc trồng chè.
+  - **Thú vui theo vùng và tuổi** (nghe đờn ca tài tử, nghe chèo, chơi cờ tướng, câu cá, nghe nhạc Trịnh, bolero…). Thú vui đã chọn theo bạn qua các năm.
+  - **Nhớ món quê** khi sống xa nhà, đúng món của vùng: hủ tiếu, lẩu mắm, cá kho tộ (miền Tây); bún chả, bún riêu, bánh cuốn (miền Bắc); mì Quảng, cao lầu, bún bò Huế (miền Trung)…
+- **16 di sản văn hóa phi vật thể được UNESCO ghi danh**, xuất hiện đúng địa phương và dân tộc: Quan họ (Bắc Ninh, Bắc Giang), Hát Xoan và Tín ngưỡng thờ cúng Hùng Vương (Phú Thọ), Hội Gióng, Ca trù, Nhã nhạc Huế, Cồng chiêng Tây Nguyên, Ví Giặm Nghệ Tĩnh, Đờn ca tài tử Nam Bộ, Bài chòi Trung Bộ, Thờ Mẫu Tam phủ, Kéo co, Gốm Chăm (Bàu Trúc), Vía Bà Chúa Xứ núi Sam (An Giang), Then (Tày, Nùng, Thái), Xòe Thái. Có thể tham gia, xem, hoặc xin học từ nghệ nhân.
+- **Lễ tết của các dân tộc:** Khmer (Chôl Chnăm Thmây, Sene Dolta, Ok Om Bok), Tày và Nùng (Lồng tồng), Mông (Tết của người Mông, Gầu tào), Thái, Mường (Khai hạ), Ê Đê, Gia Rai, Ba Na (mừng lúa mới), Chăm (Katê), Hoa (Nguyên tiêu).
+- **Lịch sử và công dân**, chỉ dùng những mốc đã được ghi nhận chính thức:
+  - Tiết Lịch sử: Bạch Đằng 938 và 1288, Như Nguyệt 1077, Lam Sơn 1428, Ngọc Hồi – Đống Đa 1789, Tuyên ngôn Độc lập 2/9/1945, Điện Biên Phủ 7/5/1954, thống nhất đất nước 30/4/1975, Đổi mới 1986, ASEAN 1995 và WTO 2007, 34 tỉnh thành từ 1/7/2025.
+  - Ông bà kể chuyện ngày xưa (tem phiếu thời bao cấp, những năm đầu Đổi mới…) tùy theo thế hệ của ông bà.
+  - Ngày Thương binh – Liệt sĩ 27/7 (thắp nến tri ân, thăm gia đình chính sách); Giỗ Tổ Hùng Vương mùng 10 tháng 3 âm lịch.
+  - Kỳ nghỉ 30/4 – 1/5: đi làm ngày lễ được trả ít nhất 300% lương theo Bộ luật Lao động 2019.
+  - Bầu cử đại biểu Quốc hội và HĐND 5 năm một lần (2026, 2031…). Chọn "nhờ người nhà bầu hộ" sẽ được giải thích đúng luật: cử tri phải tự mình đi bầu.
+- Nguồn tham khảo ghi trong docs/culture-sources.md; trang chủ ghi công bộ dữ liệu Nemotron-Personas-Vietnam.
+- Thêm mục kiểm thử hồi quy 62, bổ sung kiểm thử đánh giá trong tests/update550.js và tests/update651.js.
+
 ## v6.6.0 — Xuất thân hoàng tộc, nghề khoa học, con đường chính trị, thành tựu, gia phả, ảnh thẻ khổ dọc, web tải nhanh hơn
 
 - **Xuất thân hoàng tộc** (theo góp ý của người chơi):

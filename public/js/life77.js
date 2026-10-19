@@ -44,7 +44,7 @@
       opts: D.opts.map(function (o) {
         return { k: o[0], l: o[1], h: function (l) { return o[2] ? 'Khoảng ' + mo(l, V(l, o[2])) + E.medNote(l, V(l, o[2]), o[3]) : 'Không tốn tiền'; }, req: function (l) { return !o[2] || !l.indep || l.money >= V(l, o[2]) * (1 - o[3] * E.bhytShare(l)); }, ai: { w: o[0] === 'de' || o[0] === 'tay' ? 0.6 : o[0] === 'cong' || o[0] === 'mac_cai' || o[0] === 'vai' ? 1.1 : 0.6 },
           run: function (l, r, log) {
-            if (!o[2]) { log(D.k === 'tram' ? 'Bạn để đó. Vài tháng sau chiếc răng đau nhức cả đêm.' : 'Bạn quyết định để sau.', 'neutral'); if (D.k === 'tram') H.fx(l, { hea: -2, hap: -2 }); return; }
+            if (!o[2]) { log(D.k === 'tram' ? 'Bạn để đó. Vài tháng sau chiếc răng đau nhức cả đêm.' : (typeof D.title === 'string' ? D.title + ': bạn quyết định để sau.' : 'Bạn quyết định để sau.'), 'neutral'); if (D.k === 'tram') H.fx(l, { hea: -2, hap: -2 }); return; }
             E.medBill(l, V(l, o[2]), D.title + ': ' + o[1].toLowerCase(), log, o[3]);
             if (D.k === 'nieng') { l.flags.braces = l.age; log('Bắt đầu niềng răng. Mấy tuần đầu ăn cháo, cười lộ mắc cài. Hai năm sau tháo niềng, hàm răng đều tăm tắp.', 'good'); H.fx(l, { hap: 3 }); }
             else if (D.k === 'su') { l.flags.veneers = l.age; log(o[0] === 'tay' ? 'Tẩy trắng răng xong, nụ cười sáng hơn hẳn.' : 'Bọc răng sứ xong, nụ cười trắng sáng hẳn.', 'good'); H.fx(l, { hap: 3 }); }

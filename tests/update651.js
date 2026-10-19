@@ -15,5 +15,9 @@ const assert=require('assert'),fs=require('fs'),path=require('path');let n=0;fun
  const html=fs.readFileSync(path.join(__dirname,'../public/reviews.html'),'utf8'),js=fs.readFileSync(path.join(__dirname,'../public/js/reviews.js'),'utf8');
  ok(html.includes('id="reviewFilter"')&&html.includes('id="allReviews"')&&html.includes('id="textOnly"'),'trang có bộ lọc sao, nút xem tất cả, chỉ review có nội dung');
  ok(/&stars=/.test(js)&&/limit/.test(js)&&!/innerHTML/.test(js),'giao diện gọi API lọc, không chèn HTML thô');
+  { const db2=require('../tools/reviews-local.js')(':memory:');await db2.prepare("CREATE TABLE game_ratings (voter_hash TEXT PRIMARY KEY, stars INTEGER NOT NULL, updated_at INTEGER NOT NULL, review_text TEXT NOT NULL DEFAULT '')").run();for(let i=0;i<35;i++)await db2.prepare('INSERT INTO game_ratings VALUES (?,?,?,?)').bind('h'+i,5,1000+i,i%2?'cũ '+i:'').run();
+  const env2={REVIEWS_DB:db2};let v=await (await worker.fetch(new Request(origin+'/api/reviews?limit=100'),env2)).json();ok(v.total===35&&v.reviews.length===35&&v.reviews.some(x=>x.review==='cũ 1'),'v6.7: 35 đánh giá cũ được chép sang, không mất');
+  for(let i=0;i<3;i++){const r=await worker.fetch(new Request(origin+'/api/reviews',{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,'CF-Connecting-IP':'203.0.113.'+i},body:JSON.stringify({voter:('f'+i).padStart(64,'0'),stars:4})}),env2);ok(r.status===200,'v6.7: lượt mới '+i);}
+  v=await (await worker.fetch(new Request(origin+'/api/reviews'),env2)).json();ok(v.total===38,'v6.7: đánh giá mới làm tăng tổng số lượt ('+v.total+')'); }
  console.log('V6.5.1: '+n+' review filter checks passed');
 })().catch(e=>{console.error(e);process.exit(1);});
