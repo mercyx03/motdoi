@@ -1,3 +1,8 @@
+## v7.0.1 — Gọn mục Nguồn dữ liệu
+
+- Mục Giới thiệu → Nguồn dữ liệu bỏ dòng "Nguồn: …" vì link bộ dữ liệu Nemotron-Personas-Vietnam đã có ở chân trang. Giấy phép, ghi công NVIDIA và FPT, phần nêu rõ dữ liệu đã được điều chỉnh và câu "không tài trợ, bảo trợ hoặc xác nhận" vẫn giữ nguyên.
+- Thêm công cụ quản trị `npm run reset:password -- <tên đăng nhập>` để đặt lại mật khẩu cho người chơi quên mật khẩu.
+
 ## v7.0.0 — Rà soát lỗi logic toàn hệ thống
 
 Thêm công cụ `npm run audit` (tools/logic-audit.js): chạy 1.500 đời mô phỏng và đánh dấu các mâu thuẫn, như sự kiện sau khi mất, kết hôn khi chưa đủ tuổi, đi làm hay nghỉ hưu sai tuổi, nhắc người đã mất như còn sống, lời kể lỗi… Đã sửa mọi lỗi thật tìm được:
