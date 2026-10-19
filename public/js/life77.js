@@ -12,9 +12,12 @@
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function parent(l) { var f = l.fam || {}, m = !f.noMom && f.mAlive, b = !f.noDad && f.fAlive; return m && b ? 'bố mẹ' : m ? 'mẹ' : b ? 'bố' : ''; }
   // tỉ lệ bảo hiểm chi trả
+  // v7.0: đã định cư hẳn ở nước ngoài thì là bảo hiểm y tế nước sở tại, không phải BHYT Việt Nam
+  function vnHome(l) { return isVN(l) && !(l.abroad && l.abroad.perm); }
+  function insName(l) { return vnHome(l) ? 'BHYT' : 'bảo hiểm y tế'; }
   E.bhytShare = function (l) {
     if (!E.hasBHYT || !E.hasBHYT(l)) return 0;
-    if (!isVN(l)) return 0.8;
+    if (!vnHome(l)) return 0.8;
     if (l.age < 6 || (l.fam && l.fam.q <= 1 && !l.indep)) return 1;
     if (l.pensioned || l.age >= 80) return 0.95;
     return 0.8;
@@ -23,12 +26,12 @@
   E.medBill = function (l, total, why, log, cover) {
     if (!(total > 0)) return 0;
     var share = (cover == null ? 1 : cover) * E.bhytShare(l), ins = total * share, own = total - ins;
-    if (!l.indep && l.age < 18) { if (log) log(U.cap(parent(l) || 'gia đình') + ' lo viện phí ' + mo(l, total) + (ins > 0 ? ' (BHYT chi trả ' + Math.round(share * 100) + '%, nhà trả ' + mo(l, own) + ')' : '') + '.', 'neutral'); return 0; }
+    if (!l.indep && l.age < 18) { if (log) log(U.cap(parent(l) || 'gia đình') + ' lo viện phí ' + mo(l, total) + (ins > 0 ? ' (' + insName(l) + ' chi trả ' + Math.round(share * 100) + '%, nhà trả ' + mo(l, own) + ')' : '') + '.', 'neutral'); return 0; }
     H.cash(l, -own, why);
-    if (log && ins > 0) log('Viện phí ' + mo(l, total) + ': ' + (isVN(l) ? 'BHYT' : 'bảo hiểm') + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, ins) + '), bạn trả ' + mo(l, own) + '.', 'neutral');
+    if (log && ins > 0) log('Viện phí ' + mo(l, total) + ': ' + insName(l) + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, ins) + '), bạn trả ' + mo(l, own) + '.', 'neutral');
     return own;
   };
-  E.medNote = function (l, total, cover) { var s = (cover == null ? 1 : cover) * E.bhytShare(l); return s > 0 ? ' · BHYT trả ' + Math.round(s * 100) + '%, bạn trả ~' + mo(l, total * (1 - s)) : ''; };
+  E.medNote = function (l, total, cover) { var s = (cover == null ? 1 : cover) * E.bhytShare(l); return s > 0 ? ' · ' + insName(l) + ' trả ' + Math.round(s * 100) + '%, bạn trả ~' + mo(l, total * (1 - s)) : ''; };
 
   // nha khoa
   var DENTAL = [

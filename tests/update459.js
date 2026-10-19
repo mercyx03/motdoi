@@ -31,6 +31,6 @@ for(const [id,k]of [['dien_thoai_be','game'],['da_bong_vo_kinh','admit']]){
 }
 {
  const l=life();E.SC('audit_cost_number',{title:'Chi phí',text:'Một buổi học',opts:[{k:'yes',l:'Đồng ý',run:(l,r,log)=>{E.H.cash(l,-2,'Học thêm');log('Đăng ký khóa học 3 buổi.','good');}}]});l.money=3;
- const t=run(l,'audit_cost_number','yes');ok(l.money===1&&/bạn tự chi 2 triệu.*tiền riêng/.test(t),'sự kiện có số 3 vẫn phải ghi khoản chi và nguồn tiền');
+ const t=run(l,'audit_cost_number','yes');ok(l.money===3&&/bố mẹ chi 2 triệu/.test(t)&&!/tiền riêng/.test(t),'v6.9.1: trẻ dưới 15 tuổi còn bố mẹ thì bố mẹ chi, vẫn ghi rõ khoản chi và người trả');
 }
 console.log('PASS: '+n+' kiểm tra nguồn tiền chi tuổi thơ bản 4.5.9.');

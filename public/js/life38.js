@@ -249,7 +249,7 @@
         run: function (l, r, log, d) { buy(l, r, log, d, d.d[i], i === d.like); } };
     }).concat([
       { k: 'hoi', l: 'Hỏi "uống gì?" trước cho chắc', ai: { w: 0.8 }, run: function (l, r, log, d) { if (ch(r, 0.5)) { log('Hỏi "uống gì?", nhận về câu trả lời kinh điển: "Gì cũng được." Mua đại ' + d.d[0][0] + ' thì bị chê "' + fill(d.t, '{Uc} biết {I} không thích món này mà') + '".', 'neutral'); H.cash(l, -V(l, d.d[0][1] * 2 / 1000), 'Mua nước'); } else buy(l, r, log, d, d.d[d.like], true); } },
-      { k: 'khong', l: 'Thôi, nhắn tin hỏi han là được', ai: { w: 0.4 }, run: function (l, r, log, d) { log('Chỉ nhắn tin hỏi han ' + d.t.n + '.', 'neutral'); } }
+      { k: 'khong', l: 'Thôi, nhắn tin hỏi han là được', ai: { w: 0.4 }, run: function (l, r, log, d) { log(d.t && d.t.n ? 'Chỉ nhắn tin hỏi han ' + d.t.n + '.' : 'Chỉ nhắn tin hỏi han.', 'neutral'); } }
     ])
   });
   var GOOD = ['{Uc} biết đúng món tủ của {I} luôn!', 'Thương {U} ghê, uống một ngụm là hết mệt.', 'Đúng ly {I} đang thèm, {U} giỏi thật!', 'Cảm ơn {U} nha, để {I} chụp ảnh đăng story.'];

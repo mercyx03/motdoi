@@ -262,13 +262,18 @@
     if (c.hidden) return false;
     if (c.minAge && l.age < c.minAge) return false;
     if (c.edu > l.edu) return false;
-    if (c.vnOnly && !isVN(l)) return false;
+    if (c.vnOnly && (!isVN(l) || (l.abroad && l.abroad.perm))) return false; // v7.0: đã định cư nước ngoài thì không làm việc chỉ có ở Việt Nam
+    if (c.cat === 'state' && l.abroad && l.abroad.perm) return false;
     if (c.major && !c.soft && c.major !== l.major) return false;
     if (c.majors && !c.soft && c.majors.indexOf(l.major) < 0) return false;
     if (c.talent && c.talent !== l.talent && !(c.soft && (c.major === l.major || (c.majors && c.majors.indexOf(l.major) >= 0)))) return false;
     if (c.rural && l.urban) return false;
     if (c.coast && !(l.coast && !l.urban)) return false;
     if (c.maxAge && l.age > (c.id === 'vdv' && E.sportInfo ? E.sportInfo(l).max : c.maxAge) - 6) return false;
+    // v7.0: từ 58 tuổi không còn được tuyển mới vào khu vực chính thức (gần tuổi nghỉ hưu); từ 65 tuổi tránh việc nặng nhọc, nguy hiểm
+    if (l.age >= 58 && c.sec === 'formal' && !(l.job && resolveJob(l.job.id) === c.id)) return false;
+    if (l.age >= 65 && c.haz) return false;
+    if (l.age >= 62 && !(l.job && resolveJob(l.job.id) === c.id) && /vũ công|thợ hồ|phụ hồ|bartender|pha chế|tài xế xe tải|shipper|giao hàng|người mẫu|vận động viên|bốc vác|thợ xây/.test(c.t[0])) return false;
     return true;
   }
   function offers(l, r) {
@@ -413,7 +418,7 @@
         if (f0 < m[0] && l.fame >= m[0] && !(l.flags.fameHit || (l.flags.fameHit = {}))[m[0]]) { l.flags.fameHit[m[0]] = 1; log(m[1], 'big'); H.fx(l, { hap: 6 }); if (m[0] >= 1e5) H.mem(l, m[1], m[0] >= 1e6 ? 6 : 4); if (m[0] >= 1e6 && c.cat === 'creator' && !l.flags.mediaCo) { l.flags.mediaCo = true; log('Thành lập công ty truyền thông riêng.', 'good'); } }
       });
       var t0 = fameTier(f0), t1 = fameTier(l.fame * 1.25); // v6.9.1: chỉ báo tụt hạng khi giảm hẳn dưới mốc (tránh báo lên / xuống liên tục)
-      if (c.t.length > 1 && t1 < t0) { log('Danh tiếng đi xuống, tụt hạng thành ' + c.t[Math.min(t1, c.t.length - 1)] + '.', 'bad'); H.fx(l, { hap: -4 }); }
+      if (c.t.length > 1 && t1 < t0 && !(l.flags.fameDropAt != null && a - l.flags.fameDropAt < 5)) { l.flags.fameDropAt = a; log('Danh tiếng đi xuống, tụt hạng thành ' + c.t[Math.min(t1, c.t.length - 1)] + '.', 'bad'); H.fx(l, { hap: -4 }); }
       inc = fameIncome(c, l.fame) * 12 * scale(l) * Math.exp(U.normal(r) * 0.3);
       if (l.fame < 1e4 && l.job.yrs >= 4 && !l.flags.creatorWarned) { l.flags.creatorWarned = true; H.sched(l, 'creator_nghi', 0); }
     } else if (c.id === 'xkld') {

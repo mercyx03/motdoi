@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/life87.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -2738,6 +2738,33 @@ section('65. Bản 6.9.1: trẻ chưa tự lập thì bố mẹ chi tiền, bớ
   t.pending = [E.DEC.t2.make()]; E.resolve(t, 'buy'); delete E.DEC.t2; const tl = t.log[t.log.length - 1];
   ok(Math.abs(t.money) < 1e-9 && /tự chi [^)]* từ tiền tiêu vặt, (bố mẹ|mẹ|bố) chi /.test(tl.t), '16 tuổi: tự chi bằng tiền tiêu vặt, thiếu thì bố mẹ bù — ' + tl.t);
   ok(/placeholder="vd: mercy"/.test(fs.readFileSync(path.join(ROOT, 'js/account.js'), 'utf8')), 'gợi ý tên đăng nhập "mercy"');
+}
+section('66. Bản 7.0.0: rà soát lỗi logic toàn hệ thống');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  // tuổi kết hôn theo luật
+  ok(E.marryAge({ country: 'VN', abroad: null }, 'M') === 20 && E.marryAge({ country: 'VN', abroad: null }, 'F') === 18 && E.marryAge({ country: 'US', abroad: null }, 'M') === 18, 'tuổi kết hôn: Việt Nam nam 20, nữ 18; nước khác 18');
+  const mk = (seed, age, sex, o) => { const l = E.createLife(Object.assign({ mode: 'vn', seed, gender: sex }, o || {})); l.age = age; l.school = null; l.pending = []; l.partner = { name: 'Lan', sex: sex === 'M' ? 'F' : 'M', age: sex === 'M' ? Math.max(18, age) : Math.max(20, age), status: 'dating', since: age - 2, alive: true }; return l; };
+  ok(!E.DEC.marry.valid(mk(66000, 17, 'F'), {}) && !E.DEC.marry.valid(mk(66001, 19, 'M'), {}) && E.DEC.marry.valid(mk(66002, 20, 'M'), {}) && E.DEC.marry.valid(mk(66003, 18, 'F'), {}), 'chưa đủ tuổi thì không có lời cầu hôn / đám cưới');
+  const yo = mk(66004, 18, 'F'); yo.partner.age = 18; ok(!E.DEC.marry.valid(yo, {}), 'nữ 18 tuổi với bạn trai 18 tuổi (chưa đủ 20) vẫn chưa được kết hôn');
+  const cb = mk(66005, 16, 'F'); { const d = E.DEC.co_bau_som.make(cb, R(1)); E.DEC.co_bau_som.apply(cb, d, 'cuoi', R(2), (t, k) => cb.log.push({ a: cb.age, t, k })); }
+  ok(cb.partner && cb.partner.status !== 'married' && cb.log.some(e => /đủ 18 tuổi mới được đăng ký kết hôn/.test(e.t)) && cb.flags.marryWhenLegal === cb.partner.name, 'có thai khi 16 tuổi: về ở cùng, đủ tuổi mới cưới');
+  let early = 0; for (let i = 0; i < 400; i++) { const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 66100 + i }); E.runHeadless(l); l.log.forEach(e => { if (e.a < (E.isVN(l) ? 18 : 18) && /^(Tổ chức đám cưới với|Kết hôn với)/.test(e.t)) early++; }); }
+  ok(early === 0, 'không còn ai cưới trước 18 tuổi (' + early + ')');
+  // nghỉ hưu trước tuổi trong lực lượng vũ trang
+  const qd = E.createLife({ mode: 'vn', seed: 66200 }); qd.age = 38; qd.school = null; E.startJob(qd, 'quan_doi', R(2), () => { }); qd.workYrs = 15;
+  ok(!E.DEC.qd_nghi_huu_som.valid(qd, {}) && E.TRIG.filter(t => t.id === 'qd_nghi_huu_som').every(t => !t.when(qd, 38)), '38 tuổi chưa được nghỉ hưu trước tuổi');
+  qd.age = 50; qd.workYrs = 25; qd.job.rank = 6; ok(E.DEC.qd_nghi_huu_som.valid(qd, {}), '50 tuổi, 25 năm công tác thì có thể nghỉ hưu trước tuổi');
+  // tuyển dụng người cao tuổi
+  const old = E.createLife({ mode: 'vn', seed: 66300 }); old.age = 66; old.edu = 6; old.school = null; old.job = null;
+  const ok66 = Object.keys(E.CAR).filter(id => E.jobEligible ? E.jobEligible(old, E.CAR[id]) : false);
+  ok(ok66.length > 0 && ok66.every(id => E.CAR[id].sec !== 'formal' && !/vũ công|thợ hồ|bartender|tài xế xe tải|shipper/.test(E.CAR[id].t[0])), '66 tuổi không được tuyển mới vào việc chính thức hay việc nặng nhọc (' + ok66.length + ' nghề còn làm được)');
+  // định cư nước ngoài
+  const em = E.createLife({ mode: 'vn', seed: 66400 }); em.age = 30; em.indep = true; em.school = null; em.abroad = { code: 'US', name: 'Mỹ', perm: true }; em.money = em.base * 10; E.startJob(em, 'ke_toan', R(3), () => { }); em.si = { yrs: 5, sum: 1, last: 29 }; const logs = []; E.medBill(em, em.base, 'Khám bệnh', (t) => logs.push(t));
+  ok(logs.every(t => !/BHYT/.test(t)) && logs.some(t => /bảo hiểm y tế/.test(t)), 'định cư nước ngoài: bảo hiểm y tế nước sở tại, không ghi BHYT');
+  ok(!Object.keys(E.CAR).some(id => (E.CAR[id].vnOnly || E.CAR[id].cat === 'state') && E.jobEligible && E.jobEligible(em, E.CAR[id])), 'định cư nước ngoài không làm việc chỉ có ở Việt Nam / công chức');
+  ok(E.siLabel(em) !== 'BHXH, BHYT, BHTN', 'định cư nước ngoài: không ghi BHXH, BHYT, BHTN của Việt Nam');
+  ok(fs.existsSync(path.join(ROOT, '..', 'tools', 'logic-audit.js')), 'có công cụ rà soát lỗi logic tools/logic-audit.js');
 }
 function isVNx(l) { return E.isVN(l); }
 

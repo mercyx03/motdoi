@@ -1,3 +1,32 @@
+## v7.0.0 — Rà soát lỗi logic toàn hệ thống
+
+Thêm công cụ `npm run audit` (tools/logic-audit.js): chạy 1.500 đời mô phỏng và đánh dấu các mâu thuẫn, như sự kiện sau khi mất, kết hôn khi chưa đủ tuổi, đi làm hay nghỉ hưu sai tuổi, nhắc người đã mất như còn sống, lời kể lỗi… Đã sửa mọi lỗi thật tìm được:
+
+- **Tuổi kết hôn theo luật:**
+  - Việt Nam: nam từ đủ 20, nữ từ đủ 18 tuổi (Luật Hôn nhân và Gia đình 2014). Nước khác: từ 18 tuổi.
+  - Trước đây có nhân vật 16–17 tuổi đã tổ chức đám cưới. Nay chưa đủ tuổi thì không có lời cầu hôn, đám cưới hay giục cưới; cả người yêu cũng phải đủ tuổi.
+  - Có thai khi chưa đủ tuổi: hai gia đình cho về ở cùng, đủ tuổi mới làm đám cưới.
+- **Nghỉ hưu trước tuổi (quân đội, công an):** trước đây có người 38 tuổi đã nhận lương hưu. Nay chỉ từ 48 tuổi và có từ 20 năm công tác.
+- **Tuyển dụng người cao tuổi:** trước đây người 65–70 tuổi vẫn được tuyển mới làm bác sĩ thực hành, kỹ sư R&D, chuyên viên nhà nước, giảng viên, đầu bếp.
+  - Từ 58 tuổi không còn được tuyển mới vào khu vực chính thức.
+  - Từ 62 tuổi không nhận việc nặng nhọc (thợ hồ, bartender, tài xế xe tải, shipper, vũ công…).
+  - Từ 65 tuổi tránh việc nguy hiểm. Người đang làm thì vẫn làm tiếp được.
+- **Người đã định cư hẳn ở nước ngoài:**
+  - Viện phí ghi "bảo hiểm y tế" của nước sở tại thay vì "BHYT" Việt Nam; lương không còn ghi "đã trừ BHXH, BHYT, BHTN".
+  - Không được tuyển làm công chức xã / phường, chủ tịch UBND hay các việc chỉ có ở Việt Nam; con cái lớn lên ở nước ngoài cũng vậy.
+  - Không có sự kiện đăng ký BHXH tự nguyện của Việt Nam.
+- **Trẻ mồ côi** (không còn bố mẹ) vẫn tự chi bằng tiền tiết kiệm của mình như trước. Bản 6.9.1 lỡ cho "gia đình" trả hộ.
+- **Lời kể:**
+  - Sửa "Chỉ nhắn tin hỏi han ." (thừa khoảng trắng) và lỗi hai dấu chấm "..".
+  - Trẻ chưa đi học bị bó bột thì "cả nhà" ký tên lên lớp bột, không phải "cả lớp".
+  - Câu khất chuyến về quê có cách nói khác khi đã từng khất.
+  - Báo tụt hạng danh tiếng tối đa một lần mỗi 5 năm.
+- **Đã kiểm tra, không phải lỗi:**
+  - Người yêu chênh trên 25 tuổi chỉ xuất hiện trong mạch truyện "tìm hiểu kèm chu cấp", đúng thiết kế.
+  - Mất việc và bồi dưỡng nghề trong cùng năm thực ra diễn ra trước rồi mới mất việc.
+  - Các từ láy như "rưng rưng", "rần rần" là bình thường.
+- Thêm mục kiểm thử hồi quy 66. Cập nhật bài kiểm thử cũ tests/update459.js theo quy tắc mới: trẻ dưới 15 tuổi còn bố mẹ thì bố mẹ chi.
+
 ## v6.9.1 — Trẻ chưa tự lập thì bố mẹ chi tiền
 
 - Sửa lỗi mới vài tuổi đã "tự chi từ tiền riêng": dưới 15 tuổi mọi khoản do bố mẹ chi (ghi rõ "bố mẹ chi …"), 15–17 tuổi tự chi bằng tiền tiêu vặt nếu đủ, thiếu thì bố mẹ bù.

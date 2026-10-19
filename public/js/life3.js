@@ -116,7 +116,7 @@
   }
   E.insured = insured;
   function siRate(l) { return isVN(l) ? 0.105 : 0.08; }
-  E.siLabel = function (l) { return isVN(l) ? 'BHXH, BHYT, BHTN' : 'bảo hiểm xã hội & y tế'; };
+  E.siLabel = function (l) { return (isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHXH, BHYT, BHTN' : 'bảo hiểm xã hội & y tế'; };
   var LVN = ['Mới tập', 'Làm quen', 'Khá', 'Giỏi', 'Rất giỏi', 'Xuất sắc', 'Tinh anh', 'Chuyên nghiệp', 'Bậc thầy', 'Huyền thoại'];
   function tLevel(sk) { return Math.min(10, 1 + Math.floor((sk || 0) / 10)); }
   E.talentLevel = function (l, sk) { var s = sk == null ? (l.skill || 0) : sk, lv = tLevel(s); return { lv: lv, name: LVN[lv - 1], exp: lv >= 10 ? 100 : Math.round((s % 10) * 10), next: lv >= 10 ? null : LVN[lv] }; };
@@ -190,8 +190,8 @@
   E.DEC.treat.apply = function (l, d, k, r, log) {
     var m0 = l.money, x = ta0.apply(this, arguments), spent = m0 - l.money;
     var share = E.bhytShare ? E.bhytShare(l) : (bhyt(l) ? 0.8 : 0), priv = k === 'best' && d.data && d.data.priv;
-    if (spent > 0 && share > 0 && priv) { H.cash(l, spent * share, isVN(l) ? 'BHYT chi trả phần viện phí chuẩn' : 'Bảo hiểm chi trả phần chuẩn'); }
-    else if (spent > 0 && share > 0) { var back = spent * share; H.cash(l, back, isVN(l) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); log('Viện phí ' + mo(l, spent) + ': ' + (isVN(l) ? 'BHYT' : 'bảo hiểm') + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, back) + '), bạn trả ' + mo(l, spent - back) + '.', 'good'); }
+    if (spent > 0 && share > 0 && priv) { H.cash(l, spent * share, (isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHYT chi trả phần viện phí chuẩn' : 'Bảo hiểm chi trả phần chuẩn'); }
+    else if (spent > 0 && share > 0) { var back = spent * share; H.cash(l, back, (isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); log('Viện phí ' + mo(l, spent) + ': ' + ((isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHYT' : 'bảo hiểm') + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, back) + '), bạn trả ' + mo(l, spent - back) + '.', 'good'); }
     return x;
   };
 

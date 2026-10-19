@@ -278,7 +278,7 @@
   // ===================================================================
   var KID_JOBS_BAN = { an_xin: 1, phu_giup: 1, scam_kh: 1, xkld: 1 };
   function kidJobPick(l, k, r) {
-    var ids = Object.keys(E.CAR).filter(function (id) { var c = E.CAR[id]; return !KID_JOBS_BAN[id] && !c.fame && c.skillRank == null && c.sec !== 'crime' && !c.ladder && (c.edu || 0) <= k.edu && !(c.vnOnly && !isVN(l)); });
+    var ids = Object.keys(E.CAR).filter(function (id) { var c = E.CAR[id]; return !KID_JOBS_BAN[id] && !c.fame && c.skillRank == null && c.sec !== 'crime' && !c.ladder && (c.edu || 0) <= k.edu && !(c.vnOnly && !isVN(l)) && !((c.vnOnly || c.cat === 'state') && l.abroad && l.abroad.perm); }); // v7.0: gia đình đã định cư nước ngoài thì con không làm công chức ở Việt Nam
     return U.wpick(r, ids, function (id) { var c = E.CAR[id]; return (c.w || 1) * (c.hidden ? 0.15 : 1) * (k.edu >= 5 && (c.edu || 0) >= 5 ? 4 : 1) * (k.edu >= 5 && (c.edu || 0) < 3 ? 0.2 : 1); });
   }
   function kidIncome(l, k) {

@@ -99,7 +99,7 @@
     { k: 'khong', l: 'Ở nhà chơi', out: [[1, 'Mùa hè trôi qua bên tivi và mấy trò chơi quen.', null, 'neutral']] }]);
 
   KID('k6_nga_cay', 5, 11, 'Cú ngã', ['Trèo cây ổi nhà hàng xóm hái quả, cành gãy, bạn ngã sõng soài.', 'Đạp xe thả dốc, phanh không ăn, bạn ngã lăn ra đường.', 'Chơi đuổi bắt trên cầu thang, bạn trượt chân ngã đập tay xuống bậc.'], [
-    { k: 'ke', l: 'Khóc, kể ngay với bố mẹ', ai: { w: 1.3 }, out: [[0.55, 'Bó bột tay một tháng, cả lớp thi nhau ký tên lên lớp bột trắng.', { hea: -4, hap: -1 }, 'neutral'], [0.45, 'Chỉ trầy xước, bác sĩ sát trùng rồi cho về. Từ đó bạn trèo cẩn thận hơn.', { hea: -1 }, 'neutral']] },
+    { k: 'ke', l: 'Khóc, kể ngay với bố mẹ', ai: { w: 1.3 }, out: [[0.55, function (l) { return 'Bó bột tay một tháng, ' + (l.school ? 'cả lớp' : 'cả nhà') + ' thi nhau ký tên, vẽ hình lên lớp bột trắng.'; }, { hea: -4, hap: -1 }, 'neutral'], [0.45, 'Chỉ trầy xước, bác sĩ sát trùng rồi cho về. Từ đó bạn trèo cẩn thận hơn.', { hea: -1 }, 'neutral']] },
     { k: 'giau', l: 'Giấu bố mẹ vì sợ bị mắng', ai: { w: 0.6 }, out: [[0.6, 'Tay sưng vù mới bị phát hiện. Bác sĩ bảo đến muộn thêm chút nữa là xương liền lệch.', { hea: -6, hap: -2 }, 'bad'], [0.4, 'Đau mấy hôm rồi cũng đỡ. Vết sẹo nhỏ ở đầu gối theo bạn mãi.', { hea: -2 }, 'neutral']] }]);
 
   KID('k6_ruou_gio', 11, 14, 'Chén rượu ngày giỗ', [function (l) { return 'Ngày giỗ ông, mấy chú bác rót rượu mời: “' + (l.sex === 'M' ? 'Lớn rồi, làm một chén cho ra dáng đàn ông!' : 'Con gái cũng làm một chén cho vui!') + '”'; }, 'Tất niên ở nhà bác cả, cả mâm giục bạn "nâng ly" với người lớn.'], [
