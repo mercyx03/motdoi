@@ -1088,12 +1088,18 @@
   }
   function willForm(l,d){
     if(d.id!=='di_chuc'||!E.WILL70)return '';
-    return '<div class="family-form"><label for="willPlan">Để lại tài sản</label><select id="willPlan">'+E.WILL70.choices(l).map(function(o){return '<option value="'+o.k+'"'+(d.data.plan===o.k?' selected':'')+'>'+esc(o.l)+'</option>';}).join('')+'</select><label for="willNote">Lời nhắn của bạn</label><textarea id="willNote" maxlength="1000" rows="6" placeholder="Viết điều bạn muốn gửi lại…">'+esc(d.data.note||'')+'</textarea><p id="willError" role="status"></p></div>';
+    var W=E.WILL70,sh=d.data.shares||{},rs=W.recipients?W.recipients(l):[],causes=W.causes||{};
+    var custom='<div id="willCustom"'+(d.data.plan==='custom'?'':' hidden')+'><p class="small muted" style="margin:4px 0">Ghi phần trăm cho từng người. Phần còn lại (nếu có) chia theo pháp luật cho các con và bạn đời.</p>'+rs.map(function(x){return '<label style="display:flex;gap:8px;align-items:center;justify-content:space-between"><span>'+esc(x.name)+' <span class="small muted">· '+esc(x.note)+'</span></span><span><input type="number" min="0" max="100" step="1" inputmode="numeric" style="width:72px" data-share="'+esc(x.key)+'" value="'+(+sh[x.key]||0)+'"> %</span></label>';}).join('')+
+      '<label for="willOther">Tên người khác (nếu có)</label><input id="willOther" maxlength="60" placeholder="Ví dụ: cô hàng xóm đã chăm sóc bạn" value="'+esc(d.data.otherName||'')+'"><p id="willSum" class="small"></p></div>';
+    var cause='<div id="willCauseBox"'+(d.data.plan==='custom'||d.data.plan==='charity'?'':' hidden')+'><label for="willCause">Quỹ / tổ chức xã hội nhận</label><select id="willCause">'+Object.keys(causes).map(function(k){return '<option value="'+k+'"'+(d.data.cause===k?' selected':'')+'>'+esc(causes[k])+'</option>';}).join('')+'</select></div>';
+    return '<div class="family-form"><label for="willPlan">Để lại tài sản</label><select id="willPlan">'+W.choices(l).map(function(o){return '<option value="'+o.k+'"'+(d.data.plan===o.k?' selected':'')+'>'+esc(o.l)+'</option>';}).join('')+'</select>'+custom+cause+'<label for="willNote">Lời nhắn của bạn</label><textarea id="willNote" maxlength="1000" rows="6" placeholder="Viết điều bạn muốn gửi lại…">'+esc(d.data.note||'')+'</textarea><p id="willError" role="status"></p></div>';
   }
   function bindWill(box,l,d){
     if(d.id!=='di_chuc'||!E.WILL70)return;
-    function draft(){d.data.note=$('#willNote',box).value;d.data.plan=$('#willPlan',box).value;persist();}
-    $('#willNote',box).oninput=draft;$('#willPlan',box).onchange=draft;
+    function draft(){d.data.note=$('#willNote',box).value;d.data.plan=$('#willPlan',box).value;var sh={};$$('[data-share]',box).forEach(function(i){var v=Math.round(+i.value);if(!isFinite(v)||v<0)v=0;if(v>100)v=100;if(v>0)sh[i.dataset.share]=v;});d.data.shares=sh;if($('#willOther',box))d.data.otherName=$('#willOther',box).value;if($('#willCause',box))d.data.cause=$('#willCause',box).value;
+      var c=$('#willCustom',box),cb=$('#willCauseBox',box);if(c)c.hidden=d.data.plan!=='custom';if(cb)cb.hidden=!(d.data.plan==='custom'||d.data.plan==='charity');
+      var sum=Object.keys(sh).reduce(function(t,k){return t+sh[k];},0),out=$('#willSum',box);if(out){out.textContent='Đã chia '+sum+'% · '+(sum>100?'vượt quá 100%':'còn '+(100-sum)+'% chia theo pháp luật');out.style.color=sum>100?'var(--bad)':'';}persist();}
+    $('#willNote',box).oninput=draft;$('#willPlan',box).onchange=draft;$$('[data-share]',box).forEach(function(i){i.oninput=draft;});if($('#willOther',box))$('#willOther',box).oninput=draft;if($('#willCause',box))$('#willCause',box).onchange=draft;draft();
   }
   function showDecision() {
     if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; }
@@ -1265,8 +1271,8 @@
       '<h3 style="margin:22px 0 4px">Khúc cuối</h3><div class="fin-wrap">' + finaleHtml(stages) + '</div>' +
       (refl ? '<h3 style="margin:22px 0 4px">Những quãng lặng</h3><div class="refl-list">' + refl + '</div>' : '') +
       (stars.length ? '<h3 style="margin:22px 0 4px">⭐ Khoảnh khắc bạn đã đánh dấu</h3><ul class="finale-list">' + stars.map(function (e) { return '<li>' + e.a + ' tuổi — ' + esc(e.t) + '</li>'; }).join('') + '</ul>' : '') +
-      (kidsLive.length ? '<div class="card pad heir"><div class="eyebrow">Đời người nối tiếp</div><p style="margin:6px 0 10px">' + esc(l.name) + ' để lại ' + (kidsLive.length === 1 ? 'một người con' : kidsLive.length + ' người con') + '. Bạn có thể sống lại cuộc đời của con từ lúc chào đời — trong gia đình do chính bạn gây dựng.</p><div class="go-row">' +
-        kidsLive.map(function (k, i) { return '<button class="btn gold" data-heir="' + i + '">Sống tiếp đời ' + (k.sex === 'M' ? 'con trai' : 'con gái') + ' ' + esc(k.name) + '</button>'; }).join('') + '</div></div>' : '') +
+      (kidsLive.length ? '<div class="card pad heir"><div class="eyebrow">Đời người nối tiếp</div><p style="margin:6px 0 10px">' + esc(l.name) + ' để lại ' + (kidsLive.length === 1 ? 'một người con' : kidsLive.length + ' người con') + '. Chọn một người con để sống tiếp: bắt đầu lại từ lúc chào đời trong gia đình do chính bạn gây dựng, hoặc tiếp tục ngay ở tuổi hiện tại của con và nhận phần thừa kế.</p><div class="go-row">' +
+        kidsLive.map(function (k, i) { var ka = l.death.age - k.born; return '<button class="btn gold" data-heir="' + i + '">Sống tiếp đời ' + (k.sex === 'M' ? 'con trai' : 'con gái') + ' ' + esc(k.name) + ' (' + ka + ' tuổi)</button>'; }).join('') + '</div></div>' : '') +
       '<h3 style="margin:22px 0 4px">Những người sinh cùng giây</h3><div class="cohort">' + (cohort || []).map(function (c) {
         return '<div class="c"><b>' + esc(c.name) + '</b><span>' + esc(c.where) + (c.death ? ' · mất ở tuổi ' + c.death.age : '') + '</span><p class="small" style="margin:6px 0 0">' + esc(c.summary) + '</p></div>';
       }).join('') + '</div>' +
@@ -1286,7 +1292,23 @@
       b.onclick = function () {
         var k = kidsLive[+b.dataset.heir]; if (!k) return;
         l.finalWords = words(); updRecent();
-        ask('Sống tiếp đời con', 'Bắt đầu cuộc đời của ' + k.name + ' từ lúc chào đời, là con của ' + l.name + '?', 'Bắt đầu đời của ' + k.name, function () { try { bornWith(E.childOpts(l, k)); } catch (e) { toast('Chưa bắt đầu được đời con, hãy thử lại'); if (window.console) console.error(e); } });
+        var ka = l.death.age - k.born, share = E.heirShare ? E.heirShare(l, k) : 0, P = l.sex === 'M' ? 'bố' : 'mẹ';
+        var inh = share > 0 ? 'Phần thừa kế của ' + k.name + ': ' + money(l, share) + '.' : E.netWorth(l) < 0 ? l.name + ' để lại nợ; theo luật con không phải trả quá phần di sản được hưởng.' : 'Theo di chúc, ' + k.name + ' không nhận phần tài sản nào.';
+        modal('<h2>Sống tiếp đời ' + esc(k.name) + '</h2><p>' + esc(inh) + '</p><div class="opts">' +
+          '<button class="opt" data-hm="birth"><b>Từ lúc chào đời</b><span>' + esc('Sinh ra trong gia cảnh lúc ' + l.name + ' ' + k.born + ' tuổi. ' + U.cap(P) + ' sẽ ra đi khi con ' + ka + ' tuổi và để lại đúng phần thừa kế này.') + '</span></button>' +
+          (ka > 0 ? '<button class="opt" data-hm="now"><b>Tiếp tục ở tuổi hiện tại (' + ka + ' tuổi)</b><span>' + esc('Những năm đã qua được dựng lại theo hồ sơ của con; bắt đầu từ năm ' + P + ' mất và nhận thừa kế.') + '</span></button>' : '') +
+          '<button class="opt" data-hm="no"><b>Thôi</b></button></div>', function (box) {
+            $$('[data-hm]', box).forEach(function (bt) { bt.onclick = function () {
+              var mode = bt.dataset.hm; if (mode === 'no') { closeModal(); return; }
+              if (mode === 'birth') { closeModal(); try { bornWith(E.childOpts(l, k)); } catch (e) { toast('Chưa bắt đầu được đời con, hãy thử lại'); if (window.console) console.error(e); } return; }
+              box.querySelector('.opts').innerHTML = '<p class="muted">Đang dựng lại ' + ka + ' năm cuộc đời của ' + esc(k.name) + '…</p>';
+              setTimeout(function () { var life = null; try { life = E.heirAtAge(l, k); } catch (e) { if (window.console) console.error(e); } closeModal();
+                if (!life) { toast('Chưa dựng lại được đời con, hãy thử bắt đầu từ lúc chào đời'); return; }
+                var seen = LS.get('mkn.seen', []); if (Array.isArray(seen) && seen.length) { life.flags.prevSeen = {}; seen.forEach(function (ids) { (ids || []).forEach(function (id) { life.flags.prevSeen[id] = 1; }); }); }
+                S.life = life; S.cohort = E.makeCohort(life); S.speed = 1; S.auto = false; S.skipping = false; S.preview = null; persist(); enterLife(); toast('Tiếp tục cuộc đời của ' + life.name + ' ở tuổi ' + life.age);
+              }, 30);
+            }; });
+          });
       };
     });
     $('#saveMem').onclick = function () {

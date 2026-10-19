@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -560,7 +560,7 @@ section('15. Khúc cuối, chia sẻ, 10 đời gần đây, tương thích bả
     const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 2100 + i }); E.runHeadless(l);
     const st = E.finale(l);
     ok(st.length >= 2 && st.every(s => !badText(s.h) && (!s.x || !badText(s.x)) && (!s.list || s.list.every(x => !badText(x)))), 'khúc cuối sạch #' + i);
-    if (l.death.age < 6) kinds.child++; else if (l.death.sudden) kinds.sudden++; else { kinds.ill++; ok(st.some(s => s.h === 'Di nguyện') && st.some(s => s.h === 'Hồi tưởng') && st[st.length - 1].h === 'Xuôi tay', 'chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay #' + i); }
+    if (l.death.age < 6) kinds.child++; else if (l.death.sudden) kinds.sudden++; else { kinds.ill++; ok(st.some(s => s.h === 'Di nguyện') && st.some(s => s.h === 'Hồi tưởng') && (function () { var xi = st.map(s => s.h).lastIndexOf('Xuôi tay'); return xi >= 0 && st.slice(xi + 1).every(s => /^(Di chúc để lại|Thừa kế theo pháp luật|Khi các con hay tin|Ngày tiễn biệt)$/.test(s.h)); })(), 'chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay (sau đó là di chúc, thừa kế, cảnh các con) #' + i); }
     const sum = E.share.summary(l, 'Cảm ơn nhé');
     const back = E.share.decode(E.share.encode(sum));
     ok(back && back.n === l.name && back.o === sum.o && back.f === 'Cảm ơn nhé' && back.m === sum.m, 'mã hóa/giải mã link chia sẻ #' + i);
@@ -2530,6 +2530,61 @@ section('59. Bản 6.4.0: những cuộc đời không màu hồng, ôn thi chuy
   const s = E.createLife({ mode: 'vn', seed: 59500, gender: 'F' }); s.age = 15; s.pending = []; s.school = 'lower'; s.st.kno = 80; s.pending = [E.DEC.hs.make(s, R(1))]; E.resolve(s, 'special54'); E.resolve(s, 'english'); const on = s.pending[0];
   ok(on && on.id === 'chuyen_on' && /nghe hiểu, ngữ âm/.test(on.text), 'thi vào chuyên Anh: có bước ôn thi theo dạng đề chuyên Anh');
   E.resolve(s, 'o0'); ok(!s.pending.some(d => d.id === 'chuyen_on') && (s.flags.study54.special || s.log.some(e => /chưa đỗ|Chưa đỗ|trượt/.test(e.t)) || s.school === 'upper'), 'ôn xong thì vào phòng thi, có kết quả đỗ / trượt');
+}
+section('60. Bản 6.5.0: mèo đi theo, tuổi thơ đa dạng, di chúc chia theo tỉ lệ, các con khi bạn mất, thừa kế đời con');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); }, Hh = E.H;
+  // mèo: cứu xong có lựa chọn mang về, mang về thì có thú cưng thật
+  const c = E.createLife({ mode: 'vn', seed: 60100 }); c.age = 8; c.school = 'primary'; c.pets = []; c.pending = [E.DEC.meo_ket.make(c, R(1))];
+  E.resolve(c, 'adult'); const mt = c.pending[0];
+  ok(mt && mt.id === 'meo_theo' && /mến bạn/.test(mt.text) && mt.opts.some(o => o.k === 'take') && mt.opts.some(o => o.k === 'leave'), 'cứu mèo xong: chú mèo mến bạn đi theo, được chọn mang về hay không');
+  ok(!c.log.some(e => /được mang mèo về nuôi/.test(e.t)), 'không còn báo "được mang mèo về" khi chưa có mèo');
+  E.resolve(c, 'take'); ok(Hh.pets(c).length === 1 && Hh.pets(c)[0].k === 'mèo', 'mang về thì nhà có mèo thật (hiện trong gia đình, đặt tên được)');
+  const c2 = E.createLife({ mode: 'vn', seed: 60101 }); c2.age = 8; c2.school = 'primary'; c2.pets = []; c2.pending = [E.DEC.meo_theo.make(c2, R(2))]; E.resolve(c2, 'leave'); ok(!Hh.pets(c2).length, 'không mang về thì không có mèo');
+  // tuổi thơ: nhiều chuyện mới, mỗi đời gặp khác nhau
+  const ids = E.TRIG.filter(t => /^k6_/.test(t.id)).map(t => t.id); ok(ids.length >= 35, 'thêm ' + ids.length + ' chuyện tuổi thơ mới');
+  const seen = new Set(); for (let i = 0; i < 60; i++) { const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 60200 + i }); E.runHeadless(l); Object.keys(l.flags.scN || {}).forEach(id => { if (/^k6_/.test(id)) seen.add(id); }); }
+  ok(seen.size >= 25, 'các chuyện tuổi thơ mới xuất hiện ngẫu nhiên giữa các đời (' + seen.size + ' loại trong 60 đời)');
+  // di chúc tự chia theo tỉ lệ
+  const W = E.WILL70, mkW = () => { const l = E.createLife({ mode: 'vn', seed: 60300 }); l.age = 75; l.school = null; l.indep = true; l.money = 1000; l.loans = []; l.pending = []; l.partner = { name: 'Hoa', sex: 'F', age: 72, status: 'married', alive: true }; l.kids = [{ name: 'An', sex: 'M', born: 30, alive: true }, { name: 'Bình', sex: 'F', born: 33, alive: true, vice: 'cờ bạc' }]; l.grand = 2; return l; };
+  let l = mkW(); ok(W.choices(l).some(x => x.k === 'custom') && W.recipients(l).some(x => x.kind === 'society') && W.recipients(l).some(x => x.kind === 'other') && W.recipients(l).some(x => x.kind === 'grand'), 'di chúc: tự chia cho từng người con, bạn đời, các cháu, người khác, xã hội');
+  let d = E.act(l, 'di_chuc70'); d.data.plan = 'custom'; d.data.shares = { k0: 60, k1: 50 }; ok(/quá 100%/.test(W.check(l, d.data)), 'tổng quá 100% bị chặn');
+  d.data.shares = { k0: 50, k1: 0, p: 20, o: 10, s: 10 }; d.data.otherName = ''; ok(/tên người nhận/.test(W.check(l, d.data)), 'chia cho người khác phải ghi tên');
+  d.data.otherName = 'Cô Tư hàng xóm'; d.data.cause = 'benh'; ok(!W.check(l, d.data), 'di chúc hợp lệ'); E.resolve(l, 'save');
+  l.alive = false; l.death = { age: 75, year: l.birthYear + 75, cause: 'tuổi già' }; const net = E.netWorth(l), s = W.settle(l);
+  const get = n => s.list.filter(x => x.name === n).reduce((a, x) => a + x.amount, 0), law = n => s.law.filter(x => x.name === n).reduce((a, x) => a + x.amount, 0);
+  ok(net > 0 && Math.abs(get('An') - net * 0.5) < 1e-6 && Math.abs(get('Hoa') - net * 0.2) < 1e-6 && Math.abs(get('Cô Tư hàng xóm') - net * 0.1) < 1e-6 && Math.abs(get(W.causes.benh) - net * 0.1) < 1e-6 && get('Bình') === 0, 'chia đúng tỉ lệ: con 50%, bạn đời 20%, người khác 10%, quỹ bệnh nhi 10%, đứa con cờ bạc 0%');
+  ok(Math.abs(s.unassigned - net * 0.1) < 1e-6 && s.law.length === 3 && Math.abs(law('Bình') - net * 0.1 / 3) < 1e-6, '10% chưa chia được chia theo pháp luật cho các con và bạn đời');
+  ok(Math.abs(s.list.reduce((a, x) => a + x.amount, 0) + s.law.reduce((a, x) => a + x.amount, 0) - net) < 1e-6, 'tổng phần chia đúng bằng di sản, không sinh thêm tiền');
+  const fin = E.finale(l), grief = fin.find(x => x.h === 'Khi các con hay tin');
+  ok(fin.some(x => x.h === 'Di chúc để lại' && x.list.some(t => /50%/.test(t))) && grief && grief.list.length >= 3, 'khúc cuối có di chúc theo tỉ lệ và cảnh từng người con, bạn đời');
+  ok(grief && grief.list.some(t => /Bình/.test(t) && /(nghẹn ngào|biết lỗi|khóc không thành tiếng)/.test(t)), 'đứa con phá gia chi tử nghẹn ngào nhận ra bố / mẹ đã hy sinh');
+  ok(JSON.stringify(E.finale(l)) === JSON.stringify(fin), 'khúc cuối ổn định, mở lại vẫn như cũ');
+  // con chưa thành niên được ít nhất 2/3 suất pháp luật
+  const y = mkW(); y.kids.push({ name: 'Út', sex: 'M', born: 70, alive: true }); d = E.act(y, 'di_chuc70'); d.data.plan = 'custom'; d.data.shares = { s: 100 }; d.data.cause = 'hoc'; E.resolve(y, 'save'); y.alive = false; y.death = { age: 75, year: y.birthYear + 75, cause: 'tuổi già' };
+  const sy = W.settle(y), ut = sy.list.filter(x => x.name === 'Út').reduce((a, x) => a + x.amount, 0), ny = sy.net;
+  ok(Math.abs(ut - ny / 4 * 2 / 3) < 1e-6 && sy.notes.length === 1 && Math.abs(sy.list.reduce((a, x) => a + x.amount, 0) - ny) < 1e-6, 'con chưa thành niên vẫn được 2/3 một suất thừa kế dù di chúc cho hết xã hội');
+  // các kiểu con khác nhau
+  const types = new Set(), base = { name: 'X', sex: 'M', born: 30, alive: true, close: 60 };
+  [{ vice: 'ma túy' }, { close: 20 }, { abroadStudy: true }, { edu: 5, job: 'bác sĩ' }, { close: 90 }, {}, { born: 70 }, { born: 60 }, { jail: 60 }].forEach(x => types.add(E.kidGrief.type(l, Object.assign({}, base, x))));
+  ok(types.size >= 9, 'nhiều kiểu phản ứng tùy con: ' + [...types].join(', '));
+  // sống tiếp đời con
+  let P = null; for (let i = 0; i < 300 && !P; i++) { const x = E.createLife({ mode: 'vn', seed: 60400 + i }); E.runHeadless(x); if (x.death.age >= 70 && E.netWorth(x) > 0 && x.kids.filter(k => k.alive && x.death.age - k.born >= 25).length >= 2) P = x; }
+  ok(!!P, 'tìm được đời có nhiều con để thử');
+  if (P) {
+    const kids = P.kids.filter(k => k.alive), k = kids[1], ka = P.death.age - k.born, sh = E.heirShare(P, k), es = E.WILL70.estate(P);
+    ok(sh > 0 && Math.abs(kids.reduce((a, x) => a + E.heirShare(P, x), 0) - es.law.concat(es.list).filter(x => x.kid != null).reduce((a, x) => a + x.amount, 0)) < 1e-6, 'mỗi người con có phần thừa kế riêng');
+    const b = E.createLife(E.childOpts(P, k)); E.runHeadless(b);
+    const side = P.sex === 'F' ? 'mẹ' : 'bố', dl = b.log.filter(e => e.t.indexOf((side === 'mẹ' ? 'Mẹ ' : 'Bố ') + P.name + ' qua đời ở tuổi ' + P.death.age) === 0);
+    ok(b.death.age < ka || (dl.length === 1 && dl[0].a === ka), 'sống từ lúc chào đời: ' + side + ' ra đi đúng năm con ' + ka + ' tuổi, đúng tuổi ' + P.death.age);
+    ok(b.death.age < ka || b.log.some(e => e.a === ka && /được hưởng/.test(e.t)), 'sống từ lúc chào đời: nhận đúng phần thừa kế khi ' + side + ' mất');
+    const h = E.heirAtAge(P, k); ok(h && h.age === ka && h.alive && h.name === k.name && h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'], 'tiếp tục ở tuổi hiện tại: bắt đầu đúng ' + ka + ' tuổi, ' + side + ' còn sống đến năm ấy');
+    if (h) { const m0 = h.money; E.beginYear(h, {}); let g = 0; while (h.pending.length && g++ < 64) E.resolve(h, E.autoKey(h)); E.finishYear(h);
+      ok(!h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'] && h.log.some(e => /được hưởng/.test(e.t)), 'năm ấy ' + side + ' mất và bạn nhận thừa kế');
+      const it = (h.yr.items || []).filter(x => /^Thừa kế từ/.test(x.t)); ok(it.length === 1 && Math.abs(it[0].v - h.flags.heirOf.amt) < 1e-6 && Math.abs(h.flags.heirOf.amt - sh) < 1e-6, 'tiền thừa kế được cộng đúng một lần vào tiền mặt, đúng bằng phần của con'); }
+  }
+  const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8');
+  ok(/data-hm="now"/.test(appSrc) && /heirAtAge/.test(appSrc) && /data-share/.test(appSrc), 'màn kết thúc: chọn sống từ lúc chào đời hay ở tuổi hiện tại; di chúc nhập tỉ lệ từng người');
 }
 function isVNx(l) { return E.isVN(l); }
 

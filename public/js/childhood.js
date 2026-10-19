@@ -263,12 +263,22 @@
   SC('meo_ket', {
     title: 'Chú mèo trên cây', text: 'Một chú mèo con kêu thảm thiết trên ngọn cây trước cổng trường, không trèo xuống được.',
     opts: [
-      { k: 'climb', l: 'Trèo lên cứu', run: function (l, r, log) { if (ch(r, 0.2)) { log('Cứu được mèo nhưng bị cào xước cả tay, lại ngã trầy chân.', 'neutral'); fx(l, { hea: -2, karma: 3 }); } else { log('Trèo lên ôm được chú mèo xuống. Cả đám học sinh vỗ tay.', 'good'); fx(l, { karma: 4, hap: 3 }); } } },
-      { k: 'adult', l: 'Gọi bác bảo vệ giúp', run: function (l, r, log) { log('Bác bảo vệ bắc thang đưa mèo xuống. Bạn được mang mèo về nuôi.', 'good'); fx(l, { karma: 2 }); if (H.pets(l).length < 3 && ch(r, 0.4)) H.addPet(l, r, 'mèo', 'mèo ta', pick(r, ['Mun', 'Cam', 'Bé Mèo', 'Sữa'])); } },
+      { k: 'climb', l: 'Trèo lên cứu', run: function (l, r, log) { if (ch(r, 0.2)) { log('Cứu được mèo nhưng bị cào xước cả tay, lại ngã trầy chân.', 'neutral'); fx(l, { hea: -2, karma: 3 }); } else { log('Trèo lên ôm được chú mèo xuống. Cả đám học sinh vỗ tay.', 'good'); fx(l, { karma: 4, hap: 3 }); } H.chain(l, 'meo_theo'); } },
+      { k: 'adult', l: 'Gọi bác bảo vệ giúp', run: function (l, r, log) { log('Bác bảo vệ bắc thang đưa mèo xuống. Bạn ôm chú mèo vào lòng vuốt ve mãi.', 'good'); fx(l, { karma: 2 }); H.chain(l, 'meo_theo'); } },
       { k: 'leave', l: 'Đi qua, sợ muộn học', run: function (l, r, log) { log('Đi qua, cả buổi học cứ nghĩ đến chú mèo.', 'neutral'); } }
     ]
   });
   CT('meo_ket', function (l, a) { return a >= 6 && a <= 13 && l.school; }, 99);
+  // v6.5: chú mèo mến bạn — được chọn mang về hay không, mang về thì có thú cưng thật và đặt tên
+  SC('meo_theo', {
+    title: 'Chú mèo đi theo bạn',
+    text: function (l) { return 'Tan học, chú mèo con cứ lẽo đẽo đi theo sau, dụi đầu vào chân bạn rồi kêu meo meo. Có vẻ nó đã mến bạn và muốn được về với bạn.' + (H.pets(l).length >= 3 ? ' Nhưng nhà đã nuôi khá nhiều con vật rồi.' : ''); },
+    opts: [
+      { k: 'take', l: 'Ôm mèo về, xin bố mẹ cho nuôi', h: function (l) { return H.pets(l).length >= 3 ? 'Nhà đã đủ thú cưng' : 'Có thêm một người bạn nhỏ · được đặt tên'; }, req: function (l) { return H.pets(l).length < 3; }, ai: { soc: 1, w: 1.3 }, run: function (l, r, log) { var p = H.addPet(l, r, 'mèo', 'mèo ta', pick(r, ['Mun', 'Cam', 'Bé Mèo', 'Sữa', 'Mướp', 'Bông'])); log((l.fam.q <= 1 ? 'Bố mẹ thở dài vì nhà còn chật vật, nhưng rồi cũng gật đầu. ' : 'Bố mẹ mỉm cười gật đầu. ') + 'Từ nay nhà có thêm chú mèo ' + p.n + '.', 'good'); fx(l, { hap: 5, karma: 1 }); H.mem(l, 'Ôm chú mèo con đi theo mình từ cổng trường về nhà.', 3); } },
+      { k: 'friend', l: 'Nhờ bạn cùng lớp mang về nuôi giúp', ai: { w: 0.8 }, run: function (l, r, log) { log('Đứa bạn thân reo lên nhận nuôi. Thỉnh thoảng bạn lại sang nhà nó chơi với chú mèo.', 'good'); fx(l, { hap: 2, soc: 1 }); } },
+      { k: 'leave', l: 'Vuốt ve rồi để nó ở lại trường', ai: { w: 0.6 }, run: function (l, r, log) { log('Bạn vuốt ve chú mèo rồi đi về. Mấy hôm sau, bác bảo vệ bắt đầu cho nó ăn cơm thừa.', 'neutral'); } }
+    ]
+  });
 
   SC('chuyen_ma', {
     title: 'Đêm kể chuyện ma', text: 'Mất điện. Đám trẻ trong xóm ngồi quây quần, thằng lớn nhất bắt đầu kể chuyện ma ở cây đa đầu làng.',

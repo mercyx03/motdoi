@@ -1,3 +1,36 @@
+## v6.5.0 — Chú mèo đi theo bạn, tuổi thơ đa dạng hơn, di chúc chia theo tỉ lệ, các con khi bạn ra đi, thừa kế đời con
+
+- **Sửa lỗi chú mèo trên cây:** trước đây game báo "được mang mèo về nuôi" nhưng nhiều khi nhà lại không có mèo. Nay cứu mèo xong, chú mèo mến bạn và lẽo đẽo đi theo, có vẻ muốn về với bạn. Bạn chọn ôm mèo về (nhà có mèo thật, hiện trong mục gia đình và được đặt tên), nhờ bạn cùng lớp nuôi giúp, hoặc để nó ở lại trường.
+- **Thêm 43 chuyện tuổi thơ mới**, mỗi chuyện có nhiều cách mở đầu và kết quả ngẫu nhiên, nên mỗi đời gặp một khác:
+  - Lạc mẹ ở chợ, vẽ lên tường nhà, làm ca sĩ nhí ở đám cưới, chú cá vàng chết.
+  - Giữ tiền quỹ lớp, bị nghi oan, người bạn khuyết tật bị trêu, Tết Thiếu nhi 1/6.
+  - Học đàn, học võ, cú ngã gãy tay, chén rượu ngày giỗ, thuốc lá điện tử.
+  - Phim ma, bài thơ báo tường, người lạ trên mạng, lừa "kim cương miễn phí", hạt đậu nảy mầm.
+  - Nước ngập đường, thả diều, đi câu với bố, bắt dế chọi, cơn sốt thẻ bài, giận bạn thân.
+  - Bố mẹ cãi nhau, ông bà nằm viện, em họ về ở cùng, đội tuyển của trường, gói bánh chưng, ủng hộ vùng lũ.
+  - Tuổi dậy thì, đòi mua đồ chơi, đêm đầu ngủ một mình, lần đầu tự đi xe buýt, bị cận thị, phụ quán kiếm tiền.
+  - Điểm kém (nói thật hay sửa điểm), đêm bão, thử vai diễn viên nhí, nhường ghế, can bạn bị bắt nạt, mùa hè ở quê.
+  - Lá thư gửi chính mình 20 năm sau: đúng 20 năm sau, trường gửi trả lá thư cho bạn đọc lại.
+- **Di chúc đa dạng hơn:**
+  - Tự chia theo tỉ lệ phần trăm cho từng người con, bạn đời, các cháu, bạn thân, một người khác (tự ghi tên).
+  - Để lại cho xã hội: quỹ khuyến học, quỹ bệnh nhi ung thư, mái ấm trẻ mồ côi, học bổng trường cũ, nơi thờ tự, trồng rừng, viện dưỡng lão.
+  - Có thể không chia gì cho đứa con hư hỏng. Phần chưa chia, và cả khi không viết di chúc, được chia theo pháp luật cho các con và bạn đời.
+  - Theo luật Việt Nam, con chưa đủ 18 tuổi vẫn được ít nhất 2/3 một suất thừa kế, dù di chúc chia khác.
+  - Mất mà để lại nợ: con cái chỉ trả nợ trong phạm vi phần di sản được hưởng, không phải gánh thêm.
+- **Khi bạn ra đi, các con phản ứng theo đúng con người của mình:**
+  - Đứa con phá gia chi tử về muộn, quỵ xuống trước di ảnh, lật cuốn sổ ghi từng khoản tiền bố/mẹ đã lo cho mình, nghẹn ngào nhận ra bố/mẹ đã hy sinh bao nhiêu.
+  - Đứa con xa cách mở lại tin nhắn "Con có khỏe không?" chưa từng trả lời.
+  - Đứa con ở nước ngoài bay suốt đêm vẫn không kịp nhìn mặt lần cuối.
+  - Đứa con thành đạt đọc điếu văn không trọn.
+  - Đứa con hiếu thảo nắm tay bố/mẹ đến hơi thở cuối.
+  - Đứa con còn nhỏ hỏi "Bao giờ mẹ dậy?"; đứa con tuổi mới lớn còn giận nhau chưa kịp làm lành.
+  - Đứa con đang thụ án được về chịu tang.
+  - Thêm cảnh người bạn đời ở lại, các cháu thắp nhang, và đám tang của người không có con cái. Phần thừa kế và lời nhắn trong di chúc cũng chạm tới từng người con.
+- **Sống tiếp đời con:** chọn bất kỳ người con nào còn sống, xem trước phần thừa kế của con, rồi chọn:
+  - **Từ lúc chào đời:** gia cảnh đúng như lúc con sinh ra. Bố/mẹ (nhân vật cũ) sống đến đúng tuổi đã mất, ra đi đúng năm con bằng tuổi ấy, để lại đúng lời nhắn và phần thừa kế. Con còn nhỏ thì người giám hộ giữ hộ tiền đến năm 18 tuổi.
+  - **Tiếp tục ở tuổi hiện tại:** những năm đã qua được dựng lại, gần nhất với hồ sơ của con (học vấn, gia đình, công việc). Bạn bắt đầu đúng năm bố/mẹ mất và nhận thừa kế ngay trong năm đó.
+- Thêm mục kiểm thử hồi quy 60.
+
 ## v6.4.0 — Những cuộc đời không màu hồng, ôn thi chuyên theo từng môn (gộp v6.3.0)
 
 - **Những cuộc đời không màu hồng** (theo góp ý: đời thật đâu phải lúc nào cũng thuận lợi):
