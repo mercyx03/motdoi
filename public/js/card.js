@@ -2,7 +2,7 @@
    bản đồ đời người theo mức hạnh phúc và những khoảnh khắc đáng nhớ. Vẽ bằng canvas, không gửi dữ liệu đi đâu. */
 (function () {
   'use strict';
-  var W = 1080, H = 1350;
+  var W = 1080, H0 = 1350; // v6.6: khổ 4:5 (1080×1350) hoặc dọc 9:16 (1080×1920)
   var C = { bg1: '#0a1520', bg2: '#13283b', gold: '#d9b26a', gold2: '#f0cf8e', text: '#f3ede2', muted: '#9fb0c2', line: 'rgba(217,178,106,.35)', tile: 'rgba(255,255,255,.05)' };
   var FD = '"Playfair Display", Lora, "Noto Serif", "Times New Roman", serif', FB = '"Be Vietnam Pro", system-ui, sans-serif', FL = 'Lora, "Noto Serif", "Times New Roman", serif';
 
@@ -24,11 +24,12 @@
   function fit(ctx, text, font, size, maxW, min) { var s = size; do { ctx.font = font.replace('%', s); s -= 2; } while (ctx.measureText(text).width > maxW && s > min); }
 
   // sum: tóm tắt cuộc đời (E.share.summary) · avatarSvg: chân dung pixel (tùy chọn)
-  function draw(sum, avatarSvg) {
+  function draw(sum, avatarSvg, fmt) {
+    var H = fmt === 'story' ? 1920 : H0, story = fmt === 'story';
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
     var ctx = cv.getContext('2d');
     // font web chỉ tải phần ký tự tiếng Việt khi được dùng — tải trước đúng đoạn chữ sẽ vẽ để không vỡ dấu
-    var all = [sum.n, sum.y, sum.w, sum.c, sum.o, sum.jt, sum.nw, (sum.st || []).join(' '), (sum.mem || []).join(' '), 'MỘT ĐỜI KHOẢNH KHẮC ĐÁNG NHỚ tuổi người con tài sản cuối đời nghề chính kỳ vọng Mất ở vì'].join(' ');
+    var all = [sum.n, sum.y, sum.w, sum.c, sum.o, sum.jt, sum.nw, sum.rt || '', (sum.ach || []).join(' '), (sum.st || []).join(' '), (sum.mem || []).join(' '), 'THÀNH TỰU Thế hệ thứ', 'MỘT ĐỜI KHOẢNH KHẮC ĐÁNG NHỚ tuổi người con tài sản cuối đời nghề chính kỳ vọng Mất ở vì'].join(' ');
     var loads = document.fonts && document.fonts.load ? ['italic 500 29px Lora', '800 76px "Playfair Display"', '700 40px "Playfair Display"', '500 26px "Be Vietnam Pro"', '700 26px "Be Vietnam Pro"', '600 20px "Be Vietnam Pro"'].map(function (f) { return document.fonts.load(f, all).catch(function () { }); }) : [];
     var ready = Promise.all(loads).then(function () { return document.fonts && document.fonts.ready; });
     return ready.then(function () { return img(avatarSvg); }).then(function (av) {
@@ -43,20 +44,22 @@
       ctx.strokeStyle = C.gold; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(W / 2, 150, 34, Math.PI, 0); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(W / 2 - 60, 150); ctx.lineTo(W / 2 + 60, 150); ctx.stroke();
       ctx.fillStyle = C.gold2; ctx.beginPath(); ctx.arc(W / 2 + 22, 126, 7, 0, Math.PI * 2); ctx.fill();
-      var y = 180;
+      var y = story ? 260 : 180;
       if (av) {
-        var s = 160; ctx.fillStyle = 'rgba(255,255,255,.06)'; round(ctx, W / 2 - s / 2 - 12, y, s + 24, s + 24, 20); ctx.fill();
-        ctx.imageSmoothingEnabled = true; ctx.drawImage(av, W / 2 - s / 2, y + 12, s, s); y += s + 50;
+        var s = story ? 260 : 160; ctx.fillStyle = 'rgba(255,255,255,.06)'; round(ctx, W / 2 - s / 2 - 12, y, s + 24, s + 24, 20); ctx.fill();
+        ctx.imageSmoothingEnabled = true; ctx.drawImage(av, W / 2 - s / 2, y + 12, s, s); y += s + (story ? 80 : 50);
       } else y += 30;
       // tên
       ctx.fillStyle = C.text; fit(ctx, sum.n, '800 %px ' + FD, 76, W - 160, 40); ctx.fillText(sum.n, W / 2, y + 40); y += 70;
       ctx.fillStyle = C.muted; ctx.font = '500 30px ' + FB;
       fit(ctx, sum.y + ' · ' + sum.w, '500 %px ' + FB, 30, W - 160, 20); ctx.fillText(sum.y + ' · ' + sum.w, W / 2, y + 20); y += 50;
+      var tag = [sum.rt || '', sum.g > 1 ? 'Thế hệ thứ ' + sum.g + ' của gia đình' : ''].filter(Boolean).join(' · ');
+      if (tag) { ctx.fillStyle = C.gold; fit(ctx, tag, '600 %px ' + FB, 26, W - 160, 18); ctx.fillText(tag, W / 2, y + 14); y += 44; }
       if (sum.c) { ctx.font = '500 26px ' + FB; ctx.fillStyle = C.muted; var cl = 'Mất ở tuổi ' + sum.a + ' vì ' + sum.c; fit(ctx, cl, '500 %px ' + FB, 26, W - 160, 18); ctx.fillText(cl, W / 2, y + 14); y += 44; }
       // văn bia
       ctx.fillStyle = C.gold2; ctx.font = 'italic 500 32px ' + FL;
       ctx.font = 'italic 500 29px ' + FL; wrap(ctx, sum.o, W - 200, 3).forEach(function (ln) { ctx.fillText(ln, W / 2, y + 28); y += 40; });
-      y += 24;
+      y += story ? 60 : 24;
       // các ô số liệu
       var tiles = [[String(sum.a), 'tuổi' + (sum.e ? ' (kỳ vọng ' + String(sum.e).replace('.', ',') + ')' : '')], [sum.jt || '—', 'nghề chính'], [String(sum.kd || 0), 'người con'], [sum.nw || '—', 'tài sản cuối đời']];
       var tw = (W - 160 - 3 * 20) / 4;
@@ -71,9 +74,16 @@
         } else ctx.fillText(t[0], x + tw / 2, y + 58);
         ctx.fillStyle = C.muted; fit(ctx, t[1], '500 %px ' + FB, 20, tw - 20, 14); ctx.fillText(t[1], x + tw / 2, y + 94);
       });
-      y += 150;
+      y += story ? 190 : 150;
+      // thành tựu của đời này (huy hiệu)
+      var ach = (sum.ach || []).slice(0, story ? 4 : 3);
+      if (ach.length) {
+        ctx.font = '600 24px ' + FB; var pw = ach.map(function (a) { return Math.min(ctx.measureText(a).width + 40, (W - 160 - (ach.length - 1) * 14) / ach.length); }), tot = pw.reduce(function (s2, x) { return s2 + x; }, 0) + (ach.length - 1) * 14, px = (W - tot) / 2;
+        ach.forEach(function (a, i) { ctx.fillStyle = 'rgba(217,178,106,.14)'; round(ctx, px, y, pw[i], 50, 25); ctx.fill(); ctx.strokeStyle = C.line; ctx.lineWidth = 1.5; round(ctx, px, y, pw[i], 50, 25); ctx.stroke(); ctx.fillStyle = C.gold2; fit(ctx, a, '600 %px ' + FB, 24, pw[i] - 24, 14); ctx.fillText(a, px + pw[i] / 2, y + 33); px += pw[i] + 14; });
+        y += story ? 120 : 80;
+      }
       // bản đồ đời người: mỗi ô một năm, đậm = hạnh phúc
-      var m = String(sum.m || ''), per = 25, cs = 28, gap = 5, rows = Math.max(1, Math.ceil(m.length / per));
+      var m = String(sum.m || ''), per = 25, cs = story ? 30 : 28, gap = story ? 7 : 5, rows = Math.max(1, Math.ceil(m.length / per));
       var gx = (W - (per * cs + (per - 1) * gap)) / 2;
       ctx.textAlign = 'left'; ctx.fillStyle = C.muted; ctx.font = '600 20px ' + FB; ctx.fillText('MỖI Ô LÀ MỘT NĂM — ĐẬM HƠN LÀ HẠNH PHÚC HƠN', gx, y); y += 16;
       for (var i = 0; i < m.length; i++) {
@@ -81,16 +91,16 @@
         ctx.fillStyle = 'rgba(217,178,106,' + (0.12 + h / 9 * 0.88).toFixed(2) + ')';
         round(ctx, gx + c * (cs + gap), y + r * (cs + gap), cs, cs, 6); ctx.fill();
       }
-      y += rows * (cs + gap) + 30;
+      y += rows * (cs + gap) + (story ? 80 : 30);
       // khoảnh khắc đáng nhớ (ưu tiên những dòng người chơi đánh dấu ⭐)
-      var moments = (sum.st && sum.st.length ? sum.st : sum.mem || []).slice(0, 3);
+      var moments = (sum.st && sum.st.length ? sum.st : sum.mem || []).slice(0, story ? 6 : 3);
       if (moments.length && y < H - 230) {
         ctx.fillStyle = C.gold; ctx.font = '700 22px ' + FB; ctx.fillText((sum.st && sum.st.length ? '⭐ ' : '') + 'KHOẢNH KHẮC ĐÁNG NHỚ', gx, y); y += 40;
         moments.forEach(function (x) {
           var p = String(x).split('|'), age = p.length > 1 ? p[0] + ' tuổi — ' : '', t = p.length > 1 ? p.slice(1).join('|') : p[0];
-          ctx.font = '500 25px ' + FB; ctx.fillStyle = C.text;
-          wrap(ctx, age + t, W - 2 * gx, 2).forEach(function (ln) { if (y < H - 115) { ctx.fillText(ln, gx, y); y += 34; } });
-          y += 8;
+          ctx.font = (story ? '500 28px ' : '500 25px ') + FB; ctx.fillStyle = C.text;
+          wrap(ctx, age + t, W - 2 * gx, story ? 3 : 2).forEach(function (ln) { if (y < H - 115) { ctx.fillText(ln, gx, y); y += story ? 40 : 34; } });
+          y += story ? 18 : 8;
         });
       }
       // chân thẻ
@@ -102,19 +112,19 @@
   }
   function fileName(sum) { return 'mot-doi-' + String(sum.n || 'cuoc-doi').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase() + '.png'; }
   function toBlob(cv) { return new Promise(function (ok) { cv.toBlob(function (b) { ok(b); }, 'image/png'); }); }
-  function download(sum, avatarSvg) {
-    return draw(sum, avatarSvg).then(toBlob).then(function (b) {
+  function download(sum, avatarSvg, fmt) {
+    return draw(sum, avatarSvg, fmt).then(toBlob).then(function (b) {
       var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = fileName(sum);
       document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
       return true;
     });
   }
   // chia sẻ trực tiếp ảnh (điện thoại); không hỗ trợ thì tải về
-  function share(sum, avatarSvg) {
-    return draw(sum, avatarSvg).then(toBlob).then(function (b) {
+  function share(sum, avatarSvg, fmt) {
+    return draw(sum, avatarSvg, fmt).then(toBlob).then(function (b) {
       var f = typeof File !== 'undefined' ? new File([b], fileName(sum), { type: 'image/png' }) : null;
       if (f && navigator.canShare && navigator.canShare({ files: [f] })) return navigator.share({ files: [f], title: 'Một Đời — ' + sum.n }).then(function () { return true; }, function () { return false; });
-      return download(sum, avatarSvg);
+      return download(sum, avatarSvg, fmt);
     });
   }
   window.G = window.G || {}; window.G.LifeCard = { draw: draw, download: download, share: share, fileName: fileName };

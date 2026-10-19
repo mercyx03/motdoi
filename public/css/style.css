@@ -470,3 +470,18 @@ footer .disclaimer b { color: var(--accent); }
 #lgbtSub { margin-top: 8px; }
 .chip[data-tip] { position: relative; -webkit-touch-callout: none; user-select: none; }
 .chip[data-tip]:hover::after, .chip[data-tip].tipshow::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); padding: 3px 9px; border-radius: 8px; font-size: 12px; font-weight: 600; white-space: nowrap; background: #f3e3bf; color: #10202c; box-shadow: 0 4px 12px rgba(0,0,0,.35); pointer-events: none; z-index: 5; }
+/* v6.6: thành tựu & gia phả */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0}
+.ach{position:relative;display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;opacity:.55}
+.ach.on{opacity:1;border-color:var(--accent);background:var(--surface-2,rgba(255,255,255,.04))}
+.ach-i{font-size:24px;line-height:1}.ach b{font-size:14px}.ach small{font-size:12px;color:var(--muted);line-height:1.35}
+.ach em{position:absolute;top:8px;right:8px;font-style:normal;font-size:11px;font-weight:700;color:#0a1520;background:var(--accent);border-radius:999px;padding:1px 7px}
+.tree{display:flex;flex-direction:column;align-items:stretch;margin:8px 0}
+.tree-node{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface-2,rgba(255,255,255,.03))}
+.tree-gen{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.tree-rt{font-size:12px;color:var(--accent)}
+.tree-link{text-align:center;color:var(--accent);line-height:1.1;font-size:18px}
+.tree-kids{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;font-size:13px;align-items:center}
+.tree-kid{border:1px solid var(--line);border-radius:999px;padding:1px 9px}.tree-kid.on{border-color:var(--accent);color:var(--accent);font-weight:700}.tree-kid.gone{opacity:.55;text-decoration:line-through}
+.tree-sep{border:0;border-top:1px dashed var(--line);margin:14px 0}
+.modal.legacy{max-width:760px}

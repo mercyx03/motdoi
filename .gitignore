@@ -27,3 +27,6 @@ desktop.ini
 # Bản đóng gói & tư liệu quảng bá (không đưa lên repo)
 mot-doi-*.zip
 promo/
+
+# Bản sao lưu đánh giá (tạo bằng npm run backup:reviews)
+backups/

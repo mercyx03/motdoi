@@ -12,7 +12,7 @@
     del: function (k) { try { localStorage.removeItem(k); } catch (e) { /* bỏ qua */ } }
   };
   // giữ nguyên khóa lưu trữ từ bản 1.0 để người chơi không mất dữ liệu
-  var K = { settings: 'mkn.settings', cur: 'mkn.current', mem: 'mkn.memorial', theme: 'mkn.theme', last: 'mkn.lastEnd', recent: 'mkn.recent' };
+  var K = { settings: 'mkn.settings', cur: 'mkn.current', mem: 'mkn.memorial', theme: 'mkn.theme', last: 'mkn.lastEnd', recent: 'mkn.recent', ach: 'mkn.ach', tree: 'mkn.tree' };
 
   var DEF = { mode: 'vn', variant: '34', prov: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
   var S = {
@@ -831,6 +831,7 @@
     if(S.life){if(S.phase==='decision')minimizeDecision();S.paused=true;persist();renderTopbar();}
     window.open('reviews.html','_blank','noopener');
   }
+  if ($('#legacyBtn')) $('#legacyBtn').onclick = openLegacy;
   $('#reviewsBtn').onclick=openReviews;$('#reviewsLifeBtn').onclick=openReviews;
 
   function renderFocus() {
@@ -1228,6 +1229,7 @@
     sum.fin = stages;
     LS.set(K.recent, E.share.pushRecent(LS.get(K.recent, []), sum, 10));
     LS.set(K.last, { life: l, cohort: S.cohort });
+    saveLegacy(l);
     function step() {
       if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; }
       if (i >= stages.length) { closeModal(); S.phase = 'idle'; renderEnd(l, S.cohort, stages); show('end'); return; }
@@ -1242,6 +1244,36 @@
         }, 'finale');
     }
     step();
+  }
+  // v6.6: thành tựu và gia phả lưu trên thiết bị
+  function saveLegacy(l) {
+    try {
+      if (E.achievementsOf) { var got = E.achievementsOf(l), store = LS.get(K.ach, {}); if (!store || typeof store !== 'object' || Array.isArray(store)) store = {}; S.newAch = [];
+        got.forEach(function (a) { if (!store[a.id]) { store[a.id] = { at: Date.now(), n: l.name }; S.newAch.push(a.id); } }); LS.set(K.ach, store); S.lifeAch = got; }
+      if (E.treeRecord) { var tree = LS.get(K.tree, []); if (!Array.isArray(tree)) tree = []; var rec = E.treeRecord(l); tree = tree.filter(function (x) { return x && x.id !== rec.id; }); tree.push(rec);
+        if (rec.pid) tree.forEach(function (x) { if (x.id === rec.pid) x.cont = rec.n; }); if (tree.length > 400) tree = tree.slice(-400); LS.set(K.tree, tree); }
+    } catch (e) { if (window.console) console.error(e); }
+  }
+  function lineage(id) { var tree = LS.get(K.tree, []); if (!Array.isArray(tree)) return []; var by = {}; tree.forEach(function (x) { if (x && x.id) by[x.id] = x; }); var out = [], cur = by[id], guard = 0; while (cur && guard++ < 50) { out.unshift(cur); cur = cur.pid ? by[cur.pid] : null; } return out; }
+  function treeHtml(chain) {
+    if (!chain.length) return '';
+    return '<div class="tree">' + chain.map(function (x, i) {
+      var next = chain[i + 1], kids = (x.k || []).map(function (k) { var on = next ? k.n === next.n : x.cont === k.n; return '<span class="tree-kid' + (on ? ' on' : '') + (k.alive ? '' : ' gone') + '">' + esc(k.n) + (on ? ' ➜' : '') + '</span>'; }).join('');
+      return '<div class="tree-node"><div class="tree-gen">Thế hệ ' + (x.gen || i + 1) + '</div><b>' + esc(x.n) + '</b>' + (x.rt ? ' <span class="tree-rt">' + esc(x.rt) + '</span>' : '') + '<div class="small muted">' + esc(x.y + ' · ' + x.a + ' tuổi · ' + x.w) + '</div>' +
+        (x.j || x.nw ? '<div class="small">' + esc([x.j ? U.cap(x.j) : '', x.nw ? 'Tài sản cuối đời ' + x.nw : ''].filter(Boolean).join(' · ')) + '</div>' : '') + (x.p ? '<div class="small muted">Bạn đời: ' + esc(x.p) + '</div>' : '') +
+        (kids ? '<div class="tree-kids">Các con: ' + kids + '</div>' : '') + '</div>' + (next ? '<div class="tree-link" aria-hidden="true">│</div>' : '');
+    }).join('') + '</div>';
+  }
+  function achHtml(list, fresh) { return '<div class="ach-grid">' + list.map(function (a) { var nw = fresh && fresh.indexOf(a.id) >= 0; return '<div class="ach on" title="' + esc(a.d) + '"><span class="ach-i">' + a.icon + '</span><b>' + esc(a.t) + '</b>' + (nw ? '<em>Mới</em>' : '') + '<small>' + esc(a.d) + '</small></div>'; }).join('') + '</div>'; }
+  function openLegacy() {
+    var store = LS.get(K.ach, {}) || {}, all = E.ACHIEVEMENTS || [], n = all.filter(function (a) { return store[a.id]; }).length;
+    var tree = LS.get(K.tree, []); if (!Array.isArray(tree)) tree = [];
+    var ids = {}; tree.forEach(function (x) { if (x && x.pid) ids[x.pid] = 1; });
+    var leaves = tree.filter(function (x) { return x && !ids[x.id] && x.pid; }).slice(-8).reverse();
+    modal('<div class="agep">Thành tựu & gia phả</div><h2>Đã mở ' + n + ' / ' + all.length + ' thành tựu</h2>' +
+      '<div class="ach-grid">' + all.map(function (a) { var g = store[a.id]; return '<div class="ach' + (g ? ' on' : '') + '" title="' + esc(a.d) + '"><span class="ach-i">' + (g ? a.icon : '🔒') + '</span><b>' + esc(a.t) + '</b><small>' + esc(a.d) + (g && g.n ? ' · ' + g.n : '') + '</small></div>'; }).join('') + '</div>' +
+      '<h3 style="margin:18px 0 6px">Gia phả các dòng họ bạn đã sống</h3>' + (leaves.length ? leaves.map(function (x) { return treeHtml(lineage(x.id)); }).join('<hr class="tree-sep">') : '<p class="muted small">Chưa có gia đình nhiều thế hệ. Khi một đời khép lại, hãy chọn "Sống tiếp đời con" để viết tiếp gia phả.</p>') +
+      '<div class="go-row" style="margin-top:14px"><button class="btn ghost" id="legX">Đóng</button></div>', function (box) { $('#legX', box).onclick = closeModal; }, 'legacy');
   }
   function lifeYears(l) { return l.birthYear + ' – ' + l.death.year; }
   function memWhere(l) { return E.isVN(l) ? (l.provLabel || l.prov.old) + ', Việt Nam' : l.countryName; }
@@ -1269,6 +1301,8 @@
       '</div>' +
       '<div class="lifemap" id="endMap"></div><div class="small muted" style="margin-top:6px">1 ô = 1 năm · đậm hơn = hạnh phúc hơn · viền vàng = tuổi thọ kỳ vọng</div>' +
       '<h3 style="margin:22px 0 4px">Khúc cuối</h3><div class="fin-wrap">' + finaleHtml(stages) + '</div>' +
+      (S.lifeAch && S.lifeAch.length ? '<h3 style="margin:22px 0 4px">🏆 Thành tựu của đời này</h3>' + achHtml(S.lifeAch, S.newAch) : '') +
+      (function () { var ch = lineage(l.id); return ch.length > 1 ? '<h3 style="margin:22px 0 4px">🌳 Gia phả</h3>' + treeHtml(ch) : ''; })() +
       (refl ? '<h3 style="margin:22px 0 4px">Những quãng lặng</h3><div class="refl-list">' + refl + '</div>' : '') +
       (stars.length ? '<h3 style="margin:22px 0 4px">⭐ Khoảnh khắc bạn đã đánh dấu</h3><ul class="finale-list">' + stars.map(function (e) { return '<li>' + e.a + ' tuổi — ' + esc(e.t) + '</li>'; }).join('') + '</ul>' : '') +
       (kidsLive.length ? '<div class="card pad heir"><div class="eyebrow">Đời người nối tiếp</div><p style="margin:6px 0 10px">' + esc(l.name) + ' để lại ' + (kidsLive.length === 1 ? 'một người con' : kidsLive.length + ' người con') + '. Chọn một người con để sống tiếp: bắt đầu lại từ lúc chào đời trong gia đình do chính bạn gây dựng, hoặc tiếp tục ngay ở tuổi hiện tại của con và nhận phần thừa kế.</p><div class="go-row">' +
@@ -1323,17 +1357,20 @@
   }
 
   // ---------- Ảnh thẻ cuộc đời (xem trước rồi tải / chia sẻ) ----------
-  function cardImage(sum, avatarSvg, btn) {
+  function cardImage(sum, avatarSvg, btn, fmt) {
     if (!G.LifeCard) { toast('Trình duyệt không hỗ trợ tạo ảnh'); return; }
     var old = btn ? btn.textContent : ''; if (btn) { btn.disabled = true; btn.textContent = 'Đang vẽ ảnh…'; }
-    G.LifeCard.draw(sum, avatarSvg).then(function (cv) {
+    G.LifeCard.draw(sum, avatarSvg, fmt).then(function (cv) {
       if (btn) { btn.disabled = false; btn.textContent = old; }
       modal('<div class="agep">Ảnh thẻ cuộc đời</div><h2>' + esc(sum.n) + '</h2><img class="cardprev" alt="Ảnh thẻ cuộc đời của ' + esc(sum.n) + '" src="' + cv.toDataURL('image/png') + '">' +
-        '<p class="small muted">Ảnh 1080×1350, hợp để đăng Facebook, Instagram, Zalo, TikTok.</p>' +
+        '<p class="small muted">' + (fmt === 'story' ? 'Ảnh dọc 1080×1920, hợp để đăng TikTok, Story Facebook / Instagram, Zalo.' : 'Ảnh 1080×1350, hợp để đăng bài Facebook, Instagram, Zalo.') + '</p>' +
+        '<div class="go-row"><button class="btn ' + (fmt === 'story' ? '' : 'gold') + ' sm" id="cardFeed">Khổ 4:5 (bài đăng)</button><button class="btn ' + (fmt === 'story' ? 'gold' : '') + ' sm" id="cardStory">Khổ dọc 9:16 (TikTok, Story)</button></div>' +
         '<div class="go-row"><button class="btn primary" id="cardDl">Tải ảnh về</button>' + (navigator.share ? '<button class="btn" id="cardSh">Chia sẻ ảnh</button>' : '') + '<button class="btn ghost" id="cardX">Đóng</button></div>',
         function (box) {
-          $('#cardDl', box).onclick = function () { G.LifeCard.download(sum, avatarSvg).then(function () { toast('Đã tải ảnh về máy'); }); };
-          if ($('#cardSh', box)) $('#cardSh', box).onclick = function () { G.LifeCard.share(sum, avatarSvg); };
+          $('#cardFeed', box).onclick = function () { if (fmt === 'story') cardImage(sum, avatarSvg, null, 'feed'); };
+          $('#cardStory', box).onclick = function () { if (fmt !== 'story') cardImage(sum, avatarSvg, null, 'story'); };
+          $('#cardDl', box).onclick = function () { G.LifeCard.download(sum, avatarSvg, fmt).then(function () { toast('Đã tải ảnh về máy'); }); };
+          if ($('#cardSh', box)) $('#cardSh', box).onclick = function () { G.LifeCard.share(sum, avatarSvg, fmt); };
           $('#cardX', box).onclick = closeModal;
         }, 'cardmodal');
     }, function () { if (btn) { btn.disabled = false; btn.textContent = old; } toast('Không tạo được ảnh'); });

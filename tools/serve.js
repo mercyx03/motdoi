@@ -3,7 +3,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const ROOT = path.join(__dirname, '..', 'public');
+const ROOT = path.join(__dirname, '..', process.env.MOTDOI_ROOT || 'public'); // MOTDOI_ROOT=dist để chạy thử bản build
 const PORT = +process.env.PORT || 8080;
 let ratingsDB;
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };

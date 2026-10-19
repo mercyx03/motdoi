@@ -732,7 +732,7 @@
   function birthSentence(life) {
     var f = life.fam;
     var s = 'Tháng ' + life.birthMonth + ' năm ' + life.birthYear + ', bạn chào đời là một bé ' + (life.sex === 'M' ? 'trai' : 'gái') +
-      ' tại ' + placeText(life) + ', trong ' + QUINT[f.q] + '.';
+      ' tại ' + placeText(life) + ', ' + (f.q === 1 || f.q === 5 ? 'thuộc ' : 'trong ') + QUINT[f.q] + '.';
     if (life.eth) s += ' Bạn là người dân tộc ' + life.eth + '.';
     s += f.sibs ? ' Bạn có ' + f.sibs + ' anh chị.' : ' Bạn là con đầu lòng.';
     if (f.noDad) s += ' Mẹ một mình nuôi bạn.';
@@ -2056,7 +2056,7 @@
   // ================= CÁO PHÓ =================
   function obituary(life) {
     var s = [];
-    s.push('Sinh ra là một bé ' + (life.sex === 'M' ? 'trai' : 'gái') + ' trong ' + QUINT[life.fam.q] + ' ở ' + (life.birthPlace || placeText(life)) + '.');
+    s.push('Sinh ra là một bé ' + (life.sex === 'M' ? 'trai' : 'gái') + (life.fam.q === 1 || life.fam.q === 5 ? ' thuộc ' : ' trong ') + QUINT[life.fam.q] + ' ở ' + (life.birthPlace || placeText(life)) + '.');
     if (life.fam.vice && !life.fam.noDad) s.push('Lớn lên bên người bố ' + VICE[life.fam.vice] + '.');
     if (life.movedTo) s.push('Lên ' + life.movedTo + ' lập nghiệp.');
     if (life.death && life.death.age < 6) { s.push('Ra đi vì ' + life.death.cause + ' khi mới ' + (life.death.age === 0 ? 'chưa tròn một tuổi' : life.death.age + ' tuổi') + '.'); return s.join(' '); }

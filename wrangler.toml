@@ -1,9 +1,9 @@
-# Triển khai lên Cloudflare Workers (static assets): npx wrangler deploy
+# Triển khai lên Cloudflare Workers (static assets): npm run build && npx wrangler deploy (thư mục dist do tools/build.js tạo)
 name = "mot-doi"
 compatibility_date = "2025-09-01"
-main = "public/_worker.js"
+main = "dist/_worker.js"
 
 [assets]
-directory = "./public"
+directory = "./dist"
 binding = "ASSETS"
 run_worker_first = ["/api/market", "/api/reviews", "/_worker.js"]

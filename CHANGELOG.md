@@ -1,3 +1,38 @@
+## v6.6.0 — Xuất thân hoàng tộc, nghề khoa học, con đường chính trị, thành tựu, gia phả, ảnh thẻ khổ dọc, web tải nhanh hơn
+
+- **Xuất thân hoàng tộc** (theo góp ý của người chơi):
+  - Chế độ thế giới, sinh ra ở 27 nước còn chế độ quân chủ (Anh, Nhật, Thái Lan, Ả Rập Xê Út, Brunei, Malaysia, Tây Ban Nha, Hà Lan, Thụy Điển, Na Uy, Đan Mạch, Campuchia, Bhutan, Morocco, Jordan, Monaco…). Khoảng 3% số ca sinh ở các nước này là thành viên hoàng tộc: nhánh chính (hoàng tử / công chúa) hoặc nhánh phụ (thân vương / quận chúa).
+  - Có học lễ nghi cung đình, báo chí săn ảnh, chọn học viện quân sự / đại học nước ngoài / năm tình nguyện, hôn nhân môn đăng hộ đối hay cưới người thường, công vụ hoàng gia.
+  - Có thể từ bỏ tước hiệu để sống tự lập (thôi nhận trợ cấp).
+  - Con trưởng nhánh chính kế vị khi người trị vì qua đời. Nước nào không cho phụ nữ kế vị thì ngai vàng thuộc người anh em trai.
+  - Sống tiếp đời con vẫn giữ dòng dõi hoàng tộc.
+- **Nghề nghiên cứu, khoa học:**
+  - Thêm nghề kỹ sư R&D, kỹ sư hàng không vũ trụ, nghiên cứu y sinh, kỹ sư nông nghiệp công nghệ cao.
+  - Sinh viên giỏi có thể được thầy mời ở lại làm nghiên cứu hoặc săn học bổng tiến sĩ nước ngoài, rồi bảo vệ luận văn thạc sĩ, luận án tiến sĩ.
+  - Nhà khoa học gặp: hồ sơ xin đề tài, "phản biện số 2", cám dỗ tạp chí đăng bài không phản biện, hội thảo quốc tế, lời mời từ phòng thí nghiệm nước ngoài, hướng dẫn sinh viên nghiên cứu khoa học.
+- **Con đường chính trị:**
+  - Việt Nam: công chức, viên chức nhiều năm công tác được quy hoạch, điều động sang khối Đảng, chính quyền; ứng cử đại biểu HĐND tỉnh hoặc Quốc hội; đại biểu đi tiếp xúc cử tri, theo đuổi kiến nghị của dân.
+  - Thế giới: ra tranh cử hội đồng thành phố, thắng thì thành chính khách, cứ 4 năm tái cử hoặc thất cử.
+- **Nhiều kết quả hơn cho cùng một lựa chọn:** 42 kết quả trước đây chỉ có một câu cố định (để dành tiền, từ chối cho vay, thôi nôi, đi nhậu, chờ đèn đỏ, mùa hè ở quê…) nay có thêm các cách kể khác, chọn ngẫu nhiên.
+- **Thành tựu cuộc đời (92 thành tựu):**
+  - Tuổi thọ (Bách niên, Thượng thọ, Sống vội), tiền bạc (Tỷ phú, Đại gia, Từ hai bàn tay trắng, Trúng số, Địa chủ, Nhà đầu tư, Phá sản, Nợ nần chồng chất), học vấn (Cử nhân, Thạc sĩ, Tiến sĩ, Giáo sư, Vượt khó học giỏi, Trường đời).
+  - Nghề nghiệp (Lương y, Bầu trời, Người lái đò, Người lính, Ông chủ, Tuyển thủ, Trăm nghề, Một đời một nghề, Nhà ngoại giao, Đại biểu của dân, Chính khách), gia đình (Thành gia, Đám cưới vàng, Đa tình, Làm lại từ đầu, Con thành tài, Nhận con nuôi, Tứ đại đồng đường, Gia đình êm ấm), hoàng tộc (Dòng dõi hoàng tộc, Đăng quang, Sống là chính mình).
+  - Nhân cách và trải nghiệm (Người tốt, Phản diện, Hoàn lương, Sa ngã, Người hùng thầm lặng, Lên phố lập nghiệp, Lá rụng về cội, Công dân mới, Fan cứng), và những thành tựu vui như "Đúng lời tiên tri" (thôi nôi bốc tờ tiền, lớn lên giàu thật), "Thư từ quá khứ", "Chú mèo đi theo".
+  - Màn kết thúc hiện thành tựu của đời này, đánh dấu "Mới" cho những cái mở lần đầu. Nút **🏆 Thành tựu** trên trang chủ xem lại tất cả (đã mở / còn khóa).
+- **Gia phả:** mỗi đời khép lại được ghi vào gia phả trên thiết bị. Sống tiếp đời con nhiều lần sẽ thấy cây gia phả từ thế hệ 1 trở đi: tên, năm sinh mất, nghề, tài sản, bạn đời, các con, người con được sống tiếp. Hiện ở màn kết thúc và trong mục Thành tựu.
+- **Ảnh thẻ cuộc đời đẹp hơn:**
+  - Thêm khổ dọc 9:16 (1080×1920) cho TikTok / Story, bên cạnh khổ 4:5 cũ.
+  - Ảnh có thêm huy hiệu thành tựu, tước hiệu hoàng tộc, dòng "Thế hệ thứ N của gia đình".
+- **Web tải nhanh hơn:**
+  - Lệnh `npm run build` gộp hơn 80 file js của trang chính thành một file (tên file đổi theo nội dung nên không lo trình duyệt giữ bản cũ) vào thư mục `dist/`.
+  - Từ bản này, tải thư mục **dist** lên Cloudflare thay cho public.
+- **Dọn thư mục public:** các file tài liệu nguồn số liệu (*.md, *.csv, bảng kinh tế thế giới) chuyển sang thư mục `docs/`, không còn bị đưa công khai lên web.
+- **Sao lưu đánh giá:**
+  - `npm run backup:reviews` tải toàn bộ đánh giá về `backups/`.
+  - `npm run backup:reviews -- --d1` xuất nguyên database D1.
+- Sửa câu "trong một trong những gia đình…" thành "thuộc một trong những gia đình…".
+- Thêm mục kiểm thử hồi quy 61 và tests/update660.js (kiểm tra bản build).
+
 ## v6.5.1 — Xem hết review, lọc theo số sao
 
 - **Trang đánh giá:**

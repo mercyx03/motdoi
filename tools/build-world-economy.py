@@ -49,11 +49,11 @@ for c in countries:
 vn=float(wages['VNM'][1]['obs_value'])*25400/1e6
 payload={'retrieved':'2026-10-17','vnMonthlyMillion':vn,'fallbackMedianWageToGDP':med,'countries':profiles}
 public=root.parent/'public'
-(public/'world-economy-data.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
+(root.parent/'docs'/'world-economy-data.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
 js='/* Country earnings: ILOSTAT EAR_EMTA_SEX_CUR_NB; GDP/prices: World Bank WDI. See world-economy-sources.md. */\n(function(G){\n\'use strict\';\nvar DATA='+json.dumps(payload,ensure_ascii=False,separators=(',',':'))+';\n'
 js+=(root/'world-economy-runtime.txt').read_text(encoding='utf-8')
 (public/'js/world-economy.js').write_text(js,encoding='utf-8')
-with (public/'world-economy-countries.csv').open('w',encoding='utf-8-sig',newline='') as f:
+with (root.parent/'docs'/'world-economy-countries.csv').open('w',encoding='utf-8-sig',newline='') as f:
  fields=['code','name','usd','wageYear','source','gdpNominal','gdpPPP','gdpYear','consumptionPLI','priceYear','priceSource','iloSource','status'];writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader();writer.writerows(detail)
 print('Profiles',len(profiles),'ILO',sum(x['source']=='ilo' for x in profiles.values()),'estimated/proxy',sum(x['source']!='ilo' for x in profiles.values()),'VN reference',vn)
 print({k:profiles[k] for k in ['JP','KR','TH','US','VA']})

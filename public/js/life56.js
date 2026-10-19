@@ -1,6 +1,6 @@
 /* v4.6.4 — quê hương theo 63 tỉnh/thành trước sáp nhập, du lịch cùng người yêu/bạn đời.
    Địa danh và đặc sản là gợi ý văn hóa; ngân sách chuyến đi là cân bằng game.
-   Nguồn đối chiếu và quy ước: public/heritage-sources.md. */
+   Nguồn đối chiếu và quy ước: docs/heritage-sources.md. */
 (function(G){
   'use strict';
   var E=G.E,H=E.H,U=G.U,VN=G.VN;

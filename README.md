@@ -8,7 +8,9 @@ Trang web hoàn toàn tĩnh (HTML/CSS/JS thuần, không cần máy chủ, khôn
 ## Cấu trúc thư mục
 
 ```
-public/              ← CHỈ thư mục này được đưa lên Cloudflare
+public/              ← mã nguồn trang web (chạy được trực tiếp)
+dist/                ← bản build gọn để đưa lên Cloudflare (npm run build tạo ra, không lưu trên git)
+docs/                ← tài liệu nguồn số liệu (không đưa lên web)
   index.html
   logo.svg           ← logo Một Đời
   _headers           ← header bảo mật & cache cho Cloudflare
@@ -57,9 +59,9 @@ Phải in ra `✓ Tất cả bài kiểm thử hồi quy đều đạt.` Bộ te
 ### Cách 1 — Kéo thả trên dash.cloudflare.com (dễ nhất)
 1. Vào https://dash.cloudflare.com → **Workers & Pages** → **Create** → tab **Pages** → **Upload assets**.
 2. Đặt tên dự án, ví dụ `mot-doi` → **Create project**.
-3. Kéo thả **thư mục `public`** → **Deploy site**.
+3. Chạy `npm run build` (tạo thư mục `dist`), rồi kéo thả **thư mục `dist`** → **Deploy site**.
 
-Cập nhật bản mới: vào dự án → **Create deployment** → kéo thả lại thư mục `public`.
+Cập nhật bản mới: chạy `npm run build`, vào dự án → **Create deployment** → kéo thả lại thư mục `dist`. (Kéo thả `public` vẫn chạy được, chỉ tải chậm hơn vì phải tải hơn 80 file js riêng lẻ.)
 Người chơi cũ không mất dữ liệu: khóa lưu trữ được giữ nguyên và dữ liệu cũ tự nâng cấp.
 
 ### Cách 2 — Dòng lệnh (Wrangler)
@@ -70,7 +72,7 @@ npm run deploy:pages
 (`npm run deploy:pages` tự chạy kiểm thử hồi quy trước, lỗi thì dừng.)
 
 ### Cách 3 — Kết nối GitHub (tự động triển khai khi đẩy code)
-Cloudflare **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → Build command: `node tests/regression.js` · Build output directory: `public`.
+Cloudflare **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → Build command: `node tests/regression.js && node tools/build.js` · Build output directory: `dist`.
 
 ## Quy trình cập nhật phiên bản
 1. Sửa code / thêm tính năng (giữ nguyên toàn bộ tính năng cũ).
@@ -78,6 +80,11 @@ Cloudflare **Workers & Pages** → **Create** → **Pages** → **Connect to Git
 3. Tăng `G.VERSION` trong `public/js/util.js`, đổi `?v=` trong `public/index.html`, ghi mục mới trong `CHANGELOG.md` (test sẽ báo lỗi nếu quên).
 4. Chạy `node tests/regression.js` → đạt 100% mới triển khai.
 5. Dữ liệu cũ của người chơi được nâng cấp qua `E.migrate()` trong `engine.js`.
+
+## Sao lưu đánh giá
+- `npm run backup:reviews` — tải toàn bộ đánh giá công khai về `backups/reviews-NGÀY.json`.
+- `npm run backup:reviews -- --d1` — xuất nguyên database D1 (cần `npx wrangler login` trước) về `backups/reviews-NGÀY.sql`.
+- Cloudflare D1 còn có Time Travel: khôi phục database về một thời điểm trong quá khứ ngay trên dashboard.
 
 ## Thêm tình huống mới
 Trong `public/js/scenarios.js`:
