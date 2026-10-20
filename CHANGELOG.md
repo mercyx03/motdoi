@@ -1,3 +1,24 @@
+## v7.5.0 — Đời con tiếp quản cơ ngơi, ai đang ở đâu, chọn trường quân đội / công an
+
+- **Sống tiếp đời con ở tuổi hiện tại** (khi bố / mẹ qua đời, tiếp quản cơ ngơi gia đình):
+  - Giữ đúng nghề, bậc, thâm niên và học vấn của người con như đã hiển thị ở đời trước. Trước đây những năm đã qua được dựng lại ngẫu nhiên nên nghề bị đổi.
+  - Người con đang học đại học thì tiếp tục đi học.
+  - Lựa chọn này giờ đứng đầu bảng "Sống tiếp đời…".
+- **Biết mọi người đang ở đâu:**
+  - Dòng nơi ở của bạn: ở quê, lên thành phố, sinh viên ở trọ, học viên học viện, tại ngũ, đi làm ở nước ngoài, du học, định cư (sống cùng bố mẹ nếu đã bảo lãnh)…
+  - Sửa lỗi đã ra nước ngoài (du học, đi làm) mà vẫn hiện "Sống cùng bố mẹ".
+  - Bố mẹ: ở cùng nhà, ở quê, sống cùng bạn ở nước ngoài.
+  - Từng người con: sống cùng bạn, đi du học, ở trọ học đại học, đi làm, ở riêng, đã lập gia đình, ở với bố / mẹ còn lại sau ly hôn.
+- **Tự chọn trường quân đội, công an.** Đạt sơ tuyển thì chọn một trong 16 trường; trường càng "hot" điểm chuẩn càng cao; ra trường phong Thiếu úy, quân hàm kèm binh chủng, lực lượng:
+  - Học viện An ninh nhân dân, Học viện Cảnh sát nhân dân;
+  - Trường Đại học An ninh, Cảnh sát, Phòng cháy chữa cháy, Kỹ thuật – Hậu cần CAND;
+  - Học viện Kỹ thuật Quân sự, Quân y (6 năm), Hải quân, Biên phòng, Phòng không – Không quân, Hậu cần;
+  - Trường Sĩ quan Lục quân 1, Chính trị, Thông tin, Đặc công.
+- **Lộ trình thăng quân hàm** (việc mới "Xem lộ trình thăng quân hàm"):
+  - Thiếu úy → Trung úy 2 năm → Thượng úy 3 năm → Đại úy 3 năm → Thiếu tá, Trung tá, Thượng tá, Đại tá mỗi bậc tối thiểu 4 năm, theo Luật Sĩ quan QĐND và Luật CAND.
+  - Đại úy đến Trung tá được cử đi học Học viện Lục quân / Học viện Chính trị (công an: Học viện Chính trị CAND). Phải qua lớp này mới lên được Thượng tá.
+  - Đại tá học Học viện Quốc phòng (công an: lớp cao cấp lý luận chính trị) mới được xét phong cấp tướng.
+
 ## v7.4.1 — Sửa lỗi khi định cư nước ngoài, thêm thành tựu Embes
 
 - **Bảo lãnh bố mẹ sang nước ngoài ở cùng:** không còn các lựa chọn "gửi tiền về cho bố mẹ", "nhà bố mẹ ở quê bị dột / xuống cấp", "ai nuôi bố mẹ", "bố mẹ ở một mình", hay bảo lãnh lại lần nữa. Tết đón cùng bố mẹ ở xứ người.

@@ -920,8 +920,9 @@
             life.pending.unshift(DEC.major.make(life));
           } else { log(life.examScore != null ? 'Điểm xét tuyển ' + U.fmtNum(life.examScore, 2) + ' chưa đạt mốc ' + (k === 'uni_big' ? 23 : 18) + ' của nhóm trường đã chọn.' : 'Chưa đạt yêu cầu xét tuyển của nhóm trường đã chọn.', 'bad'); life.st.hap -= 6; life.pending.unshift(DEC.uniFail.make(life)); }
         } else if (k === 'police') {
-          var pass = U.clamp(0.15 + (life.st.kno - 45) / 70 + (life.st.hea - 60) / 120, 0.05, 0.85);
-          if (r() < pass) { life.school = 'police'; life.schoolEnd = life.age + 4; life.flags.policeTrack = r() < 0.6 ? 'cong_an' : 'quan_doi'; log('Đỗ vào ' + (life.flags.policeTrack === 'cong_an' ? (isVN(life) ? 'Học viện Cảnh sát nhân dân' : 'học viện cảnh sát') : (isVN(life) ? 'trường Sĩ quan Lục quân' : 'học viện quân sự')) + '.', 'good'); life.st.hap += 6; H.mem(life, 'Lần đầu khoác lên mình bộ quân phục học viên.', 3); }
+          var pass = U.clamp(0.15 + (life.st.kno - 45) / 70 + (life.st.hea - 60) / 120, 0.05, 0.85); var passOk = r() < pass;
+          if (passOk && isVN(life) && E.DEC.chon_hoc_vien) { log('Đạt sơ tuyển vào các trường quân đội, công an (sức khỏe, lý lịch, điểm thi).', 'good'); life.pending.unshift(E.DEC.chon_hoc_vien.make(life, r)); } // v7.5: tự chọn trường
+          else if (passOk) { life.school = 'police'; life.schoolEnd = life.age + 4; life.flags.policeTrack = r() < 0.6 ? 'cong_an' : 'quan_doi'; log('Đỗ vào ' + (life.flags.policeTrack === 'cong_an' ? (isVN(life) ? 'Học viện Cảnh sát nhân dân' : 'học viện cảnh sát') : (isVN(life) ? 'trường Sĩ quan Lục quân' : 'học viện quân sự')) + '.', 'good'); life.st.hap += 6; H.mem(life, 'Lần đầu khoác lên mình bộ quân phục học viên.', 3); }
           else { log('Trượt kỳ thi vào trường công an / quân đội.', 'bad'); life.st.hap -= 5; life.pending.unshift(DEC.uniFail.make(life)); }
         } else if (k === 'abroad') { H.chain(life, 'du_hoc'); }
         else if (k === 'voc') { life.school = 'voc'; life.schoolEnd = life.age + 2; log('Vào học cao đẳng nghề.', 'neutral'); }

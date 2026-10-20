@@ -759,8 +759,8 @@
       return s;
     };
     if (f.orphan && f.orphan.adopted == null) row((f.orphan.unknown ? 'Bố mẹ ruột: không rõ tung tích' + (f.orphan.found != null ? ' (đã tìm lại được năm ' + f.orphan.found + ' tuổi)' : '') : 'Bố mẹ: đã mất khi bạn còn đỏ hỏn') + ' · người nuôi dưỡng: ' + esc(f.orphan.carer), true); // v7.1
-    else row('Mẹ: ' + esc(f.mName) + ' · ' + (f.mAlive ? (f.mAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.mJob, f.mRet, f.mLost, f.mAlive) + pinc(f.mInc, f.mInc0, f.mRet, f.mAlive) + (f.mAlive && f.mTrait && E.PARENT_TRAITS ? ' · <small class="muted">' + esc(E.PARENT_TRAITS[f.mTrait].n) + '</small>' : ''), !f.mAlive);
-    if (!f.noDad && !(f.orphan && f.orphan.adopted == null)) row('Bố: ' + esc(f.fName) + ' · ' + (f.fAlive ? (f.fAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.fJob, f.fRet, f.fLost, f.fAlive) + pinc(f.fInc, f.fInc0, f.fRet, f.fAlive) + (f.fAlive && f.fTrait && E.PARENT_TRAITS ? ' · <small class="muted">' + esc(E.PARENT_TRAITS[f.fTrait].n) + '</small>' : ''), !f.fAlive);
+    else row('Mẹ: ' + esc(f.mName) + ' · ' + (f.mAlive ? (f.mAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.mJob, f.mRet, f.mLost, f.mAlive) + pinc(f.mInc, f.mInc0, f.mRet, f.mAlive) + (f.mAlive && f.mTrait && E.PARENT_TRAITS ? ' · <small class="muted">' + esc(E.PARENT_TRAITS[f.mTrait].n) + '</small>' : '') + (f.mAlive && E.parentWhere ? ' · ' + esc(E.parentWhere(l)) : ''), !f.mAlive);
+    if (!f.noDad && !(f.orphan && f.orphan.adopted == null)) row('Bố: ' + esc(f.fName) + ' · ' + (f.fAlive ? (f.fAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.fJob, f.fRet, f.fLost, f.fAlive) + pinc(f.fInc, f.fInc0, f.fRet, f.fAlive) + (f.fAlive && f.fTrait && E.PARENT_TRAITS ? ' · <small class="muted">' + esc(E.PARENT_TRAITS[f.fTrait].n) + '</small>' : '') + (f.fAlive && E.parentWhere ? ' · ' + esc(E.parentWhere(l)) : ''), !f.fAlive);
     // v2.4: từng anh chị em ruột (tên, tuổi, nghề, độ thân thiết)
     if (l.sibList && l.sibList.length) l.sibList.slice().sort(function (x, y) { return x.born - y.born; }).forEach(function (s) {
       var sa = a - s.born, w = s.born < 0 ? (s.sex === 'M' ? 'Anh trai' : 'Chị gái') : (s.sex === 'M' ? 'Em trai' : 'Em gái');
@@ -787,6 +787,7 @@
         if (k.vice) info += ' · <span style="color:var(--bad)">' + esc(k.vice === 'game' ? 'nghiện game' : k.vice) + '</span>';
         if (k.upbringing && k.upbringing.stress >= 65) info += ' · cần được lắng nghe thêm';
         if (ka >= 10 && k.close != null) info += ' · ' + (k.close >= 70 ? '❤ thân thiết' : k.close >= 40 ? 'bình thường' : 'xa cách');
+        if (E.kidWhere) info += ' · ' + esc(E.kidWhere(l, k)); // v7.5: con đang ở đâu
       }
       row((k.sex === 'M' ? 'Con trai' : 'Con gái') + ': ' + esc(k.name) + ' · ' + (k.alive ? ka + ' tuổi' : 'đã mất') + info + ' <button class="btn sm family-open" data-family-child="' + esc(k.parentId) + '">Hồ sơ</button>', !k.alive);
     });
@@ -795,7 +796,7 @@
     (l.friends || []).forEach(function (f) { row('Bạn thân: ' + esc(f.name) + (f.from ? ' (quen ở ' + esc(f.from) + ')' : '') + (f.alive === false ? ' · đã mất' : f.lover ? ' · người yêu' : ' · ' + (f.close >= 70 ? 'thân thiết' : f.close >= 40 ? 'vẫn giữ liên lạc' : 'đã xa cách')), f.alive === false); });
     if (l.idol) row('Thần tượng: ' + esc(l.idol));
     (l.pets || []).slice(-4).forEach(function (pt) { row('🐾 ' + esc(U.cap(E.H.petLabel(pt))) + ' ' + esc(pt.n) + ' · ' + (pt.alive ? Math.max(0, a - pt.since) + ' năm bên bạn' : pt.lost ? 'đã thất lạc' : 'đã mất'), !pt.alive); });
-    var home = l.age < 18 && !l.indep ? 'Sống cùng bố mẹ trong ' + (l.houseType ? l.houseType + ' ' : '') + '(' + f.home + ')' : (l.ownHouse ? 'Sống trong ' + (l.houseName && l.houseName !== 'nhà riêng' ? l.houseName : 'nhà riêng') : l.urban ? 'Thuê nhà' : 'Sống ở quê');
+    var home = E.whereNow ? E.whereNow(l) : l.age < 18 && !l.indep ? 'Sống cùng bố mẹ trong ' + (l.houseType ? l.houseType + ' ' : '') + '(' + f.home + ')' : (l.ownHouse ? 'Sống trong ' + (l.houseName && l.houseName !== 'nhà riêng' ? l.houseName : 'nhà riêng') : l.urban ? 'Thuê nhà' : 'Sống ở quê');
     if (l.veh === 'ô tô' && l.vehName) home += ' · đi ' + l.vehName;
     $('#famPanel').innerHTML = '<h3>Gia đình & những người thân</h3><ul class="fam">' + li.join('') + '</ul><div class="small muted" style="margin-top:8px">' + esc(home) + '</div>';
     $$('[data-family-child]', $('#famPanel')).forEach(function(b){b.onclick=function(){familyProfile(b.dataset.familyChild);};});
@@ -1347,8 +1348,8 @@
         var ka = l.death.age - k.born, share = E.heirShare ? E.heirShare(l, k) : 0, P = l.sex === 'M' ? 'bố' : 'mẹ';
         var inh = share > 0 ? 'Phần thừa kế của ' + k.name + ': ' + money(l, share) + '.' : E.netWorth(l) < 0 ? l.name + ' để lại nợ; theo luật con không phải trả quá phần di sản được hưởng.' : 'Theo di chúc, ' + k.name + ' không nhận phần tài sản nào.';
         modal('<h2>Sống tiếp đời ' + esc(k.name) + '</h2><p>' + esc(inh) + '</p><div class="opts">' +
+          (ka > 0 ? '<button class="opt" data-hm="now"><b>Tiếp tục ở tuổi hiện tại (' + ka + ' tuổi) — tiếp quản cơ ngơi</b><span>' + esc('Giữ nguyên nghề nghiệp, học vấn của ' + k.name + ' như hồ sơ đời trước; bắt đầu từ năm ' + P + ' mất và nhận thừa kế.') + '</span></button>' : '') +
           '<button class="opt" data-hm="birth"><b>Từ lúc chào đời</b><span>' + esc('Sinh ra trong gia cảnh lúc ' + l.name + ' ' + k.born + ' tuổi. ' + U.cap(P) + ' sẽ ra đi khi con ' + ka + ' tuổi và để lại đúng phần thừa kế này.') + '</span></button>' +
-          (ka > 0 ? '<button class="opt" data-hm="now"><b>Tiếp tục ở tuổi hiện tại (' + ka + ' tuổi)</b><span>' + esc('Những năm đã qua được dựng lại theo hồ sơ của con; bắt đầu từ năm ' + P + ' mất và nhận thừa kế.') + '</span></button>' : '') +
           '<button class="opt" data-hm="no"><b>Thôi</b></button></div>', function (box) {
             $$('[data-hm]', box).forEach(function (bt) { bt.onclick = function () {
               var mode = bt.dataset.hm; if (mode === 'no') { closeModal(); return; }
