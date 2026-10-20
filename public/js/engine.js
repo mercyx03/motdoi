@@ -273,12 +273,12 @@
     if (l.bff && !l.bff.alive && l.age > l.bff.died && !/qua đời|mộ|giỗ|nhớ|thuở|ngày xưa|di ảnh/.test(t)) t = t.replace(/(^|[^p{L}])([Nn])gười bạn thân(?! nhất)(?![p{L}])/gu, function (x, p, N) { return p + (N === 'N' ? 'M' : 'm') + 'ột người bạn'; }).replace(/(^|[^p{L}])([Bb])ạn thân(?![p{L}])/gu, function (x, p, B) { return p + B + 'ạn bè'; });
     var f = l.fam, m = !!f.mAlive, b = !!f.fAlive && !f.noDad;
     if ((m && b) || FAM_KEEP.test(t)) return t;
-    var pw = m ? 'mẹ' : b ? 'bố' : (l.age < 18 ? 'ông bà' : '');
+    var fo = f.orphan && f.orphan.adopted == null ? f.orphan : null, oc = fo ? fo.carer : l.flags && l.flags.orphanCarer || null, pw = m ? 'mẹ' : b ? 'bố' : (l.age < 18 ? oc || 'ông bà' : ''); // v7.1: trẻ mồ côi từ nhỏ — người nuôi dưỡng
     if (pw) t = t.replace(/(^|[^\p{L}])([Bb])ố mẹ(?![\p{L}])/gu, function (x, p, B) { return p + (B === 'B' ? pw.charAt(0).toUpperCase() + pw.slice(1) : pw); });
     if (l.age < 18) {
       var hasM = /(^|[^\p{L}])[Mm]ẹ(?![\p{L}])/u.test(t), hasB = /(^|[^\p{L}])[Bb]ố(?![\p{L}])/u.test(t);
-      if (!m && hasM && !hasB) t = t.replace(/(^|[^\p{L}])([Mm])ẹ(?![\p{L}])/gu, function (x, p, M) { var w = b ? 'bố' : 'bà'; return p + (M === 'M' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
-      else if (!b && hasB && !hasM) t = t.replace(/(^|[^\p{L}])([Bb])ố(?![\p{L}])/gu, function (x, p, B) { var w = m ? 'mẹ' : 'ông'; return p + (B === 'B' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
+      if (!m && hasM && !hasB) t = t.replace(/(^|[^\p{L}])([Mm])ẹ(?![\p{L}])/gu, function (x, p, M) { var w = b ? 'bố' : fo ? fo.one || 'bà' : 'bà'; return p + (M === 'M' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
+      else if (!b && hasB && !hasM) t = t.replace(/(^|[^\p{L}])([Bb])ố(?![\p{L}])/gu, function (x, p, B) { var w = m ? 'mẹ' : fo ? fo.one || 'ông' : 'ông'; return p + (B === 'B' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
     }
     return t;
   }
@@ -294,7 +294,7 @@
     var tiny = Math.abs(net) < 1e-9;
     var txt = (tiny ? '' : (net < 0 ? 'bạn tự chi ' : 'bạn nhận ') + fmtMoney(life, Math.abs(net)) + (net < 0 ? ' từ tiền riêng' : '')) + (loan > 0 ? (tiny ? 'vay thêm ' : ', vay thêm ') + fmtMoney(life, loan) : '');
     // v6.9.1: trẻ chưa tự lập thì bố mẹ trả; dưới 15 tuổi chưa có tiền tiêu vặt nên bố mẹ trả toàn bộ, 15–17 tuổi tự trả bằng tiền tiêu vặt nếu đủ, thiếu thì bố mẹ bù
-    var fm = life.fam || {}, who = fm.mAlive && fm.fAlive && !fm.noDad ? 'bố mẹ' : fm.mAlive ? 'mẹ' : fm.fAlive && !fm.noDad ? 'bố' : null;
+    var fm = life.fam || {}, who = fm.mAlive && fm.fAlive && !fm.noDad ? 'bố mẹ' : fm.mAlive ? 'mẹ' : fm.fAlive && !fm.noDad ? 'bố' : (E.orphanCarer && E.orphanCarer(life)) || null; // v7.1: mồ côi từ nhỏ thì người nuôi dưỡng chi
     if (net < 0 && life.age < 18 && !life.indep && who) {
       var cost = -net, before = life.money + cost, self = life.age >= 15 ? Math.min(cost, Math.max(0, before)) : 0, famPay = cost - self;
       if (famPay > 1e-9) { life.money += famPay; if (life.yr) (life.yr.familyExpenses || (life.yr.familyExpenses = [])).push({ t: why.slice(0, 2).join(', '), amount: famPay, payer: who }); }
@@ -1690,8 +1690,9 @@
     // tiêu dùng: một phần thu nhập dư
     var ess = F.food + F.rent + F.travel + F.kids + F.parents + F.health + F.debt;
     var surplus = income + F.partner - ess;
-    var share = { save: 0.35, normal: 0.6, lavish: 0.95 }[life.spend] || 0.6;
+    var share = { save: 0.5, normal: 0.75, lavish: 0.95 }[life.spend] || 0.75; // v7.1: tiêu dùng tăng theo thu nhập dư (trước 0,35 / 0,6 / 0,95) — tiết kiệm sát thực tế hơn
     if (life.spend === 'lavish' && life.money > b * 8) share = Math.min(0.97, share + Math.min(0.3, (life.money / b - 8) / 80)); // V5: chỉ tự nâng ngân sách khi chủ động chọn sống thoải mái
+    if (life.retired || a >= 62) share = Math.max(share, 0.92); // v7.1: về già tiêu dần khoản dư (sức khỏe, con cháu, hiếu hỉ) thay vì tiếp tục tích lũy
     F.life = life.money >= 0 && surplus > 0 ? surplus * share : 0;
     if (focus === 'rest') F.life += b * 0.06;
     if (life.money < 0) { F.life = 0; var cut = Math.max(0, ess - Math.max(ess * 0.8, income + F.partner)); F.food -= Math.min(cut, F.food * 0.2); }

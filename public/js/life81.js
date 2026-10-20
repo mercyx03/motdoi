@@ -125,7 +125,7 @@
     opts: [
       { k: 'ho_hang', l: 'Vay họ hàng, anh em', ai: { w: 1.1 }, run: function (l, r, log) { if (H.addLoan) H.addLoan(l, 'family', V(l, 60)); H.cash(l, -V(l, 60), 'Viện phí cho ' + pw(l)); fx(l, { hap: -4 }); log('Bạn đi vay khắp họ hàng, mỗi nhà một ít, đủ tiền cho ' + pw(l) + ' lên bàn mổ.', 'neutral'); } },
       { k: 'nong', l: 'Vay nóng cho kịp', ai: { w: 0.5, risk: 1 }, run: function (l, r, log) { if (H.addLoan) H.addLoan(l, 'nong', V(l, 60)); H.cash(l, -V(l, 60), 'Viện phí cho ' + pw(l)); fx(l, { hap: -6 }); stress(l, 10); log('Không kịp xoay xở, bạn vay nóng. Ca mổ thành công, nhưng khoản nợ lãi ngày bắt đầu lớn dần.', 'bad'); } },
-      { k: 'ban', l: 'Bán xe, bán đồ đạc có giá trị', req: function (l) { return !!l.veh; }, ai: { w: 0.8 }, run: function (l, r, log) { var v = l.vehVal || V(l, 15); l.veh = null; l.vehName = null; l.vehVal = 0; H.cash(l, v - V(l, 60), 'Bán xe lo viện phí'); fx(l, { hap: -5 }); log('Bạn bán chiếc xe, gom góp thêm để lo viện phí cho ' + pw(l) + '. Từ đó đi làm bằng xe buýt.', 'neutral'); } },
+      { k: 'ban', l: 'Bán xe, bán đồ đạc có giá trị', req: function (l) { return !!l.veh; }, ai: { w: 0.8 }, run: function (l, r, log) { var v = l.vehVal || V(l, 15); l.veh = null; l.vehName = null; l.vehK = null; l.vehVal = 0; H.cash(l, v - V(l, 60), 'Bán xe lo viện phí'); fx(l, { hap: -5 }); log('Bạn bán chiếc xe, gom góp thêm để lo viện phí cho ' + pw(l) + '. Từ đó đi làm bằng xe buýt.', 'neutral'); } },
       { k: 'khong', l: 'Đưa ' + 'về điều trị ở bệnh viện tuyến dưới cho rẻ', ai: { w: 0.4 }, run: function (l, r, log) { fx(l, { hap: -8 }); log('Không đủ tiền, gia đình đưa ' + pw(l) + ' về bệnh viện tuyến dưới điều trị. Cả nhà chỉ biết cầu mong.', 'bad'); } }
     ]
   });

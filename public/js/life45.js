@@ -161,7 +161,7 @@
     if ((P.m && !f.mAlive) || (P.f && !f.fAlive)) {
       F.parentLostAt = a;
       if (a < 18) {
-        if (!f.mAlive && !f.fAlive) { F.orphanAt = a; log('Mồ côi cả bố lẫn mẹ, bạn về ở với ' + pick(r, ['ông bà', 'bà nội', 'bà ngoại', 'cô ruột', 'dì ruột']) + '. Từ đây phải tự lớn lên sớm hơn chúng bạn.', 'bad'); stress(l, 20); if (f.q > 1) f.q--; }
+        if (!f.mAlive && !f.fAlive) { F.orphanAt = a; F.orphanCarer = pick(r, ['ông bà', 'bà nội', 'bà ngoại', 'cô ruột', 'dì ruột']); log('Mồ côi cả bố lẫn mẹ, bạn về ở với ' + F.orphanCarer + '. Từ đây phải tự lớn lên sớm hơn chúng bạn.', 'bad'); stress(l, 20); if (f.q > 1) f.q--; }
         else F.singleParent = f.fAlive ? 'bố' : 'mẹ';
       }
     }

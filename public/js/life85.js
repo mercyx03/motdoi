@@ -65,7 +65,7 @@
     opts: [0, 1, 2].map(function (i) { return { k: 'h' + i, l: function (l, d) { return d.list && d.list[i] ? 'Thử ' + low(d.list[i]) : ''; }, req: function (l, d) { return !!(d && d.list && d.list[i]); }, ai: { w: 1 }, run: function (l, r, log, d) { var h = d.list[i]; l.flags.hobbies = (l.flags.hobbies || []).concat([h]).slice(-4); log(pick(r, ['Bạn bắt đầu ' + low(h) + '. Mấy tháng sau đã thành thói quen mỗi tuần.', 'Thử ' + low(h) + ' vài lần, bạn thấy đầu óc nhẹ nhõm hẳn.', 'Bạn tìm được hội ' + low(h) + ' ngay gần nhà, quen thêm vài người bạn mới.']), 'good'); H.fx(l, { hap: 3, soc: 1 }); } }; }).concat([{ k: 'thoi', l: 'Thôi, mình không có thời gian', run: function (l, r, log) { log('Bạn bận quá, để dành thú vui cho lúc khác.', 'neutral'); } }]) });
   T('pv_thu_vui', function (l, a) { return vn(l) && a >= 15 && a <= 80 && (l.flags.hobbies || []).length < 4 && !!group(l); }, 0.05, 8, 3, true);
   E.HOOKS.year.unshift(function (l, r, log, a) {
-    var hs = l.flags && l.flags.hobbies; if (!hs || !hs.length || !l.alive || a < 15) return;
+    var hs = l.flags && l.flags.hobbies; if (!hs || !hs.length || !l.alive || a < 15) return; if (a > 65) { hs = hs.filter(function (h) { return !/gym|bóng đá|đá bóng|đá banh|bóng rổ|leo núi|boxing|võ thuật|nhảy hiện đại|chạy marathon/i.test(h); }); if (!hs.length) return; } // v7.1: người già không còn tập gym, đá bóng
     if (r() < 0.12) { var h = hs[Math.floor(r() * hs.length)]; log(pick(r, ['Năm nay vẫn giữ thói quen ' + low(h) + ' mỗi cuối tuần.', 'Những lúc mệt mỏi, ' + low(h) + ' giúp bạn cân bằng lại.']), 'neutral'); H.fx(l, { hap: 1 }); }
   });
 

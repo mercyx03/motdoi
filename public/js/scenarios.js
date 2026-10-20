@@ -1095,7 +1095,7 @@
     text: function (l) { return 'Trong nhà không còn một hạt gạo, túi không còn đồng nào.' + (l.ownHouse ? ' Ngôi nhà cũ dột nát mà không có tiền sửa.' : ' Tiền nhà đã quá hạn hai tháng.') + (l.age >= 65 ? ' Tuổi già, sức yếu, chẳng ai thuê làm.' : ''); },
     opts: [
       { k: 'help', l: 'Xin trợ cấp, nhờ hàng xóm, nhà chùa', ai: { soc: 1, w: 1.2 }, run: function (l, r, log) { cashB(l, 0.05, 'Trợ cấp, hàng xóm giúp đỡ'); log('Bà con lối xóm mỗi người góp một ít gạo. Nghèo mà tình nghĩa.', 'neutral'); fx(l, { hap: -2, soc: 3 }); H.mem(l, 'Bao gạo hàng xóm mang sang ngày nhà hết sạch gạo.', 4); } },
-      { k: 'sell', l: 'Bán dần đồ đạc trong nhà', ai: { w: 1 }, run: function (l, r, log) { cashB(l, 0.08, 'Bán đồ đạc'); if (l.veh) { H.cash(l, l.vehVal || 0, 'Bán xe'); var cd = (l.loans || []).filter(function (x) { return x.type === 'car'; }).reduce(function (s, x) { return s + x.bal; }, 0); H.cash(l, -cd, 'Tất toán nợ mua xe'); clearLoans(l, ['car'], 0); l.veh = null; l.vehVal = 0; } log('Bán dần đồ đạc, cả chiếc xe máy, để có cái ăn.', 'bad'); fx(l, { hap: -6 }); } },
+      { k: 'sell', l: 'Bán dần đồ đạc trong nhà', ai: { w: 1 }, run: function (l, r, log) { cashB(l, 0.08, 'Bán đồ đạc'); if (l.veh) { H.cash(l, l.vehVal || 0, 'Bán xe'); var cd = (l.loans || []).filter(function (x) { return x.type === 'car'; }).reduce(function (s, x) { return s + x.bal; }, 0); H.cash(l, -cd, 'Tất toán nợ mua xe'); clearLoans(l, ['car'], 0); l.veh = null; l.vehName = null; l.vehK = null; l.vehVal = 0; } log('Bán dần đồ đạc, cả chiếc xe máy, để có cái ăn.', 'bad'); fx(l, { hap: -6 }); } },
       { k: 'borrow', l: 'Vay nóng', ai: { risk: 1, w: 0.4 }, run: function (l, r, log) { H.addLoan(l, 'nong', l.base * 0.3); log('Vay nóng để qua cơn túng quẫn.', 'bad'); } },
       { k: 'beg', l: 'Ra đường xin ăn', req: function (l) { return !l.job && l.age >= 16; }, ai: { w: 0.5 }, run: function (l, r, log) { E.startJob(l, 'an_xin', r, log, true); log('Ngồi ở cổng chợ, chìa chiếc nón ra xin từng đồng lẻ.', 'bad'); fx(l, { hap: -12, soc: -6 }); H.mem(l, 'Lần đầu ngồi xin ăn ở cổng chợ, cúi gằm mặt xuống.', 6); } }
     ]
@@ -1203,7 +1203,7 @@
     title: 'Lỡ tay', prep: function (l, r) { return { t: pick(r, ['bình hoa của mẹ', 'chiếc điện thoại của bố', 'bát hương trên bàn thờ', 'cửa kính nhà hàng xóm']) }; },
     text: function (l, d) { return 'Chơi đùa trong nhà, bạn lỡ tay làm vỡ ' + d.t + '. Chưa ai nhìn thấy.'; },
     opts: [
-      { k: 'admit', l: 'Nhận lỗi', run: function (l, r, log, d) { log('Rụt rè nhận lỗi làm vỡ ' + d.t + '. Bố mẹ mắng một chút rồi xoa đầu.', 'good'); fx(l, { karma: 3 }); } },
+      { k: 'admit', l: 'Nhận lỗi', run: function (l, r, log, d) { log('Rụt rè nhận lỗi làm vỡ ' + d.t + '. ' + (l.fam.mAlive || l.fam.fAlive ? 'Bố mẹ' : 'Người lớn') + ' mắng một chút rồi xoa đầu.', 'good'); fx(l, { karma: 3 }); } },
       { k: 'blame', l: 'Đổ cho em / con mèo', run: function (l, r, log) { fx(l, { karma: -3 }); if (ch(r, 0.4)) { log('Bị phát hiện đổ lỗi, ăn đòn gấp đôi.', 'bad'); fx(l, { hap: -3 }); } else log('Con mèo bị mắng oan. Bạn thấy áy náy.', 'neutral'); } },
       { k: 'hide', l: 'Giấu mảnh vỡ đi', run: function (l, r, log) { fx(l, { karma: -1 }); log(ch(r, 0.5) ? 'Giấu mảnh vỡ dưới gầm giường, mấy hôm sau mới bị lộ.' : 'Giấu trót lọt. Nhưng tối nào cũng sợ.', 'neutral'); } }
     ]

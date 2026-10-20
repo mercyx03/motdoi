@@ -44,6 +44,6 @@ for(const veh of [null,'xe đạp','xe máy','ô tô'])for(const country of ['VN
 {
  const l=life();l.age=19;l.edu=3;l.talent='âm nhạc';l.skill=95;l.st.kno=95;E.startJob(l,'ca_si',()=>.5,()=>{},true);const d=E.DEC.uni.make(l,()=>.5),k=d.opts.find(o=>/^nk_/.test(o.k)).k;E.DEC.uni.apply(l,d,k,()=>0,()=>{});ok(l.school==='uni'&&!l.job&&l.income===0,'working applicant ends old job on full-time talent admission');
  const young=life();young.age=20;young.indep=false;young.school='uni';young.schoolEnd=24;young.edu=3;young.veh='xe máy';young.money=10;const before=young.money;E.finishYear(young);ok(young.yr.items.some(e=>e.t==='Chi phí xe khi chưa tự lập'),'adult student still pays annual owned vehicle bill');
- const l2=life();l2.spend='normal';l2.income=500;l2.money=10000;l2.partner.status='married';E.finishYear(l2);const surplus=l2.fin.inc+l2.fin.partner-l2.fin.food-l2.fin.rent-l2.fin.travel-l2.fin.kids-l2.fin.parents-l2.fin.health-l2.fin.debt;near(l2.fin.life,Math.max(0,surplus)*.6,'normal discretionary share not automatically raised by wealth');
+ const l2=life();l2.spend='normal';l2.income=500;l2.money=10000;l2.partner.status='married';E.finishYear(l2);const surplus=l2.fin.inc+l2.fin.partner-l2.fin.food-l2.fin.rent-l2.fin.travel-l2.fin.kids-l2.fin.parents-l2.fin.health-l2.fin.debt;near(l2.fin.life,Math.max(0,surplus)*.75,'normal discretionary share not automatically raised by wealth (v7.1: 75%)');
 }
 console.log('V5.0: '+n+' checks passed; '+T.data.length+' destinations, '+D.films.length+' named animation films.');

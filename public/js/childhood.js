@@ -32,7 +32,7 @@
   // ===================================================================
   function kidLines(l, a) {
     var vn = isVN(l), m = mom(l), d = dad(l), L = [];
-    if (a <= 1) L.push('Lần đầu biết lẫy, cả nhà vỗ tay rần rần.', 'Mọc chiếc răng sữa đầu tiên, đêm nào cũng quấy khóc.', 'Bập bẹ tiếng đầu tiên — là "bà", không phải "mẹ".', 'Lần đầu ăn dặm, phun cháo đầy mặt ' + m + '.', 'Nắm chặt ngón tay ' + d + ' không chịu buông.');
+    if (a <= 1) L.push('Lần đầu biết lẫy, cả nhà vỗ tay rần rần.', 'Mọc chiếc răng sữa đầu tiên, đêm nào cũng quấy khóc.', (l.fam.mAlive ? 'Bập bẹ tiếng đầu tiên — là "bà", không phải "mẹ".' : 'Bập bẹ tiếng đầu tiên — là "bà".'), 'Lần đầu ăn dặm, phun cháo đầy mặt ' + m + '.', 'Nắm chặt ngón tay ' + d + ' không chịu buông.');
     if (a >= 1 && a <= 3) L.push('Biết vẫy tay "bai bai" với khách đến nhà.', 'Ôm chặt chiếc chăn nhỏ đi khắp nhà, không cho ai giặt.', 'Bị ngã u đầu khi chạy theo con mèo.', 'Lần đầu được đi sở thú, sợ khóc thét khi thấy con voi.', 'Học được câu hát đầu tiên, hát đi hát lại cả ngày.', 'Lén bốc vụng đường trong hũ, bị bắt quả tang.');
     if (a >= 3 && a <= 6) {
       L.push('Hỏi "tại sao?" đến cả trăm lần mỗi ngày.', 'Vẽ lên tường nhà một "bức tranh" to đùng, bị mắng một trận.', 'Có một người bạn tưởng tượng tên là "Bin".', 'Sợ ma, tối nào cũng đòi ngủ với ' + m + '.', 'Lần đầu tự buộc được dây giày.', 'Rụng chiếc răng sữa đầu tiên, ' + (vn ? 'ném lên mái nhà theo lời bà dặn.' : 'giấu dưới gối chờ "tiên răng".'));

@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/life87.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/life87.js', 'js/life88.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -410,7 +410,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
   ok(!E.DEC.gameshow_dong.valid(TPL[0],{}),'hậu trường cũ đã được thay bằng mùa vr_vong');
-  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
+  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than|mc_)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -2765,6 +2765,44 @@ section('66. Bản 7.0.0: rà soát lỗi logic toàn hệ thống');
   ok(!Object.keys(E.CAR).some(id => (E.CAR[id].vnOnly || E.CAR[id].cat === 'state') && E.jobEligible && E.jobEligible(em, E.CAR[id])), 'định cư nước ngoài không làm việc chỉ có ở Việt Nam / công chức');
   ok(E.siLabel(em) !== 'BHXH, BHYT, BHTN', 'định cư nước ngoài: không ghi BHXH, BHYT, BHTN của Việt Nam');
   ok(fs.existsSync(path.join(ROOT, '..', 'tools', 'logic-audit.js')), 'có công cụ rà soát lỗi logic tools/logic-audit.js');
+}
+section('67. Bản 7.1.0: xuất thân mồ côi ngẫu nhiên, kiếm tiền khó hơn');
+{
+  const R = s => { const h = { rs: s }; return () => U.rand(h); };
+  // tỉ lệ xuất thân mồ côi, nhà nghèo dễ gặp hơn
+  let n = 0, orph = 0;
+  for (let i = 0; i < 4000; i++) { const l = E.createLife({ mode: 'vn', seed: 67000 + i }); n++; if (l.fam.orphan) orph++; }
+  ok(orph / n > 0.007 && orph / n < 0.04, 'khoảng 1–3% ca sinh là xuất thân mồ côi (' + (orph / n * 100).toFixed(2) + '%)');
+  let kinds = {}, neg = 0, nan = 0, carerPay = 0, parentTxt = 0, birthOk = 0, adopted = 0, left = 0;
+  for (let i = 0; i < 160; i++) {
+    const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 67500 + i, orphan: true }); if (!l.fam.orphan) continue;
+    const o = l.fam.orphan; kinds[o.kind] = 1;
+    if (!l.fam.mAlive && !l.fam.fAlive && l.sendParents === false && /bố mẹ|bố mẹ bạn|chiếc giỏ|tìm thấy/.test(l.log[0].t) && !/,\./.test(l.log[0].t)) birthOk++;
+    E.runHeadless(l, x => { if (!isFinite(x.money)) nan++; if (x.age < 15 && !x.indep && x.money < -1e-6) neg++; });
+    if (o.adopted != null) adopted++; if (o.left === 18) left++;
+    l.log.forEach(e => { if (e.a < 15 && /\((ông bà|cô chú|các cô ở mái ấm|sư cô|gia đình nuôi dưỡng tạm thời|cô ruột|chú ruột|bác ruột|cô) chi /.test(e.t)) carerPay++; if (o.adopted == null && e.a < 18 && /\((bố mẹ|mẹ|bố) chi /.test(e.t)) parentTxt++; });
+  }
+  ok(Object.keys(kinds).length >= 4, 'đủ các hoàn cảnh: ông bà, họ hàng, mái ấm, nhà chùa (' + Object.keys(kinds).join(', ') + ')');
+  ok(birthOk >= 150, 'lời kể lúc chào đời nói rõ hoàn cảnh mồ côi, không còn bố mẹ, không gửi tiền cho bố mẹ (' + birthOk + ')');
+  ok(nan === 0 && neg === 0, 'trẻ mồ côi dưới 15 tuổi không bị âm tiền, không lỗi số');
+  ok(carerPay > 20 && parentTxt === 0, 'người nuôi dưỡng chi tiền cho trẻ, không ghi "bố mẹ chi" (' + carerPay + ' / ' + parentTxt + ')');
+  ok(adopted > 0 && left > 0, 'có trẻ được nhận làm con nuôi, có trẻ rời mái ấm khi 18 tuổi (' + adopted + ' / ' + left + ')');
+  // nhận con nuôi: có bố mẹ mới
+  const ad = E.createLife({ mode: 'vn', seed: 67900, orphan: true }); ad.fam.orphan.kind = 'mai_am'; ad.age = 3;
+  { const d = E.DEC.mc_nhan_nuoi.make(ad, R(1)); E.DEC.mc_nhan_nuoi.apply(ad, d, 'theo', R(2), (t, k) => ad.log.push({ a: ad.age, t, k })); }
+  ok(ad.fam.mAlive && ad.fam.fAlive && ad.fam.orphan.adopted === 3 && ad.fam.mInc > 0 && !E.isOrphanBorn(ad), 'được nhận nuôi: có bố mẹ nuôi, có thu nhập gia đình');
+  // bố mẹ mất khi còn nhỏ: người nuôi dưỡng chi
+  const kid = E.createLife({ mode: 'vn', seed: 67950, noOrphan: true }); kid.age = 9; kid.fam.mAlive = false; kid.fam.fAlive = false; kid.flags.orphanCarer = 'bà ngoại';
+  ok(E.orphanCarer(kid) === 'bà ngoại' && !E.orphanCarer(Object.assign({}, kid, { age: 20 })), 'trẻ mồ côi giữa chừng có người nuôi dưỡng đến 18 tuổi');
+  ok(!E.createLife({ mode: 'vn', seed: 67000, noOrphan: true }).fam.orphan, 'có thể tắt xuất thân mồ côi (noOrphan)');
+  // kinh tế: thăng tiến hình tháp, tích lũy khó hơn
+  let top = 0, at45 = 0; const nw60 = [];
+  for (let i = 0; i < 150; i++) { const l = E.createLife({ mode: 'vn', seed: 67100 + i * 13 }); E.runHeadless(l, x => { if (x.age === 45 && x.job && !x.job.fam) { const c = E.jobDef(x); if (c && !c.ladder && c.t && c.t.length > 2) { at45++; if (x.job.rank >= c.t.length - 1) top++; } } if (x.age === 60) nw60.push(E.netWorth(x) / x.base); }); }
+  nw60.sort((a, b) => a - b); const med = nw60[nw60.length >> 1];
+  ok(at45 > 30 && top / at45 < 0.3, 'tuổi 45 chỉ một phần nhỏ lên tới bậc cao nhất (' + top + '/' + at45 + ')');
+  ok(med > 3 && med < 55, 'tài sản trung vị ở tuổi 60 vừa phải (' + med.toFixed(1) + ' lần thu nhập cơ sở)');
+  // xe đã bán thì không còn thay pin
+  const sv = fs.readFileSync(path.join(ROOT, 'js/life81.js'), 'utf8'); ok(/l\.vehName = null; l\.vehK = null;/.test(sv), 'bán xe lo viện phí xóa luôn loại xe (không còn "thay pin null")');
 }
 function isVNx(l) { return E.isVN(l); }
 

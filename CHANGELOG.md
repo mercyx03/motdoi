@@ -1,3 +1,36 @@
+## v7.1.0 — Xuất thân mồ côi, kiếm tiền khó hơn
+
+- **Xuất thân mồ côi ngẫu nhiên:**
+  - Khoảng 1,5% ca sinh không còn bố mẹ bên cạnh từ khi chào đời. Nhà càng nghèo càng dễ gặp: khoảng 4% ở nhóm nghèo nhất, 0,4% ở nhóm giàu nhất. Không áp dụng cho gia đình tài phiệt, hoàng tộc hay đời con nối tiếp.
+  - Bốn hoàn cảnh:
+    - ông bà nội / ngoại nuôi;
+    - cô chú họ hàng cưu mang;
+    - mái ấm trẻ mồ côi (ở các nước giàu là gia đình nuôi dưỡng tạm thời);
+    - bị bỏ rơi trước cổng chùa, được sư cô nuôi dưỡng.
+  - Bố mẹ mất khi bạn còn đỏ hỏn, hoặc không rõ tung tích.
+  - Người nuôi dưỡng lo các khoản chi khi bạn còn nhỏ. Nhật ký ghi rõ "ông bà chi", "các cô ở mái ấm chi"…
+  - Không có bố mẹ chu cấp, không có thừa kế, không gửi tiền về cho bố mẹ. Mười tám tuổi ra đời với hai bàn tay trắng.
+  - Câu chuyện riêng:
+    - ông bà già yếu có thể mất trước khi bạn trưởng thành, bạn chuyển sang ở với cô / chú / bác;
+    - trẻ ở mái ấm hoặc nhà chùa có thể được một gia đình hiếm muộn nhận làm con nuôi;
+    - học bổng cho học sinh mồ côi, bài văn "Tả mẹ của em", ngày rời mái ấm;
+    - tìm lại bố mẹ ruột qua chương trình truyền hình;
+    - quay về giúp đỡ mái ấm / ngôi chùa nơi mình lớn lên.
+  - Hồ sơ xuất phát, giấy khai sinh và trang gia đình hiện "Bố mẹ: không rõ tung tích / đã mất" và người nuôi dưỡng.
+  - 4 thành tựu mới: Tay trắng dựng nghiệp, Có một mái nhà, Tìm về nguồn cội, Uống nước nhớ nguồn.
+  - Trẻ mồ côi giữa chừng (bố mẹ mất khi còn nhỏ) cũng có người nuôi dưỡng chi tiền đến 18 tuổi, không còn bị âm tiền.
+- **Cân bằng lại kinh tế (trước đây kiếm tiền và tích lũy quá dễ):**
+  - Thăng tiến hình tháp: càng lên cao càng ít chỗ, tỉ lệ được đề bạt giảm dần theo cấp. Trước đây 43% người 45 tuổi đã ở bậc cao nhất, nay khoảng 13%. Nông nghiệp lên bậc chậm hơn.
+  - Hệ số học vấn, trường danh tiếng và chứng chỉ cộng lại tối đa ×1,4. Phụ cấp thâm niên tối đa +12%. Lương các nghề sát thực tế hơn.
+  - Chi tiêu tăng theo thu nhập dư: tằn tiện 50%, bình thường 75%, thoải mái 95% khoản dư (trước 35% / 60% / 95%). Từ 62 tuổi hoặc khi đã nghỉ hưu thì tiêu dần khoản dư (sức khỏe, con cháu, hiếu hỉ) thay vì tiếp tục tích lũy.
+  - Kết quả (đơn vị: số năm thu nhập cơ sở):
+    - tài sản trung vị ở tuổi 60 giảm từ khoảng 66 xuống 35;
+    - cuối đời giảm từ khoảng 120 xuống 48;
+    - người xuất thân mồ côi cuối đời chỉ khoảng 28.
+- **Sửa lỗi:**
+  - Bán xe để lo viện phí hoặc lúc túng thiếu mà sau đó vẫn bị "thay pin null".
+  - Câu "Bập bẹ tiếng đầu tiên — là "bà", không phải "bà"", và câu "Bố mẹ mắng một chút" khi không còn bố mẹ.
+
 ## v7.0.1 — Gọn mục Nguồn dữ liệu
 
 - Mục Giới thiệu → Nguồn dữ liệu bỏ dòng "Nguồn: …" vì link bộ dữ liệu Nemotron-Personas-Vietnam đã có ở chân trang. Giấy phép, ghi công NVIDIA và FPT, phần nêu rõ dữ liệu đã được điều chỉnh và câu "không tài trợ, bảo trợ hoặc xác nhận" vẫn giữ nguyên.

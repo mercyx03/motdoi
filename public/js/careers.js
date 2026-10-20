@@ -233,7 +233,7 @@
     var need = Math.min(c.edu >= 99 ? 5 : c.edu || 0, 7), m = EDT[l.edu] / EDT[need];
     m = U.clamp(m, 0.85, c.edu >= 5 ? 1.32 : 1.12) * (E.certBonus ? E.certBonus(l, c) : 1);
     if (l.edu >= 5 && c.cat !== 'state' && c.cat !== 'uniform') m *= 1 + ((l.uniTier || 1) - 1) * 0.5;
-    return m;
+    return Math.min(m, 1.4); // v7.1: học vấn, trường danh tiếng, chứng chỉ cộng lại tối đa ×1,4
   }
   function monthlyEst(l, id, rank) {
     var c = CAR[resolveJob(id)], rk = rank || 0;
@@ -436,7 +436,7 @@
       J0.nz = (J0.nz || 0) * 0.5 + U.normal(r) * 0.5;
       J0.sen = (J0.sen || 0) + 1;
       var noise = Math.exp(J0.nz * c.sigma * (c.sigma >= 0.4 ? 0.9 : c.sec === 'formal' ? 0.25 : 0.5));
-      var senior = 1 + Math.min(10, J0.sen - 1) * 0.02;
+      var senior = 1 + Math.min(12, J0.sen - 1) * 0.01; // v7.1: thâm niên tối đa +12%
       inc = c.vn[rk] * 12 * scale(l, c, c.vn[rk]) * eduM * qM * focM * (E.athletePay && /^(vdv|tuyen_thu_es|ky_thu)$/.test(c.id) ? E.athletePay(l, rk) : c.id === 'vdv' && E.sportPay ? E.sportPay(l, rk) : 1) * J0.k * noise * senior;
       if (c.id === 'tuyen_thu_es' && E.esportsIncome) inc = E.esportsIncome(l, inc, r, log);
       // vừa được thăng chức thì lương năm sau không thể thấp hơn trước; nghề ổn định không tự dưng tụt lương
@@ -454,6 +454,8 @@
         var pp = c.ladder ? (l.job.rank >= 7 ? 0.04 + (l.st.kno - 70) / 300 : 0.85 - (l.karma < -20 ? 0.4 : 0)) :
           (c.promo || 0.2) + (l.st.kno - 50) / 250 + (focus === 'work' ? 0.12 : focus === 'balance' ? 0.06 : 0) + ((l.tr && l.tr.amb) - 50) / 300 + (l.talent === 'ăn nói' ? 0.04 : 0) - l.job.rank * 0.06 +
           (l.flags.eliteBoost && l.flags.eliteBoost === c.id ? 0.3 : 0); // v2.5: con nhà có "ô dù" thăng tiến nhanh hơn
+        // v7.1: tháp thăng tiến — càng lên cao càng ít chỗ; bậc cao nhất chỉ dành cho số ít (trước đây ~43% người 45 tuổi đã ở bậc cao nhất)
+        if (!c.ladder) { var L1 = Math.max(1, c.t.length - 1), fr = (l.job.rank + 1) / L1; pp = Math.min(0.45, pp) * (0.62 - 0.5 * Math.pow(fr, 1.4)) * (c.cat === 'farm' ? 0.35 : 1); }
         if (r() < pp) {
           l.job.rank++; l.job.yrs = 0; l.job.rankSince = l.age + 1; l.job.rankTracked = l.job.rank;
           if (inc > 0 && !c.fame) { l.job.floor = inc * (1.08 + r() * 0.1); l.job.floorRk = Math.min(l.job.rank, c.vn.length - 1); } // v3.0: thăng chức là tăng lương
