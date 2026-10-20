@@ -1840,8 +1840,9 @@
       else if (r() < qBase(p.sex === 'M' ? life.mortM : life.mortF, p.age)) {
         log((partnerWord(life, p) === 'người bạn đời' ? 'Người bạn đời ' : U.cap(partnerWord(life, p)) + ' ') + p.name + ' qua đời ở tuổi ' + p.age + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(p.age, r)) + '.', 'bad');
         H.mem(life, 'Ngày tiễn ' + p.name + ' về với đất — một nửa của bạn đã đi xa.', 6);
-        life.partner = null;
+        life.partner = null; p.alive = false; p.died = a;
         if (p.status !== 'dating') life.widowed++; else life.flags.lateDating = p.name;
+        if (E.personDied) E.personDied(life, p, a); // v7.2: bạn thân / người cũ cùng là người này cũng được ghi là đã mất
         st.hap -= 18; st.hea -= 4;
       }
     }

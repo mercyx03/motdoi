@@ -1,3 +1,73 @@
+## v7.2.0 — Người đã mất không "sống lại", nghề nở sớm, tính cách bố mẹ, drama gia đình và drama khắp nơi
+
+- **Sửa lỗi người đã mất vẫn "sống" (theo góp ý của người chơi):**
+  - Tỏ tình với bạn thân, hai người thành đôi, rồi người yêu qua đời: trước đây bạn thân ấy vẫn "còn sống" trong mục Mối quan hệ, vẫn hẹn đi chơi, vẫn hỏi vay tiền. Nay khi người yêu / bạn đời qua đời, bản ghi bạn thân cũng được ghi là đã mất.
+  - "Liên lạc lại với người cũ" không còn gợi ý người đã mất, nên không còn chuyện quay lại hay tái hôn với người đã khuất.
+  - Ngược lại, bạn thân đang là người yêu / vợ / chồng mà qua đời (tuổi già, tai nạn) thì bạn cũng mất người yêu (tính là góa nếu đã cưới).
+  - Người yêu cũ là bạn thân mà sau này qua đời cũng được xóa khỏi danh sách người cũ.
+  - Bản lưu cũ đã dính lỗi được tự dọn lại theo nhật ký.
+  - Tên người lạ (bạn mới, người quen) không còn trùng tên người trong nhà. Trước đây có lúc một "bạn thân mới" trùng tên đứa con gái vừa sinh.
+  - Đã quét 1.500 đời mô phỏng: không còn dòng nhật ký nào nhắc người đã mất như còn sống.
+- **Nghề nở sớm:**
+  - Người có năng khiếu bóng đá, bơi, điền kinh, thể dục dụng cụ, cầu lông, bóng bàn, quần vợt, bóng rổ, bóng chuyền được học viện / câu lạc bộ mời ký hợp đồng đào tạo từ 15 tuổi (ví dụ Học viện PVF, HAGL – JMG, lò Sông Lam Nghệ An…).
+  - Người chơi game giỏi được đội esports mời vào đội trẻ từ 16 tuổi. Nghề tuyển thủ esports trước đây khóa đến 18 tuổi.
+  - Bố mẹ / người giám hộ ký thay. Bạn học văn hóa hệ giáo dục thường xuyên ngay trong học viện, phần lớn lấy được bằng THPT.
+  - Có thể chọn "học xong cấp ba rồi mới lên đội": đội giữ lời hẹn và gọi lại sau khi tốt nghiệp.
+  - Thêm việc "Đi thử việc ở học viện / đội trẻ" để chủ động xin. Số người có năng khiếu game trở thành tuyển thủ chuyên nghiệp tăng khoảng gấp ba.
+- **Tính cách bố mẹ — 16 kiểu, bố và mẹ mỗi người một kiểu:**
+  - nghiêm khắc, chiều con, bao bọc, gia trưởng, hay so sánh "con nhà người ta", kỳ vọng cao, cởi mở, nóng tính;
+  - tằn tiện, sĩ diện, tin bói toán, cuồng công việc, hài hước, hay lo, thiên vị, ấm áp.
+  - Tính cách ảnh hưởng chỉ số và lời kể tuổi thơ, hiện ở giấy khai sinh, trang gia đình và bối cảnh xuất phát.
+  - Tình huống riêng theo tính cách:
+    - bị so sánh với con nhà người ta;
+    - bố mẹ ép chọn ngành thi đại học;
+    - bố mẹ đi xem bói, cấm cưới vì "không hợp tuổi";
+    - đám cưới phải làm thật to cho bằng họ hàng;
+    - di chúc thiên vị.
+- **Drama gia đình ở mọi hoàn cảnh:**
+  - Nhà giàu:
+    - anh chị em tranh giành tài sản khi bố mẹ còn sống (đứng về phía bố mẹ, đòi phần, mời luật sư lập di chúc, đứng ngoài);
+    - kiện nhau ra tòa chia di sản;
+    - tranh ghế chủ tịch tập đoàn gia đình.
+  - Mọi gia đình:
+    - mảnh đất hương hỏa: giữ, bán hay mua lại;
+    - anh chị em đùn đẩy việc nuôi bố mẹ già;
+    - anh chị em nợ nần (cờ bạc, tín dụng đen), chủ nợ đến nhà;
+    - họ hàng mượn sổ đỏ đi thế chấp;
+    - bố mẹ cãi nhau, ly thân;
+    - con riêng của bố xuất hiện ở đám tang đòi chia di sản;
+    - di chúc thiên vị làm thay đổi phần chia tài sản.
+- **Drama ở khắp nơi — ngẫu nhiên, tỉ lệ thấp:** trung bình mỗi đời gặp khoảng 3 lần, khoảng 1 trên 10 đời không gặp lần nào.
+  - Công sở:
+    - bị đồng nghiệp cướp công;
+    - sếp đổ lỗi;
+    - tin đồn tình cảm nơi công sở;
+    - chọn phe trước đợt bổ nhiệm trưởng phòng;
+    - gửi nhầm tin nói xấu sếp vào nhóm chat chung;
+    - nhân viên mới "con ông cháu cha";
+    - danh sách cắt giảm (giữ mình hay nhường người đang nuôi con nhỏ);
+    - tiệc tất niên bị ép uống;
+    - bạn thân thành sếp;
+    - bị sếp quấy rối (có thể báo phòng nhân sự / công đoàn).
+  - Hàng xóm, chung cư, phòng trọ:
+    - hàng xóm hát karaoke đến nửa đêm;
+    - lấn ranh giới đất;
+    - chó thả rông;
+    - họp cư dân vì phí quản lý, quỹ bảo trì, chỗ đỗ xe, nhà trên thấm nước;
+    - bạn cùng phòng trọ trốn tiền điện nước.
+  - Mạng xã hội:
+    - bị "bóc phốt";
+    - cãi nhau trong hội nhóm;
+    - bài đăng bất ngờ lan truyền vì một việc tử tế.
+  - Trường học:
+    - bị nhóm bạn tẩy chay;
+    - bị nghi gian lận trong giờ kiểm tra.
+  - Bạn bè, đường phố:
+    - họp lớp so bì;
+    - người giữ quỹ du lịch của hội bạn làm mất tiền;
+    - va quẹt xe giờ tan tầm.
+- Bộ dò lỗi logic `npm run audit` bớt báo nhầm (lễ thôi nôi "sau này làm thầy giáo", trễ hạn vay mua nhà, quân nhân nghỉ hưu trước tuổi đúng chế độ).
+
 ## v7.1.0 — Xuất thân mồ côi, kiếm tiền khó hơn
 
 - **Xuất thân mồ côi ngẫu nhiên:**

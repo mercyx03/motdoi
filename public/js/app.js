@@ -372,6 +372,7 @@
       (f.orphan && f.orphan.adopted == null ? fact('Bố mẹ', f.orphan.unknown ? 'Không rõ tung tích' : 'Đã mất khi bạn còn đỏ hỏn') + fact('Người nuôi dưỡng', esc(U.cap(f.orphan.carer))) : // v7.1: xuất thân mồ côi
       fact('Tuổi bố mẹ', 'Mẹ ' + f.mAge + (f.noDad ? '' : ' · Bố ' + f.fAge)) +
       fact('Nghề của bố mẹ', 'Mẹ: ' + esc(f.mJob) + (f.noDad ? '' : '<br>Bố: ' + esc(f.fJob))) +
+      (E.parentTraitText && f.mTrait ? fact('Tính cách bố mẹ', 'Mẹ: ' + esc(E.parentTraitText(l, 'm')) + (f.noDad ? '' : '<br>Bố: ' + esc(E.parentTraitText(l, 'f')))) : '') + // v7.2
       fact('Thu nhập của mẹ', esc(money(l, f.mInc || 0)) + '/tháng') +
       (f.noDad ? '' : fact('Thu nhập của bố', esc(money(l, f.fInc || 0)) + '/tháng')) +
       fact('Thu nhập cả nhà', '<span style="color:var(--accent-2)">' + esc(money(l, (f.mInc || 0) + (f.fInc || 0), true)) + '/tháng</span>')) +
@@ -758,8 +759,8 @@
       return s;
     };
     if (f.orphan && f.orphan.adopted == null) row((f.orphan.unknown ? 'Bố mẹ ruột: không rõ tung tích' + (f.orphan.found != null ? ' (đã tìm lại được năm ' + f.orphan.found + ' tuổi)' : '') : 'Bố mẹ: đã mất khi bạn còn đỏ hỏn') + ' · người nuôi dưỡng: ' + esc(f.orphan.carer), true); // v7.1
-    else row('Mẹ: ' + esc(f.mName) + ' · ' + (f.mAlive ? (f.mAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.mJob, f.mRet, f.mLost, f.mAlive) + pinc(f.mInc, f.mInc0, f.mRet, f.mAlive), !f.mAlive);
-    if (!f.noDad && !(f.orphan && f.orphan.adopted == null)) row('Bố: ' + esc(f.fName) + ' · ' + (f.fAlive ? (f.fAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.fJob, f.fRet, f.fLost, f.fAlive) + pinc(f.fInc, f.fInc0, f.fRet, f.fAlive), !f.fAlive);
+    else row('Mẹ: ' + esc(f.mName) + ' · ' + (f.mAlive ? (f.mAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.mJob, f.mRet, f.mLost, f.mAlive) + pinc(f.mInc, f.mInc0, f.mRet, f.mAlive) + (f.mAlive && f.mTrait && E.PARENT_TRAITS ? ' · <small class="muted">' + esc(E.PARENT_TRAITS[f.mTrait].n) + '</small>' : ''), !f.mAlive);
+    if (!f.noDad && !(f.orphan && f.orphan.adopted == null)) row('Bố: ' + esc(f.fName) + ' · ' + (f.fAlive ? (f.fAge + a) + ' tuổi' : 'đã mất') + ' · ' + pjob(f.fJob, f.fRet, f.fLost, f.fAlive) + pinc(f.fInc, f.fInc0, f.fRet, f.fAlive) + (f.fAlive && f.fTrait && E.PARENT_TRAITS ? ' · <small class="muted">' + esc(E.PARENT_TRAITS[f.fTrait].n) + '</small>' : ''), !f.fAlive);
     // v2.4: từng anh chị em ruột (tên, tuổi, nghề, độ thân thiết)
     if (l.sibList && l.sibList.length) l.sibList.slice().sort(function (x, y) { return x.born - y.born; }).forEach(function (s) {
       var sa = a - s.born, w = s.born < 0 ? (s.sex === 'M' ? 'Anh trai' : 'Chị gái') : (s.sex === 'M' ? 'Em trai' : 'Em gái');

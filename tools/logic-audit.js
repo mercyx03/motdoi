@@ -23,14 +23,14 @@ for (let i = 0; i < N; i++) {
     if (a >= 1 && /^(Mẹ|Bố) (mua|nấu|dặn|ôm|cho|chở|đưa|đón|khen|mắng|gọi)/.test(t) && ((/^Mẹ/.test(t) && s.m === false && (snap[a - 1] || {}).m === false) || (/^Bố/.test(t) && s.f === false && (snap[a - 1] || {}).f === false))) add('Nhắc bố / mẹ đã mất như còn sống', tag(e));
     if (/^Con [A-ZĐ]/.test(t) && s.kids === 0 && (snap[a - 1] || {}).kids === 0) add('Nhắc con khi chưa có con', tag(e));
     if (s.p && !s.p.a && (snap[a - 1] || {}).p && !(snap[a - 1] || {}).p.a && t.indexOf(s.p.n) >= 0 && !/(qua đời|mất|tưởng nhớ|nhớ|giỗ|mộ|di ảnh|ngày xưa|ra đi|vắng|thương nhớ|kỷ niệm)/.test(t)) add('Nhắc bạn đời đã mất như còn sống', tag(e));
-    if (s.jail && (snap[a - 1] || {}).jail && /(Bắt đầu công việc mới|đi du lịch|Chuyến đi|Tổ chức đám cưới|mua (nhà|xe|ô tô))/.test(t)) add('Làm việc tự do khi đang ở tù', tag(e));
-    if (a < 6 && /(cả lớp|bài kiểm tra|giờ ra chơi|thầy giáo|bạn cùng bàn)/.test(t) && !/mẫu giáo|nhà trẻ/.test(t)) add('Chuyện trường lớp trước tuổi đi học', tag(e));
+    if (s.jail && (snap[a - 1] || {}).jail && /(Bắt đầu công việc mới|đi du lịch|Chuyến đi|Tổ chức đám cưới|(?<!vay )mua (nhà|xe|ô tô))/.test(t)) add('Làm việc tự do khi đang ở tù', tag(e));
+    if (a < 6 && /(cả lớp|bài kiểm tra|giờ ra chơi|thầy giáo|bạn cùng bàn)/.test(t) && !/mẫu giáo|nhà trẻ|Sau này làm/.test(t)) add('Chuyện trường lớp trước tuổi đi học', tag(e));
     if (/^Bắt đầu hẹn hò với/.test(t) && (snap[a - 1] || {}).p && (snap[a - 1] || {}).p.s === 'married' && (snap[a - 1] || {}).p.a && t.indexOf((snap[a - 1] || {}).p.n) < 0) add('Hẹn hò người khác khi đang có vợ / chồng', tag(e));
     if (a > 27 && /(Nhập ngũ|nhập ngũ, |Lên đường nhập ngũ|đi nghĩa vụ quân sự)/.test(t) && !/(con|cháu|bạn|anh|em|chị)/.test(t)) add('Nhập ngũ quá tuổi', tag(e));
     if (a < 18 && /(bằng lái ô tô|bằng B2|bằng B1|bằng lái xe ô tô|mua (căn hộ|nhà|ô tô))/.test(t) && !/(bố|mẹ|ông|bà|anh|chị)/i.test(t)) add('Việc của người lớn khi chưa 18', tag(e));
     if (/Tốt nghiệp đại học/.test(t) && a < 19) add('Tốt nghiệp đại học quá sớm', tag(e));
     if (/(Bố|Mẹ) qua đời ở tuổi (d+)/.test(t) && +RegExp.$2 > 112) add('Bố mẹ sống quá lâu', tag(e));
-    if (/lương hưu/.test(t) && a < 50 && !/(bố|mẹ|Bố|Mẹ|ông|bà|vợ|chồng|BHXH|đóng|đủ 15 năm|sẽ có)/.test(t)) add('Nhận lương hưu khi còn trẻ', tag(e));
+    if (/lương hưu/.test(t) && a < 50 && !/(bố|mẹ|Bố|Mẹ|ông|bà|vợ|chồng|BHXH|đóng|đủ 15 năm|sẽ có)/.test(t) && !(a >= 48 && /trước tuổi theo chế độ|lương hưu & con cái/.test(t))) add('Nhận lương hưu khi còn trẻ', tag(e));
     if (/undefined|NaN|\[object|null(?![\p{L}])/u.test(t)) add('Lời kể lỗi dữ liệu', tag(e));
     if (/  |\s[,.]|\.\.(?!\.)/.test(t) && !/…/.test(t)) add('Dấu câu / khoảng trắng thừa', tag(e));
   });
