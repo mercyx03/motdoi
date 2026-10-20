@@ -13,7 +13,7 @@
   function nw(l) { return E.netWorth ? E.netWorth(l) / (l.base || 1) : 0; }
   function marriedNow(l) { return !!(l.partner && l.partner.status === 'married' && l.partner.alive !== false); }
   // ghi nhận vài mốc trong đời để chấm thành tựu
-  E.HOOKS.year.unshift(function (l, r, log, a) {
+  E.HOOKS.year.unshift(E.achYear93 = function (l, r, log, a) {
     if (!l.alive) return;
     var F = l.flags;
     if (l.veh === 'ô tô' && a < 25) F.carYoung = true;
@@ -35,6 +35,7 @@
     ['fc_galaxy', 'FC Galaxy', ['Anh Tú Atus'], 'Anh Tú Atus'],
     ['fc_goose', 'Goose', ['HURRYKNG'], 'HURRYKNG'],
     ['fc_dopamine', 'Dopamine', ['Dương Domic'], 'Dương Domic'],
+    ['fc_embes', 'Embes', ['Negav'], 'Negav'],
     ['fc_sonic', 'SONIC', ['JSOL'], 'JSOL'],
     ['fc_xa_xa', 'Xa Xa', ['Pháp Kiều'], 'Pháp Kiều'],
     ['fc_cuu_co_canh', 'Cừu Có Cánh', ['Captain Boy'], 'Captain Boy'],

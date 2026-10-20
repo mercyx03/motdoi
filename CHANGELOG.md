@@ -1,3 +1,16 @@
+## v7.4.1 — Sửa lỗi khi định cư nước ngoài, thêm thành tựu Embes
+
+- **Bảo lãnh bố mẹ sang nước ngoài ở cùng:** không còn các lựa chọn "gửi tiền về cho bố mẹ", "nhà bố mẹ ở quê bị dột / xuống cấp", "ai nuôi bố mẹ", "bố mẹ ở một mình", hay bảo lãnh lại lần nữa. Tết đón cùng bố mẹ ở xứ người.
+- **Định cư nước ngoài mà bố mẹ còn ở quê:** Tết là "Tết xa nhà" thay vì "về quê ăn Tết".
+- **Bạn thân nhớ nơi quen nhau:**
+  - Đang ở nước ngoài thì không còn hẹn bạn thân ở Việt Nam đi ăn, đi cà phê, chạy vào viện trong đêm. Thay vào đó là nhắn tin, gọi video.
+  - Bạn mới quen ở nước ngoài thì gặp được ở nước ngoài.
+  - Về nước thì gặp lại bạn cũ.
+- **Anh chị em ở quê:** đang ở nước ngoài thì gọi video cho cả nhà thay vì "rủ cả nhà tụ họp ăn một bữa", "đi du lịch chung".
+- **Cặp đôi đồng giới ở nước ngoài nhận con nuôi:** theo luật nước đang sống. Ở Mỹ, Canada, phần lớn Tây Âu, Úc, Đài Loan… hai người được cùng đứng tên; ở Nhật, Hàn… một người đứng tên. Trước đây vẫn ghi "ở Việt Nam, một người đứng tên".
+- Thêm thành tựu fan cứng **Embes**: thần tượng Negav từ 3 năm. Tổng cộng 95 thành tựu fan cứng.
+- Người yêu mới không còn trùng tên y hệt người yêu / bạn đời đã mất, người thân, bạn bè, người yêu cũ (hay gặp ở nước có kho tên nhỏ).
+
 ## v7.4.0 — Ứng dụng hẹn hò theo từng nước, điều chỉnh lương
 
 - **Ứng dụng hẹn hò đúng với từng nước.** Trước đây nước nào cũng hiện Tinder, Bumble, Hinge, Facebook Hẹn hò, nhóm Zalo như Việt Nam. Nay mỗi nước một bộ app phổ biến thật, tham khảo bảng xếp hạng của data.ai, adjoe và các bảng xếp hạng app hẹn hò ở Hàn Quốc, Nhật Bản, Trung Quốc:

@@ -67,6 +67,7 @@
     if (l.partner) a.push(l.partner.name);
     people(l).forEach(function (x) { a.push(x.name); });
     ((l.flags && l.flags.exList) || []).forEach(function (x) { a.push(x.name); });
+    ((l.flags && l.flags.deadPartners) || []).forEach(function (x) { a.push(x.n); }); // v7.4.1: người yêu / bạn đời đã mất
     return a;
   }
   H.stranger = function (l, r, sex) {
