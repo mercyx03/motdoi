@@ -23,7 +23,7 @@
 
   // Giữ đủ 33 / 34 thành viên ngay trong dữ liệu chung dùng bởi mọi màn chọn.
   var cast = E.SHOWS.filter(function (s) { return s.k === 'atvncg24'; })[0];
-  if (cast && cast.m.indexOf('Phan Đinh Tùng') < 0) cast.m.push('Phan Đinh Tùng');
+  if (cast && cast.m.indexOf('Phan Đình Tùng') < 0) cast.m.push('Phan Đình Tùng');
   E.SC('concert_luu_tru', {
     title: 'Concert lưu trữ',
     prep: function (l, r, a) { return { name: a && typeof a.name === 'string' && a.name.trim() ? a.name : 'concert chương trình truyền hình' }; },

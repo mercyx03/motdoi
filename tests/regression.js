@@ -2912,6 +2912,12 @@ section('70. Bản 7.3.0: đời con giữ đúng nghề bố mẹ và anh chị
   const fan = E.createLife({ mode: 'vn', seed: 70600 }); fan.age = 20; fan.bias = { n: 'Ánh Sáng AZA', show: 'Em xinh', pre: 'em xinh' };
   for (let i = 0; i < 3; i++) { E.HOOKS.year[0](fan, () => .5, () => { }, fan.age); fan.age++; }
   ok(E.achievementsOf(fan).some(a => a.t === 'Bóng đèn'), 'thần tượng Aza Ánh Sáng 3 năm: thành tựu Bóng đèn');
+  // v7.3.1: danh sách FC theo góp ý, so khớp đúng tên nghệ sĩ
+  ok(!E.ACHIEVEMENTS.some(a => a.id === 'fc_embes') && T.includes('Bạn Nhạc') && T.includes('FC Galaxy') && T.includes('Động Cam Sành - MyMuse') && T.includes('SeaSea') && T.includes('Tóc con'), 'cập nhật tên FC theo góp ý (bỏ Negav, Bạn Nhạc, FC Galaxy, Động Cam Sành - MyMuse…)');
+  ok(E.FAN_CLUBS.length >= 90, 'đủ ' + E.FAN_CLUBS.length + ' thành tựu fan cứng');
+  const atus = E.createLife({ mode: 'vn', seed: 70601 }); atus.age = 20; atus.bias = { n: 'Anh Tú Atus', show: 'Anh trai', pre: 'anh trai' };
+  for (let i = 0; i < 3; i++) { E.HOOKS.year[0](atus, () => .5, () => { }, atus.age); atus.age++; }
+  const got = E.achievementsOf(atus).map(a => a.t); ok(got.includes('FC Galaxy') && !got.includes('Lover'), 'thần tượng Anh Tú Atus không bị tính nhầm là fan Anh Tú (Voi)');
 }
 function isVNx(l) { return E.isVN(l); }
 

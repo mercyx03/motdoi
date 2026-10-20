@@ -1,3 +1,17 @@
+## v7.3.1 — Bổ sung tên FC cho thành tựu fan cứng
+
+- Thành tựu fan cứng tăng từ 26 lên 94, theo danh sách tên FC người chơi cung cấp. Thần tượng nghệ sĩ đó từ 3 năm thì đạt thành tựu.
+  - **Anh trai "say hi" mùa 1:** SeaSea (Erik), Nhím (Song Luân), Oil (Phạm Anh Duy), Lover (Anh Tú – Voi), Love (Phạm Đình Thái Ngân), Wink (Đỗ Phú Quí), Smilou (Lou Hoàng), Chun Fam (Quang Trung), Citisan (Công Dương), Ginious (Gin Tuấn Kiệt), Lil Lì (Nicky), Híp (Quân A.P), Deers (Vũ Thịnh), Alo Family (Ali Hoàng Dương), Weanie (Wean Lê), FC Tage (Tage).
+  - **Anh trai "say hi" mùa 2:** Riker (Karik), Gillianaire (GILL), Cổ Đông (Mason Nguyễn), Mumble Bee (Robber), 2Nammaste (Nhâm Phương Nam), Khu ổ chuột (Jaysonlei), Bon Bon (Jey B), Voi Con (Vương Bình), ICON (LOHAN), Kho Báu (Cody Nam Võ), Bột Ngọt (Bùi Duy Ngọc), SONATA (Đỗ Nam Sơn), Lớp Du (Phúc Du), Vịt Con (Ryn Lee), Tổ Vẹt (Rio), BFF (Ngô Kiến Huy), Ocean (OGENUS), ANDME (Dillan Hoàng Phan), Tezdy (TEZ), Pillow (Khôi Vũ), ONE (OTIS), PanSun (Hải Nam).
+  - **Em xinh "say hi":** SALTY (Muộii), Lovely (LyLy), Chaubaus (Châu Bùi), Myllions (Mỹ Mỹ), Shinner (Quỳnh Anh Shyn), Peach Jam (Đào Tử A1J), Lạc Đà (Han Sara), Tổ Cò (Phương Mỹ Chi), Little Ly (Phương Ly), Halo (Maiquinn), Thor (Lamoon), Tiên Đôi (Tiên Tiên), Hippies (Lâm Bảo Ngọc), Millie (Vũ Thảo My), Moro (Juky San), Cá Vợ (52Hz), Dâu Tây kiukiu (Danmy), Bông hoa nhỏ (Bích Phương), Bomer (Pháo NorthSide), Chít (Chi Xê), Lahu (Ngô Lan Hương), EMBER (Yeolan), Vàng (Hoàng Duyên), FC Bảo Anh (Bảo Anh).
+  - **Anh trai vượt ngàn chông gai:** BBQ (BB Trần), Homie (Binz), Carrot (Jun Phạm), Khách iu (Bùi Công Nam), Zhoufam (Duy Khánh), Tóc con (Phan Đình Tùng), Pifam (Tăng Phúc).
+- **Sửa tên FC:** Hoàng Dũng thành Bạn Nhạc, Anh Tú Atus thành FC Galaxy, Orange thành Động Cam Sành - MyMuse.
+- Bỏ thành tựu fan cứng của Negav.
+- Sửa tên "Phan Đinh Tùng" thành Phan Đình Tùng trong đội hình Anh trai vượt ngàn chông gai 2024.
+- Negav vẫn có trong đội hình Anh trai "say hi" mùa 1, 2; chỉ bỏ thành tựu fan cứng.
+- Người trên 65 tuổi không còn được gợi ý thú vui tập gym, đá bóng.
+- So khớp đúng tên nghệ sĩ: thần tượng Anh Tú Atus không còn bị tính nhầm là fan của Anh Tú (Voi).
+
 ## v7.3.0 — Đời con đúng gia đình, bảng Giới thiệu, thành tựu mới
 
 - **Sửa lỗi "sống tiếp đời con":**

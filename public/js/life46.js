@@ -213,7 +213,7 @@
   function A_(n, b) { return { n: n, b: b }; }
   if (CC) {
     var cast24 = CC.show.shows.filter(function (s) { return s.k === 'atvncg24'; })[0];
-    if (cast24 && cast24.m.indexOf('Phan Đinh Tùng') < 0) cast24.m.push('Phan Đinh Tùng');
+    if (cast24 && cast24.m.indexOf('Phan Đình Tùng') < 0) cast24.m.push('Phan Đình Tùng');
     CC.kr.n = 'Kpop Hàn Quốc';
     CC.vn.a = [A_('Sơn Tùng M-TP', 1994), A_('Jack - J97', 1997), A_('Soobin Hoàng Sơn', 1992), A_('Mỹ Tâm', 1981), A_('Hà Anh Tuấn', 1984), A_('Đen Vâu', 1989), A_('Hồ Ngọc Hà', 1984), A_('Noo Phước Thịnh', 1988), A_('Hoàng Thùy Linh', 1988), A_('Đông Nhi', 1988), A_('Tóc Tiên', 1989), A_('Vũ.', 1995), A_('Hòa Minzy', 1995), A_('AMEE', 2000), A_('MONO', 2000), A_('Văn Mai Hương', 1994), A_('Phan Mạnh Quỳnh', 1990), A_('Đàm Vĩnh Hưng', 1971), A_('Lệ Quyên', 1981), A_('Hoàng Dũng', 1995)];
     CC.kr.a = [A_('BTS', 1995), A_('BLACKPINK', 1996), A_('TWICE', 1997), A_('SEVENTEEN', 1997), A_('Stray Kids', 2000), A_('NewJeans', 2005), A_('aespa', 2001), A_('IVE', 2004), A_('(G)I-DLE', 1998), A_('LE SSERAFIM', 2002), A_('ENHYPEN', 2003), A_('TOMORROW X TOGETHER', 2001), A_('ATEEZ', 1999), A_('ITZY', 2001), A_('NCT 127', 1997), A_('EXO', 1992), A_('BIGBANG', 1988), A_('Red Velvet', 1995), A_('BABYMONSTER', 2006), A_('RIIZE', 2002), A_('IU', 1993), A_('Hwasa', 1995), A_('PSY', 1977), A_('G-Dragon', 1988)];

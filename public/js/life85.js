@@ -32,7 +32,7 @@
   function group(l, reg) { var g = reg || liveRegion(l); if (!g) return null; return P[g + '_' + (l.urban ? 'u' : 'r')] || P[g + '_r'] || P[g + '_u'] || null; }
   function wpick(r, list, skip) { var a = (list || []).filter(function (x) { return !skip || skip.indexOf(x[0]) < 0; }); if (!a.length) return null; var t = a.reduce(function (s, x) { return s + x[1]; }, 0), z = r() * t; for (var i = 0; i < a.length; i++) { z -= a[i][1]; if (z <= 0) return a[i][0]; } return a[a.length - 1][0]; }
   function band(a) { return a < 30 ? 'y' : a < 45 ? 'm' : a < 60 ? 'o' : 's'; }
-  function hobbies(g, age) { if (!g) return []; var b = g.hobAge && g.hobAge[band(age)]; return b && b.length >= 6 ? b : g.hob; }
+  function hobbies(g, age) { if (!g) return []; var b = g.hobAge && g.hobAge[band(age)], L = b && b.length >= 6 ? b : g.hob; return age > 65 ? L.filter(function (x) { return !/gym|bóng đá|đá bóng|đá banh|bóng rổ|leo núi|boxing|võ thuật|nhảy hiện đại|chạy marathon/i.test(Array.isArray(x) ? x[0] : x); }) : L; } // v7.3.1: người già không được gợi ý tập gym, đá bóng
   function low(s) { return s ? s.charAt(0).toLowerCase() + s.slice(1) : ''; }
   // nghề trong dữ liệu là danh từ chỉ người ("Tiểu thương chợ", "Bác sĩ") hoặc hoạt động ("Trồng cà phê", "Kinh doanh online")
   function jobPhrase(j) { j = low(j); if (/^nghỉ hưu/.test(j)) return 'đã ' + j; return /^(trồng|kinh doanh|đang|nội trợ|làm|buôn|bán|chăn|nuôi|đánh|học)/.test(j) ? j : 'làm ' + j; }
