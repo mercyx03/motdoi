@@ -19,22 +19,22 @@
     ['ve_chai', ['người nhặt ve chai', 'chủ vựa ve chai'], [3.5, 14], [6], { cat: 'poor', sec: 'inf', w: 0.6 }],
     ['ve_so', ['người bán vé số dạo'], [4], [], { cat: 'poor', sec: 'inf', vn: 1, w: 0.6 }],
     ['ban_rong', ['bán hàng rong', 'chủ sạp chợ'], [5, 12], [5], { cat: 'poor', sec: 'inf', w: 1 }],
-    ['xe_om', ['xe ôm truyền thống'], [6], [], { cat: 'poor', sec: 'inf', sex: [1.5, 0.1], haz: [0.03, 0.002, 'tai nạn giao thông'] }],
+    ['xe_om', ['xe ôm truyền thống'], [7], [], { cat: 'poor', sec: 'inf', sex: [1.5, 0.1], haz: [0.03, 0.002, 'tai nạn giao thông'] }],
     ['tx_cn', ['tài xế xe máy công nghệ', 'tài xế ô tô công nghệ'], [9, 15], [3], { cat: 'poor', sec: 'inf', edu: 2, sex: [1.6, 0.4], haz: [0.03, 0.0015, 'tai nạn giao thông'], tag: 'driver' }],
-    ['shipper', ['shipper', 'trưởng nhóm giao hàng'], [9, 13], [3], { cat: 'poor', sec: 'inf', edu: 1, sex: [1.4, 0.5], haz: [0.03, 0.0012, 'tai nạn giao thông'], tag: 'driver' }],
+    ['shipper', ['shipper', 'trưởng nhóm giao hàng'], [10, 14], [3], { cat: 'poor', sec: 'inf', edu: 1, sex: [1.4, 0.5], haz: [0.03, 0.0012, 'tai nạn giao thông'], tag: 'driver' }],
     ['phu_ho', ['phụ hồ', 'thợ hồ', 'cai thầu xây dựng', 'chủ thầu xây dựng'], [8.5, 12, 22, 50], [2, 5, 6], { cat: 'poor', sec: 'inf', sex: [1.6, 0.3], haz: [0.03, 0.002, 'tai nạn lao động'] }],
-    ['giup_viec', ['người giúp việc'], [7], [], { cat: 'poor', sec: 'inf', sex: [0.05, 1.3] }],
-    ['bao_ve', ['nhân viên bảo vệ', 'đội trưởng bảo vệ'], [7, 10], [5], { cat: 'poor', sec: 'formal', edu: 1, sex: [1.3, 0.2] }],
-    ['phuc_vu', ['phục vụ quán ăn', 'quản lý nhà hàng'], [6, 15], [4], { cat: 'poor', sec: 'inf', edu: 1 }],
-    ['nong', ['làm nông', 'chủ trang trại'], [4, 18], [10], { cat: 'farm', sec: 'farm', rural: 1 }],
+    ['giup_viec', ['người giúp việc'], [8.5], [], { cat: 'poor', sec: 'inf', sex: [0.05, 1.3] }],
+    ['bao_ve', ['nhân viên bảo vệ', 'đội trưởng bảo vệ'], [8, 11], [5], { cat: 'poor', sec: 'formal', edu: 1, sex: [1.3, 0.2] }],
+    ['phuc_vu', ['phục vụ quán ăn', 'quản lý nhà hàng'], [7, 15], [4], { cat: 'poor', sec: 'inf', edu: 1 }],
+    ['nong', ['làm nông', 'chủ trang trại'], [5, 18], [10], { cat: 'farm', sec: 'farm', rural: 1 }],
     ['ngu_dan', ['bạn thuyền đánh cá', 'thuyền trưởng', 'chủ tàu cá'], [7, 12, 30], [4, 6], { cat: 'farm', sec: 'inf', coast: 1, sex: [1.5, 0.05], haz: [0.03, 0.004, 'bão biển, mất tích ngoài khơi'] }],
     ['phu_giup', ['phụ giúp gia đình'], [2], [], { cat: 'other', hidden: 1, sec: 'inf' }],
     // --- công nhân & thợ ---
-    ['cong_nhan', ['công nhân', 'tổ trưởng', 'chuyền trưởng', 'quản đốc'], [8, 10, 13, 20], [3, 3, 5], { cat: 'worker', sec: 'formal', edu: 1, w: 2.2 }],
-    ['tho_may', ['thợ may', 'chủ tiệm may'], [7, 14], [6], { cat: 'worker', sec: 'inf', edu: 1, sex: [0.4, 1.3] }],
-    ['tho_dien', ['thợ điện', 'kỹ thuật viên điện', 'đội trưởng kỹ thuật'], [9, 13, 18], [3, 5], { cat: 'worker', sec: 'formal', edu: 4, sex: [1.5, 0.2] }],
+    ['cong_nhan', ['công nhân', 'tổ trưởng', 'chuyền trưởng', 'quản đốc'], [9.5, 11.5, 14, 20], [3, 3, 5], { cat: 'worker', sec: 'formal', edu: 1, w: 2.2 }],
+    ['tho_may', ['thợ may', 'chủ tiệm may'], [9, 15], [6], { cat: 'worker', sec: 'inf', edu: 1, sex: [0.4, 1.3] }],
+    ['tho_dien', ['thợ điện', 'kỹ thuật viên điện', 'đội trưởng kỹ thuật'], [10, 14, 20], [3, 5], { cat: 'worker', sec: 'formal', edu: 4, sex: [1.5, 0.2] }],
     ['tho_sua_xe', ['thợ phụ sửa xe', 'thợ sửa xe', 'chủ tiệm sửa xe'], [5, 10, 22], [2, 5], { cat: 'worker', sec: 'inf', edu: 1, sex: [1.6, 0.1] }],
-    ['tho_han', ['thợ hàn', 'thợ hàn bậc cao'], [10, 16], [5], { cat: 'worker', sec: 'formal', edu: 4, sex: [1.5, 0.1], haz: [0.02, 0.001, 'tai nạn lao động'] }],
+    ['tho_han', ['thợ hàn', 'thợ hàn bậc cao'], [11, 17], [5], { cat: 'worker', sec: 'formal', edu: 4, sex: [1.5, 0.1], haz: [0.02, 0.001, 'tai nạn lao động'] }],
     ['ky_thuat_vien', ['kỹ thuật viên', 'trưởng ca', 'trưởng bộ phận kỹ thuật'], [10, 15, 25], [3, 5], { cat: 'worker', sec: 'formal', edu: 4 }],
     ['dau_bep', ['phụ bếp', 'đầu bếp', 'bếp trưởng'], [6, 12, 25], [2, 6], { cat: 'worker', sec: 'inf', edu: 1 }],
     ['quan_net', ['nhân viên quán net', 'chủ quán net'], [5, 15], [5], { cat: 'worker', sec: 'inf', edu: 1, talent: 'game', w: 0.6 }],
@@ -71,10 +71,10 @@
     ['sale_mp', ['nhân viên bán mỹ phẩm', 'quản lý cửa hàng mỹ phẩm'], [7, 14], [4], { cat: 'sale', sec: 'formal', edu: 2, sex: [0.4, 1.5] }],
     ['sale_b2b', ['nhân viên kinh doanh', 'trưởng nhóm kinh doanh', 'trưởng phòng kinh doanh', 'giám đốc kinh doanh'], [10, 18, 35, 70], [2, 3, 4], { cat: 'sale', sec: 'formal', edu: 3, sigma: 0.35 }],
     // --- văn phòng ---
-    ['van_phong', ['thực tập sinh', 'nhân viên văn phòng', 'trưởng nhóm', 'trưởng phòng', 'giám đốc'], [3, 11, 18, 30, 60], [1, 3, 4, 5], { cat: 'office', sec: 'formal', edu: 5 }],
-    ['ke_toan', ['thực tập sinh kế toán', 'kế toán viên', 'kế toán tổng hợp', 'kế toán trưởng', 'giám đốc tài chính'], [3, 10, 15, 25, 60], [1, 3, 4, 6], { cat: 'office', sec: 'formal', edu: 5, major: 'eco' }],
+    ['van_phong', ['thực tập sinh', 'nhân viên văn phòng', 'trưởng nhóm', 'trưởng phòng', 'giám đốc'], [5, 11, 18, 30, 60], [1, 3, 4, 5], { cat: 'office', sec: 'formal', edu: 5 }],
+    ['ke_toan', ['thực tập sinh kế toán', 'kế toán viên', 'kế toán tổng hợp', 'kế toán trưởng', 'giám đốc tài chính'], [5, 11, 16, 25, 60], [1, 3, 4, 6], { cat: 'office', sec: 'formal', edu: 5, major: 'eco' }],
     ['ngan_hang', ['giao dịch viên ngân hàng', 'chuyên viên tín dụng', 'trưởng phòng ngân hàng', 'giám đốc chi nhánh ngân hàng'], [10, 16, 35, 70], [3, 4, 6], { cat: 'office', sec: 'formal', edu: 5, major: 'eco' }],
-    ['marketing', ['thực tập sinh marketing', 'chuyên viên marketing', 'trưởng phòng marketing', 'giám đốc marketing'], [3, 12, 30, 60], [1, 4, 5], { cat: 'office', sec: 'formal', edu: 5, majors: ['eco', 'art', 'law'] }],
+    ['marketing', ['thực tập sinh marketing', 'chuyên viên marketing', 'trưởng phòng marketing', 'giám đốc marketing'], [5, 13, 30, 60], [1, 4, 5], { cat: 'office', sec: 'formal', edu: 5, majors: ['eco', 'art', 'law'] }],
     ['dev', ['thực tập sinh lập trình', 'lập trình viên', 'lập trình viên cấp cao', 'trưởng nhóm kỹ thuật', 'giám đốc công nghệ'], [5, 18, 38, 60, 100], [1, 3, 3, 5], { cat: 'office', sec: 'formal', edu: 5, major: 'it' }],
     ['ky_su', ['kỹ sư', 'kỹ sư chính', 'giám đốc dự án'], [12, 22, 45], [4, 6], { cat: 'office', sec: 'formal', edu: 5, major: 'it' }],
     ['ky_su_xd', ['kỹ sư xây dựng', 'chỉ huy trưởng công trình', 'giám đốc dự án xây dựng'], [11, 22, 45], [4, 6], { cat: 'office', sec: 'formal', edu: 5, major: 'it', haz: [0.01, 0.0002, 'tai nạn ở công trường'] }],
@@ -86,9 +86,9 @@
     ['thiet_ke', ['thiết kế đồ họa', 'thiết kế chính', 'giám đốc sáng tạo'], [9, 18, 40], [3, 6], { cat: 'office', sec: 'formal', edu: 4, majors: ['art', 'it'], talent: 'hội họa', soft: 1 }],
     ['luat_su', ['trợ lý luật sư', 'luật sư', 'luật sư thành viên', 'luật sư điều hành hãng luật'], [7, 20, 45, 90], [2, 5, 6], { cat: 'office', sec: 'formal', edu: 5, major: 'law' }],
     // --- cơ quan nhà nước: lương = hệ số × lương cơ sở 2,34 triệu + phụ cấp (đã gồm phụ cấp công vụ, thâm niên) ---
-    ['cong_chuc', ['chuyên viên', 'phó phòng', 'trưởng phòng', 'phó giám đốc sở', 'giám đốc sở'], [8, 11, 15, 20, 28], [4, 5, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
-    ['vien_chuc', ['viên chức hạng III', 'viên chức hạng II', 'trưởng phòng đơn vị sự nghiệp', 'giám đốc trung tâm'], [7, 10, 14, 20], [4, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
-    ['can_bo_xa', ['công chức xã / phường', 'phó chủ tịch UBND xã / phường', 'chủ tịch UBND xã / phường', 'bí thư đảng ủy xã / phường'], [6.5, 9, 11, 13], [5, 5, 5], { cat: 'state', sec: 'formal', edu: 5, promo: 0.2, loss: 0.004, w: 1.2 }],
+    ['cong_chuc', ['chuyên viên', 'phó phòng', 'trưởng phòng', 'phó giám đốc sở', 'giám đốc sở'], [8.5, 11, 14.5, 20, 28], [4, 5, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
+    ['vien_chuc', ['viên chức hạng III', 'viên chức hạng II', 'trưởng phòng đơn vị sự nghiệp', 'giám đốc trung tâm'], [8, 11, 15, 21], [4, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
+    ['can_bo_xa', ['công chức xã / phường', 'phó chủ tịch UBND xã / phường', 'chủ tịch UBND xã / phường', 'bí thư đảng ủy xã / phường'], [7.5, 9.5, 12, 14], [5, 5, 5], { cat: 'state', sec: 'formal', edu: 5, promo: 0.2, loss: 0.004, w: 1.2 }],
     ['thue', ['công chức thuế', 'kiểm soát viên thuế', 'đội trưởng thuế', 'trưởng thuế cơ sở', 'cục trưởng thuế'], [9, 13, 17, 23, 32], [3, 5, 6, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'eco', promo: 0.22, loss: 0.003 }],
     ['hai_quan', ['nhân viên hải quan', 'kiểm tra viên hải quan', 'đội trưởng hải quan', 'chi cục trưởng hải quan', 'cục trưởng hải quan'], [10, 14, 19, 26, 35], [3, 5, 6, 7], { cat: 'state', sec: 'formal', edu: 5, majors: ['eco', 'law'], promo: 0.22, loss: 0.003 }],
     ['tham_phan', ['thư ký tòa án', 'thẩm phán sơ cấp', 'thẩm phán trung cấp', 'thẩm phán cao cấp', 'chánh án tòa án tỉnh'], [8, 13, 18, 25, 32], [3, 6, 7, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'law', promo: 0.2, loss: 0.002 }],
@@ -96,12 +96,12 @@
     ['ngoai_giao', ['tùy viên ngoại giao', 'bí thư thứ ba', 'bí thư thứ nhất', 'tham tán', 'đại sứ'], [10, 14, 22, 32, 50], [3, 4, 5, 7], { cat: 'state', sec: 'formal', edu: 5, majors: ['law', 'eco'], w: 0.3, promo: 0.2, loss: 0.002 }],
     ['qltt', ['kiểm soát viên thị trường', 'đội trưởng quản lý thị trường', 'chi cục trưởng quản lý thị trường'], [8, 12, 18], [5, 7], { cat: 'state', sec: 'formal', edu: 5, majors: ['eco', 'law'], loss: 0.003 }],
     ['kiem_toan', ['kiểm toán viên nhà nước', 'kiểm toán viên chính', 'kiểm toán viên cao cấp', 'kiểm toán trưởng'], [10, 15, 22, 32], [4, 6, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'eco', loss: 0.002 }],
-    ['kiem_lam', ['kiểm lâm viên', 'trạm trưởng kiểm lâm', 'hạt trưởng kiểm lâm'], [7, 10, 14], [5, 7], { cat: 'state', sec: 'formal', edu: 4, rural: 1, sex: [1.5, 0.3], haz: [0.02, 0.0005, 'bị lâm tặc tấn công khi tuần tra rừng'] }],
+    ['kiem_lam', ['kiểm lâm viên', 'trạm trưởng kiểm lâm', 'hạt trưởng kiểm lâm'], [8, 11, 15], [5, 7], { cat: 'state', sec: 'formal', edu: 4, rural: 1, sex: [1.5, 0.3], haz: [0.02, 0.0005, 'bị lâm tặc tấn công khi tuần tra rừng'] }],
     ['dnnn', ['kỹ sư tập đoàn nhà nước', 'chuyên viên chính tập đoàn', 'trưởng ban tập đoàn', 'phó tổng giám đốc tập đoàn'], [15, 25, 40, 90], [3, 6, 8], { cat: 'state', sec: 'formal', edu: 5, majors: ['it', 'eco'], vn: 1, w: 0.6, loss: 0.005, prod: ['EVN', 'Viettel', 'PetroVietnam', 'VNPT', 'Vietnam Airlines', 'Vinacomin', 'Vietcombank'] }],
     ['nghien_cuu', ['nghiên cứu viên', 'nghiên cứu viên chính', 'phó giáo sư', 'giáo sư'], [10, 16, 25, 35], [4, 6, 6], { cat: 'edu', sec: 'formal', edu: 6 }],
     // --- y tế ---
     ['bac_si', ['bác sĩ thực hành', 'bác sĩ', 'bác sĩ chuyên khoa I', 'bác sĩ chuyên khoa II', 'trưởng khoa', 'giám đốc bệnh viện'], [6, 14, 22, 32, 45, 70], [2, 4, 4, 5, 6], { cat: 'med', sec: 'formal', edu: 5, major: 'med', loss: 0.005 }],
-    ['dieu_duong', ['điều dưỡng hạng IV', 'điều dưỡng hạng III', 'điều dưỡng hạng II', 'điều dưỡng trưởng khoa', 'điều dưỡng trưởng bệnh viện'], [7, 9, 12, 15, 20], [3, 4, 5, 6], { cat: 'med', sec: 'formal', edu: 4, major: 'med', soft: 1, sex: [0.4, 1.4], loss: 0.005 }],
+    ['dieu_duong', ['điều dưỡng hạng IV', 'điều dưỡng hạng III', 'điều dưỡng hạng II', 'điều dưỡng trưởng khoa', 'điều dưỡng trưởng bệnh viện'], [9, 11, 14, 18, 25], [3, 4, 5, 6], { cat: 'med', sec: 'formal', edu: 4, major: 'med', soft: 1, sex: [0.4, 1.4], loss: 0.005 }],
     ['duoc_si', ['dược sĩ', 'dược sĩ trưởng', 'chủ nhà thuốc'], [10, 18, 35], [4, 6], { cat: 'med', sec: 'formal', edu: 5, major: 'med' }],
     ['nha_si', ['nha sĩ', 'bác sĩ răng hàm mặt', 'chủ phòng khám nha khoa'], [15, 30, 80], [3, 6], { cat: 'med', sec: 'formal', edu: 5, major: 'med', sigma: 0.4 }],
     ['thu_y', ['bác sĩ thú y', 'bác sĩ thú y chính', 'chủ phòng khám thú y'], [9, 15, 35], [3, 6], { cat: 'med', sec: 'formal', edu: 5, major: 'med', sigma: 0.3 }],
@@ -109,10 +109,10 @@
     ['cong_an', POLICE, [9, 10, 11, 13, 15, 17, 20, 24, 35], [2, 3, 3, 4, 4, 4, 4, 6], { cat: 'uniform', sec: 'formal', edu: 99, hidden: 1, ladder: 1, loss: 0.003, haz: [0.02, 0.0008, 'hy sinh khi làm nhiệm vụ'] }],
     ['quan_doi', POLICE, [9, 10, 11, 13, 15, 17, 20, 24, 35], [2, 3, 3, 4, 4, 4, 4, 6], { cat: 'uniform', sec: 'formal', edu: 99, hidden: 1, ladder: 1, loss: 0.003, haz: [0.01, 0.0005, 'tai nạn khi huấn luyện'] }],
     // --- giáo dục ---
-    ['giao_vien', ['giáo viên hạng III', 'giáo viên hạng II', 'giáo viên hạng I', 'tổ trưởng chuyên môn', 'phó hiệu trưởng', 'hiệu trưởng'], [8, 10, 13, 14, 17, 22], [3, 4, 3, 4, 5], { cat: 'edu', sec: 'formal', edu: 5, major: 'edu', loss: 0.005 }],
+    ['giao_vien', ['giáo viên hạng III', 'giáo viên hạng II', 'giáo viên hạng I', 'tổ trưởng chuyên môn', 'phó hiệu trưởng', 'hiệu trưởng'], [8.5, 10.5, 13, 15, 18, 23], [3, 4, 3, 4, 5], { cat: 'edu', sec: 'formal', edu: 5, major: 'edu', loss: 0.005 }],
     ['giang_vien', ['giảng viên', 'giảng viên chính', 'phó giáo sư', 'giáo sư'], [10, 16, 25, 35], [5, 6, 6], { cat: 'edu', sec: 'formal', edu: 6 }],
     ['gia_su', ['gia sư', 'chủ trung tâm dạy thêm'], [6, 30], [5], { cat: 'edu', sec: 'inf', edu: 3, sigma: 0.4 }],
-    ['gv_mam_non', ['giáo viên mầm non', 'tổ trưởng chuyên môn mầm non', 'hiệu trưởng trường mầm non'], [6.5, 8.5, 13], [4, 6], { cat: 'edu', sec: 'formal', edu: 4, major: 'edu', soft: 1, sex: [0.05, 1.6], loss: 0.005 }],
+    ['gv_mam_non', ['giáo viên mầm non', 'tổ trưởng chuyên môn mầm non', 'hiệu trưởng trường mầm non'], [7.5, 9.5, 14], [4, 6], { cat: 'edu', sec: 'formal', edu: 4, major: 'edu', soft: 1, sex: [0.05, 1.6], loss: 0.005 }],
     ['pt_gym', ['huấn luyện viên cá nhân (PT)', 'PT cao cấp', 'chủ phòng gym'], [8, 18, 40], [3, 5], { cat: 'sport', sec: 'inf', edu: 2, w: 0.6, sigma: 0.35 }],
     // --- báo chí – truyền hình ---
     ['phong_vien', ['phóng viên', 'biên tập viên', 'trưởng ban', 'tổng biên tập'], [9, 15, 25, 45], [4, 6, 8], { cat: 'media', sec: 'formal', edu: 5, major: 'law' }],
@@ -148,9 +148,9 @@
     ['kskl', ['kiểm soát viên không lưu', 'kíp trưởng không lưu'], [28, 45], [6], { cat: 'service', sec: 'formal', edu: 5, major: 'it', w: 0.2, loss: 0.003 }],
     ['hdv', ['hướng dẫn viên du lịch', 'hướng dẫn viên quốc tế', 'chủ công ty lữ hành'], [10, 20, 45], [3, 6], { cat: 'service', sec: 'inf', edu: 3, w: 0.7, sigma: 0.35 }],
     ['le_tan', ['lễ tân khách sạn', 'giám sát tiền sảnh', 'quản lý khách sạn', 'tổng quản lý khách sạn'], [7, 12, 25, 60], [3, 4, 6], { cat: 'service', sec: 'formal', edu: 3 }],
-    ['barista', ['nhân viên pha chế', 'barista chính', 'quản lý quán cà phê'], [5, 8, 14], [2, 4], { cat: 'service', sec: 'inf', edu: 1 }],
+    ['barista', ['nhân viên pha chế', 'barista chính', 'quản lý quán cà phê'], [6, 9, 15], [2, 4], { cat: 'service', sec: 'inf', edu: 1 }],
     ['bartender', ['bartender', 'bartender trưởng', 'chủ quán bar'], [8, 16, 40], [3, 6], { cat: 'service', sec: 'inf', edu: 1, minAge: 18, sigma: 0.35 }],
-    ['thu_ngan', ['thu ngân siêu thị', 'giám sát ngành hàng', 'quản lý siêu thị'], [6.5, 10, 20], [3, 5], { cat: 'service', sec: 'formal', edu: 2 }],
+    ['thu_ngan', ['thu ngân siêu thị', 'giám sát ngành hàng', 'quản lý siêu thị'], [7.5, 11, 20], [3, 5], { cat: 'service', sec: 'formal', edu: 2 }],
     ['sau_rieng', ['làm thuê vườn sầu riêng', 'chủ vườn sầu riêng', 'chủ vựa sầu riêng xuất khẩu'], [7, 40, 120], [5, 6], { cat: 'farm', sec: 'farm', rural: 1, vn: 1, sigma: 0.8, fail: 0.04, w: 0.5 }],
     ['nuoi_tom', ['công nhân trại tôm', 'chủ đầm tôm', 'chủ trang trại tôm công nghệ cao'], [7, 35, 100], [4, 6], { cat: 'farm', sec: 'farm', coast: 1, sigma: 0.8, fail: 0.05, w: 0.6 }],
     // --- thể thao, esports, cờ ---
@@ -456,6 +456,8 @@
           (l.flags.eliteBoost && l.flags.eliteBoost === c.id ? 0.3 : 0); // v2.5: con nhà có "ô dù" thăng tiến nhanh hơn
         // v7.1: tháp thăng tiến — càng lên cao càng ít chỗ; bậc cao nhất chỉ dành cho số ít (trước đây ~43% người 45 tuổi đã ở bậc cao nhất)
         if (!c.ladder) { var L1 = Math.max(1, c.t.length - 1), fr = (l.job.rank + 1) / L1; pp = Math.min(0.45, pp) * (0.62 - 0.5 * Math.pow(fr, 1.4)) * (c.cat === 'farm' ? 0.35 : 1); }
+        // v7.4: thực tập sinh, học việc, tập sự hết thời gian thử việc thì phần lớn được nhận chính thức (trước đây có người kẹt 8 năm ở bậc thực tập)
+        if (!c.ladder && l.job.rank === 0 && /thực tập|tập sự|học việc|học viên|^phụ /.test(c.t[0])) pp = Math.max(pp, 0.6 + (focus === 'work' ? 0.15 : 0));
         if (r() < pp) {
           l.job.rank++; l.job.yrs = 0; l.job.rankSince = l.age + 1; l.job.rankTracked = l.job.rank;
           if (inc > 0 && !c.fame) { l.job.floor = inc * (1.08 + r() * 0.1); l.job.floorRk = Math.min(l.job.rank, c.vn.length - 1); } // v3.0: thăng chức là tăng lương

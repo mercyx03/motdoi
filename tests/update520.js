@@ -7,7 +7,7 @@ function ok(v,t){assert.ok(v,t);n++;}function near(a,b,t){ok(Math.abs(a-b)<Math.
 function life(code,urban=true){const l=E.createLife({mode:code==='VN'?'vn':'world',country:code,seed:52001,urban});l.age=30;l.school=null;l.indep=true;l.retired=false;l.pensioned=false;l.pending=[];l.edu=1;l.uniTier=1;l.money=l.base*10;return l;}
 function nominal(l,x){return l.cur==='vnd'?x*1e6/C.VND:x*C.priceLevel((W.BY[l.abroad&&l.abroad.code]||W.BY[l.country]).gdp);}
 ok(Object.keys(M.data.countries).length===194,'194 profiles');ok(!M.data.countries.VN,'VN excluded');
-const reference=life('VN');near(E.monthlyEst(reference,'bao_ve',0),7*Math.pow(reference.base/90,.45),'VN pay unchanged');
+const reference=life('VN');near(E.monthlyEst(reference,'bao_ve',0),8*Math.pow(reference.base/90,.45),'VN pay matches table (v7.4: bảo vệ 8 triệu)');
 for(const c of W.C.filter(x=>x.code!=='VN')){
  const l=life(c.code),d=M.data.countries[c.code];ok(d&&d.usd>0&&d.gdpPPP>0&&d.consumptionPLI>0,'complete profile '+c.code);ok(['ilo','estimate'].includes(d.source)||d.source.startsWith('proxy:'),'transparent source '+c.code);
  ok(Number.isFinite(l.base)&&l.base>0,'living base '+c.code);

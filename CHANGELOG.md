@@ -1,3 +1,34 @@
+## v7.4.0 — Ứng dụng hẹn hò theo từng nước, điều chỉnh lương
+
+- **Ứng dụng hẹn hò đúng với từng nước.** Trước đây nước nào cũng hiện Tinder, Bumble, Hinge, Facebook Hẹn hò, nhóm Zalo như Việt Nam. Nay mỗi nước một bộ app phổ biến thật, tham khảo bảng xếp hạng của data.ai, adjoe và các bảng xếp hạng app hẹn hò ở Hàn Quốc, Nhật Bản, Trung Quốc:
+  - Việt Nam: Tinder, Bumble, Facebook Hẹn hò, Litmatch.
+  - Hàn Quốc: Amanda, WIPPY, Glam, Tinder.
+  - Nhật Bản: Pairs, Tapple, with, Tinder.
+  - Trung Quốc: Tantan, Momo, Soul (không có Tinder, Facebook).
+  - Đài Loan, Hồng Kông: Tinder, Omi, Pairs.
+  - Nga: Mamba, VK Знакомства, Badoo.
+  - Mỹ, Anh, Úc, Canada: Tinder, Hinge, Bumble.
+  - Châu Âu: Tinder, Hinge, Bumble, Badoo.
+  - Mỹ Latinh: Tinder, Badoo, Bumble.
+  - Ấn Độ: Tinder, Bumble, Aisle, QuackQuack.
+  - Trung Đông, Bắc Phi: Muzz.
+  - Đông Nam Á: Tinder, Tantan, Omi, Litmatch, Bumble.
+  - App cho người LGBTQ+: Blued ở châu Á, Grindr ở nơi khác, HER.
+- **Người từ 45 tuổi tìm bạn đời theo cách của từng nơi:**
+  - Việt Nam: nhóm Zalo;
+  - Hàn Quốc: công ty mai mối kết hôn (như Duo);
+  - Nhật Bản: dịch vụ "hôn hoạt" và app Omiai;
+  - Trung Quốc: góc xem mắt ở công viên;
+  - Ấn Độ: Shaadi.com, Jeevansathi;
+  - Trung Đông: mai mối qua gia đình;
+  - Mỹ, Anh: Match.com, eHarmony.
+- Hồ sơ hẹn hò ở nước ngoài không còn nhắc "sắp về Việt Nam", "Việt kiều", "nói tiếng Việt chưa sõi".
+- **Điều chỉnh lương các nghề đang thấp so với thực tế 2026:**
+  - Công nhân (tính cả tăng ca): mới vào khoảng 11 triệu, trung vị khoảng 13 triệu.
+  - Tăng cho thợ may, nông dân, điều dưỡng, giáo viên, giáo viên mầm non, công chức, viên chức, cán bộ xã, bảo vệ, giúp việc, phục vụ, pha chế, thu ngân, xe ôm, thợ điện, thợ hàn, shipper, kiểm lâm.
+  - Phụ cấp thực tập sinh kế toán, marketing, văn phòng: từ 3 lên 5 triệu.
+- **Sửa lỗi kẹt bậc thực tập:** trước đây có thực tập sinh bị kẹt ở bậc thực tập tới 8 năm (kế toán trung vị chỉ 5,4 triệu). Nay hết thời gian thực tập, học việc thì phần lớn được nhận chính thức.
+
 ## v7.3.1 — Bổ sung tên FC cho thành tựu fan cứng
 
 - Thành tựu fan cứng tăng từ 26 lên 94, theo danh sách tên FC người chơi cung cấp. Thần tượng nghệ sĩ đó từ 3 năm thì đạt thành tựu.

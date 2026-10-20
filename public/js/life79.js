@@ -36,7 +36,7 @@
         run: function (l, r, log) {
           var s = l.flags.appSwipe, p = s && s.list[i]; if (!p) return; l.flags.appSwipe = null;
           if (r() < 0.2) { log('Bạn gửi lời chào ' + p.n + ' trên ' + s.app + ', nhưng ' + (p.s === 'M' ? 'anh ấy' : 'cô ấy') + ' chỉ "seen" rồi im lặng.', 'neutral'); return; }
-          if (/Tinder|Blued/.test(s.app) && l.age <= 45 && E.DEC.qua_dem && r() < 0.2) { l.pending.unshift(E.DEC.qua_dem.make(l, r, { app: s.app, name: p.n })); return; } // app quẹt nhanh: có người chỉ muốn gặp qua đêm
+          if ((E.HOOKUP_APP || /Tinder|Blued/).test(s.app) && l.age <= 45 && E.DEC.qua_dem && r() < 0.2) { l.pending.unshift(E.DEC.qua_dem.make(l, r, { app: s.app, name: p.n })); return; } // app quẹt nhanh: có người chỉ muốn gặp qua đêm
           l.pending.unshift(E.DEC.hen_online.make(l, r, { app: s.app, s: p.s, n: p.n, t: p.t, age: p.age, job: p.job }));
         } };
     }).concat([
