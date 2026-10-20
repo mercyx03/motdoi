@@ -225,9 +225,9 @@
     ]
   });
   T('mxh_boc_phot', function (l, a) { return a >= 16 && a <= 60; }, 0.007, 10, 1);
-  E.EVENTS.push({ c: function (l, a) { return free(l) && a >= 15 && a <= 65; }, p: 0.008, cd: 10, run: function (l, a, r, log) {
+  E.EVENTS.push({ c: function (l, a) { return free(l) && a >= 15 && a <= 65; }, p: 0.003, cd: 10, run: function (l, a, r, log) {
     var t = pick(r, ['Bức ảnh bạn chụp bà cụ bán rau dưới mưa bỗng có hàng chục nghìn lượt chia sẻ. Có người tìm đến mua hết gánh rau của bà.', 'Một video bạn quay cảnh chú chó đợi chủ trước cổng bệnh viện lan truyền khắp mạng, báo chí xin đăng lại.', 'Bài bạn viết về mẹ được hàng nghìn người chia sẻ, nhiều người nhắn tin: "Đọc xong tôi gọi điện về cho mẹ ngay."']);
-    log(t, 'good'); fx(l, { hap: 4, soc: 3 }); l.fame = (l.fame || 0) + 500;
+    log(t, 'good'); fx(l, { hap: 4, soc: 3 }); l.fame = (l.fame || 0) + 500; l.flags.viral = true;
   } });
   SC('mxh_hoi_nhom', {
     title: 'Cãi nhau trong hội nhóm',

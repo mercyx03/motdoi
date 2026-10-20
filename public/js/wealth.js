@@ -452,7 +452,7 @@
     initSibs(l);
     // mẹ sinh em bé (em út) khi bạn còn nhỏ
     var f = l.fam, young = (l.sibList || []).filter(function (s) { return s.born > 0; }).length;
-    if (a >= 1 && a <= 12 && f.mAlive && f.mAge + a <= 40 && young < 2 && ch(r, (l.tfr || 2) > 2.2 ? 0.08 : 0.035)) {
+    if (a >= 1 && a <= 12 && f.mAlive && f.mAge + a <= 40 && young < 2 && !l.flags.knownSibs && ch(r, (l.tfr || 2) > 2.2 ? 0.08 : 0.035)) {
       var s = newSib(l, r, a); l.sibList.push(s); f.ysibs = (f.ysibs || 0) + 1;
       log('Mẹ sinh em bé — bạn có thêm ' + (s.sex === 'M' ? 'em trai' : 'em gái') + ' tên ' + s.n + '.', 'good'); fx(l, { hap: 3 });
       H.mem(l, 'Ngày đầu tiên được bế ' + (s.sex === 'M' ? 'em trai' : 'em gái') + ' bé xíu.', 3);

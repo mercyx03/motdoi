@@ -1872,7 +1872,7 @@
     });
 
     // ---- Bố mẹ ----
-    if (a >= 1) { parentYear(life, r, log, 'm'); if (!f.noDad) parentYear(life, r, log, 'f'); }
+    if (a >= 1) { if (!f.mCareer) parentYear(life, r, log, 'm'); if (!f.noDad && !f.fCareer) parentYear(life, r, log, 'f'); } // v7.3: bố / mẹ là nhân vật đời trước thì đi đúng con đường sự nghiệp đã sống
     var mCause = null;
     if (f.mAlive && !(life.flags.heirKeep && life.flags.heirKeep.m != null && a <= life.flags.heirKeep.m) && r() < qBase(life.mortF, f.mAge + a)) { f.mAlive = false; mCause = H.deathCause(f.mAge + a, r); log('Mẹ qua đời ở tuổi ' + (f.mAge + a) + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(mCause) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày mẹ ra đi. Từ nay không còn ai gọi bạn về ăn cơm.', 7); }
     if (f.fAlive && !(life.flags.heirKeep && life.flags.heirKeep.f != null && a <= life.flags.heirKeep.f) && r() < qBase(life.mortM, f.fAge + a) * (f.vice === 'alcohol' || f.vice === 'drugs' ? 1.8 : f.vice === 'gang' ? 1.5 : 1)) { f.fAlive = false; var fCause = H.deathCause(f.fAge + a, r, f.vice), tries = 0; while (mCause && fCause === mCause && !/tai nạn|tuổi già|thanh thản/.test(fCause) && tries++ < 8) fCause = H.deathCause(f.fAge + a, r, f.vice); // v3.0: bố mẹ mất cùng năm không trùng một bệnh

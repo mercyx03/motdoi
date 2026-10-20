@@ -485,3 +485,10 @@ footer .disclaimer b { color: var(--accent); }
 .tree-kid{border:1px solid var(--line);border-radius:999px;padding:1px 9px}.tree-kid.on{border-color:var(--accent);color:var(--accent);font-weight:700}.tree-kid.gone{opacity:.55;text-decoration:line-through}
 .tree-sep{border:0;border-top:1px dashed var(--line);margin:14px 0}
 .modal.legacy{max-width:760px}
+/* v7.3: bảng Giới thiệu */
+.modal.about-modal { position: relative; width: min(600px, 100%); padding: 28px 30px 26px; }
+.modal.about-modal .about-title { font-size: 34px; color: var(--accent-2); margin: 0 40px 14px 0; letter-spacing: .01em; }
+.modal.about-modal p { line-height: 1.7; margin: 0 0 14px; }
+.modal.about-modal p:last-child { margin-bottom: 0; }
+.about-x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent; color: var(--ink, inherit); font-size: 20px; cursor: pointer; opacity: .8; }
+.about-x:hover { opacity: 1; background: rgba(127, 127, 127, .15); }

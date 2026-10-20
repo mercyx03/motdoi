@@ -9,7 +9,7 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/life87.js', 'js/life88.js', 'js/life89.js', 'js/life90.js', 'js/life91.js', 'js/scene.js', 'js/scene2d.js'];
+const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/life87.js', 'js/life88.js', 'js/life89.js', 'js/life90.js', 'js/life91.js', 'js/life92.js', 'js/life93.js', 'js/scene.js', 'js/scene2d.js'];
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -2697,7 +2697,7 @@ section('63. Bản 6.8.0: khai thác sâu Nemotron-Personas-Vietnam, đối chi�
   // thành tựu
   const ids = E.ACHIEVEMENTS.map(a => a.id), ts = E.ACHIEVEMENTS.map(a => a.t);
   ok(ids.length >= 120 && new Set(ids).size === ids.length, 'có ' + ids.length + ' thành tựu, không trùng mã');
-  ok(ts.includes('Doanh nhân đầu tàu') && ts.includes('Mưu sinh xứ người') && ts.includes('Lá lành đùm lá rách') && !ts.includes('Thuyền trưởng doanh nghiệp') && !ts.includes('Xứ người mưu sinh') && !ts.includes('Bàn tay chìa ra'), 'đổi tên thành tựu theo góp ý');
+  ok(ts.includes('Lãnh đạo thương trường') && ts.includes('Mưu sinh xứ người') && ts.includes('Lá lành đùm lá rách') && !ts.includes('Thuyền trưởng doanh nghiệp') && !ts.includes('Xứ người mưu sinh') && !ts.includes('Bàn tay chìa ra'), 'đổi tên thành tựu theo góp ý');
   ok(fs.existsSync(path.join(ROOT, '..', 'docs', 'persona-calibration.md')), 'có báo cáo đối chiếu mô phỏng');
 }
 section('64. Bản 6.9.0: toàn bộ 1 triệu persona, số liệu theo 34 tỉnh, món đặc trưng đúng tỉnh, tài khoản');
@@ -2872,6 +2872,46 @@ section('69. Bản 7.2.0: drama công sở, hàng xóm, mạng xã hội, trư�
   const fm = E.createLife({ mode: 'vn', seed: 69501, noOrphan: true }); fm.age = 30; fm.school = null; fm.indep = true; fm.job = null; ok(!E.DEC.cs_cuop_cong.valid(fm, {}), 'không đi làm thì không có drama công sở');
   { const d = E.DEC.cs_do_loi.make(w, R(2)); const before = w.money; E.DEC.cs_do_loi.apply(w, d, 'nhan', R(3), (t, k) => w.log.push({ a: w.age, t, k })); ok(w.money < before && w.log.some(e => /nhận lỗi/.test(e.t)), 'nhận lỗi thay sếp thì bị trừ thưởng'); }
   const kid = E.createLife({ mode: 'vn', seed: 69502, noOrphan: true }); kid.age = 12; kid.school = 'lower'; ok(E.DEC.th_tay_chay.valid(kid, {}) && !E.DEC.cs_tat_nien.valid(kid, {}), 'học sinh gặp drama trường học, không gặp drama công sở');
+}
+section('70. Bản 7.3.0: đời con giữ đúng nghề bố mẹ và anh chị em, bảng Giới thiệu, đổi tên & thêm thành tựu, fan cứng');
+{
+  // sống tiếp đời con
+  let tested = 0, jobOk = 0, sibOk = 0, noRandBirth = 0, careerLog = 0;
+  for (let i = 0; i < 80 && tested < 6; i++) {
+    const p = E.createLife({ mode: 'vn', seed: 70000 + i * 7, gender: 'M', noOrphan: true }); E.runHeadless(p);
+    if ((p.kids || []).length < 3 || !(p.flags.career92 || []).some(c => c.t && c.t !== 'đang đi học')) continue;
+    tested++; const k = p.kids[1], c = E.createLife(E.childOpts(p, k));
+    const at = (p.flags.career92 || []).filter(x => x.a <= k.born).pop();
+    if (at && at.t !== 'đang đi học' && c.fam.fJob === at.t) jobOk++; else if (!at || at.t === 'đang đi học') jobOk++;
+    const others = p.kids.filter(x => x !== k && !(x.alive === false && x.died != null && x.died <= k.born)).map(x => x.name).sort().join('|');
+    const got = (c.sibList || []).concat(c.flags.futureSibs || []).map(s => s.n).sort().join('|');
+    if (others === got) sibOk++;
+    E.runHeadless(c);
+    if (!c.log.some(e => /^Mẹ sinh em bé/.test(e.t))) noRandBirth++;
+    const titles = new Set((p.flags.career92 || []).map(x => x.t === 'đang đi học' ? 'sinh viên' : x.t));
+    if (c.log.filter(e => /^Bố giờ là /.test(e.t)).every(e => titles.has(e.t.replace(/^Bố giờ là /, '').replace(/\.$/, '')))) careerLog++;
+  }
+  ok(tested >= 4, 'có đủ đời mẫu để kiểm tra (' + tested + ')');
+  ok(jobOk === tested, 'đời con: nghề của bố đúng nghề nhân vật đời trước lúc con chào đời (' + jobOk + '/' + tested + ')');
+  ok(sibOk === tested, 'đời con: anh chị em giữ nguyên họ tên (' + sibOk + '/' + tested + ')');
+  ok(noRandBirth === tested && careerLog === tested, 'không sinh thêm em ngẫu nhiên; bố đổi nghề đúng con đường sự nghiệp đã sống');
+  // bảng Giới thiệu
+  const app = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8'), css = fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf8');
+  ok(/function openAbout/.test(app) && /a\[href="#about"\]/.test(app) && /tài khoản/.test(app) && /\.modal\.about-modal/.test(css), 'bấm "Giới thiệu" mở bảng giới thiệu, nội dung nhắc hệ thống tài khoản');
+  // đổi tên thành tựu
+  const T = E.ACHIEVEMENTS.map(a => a.t);
+  const NEW = ['Bách niên giai lão', 'Cửu tuần đại thọ', 'Tiền nhiều để làm gì?', 'Kẻ khai phá tri thức', 'Một Bước Lên Quan', 'Sinh Ra Đã Ngậm Thìa Vàng', 'Tam Đại Đồng Đường', 'Ngũ Đại Đồng Đường', 'Con Đàn Cháu Đống', 'Phúc Lộc Đầy Nhà', 'Tâm Sáng Giữa Đời', 'Quay Đầu Là Bờ', 'Hoàng Thượng Không Rời Nửa Bước', 'Tiền Đẻ Ra Tiền', 'Có Công Mài Sắt', 'Con nhà người ta', 'Chinh Phục Bầu Trời', 'Lãnh đạo thương trường', 'Một Nắng Hai Sương', 'Tuổi Già An Nhàn', 'Yên Bề Gia Thất', 'Độc thân vui tính', 'Con Hơn Cha, Nhà Có Phúc', 'Tri Kỷ Một Đời', 'Ăn cơm nhà nước', 'Sử Ta Phải Biết', 'Nét đẹp ngàn đời'];
+  const miss = NEW.filter(n => !T.includes(n)); ok(!miss.length, 'đổi tên ' + NEW.length + ' thành tựu theo góp ý' + (miss.length ? ' — thiếu: ' + miss.join(', ') : ''));
+  ok(!['Bách niên', 'Cổ lai hy', 'Nối dõi', 'Đông con nhiều cháu', 'Học sinh trường chuyên', 'Từng vào tù'].some(n => T.includes(n)), 'tên cũ không còn');
+  ok(['Nhà có 5 nàng tiên', 'Lời xin lỗi của một dân chơi', 'Red flag di động', 'Green flag chính hiệu', 'Ế bền vững'].every(n => T.includes(n)) && new Set(E.ACHIEVEMENTS.map(a => a.id)).size === E.ACHIEVEMENTS.length, 'thêm thành tựu kiểu Gen Z, không trùng mã');
+  const five = E.createLife({ mode: 'vn', seed: 70500 }); five.kids = [1, 2, 3, 4, 5].map(i => ({ name: 'Con ' + i, sex: 'F', born: 20 + i, alive: true })); five.death = { age: 80 };
+  ok(E.achievementsOf(five).some(a => a.id === 'nam_nang_tien'), '5 cô con gái: Nhà có 5 nàng tiên');
+  // fan cứng
+  ok(E.FAN_CLUBS.length >= 20 && E.FAN_CLUBS.every(x => x[1] && x[2].length), 'thành tựu fan cứng có tên FC (' + E.FAN_CLUBS.length + ' nghệ sĩ)');
+  ok(T.includes('Bóng đèn') && T.includes('SAAWU') && T.includes('SUNDAYs') && T.includes('Muzik'), 'có Bóng đèn (Aza Ánh Sáng), SAAWU (Saabirose), SUNDAYs (HIEUTHUHAI), Muzik (Quang Hùng MasterD)');
+  const fan = E.createLife({ mode: 'vn', seed: 70600 }); fan.age = 20; fan.bias = { n: 'Ánh Sáng AZA', show: 'Em xinh', pre: 'em xinh' };
+  for (let i = 0; i < 3; i++) { E.HOOKS.year[0](fan, () => .5, () => { }, fan.age); fan.age++; }
+  ok(E.achievementsOf(fan).some(a => a.t === 'Bóng đèn'), 'thần tượng Aza Ánh Sáng 3 năm: thành tựu Bóng đèn');
 }
 function isVNx(l) { return E.isVN(l); }
 

@@ -1,3 +1,32 @@
+## v7.3.0 — Đời con đúng gia đình, bảng Giới thiệu, thành tựu mới
+
+- **Sửa lỗi "sống tiếp đời con":**
+  - Nghề của bố / mẹ (chính là nhân vật đời trước) giờ đi đúng con đường sự nghiệp đã sống: đang làm gì lúc con chào đời, đổi việc, thăng chức, nghỉ hưu năm nào. Không còn bị đổi sang nghề ngẫu nhiên hay "mất việc" ngẫu nhiên.
+  - Nghề của người còn lại lấy đúng nghề lúc con chào đời.
+  - Anh chị em ruột giữ nguyên họ tên, giới tính, thứ tự. Em sinh sau chào đời đúng năm; người đã mất ở đời trước cũng ra đi đúng tuổi; không sinh thêm em ngẫu nhiên.
+- **Bảng Giới thiệu:** bấm "Giới thiệu" mở một bảng riêng theo màu, chữ của web. Nội dung cập nhật:
+  - hoàn cảnh xuất phát (gia cảnh, tính cách bố mẹ, mồ côi);
+  - số nghề, các loại drama;
+  - sống tiếp đời con;
+  - tài khoản để đồng bộ thành tựu, gia phả, đài tưởng niệm và cuộc đời đang chơi giữa các thiết bị.
+- **Đổi tên 27 thành tựu theo góp ý:**
+  - Bách niên giai lão, Cửu tuần đại thọ, Tiền nhiều để làm gì?, Kẻ khai phá tri thức, Một Bước Lên Quan, Sinh Ra Đã Ngậm Thìa Vàng;
+  - Tam Đại Đồng Đường, Ngũ Đại Đồng Đường, Con Đàn Cháu Đống, Phúc Lộc Đầy Nhà, Tâm Sáng Giữa Đời, Quay Đầu Là Bờ;
+  - Hoàng Thượng Không Rời Nửa Bước, Tiền Đẻ Ra Tiền, Có Công Mài Sắt, Con nhà người ta, Chinh Phục Bầu Trời, Lãnh đạo thương trường;
+  - Một Nắng Hai Sương, Tuổi Già An Nhàn, Yên Bề Gia Thất, Độc thân vui tính, Con Hơn Cha, Nhà Có Phúc, Tri Kỷ Một Đời;
+  - Ăn cơm nhà nước, Sử Ta Phải Biết, Nét đẹp ngàn đời.
+- **14 thành tựu kiểu Gen Z:**
+  - Nhà có 5 nàng tiên (5 cô con gái);
+  - Lời xin lỗi của một dân chơi (từng đào hoa, rồi cưới và chung thủy từ 15 năm);
+  - Flex nhẹ cái, Đi đâu cũng là healing, Red flag di động, Green flag chính hiệu, Ế bền vững, Giàu ngầm, Hot hòn họt, Lên xu hướng;
+  - Drama không hồi kết, Từ bạn thân thành người thương, Quay xe thần sầu, Cày như trâu.
+- **26 thành tựu "fan cứng"** (thần tượng nghệ sĩ đó từ 3 năm), tên thành tựu là tên FC đã được công bố của nghệ sĩ các chương trình Anh trai "say hi" mùa 1, 2, Anh trai vượt ngàn chông gai 2024, 2026, Tinh hà "say hi", Em xinh "say hi":
+  - SUNDAYs (HIEUTHUHAI), FLASH (Rhyder), Lion Kingdom (Isaac), Sun Sun (Đức Phúc), Muzik (Quang Hùng MasterD), Galaxy Day (Anh Tú Atus), Goose (HURRYKNG), Dopamine (Dương Domic), Embes (Negav), SONIC (JSOL), Xa Xa (Pháp Kiều), Cừu Có Cánh (Captain Boy);
+  - FM — Forever Mine (Vũ Cát Tường), UNICONG (CONGB), Capo (Sơn.K), Brayniacs (B Ray), Archer (buitruonglinh);
+  - Động Cam Sành (Orange), Euphoria (LyHan), SAAWU (Saabirose), Bóng đèn (Aza Ánh Sáng);
+  - Kingdom (SOOBIN), Tôm Hùm (Đăng Khôi), bạn nhạc (Hoàng Dũng), Ưng Dung (Hà An Huy), Fan Thuê của Da LAB (Thỏ, Thơm).
+  - Nghệ sĩ chưa có tên FC được công bố thì chưa có thành tựu.
+
 ## v7.2.0 — Người đã mất không "sống lại", nghề nở sớm, tính cách bố mẹ, drama gia đình và drama khắp nơi
 
 - **Sửa lỗi người đã mất vẫn "sống" (theo góp ý của người chơi):**
