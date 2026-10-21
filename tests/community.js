@@ -43,5 +43,11 @@ const ok=(v,m)=>{assert(v,m);checks++;};
  const stale=JSON.parse(JSON.stringify(d));stale.text='Old text';const seed=l.rng;E.refreshActingWarning(l,stale);ok(/rời công việc/.test(stale.text)&&l.rng===seed,'saved pending choice gets warning without random changes');
  for(const mode of ['vn','world'])for(const difficulty of ['normal','hardcore']){const x=E.createLife({mode,difficulty,country:'US',seed:234});x.age=25;x.school=null;E.startJob(x,'ke_toan',()=>.5,()=>{},true);const saved=JSON.stringify(x.job),choice=E.DEC.casting.make(x,()=>.5);E.DEC.casting.apply(x,choice,'web',()=>.999,()=>{});ok(JSON.stringify(x.job)===saved,'failed casting retains job '+mode+difficulty);E.DEC.casting.apply(x,choice,'web',()=>.01,()=>{});ok(x.job&&x.job.id==='dien_vien','successful casting changes career '+mode+difficulty);ok(!/rời công việc/.test(E.DEC.casting.make(x,()=>.5).text),'existing actor has no false loss warning');}
  const history=JSON.parse(fs.readFileSync('public/data/updates.json'));ok(history.entries.length>=50&&history.entries.every(x=>x.title&&!/^\d+\/\d+\/\d+$/.test(x.title)&&Number.isFinite(Date.parse(x.publishedAt))),'dated history with meaningful titles');ok(!/\bv?\d+\.\d+\.\d+\b/.test(JSON.stringify(history.entries)),'history omits versions');
+ const notes=require('../tools/player-update-notes');
+ ok(history.entries.every(e=>[e.title,e.summary,...e.details].every(s=>!notes.technical.test(s))),'public update titles, summaries and details omit engineering notes');
+ ok(notes.playerLine('Thêm mục kiểm thử hồi quy và tests/update770.js.')===null,'hide pure test notes');
+ const mixed=notes.playerLine('Hai hành động mới chỉ do người chơi chọn, không thêm vào lựa chọn tự động. Đối chiếu 12 cuộc đời Thường vẫn trùng khớp; thêm tests/update770.js cho gia cảnh.');
+ ok(mixed.includes('người chơi')&&!mixed.includes('tests/'),'retain gameplay change while removing mixed test details');
+ ok(notes.playerLine('Đột phá giữ nguyên linh lực dư.')==='Đột phá giữ nguyên linh lực dư.','retain ordinary gameplay notes');
  ok(!/innerHTML/.test(fs.readFileSync('public/js/updates.js','utf8')),'comments render as text');db.close();console.log('Community: '+checks+' checks passed');
 })().catch(e=>{console.error(e);process.exit(1);});
