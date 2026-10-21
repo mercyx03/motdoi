@@ -1,3 +1,11 @@
+## v8.2.0 — Fantasy thử nghiệm: nhánh tu luyện, kỹ năng và nhịp chơi
+
+- Đồng bộ font với giao diện chính, ghi Fantasy gia tộc (thử nghiệm) trước khi vào; thêm thanh EXP rõ ràng ở khu trung tâm và bản tin chiến sự có lịch sử.
+- Tự chuyển năm mỗi 6 giây, có tạm dừng và tốc độ 1×/2×/4×. Dừng khi có sự kiện, trận đấu, đọc nhật ký cũ, chuyển tab hoặc rời Fantasy. Giữ vị trí cuộn khi dựng lại giao diện; nhật ký một cột, hỗ trợ cuộn và bàn phím.
+- Chọn một con đường chiến đấu từ 6 tuổi (Hắc ma pháp từ 16), chỉ mở nhánh tu luyện/lĩnh ngộ đó. Rèn khí và Dược thuật là nhánh chung. Bản lưu cũ giữ nền tảng, kỹ năng và điểm; người chơi tự chọn nhánh chiến đấu.
+- Kỹ năng chiến đấu cấp 1–5: hệ số nền 100%, 112%, 124%, 136%, 148%; nâng cấp có phí điểm, lượt và yêu cầu cấp nhân vật. Mô tả riêng hiệu ứng, ma lực, cảnh giới và giới hạn; hệ số áp vào chiến đấu thật. Kỹ năng nghề tối đa 1 cấp, không có hệ số sát thương.
+- Chặn thao tác lựa chọn từ nút cũ, dọn câu hỏi đã giải quyết trong bản lưu và chống lặp chủ đề nhập trong sáu năm.
+
 ## v8.1.0 — Thế cuộc Fantasy và chiến tranh gia tộc
 
 - Thêm năm nguồn Aurelia trên Hugging Face, xử lý 715.460 bản ghi thuộc các phân vùng đã chọn; giữ revision, checksum và ghi công. Dữ liệu được tổng hợp thành thuộc tính/tần suất, không đếm số dòng thành truyện chơi được.

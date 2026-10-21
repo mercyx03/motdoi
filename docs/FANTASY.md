@@ -55,3 +55,11 @@ Chạy `npm run test:fantasy` cho kiểm thử vòng đời, hệ thống RPG, t
 ## Thế cuộc 8.1.0
 
 Mục Thế cuộc quản lý quan hệ gia tộc, trạng thái vùng, mặt trận, quân lực, tiếp tế, cứu trợ và hiệp ước. Chiến dịch chiếm đất nay cần mặt trận hợp lệ và hậu cần. Xem [hướng dẫn chi tiết](FANTASY-POLITICS.md).
+
+## Giao diện và tu luyện 8.2.0
+
+Fantasy gia tộc được gắn nhãn thử nghiệm. Đồng hồ tự chạy một năm mỗi 6 giây ở tốc độ 1×; chọn 2×/4× hoặc Tạm dừng trên đầu trang. Đồng hồ chờ khi có lựa chọn, giao tranh, cuộn xuống đọc nhật ký hoặc ẩn tab. Cuộn về đầu nhật ký để tiếp tục nhịp thời gian; có nút xem toàn bộ lịch sử. Tin tức ghi chiến sự, đình chiến, hiệp ước, thay tộc trưởng và biến động vùng qua các năm.
+
+Từ 6 tuổi chọn Kiếm kỹ hoặc Ma pháp; nếu muốn Hắc ma pháp có thể giữ chưa chọn cho tới 16 tuổi. Chỉ chọn một con đường chiến đấu trong cuộc đời; Rèn khí/Dược thuật học chung. Bản lưu cũ giữ nguyên nền tảng, kiến thức và điểm; vào Tu luyện chọn con đường chiến đấu, không bị tự gán nhánh theo gia tộc.
+
+Kỹ năng chiến đấu có năm cấp, hệ số sát thương nền tương ứng 100/112/124/136/148%. Nâng từ cấp k lên k+1 tốn 2+k điểm lĩnh ngộ, một lượt, yêu cầu cấp nhân vật ≥ cảnh giới yêu cầu ×5 + k×2. Sát thương còn được điều chỉnh bởi hiệu ứng từng chiêu, trang bị, khắc hệ, dao động và giáp. Thanh EXP chính hiện ở trên vùng nội dung, cấp nhân vật tối đa 40.
