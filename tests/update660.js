@@ -12,6 +12,16 @@ try{
  const list=[];(function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else list.push(path.relative(out,p).replace(/\\/g,'/'));}})(out);
  ok(!list.some(f=>/\.(md|csv)$/i.test(f)),'không đưa tài liệu nội bộ lên web');
  ok(['_worker.js','_routes.json','_headers','reviews.html','js/reviews.js','css/style.css','data/market-prices.json','logo.svg'].every(f=>list.includes(f)),'đủ file cần cho web, API đánh giá và trang đánh giá');
+ // Verify the deployed pages, not just source files: every local script must ship.
+ for(const page of list.filter(f=>/\.html$/i.test(f))){
+  const source=fs.readFileSync(path.join(out,page),'utf8');
+  for(const m of source.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)){
+   const src=m[1].split(/[?#]/)[0];if(!src||/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(src))continue;
+   const target=src.startsWith('/')?src.slice(1):path.join(path.dirname(page),src);
+   ok(fs.existsSync(path.join(out,target)),page+' ships '+src);
+  }
+ }
+ ok(fs.readFileSync(path.join(out,'js/account.js'),'utf8')===fs.readFileSync(path.join(PUB,'js/account.js'),'utf8'),'Updates ships the same account/profile implementation as home');
  ok(!list.some(f=>/^js\/(engine|app|life\d+)\.js$/.test(f)),'không chép lại các file js nguồn đã gộp');
  // ctx: chạy phần mô phỏng của file gộp (bỏ phần giao diện cần trình duyệt)
  const ui=bundle.indexOf('/* ===== js/scene.js =====');const ctx={console,Math,Date,JSON,TextEncoder,TextDecoder};ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(bundle.slice(0,ui),ctx);

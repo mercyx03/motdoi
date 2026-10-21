@@ -18,6 +18,22 @@ function build(outDir) {
   const name = 'js/mot-doi.' + hash + '.js';
   fs.rmSync(OUT, { recursive: true, force: true });
   const skip = new Set(files.map(f => path.normalize(f)));
+  // Other pages still load shared scripts directly (e.g. account.js on Updates).
+  // Keep those assets even when the home page also includes them in its bundle.
+  (function keepPageScripts(dir) {
+    for (const e of fs.readdirSync(path.join(PUB, dir), { withFileTypes: true })) {
+      const rel = path.join(dir, e.name);
+      if (e.isDirectory()) { keepPageScripts(rel); continue; }
+      if (!/\.html$/i.test(e.name) || rel === 'index.html') continue;
+      const page = fs.readFileSync(path.join(PUB, rel), 'utf8');
+      for (const m of page.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)) {
+        const src = m[1].split(/[?#]/)[0];
+        if (!src || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(src)) continue;
+        const asset = src.startsWith('/') ? src.slice(1) : path.join(path.dirname(rel), src);
+        skip.delete(path.normalize(asset));
+      }
+    }
+  })('');
   (function copy(dir) {
     for (const e of fs.readdirSync(path.join(PUB, dir), { withFileTypes: true })) {
       const rel = path.join(dir, e.name);
