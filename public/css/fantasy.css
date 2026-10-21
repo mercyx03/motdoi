@@ -7,3 +7,25 @@
 .fantasy-wrap{font-family:var(--sans)}.fantasy-wrap button,.fantasy-wrap input,.fantasy-wrap select{font-family:var(--sans)}.fx-exp{padding:16px 20px;margin-bottom:14px;background:#102b3b;border:1px solid #4c8196;border-radius:12px}.fx-exp>div{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}.fx-exp progress,.fx-meter progress{display:block;width:100%;height:12px;border:0;border-radius:8px;overflow:hidden;background:#253b48;accent-color:#7dc7e1}.fx-exp progress{height:16px;margin:10px 0}.fx-exp progress::-webkit-progress-bar,.fx-meter progress::-webkit-progress-bar{background:#253b48;border-radius:8px}.fx-exp progress::-webkit-progress-value,.fx-meter progress::-webkit-progress-value{background:#7dc7e1;border-radius:8px}.fx-exp progress::-moz-progress-bar,.fx-meter progress::-moz-progress-bar{background:#7dc7e1;border-radius:8px}.fx-exp small{color:#a9c6d4}.fx-news{max-height:260px;overflow-y:auto;overscroll-behavior:contain}.fx-news p{border-bottom:1px solid #30434e;padding-bottom:10px}.fx-news small{color:#9ab3c1}.fx-log:focus-visible{outline:2px solid #7dc7e1;outline-offset:4px}.fx-log{scrollbar-gutter:stable;columns:1!important;line-height:1.75;max-height:55vh}.fx-skill p{font-size:13px}.fx-skill small{margin:8px 0}
 
 .fx-log{font-size:14px}.fx-log small{font-size:12px}.fx-news{font-size:14px}
+/* Fantasy layout: one main column, journal visible beside the first controls. */
+#fantasy .fx-layout{grid-template-columns:minmax(0,1fr) 330px;gap:22px}
+#fantasy .fx-journal{position:sticky;top:16px}
+#fantasy .fx-journal .fx-log{max-height:58vh}
+#fantasy .fx-layout>main>.btn:first-child{margin-bottom:14px}
+#fantasy .fx-service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#fantasy .fx-service-grid article{border:1px solid #40545b;border-radius:12px;padding:16px;background:#152630}
+#fantasy .fx-service-grid .btn{margin:4px}
+#fantasy .fx-tile small{font-size:11px}
+#fantasy .fx-tile b{font-size:12px}
+#fantasy .fx-tile{min-height:125px}
+#fantasy .fx-exp{margin-top:6px}
+@media(max-width:1000px){#fantasy .fx-layout{grid-template-columns:minmax(0,1fr)}#fantasy .fx-journal{position:static;grid-row:1}#fantasy .fx-journal .fx-log{max-height:180px}#fantasy .fx-journal>.fx-card:last-child{display:none}}
+@media(max-width:600px){#fantasy .fx-service-grid{grid-template-columns:1fr}#fantasy .fx-map{grid-template-columns:repeat(5,minmax(0,1fr))}#fantasy .fx-tile b{font-size:10px}#fantasy .fx-tile small{font-size:9px}#fantasy .fx-tile{min-height:115px}}
+#fantasy .fx-journal{grid-column:auto;min-width:0}
+#fantasy .fx-exp small{display:block;line-height:1.7}
+#fantasy .fx-header h1{font-size:clamp(26px,3vw,34px)}
+#fantasy .fx-identity{line-height:1.8}
+@media(max-width:1000px){#fantasy .fx-journal{grid-column:1;grid-row:1}}
+#fantasy .fx-log{columns:auto!important;column-count:auto!important;column-width:auto!important;overflow-x:hidden;overflow-wrap:anywhere}
+#fantasy .fx-subnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+#fantasy .fx-subnav button{font-size:13px}
