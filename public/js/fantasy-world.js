@@ -20,7 +20,7 @@ var D=G.FANTASY_DATA={
   ],
   regions:[
     ['lang','Làng Bình Minh',0,0,0,'thu',10,'Khu dân cư',0,0],['truong','Học viện Ngân Đăng',1,0,0,'phap',2,'Học viện',0,1],['cho_song','Chợ ven sông',2,0,0,'co',6,'Thương lộ',1,2],['ben_nuoc','Bến Linh Tuyền',3,0,0,'thuy',9,'Thủy Vực',0,3],['coi_trang','Cõi Trăng',4,0,2,'thuy',0,'Thủy Vực',2,4],
-    ['dong_co','Đồng Cỏ Gió',0,1,1,'phong',7,'Rừng Hoang',1,5],['rung_bac','Rừng Ngân Diệp',1,1,2,'sinh',4,'Rừng Hoang',2,6],['mo_dong','Mỏ Đồng Đỏ',2,1,2,'tho',3,'Sơn Động',2,7],['ai_da','Ải Huyền Nham',3,1,3,'tho',3,'Sơn Động',3,8],['cao_nguyen','Cao Nguyên Tro',4,1,4,'hoa',1,'Hoang Mạc',4,9],
+    ['dong_co','Đồng Cỏ Gió',0,1,1,'phong',7,'Rừng Hoang',0,5],['rung_bac','Rừng Ngân Diệp',1,1,2,'sinh',4,'Rừng Hoang',2,6],['mo_dong','Mỏ Đồng Đỏ',2,1,2,'tho',3,'Sơn Động',2,7],['ai_da','Ải Huyền Nham',3,1,3,'tho',3,'Sơn Động',3,8],['cao_nguyen','Cao Nguyên Tro',4,1,4,'hoa',1,'Hoang Mạc',4,9],
     ['dam_lay','Đầm Sương Độc',0,2,3,'sinh',5,'Đầm Lầy',3,10],['son_thanh','Sơn Thành Bạch Phong',1,2,3,'phong',2,'Sơn Động',3,11],['di_tich','Di Tích Tử Nguyệt',2,2,4,'thoi',8,'Di Tích',4,12],['hoang_sa','Hoang Sa Lưu Quang',3,2,4,'tho',11,'Hoang Mạc',4,13],['long_huyet','Thung Lũng Long Huyết',4,2,5,'hoa',1,'Sơn Động',5,14],
     ['thap_co','Tháp Dạ Khế',0,3,4,'hac',5,'Di Tích',4,15],['vuc_sau','Vực Vô Thanh',1,3,5,'hac',5,'Di Tích',5,16],['bien_co','Bờ Biển Cổ',2,3,4,'thuy',0,'Thủy Vực',4,17],['cong_sao','Cổng Sao Rạn',3,3,6,'thoi',8,'Di Tích',6,18],['thanh_do','Thánh Đô Vương Miện',4,3,0,'thu',6,'Khu dân cư',0,19]
   ],

@@ -1,6 +1,6 @@
 # Fantasy: map, học viện và hành trình
 
-Phạm vi: chỉ `fantasy-*.js`, `fantasy.css`, kiểm thử Fantasy và tài liệu này; `index.html` chỉ đổi cache tag của các asset Fantasy. Không đổi luật chơi, dữ liệu hay khóa lưu của Việt Nam / Toàn thế giới.
+Phạm vi: chỉ `fantasy-*.js`, `fantasy.css`, kiểm thử Fantasy và tài liệu này; `index.html` chỉ nạp module linh lực và đổi cache tag của các asset Fantasy. Không đổi luật chơi, dữ liệu hay khóa lưu của Việt Nam / Toàn thế giới.
 
 ## Cơ chế và giao diện
 
@@ -12,7 +12,7 @@ Phạm vi: chỉ `fantasy-*.js`, `fantasy.css`, kiểm thử Fantasy và tài li
 - Bến Linh Tuyền là bến dân cư với đường hộ tống, dược sư và hàng hồi ma. UI dùng chung `travelInfo` với engine để hiển thị chính xác lý do khóa và chi phí. Bấm ô đang đứng mở lại dịch vụ tại đó.
 - Stock, NPC, phẩm trang bị và 80 món trang bị địa phương chia theo 20 vùng. Làng chỉ bán nhu yếu phẩm; chợ/thánh đô phong phú hơn, trạm rừng/mỏ có chuyên môn riêng; hoang địa không tự mọc cửa hàng. Chiến lợi phẩm gồm đồ địa phương hoặc đồ chung phù hợp bậc cuộc chạm trán.
 - Thợ rèn nhận bạc, quặng và gỗ để chế tác/cường hóa vũ khí hoặc giáp tới +10. Chi phí tăng theo bậc; không có thất bại ngẫu nhiên. Trang bị mua được đưa vào túi, cần trang bị trong Túi đồ để có hiệu lực.
-- Các kỹ năng có 10 cấp. Kỹ năng chiến đấu tăng 12 điểm phần trăm sát thương nền/cấp; nghề dược tăng số thuốc và nghề rèn tăng số bậc chế tác thêm mỗi ba cấp. Bậc nội bộ cũ được giữ để đọc save và xét cảnh giới; bỏ giới hạn 40, UI dùng tổng điểm kiếm kỹ/ma lực theo đường đã chọn. Điểm tích lũy tiếp tục tăng sau mốc cũ.
+- Các kỹ năng có 10 cấp. Kỹ năng chiến đấu tăng 12 điểm phần trăm sát thương nền/cấp; nghề dược tăng số thuốc và nghề rèn tăng số bậc chế tác thêm mỗi ba cấp. Bậc nội bộ cũ được giữ để đọc save và xét cảnh giới; bỏ giới hạn 40, UI dùng linh lực chung, tích lũy theo giây và đột phá chủ động (chi tiết bên dưới).
 - Học viện có kiếm sĩ, pháp sư, hắc pháp, công tượng, dược sư. Nhập học 15 bạc + 1 lượt; 5 buổi học, mỗi buổi 8 bạc + 1 lượt. Tốt nghiệp nhận kỹ năng thật, mở tâm pháp (+2 chỉ số gốc/cấp) và nội tại (+1/cấp), mỗi loại tối đa 10. Khóa chiến đấu không cho vượt đường đã chọn; hai khóa nghề học chung. Tăng chỉ số khi luyện thành công, không cộng lại khi render/tải save.
 
 ## Nội dung và khảo sát nguồn
@@ -39,3 +39,12 @@ Nội dung mới gồm **36 tình huống viết riêng**, **40 biến thể đ�
 `node tests/update800.js`, `node tests/fantasy-ui.js`, `node tests/fantasy-politics.js`, `node tests/fantasy-progression.js` kiểm tra vòng đời, điều kiện map, săn khi 0 lượt, kinh tế dịch vụ, giới hạn +10, năm khóa học, chỉ số gốc và save, các lựa chọn mới và chống lặp đầu game. Kiểm tra gia đình đối chiếu Fantasy hiện tại khi có/không nạp module gia đình thực tế, thay vì buộc nội dung Fantasy mới trùng snapshot cũ. Hai kiểm tra di sản dùng log trả di sản/trạng thái trust thay vì giả định không có thu nhập sự kiện độc lập.
 
 `node tests/hardcore-isolation.js` đối chiếu 12 cuộc đời Việt Nam/Thế giới với snapshot cũ. `node tools/build.js` tạo bundle từ nguồn hiện tại. Kiểm thử UI bằng DOM giả bổ sung cho kiểm tra hiển thị thực trên trình duyệt, không thay thế kiểm tra bằng mắt.
+
+## Linh lực theo giây và mở bãi farm
+
+- Đồng Cỏ Gió mở ở cảnh giới đầu. Từ Bến Linh Tuyền hoặc nơi khác có thể chọn đi thẳng tới map đủ điều kiện, không bị chặn vì ô không liền kề. Đi đường vẫn tốn lượt; săn không tốn lượt. Thú thường đầu game có bậc 1–2 và sát thương phù hợp nhân vật mới; thủ lĩnh vẫn khó hơn.
+- Linh lực bắt đầu hấp thụ từ 6 tuổi. Tốc độ gốc = 10 × (1 + 0,5 × bậc cảnh giới), tức 10/giây ở Chưa thức tỉnh, 15 ở Sơ học, 20 ở Học đồ… Đây là giây thực khi Fantasy đang mở và hiển thị, độc lập mức 15/30/60 giây mỗi năm. Chờ lựa chọn hoặc chiến đấu vẫn hấp thụ; tạm dừng, ẩn/đóng trang hoặc về trang chính không có thu nhập thời gian ẩn.
+- Đọc sách tốn một lượt và cộng 10 điểm phần trăm hiệu suất vĩnh viễn, tối đa +100% nghiên cứu. Có ba công pháp mua/học riêng tại các địa điểm phù hợp: Tụ Linh Nhập Môn +10%, Linh Tuyền Dẫn Khí +20%, Tinh Hà Thổ Nạp +35%. Mỗi sách chỉ học một lần. Các phần trăm cộng trên tốc độ gốc: 10 × (1 + 10%) = 11/giây; thêm sách +20% thì thành 13/giây. Khi cảnh giới nâng tốc độ gốc, mọi % đã học tiếp tục áp dụng.
+- Mốc đầu cần 100 linh lực; mốc sau tăng theo `ceil(100 × 1,18^(tầng nội bộ − 1))`. Đủ linh lực hiện nút Đột phá; không tự trừ hay kẹp linh lực ở mốc. Đột phá đủ điều kiện thành công, không tốn lượt hoạt động, nhận 2 điểm lĩnh ngộ và tăng nền tảng. Có 110, cần 100 thì sau đột phá còn đúng 10; có thể giữ nhiều mốc trong lúc đang chiến đấu/chờ giải quyết sự kiện. Thao tác bị chặn hoặc chưa đủ không trừ linh lực.
+- Bản lưu cũ giữ nguyên cảnh giới và quy đổi phần kinh nghiệm dang dở theo tỷ lệ sang mốc linh lực mới. Bản lưu mới giữ số linh lực chính xác, sách và hiệu suất, không nhân lại % khi tải. Không lưu timestamp để nhận linh lực offline. Giao diện cập nhật thanh linh lực mà không dựng lại lựa chọn, nhờ vậy không mất trạng thái bấm/chỗ cuộn.
+- Kiểm thử có ví dụ 110 → 10, 10/giây → 11/giây, tăng tốc độ gốc sau cảnh giới lớn, cộng nhiều sách, không học trùng, save cũ/mới, thời gian ẩn/tạm dừng và 30 cuộc đi từ bến đến bãi farm rồi thắng bằng nhân vật cảnh giới đầu.
