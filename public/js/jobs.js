@@ -182,7 +182,7 @@
         if (ch(r, d.danger * 1.5)) { H.kill(l, 'hy sinh khi làm nhiệm vụ', log, true); return; }
         if (ch(r, 0.3)) { log('Bị đối tượng chống trả, bị thương nặng phải nằm viện nhiều tuần.', 'bad'); fx(l, { hea: -15 }); }
         rep(l, 12); log('Trực tiếp khống chế đối tượng, phá thành công chuyên án. Được đề nghị tặng Huân chương Chiến công.', 'big'); fx(l, { hap: 8, karma: 4 });
-        if (l.job.rank < E.CAR.cong_an.t.length - 1 && ch(r, 0.4) && l.job.yrs >= 1) { l.job.rank++; l.job.yrs = 0; log('Được thăng quân hàm vượt cấp lên ' + E.CAR.cong_an.t[l.job.rank] + ' nhờ thành tích.', 'big'); }
+        if (l.job.rank < E.CAR.cong_an.t.length - 1 && ch(r, 0.4) && l.job.yrs >= 1 && (l.job.rank < 7 || !E.canAdvance || E.canAdvance(l, E.CAR.cong_an, false))) { l.job.rank++; l.job.yrs = 0; log('Được thăng quân hàm vượt cấp lên ' + E.CAR.cong_an.t[l.job.rank] + ' nhờ thành tích.', 'big'); }
         H.mem(l, 'Chuyên án năm ' + yr(l) + ' — lần bạn đi đầu đối mặt với tội phạm.', 6);
         if (d.b === 'mt' || d.b === 'hs') l.flags.revenge = (l.flags.revenge || 0) + 1;
       } },
@@ -466,7 +466,7 @@
       { k: 'campaign', l: 'Đi khắp địa bàn, lắng nghe cử tri', ai: { w: 1.4, soc: 1 }, run: function (l, r, log) {
         var p = U.clamp(0.5 + (l.st.soc - 50) / 120 + (l.karma || 0) / 200 + (l.flags.eliteBoost ? 0.15 : 0), 0.2, 0.92);
         fx(l, { hea: -3 });
-        if (ch(r, p)) { l.flags.daibieu = (l.flags.daibieu || 0) + 1; log(isVN(l) ? 'Trúng cử đại biểu Quốc hội với số phiếu cao.' : 'Thắng cử sát nút!', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Đêm nghe công bố kết quả bầu cử năm ' + yr(l) + '.', 5); if (rank(l) < E.CAR[jid(l)].t.length - 1 && ch(r, 0.4)) { l.job.rank++; l.job.yrs = 0; log('Được giao trọng trách mới: ' + E.jobTitle(l) + '.', 'big'); } }
+        if (ch(r, p)) { l.flags.daibieu = (l.flags.daibieu || 0) + 1; log(isVN(l) ? 'Trúng cử đại biểu Quốc hội với số phiếu cao.' : 'Thắng cử sát nút!', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Đêm nghe công bố kết quả bầu cử năm ' + yr(l) + '.', 5); if (rank(l) < E.CAR[jid(l)].t.length - 1 && ch(r, 0.4) && (jid(l) !== 'chinh_tri' || rank(l) < 6 || !E.canAdvance || E.canAdvance(l, E.CAR[jid(l)], false))) { l.job.rank++; l.job.yrs = 0; log('Được giao trọng trách mới: ' + E.jobTitle(l) + '.', 'big'); } }
         else { log(isVN(l) ? 'Không trúng cử lần này.' : 'Thất cử.', 'bad'); fx(l, { hap: -6 }); }
       } },
       { k: 'money', l: 'Chi tiền "vận động" ngầm', ai: { bad: 1.3, risk: 1 }, run: function (l, r, log) { cashB(l, -1, 'Chi phí vận động'); fx(l, { karma: -8 }); l.flags.dirty = (l.flags.dirty || 0) + 1; if (ch(r, 0.6)) { l.flags.daibieu = (l.flags.daibieu || 0) + 1; log('Trúng cử. Ai cũng biết cái giá của nó.', 'neutral'); } else log('Mất tiền mà vẫn thất cử.', 'bad'); } },

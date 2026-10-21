@@ -180,7 +180,7 @@
       var c = E.jobDef(l), rk = l.job.rank, since = l.job.rankSince != null ? l.job.rankSince : l.age - (l.job.yrs || 0), inRank = l.age - since;
       var rows = c.t.map(function (t, i) { var mark = i < rk ? '✔ ' : i === rk ? '▶ ' : '○ '; var y = i < c.t.length - 1 ? ' → lên ' + c.t[i + 1] + ' sau tối thiểu ' + c.yrs[i] + ' năm' + (i === 5 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'Học viện Chính trị CAND' : 'Học viện Lục quân / Học viện Chính trị') + ')' : i === 7 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'lớp cao cấp' : 'Học viện Quốc phòng') + ', xét theo chức vụ)' : '') : ''; return mark + t + y; });
       var need = c.yrs[rk] || 0, left = Math.max(0, need - inRank);
-      return 'Quân hàm hiện tại: ' + c.t[rk] + ' (' + inRank + ' năm ở bậc này' + (rk < c.t.length - 1 ? ', còn khoảng ' + left + ' năm nữa đủ niên hạn' : '') + ').\n' + rows.join('\n') + '\nNiên hạn theo Luật Sĩ quan Quân đội nhân dân và Luật Công an nhân dân; đủ niên hạn còn cần hoàn thành nhiệm vụ, đủ tiêu chuẩn chính trị, sức khỏe và có chức vụ phù hợp.';
+      return 'Quân hàm hiện tại: ' + c.t[rk] + ' (' + inRank + ' năm ở bậc này' + (rk < c.t.length - 1 ? ', còn khoảng ' + left + ' năm nữa đủ niên hạn' : '') + ').\n' + rows.join('\n') + '\nLộ trình mô phỏng trong game: đủ thời gian chưa chắc được thăng hàm; còn cần hoàn thành nhiệm vụ, đủ sức khỏe, học nâng cao và có chức vụ phù hợp.';
     },
     opts: [{ k: 'ok', l: 'Đã hiểu', ai: { w: 1 }, run: function () { } }]
   });

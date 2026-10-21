@@ -83,7 +83,7 @@
     } else {
       life.base = G.WEC && G.WEC.baseFor(life.country, life.urban, life.gdp) || life.gdp * 1000 * 0.55 * (life.urban ? 1.1 : 0.8);
     }
-    if (life.abroad && life.abroad.perm) {
+    if (life.abroad && (life.abroad.perm || life.abroad.research)) {
       var foreignBase = life.abroad.base;
       var residence = W.BY[life.abroad.code];
       if (G.WEC && residence) {
@@ -1850,6 +1850,7 @@
     }
 
     // ---- Bạn đời ----
+    if (E.syncKnownDeaths) E.syncKnownDeaths(life, a);
     var p = life.partner;
     if (p) {
       p.age++;
@@ -1917,6 +1918,8 @@
       bf.close = U.clamp((bf.close || 60) + U.normal(r) * 4 - (life.abroad ? 3 : 0), 0, 100);
       if (r() < qBase(life.mort, a) * 1.1 + (a >= 16 && a <= 40 ? 0.002 : 0)) {
         bf.alive = false; bf.died = a;
+        if (life.partner && life.partner.name === bf.name && E.partnerGone) E.partnerGone(life, a);
+        if (E.personDied) E.personDied(life, bf, a);
         var why = U.pick(r, a < 40 ? ['tai nạn giao thông', 'đuối nước', 'một cơn bạo bệnh'] : ['ung thư', 'đột quỵ', 'bệnh tim']);
         log('Hung tin: ' + bf.name + ' — người bạn thân từ thuở nhỏ — qua đời vì ' + why + '.', 'bad');
         H.mem(life, 'Ngày tiễn ' + bf.name + ', người bạn thân nhất. Bạn đặt lên mộ ' + (bf.token || 'chiếc ảnh chụp chung năm cấp ba') + '.', 7);

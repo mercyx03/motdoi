@@ -18,6 +18,15 @@ entries.unshift(
 );
 entries.unshift({id:'community-update',publishedAt:new Date().toISOString(),title:'Góc cập nhật, cộng đồng và hành trình theo đuổi đam mê',summary:'Xem lịch sử phát triển, góp ý bằng tài khoản và biết rõ rủi ro trước khi chuyển nghề diễn viên.',tags:['Tính năng','Cộng đồng','Sửa lỗi'],details:['Thêm cảnh báo rời công việc và lương hiện tại nếu trúng vai khi chuyển sang diễn xuất; tài năng và may mắn có thể đưa bạn lên hạng A, nhưng cũng có thể dừng ở vai phụ hoặc quần chúng.','Bổ sung, sửa tên các thành tựu fandom theo danh sách người chơi cung cấp; giữ tiến độ thành tựu đã có.','Đánh giá chỉ còn số sao; giữ dữ liệu cũ và đưa nơi góp ý sang trang cập nhật.']});
 entries.sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
+const extraPath=path.join(root,'docs/update-extra.json');
+if(fs.existsSync(extraPath))entries.unshift(...JSON.parse(fs.readFileSync(extraPath,'utf8')));
+// Rebuilding the page does not change the date an existing update was published.
+const previousPath=path.join(root,'public/data/updates.json');
+if(fs.existsSync(previousPath)){
+ const previous=new Map(JSON.parse(fs.readFileSync(previousPath,'utf8')).entries.map(e=>[e.id,e.publishedAt]));
+ entries.forEach(e=>{if(previous.has(e.id))e.publishedAt=previous.get(e.id);});
+}
+entries.sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
 const publicEntries=entries.map(playerEntry).filter(Boolean);
 fs.writeFileSync(path.join(root,'public/data/updates.json'),JSON.stringify({generatedAt:new Date().toISOString(),entries:publicEntries},null,2)+'\n');
 console.log('Built '+entries.length+' dated update entries from '+releases.length+' release commits; version labels omitted.');

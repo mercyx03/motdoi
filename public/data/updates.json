@@ -1,65 +1,76 @@
 {
-  "generatedAt": "2026-10-21T13:54:31.080Z",
+  "generatedAt": "2026-10-21T22:44:36.148Z",
   "entries": [
+    {
+      "id": "continuity-oct22",
+      "publishedAt": "2026-10-21T22:43:57.111Z",
+      "title": "Thêm chức danh, chuyện tình cảm và sửa bản lưu",
+      "summary": "Thêm chức danh nhà nước, các cấp hàm đến Đại tướng và những vụ scandal ảnh hưởng uy tín.",
+      "details": [
+        "Thêm chức danh nhà nước, các cấp hàm đến Đại tướng và những vụ scandal ảnh hưởng uy tín.",
+        "Có thêm chuyện mập mờ, tình một đêm và những mong đợi khác nhau sau đó.",
+        "Học bổng tiến sĩ chuyển đúng nơi sống và thu nhập; người vừa là bạn thân vừa là bạn đời chỉ báo qua đời một lần."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
     {
       "id": "community-update",
       "publishedAt": "2026-10-21T13:54:31.069Z",
-      "title": "Góc cập nhật, cộng đồng và hành trình theo đuổi đam mê",
-      "summary": "Xem lịch sử phát triển, góp ý bằng tài khoản và biết rõ rủi ro trước khi chuyển nghề diễn viên.",
+      "title": "Góp ý cho game, thêm thành tựu fan cứng",
+      "summary": "Có chỗ riêng để bình luận và trả lời góp ý; phần đánh giá chỉ còn số sao.",
       "tags": [
         "Tính năng",
         "Cộng đồng",
         "Sửa lỗi"
       ],
       "details": [
-        "Thêm cảnh báo rời công việc và lương hiện tại nếu trúng vai khi chuyển sang diễn xuất; tài năng và may mắn có thể đưa bạn lên hạng A, nhưng cũng có thể dừng ở vai phụ hoặc quần chúng.",
-        "Bổ sung, sửa tên các thành tựu fandom theo danh sách người chơi cung cấp; giữ tiến độ thành tựu đã có.",
-        "Đánh giá chỉ còn số sao; giữ dữ liệu cũ và đưa nơi góp ý sang trang cập nhật."
+        "Có chỗ riêng để bình luận và trả lời góp ý; phần đánh giá chỉ còn số sao.",
+        "Bổ sung 47 tên fandom, sửa lại tên thành tựu theo góp ý.",
+        "Trước khi chuyển nghề diễn viên, game sẽ báo rõ chuyện mất công việc và mức lương đang có."
       ]
     },
     {
       "id": "spiritual-cultivation",
       "publishedAt": "2026-10-21T10:42:07Z",
-      "title": "Linh lực theo giây và bãi farm khởi đầu",
-      "summary": "Mở Đồng Cỏ Gió ngay cảnh giới đầu; đột phá giữ nguyên linh lực dư.",
+      "title": "Mở bãi farm đầu, đổi cách tích linh lực",
+      "summary": "Đồng Cỏ Gió đã mở từ cảnh giới đầu. Map đủ điều kiện thì có thể đi thẳng tới.",
       "tags": [
         "Fantasy",
         "Sửa lỗi"
       ],
       "details": [
-        "Chọn đường đi thẳng tới map đủ điều kiện, mở bãi farm đầu và cân lại linh thú cho nhân vật mới.",
-        "Hấp thụ linh lực theo giây thực, cảnh giới tăng tốc độ gốc; đọc sách và học công pháp cộng % hấp thụ.",
-        "Đột phá trừ đúng linh lực cần thiết, giữ toàn bộ phần dư cho tầng sau.",
-        "Giữ cảnh giới của bản lưu cũ; tạm dừng hoặc ẩn trang không cộng linh lực thời gian ẩn."
+        "Đồng Cỏ Gió đã mở từ cảnh giới đầu. Map đủ điều kiện thì có thể đi thẳng tới.",
+        "Linh lực tăng theo giây; lên cảnh giới và học sách giúp hấp thụ nhanh hơn.",
+        "Đột phá xong vẫn giữ linh lực dư cho cấp sau."
       ]
     },
     {
       "id": "fantasy-expansion",
       "publishedAt": "2026-10-21T10:12:45Z",
-      "title": "Gọn giao diện Fantasy, học viện và NPC theo vùng",
-      "summary": "Săn linh thú không tốn lượt; thêm học viện, tâm pháp, thợ rèn và trang bị địa phương.",
+      "title": "Fantasy có học viện, cửa hàng và thợ rèn",
+      "summary": "Gom lại các nút, đưa nhật ký lên chỗ dễ nhìn hơn trên điện thoại.",
       "tags": [
         "Fantasy",
         "Tính năng"
       ],
       "details": [
-        "Gom sáu nhóm điều hướng, nhân vật và gia thế chung một nút, đưa nhật ký lên trên ở điện thoại.",
-        "Năm khóa học viện, tuyệt kỹ khi tốt nghiệp, tâm pháp và nội tại tăng chỉ số gốc; kỹ năng lên cấp 10.",
-        "NPC, cửa hàng, thuốc, thợ rèn và 80 trang bị chia theo map; chế tác/cường hóa tới +10.",
-        "Thêm 36 tình huống riêng, 40 biến thể địa phương, nhiều chuyện sơ sinh; sửa Bến Linh Tuyền và lỗi nhật ký tràn ngang."
+        "Gom lại các nút, đưa nhật ký lên chỗ dễ nhìn hơn trên điện thoại.",
+        "Thêm khóa học, tâm pháp và kỹ năng bị động. Kỹ năng có thể lên cấp 10.",
+        "Mỗi vùng có NPC và đồ riêng; thêm mua thuốc, chế đồ, cường hóa. Săn linh thú không tốn lượt hoạt động."
       ]
     },
     {
       "id": "git-3cbed702799c",
       "publishedAt": "2026-10-21T08:47:54Z",
-      "title": "Giao lưu với con, tính cách bố mẹ và tình cảm",
-      "summary": "Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore; không đổi Fantasy.",
+      "title": "Có thêm chuyện để nói với người nhà",
+      "summary": "Chọn từng người con để hỏi han, chăm sóc hoặc hỗ trợ tiền.",
       "details": [
-        "Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore; không đổi Fantasy.",
-        "Thêm mục Gia đình: chọn từng người con để chăm sóc, trò chuyện, bàn ranh giới hoặc hỗ trợ một khoản có kiểm tra tiền. Mỗi người có lượt riêng trong năm; sống xa liên lạc từ xa, trẻ sơ sinh thông qua người chăm sóc.",
-        "Thêm trò chuyện riêng với bố/mẹ theo 16 tính cách hiện có và mục Tình cảm để tâm sự, xin lỗi, bàn riêng tư/kế hoạch/ngân sách. Lời đề nghị có thể chưa được chấp thuận.",
-        "40 tình huống tự nhiên: 16 theo tính cách bố mẹ, 12 về từng giai đoạn tuổi của con, 12 về tình cảm. Giới hạn tần suất và kiểm tra người còn sống, tuổi, nơi ở, tình trạng quan hệ; không kết tội ngoại tình từ lời đồn, không quyết việc làm/hôn nhân thay con trưởng thành.",
-        "Tin cậy và căng thẳng theo từng mối quan hệ ảnh hưởng phản hồi; gắn bó cập nhật vào hồ sơ con/bạn đời hiện có. Bản lưu cũ được bổ sung trạng thái khi dùng, không đổi tên hay tuổi người thân."
+        "Chọn từng người con để hỏi han, chăm sóc hoặc hỗ trợ tiền.",
+        "Trò chuyện với bố mẹ tùy tính cách của từng người; có thêm chuyện để tâm sự với người yêu, vợ chồng.",
+        "Thêm những va chạm trong gia đình, từ chuyện con cái đến tiền bạc và tình cảm."
       ],
       "tags": [
         "Tính năng"
@@ -68,14 +79,12 @@
     {
       "id": "git-58c1fbc618db",
       "publishedAt": "2026-10-21T07:31:37Z",
-      "title": "Fantasy thử nghiệm: nhánh tu luyện, kỹ năng và nhịp chơi",
-      "summary": "Đồng bộ font với giao diện chính, ghi Fantasy gia tộc (thử nghiệm) trước khi vào; thêm thanh EXP rõ ràng ở khu trung tâm và bản tin chiến sự có lịch sử.",
+      "title": "Chọn đường tu luyện, học và nâng kỹ năng",
+      "summary": "Fantasy có lựa chọn hướng chiến đấu, kỹ năng và điều kiện học riêng cho từng nhánh.",
       "details": [
-        "Đồng bộ font với giao diện chính, ghi Fantasy gia tộc (thử nghiệm) trước khi vào; thêm thanh EXP rõ ràng ở khu trung tâm và bản tin chiến sự có lịch sử.",
-        "Tự chuyển năm mỗi 6 giây, có tạm dừng và tốc độ 1×/2×/4×. Dừng khi có sự kiện, trận đấu, đọc nhật ký cũ, chuyển tab hoặc rời Fantasy. Giữ vị trí cuộn khi dựng lại giao diện; nhật ký một cột, hỗ trợ cuộn và bàn phím.",
-        "Chọn một con đường chiến đấu từ 6 tuổi (Hắc ma pháp từ 16), chỉ mở nhánh tu luyện/lĩnh ngộ đó. Rèn khí và Dược thuật là nhánh chung. Bản lưu cũ giữ nền tảng, kỹ năng và điểm; người chơi tự chọn nhánh chiến đấu.",
-        "Kỹ năng chiến đấu cấp 1–5: hệ số nền 100%, 112%, 124%, 136%, 148%; nâng cấp có phí điểm, lượt và yêu cầu cấp nhân vật. Mô tả riêng hiệu ứng, ma lực, cảnh giới và giới hạn; hệ số áp vào chiến đấu thật. Kỹ năng nghề tối đa 1 cấp, không có hệ số sát thương.",
-        "Chặn thao tác lựa chọn từ nút cũ, dọn câu hỏi đã giải quyết trong bản lưu và chống lặp chủ đề nhập trong sáu năm."
+        "Fantasy có lựa chọn hướng chiến đấu, kỹ năng và điều kiện học riêng cho từng nhánh.",
+        "Có nút tạm dừng và đổi tốc độ; gặp sự kiện hoặc vào trận thì game dừng để chờ bạn chọn.",
+        "Nhật ký và bản tin chiến sự dễ theo dõi hơn."
       ],
       "tags": [
         "Fantasy",
@@ -85,13 +94,12 @@
     {
       "id": "git-b7332f0224f5",
       "publishedAt": "2026-10-21T06:24:55Z",
-      "title": "Thế cuộc Fantasy và chiến tranh gia tộc",
-      "summary": "Bổ sung chất liệu cho các câu chuyện Fantasy và những biến cố giữa các gia tộc.",
+      "title": "Các gia tộc bắt đầu có chuyện với nhau",
+      "summary": "Thêm quan hệ giữa các tộc, tranh quyền, kế nhiệm và chiến tranh kéo dài nhiều năm.",
       "details": [
-        "Bổ sung chất liệu cho các câu chuyện Fantasy và những biến cố giữa các gia tộc.",
-        "Thêm trạng thái vùng, quan hệ từng cặp gia tộc, tộc trưởng/kế nhiệm, chiến tranh nhiều năm, hậu cần, hộ vệ, nhiệm vụ mặt trận, đình chiến, hiệp ước, cứu trợ và giá chợ theo hoàn cảnh.",
-        "Bổ sung các cảnh chính trị viết tiếng Việt theo tuổi, địa vị và điều kiện hiện tại; hồ sơ đối chất, thiếu tài nguyên, di tản, trạm dược, tranh quyền và giao lưu. Trẻ em chỉ chọn việc của bản thân.",
-        "Chặn chiếm đất lúc hòa bình, chiến tranh từ xa, phá đình chiến, trùng mặt trận, lặp thưởng cứu trợ, thiếu tài nguyên, cảnh sai địa điểm và gửi dân về vùng còn đánh nhau. Lưu được nâng cấp trong chế độ Fantasy."
+        "Thêm quan hệ giữa các tộc, tranh quyền, kế nhiệm và chiến tranh kéo dài nhiều năm.",
+        "Có nhiệm vụ mặt trận, hộ vệ, cứu trợ, đình chiến và ký hiệp ước.",
+        "Giá chợ và chuyện gặp trên đường thay đổi theo tình hình từng vùng."
       ],
       "tags": [
         "Fantasy",
@@ -101,17 +109,12 @@
     {
       "id": "git-8508fc135a32",
       "publishedAt": "2026-10-21T05:52:25Z",
-      "title": "Góc nhìn nhân vật và thế giới Fantasy gia tộc",
-      "summary": "Hardcore: giai đoạn 0–2 tuổi chỉ có quan sát và tác động chăm sóc tự động, không đưa quyết định của bố mẹ cho người chơi. Từ 3 tuổi, lựa chọn là hành động của trẻ: nói điều mình cần, nhờ giúp, tự thử, học, nghỉ hoặc im lặng. Người lớn có thể từ chối tùy áp lực và phản ứng của họ; lựa chọn của trẻ không tự rút quỹ gia đình hay ra lệnh người lớn phải thay đổi. Cập nhật cả sự kiện đang mở trong bản lưu cũ.",
+      "title": "Thêm chế độ Fantasy gia tộc",
+      "summary": "Bắt đầu từ lúc chào đời, lớn lên trong một gia tộc rồi có thể sống tiếp đời con.",
       "details": [
-        "Hardcore: giai đoạn 0–2 tuổi chỉ có quan sát và tác động chăm sóc tự động, không đưa quyết định của bố mẹ cho người chơi. Từ 3 tuổi, lựa chọn là hành động của trẻ: nói điều mình cần, nhờ giúp, tự thử, học, nghỉ hoặc im lặng. Người lớn có thể từ chối tùy áp lực và phản ứng của họ; lựa chọn của trẻ không tự rút quỹ gia đình hay ra lệnh người lớn phải thay đổi. Cập nhật cả sự kiện đang mở trong bản lưu cũ.",
-        "Thêm Fantasy gia tộc cạnh Việt Nam / Toàn thế giới, với bản lưu riêng, xuất thân, cha mẹ, hôn nhân, con cái và truyền đời từ sơ sinh.",
-        "Sáu xuất thân, 12 gia tộc, 20 vùng đất, tước từ thường dân tới công tước và tám cảnh giới sức mạnh. Tước gia đình, tước cá nhân, chức trong hội nghề và sức chiến đấu được theo dõi riêng. Có xác nhận kế vị khi trưởng thành, không cho trẻ cai trị chỉ vì sinh vào nhà quý tộc.",
-        "Kiếm kỹ, ma pháp, hắc ma pháp, rèn khí và dược thuật; 19 kỹ năng có điều kiện trước/sau; luyện tập giới hạn theo năm, học cùng thầy, học bổng và xin hỗ trợ gia tộc do NPC xét. Hắc thuật tăng tà nhiễm, có thanh tẩy và hậu quả nếu lạm dụng.",
-        "Bản đồ di chuyển có chi phí, giới hạn tuổi / cảnh giới, giao tranh theo lượt, tiêu hao ma lực, khắc hệ, thủ thế, trói, phá giáp, hồi phục, rút lui và tử trận. Quái cho kinh nghiệm, tiền, vật liệu và đôi khi trang bị; không có thưởng khi rút chạy. Có giới hạn để không trói đối thủ vô hạn hay nhận thưởng lặp.",
-        "Thu thập, giao thương có chênh lệch mua/bán, chế tác, trang bị rơi, khắc phù, nhiệm vụ có tiến độ và nộp tài nguyên thật. Năm hội nghề có điều kiện gia nhập, thâm niên, chức bậc và phụ cấp. Có tranh chấp tài nguyên, chiến dịch chiếm lãnh địa, tái thiết, ngoại giao và biến động biên giới làm đổi chủ lãnh thổ.",
-        "Bổ sung linh thú, tương tác với nhân vật, mô tả địa hình và nhiệm vụ được chuyển thể sang tiếng Việt.",
-        "Giữ đúng cha/mẹ lúc con sinh ra khi người chơi có bạn đời mới; di sản chỉ được nhận sau lúc cha/mẹ qua đời và khi con đủ tuổi. Đời con không kế thừa cấp chiến đấu. Có thể xuất bản lưu và tìm kiếm trong bách khoa linh thú."
+        "Bắt đầu từ lúc chào đời, lớn lên trong một gia tộc rồi có thể sống tiếp đời con.",
+        "Có 20 vùng đất, kiếm kỹ, ma pháp, nghề rèn, dược thuật và các trận đánh theo lượt.",
+        "Hardcore cũng sửa cách kể ở tuổi nhỏ: bạn chọn việc của đứa trẻ, không quyết thay bố mẹ."
       ],
       "tags": [
         "Fantasy"
@@ -120,14 +123,12 @@
     {
       "id": "git-c8002dc1004b",
       "publishedAt": "2026-10-21T03:33:52Z",
-      "title": "Hardcore theo gia cảnh, luyện tài năng thể thao và training esports",
-      "summary": "Tình huống Hardcore đọc điều kiện thực tế: trẻ dựa vào gia cảnh và thu nhập của người còn sống; người đã tự lập dựa vào tiền và tài sản của chính mình. Những tình huống thiếu thốn có nhánh thay thế khi nhu cầu vật chất đã được đáp ứng: kỳ vọng thành tích, kiểm soát, ít thời gian bên con, khó tự quyết và áp lực hình ảnh.",
+      "title": "Hardcore hợp gia cảnh hơn, thêm luyện tập",
+      "summary": "Nhà khá giả không còn gặp chuyện thiếu ăn, thiếu tiền vô lý; áp lực sẽ khác với nhà khó khăn.",
       "details": [
-        "Tình huống Hardcore đọc điều kiện thực tế: trẻ dựa vào gia cảnh và thu nhập của người còn sống; người đã tự lập dựa vào tiền và tài sản của chính mình. Những tình huống thiếu thốn có nhánh thay thế khi nhu cầu vật chất đã được đáp ứng: kỳ vọng thành tích, kiểm soát, ít thời gian bên con, khó tự quyết và áp lực hình ảnh.",
-        "Sửa tình huống nhà giàu bỗng thiếu thốn sau vài lựa chọn; bỏ lời giải thích lặp lại trong hồ sơ, gợi ý và nhật ký. Bản lưu cũ được cập nhật lời kể, giữ nguyên chi phí đã chọn.",
-        "Thêm hành động tự chọn Luyện tập thể thao / nâng kỹ năng từ 6 tuổi: kỹ thuật, thể lực, huấn luyện viên cho người trưởng thành có đủ tiền và phục hồi nhẹ. Kỹ năng tăng vào cấp tài năng thật, giảm hiệu quả khi đã giỏi, tối đa 100 và mỗi năm một đợt. Người đang chấn thương chỉ tập nhẹ; trẻ không bị trừ tiền cá nhân.",
-        "Thêm Training esports: phản xạ / chiến thuật / phong độ cho tuyển thủ đang thi đấu ở cả bốn game. Chỉ số được dùng trực tiếp trong thi đấu, đồng bộ với kỹ năng game; phần tăng phong độ không bị cập nhật thường niên ghi đè. Có giới hạn một đợt mỗi năm, kiểm tra lại nghề và phiên thi đấu để chặn menu cũ hoặc lặp lợi ích.",
-        "Hai hành động luyện tập mới chỉ được thực hiện khi người chơi chủ động chọn."
+        "Nhà khá giả không còn gặp chuyện thiếu ăn, thiếu tiền vô lý; áp lực sẽ khác với nhà khó khăn.",
+        "Có thể chủ động luyện thể thao từ nhỏ, chọn tập kỹ thuật, thể lực hoặc phục hồi.",
+        "Tuyển thủ esports có thêm buổi tập phản xạ, chiến thuật và phong độ."
       ],
       "tags": [
         "Tính năng",
@@ -137,23 +138,12 @@
     {
       "id": "git-2123a49bf720",
       "publishedAt": "2026-10-21T02:42:03Z",
-      "title": "Chiến dịch Hardcore: xuất phát điểm, cảm xúc và khả năng vươn lên",
-      "summary": "Sống tiếp đời con: dữ liệu cũ thiếu chỗ ở lúc sinh dùng nhà đã biết của bố mẹ, thay vì bốc lại gia cảnh nhà thuê / nhà tạm. Vẫn ưu tiên hồ sơ đúng lúc sinh nếu đã có; nhà của bố mẹ không bị cộng thành tài sản riêng của trẻ.",
+      "title": "Hardcore có chuyện riêng từ nhỏ đến già",
+      "summary": "Thêm gần 100 tình huống riêng, theo từng giai đoạn cuộc đời và hoàn cảnh gia đình.",
       "details": [
-        "Sống tiếp đời con: dữ liệu cũ thiếu chỗ ở lúc sinh dùng nhà đã biết của bố mẹ, thay vì bốc lại gia cảnh nhà thuê / nhà tạm. Vẫn ưu tiên hồ sơ đúng lúc sinh nếu đã có; nhà của bố mẹ không bị cộng thành tài sản riêng của trẻ.",
-        "Sửa danh sách anh chị em khi tiếp đời: giữ đúng tên, giới tính và thứ tự sinh, kể cả gia đình định cư ở Nhật và nhân vật là con một.",
-        "Tách kho biến cố ngẫu nhiên Hardcore khỏi kho sự kiện Thường. Có 98 tình huống riêng theo chín giai đoạn từ 0 tuổi đến tuổi già, thêm 6 chặng tiếp nối, 6 tình huống theo bối cảnh quân ngũ / trại giam / bị giữ và một cơ hội bứt phá hiếm. Giữ các ngã rẽ bắt buộc như học hành, tìm việc; lời dẫn Hardcore được viết riêng.",
-        "Từ năm đầu có nhiều lựa chọn mới về chăm sóc, điều kiện sinh hoạt và phản ứng của người chăm sóc. Trẻ dùng quỹ gia đình trừu tượng, không bị gán nợ cá nhân.",
-        "Môi trường gia đình có thể khắt khe, thiếu lắng nghe hoặc căng thẳng vì cơm áo; vẫn có một tỷ lệ nhỏ có chỗ dựa tốt hơn. Áp lực và cách ứng phó tích lũy thành cảm xúc / tổn thương, ảnh hưởng stress khi lớn lên, mức hạnh phúc và điểm thi.",
-        "Có hỗ trợ miễn phí khi thiếu tiền, nhưng không thể lặp lại nhiều lần trong một năm. Có thể tiến bộ chậm bằng kế hoạch, kỹ năng và phục hồi; không buộc mọi cuộc đời phải thất bại.",
-        "Thu nhập lao động và phần bạn đời góp chỉ còn 18%, lãi dương còn 12%, thu nhập hưu trí còn 45%. Các khoản thưởng, cát-xê và tiền công ngoài lương có chi phí / hao hụt riêng 82%; không trừ vào vốn vay, tiền bán tài sản hay thừa kế.",
-        "Cơ hội bứt phá yêu cầu đã chuẩn bị kỹ năng và ổn định cảm xúc; chỉ một phần nhỏ cuộc đời có cửa này. Nhận cơ hội giúp cải thiện thu nhập từ công việc trong một giai đoạn, không phát tiền hoặc bảo đảm giàu.",
-        "Chọn Thường / Hardcore trước khi chào đời, áp dụng cho cả hồ sơ ngẫu nhiên và tự tạo nhân vật. Lưu cùng cuộc đời, giữ khi tải lại và sống tiếp đời con.",
-        "Hardcore: thu nhập lao động và phần bạn đời đóng góp còn 40%; thu nhập khi nghỉ hưu còn 65%. Giữ nguyên chi phí sinh hoạt, nợ vay và giá mua tài sản.",
-        "Lãi dương của đầu tư, kinh doanh, cho thuê và tiền mặt còn 40%; giữ nguyên khoản lỗ, vốn gốc, khoản vay và tiền bán tài sản.",
-        "Tần suất các tình huống thông thường tăng 1,8 lần, tối đa 5 quyết định mỗi năm; vẫn giữ điều kiện tuổi, thời gian chờ, giới hạn lặp và bối cảnh tù / quân ngũ.",
-        "Thêm 6 biến cố riêng có lựa chọn ứng phó: đồ thiết yếu hỏng, gia đình cần tiền, hụt thu, lời mời việc cần cọc, bài học bị thất lạc, nhiều việc dồn cùng lúc. Không tự trừ tiền trẻ chưa tự lập.",
-        "Giữ các bản sửa lỗi đời con, niên hạn quân hàm và khóa học hai năm."
+        "Thêm gần 100 tình huống riêng, theo từng giai đoạn cuộc đời và hoàn cảnh gia đình.",
+        "Áp lực tuổi thơ và cách đối mặt để lại ảnh hưởng khi lớn lên; vẫn có cơ hội tìm được chỗ dựa và vươn lên.",
+        "Sửa chỗ ở và danh sách anh chị em khi sống tiếp đời con."
       ],
       "tags": [
         "Tính năng",
@@ -163,13 +153,12 @@
     {
       "id": "git-78c291c10d3c",
       "publishedAt": "2026-10-20T23:40:24Z",
-      "title": "Đời con tiếp quản cơ ngơi, ai đang ở đâu, chọn trường quân đội / công an",
-      "summary": "Sống tiếp đời con ở tuổi hiện tại (khi bố / mẹ qua đời, tiếp quản cơ ngơi gia đình):",
+      "title": "Đời con tiếp quản cơ ngơi của gia đình",
+      "summary": "Khi bố mẹ qua đời, có thể tiếp tục chơi người con ở đúng tuổi hiện tại.",
       "details": [
-        "Sống tiếp đời con ở tuổi hiện tại (khi bố / mẹ qua đời, tiếp quản cơ ngơi gia đình):",
-        "Biết mọi người đang ở đâu:",
-        "Tự chọn trường quân đội, công an. Đạt sơ tuyển thì chọn một trong 16 trường; trường càng \"hot\" điểm chuẩn càng cao; ra trường phong Thiếu úy, quân hàm kèm binh chủng, lực lượng:",
-        "Lộ trình thăng quân hàm (việc mới \"Xem lộ trình thăng quân hàm\"):"
+        "Khi bố mẹ qua đời, có thể tiếp tục chơi người con ở đúng tuổi hiện tại.",
+        "Dễ xem người thân đang ở đâu hơn.",
+        "Được tự chọn trường quân đội, công an sau sơ tuyển và xem đường thăng quân hàm."
       ],
       "tags": [
         "Tính năng"
@@ -178,16 +167,12 @@
     {
       "id": "git-ad6beec193dd",
       "publishedAt": "2026-10-20T14:26:01Z",
-      "title": "Sửa lỗi khi định cư nước ngoài, thêm thành tựu Embes",
-      "summary": "Bảo lãnh bố mẹ sang nước ngoài ở cùng: không còn các lựa chọn \"gửi tiền về cho bố mẹ\", \"nhà bố mẹ ở quê bị dột / xuống cấp\", \"ai nuôi bố mẹ\", \"bố mẹ ở một mình\", hay bảo lãnh lại lần nữa. Tết đón cùng bố mẹ ở xứ người.",
+      "title": "Định cư rồi thì sinh hoạt cũng phải khác",
+      "summary": "Đã đón bố mẹ sang ở cùng thì không còn bị hỏi gửi tiền về quê hay bảo lãnh thêm lần nữa.",
       "details": [
-        "Bảo lãnh bố mẹ sang nước ngoài ở cùng: không còn các lựa chọn \"gửi tiền về cho bố mẹ\", \"nhà bố mẹ ở quê bị dột / xuống cấp\", \"ai nuôi bố mẹ\", \"bố mẹ ở một mình\", hay bảo lãnh lại lần nữa. Tết đón cùng bố mẹ ở xứ người.",
-        "Định cư nước ngoài mà bố mẹ còn ở quê: Tết là \"Tết xa nhà\" thay vì \"về quê ăn Tết\".",
-        "Bạn thân nhớ nơi quen nhau:",
-        "Anh chị em ở quê: đang ở nước ngoài thì gọi video cho cả nhà thay vì \"rủ cả nhà tụ họp ăn một bữa\", \"đi du lịch chung\".",
-        "Cặp đôi đồng giới ở nước ngoài nhận con nuôi: theo luật nước đang sống. Ở Mỹ, Canada, phần lớn Tây Âu, Úc, Đài Loan… hai người được cùng đứng tên; ở Nhật, Hàn… một người đứng tên. Trước đây vẫn ghi \"ở Việt Nam, một người đứng tên\".",
-        "Thêm thành tựu fan cứng Embes: thần tượng Negav từ 3 năm. Tổng cộng 95 thành tựu fan cứng.",
-        "Người yêu mới không còn trùng tên y hệt người yêu / bạn đời đã mất, người thân, bạn bè, người yêu cũ (hay gặp ở nước có kho tên nhỏ)."
+        "Đã đón bố mẹ sang ở cùng thì không còn bị hỏi gửi tiền về quê hay bảo lãnh thêm lần nữa.",
+        "Bố mẹ còn ở Việt Nam thì Tết là Tết xa nhà; muốn gặp anh chị em ở quê có thể gọi video.",
+        "Thêm thành tựu Embes và sửa vài tình huống nhận con nuôi ở nước ngoài."
       ],
       "tags": [
         "Tính năng",
@@ -198,14 +183,12 @@
     {
       "id": "git-9bf76ba294e2",
       "publishedAt": "2026-10-20T12:56:24Z",
-      "title": "Ứng dụng hẹn hò theo từng nước, điều chỉnh lương",
-      "summary": "Ứng dụng hẹn hò thay đổi theo nước nhân vật đang sống, thay vì dùng chung danh sách của Việt Nam.",
+      "title": "Hẹn hò đúng nơi sống, chỉnh lại lương",
+      "summary": "Ứng dụng và hồ sơ hẹn hò thay đổi theo quốc gia, không còn nước nào cũng giống Việt Nam.",
       "details": [
-        "Ứng dụng hẹn hò thay đổi theo nước nhân vật đang sống, thay vì dùng chung danh sách của Việt Nam.",
-        "Người từ 45 tuổi tìm bạn đời theo cách của từng nơi:",
-        "Hồ sơ hẹn hò ở nước ngoài không còn nhắc \"sắp về Việt Nam\", \"Việt kiều\", \"nói tiếng Việt chưa sõi\".",
-        "Điều chỉnh lương các nghề đang thấp so với thực tế 2026:",
-        "Sửa lỗi kẹt bậc thực tập: trước đây có thực tập sinh bị kẹt ở bậc thực tập tới 8 năm (kế toán trung vị chỉ 5,4 triệu). Nay hết thời gian thực tập, học việc thì phần lớn được nhận chính thức."
+        "Ứng dụng và hồ sơ hẹn hò thay đổi theo quốc gia, không còn nước nào cũng giống Việt Nam.",
+        "Chỉnh mức lương của một số nghề đang quá thấp.",
+        "Sửa lỗi làm thực tập sinh nhiều năm mà mãi chưa được nhận chính thức."
       ],
       "tags": [
         "Tính năng",
@@ -215,16 +198,11 @@
     {
       "id": "git-878a6c4275e1",
       "publishedAt": "2026-10-20T12:09:13Z",
-      "title": "Bổ sung tên FC cho thành tựu fan cứng",
-      "summary": "Thành tựu fan cứng tăng từ 26 lên 94, theo danh sách tên FC người chơi cung cấp. Thần tượng nghệ sĩ đó từ 3 năm thì đạt thành tựu.",
+      "title": "Bổ sung tên fandom cho thành tựu",
+      "summary": "Thêm nhiều thành tựu fan cứng. Theo thần tượng đủ ba năm sẽ mở được thành tựu tương ứng.",
       "details": [
-        "Thành tựu fan cứng tăng từ 26 lên 94, theo danh sách tên FC người chơi cung cấp. Thần tượng nghệ sĩ đó từ 3 năm thì đạt thành tựu.",
-        "Sửa tên FC: Hoàng Dũng thành Bạn Nhạc, Anh Tú Atus thành FC Galaxy, Orange thành Động Cam Sành - MyMuse.",
-        "Bỏ thành tựu fan cứng của Negav.",
-        "Sửa tên \"Phan Đinh Tùng\" thành Phan Đình Tùng trong đội hình Anh trai vượt ngàn chông gai 2024.",
-        "Negav vẫn có trong đội hình Anh trai \"say hi\" mùa 1, 2; chỉ bỏ thành tựu fan cứng.",
-        "Người trên 65 tuổi không còn được gợi ý thú vui tập gym, đá bóng.",
-        "So khớp đúng tên nghệ sĩ: thần tượng Anh Tú Atus không còn bị tính nhầm là fan của Anh Tú (Voi)."
+        "Thêm nhiều thành tựu fan cứng. Theo thần tượng đủ ba năm sẽ mở được thành tựu tương ứng.",
+        "Sửa tên FC của Hoàng Dũng, Anh Tú Atus và Orange; sửa cách viết tên Phan Đình Tùng."
       ],
       "tags": [
         "Tính năng",
@@ -235,14 +213,12 @@
     {
       "id": "git-c2a49de76fad",
       "publishedAt": "2026-10-20T09:37:14Z",
-      "title": "Đời con đúng gia đình, bảng Giới thiệu, thành tựu mới",
-      "summary": "Sửa lỗi \"sống tiếp đời con\":",
+      "title": "Sửa đời con, thêm thành tựu mới",
+      "summary": "Rà lại gia đình của nhân vật khi chọn sống tiếp đời con.",
       "details": [
-        "Sửa lỗi \"sống tiếp đời con\":",
-        "Bảng Giới thiệu: bấm \"Giới thiệu\" mở một bảng riêng theo màu, chữ của web. Nội dung cập nhật:",
-        "Đổi tên 27 thành tựu theo góp ý:",
-        "14 thành tựu kiểu Gen Z:",
-        "26 thành tựu \"fan cứng\" (thần tượng nghệ sĩ đó từ 3 năm), tên thành tựu là tên FC đã được công bố của nghệ sĩ các chương trình Anh trai \"say hi\" mùa 1, 2, Anh trai vượt ngàn chông gai 2024, 2026, Tinh hà \"say hi\", Em xinh \"say hi\":"
+        "Rà lại gia đình của nhân vật khi chọn sống tiếp đời con.",
+        "Đổi tên một số thành tựu và thêm thành tựu fan cứng, tình yêu, gia đình, lối sống.",
+        "Mục Giới thiệu được tách thành bảng riêng cho dễ đọc."
       ],
       "tags": [
         "Tính năng",
@@ -253,14 +229,12 @@
     {
       "id": "git-01a9c0d1476f",
       "publishedAt": "2026-10-20T07:04:23Z",
-      "title": "Người đã mất không \"sống lại\", nghề nở sớm, tính cách bố mẹ, drama gia đình và drama khắp nơi",
-      "summary": "Sửa lỗi người đã mất vẫn \"sống\" (theo góp ý của người chơi):",
+      "title": "Bố mẹ có tính cách, gia đình có nhiều chuyện hơn",
+      "summary": "Bố và mẹ có tính cách riêng, ảnh hưởng cách hai người phản ứng với bạn.",
       "details": [
-        "Sửa lỗi người đã mất vẫn \"sống\" (theo góp ý của người chơi):",
-        "Nghề nở sớm:",
-        "Tính cách bố mẹ — 16 kiểu, bố và mẹ mỗi người một kiểu:",
-        "Drama gia đình ở mọi hoàn cảnh:",
-        "Drama ở khắp nơi — ngẫu nhiên, tỉ lệ thấp: trung bình mỗi đời gặp khoảng 3 lần, khoảng 1 trên 10 đời không gặp lần nào."
+        "Bố và mẹ có tính cách riêng, ảnh hưởng cách hai người phản ứng với bạn.",
+        "Thêm chuyện gia đình và những rắc rối có thể gặp trong cuộc sống.",
+        "Sửa lỗi người thân đã mất vẫn xuất hiện trong sự kiện; một số nghề có thể bắt đầu sớm hơn."
       ],
       "tags": [
         "Tính năng",
@@ -270,12 +244,11 @@
     {
       "id": "git-3575c22dfca6",
       "publishedAt": "2026-10-20T00:40:38Z",
-      "title": "Xuất thân mồ côi, kiếm tiền khó hơn",
-      "summary": "Xuất thân mồ côi ngẫu nhiên:",
+      "title": "Thêm xuất thân mồ côi, kiếm tiền khó hơn",
+      "summary": "Có thể sinh ra trong hoàn cảnh mồ côi.",
       "details": [
-        "Xuất thân mồ côi ngẫu nhiên:",
-        "Cân bằng lại kinh tế (trước đây kiếm tiền và tích lũy quá dễ):",
-        "Sửa lỗi:"
+        "Có thể sinh ra trong hoàn cảnh mồ côi.",
+        "Chỉnh lại thu nhập và tích lũy để không quá dễ giàu sau vài năm."
       ],
       "tags": [
         "Tính năng",
@@ -285,16 +258,12 @@
     {
       "id": "git-bd3c51d2f3d3",
       "publishedAt": "2026-10-19T15:17:26Z",
-      "title": "Rà soát lỗi logic toàn hệ thống",
-      "summary": "Tuổi kết hôn theo luật:",
+      "title": "Sửa những chuyện chưa hợp tuổi, hợp cảnh",
+      "summary": "Rà lại tuổi kết hôn và điều kiện nghỉ hưu của quân đội, công an.",
       "details": [
-        "Tuổi kết hôn theo luật:",
-        "Nghỉ hưu trước tuổi (quân đội, công an): trước đây có người 38 tuổi đã nhận lương hưu. Nay chỉ từ 48 tuổi và có từ 20 năm công tác.",
-        "Tuyển dụng người cao tuổi: trước đây người 65–70 tuổi vẫn được tuyển mới làm bác sĩ thực hành, kỹ sư R&D, chuyên viên nhà nước, giảng viên, đầu bếp.",
-        "Người đã định cư hẳn ở nước ngoài:",
-        "Trẻ mồ côi (không còn bố mẹ) vẫn tự chi bằng tiền tiết kiệm của mình như trước. Bản lỡ cho \"gia đình\" trả hộ.",
-        "Lời kể:",
-        "Đã kiểm tra, không phải lỗi:"
+        "Rà lại tuổi kết hôn và điều kiện nghỉ hưu của quân đội, công an.",
+        "Người đã lớn tuổi không còn được tuyển mới vào một số nghề đòi hỏi lộ trình dài.",
+        "Sửa cách tính chi tiêu của trẻ mồ côi và vài tình huống khi đã định cư nước ngoài."
       ],
       "tags": [
         "Tính năng",
@@ -304,12 +273,11 @@
     {
       "id": "git-973cdfaa92a5",
       "publishedAt": "2026-10-19T13:03:12Z",
-      "title": "Trẻ chưa tự lập thì bố mẹ chi tiền",
-      "summary": "Sửa lỗi mới vài tuổi đã \"tự chi từ tiền riêng\": dưới 15 tuổi mọi khoản do bố mẹ chi (ghi rõ \"bố mẹ chi …\"), 15–17 tuổi tự chi bằng tiền tiêu vặt nếu đủ, thiếu thì bố mẹ bù.",
+      "title": "Trẻ nhỏ không phải tự trả mọi khoản",
+      "summary": "Dưới 15 tuổi, bố mẹ chi tiền; 15–17 tuổi dùng tiền tiêu vặt, thiếu thì bố mẹ bù.",
       "details": [
-        "Sửa lỗi mới vài tuổi đã \"tự chi từ tiền riêng\": dưới 15 tuổi mọi khoản do bố mẹ chi (ghi rõ \"bố mẹ chi …\"), 15–17 tuổi tự chi bằng tiền tiêu vặt nếu đủ, thiếu thì bố mẹ bù.",
-        "Gợi ý tên đăng nhập đổi thành \"mercy\".",
-        "Bớt câu lặp: hẹn về quê chơi (khất tối đa vài lần), thay pin xe máy điện, chu cấp, báo lên / tụt hạng danh tiếng (có khoảng đệm, mỗi mốc chỉ báo một lần), luyện thể thao."
+        "Dưới 15 tuổi, bố mẹ chi tiền; 15–17 tuổi dùng tiền tiêu vặt, thiếu thì bố mẹ bù.",
+        "Bớt lặp chuyện hẹn về quê, thay pin xe, chu cấp và thông báo lên xuống danh tiếng."
       ],
       "tags": [
         "Tính năng",
@@ -319,11 +287,11 @@
     {
       "id": "git-119bce2a2116",
       "publishedAt": "2026-10-19T12:32:43Z",
-      "title": "Tài khoản, lưu tiến trình và xuất thân theo từng tỉnh",
-      "summary": "Tài khoản và lưu tiến trình (nút 👤 Tài khoản trên trang chủ):",
+      "title": "Có tài khoản để giữ tiến trình",
+      "summary": "Có thể đăng nhập để giữ cuộc đời đang chơi, thành tựu và gia phả, rồi chơi tiếp trên máy khác.",
       "details": [
-        "Tài khoản và lưu tiến trình (nút 👤 Tài khoản trên trang chủ):",
-        "Thành tựu \"An cư lạc nghiệp\" nay cần có nhà riêng, đã trả hết nợ mua nhà và sống tới 40 tuổi (trước đây gần 9/10 số đời đều mở được)."
+        "Có thể đăng nhập để giữ cuộc đời đang chơi, thành tựu và gia phả, rồi chơi tiếp trên máy khác.",
+        "Thành tựu An cư lạc nghiệp cần nhà riêng đã trả hết nợ và sống tới 40 tuổi."
       ],
       "tags": [
         "Tính năng",
@@ -333,12 +301,11 @@
     {
       "id": "git-cf06f858b276",
       "publishedAt": "2026-10-19T11:43:31Z",
-      "title": "Hoàn thiện mô phỏng cuộc sống Việt Nam và thêm thành tựu",
-      "summary": "Dữ liệu lớn hơn nhiều:",
+      "title": "Chỉnh lại xuất thân và thêm thành tựu",
+      "summary": "Bổ sung thông tin để hoàn cảnh nhân vật và cuộc sống ở Việt Nam sát thực tế hơn.",
       "details": [
-        "Dữ liệu lớn hơn nhiều:",
-        "Dùng thêm các trường dữ liệu:",
-        "Thành tựu:"
+        "Bổ sung thông tin để hoàn cảnh nhân vật và cuộc sống ở Việt Nam sát thực tế hơn.",
+        "Thêm thành tựu để mở trong quá trình chơi."
       ],
       "tags": [
         "Tính năng",
@@ -348,13 +315,12 @@
     {
       "id": "git-e4842dfb3efd",
       "publishedAt": "2026-10-19T09:47:32Z",
-      "title": "Sửa số lượt đánh giá, mở rộng con người, văn hóa và lịch sử Việt Nam",
-      "summary": "Sửa lỗi số đánh giá đứng yên ở 35:",
+      "title": "Thêm lễ hội, di sản và chuyện ở từng địa phương",
+      "summary": "Có thể gặp lễ hội, xem biểu diễn hoặc xin học từ nghệ nhân ở đúng vùng văn hóa.",
       "details": [
-        "Sửa lỗi số đánh giá đứng yên ở 35:",
-        "16 di sản văn hóa phi vật thể được UNESCO ghi danh, xuất hiện đúng địa phương và dân tộc: Quan họ (Bắc Ninh, Bắc Giang), Hát Xoan và Tín ngưỡng thờ cúng Hùng Vương (Phú Thọ), Hội Gióng, Ca trù, Nhã nhạc Huế, Cồng chiêng Tây Nguyên, Ví Giặm Nghệ Tĩnh, Đờn ca tài tử Nam Bộ, Bài chòi Trung Bộ, Thờ Mẫu Tam phủ, Kéo co, Gốm Chăm (Bàu Trúc), Vía Bà Chúa Xứ núi Sam (An Giang), Then (Tày, Nùng, Thái), Xòe Thái. Có thể tham gia, xem, hoặc xin học từ nghệ nhân.",
-        "Lễ tết của các dân tộc: Khmer (Chôl Chnăm Thmây, Sene Dolta, Ok Om Bok), Tày và Nùng (Lồng tồng), Mông (Tết của người Mông, Gầu tào), Thái, Mường (Khai hạ), Ê Đê, Gia Rai, Ba Na (mừng lúa mới), Chăm (Katê), Hoa (Nguyên tiêu).",
-        "Lịch sử và công dân, chỉ dùng những mốc đã được ghi nhận chính thức:"
+        "Có thể gặp lễ hội, xem biểu diễn hoặc xin học từ nghệ nhân ở đúng vùng văn hóa.",
+        "Thêm ngày lễ của các dân tộc và những mốc lịch sử, công dân.",
+        "Sửa lỗi tổng số đánh giá bị đứng yên."
       ],
       "tags": [
         "Tính năng",
@@ -365,19 +331,12 @@
     {
       "id": "git-39262fbd24c9",
       "publishedAt": "2026-10-19T07:51:32Z",
-      "title": "Xuất thân hoàng tộc, nghề khoa học, con đường chính trị, thành tựu, gia phả, ảnh thẻ khổ dọc, web tải nhanh…",
-      "summary": "Xuất thân hoàng tộc (theo góp ý của người chơi):",
+      "title": "Thêm xuất thân hoàng tộc, nghề khoa học và chính trị",
+      "summary": "Có thêm xuất thân hoàng tộc, hướng nghiên cứu khoa học và con đường chính trị.",
       "details": [
-        "Xuất thân hoàng tộc (theo góp ý của người chơi):",
-        "Nghề nghiên cứu, khoa học:",
-        "Con đường chính trị:",
-        "Nhiều kết quả hơn cho cùng một lựa chọn: 42 kết quả trước đây chỉ có một câu cố định (để dành tiền, từ chối cho vay, thôi nôi, đi nhậu, chờ đèn đỏ, mùa hè ở quê…) nay có thêm các cách kể khác, chọn ngẫu nhiên.",
-        "Thành tựu cuộc đời (92 thành tựu):",
-        "Gia phả: mỗi đời khép lại được ghi vào gia phả trên thiết bị. Sống tiếp đời con nhiều lần sẽ thấy cây gia phả từ thế hệ 1 trở đi: tên, năm sinh mất, nghề, tài sản, bạn đời, các con, người con được sống tiếp. Hiện ở màn kết thúc và trong mục Thành tựu.",
-        "Ảnh thẻ cuộc đời đẹp hơn:",
-        "Web tải nhanh hơn:",
-        "Sao lưu đánh giá:",
-        "Sửa câu \"trong một trong những gia đình…\" thành \"thuộc một trong những gia đình…\"."
+        "Có thêm xuất thân hoàng tộc, hướng nghiên cứu khoa học và con đường chính trị.",
+        "Bổ sung thành tựu, gia phả và ảnh thẻ khổ dọc.",
+        "Những lựa chọn quen thuộc có thêm cách kể và kết quả khác nhau."
       ],
       "tags": [
         "Tính năng",
@@ -388,11 +347,10 @@
     {
       "id": "git-8d41a335e38a",
       "publishedAt": "2026-10-19T04:39:55Z",
-      "title": "Xem hết review, lọc theo số sao",
-      "summary": "Trang đánh giá:",
+      "title": "Xem lại và lọc đánh giá dễ hơn",
+      "summary": "Có thể lọc theo số sao và tải thêm những đánh giá trước.",
       "details": [
-        "Trang đánh giá:",
-        "Có thể lọc đánh giá theo số sao và tải thêm các đánh giá trước."
+        "Có thể lọc theo số sao và tải thêm những đánh giá trước."
       ],
       "tags": [
         "Tính năng",
@@ -403,14 +361,12 @@
     {
       "id": "git-10cffb906d3f",
       "publishedAt": "2026-10-19T04:29:15Z",
-      "title": "Chú mèo đi theo bạn, tuổi thơ đa dạng hơn, di chúc chia theo tỉ lệ, các con khi bạn ra đi, thừa kế đời con",
-      "summary": "Sửa lỗi chú mèo trên cây: trước đây game báo \"được mang mèo về nuôi\" nhưng nhiều khi nhà lại không có mèo. Nay cứu mèo xong, chú mèo mến bạn và lẽo đẽo đi theo, có vẻ muốn về với bạn. Bạn chọn ôm mèo về (nhà có mèo thật, hiện trong mục gia đình và được đặt tên), nhờ bạn cùng lớp nuôi giúp, hoặc để nó ở lại trường.",
+      "title": "Cứu mèo rồi có thể mang về nuôi",
+      "summary": "Chú mèo được cứu có thể theo bạn về nhà, xuất hiện trong gia đình và được đặt tên.",
       "details": [
-        "Sửa lỗi chú mèo trên cây: trước đây game báo \"được mang mèo về nuôi\" nhưng nhiều khi nhà lại không có mèo. Nay cứu mèo xong, chú mèo mến bạn và lẽo đẽo đi theo, có vẻ muốn về với bạn. Bạn chọn ôm mèo về (nhà có mèo thật, hiện trong mục gia đình và được đặt tên), nhờ bạn cùng lớp nuôi giúp, hoặc để nó ở lại trường.",
-        "Thêm 43 chuyện tuổi thơ mới, mỗi chuyện có nhiều cách mở đầu và kết quả ngẫu nhiên, nên mỗi đời gặp một khác:",
-        "Di chúc đa dạng hơn:",
-        "Khi bạn ra đi, các con phản ứng theo đúng con người của mình:",
-        "Sống tiếp đời con: chọn bất kỳ người con nào còn sống, xem trước phần thừa kế của con, rồi chọn:"
+        "Chú mèo được cứu có thể theo bạn về nhà, xuất hiện trong gia đình và được đặt tên.",
+        "Thêm chuyện tuổi thơ, lựa chọn chia di chúc và phản ứng của các con khi bạn qua đời.",
+        "Rà lại chuyện thừa kế khi sống tiếp đời con."
       ],
       "tags": [
         "Tính năng",
@@ -420,16 +376,12 @@
     {
       "id": "git-8f2c54ab8c6b",
       "publishedAt": "2026-10-18T23:47:43Z",
-      "title": "Những cuộc đời không màu hồng, ôn thi chuyên theo từng môn",
-      "summary": "Những cuộc đời không màu hồng (theo góp ý: đời thật đâu phải lúc nào cũng thuận lợi):",
+      "title": "Cuộc đời có thêm những lúc không thuận lợi",
+      "summary": "Thêm chuyện khó khăn, thất bại và lựa chọn ôn thi chuyên theo từng môn.",
       "details": [
-        "Những cuộc đời không màu hồng (theo góp ý: đời thật đâu phải lúc nào cũng thuận lợi):",
-        "Ôn thi chuyên & đội tuyển theo đúng từng môn (trước đây môn nào cũng chung lựa chọn):",
-        "Sửa lỗi tính tiền: tình huống \"vay app sinh viên\" trước đây cộng tiền vay hai lần; khoản chủ động chu cấp cho người yêu (bản ) có thể tăng không giới hạn và vẫn trừ khi đã hết tiền — nay tối đa gấp đôi mức ban đầu, không còn dư dả thì tự dừng chu cấp.",
-        "Sửa lỗi không bấm được \"Sống tiếp đời con\": nút này (và \"Bỏ cuộc đời đang sống dở\", \"Xóa khỏi đài tưởng niệm\") dùng hộp xác nhận của trình duyệt. Trình duyệt tích hợp trong Facebook, Zalo, Messenger… thường chặn hộp này nên bấm không có tác dụng. Nay dùng hộp xác nhận riêng của game.",
-        "Quay lại với người cũ:",
-        "Người giàu chủ động chu cấp:",
-        "Tiến độ thăng chức:"
+        "Thêm chuyện khó khăn, thất bại và lựa chọn ôn thi chuyên theo từng môn.",
+        "Sửa tiền vay sinh viên bị cộng hai lần và việc chu cấp vẫn trừ khi đã hết tiền.",
+        "Nút Sống tiếp đời con đã bấm được trong trình duyệt Facebook, Zalo, Messenger."
       ],
       "tags": [
         "Tính năng",
@@ -439,18 +391,12 @@
     {
       "id": "git-a73902fbf128",
       "publishedAt": "2026-10-18T17:00:14Z",
-      "title": "Ứng dụng hẹn hò 5 hồ sơ, Người ấy là ai chọn 1 trong 3, chu cấp khi đặt ranh giới",
-      "summary": "Ứng dụng hẹn hò (Tinder, Bumble, Hinge, Facebook Hẹn hò, Blued, HER):",
+      "title": "Hẹn hò có thêm người để chọn",
+      "summary": "Ứng dụng hẹn hò có năm hồ sơ để xem; chung cuộc Người ấy là ai được chọn một trong ba người.",
       "details": [
-        "Ứng dụng hẹn hò (Tinder, Bumble, Hinge, Facebook Hẹn hò, Blued, HER):",
-        "Người ấy là ai: chung cuộc chọn 1 trong 3 chàng trai (trước đây chỉ còn 2). Hai vòng loại: ngoại hình & nghề nghiệp, tài năng & câu hỏi riêng. Khi bạn là chàng trai dự thi, nữ chính cũng chọn 1 trong 3 người vào chung cuộc.",
-        "Chu cấp khi đặt ranh giới: không để người chu cấp kiểm soát thì 55% người ấy tôn trọng và vẫn chu cấp đều; 25% giận dỗi nhưng vẫn gửi tiền; chỉ khoảng 20% ngừng chu cấp năm đó.",
-        "Rà soát cách tính tiền:",
-        "Bảo hiểm y tế (BHYT) thống nhất:",
-        "Áp dụng cho: điều trị bệnh, phẫu thuật (kể cả biến chứng sau mổ), khám sức khỏe, nhổ răng khôn (bệnh viện công 1,5 triệu đ → bạn trả 300k đ), khám chữa bệnh trong trại giam.",
-        "Nha khoa mới:",
-        "Bố mẹ mất việc đúng lý do theo nghề (người chơi phản ánh: bố là bác sĩ mà lý do là \"thu hẹp sản xuất\"):",
-        "Thưởng Tết cuối năm theo ngành nghề (thay cho sự kiện thưởng ngẫu nhiên cũ):"
+        "Ứng dụng hẹn hò có năm hồ sơ để xem; chung cuộc Người ấy là ai được chọn một trong ba người.",
+        "Đặt ranh giới trong quan hệ chu cấp không còn đồng nghĩa chắc chắn bị cắt tiền.",
+        "Rà lại một số khoản thu chi."
       ],
       "tags": [
         "Tính năng",
@@ -460,17 +406,12 @@
     {
       "id": "git-4c2114c22eba",
       "publishedAt": "2026-10-18T15:36:49Z",
-      "title": "Sinh viên lên thành phố, chuyện nghề chi tiết, quà cho nam",
-      "summary": "Sinh viên lên thành phố học: chọn chỗ ở theo điều kiện gia đình.",
+      "title": "Chuyện sinh viên lên thành phố",
+      "summary": "Chọn chỗ ở theo điều kiện gia đình và làm thêm khi đi học.",
       "details": [
-        "Sinh viên lên thành phố học: chọn chỗ ở theo điều kiện gia đình.",
-        "Làm thêm khi đi học: phục vụ quán cà phê, gia sư, giao đồ ăn, bán hàng online, lễ tân ca đêm, nhân viên sự kiện.",
-        "\"Cơ hội\" ở thành phố, hiện ra như chuyện bình thường, có cái là bẫy:",
-        "Chuyện nghề chi tiết: khách đặt yêu cầu cụ thể, chọn cách làm. Làm khéo thì được khen, có tiền boa, tăng uy tín; tay nghề chưa tới thì phải làm lại. Các nghề:",
-        "Quà tặng thêm:",
-        "Tặng quà người yêu / bạn đời: từ 6 nhóm 18 món lên 10 nhóm 62 món.",
-        "Xưng hô đúng giới tính:",
-        "Không còn ai trong gia đình thì tháng Ramadan không còn \"chiều về quây quần\", mà đến thánh đường cùng bà con."
+        "Chọn chỗ ở theo điều kiện gia đình và làm thêm khi đi học.",
+        "Có những cơ hội kiếm tiền, cả những lời mời tưởng tốt nhưng là bẫy.",
+        "Thêm chuyện riêng trong công việc và lựa chọn quà tặng cho nam."
       ],
       "tags": [
         "Tính năng"
@@ -479,12 +420,11 @@
     {
       "id": "git-a96ed04500a5",
       "publishedAt": "2026-10-18T15:03:14Z",
-      "title": "Mua nước cho người thân: xưng hô đúng từng người",
-      "summary": "Theo góp ý người chơi: trước đây mua đồ uống cho vợ, chồng hay người nhà, câu phản hồi lúc nào cũng tự xưng \"anh\" (\"Anh không uống được trân châu đâu…\"). Nay người nhận xưng hô và gọi bạn đúng theo quan hệ, tuổi, giới tính:",
+      "title": "Mua đồ uống cho đúng người, gọi đúng vai",
+      "summary": "Được chọn mua cho người yêu, vợ chồng, bố mẹ, anh chị em, con hoặc bạn thân.",
       "details": [
-        "Theo góp ý người chơi: trước đây mua đồ uống cho vợ, chồng hay người nhà, câu phản hồi lúc nào cũng tự xưng \"anh\" (\"Anh không uống được trân châu đâu…\"). Nay người nhận xưng hô và gọi bạn đúng theo quan hệ, tuổi, giới tính:",
-        "Hành động \"Mua trà sữa / đồ uống cho người thân\" giờ cho chọn người muốn mua: người yêu / vợ / chồng, bố, mẹ, anh chị em, con, các bạn thân.",
-        "Thêm nhiều câu phản hồi hơn (khen, chê, dặn ít đường…)."
+        "Được chọn mua cho người yêu, vợ chồng, bố mẹ, anh chị em, con hoặc bạn thân.",
+        "Người nhận xưng hô đúng quan hệ với bạn, có thêm lời khen, chê và dặn dò."
       ],
       "tags": [
         "Tính năng"
@@ -493,13 +433,12 @@
     {
       "id": "git-c3ed7e7703a0",
       "publishedAt": "2026-10-18T12:33:43Z",
-      "title": "Con ngoài hôn nhân, nhiều bạn thân, hẹn hò với bạn thân, định cư nước ngoài",
-      "summary": "Con ngoài hôn nhân (có thai khi chưa cưới): khi đang hẹn hò với người khác giới, có thể có tin bất ngờ. Có thể chọn:",
+      "title": "Bạn thân có thể thành người yêu",
+      "summary": "Có nhiều bạn thân hơn và có thể tiến tới hẹn hò.",
       "details": [
-        "Con ngoài hôn nhân (có thai khi chưa cưới): khi đang hẹn hò với người khác giới, có thể có tin bất ngờ. Có thể chọn:",
-        "Nhiều bạn thân hơn:",
-        "Hẹn hò với bạn thân:",
-        "Định cư nước ngoài:"
+        "Có nhiều bạn thân hơn và có thể tiến tới hẹn hò.",
+        "Thêm chuyện có con khi chưa cưới cùng những lựa chọn sau đó.",
+        "Bổ sung chuyện định cư nước ngoài."
       ],
       "tags": [
         "Tính năng"
@@ -508,23 +447,12 @@
     {
       "id": "git-0cb984a92170",
       "publishedAt": "2026-10-18T11:36:50Z",
-      "title": "Xem tivi chọn thần tượng, trại lừa đảo, đám cưới theo điều kiện, đồ công nghệ",
-      "summary": "Xem tivi, chọn thần tượng (Việt Nam):",
+      "title": "Chọn thần tượng từ tivi, thêm chuyện đám cưới",
+      "summary": "Xem tivi có thể chọn nghệ sĩ mình thích.",
       "details": [
-        "Xem tivi, chọn thần tượng (Việt Nam):",
-        "Trại lừa đảo ở Campuchia:",
-        "Quan hệ chu cấp có kiểm soát: mỗi năm còn nhận chu cấp thì căng thẳng tăng, hạnh phúc giảm, càng bị kiểm soát càng nặng.",
-        "Chi phí sinh hoạt theo mức sống: nhà giàu chi ăn uống, sinh hoạt nhiều hơn nhà bình thường, nhà khó khăn chi ít hơn.",
-        "Đám cưới theo điều kiện:",
-        "Chia tay có lý do cụ thể:",
-        "Mua điện thoại, laptop, PC:",
-        "Sửa lỗi:",
-        "Chỉ áp dụng cho nhân vật sinh ra và đang sống ngoài Việt Nam. Đời ở Việt Nam, kể cả người Việt định cư nước ngoài, giữ nguyên hoàn toàn: đã so sánh lại từng dòng nhật ký, không khác gì so với bản trước.",
-        "Hơn 420 chuyện đời thường mới, gồm 382 chuyện riêng của 67 quốc gia, còn lại là chuyện theo vùng (châu Âu, Trung Đông, châu Phi, Nam Á, Đông Á, Đông Nam Á, Trung Á, Mỹ Latinh, châu Đại Dương) cho các nước còn lại. Ví dụ:",
-        "Lọc đúng hoàn cảnh: tuổi, đang đi học (tiểu học, cấp ba, đại học), đi làm, có con, tuổi già, thành thị / nông thôn, còn gia đình, còn anh chị em, tôn giáo. Mỗi chuyện chỉ kể một lần trong đời.",
-        "Lễ hội theo tôn giáo: Diwali, Holi, Navratri, Raksha Bandhan, Ganesh Chaturthi (Hindu); Vaisakhi (Sikh); Hanukkah, Lễ Vượt Qua, Yom Kippur (Do Thái); Vesak (Phật giáo ở nước ngoài).",
-        "14 tình huống lựa chọn mang đặc trưng quốc gia:",
-        "Sửa lỗi chế độ Thế giới:"
+        "Xem tivi có thể chọn nghệ sĩ mình thích.",
+        "Đám cưới, đồ công nghệ và chi phí sinh hoạt thay đổi theo điều kiện gia đình.",
+        "Thêm tình huống trại lừa đảo và những rắc rối trong quan hệ chu cấp bị kiểm soát."
       ],
       "tags": [
         "Tính năng",
@@ -534,23 +462,12 @@
     {
       "id": "git-62c51017b1df",
       "publishedAt": "2026-10-18T09:40:52Z",
-      "title": "Rà soát logic: sếp, gia đình, ngồi tù, lương hưu, sân bóng",
-      "summary": "Chức cao, nghề tự do không có \"sếp\":",
+      "title": "Sửa chuyện công việc, gia đình và thời gian ở tù",
+      "summary": "Người làm tự do hay đã đứng đầu không còn gặp chuyện sếp vô lý.",
       "details": [
-        "Chức cao, nghề tự do không có \"sếp\":",
-        "Gia đình đúng hoàn cảnh:",
-        "Ngồi tù: bị bắt giữa năm thì phần còn lại của năm đó chưa tính là một năm thụ án, phải chạy hết thanh năm sau mới ra tù. Trong tù vẫn không thi bằng lái, hẹn hò, nhận việc.",
-        "Nhận việc: tiến sĩ mới vào nghề không vào thẳng chức phó giáo sư, chuyên gia cấp cao. Bartender trưởng, quản lý… vẫn cần đủ năm kinh nghiệm trong nghề.",
-        "Lương hưu cho đa số nghề: chủ quán, chủ cơ sở kinh doanh tự đóng BHXH tự nguyện nên có lương hưu. Vé số, xe ôm, tài xế ứng dụng, bán rong, freelancer, streamer, nông dân… vẫn không có.",
-        "Tuổi già: khoản chi \"tập gym\" đổi thành \"tập thể dục, thể thao\", từ 60 tuổi là đi bộ, tập dưỡng sinh.",
-        "Tuổi học trò: đã nghỉ học (do nhà nghèo…) thì thư tỏ tình không còn \"bạn ngồi bàn trên\", \"nằm trong cặp\".",
-        "Đi xem bóng đá ở sân gần nơi sống: Mỹ Đình hoặc Hàng Đẫy (Hà Nội), Thống Nhất (TP.HCM), Lạch Tray, Thiên Trường, Thanh Hóa, Vinh, Gò Đậu, Hòa Xuân, Pleiku, Quy Nhơn, Việt Trì… Nơi khác là sân vận động tỉnh.",
-        "Ít lặp câu: trò chơi giải đố trong show thực tế có nhiều cách báo đúng / sai hơn.",
-        "Đã kiểm tra lại: bé gái bốc trúng cây bút là \"cô giáo\"; vợ / chồng góp khoảng 55% thu nhập thật mỗi tháng, không có trường hợp lương cao mà chỉ góp 10 triệu.",
-        "Nhập quốc tịch:",
-        "Visa esports:",
-        "Cắt giảm nhân sự hợp lý hơn:",
-        "Ít lặp câu hơn: thêm cách viết khác cho giúp bạn cũ, gặp gỡ mở rộng quan hệ, tìm hiểu văn hóa ở nước ngoài, công việc tạm hoãn, thay pin xe máy điện."
+        "Người làm tự do hay đã đứng đầu không còn gặp chuyện sếp vô lý.",
+        "Thời gian thụ án được tính lại; đang trong tù không thể nhận việc hay đi hẹn hò bên ngoài.",
+        "Rà lại điều kiện nhận việc, lương hưu và sân bóng gần nơi sống."
       ],
       "tags": [
         "Tính năng",
@@ -560,13 +477,11 @@
     {
       "id": "git-36b666acda0b",
       "publishedAt": "2026-10-18T04:01:28Z",
-      "title": "Xu hướng tính dục: tóp mỡ, bột tôm, bé Liên, bi",
-      "summary": "Bỏ lựa chọn Liên giới; giới tính sinh học còn Ngẫu nhiên / Nam / Nữ.",
+      "title": "Chọn xu hướng tính dục rõ hơn",
+      "summary": "Phần tạo nhân vật tách giới tính sinh học và xu hướng tính dục.",
       "details": [
-        "Bỏ lựa chọn Liên giới; giới tính sinh học còn Ngẫu nhiên / Nam / Nữ.",
-        "Xu hướng tính dục: Dị tính / LGBTQ+. Bấm LGBTQ+ thì hiện thêm Tóp mỡ, Bột tôm, Bé Liên, Bi (không bắt buộc, bấm lần nữa để bỏ chọn).",
-        "Rê chuột (máy tính) hoặc ấn giữ (điện thoại) vào từng lựa chọn để xem chú thích ngắn: Top / Bot / Les / Bisexual.",
-        "Chọn Tóp mỡ / Bột tôm thì nhân vật là nam, Bé Liên là nữ, Bi giữ giới tính đã chọn. Hồ sơ ghi đúng cách gọi đã chọn, ví dụ \"Đồng tính nam (tóp mỡ)\"; chọn LGBTQ+ chung hoặc bản lưu cũ vẫn ghi trung tính."
+        "Phần tạo nhân vật tách giới tính sinh học và xu hướng tính dục.",
+        "Có thêm các cách gọi quen thuộc kèm giải thích; hồ sơ ghi theo lựa chọn của bạn."
       ],
       "tags": [
         "Tính năng"
@@ -575,22 +490,12 @@
     {
       "id": "git-bdbf91ccc2ee",
       "publishedAt": "2026-10-18T03:06:34Z",
-      "title": "Rà soát lỗi logic",
-      "summary": "Tên nhân vật bị lệch dấu (ví dụ \"Lê Hoàng Yế n\", \"Hô Anh Khoa\"): khi phông chữ chính chưa tải kịp, trang rơi về phông Georgia vốn không có sẵn các chữ hai dấu chồng (ế, ồ, ẫ…). Giờ phông dự phòng là Noto Serif / Times New Roman hỗ trợ đủ tiếng Việt, cả trên trang chơi, trang đánh giá và ảnh thẻ chia sẻ.",
+      "title": "Sửa tên, xưng hô và vài chỗ hiển thị sai",
+      "summary": "Tên tiếng Việt không còn bị lệch dấu khi tải trang.",
       "details": [
-        "Tên nhân vật bị lệch dấu (ví dụ \"Lê Hoàng Yế n\", \"Hô Anh Khoa\"): khi phông chữ chính chưa tải kịp, trang rơi về phông Georgia vốn không có sẵn các chữ hai dấu chồng (ế, ồ, ẫ…). Giờ phông dự phòng là Noto Serif / Times New Roman hỗ trợ đủ tiếng Việt, cả trên trang chơi, trang đánh giá và ảnh thẻ chia sẻ.",
-        "Pháp Kiều được gọi thẳng tên, không thêm \"anh trai\" (trong chọn bias, concert, đội hình show); các nghệ sĩ khác giữ cách gọi cũ.",
-        "Gọi đúng người thương: các lựa chọn \"người yêu / bạn đời\" giờ ghi đúng \"người yêu\" khi đang yêu, \"vợ\" / \"chồng\" khi đã cưới, \"người bạn đời\" với cặp cùng giới. Áp dụng cho mời đi chơi quê hương, du lịch, tặng quà và tên các mục trong \"Việc bạn muốn làm\".",
-        "Giá món ăn địa phương sát thực tế:",
-        "Trường chuyên: nhật ký ghi đúng tỉnh hoặc thành phố nơi nhân vật sống.",
-        "Esports: sửa lỗi game dừng (crash) khi nhận lời mời chiêu mộ lúc chưa có mùa giải.",
-        "Di chúc: sửa phần gợi ý trống trong các lựa chọn.",
-        "Điểm thi THPT sát thực tế:",
-        "Bằng lái:",
-        "Ung thư sau 85 tuổi hiếm khi khỏi hẳn hơn trước.",
-        "Rủ đi net: bé gái hầu như không bị rủ (khoảng 0,25% mỗi năm, tức khoảng 2% cả tuổi thơ); bé trai như cũ.",
-        "Trị liệu tâm lý: chỉ lần đầu mới là \"lần đầu tiên có người giúp bạn gỡ từng nút thắt\"; các lần sau có lời kể khác.",
-        "Bớt lặp câu:"
+        "Tên tiếng Việt không còn bị lệch dấu khi tải trang.",
+        "Các lời mời, quà tặng gọi đúng người yêu, vợ, chồng hoặc bạn đời.",
+        "Sửa địa danh trường chuyên, gợi ý trong di chúc và giá một số món ăn."
       ],
       "tags": [
         "Tính năng",
@@ -600,218 +505,12 @@
     {
       "id": "git-c4d9195ef933",
       "publishedAt": "2026-10-18T01:19:17Z",
-      "title": "Esports, chiêu mộ và gaming house",
-      "summary": "Thêm Nghịch Thủy Hàn và TFT vào Game khác; ngoại trang 1 triệu, linh thú TFT 2,5 / 2,5 / 7 triệu theo cấu hình yêu cầu. Chỉ mua vật phẩm của game đã chơi; Nghịch Thủy Hàn không có đường thi đấu chuyên nghiệp.",
+      "title": "Esports có đội trẻ, hợp đồng và mùa giải",
+      "summary": "Có đường thử việc, vào học viện hoặc đội trẻ rồi được tuyển lên đội chuyên nghiệp.",
       "details": [
-        "Thêm Nghịch Thủy Hàn và TFT vào Game khác; ngoại trang 1 triệu, linh thú TFT 2,5 / 2,5 / 7 triệu theo cấu hình yêu cầu. Chỉ mua vật phẩm của game đã chơi; Nghịch Thủy Hàn không có đường thi đấu chuyên nghiệp.",
-        "Thêm đi xem esports, chọn game, giải/khu vực, đội và tuyển thủ; xem trực tuyến hoặc mua vé khi đang ở nước tổ chức. Dùng danh mục tham chiếu mùa 2026 gồm 60 đội LMHT (kể cả 2 khách mời Versus), 62 đội Valorant (kể cả 14 đội Challengers/Nationals vào Stage 2), 34 đội Liên Quân (có Super Nova mùa Xuân) và 40 tuyển thủ TFT.",
-        "Thử việc, học viện/đội trẻ, tuyển trạch và lời mời ký hợp đồng; Việt Nam LMHT có hướng đội trẻ/VCS B đến chiêu mộ LCP. Giữ tiến trình chuyên nghiệp của save cũ.",
-        "Chuỗi mùa giải có lựa chọn chiến thuật, đối thủ, thứ hạng và điều kiện vé quốc tế; không tự dự tất cả giải hay nhận thêm tiền từ lượt random vô địch cũ. TFT thi đấu cá nhân, có lựa chọn tự do hoặc nhận hợp đồng đội.",
-        "Phản xạ, kinh nghiệm, phong độ được tách riêng; luyện tập theo từng game có giới hạn tăng trong năm. Giải nghệ thi đấu ở tuổi 26–29 theo cân bằng game, chuyển sang công việc hậu thi đấu.",
-        "Hợp đồng đội có gaming house bao ăn ở của tuyển thủ; không miễn tiền nuôi con, nhà ở gia đình, xe cộ, quà tặng hay chi tiêu riêng. Độc lập TFT không tự có lương hoặc bảo hiểm theo hợp đồng đội.",
-        "Bảng thưởng sử dụng các mức đã công bố theo giải, ghi tiền đội và phần cá nhân riêng, chống nhận hai lần. Lương và tỷ lệ chia theo hợp đồng mô phỏng vì thông tin riêng không công khai đầy đủ; chưa xác minh được thưởng thì không tự tạo tiền. Không hiện nguồn trong các menu esports.",
-        "Loại công chức, viên chức, nhóm công vụ, công an/quân đội và các nghề thực thi công vụ khỏi thất nghiệp kinh tế chung và mất việc ngẫu nhiên hằng năm.",
-        "Áp dụng cùng điều kiện cho các nghề công vụ của bố mẹ; doanh nghiệp nhà nước vẫn được phân biệt với biên chế công vụ.",
-        "Sự kiện sắp xếp bộ máy hiếm hơn, tối đa một lần; nhận phân công tại đơn vị mới giữ việc và bậc nghề.",
-        "Giữ các trường hợp tự nghỉ, nghỉ hưu và kỷ luật từ sai phạm cụ thể. Không cho công vụ bị đuổi việc vì xin tăng lương hoặc bị tung tin bôi nhọ trong sự kiện chung.",
-        "Trang đánh giá đồng bộ logo, kiểu chữ và thanh điều hướng với trang chủ; thêm nút Trang chủ và Chơi ngay.",
-        "Giữ font nội dung hỗ trợ tiếng Việt và bố cục phù hợp điện thoại.",
-        "Từ 70 tuổi có thể viết, sửa, hủy di chúc nhiều lần trong năm ở mục Tiền bạc; không tiêu hao lượt hoặc thu phí.",
-        "Lưu lời nhắn riêng và chọn để lại di sản cho các con, bạn đời, chia hai phần hoặc từ thiện; phần kết ghi nhận bản mới nhất và chỉ tính di sản ròng còn lại.",
-        "Trang đánh giá dùng font hệ thống hỗ trợ tiếng Việt; thêm review tối đa 1.000 ký tự, hiển thị công khai cùng số sao.",
-        "Thêm trang đánh giá với lựa chọn 1–5 sao, điểm trung bình, phân bố sao và danh sách đánh giá mới nhất.",
-        "Mở trang đánh giá từ màn chơi sẽ tạm dừng cuộc đời và giữ tiến trình.",
-        "Đưa nút Góp ý ra thanh điều khiển chính khi đang chơi; không còn bị gom vào menu mở rộng trên điện thoại.",
-        "Bốc bút trong lễ thôi nôi: nhân vật nữ được gọi là cô giáo, nam là thầy giáo; sửa lời chúc bốc tiền không còn hiện “Thằng/con”.",
-        "Sửa vòng lặp tính thử giá khi mở hẹn hò ở mức chi tiêu tiết kiệm/thoải mái và chọn đổi địa điểm.",
-        "Rút gọn lời dẫn thế giới ngầm, bỏ câu nhắc hư cấu và cảnh báo vốn lặp trong từng sự kiện; số tiền cần góp vẫn hiện ngay trên lựa chọn có thu tiền.",
-        "Giữ các tính năng trường chuyên, đội tuyển và nguyện vọng của .",
-        "Thêm lựa chọn thi lớp chuyên khi vào lớp 10; chưa đỗ vẫn xét phương án học phổ thông thường.",
-        "Chọn một trong 9 môn học sinh giỏi, ôn luyện và thi từng vòng; quốc gia dành cho THPT, Olympic quốc tế chỉ mở cho Toán/Lý/Hóa/Sinh/Tin sau vòng tuyển chọn.",
-        "Thêm 27 đại học ở ba miền, chọn trường/ngành, lập tối đa 5 nguyện vọng và xét theo thứ tự ưu tiên; điểm chuẩn là mô phỏng, không phải điểm thật của trường.",
-        "Thành tích đúng môn hỗ trợ xét tuyển nhóm ngành phù hợp. Chỉ nhập học sau khi trúng tuyển, vẫn cần hoàn thành khóa học để có bằng.",
-        "Hiển thị trường đại học hoặc lớp chuyên trong thẻ thông tin nhân vật.",
-        "Xóa nút và biểu mẫu góp ý ở trang chủ và màn hình cuộc đời.",
-        "Phân biệt HTTP 502/nội dung không hợp lệ với lỗi mạng, giữ bản nháp khi gửi thất bại.",
-        "Bổ sung mã lỗi an toàn theo bước xử lý; không đưa địa chỉ nhận hoặc phản hồi thô của dịch vụ ra trình duyệt.",
-        "Giữ bản nháp khi mạng lỗi, chỉ xóa sau khi gửi thành công; hạn chế gửi trùng khi đang chờ phản hồi.",
-        "Giới hạn nội dung, kiểm tra nguồn trang, chỉ chuyển các trường được cho phép; không chuyển địa chỉ nhận tùy ý từ dữ liệu người chơi.",
-        "Thẻ hồ sơ riêng cho bạn đời và từng người con trong bảng Gia đình; có chân dung anime, tuổi, học vấn, quan hệ và năng khiếu/kỹ năng.",
-        "Đặt tên cho bé 0–2 tuổi; đặt tên gọi ở nhà khi con lớn hơn, giữ nguyên danh tính dùng trong các sự kiện. Từ 18 tuổi không áp đặt đổi tên.",
-        "Chọn trường công/tư/quốc tế theo tuổi và quyền chăm sóc; học phí bổ sung tự đóng theo năm, không thu trùng khi bấm lại hoặc chạy lại vòng năm. Thiếu ngân sách chuyển sang lựa chọn miễn phí.",
-        "Chọn hoạt động và cách học cho con 4–17 tuổi; phân biệt sở thích, thiên hướng bẩm sinh và kỹ năng tích lũy. Tăng kỹ năng mỗi năm, không cộng điểm bằng thao tác lặp.",
-        "Mục Góp ý trên trang chủ và màn chơi: mở thư nháp tới hộp thư của tác giả; có lưu nháp, sao chép dự phòng và tùy chọn đính kèm thông tin ngắn về lượt chơi. Không tự gửi thư hay tải toàn bộ bản lưu lên mạng.",
-        "Hồ sơ kinh tế cho 194 quốc gia ngoài Việt Nam: 129 mốc lương ILOSTAT, 65 ước tính/tham chiếu được đánh dấu. Ghi năm quan sát riêng cho từng nước; không coi dữ liệu khác năm là giá lương hiện tại.",
-        "Lương theo thị trường lao động nơi đang sống thay vì nhân toàn bộ theo GDP. Phân biệt mô phỏng việc chính thức, việc tự do/nông nghiệp và đô thị/nông thôn. Nghề, cấp bậc, học vấn, kỹ năng và thành tích vẫn quyết định thu nhập cá nhân.",
-        "Chi phí sống dùng GDP PPP và giá tiêu dùng World Bank, có giới hạn tương quan với tiền lương để tránh GDP cao do thuế/tài nguyên làm sai ngân sách hộ gia đình.",
-        "Bản lưu cũ giữ tiền và tài sản; cập nhật nền chi phí khi tải lại, bỏ mốc lương sàn cũ khi tính lương năm tiếp theo ở thị trường mới.",
-        "Thêm hai ô giới thiệu: Một đời khắp thế giới; Gia đình qua từng thế hệ.",
-        "Đồng bộ đổi tiền khi định cư/về nước: lương hưu, mức đóng bảo hiểm, lương bạn đời/bố mẹ, mức lương lưu, bất động sản và vốn/doanh thu kinh doanh. Giữ nguyên đơn vị gốc của danh mục thị trường VND/USD.",
-        "Đổi giữa hai quốc gia dùng USD PPP theo mức giá tương ứng, tránh tự tăng giá trị tài sản chỉ vì chuyển nơi ở.",
-        "Cơ sở kinh doanh có cạnh tranh kéo dài, chi phí quản lý chuỗi, thuê quản lý khi bận/đã cao tuổi và tái đầu tư trang thiết bị. Nhà cho thuê trừ chi phí bảo trì/quản lý.",
-        "Lợi nhuận kinh doanh chỉ hạch toán một lần mỗi tuổi. Không đặt trần tài sản 500 tỷ và không cắt tiền đã tích lũy của bản lưu cũ.",
-        "Chặn thư trong ngăn bàn sau khi nghỉ học; dọn cảnh lớp học đang chờ. Bóng đá dùng nơi đang sống, kể cả ở nước ngoài.",
-        "Tiền dưới một triệu hiển thị bằng k, khoản tỷ hiển thị bằng tỷ; nhật ký ghi cả khoản chi nhỏ.",
-        "Học bơi có khóa trả phí và tự luyện miễn phí, tiến độ kỹ năng, cứu hộ / đuối nước; kiểm tra người trả tiền và hoàn cảnh trước khi áp dụng.",
-        "Khám định kỳ tự động không phát thêm lời mời khám tổng quát; thao tác chủ động giữ đúng lựa chọn, chặn bộ hẹn giờ tự chọn cũ.",
-        "Quê hương 63/34 có địa danh và món ăn của các tỉnh thành viên, đi một mình / bố mẹ / bạn thân / người yêu, ghi nhận tiền và kỷ niệm. Ghi nhớ chỉ tăng kiến thức một lần.",
-        "Show khách mời còn 4 lượt chọn, cố định 12 lượt chọn; thêm giải mã, ghi nhớ, đoán hành động và chiến thuật vận động. Bản lưu lịch quay cũ giữ nguyên tiến trình.",
-        "Ngày / giờ sinh, cung hoàng đạo tạo thiên hướng tính cách và cơ hội nhập vai nhỏ. Đây là cơ chế văn hóa tâm linh trong game, không phải mô hình dự báo đời thực. Bản lưu người trưởng thành không đổi tính cách hồi tố.",
-        "Gia đình hai bên có phản đối cưới, quan tâm và đặt ranh giới; dựa trên người thân còn sống, tuổi, người yêu hiện tại và bối cảnh nghiêm khắc.",
-        "Rút gọn phần dẫn quê hương / show / thế giới ngầm, giữ chi phí ở lựa chọn; làm mới lời kể trong bản lưu cũ.",
-        "Chặn lời mời lên thành phố ở sai hoàn cảnh; khôi phục mốc thu nhập nước ngoài bị thiếu để tránh tiền / dư nợ thành số không hợp lệ.",
-        "Sổ xe hằng năm tách xăng / sạc, bảo dưỡng, bảo hiểm, gửi xe, đường bộ và thuê xe. Xe sang bảo dưỡng cao hơn, xe điện sạc rẻ hơn, xe đã bán không còn chịu phí cũ. Gộp phí xe sang vào đúng một khoản, giữ phí nhà riêng, tránh thu trùng. Xe để lại khi tại ngũ / trong tù không đổ xăng nhưng vẫn bảo trì.",
-        "Bình thường giữ giá gói thường dù giàu; thoải mái nâng mức dịch vụ ×1,5–5 theo tài chính, tiết kiệm ×0,82. Áp dụng sinh hoạt và các dịch vụ giải trí / hẹn hò; không nhân giá tài sản, skin, học phí, thuế, phạt. Có thể chọn nếp chi tiêu từ nhỏ, gia đình thanh toán hoạt động của trẻ theo ngân sách thực.",
-        "95 điểm đến với địa danh, món ăn, hoạt động và 6 kiểu chuyện dọc đường. Chọn châu lục → điểm đến → bạn đồng hành → ai trả → khám phá. Gói châu Á không quá 50 triệu VND/người; châu Âu / châu Mỹ cao hơn, giá đôi ghi rõ hai suất. Thu một lần, các lựa chọn trong gói không thu thêm; đi chơi không biến thành định cư.",
-        "Xem phim theo thể loại, hoạt hình tách anime / Trung Quốc / Disney-Pixar. 58 phim thật có năm phát hành và ngưỡng tuổi mô phỏng; phim cũ là suất tuyển chọn. Thêm phim hư cấu cho 10 thể loại người đóng. Cả tuổi người yêu cũng được kiểm tra.",
-        "Tặng quà: trang sức, mỹ phẩm, handmade, gấu bông, hoa, sách / đồ sở thích; mỗi loại 3 mức. Gu ổn định theo từng người, có thể hỏi; món / phim hợp gu và cách quan tâm tăng tình cảm, không hợp có thể giảm. Không cộng vô hạn khi lặp lại, giá cao không đảm bảo được yêu hơn.",
-        "Thanh toán rõ bạn / chia đôi / người ấy / gia đình khi phù hợp. Ngân sách người ấy dùng thu nhập thực, không trùng tiền góp sinh hoạt, dùng chung với đi quê. Quyết định giữ mã bước / năm / người yêu / nơi ở / tiền tệ để chặn trừ tiền từ lựa chọn cũ.",
-        "Thêm địa danh và phim có thật; giá các gói và quà tặng được ước tính cho trò chơi.",
-        "Sửa lỗi người đang đi làm thi lại đỗ trường năng khiếu vẫn giữ việc khi nhập học toàn thời gian. Giữ tiền riêng của trẻ tách khỏi chi của gia đình; dịch vụ giải trí không đủ ngân sách thì chưa diễn ra.",
-        "Thêm T-ara vào Kpop và thần tượng, dùng cùng bộ lọc thế hệ / concert lưu trữ hiện có.",
-        "Năng khiếu đạo diễn xuất hiện ngẫu nhiên. Ngã rẽ đại học gợi ý ba ngành ở hai trường Sân khấu – Điện ảnh Hà Nội / TP.HCM; cần tốt nghiệp THPT và đủ 18 tuổi, đỗ rồi học 4 năm, ra trường bắt đầu từ trợ lý.",
-        "Sinh viên đạo diễn thực tập tại đoàn phim / xưởng phim và bảo vệ đồ án phim; không dùng tình huống thực tập kiến trúc của nhóm ngành nghệ thuật chung.",
-        "Công việc → Đạo diễn: dự án phim / tuyển diễn viên. Trợ lý làm phim ngắn đầu tay; bậc đạo diễn mở truyền hình, điện ảnh, web drama. Chọn riêng người đóng / hoạt hình, kịch bản gốc / chuyển thể có phép / phạm vi công cộng và 10 thể loại.",
-        "Một dự án có 16 chặng trong năm: chọn dự án, vốn, hai vai diễn, kịch bản, mini game storyboard, tiền kỳ, sản xuất, mini game nối cảnh, biến cố, dựng, âm thanh và phát hành. Dự án hoạt hình dùng diễn viên lồng tiếng và lịch diễn hoạt / render.",
-        "Mỗi dự án có 6 diễn viên hư cấu với tên, tuổi theo năm hiện tại, quê, diễn xuất, giọng, kỷ luật, sở trường, điểm mạnh / yếu. Không chọn một người cho cả hai vai. Năng lực và lựa chọn ảnh hưởng chất lượng / khán giả / uy tín.",
-        "Phân biệt vốn hãng và vốn tự góp; ghi rõ ai trả, không trừ hai lần tiền diễn viên, không cộng ngân sách hãng vào ví. Hãng trả cát-xê sau hoàn tất; tự đầu tư có thể lỗ, kết quả ghi vốn / thu hồi / lãi lỗ.",
-        "Không nhận show chồng lịch phim; dự án kiểm tra tuổi, nghề, cấp bậc, nơi sống, tiền tệ, năm, tù / nghĩa vụ / sức khỏe. Bản lưu giữ hồ sơ và mini game, không phát tiền hai lần khi bấm lại. Tối đa một dự án / năm, luôn được dừng.",
-        "Tên trường và ngành học dựa trên thông tin thực tế; thu nhập và kết quả tác phẩm được mô phỏng trong game.",
-        "Mở rộng nghề phi pháp ra các nước ngoài Việt Nam: 64 tình huống, gồm 28 chuyện riêng cho đủ 7 nghề, 28 chuyện theo 14 hồ sơ tổ chức / khu vực và 8 chuyện chung.",
-        "Nhật có lựa chọn nhóm Yakuza hư cấu; Ý / Nga / Mỹ có nhóm kiểu Mafia hư cấu; Mexico / Colombia có nhóm kiểu cartel hư cấu. Các khu vực khác có băng nhóm địa phương / mạng có tổ chức hoặc xuyên biên giới hư cấu; không gán một nhãn cho toàn bộ cư dân hay quốc gia.",
-        "Đường tối → Tổ chức / nghề phi pháp nơi đang sống: xem tổ chức, chọn nghề, xử lý tình huống, rút lui. Gia nhập tổ chức và nhận nghề là hai quyết định riêng.",
-        "Dùng quốc gia đang sống, không dùng nhầm quốc gia sinh ra. Chuyển nước không tự gia nhập tổ chức mới; sự đe dọa cũ không tự biến mất. Cảnh mang bối cảnh Việt Nam được thay bằng bộ mới ở nước ngoài.",
-        "Gọi đúng hoạt động trái phép (cưỡng đoạt / cưỡng ép / cá cược không phép); không coi dịch vụ cho vay hoặc casino có phép là tội phạm, không coi người bị ép làm trong trại lừa đảo là tự nguyện gia nhập.",
-        "Tối đa 2 tình huống mới/năm; cùng chuyện cách 5 năm. Lời mời và lựa chọn có dấu thời điểm / quốc gia / nghề / cấp bậc; mất điều kiện thì không thu tiền hay áp hậu quả cũ. Vốn tự góp ghi rõ, chỉ làm khi đủ tiền, rút lui luôn có.",
-        "Giữ cơ chế thăng bậc theo thâm niên, điều tra, tù, đánh úp và truy sát hiện có; không thêm lượt đánh úp độc lập làm chồng rủi ro. Cấp cao không được miễn truy cứu.",
-        "Trước khi bán hiện giá vốn bình quân, giá bán được hiện tại, chênh lệch trên mỗi chỉ / cổ phiếu, phần trăm tăng giảm và tổng lãi / lỗ dự kiến theo số lượng. Nhật ký bán ghi lại các số liệu này; vàng giải thích chênh mua–bán, giá vốn 0 không chia để tạo % vô hạn.",
-        "Giá vàng và cổ phiếu mới lấy giá thị trường thật làm mốc khởi đầu, sau đó biến động ngẫu nhiên mỗi năm trong game theo yêu cầu người chơi.",
-        "Ba loại vàng cùng một xu hướng; cổ phiếu cùng thị trường có xu hướng chung và biến động riêng từng mã, ETF dao động nhẹ hơn. Có cả tăng và giảm, không bảo đảm lợi nhuận.",
-        "Giữ nguyên số lượng và giá vốn; cập nhật giá mua / bán, tài sản ròng và lãi / lỗ. Ghi rõ giá mô phỏng theo năm, tách khỏi thời điểm nguồn giá thật.",
-        "Tải lại giữ nguyên giá thị trường trong năm, tránh việc làm mới để mua bán kiếm chênh lệch.",
-        "Mua / bán vàng theo chỉ hoặc lượng (1 lượng = 10 chỉ), cổ phiếu / ETF theo số nguyên; nhập số lượng, xem tổng tiền, điền tối đa hoặc bán hết.",
-        "Bảng giá 3 loại vàng và 13 mã cổ phiếu / ETF Việt Nam, Mỹ. Đúng chiều vàng: người chơi mua giá bán ra, bán giá mua vào. Cổ phiếu dùng giá phiên gần nhất nguồn công bố.",
-        "Bảng giá vàng, chứng khoán và ngoại tệ có thời điểm cập nhật; khi nguồn giá gián đoạn, giữ giá gần nhất và hiển thị thời gian.",
-        "Danh mục mới lưu số lượng / giá vốn, cộng vào tài sản ròng và hồ sơ; không chạy lợi suất ngẫu nhiên hoặc tự cộng cổ tức giả định của cơ chế cũ. Hỗ trợ đổi đơn vị tiền khi chuyển nước.",
-        "Khoản cũ giữ nguyên, có lựa chọn xem quy đổi sang số lượng theo giá đang lưu mà giữ nguyên tổng giá trị; phần lẻ không đủ đơn vị vẫn ở khoản cũ.",
-        "Giá ngoài đời tại thời điểm nguồn cập nhật, không phải giá dự báo cho năm tương lai trong game. Giao dịch chưa cộng phí môi giới / thuế thực tế.",
-        "Mở rộng đời sống thế giới: 136 tình huống, gồm 106 tình huống riêng tại 53 quốc gia và 30 tình huống chung được lọc cho 194 nước ngoài Việt Nam.",
-        "Thêm tuổi thơ 5–7 tuổi, trường học, học tiếp khi trưởng thành, công việc, nhà ở, cộng đồng, gia đình, tình yêu, nuôi con và tuổi già; các hoạt động văn hóa là tự nguyện.",
-        "Gia đình & bạn bè → Chuyện đời sống / văn hóa nơi đang sống: chọn chủ đề phù hợp, đồng thời có sự kiện xuất hiện tự nhiên trong năm.",
-        "Mỗi năm tối đa hai chuyện, cùng tình huống cách ít nhất tám năm; ưu tiên chuyện riêng của quốc gia khi có điều kiện phù hợp.",
-        "Tính theo quốc gia hiện cư trú, gồm nhân vật Việt Nam đang ở nước ngoài; kiểm tra lại tuổi, nơi ở, tiền, công việc và người thân trước khi giải quyết. Trẻ em không có lựa chọn tự chi tiền.",
-        "Phương án miễn phí, nghỉ hoặc từ chối luôn có; học thêm dùng tiền riêng với ngân sách mô phỏng ghi trước. Không tự cấp bằng, nhận việc, chuyển nhà hay thêm người thân.",
-        "Chặn xác nhận trùng / sai năm / đổi nơi ở / đổi tiền tệ, bị giam, nghĩa vụ hoặc mắc kẹt. Bộ đếm và lịch sử giữ trong bản lưu.",
-        "Công chức xã / phường yêu cầu đại học khi nhận việc mới. Giữ công việc trong bản lưu đang chơi.",
-        "Bảng nghề hiện đủ yêu cầu học vấn ở các bậc, thay vì chỉ ghi từ đại học.",
-        "Cập nhật Đồng Nai, Quảng Ninh và Bắc Ninh thành thành phố trực thuộc trung ương trong danh sách 34 đơn vị và mục tạo nhân vật.",
-        "Đồng bộ loại đơn vị khi mở bản lưu cũ; giữ nguyên ID, ranh giới sáp nhập và bộ 63 địa phương lịch sử.",
-        "Gợi ý tạo nhân vật ghi rõ loại đơn vị; số dân ghi rõ là số liệu 2023 phục vụ mô phỏng.",
-        "Thêm bộ giới thiệu 63 tỉnh/thành trước sáp nhập: 126 địa danh và 126 món ăn / sản vật. Hiện nét đặc trưng quê sinh ra ở màn xuất phát và bảng thông tin địa phương.",
-        "Người yêu / bạn đời có quê quán được lưu cố định; hỗ trợ bản lưu cũ, gặp gỡ thông thường, show hẹn hò và quan hệ chu cấp.",
-        "Thêm hành động mời nhau về quê chơi, người yêu ngẫu nhiên ngỏ lời dẫn về quê; chọn địa danh, ẩm thực hoặc lịch kết hợp rồi thống nhất người trả tiền.",
-        "Ngân sách mô phỏng tính đi lại khứ hồi, nơi đang sống và đơn vị tiền; mỗi hướng tối đa một chuyến/năm, cả đôi tối đa hai chuyến/năm.",
-        "Running Man Việt Nam / 2 Ngày 1 Đêm: chọn chương trình rồi chọn khách mời 2 tập hoặc thành viên cố định 6 tập mô phỏng trong năm.",
-        "Khách mời có 6 chặng lựa chọn; cố định có 30 chặng, nhiều nhiệm vụ và địa điểm hơn. Báo giá riêng theo vai trò trước khi nhận lịch.",
-        "Quyết toán cát-xê theo số tập thực sự hoàn thành, kể cả khi rút lui hoặc lịch quay bị gián đoạn; chặn xác nhận lại từ lời mời cũ.",
-        "Mỗi tập hoàn thành đều thu hút thêm người theo dõi dù thắng hay thua; nhật ký phản hồi khán giả thay đổi theo hành trình, căn cước có thống kê số tập và người theo dõi thu hút qua game show.",
-        "Bản lưu lịch cũ 3 chuyến tiếp tục đúng lịch và hợp đồng cũ; hỗ trợ lưu giữa màn chọn vai trò hoặc giữa tập.",
-        "Tách hàm nuôi dạy con khỏi hàm cập nhật thu nhập bố mẹ; bổ sung kiểm tra trợ cấp bố mẹ.",
-        "Concert lưu trữ có nội dung dự phòng khi thiếu tên chương trình; nhật ký quan hệ chu cấp nêu rõ từng bối cảnh, tránh câu lặp trong cùng năm.",
-        "Rà soát logic: bạn đời không thu nhập không tự tạo tiền đóng góp; thăng chức của bạn đời cần đủ thâm niên.",
-        "Ôn thi lại chỉ công bố kết quả khi đến năm thi, không hiện trước điểm tương lai.",
-        "Hồ sơ khách mời hẹn hò đúng tuổi và giữ nguyên nghề / thu nhập sau ghép đôi; vòng show hết hạn khi qua năm.",
-        "Thua thử thách trên đảo không còn kể như được hẹn hò tại khu nghỉ dưỡng.",
-        "Sửa cả hồ sơ người yêu và cảnh hẹn hò đang chờ khi mở bản lưu cũ.",
-        "Thêm hướng dẫn mở quan hệ chu cấp và Người ấy là ai; giới hạn đăng ký show hẹn hò một lần mỗi năm, chặn vòng show khi hoàn cảnh thay đổi.",
-        "Sửa hồ sơ người yêu dưới 18 tuổi thành học sinh; kiểm tra lại sau khi sự kiện thay đổi tuổi và khi mở bản lưu.",
-        "Điểm thi phù hợp kiến thức; xét đại học trong game theo ngưỡng điểm 23 / 18, bỏ lượt may rủi thứ hai.",
-        "Thêm 28 tình huống cho 14 nhóm nghề; tối đa hai tình huống mới mỗi năm, cùng chuyện cách ít nhất bốn năm. Kiểm tra lại công việc, chức vụ và trạng thái trước khi giải quyết.",
-        "Sự kiện nghề cũ kiểm tra lại chức vụ và điều kiện ban đầu.",
-        "Thêm mục chủ động trong Gia đình & bạn bè: chọn đúng từng con để chăm sóc / đồng hành; trẻ nhỏ, học sinh, tuổi mới lớn và con trưởng thành có nội dung riêng. Bao gồm cả con nuôi.",
-        "19 tình huống: nhịp ngủ, khám phá, thời gian bên bé, làm quen nhóm trẻ, cảm xúc, chia sẻ, học đầu cấp, bài khó, sở thích, bị trêu chọc, màn hình, áp lực điểm, quyền riêng tư, bạn bè, quản lý tiền, hướng nghiệp, tự lập, ranh giới khi trưởng thành và hỗ trợ từ xa.",
-        "Lựa chọn ảnh hưởng gắn kết, áp lực, học tập, giao tiếp và tự lập; không tự trao bằng cấp hay bảo đảm thành tài. Phí ghi rõ người chơi chi, kiểm tra số dư trước khi trừ.",
-        "Mỗi con tối đa hai tình huống mỗi năm; cùng chuyện cách tối thiểu ba năm. Tình huống tự phát được luân phiên giữa các con, tối đa một lần cho cả nhà mỗi năm.",
-        "Danh tính con ổn định khi lưu/tải, kể cả hai con trùng tên; lựa chọn cũ không chuyển sang con khác khi mất người thân hoặc mảng con thay đổi. Cảnh hết năm, sai tuổi, đổi quyền chăm sóc hoặc cha mẹ bị giam / tại ngũ được hủy.",
-        "Con ở với người cũ, cha mẹ ở nước ngoài hoặc con đang thụ án chỉ có nội dung liên lạc từ xa. Con trưởng thành được tôn trọng quyền tự quyết.",
-        "Bỏ suy diễn học lực thấp / chơi game thành nợ cờ bạc. Sự kiện thành tài không tự tạo nghề bác sĩ / tiến sĩ / doanh nghiệp chỉ từ điểm học.",
-        "Sửa chuỗi học hành cũ vượt 100 điểm, học thêm thiếu tiền và việc kể giáo viên phổ thông gọi về khi con đã trưởng thành; thêm kiểm tra mục tiêu còn sống / không trùng tên mơ hồ.",
-        "Sửa tiệc sinh nhật trẻ còn phụ thuộc: bố mẹ chi từ ngân sách gia đình, không trừ tiền tiết kiệm của trẻ; ghi rõ ai thanh toán và số tiền trong nhật ký / gợi ý lựa chọn. Không tổ chức nếu gia đình thiếu ngân sách.",
-        "Nếu không còn bố mẹ hoặc đã tự lập, chỉ dùng tiền riêng khi đủ; không tự tạo người trả hộ hoặc làm âm tiền vì tiệc sinh nhật.",
-        "Sửa tương tự việc lỡ nạp game trên điện thoại và bố mẹ bồi thường cửa kính: ghi khoản chi gia đình riêng, đúng người thân còn sống.",
-        "Các khoản thật sự trừ vào ví nhân vật được chú thích là tự chi từ tiền riêng; sự kiện có số tuổi / số buổi vẫn được ghi số tiền, không bỏ qua chỉ vì nội dung đã có chữ số.",
-        "Phân loại 159 nghề: 106 nghề ở bậc đầu có tích lũy bảo hiểm hưu trí, bổ sung dịch vụ, thợ, lao động theo hợp đồng, vận động viên và huấn luyện viên. Chủ cơ sở và vị trí tự doanh được xét theo bậc nghề.",
-        "Ngoại lệ không tự động tích lũy: freelancer, sáng tạo nội dung / nghệ sĩ hoạt động tự do, vé số, hàng rong, ve chai, xe ôm / tài xế nền tảng tự do, nông ngư nghiệp tự doanh, phụ giúp nhà, kinh doanh riêng và phi pháp. Giữ quyền đã đóng đủ từ nghề cũ và cơ chế BHXH tự nguyện hiện có.",
-        "Lương hưu dựa số năm đóng thực tế và mức bình quân; tính cả năm đóng thứ 15 khi nghỉ, không thay số năm đóng bằng tổng số năm lao động. Đủ điều kiện vẫn nhận khi đang thất nghiệp hoặc chuyển nghề. Không tự tạo năm đóng cho lịch sử cũ chưa có dữ liệu đóng.",
-        "Vận động viên, esports và kỳ thủ có hệ số hợp đồng theo huy chương / giải đấu. Chức vô địch, kỷ lục, thành tích trong sự kiện môn được ghi nhận, tách khỏi tiền thưởng một lần. Thành tích lớn có trọng số cao hơn, hệ số tối đa 3,5 lần nền theo bậc / môn; không nhân dồn khi mở hồ sơ.",
-        "Thành tích và hợp đồng tách theo nghề, môn và game; thành tích khác môn không được chuyển sang. Hồ sơ và ước tính lời mời việc phản ánh cơ chế mới.",
-        "Chặn cộng hai năm bảo hiểm trong một năm; BHXH tự nguyện không trừ tiền khi không đủ tiền hoặc đang bị giam / tại ngũ.",
-        "Chặn nhập ngũ lần hai từ ngã rẽ sau phổ thông, từ lựa chọn cũ và từ save thiếu cờ nhưng còn nhật ký phục vụ. Không gọi người đang bị giam, sức khỏe quá thấp hoặc đang làm quân đội / công an.",
-        "Giảm tần suất gọi khám tuyển ngẫu nhiên tại VN, mỗi đời tối đa một thông báo tự động. Chuyển từ nhập ngũ cuối năm sang lịch khám tuyển năm sau để không mất một năm phục vụ.",
-        "Xếp đủ bốn chuyện năm đầu; tân binh, phân đơn vị và chuyện quân ngũ không phát lại. Ra quân sau đủ hai năm, khóa trợ cấp một lần, xử lý save cũ đã nhận trợ cấp.",
-        "Thư hậu phương và về phép đúng người thân còn sống; không trừ âm tiền tàu xe.",
-        "Bỏ lựa chọn đã hết hiệu lực trước khi áp dụng. Không xếp trùng ID trong hàng đợi năm, giữ lại lịch hẹn quá số ô thay vì xóa mất.",
-        "Thêm câu kể năm bình thường, ưu tiên câu chưa từng gặp rồi tránh lặp trong 12 năm gần nhất.",
-        "Đổi nét mặt sang anime với mắt nhiều lớp, tóc chia lọn, cằm thuôn, bóng cel và ánh sáng trên chân dung. Giữ khác biệt tuổi, tóc bạc, trang phục nghề và biểu cảm.",
-        "Phong cảnh có mây nhiều lớp, nắng xiên, tán cây, mái ngói, kính cửa sổ và chiều sâu màu; giữ nguyên bố cục, tỷ lệ khung hình và logic người thân hiện diện.",
-        "Ngoại hình nhân vật giữ ổn định theo danh tính trong suốt quá trình chơi.",
-        "Nhãn luôn là Bối cảnh gia đình; nội dung mô tả mức sống thực tế thay câu chung chung về biến cố.",
-        "Kết hợp 20 mô tả kinh tế với 8 nếp nuôi dạy, cùng gia đình đơn thân, đông anh chị em, thất nghiệp, gia thế và bất ổn nghiêm trọng nếu có trong dữ liệu.",
-        "Diện mạo xuất phát điểm cố định theo nhân vật, không thay đổi khi mở lại và không tự làm đổi hoàn cảnh gia đình.",
-        "Chọn FPS / MOBA / Game khác rồi chọn game; đủ 12 game yêu cầu, gồm PUBG Mobile.",
-        "Chỉ ghi lịch sử khi thật sự chơi; lịch sử giải trí riêng với game thi đấu / năng khiếu.",
-        "Cửa hàng và sự kiện skin chỉ hiện game đã chơi, kiểm tra tiền và hoàn cảnh khi mua.",
-        "Giá vật phẩm thay đổi theo từng trò chơi; Minecraft và Roblox có lựa chọn diện mạo miễn phí. Các mức giá chưa xác minh được ghi là ước tính.",
-        "Giữ nguyên bố cục, màu, nút và các bảng hiện tại; thay chân dung / khung cảnh pixel bằng hình minh họa 2D mềm, rõ ở mọi kích thước. Chân dung có trẻ sơ sinh, thiếu nhi, thiếu niên, người lớn, tuổi già và trang phục theo nghề; ảnh thẻ chia sẻ cũng được làm mịn.",
-        "Diện mạo cố định theo tên và ngày sinh. Cảnh gia đình chỉ hiện người còn sống, đang ở cùng; khung cảnh phù hợp với nơi nhân vật sinh sống.",
-        "Bartender chỉ xuất hiện trong tuyển dụng từ 18 tuổi. Người mới vào nghề bắt đầu ở bartender, không được gọi là bartender trưởng. Thăng bậc cần số năm công tác thật, không chỉ điểm kinh nghiệm; chặn cả một số đường tắt qua sự kiện nghề.",
-        "Tuổi 25 hoặc kinh nghiệm nghề khác không tự cho vị trí quản lý / trưởng. Người thực sự từng làm cùng nghề vẫn có thể ứng tuyển bậc phù hợp. Xin xét lương tối đa một lần trong năm, không bấm lặp để nhận thưởng / nhảy chức.",
-        "Dòng xuất phát điểm dùng \"Bối cảnh gia đình\" cho hoàn cảnh bình thường; không xếp tuổi thơ êm đềm, vùng biển, gia đình mẹ đơn thân hay nghèo khó mặc nhiên thành biến cố nặng. \"Biến cố gia đình\" dành cho dữ liệu nghiêm trọng đã có như nghiện ngập, giang hồ hoặc không còn bố mẹ.",
-        "Thêm lời đề nghị tìm hiểu và chu cấp từ người lớn tuổi, thành đạt; chỉ từ 18 tuổi, phù hợp xu hướng tình cảm, không tự chèn quan hệ khi đã có vợ / chồng. Người chơi tự chọn nhận hoặc từ chối.",
-        "Chuỗi sự kiện tiền bạc đi kèm kiểm soát: điện thoại / lịch trình, bạn bè, quần áo / mạng xã hội, yêu cầu nghỉ việc, trì hoãn tiền. Có lựa chọn nhượng bộ, đặt ranh giới, ngừng nhận chu cấp hoặc chia tay; không tự cưỡng ép nhân vật mất việc hay mất tài sản riêng.",
-        "Chỉ cộng tiền thực nhận một lần mỗi năm, trong khả năng người chu cấp; không trả khi đã chia tay, người ấy mất, bị cắt khoản tiền hoặc nhân vật ở tù. Khoản chu cấp khi hẹn hò không cộng trùng với đóng góp gia đình khi đã kết hôn / chung sống.",
-        "Người yêu đang hẹn hò cũng có diễn biến tuổi già / qua đời, không sống mãi vì chưa cưới; mất người đang hẹn hò không tự biến nhân vật thành người góa.",
-        "Nhật ký Running Man / 2 Ngày 1 Đêm ghi rõ chuyến quay ở từng kết quả, tránh ba chuyến trong cùng năm bị hiện thành các dòng sự kiện trùng nhau.",
-        "Running Man / 2 Ngày 1 Đêm có chuỗi mùa quay trong cùng năm: 3 chuyến, mỗi chuyến 5 lượt lựa chọn. Địa điểm, nhiệm vụ, khách mời và đội chơi được chọn ngẫu nhiên.",
-        "Running Man: gặp khách mời, thử thách phối hợp / giải đố / thể lực, săn manh mối, đổi một đồng đội, cuộc đua xé bảng tên. Tham khảo đặc trưng trò chơi từ HTV; mọi tình huống và kết quả trong game là mô phỏng.",
-        "2 Ngày 1 Đêm: chia đội, nhiệm vụ địa phương, trò giành bữa tối / chỗ ngủ, nhiệm vụ buổi sáng. Đội thua vẫn có suất ăn cơ bản và nơi nghỉ có hỗ trợ.",
-        "Mỗi đội có 4 người, luôn có người chơi và không trùng thành viên. Khách mời thay đổi theo thời gian; lưu rồi chơi tiếp vẫn giữ đúng đội đã chọn.",
-        "Có cách phối hợp, giải đố, xung phong vận động và xin dừng. Chấn thương chặn phần vận động mạnh. Người chơi chủ động nhận show được tự chọn các vòng tiếp theo dù đang bật tự động.",
-        "Cát-xê quyết toán một lần theo số chuyến thực sự hoàn thành; rút lui / bị gián đoạn không nhận cả mùa. Không nhận lại hai mùa trong một năm hoặc chồng lịch với show âm nhạc đang diễn ra.",
-        "Vào tù, qua đời, hết năm hoặc sức khỏe quá thấp thì dừng quay, dọn lựa chọn cũ. Chặn bấm lại vòng đã qua để nhảy vòng / nhận tiền hai lần.",
-        "Sửa show âm nhạc: Tinh Hà không bị trộn đội hình với Anh trai Say Hi; không dùng nghệ sĩ thật ở năm quá xa; loại quán quân mùa hiện tại khỏi lời mời thi lại cùng show; bỏ khoản 1 tỷ bị cộng trùng; chặn trả thưởng lần hai ở chung kết đã hoàn tất.",
-        "Sửa mừng thọ: cặp đôi cùng giới dùng \"người bạn đời\", không tự gọi \"hai vợ chồng\"; bạn đời đã mất không xuất hiện như còn sống.",
-        "Sửa nguyên nhân Anh Tài 2024 / 2026 biến mất: bỏ ngưỡng 50 tuổi trung bình khỏi cả hai màn lọc show. Giữ đầy đủ 33 thành viên K24 và 34 thành viên K26, chọn được từng người qua phân trang.",
-        "Với năm trong game quá xa (tuổi trung bình trên 65), chuyển sang bản ghi concert lưu trữ, không phát sinh vé máy bay, săn vé hay gặp nghệ sĩ trực tiếp. Không xuất hiện show trước năm ra mắt.",
-        "Đối chiếu đội hình: K24, K26 — VTV.",
-        "Thêm hành động làm ăn bất chính / liên kết xã hội đen từ 18 tuổi, góp vốn có lời hoặc mất vốn, tối đa một thương vụ mỗi năm. Có lựa chọn dừng hợp tác.",
-        "Thêm trạng thái thù địch và bị truy sát lưu cùng cuộc đời. Nguy cơ đánh úp tăng khi quan hệ băng nhóm, thù địch và truy sát tăng; tỷ lệ là thiết kế trò chơi, không phải thống kê thực tế.",
-        "Đánh úp có đúng hai lựa chọn: chống trả rồi chạy, hoặc chạy ngay. Cả hai có xác suất tử vong; sống sót bị thương và tiếp tục bị truy sát. Hiển thị nguy cơ trước lựa chọn.",
-        "Thêm sự kiện truy sát nối tiếp, phản bội, chia phần, đe dọa, điều tra, mất vốn, người thân can ngăn, hỗ trợ người cùng nhóm gặp nạn và cơ hội làm lại. Bỏ nghề không tự xóa truy sát. Khóa các sự kiện ngoài đường khi đang ở tù, bị giam giữ hoặc nhập ngũ.",
-        "Tắt nguồn đánh úp ngẫu nhiên cũ để không cộng chồng hai cơ chế. Dừng liên kết khi bỏ nghề; tử vong dọn lựa chọn đang chờ.",
-        "Sửa lỗi tổng giám đốc ngân hàng (bố là chủ tịch HĐQT), cơ trưởng… vẫn bị \"sếp liên tục giao việc ngoài giờ\".",
-        "Người giữ chức cao nhất hoặc gần cao nhất của nghề, chủ cơ sở, cơ nghiệp gia đình, người làm tự do không còn các chuyện bị sếp ép, bị cướp công, sơ cứu \"sếp lớn\"… và không còn mục \"Xin tăng lương\".",
-        "Khi bấm vào \"Việc bạn muốn làm\" lúc thanh cuộc đời đang chạy, game tự tạm dừng để bạn chọn. Đóng nhóm việc thì chạy tiếp.",
-        "Giới tính (sinh học): Nam / Nữ / Liên giới / Ngẫu nhiên.",
-        "Xu hướng tính dục tách riêng, không bắt buộc: Dị tính / LGBTQ+. Bấm lần nữa để bỏ chọn, không chọn thì để cuộc đời quyết định.",
-        "Bỏ các lựa chọn \"bột tôm / tóp mỡ / bé Liên / bi\" và mọi nội dung \"top / bot\" (đó là chuyện riêng tư, không phải xu hướng tính dục). Hồ sơ ghi gọn \"LGBTQ+ (đồng tính)\" / \"LGBTQ+ (song tính)\".",
-        "Vợ / chồng góp vào chi tiêu chung khoảng một nửa thu nhập thật, thay vì luôn khoảng 10 triệu đồng mỗi tháng. Ví dụ vợ lương 136 triệu / tháng thì góp khoảng 75 triệu / tháng.",
-        "Không lấy mức thu nhập giả định cao hơn lương thật của người phối ngẫu. Không ghi \"con cái biếu\" nếu không có khoản con cái đóng góp.",
-        "Án tính trọn năm: chỉ ra tù và mở khóa thao tác sau khi thanh thời gian của năm cuối hoàn tất; án một năm không bị cộng thêm một năm.",
-        "Trong thời gian ở tù không còn thi bằng lái, hẹn hò, mua nhà, nhận việc mới… Anh chị em cưới thì \"chỉ biết gửi lời chúc qua thư\".",
-        "Mỗi năm có 3–4 chuyện trong trại, không lặp lại. Thêm các chuyện mới:",
-        "Buôn lậu có ba cấp:",
-        "Ma túy, lừa đảo, đòi nợ thuê cũng chia cấp tương tự.",
-        "Càng lên cao càng có đàn em, có người chống lưng, ít trực tiếp nhúng tay nên ít bị bắt hơn: trùm chỉ còn khoảng 1/4 nguy cơ.",
-        "Thêm các chuyện:",
-        "Lên cấp có lời kể riêng: \"được anh lớn tin tưởng, giao quản lý cả một mối hàng…\".",
-        "Mục mới \"Mở thêm chi nhánh / mở rộng quy mô\": chủ quán, chủ tiệm, chủ xưởng… có đủ vốn thì tự mở rộng (ví dụ chủ quán → chủ chuỗi quán); cơ sở kinh doanh đầu tư thì mở thêm chi nhánh.",
-        "Năng khiếu chỉ là thể loại: MOBA hoặc FPS. Khi bộc lộ năng khiếu, bạn tự chọn game:",
-        "Các nhóm chỉ ghi tên nhóm, không ghi tên nghệ sĩ ở dưới. Bấm vào nhóm thì chọn nghệ sĩ (8 người mỗi trang, có \"Xem thêm\"):",
-        "Không có con cháu:",
-        "Không còn anh chị em thì không có \"anh chị em mỗi người góp một phần\"; lựa chọn \"chia với anh chị em\" chỉ hiện khi còn anh chị em.",
-        "Cả nhà đã mất:",
-        "Tập gym đến 65 tuổi, đá bóng đến 60, leo núi đến 65, đi phượt đến 55."
+        "Có đường thử việc, vào học viện hoặc đội trẻ rồi được tuyển lên đội chuyên nghiệp.",
+        "Mùa giải có đối thủ, chiến thuật, thứ hạng và vé dự giải quốc tế.",
+        "Thêm đi xem esports, luyện phản xạ, phong độ và công việc sau khi giải nghệ."
       ],
       "tags": [
         "Tính năng",
@@ -821,73 +520,12 @@
     {
       "id": "git-28b25f58630e",
       "publishedAt": "2026-10-16T06:59:21Z",
-      "title": "nghề tự do không \"thăng chức\", trả góp có kỳ hạn rõ ràng, xưng hô đúng giới, cho con tiền không trùng, con …",
-      "summary": "Freelancer, làm tự do không còn \"Được thăng chức\". Thay vào đó: \"Làm tự do không có ai thăng chức cho mình — nhưng tay nghề, uy tín lên dần, khách tìm đến đông hơn, nhận được việc lớn hơn.\"",
+      "title": "Làm tự do lên tay nghề, trả góp ghi rõ tiền",
+      "summary": "Nghề tự do tăng uy tín và có khách lớn hơn, thay vì được báo thăng chức.",
       "details": [
-        "Freelancer, làm tự do không còn \"Được thăng chức\". Thay vào đó: \"Làm tự do không có ai thăng chức cho mình — nhưng tay nghề, uy tín lên dần, khách tìm đến đông hơn, nhận được việc lớn hơn.\"",
-        "Rà lại các nghề khác có cùng đặc thù:",
-        "Khi chọn mua xe trả góp, ghi rõ: trả trước bao nhiêu (30%), vay ai, lãi suất mỗi năm, góp mấy năm, mỗi năm và mỗi tháng phải góp bao nhiêu, tổng phải trả và tổng tiền lãi.",
-        "Mỗi năm trừ đúng khoản góp và ghi vào nhật ký, ví dụ: \"Góp tiền trả góp Toyota Vios năm thứ 2/5: 148 triệu đ · còn nợ 367 triệu đ\". Không đủ tiền góp thì bị trễ hạn, ghi nợ xấu như trước.",
-        "Nhân vật nam được mời làm phù rể, nhân vật nữ làm phù dâu (trước đây dựa theo giới tính của bạn thân).",
-        "Vợ chồng, người yêu nói chuyện xưng hô đúng: vợ xưng \"em\" gọi chồng \"anh\", chồng xưng \"anh\" gọi vợ \"em\". Cặp đồng giới xưng theo tuổi.",
-        "\"Cho con tiền mua nhà, làm vốn\" giờ là một lựa chọn (cho, cho mượn trả dần, hoặc giữ lại dưỡng già), không còn tự động trừ tiền.",
-        "Vừa cho con một khoản thì trong 8 năm không hỏi lại chuyện cho tiền hay \"con xin vốn\" với chính người con đó.",
-        "Cho mượn thì con trả dần mỗi năm.",
-        "Sửa lỗi sinh ra trong gia đình khá giả mà nghỉ học năm 11 tuổi không lý do: nhà có điều kiện thì con luôn được đi học tiểu học, trung học cơ sở.",
-        "Trường hợp phải nghỉ học thì nói rõ lý do: nhà nghèo phải ở nhà phụ giúp bố mẹ, học lực yếu không đỗ lớp 6, trường cấp hai ở xa.",
-        "Ly hôn khi con còn nhỏ:",
-        "Bố hoặc mẹ mất khi còn nhỏ:",
-        "Bố / mẹ già ở một mình sau khi người kia mất: đón về ở cùng, về thăm thường xuyên, hoặc thuê người chăm. Bố / mẹ có thể muốn đi bước nữa: ủng hộ hay phản đối.",
-        "Ngày giỗ bố mẹ: họ hàng về đông đủ, nấu lại món người đã khuất thích nhất.",
-        "Góa bụa: những ngày một mình — dọn về ở với con cháu, đi sinh hoạt câu lạc bộ, hay ở một mình với kỷ niệm.",
-        "Người vừa trúng số hoặc đang có nhiều tiền thì không còn \"ham\" lời mời việc nhẹ lương cao rồi bị lừa sang trại lừa đảo.",
-        "Sửa lỗi hồi tưởng sau khi mất không có mặt vợ / chồng: hồi tưởng luôn có ít nhất một ký ức về người bạn đời, kể cả khi mất đột ngột.",
-        "Người bạn đời đã mất trước thì trong cơn mê nhân vật khẽ gọi tên người ấy.",
-        "Sửa lỗi: bố mất khi mới 10 tuổi mà nhân vật không có cảm giác gì, đến 20 tuổi ông mất mới \"lần đầu hiểu thế nào là mất mát\".",
-        "Giờ lần mất người thân đầu tiên trong đời (bố mẹ, ông bà, anh chị em, vợ chồng, bạn thân…) mới là \"lần đầu hiểu thế nào là mất mát\". Mất bố / mẹ khi còn nhỏ: \"Mới 10 tuổi, lần đầu bạn hiểu thế nào là mất mát — một khoảng trống chẳng gì lấp được.\"",
-        "Những lần sau là nỗi đau chồng lên nỗi đau:",
-        "Một số trường hợp riêng:",
-        "Sau mất mát có thể ngồi lại với gia đình, lao vào công việc, hoặc tìm đến chuyên gia tâm lý.",
-        "Tin nhắn lúc nửa đêm: một người bạn nhắn \"mệt quá, chắc không ai cần mình nữa\". Bạn có thể:",
-        "Những ngày tăm tối: căng thẳng kéo dài, buồn bã thì nhân vật có thể nói thật với người thân, gọi đường dây hỗ trợ, đi khám chuyên khoa, hoặc giữ trong lòng (nặng dần lên).",
-        "Kèm thông tin hỗ trợ thật: Đường dây nóng Ngày Mai 096 306 1414 (miễn phí); khi nguy cấp gọi 115. Ở nước ngoài: findahelpline.com.",
-        "12 tình huống theo nghề:",
-        "Mỗi tình huống có 3 lựa chọn: ngồi lại tâm sự, cảm ơn và tự tin với nghề, hoặc vẫn giữ nỗi buồn. Lời người tử tế được lưu thành ký ức.",
-        "Vài năm sau có một tình huống nghề nghiệp ý nghĩa, và lời năm xưa được nhắc lại. Ví dụ: thợ xăm gặp cô gái muốn xăm nét chữ của người mẹ vừa mất; shipper đội mưa giao thuốc cho bà cụ neo đơn; nam giáo viên mầm non ở bên một bé vừa mất bố.",
-        "Nếu năm xưa chọn giữ nỗi buồn, đến lúc này nhân vật mới hiểu ra giá trị nghề của mình.",
-        "Bạn thân đã mất: các tình huống thường ngày không còn lựa chọn \"Đưa cho bạn thân xem\", mà đổi thành \"bạn bè\".",
-        "Không làm chủ khi chưa 18 tuổi: dưới 18 tuổi không được mời làm chủ tạp hóa, chủ quán, chủ xưởng… Riêng con nhà buôn bán thì được \"phụ giúp tiệm của gia đình\". Từ 18 đến 21 tuổi muốn làm chủ phải có vốn.",
-        "Con nhà có điều kiện nghe theo gia đình:",
-        "Giới hạn tuổi:",
-        "Mục Tình cảm: đã có người yêu thì không còn hiện \"Tìm người yêu\" và \"Đăng ký show hẹn hò\".",
-        "Giá skin giới hạn:",
-        "Thêm nhiều kiểu hẹn hò: đu concert cùng người yêu, ở bên nhau cả ngày (skinship), chụp photobooth, cà phê mèo, đi biển, cắm trại glamping, escape room, vườn hoa, ăn kem – trà sữa – chè, xem bóng đá, đi lễ chùa / nhà thờ, về quê ra mắt.",
-        "Các kiểu cũ vẫn giữ: mì cay, gà rán KFC / Jollibee, tô tượng, thủy cung, bảo tàng, Dookki, Haidilao…",
-        "Mỗi lần hiện 8 gợi ý; bấm \"Nghĩ thêm chỗ khác\" để đổi bộ gợi ý.",
-        "Ngày hội câu lạc bộ: gợi ý câu lạc bộ theo sở trường và sở thích (âm nhạc, bóng đá, tình nguyện, tiếng Anh, dance, nhiếp ảnh, khởi nghiệp, học thuật, MC, kịch, esports, cờ, võ, sách, ẩm thực…).",
-        "Sinh hoạt câu lạc bộ trong suốt những năm học: chiến dịch Mùa hè xanh, giải bóng đá sinh viên, đêm nhạc gây quỹ… Có thể lên làm chủ nhiệm, có thể gặp người thương trong câu lạc bộ.",
-        "Lễ khai giảng mỗi năm: trường mời ca sĩ về diễn, vé miễn phí cho sinh viên. Chọn đi từ sớm (có khi được chụp ảnh cùng ca sĩ), đi cùng bạn, hoặc không đi.",
-        "Viêm ruột thừa cấp phải mổ (chần chừ thì có thể vỡ, viêm phúc mạc).",
-        "Sốt xuất huyết (ở nước nhiệt đới): nhập viện theo dõi hay tự truyền dịch ở nhà (nguy cơ sốc).",
-        "Sốt siêu vi, thủy đậu, tay chân miệng, sỏi thận, viêm loét dạ dày.",
-        "Dị ứng: khoảng 1/10 người có cơ địa dị ứng: tôm cua hải sản, cá, đậu phộng, sữa bò, trứng, phấn hoa – bụi nhà, kháng sinh penicillin. Về sau đi ăn cỗ phải kiêng, ăn liều có thể phải đi cấp cứu.",
-        "Có BHYT thì được chi trả phần lớn viện phí. Trẻ chưa tự lập thì bố mẹ lo viện phí.",
-        "Đàn em thân tín ôm tiền bỏ trốn hoặc khai hết với công an.",
-        "Người thương bỏ theo đại ca băng đối thủ.",
-        "Bị băng đối thủ trả thù, có thể mất mạng.",
-        "Mẹ khóc xin bỏ nghề; con bị bạn bè xa lánh vì \"bố nó là dân xã hội đen\".",
-        "Bị truy nã (ra đầu thú được giảm nhẹ, bỏ trốn thì án nặng hơn); bị rủ thử ma túy.",
-        "Lúc nào cũng có thể chọn rửa tay gác kiếm, ra đầu thú.",
-        "Cả cuộc sống chỉ xoay quanh trại giam, mỗi năm 2 chuyện, không lặp lại: thăm nuôi, luật buồng giam và \"đại ca\", lao động cải tạo, lớp học văn hóa / học nghề, bị rủ trốn trại, xét đặc xá dịp Quốc khánh 2/9, Tết trong trại, ốm trong trại, đơn ly hôn, thư của con, bạn tù rủ làm ăn, thư viện trại.",
-        "Cải tạo tốt thì có điểm thi đua, được giảm án hoặc đặc xá. Trốn trại, đánh nhau thì bị tăng án.",
-        "\"Việc bạn muốn làm\" trong tù: viết thư về nhà, xung phong lao động, học nghề / đọc sách, tập thể dục, gọi điện về nhà.",
-        "Ra tù:",
-        "Tài sản đầu tư vượt khoảng 250 năm thu nhập cơ sở (≈ vài chục tỷ đồng) thì mỗi năm chịu thêm chi phí: thuế, phí quản lý, bảo trì, nhân sự… khoảng 2,5–9%. Càng lớn càng nặng.",
-        "Tiền mặt quá lớn cũng hao dần.",
-        "Thu nhập của chủ tịch tập đoàn, chủ tịch ngân hàng, chủ đầu tư bất động sản giảm cho sát thực tế (trước đây chủ tịch tập đoàn khoảng 20 tỷ đồng / tháng).",
-        "Mô phỏng người chơi dồn toàn bộ tiền vào đất: tối đa khoảng 560 tỷ (trước đây gần 12.000 tỷ). Người chơi bình thường gần như không bị ảnh hưởng.",
-        "Từ 16 tuổi có thể tìm hiểu và đổi tôn giáo: Phật giáo, Công giáo, Tin Lành, Cao Đài, Hòa Hảo, Hồi giáo, hoặc thôi theo đạo (ở nước ngoài: Kitô giáo, Hồi giáo, Phật giáo, Hindu giáo, Do Thái giáo…).",
-        "Đổi xong thì các hoạt động, ngày lễ, nơi sinh hoạt tôn giáo đổi theo. Gia đình có thể buồn một thời gian."
+        "Nghề tự do tăng uy tín và có khách lớn hơn, thay vì được báo thăng chức.",
+        "Mua xe trả góp ghi rõ trả trước, lãi suất, kỳ hạn và số tiền phải góp.",
+        "Sửa xưng hô theo giới tính và tránh cho con tiền trùng."
       ],
       "tags": [
         "Tính năng",
@@ -897,23 +535,12 @@
     {
       "id": "git-1461cbae7a27",
       "publishedAt": "2026-10-16T03:39:34Z",
-      "title": "nghĩa vụ quân sự đủ 24 tháng & trợ cấp xuất ngũ mới, con thành tài / phá gia chi tử, đất & vàng mất giá (bá…",
-      "summary": "Nhật ký tuổi 14 không còn câu \"mấy chục năm sau đọc lại vẫn còn bật cười\" (nhân vật mới 14 tuổi). Các câu \"lớn lên nhớ lại…\" trong sự kiện tuổi nhỏ cũng được viết lại cho đúng thời điểm.",
+      "title": "Đi nghĩa vụ đủ hai năm, thêm chuyện trong quân ngũ",
+      "summary": "Nhập ngũ lúc 18 tuổi thì ra quân lúc 20, có thêm huấn luyện, hành quân, Tết xa nhà và thư từ hậu phương.",
       "details": [
-        "Nhật ký tuổi 14 không còn câu \"mấy chục năm sau đọc lại vẫn còn bật cười\" (nhân vật mới 14 tuổi). Các câu \"lớn lên nhớ lại…\" trong sự kiện tuổi nhỏ cũng được viết lại cho đúng thời điểm.",
-        "Nhập ngũ năm 18 tuổi thì ra quân năm 20 tuổi (trước đây ra quân ngay năm 19 tuổi).",
-        "Thêm các sự kiện trong quân ngũ: kiểm tra bắn đạn thật, hành quân dã ngoại, Tết trong quân ngũ (đứng gác đêm giao thừa, văn nghệ), chiếc điện thoại lén, thư / quà từ hậu phương (người yêu có thể chờ hoặc chia tay), hội thao quân sự, tăng gia sản xuất. Năm đầu: huấn luyện tân binh, về đơn vị và 2 chuyện; năm sau: 3 chuyện, không lặp lại.",
-        "Trợ cấp xuất ngũ và trợ cấp tạo việc làm theo mức lương cơ sở:",
-        "Con học giỏi (18–45 tuổi) có thể thành tài: đỗ thủ khoa, học bổng du học, giải Olympic, giám đốc chi nhánh, bác sĩ giỏi, khởi nghiệp thành công, bảo vệ luận án tiến sĩ.",
-        "Con ham chơi có thể thành phá gia chi tử: cờ bạc, cá độ, vay tín dụng đen, bị đòi nợ tận nhà. Có thể:",
-        "Khi lô đất hoặc số vàng tích trữ giảm từ 15% so với giá mua, bạn được hỏi: bán ngay cắt lỗ, bán một nửa, giữ chờ thị trường hồi, hay mua thêm khi giá rẻ. Không hỏi lại trong vòng 3 năm.",
-        "Ở Việt Nam pháp luật chưa công nhận hôn nhân cùng giới: hai bạn có thể về chung sống với nhau, hoặc cùng sang một nước đã công nhận hôn nhân đồng giới.",
-        "Danh sách nước được chọn (bấm để chọn, có trang \"Xem thêm\"): Thái Lan (từ 2025), Úc, Canada, Hoa Kỳ, Hà Lan, Đức, Pháp, Vương quốc Anh, Tây Ban Nha, New Zealand, các nước Bắc Âu, Ireland, Bỉ, Thụy Sĩ, Áo, Bồ Đào Nha, Brazil, Argentina, Mexico, Chile, Colombia, Nam Phi… (chỉ những nước đã hợp pháp hóa).",
-        "Sang đó thì đăng ký kết hôn hợp pháp. Cuộc sống chuyển hẳn sang nước đó: tiền tiết kiệm, khoản vay, vàng, đất, cổ phiếu được quy đổi theo tỉ giá thực; mua sắm, nhà cửa, việc làm tính theo nước đó.",
-        "Làm việc từ xa: khi định cư nước ngoài có thể nhận việc online cho công ty Việt Nam (lập trình, biên dịch, viết nội dung, dạy học online). Vẫn gửi tiền về cho bố mẹ được như trước.",
-        "Về Việt Nam sống một thời gian:",
-        "Di cư từ Việt Nam: tiền tiết kiệm, khoản vay, giá trị xe, vàng, đất, cổ phiếu, tiền mã hóa được quy đổi theo tỉ giá danh nghĩa và mức giá của nước đến (trước đây quy đổi lệch).",
-        "Ra quân không còn ghi hai lần dòng \"xuất ngũ\"."
+        "Nhập ngũ lúc 18 tuổi thì ra quân lúc 20, có thêm huấn luyện, hành quân, Tết xa nhà và thư từ hậu phương.",
+        "Chỉnh trợ cấp xuất ngũ, thêm chuyện con cái thành tài hoặc phá của.",
+        "Đầu tư đất và vàng cũng có lúc mất giá."
       ],
       "tags": [
         "Tính năng",
@@ -923,43 +550,12 @@
     {
       "id": "git-8b22ed352563",
       "publishedAt": "2026-10-16T00:49:45Z",
-      "title": "đại học theo ngành & bảo vệ tốt nghiệp, ngành Y (thực tập, nội trú, chuyên khoa, phòng khám), số liệu nghề …",
-      "summary": "Số liệu theo thực tế bệnh viện công ở Việt Nam (~250 ngày làm việc / năm):",
+      "title": "Học đại học có ngành, nghề Y có lộ trình riêng",
+      "summary": "Học theo ngành và có bảo vệ tốt nghiệp; nghề Y có thực tập, nội trú, chuyên khoa và phòng khám.",
       "details": [
-        "Số liệu theo thực tế bệnh viện công ở Việt Nam (~250 ngày làm việc / năm):",
-        "Bác sĩ thực hành làm dưới sự giám sát nên ít ca hơn. Trưởng khoa, giám đốc bệnh viện bận quản lý nên ít ca chuyên môn.",
-        "Các nghề khác chỉnh lại cho sát thực tế:",
-        "Nam ca sĩ trẻ / tân binh 16–24 tuổi (hoặc có năng khiếu âm nhạc) có thể được mời.",
-        "Thể thức: Kỳ sát hạch 1 (đánh giá đầu vào) → Kỳ sát hạch 2 → Kỳ sát hạch 3 (vũ đạo, có thể tập nhảy trước) → Survival showcase (chọn đội hình thăng cấp) → Giai đoạn thăng cấp (đối đầu nhóm nhạc quốc tế) → Chung kết – Sân khấu tinh hoa (chọn đội hình debut 7 thành viên).",
-        "Phần lớn bị loại qua các kỳ sát hạch; chỉ khoảng 1/4 được debut nhóm nhạc.",
-        "Anh trai / Em xinh / Tinh hà \"Say Hi\": quán quân, Best 5, cùng các giải phụ: The Best Leader, The Best Performer, The Best Group Performance, The Best Transformer, The Best Showcase, The Best Hit. Quán quân Tinh hà nhận giải 1 tỷ đồng.",
-        "Anh trai vượt ngàn chông gai:",
-        "Tân binh toàn năng: Tân binh dẫn đầu bảng điểm cá nhân (được diễn solo ở chung kết), Tân binh được yêu thích nhất.",
-        "Cả chương trình (các vòng thi, nhật ký) diễn ra trọn trong một năm.",
-        "Có thể tham gia lại mùa sau hoặc chương trình khác sau ít nhất 2 năm, tối đa 3 lần trong đời. Đã vô địch / debut thì không thi lại chính chương trình đó.",
-        "Tinh hà \"Say Hi\" có trong danh sách chương trình từ năm 2026.",
-        "Chuyện đã gặp ở 3 đời gần nhất giờ càng ít gặp lại ở đời mới.",
-        "Độc thân, 20–42 tuổi, hồ sơ nổi bật (học vấn, việc làm, giao tiếp, danh tiếng) thì được bạn bè đăng ký hoặc tự đăng ký.",
-        "Bạn muốn hẹn hò: ngồi sau hàng rào trái tim, giới thiệu bản thân, người thân góp ý, 2 phút trò chuyện rồi cùng bấm nút. Cả hai bấm thì thành đôi.",
-        "Người ấy là ai:",
-        "Đảo thiên đường (đến 35 tuổi): sống chung trên đảo Phú Quốc với các bạn trẻ độc thân, thử thách vận động, thắng thì được hẹn hò ở khu nghỉ dưỡng \"thiên đường\". Ngày cuối cả hai cùng chọn nhau mới thành đôi.",
-        "Không xóa sự kiện nào. Mọi sự kiện vẫn xuất hiện ngẫu nhiên để mỗi đời mỗi khác.",
-        "Đã rà soát lại: sự kiện nghề nghiệp chỉ xảy ra với đúng nghề (hoặc nghề gần, VD người mẫu được mời đóng phim).",
-        "Số năm học:",
-        "Có tên trường theo ngành và nơi học, VD Đại học Bách khoa Hà Nội, Kinh tế Quốc dân, Đại học Y Hà Nội, Đại học Y Dược TP.HCM, Đại học Huế, Đại học Cần Thơ…",
-        "Năm cuối phải bảo vệ đồ án / khóa luận (ngành y thi tốt nghiệp lý thuyết, lâm sàng):",
-        "Thực tập cuối khóa (ngân hàng, công ty kiểm toán, văn phòng luật, trường THPT, công ty thiết kế…): thực tập tốt có thể được giữ lại làm chính thức sau khi ra trường.",
-        "Chọn hướng học: bác sĩ đa khoa, răng hàm mặt, y học cổ truyền, dược, điều dưỡng, bác sĩ quân y.",
-        "Thực tập ở bệnh viện lớn theo nơi học:",
-        "Tình huống khi thực tập: ca trực đêm đầu tiên, lần đầu vào phòng mổ (có khi choáng ngã), bệnh nhân đầu tiên ra đi, người nhà bệnh nhân quát tháo, tự tay ép tim cấp cứu.",
-        "Thi bác sĩ nội trú (năm cuối, học giỏi): đỗ thì học thêm 3 năm, ra trường chuyên môn vững.",
-        "Chọn chuyên khoa (bác sĩ đa khoa, quân y), thu nhập khác nhau:",
-        "Về công tác đúng nơi theo chuyên khoa (sản → Từ Dũ / Phụ sản Trung ương, nhi → Nhi Đồng 1 / Nhi Trung ương, ung bướu → Bệnh viện K…). Ra trường phải thực hành 18 tháng mới có chứng chỉ hành nghề.",
-        "Giàu thì mở phòng khám theo chuyên môn (nha khoa, da liễu, sản…).",
-        "Bác sĩ: đã khám bao nhiêu lượt bệnh nhân, mổ bao nhiêu ca. Nha sĩ: điều trị bao nhiêu ca răng. Có cột mốc (VD 10.000 lượt bệnh nhân, 1.000 ca mổ).",
-        "Các nghề khác cũng vậy:",
-        "Hồ sơ có mục \"Số liệu nghề nghiệp\" và chuyên khoa.",
-        "Dược sĩ, nha sĩ, bác sĩ thú y có câu kể riêng thay vì \"những ca trực đêm ở bệnh viện\"."
+        "Học theo ngành và có bảo vệ tốt nghiệp; nghề Y có thực tập, nội trú, chuyên khoa và phòng khám.",
+        "Chỉnh lại khối lượng công việc của bác sĩ và một số nghề khác.",
+        "Bổ sung các vòng thi và lựa chọn trong chương trình dành cho ca sĩ trẻ."
       ],
       "tags": [
         "Tính năng",
@@ -969,14 +565,12 @@
     {
       "id": "git-959ca6356e28",
       "publishedAt": "2026-10-15T23:54:10Z",
-      "title": "sống cùng bố mẹ thì \"Dành thời gian cho bố mẹ\" thay vì \"về thăm\", tên con đồng nhất theo họ cha ở các nước,…",
-      "summary": "Đã đón bố mẹ về ở cùng mà vẫn bị hỏi \"Về thăm nhà\":",
+      "title": "Ở cùng bố mẹ thì không còn phải về thăm",
+      "summary": "Lời kể phân biệt đang sống chung hay ở xa bố mẹ.",
       "details": [
-        "Đã đón bố mẹ về ở cùng mà vẫn bị hỏi \"Về thăm nhà\":",
-        "Tên nhân vật không đồng nhất khi chơi ở các nước khác:",
-        "Lặp câu khi chơi ở các nước khác:",
-        "Trúng số nhận giải công khai: người lạ \"nhận vơ\" và họ hàng chắc chắn tìm đến trong những năm ngay sau đó.",
-        "Người trên 85 tuổi mắc ung thư càng hiếm khi khỏi hẳn."
+        "Lời kể phân biệt đang sống chung hay ở xa bố mẹ.",
+        "Sửa họ tên con và những câu lặp khi sống ở nước ngoài.",
+        "Sau khi nhận giải xổ số công khai, có thể bị người lạ và họ hàng tìm đến."
       ],
       "tags": [
         "Tính năng",
@@ -986,33 +580,12 @@
     {
       "id": "git-29ea57f62c76",
       "publishedAt": "2026-10-15T18:19:23Z",
-      "title": "show thực tế (Anh trai Say Hi, Em xinh, Anh trai vượt ngàn chông gai), concert theo chương trình & bias, fa…",
-      "summary": "Thi trượt đại học bị kẹt ở ngã rẽ \"Mười tám tuổi\":",
+      "title": "Tham gia show thực tế, đi concert theo thần tượng",
+      "summary": "Thêm Anh trai Say Hi, Em xinh Say Hi, Anh trai vượt ngàn chông gai và concert theo chương trình.",
       "details": [
-        "Thi trượt đại học bị kẹt ở ngã rẽ \"Mười tám tuổi\":",
-        "Người 81 tuổi bị \"đi học chứng chỉ\": học chứng chỉ, thi lại IELTS chỉ đến 60 tuổi; thi bằng lái đến 70 tuổi.",
-        "Đi ô tô bị CSGT phạt \"không đội mũ bảo hiểm\": nay lỗi theo đúng loại xe. Ô tô: không thắt dây an toàn, chạy quá tốc độ, dùng điện thoại khi lái, đi sai làn (mức phạt theo Nghị định 168/2024). Xe máy: không đội mũ bảo hiểm, đi sai làn.",
-        "Trại lừa đảo: bị giam thì không chi tiêu, mua sắm, đi chơi, yêu đương, cưới hỏi, chuyển nhà được; không có chuyện đời thường bên ngoài. Chi tiêu định kỳ cũng tạm dừng.",
-        "Ca sĩ nam trẻ là tân binh tiềm năng hoặc đã có tiếng có thể được mời tham gia Anh trai \"Say Hi\". Ca sĩ nữ có thể được mời Em xinh \"Say Hi\". Nghệ sĩ nam từ 30 tuổi, có tên tuổi (ca sĩ, diễn viên, MC, vận động viên…) có thể được mời Anh trai vượt ngàn chông gai.",
-        "Anh trai / Em xinh \"Say Hi\": Bài nhóm liên quân → Livestage 1 → Livestage 2 → Livestage 3 → Livestage 4 (Dance battle) → Chung kết (nhóm Best 5, quán quân).",
-        "Anh trai vượt ngàn chông gai: Đêm Hội ngộ → Công diễn 1 → 2 → 3 → 4 → 5 → Đêm chung kết (Gia tộc Anh tài Toàn năng).",
-        "Mỗi vòng được ghép đội / \"nhà\" ngẫu nhiên với các anh trai, em xinh, anh tài thật của chương trình. Có thể được bầu làm đội trưởng. Mỗi vòng chọn cách trình diễn:",
-        "Trước vòng Dance battle có thể tập nhảy ngày đêm để không bị lộ điểm yếu.",
-        "Kịch tính: điểm thấp thì rơi vào nhóm có nguy cơ dừng chân, rồi có thể được fan bình chọn cứu (Say Hi) hoặc được các anh tài bỏ phiếu hồi sinh (Anh tài). Đủ mạnh thì vào Best 5, vô địch, hoặc được gọi tên vào Gia tộc Anh tài Toàn năng.",
-        "Dù dừng chân ở vòng nào cũng nổi tiếng hơn, cát-xê tăng.",
-        "Bản này thêm nhiều sự kiện mới, nên để mỗi đời không bị dồn quá nhiều lựa chọn (giữ dưới 90 lựa chọn / đời):",
-        "Concert theo từng chương trình, từng mùa, với đầy đủ nghệ sĩ:",
-        "Chọn chương trình → hiện toàn bộ nghệ sĩ (10 người một trang) → chọn bias để ủng hộ (hoặc \"thương hết cả đội hình\"). Đi concert thì giơ banner tên bias, có lúc được bias bắn tim.",
-        "Fanmeeting: săn vé thường hoặc VIP (hi-touch, chụp ảnh nhóm). Có cơ hội được thần tượng bốc thăm gọi tên lên sân khấu, chụp polaroid ký tặng, hỏi han, đọc thư của bạn, tặng quà.",
-        "Chuyện làm fan: fan project sinh nhật thần tượng (màn hình LED, từ thiện), cày vote đêm chung kết, săn photocard bias, đón thần tượng ở sân bay (văn minh hay chen lấn), cãi nhau trên mạng.",
-        "Học bơi, học võ, học sơ cứu (khi nhỏ hoặc qua mục \"Học bơi / học võ / học sơ cứu\"). Nghề công an, quân đội, y tế, ngư dân cũng có sẵn kỹ năng phù hợp.",
-        "Biết võ: gặp người bị bắt nạt, giật đồ giữa phố → can thiệp, được ghi nhận \"hành động dũng cảm\".",
-        "Biết bơi: đi biển gặp đứa trẻ đuối nước → bơi ra cứu. Không biết bơi mà liều thì rất nguy hiểm.",
-        "Biết sơ cứu: gặp người ngưng tim → ép tim, hồi sức chờ xe cấp cứu.",
-        "Năng khiếu có dịp thể hiện: hát mừng đám cưới, vẽ chân dung tặng bà, đóng vai chính tiểu phẩm cuối năm, chỉ đường cho du khách nước ngoài, kèm toán cho em, làm MC bất đắc dĩ, sửa đồ cho hàng xóm, trang điểm cho cô dâu, vô địch giải game ở quán net, thắng cờ các cụ ở công viên…",
-        "Mua nước \"lấy lòng\" người yêu, vợ / chồng, anh chị em, bạn thân. Chọn món theo menu: trà sữa trân châu đường đen, trà sữa Đài Loan, matcha latte, trà đào cam sả, cà phê muối, bạc xỉu, hồng trà macchiato, sữa tươi trân châu đường đen, trà sữa nướng, trà vải, oolong sữa, kem ốc quế…, kèm quán hay bán.",
-        "Hẹn hò thêm: ăn mì cay 7 cấp độ, xem Netflix ở nhà, gà rán KFC / Jollibee, buffet tokbokki Dookki, lẩu Haidilao, buffet hải sản Cửu Vân Long, Pizza 4P's. Sống ở nước ngoài thì không hiện các thương hiệu chỉ có ở Việt Nam.",
-        "Rủ hội bạn đi ăn: Dookki, gà rán, mì cay, Haidilao, Cửu Vân Long, thịt nướng Hàn Quốc, quán ốc vỉa hè, trà sữa rồi về xem Netflix. Chi phí chia đều, thỉnh thoảng giành bao cả hội."
+        "Thêm Anh trai Say Hi, Em xinh Say Hi, Anh trai vượt ngàn chông gai và concert theo chương trình.",
+        "Sửa ngã rẽ đại học bị kẹt, chuyện học chứng chỉ khi quá tuổi và lỗi phạt giao thông sai loại xe.",
+        "Nhân vật bị giam trong trại lừa đảo không còn sinh hoạt như đang ở bên ngoài."
       ],
       "tags": [
         "Tính năng",
@@ -1022,33 +595,12 @@
     {
       "id": "git-a884e10aeb8d",
       "publishedAt": "2026-10-15T16:50:54Z",
-      "title": "mục Chi tiêu & chi tiêu định kỳ, chế độ nghỉ hưu, định cư nước ngoài mua nhà/xe/vé số theo nơi sống, LGBT+ …",
-      "summary": "Tạo nhân vật: mục LGBTQ+ giờ có 4 lựa chọn:",
+      "title": "Gom chi tiêu, thêm chuyện sống chung và nghỉ hưu",
+      "summary": "Có mục riêng cho các khoản chi và chi tiêu định kỳ.",
       "details": [
-        "Tạo nhân vật: mục LGBTQ+ giờ có 4 lựa chọn:",
-        "Tuổi thơ như mọi bạn khác. Phần lớn nhận ra mình vào khoảng 12–13 tuổi, mỗi kiểu có lời kể riêng (VD tóp mỡ: \"lúc nào cũng muốn đứng ra che chắn cho cậu ấy\"; bột tôm: \"thích được cậu ấy quan tâm\"; bé Liên: rung động với cô bạn cùng lớp; bi: thích cả bạn nam lẫn bạn nữ).",
-        "Hẹn hò, chung sống:",
-        "Tình huống mới:",
-        "Hồ sơ ghi cách gọi quen thuộc: \"Đồng tính nam (tóp mỡ)\", \"Đồng tính nữ (bé Liên)\", \"Song tính (bi)\".",
-        "Biệt danh sau khi công khai: nữ đồng tính trước đây bị gọi nhầm \"bột tôm\" (đã sửa thành \"bé Liên\"); tóp mỡ được gọi là \"tóp mỡ\"; thêm biệt danh \"bi\".",
-        "Đòi nợ app: người không đi làm không còn bị \"ảnh ghép lan khắp nhóm Zalo công ty\"; ở nước ngoài không còn nhắc Zalo.",
-        "Mức thân thiết với con, anh chị em không còn vượt quá 100 (vài lựa chọn cộng thêm mà chưa chặn trên).",
-        "Đo lại trên 300 đời người: không có lựa chọn nào bị hỏi hai lần trong cùng một năm. Những lựa chọn lặp lại nhiều qua các năm đã được giới hạn:",
-        "Chuyện tuổi thơ riêng theo giới (VD bé gái mê K-pop, bé trai đá bóng) giờ xuất hiện đúng theo trọng số ở mọi lượt, không chỉ ở \"nhịp tuổi thơ\".",
-        "Trước đây, du học rồi định cư Úc vẫn chỉ mua được \"nhà cấp 4, chung cư mini ở TP. HCM\", xe Wave, VinFast theo giá Việt Nam, vé Vietlott.",
-        "Nhà: giá theo thành phố đang sống (VD \"Giá nhà ở Brisbane, Úc\"), loại nhà kiểu nước ngoài: căn hộ studio, căn hộ 2 phòng ngủ, nhà liền kề (townhouse), nhà riêng có sân vườn, biệt thự, dinh thự. Giá tính theo thu nhập trung bình nước đó.",
-        "Xe: giá theo thị trường quốc tế (không gồm thuế nhập khẩu, tiêu thụ đặc biệt như ở Việt Nam), đổi theo mức giá nước đó.",
-        "Vé số: xổ số quốc gia nơi đang sống, không còn Vietlott.",
-        "Nhà cho thuê: giá theo giá nhà nơi đó.",
-        "Áp dụng cho cả người định cư ở nước ngoài và người sinh ra ở nước khác.",
-        "Một mục riêng ở đầu \"Việc bạn muốn làm\", gom mọi việc tiêu tiền: đầu tư (cổ phiếu, tiền mã hóa, vàng, đất), tìm việc mới, mua nhà, đổi nhà, chuyển chỗ ở, mua xe, du lịch, nhà cho thuê, kinh doanh, bảo hiểm, biếu bố mẹ, từ thiện, khám sức khỏe, vay, trả nợ…",
-        "Chi tiêu định kỳ: bật một lần, tự động chi mỗi kỳ, không tốn lượt, khỏi phải chọn lại mỗi năm.",
-        "Không đủ tiền thì năm đó tạm bỏ qua, không đẩy vào nợ.",
-        "Từ 55 tuổi (nữ từ 50) có thể tự chọn \"Nghỉ hưu\", có ghi rõ đã đóng BHXH bao nhiêu năm và có lương hưu hay không.",
-        "Trước đây bấm \"Nghỉ việc\" lúc đến tuổi chỉ là thất nghiệp, nên game cứ hỏi nhận việc mới.",
-        "Đã nghỉ hưu (tự chọn hay đến tuổi) thì nghỉ hẳn: không còn bị hỏi nhận việc này việc kia.",
-        "Muốn đi làm lại thì tự bấm \"Đi làm lại (đang nghỉ hưu)\".",
-        "Chuyển chỗ ở sang thành phố khác (trong nước, hoặc trong nước đang định cư). Người làm công có thể phải nghỉ việc để tìm việc mới ở nơi ở mới."
+        "Có mục riêng cho các khoản chi và chi tiêu định kỳ.",
+        "Mua nhà, xe, vé số theo nơi đang sống; bổ sung sinh hoạt khi nghỉ hưu.",
+        "Thêm lựa chọn và chuyện tình cảm cho nhân vật LGBTQ+."
       ],
       "tags": [
         "Tính năng",
@@ -1058,35 +610,12 @@
     {
       "id": "git-719072c702ed",
       "publishedAt": "2026-10-15T14:23:32Z",
-      "title": "năng khiếu → trường chuyên ngành → nghề, hơn 40 sự kiện theo bối cảnh ngành, tên người Việt tự nhiên, sửa l…",
-      "summary": "Định hướng ở tuổi 15–17: thầy cô và bố mẹ gợi ý hướng đi theo năng khiếu, kèm tên trường và nghề phù hợp. Ba lựa chọn:",
+      "title": "Có năng khiếu thì có đường theo đuổi",
+      "summary": "Thầy cô, bố mẹ gợi ý trường và nghề phù hợp từ tuổi 15–17.",
       "details": [
-        "Định hướng ở tuổi 15–17: thầy cô và bố mẹ gợi ý hướng đi theo năng khiếu, kèm tên trường và nghề phù hợp. Ba lựa chọn:",
-        "Ngã rẽ 18 tuổi có thêm 3 trường chuyên ngành hợp nhất với năng khiếu. Mỗi trường ghi rõ nội dung thi, khả năng đỗ và nghề có thể làm sau khi ra trường. Đỗ hay trượt tùy trình độ năng khiếu, sự chuẩn bị và điểm văn hóa. Các trường theo năng khiếu:",
-        "Ra trường: gợi ý nghề đúng chuyên ngành (VD Thanh nhạc → ca sĩ, nhạc công; Sư phạm Âm nhạc → giáo viên; trường quân đội → diễn viên đoàn văn công). Vẫn có thể chọn ngành khác.",
-        "Nhật ký, hồ sơ ghi đúng tên ngành (\"Tốt nghiệp đại học ngành Thanh nhạc\").",
-        "Nghề mới: họa sĩ; diễn viên đoàn văn công quân đội.",
-        "Ca hát:",
-        "Mỹ thuật, thiết kế: triển lãm cá nhân, khách đặt vẽ chân dung, đơn \"chép tranh\" ký tên danh họa (có hậu quả về sau), đấu giá từ thiện, thi phương án kiến trúc, tuần lễ thời trang, mất thẻ nhớ ảnh cưới.",
-        "Sân khấu – điện ảnh – truyền hình: phim đầu tay (nghệ thuật hay thương mại), kịch bản bị sửa, sự cố ở đám cưới, dẫn thay chương trình lớn.",
-        "Thể thao: phát hiện học trò nghèo có năng khiếu, lời đề nghị khai gian tuổi, khách đòi thuốc tăng cơ.",
-        "Ngoại ngữ, du lịch: phiên dịch cabin, phát hiện mình dịch sai, khách mất hộ chiếu, hành khách gây rối trên máy bay.",
-        "Kỹ thuật: dự án gấp, sáng kiến – sáng chế, ép ký kiểm định khi chưa thử tải (có hậu quả về sau), rủ khởi nghiệp.",
-        "Các nghề trước đây chưa có sự kiện riêng: thợ hàn, thợ mộc, phục vụ, bán hàng rong, bán vé số, công chứng, đầu bếp, trang điểm, thợ xăm, spa.",
-        "Như mọi bản trước, tình huống cám dỗ nào cũng có lựa chọn làm đúng. Cán bộ, công an trong sự kiện làm việc tận tình.",
-        "Trước đây tên đệm và tên gọi được ghép ngẫu nhiên, nên có những tên nghe không giống người Việt như \"Trần Tường Hà\".",
-        "Nay tên đệm + tên gọi lấy từ danh sách hơn 370 tên có thật, thường gặp (Nguyễn Minh Khôi, Trần Thu Hà, Lê Khánh Linh, Phạm Gia Bảo…).",
-        "Không ghép \"Văn\" cho nữ, \"Thị\" cho nam; không trùng họ với tên gọi.",
-        "Trẻ chưa / không đi học không còn có chuyện \"làm lớp trưởng\", \"bị cả lớp trêu\" (trước đây dòng này lọt qua bộ lọc cuối năm).",
-        "Không còn \"đạt giải học sinh giỏi cấp tỉnh\" hai lần trong cùng một năm.",
-        "Học xong, chưa có việc mà bố mẹ vẫn gửi tiền kèm câu \"con cứ lo học\" → nay câu nói hợp hoàn cảnh.",
-        "Sơ cứu cứu sống sếp không còn được \"thăng chức\" thành chủ công ty.",
-        "Chủ tiệm, người làm tự do hợp sở trường: \"khách hàng tin tưởng\" thay vì \"được cấp trên để ý\".",
-        "Con cái làm chủ công ty: \"trở thành chủ công ty\" thay vì \"được lên chủ công ty\".",
-        "Chuyện mẹ chồng nàng dâu chỉ xảy ra khi có chồng (không xảy ra với cặp đôi nữ – nữ).",
-        "Lính nghĩa vụ ở nước ngoài không còn \"gấp chăn vuông như bánh chưng\".",
-        "Tiền \"bao đậu\" bằng lái hợp lý hơn.",
-        "Bố mẹ đều đã mất thì không còn \"bố mẹ mua cho chiếc xe máy\" khi 18 tuổi."
+        "Thầy cô, bố mẹ gợi ý trường và nghề phù hợp từ tuổi 15–17.",
+        "Thi trường chuyên ngành dựa vào năng khiếu, chuẩn bị và điểm văn hóa; ra trường có gợi ý việc đúng ngành.",
+        "Thêm nghề họa sĩ, diễn viên đoàn văn công và nhiều chuyện trong công việc."
       ],
       "tags": [
         "Tính năng",
@@ -1096,22 +625,12 @@
     {
       "id": "git-e8ab377b7d36",
       "publishedAt": "2026-10-15T12:40:46Z",
-      "title": "hẹn hò qua mạng (đào mỏ, lừa đầu tư, người tử tế), 14 hoạt động hẹn hò, rủ chơi game, nghề cày thuê rank, 3…",
-      "summary": "Hẹn hò qua mạng (Tinder, Bumble, Facebook Hẹn hò…): sau khi match có thể gặp:",
+      "title": "Hẹn hò nhiều cách hơn, tuổi thơ bớt lặp",
+      "summary": "Thêm 14 hoạt động hẹn hò và nhiều kiểu người có thể gặp qua mạng.",
       "details": [
-        "Hẹn hò qua mạng (Tinder, Bumble, Facebook Hẹn hò…): sau khi match có thể gặp:",
-        "14 hoạt động hẹn hò: xem phim, tô tượng, thủy cung, nhà sách – cà phê sách, bảo tàng, workshop gốm / nến thơm, bowling, trượt patin, lẩu nướng, chợ đêm, picnic ngắm hoàng hôn, nấu ăn ở nhà, karaoke, công viên giải trí. Mỗi lần hiện ngẫu nhiên 5 hoạt động, có gợi ý chi phí.",
-        "Rủ người lạ chơi game cùng (13–35 tuổi), với các tình huống trớ trêu: \"bé Mèo 2k5\" hóa ra là anh trai mét tám dùng phần mềm đổi giọng; đồng đội cực hay hóa ra học lớp 5; đứa toxic thành bạn thân; người leo rank cùng hóa ra học cùng trường.",
-        "Nghề cày thuê rank cho Liên Quân Mobile, Liên Minh Huyền Thoại, Liên Minh: Tốc Chiến:",
-        "35 chuyện tuổi thơ mới, mỗi chuyện gặp tối đa 1 lần trong đời. Ví dụ: mất điện cả xóm, răng sữa ném lên mái nhà, sâu răng, tiêm phòng, tập xe đạp, học bơi, về quê hè, trò chơi dân gian, thuê truyện tranh, mưa đá, bài văn tả mẹ, ăn cỗ đám cưới, sao đỏ ghi tên, bầu lớp trưởng, Kế hoạch nhỏ, ngày 20/11, cắm trại, xem bóng đá đêm khuya cùng bố, nuôi tằm, đàn gà con, cuốn nhật ký có khóa…",
-        "Những chuyện tuổi thơ quen thuộc nhất (sinh nhật, lì xì, thú cưng, lễ hội…) xuất hiện thưa hơn.",
-        "Trung bình mỗi tuổi thơ có khoảng 26 chuyện khác nhau (trước đây khoảng 20).",
-        "Nhớ chuyện đời trước: game ghi lại các chuyện đã gặp ở 3 đời gần nhất; đời mới sẽ ít gặp lại các chuyện đó.",
-        "\"Mua nhà\" khi chưa đủ tiền không còn hiện danh sách lựa chọn trống. Thay vào đó hiện giá tham khảo từng loại nhà và nhắc tích lũy thêm.",
-        "Nhật ký không còn ghi \"thu về 0 triệu đ, vay thêm…\" khi chỉ có khoản vay.",
-        "Bố / mẹ mất trước khi kịp quyết định chuyện chăm sóc thì không còn \"gửi tiền chu cấp cho mẹ\".",
-        "Người đã nghỉ hưu hoặc không đi làm không còn được \"chị đồng nghiệp ở công ty\" rủ chơi hụi.",
-        "Ung thư phát hiện ở tuổi trên 85 hiếm khi thuyên giảm hoàn toàn (trước đây khỏi hơi dễ)."
+        "Thêm 14 hoạt động hẹn hò và nhiều kiểu người có thể gặp qua mạng.",
+        "Có thể rủ người lạ chơi game, làm nghề cày thuê rank.",
+        "Bổ sung 35 chuyện tuổi thơ, từ mất điện cả xóm đến học bơi, cắm trại và nuôi thú nhỏ."
       ],
       "tags": [
         "Tính năng",
@@ -1121,18 +640,12 @@
     {
       "id": "git-c34c4df21a1a",
       "publishedAt": "2026-10-15T11:12:49Z",
-      "title": "lời lưu ý, nghĩa vụ quân sự 2 năm, đầu tư cổ phiếu & tiền ảo, khách sạn/resort, gần 100 sự kiện nghề có cạm…",
-      "summary": "Màn hình \"Chào đời\", ngay cạnh dòng cảnh báo 15+: \"Nhân vật và tình huống đều hư cấu, không ám chỉ cá nhân hay tổ chức nào.\"",
+      "title": "Thêm chuyện nghề và rủi ro khi làm ăn",
+      "summary": "Bổ sung gần 100 tình huống nghề, có cả cơ hội lẫn cạm bẫy.",
       "details": [
-        "Màn hình \"Chào đời\", ngay cạnh dòng cảnh báo 15+: \"Nhân vật và tình huống đều hư cấu, không ám chỉ cá nhân hay tổ chức nào.\"",
-        "Chân trang:",
-        "Nghĩa vụ quân sự 2 năm (trước đây nhập ngũ xong vẫn làm được mọi việc như ở ngoài):",
-        "Hoạt động hợp tuổi: người già không còn đi battle rap, cắm trại phượt, đu concert, giành mic karaoke. Vẫn đọc sách, đi chùa / nhà thờ, tập dưỡng sinh, du lịch.",
-        "Có nhiều tiền thì mở rộng kinh doanh: khách sạn mini, khách sạn 4 sao, resort ven biển. Vốn lớn, lãi trên vốn thấp hơn quán xá, dễ điêu đứng khi du lịch đóng băng.",
-        "Đầu tư đa dạng:",
-        "Sự kiện & cạm bẫy theo nhóm nghề (theo tài liệu bạn gửi): gần 100 tình huống mới cho 21 nhóm nghề.",
-        "Vừa mê một thần tượng thì không có ngay \"đêm diễn chia tay sân khấu\" trong cùng năm.",
-        "Thành tựu trong hồ sơ không còn lẫn chuyện của người khác."
+        "Bổ sung gần 100 tình huống nghề, có cả cơ hội lẫn cạm bẫy.",
+        "Có thể mở khách sạn, resort; vốn lớn và cũng dễ gặp khó khi du lịch vắng khách.",
+        "Hoạt động giải trí hợp tuổi hơn, thời gian đi nghĩa vụ được tách khỏi sinh hoạt bên ngoài."
       ],
       "tags": [
         "Tính năng"
@@ -1141,35 +654,12 @@
     {
       "id": "git-de730a7d4cab",
       "publishedAt": "2026-10-15T07:11:22Z",
-      "title": "giao diện điện thoại, nhà ở theo loại, bệnh viện công/tư, nghề diễn viên & game show, lựa chọn theo nơi đan…",
-      "summary": "Đang có lựa chọn chờ (đã thu nhỏ) vẫn làm được \"Việc bạn muốn làm\". Làm xong thì quay lại lựa chọn đang chờ, không còn báo \"hãy chọn xong lựa chọn đang chờ trước đã\".",
+      "title": "Dễ chơi trên điện thoại, nhà ở và bệnh viện rõ hơn",
+      "summary": "Có thể tạm thu nhỏ lựa chọn để xem hồ sơ hoặc làm việc khác rồi quay lại.",
       "details": [
-        "Đang có lựa chọn chờ (đã thu nhỏ) vẫn làm được \"Việc bạn muốn làm\". Làm xong thì quay lại lựa chọn đang chờ, không còn báo \"hãy chọn xong lựa chọn đang chờ trước đã\".",
-        "Điện thoại:",
-        "Nhà ở chia theo loại: nhà cấp 4, chung cư mini, chung cư cũ (khu tập thể), chung cư thương mại, nhà phố 3–4 tầng, chung cư cao cấp, biệt thự, dinh thự.",
-        "Bệnh viện công / tư:",
-        "Phẫu thuật: bệnh nặng (ung thư…) hay tai nạn gãy xương phải mổ. Chọn mổ ở bệnh viện công theo bảo hiểm (chờ lịch, phòng đông), mổ dịch vụ, hay bệnh viện tư; có thể bị biến chứng.",
-        "Răng khôn mọc lệch: nhổ ở bệnh viện công (xếp hàng) hay nha khoa tư. Để đó thì vài năm sau sưng đau hơn.",
-        "Nghề diễn viên:",
-        "Game show: người nổi tiếng được mời tham gia Running Man Việt Nam hoặc 2 Ngày 1 Đêm, có cát-xê cả mùa. Trong game có \"anh lớn\" Tràng Dương hay bắt nạt người mới và anh cả biệt danh \"Thánh Trần\" hay nâng đỡ người mới (nhân vật trong game).",
-        "Tình yêu:",
-        "Thi lại chứng chỉ: IELTS, TOPIK, HSK hết hạn mà lúc đó chọn không thi lại thì game không hỏi nữa. Muốn thi lại thì tự vào \"Việc bạn muốn làm → Học tập\".",
-        "Tiền mã hóa:",
-        "Ít trùng lặp hơn:",
-        "Lỗi ở các bản trước: một số điều kiện bổ sung (không còn \"cơn thèm mua sắm\" khi đã rất giàu, về thăm bố mẹ…) không có tác dụng vì game chép điều kiện cũ lúc khởi động. Đã sửa để luôn dùng điều kiện mới nhất.",
-        "Tài sản không còn phình to vô lý: giàu lên thì chi tiêu rộng tay hơn. Về già có của thì thỉnh thoảng cho con tiền mua nhà, làm vốn, lo cho cháu ăn học (rất phổ biến ở Việt Nam).",
-        "Trốn khỏi trại lừa đảo về nước, đi làm lại thì không còn \"vừa học đại học vừa đi làm\".",
-        "Bố đã mất thì không còn tình huống \"bố đi làm đến tối, bố nấu cháo cho mẹ\".",
-        "Đã nghỉ học thì kết quả các lựa chọn cũng không còn kể chuyện trên lớp.",
-        "Nhật ký ghi luôn số tiền: lựa chọn hay chuyện kể nào tốn tiền (hoặc được tiền) thì dòng nhật ký ghi kèm, ví dụ \"Chuyến đi Đà Lạt cùng vợ (chi 5 triệu đ)\". Không cần kéo xuống bảng tài chính mới biết bị trừ bao nhiêu.",
-        "Lựa chọn nào tốn tiền cũng hiện chi phí ngay dưới lựa chọn, kể cả những lựa chọn trước đây chưa ghi giá (rủ anh chị em đi du lịch, đi nhậu…).",
-        "Về thăm bố mẹ tốn tiền theo khoảng cách:",
-        "Lựa chọn thường ngày theo nơi đang sống:",
-        "\"Tiền riêng\" có giải thích ngay trên bảng: đó là tiền lì xì, tiền tiêu vặt, tiền làm thêm bạn tự để dành khi còn sống cùng bố mẹ.",
-        "Bố hoặc mẹ đã mất thì lời kể không còn \"bố mẹ khoe với cả xóm\", \"bố mẹ mua cho\", \"tiền nong để bố mẹ\"… Trẻ mồ côi mẹ thì lời kể tuổi thơ nhắc bố (hoặc ông bà).",
-        "Đã nghỉ học thì không còn chuyện \"làm lớp trưởng\", \"cả lớp ký tên lên bó bột\", \"bạn cùng lớp\"…",
-        "Không có bạn đời thì con ốm nằm viện là \"một mình bạn thức trắng trông con\", không phải \"vợ chồng thay nhau trực\".",
-        "Sửa lỗi ở bản 3.0: bộ lọc dòng nhật ký lặp bị sai (lọc nhầm theo chữ \"d\")."
+        "Có thể tạm thu nhỏ lựa chọn để xem hồ sơ hoặc làm việc khác rồi quay lại.",
+        "Nhà ở chia theo loại, từ nhà cấp 4 đến chung cư, biệt thự, dinh thự.",
+        "Khi cần phẫu thuật, có lựa chọn bệnh viện công, dịch vụ hoặc tư nhân với chi phí và rủi ro khác nhau."
       ],
       "tags": [
         "Tính năng",
@@ -1179,35 +669,12 @@
     {
       "id": "git-049e8956cd96",
       "publishedAt": "2026-10-15T04:58:54Z",
-      "title": "15/10/2026 (bản cập nhật lớn)",
-      "summary": "Nhật ký cuộc đời có nút \"Thu gọn / Mở\" và tự cuộn trong khung riêng. Trên điện thoại không còn phải kéo hết đoạn nhật ký mới xem được hồ sơ nhân vật.",
+      "title": "Hồ sơ đầy đủ hơn, nhật ký gọn hơn",
+      "summary": "Nhật ký có thể thu gọn và cuộn riêng, dễ xem hồ sơ trên điện thoại.",
       "details": [
-        "Nhật ký cuộc đời có nút \"Thu gọn / Mở\" và tự cuộn trong khung riêng. Trên điện thoại không còn phải kéo hết đoạn nhật ký mới xem được hồ sơ nhân vật.",
-        "Nút \"👤 Hồ sơ\" trên thanh điều khiển và nút \"Xem hồ sơ chi tiết\" ở thẻ căn cước. Hồ sơ gồm:",
-        "Mức căng thẳng hiện theo thang 0–100: thư thái, bình thường, căng thẳng, quá tải, báo động.",
-        "HIV chỉ lây qua 3 đường: quan hệ tình dục không an toàn, dùng chung kim tiêm, từ mẹ sang con. Không có đường lây thì không bao giờ mắc. Khi chẩn đoán có ghi rõ đường lây và việc điều trị ARV.",
-        "Lương theo trình độ:",
-        "Bảo hiểm xã hội:",
-        "Thu nhập rõ ràng:",
-        "Kinh doanh lãi lỗ theo thực tế:",
-        "Làm đúng sở trường:",
-        "Năng khiếu có cấp độ (cấp 1 \"Mới tập\" đến cấp 10 \"Huyền thoại\", kèm EXP). Rèn giũa thì lên cấp.",
-        "Bằng lái và chứng chỉ có hạn:",
-        "Mua xe theo nhóm:",
-        "Thuê xe chạy dịch vụ (làm tài xế công nghệ):",
-        "Xăng xe đổ hằng tuần: tiền xăng / sạc mỗi tuần theo loại xe, cộng bảo hiểm, gửi xe, bảo dưỡng.",
-        "Hẹn hò qua ứng dụng:",
-        "Kết nạp Đội Thiếu niên Tiền phong (lớp 3), kết nạp Đoàn (cấp 3).",
-        "Tình huống lặp đi lặp lại:",
-        "Lớp 1 không còn \"quàng khăn đỏ\" (khăn quàng đỏ từ lớp 3).",
-        "15 tuổi còn ở với bố mẹ thì là tiền tiêu vặt, không phải \"tiền sinh hoạt\". Đi học xa mới là tiền sinh hoạt.",
-        "Đã yêu rồi chia tay thì không còn \"mối tình đầu\" lần nữa. Người yêu đầu tiên chính là mối tình đầu.",
-        "Thăng chức mà lương giảm: đã sửa. Lương không còn nhảy thất thường giữa các năm (kiểu 52 triệu xuống 4 triệu). Giờ chỉ giảm mạnh khi mất việc, phá sản hoặc nghỉ hưu, và nhật ký ghi rõ lý do.",
-        "46 tuổi không còn chơi Free Fire: game theo lứa tuổi.",
-        "\"Cơn thèm mua sắm\":",
-        "\"Tìm một nửa\" ở tuổi 73 không còn \"bạn bè lần lượt có đôi\" hay \"để ý một người ở trường học\". Lời lẽ và lựa chọn hợp tuổi.",
-        "Bố mẹ mất cùng năm không còn trùng đúng một căn bệnh. Nếu cùng mất trong một vụ tai nạn thì ghi rõ.",
-        "Chọn ngẫu nhiên theo trọng số không còn vì sai số làm tròn mà chọn nhầm mục có trọng số 0 (nguyên nhân HIV \"tự nhiên\")."
+        "Nhật ký có thể thu gọn và cuộn riêng, dễ xem hồ sơ trên điện thoại.",
+        "Có nút mở hồ sơ chi tiết và mức căng thẳng rõ ràng hơn.",
+        "Chỉnh lại lương theo trình độ và một số tình huống sức khỏe."
       ],
       "tags": [
         "Tính năng",
@@ -1217,22 +684,12 @@
     {
       "id": "git-70602774fb96",
       "publishedAt": "2026-10-14T23:59:50Z",
-      "title": "vận động viên theo môn, con đường năng khiếu, concert theo thể loại, sở thích, tôn giáo, nhóm nghề pháp luậ…",
-      "summary": "Nghề vận động viên chia theo từng môn: bóng đá, bóng rổ, bóng chuyền, bơi lội, điền kinh, cầu lông, bóng bàn, quần vợt, võ thuật (karate, taekwondo, vovinam, pencak silat, boxing, judo), cử tạ, bắn cung, thể dục dụng cụ, đua xe đạp, bi-a, golf. Năng khiếu thể thao lúc nhỏ sẽ rơi vào một trong các môn này.",
+      "title": "Thể thao theo từng môn, concert theo gu nghe nhạc",
+      "summary": "Nghề vận động viên chia theo môn; năng khiếu lúc nhỏ có thể dẫn tới con đường chuyên nghiệp.",
       "details": [
-        "Nghề vận động viên chia theo từng môn: bóng đá, bóng rổ, bóng chuyền, bơi lội, điền kinh, cầu lông, bóng bàn, quần vợt, võ thuật (karate, taekwondo, vovinam, pencak silat, boxing, judo), cử tạ, bắn cung, thể dục dụng cụ, đua xe đạp, bi-a, golf. Năng khiếu thể thao lúc nhỏ sẽ rơi vào một trong các môn này.",
-        "Con đường phát triển năng khiếu: có năng khiếu toán, ngoại ngữ, âm nhạc, hội họa, ăn nói, khéo tay hay kinh doanh thì được hỏi có muốn theo đuổi không (theo nghiêm túc / học cho vui / thôi).",
-        "Concert theo thể loại (hành động \"Đi xem ca nhạc, concert\"): chọn nghệ sĩ Việt Nam, concert các chương trình \"Say Hi\" / Anh tài, K-pop Hàn Quốc, nghệ sĩ Âu Mỹ, Rap Việt hay rapper Mỹ.",
-        "Sở thích từ nhỏ: mê rap, nhảy, guitar, vẽ, chụp ảnh, nấu ăn, đọc sách, K-pop, đá bóng (khác nhau theo giới tính và năng khiếu).",
-        "Thêm việc giải trí: xem phim ở rạp (đi với bạn, với người yêu), hát karaoke, đi công viên / khu vui chơi (trẻ con), rủ bạn đá bóng / chơi thể thao, đi xem bóng đá ở sân, đi phượt / cắm trại, xem show rap / battle rap (mê rap thì lên battle luôn), chơi game ở nhà.",
-        "Thêm việc chăm sóc tâm hồn: thiền / yoga, đọc sách, leo núi / dã ngoại, massage / xông hơi.",
-        "Tâm linh theo tôn giáo: hành động ghi đúng theo đạo — \"Đi lễ nhà thờ\" (Công giáo), \"Đi nhà thờ (Tin Lành)\", \"Đi chùa lễ Phật\", \"Đến thánh thất Cao Đài\", \"Tụng kinh, làm việc thiện (Hòa Hảo)\", \"Đến thánh đường Hồi giáo\", \"Lên đền tháp Chăm\", Hindu, Sikh, Do Thái, Đạo giáo. Không theo tôn giáo thì \"Thắp hương tổ tiên, tĩnh tâm\".",
-        "Bảng \"Nghề & lương\" hiện chi tiết từng môn thể thao: dưới nghề vận động viên có danh sách từng môn, kèm các bậc danh xưng, mức lương, tuổi đỉnh cao, tuổi giải nghệ, môn đồng đội hay cá nhân.",
-        "Nhóm nghề \"Pháp luật & tòa án\" tách riêng trong bảng nghề:",
-        "Vé số / Vietlott theo tỉ lệ thật:",
-        "Kỷ niệm đáng nhớ trùng nội dung với kỷ niệm đã có giờ được gắn ⭐ thay vì bị bỏ qua.",
-        "Môn đồng đội không còn ra huy chương Olympic quá dễ.",
-        "Concert của thần tượng dùng chung một luật theo tuổi, không còn hai luật chồng nhau."
+        "Nghề vận động viên chia theo môn; năng khiếu lúc nhỏ có thể dẫn tới con đường chuyên nghiệp.",
+        "Đi concert được chọn nghệ sĩ Việt, K-pop, Âu Mỹ hoặc rap.",
+        "Thêm sở thích, hoạt động giải trí và lựa chọn theo tôn giáo."
       ],
       "tags": [
         "Tính năng"
@@ -1241,30 +698,12 @@
     {
       "id": "git-127e14cbcfd4",
       "publishedAt": "2026-10-14T17:52:37Z",
-      "title": "bố cục gọn, người yêu có nghề & lương, mua xe theo ngân sách, tiền bạc rõ ràng, sửa nhiều lỗi logic",
-      "summary": "Tiền bạc rõ ràng hơn:",
+      "title": "Tiền bạc dễ theo dõi, mua xe hợp túi tiền",
+      "summary": "Mua xe dựa vào ngân sách đang có, các khoản tiền được ghi rõ hơn.",
       "details": [
-        "Tiền bạc rõ ràng hơn:",
-        "Mua xe theo số tiền đang có (làm lại hoàn toàn):",
-        "Người thân, bạn bè mất đều ghi lý do hợp với tuổi: người trẻ hay gặp tai nạn giao thông, đuối nước; trung niên là ung thư, nhồi máu cơ tim, đột quỵ; người già là tuổi già sức yếu, suy tim, viêm phổi. Có tính cả thói quen (bố nghiện rượu thì có thể mất vì xơ gan).",
-        "Làm chủ cửa hàng / quán:",
-        "Game theo thể loại sở trường: năng khiếu FPS chơi Valorant, CS2, Đột Kích, Delta Force, PUBG Mobile, Free Fire, Call of Duty Mobile; MOBA chơi Liên Minh Huyền Thoại, Dota 2, Liên Quân Mobile, Mobile Legends: Bang Bang, Tốc Chiến. Ở quán net chơi bản máy tính; nhà nghèo, nông thôn hay chơi bản điện thoại. Tuyển thủ, streamer thi đấu đúng game sở trường.",
-        "44 tuổi đi xin việc lại bị mời \"thực tập sinh\": người đã đi làm nhiều năm vào thẳng bậc hợp với tuổi và kinh nghiệm. Sinh viên mới ra trường vẫn bắt đầu từ thực tập.",
-        "Trợ cấp hưu trí xã hội 0,4 triệu/tháng: đúng theo Luật Bảo hiểm xã hội 2024 (hiệu lực 1/7/2025) là 500.000 đ/tháng, mức chung cả nước, cho người từ 75 tuổi không có lương hưu (từ 70 tuổi nếu thuộc hộ nghèo / cận nghèo). Trước đây mức này bị nhân theo vùng nên ra 0,4 triệu, và nhân vật không có lương hưu còn nhận trợ cấp ngay từ lúc nghỉ việc. Bảng tài chính ghi \"Trợ cấp / con biếu\" thay vì \"Lương hưu\".",
-        "Mời mở chi nhánh khi tiền mặt đang âm và chỉ còn nút \"Giữ quy mô\": giờ chỉ mời khi đủ tiền, hoặc vay được ngân hàng (tự bỏ ra 30%).",
-        "Không còn nhắc mẹ đã mất (\"Mẹ khóc\", \"Mẹ mua cho con búp bê\", \"Mẹ dạy tô son\").",
-        "Anh chị em ruột không trùng tên gọi. Ở nước ngoài, anh chị em được gọi bằng tên chứ không phải họ, vì cả nhà cùng họ.",
-        "Không còn lặp tin trong cùng năm: thi đỗ bằng lái hai lần, \"có chắt\" hai lần, nhiều khoản nợ cùng loại bị xử lý cùng lúc, nhận cùng một việc hai lần, nhiều căn nhà cho thuê cùng bỏ trống.",
-        "Nhân vật mất vào cuối năm không còn để treo câu hỏi \"Học tiếp sau đại học?\".",
-        "Bố cục gọn hơn:",
-        "Số lượt hành động theo tuổi: dưới 10 tuổi 3 lượt, 10–17 tuổi 7 lượt, từ 18 tuổi không giới hạn.",
-        "Game tự chọn việc: nếu năm trước bạn không tự làm việc gì, game đôi khi tự chọn ngẫu nhiên một việc (bạn vẫn quyết định các lựa chọn trong đó).",
-        "Trọng tâm \"Cân bằng\" (từ 21 tuổi): cân bằng công việc, sức khỏe, gia đình và trau dồi kỹ năng. Mọi chỉ số tăng nhẹ, thăng tiến đều mà không kiệt sức.",
-        "Người yêu có nghề nghiệp: người mới quen hiện cả công việc (đang làm gì, sinh viên, đã nghỉ hưu). Quen khoảng 2 năm hoặc khi đã cưới thì biết được lương. Bảng gia đình hiện nghề và thu nhập (hoặc \"thu nhập: chưa rõ\"). Người ấy ra trường đi làm, được thăng chức, nghỉ hưu theo năm tháng.",
-        "Ai trả tiền buổi hẹn: nữ hẹn hò với nam thì phần lớn bạn nam giành trả; nam thì thường tự trả, đôi khi được người yêu \"bao\" (nhất là khi người ấy kiếm nhiều hơn); cùng giới thì thường chia đôi.",
-        "Bố mẹ khá giả chu cấp tiền sinh hoạt cho con từ 15 đến khoảng 26 tuổi, nhiều hay ít tùy thu nhập của bố mẹ (đang đi học nhận nhiều nhất).",
-        "Mua xe trả thẳng hoặc trả góp: mỗi loại ô tô có hai lựa chọn. Trả thẳng khi đủ tiền (tính cả tiền bán xe cũ); trả góp thì trả trước 30%, vay ngân hàng 70% (siêu xe không cho vay).",
-        "Tự đặt tên thú cưng: tự tay chọn nhận nuôi thì được đặt tên (hoặc giữ tên gợi ý)."
+        "Mua xe dựa vào ngân sách đang có, các khoản tiền được ghi rõ hơn.",
+        "Người yêu có nghề và lương; người thân gặp biến cố phù hợp với tuổi và thói quen.",
+        "Nghề tuyển thủ, streamer chơi đúng thể loại game sở trường."
       ],
       "tags": [
         "Tính năng",
@@ -1274,13 +713,11 @@
     {
       "id": "git-993484f91eec",
       "publishedAt": "2026-10-14T15:21:54Z",
-      "title": "thu nhỏ hộp lựa chọn, tuổi thơ đa dạng theo giới tính",
-      "summary": "Thu nhỏ hộp lựa chọn: nút \"⤓ Thu nhỏ\" (hoặc phím Esc) để tạm đóng hộp lựa chọn, xem các bảng, đổi trọng tâm năm nay… Đời tạm dừng trong lúc đó. Thanh \"Đang chờ bạn chọn\" ở cuối màn hình để mở lại (hoặc Esc / phím cách).",
+      "title": "Thu nhỏ lựa chọn để xem lại cuộc đời",
+      "summary": "Có thể thu nhỏ hộp lựa chọn; game tạm dừng và chờ bạn mở lại.",
       "details": [
-        "Thu nhỏ hộp lựa chọn: nút \"⤓ Thu nhỏ\" (hoặc phím Esc) để tạm đóng hộp lựa chọn, xem các bảng, đổi trọng tâm năm nay… Đời tạm dừng trong lúc đó. Thanh \"Đang chờ bạn chọn\" ở cuối màn hình để mở lại (hoặc Esc / phím cách).",
-        "Tuổi thơ 0–15 đa dạng hơn:",
-        "Bé gái ít bị rủ đi net chơi Liên Minh hơn hẳn (trừ khi có năng khiếu game).",
-        "\"Hai anh em giận nhau\" đổi theo giới tính (\"hai chị em\"…), có nhiều cách kể. Gãy tay lúc nhỏ chỉ xảy ra một lần. Sinh nhật nhà nghèo / nhà khá có nhiều cách kể hơn."
+        "Có thể thu nhỏ hộp lựa chọn; game tạm dừng và chờ bạn mở lại.",
+        "Tuổi thơ có thêm cách kể theo giới tính và gia cảnh, bớt lặp những chuyện đã gặp."
       ],
       "tags": [
         "Tính năng"
@@ -1289,15 +726,12 @@
     {
       "id": "git-a162b54a92d0",
       "publishedAt": "2026-10-14T14:39:25Z",
-      "title": "nghề mới, hướng đi giữa các nghề, sự kiện theo nghề, gia đình tài phiệt / chính trị",
-      "summary": "Nghề mới: chủ quán ăn, chủ nhà hàng / chuỗi nhà hàng, tiệm điện thoại (bán → sửa → chủ tiệm → chủ chuỗi), thám tử tư, công chứng viên, chủ phòng khám tư, chủ đầu tư bất động sản. Ngoài ra có các vị trí chỉ vào được qua gia đình hoặc đi lên từ dưới: ban điều hành tập đoàn → chủ tịch tập đoàn (hàng trăm tỷ mỗi năm), lãnh đạo ngân hàng → chủ tịch HĐQT, chính trường (văn phòng tỉnh ủy → bí thư tỉnh ủy → ủy viên Trung ương; ở nước ngoài: hội đồng thành phố → thị trưởng → nghị sĩ → bộ trưởng).",
+      "title": "Thêm nghề mới và những ngã rẽ khi đã có vốn",
+      "summary": "Có thêm chủ nhà hàng, tiệm điện thoại, thám tử, công chứng viên và chủ phòng khám.",
       "details": [
-        "Nghề mới: chủ quán ăn, chủ nhà hàng / chuỗi nhà hàng, tiệm điện thoại (bán → sửa → chủ tiệm → chủ chuỗi), thám tử tư, công chứng viên, chủ phòng khám tư, chủ đầu tư bất động sản. Ngoài ra có các vị trí chỉ vào được qua gia đình hoặc đi lên từ dưới: ban điều hành tập đoàn → chủ tịch tập đoàn (hàng trăm tỷ mỗi năm), lãnh đạo ngân hàng → chủ tịch HĐQT, chính trường (văn phòng tỉnh ủy → bí thư tỉnh ủy → ủy viên Trung ương; ở nước ngoài: hội đồng thành phố → thị trưởng → nghị sĩ → bộ trưởng).",
-        "Hướng đi logic giữa các nghề: làm lâu, có kinh nghiệm và vốn thì được mời rẽ hướng. Ví dụ:",
-        "Sinh ra trong gia đình siêu giàu (~1%): tài phiệt, chủ ngân hàng, hoặc gia đình chính trị.",
-        "Sự kiện riêng theo từng nghề:",
-        "Bố mẹ trong gia đình siêu giàu không còn \"bị cắt giảm nhân sự\".",
-        "Con nhà giàu từ chối làm ăn phi pháp không còn nói \"nghèo cũng không làm chuyện thất đức\"."
+        "Có thêm chủ nhà hàng, tiệm điện thoại, thám tử, công chứng viên và chủ phòng khám.",
+        "Làm lâu, có kinh nghiệm và tiền có thể được mời đổi hướng làm ăn.",
+        "Có xuất thân tài phiệt, ngân hàng, chính trị và chuyện riêng theo nghề."
       ],
       "tags": [
         "Tính năng",
@@ -1307,22 +741,12 @@
     {
       "id": "git-a424b9f7481c",
       "publishedAt": "2026-10-14T13:05:34Z",
-      "title": "sửa lỗi logic từ phản hồi người chơi, xe/nhà theo mức giàu, đầu tư kinh doanh, anh chị em",
-      "summary": "Bố mẹ đã mất vẫn xuất hiện: \"Về thăm bố mẹ\" chỉ nhắc người còn sống (không còn chuyện bố đã mất mà vẫn \"khoe cây cảnh\"). Bỏ lựa chọn \"mua tivi cho bố mẹ\" khi bố mẹ đã khuất. \"Bố mẹ cần đến bạn\" không còn nhắc người đã mất. Lời đe dọa đòi nợ và chuyện nhờ người nhà trả nợ đổi theo hoàn cảnh: tuổi già thì là các con hoặc anh chị em.",
+      "title": "Sửa các tình huống lệch với cuộc đời đang chơi",
+      "summary": "Người thân đã mất không còn được nhắc như vẫn đang sống; game nhớ những nước bạn từng đến.",
       "details": [
-        "Bố mẹ đã mất vẫn xuất hiện: \"Về thăm bố mẹ\" chỉ nhắc người còn sống (không còn chuyện bố đã mất mà vẫn \"khoe cây cảnh\"). Bỏ lựa chọn \"mua tivi cho bố mẹ\" khi bố mẹ đã khuất. \"Bố mẹ cần đến bạn\" không còn nhắc người đã mất. Lời đe dọa đòi nợ và chuyện nhờ người nhà trả nợ đổi theo hoàn cảnh: tuổi già thì là các con hoặc anh chị em.",
-        "\"Lần đầu đặt chân đến Hàn Quốc\" sau khi đã đi xuất khẩu lao động ở đó: game nhớ các nước đã từng đến (du lịch, XKLĐ, du học, định cư). Quay lại thì ghi \"Quay lại…\", và khi chọn điểm đến sẽ ưu tiên nơi chưa đi.",
-        "Concert ở tuổi 71, thần tượng không già đi: thần tượng có năm sinh, già đi theo thời gian, đến tuổi thì làm đêm diễn chia tay rồi giải nghệ. Những năm 2060+ có thế hệ ca sĩ mới (tên hư cấu). Hành động \"Đi concert\" chỉ còn đến 55 tuổi.",
-        "Nợ treo 60 năm:",
-        "90 tuổi mắc ung thư vẫn khỏi, rồi lại mắc bệnh khác:",
-        "Tình huống lặp đi lặp lại: mỗi hành động chỉ làm được 1 lần mỗi năm. AI không chọn lại cùng một việc trong 3 năm. Mỗi tình huống ngẫu nhiên cách nhau ít nhất 2 năm.",
-        "Bỏ dòng \"Nguồn tham khảo\" ở bảng Nghề & lương.",
-        "Chứng chỉ ngoại ngữ theo nơi định đến: IELTS 4.5→8.5, JLPT N5→N1 (Nhật), TOPIK 1→6 (Hàn), HSK 1→6 (Trung/Đài), Goethe A1→C1 (Đức).",
-        "Xe theo mức giàu có: xe máy, xe máy điện, ô tô điện, ô tô phổ thông, SUV 7 chỗ, xe hạng sang, xe thể thao, siêu xe. Đổi xe thì bán lại xe cũ. Xe sang tốn chi phí nuôi xe mỗi năm.",
-        "Nhà theo mức giàu có: hành động \"Đổi nhà to hơn\" để lên nhà phố nhiều tầng, căn hộ cao cấp, biệt thự, dinh thự. Bán nhà cũ, tất toán nợ cũ, vay thêm nếu thiếu. Nhà càng to chi phí duy trì càng cao.",
-        "Đầu tư làm ăn:",
-        "Anh chị em ruột có tên, tuổi, nghề và độ thân thiết.",
-        "Nghỉ hưu linh hoạt:"
+        "Người thân đã mất không còn được nhắc như vẫn đang sống; game nhớ những nước bạn từng đến.",
+        "Thần tượng già đi theo thời gian, về sau có thế hệ nghệ sĩ mới.",
+        "Rà lại nợ, bệnh tật, nhà xe và chuyện đầu tư theo hoàn cảnh nhân vật."
       ],
       "tags": [
         "Tính năng",
@@ -1332,18 +756,11 @@
     {
       "id": "git-b9fa9e86fdaf",
       "publishedAt": "2026-10-14T09:36:37Z",
-      "title": "mô phỏng một đời người bằng số liệu thật",
-      "summary": "⭐ Đánh dấu khoảnh khắc: mỗi dòng nhật ký có ngôi sao. Khoảnh khắc đã đánh dấu được ưu tiên khi nhân vật hồi tưởng cuối đời, hiện ở màn kết thúc, trong link chia sẻ và trên ảnh thẻ.",
+      "title": "Giữ lại những khoảnh khắc đáng nhớ",
+      "summary": "Đánh dấu sao ở nhật ký để giữ những chuyện muốn nhớ, xem lại khi cuộc đời khép lại hoặc chia sẻ ảnh thẻ.",
       "details": [
-        "⭐ Đánh dấu khoảnh khắc: mỗi dòng nhật ký có ngôi sao. Khoảnh khắc đã đánh dấu được ưu tiên khi nhân vật hồi tưởng cuối đời, hiện ở màn kết thúc, trong link chia sẻ và trên ảnh thẻ.",
-        "Tài sản & tiền bạc:",
-        "Sức khỏe tinh thần:",
-        "Con cái có đời riêng:",
-        "Học hành chi tiết:",
-        "Ảnh thẻ cuộc đời 1080×1350: chân dung pixel, văn bia, nghề chính, số con, tài sản, bản đồ đời người, khoảnh khắc ⭐. Xem trước rồi tải về hoặc chia sẻ thẳng (điện thoại). Có ở màn kết thúc và màn xem đời được chia sẻ.",
-        "Nhạc nền lofi chill: tự sinh bằng Web Audio — piano điện với hợp âm jazz, bass trầm, trống nhẹ có swing, tiếng đĩa than lạo xạo. Không dùng file nhạc nên không lo bản quyền. Nút ♪ trên thanh menu và thanh cuộc đời, có thanh âm lượng; nhớ lựa chọn cho lần sau.",
-        "Chuyện \"con đỗ đại học\" trước đây là ngẫu nhiên, giờ thành ngã rẽ có lựa chọn của bố mẹ và phụ thuộc học lực của con.",
-        "Thu nhập bố mẹ ở đời con không bị kẹp theo bảng nghề chung nữa."
+        "Đánh dấu sao ở nhật ký để giữ những chuyện muốn nhớ, xem lại khi cuộc đời khép lại hoặc chia sẻ ảnh thẻ.",
+        "Bổ sung tài sản, sức khỏe tinh thần, học hành và cuộc sống riêng của các con."
       ],
       "tags": [
         "Tính năng"

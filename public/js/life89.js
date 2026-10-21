@@ -24,7 +24,7 @@
     if (!p || !p.name) return;
     p.alive = false; if (p.died == null) p.died = a;
     if (!E.isDeadPartner(l, p)) dead(l).push({ n: p.name, s: p.since, a: a });
-    people(l).forEach(function (f) { if (f.name === p.name && (f.lover || p.fromFriend)) { f.alive = false; f.died = a; f.lover = false; } });
+    people(l).forEach(function (f) { if (f.name === p.name && (!f.sex || !p.sex || f.sex === p.sex)) { f.alive = false; f.died = a; f.lover = false; } });
     var L = l.flags.exList; if (L) l.flags.exList = L.filter(function (x) { return !sameEx(x, { n: p.name, s: p.since }); });
   };
   E.partnerGone = function (l, a, log, why) { if (l.partner) partnerGone(l, l.partner, a, log, why); };

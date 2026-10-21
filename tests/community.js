@@ -45,6 +45,7 @@ const ok=(v,m)=>{assert(v,m);checks++;};
  const history=JSON.parse(fs.readFileSync('public/data/updates.json'));ok(history.entries.length>=50&&history.entries.every(x=>x.title&&!/^\d+\/\d+\/\d+$/.test(x.title)&&Number.isFinite(Date.parse(x.publishedAt))),'dated history with meaningful titles');ok(!/\bv?\d+\.\d+\.\d+\b/.test(JSON.stringify(history.entries)),'history omits versions');
  const notes=require('../tools/player-update-notes');
  ok(history.entries.every(e=>[e.title,e.summary,...e.details].every(s=>!notes.technical.test(s))),'public update titles, summaries and details omit engineering notes');
+ ok(history.entries.every(e=>e.title.length<=85&&e.details.length>=1&&e.details.length<=3&&e.details.every(s=>s.length<=250&&!/:$/.test(s))),'update cards contain short titles and at most three complete highlights');
  ok(notes.playerLine('Thêm mục kiểm thử hồi quy và tests/update770.js.')===null,'hide pure test notes');
  const mixed=notes.playerLine('Hai hành động mới chỉ do người chơi chọn, không thêm vào lựa chọn tự động. Đối chiếu 12 cuộc đời Thường vẫn trùng khớp; thêm tests/update770.js cho gia cảnh.');
  ok(mixed.includes('người chơi')&&!mixed.includes('tests/'),'retain gameplay change while removing mixed test details');
