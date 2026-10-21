@@ -7,12 +7,36 @@
   function hard(l) { return l.difficulty === 'hardcore'; }
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && l.abroad.trapped); }
   function care(l) { var f = l.fam || {}; return f.mAlive && f.fAlive && !f.noDad ? 'bố mẹ' : f.mAlive ? 'mẹ' : f.fAlive && !f.noDad ? 'bố' : 'người chăm sóc'; }
+  function context(l) {
+    var f = l.fam || {}, family = l.age < 18 || !l.indep;
+    if (family) {
+      var inc = ((f.mAlive ? f.mInc || 0 : 0) + (f.fAlive && !f.noDad ? f.fInc || 0 : 0)) * 12 / Math.max(1, l.base);
+      if (f.elite || l.royal || f.q >= 4 || inc >= 2.6) return 'wealthy';
+      return f.q >= 3 || inc >= 1.6 ? 'comfortable' : 'struggling';
+    }
+    var worth = E.netWorth(l) / Math.max(1, l.base), cash = l.money / Math.max(1, l.base);
+    if (cash >= 5 || (worth >= 40 && cash >= 1)) return 'wealthy';
+    return cash >= 0.5 || (l.ownHouse && cash >= 0.2) ? 'comfortable' : 'struggling';
+  }
+  E.hardcoreContext = context;
+  function environment(h, c) {
+    if (c === 'wealthy') return h.pressure >= 70 ? 'kỳ vọng cao, ít lắng nghe' : h.pressure >= 45 ? 'bận rộn, ít thời gian bên con' : 'đủ đầy, có người lắng nghe';
+    if (c === 'comfortable') return h.pressure >= 70 ? 'khắt khe, thường so sánh' : h.pressure >= 45 ? 'bận rộn, khó chia sẻ' : 'ổn định, có chỗ dựa';
+    return h.pressure >= 70 ? 'khắt khe, ít lắng nghe' : h.pressure >= 45 ? 'căng thẳng vì cơm áo' : 'thiếu thốn nhưng biết đùm bọc';
+  }
   function state(l) {
-    if (l.flags.hcSurvival) return l.flags.hcSurvival;
+    if (l.flags.hcSurvival) {
+      var old = l.flags.hcSurvival;
+      // Repair existing saves too; an exhausted abstract meter never makes a rich household poor.
+      if (l.age < 18) { old.style = environment(old, context(l)); if (context(l) === 'wealthy') { old.resources = 100; old.gap = 0; } }
+      return old;
+    }
     var r = H.rf(l), x = r(), q = (l.fam && l.fam.q) || 2;
-    return l.flags.hcSurvival = { resources: Math.min(75, 14 + q * 9), gap: 0, emotion: 28 + Math.floor(r() * 15), trauma: x < 0.68 ? 18 : 8,
+    var h = l.flags.hcSurvival = { resources: Math.min(75, 14 + q * 9), gap: 0, emotion: 28 + Math.floor(r() * 15), trauma: x < 0.68 ? 18 : 8,
       pressure: x < 0.68 ? 75 : x < 0.92 ? 50 : 25, style: x < 0.34 ? 'khắt khe, thường so sánh' : x < 0.68 ? 'bất ổn, ít lắng nghe' : x < 0.92 ? 'căng thẳng vì cơm áo' : 'có chỗ dựa nhưng thiếu điều kiện',
       training: 0, support: 0, seen: {}, breakthroughRoll: r(), opportunity: false, resolved: 0 };
+    h.style = environment(h, context(l)); if (context(l) === 'wealthy') h.resources = 100;
+    return h;
   }
   var create = E.createLife;
   E.createLife = function (opts) { var l = create.apply(this, arguments); if (hard(l)) { var h = state(l); l.st.hap = Math.min(l.st.hap, 38 + h.emotion * 0.35); } return l; };
@@ -40,35 +64,38 @@
   function apply(l, p, d, label, log) {
     var h = state(l), family = l.age < 18 || !l.indep, fee = family ? 0 : d.amount * (p.fee || 0);
     if (p === policies.support && l.money < fee) fee = 0;
-    if (family) {
+    if (family && context(l) !== 'wealthy') {
       var next = h.resources + (p.reserve || 0);
       if (next < 0) { h.gap += -next; h.trauma += Math.min(2, -next * 0.2); h.emotion -= Math.min(2, -next * 0.3); }
       h.resources = next;
-    } else if (fee > 0) H.cash(l, -fee, 'Hardcore: ' + label);
+    } else if (!family && fee > 0) H.cash(l, -fee, label);
     h.emotion += p.emotion || 0; h.trauma += p.trauma || 0; h.training += p.training || 0; h.support = Math.min(6, h.support + (p.support || 0));
     if (p === policies.support) h.supportAt = l.age;
     H.fx(l, { hea: p.hea || 0, hap: p.hap || 0, kno: p.kno || 0, soc: p.soc || 0 });
     if (l.mind && l.age >= 12) l.mind.stress = U.clamp(l.mind.stress + (p.stress || 0), 0, 100);
     if (p.quit && l.job && !E.isStableService(l)) { l.lastJob = l.job; l.job = null; l.flags.needJob = true; }
     h.resolved++; l.flags.hardcoreShocks = (l.flags.hardcoreShocks || 0) + 1; bound(h);
-    log(label + (family ? '. Quỹ gia đình ' + Math.round(h.resources) + '/100; đây không phải khoản nợ cá nhân của bạn.' : fee > 0 ? ': ' + H.money(l, fee) + '.' : '. Bạn giữ lại tiền nhưng phải đánh đổi thời gian hoặc cảm xúc.'), p.emotion > 1 ? 'neutral' : 'bad');
+    log(label + (fee > 0 ? ': ' + H.money(l, fee) + '.' : '.'), p.emotion > 1 ? 'neutral' : 'bad');
   }
+  var alternatives = {};
+  function alternative(key, title, text, opts) { alternatives[key] = { title: title, text: text, opts: opts }; }
+  function version(l, key, title, text, opts) { return context(l) !== 'struggling' && alternatives[key] || { title: title, text: text, opts: opts }; }
   function story(phase, key, title, text, opts, need) {
     var ages = phases[phase], id = 'hc_story_' + key;
     var meta = { id: id, phase: phase, min: ages[0], max: ages[1], cd: ages[1] < 18 ? 20 : 4, maxN: ages[1] < 18 ? 1 : 30, need: need || '' };
     catalog.push(meta);
     E.SC(id, {
-      title: title, tone: 'dark',
+      title: function (l) { return version(l, key, title, text, opts).title; }, tone: 'dark',
       valid: function (l) { return hard(l) && free(l) && l.age >= meta.min && l.age <= meta.max && (need !== 'school' || !!l.school) && (need !== 'job' || (!!l.job && !l.retired && !E.isStableService(l))) && (need !== 'unemployed' || (!l.job && !l.school && !l.retired)); },
-      prep: function (l, r) { return { amount: amount(l, r), detail: U.pick(r, ['Quỹ dự phòng vừa phải dùng vào một việc khác.', 'Những khoản nhỏ dồn lại thành gánh nặng.', 'Bạn phải chọn việc nào giải quyết trước.']) }; },
-      text: function (l, d) { return text.replace(/\{care\}/g, care(l)) + ' ' + (l.age >= 18 ? d.detail : 'Cách gia đình phản ứng sẽ để lại ảnh hưởng lâu dài.'); },
-      opts: opts.map(function (o, i) { var p = policies[o[1]]; return { k: 'c' + i, l: o[0], ai: { w: i === 1 ? 1.1 : 1 },
-        req: function (l, d) { return (p !== policies.support || state(l).supportAt !== l.age) && (p === policies.support || l.age < 18 || !l.indep || !p.fee || l.money >= d.amount * p.fee); },
-        h: function (l, d) { return p.label + (p === policies.support && l.age >= 18 && l.money < d.amount * p.fee ? ' · tìm kênh miễn phí, tối đa một lần/năm' : l.age >= 18 && l.indep && p.fee ? ' · ' + H.money(l, d.amount * p.fee) : l.age < 18 || !l.indep ? ' · quỹ gia đình ' + ((p.reserve || 0) > 0 ? '+' : '') + (p.reserve || 0) : '') + ' · cảm xúc ' + ((p.emotion || 0) > 0 ? '+' : '') + (p.emotion || 0); },
-        run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, p, d, o[0], log); if (E.hardcoreFollowup) E.hardcoreFollowup(l, key, o[1]); }
+      prep: function (l, r, arg) { return { amount: arg && isFinite(arg.amount) && arg.amount >= 0 ? arg.amount : amount(l, r) }; },
+      text: function (l) { return version(l, key, title, text, opts).text.replace(/\{care\}/g, care(l)); },
+      opts: opts.map(function (o, i) { function choice(l) { return version(l, key, title, text, opts).opts[i]; } return { k: 'c' + i, l: function (l) { return choice(l)[0]; }, ai: { w: i === 1 ? 1.1 : 1 },
+        req: function (l, d) { var p = policies[choice(l)[1]]; return (p !== policies.support || state(l).supportAt !== l.age) && (p === policies.support || l.age < 18 || !l.indep || !p.fee || l.money >= d.amount * p.fee); },
+        h: function (l, d) { var p = policies[choice(l)[1]]; return l.age >= 18 && l.indep && p.fee ? (p === policies.support && l.money < d.amount * p.fee ? 'Tư vấn cộng đồng miễn phí' : H.money(l, d.amount * p.fee)) : ''; },
+        run: function (l, r, log, d) { var o = choice(l), p = policies[o[1]], h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, p, d, o[0], log); if (E.hardcoreFollowup) E.hardcoreFollowup(l, key, o[1]); }
       }; }).concat([
-        { k: 'slow', l: 'Chia nhỏ việc, chấp nhận tiến độ chậm', req: function (l) { return l.age >= 18; }, h: 'Không trả phí; cần thời gian, tiến bộ từng chút', ai: { w: 0.5 }, run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, policies.plan, d, 'Giải quyết từng bước: ' + title.toLowerCase(), log); } },
-        { k: 'wait', l: 'Tạm cầm cự, giữ tiền cho nhu cầu thiết yếu', req: function (l) { return l.age >= 18; }, h: 'Không trả phí, nhưng áp lực và cảm xúc xấu chưa được giải quyết', ai: { w: 0.5 }, run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, policies.hold, d, 'Tạm cầm cự trước ' + title.toLowerCase(), log); } }
+        { k: 'slow', l: 'Chia nhỏ việc, chấp nhận tiến độ chậm', req: function (l) { return l.age >= 18; }, h: 'Không trả phí', ai: { w: 0.5 }, run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, policies.plan, d, 'Giải quyết từng bước: ' + version(l, key, title, text, opts).title.toLowerCase(), log); } },
+        { k: 'wait', l: function (l) { return context(l) === 'struggling' ? 'Tạm cầm cự, giữ tiền cho nhu cầu thiết yếu' : 'Chưa giải quyết, giữ nhịp sống hiện tại'; }, req: function (l) { return l.age >= 18; }, h: 'Không trả phí', ai: { w: 0.5 }, run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, policies.hold, d, 'Gác lại chuyện ' + version(l, key, title, text, opts).title.toLowerCase(), log); } }
       ])
     });
   }
@@ -173,6 +200,46 @@
   story('elder','tiet_kiem','Tiết kiệm đến mức quên nhu cầu của mình','Thói quen thiếu thốn làm bạn ngại cả những khoản thực sự cần cho sức khỏe và sự thoải mái.',[['Dành một phần hợp lý để chăm mình','recover'],['Giữ mọi khoản phòng khi có chuyện','hold'],['Nhờ người tin cậy cùng cân đối','support']]);
   story('elder','giu_lien_he','Giữ liên hệ cũng cần công sức','Bạn muốn có người để trò chuyện nhưng ngại mở lời và ngại làm phiền.',[['Chủ động một cuộc liên hệ nhỏ','support'],['Thu mình để khỏi phải nhờ vả','hold'],['Sắp lịch sinh hoạt có kết nối','plan']]);
 
+  // Material scarcity has different causes and choices when basic needs are already covered.
+  alternative('sau_sinh','Những cuộc gọi bên ngoài phòng bé','Sau ngày bạn chào đời, {care} vẫn bận với công việc. Người được thuê chăm bạn có mặt nhiều hơn người thân.',[['Tắt điện thoại, dành giờ riêng bên bé','protect'],['Giao hết cho người chăm để tiếp tục làm việc','endure'],['Chia lịch để người nhà luôn có mặt','plan']]);
+  alternative('bua_an','Mỗi người một lời quanh bữa ăn','Đồ ăn được chuẩn bị đầy đủ, nhưng người lớn bất đồng về cách cho bạn ăn. Bữa ăn thường bị gián đoạn bởi những lời trách nhau.',[['Thống nhất cách chăm với người có chuyên môn','support'],['Ép ăn cho hết dù bé phản ứng','endure'],['Theo nhịp ăn của bé, ghi lại điều phù hợp','plan']]);
+  alternative('nguoi_trong','Thay người chăm mà không báo trước','Bạn vừa quen một người chăm thì gia đình lại đổi người theo lịch công việc. Mỗi lần thức dậy, bạn tìm một gương mặt quen.',[['Cho người cũ và mới cùng chăm một thời gian','protect'],['Đổi ngay vì người lớn đã sắp lịch','endure'],['Giữ một người thân bên bé khi chuyển ca','plan']]);
+  alternative('khong_khi','Cuộc tranh cãi ngoài phòng bé','{care} bất đồng về công việc và cách nuôi dạy. Tiếng lớn của người lớn thường lọt vào phòng bạn.',[['Ngừng tranh cãi khi ở gần bé','protect'],['Cho rằng phòng riêng đã đủ để bé không bị ảnh hưởng','endure'],['Dành một lúc khác để bàn chuyện người lớn','plan']]);
+  alternative('tai_kham','Một lịch hẹn bị đẩy cho người khác','Gia đình đã đặt lịch khám, nhưng đến ngày thì ai cũng bận. Hồ sơ được giao cho người chăm trong khi bác sĩ cần hỏi người thân.',[['Một người thân đi cùng và nghe hướng dẫn','protect'],['Để người chăm tự lo toàn bộ','endure'],['Đổi lịch để người nhà có thể tham dự','plan']]);
+  alternative('nha_am','Căn phòng đẹp nhưng khó ngủ','Phòng được trang bị đủ thứ, nhưng đèn và tiếng thiết bị khiến bạn khó ngủ. Người lớn lại sợ thay đổi sẽ làm hỏng nếp đã đặt ra.',[['Điều chỉnh phòng theo giấc ngủ của bé','protect'],['Giữ nguyên vì đã nhờ người thiết kế','endure'],['Thử từng thay đổi nhỏ rồi quan sát','plan']]);
+  alternative('do_dung','Đồ mới liên tục, điều quen thuộc biến mất','Người lớn thường thay đồ chăm bé theo lời giới thiệu mới. Chiếc chăn bạn đã quen cũng bị cất đi mà không ai để ý.',[['Giữ lại món quen còn an toàn','protect'],['Thay tất cả theo bộ mới cho đồng nhất','endure'],['Hỏi người thường chăm bé trước khi thay','support']]);
+  alternative('nha_tre','Ngôi trường được chọn thay bạn','Gia đình chọn nơi gửi trẻ theo danh tiếng, nhưng bạn sợ lớp quá đông và không quen nhịp sinh hoạt ở đó.',[['Cho bé thử lớp và trao đổi với cô','protect'],['Giữ quyết định vì trường được nhiều người khen','endure'],['Tìm môi trường hợp với bé hơn','plan']]);
+  alternative('do_choi_cu','Món đồ cũ bị thay bằng đồ mới','Món đồ bạn thích bị hỏng. Người lớn mua ngay một món đắt hơn, nhưng bạn vẫn tìm món cũ vì những lần được chơi cùng người thân.',[['Cùng sửa món cũ và ngồi chơi với bé','support'],['Cất món cũ, bắt bé nhận đồ mới','endure'],['Hỏi bé muốn giữ lại điều gì','plan']]);
+  alternative('sach_cu','Bộ sách được chọn theo thành tích','Bạn có đủ sách, nhưng người lớn muốn bạn học những cuốn vượt xa bài trên lớp. Bạn ngại nói rằng mình chưa hiểu.',[['Đọc từ phần vừa sức rồi hỏi lại','learn'],['Giả vờ hiểu để khỏi bị chê','endure'],['Nhờ người hướng dẫn chọn mức phù hợp','support']]);
+  alternative('hoc_phi_phu','Khoản đóng góp đi cùng kỳ vọng','Gia đình đáp ứng các khoản của trường rất nhanh. Đổi lại, bạn thường được nhắc rằng với điều kiện như thế thì không được phép thua bạn bè.',[['Nói rõ điều đang khó trong việc học','plan'],['Giấu những lần sa sút vì sợ phụ lòng','endure'],['Nhờ cô giáo cùng trao đổi với gia đình','support']]);
+  alternative('bi_treu','Bị nhìn qua điều kiện gia đình','Một vài bạn cho rằng điểm tốt hay đồ dùng của bạn đều nhờ gia đình lo sẵn. Bạn muốn được nhìn nhận bằng chính những gì mình làm.',[['Nói chuyện với người lớn đáng tin','support'],['Thu mình, không kể chuyện ở nhà nữa','endure'],['Nói rõ khi lời trêu đi quá xa','defy']]);
+  alternative('den_hoc','Có phòng học riêng nhưng thiếu yên tĩnh','Bạn có góc học đầy đủ, nhưng liên tục bị gọi kiểm tra tiến độ, đổi gia sư và nhắc về điểm số.',[['Thỏa thuận một khoảng học không bị ngắt','plan'],['Làm thêm bài để người lớn yên tâm','learn'],['Im lặng học theo từng lần bị gọi','endure']]);
+  alternative('ngoai_khoa','Hoạt động yêu thích không được coi trọng','Gia đình có thể thu xếp cho bạn tham gia, nhưng chỉ muốn chọn những lớp được xem là có ích cho hồ sơ thành tích.',[['Trình bày lý do muốn theo hoạt động này','learn'],['Bỏ sở thích để theo lịch đã chọn','endure'],['Nhờ giáo viên trao đổi về điều bạn thích','support']]);
+  alternative('phu_giup','Lịch gia đình chiếm hết cuối tuần','Bạn được yêu cầu đi cùng người lớn trong những buổi gặp và hoạt động của gia đình. Thời gian học, nghỉ và gặp bạn bè ngày càng ít.',[['Thống nhất những buổi thực sự cần có mặt','plan'],['Đi đủ mọi buổi dù đã rất mệt','work'],['Xin giữ lại một ngày nghỉ của riêng mình','rest']]);
+  alternative('mang_xa_hoi','Luôn phải trông như đang sống tốt','Hình ảnh gia đình và bạn được chia sẻ rất chỉn chu. Bạn thấy khó nói mình buồn khi mọi người đều cho rằng bạn chẳng thiếu gì.',[['Giảm thời gian xem và giữ khoảng riêng','rest'],['Cố đăng những điều vui để không ai hỏi','endure'],['Kể thật với một người mình tin','support']]);
+  alternative('tai_lieu','Đủ học liệu nhưng không được tự chọn cách học','Bạn được mua nhiều khóa và tài liệu. Khi muốn học theo cách khác, bạn bị nhắc phải theo đúng thứ gia đình đã đầu tư.',[['Chọn phần phù hợp rồi giải thích kết quả','learn'],['Làm cho đủ các khóa dù không theo kịp','endure'],['Nhờ giáo viên cùng sắp lại tài liệu','support']]);
+  alternative('hoc_hay_lam','Con đường nghề nghiệp đã được xếp sẵn','Gia đình đã nhờ người quen tìm một lộ trình cho bạn. Bạn chưa chắc mình muốn đi theo, nhưng việc từ chối bị xem là không biết quý cơ hội.',[['Tìm hiểu nghề và năng lực của mình trước','learn'],['Làm theo để tránh khiến gia đình mất mặt','endure'],['Nhờ người hướng nghiệp trao đổi cùng','support']]);
+  alternative('hoc_phi','Được lo học phí, phải theo ngành đã chọn','Gia đình sẵn sàng trả tiền học nhưng muốn quyết định nơi học và ngành học. Điều bạn thích lại không nằm trong kế hoạch ấy.',[['Chuẩn bị một lộ trình riêng có căn cứ','plan'],['Im lặng nhận lựa chọn của gia đình','endure'],['Nhờ người am hiểu cùng nói chuyện','support']]);
+  alternative('dong_trang_lua','Không muốn mọi thành quả bị quy về gia đình','Bạn có nhiều cơ hội hơn một số bạn bè, nhưng cũng thường nghe rằng mọi thứ của mình đều đã được sắp sẵn.',[['Theo đuổi một kỹ năng và tự làm đến cùng','learn'],['Tránh thử vì sợ bị đem ra so sánh','endure'],['Tìm nhóm có thể góp ý thẳng thắn','support']]);
+  alternative('viec_dau','Công việc đầu dưới cái bóng gia đình','Công việc mới cho bạn chỗ bắt đầu, nhưng những người xung quanh kỳ vọng bạn phải tiến nhanh và luôn giữ hình ảnh thành công.',[['Học tay nghề, đặt mục tiêu vừa sức','train'],['Nhận hết việc để chứng minh mình','overwork'],['Thống nhất tiêu chí công việc rõ ràng','plan']]);
+  alternative('phong_tro','Chỗ ở đầy đủ nhưng khó có khoảng riêng','Bạn thu xếp được chỗ ở ổn định. Những người liên quan vẫn muốn can thiệp vào giờ giấc và cách bạn sắp đặt cuộc sống.',[['Thu xếp lại chỗ ở để có không gian riêng','pay'],['Nhượng bộ để tránh tranh cãi','hold'],['Trao đổi về ranh giới sinh hoạt','boundary']]);
+  alternative('gui_ve','Thành công luôn phải đem ra so sánh','Khoản bạn làm ra bị đặt cạnh thành tích người quen. Bạn cảm thấy mình phải liên tục chứng minh rằng đã đủ giỏi.',[['Nói rõ mục tiêu và giới hạn của mình','boundary'],['Nhận thêm việc để đuổi kịp lời so sánh','overwork'],['Đặt lại một kế hoạch do mình lựa chọn','plan']]);
+  alternative('mang_luoi','Có nhiều mối quen nhưng thiếu người nói thật','Những lời giới thiệu đến với bạn khá dễ dàng. Khó hơn là tìm người dám chỉ ra điểm yếu mà không nể quan hệ hay lợi ích.',[['Tìm một người cố vấn độc lập','support'],['Tự học và nhờ đánh giá bằng sản phẩm','train'],['Chỉ nghe những người đã quen từ trước','hold']]);
+  alternative('quy_du_phong','Một khoản chi trở thành cuộc tranh cãi','Bạn có thể thu xếp khoản phát sinh, nhưng người liên quan bất đồng về ai được quyết định và khoản nào đáng chi.',[['Xử lý nhu cầu cần thiết, làm rõ thỏa thuận','pay'],['Giải quyết tạm để tránh bàn thêm','patch'],['Nhờ người trung lập giúp trao đổi','support']]);
+  alternative('dung_chan','Điều kiện tốt mà vẫn thấy mắc kẹt','Bạn không phải lo từng bữa, nhưng công việc lặp lại và kỳ vọng bên ngoài khiến bạn khó biết mình thực sự muốn tiến theo hướng nào.',[['Học một kỹ năng mình muốn làm chủ','train'],['Làm nhiều hơn để giữ hình ảnh bận rộn','overwork'],['Tìm cố vấn độc lập để xem lại hướng đi','support']]);
+  alternative('cham_tra','Một khoản phải thu kéo theo bất đồng','Khoản thanh toán chậm chưa làm sinh hoạt đình trệ, nhưng cách đối tác lảng tránh khiến bạn khó tin vào những lời hẹn tiếp theo.',[['Yêu cầu lịch thanh toán bằng văn bản','plan'],['Tạm nhượng bộ để giữ quan hệ','hold'],['Dành công sức kiểm tra lại hợp đồng','boundary']]);
+  alternative('nghi_ngoi','Có thể nghỉ nhưng không dám dừng','Bạn thu xếp được chi phí nghỉ ngơi, nhưng lại thấy có lỗi khi không làm việc hoặc sợ người khác cho rằng mình đã tụt lại.',[['Dành một đợt nghỉ và hỗ trợ hồi phục','recover'],['Tiếp tục nhận việc để khỏi thấy có lỗi','overwork'],['Nhờ người giúp tháo bớt trách nhiệm','support']]);
+  alternative('suc_khoe_tien','Việc chăm sức khỏe liên tục bị lùi','Chi phí không phải trở ngại chính. Bạn vẫn hoãn việc chăm mình vì lịch công việc và những lời nhờ cậy không dứt.',[['Giữ lịch chăm sức khỏe đã hẹn','recover'],['Chỉ xử lý tạm để quay lại công việc','patch'],['Chia lại lịch và việc với người liên quan','plan']]);
+  alternative('nha_xuong_cap','Sửa nhà thành cuộc giằng co','Bạn có thể thu xếp việc sửa và thay đồ, nhưng những người liên quan muốn quyết định theo ý riêng. Công việc bị kéo dài qua nhiều lần tranh luận.',[['Thuê người kiểm tra, chốt phần cần sửa','pay'],['Làm tạm một phần để tránh tranh cãi','patch'],['Thống nhất từng hạng mục trước khi làm','plan']]);
+  alternative('hut_du_phong','Khó buông việc dù đã có tích lũy','Bạn đã có nền tảng cho tuổi già, nhưng vẫn sợ mất vị trí hoặc mất quyền quyết định nếu giảm công việc.',[['Lập kế hoạch bàn giao và giới hạn trách nhiệm','plan'],['Tiếp tục nhận việc để giữ vai trò','overwork'],['Trao đổi với người tư vấn độc lập','support']]);
+  alternative('tinh_gon','Bỏ bớt những cuộc hẹn không còn muốn giữ','Bạn duy trì nhiều cuộc gặp và cam kết vì thể diện. Ngày trống để nghỉ ngơi ngày càng hiếm.',[['Giữ lại những việc thực sự có ý nghĩa','plan'],['Chỉ bớt những việc dễ từ chối nhất','patch'],['Nhờ người cùng sắp lại trách nhiệm','support']]);
+  alternative('chi_phi_thuoc','Có người lo thuốc nhưng ít ai hỏi ý','Việc chăm sóc được thu xếp đầy đủ. Bạn vẫn thấy buồn khi mọi người chỉ trao đổi với nhau về lịch uống thuốc mà ít hỏi bạn đang cảm thấy thế nào.',[['Đặt lịch trao đổi trực tiếp với người chăm','pay'],['Thuận theo lịch dù còn điều muốn hỏi','hold'],['Nhờ một người chịu nghe nói giúp','support']]);
+  alternative('lo_tien','Lo mất quyền quyết định về tài sản','Những cuộc bàn bạc về tài sản làm bạn bất an. Bạn muốn được hỏi ý trong khi người khác cho rằng họ đang lo giúp.',[['Rà lại giấy tờ và nói rõ mong muốn','plan'],['Im lặng để tránh gia đình căng thẳng','hold'],['Tìm tư vấn độc lập và người tin cậy','support']]);
+  alternative('di_lai','Chuyến đi đã lo xong nhưng thiếu người bên cạnh','Phương tiện và lịch hẹn đã được sắp xếp. Bạn vẫn mong có một người thân cùng đi và nghe điều mình muốn nói.',[['Thu xếp người đồng hành phù hợp','pay'],['Đi theo lịch, giữ nỗi buồn cho riêng mình','hold'],['Chủ động nhờ một người mình tin','support']]);
+  alternative('thiet_bi','Đồ dùng đổi mới mà chẳng ai hỏi','Người khác thay thiết bị trong nhà để bạn dùng thuận tiện hơn. Bạn lại khó quen và thấy mình không còn được quyết định những điều nhỏ.',[['Nhờ hướng dẫn và chỉnh theo thói quen của mình','pay'],['Cố dùng dù còn rất lúng túng','hold'],['Giữ lại cách dùng quen, đổi từng bước','plan']]);
+  alternative('tiet_kiem','Ngại tiêu cho mình vì sợ bị phán xét','Bạn có thể chi cho nhu cầu riêng, nhưng những lời bình phẩm về lối sống khiến bạn ngần ngại cả những điều mình muốn.',[['Chọn một khoản hợp lý để chăm mình','recover'],['Gác mong muốn lại để khỏi bị bàn tán','hold'],['Tâm sự với người tôn trọng lựa chọn của mình','support']]);
+  alternative('nghe_moi','Học lại nghề khi đã có chỗ đứng','Cách làm việc đã thay đổi. Bạn muốn học lại nhưng ngại bị người trẻ nhìn thấy những điều mình chưa biết.',[['Học công cụ mới từ phần cần nhất','train'],['Cố làm nhiều hơn để che phần chưa biết','overwork'],['Tìm nhóm cùng học không nặng chuyện tuổi tác','support']]);
+  alternative('song_mot_minh','Khó quen với người hỗ trợ trong nhà','Bạn có thể thu xếp người giúp việc, nhưng chưa quen việc có người khác động vào những thứ mình từng tự lo.',[['Tìm người phù hợp và thống nhất cách giúp','support'],['Tự ôm hết việc dù đã ít sức','hold'],['Chọn rõ phần nào mình vẫn muốn tự làm','plan']]);
   function eligible(l, a) {
     var h = state(l), at = l.flags.hardcoreAt || {}, cd = l.flags.cd || {};
     return catalog.filter(function (m) { var seen = h.seen[m.id] || 0, last = Math.max(at[m.id] == null ? -999 : at[m.id], cd[m.id] == null ? -999 : cd[m.id]); return a >= m.min && a <= m.max && seen < m.maxN && a - last >= m.cd && E.DEC[m.id].valid(l, {}); });
@@ -203,7 +270,7 @@
       var id = 'hc_chain_' + row[0] + '_' + step; E.HARDCORE_CHAINS.push({ id: id, name: row[0], step: step });
       E.SC(id, { title: row[1] + (step === 2 ? ' · lần lựa chọn tiếp theo' : ''), tone: 'dark',
         valid: function (l) { return hard(l) && free(l) && !!state(l).chains && state(l).chains[row[0]] === step; },
-        prep: function (l, r) { return { amount: amount(l, r) * (step === 2 ? 1.4 : 1) }; }, text: function () { return row[2] + ' Lần lựa chọn trước đã để lại hệ quả; lần này cần cân nhắc cả sức lực và nguồn lực còn lại.'; },
+        prep: function (l, r) { return { amount: amount(l, r) * (step === 2 ? 1.4 : 1) }; }, text: row[2],
         opts: [
           { k: 'giai_quyet', l: 'Dành nguồn lực để giải quyết đến nơi', req: function (l, d) { return l.age < 18 || !l.indep || l.money >= d.amount; }, h: function (l, d) { return l.age < 18 || !l.indep ? 'Dùng quỹ gia đình; không trừ tiền cá nhân' : H.money(l, d.amount); }, ai: { w: 1 }, run: function (l, r, log, d) { var h = state(l); apply(l, l.age < 18 || !l.indep ? policies.protect : policies.pay, d, 'Giải quyết vấn đề kéo dài', log); h.chains[row[0]] = 0; if (row[0] === 'tay_nghe') h.training += 2; else h.trauma = Math.max(0, h.trauma - 3); } },
           { k: 'tung_buoc', l: 'Tìm hỗ trợ, làm từng bước trong khả năng', ai: { w: 1.3 }, run: function (l, r, log, d) { var h = state(l); apply(l, policies.plan, d, 'Tiếp tục xử lý từng bước', log); if (step === 1) { h.chains[row[0]] = 2; H.sched(l, 'hc_chain_' + row[0] + '_2', 2); } else { h.chains[row[0]] = 0; h.training += row[0] === 'tay_nghe' ? 1 : 0; } } },
@@ -241,18 +308,30 @@
   E.beginYear = function (l) { var had = l.pending && l.pending.length, result = begin.apply(this, arguments); if (hard(l) && !had && l.alive && role(l) === 'trapped' && l.pending.length < 4) l.pending.push(E.DEC[roleEvent(l, H.rf(l), 'trapped')].make(l, H.rf(l))); return result; };
   E.HARDCORE_EVENTS = legacy.concat(catalog.map(function (x) { return x.id; }), E.HARDCORE_CHAINS.map(function (x) { return x.id; }), E.HARDCORE_ROLES.map(function (x) { return x.id; }), ['hc_buoc_ngoat']);
   var migrate = E.migrate;
-  E.migrate = function (l) { var x = migrate.apply(this, arguments); if (x && hard(x)) state(x); return x; };
+  E.migrate = function (l) {
+    var x = migrate.apply(this, arguments);
+    if (x && hard(x)) {
+      var h = state(x);
+      if (!h.contextStories) {
+        // Update already-open decisions from 7.7.0 without advancing the life RNG or rerolling their fee.
+        var seed = { rs: (x.rs ^ 0x7701) | 0 };
+        x.pending = (x.pending || []).map(function (d) { if (!/^hc_story_/.test(d.id) || !E.DEC[d.id]) return d; var fresh = E.DEC[d.id].make(x, function () { return U.rand(seed); }, d.data); if (d.manual) fresh.manual = true; return fresh; });
+        h.contextStories = 1;
+      }
+    }
+    return x;
+  };
   var birth = E.birthContext;
   if (birth) E.birthContext = function (l) {
     var result = birth.apply(this, arguments); if (!hard(l)) return result;
-    var h = state(l); return { label: 'Môi trường lớn lên · Hardcore', text: 'Sinh tồn từ ngày đầu: ' + care(l) + ' ' + h.style + '. Quỹ gia đình hữu hạn; cảm xúc và tổn thương sẽ ảnh hưởng chuyện học, công việc và khả năng tìm cơ hội sau này.' };
+    var h = state(l); return { label: 'Môi trường lớn lên', text: U.cap(care(l)) + ' ' + h.style + '.' };
   };
   // Những ngã rẽ bắt buộc vẫn dùng cơ chế cũ, chỉ thay lời dẫn của quyết định Hardcore mới tạo.
   var intros = {
-    hs: ['Học tiếp trong áp lực cơm áo', 'Bạn phải cân nhắc nền tảng học tập, nguồn lực gia đình và sức lực của chính mình.'],
-    uni: ['Một tấm bằng, một khoản đầu tư đầy rủi ro', 'Học tiếp không tự bảo đảm thành công. Thiếu điều kiện và cảm xúc bất ổn có thể khiến bạn khó theo đến cùng.'],
-    job: ['Tìm việc để giữ nhịp sống', 'Hardcore: thu nhập thường niên từ công việc chỉ bằng 18% mức tham chiếu; khoản thưởng không thường xuyên còn có hao hụt riêng.'],
-    marry: ['Xây gia đình khi quỹ dự phòng còn mỏng', 'Một mối quan hệ cần cả sự an toàn cảm xúc và khả năng chia sẻ trách nhiệm.'],
+    hs: ['Ngã rẽ sau những năm học đầu', 'Gia đình và bạn cần nói chuyện về hướng học tiếp.'],
+    uni: ['Chọn hướng học tiếp', 'Bạn đứng trước lựa chọn về ngành học và cuộc sống sắp tới.'],
+    job: ['Bắt đầu tìm việc', 'Bạn xem lại những điều mình biết làm và những nơi đang tuyển.'],
+    marry: ['Nghĩ về chuyện xây gia đình', 'Hai người cần nói rõ mong muốn và trách nhiệm trước khi quyết định.'],
     kid: ['Có thêm người cần mình chăm sóc', 'Bạn phải cân nhắc sức lực, cảm xúc và khoản dự phòng trước một trách nhiệm kéo dài nhiều năm.'],
     house: ['Một chỗ ở, nhiều năm phải xoay xở', 'Chi phí nhà ở và lãi vay không giảm theo mức lương Hardcore.'],
     biz: ['Kinh doanh khi không có nhiều lần thử lại', 'Lãi dương rất thấp, khoản lỗ và vốn phải bỏ ra vẫn giữ nguyên.'],
@@ -283,6 +362,7 @@
   E.hardcoreYear = function (l, r, log, a) {
     if (!hard(l) || !l.alive) return;
     var h = state(l), familyPressure = a < 18 ? h.pressure / 45 : h.trauma / 65;
+    if (a < 18 && h.reserveAt !== a) { h.reserveAt = a; h.resources = context(l) === 'wealthy' ? 100 : context(l) === 'comfortable' ? Math.max(50, h.resources) : Math.min(100, h.resources + 6); }
     if (a >= 6) h.emotion += h.support * 0.12 - familyPressure - h.trauma * 0.006;
     if (a >= 12 && l.mind) l.mind.stress = U.clamp(l.mind.stress + familyPressure + h.trauma / 45 - h.support * 0.3, 0, 100);
     if (a >= 18 && h.support >= 2) h.trauma = Math.max(0, h.trauma - 0.5);

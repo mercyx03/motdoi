@@ -1,3 +1,11 @@
+## v7.7.1 — Hardcore theo gia cảnh, luyện tài năng thể thao và training esports
+
+- Tình huống Hardcore đọc điều kiện thực tế: trẻ dựa vào gia cảnh và thu nhập của người còn sống; người đã tự lập dựa vào tiền và tài sản của chính mình. Những tình huống thiếu thốn có nhánh thay thế khi nhu cầu vật chất đã được đáp ứng: kỳ vọng thành tích, kiểm soát, ít thời gian bên con, khó tự quyết và áp lực hình ảnh.
+- Nhà giàu không bị biến thành thiếu thốn do quỹ trừu tượng cạn sau vài lựa chọn. Quỹ nội bộ được bổ sung theo điều kiện; bỏ chỉ số quỹ khỏi căn cước, bỏ câu giải thích cơ chế lặp lại trong lời kể, gợi ý và nhật ký. Bản lưu đang mở tình huống cũ được cập nhật lời kể khi tải, không đổi RNG hay bốc lại chi phí.
+- Thêm hành động tự chọn **Luyện tập thể thao / nâng kỹ năng** từ 6 tuổi: kỹ thuật, thể lực, huấn luyện viên cho người trưởng thành có đủ tiền và phục hồi nhẹ. Kỹ năng tăng vào cấp tài năng thật, giảm hiệu quả khi đã giỏi, tối đa 100 và mỗi năm một đợt. Người đang chấn thương chỉ tập nhẹ; trẻ không bị trừ tiền cá nhân.
+- Thêm **Training esports: phản xạ / chiến thuật / phong độ** cho tuyển thủ đang thi đấu ở cả bốn game. Chỉ số được dùng trực tiếp trong thi đấu, đồng bộ với kỹ năng game; phần tăng phong độ không bị cập nhật thường niên ghi đè. Có giới hạn một đợt mỗi năm, kiểm tra lại nghề và phiên thi đấu để chặn menu cũ hoặc lặp lợi ích.
+- Hai hành động mới chỉ do người chơi chọn, không thêm vào lựa chọn tự động. Đối chiếu 12 cuộc đời Thường vẫn trùng khớp; thêm `tests/update770.js` cho gia cảnh, bản lưu và các nhánh tập luyện.
+
 ## v7.7.0 — Chiến dịch Hardcore: xuất phát điểm, cảm xúc và khả năng vươn lên
 
 - Sống tiếp đời con: dữ liệu cũ thiếu chỗ ở lúc sinh dùng nhà đã biết của bố mẹ, thay vì bốc lại gia cảnh nhà thuê / nhà tạm. Vẫn ưu tiên hồ sơ đúng lúc sinh nếu đã có; nhà của bố mẹ không bị cộng thành tài sản riêng của trẻ.

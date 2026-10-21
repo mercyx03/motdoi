@@ -632,7 +632,7 @@
       '<div class="idhead">' + E.art.avatar(l) + '<div class="nm">' + esc(l.name) + (l.nameSub ? '<small>' + esc(l.nameSub) + '</small>' : '') + '</div></div>' +
       '<dl class="kv"><dt>Giới tính</dt><dd>' + sexWord(l) + (l.orient !== 'straight' && (l.realized || l.chosenOrient) ? ' · ' + E.orientLabel(l) : '') + '</dd>' +
       '<dt>Sinh</dt><dd>' + (l.birthDay ? l.birthDay + '/' : '') + l.birthMonth + '/' + l.birthYear + '</dd>' +
-      (l.difficulty === 'hardcore' && E.hardcoreState ? (function () { var h = E.hardcoreState(l); return '<dt>Môi trường lớn lên</dt><dd>' + esc(h.style) + '</dd><dt>Cảm xúc · tổn thương</dt><dd>' + Math.round(h.emotion) + '/100 · ' + Math.round(h.trauma) + '/100</dd>' + (l.age < 18 ? '<dt>Quỹ gia đình Hardcore</dt><dd>' + Math.round(h.resources) + '/100 · thiệt thòi tích lũy ' + Math.round(h.gap) + '/100</dd>' : '<dt>Nền tảng phục hồi</dt><dd>Học kỹ năng ' + Math.round(h.training) + ' · chỗ dựa ' + Math.round(h.support) + '/6</dd>'); })() : '') +
+      (l.difficulty === 'hardcore' && E.hardcoreState ? (function () { var h = E.hardcoreState(l); return '<dt>Môi trường lớn lên</dt><dd>' + esc(h.style) + '</dd><dt>Cảm xúc · tổn thương</dt><dd>' + Math.round(h.emotion) + '/100 · ' + Math.round(h.trauma) + '/100</dd>' + (l.age < 18 ? '' : '<dt>Nền tảng phục hồi</dt><dd>Học kỹ năng ' + Math.round(h.training) + ' · chỗ dựa ' + Math.round(h.support) + '/6</dd>'); })() : '') +
       (E.astroText ? '<dt>Giờ sinh · cung</dt><dd>' + esc(E.astroText(l)) + '</dd>' : '') +
       '<dt>Sống tại</dt><dd>' + esc(currentPlace(l)) + '</dd>' +
       (l.eth ? '<dt>Dân tộc</dt><dd>' + esc(l.eth) + '</dd>' : '') +
