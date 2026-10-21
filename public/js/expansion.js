@@ -186,7 +186,7 @@
     var A = l.assets, core = function () { return (A.save || 0) + (A.gold || 0) + (A.stock || 0) + (A.land || 0); }, before = core(); // v2.4: chỉ 4 loại tài sản tài chính (nhà cho thuê, cơ sở kinh doanh tính riêng)
     if (before > 0.5) {
       var g = { save: 0.025, gold: 0.03 + U.normal(r) * 0.13, stock: STOCK[M.stock][0] + U.normal(r) * STOCK[M.stock][1], land: LAND[M.land][0] + U.normal(r) * LAND[M.land][1] };
-      Object.keys(g).forEach(function (k) { if (A[k] > 0) A[k] = Math.max(0, A[k] * (1 + Math.max(-0.7, g[k]))); });
+      Object.keys(g).forEach(function (k) { if (g[k] > 0) g[k] *= E.difficulty(l).passive; if (A[k] > 0) A[k] = Math.max(0, A[k] * (1 + Math.max(-0.7, g[k]))); });
       var after = core(), parts = Object.keys(ASSET_NAME).filter(function (k) { return A[k] > 0.5; }).map(function (k) { return ASSET_NAME[k] + ' ' + pct(g[k]); });
       log('Tài sản đầu tư: ' + parts.join(' · ') + ' — tổng ' + mo(l, after) + ' (' + (after >= before ? 'tăng ' + mo(l, after - before) : 'giảm ' + mo(l, before - after)) + ').', 'money');
       if (M.stock === 'sập' && A.stock > l.base * 0.5) { fx(l, { hap: -5 }); l.mind.stress += 6; }
@@ -559,8 +559,8 @@
     // tuổi & thu nhập của bạn đời được ghi lại đúng lúc con chào đời
     var mate = k.mate ? { name: k.mate.name, sex: k.mate.sex, age: U.clamp(k.mate.age, 16, 70), job: k.mateInc > 0 ? 'làm công ăn lương' : 'nội trợ', inc: k.mateInc || 0 } : null;
     var o = {
-      mode: l.mode, variant: l.variant, year: l.birthYear + k.born, name: k.name, gender: k.sex, lifeMin: l.lifeMin,
-      parent: { me: me, mate: mate, q: k.q || l.fam.q, sibs: Math.max(0, l.kids.length - 1), vice: vice, home: k.home, gen: l.gen || 1, lineage: l.lineage || [], years: l.birthYear + '–' + (l.death ? l.death.year : l.birthYear + l.age) }
+      mode: l.mode, variant: l.variant, difficulty: l.difficulty, year: l.birthYear + k.born, name: k.name, gender: k.sex, lifeMin: l.lifeMin,
+      parent: { me: me, mate: mate, q: k.q || l.fam.q, sibs: Math.max(0, l.kids.length - 1), vice: vice, home: k.home || (l.ownHouse ? (l.houseName || 'nhà riêng') : l.urban ? 'nhà thuê' : 'nhà riêng'), gen: l.gen || 1, lineage: l.lineage || [], years: l.birthYear + '–' + (l.death ? l.death.year : l.birthYear + l.age) }
     };
     if (vn) {
       var city = l.movedTo && VN.byName[l.movedTo] ? l.movedTo : null;

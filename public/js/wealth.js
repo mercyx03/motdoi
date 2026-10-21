@@ -377,7 +377,7 @@
       p.v = Math.max(p.basis * 0.3, p.v * (1 + g + U.normal(r) * 0.03));
       var occupied = ch(r, 0.12) ? 0.4 : 1;
       if (occupied < 1) { p.empty++; empties.push(p.n); }
-      H.cash(l, p.v * p.y * occupied, 'Tiền cho thuê ' + p.n);
+      H.cash(l, p.v * p.y * occupied * E.difficulty(l).passive, 'Tiền cho thuê ' + p.n);
       H.cash(l, -p.v * .012, 'Bảo trì và quản lý ' + p.n);
     });
     if (empties.length) log((empties.length === 1 ? U.cap(empties[0]) : empties.length + ' bất động sản cho thuê') + ' bỏ trống mấy tháng chưa có khách thuê.', 'neutral');
@@ -398,6 +398,7 @@
       var renewal = v.cap * .025;
       var manager = a >= 65 || l.job ? rev * .03 : 0;
       var cost = rev * B.vc + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
+      if (rev > cost) cost += (rev - cost) * (1 - E.difficulty(l).passive);
       var prof = rev - cost, rate = prof / Math.max(1e-9, v.cap);
       v.last = { rev: rev, cost: cost, prof: prof };
       H.cash(l, prof, prof >= 0 ? 'Lãi ' + v.n : 'Lỗ ' + v.n);

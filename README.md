@@ -5,6 +5,8 @@ Bạn được sinh ra ngẫu nhiên — ở một tỉnh thành Việt Nam, thu
 
 Trang web hoàn toàn tĩnh (HTML/CSS/JS thuần, không cần máy chủ, không thư viện ngoài), dữ liệu người chơi lưu trên trình duyệt. Chia sẻ cuộc đời bằng đường link (dữ liệu nằm ngay trong link, không cần cơ sở dữ liệu).
 
+**Hardcore (v7.7.0):** chọn ở mục **Độ khó** trước khi chào đời. Chiến dịch riêng với 98 tình huống theo tuổi và các chặng tiếp nối, có lựa chọn mới ngay từ năm đầu. Môi trường gia đình, cảm xúc và tổn thương ảnh hưởng lâu dài đến stress, chuyện học và cơ hội sau này. Thu nhập lao động còn 18%, lãi dương còn 12%, thu nhập hưu trí còn 45%; các khoản thưởng ngoài lương có hao hụt riêng. Có hỗ trợ miễn phí, cách phục hồi chậm và một cơ hội bứt phá hiếm khi có chuẩn bị phù hợp. Chế độ được lưu cùng nhân vật và giữ sang đời con. Kho sự kiện Thường được giữ riêng; chạy `node tests/hardcore-isolation.js` để so sánh 12 trạng thái cuộc đời với bản trước thay đổi và `node tests/hardcore-campaign.js` để kiểm tra chiến dịch mới.
+
 ## Cấu trúc thư mục
 
 ```

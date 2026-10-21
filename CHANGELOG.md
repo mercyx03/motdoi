@@ -1,3 +1,24 @@
+## v7.7.0 — Chiến dịch Hardcore: xuất phát điểm, cảm xúc và khả năng vươn lên
+
+- Sống tiếp đời con: dữ liệu cũ thiếu chỗ ở lúc sinh dùng nhà đã biết của bố mẹ, thay vì bốc lại gia cảnh nhà thuê / nhà tạm. Vẫn ưu tiên hồ sơ đúng lúc sinh nếu đã có; nhà của bố mẹ không bị cộng thành tài sản riêng của trẻ.
+- Gia cố danh sách anh chị em khi tiếp đời: giữ nguyên tên Việt ở gia đình định cư Nhật, giới tính và thứ tự sinh; danh sách rỗng của con một cũng được giữ; bản sao hồ sơ con không bị tính thành anh chị em của chính mình. Thêm `tests/heir-family770.js` kiểm tra cả Thường và Hardcore, dữ liệu cũ và lưu / tải.
+- Tách kho biến cố ngẫu nhiên Hardcore khỏi kho sự kiện Thường. Có 98 tình huống riêng theo chín giai đoạn từ 0 tuổi đến tuổi già, thêm 6 chặng tiếp nối, 6 tình huống theo bối cảnh quân ngũ / trại giam / bị giữ và một cơ hội bứt phá hiếm. Giữ các ngã rẽ bắt buộc như học hành, tìm việc; lời dẫn Hardcore được viết riêng.
+- Từ năm đầu có nhiều lựa chọn mới về chăm sóc, điều kiện sinh hoạt và phản ứng của người chăm sóc. Trẻ dùng quỹ gia đình trừu tượng, không bị gán nợ cá nhân.
+- Môi trường gia đình có thể khắt khe, thiếu lắng nghe hoặc căng thẳng vì cơm áo; vẫn có một tỷ lệ nhỏ có chỗ dựa tốt hơn. Áp lực và cách ứng phó tích lũy thành cảm xúc / tổn thương, ảnh hưởng stress khi lớn lên, mức hạnh phúc và điểm thi.
+- Có hỗ trợ miễn phí khi thiếu tiền, nhưng không thể lặp lại nhiều lần trong một năm. Có thể tiến bộ chậm bằng kế hoạch, kỹ năng và phục hồi; không buộc mọi cuộc đời phải thất bại.
+- Thu nhập lao động và phần bạn đời góp chỉ còn 18%, lãi dương còn 12%, thu nhập hưu trí còn 45%. Các khoản thưởng, cát-xê và tiền công ngoài lương có chi phí / hao hụt riêng 82%; không trừ vào vốn vay, tiền bán tài sản hay thừa kế.
+- Cơ hội bứt phá yêu cầu đã chuẩn bị kỹ năng và ổn định cảm xúc; chỉ một phần nhỏ cuộc đời có cửa này. Nhận cơ hội giúp cải thiện thu nhập từ công việc trong một giai đoạn, không phát tiền hoặc bảo đảm giàu.
+- Chế độ Thường có bản đối chiếu 12 toàn bộ trạng thái cuộc đời từ v7.6.0, xác nhận không đổi hành vi và RNG (ngoại trừ nhãn phiên bản phát hành).
+
+## v7.6.0 — Chế độ Hardcore
+
+- Chọn Thường / Hardcore trước khi chào đời, áp dụng cho cả hồ sơ ngẫu nhiên và tự tạo nhân vật. Lưu cùng cuộc đời, giữ khi tải lại và sống tiếp đời con.
+- Hardcore: thu nhập lao động và phần bạn đời đóng góp còn 40%; thu nhập khi nghỉ hưu còn 65%. Giữ nguyên chi phí sinh hoạt, nợ vay và giá mua tài sản.
+- Lãi dương của đầu tư, kinh doanh, cho thuê và tiền mặt còn 40%; giữ nguyên khoản lỗ, vốn gốc, khoản vay và tiền bán tài sản.
+- Tần suất các tình huống thông thường tăng 1,8 lần, tối đa 5 quyết định mỗi năm; vẫn giữ điều kiện tuổi, thời gian chờ, giới hạn lặp và bối cảnh tù / quân ngũ.
+- Thêm 6 biến cố riêng có lựa chọn ứng phó: đồ thiết yếu hỏng, gia đình cần tiền, hụt thu, lời mời việc cần cọc, bài học bị thất lạc, nhiều việc dồn cùng lúc. Không tự trừ tiền trẻ chưa tự lập.
+- Giữ các bản sửa lỗi đời con, niên hạn quân hàm và khóa học hai năm.
+
 ## v7.5.0 — Đời con tiếp quản cơ ngơi, ai đang ở đâu, chọn trường quân đội / công an
 
 - **Sống tiếp đời con ở tuổi hiện tại** (khi bố / mẹ qua đời, tiếp quản cơ ngơi gia đình):

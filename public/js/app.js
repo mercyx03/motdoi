@@ -14,13 +14,14 @@
   // giữ nguyên khóa lưu trữ từ bản 1.0 để người chơi không mất dữ liệu
   var K = { settings: 'mkn.settings', cur: 'mkn.current', mem: 'mkn.memorial', theme: 'mkn.theme', last: 'mkn.lastEnd', recent: 'mkn.recent', ach: 'mkn.ach', tree: 'mkn.tree' };
 
-  var DEF = { mode: 'vn', variant: '34', prov: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
+  var DEF = { mode: 'vn', variant: '34', difficulty: 'normal', prov: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
   var S = {
     set: Object.assign({}, DEF, LS.get(K.settings, {})),
     life: null, cohort: null, speed: 1, paused: false, auto: false, skipping: false,
     progress: 0, queue: [], phase: 'idle', yearRunning: false, last: 0, modalTimer: null
   };
   S.set.name = '';
+  S.set.difficulty = S.set.difficulty === 'hardcore' ? 'hardcore' : 'normal';
   S.minorOnly = !!S.set.minorOnly;
   if (['random', 'M', 'F'].indexOf(S.set.gender) < 0) S.set.gender = 'random'; // v5.6.2: giới tính sinh học nam / nữ
   var LGBT_SUB = ['top', 'bot', 'les', 'bi'];
@@ -128,6 +129,7 @@
     $('#lgbtSub').classList.toggle('hidden', !fam);
     $$('#lgbtSub .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.o === S.set.orient); });
     $$('#lenChips .chip').forEach(function (c) { c.classList.toggle('on', +c.dataset.len === +S.set.lifeMin); });
+    $$('#difficultyChips .chip').forEach(function (c) { var on = c.dataset.difficulty === S.set.difficulty; c.classList.toggle('on', on); c.setAttribute('aria-pressed', String(on)); });
     $('#heroTitle').innerHTML = vn ? '1 trong <em>100 triệu</em>' : '1 trong <em>8 tỷ</em>';
     $('#heroLead').textContent = vn
       ? 'Cứ khoảng 23 giây lại có một em bé chào đời ở Việt Nam. Bạn sẽ trở thành một trong số đó và sống trọn một đời người — với những ngã rẽ, cám dỗ, mất mát và hạnh phúc. Sinh ra ở tỉnh nào, dân tộc nào, trong gia đình nào — bạn không được chọn. Cũng như ngoài đời.'
@@ -186,7 +188,7 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { mode: S.set.mode, variant: S.set.variant, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
+  function profileOpts() { return { mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var where = E.isVN(l) ? l.provLabel + ' · Việt Nam' : l.city + ' · ' + l.countryName;
@@ -197,6 +199,7 @@
     var talent = l.talent ? U.cap(E.talentText(l)) + (l.game && l.flags.gamePicked ? ' · ' + l.game : '') : 'Chưa bộc lộ';
     var tags = [E.QUINT[f.q].replace('một trong những ', '').replace('một ', '').replace('gia đình', 'Gia đình'), l.urban ? 'Thành thị' : 'Nông thôn'];
     if (l.eth) tags.push(l.eth); if (l.chosenOrient || l.orient !== 'straight') tags.push('LGBTQ+');
+    if (l.difficulty === 'hardcore') tags.push('Hardcore');
     $('#heroProfile').innerHTML = '<div class="eyebrow">MỘT LƯỢT MÔ PHỎNG CÓ THỂ BẮT ĐẦU NHƯ SAU</div><h3>Hồ sơ xuất phát</h3>' +
       '<div class="idhead" style="margin:6px 0 10px">' + E.art.avatar(Object.assign({}, l, { age: 6, school: 'primary', job: null })) + '<div><b style="font-size:17px">' + esc(l.name) + '</b><div class="small muted">' + (l.sex === 'M' ? 'Bé trai' : 'Bé gái') + ' · ' + esc(where) + '</div></div></div>' +
       '<div class="prow"><span>Nơi sinh</span><span>' + esc(where) + '</span></div>' +
@@ -279,6 +282,7 @@
     c.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   });
   $$('#lenChips .chip').forEach(function (c) { c.onclick = function () { S.set.lifeMin = +c.dataset.len; saveSettings(); syncSetupUI(); }; });
+  $$('#difficultyChips .chip').forEach(function (c) { c.onclick = function () { S.set.difficulty = c.dataset.difficulty; if (S.preview) S.preview.difficulty = S.set.difficulty; saveSettings(); syncSetupUI(); renderProfile(); }; });
   $$('[data-go]').forEach(function (b) { b.onclick = function () { show(b.dataset.go); }; });
   document.addEventListener('click', function (e) {
     var m = e.target.closest('[data-mem]'); if (m) { openMemorial(+m.dataset.mem); return; }
@@ -287,7 +291,7 @@
   });
 
   $('#bornBtn').onclick = function () {
-    var opts = { mode: S.set.mode, variant: S.set.variant, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
+    var opts = { mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
     bornWith(opts);
   };
@@ -404,6 +408,7 @@
       '<div class="avatarbox">' + E.art.avatar(l) + '</div>' +
       '<div class="fact"><div class="k">Họ và tên</div></div><h1 class="name">' + esc(l.name) + '</h1>' + (l.nameSub ? '<div class="native">' + esc(l.nameSub) + '</div>' : '') +
       '<p>' + esc(l.log[0].t) + '</p>' +
+      (l.difficulty === 'hardcore' ? '<p class="notice"><b>HARDCORE · SINH TỒN</b> · Biến cố riêng ngay từ đầu đời. Môi trường lớn lên để lại hệ quả về cảm xúc, stress và việc học. Thu nhập lao động còn 18%, lãi dương còn 12%; cơ hội vươn lên rất khó nhưng vẫn có.</p>' : '') +
       '<p class="small muted">Sống đến tuổi thọ kỳ vọng mất khoảng ' + l.lifeMin + ' phút (1 năm ≈ ' + Math.round(sec) + ' giây). Nếu bạn đóng trang, cuộc đời được lưu trên trình duyệt này và tiếp tục khi bạn quay lại.</p>' +
       '<div class="facts">' + facts + '</div>' +
       '<div class="odds">' + odds + '</div>' +
@@ -551,7 +556,7 @@
   function renderTopbar() {
     var l = S.life;
     $('#lbAge').textContent = ageStr(l.age);
-    $('#lbMeta').textContent = (l.birthYear + l.age) + ' · ' + l.name + ' · 1 năm ≈ ' + Math.round(secPerYear(l) / S.speed) + ' giây';
+    $('#lbMeta').textContent = (l.birthYear + l.age) + ' · ' + l.name + (l.difficulty === 'hardcore' ? ' · HARDCORE' : '') + ' · 1 năm ≈ ' + Math.round(secPerYear(l) / S.speed) + ' giây';
     $('#pauseBtn').textContent = S.paused ? '▶ Tiếp tục' : '❚❚ Tạm dừng';
     $('#autoBtn').classList.toggle('on', S.auto);
     $('#minorBtn').classList.toggle('on', !!S.minorOnly);
@@ -623,10 +628,11 @@
     var job = l.job ? U.cap(E.jobTitle(l)) + (vens.length ? ' · ' + vens.join(', ') : '') : vens.length ? U.cap(vens.join(', ')) : l.retired ? 'Đã nghỉ hưu' : l.flags.military ? 'Đang tại ngũ' : l.jailUntil != null && l.age < l.jailUntil ? 'Đang thụ án' : l.school ? 'Đang đi học' : l.age < 15 ? '—' : 'Thất nghiệp';
     var veh = l.veh ? (l.vehName || l.veh) + (l.veh === 'xe máy' && !l.lic.A1 ? ' (chưa có bằng)' : l.veh === 'ô tô' && !l.lic.B ? ' (chưa có bằng)' : '') : '';
     var med = l.medals && l.medals.length ? l.medals.map(function (m) { return m.m; }).reduce(function (a, m) { a[m] = (a[m] || 0) + 1; return a; }, {}) : null;
-    $('#idCard').innerHTML = '<h3>Căn cước · ' + esc(E.isVN(l) ? 'Việt Nam' : l.countryName) + '</h3>' +
+    $('#idCard').innerHTML = '<h3>Căn cước · ' + esc(E.isVN(l) ? 'Việt Nam' : l.countryName) + (l.difficulty === 'hardcore' ? ' · Hardcore' : '') + '</h3>' +
       '<div class="idhead">' + E.art.avatar(l) + '<div class="nm">' + esc(l.name) + (l.nameSub ? '<small>' + esc(l.nameSub) + '</small>' : '') + '</div></div>' +
       '<dl class="kv"><dt>Giới tính</dt><dd>' + sexWord(l) + (l.orient !== 'straight' && (l.realized || l.chosenOrient) ? ' · ' + E.orientLabel(l) : '') + '</dd>' +
       '<dt>Sinh</dt><dd>' + (l.birthDay ? l.birthDay + '/' : '') + l.birthMonth + '/' + l.birthYear + '</dd>' +
+      (l.difficulty === 'hardcore' && E.hardcoreState ? (function () { var h = E.hardcoreState(l); return '<dt>Môi trường lớn lên</dt><dd>' + esc(h.style) + '</dd><dt>Cảm xúc · tổn thương</dt><dd>' + Math.round(h.emotion) + '/100 · ' + Math.round(h.trauma) + '/100</dd>' + (l.age < 18 ? '<dt>Quỹ gia đình Hardcore</dt><dd>' + Math.round(h.resources) + '/100 · thiệt thòi tích lũy ' + Math.round(h.gap) + '/100</dd>' : '<dt>Nền tảng phục hồi</dt><dd>Học kỹ năng ' + Math.round(h.training) + ' · chỗ dựa ' + Math.round(h.support) + '/6</dd>'); })() : '') +
       (E.astroText ? '<dt>Giờ sinh · cung</dt><dd>' + esc(E.astroText(l)) + '</dd>' : '') +
       '<dt>Sống tại</dt><dd>' + esc(currentPlace(l)) + '</dd>' +
       (l.eth ? '<dt>Dân tộc</dt><dd>' + esc(l.eth) + '</dd>' : '') +

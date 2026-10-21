@@ -134,7 +134,7 @@
   }
   function summary(l, words) {
     return {
-      v: 1, id: l.id, n: l.name, s: l.nameSub || '', x: l.sex, w: E.isVN(l) ? (l.provLabel || l.prov.old) + ', Việt Nam' : l.countryName,
+      v: 1, difficulty: l.difficulty || 'normal', id: l.id, n: l.name, s: l.nameSub || '', x: l.sex, w: E.isVN(l) ? (l.provLabel || l.prov.old) + ', Việt Nam' : l.countryName,
       y: l.birthYear + ' – ' + (l.death ? l.death.year : l.birthYear + l.age), a: l.death ? l.death.age : l.age, c: l.death ? l.death.cause : '',
       o: E.obituary(l), f: words || l.finalWords || '', e: Math.round(l.e0sex * 10) / 10, k: l.karma || 0,
       m: (l.yrs || []).map(function (y) { return Math.min(9, Math.max(0, Math.floor(y.hap / 10))); }).join(''),

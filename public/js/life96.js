@@ -28,11 +28,16 @@
   if (heirAtAge) E.heirAtAge = function (l, k, tries) {
     var best = heirAtAge.apply(this, arguments); if (!best || !best.flags.heirFF) return best;
     var rec = (E.childOpts(l, k).parent.heir || {}).rec || {}, h0 = { rs: (best.rs ^ 0x96a1) | 0 }, r = function () { return U.rand(h0); };
-    best.edu = Math.max(best.edu || 0, rec.eduExact || 0);
+    best.edu = rec.eduExact || 0;
     if (rec.uniLeft > 0) { if (best.job) { best.lastJob = best.job; best.job = null; } best.school = 'uni'; best.schoolEnd = best.age + rec.uniLeft; best.indep = false; if (rec.abroadStudy) best.flags.heirAbroadStudy = true; }
     else if (rec.jobId && E.CAR[rec.jobId]) {
+      best.school = null; best.schoolEnd = null; best.cityStudent = null;
       if (!best.job || E.resolveJob(best.job.id) !== rec.jobId) { best.school = null; best.schoolEnd = null; E.startJob(best, rec.jobId, r, function () { }, true); }
       if (best.job) { var c = E.CAR[rec.jobId]; best.job.rank = Math.min(rec.rank || 0, c.t.length - 1); best.job.rankTracked = best.job.rank; best.job.rankSince = best.age - Math.max(0, rec.jyrs || 0); best.job.yrs = rec.jyrs || 0; best.indep = true; }
+    } else {
+      best.job = null;
+      if (best.age >= 18) { best.school = null; best.schoolEnd = null; best.cityStudent = null; }
+      best.flags.needJob = best.age >= 18 && !best.retired;
     }
     return best;
   };
@@ -129,15 +134,26 @@
   // học viện nâng cao giữa sự nghiệp
   function uni(l) { var id = l.job && E.resolveJob(l.job.id); return id === 'quan_doi' || id === 'cong_an' ? id : null; }
   var MID = { quan_doi: [['hv_luc_quan', 'Học viện Lục quân', 'đào tạo chỉ huy tham mưu cấp trung đoàn, sư đoàn'], ['hv_chinh_tri', 'Học viện Chính trị', 'đào tạo chính ủy, chính trị viên cấp trung, sư đoàn']], cong_an: [['hv_ct_cand', 'Học viện Chính trị Công an nhân dân', 'bồi dưỡng lãnh đạo, chỉ huy cấp phòng, cấp tỉnh'], ['hv_an_ninh_sdh', 'Học viện An ninh / Cảnh sát (hệ sau đại học)', 'học thạc sĩ chuyên ngành, làm cán bộ nghiệp vụ']] };
+  E.HOOKS.year.unshift(function (l, r, log, a) {
+    var s = l.flags.midAcadStudy;
+    if (!s) return;
+    if (uni(l) !== s.track || l.retired) { l.flags.midAcadStudy = null; log('Dừng khóa học ' + s.n + ' do không còn công tác trong lực lượng.', 'neutral'); return; }
+    if (a < s.until || (l.jailUntil != null && a < l.jailUntil)) return;
+    l.flags.midAcadStudy = null;
+    l.flags.midAcad = { id: s.id, n: s.n, at: a };
+    l.edu = Math.max(l.edu, 6);
+    log('Sau hai năm học ' + s.n + ', bạn tốt nghiệp và trở về đơn vị.', 'good');
+    H.fx(l, { kno: 4, hap: 2 }); H.mem(l, 'Ngày tốt nghiệp ' + s.n + '.', 3);
+  });
   SC('hv_nang_cao', {
     title: 'Cử đi học nâng cao',
     prep: function (l) { return { u: uni(l) }; },
-    valid: function (l) { return !!uni(l) && l.job.rank >= 3 && l.job.rank <= 5 && !l.flags.midAcad; },
+    valid: function (l) { return !!uni(l) && l.job.rank >= 3 && l.job.rank <= 5 && !l.flags.midAcad && !l.flags.midAcadStudy; },
     text: function (l, d) { return 'Bạn mang quân hàm ' + E.jobTitle(l) + ', được đơn vị đề xuất cử đi học 2 năm. Muốn được bổ nhiệm cấp cao hơn, gần như ai cũng phải qua lớp đào tạo này.'; },
-    opts: [0, 1].map(function (i) { return { k: 'h' + i, l: function (l, d) { var m = MID[d.u || uni(l) || 'quan_doi'][i]; return 'Học ' + m[1]; }, h: function (l, d) { return MID[d.u || uni(l) || 'quan_doi'][i][2]; }, ai: { w: 1, amb: 1 }, run: function (l, r, log, d) { var m = MID[d.u || uni(l)][i]; l.flags.midAcad = { id: m[0], n: m[1], at: l.age }; l.edu = Math.max(l.edu, 6); log('Hai năm học ' + m[1] + ', ' + m[2] + '. Tốt nghiệp loại giỏi, bạn trở về đơn vị với nhiều kỳ vọng.', 'good'); H.fx(l, { kno: 4, hap: 2 }); H.mem(l, 'Ngày tốt nghiệp ' + m[1] + '.', 3); } }; }).concat([
+    opts: [0, 1].map(function (i) { return { k: 'h' + i, l: function (l, d) { var m = MID[d.u || uni(l) || 'quan_doi'][i]; return 'Học ' + m[1]; }, h: function (l, d) { return MID[d.u || uni(l) || 'quan_doi'][i][2]; }, ai: { w: 1, amb: 1 }, run: function (l, r, log, d) { if (l.flags.midAcad || l.flags.midAcadStudy) return; var track = uni(l), m = MID[track][i]; l.flags.midAcadStudy = { id: m[0], n: m[1], track: track, at: l.age, until: l.age + 2 }; log('Bắt đầu khóa học hai năm tại ' + m[1] + ', ' + m[2] + '.', 'big'); } }; }).concat([
       { k: 'thoi', l: 'Xin ở lại đơn vị, chưa đi học', ai: { w: 0.3 }, run: function (l, r, log) { l.flags.midAcadNo = (l.flags.midAcadNo || 0) + 1; log('Bạn xin ở lại đơn vị. Cơ hội thăng tiến lên cấp cao vì thế mà chậm lại.', 'neutral'); } }])
   });
-  E.TRIG.push({ id: 'hv_nang_cao', when: function (l, a) { return !!uni(l) && l.job.rank >= 3 && l.job.rank <= 5 && !l.flags.midAcad && (l.flags.midAcadNo || 0) < 2 && !(l.jailUntil != null && a < l.jailUntil); }, p: 0.35, cd: 3, max: 3 });
+  E.TRIG.push({ id: 'hv_nang_cao', when: function (l, a) { return !!uni(l) && l.job.rank >= 3 && l.job.rank <= 5 && !l.flags.midAcad && !l.flags.midAcadStudy && (l.flags.midAcadNo || 0) < 2 && !(l.jailUntil != null && a < l.jailUntil); }, p: 0.35, cd: 3, max: 3 });
   SC('hv_quoc_phong', {
     title: function (l) { return uni(l) === 'cong_an' ? 'Lớp cao cấp lý luận chính trị' : 'Học viện Quốc phòng'; },
     valid: function (l) { return !!uni(l) && l.job.rank === 7 && !!l.flags.midAcad && !l.flags.topAcad; },
@@ -150,19 +166,20 @@
   var ca = E.canAdvance;
   if (ca) E.canAdvance = function (l, c, yearEnd) {
     var ok = ca.apply(this, arguments); if (!ok || !c || (c.id !== 'quan_doi' && c.id !== 'cong_an') || !l.job) return ok;
-    if (l.job.rank === 5 && !l.flags.midAcad && !l.flags.heirFF) return false;
+    if (l.job.rank === 5 && !l.flags.midAcad) return false;
     if (l.job.rank === 7 && !(l.flags.topAcad > 0)) return false;
     return true;
   };
   // lộ trình thăng quân hàm
   var LAW = [2, 3, 3, 4, 4, 4, 4, 4];
+  ['quan_doi', 'cong_an'].forEach(function (id) { E.CAR[id].yrs = LAW.slice(); });
   SC('lo_trinh_quan_ham', {
     title: 'Lộ trình thăng quân hàm',
     valid: function (l) { return !!uni(l); },
     text: function (l) {
       var c = E.jobDef(l), rk = l.job.rank, since = l.job.rankSince != null ? l.job.rankSince : l.age - (l.job.yrs || 0), inRank = l.age - since;
-      var rows = c.t.map(function (t, i) { var mark = i < rk ? '✔ ' : i === rk ? '▶ ' : '○ '; var y = i < c.t.length - 1 ? ' → lên ' + c.t[i + 1] + ' sau tối thiểu ' + LAW[Math.min(i, LAW.length - 1)] + ' năm' + (i === 5 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'Học viện Chính trị CAND' : 'Học viện Lục quân / Học viện Chính trị') + ')' : i === 7 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'lớp cao cấp' : 'Học viện Quốc phòng') + ', xét theo chức vụ)' : '') : ''; return mark + t + y; });
-      var need = LAW[Math.min(rk, LAW.length - 1)], left = Math.max(0, need - inRank);
+      var rows = c.t.map(function (t, i) { var mark = i < rk ? '✔ ' : i === rk ? '▶ ' : '○ '; var y = i < c.t.length - 1 ? ' → lên ' + c.t[i + 1] + ' sau tối thiểu ' + c.yrs[i] + ' năm' + (i === 5 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'Học viện Chính trị CAND' : 'Học viện Lục quân / Học viện Chính trị') + ')' : i === 7 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'lớp cao cấp' : 'Học viện Quốc phòng') + ', xét theo chức vụ)' : '') : ''; return mark + t + y; });
+      var need = c.yrs[rk] || 0, left = Math.max(0, need - inRank);
       return 'Quân hàm hiện tại: ' + c.t[rk] + ' (' + inRank + ' năm ở bậc này' + (rk < c.t.length - 1 ? ', còn khoảng ' + left + ' năm nữa đủ niên hạn' : '') + ').\n' + rows.join('\n') + '\nNiên hạn theo Luật Sĩ quan Quân đội nhân dân và Luật Công an nhân dân; đủ niên hạn còn cần hoàn thành nhiệm vụ, đủ tiêu chuẩn chính trị, sức khỏe và có chức vụ phù hợp.';
     },
     opts: [{ k: 'ok', l: 'Đã hiểu', ai: { w: 1 }, run: function () { } }]

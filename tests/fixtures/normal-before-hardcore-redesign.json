@@ -1,0 +1,150 @@
+{
+  "version": "7.6.0",
+  "capturedBeforeRedesign": true,
+  "results": [
+    {
+      "opts": {
+        "mode": "vn",
+        "variant": "34",
+        "seed": 78100,
+        "year": 2026
+      },
+      "hash": "1e3c48c50b194d478947cc7060d80cc264e2ee462a57689e33bf5ab0a7326589",
+      "age": 92,
+      "money": 70097.2192059089,
+      "logs": 556
+    },
+    {
+      "opts": {
+        "mode": "vn",
+        "variant": "63",
+        "seed": 78101,
+        "year": 2026
+      },
+      "hash": "f0c3df4ea9a07d7c87195e56aaef9cf07d99fc6f300d1ff9411a34403ac80c81",
+      "age": 86,
+      "money": 587.0460787855422,
+      "logs": 448
+    },
+    {
+      "opts": {
+        "mode": "vn",
+        "variant": "34",
+        "seed": 78102,
+        "year": 2026
+      },
+      "hash": "45096f5c480600d64f1fe1fba9786de94f4fae0c51842bf64ec564f20591de3d",
+      "age": 92,
+      "money": 1849.88257988397,
+      "logs": 516
+    },
+    {
+      "opts": {
+        "mode": "vn",
+        "variant": "63",
+        "seed": 78103,
+        "year": 2026
+      },
+      "hash": "3f75c0ac6791940f16c79d39f68db15b3eef2b8966ffc7d0fabcb7fca29d264f",
+      "age": 68,
+      "money": 1147.7873793997335,
+      "logs": 400
+    },
+    {
+      "opts": {
+        "mode": "vn",
+        "variant": "34",
+        "seed": 78104,
+        "year": 2026
+      },
+      "hash": "e7dfacdf1382cc0f1cd8e4e03d8471c1234892ad50842ee61b28878d51907628",
+      "age": 91,
+      "money": 1116.5582349325143,
+      "logs": 525
+    },
+    {
+      "opts": {
+        "mode": "vn",
+        "variant": "63",
+        "seed": 78105,
+        "year": 2026
+      },
+      "hash": "1816307e97dbc5a8f9693fe66a13c015f0924c66ed20ad1ac934e946cd3e5ba8",
+      "age": 74,
+      "money": 456.41846849321513,
+      "logs": 465
+    },
+    {
+      "opts": {
+        "mode": "world",
+        "country": "US",
+        "seed": 78200,
+        "year": 2026
+      },
+      "hash": "26aa0bd74b10c0589a76b61668be1044039bc07044e9fb561dafbaef54125610",
+      "age": 101,
+      "money": 29487358.9948237,
+      "logs": 618
+    },
+    {
+      "opts": {
+        "mode": "world",
+        "country": "JP",
+        "seed": 78201,
+        "year": 2026
+      },
+      "hash": "4568ecf79fcbd5cd264a25aef018952884e6744aeb49a14706024d58513fafb3",
+      "age": 93,
+      "money": 3904226.6457841457,
+      "logs": 613
+    },
+    {
+      "opts": {
+        "mode": "world",
+        "country": "IN",
+        "seed": 78202,
+        "year": 2026
+      },
+      "hash": "bfe02eb39109d4540057aff16b05feafdd980d471dbbc0a5827aad5e2eb5260b",
+      "age": 23,
+      "money": 11342.994200728888,
+      "logs": 115
+    },
+    {
+      "opts": {
+        "mode": "world",
+        "country": "NG",
+        "seed": 78203,
+        "year": 2026
+      },
+      "hash": "158130ea9cb07c42a212644102bcb89c116fbabea923aa943387c57c163f798e",
+      "age": 30,
+      "money": 2213.032210447561,
+      "logs": 167
+    },
+    {
+      "opts": {
+        "mode": "world",
+        "country": "DE",
+        "seed": 78204,
+        "year": 2026
+      },
+      "hash": "bfc6bb51fec4e871167d2115d1cb9c1c896ffd27f245c8a385c8900939c13783",
+      "age": 94,
+      "money": 2781738.477855376,
+      "logs": 590
+    },
+    {
+      "opts": {
+        "mode": "world",
+        "country": "BR",
+        "seed": 78205,
+        "year": 2026
+      },
+      "hash": "e02d1c6ae92839413a2bfa07f72ad7001339620905dbbbd57325e890c8bded23",
+      "age": 13,
+      "money": 0,
+      "logs": 53
+    }
+  ]
+}

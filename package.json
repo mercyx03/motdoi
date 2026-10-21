@@ -1,6 +1,6 @@
 {
   "name": "mot-doi",
-  "version": "7.5.0",
+  "version": "7.7.0",
   "private": true,
   "description": "Một Đời — mô phỏng một đời người bằng số liệu thật (Việt Nam 63/34 tỉnh, 54 dân tộc; 195 quốc gia)",
   "scripts": {

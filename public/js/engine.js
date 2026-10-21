@@ -9,6 +9,11 @@
   var CAL = 0.6;
 
   var DEC = {}, TRIG = [], ACT = [], EVENTS = [], CAR = {}, LINES = [];
+  var DIFFICULTIES = {
+    normal: { label: 'Thường', income: 1, passive: 1, pension: 1, events: 1, cap: 3 },
+    hardcore: { label: 'Hardcore', income: 0.4, passive: 0.4, pension: 0.65, events: 1.8, cap: 5 }
+  };
+  function difficulty(l) { return DIFFICULTIES[l.difficulty === 'hardcore' ? 'hardcore' : 'normal']; }
 
   function RF(life) { return function () { return U.rand(life); }; }
   function isVN(life) { return life.country === 'VN'; }
@@ -586,7 +591,8 @@
     var life = {
       v: G.VERSION, id: Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36),
       mode: opts.mode === 'world' ? 'world' : 'vn', variant: opts.variant === '63' ? '63' : '34',
-      rs: opts.seed != null ? opts.seed | 0 : U.newSeed(), lifeMin: opts.lifeMin || 30, createdAt: Date.now()
+      rs: opts.seed != null ? opts.seed | 0 : U.newSeed(), lifeMin: opts.lifeMin || 30, createdAt: Date.now(),
+      difficulty: opts.difficulty === 'hardcore' ? 'hardcore' : 'normal'
     };
     var r = RF(life);
     life.birthYear = opts.year || new Date().getFullYear();
@@ -1330,7 +1336,7 @@
     if (!life.alive || life.pending.length) return life.pending;
     var r = RF(life), a = life.age, q = [];
     life.prevActs = life.acts || 0; life.acts = 0; life.yr = { items: [] };
-    var cap = 3;
+    var cap = difficulty(life).cap;
     function add(id, arg) {
       if (q.length >= cap || !DEC[id] || q.some(function (d) { return d.id === id; })) return;
       if (DEC[id].valid && !DEC[id].valid(life, arg || {})) return; // tình huống hẹn trước không còn phù hợp
@@ -1408,8 +1414,14 @@
     if (life.job && !/^(kd_|xkld|phu_giup)/.test(life.job.id) && !E.isCrime(life) && a >= 25 && a <= 50 && (life.flags.bizAsked || 0) < 2 && life.money > life.base && r() < 0.04) add('biz');
     if (a >= 40 && a <= 70 && !life.flags.careDone && ((life.fam.mAlive && life.fam.mAge + a >= 72) || (life.fam.fAlive && life.fam.fAge + a >= 72)) && r() < 0.3) add('care');
 
+    // Hardcore có thêm một biến cố riêng; vẫn tuân thủ điều kiện, giới hạn và chuỗi bắt buộc.
+    if (E.hardcoreEvent && q.length < cap) {
+      var hc = E.hardcoreEvent(life, r, a), beforeHC = q.length;
+      if (hc) { add(hc); if (q.length > beforeHC) { (life.flags.hardcoreAt || (life.flags.hardcoreAt = {}))[hc] = a; if (life.difficulty === 'hardcore' && E.hardcoreTriggers) { (life.flags.scN || (life.flags.scN = {}))[hc] = ((life.flags.scN || {})[hc] || 0) + 1; (life.flags.cd || (life.flags.cd = {}))[hc] = a; } } }
+    }
     // tình huống ngẫu nhiên đời thường (theo điều kiện)
-    var tr = TRIG.slice();
+    var hardcorePool = life.difficulty === 'hardcore' && E.hardcoreTriggers;
+    var tr = hardcorePool ? E.hardcoreTriggers(life, a) : TRIG.slice();
     var cdm = life.flags.cd || (life.flags.cd = {}), scN = life.flags.scN || (life.flags.scN = {});
     for (var i = tr.length - 1; i > 0; i--) { var jj = Math.floor(r() * (i + 1)); var tmp = tr[i]; tr[i] = tr[jj]; tr[jj] = tmp; }
     for (var t = 0; t < tr.length && q.length < cap; t++) {
@@ -1423,19 +1435,19 @@
       if (!T.rep && seenN >= (T.max || 3)) continue;
       var pv = life.flags.prevSeen || {}; // v3.4: chuyện đã gặp ở các đời trước thì đời này ít gặp lại hơn
       var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
-      if (r() < pr && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
+      if (r() < Math.min(1, pr * difficulty(life).events) && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
 
     // nhịp tuổi thơ: từ 1 đến 14 tuổi, năm nào cũng nên có một lựa chọn hợp lứa tuổi
     if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.85)) {
-      var kidT = TRIG.filter(function (T) {
+      var kidT = (hardcorePool ? [] : TRIG).filter(function (T) {
         return T.child && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
       if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
     }
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)
-    if (opts && (opts.auto || (life.prevActs === 0 && a >= 8)) && q.length < cap && a >= 8 && r() < (opts.auto ? 0.3 : 0.45)) { // v2.7: không tự chọn việc gì thì game tự chọn ngẫu nhiên
+    if (!hardcorePool && opts && (opts.auto || (life.prevActs === 0 && a >= 8)) && q.length < cap && a >= 8 && r() < (opts.auto ? 0.3 : 0.45)) { // Hardcore dùng chuỗi lựa chọn riêng; hành động thủ công vẫn giữ nguyên.
       // v2.4: AI không lặp lại cùng một việc trong vòng 3 năm (trước đây năm nào cũng "xin tăng lương", "mua vé số"…)
       var aAt = life.flags.actAt || (life.flags.actAt = {});
       var aN = life.flags.actN || (life.flags.actN = {});
@@ -1599,6 +1611,7 @@
     var b = life.base, p = life.partner && life.partner.status !== 'dating' && life.partner.alive ? life.partner : null;
     var kidsHome = life.kids.filter(function (k) { return k.alive && a - k.born < 22 && k.custody !== 'other'; }).length; // v5.9.0: con sống với người kia thì trả tiền chu cấp thay vì chi phí nuôi con
     F.partner = p && !(life.jailUntil != null && a < life.jailUntil) && p.inc > 0 && isFinite(p.inc) ? p.inc * 12 * 0.55 : 0; // chỉ góp từ thu nhập thực, không tự tạo thu nhập khi thất nghiệp / đang học
+    F.partner *= difficulty(life).income;
     if (E.sponsorContributionAllowed && !E.sponsorContributionAllowed(life)) F.partner = 0;
     var styleK = E.lifestyleFactor ? E.lifestyleFactor(life) : ({ save: 0.82, normal: 1, lavish: 1.25 }[life.spend] || 1);
     var wealthK = E.wealthLivingK ? E.wealthLivingK(life, income) : 1; // v5.8.0: nhà giàu chi tiêu sinh hoạt nhiều hơn nhà bình thường, nhà nghèo
@@ -1698,6 +1711,7 @@
     if (focus === 'rest') F.life += b * 0.06;
     if (life.money < 0) { F.life = 0; var cut = Math.max(0, ess - Math.max(ess * 0.8, income + F.partner)); F.food -= Math.min(cut, F.food * 0.2); }
     F.interest = life.money < 0 ? life.money * 0.06 : life.money * 0.015;
+    if (F.interest > 0) F.interest *= difficulty(life).passive;
     var spend = F.food + F.rent + F.travel + F.kids + F.parents + F.health + F.debt + F.life;
     life.money += income + F.partner + F.interest - spend;
     F.spend = spend; F.save = income + F.partner + F.interest - spend;
@@ -1812,8 +1826,9 @@
     var income = 0;
     if (inJail) log('Một năm nữa trôi qua sau song sắt' + (life.jailUntil - a > 1 ? ' — còn ' + (life.jailUntil - a - 1) + ' năm.' : '.'), 'bad');
     else income = E.careerYear(life, r, log, focus);
+    if (income > 0) income *= difficulty(life).income;
     // v2.4: đã có lương hưu mà vẫn kinh doanh / làm thêm thì vẫn nhận lương hưu
-    if (!life.retired && life.job && life.pensioned && life.pensionInc) income += life.pensionInc;
+    if (!life.retired && life.job && life.pensioned && life.pensionInc) income += life.pensionInc * difficulty(life).pension;
     if (!life.alive) { clampSt(life); return out; } // mất giữa năm (tai nạn nghề nghiệp, thanh toán băng nhóm…)
     var kidIncome = 0;
     if (life.retired) {
@@ -1821,6 +1836,7 @@
       income = life.pensioned ? (life.pensionInc != null ? life.pensionInc : (life.lastIncome || life.base) * 0.55) : isVN(life) && life.cur === 'vnd' && !(life.abroad && life.abroad.perm) ? (a >= (life.fam.q <= 2 ? 70 : 75) ? 6 : 0) : life.base * 0.05;
       life.kids.forEach(function (k) { if (k.alive && a - k.born >= 25) kidIncome += E.kidSupport ? E.kidSupport(life, k) : life.base * 0.12; });
       income += kidIncome;
+      if (income > 0) income *= difficulty(life).pension;
     }
     if (!life.indep && a >= 18 && !life.school && !(life.job && life.job.id === 'phu_giup')) life.indep = true;
     if (life.job && life.job.id === 'phu_giup' && a >= 20) life.indep = true;
@@ -2053,7 +2069,7 @@
   function makeCohort(life) {
     var list = [];
     for (var i = 0; i < 4; i++) {
-      var o = createLife({ mode: life.mode === 'vn' ? 'vn' : 'world', variant: life.variant, gender: 'random', seed: (life.rs ^ (0x9E3779B9 * (i + 1))) | 0, year: life.birthYear });
+      var o = createLife({ mode: life.mode === 'vn' ? 'vn' : 'world', variant: life.variant, difficulty: life.difficulty, gender: 'random', seed: (life.rs ^ (0x9E3779B9 * (i + 1))) | 0, year: life.birthYear });
       var tl = [];
       runHeadless(o, function (x) { tl[x.age] = statusLine(x); });
       list.push({
@@ -2104,6 +2120,7 @@
   // Nâng cấp dữ liệu lưu từ bản cũ để người chơi đang chơi dở không bị mất tiến trình
   function migrate(l) {
     if (!l) return l;
+    l.difficulty = l.difficulty === 'hardcore' ? 'hardcore' : 'normal';
     if (l.prov) {
       var admin = VN.P34.find(function (p) { return p.name === l.prov.neu; });
       if (admin) { l.prov.kind = admin.kind; l.prov.neuId = admin.id; }
@@ -2127,6 +2144,7 @@
   }
 
   var E = G.E = {
+    DIFFICULTIES: DIFFICULTIES, difficulty: difficulty,
     isStableService: stableService, isStableParent: stableParent, HOOKS: HOOKS, assetTotal: assetTotal, KHOI: KHOI,
     createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
     runHeadless: runHeadless, makeCohort: makeCohort, netWorth: netWorth, obituary: obituary, statusLine: statusLine, fmtMoney: fmtMoney,
