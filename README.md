@@ -119,3 +119,7 @@ Số liệu được làm tròn từ Tổng cục Thống kê (Niên giám 2023,
 ### Fantasy 8.1.0 — Thế cuộc
 
 Thêm chuỗi chiến tranh gia tộc có biên giới, hậu cần, hiệp ước, đình chiến, dân di tản và tái thiết; biến cố theo tuổi/quyền hạn và trạng thái địa phương. Dữ liệu tổng hợp từ năm nguồn Aurelia bổ sung, không tính mỗi dòng nguồn là một truyện riêng. Xem [hướng dẫn và nguồn](docs/FANTASY-POLITICS.md).
+
+### Gia đình và tình cảm 8.3.0
+
+Áp dụng cho Việt Nam/Toàn thế giới, cả Thường và Hardcore. Trong Việc bạn muốn làm, mở Gia đình để giao lưu với từng con hoặc nói chuyện với bố/mẹ; mở Tình cảm để trò chuyện với người yêu/bạn đời. Xem [hướng dẫn và điều kiện](docs/FAMILY-830.md). Fantasy giữ nguyên.

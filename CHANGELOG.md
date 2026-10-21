@@ -1,3 +1,12 @@
+## v8.3.0 — Giao lưu với con, tính cách bố mẹ và tình cảm
+
+- Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore; không đổi Fantasy.
+- Thêm mục Gia đình: chọn từng người con để chăm sóc, trò chuyện, bàn ranh giới hoặc hỗ trợ một khoản có kiểm tra tiền. Mỗi người có lượt riêng trong năm; sống xa liên lạc từ xa, trẻ sơ sinh thông qua người chăm sóc.
+- Thêm trò chuyện riêng với bố/mẹ theo 16 tính cách hiện có và mục Tình cảm để tâm sự, xin lỗi, bàn riêng tư/kế hoạch/ngân sách. Lời đề nghị có thể chưa được chấp thuận.
+- 40 tình huống tự nhiên: 16 theo tính cách bố mẹ, 12 về từng giai đoạn tuổi của con, 12 về tình cảm. Giới hạn tần suất và kiểm tra người còn sống, tuổi, nơi ở, tình trạng quan hệ; không kết tội ngoại tình từ lời đồn, không quyết việc làm/hôn nhân thay con trưởng thành.
+- Tin cậy và căng thẳng theo từng mối quan hệ ảnh hưởng phản hồi; gắn bó cập nhật vào hồ sơ con/bạn đời hiện có. Bản lưu cũ được bổ sung trạng thái khi dùng, không đổi tên hay tuổi người thân.
+- Kiểm tra 4 biến thể đời thực, mọi lựa chọn mới, tiền, người đã mất/đổi bạn đời và đối chiếu nguyên vẹn 9 cuộc đời Fantasy với bản trước.
+
 ## v8.2.0 — Fantasy thử nghiệm: nhánh tu luyện, kỹ năng và nhịp chơi
 
 - Đồng bộ font với giao diện chính, ghi Fantasy gia tộc (thử nghiệm) trước khi vào; thêm thanh EXP rõ ràng ở khu trung tâm và bản tin chiến sự có lịch sử.
