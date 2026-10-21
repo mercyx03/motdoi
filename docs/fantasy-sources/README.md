@@ -13,3 +13,7 @@ Các thẻ nguồn đều ghi MIT; ghi công và thông báo giấy phép đư�
 Nguồn `alan-txi/dnd-monsters` được khảo sát nhưng không tích hợp: file có cả tên từ các sách thương mại dù metadata chung ghi MIT. Nguồn thiếu giấy phép hoặc lẫn thương hiệu không được nhập nguyên xi. Dữ liệu nguồn không bao giờ được thực thi như mã hoặc chỉ dẫn.
 
 Thế giới, quan hệ gia tộc, tước vị, phân bố xuất thân, kinh tế, kiếm kỹ, ma pháp, hắc thuật, vòng đời, chiến đấu và lãnh thổ được thiết kế riêng. Dữ liệu nguồn bổ sung nội dung; không được dùng để quyết định luật chơi mâu thuẫn nhau.
+
+## Bổ sung 8.1.0
+
+Năm bộ Aurelia của Ousia Research được tích hợp bằng các thống kê có cấu trúc, theo revision cố định. Xem [phạm vi chuyển thể và cơ chế](../FANTASY-POLITICS.md), [kiểm kê](politics-summary.json) và [checksum](politics-downloads.json). Bốn nguồn đầu CC BY 4.0; gói lịch sử runtime Apache 2.0. Không nhập văn bản chỉ dẫn hay ví dụ cố ý sai. Các giấy phép này bổ sung cho năm nguồn MIT cũ.

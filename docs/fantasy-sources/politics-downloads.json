@@ -1,0 +1,272 @@
+[
+  {
+    "id": "OusiaResearch/aurelia-causal-events",
+    "revision": "c57a96fd828c5e892387cd10216de744df00aa0a",
+    "license": "cc-by-4.0",
+    "files": [
+      {
+        "file": "data/phase11-100y/train.parquet",
+        "bytes": 6990549,
+        "sha256": "b3a50ea0409e38368396f06b70abe14307afb506af1ef7058a6658e05cfacb67"
+      },
+      {
+        "file": "data/phase11-200y/train.parquet",
+        "bytes": 10013237,
+        "sha256": "03c284ecb5bf37974c2abe8bcb0bf60be51b6e71eb37b47f5b12bf1b414634f0"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/train.parquet",
+        "bytes": 1918155,
+        "sha256": "e4be41d08f20ecd806cebb7ebfe003a523d8f261e9bf23bdb36774da2127ef00"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/train.parquet",
+        "bytes": 1918137,
+        "sha256": "51d28e6bc366fd60f299e9b700f7021cdd78dcc04696994ec03ebd4d49b3d45f"
+      },
+      {
+        "file": "data/phase11-density-100y/train.parquet",
+        "bytes": 6776675,
+        "sha256": "a22a2436e66cece3898a14db0fa84212e828dd42d6bacf093fe32b1458424dcc"
+      }
+    ]
+  },
+  {
+    "id": "OusiaResearch/aurelia-civilization-metrics",
+    "revision": "e59ef51a66a299dfb1063116e9e252e3edf37055",
+    "license": "cc-by-4.0",
+    "files": [
+      {
+        "file": "data/phase11-100y/train.parquet",
+        "bytes": 262139,
+        "sha256": "16100e6d23c311339335df0bca059d3230f5778d5281a5438bf4a88cde05f228"
+      },
+      {
+        "file": "data/phase11-200y/train.parquet",
+        "bytes": 485308,
+        "sha256": "359d3a227ba32bc59f0493855eef0d94a2576d9e0a87cb8400aa882284bca864"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/train.parquet",
+        "bytes": 33436,
+        "sha256": "6533da01853a16a2c7374f0b24f1a508824c16e33111d4c05d474add8961f18d"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/train.parquet",
+        "bytes": 33426,
+        "sha256": "aad20cae628316dcf9d87f9d25293be3c21ddeb746d45ceaef531e904fdc4fc9"
+      },
+      {
+        "file": "data/phase11-density-100y/train.parquet",
+        "bytes": 256092,
+        "sha256": "592545980874a57e22c01bd02568069982a967bd6bde20743457b9b775c5f322"
+      }
+    ]
+  },
+  {
+    "id": "OusiaResearch/aurelia-federation-causal",
+    "revision": "219adbfbfa758a5adf3b6c7c492396215c7ed8ac",
+    "license": "cc-by-4.0",
+    "files": [
+      {
+        "file": "data/phase11-100y/edges.parquet",
+        "bytes": 70876,
+        "sha256": "30eed80cc18231b99c81a927c7a622826af880bd12759fb937dcf426b4a03916"
+      },
+      {
+        "file": "data/phase11-100y/events.parquet",
+        "bytes": 1217131,
+        "sha256": "1e65b23bfad61dbf496d80eae2d5de406a8cd29ef8e379ad2dcfa0d1b8f5884d"
+      },
+      {
+        "file": "data/phase11-200y/edges.parquet",
+        "bytes": 87789,
+        "sha256": "650b94ad3d3d2e3c28417259b636a65fbbe32f8968372b647d896146339d9042"
+      },
+      {
+        "file": "data/phase11-200y/events.parquet",
+        "bytes": 1640859,
+        "sha256": "ce7fa3e575d78a783778b157d22c368de5609ea9e8e872287f440f1af613aba8"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/edges.parquet",
+        "bytes": 16367,
+        "sha256": "20231714853e89666568366a599140ef36dd945be9844004cc228d9f71fcb66c"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/events.parquet",
+        "bytes": 267896,
+        "sha256": "9335fa02823183ec9da09bd425b0b27e56329885d6553fa394c73ad1f747a2ff"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/edges.parquet",
+        "bytes": 16357,
+        "sha256": "29cf7fc3ee61a94470b3195d1ce799ec51acf55527c6830eaf6c75f938b07b79"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/events.parquet",
+        "bytes": 267886,
+        "sha256": "96717bdad0581603c06dffbf2815a9d941c8979b97e76d239463cf431875fd81"
+      },
+      {
+        "file": "data/phase11-density-100y/edges.parquet",
+        "bytes": 81737,
+        "sha256": "40beb60ce3be026e163fdf1a2b9a6ac178c054941ae8f99bf3805f1b807c3915"
+      },
+      {
+        "file": "data/phase11-density-100y/events.parquet",
+        "bytes": 1158626,
+        "sha256": "3d43f4d7746454e2548edcf6251b17f54721f2c38afb13dfcf5a527e2fcfee8c"
+      }
+    ]
+  },
+  {
+    "id": "OusiaResearch/aurelia-npc-population",
+    "revision": "5d40ba28becca97fd9e536a459e709835f0dfe3a",
+    "license": "cc-by-4.0",
+    "files": [
+      {
+        "file": "data/phase11-100y/arkos/train.parquet",
+        "bytes": 122964,
+        "sha256": "d293bd813dbc51807490c1d464bbdd3719d3010e8d3d6b6fdf5988890f857c04"
+      },
+      {
+        "file": "data/phase11-100y/mirithane/train.parquet",
+        "bytes": 99806,
+        "sha256": "9d6efbfa092a3ecc7b4c22f6860274ec31e429aff24f9c029709a3b914149924"
+      },
+      {
+        "file": "data/phase11-100y/solara/train.parquet",
+        "bytes": 54402,
+        "sha256": "7e6db2bb783298abbdfc091489071b4a8fc0e99bcbec1c76131034f5d5f80689"
+      },
+      {
+        "file": "data/phase11-100y/valdris/train.parquet",
+        "bytes": 126611,
+        "sha256": "c18a29eb92c480d65aa047f842a481072a60eee145b5462ab508e0609ec403be"
+      },
+      {
+        "file": "data/phase11-100y/verge/train.parquet",
+        "bytes": 101743,
+        "sha256": "fb18a527278f8947c1f561cbf75b18ae4112512704c9aa4126047dd8e43be935"
+      },
+      {
+        "file": "data/phase11-200y/arkos/train.parquet",
+        "bytes": 143799,
+        "sha256": "86045c3e8f807eef41e39c676bf386a47bb67e1208c44e773e75507c73b56fe5"
+      },
+      {
+        "file": "data/phase11-200y/mirithane/train.parquet",
+        "bytes": 115038,
+        "sha256": "ce3785db99721a427fe3a7918fcfd20a2e8f24a189d2d23a7771b37a415f590b"
+      },
+      {
+        "file": "data/phase11-200y/solara/train.parquet",
+        "bytes": 63603,
+        "sha256": "50a5f80629e57c5fd5b6c2114b151ff5d33499a81daee4825b7ebf9673136c90"
+      },
+      {
+        "file": "data/phase11-200y/valdris/train.parquet",
+        "bytes": 148979,
+        "sha256": "a3d8fcc533f8e9f98577d6c4b997297cb3994fd4703976b2f4aaf4879f7c64b6"
+      },
+      {
+        "file": "data/phase11-200y/verge/train.parquet",
+        "bytes": 122546,
+        "sha256": "ae4981611cd687315ca0fd9c5ea300fd5e3fdf4f2a574058e74847a935d26a9a"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/arkos/train.parquet",
+        "bytes": 38355,
+        "sha256": "2a96e8df9e08a719e28ffd4a71a49b2fc0432c6b54aefb84febef6fc10811c4a"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/mirithane/train.parquet",
+        "bytes": 30873,
+        "sha256": "acf4a5b96ba141386acd13d89889f4ad647bed47918533a8859e2fffb83a5566"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/solara/train.parquet",
+        "bytes": 21505,
+        "sha256": "8d2a05849e6af30abb2b52eae09886dbee775041529b5ccf089877699a4a5ad9"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/valdris/train.parquet",
+        "bytes": 38919,
+        "sha256": "0d0ebd79c2c90dc62a41954b5b2115bac15d309be9d100589320827332939c78"
+      },
+      {
+        "file": "data/phase11-bolster-scan-y5/verge/train.parquet",
+        "bytes": 31113,
+        "sha256": "9a1b290511bdf5dd56df0ffe60a53eff27559262a1437f370d126df78d105c7d"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/arkos/train.parquet",
+        "bytes": 38345,
+        "sha256": "8f2286f240e5e2728fee3502cb67fc81624c815faa68e6abb83ad7c6f6306cbb"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/mirithane/train.parquet",
+        "bytes": 30863,
+        "sha256": "3bdaf09975f5849a25d43a02ef735c1008c238ea4895f0852f3641ddcf9270e5"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/solara/train.parquet",
+        "bytes": 21495,
+        "sha256": "a68064c01e8277f45f9fe8cd4e05997917cde8bb74834e05c36032ff786badf2"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/valdris/train.parquet",
+        "bytes": 38909,
+        "sha256": "ec7da699696abcde55a0c2d896030ff22ecaf0cdaeb0e51c1e6a5347014e79f0"
+      },
+      {
+        "file": "data/phase11-cf-solara-aid/verge/train.parquet",
+        "bytes": 31103,
+        "sha256": "40481d632350de097c74a9557ac3a1756c13bc623b011243771750d0cc7cdf6e"
+      },
+      {
+        "file": "data/phase11-density-100y/arkos/train.parquet",
+        "bytes": 112846,
+        "sha256": "e885ada3f93682634e77422a0c4953832e5b3c17dfc538be90bbbbd231289ee5"
+      },
+      {
+        "file": "data/phase11-density-100y/mirithane/train.parquet",
+        "bytes": 93359,
+        "sha256": "4c05db0d8bbd47070212e082213b18bdcb55db45a59643d221bbd2e427b9d33a"
+      },
+      {
+        "file": "data/phase11-density-100y/solara/train.parquet",
+        "bytes": 67914,
+        "sha256": "d624821932bfed84b3ccc9554d4c9d8943531fe02868d731b450e535cfb4ae54"
+      },
+      {
+        "file": "data/phase11-density-100y/valdris/train.parquet",
+        "bytes": 128611,
+        "sha256": "dc818659b2f44c051a5b1e566170e2b450e378674a5b7361e6cf9ceb470804f0"
+      },
+      {
+        "file": "data/phase11-density-100y/verge/train.parquet",
+        "bytes": 88697,
+        "sha256": "9762c0eb4e086dde1a652e4349ff303a43673fb7ec00b693d25a4a5805551efc"
+      }
+    ]
+  },
+  {
+    "id": "OusiaResearch/aurelia-runtime-corpus-v2",
+    "revision": "be7e3d92eea100bbe55097a8f6d252b98879809e",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "file": "metadata/coverage_report.json",
+        "bytes": 181811,
+        "sha256": "2df90f46317dd28ae2b82e0dd1c91f6727b889021d1f094df5e7214ea0213efc"
+      },
+      {
+        "file": "source/lore_history_packs.jsonl",
+        "bytes": 10835446,
+        "sha256": "4ee6ef52128bbbb4e987edf309eba00531220d9d1371c9cd2bb329e516ab75c1"
+      }
+    ]
+  }
+]

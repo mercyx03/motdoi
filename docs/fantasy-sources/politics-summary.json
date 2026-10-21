@@ -1,0 +1,44 @@
+{
+  "profiles": 1227,
+  "climates": 35,
+  "links": 43,
+  "demography": 75,
+  "history": 77,
+  "sources": [
+    {
+      "id": "OusiaResearch/aurelia-causal-events",
+      "revision": "c57a96fd828c5e892387cd10216de744df00aa0a",
+      "license": "cc-by-4.0",
+      "rows": 560428,
+      "url": "https://huggingface.co/datasets/OusiaResearch/aurelia-causal-events"
+    },
+    {
+      "id": "OusiaResearch/aurelia-civilization-metrics",
+      "revision": "e59ef51a66a299dfb1063116e9e252e3edf37055",
+      "license": "cc-by-4.0",
+      "rows": 12600,
+      "url": "https://huggingface.co/datasets/OusiaResearch/aurelia-civilization-metrics"
+    },
+    {
+      "id": "OusiaResearch/aurelia-federation-causal",
+      "revision": "219adbfbfa758a5adf3b6c7c492396215c7ed8ac",
+      "license": "cc-by-4.0",
+      "rows": 114133,
+      "url": "https://huggingface.co/datasets/OusiaResearch/aurelia-federation-causal"
+    },
+    {
+      "id": "OusiaResearch/aurelia-npc-population",
+      "revision": "5d40ba28becca97fd9e536a459e709835f0dfe3a",
+      "license": "cc-by-4.0",
+      "rows": 25799,
+      "url": "https://huggingface.co/datasets/OusiaResearch/aurelia-npc-population"
+    },
+    {
+      "id": "OusiaResearch/aurelia-runtime-corpus-v2",
+      "revision": "be7e3d92eea100bbe55097a8f6d252b98879809e",
+      "license": "apache-2.0",
+      "rows": 2500,
+      "url": "https://huggingface.co/datasets/OusiaResearch/aurelia-runtime-corpus-v2"
+    }
+  ]
+}

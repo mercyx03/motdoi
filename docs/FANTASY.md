@@ -51,3 +51,7 @@ Bạn đời và con được ghi nhận theo lúc sinh. Bạn đời mới khô
 Xem [nguồn và cách chuyển thể](fantasy-sources/README.md) cùng `manifest.json` để biết số bản ghi, giấy phép và checksum. Dữ liệu có hàng nghìn sinh vật / tương tác / mô-típ, nhưng không đánh đồng mô-típ trích chủ đề với một truyện dài viết tay.
 
 Chạy `npm run test:fantasy` cho kiểm thử vòng đời, hệ thống RPG, truyền đời, lưu giữa trận và bộ điều khiển giao diện. `node tests/hardcore-isolation.js` đối chiếu 12 cuộc đời Thường với bản gốc. Giao diện có kiểm thử mã và luồng thao tác; không tuyên bố đã kiểm tra hình ảnh trực tiếp khi trình duyệt công cụ không mở được tệp nội bộ.
+
+## Thế cuộc 8.1.0
+
+Mục Thế cuộc quản lý quan hệ gia tộc, trạng thái vùng, mặt trận, quân lực, tiếp tế, cứu trợ và hiệp ước. Chiến dịch chiếm đất nay cần mặt trận hợp lệ và hậu cần. Xem [hướng dẫn chi tiết](FANTASY-POLITICS.md).

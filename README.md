@@ -115,3 +115,7 @@ T('ten_tinh_huong', function (l, a) { return a >= 18; }, 0.05, 3); // điều ki
 
 ## Về số liệu
 Số liệu được làm tròn từ Tổng cục Thống kê (Niên giám 2023, Tổng điều tra 2019), Nghị quyết 202/2025/QH15, UN World Population Prospects 2024, World Bank; tỷ giá xấp xỉ 2025. Lương các nghề, tỷ lệ đô thị và thu nhập từng tỉnh là ước tính. Đây là trò chơi để suy ngẫm, không phải công cụ thống kê.
+
+### Fantasy 8.1.0 — Thế cuộc
+
+Thêm chuỗi chiến tranh gia tộc có biên giới, hậu cần, hiệp ước, đình chiến, dân di tản và tái thiết; biến cố theo tuổi/quyền hạn và trạng thái địa phương. Dữ liệu tổng hợp từ năm nguồn Aurelia bổ sung, không tính mỗi dòng nguồn là một truyện riêng. Xem [hướng dẫn và nguồn](docs/FANTASY-POLITICS.md).

@@ -41,3 +41,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Additional sources in v8.1.0 — Aurelia Simulation Dataset, Ousia Research, 2026.
+https://github.com/ousiaresearch/aurelia
+
+The following four sources are CC BY 4.0, https://creativecommons.org/licenses/by/4.0/ :
+https://huggingface.co/datasets/OusiaResearch/aurelia-causal-events
+https://huggingface.co/datasets/OusiaResearch/aurelia-civilization-metrics
+https://huggingface.co/datasets/OusiaResearch/aurelia-federation-causal
+https://huggingface.co/datasets/OusiaResearch/aurelia-npc-population
+Changes: aggregated event frequencies, magnitudes, climate indicators, causal-link counts and demographic states; mapped to an original Vietnamese Fantasy setting. Source stories/names were not copied. These are synthetic simulations, not real historical facts.
+
+https://huggingface.co/datasets/OusiaResearch/aurelia-runtime-corpus-v2
+Copyright Ousia Research, 2026. Licensed under Apache License 2.0. See fantasy-Apache-2.0.txt and https://www.apache.org/licenses/LICENSE-2.0
+Changes: recent-event counts aggregated from 2,500 lore/history packs. No original instructions or path strings are shipped in runtime data.
+
+Pinned revisions, file SHA-256 values and row counts are in docs/fantasy-sources/politics-downloads.json and politics-summary.json in the source repository. New Vietnamese political scenes and game rules are authored adaptations. The number of source rows is not the number of unique playable stories.

@@ -1,3 +1,11 @@
+## v8.1.0 — Thế cuộc Fantasy và chiến tranh gia tộc
+
+- Thêm năm nguồn Aurelia trên Hugging Face, xử lý 715.460 bản ghi thuộc các phân vùng đã chọn; giữ revision, checksum và ghi công. Dữ liệu được tổng hợp thành thuộc tính/tần suất, không đếm số dòng thành truyện chơi được.
+- Thêm trạng thái vùng, quan hệ từng cặp gia tộc, tộc trưởng/kế nhiệm, chiến tranh nhiều năm, hậu cần, hộ vệ, nhiệm vụ mặt trận, đình chiến, hiệp ước, cứu trợ và giá chợ theo hoàn cảnh.
+- Bổ sung các cảnh chính trị viết tiếng Việt theo tuổi, địa vị và điều kiện hiện tại; hồ sơ đối chất, thiếu tài nguyên, di tản, trạm dược, tranh quyền và giao lưu. Trẻ em chỉ chọn việc của bản thân.
+- Chặn chiếm đất lúc hòa bình, chiến tranh từ xa, phá đình chiến, trùng mặt trận, lặp thưởng cứu trợ, thiếu tài nguyên, cảnh sai địa điểm và gửi dân về vùng còn đánh nhau. Lưu 8.0.0 được nâng cấp trong chế độ Fantasy.
+- Chi tiết: docs/FANTASY-POLITICS.md. Chế độ đời thực và bản lưu của chúng được giữ riêng.
+
 ## v8.0.0 — Góc nhìn nhân vật và thế giới Fantasy gia tộc
 
 - Hardcore: giai đoạn 0–2 tuổi chỉ có quan sát và tác động chăm sóc tự động, không đưa quyết định của bố mẹ cho người chơi. Từ 3 tuổi, lựa chọn là hành động của trẻ: nói điều mình cần, nhờ giúp, tự thử, học, nghỉ hoặc im lặng. Người lớn có thể từ chối tùy áp lực và phản ứng của họ; lựa chọn của trẻ không tự rút quỹ gia đình hay ra lệnh người lớn phải thay đổi. Cập nhật cả sự kiện đang mở trong bản lưu cũ.
