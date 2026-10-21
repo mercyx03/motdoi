@@ -12,7 +12,7 @@ for (const meta of E.HARDCORE_CATALOG) {
     if (meta.need === 'job') E.startJob(l, 'ke_toan', rnd(2), () => {}, true);
     if (broke) E.hardcoreState(l).supportAt = l.age;
     ok(E.DEC[meta.id].valid(l, {}), meta.id + ' fixture valid');
-    const d = E.DEC[meta.id].make(l, rnd(3)); ok(d.opts.length >= 1, meta.id + ' always has an affordable option');
+    const d = E.DEC[meta.id].make(l, rnd(3)); ok(meta.max < 3 ? d.opts.length === 0 : d.opts.length >= 1, meta.id + ' infancy observes; later childhood always has an affordable option');
     ok(!/undefined|NaN|\[object/.test(JSON.stringify(d)), meta.id + ' readable decision');
     for (const option of d.opts) {
       const x = copy(l); x.pending = [copy(d)]; const before = x.money;
@@ -29,7 +29,7 @@ for (let i = 0; i < 16; i++) {
   const l = fresh(79100 + i);
   while (l.alive && l.age < 6) {
     E.beginYear(l, { auto: true });
-    ok(l.pending.length >= 2, 'multiple bespoke decisions from infancy, seed ' + i + ' age ' + l.age);
+    ok(l.age < 3 ? l.pending.length === 0 : l.pending.length >= 2, 'infants observe; toddlers choose their own actions, seed ' + i + ' age ' + l.age);
     ok(l.pending.every(d => /^hc_/.test(d.id)), 'no ordinary opening celebrations or toddler story pool'); early += l.pending.length;
     let guard = 0; while (l.alive && l.pending.length && guard++ < 30) E.resolve(l, E.autoKey(l));
     if (l.alive) E.finishYear(l); guard = 0; while (l.alive && l.pending.length && guard++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l);

@@ -1,3 +1,15 @@
+## v8.0.0 — Góc nhìn nhân vật và thế giới Fantasy gia tộc
+
+- Hardcore: giai đoạn 0–2 tuổi chỉ có quan sát và tác động chăm sóc tự động, không đưa quyết định của bố mẹ cho người chơi. Từ 3 tuổi, lựa chọn là hành động của trẻ: nói điều mình cần, nhờ giúp, tự thử, học, nghỉ hoặc im lặng. Người lớn có thể từ chối tùy áp lực và phản ứng của họ; lựa chọn của trẻ không tự rút quỹ gia đình hay ra lệnh người lớn phải thay đổi. Cập nhật cả sự kiện đang mở trong bản lưu cũ.
+- Thêm **Fantasy gia tộc** ở cạnh Việt Nam / Toàn thế giới. Dùng engine, trạng thái và khóa lưu riêng; có hồ sơ, xuất thân, cha mẹ, hôn nhân, con, tử vong và truyền đời từ sơ sinh. Không nạp nghề nghiệp, tiền tệ hoặc biến cố đời thực vào cuộc đời Fantasy.
+- Sáu xuất thân, 12 gia tộc, 20 vùng đất, tước từ thường dân tới công tước và tám cảnh giới sức mạnh. Tước gia đình, tước cá nhân, chức trong hội nghề và sức chiến đấu được theo dõi riêng. Có xác nhận kế vị khi trưởng thành, không cho trẻ cai trị chỉ vì sinh vào nhà quý tộc.
+- Kiếm kỹ, ma pháp, hắc ma pháp, rèn khí và dược thuật; 19 kỹ năng có điều kiện trước/sau; luyện tập giới hạn theo năm, học cùng thầy, học bổng và xin hỗ trợ gia tộc do NPC xét. Hắc thuật tăng tà nhiễm, có thanh tẩy và hậu quả nếu lạm dụng.
+- Bản đồ di chuyển có chi phí, giới hạn tuổi / cảnh giới, giao tranh theo lượt, tiêu hao ma lực, khắc hệ, thủ thế, trói, phá giáp, hồi phục, rút lui và tử trận. Quái cho kinh nghiệm, tiền, vật liệu và đôi khi trang bị; không có thưởng khi rút chạy. Có giới hạn để không trói đối thủ vô hạn hay nhận thưởng lặp.
+- Thu thập, giao thương có chênh lệch mua/bán, chế tác, trang bị rơi, khắc phù, nhiệm vụ có tiến độ và nộp tài nguyên thật. Năm hội nghề có điều kiện gia nhập, thâm niên, chức bậc và phụ cấp. Có tranh chấp tài nguyên, chiến dịch chiếm lãnh địa, tái thiết, ngoại giao và biến động biên giới làm đổi chủ lãnh thổ.
+- Nhập đủ 3.280 bản ghi linh thú Anh–Nga, 3.750 tương tác NPC, 202 mô tả địa hình, 5 nhiệm vụ tiếng Bồ Đào Nha và 2.996 mô-típ giữ lại từ 3.072 hội thoại tổng hợp. Năm nguồn Hugging Face có thẻ MIT; chuyển thể thuộc tính và chủ đề sang tiếng Việt, không tuyên bố đã dịch nguyên văn mọi đoạn. Bản nguồn, checksum, công cụ tái tạo và ghi công được lưu; dữ liệu không được thực thi thành mã.
+- Giữ đúng cha/mẹ lúc con sinh ra khi người chơi có bạn đời mới; di sản chỉ được nhận sau lúc cha/mẹ qua đời và khi con đủ tuổi. Đời con không kế thừa cấp chiến đấu. Có xuất bản lưu JSON và bách khoa linh thú có tìm kiếm / phân trang.
+- Thêm kiểm thử hàng trăm vòng đời Fantasy, mọi nhánh truyện, cây kỹ năng, chiến đấu, vật phẩm, tài nguyên, truyền đời, lưu giữa trận, tách chế độ và luồng giao diện. Giữ đối chiếu 12 cuộc đời Thường với bản gốc trước các cập nhật Hardcore.
+
 ## v7.7.1 — Hardcore theo gia cảnh, luyện tài năng thể thao và training esports
 
 - Tình huống Hardcore đọc điều kiện thực tế: trẻ dựa vào gia cảnh và thu nhập của người còn sống; người đã tự lập dựa vào tiền và tài sản của chính mình. Những tình huống thiếu thốn có nhánh thay thế khi nhu cầu vật chất đã được đáp ứng: kỳ vọng thành tích, kiểm soát, ít thời gian bên con, khó tự quyết và áp lực hình ảnh.

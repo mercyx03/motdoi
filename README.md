@@ -9,6 +9,10 @@ Trang web hoàn toàn tĩnh (HTML/CSS/JS thuần, không cần máy chủ, khôn
 
 **Cập nhật v7.7.1:** biến cố Hardcore phân theo gia cảnh và nguồn lực thực tế; gia đình có điều kiện gặp áp lực quan hệ và kỳ vọng thay vì thiếu tiền mua đồ thiết yếu. Bỏ lời giải thích cơ chế lặp lại trong tình huống. Ở bảng hành động, tài năng thể thao có **Luyện tập / nâng kỹ năng** từ 6 tuổi; tuyển thủ esports đang thi đấu có **Training phản xạ / chiến thuật / phong độ**, mỗi năm một đợt. Chạy `node tests/update770.js` để kiểm tra các nhánh mới.
 
+**Fantasy gia tộc (v8.0.0):** chế độ thứ ba, tách bản lưu và engine khỏi Việt Nam / Toàn thế giới. Có vòng đời từ sơ sinh, 12 gia tộc, 20 vùng, tước quý tộc, kiếm kỹ / ma pháp / hắc thuật, bản đồ săn linh thú, chiến đấu theo lượt, vật phẩm, chế tác, hội nghề và chiến tranh lãnh địa. Kho dữ liệu chuyển thể từ 5 nguồn Hugging Face gồm 3.280 linh thú, 3.750 tương tác NPC, 202 mô tả địa hình, 5 tuyến nhiệm vụ và 2.996 mô-típ hội thoại. Xem [hướng dẫn Fantasy](docs/FANTASY.md) và [nguồn / cách Việt hóa](docs/fantasy-sources/README.md).
+
+**Hardcore v8.0.0:** sơ sinh không chọn thay bố mẹ. Từ lúc đủ tuổi, các lựa chọn là hành động của chính trẻ; xin giúp đỡ không buộc người lớn phải đồng ý. Không rút quỹ gia đình theo lựa chọn của trẻ.
+
 ## Cấu trúc thư mục
 
 ```

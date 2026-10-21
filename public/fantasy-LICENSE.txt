@@ -1,0 +1,43 @@
+FANTASY DATA ATTRIBUTION
+
+The Fantasy mode includes semantic Vietnamese adaptations of the following
+datasets, whose dataset cards declare the MIT license:
+
+1. limloop / Fantasy Creature Bestiary
+   https://huggingface.co/datasets/limloop/fantasy_creature_bestiary
+2. ItsHotdogFred / GregAI NPC Training Data v1
+   https://huggingface.co/datasets/ItsHotdogFred/npc-training-data-v1
+3. Angry-Wizard / RPG Grid Maps (map_info.csv metadata only; no map images)
+   https://huggingface.co/datasets/Angry-Wizard/rpg_grid_maps
+4. Marcylene / RPG AI (five Portuguese quest descriptions)
+   https://huggingface.co/datasets/Marcylene/rpg_ai
+5. practical-dreamer / RPGPT PublicDomain (v2 alpaca)
+   https://huggingface.co/datasets/practical-dreamer/RPGPT_PublicDomain-alpaca
+
+Copyright remains with the respective dataset creators and contributors.
+Dataset cards and checksums are retained in docs/fantasy-sources in the source
+repository. Vietnamese names and descriptions are semantic adaptations of
+structured attributes. Long dialogues are reduced to thematic motifs and
+re-authored in this game's own setting; they are not represented as verbatim
+translations. Unrelated mature-content motifs are filtered. The realm, houses,
+skills, combat, economy and life simulation are original game design.
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

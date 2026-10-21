@@ -1,0 +1,53 @@
+{
+  "sources": [
+    {
+      "id": "limloop/fantasy_creature_bestiary",
+      "url": "https://huggingface.co/datasets/limloop/fantasy_creature_bestiary",
+      "license": "MIT",
+      "rows": 3280,
+      "sha256": "15f740cd22b6fc6bb0515f77aeb65494f95b1c60edd489d246dea79411752339"
+    },
+    {
+      "id": "ItsHotdogFred/npc-training-data-v1",
+      "file": "train (full partition)",
+      "url": "https://huggingface.co/datasets/ItsHotdogFred/npc-training-data-v1",
+      "license": "MIT",
+      "rows": 3750,
+      "sha256": "2407f6f1c727aab8f9938b04c7bdf58794774cc31d68606d2274c26b9b878359"
+    },
+    {
+      "id": "Angry-Wizard/rpg_grid_maps",
+      "url": "https://huggingface.co/datasets/Angry-Wizard/rpg_grid_maps",
+      "file": "map_info.csv",
+      "license": "MIT",
+      "rows": 202,
+      "adapted": 202,
+      "sha256": "757b98aa2a0dd8c012648daedcf227e52bf0719150df58e1d51178e2e8cb18a0"
+    },
+    {
+      "id": "Marcylene/rpg_ai",
+      "url": "https://huggingface.co/datasets/Marcylene/rpg_ai",
+      "file": "output.json",
+      "license": "MIT",
+      "rows": 5,
+      "adapted": 5,
+      "sha256": "c2ed71c72b269d0a5f3c023ce3c58a858617fedfb188891e09b8fbe263b3abda"
+    },
+    {
+      "id": "practical-dreamer/RPGPT_PublicDomain-alpaca",
+      "url": "https://huggingface.co/datasets/practical-dreamer/RPGPT_PublicDomain-alpaca",
+      "file": "RPGPT_PublicDomain_v2_alpaca.json",
+      "license": "MIT",
+      "rows": 3072,
+      "adapted": 2996,
+      "sha256": "ef08ba0eec8b7db09f52b0cd7e7b141efc0dcc0eac906f8f01e94eb4fba4d94f"
+    }
+  ],
+  "adaptation": "Tên và mô tả tiếng Việt được biên soạn từ thuộc tính có cấu trúc. Hội thoại dài được chuyển thành mô-típ chủ đề; bản đồ dùng metadata địa hình, không sao chép ảnh. Không tuyên bố là bản dịch nguyên văn toàn bộ văn xuôi. Thế giới, gia tộc và cơ chế được thiết kế riêng.",
+  "excluded": [
+    {
+      "id": "alan-txi/dnd-monsters",
+      "reason": "Metadata ghi MIT nhưng file có quái từ nhiều sách thương mại, không đủ cơ sở để đưa toàn bộ vào game."
+    }
+  ]
+}

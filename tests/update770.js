@@ -28,7 +28,8 @@ for (const age of [0,3,8,13,16]) {
     const id = age < 3 ? 'hc_story_bua_an' : age < 6 ? 'hc_story_do_choi_cu' : age < 11 ? 'hc_story_sach_cu' : age < 15 ? 'hc_story_tai_lieu' : 'hc_story_hoc_phi';
     const d = E.DEC[id].make(l, () => .5);
     ok(!/không dễ mua|phương án rẻ nhất|vay|thiếu tài liệu|sách.*trang thiếu|quỹ dự phòng cạn/.test(d.text + d.opts.map(o => o.l).join(' ')), 'rich childhood never gets material-scarcity version');
-    l.pending = [d]; E.resolve(l, 'c1');
+    if (age < 3) { ok(d.opts.length === 0, 'infant cannot pick a caregiver response'); h.pressure = 75; E.hardcoreYear(l, () => 0, () => {}, age); }
+    else { l.pending = [d]; E.resolve(l, 'c1'); }
   }
   ok(h.resources === 100 && h.gap === 0, 'abstract reserves cannot bankrupt rich family');
   ok(h.trauma > 18, 'wealth does not remove the consequences of emotional neglect');

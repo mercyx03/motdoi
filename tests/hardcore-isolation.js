@@ -4,16 +4,17 @@ const fs = require('fs'), path = require('path'), vm = require('vm'), crypto = r
 const root = path.join(__dirname, '..', 'public'), fixture = path.join(__dirname, 'fixtures', 'normal-before-hardcore-redesign.json');
 const tick = Date.UTC(2026, 9, 21);
 class Clock extends Date { constructor(...a) { super(...(a.length ? a : [tick])); } static now() { return tick; } }
-function game() {
+function gameContext() {
   let seed = 78123;
   const math = Object.create(Math); math.random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
   const c = { console, Math: math, Date: Clock, JSON, Buffer, TextEncoder, TextDecoder }; c.globalThis = c; vm.createContext(c);
   for (const m of fs.readFileSync(path.join(root, 'index.html'), 'utf8').matchAll(/<script src="(js\/[^"?]+)/g)) {
     if (!/\/(app|music|card|scene2d|scene|account)\.js$/.test(m[1])) vm.runInContext(fs.readFileSync(path.join(root, m[1]), 'utf8'), c, { filename: m[1] });
   }
-  return c.G.E;
+  return c.G;
 }
-module.exports = { game };
+function game() { return gameContext().E; }
+module.exports = { game, gameContext };
 if (require.main === module) {
 const cases = [
   ...Array.from({ length: 6 }, (_, i) => ({ mode: 'vn', variant: i % 2 ? '63' : '34', seed: 78100 + i, year: 2026 })),

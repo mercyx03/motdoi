@@ -61,14 +61,10 @@
   var phases = { baby: [0, 2], preschool: [3, 5], primary: [6, 10], teen: [11, 14], youth: [15, 17], young: [18, 29], adult: [30, 49], middle: [50, 64], elder: [65, 115] };
   function bound(h) { h.emotion = U.clamp(h.emotion, 0, 100); h.trauma = U.clamp(h.trauma, 0, 100); h.resources = U.clamp(h.resources, 0, 100); h.gap = U.clamp(h.gap, 0, 100); }
   function amount(l, r) { return l.base * (0.045 + r() * 0.10) * (l.age >= 65 ? 0.75 : 1); }
-  function apply(l, p, d, label, log) {
+  function apply(l, p, d, label, log, r) {
     var h = state(l), family = l.age < 18 || !l.indep, fee = family ? 0 : d.amount * (p.fee || 0);
     if (p === policies.support && l.money < fee) fee = 0;
-    if (family && context(l) !== 'wealthy') {
-      var next = h.resources + (p.reserve || 0);
-      if (next < 0) { h.gap += -next; h.trauma += Math.min(2, -next * 0.2); h.emotion -= Math.min(2, -next * 0.3); }
-      h.resources = next;
-    } else if (!family && fee > 0) H.cash(l, -fee, label);
+    if (!family && fee > 0) H.cash(l, -fee, label);
     h.emotion += p.emotion || 0; h.trauma += p.trauma || 0; h.training += p.training || 0; h.support = Math.min(6, h.support + (p.support || 0));
     if (p === policies.support) h.supportAt = l.age;
     H.fx(l, { hea: p.hea || 0, hap: p.hap || 0, kno: p.kno || 0, soc: p.soc || 0 });
@@ -76,14 +72,35 @@
     if (p.quit && l.job && !E.isStableService(l)) { l.lastJob = l.job; l.job = null; l.flags.needJob = true; }
     h.resolved++; l.flags.hardcoreShocks = (l.flags.hardcoreShocks || 0) + 1; bound(h);
     log(label + (fee > 0 ? ': ' + H.money(l, fee) + '.' : '.'), p.emotion > 1 ? 'neutral' : 'bad');
+    if (l.age >= 3 && l.age < 18 && r && /^(Xin|Nhờ người lớn|Nhờ người thân)/.test(label)) {
+      if (r() < h.pressure / 120) { h.emotion = Math.max(0,h.emotion-Math.max(0,p.emotion||0)*0.7); h.trauma = Math.min(100,h.trauma+1); log(U.cap(care(l)) + ' chưa chịu nghe hết. Bạn buồn, dù đã cố nói điều mình cần.', 'bad'); }
+      else log(U.cap(care(l)) + ' dừng lại để nghe bạn nói. Lần này, lời đề nghị được tiếp nhận.', 'good');
+    }
   }
   var alternatives = {};
   function alternative(key, title, text, opts) { alternatives[key] = { title: title, text: text, opts: opts }; }
-  function version(l, key, title, text, opts) { return context(l) !== 'struggling' && alternatives[key] || { title: title, text: text, opts: opts }; }
+  var childChoices = {
+    nha_tre: [['Nói với cô rằng con đang sợ','support'],['Im lặng dù vẫn chưa quen lớp','endure'],['Thử làm quen với một bạn trước','plan']],
+    so_sanh: [['Nói con muốn được thử từ từ','protect'],['Im lặng vì sợ bị chê thêm','endure'],['Kể với một người lớn mình tin','support']],
+    so_hai: [['Nói rõ điều đang làm mình sợ','protect'],['Cố nín dù vẫn rất sợ','endure'],['Xin nắm tay người quen một lúc','support']],
+    chuyen_tro: [['Xin mang theo món đồ mình quen','plan'],['Giữ nỗi buồn, không nói gì','endure'],['Nói mình nhớ chỗ ở cũ','support']],
+    do_choi_cu: [['Nhờ người lớn cùng sửa món đồ','support'],['Giấu nỗi buồn và cất món đồ đi','endure'],['Thử làm món đồ chơi từ giấy','plan']],
+    la_mang: [['Nói mình lỡ tay rồi phụ nhặt đồ an toàn','protect'],['Không dám thử nữa vì sợ bị mắng','endure'],['Kể lại chuyện với người mình tin','support']],
+    gio_an: [['Nói mình cần thêm một chút thời gian','plan'],['Cố ăn thật nhanh dù đang khó chịu','endure'],['Nói khi đã no hoặc thấy không khỏe','protect']],
+    giao_tiep: [['Tự xem tranh rồi kể điều mình thấy','learn'],['Lặng lẽ chơi một mình','patch'],['Xin người thân nghe một câu chuyện','support']],
+    chia_tay: [['Nói con muốn chào tạm biệt trước','protect'],['Nén khóc dù chưa thấy yên tâm','endure'],['Tìm cô giáo và nói mình nhớ nhà','support']],
+    den_hoc: [['Xin người lớn giúp sắp chỗ học','support'],['Tìm lúc yên tĩnh để đọc bài','learn'],['Cố học dù thường bị ngắt quãng','patch']],
+    viec_nha: [['Xin để việc nhà sau giờ học','plan'],['Nhận hết vì sợ người lớn giận','work'],['Nhờ người thân chia giúp một phần','support']]
+  };
+  function version(l, key, title, text, opts) { var v = context(l) !== 'struggling' && alternatives[key] || { title: title, text: text, opts: opts }; return l.age >= 3 && l.age < 11 && childChoices[key] ? { title:v.title, text:v.text, opts:childChoices[key] } : v; }
   function story(phase, key, title, text, opts, need) {
     var ages = phases[phase], id = 'hc_story_' + key;
     var meta = { id: id, phase: phase, min: ages[0], max: ages[1], cd: ages[1] < 18 ? 20 : 4, maxN: ages[1] < 18 ? 1 : 30, need: need || '' };
     catalog.push(meta);
+    if (phase === 'baby') {
+      E.SC(id,{title:title,tone:'dark',valid:function(l){return hard(l)&&free(l)&&l.age<3;},text:function(l){return version(l,key,title,text,opts).text.replace(/\{care\}/g,care(l));},opts:[]});
+      return;
+    }
     E.SC(id, {
       title: function (l) { return version(l, key, title, text, opts).title; }, tone: 'dark',
       valid: function (l) { return hard(l) && free(l) && l.age >= meta.min && l.age <= meta.max && (need !== 'school' || !!l.school) && (need !== 'job' || (!!l.job && !l.retired && !E.isStableService(l))) && (need !== 'unemployed' || (!l.job && !l.school && !l.retired)); },
@@ -92,7 +109,7 @@
       opts: opts.map(function (o, i) { function choice(l) { return version(l, key, title, text, opts).opts[i]; } return { k: 'c' + i, l: function (l) { return choice(l)[0]; }, ai: { w: i === 1 ? 1.1 : 1 },
         req: function (l, d) { var p = policies[choice(l)[1]]; return (p !== policies.support || state(l).supportAt !== l.age) && (p === policies.support || l.age < 18 || !l.indep || !p.fee || l.money >= d.amount * p.fee); },
         h: function (l, d) { var p = policies[choice(l)[1]]; return l.age >= 18 && l.indep && p.fee ? (p === policies.support && l.money < d.amount * p.fee ? 'Tư vấn cộng đồng miễn phí' : H.money(l, d.amount * p.fee)) : ''; },
-        run: function (l, r, log, d) { var o = choice(l), p = policies[o[1]], h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, p, d, o[0], log); if (E.hardcoreFollowup) E.hardcoreFollowup(l, key, o[1]); }
+        run: function (l, r, log, d) { var o = choice(l), p = policies[o[1]], h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, p, d, o[0], log, r); if (E.hardcoreFollowup) E.hardcoreFollowup(l, key, o[1]); }
       }; }).concat([
         { k: 'slow', l: 'Chia nhỏ việc, chấp nhận tiến độ chậm', req: function (l) { return l.age >= 18; }, h: 'Không trả phí', ai: { w: 0.5 }, run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, policies.plan, d, 'Giải quyết từng bước: ' + version(l, key, title, text, opts).title.toLowerCase(), log); } },
         { k: 'wait', l: function (l) { return context(l) === 'struggling' ? 'Tạm cầm cự, giữ tiền cho nhu cầu thiết yếu' : 'Chưa giải quyết, giữ nhịp sống hiện tại'; }, req: function (l) { return l.age >= 18; }, h: 'Không trả phí', ai: { w: 0.5 }, run: function (l, r, log, d) { var h = state(l); h.seen[id] = (h.seen[id] || 0) + 1; apply(l, policies.hold, d, 'Gác lại chuyện ' + version(l, key, title, text, opts).title.toLowerCase(), log); } }
@@ -252,9 +269,9 @@
     }
     return out;
   }
-  E.hardcoreEvent = function (l, r, a) { if (!hard(l) || !free(l)) return null; var x = select(l, r, a, 1); return x.length ? x[0].id : null; };
+  E.hardcoreEvent = function (l, r, a) { if (!hard(l) || !free(l) || a < 3) return null; var x = select(l, r, a, 1); return x.length ? x[0].id : null; };
   E.hardcoreTriggers = function (l, a) {
-    if (!hard(l) || !free(l)) return [];
+    if (!hard(l) || !free(l) || a < 3) return [];
     return select(l, H.rf(l), a, a < 18 || a >= 50 ? 2 : 3).map(function (m) { return { id: m.id, when: function (x) { return E.DEC[m.id].valid(x, {}); }, p: 1, cd: m.cd, max: m.maxN }; });
   };
   E.HARDCORE_CATALOG = catalog;
@@ -312,11 +329,11 @@
     var x = migrate.apply(this, arguments);
     if (x && hard(x)) {
       var h = state(x);
-      if (!h.contextStories) {
+      if (h.contextStories !== 2) {
         // Update already-open decisions from 7.7.0 without advancing the life RNG or rerolling their fee.
         var seed = { rs: (x.rs ^ 0x7701) | 0 };
-        x.pending = (x.pending || []).map(function (d) { if (!/^hc_story_/.test(d.id) || !E.DEC[d.id]) return d; var fresh = E.DEC[d.id].make(x, function () { return U.rand(seed); }, d.data); if (d.manual) fresh.manual = true; return fresh; });
-        h.contextStories = 1;
+        x.pending = (x.pending || []).filter(function (d) { return x.age >= 3 || !/^hc_story_/.test(d.id); }).map(function (d) { if (!/^hc_story_/.test(d.id) || !E.DEC[d.id]) return d; var fresh = E.DEC[d.id].make(x, function () { return U.rand(seed); }, d.data); if (d.manual) fresh.manual = true; return fresh; });
+        h.contextStories = 2;
       }
     }
     return x;
@@ -362,6 +379,14 @@
   E.hardcoreYear = function (l, r, log, a) {
     if (!hard(l) || !l.alive) return;
     var h = state(l), familyPressure = a < 18 ? h.pressure / 45 : h.trauma / 65;
+    if (a < 3 && h.infantAt !== a) {
+      h.infantAt = a;
+      var m = U.pick(r, catalog.filter(function (x) { return x.phase === 'baby'; })), key = m.id.replace('hc_story_', ''), def = E.DEC[m.id], d = def.make(l,r);
+      log(d.text, 'neutral');
+      if (r() < h.pressure / 110) { h.emotion -= 1.5; h.trauma += 2; H.fx(l,{hap:-1}); log('Bạn khóc rồi thiếp đi; tiếng người lớn vẫn còn vẳng quanh chỗ ngủ.', 'bad'); }
+      else { h.emotion += 1; h.trauma = Math.max(0,h.trauma-0.5); log('Một người thân ở bên vỗ về, bạn dần ngủ yên.', 'good'); }
+      l.flags.hardcoreShocks = (l.flags.hardcoreShocks||0)+1;
+    }
     if (a < 18 && h.reserveAt !== a) { h.reserveAt = a; h.resources = context(l) === 'wealthy' ? 100 : context(l) === 'comfortable' ? Math.max(50, h.resources) : Math.min(100, h.resources + 6); }
     if (a >= 6) h.emotion += h.support * 0.12 - familyPressure - h.trauma * 0.006;
     if (a >= 12 && l.mind) l.mind.stress = U.clamp(l.mind.stress + familyPressure + h.trauma / 45 - h.support * 0.3, 0, 100);
