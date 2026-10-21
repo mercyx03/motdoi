@@ -1134,6 +1134,7 @@
     clearDecPill();
     var l = S.life, d = l.pending[0];
     if (!d) { afterDecisions(); return; }
+    if (E.refreshActingWarning) E.refreshActingWarning(l, d);
     S.phase = 'decision';
     var major = E.isMajor(d);
     var aiPick = !d.manual && (S.auto || (S.minorOnly && !major));

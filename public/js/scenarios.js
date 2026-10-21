@@ -217,7 +217,7 @@
       var t = l.flags.track, id = { 'thể thao': 'vdv', game: U.rand(l) < 0.6 ? 'tuyen_thu_es' : 'streamer', 'cờ': 'ky_thu', 'âm nhạc': 'ca_si', 'diễn xuất': 'dien_vien', 'làm đẹp': U.rand(l) < 0.5 ? 'makeup' : 'youtuber' }[t] || 'youtuber';
       return { id: id };
     },
-    text: function (l, d) { return 'Sau nhiều năm khổ luyện, bạn có cơ hội làm ' + E.jobLabel(d.id) + ' chuyên nghiệp. Con đường này đầy vinh quang — và cũng đầy bấp bênh.'; },
+    text: function (l, d) { return 'Sau nhiều năm khổ luyện, bạn có cơ hội làm ' + E.jobLabel(d.id) + ' chuyên nghiệp. Con đường này đầy vinh quang — và cũng đầy bấp bênh.' + (d.id === 'dien_vien' ? (l.job ? ' Bạn sẽ rời công việc và mức lương hiện tại khi chuyển nghề.' : '') + ' Tài năng và may mắn có thể giúp bạn lên hạng A, nhưng cũng có thể chỉ nhận vai phụ hoặc quần chúng.' : ''); },
     valid: function (l) { return !!l.flags.track && (!l.job || !E.jobDef(l).skillRank); },
     opts: [
       { k: 'go', l: function (l, d) { return 'Trở thành ' + E.jobLabel(d.id); }, h: 'Thu nhập phụ thuộc thành tích', ai: { amb: 1, risk: 0.6, w: 1.4 }, run: function (l, r, log, d) { l.school = null; E.startJob(l, d.id, r, log); } },

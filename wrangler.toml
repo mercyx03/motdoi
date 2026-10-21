@@ -6,4 +6,4 @@ main = "dist/_worker.js"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
-run_worker_first = ["/api/market", "/api/reviews", "/api/account", "/_worker.js"]
+run_worker_first = ["/api/market", "/api/reviews", "/api/account", "/api/comments", "/_worker.js"]

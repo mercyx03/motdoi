@@ -1,0 +1,262 @@
+[
+  {
+    "sha": "1303b2669c0ebceccc964c7cb088d82087d38985",
+    "publishedAt": "2026-10-21T10:42:07Z",
+    "message": "Fantasy: unlock starter farming and add per-second spiritual cultivation\n\nAllow direct travel to eligible maps and open Dong Co Gio at the first realm, with beginner encounters tuned for new characters.\n\nReplace path mastery with real-time spiritual power, realm base absorption, additive research/book bonuses and explicit breakthroughs. Subtract only the required threshold and carry all surplus into the next stage; preserve legacy save progress.\n\nCover real-time UI behavior, pause/hidden tabs, overflow, book stacking, migration and thirty complete novice farming trips. Preserve Vietnam and World gameplay."
+  },
+  {
+    "sha": "022f65284290224ace8cbee6b8f58a267d17cf2f",
+    "publishedAt": "2026-10-21T10:12:45Z",
+    "message": "Fantasy: simplify interface, unlock free hunting and expand maps, academy and events\n\nGroup the interface into six sections with character/family details behind one control and move the journal up. Fix settlement travel at Linh Tuyen and align map buttons with travel rules; add regional NPC services, crafting, enhancement and equipment.\n\nSeparate hunting from annual learning actions, extend skills to level 10, replace the level-40 display/cap with path mastery and add five academy courses with permanent mind/passive progression. Add 36 authored situations, 40 regional variants and varied infant scenes with source research notes.\n\nValidate Fantasy lifecycle, combat, services, academy, UI/save isolation and real-world/family isolation. Real-world gameplay files are unchanged."
+  },
+  {
+    "sha": "3cbed702799c9fb26cf31d0c58421a9168be2870",
+    "publishedAt": "2026-10-21T08:47:54Z",
+    "message": "8.3.0: add contextual family, parenting and relationship interactions"
+  },
+  {
+    "sha": "58c1fbc618db6ab0c2d7f0cad1bb0f22da1b83f4",
+    "publishedAt": "2026-10-21T07:31:37Z",
+    "message": "v8.2.0: fix Fantasy play loop, readable UI and class-specific progression\n\nUse the main Vietnamese font system and mark Fantasy experimental. Add persistent war news, visible EXP, timed progression with pause/speed controls and reading-aware log scroll retention. Restrict combat training and skills to the chosen path while sharing forging/alchemy; implement five skill ranks with real damage scaling and truthful descriptions. Reject stale choice clicks and avoid repeated imported topics. Preserve legacy skills and normal-mode snapshots; include tests and Cloudflare dist.zip."
+  },
+  {
+    "sha": "b7332f0224f5103935a6e177cccbcb10877ee81a",
+    "publishedAt": "2026-10-21T06:24:55Z",
+    "message": "v8.1.0: expand Fantasy clan politics with causal wars and contextual events\n\nAdapt five pinned Aurelia Hugging Face sources into compact simulation profiles. Add regional resources, pairwise relations, succession, multi-year border wars, armies and supply, treaties, ceasefires, relief, front orders and market prices. Gate player decisions by age, title, ownership and actual resources; expire stale scenes and isolate all real-world modes. Include attribution, reproducible data tools, regression coverage and Cloudflare dist.zip."
+  },
+  {
+    "sha": "8508fc135a32edfd68177ecf1992ee667705d4c3",
+    "publishedAt": "2026-10-21T05:52:25Z",
+    "message": "v8.0.0: add independent Fantasy clan RPG and restore child agency in Hardcore\n\nIntegrate five attributed Hugging Face datasets with Vietnamese adaptations, lifecycle, training, combat, guilds, quests, territories and succession. Keep ordinary modes and saves isolated. Include reproducible data tooling, regression coverage and Cloudflare dist.zip."
+  },
+  {
+    "sha": "c8002dc1004b81d0cb09ba096e65b3784979d4c0",
+    "publishedAt": "2026-10-21T03:33:52Z",
+    "message": "Release 7.7.1: contextual Hardcore stories and dedicated sports training\n\nMatch Hardcore situations and choices to actual household resources, remove repetitive explanatory text, and update old pending scenes without rerolling fees or RNG. Add bounded sports talent practice and professional esports training for reflexes, tactics and form, preserving progress through saves and annual updates.\n\nInclude contextual and training regression checks and the updated Cloudflare dist.zip build."
+  },
+  {
+    "sha": "2123a49bf7204e8787da6a9a8c0b22de50b5b92d",
+    "publishedAt": "2026-10-21T02:42:03Z",
+    "message": "Release 7.7.0: dedicated Hardcore campaign and preserve heir family data\n\nAdd age-specific Hardcore choices, lasting family pressure and emotional recovery, difficult earnings and rare career breakthroughs. Preserve Vietnamese sibling identities across settled-family generations, handle empty sibling rosters and legacy housing snapshots. Include regression coverage, normal-mode isolation checks and the Cloudflare dist.zip build."
+  },
+  {
+    "sha": "78c291c10d3cb68f2bd5f7ff16144a7d0a979434",
+    "publishedAt": "2026-10-20T23:40:24Z",
+    "message": "Một Đời v7.5.0 — sống tiếp đời con ở tuổi hiện tại giữ đúng nghề, bậc, học vấn như đời trước (tiếp quản cơ ngơi, đưa lên đầu); hiển thị ai đang ở đâu (bạn, bố mẹ, từng người con), sửa lỗi ra nước ngoài vẫn hiện sống cùng bố mẹ; tự chọn 16 trường quân đội, công an (Học viện An ninh, Cảnh sát, Kỹ thuật Quân sự, Quân y, Hải quân, Biên phòng, các trường Sĩ quan…); lộ trình thăng quân hàm theo Luật Sĩ quan QĐND, Luật CAND, học viện cấp trung (Lục quân, Chính trị) và Học viện Quốc phòng\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "ad6beec193ddc7ea38fc50e255a209da84849fcb",
+    "publishedAt": "2026-10-20T14:26:01Z",
+    "message": "Một Đời v7.4.1 — sửa lỗi khi định cư nước ngoài: đã bảo lãnh bố mẹ sang thì không còn gửi tiền / sửa nhà cho bố mẹ ở quê, Tết đón cùng bố mẹ nơi xứ người; ở nước ngoài không hẹn bạn thân, anh chị em ở quê đi ăn (gọi video thay vào), bạn mới quen ở nước ngoài gặp được ở nước ngoài; cặp đôi đồng giới nhận con nuôi theo luật nước đang sống; người yêu mới không trùng tên người đã mất; thêm thành tựu Embes (Negav)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "9bf76ba294e27ae6d9daa1bf96a2963e8173b776",
+    "publishedAt": "2026-10-20T12:56:24Z",
+    "message": "Một Đời v7.4.0 — ứng dụng hẹn hò theo từng nước (Hàn Quốc: Amanda, WIPPY, Glam; Nhật: Pairs, Tapple; Trung Quốc: Tantan, Momo, Soul; Nga: Mamba, VK; Mỹ/Anh: Hinge; Ấn Độ: Aisle; Trung Đông: Muzz; Grindr/Blued theo vùng; cách tìm bạn đời tuổi trung niên theo từng nơi); điều chỉnh lương công nhân (có tăng ca khoảng 11–13 triệu), điều dưỡng, giáo viên, công chức, dịch vụ…; thực tập sinh không còn kẹt ở bậc thực tập\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "878a6c4275e126136232b59e2515a4b929fc807b",
+    "publishedAt": "2026-10-20T12:09:13Z",
+    "message": "Một Đời v7.3.1 — 94 thành tựu fan cứng theo tên FC người chơi cung cấp (Anh trai say hi mùa 1, 2, Em xinh say hi, Anh trai vượt ngàn chông gai); sửa Bạn Nhạc, FC Galaxy, Động Cam Sành - MyMuse; bỏ thành tựu Negav (vẫn giữ trong show); so khớp đúng tên nghệ sĩ; sửa tên Phan Đình Tùng; người già không được gợi ý tập gym\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "c2a49de76fadeabc39744efd1da54014c2954ce6",
+    "publishedAt": "2026-10-20T09:37:14Z",
+    "message": "Một Đời v7.3.0 — đời con giữ đúng nghề bố mẹ theo con đường sự nghiệp đời trước và giữ nguyên họ tên anh chị em; bảng Giới thiệu (nội dung mới, có hệ thống tài khoản); đổi tên 27 thành tựu theo góp ý; 14 thành tựu kiểu Gen Z (Nhà có 5 nàng tiên, Lời xin lỗi của một dân chơi…); 26 thành tựu fan cứng mang tên FC của nghệ sĩ Anh trai say hi, Anh trai vượt ngàn chông gai, Tinh hà say hi, Em xinh say hi\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "01a9c0d1476f6cd3a4935ab9d971962c5cc2148c",
+    "publishedAt": "2026-10-20T07:04:23Z",
+    "message": "Một Đời v7.2.0 — người đã mất không \"sống lại\" (người yêu vốn là bạn thân qua đời thì bạn thân cũng mất, không còn hẹn gặp, vay tiền, liên lạc lại hay tái hôn với người đã khuất; tên người lạ không trùng người nhà); nghề nở sớm (học viện bóng đá, CLB, đội trẻ esports ký hợp đồng từ 15–16 tuổi, học văn hóa GDTX); 16 kiểu tính cách bố mẹ; drama gia đình mọi hoàn cảnh (tranh giành tài sản, kiện di sản, ghế chủ tịch, đất hương hỏa, nuôi bố mẹ già, anh em nợ nần, sổ đỏ, bố mẹ ly thân, con riêng, di chúc thiên vị); drama công sở, hàng xóm, chung cư, phòng trọ, mạng xã hội, trường học, bạn bè, đường phố (ngẫu nhiên, tỉ lệ thấp)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "3575c22dfca62fec9243fa31d3e5dce7b9c1542f",
+    "publishedAt": "2026-10-20T00:40:38Z",
+    "message": "Một Đời v7.1.0 — xuất thân mồ côi ngẫu nhiên (ông bà nuôi, họ hàng cưu mang, mái ấm / gia đình nuôi dưỡng tạm thời, nhà chùa; người nuôi dưỡng chi tiền, con nuôi, học bổng, rời mái ấm, tìm bố mẹ ruột, 4 thành tựu); kiếm tiền khó hơn (thăng tiến hình tháp, trần hệ số học vấn ×1,4 và thâm niên +12%, chi tiêu theo thu nhập dư 50/75/95%, về già tiêu dần); sửa \"thay pin null\" sau khi bán xe, lời kể khi không còn bố mẹ, người già tập gym\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "a3446d953597c190328be53ea16d967574a69760",
+    "publishedAt": "2026-10-19T15:28:17Z",
+    "message": "Một Đời v7.0.1 — mục Nguồn dữ liệu bỏ dòng link trùng (link Nemotron-Personas-Vietnam đã có ở chân trang)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "6a8fbc817bfd8a2ee84e0a2ea9df7bc51dddcd19",
+    "publishedAt": "2026-10-19T15:25:18Z",
+    "message": "Công cụ quản trị: đặt lại mật khẩu tài khoản (mật khẩu tạm, băm PBKDF2 như máy chủ, giữ nguyên tiến trình, đăng xuất phiên cũ)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "bd3c51d2f3d30d2781371a961c96c9eaa896ba9e",
+    "publishedAt": "2026-10-19T15:17:26Z",
+    "message": "Một Đời v7.0.0 — rà soát lỗi logic toàn hệ thống: tuổi kết hôn theo luật (VN nam 20, nữ 18; nước khác 18; có thai sớm thì về ở cùng, đủ tuổi mới cưới); nghỉ hưu trước tuổi lực lượng vũ trang từ 48 tuổi và 20 năm công tác; không tuyển mới người từ 58 tuổi vào khu vực chính thức và việc nặng nhọc; người định cư nước ngoài không dùng BHYT/BHXH Việt Nam, không làm công chức trong nước; trẻ mồ côi tự chi bằng tiền tiết kiệm; sửa dấu câu, lời kể; công cụ npm run audit\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "973cdfaa92a51216b4bf5d2704f2312eb2425c0a",
+    "publishedAt": "2026-10-19T13:03:12Z",
+    "message": "Một Đời v6.9.1 — trẻ chưa tự lập thì bố mẹ chi tiền (dưới 15 tuổi bố mẹ chi toàn bộ, 15–17 tự chi bằng tiền tiêu vặt, thiếu thì bố mẹ bù); gợi ý tên đăng nhập mercy; bớt câu lặp (hẹn về quê, thay pin xe điện, chu cấp, lên/tụt hạng danh tiếng, thể thao)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "119bce2a2116ce95556e5778e95e5b5acfb4ceca",
+    "publishedAt": "2026-10-19T12:32:43Z",
+    "message": "Một Đời v6.9.0 — tài khoản & lưu tiến trình (đăng ký bằng tên đăng nhập + mật khẩu, không cần email; mật khẩu băm PBKDF2, mã phiên băm, khóa khi sai nhiều lần; đồng bộ và gộp thành tựu, gia phả, đài tưởng niệm, cuộc đời đang chơi giữa các máy; xóa tài khoản); dùng toàn bộ 1.000.000 persona Nemotron-Personas-Vietnam, số liệu theo 34 tỉnh, món quê đúng đặc sản từng tỉnh\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "cf06f858b2768273150cdf8441be78797f6822d7",
+    "publishedAt": "2026-10-19T11:43:31Z",
+    "message": "Một Đời v6.8.0 — khai thác sâu Nemotron-Personas-Vietnam (181.819 persona, 18% bộ dữ liệu, đại diện đúng 6 vùng): người quen kể kỹ năng nghề và mong muốn, thể thao, du lịch, văn nghệ theo vùng; đối chiếu mô phỏng với dữ liệu thật và sửa tỉ lệ học tiếp lớp 6, thêm xem mắt và giục cưới cho tỉ lệ kết hôn sát thực tế; đổi tên thành tựu (Doanh nhân đầu tàu, Mưu sinh xứ người, Lá lành đùm lá rách) và thêm 30 thành tựu (tổng 122)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "e4842dfb3efd321ea7b084e3b40137b82d118439",
+    "publishedAt": "2026-10-19T09:47:32Z",
+    "message": "Một Đời v6.7.0 — sửa số lượt đánh giá đứng yên (mỗi lần gửi là một lượt mới, tối đa 5 lượt/ngày, chép giữ nguyên đánh giá cũ, công cụ khôi phục từ bản sao lưu); kết hợp số liệu Nemotron-Personas-Vietnam (NVIDIA & FPT, CC BY 4.0): người quen, thú vui, món quê theo vùng; 16 di sản UNESCO đúng địa phương, lễ tết các dân tộc; tiết Lịch sử với các mốc chính thức, ông bà kể chuyện, 27/7, Giỗ Tổ, nghỉ lễ 30/4 theo Bộ luật Lao động, bầu cử theo Luật Bầu cử; ghi công nguồn dữ liệu ở mục Giới thiệu\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "39262fbd24c9d760bd840a2681fbeace6607ed29",
+    "publishedAt": "2026-10-19T07:51:32Z",
+    "message": "Một Đời v6.6.0 — xuất thân hoàng tộc ở 27 nước quân chủ (lễ nghi, báo chí, hôn nhân hoàng gia, từ bỏ tước hiệu, kế vị); nghề nghiên cứu, khoa học (R&D, hàng không vũ trụ, y sinh, nông nghiệp công nghệ cao, thạc sĩ / tiến sĩ, đề tài, hội thảo); con đường chính trị (quy hoạch, ứng cử đại biểu HĐND / Quốc hội, tranh cử hội đồng thành phố); 42 kết quả có thêm cách kể khác; 92 thành tựu; gia phả nhiều thế hệ; ảnh thẻ khổ dọc 9:16; npm run build gộp js vào dist/ cho web tải nhanh; tài liệu chuyển sang docs/; công cụ sao lưu đánh giá\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "8d41a335e38aef606a4b87b64cfc86d8df9bcfe1",
+    "publishedAt": "2026-10-19T04:39:55Z",
+    "message": "Một Đời v6.5.1 — trang đánh giá: xem tất cả review, lọc theo số sao (bấm nút hoặc thanh sao), chỉ xem review có nội dung, hiện đang xem X / Y; API hỗ trợ lọc sao và tải tối đa 100 review mỗi lần\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "10cffb906d3fc718883e0b8029e9e2ee828d29a9",
+    "publishedAt": "2026-10-19T04:29:15Z",
+    "message": "Một Đời v6.5.0 — chú mèo mến bạn đi theo (chọn mang về, có mèo thật và đặt tên); thêm 43 chuyện tuổi thơ đa dạng, ngẫu nhiên; di chúc chia theo tỉ lệ cho từng người con, bạn đời, các cháu, bạn thân, người khác hoặc xã hội, phần còn lại chia theo pháp luật; khi mất, từng người con phản ứng theo đúng con người mình (con phá gia chi tử nghẹn ngào nhận ra bố mẹ đã hy sinh); sống tiếp đời con từ lúc chào đời hoặc ở tuổi hiện tại và nhận thừa kế\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "8f2c54ab8c6b71d26811db4ab2610f3a659f4d14",
+    "publishedAt": "2026-10-18T23:47:43Z",
+    "message": "Một Đời v6.4.0 (gộp v6.3.0) — những cuộc đời không màu hồng (vận đen: rớt trường năng khiếu, bỏ học làm công nhân, xin việc khó, lên thành phố lập nghiệp, ngoài 35 bị cho nghỉ, nợ lương, tai nạn lao động, vay nợ chữa bệnh, về già không lương hưu, chi phí bất ngờ); ôn thi chuyên và đội tuyển theo đúng từng môn; quay lại với người cũ; người giàu chủ động chu cấp; tiến độ thăng chức có lý do; sửa nút \"Sống tiếp đời con\" bị chặn; sửa lỗi tính tiền vay sinh viên và chu cấp\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "a73902fbf128d9e9c21ac908e4fa22dba93969bd",
+    "publishedAt": "2026-10-18T17:00:14Z",
+    "message": "Một Đời v6.2.0 (gộp v6.1.0) — ứng dụng hẹn hò hiện 5 hồ sơ để chọn nhắn tin; Người ấy là ai chung cuộc chọn 1 trong 3; đặt ranh giới với người chu cấp vẫn có thể được chu cấp; BHYT trả 80% thống nhất (khám, chữa bệnh, phẫu thuật, nhổ răng khôn, nha khoa); thưởng Tết cuối năm theo ngành nghề; bố mẹ mất việc đúng lý do theo nghề; rà soát cách tính tiền\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "4c2114c22eba9bdddfc56df41048c89c44625392",
+    "publishedAt": "2026-10-18T15:36:49Z",
+    "message": "Một Đời v6.0.0 (gộp v5.9.2) — sinh viên lên thành phố: chỗ ở theo điều kiện gia đình (ký túc xá, trọ, chung cư, mua căn hộ, biệt thự), làm thêm, những \"cơ hội\" có cái là bẫy; chuyện nghề chi tiết hơn 20 nghề (mullet, side part, undercut, latte art, cocktail, hotfix, ca cấp cứu…); quà tặng 11 nhóm (Hoa Biết, nước hoa nam / nữ, Gundam, Lego, đồ thể thao…); xưng hô đúng giới tính\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "a96ed04500a53a12f778b655f2eea09e3b467e7f",
+    "publishedAt": "2026-10-18T15:03:14Z",
+    "message": "Một Đời v5.9.1 — mua nước cho người thân: xưng hô đúng từng người (vợ, chồng, bố mẹ, anh chị em, con, bạn thân), chọn được người muốn mua, thêm câu phản hồi\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "c3ed7e7703a0f6e1f6f9ea57706cbfe73fc43b3b",
+    "publishedAt": "2026-10-18T12:33:43Z",
+    "message": "Một Đời v5.9.0 — con ngoài hôn nhân (cưới chạy bầu, sinh con khi chưa cưới, làm mẹ đơn thân, nhận con và chu cấp, chưa giữ thai); thêm tới 4 bạn thân, chuyện cùng bạn thân, xa cách theo năm tháng; hẹn hò với bạn thân đúng xu hướng tính dục; định cư nước ngoài: sốc văn hóa, học tiếng bản xứ, thường trú theo từng nước, công nhận bằng cấp, kỳ thị, Tết xa nhà, gửi tiền về, bảo lãnh bố mẹ, dạy con tiếng mẹ đẻ, cộng đồng đồng hương\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "0cb984a92170d230b1e94c8a7e476d38196e1e71",
+    "publishedAt": "2026-10-18T11:36:50Z",
+    "message": "Một Đời v5.8.0 (gộp v5.7.0) — đời sống từng quốc gia ở chế độ Thế giới (Việt Nam giữ nguyên); xem tivi chọn thần tượng theo chương trình (gộp các mùa), không còn thần tượng ngẫu nhiên; trại lừa đảo Campuchia có việc làm riêng, chuyện mỗi năm, ngày trở về có hồn; chu cấp bị kiểm soát thì căng thẳng; chi phí sinh hoạt theo mức sống; đám cưới chọn nơi tổ chức, nhẫn cưới, bố mẹ hỗ trợ; chia tay có lý do; mua điện thoại, laptop, PC lên đời theo năm; sửa hiển thị chi phí, bỏ ghi chú địa giới 63 tỉnh\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "62c51017b1df0b10464e2be38af54302432318b4",
+    "publishedAt": "2026-10-18T09:40:52Z",
+    "message": "Một Đời v5.6.4 (gộp v5.6.3) — nhập quốc tịch theo luật từng nước, visa esports (dự bị đánh thay khi trượt visa), cắt giảm nhân sự đúng đối tượng; chức cao / nghề tự do không có \"sếp\", gia đình đúng hoàn cảnh (không anh chị em, không con cháu, không còn ai), ngồi tù đủ năm, lương hưu cho đa số nghề, tiến sĩ không vào thẳng phó giáo sư, người già không tập gym, sân bóng theo nơi sống, ít lặp câu\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "36b666acda0b342586f681774104ebd905747d94",
+    "publishedAt": "2026-10-18T04:01:28Z",
+    "message": "Một Đời v5.6.2 — xu hướng tính dục: tóp mỡ, bột tôm, bé Liên, bi\n\n- Bỏ lựa chọn Liên giới; giới tính sinh học còn Ngẫu nhiên / Nam / Nữ\n- Bấm LGBTQ+ hiện Tóp mỡ, Bột tôm, Bé Liên, Bi (không bắt buộc, bấm lại để bỏ chọn); rê chuột / ấn giữ để xem Top / Bot / Les / Bisexual\n- Tóp mỡ / Bột tôm là nam, Bé Liên là nữ; hồ sơ ghi đúng cách gọi đã chọn, LGBTQ+ chung và bản lưu cũ vẫn ghi trung tính\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "bdbf91ccc2ee0ad78b37ef28e48459f419385e09",
+    "publishedAt": "2026-10-18T03:06:34Z",
+    "message": "Một Đời v5.6.1 — rà soát lỗi logic\n\n- Điểm thi THPT sát thực tế: trung bình ~23–24, học siêu giỏi vẫn đạt 30, học rất kém có thể trượt tốt nghiệp và thi lại / học nghề / đi làm; cờ học bổng khớp điểm (cả tuyển thẳng, thi lại)\n- Sửa \"THPT chuyên tại undefined\", crash chiêu mộ esports, gợi ý trống ở di chúc\n- Tên nhân vật không còn lệch dấu (ế, ồ…): phông dự phòng hỗ trợ đủ tiếng Việt thay cho Georgia\n- Pháp Kiều gọi thẳng tên; gọi đúng người yêu / vợ / chồng / người bạn đời trong lựa chọn và mục \"Việc bạn muốn làm\"\n- Giá món ăn, địa danh địa phương theo từng loại; đi lại trong tỉnh vài chục nghìn\n- Không thi bằng lái sau 60 tuổi; ung thư sau 85 tuổi hiếm khỏi hơn; bé gái hầu như không bị rủ đi net\n- Bớt lặp câu: mini game show sinh đề mới, tin nhà đất, ngày lễ, sốt siêu vi, trị liệu tâm lý, bố mẹ mất việc…\n- Cập nhật kiểm thử cho cơ chế mới; thêm mục 46, 47\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "c4d9195ef93313347a3da6cfdbcb4b864bdcfde2",
+    "publishedAt": "2026-10-18T01:19:17Z",
+    "message": "Một Đời v5.6.0 — gộp v4.5.0 → v5.6.0\n\n- v4.5.x: chức cao không bị \"sếp\" ép; giới tính sinh học tách khỏi xu hướng tính dục; tù tính trọn năm, 3–4 chuyện trại giam mỗi năm; phi pháp có đường dây và cấp bậc; mở rộng kinh doanh chủ động; bạn đời góp theo thu nhập; chọn game, chọn nghệ sĩ concert; Running Man / 2 Ngày 1 Đêm; minh họa anime 2D; quân ngũ, lương hưu theo hợp đồng, chi phí tuổi thơ ghi rõ người trả\n- v4.6.x: nuôi dạy và đồng hành cùng con; tình huống theo 14 nhóm nghề; giới thiệu 63 tỉnh thành, về quê người yêu; show khách mời; cập nhật đơn vị hành chính\n- v4.7–v4.10: đời sống 194 quốc gia; mua bán vàng / cổ phiếu theo giá thật; phi pháp ở nước ngoài; năng khiếu và nghề đạo diễn, dự án phim\n- v5.0–v5.2: sổ xe, mức chi tiêu, du lịch 95 điểm đến, xem phim, tặng quà; sinh hoạt theo hoàn cảnh, cung hoàng đạo; rà soát tài sản; thu nhập và mức sống toàn thế giới\n- v5.3–v5.5: thẻ gia đình, đặt tên con, trường học của con; trường chuyên, đội tuyển, nguyện vọng đại học; trang đánh giá công khai (Cloudflare D1); di chúc chủ động; ổn định việc làm công vụ\n- v5.6.0: esports — xem giải, thử việc, học viện, chiêu mộ, mùa giải, hợp đồng, gaming house, giải nghệ; thêm Nghịch Thủy Hàn và TFT\n\nKhông đưa các bản nén mot-doi-*.zip và thư mục promo/ lên repo (thêm vào .gitignore).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "28b25f58630ef75dd2d645a87aac14ce463edade",
+    "publishedAt": "2026-10-16T06:59:21Z",
+    "message": "Một Đời v4.4.0 (gộp v4.2.0, v4.3.0) — nghề tự do không \"thăng chức\", trả góp có kỳ hạn rõ ràng, xưng hô đúng giới, cho con tiền không trùng, con nhà khá giả không bỏ học, hệ quả ly hôn / mất người thân, hồi tưởng có người bạn đời; mất mát lần đầu & những lần sau, sức khỏe tinh thần & phòng chống tự tử, định kiến nghề nghiệp có ký ức; CLB & khai giảng đại học, bệnh tật & dị ứng, con đường xấu, cuộc sống trong tù, chống farm tiền, đổi tôn giáo, hẹn hò, giá skin giới hạn, sửa lỗi logic\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "1461cbae7a27054a4c1295f77c5e9b596f23f8b1",
+    "publishedAt": "2026-10-16T03:39:34Z",
+    "message": "Một Đời v4.1.0 — nghĩa vụ quân sự đủ 24 tháng & trợ cấp xuất ngũ mới, con thành tài / phá gia chi tử, đất & vàng mất giá (bán hay giữ), cặp đôi đồng giới sang nước đã công nhận hôn nhân đồng giới, làm việc từ xa, về Việt Nam rồi quay lại (quy đổi tiền, vé máy bay), sửa lỗi logic\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "8b22ed35256337faf7871a3ff3a472ce8c28250a",
+    "publishedAt": "2026-10-16T00:49:45Z",
+    "message": "Một Đời v4.0.0 (gộp v3.9.0) — đại học theo ngành & bảo vệ tốt nghiệp, ngành Y (thực tập, nội trú, chuyên khoa, phòng khám), số liệu nghề sát thực tế, Tân binh toàn năng, giải thưởng chung kết các show, tham gia lại mùa sau, show hẹn hò (Bạn muốn hẹn hò, Người ấy là ai, Đảo thiên đường)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "959ca6356e285a42afc06ffb00d2d4afc65e1cf2",
+    "publishedAt": "2026-10-15T23:54:10Z",
+    "message": "Một Đời v3.8.1 — sống cùng bố mẹ thì \"Dành thời gian cho bố mẹ\" thay vì \"về thăm\", tên con đồng nhất theo họ cha ở các nước, giảm lặp câu khi chơi nước ngoài, sửa lỗi nhỏ\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "29ea57f62c76ee2a06f041170a6e9858b173f27b",
+    "publishedAt": "2026-10-15T18:19:23Z",
+    "message": "Một Đời v3.8.0 — show thực tế (Anh trai Say Hi, Em xinh, Anh trai vượt ngàn chông gai), concert theo chương trình & bias, fanmeeting, kỹ năng cứu người, trà sữa & đi ăn theo trend, sửa lỗi thi lại đại học / CSGT ô tô / trại lừa đảo / người già đi học\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "a884e10aeb8dc487c7b2e59337c3d88a487f63b4",
+    "publishedAt": "2026-10-15T16:50:54Z",
+    "message": "Một Đời v3.7.0 (gộp v3.6.0) — mục Chi tiêu & chi tiêu định kỳ, chế độ nghỉ hưu, định cư nước ngoài mua nhà/xe/vé số theo nơi sống, LGBT+ (Bột tôm, Tóp mỡ, Bé Liên, Bi), chống lặp lựa chọn, sửa lỗi logic\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "719072c702eda8d648cb6523cc38e4f408c412a8",
+    "publishedAt": "2026-10-15T14:23:32Z",
+    "message": "Một Đời v3.5.0 — năng khiếu → trường chuyên ngành → nghề, hơn 40 sự kiện theo bối cảnh ngành, tên người Việt tự nhiên, sửa lỗi logic\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "e8ab377b7d36e8a19b76b74b8d628010196a633d",
+    "publishedAt": "2026-10-15T12:40:46Z",
+    "message": "Một Đời v3.4.0 — hẹn hò qua mạng (đào mỏ, lừa đầu tư, người tử tế), 14 hoạt động hẹn hò, rủ chơi game, nghề cày thuê rank, 35 chuyện tuổi thơ, nhớ chuyện đời trước, sửa lỗi logic\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "c34c4df21a1a4e266a45b72faa413ba3287e5597",
+    "publishedAt": "2026-10-15T11:12:49Z",
+    "message": "Một Đời v3.3.0 — lời lưu ý, nghĩa vụ quân sự 2 năm, đầu tư cổ phiếu & tiền ảo, khách sạn/resort, gần 100 sự kiện nghề có cạm bẫy\n\n- Màn hình Chào đời: câu \"nhân vật và tình huống đều hư cấu\"; chân trang nhắc 1 in 8 Billion (bỏ liên kết) + khung Lưu ý nổi bật\n- Nghĩa vụ quân sự: 3 tháng tân binh, về đơn vị, diễn tập, cứu hộ, về phép, ra quân; trong 2 năm không có chuyện đời thường bên ngoài\n- Hoạt động hợp tuổi: người già không còn battle rap, phượt, concert\n- Khách sạn mini, khách sạn 4 sao, resort khi có nhiều tiền\n- Cổ phiếu từng công ty / quỹ chỉ số, tiền mã hóa theo chu kỳ, rug pull, sàn sập\n- Gần 100 sự kiện & cạm bẫy theo 21 nhóm nghề (theo tài liệu), cơ chế \"cờ chờ nổ\", độ nóng nghề phi pháp\n- Cân bằng với cơ quan nhà nước, công an, quân đội: luôn có lựa chọn liêm chính, sai phạm bị phát hiện, nhiều sự kiện tốt\n- Sửa: tịch thu nhà vẫn còn nợ vay nhà, bị bắt hai lần cùng lúc, thần tượng chia tay sân khấu ngay khi vừa mê\n- Kiểm thử: 1.999.416 bài đạt\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "de730a7d4cabbf47315992dfd324386d0e4c2d89",
+    "publishedAt": "2026-10-15T07:11:22Z",
+    "message": "Một Đời v3.2.0 (gộp v3.1.0) — giao diện điện thoại, nhà ở theo loại, bệnh viện công/tư, nghề diễn viên & game show, lựa chọn theo nơi đang sống, nhật ký ghi số tiền\n\nv3.1.0\n- Nhật ký ghi luôn số tiền chi/thu; lựa chọn nào tốn tiền cũng hiện chi phí ước tính\n- Về thăm bố mẹ tốn tiền theo khoảng cách (xe, xe khách, máy bay, từ nước ngoài về)\n- Dã ngoại, phượt, du lịch, phong tục theo nơi đang sống (trong nước theo miền, nước ngoài theo nước đó)\n- Rà soát lời kể: bố/mẹ đã mất, chuyện trường lớp khi đã nghỉ học; sửa bộ lọc dòng lặp của v3.0\n\nv3.2.0\n- Có lựa chọn đang chờ vẫn làm được \"Việc bạn muốn làm\"; thanh điều hướng dưới cùng, nút \"⋯\", hộp lựa chọn dạng tấm trượt trên điện thoại\n- Nhà ở theo loại (nhà cấp 4 → dinh thự), giá theo nơi ở\n- Bệnh viện công (xếp hàng) / tư, phẫu thuật, răng khôn\n- Diễn viên: casting, cát-xê, doanh thu phòng vé, quảng cáo, học diễn xuất, game show\n- Nhắn tin tán tỉnh (ghost, mập mờ), chênh lệch tuổi, biệt danh hội bạn\n- Thi lại chứng chỉ trong \"Học tập\"; tiền mã hóa trung bình lỗ; ít trùng lặp hơn; tài sản cuối đời hợp lý\n- Sửa: điều kiện tình huống bị chép cũ, trốn trại lừa đảo về vẫn \"đang học đại học\"\n- Kiểm thử: 1.725.743 bài đạt\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "049e8956cd96611dbb410f96faa9c0af488cea33",
+    "publishedAt": "2026-10-15T04:58:54Z",
+    "message": "Một Đời v3.0.0 — bản cập nhật lớn: hồ sơ chi tiết, nhật ký thu gọn, lương theo trình độ & BHXH, chống lặp tình huống, sửa nhiều lỗi logic\n\n- Giao diện: nút thu gọn nhật ký, nút Hồ sơ (công việc, lương, tài sản, sở thích, bằng cấp, chứng chỉ, thành tựu)\n- HIV chỉ lây qua tình dục không an toàn, kim tiêm, mẹ sang con\n- Lương theo trình độ (thạc sĩ, tiến sĩ, chứng chỉ còn hạn), BHXH/BHYT/BHTN, lương hưu theo số năm đóng\n- Lương ổn định, thăng chức không giảm lương; thu nhập ghi rõ nguồn; lãi lỗ cửa hàng theo thực tế\n- Làm đúng sở trường năng suất cao; căng thẳng 0–100 ảnh hưởng sức khỏe, quan hệ, trầm cảm\n- Năng khiếu có cấp độ & EXP; bằng B hết hạn 10 năm, IELTS/TOPIK/HSK 2 năm\n- Mua xe theo nhóm (xe máy / ô tô), thuê xe chạy Xanh SM / Grab, xăng xe hằng tuần\n- Hẹn hò qua Tinder, Bumble, Hinge, Facebook Hẹn hò, Blued, HER\n- Chống lặp tình huống & nhật ký; sửa khăn quàng lớp 1, tiền tiêu vặt, mối tình đầu, game theo tuổi, mua sắm & tìm người yêu theo tuổi, bố mẹ mất trùng bệnh\n- Kiểm thử: 1.627.347 bài đạt\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "70602774fb964874a33149c05f072fbef15e3628",
+    "publishedAt": "2026-10-14T23:59:50Z",
+    "message": "Một Đời v2.9.0 — vận động viên theo môn, con đường năng khiếu, concert theo thể loại, sở thích, tôn giáo, nhóm nghề pháp luật, vé số theo tỉ lệ thật\n\n- Vận động viên chia 15 môn (bóng đá, bóng rổ, bóng chuyền, bơi lội, quần vợt…), bảng Nghề & lương hiện chi tiết từng môn\n- Năng khiếu: thi từ cấp trường đến quốc gia / quốc tế (VMO, IMO), tuyển thẳng, học bổng, mời làm nghề\n- Concert: nghệ sĩ Việt, các show Say Hi / Anh tài, K-pop, Âu Mỹ, Rap Việt, rapper Mỹ; theo tuổi\n- Sở thích từ nhỏ (mê rap → rapper…), thêm việc giải trí và chăm sóc tâm hồn\n- Hành động và sự kiện tâm linh riêng theo từng tôn giáo\n- Nhóm \"Pháp luật & tòa án\": thẩm phán, công tố viên, điều tra viên, chấp hành viên, thừa phát lại, trợ giúp pháp lý + sự kiện\n- Vé số / Vietlott tỉ lệ thật, thuế TNCN, nhận giải giấu mặt / công khai, người lạ \"nhận vơ\", họ hàng, tiêu tiền\n- Sửa lỗi; kiểm thử 1.582.159 bài đạt\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "127e14cbcfd40a8eb0fcee75e5a022797702df69",
+    "publishedAt": "2026-10-14T17:52:37Z",
+    "message": "Một Đời v2.7.0 + v2.8.0 — bố cục gọn, người yêu có nghề & lương, mua xe theo ngân sách, tiền bạc rõ ràng, sửa nhiều lỗi logic\n\nv2.7.0\n- Khung \"Việc bạn muốn làm\" gọn (chọn nhóm mới hiện việc); \"Gia đình & người thân\" lên cột phải\n- Lượt hành động theo tuổi: <10 tuổi 3 · 10–17 tuổi 7 · từ 18 không giới hạn; không tự chọn thì game tự chọn\n- Trọng tâm \"Cân bằng\" từ 21 tuổi; tự đặt tên thú cưng\n- Người yêu có nghề, quen lâu mới biết lương; ai trả tiền buổi hẹn; bố mẹ khá giả chu cấp\n\nv2.8.0\n- Tài sản ròng chia rõ: tiền mặt, tiết kiệm, nhà, xe, nợ; \"cả năm dư ra / hụt\" có giải thích\n- Mua xe theo số tiền: chọn phân khúc → mẫu xe (giá, thông số, ưu nhược điểm), trả thẳng hoặc trả góp\n- Người thân, bạn bè mất có lý do hợp tuổi; trợ cấp hưu trí xã hội 500.000 đ/tháng (Luật BHXH 2024)\n- Người đi làm lâu năm không phải làm lại \"thực tập sinh\"; chủ cửa hàng tự điều hành, không \"xin tăng lương\"\n- Game theo thể loại sở trường (FPS / MOBA, máy tính / điện thoại)\n- Sửa: nhắc mẹ đã mất, trùng tên anh chị em, tin lặp trong năm, mời mở chi nhánh khi âm tiền, quyết định treo khi mất\n- Kiểm thử phần 23–24 (1.193.971 phép kiểm đạt)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "993484f91eec890e218bc5df2bf07e3496a505ec",
+    "publishedAt": "2026-10-14T15:21:54Z",
+    "message": "Một Đời v2.6.0 — thu nhỏ hộp lựa chọn, tuổi thơ đa dạng theo giới tính\n\n- Nút \"Thu nhỏ\" / phím Esc: tạm đóng hộp lựa chọn để xem bảng, đổi trọng tâm;\n  thanh \"Đang chờ bạn chọn\" để mở lại, đời tạm dừng trong lúc đó\n- Tuổi thơ 0–15: hơn 120 dòng kể chuyện theo tuổi, giới tính, nông thôn/thành thị,\n  giàu/nghèo, không lặp trong một đời; 22 tình huống mới (riêng bé trai / bé gái)\n- Bé gái ít bị rủ đi net hơn; câu \"hai anh em\", gãy tay, sinh nhật đa dạng hơn\n- Kiểm thử phần 22 + chặn lỗi gọi .forEach trên $() trong app.js (1.243.553 phép kiểm đạt)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "a162b54a92d0f9847d8c150d7c5cb7e1465bacec",
+    "publishedAt": "2026-10-14T14:39:25Z",
+    "message": "Một Đời v2.5.0 — nghề mới, hướng đi giữa các nghề, sự kiện theo nghề, gia đình tài phiệt / chính trị\n\n- Nghề mới: chủ quán ăn, chủ nhà hàng, tiệm điện thoại, thám tử tư, công chứng viên,\n  phòng khám tư, chủ đầu tư BĐS; cấp siêu giàu: tập đoàn, lãnh đạo ngân hàng, chính trường\n- Hơn 20 hướng đi giữa các nghề (bếp trưởng → nhà hàng, công an → thám tử, bác sĩ → phòng khám…)\n- ~1% sinh ra trong gia đình tài phiệt / chủ ngân hàng / chính trị: gia giáo, sắp xếp học hành,\n  hôn nhân sắp đặt, từ chối thì cắt chu cấp, tranh quyền thừa kế, bầu cử, thanh tra\n- Sự kiện riêng theo nghề: thám tử (chủ yếu vụ ngoại tình), công an 6 ngành, luật sư, thẩm phán,\n  bác sĩ, giáo viên, chủ quán, tiệm điện thoại, cầm đồ, xây dựng, nhà báo, môi giới, ngân hàng, tập đoàn\n- Chủ cơ sở / tự do / nghệ sĩ không còn bị \"cắt giảm nhân sự\"; căng thẳng luôn trong 0–100\n- Kiểm thử hồi quy phần 21 (1.049.800 phép kiểm đạt)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  },
+  {
+    "sha": "a424b9f7481cbc0137246e57d46f40473af0ebcb",
+    "publishedAt": "2026-10-14T13:05:34Z",
+    "message": "Một Đời v2.4.0 — sửa lỗi logic từ phản hồi người chơi, xe/nhà theo mức giàu, đầu tư kinh doanh, anh chị em\n\n- Bố mẹ đã mất không còn xuất hiện trong thăm nhà, mua sắm, bố mẹ cần, đòi nợ\n- Nhớ các nước đã đến (không còn \"lần đầu đến Hàn Quốc\" sau XKLĐ)\n- Chứng chỉ ngoại ngữ theo nơi đến: IELTS, JLPT N5-N1, TOPIK, HSK, Goethe\n- Thần tượng già đi & giải nghệ; concert chỉ đến 55 tuổi\n- Bớt lặp: hành động 1 lần/năm, AI chờ 3 năm, tình huống cách 2 năm\n- Nợ: xử lý trễ hạn kịp thời, CIC tự xóa sau 5 năm, tất toán vay nhà ở 75 tuổi\n- Bệnh tuổi già khó khỏi, bệnh mạn tính chỉ được kiểm soát\n- Xe điện → siêu xe, nhà phố → dinh thự, nhà cho thuê, cửa hàng có chi nhánh/phá sản\n- Anh chị em ruột, chia thừa kế; chủ doanh nghiệp làm đến 70-78, kinh doanh sau nghỉ hưu\n- Bỏ dòng nguồn ở bảng nghề; kiểm thử hồi quy phần 20 (724.691 phép kiểm đạt)"
+  },
+  {
+    "sha": "b9fa9e86fdaf1b164b7374792090eb343920cf95",
+    "publishedAt": "2026-10-14T09:36:37Z",
+    "message": "Một Đời v2.3.0 — mô phỏng một đời người bằng số liệu thật\n\nTrò chơi web tĩnh (HTML/CSS/JS thuần) mô phỏng trọn một đời người:\nViệt Nam 63/34 tỉnh thành, 54 dân tộc hoặc 195 quốc gia; hơn 130 nghề\nvới lương tham chiếu thực tế; ngã rẽ quyết định & lựa chọn thường ngày;\nthú cưng; tài sản, hụi, bảo hiểm; sức khỏe tinh thần; đời riêng của con\ncái và \"sống tiếp đời con\"; khối thi & điểm thi THPT; ảnh thẻ cuộc đời;\nnhạc nền lofi tự sinh. Kiểm thử hồi quy: node tests/regression.js.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+  }
+]

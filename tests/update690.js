@@ -1,7 +1,7 @@
 const assert=require('assert'),fs=require('fs'),path=require('path'),vm=require('vm');let n=0;function ok(x,t){assert.ok(x,t);n++;}
 (async()=>{const code=fs.readFileSync(path.join(__dirname,'../public/_worker.js'),'utf8'),worker=(await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'))).default;
  const db=require('../tools/reviews-local.js')(':memory:'),env={REVIEWS_DB:db},origin='https://example.test';let ip=1;
- const call=async(body,{token,o=origin,ct='application/json',sameIp}={})=>{const h={'Content-Type':ct,Origin:o,'CF-Connecting-IP':'198.51.100.'+(sameIp||ip++)};if(token)h.Authorization='Bearer '+token;const r=await worker.fetch(new Request(origin+'/api/account',{method:'POST',headers:h,body:typeof body==='string'?body:JSON.stringify(body)}),env);let j=null;try{j=await r.json();}catch(e){}return{status:r.status,j};};
+ const call=async(body,{token,o=origin,ct='application/json',sameIp}={})=>{if(body&&typeof body==='object'&&body.action==='register')body={displayName:'Người chơi',...body};const h={'Content-Type':ct,Origin:o,'CF-Connecting-IP':'198.51.100.'+(sameIp||ip++)};if(token)h.Authorization='Bearer '+token;const r=await worker.fetch(new Request(origin+'/api/account',{method:'POST',headers:h,body:typeof body==='string'?body:JSON.stringify(body)}),env);let j=null;try{j=await r.json();}catch(e){}return{status:r.status,j};};
  let r=await worker.fetch(new Request(origin+'/api/account'),{});ok(r.status===405,'chỉ nhận POST');
  r=await call({action:'me'},{o:'https://evil.test'});ok(r.status===403,'chặn gửi từ trang khác');
  r=await call({action:'register',username:'Ab',password:'12345678'});ok(r.status===400&&r.j.code==='INVALID_USERNAME','tên đăng nhập quá ngắn bị từ chối');

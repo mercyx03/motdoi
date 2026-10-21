@@ -182,11 +182,11 @@
   SC('casting', {
     title: 'Lời mời casting',
     valid: function (l) { return l.age >= 14 && free(l); },
-    text: function (l) { return (isActor(l) ? 'Quản lý gửi cho bạn mấy kịch bản đang tìm diễn viên.' : 'Một đoàn phim đang tuyển diễn viên mới, bạn bè rủ bạn thử sức.') + ' Khả năng diễn xuất của bạn: ' + Math.round(act(l)) + '/100' + ((l.fame || 0) >= 1e4 ? ', có ' + E.fmtFollowers(l.fame) + ' người hâm mộ' : '') + '.'; },
+    text: function (l) { return (isActor(l) ? 'Quản lý gửi cho bạn mấy kịch bản đang tìm diễn viên.' : 'Một đoàn phim đang tuyển diễn viên mới, bạn bè rủ bạn thử sức.') + (l.job && !isActor(l) ? " Nếu trúng vai và theo đuổi diễn xuất, bạn sẽ rời công việc cùng mức lương hiện tại. Tài năng và may mắn có thể đưa bạn thành diễn viên hạng A, nhưng bạn cũng có thể chỉ nhận vai phụ hoặc quần chúng." : '') + ' Khả năng diễn xuất của bạn: ' + Math.round(act(l)) + '/100' + ((l.fame || 0) >= 1e4 ? ', có ' + E.fmtFollowers(l.fame) + ' người hâm mộ' : '') + '.'; },
     opts: Object.keys(PROJ).map(function (k) {
       var P = PROJ[k];
       return { k: k, l: 'Casting ' + P.n,
-        h: function (l) { var f = fameK(l); return 'Cát-xê vai chính ~' + mo(l, V(l, P.lead[0] * f)) + '–' + mo(l, V(l, P.lead[1] * f)) + ', vai phụ ~' + mo(l, V(l, P.sup[0] * f)) + '–' + mo(l, V(l, P.sup[1] * f)) + (P.need ? ' · cần diễn xuất khá' : ''); },
+        h: function (l) { var f = fameK(l); return 'Cát-xê vai chính ~' + mo(l, V(l, P.lead[0] * f)) + '–' + mo(l, V(l, P.lead[1] * f)) + ', vai phụ ~' + mo(l, V(l, P.sup[0] * f)) + '–' + mo(l, V(l, P.sup[1] * f)) + (P.need ? ' · cần diễn xuất khá' : '') + (l.job && !isActor(l) ? ' · Trúng vai: chuyển nghề, mất việc và lương hiện tại' : ''); },
         req: function (l) { return act(l) >= P.need - 15 || (l.fame || 0) >= 1e5; },
         ai: function (l) { return act(l) >= P.need ? 1 + P.need / 40 : 0.4; },
         run: function (l, r, log) { cast(l, r, log, k); } };
@@ -195,6 +195,17 @@
       { k: 'no', l: 'Thôi, bỏ qua', ai: { w: 0.3 }, run: function () { } }
     ])
   });
+  // Refresh text of already saved career choices without rerolling prep/options.
+  E.refreshActingWarning = function (l, d) {
+    if (!d || (d.id !== 'casting' && d.id !== 'len_chuyen')) return;
+    if (d.id === 'len_chuyen' && (!d.data || d.data.id !== 'dien_vien')) return;
+    var def = E.DEC[d.id].def;
+    d.text = def.text(l, d.data || {});
+    if (d.id === 'casting') d.opts.forEach(function (o) {
+      var source = def.opts.filter(function (x) { return x.k === o.k; })[0];
+      if (source && typeof source.h === 'function') o.h = source.h(l, d.data || {});
+    });
+  };
   function cast(l, r, log, k) {
     var P = PROJ[k], s = act(l), f = l.fame || 0;
     var p = U.clamp(0.3 + (s - P.need) / 120 + Math.log(f + 10) / Math.LN10 / 30, 0.12, 0.9);

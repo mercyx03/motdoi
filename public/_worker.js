@@ -41,23 +41,22 @@ async function reviews(request, env, url) {
     const raw = url.searchParams.get('offset') || '0';
     if (!/^\d{1,7}$/.test(raw)) return ratingJson(400, { ok: false, code: 'INVALID_OFFSET' });
     // v6.5.1: lọc theo số sao (?stars=1..5), chỉ review có nội dung (?text=1), số dòng mỗi trang (?limit=1..100)
-    const starsRaw = url.searchParams.get('stars') || '', limitRaw = url.searchParams.get('limit') || '20', textOnly = url.searchParams.get('text') === '1';
+    const starsRaw = url.searchParams.get('stars') || '', limitRaw = url.searchParams.get('limit') || '20';
     if (starsRaw && !/^[1-5]$/.test(starsRaw)) return ratingJson(400, { ok: false, code: 'INVALID_STARS' });
     if (!/^\d{1,3}$/.test(limitRaw) || +limitRaw < 1 || +limitRaw > 100) return ratingJson(400, { ok: false, code: 'INVALID_LIMIT' });
     await initRatings(db);
     const where = [], args = [];
     if (starsRaw) { where.push('stars = ?'); args.push(Number(starsRaw)); }
-    if (textOnly) where.push("review_text <> ''");
     const cond = where.length ? ' WHERE ' + where.join(' AND ') : '';
     const rows = await db.batch([
       db.prepare('SELECT stars, COUNT(*) AS count FROM game_reviews GROUP BY stars'),
-      db.prepare('SELECT stars, updated_at, review_text FROM game_reviews' + cond + ' ORDER BY updated_at DESC, id DESC LIMIT ? OFFSET ?').bind(...args, Number(limitRaw), Number(raw)),
+      db.prepare('SELECT stars, updated_at FROM game_reviews' + cond + ' ORDER BY updated_at DESC, id DESC LIMIT ? OFFSET ?').bind(...args, Number(limitRaw), Number(raw)),
       db.prepare('SELECT COUNT(*) AS count FROM game_reviews' + cond).bind(...args)
     ]);
     const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; let total = 0, sum = 0;
     for (const row of rows[0].results) { distribution[row.stars] = row.count; total += row.count; sum += row.stars * row.count; }
     const matched = Number((rows[2].results[0] || {}).count || 0);
-    return ratingJson(200, { ok: true, total, matched, average: total ? sum / total : 0, distribution, reviews: rows[1].results.map(x => ({ stars: x.stars, updatedAt: x.updated_at, review: x.review_text || '' })) });
+    return ratingJson(200, { ok: true, total, matched, average: total ? sum / total : 0, distribution, reviews: rows[1].results.map(x => ({ stars: x.stars, updatedAt: x.updated_at })) });
   }
   if (!(request.headers.get('Content-Type') || '').toLowerCase().startsWith('application/json')) return ratingJson(415, { ok: false, code: 'CONTENT_TYPE' });
   let data;
@@ -69,8 +68,8 @@ async function reviews(request, env, url) {
     data = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(buffer));
   } catch { return ratingJson(400, { ok: false, code: 'INVALID_JSON' }); }
   if (!data || !Number.isInteger(data.stars) || data.stars < 1 || data.stars > 5 || typeof data.voter !== 'string' || !/^[a-f0-9]{64}$/.test(data.voter)) return ratingJson(400, { ok: false, code: 'INVALID_RATING' });
-  if (data.review != null && typeof data.review !== 'string' || (data.review || '').length > 1000) return ratingJson(400, { ok: false, code: 'INVALID_REVIEW' });
-  const review = (data.review || '').trim();
+  if (data.review != null && (typeof data.review !== 'string' || data.review.trim())) return ratingJson(400, { ok: false, code: 'COMMENTS_MOVED' });
+  const review = '';
   const now = Date.now(), ip = request.headers.get('CF-Connecting-IP');
   for (const [key, until] of reviewIPs) if (until <= now) reviewIPs.delete(key);
   if (ip && (reviewIPs.get(ip) || 0) > now) return ratingJson(429, { ok: false, code: 'RATE_LIMIT' });
@@ -84,7 +83,7 @@ async function reviews(request, env, url) {
   const rows = recent.results || [], last = rows[0];
   if (last && now - Math.max(last.created_at, last.updated_at) < 60000) return ratingJson(429, { ok: false, code: 'RATE_LIMIT' });
   let result, edited = false;
-  if (rows.length >= PER_DAY) { edited = true; result = await db.prepare('UPDATE game_reviews SET stars = ?, review_text = ?, updated_at = ? WHERE id = ? AND updated_at <= ?').bind(data.stars, review, now, last.id, now - 60000).run(); }
+  if (rows.length >= PER_DAY) { edited = true; result = await db.prepare('UPDATE game_reviews SET stars = ?, updated_at = ? WHERE id = ? AND updated_at <= ?').bind(data.stars, now, last.id, now - 60000).run(); }
   else result = await db.prepare('INSERT INTO game_reviews(voter_hash, stars, created_at, updated_at, review_text) VALUES (?, ?, ?, ?, ?)').bind(voterHash, data.stars, now, now, review).run();
   if (!result.success) throw Error('database');
   if (!result.meta.changes) return ratingJson(429, { ok: false, code: 'RATE_LIMIT' });
@@ -111,7 +110,14 @@ async function initAccounts(db) {
     db.prepare('CREATE TABLE IF NOT EXISTS game_sessions (token_hash TEXT PRIMARY KEY, account_id INTEGER NOT NULL, created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL)'),
     db.prepare('CREATE INDEX IF NOT EXISTS game_sessions_account ON game_sessions(account_id)'),
     db.prepare('CREATE TABLE IF NOT EXISTS game_saves (account_id INTEGER PRIMARY KEY, data TEXT NOT NULL, rev INTEGER NOT NULL, updated_at INTEGER NOT NULL)')
-  ]).catch(e => { accountSchemas.delete(db); throw e; }));
+  ]).then(async () => {
+    const columns = await db.prepare('PRAGMA table_info(game_accounts)').all();
+    if (!columns.results.some(x => x.name === 'display_name')) {
+      try { await db.prepare("ALTER TABLE game_accounts ADD COLUMN display_name TEXT NOT NULL DEFAULT ''").run(); }
+      catch (e) { const retry = await db.prepare('PRAGMA table_info(game_accounts)').all(); if (!retry.results.some(x => x.name === 'display_name')) throw e; }
+    }
+    await db.batch([db.prepare("CREATE TABLE IF NOT EXISTS game_account_roles (account_id INTEGER PRIMARY KEY, role TEXT NOT NULL CHECK(role = 'admin'))"),db.prepare("CREATE TABLE IF NOT EXISTS game_update_comments (id INTEGER PRIMARY KEY AUTOINCREMENT, account_id INTEGER NOT NULL, parent_id INTEGER, body TEXT NOT NULL, created_at INTEGER NOT NULL)"),db.prepare('CREATE INDEX IF NOT EXISTS game_comments_parent ON game_update_comments(parent_id, id DESC)'),db.prepare('CREATE INDEX IF NOT EXISTS game_comments_author ON game_update_comments(account_id, created_at DESC)')]);
+  }).catch(e => { accountSchemas.delete(db); throw e; }));
   await accountSchemas.get(db);
 }
 async function readJsonBody(request, limit) {
@@ -131,7 +137,7 @@ async function newSession(db, accountId, now) {
 }
 async function sessionAccount(db, request, now) {
   const m = /^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('Authorization') || ''); if (!m) return null;
-  const row = await db.prepare('SELECT s.account_id AS id, a.username AS username, s.token_hash AS th FROM game_sessions s JOIN game_accounts a ON a.id = s.account_id WHERE s.token_hash = ? AND s.expires_at > ?').bind(await sha256(m[1]), now).first();
+  const row = await db.prepare('SELECT s.account_id AS id, a.username AS username, a.display_name AS displayName, s.token_hash AS th FROM game_sessions s JOIN game_accounts a ON a.id = s.account_id WHERE s.token_hash = ? AND s.expires_at > ?').bind(await sha256(m[1]), now).first();
   return row || null;
 }
 async function account(request, env, url) {
@@ -151,14 +157,16 @@ async function account(request, env, url) {
     for (const [k, v] of accountIPs) if (v.until <= now) accountIPs.delete(k);
     if (ip) { const v = accountIPs.get(ip) || { n: 0, until: now + 600000 }; v.n++; accountIPs.set(ip, v); if (v.n > 10) return accJson(429, { ok: false, code: 'RATE_LIMIT' }); }
     if (action === 'register') {
+      const displayName = cleanDisplayName(body.displayName);
+      if (!displayName) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' });
       const exists = await db.prepare('SELECT id FROM game_accounts WHERE username = ?').bind(username).first();
       if (exists) return accJson(409, { ok: false, code: 'USERNAME_TAKEN' });
       const salt = hex(crypto.getRandomValues(new Uint8Array(16))), hash = await pbkdf2(password, salt);
-      let res; try { res = await db.prepare('INSERT INTO game_accounts(username, pass_hash, salt, created_at) VALUES (?, ?, ?, ?)').bind(username, hash, salt, now).run(); } catch (e) { return accJson(409, { ok: false, code: 'USERNAME_TAKEN' }); }
+      let res; try { res = await db.prepare('INSERT INTO game_accounts(username, pass_hash, salt, created_at, display_name) VALUES (?, ?, ?, ?, ?)').bind(username, hash, salt, now, displayName).run(); } catch (e) { return accJson(409, { ok: false, code: 'USERNAME_TAKEN' }); }
       const row = await db.prepare('SELECT id FROM game_accounts WHERE username = ?').bind(username).first();
-      return accJson(200, { ok: true, username, token: await newSession(db, row.id, now) });
+      return accJson(200, { ok: true, username, displayName, role: 'member', token: await newSession(db, row.id, now) });
     }
-    const acc = await db.prepare('SELECT id, pass_hash, salt, fail_count, lock_until FROM game_accounts WHERE username = ?').bind(username).first();
+    const acc = await db.prepare('SELECT id, pass_hash, salt, display_name, fail_count, lock_until FROM game_accounts WHERE username = ?').bind(username).first();
     if (acc && acc.lock_until > now) return accJson(429, { ok: false, code: 'LOCKED' });
     const hash = await pbkdf2(password, acc ? acc.salt : '00'.repeat(16));
     if (!acc || !sameHex(hash, acc.pass_hash)) {
@@ -166,11 +174,12 @@ async function account(request, env, url) {
       return accJson(401, { ok: false, code: 'WRONG_LOGIN' });
     }
     await db.prepare('UPDATE game_accounts SET fail_count = 0, lock_until = 0 WHERE id = ?').bind(acc.id).run();
-    return accJson(200, { ok: true, username, token: await newSession(db, acc.id, now) });
+    return accJson(200, { ok: true, username, displayName: acc.display_name, role: await accountRole(db, acc.id), token: await newSession(db, acc.id, now) });
   }
   const me = await sessionAccount(db, request, now);
   if (!me) return accJson(401, { ok: false, code: 'NOT_LOGGED_IN' });
-  if (action === 'me') return accJson(200, { ok: true, username: me.username });
+  if (action === 'me') return accJson(200, { ok: true, username: me.username, displayName: me.displayName, role: await accountRole(db, me.id) });
+  if (action === 'profile') { const name = cleanDisplayName(body.displayName); if (!name) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' }); await db.prepare('UPDATE game_accounts SET display_name = ? WHERE id = ?').bind(name, me.id).run(); return accJson(200, { ok: true, username: me.username, displayName: name, role: await accountRole(db, me.id) }); }
   if (action === 'logout') { await db.prepare('DELETE FROM game_sessions WHERE token_hash = ?').bind(me.th).run(); return accJson(200, { ok: true }); }
   if (action === 'load') { const s = await db.prepare('SELECT data, rev, updated_at FROM game_saves WHERE account_id = ?').bind(me.id).first(); return accJson(200, { ok: true, username: me.username, rev: s ? s.rev : 0, updatedAt: s ? s.updated_at : 0, data: s ? JSON.parse(s.data) : null }); }
   if (action === 'save') {
@@ -189,10 +198,45 @@ async function account(request, env, url) {
     const acc = await db.prepare('SELECT pass_hash, salt FROM game_accounts WHERE id = ?').bind(me.id).first();
     const password = typeof body.password === 'string' ? body.password : '';
     if (!acc || !sameHex(await pbkdf2(password, acc.salt), acc.pass_hash)) return accJson(401, { ok: false, code: 'WRONG_LOGIN' });
-    await db.batch([db.prepare('DELETE FROM game_saves WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_sessions WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_accounts WHERE id = ?').bind(me.id)]);
+    await db.batch([db.prepare('DELETE FROM game_saves WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_sessions WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_account_roles WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_accounts WHERE id = ?').bind(me.id)]);
     return accJson(200, { ok: true });
   }
   return accJson(400, { ok: false, code: 'INVALID_ACTION' });
+}
+
+// Community identity is server-owned. No username/password or admin role from a
+// client request can grant privilege; only a private D1 role record can do so.
+function cleanDisplayName(value) {
+  if (typeof value !== 'string') return null;
+  const name = value.normalize('NFC').trim().replace(/\s+/g, ' ');
+  return /^[\p{L}\p{N}\p{M} ._'’-]{2,32}$/u.test(name) && !/^(admin|administrator|quản trị viên)$/iu.test(name) ? name : null;
+}
+async function accountRole(db, id) { const row = await db.prepare("SELECT role FROM game_account_roles WHERE account_id = ?").bind(id).first(); return row && row.role === 'admin' ? 'admin' : 'member'; }
+const COMMENT_SELECT = "SELECT c.id, c.parent_id AS parentId, c.body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name, ''), 'Người chơi đã rời đi') AS displayName, CASE WHEN a.id IS NOT NULL AND r.role = 'admin' THEN 'admin' ELSE 'member' END AS role FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id LEFT JOIN game_account_roles r ON r.account_id = a.id";
+async function comments(request, env, url) {
+  if (!['GET','POST'].includes(request.method)) return accJson(405,{ok:false,code:'METHOD_NOT_ALLOWED'});
+  const db=env.REVIEWS_DB;if(!db)return accJson(503,{ok:false,code:'COMMENTS_NOT_CONFIGURED'});
+  await initAccounts(db);
+  if(request.method==='GET') {
+    const raw=url.searchParams.get('offset')||'0',thread=url.searchParams.get('thread')||'';
+    if(!/^\d{1,7}$/.test(raw)||thread&&!/^[1-9]\d{0,12}$/.test(thread))return accJson(400,{ok:false,code:'INVALID_PAGE'});
+    if(thread) {const root=await db.prepare('SELECT id FROM game_update_comments WHERE id = ? AND parent_id IS NULL').bind(Number(thread)).first();if(!root)return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});const rows=await db.prepare(COMMENT_SELECT+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20 OFFSET ?').bind(Number(thread),Number(raw)).all(),count=await db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id = ?').bind(Number(thread)).first();return accJson(200,{ok:true,replies:rows.results,total:count.count});}
+    const rows=await db.prepare(COMMENT_SELECT+' WHERE c.parent_id IS NULL ORDER BY c.id DESC LIMIT 10 OFFSET ?').bind(Number(raw)).all(),total=await db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id IS NULL').first();
+    const roots=rows.results;const replies=roots.length?await db.batch(roots.map(root=>db.prepare(COMMENT_SELECT+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20').bind(root.id))):[],counts=roots.length?await db.batch(roots.map(root=>db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id = ?').bind(root.id))):[];
+    return accJson(200,{ok:true,total:total.count,comments:roots.map((root,i)=>({...root,replies:replies[i].results,replyCount:counts[i].results[0].count}))});
+  }
+  if(request.headers.get('Origin')!==url.origin)return accJson(403,{ok:false,code:'ORIGIN'});
+  if(!(request.headers.get('Content-Type')||'').toLowerCase().startsWith('application/json'))return accJson(415,{ok:false,code:'CONTENT_TYPE'});
+  const me=await sessionAccount(db,request,Date.now());if(!me)return accJson(401,{ok:false,code:'NOT_LOGGED_IN'});
+  if(!cleanDisplayName(me.displayName))return accJson(403,{ok:false,code:'DISPLAY_NAME_REQUIRED'});
+  let body;try{body=await readJsonBody(request,8192);}catch(e){return accJson(e.large?413:400,{ok:false,code:e.large?'BODY_TOO_LARGE':'INVALID_JSON'});}
+  if(!body||typeof body.body!=='string')return accJson(400,{ok:false,code:'INVALID_COMMENT'});
+  const text=body.body.normalize('NFC').trim();if(!text||text.length>1500||/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(text))return accJson(400,{ok:false,code:'INVALID_COMMENT'});
+  const parent=body.parentId==null?null:body.parentId;if(parent!==null&&(!Number.isSafeInteger(parent)||parent<1))return accJson(400,{ok:false,code:'INVALID_PARENT'});
+  if(parent!==null&&!await db.prepare('SELECT id FROM game_update_comments WHERE id = ? AND parent_id IS NULL').bind(parent).first())return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
+  const now=Date.now(),result=await db.prepare('INSERT INTO game_update_comments(account_id, parent_id, body, created_at) SELECT ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM game_update_comments WHERE account_id = ? AND created_at > ?)').bind(me.id,parent,text,now,me.id,now-15000).run();
+  if(!result.meta.changes)return accJson(429,{ok:false,code:'RATE_LIMIT'});
+  return accJson(201,{ok:true});
 }
 
 export default {
@@ -201,6 +245,7 @@ export default {
     let decodedPath;try{decodedPath=decodeURIComponent(url.pathname);}catch{return new Response('Bad request',{status:400});}
     if (['/_worker.js', '/_headers', '/_routes.json', '/.assetsignore'].includes(decodedPath)) return new Response('Not found', { status: 404 });
     if (url.pathname === '/api/feedback') return new Response('Not found', { status: 404 });
+    if (url.pathname === '/api/comments') { try { return await comments(request, env, url); } catch { return accJson(503, { ok: false, code: 'COMMENTS_UNAVAILABLE' }); } }
     if (url.pathname === '/api/account') { try { return await account(request, env, url); } catch { return accJson(503, { ok: false, code: 'ACCOUNTS_UNAVAILABLE' }); } }
     if (url.pathname === '/api/reviews') { try { return await reviews(request, env, url); } catch { return ratingJson(503, { ok: false, code: 'REVIEWS_UNAVAILABLE' }); } }
     if (url.pathname !== '/api/market') return env.ASSETS.fetch(request);
