@@ -1,6 +1,19 @@
 {
-  "generatedAt": "2026-10-22T10:56:03.774Z",
+  "generatedAt": "2026-10-22T15:02:12.381Z",
   "entries": [
+    {
+      "id": "adult-study-civic-oct22",
+      "publishedAt": "2026-10-22T15:01:00.000Z",
+      "title": "Đi học tiếp, chọn hướng đi mới",
+      "summary": "Không cần chờ lời mời để học cao hơn hay tham gia việc chung ở địa phương.",
+      "details": [
+        "Chủ động đăng ký thạc sĩ, tiến sĩ, chọn ngành và trường; sau 30 tuổi vẫn học được khi đủ điều kiện.",
+        "Thêm lựa chọn tham gia Đoàn, phấn đấu vào Đảng, hỗ trợ Mặt trận, ứng cử HĐND và ứng tuyển vào UBND."
+      ],
+      "tags": [
+        "Tính năng"
+      ]
+    },
     {
       "id": "memorial-completed-oct22",
       "publishedAt": "2026-10-22T10:56:00.737Z",

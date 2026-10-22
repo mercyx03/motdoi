@@ -68,6 +68,7 @@ async function reviews(request, env, url) {
     data = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(buffer));
   } catch { return ratingJson(400, { ok: false, code: 'INVALID_JSON' }); }
   if (!data || !Number.isInteger(data.stars) || data.stars < 1 || data.stars > 5 || typeof data.voter !== 'string' || !/^[a-f0-9]{64}$/.test(data.voter)) return ratingJson(400, { ok: false, code: 'INVALID_RATING' });
+  if (data.stars === 1) return ratingJson(400, { ok: false, code: 'ONE_STAR_BLOCKED' });
   if (data.review != null && (typeof data.review !== 'string' || data.review.trim())) return ratingJson(400, { ok: false, code: 'COMMENTS_MOVED' });
   const review = '';
   const now = Date.now(), ip = request.headers.get('CF-Connecting-IP');
