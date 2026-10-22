@@ -1,6 +1,102 @@
 {
-  "generatedAt": "2026-10-22T03:46:13.588Z",
+  "generatedAt": "2026-10-22T23:30:43.203Z",
   "entries": [
+    {
+      "id": "life-paths-oct23",
+      "publishedAt": "2026-10-23T03:00:00.000Z",
+      "title": "Thêm lựa chọn học tập, công việc và tình cảm",
+      "summary": "Chọn ngành trong cùng trường, chủ động học cao hơn hoặc du học; thêm đường phát triển trong quân đội, công an và showbiz.",
+      "details": [
+        "Mỗi trường có thêm nhiều ngành để xếp nguyện vọng. Người chơi tự chọn thời điểm, trường và ngành khi học thạc sĩ, tiến sĩ; du học có thể chọn quốc gia, trường và ngành.",
+        "Có thêm nhiệm vụ diễu binh, cứu hộ, chiến dịch để tích lũy thành tích xin xét quân hàm sớm; chức vụ được ghi cụ thể từ cấp đơn vị đến lãnh đạo bộ.",
+        "Nghệ sĩ có thể nâng đỡ đàn em; người chơi tự bật việc thay điện thoại, máy tính mỗi năm và đặt ngân sách cho từng lần mua.",
+        "Thêm chuyện ngoại tình, ly hôn và hòa giải tài sản. Sửa lựa chọn tình cảm với bạn thân đã cưới và giới hạn hợp lý cho tình huống CSGT ở tuổi cao."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
+    {
+      "id": "adult-study-civic-oct22",
+      "publishedAt": "2026-10-22T15:01:00.000Z",
+      "title": "Đi học tiếp, chọn hướng đi mới",
+      "summary": "Không cần chờ lời mời để học cao hơn hay tham gia việc chung ở địa phương.",
+      "details": [
+        "Chủ động đăng ký thạc sĩ, tiến sĩ, chọn ngành và trường; sau 30 tuổi vẫn học được khi đủ điều kiện.",
+        "Thêm lựa chọn tham gia Đoàn, phấn đấu vào Đảng, hỗ trợ Mặt trận, ứng cử HĐND và ứng tuyển vào UBND."
+      ],
+      "tags": [
+        "Tính năng"
+      ]
+    },
+    {
+      "id": "memorial-completed-oct22",
+      "publishedAt": "2026-10-22T10:56:00.737Z",
+      "title": "Sống trọn một đời, giữ lại trong Đài tưởng niệm",
+      "summary": "Cuộc đời đã kết thúc được lưu vào Đài tưởng niệm, không cần nhớ bấm nút lưu riêng.",
+      "details": [
+        "Cuộc đời đã kết thúc được lưu vào Đài tưởng niệm, không cần nhớ bấm nút lưu riêng."
+      ],
+      "tags": [
+        "Sửa lỗi"
+      ]
+    },
+    {
+      "id": "active-careers-oct22",
+      "publishedAt": "2026-10-22T10:50:44.859Z",
+      "title": "Chủ động tìm cơ hội trong nghề",
+      "summary": "Ca sĩ có thể tự tìm show, học hát, casting, hợp tác và livestream Instagram để tăng fan. Các nghề showbiz có số fan và cơ hội làm việc với nhãn hàng.",
+      "details": [
+        "Ca sĩ có thể tự tìm show, học hát, casting, hợp tác và livestream Instagram để tăng fan. Các nghề showbiz có số fan và cơ hội làm việc với nhãn hàng.",
+        "Có single, EP/mini album và album lớn với mức vốn khác nhau. Phải cân đối thời gian, tiền sản xuất và khả năng lỗ vốn.",
+        "Thu nhập showbiz, kinh doanh và làm tự do đã trừ chi phí nghề nghiệp; các nghề khác có thêm học chuyên môn và tìm việc ngoài giờ."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
+    {
+      "id": "family-storm-oct22",
+      "publishedAt": "2026-10-22T10:11:39.671Z",
+      "title": "Đổi tên vợ chồng, sửa thiệt hại sau bão",
+      "summary": "Kết hôn rồi có thể đổi tên vợ/chồng trong thanh Gia đình.",
+      "details": [
+        "Kết hôn rồi có thể đổi tên vợ/chồng trong thanh Gia đình.",
+        "Sửa cảnh sau bão: nhà không làm nông không còn tự dưng mất ruộng, mất mùa; trẻ chưa tự lập không bị trừ tiền thay bố mẹ."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
+    {
+      "id": "fantasy-maintenance-oct22",
+      "publishedAt": "2026-10-22T09:53:33.787Z",
+      "title": "Tạm khóa Fantasy gia tộc để điều chỉnh",
+      "summary": "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau.",
+      "details": [
+        "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau."
+      ],
+      "tags": [
+        "Fantasy"
+      ]
+    },
+    {
+      "id": "fantasy-gear-inbox-oct22",
+      "publishedAt": "2026-10-22T04:40:32.867Z",
+      "title": "Sắm đồ đi săn, kết giao chủ quản",
+      "summary": "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
+      "details": [
+        "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
+        "Chủ động tu luyện, chuẩn bị đủ sức trước khi sang vùng khó; có thể xã giao, tặng quà và cứu người để kết thân với chủ quản."
+      ],
+      "tags": [
+        "Fantasy",
+        "Tính năng"
+      ]
+    },
     {
       "id": "arts-gdtx-estate-oct22",
       "publishedAt": "2026-10-22T03:45:49.312Z",

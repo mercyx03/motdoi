@@ -20,9 +20,14 @@
     "data:fantasy": "node tools/fetch-fantasy-data.js && node tools/build-fantasy-data.js",
     "data:fantasy:politics": "node tools/fetch-fantasy-politics.js && python tools/build-fantasy-politics.py",
     "test:community": "node tests/community.js && node tests/update550.js && node tests/update651.js && node tests/update690.js",
+    "test:active-careers": "node tests/careers105.js",
+    "test:memorial": "node tests/memorial-history.js",
     "test:continuity": "node tests/continuity101.js",
-    "test:family": "node tests/family830.js",
+    "test:family": "node tests/family830.js && node tests/family104.js",
+    "test:fantasy:rpg": "node tests/fantasy-rpg.js",
+    "test:notifications": "node tests/notifications.js && node tests/community-speed.js && node tests/inbox-client.js",
     "test:fantasy:narrative": "node tests/fantasy-narrative.js",
-    "data:fantasy:scenes": "node tools/build-fantasy-scenes.js"
+    "data:fantasy:scenes": "node tools/build-fantasy-scenes.js",
+    "test:adult-study": "node tests/adult106.js"
   }
 }

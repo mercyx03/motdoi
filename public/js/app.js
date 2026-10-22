@@ -441,7 +441,9 @@
     ['balance', 'Cân bằng', 'Cân bằng công việc, sức khỏe, gia đình và trau dồi kỹ năng: mọi chỉ số tăng nhẹ, thăng tiến đều đặn mà không kiệt sức.', null, null, 21]
   ];
 
-  function persist() { if (S.life) LS.set(K.cur, { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto, at: Date.now() }); }
+  function memorialLabels(l){return {where:memWhere(l),years:lifeYears(l),summary:E.obituary(l)};}
+  function saveCompletedLife(l,stages){return G.MemorialHistory&&G.MemorialHistory.save(l,stages,S.cohort,LS,memorialLabels(l));}
+  function persist() { if(S.life&&!S.life.alive&&saveCompletedLife(S.life)){LS.del(K.cur);if(G.Account)G.Account.autoSync();return;} if (S.life) LS.set(K.cur, { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto, at: Date.now() }); }
   // v6.9: cho phần tài khoản biết người chơi đang ở giữa một đời (không ghi đè) và làm mới trang chủ sau khi đồng bộ
   window.G.App = { inLife: function () { var el = document.getElementById('life'); return !!(S.life && S.life.alive && el && el.classList.contains('active')); }, refresh: function () { var h = document.getElementById('home'); if (h && h.classList.contains('active')) renderHome(); } };
 
@@ -488,7 +490,7 @@
     var l = S.life;
     S.queue.forEach(function (q) { addLog(q.e); }); S.queue = [];
     S.yearRunning = false;
-    if (!l.alive) { S.phase = 'dead'; LS.del(K.cur); setTimeout(toFinale, 1400); renderAll(); return; }
+    if (!l.alive) { if(saveCompletedLife(l))LS.del(K.cur);else{persist();toast('Chưa lưu được cuộc đời đã kết thúc. Hãy kiểm tra bộ nhớ trình duyệt.');} S.phase = 'dead'; setTimeout(toFinale, 1400); renderAll(); return; }
     var logCount = l.log.length;
     var reflect = E.endYear(l);
     l.log.slice(logCount).forEach(function (e) { addLog(e); });
@@ -642,7 +644,7 @@
       '<dt>Công việc</dt><dd>' + esc(job) + '</dd>' +
       (function () { var P = E.promoProgress && E.promoProgress(l); if (!P) return ''; if (P.top) return '<dt>Thăng tiến</dt><dd>Đã ở vị trí cao nhất của nghề</dd>'; return '<dt>Thăng tiến</dt><dd>Lên ' + esc(P.next) + ': ' + P.done + '/' + P.need + ' năm' + (P.chance ? ' · cơ hội mỗi năm ~' + Math.round(P.chance * 100) + '%' : '') + '<div style="height:8px;margin:5px 0 4px;background:var(--surface-2);border-radius:6px;overflow:hidden"><div style="height:100%;width:' + P.pct + '%;background:var(--accent);border-radius:6px"></div></div><span class="small muted">' + esc(P.why.join(' · ')) + '</span></dd>'; })() +
       (l.talent ? '<dt>Năng khiếu</dt><dd>' + esc(E.talentText(l)) + (l.game && l.talent === 'game' && l.flags.gamePicked ? ' · ' + esc(l.game) : '') + (E.talentLevel ? ' · <b>cấp ' + E.talentLevel(l).lv + '</b> ' + esc(E.talentLevel(l).name) : '') + '</dd>' : '') +
-      (l.fame >= 1000 ? '<dt>Danh tiếng</dt><dd>' + esc(E.fmtFollowers(l.fame)) + ' người theo dõi</dd>' : '') +
+      (E.showbizFans&&E.showbizFans(l)?'<dt>Người hâm mộ</dt><dd>'+esc(E.fmtFollowers(Math.max(0,l.fame||0)))+' fan</dd>':l.fame>=1000?'<dt>Danh tiếng</dt><dd>'+esc(E.fmtFollowers(l.fame))+' người theo dõi</dd>':'') +
       (l.flags.tvAudience && l.flags.tvAudience.episodes > 0 ? '<dt>Xuất hiện trên game show</dt><dd>' + esc(l.flags.tvAudience.episodes) + ' tập hoàn thành · thu hút ' + esc(E.fmtFollowers(l.flags.tvAudience.followers)) + ' người theo dõi</dd>' : '') +
       (med ? '<dt>Huy chương</dt><dd>' + Object.keys(med).map(function (k) { return med[k] + ' ' + k; }).join(' · ') + '</dd>' : '') +
       (l.titles && l.titles.length ? '<dt>Danh hiệu</dt><dd>' + esc(l.titles[l.titles.length - 1]) + '</dd>' : '') +
@@ -783,7 +785,7 @@
       var partnerHome=E.HOMETOWN&&E.HOMETOWN.partner(l,p);
       var hometown=partnerHome?' · quê '+esc(partnerHome.name)+' <small class="muted">(địa giới cũ)</small>':'';
       if(p.alive!==false&&p.family100&&E.FAMILY100)pj+=' · '+esc(E.FAMILY100.summary(l,'partner',0));
-      row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi' + hometown + pj + pi + ' <button class="btn sm family-open" data-family-partner>Hồ sơ</button>');
+      row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi' + hometown + pj + pi + ' <button class="btn sm family-open" data-family-partner>Hồ sơ</button>'+(E.canRenameSpouse&&E.canRenameSpouse(l)?' <button class="btn sm" data-family-partner-rename>Đổi tên</button>':''));
     } else if (l.widowed) row('Góa bụa');
     l.kids.forEach(function (k) {
       var ka = a - k.born, info = '';
@@ -809,6 +811,7 @@
     if (l.veh === 'ô tô' && l.vehName) home += ' · đi ' + l.vehName;
     $('#famPanel').innerHTML = '<h3>Gia đình & những người thân</h3><ul class="fam">' + li.join('') + '</ul><div class="small muted" style="margin-top:8px">' + esc(home) + '</div>';
     $$('[data-family-child]', $('#famPanel')).forEach(function(b){b.onclick=function(){familyProfile(b.dataset.familyChild);};});
+    var renamePartnerButton=$('[data-family-partner-rename]',$('#famPanel'));if(renamePartnerButton)renamePartnerButton.onclick=function(){familyProfile('partner');var input=$('#spouseName');if(input)input.focus();};
     var partnerButton=$('[data-family-partner]', $('#famPanel'));if(partnerButton)partnerButton.onclick=function(){familyProfile('partner');};
   }
   function familyProfile(id, resumePause) {
@@ -832,10 +835,12 @@
     if(can&&a<18)controls+='<form id="familyNameForm" class="family-form"><label for="familyName">'+(a<=2?'Đặt tên cho bé':'Tên gọi ở nhà')+'</label><input id="familyName" maxlength="60" value="'+esc(a<=2?k.name:s.nickname||'')+'" autocomplete="off"><button class="btn" type="submit">Lưu tên</button></form>';
     if(can&&F.schoolOK(l,k))controls+='<form id="familySchoolForm" class="family-form"><label for="familySchool">Chọn trường · học phí bổ sung mỗi năm</label><select id="familySchool">'+Object.keys(F.schools).map(function(t){return '<option value="'+t+'"'+(s.school===t?' selected':'')+'>'+esc(F.schools[t].name+' · '+money(l,F.quote(l,'school',t))+'/năm')+'</option>';}).join('')+'</select><button class="btn" type="submit">Chọn trường / đóng học phí</button></form>';
     if(can&&a>=4&&a<18)controls+='<form id="familyTalentForm" class="family-form"><label for="familyTalent">Khám phá và bồi dưỡng năng khiếu</label><select id="familyTalent">'+Object.keys(F.talents).map(function(t){return '<option value="'+t+'"'+((s.activity||s.interest)===t?' selected':'')+'>'+esc(F.talents[t]+(t===s.interest?' · con yêu thích':''))+'</option>';}).join('')+'</select><label for="familyCourse">Cách học</label><select id="familyCourse">'+Object.keys(F.courses).map(function(t){return '<option value="'+t+'"'+(s.course===t?' selected':'')+'>'+esc(F.courses[t].name+' · '+money(l,F.quote(l,'course',t))+'/năm')+'</option>';}).join('')+'</select><button class="btn" type="submit">Đăng ký hoạt động</button></form>';
-    if(controls)controls+='<p class="small muted">Các gói học đã đăng ký được đóng lại mỗi năm. Đổi sang gói rẻ hơn không hoàn học phí; thiếu tiền sẽ chuyển sang lựa chọn miễn phí. Trẻ lớn tự quyết con đường của mình.</p>';
+    if(can&&controls)controls+='<p class="small muted">Các gói học đã đăng ký được đóng lại mỗi năm. Đổi sang gói rẻ hơn không hoàn học phí; thiếu tiền sẽ chuyển sang lựa chọn miễn phí. Trẻ lớn tự quyết con đường của mình.</p>';
+    if(!child&&E.canRenameSpouse&&E.canRenameSpouse(l))controls+='<form id="spouseNameForm" class="family-form"><label for="spouseName">Tên '+(k.sex==='M'?'chồng':'vợ')+'</label><input id="spouseName" maxlength="60" required value="'+esc(k.name)+'" autocomplete="off"><button class="btn" type="submit">Lưu tên</button></form>';
     modal('<div class="prof-top">'+E.art.avatar(model)+'<div><div class="eyebrow">THẺ GIA ĐÌNH · '+esc(title)+'</div><h2>'+esc(k.name)+'</h2></div></div><ul class="finev family-facts">'+facts+'</ul>'+controls+'<p id="familyMessage" role="status"></p><button class="btn" id="familyClose">Đóng hồ sơ</button>',function(box){
       function logger(t,kind){var entry={a:l.age,y:l.birthYear+l.age,t:t,k:kind||'good'};l.log.push(entry);addLog(entry);}
       function done(result){persist();renderAll();if(result.ok){familyProfile(id,was);$('#familyMessage').textContent=result.message;}else $('#familyMessage',box).textContent=result.message;}
+      var spouseForm=$('#spouseNameForm',box);if(spouseForm)spouseForm.onsubmit=function(e){e.preventDefault();done(E.renameSpouse(l,$('#spouseName',box).value,k,at,logger));};
       var nf=$('#familyNameForm',box);if(nf)nf.onsubmit=function(e){e.preventDefault();done(F.name(l,id,$('#familyName',box).value,at,logger));};
       var sf=$('#familySchoolForm',box);if(sf)sf.onsubmit=function(e){e.preventDefault();done(F.school(l,id,$('#familySchool',box).value,at,logger));};
       var tf=$('#familyTalentForm',box);if(tf)tf.onsubmit=function(e){e.preventDefault();done(F.train(l,id,$('#familyTalent',box).value,$('#familyCourse',box).value,at,logger));};
@@ -1210,7 +1215,7 @@
     entries.forEach(function (e) { e.k = e.k || 'decision'; addLog(e); });
     renderAll(); persist();
     if (!S.life.alive) {
-      S.queue = []; S.yearRunning = false; S.phase = 'dead'; LS.del(K.cur);
+      S.queue = []; S.yearRunning = false; S.phase = 'dead'; if(saveCompletedLife(S.life))LS.del(K.cur);else persist();
       setTimeout(toFinale, 1200); return;
     }
     if (S.life.pending.length) showDecision(); else afterDecisions();
@@ -1258,6 +1263,7 @@
     LS.set(K.recent, E.share.pushRecent(LS.get(K.recent, []), sum, 10));
     LS.set(K.last, { life: l, cohort: S.cohort });
     saveLegacy(l);
+    if(!saveCompletedLife(l,stages))toast('Chưa lưu được vào Đài tưởng niệm. Hãy thử nút Lưu ở trang kết thúc.');
     function step() {
       if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; }
       if (i >= stages.length) { closeModal(); S.phase = 'idle'; renderEnd(l, S.cohort, stages); show('end'); return; }
@@ -1379,11 +1385,7 @@
     });
     $('#saveMem').onclick = function () {
       l.finalWords = words(); updRecent();
-      var mem = LS.get(K.mem, []);
-      if (mem.some(function (m) { return m.id === l.id; })) mem = mem.filter(function (m) { return m.id !== l.id; });
-      mem.push({ id: l.id, name: l.name, sub: l.nameSub, where: memWhere(l), years: lifeYears(l), age: l.death.age, cause: l.death.cause, summary: E.obituary(l), words: l.finalWords, refl: l.refl, yrs: l.yrs, e0sex: l.e0sex, age2: l.age, savedAt: Date.now(), fin: stages });
-      if (mem.length > 60) mem = mem.slice(-60);
-      if (LS.set(K.mem, mem)) { toast('Đã lưu vào đài tưởng niệm'); this.disabled = true; this.textContent = 'Đã lưu ✓'; if (G.Account) G.Account.autoSync(); }
+      if (saveCompletedLife(l,stages)) { toast('Đã lưu vào đài tưởng niệm'); this.disabled = true; this.textContent = 'Đã lưu ✓'; if (G.Account) G.Account.autoSync(); }
       else toast('Không lưu được (bộ nhớ trình duyệt bị chặn hoặc đầy)');
     };
   }
@@ -1433,6 +1435,7 @@
   // ĐÀI TƯỞNG NIỆM
   // =====================================================================
   function renderMemorial() {
+    if(G.MemorialHistory&&G.MemorialHistory.recover(LS,memorialLabels)&&G.Account)G.Account.autoSync();
     var mem = LS.get(K.mem, []);
     $('#memAll').innerHTML = mem.length ? mem.slice().reverse().map(function (m) { return memCard(m, mem.indexOf(m)); }).join('') :
       '<p class="muted">Chưa có cuộc đời nào được lưu. Hãy sống trọn một đời và lưu lại ở trang kết thúc.</p>';
@@ -1449,7 +1452,7 @@
         $('#memClose', box).onclick = closeModal;
         $('#memDel', box).onclick = function () {
           ask('Xóa khỏi đài tưởng niệm?', 'Xóa ' + m.name + ' khỏi đài tưởng niệm?', 'Xóa', function () {
-            mem.splice(i, 1); LS.set(K.mem, mem);
+            mem.splice(i, 1); LS.set(K.mem, mem);if(G.MemorialHistory)G.MemorialHistory.removed(LS,m.id);
             if ($('#memorial').classList.contains('active')) renderMemorial(); else renderHome();
           });
         };

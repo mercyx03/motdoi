@@ -39,6 +39,8 @@
   function pupil(l){return free(l)&&l.age>=9&&l.age<18&&['primary','lower','upper','priv'].indexOf(l.school)>=0;}
   function applicant(l){return free(l)&&l.age>=18&&l.edu>=3&&!l.school&&!l.retired;}
   function school(id){return SCHOOLS.filter(function(x){return x.id===id;})[0];}
+  var PROGRAMS={it:['Công nghệ thông tin','Kỹ thuật phần mềm','Kỹ thuật điện – điện tử','Kỹ thuật cơ khí'],eco:['Quản trị kinh doanh','Tài chính – Ngân hàng','Kế toán','Kinh tế quốc tế'],med:['Y khoa','Y học dự phòng','Điều dưỡng'],edu:['Sư phạm Toán','Sư phạm Ngữ văn','Sư phạm Tiếng Anh'],law:['Luật','Luật kinh tế','Luật quốc tế'],art:['Mỹ thuật','Thiết kế đồ họa','Nghệ thuật học']};
+  function programs(u){if(u.nk)return u.majors.map(function(m){return {key:'major_'+m,major:m,name:u.mn||E.MAJORS[m]};});return u.majors.reduce(function(a,m){return a.concat((m==='it'&&/^(uit|uet|hcmus|hus)$/.test(u.id)?['Công nghệ thông tin','Kỹ thuật phần mềm','Khoa học máy tính','Hệ thống thông tin']:PROGRAMS[m]||[E.MAJORS[m]]).map(function(n,i){return {key:i?'program_'+m+'_'+i:'major_'+m,major:m,name:n};}));},[]);}
   function option(k,l,h){return{k:k,l:l,h:h||''};}
   function push(l,id,r){l.pending.unshift(E.DEC[id].make(l,r));}
   function same(l,d,kind){var s=state(l);return d&&d.at===l.age&&d.serial===s.serial&&(!kind||s.kind===kind);}
@@ -71,21 +73,21 @@
   function wishes(l){return state(l).wishes;}
   function threshold(s,m){return Math.min(29.5,s.score+(m==='it'?.5:0));}
   function direct(l,m){var eligible={it:['math','physics','it','chem'],eco:['math','english'],med:['bio','chem'],edu:Object.keys(SUBJECTS),law:['lit','history','english'],art:['lit','history']};return (eligible[m]||[]).some(function(k){return rank(l,k)>=3;});}
-  function choiceText(x){var u=school(x.school);return u.name+' · '+E.MAJORS[x.major];}
+  function choiceText(x){var u=school(x.school);return u.name+' · '+(x.program||E.MAJORS[x.major]);}
   function wishValid(l,d){return applicant(l)&&same(l,d,'wishes')&&!state(l).submitted;}
   function openWishes(l,r){var s=start(l,'wishes');if(s.wishAge!==l.age){s.wishes=[];s.wishAge=l.age;s.submitted=false;}s.region=null;s.selected=null;push(l,'study_wishes54',r);}
-  E.DEC.study_wishes54={valid:wishValid,make:function(l){var s=state(l),os=[];if(s.selected){var u=school(s.selected);os=u.majors.map(function(m){return option('major_'+m,E.MAJORS[m],'Mốc mô phỏng '+threshold(u,m)+'/30'+(direct(l,m)?' · đủ thành tích xét tuyển thẳng phù hợp':''));});os.push(option('back','Quay lại danh sách trường'));}
+  E.DEC.study_wishes54={valid:wishValid,make:function(l){var s=state(l),os=[];if(s.selected){var u=school(s.selected);os=programs(u).map(function(p){return option(p.key,p.name,'Mốc mô phỏng '+threshold(u,p.major)+'/30'+(direct(l,p.major)?' · đủ thành tích xét tuyển thẳng phù hợp':''));});os.push(option('back','Quay lại danh sách trường'));}
     else if(s.region){os=SCHOOLS.filter(function(x){return x.region===s.region;}).map(function(x){return option('school_'+x.id,x.name,x.city);});os.push(option('back','Đổi khu vực'));}
     else{if(s.wishes.length<5)['Bắc','Trung','Nam'].forEach(function(x){os.push(option('region_'+x,'Thêm nguyện vọng · miền '+x));});s.wishes.forEach(function(x,i){os.push(option('remove_'+i,'Bỏ NV'+(i+1)+': '+choiceText(x),'Có thể thêm lại ở cuối danh sách'));});if(s.wishes.length)os.push(option('submit','Nộp danh sách '+s.wishes.length+' nguyện vọng'));os.push(option('cancel','Quay lại ngã rẽ sau phổ thông'));}
     return{id:'study_wishes54',title:'Nguyện vọng đại học Việt Nam',text:(s.wishes.length?s.wishes.map(function(x,i){return 'NV'+(i+1)+': '+choiceText(x);}).join('; '):'Chưa có nguyện vọng')+'. Chọn tối đa 5 trường/ngành theo thứ tự yêu thích. Xét nguyện vọng đầu tiên đủ điểm; điểm trong game là mô phỏng.',data:Object.assign(stamp(l),{view:s.selected||s.region||'list'}),opts:os};},auto:function(l,d,r){var s=state(l);if(d.opts.some(function(o){return o.k==='submit';}))return 'submit';if(s.selected){var u=school(s.selected);return 'major_'+u.majors[0];}if(s.region){var candidates=SCHOOLS.filter(function(x){return x.region===s.region;});var score=Number.isFinite(l.examScore)?l.examScore:E.rollExamScore(l,r);return 'school_'+(candidates.filter(function(x){return threshold(x,x.majors[0])<=score;})[0]||candidates[candidates.length-1]).id;}return 'region_'+U.pick(r,['Bắc','Trung','Nam']);},apply:function(l,d,k,r,log){var s=state(l);if(!wishValid(l,d.data)||d.data.view!==(s.selected||s.region||'list')||!d.opts.some(function(o){return o.k===k;}))return;
     if(k==='cancel'){s.kind=null;push(l,'uni',r);return;}if(k==='back'){if(s.selected)s.selected=null;else s.region=null;}
     else if(k.indexOf('region_')===0)s.region=k.slice(7);
     else if(k.indexOf('school_')===0)s.selected=k.slice(7);
-    else if(k.indexOf('major_')===0){var m=k.slice(6),u=school(s.selected);if(s.wishes.length>=5||!u||u.majors.indexOf(m)<0)return;if(!s.wishes.some(function(x){return x.school===u.id&&x.major===m;}))s.wishes.push({school:u.id,major:m});s.selected=null;s.region=null;}
+    else if(k.indexOf('major_')===0||k.indexOf('program_')===0){var u=school(s.selected),p=u&&programs(u).filter(function(x){return x.key===k;})[0];if(s.wishes.length>=5||!p)return;if(!s.wishes.some(function(x){return x.school===u.id&&x.major===p.major&&(x.program||PROGRAMS[p.major][0])===p.name;}))s.wishes.push({school:u.id,major:p.major,program:p.name});s.selected=null;s.region=null;}
     else if(k.indexOf('remove_')===0)s.wishes.splice(+k.slice(7),1);
     else if(k==='submit'){if(!s.wishes.length)return;s.submitted=true;s.kind=null;if(!Number.isFinite(l.examScore))l.examScore=E.rollExamScore(l,r);var found=s.wishes.filter(function(x){return l.examScore>=threshold(school(x.school),x.major)||direct(l,x.major);})[0];
       log('Điểm xét tuyển: '+U.fmtNum(l.examScore,2)+'/30.','neutral');if(!found){log('Chưa đạt các nguyện vọng đã nộp. Bạn có thể ôn thi lại, học nghề hoặc đi làm.','neutral');push(l,'uniFail',r);return;}
-      var admitted=school(found.school);s.admitted={school:found.school,major:found.major,age:l.age};l.uniName=admitted.name;l.uniCity=admitted.city;l.uniTier=admitted.score>=25?1.15:1;l.cityStudent={city:admitted.city,since:l.age};E.DEC.major.apply(l,E.DEC.major.make(l),found.major,r,log);log('Trúng tuyển NV'+(s.wishes.indexOf(found)+1)+': '+choiceText(found)+(direct(l,found.major)?' · xét thành tích học sinh giỏi.':'.'),'big');H.mem(l,'Nhập học '+choiceText(found)+'.',4);return;}
+      var admitted=school(found.school);s.admitted={school:found.school,major:found.major,program:found.program,age:l.age};l.uniName=admitted.name;l.uniCity=admitted.city;l.uniTier=admitted.score>=25?1.15:1;l.cityStudent={city:admitted.city,since:l.age};E.DEC.major.apply(l,E.DEC.major.make(l),found.major,r,log);if(found.program)l.majorName=found.program;log('Trúng tuyển NV'+(s.wishes.indexOf(found)+1)+': '+choiceText(found)+(direct(l,found.major)?' · xét thành tích học sinh giỏi.':'.'),'big');H.mem(l,'Nhập học '+choiceText(found)+'.',4);return;}
     push(l,'study_wishes54',r);
   }};
   var uni=E.DEC.uni,um=uni.make,ua=uni.apply,auto=uni.auto;
@@ -98,5 +100,5 @@
   med.make=function(l){var d=mm.apply(this,arguments);if(namedMed(l)){d.text='Xác nhận chương trình Y khoa tại '+l.uniName+'.';d.opts=d.opts.filter(function(o){return o.k==='dk';});}return d;};
   med.auto=function(l){return namedMed(l)?'dk':mt.apply(this,arguments);};
   med.apply=function(l,d,k,r,log){if(!namedMed(l))return ma.apply(this,arguments);if(k!=='dk'||!d.opts.some(function(o){return o.k===k;}))return;l.med={track:'dk',spec:null};l.majorName=E.MED_TRACK.dk.n;l.schoolEnd=l.age+6;log('Xác nhận học Y khoa tại '+l.uniName+' · 6 năm.','good');};
-  E.EDUCATION54={state:state,schools:SCHOOLS,subjects:SUBJECTS,pupil:pupil,applicant:applicant,tier:tier,direct:direct,threshold:threshold,open:openWishes};
+  E.EDUCATION54={state:state,schools:SCHOOLS,programs:programs,subjects:SUBJECTS,pupil:pupil,applicant:applicant,tier:tier,direct:direct,threshold:threshold,open:openWishes};
 })(G);
