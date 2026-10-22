@@ -1,3 +1,15 @@
+## v8.4.0 — Khối năng khiếu có trường nghệ thuật thật, học bổ túc văn hóa
+
+- Khối thi năng khiếu: H00 (Văn – Hình họa – Bố cục màu), thêm V00 (Toán – Lý – Vẽ mỹ thuật, ngành kiến trúc), S00 (Văn + năng khiếu sân khấu – điện ảnh), N00 (Văn + năng khiếu âm nhạc). Chọn khối năng khiếu thì có ôn năng khiếu từ lớp 11.
+- Danh sách nguyện vọng đại học có 12 trường nghệ thuật: Mỹ thuật Việt Nam, Mỹ thuật Công nghiệp, Kiến trúc Hà Nội / Đà Nẵng / TP.HCM, Sân khấu – Điện ảnh Hà Nội / TP.HCM, Học viện Âm nhạc Quốc gia, Nhạc viện TP.HCM, Nghệ thuật – ĐH Huế, Mỹ thuật TP.HCM, Sư phạm Nghệ thuật Trung ương.
+- Mỗi trường ghi rõ khối xét tuyển; trường hợp khối của bạn được đưa lên đầu. Nguyện vọng trái khối bị loại khi xét, không còn chuyện thi khối H mà chỉ được nộp vào trường khối A, A1, D.
+- Trường nghệ thuật có thêm vòng thi năng khiếu (thang 10) cùng mốc điểm văn hóa. Có năng khiếu thật và ôn kỹ thì dễ đỗ hơn; Sân khấu – Điện ảnh, Âm nhạc gần như không đỗ được nếu không có năng khiếu. Đỗ trường nghệ thuật thì ra trường được gợi ý nghề đúng chuyên ngành.
+- Học bổ túc văn hóa (giáo dục thường xuyên) cho người nghỉ học sớm: vừa đi làm vừa học buổi tối — bổ túc THCS 2 năm, THPT 3 năm, hoặc học liền 5 năm. Có trong "Việc bạn muốn làm" và thỉnh thoảng được gợi ý khi đang đi làm.
+- Học xong bổ túc THPT thì thi tốt nghiệp như học sinh chính quy (trượt được thi lại). Có bằng rồi chọn: thi đại học chính quy, học đại học vừa làm vừa học, học cao đẳng nghề, hoặc đi tìm việc tốt hơn — các nghề đòi bằng cấp cao hơn mở ra.
+- Thừa kế tài sản hiện vật: khi qua đời, nhà đang ở, nhà / đất cho thuê, lô đất và cơ sở kinh doanh được sang tên cho người thừa kế, phần còn lại chia bằng tiền mặt (trước đây quy hết ra tiền). Nhà đang ở ưu tiên để lại cho vợ / chồng còn sống, cơ sở kinh doanh giao cho người con đã trưởng thành; ai nhận tài sản lớn hơn suất của mình thì bù chênh lệch, nợ lớn thì bán bớt tài sản. Giá trị mỗi người được hưởng không đổi.
+- Khúc cuối đời có mục "Phân chia tài sản" ghi rõ ai nhận nhà, đất, cửa hàng nào. "Sống tiếp đời con": người con nhận đúng căn nhà, cửa hàng của bố / mẹ (chưa đủ 18 tuổi thì người giám hộ giữ hộ, tròn 18 bàn giao).
+- Sửa bộ kiểm thử: update530 và family830 gọi nhầm hàm xử lý cuối năm của module khác (lấy "hàm cuối cùng" trong danh sách) — nay gọi đích danh. regression.js tự lấy danh sách script từ index.html (danh sách viết tay đã thiếu 5 file nên trước đây dừng ở mục 5, giờ chạy hết 77 mục); cập nhật các kiểm tra đã cũ (hậu tố ?v=, gợi ý tên đăng nhập), đo tỉ lệ "game tự chọn việc" trên 2.000 đời thay vì 200 để hết chập chờn; thêm tests/followups840.js cho 3 tình huống nối tiếp chưa từng được kiểm tra.
+
 ## v8.3.0 — Giao lưu với con, tính cách bố mẹ và tình cảm
 
 - Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore; không đổi Fantasy.

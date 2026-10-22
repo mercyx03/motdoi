@@ -9,7 +9,8 @@ const ROOT = path.join(__dirname, '..', 'public');
 const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
-const MODULES = ['js/util.js', 'js/data-vn.js', 'js/data-world.js', 'js/names.js', 'js/currency.js', 'js/world-economy.js', 'js/engine.js', 'js/careers.js', 'js/scenarios.js', 'js/expansion.js', 'js/wealth.js', 'js/jobs.js', 'js/childhood.js', 'js/family.js', 'js/sports.js', 'js/talent.js', 'js/leisure.js', 'js/lottery.js', 'js/life3.js', 'js/life32.js', 'js/life33.js', 'js/jobs2.js', 'js/life34.js', 'js/life35.js', 'js/life36.js', 'js/life37.js', 'js/life38.js', 'js/life39.js', 'js/life40.js', 'js/life41.js', 'js/life42.js', 'js/life43.js', 'js/life44.js', 'js/life45.js', 'js/life46.js', 'js/life47.js', 'js/life48.js', 'js/life49.js', 'js/life50.js', 'js/life51.js', 'js/life52.js', 'js/life53.js', 'js/life54.js', 'js/life55.js', 'js/life56.js', 'js/life57.js', 'js/market-data.js', 'js/life58.js', 'js/life59.js', 'js/life60.js', 'js/life61.js', 'js/leisure-data.js', 'js/life62.js', 'js/life63.js', 'js/life64.js', 'js/life65.js', 'js/life66.js', 'js/life67.js', 'js/finale.js', 'js/life68.js', 'js/esports-data.js', 'js/life69.js', 'js/esports-finance.js', 'js/life70.js', 'js/life71.js', 'js/life72.js', 'js/life73.js', 'js/life74.js', 'js/life75.js', 'js/life76.js', 'js/life77.js', 'js/life78.js', 'js/life79.js', 'js/life80.js', 'js/life81.js', 'js/life82.js', 'js/life83.js', 'js/life84.js', 'js/data-personas-vn.js', 'js/life85.js', 'js/life86.js', 'js/life87.js', 'js/life88.js', 'js/life89.js', 'js/life90.js', 'js/life91.js', 'js/life92.js', 'js/life93.js', 'js/life94.js', 'js/life95.js', 'js/life96.js', 'js/life97.js', 'js/life98.js', 'js/life99.js', 'js/life100.js', 'js/fantasy-imports.js', 'js/fantasy-world.js', 'js/fantasy-engine.js', 'js/fantasy-politics-data.js', 'js/fantasy-politics.js', 'js/fantasy-politics-events.js', 'js/fantasy-progression.js', 'js/scene.js', 'js/scene2d.js'];
+// Lấy đúng danh sách & thứ tự script của trang (trừ các script chỉ chạy trên trình duyệt) — không để danh sách viết tay bị cũ khi thêm module mới
+const MODULES = [...fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8').matchAll(/<script src="(js\/[^"?]+)/g)].map(m => m[1]).filter(f => !['js/music.js', 'js/card.js', 'js/app.js', 'js/account.js', 'js/fantasy-ui.js'].includes(f));
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -48,7 +49,7 @@ section('0. Phiên bản & trang');
   MODULES.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp module ' + m));
   ok(html.indexOf('logo.svg?v=' + G.VERSION) >= 0 && fs.existsSync(path.join(ROOT, 'logo.svg')), 'logo Một Đời tồn tại & được dùng');
   ok(/<title>Một Đời/.test(html), 'tên game là "Một Đời"');
-  ok(refs.every(r => r.indexOf('?v=' + G.VERSION + '"') > 0), 'mọi tài nguyên dùng ?v=' + G.VERSION + ' (tránh cache cũ sau khi cập nhật)');
+  ok(refs.every(r => r.indexOf('?v=') > 0 && r.indexOf(G.VERSION) > r.indexOf('?v=')), 'mọi tài nguyên có ?v= chứa ' + G.VERSION + ' (tránh cache cũ sau khi cập nhật; cho phép hậu tố như ' + G.VERSION + '-community)');
   refs.forEach(r => { const f = r.split('"')[1].split('?')[0]; ok(fs.existsSync(path.join(ROOT, f)), 'tệp tồn tại: ' + f); });
   const cl = fs.readFileSync(path.join(__dirname, '..', 'CHANGELOG.md'), 'utf8');
   ok(cl.indexOf('## v' + G.VERSION) >= 0, 'CHANGELOG có mục cho v' + G.VERSION);
@@ -410,7 +411,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
   ok(!E.DEC.gameshow_dong.valid(TPL[0],{}),'hậu trường cũ đã được thay bằng mùa vr_vong');
-  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than|mc_|fd_|ps_|ky_som|hc_|hv_|chon_hoc_vien|lo_trinh_quan_ham|cs_|hx_|mxh_|bb_|dp_|tro_ban|th_tay|th_nghi)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31
+  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than|mc_|fd_|ps_|ky_som|hc_|hv_|chon_hoc_vien|lo_trinh_quan_ham|cs_|hx_|mxh_|bb_|dp_|tro_ban|th_tay|th_nghi|family100_|nc_sau_du_hoc|map_mo_tiep101|casual_after101|bo_nhiem_chien_luoc)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31; family100_* ở tests/family830.js; nc_sau_du_hoc ở tests/continuity101.js; map_mo_tiep101, casual_after101, bo_nhiem_chien_luoc (tình huống nối tiếp cần bối cảnh riêng) ở tests/followups840.js
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -560,7 +561,7 @@ section('15. Khúc cuối, chia sẻ, 10 đời gần đây, tương thích bả
     const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 2100 + i }); E.runHeadless(l);
     const st = E.finale(l);
     ok(st.length >= 2 && st.every(s => !badText(s.h) && (!s.x || !badText(s.x)) && (!s.list || s.list.every(x => !badText(x)))), 'khúc cuối sạch #' + i);
-    if (l.death.age < 6) kinds.child++; else if (l.death.sudden) kinds.sudden++; else { kinds.ill++; ok(st.some(s => s.h === 'Di nguyện') && st.some(s => s.h === 'Hồi tưởng') && (function () { var xi = st.map(s => s.h).lastIndexOf('Xuôi tay'); return xi >= 0 && st.slice(xi + 1).every(s => /^(Di chúc để lại|Thừa kế theo pháp luật|Khi các con hay tin|Ngày tiễn biệt)$/.test(s.h)); })(), 'chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay (sau đó là di chúc, thừa kế, cảnh các con) #' + i); }
+    if (l.death.age < 6) kinds.child++; else if (l.death.sudden) kinds.sudden++; else { kinds.ill++; ok(st.some(s => s.h === 'Di nguyện') && st.some(s => s.h === 'Hồi tưởng') && (function () { var xi = st.map(s => s.h).lastIndexOf('Xuôi tay'); return xi >= 0 && st.slice(xi + 1).every(s => /^(Di chúc để lại|Thừa kế theo pháp luật|Phân chia tài sản|Khi các con hay tin|Ngày tiễn biệt)$/.test(s.h)); })(), 'chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay (sau đó là di chúc, thừa kế, cảnh các con) #' + i); }
     const sum = E.share.summary(l, 'Cảm ơn nhé');
     const back = E.share.decode(E.share.encode(sum));
     ok(back && back.n === l.name && back.o === sum.o && back.f === 'Cảm ơn nhé' && back.m === sum.m, 'mã hóa/giải mã link chia sẻ #' + i);
@@ -1188,8 +1189,9 @@ section('23. Bản 2.7: lượt hành động theo tuổi, game tự chọn vi�
     const k = mk(80001, 8); E.beginYear(k, {}); k.pending = []; let m = 0; for (const a of E.actions(k).filter(a => a.ok === true)) { if (E.act(k, a.id)) m++; k.pending = []; }
     k.acts = 3; ok(m <= 3 && E.actions(k).every(a => a.ok !== true) && E.actions(k).some(a => a.ok === 'Đã hết lượt hành động năm nay'), '8 tuổi tối đa 3 việc mỗi năm (' + m + ')'); }
   // không tự chọn việc gì thì game tự chọn ngẫu nhiên
-  { let auto = 0; for (let i = 0; i < 200; i++) { const l = mk(80100 + i, 25); l.prevActs = 0; l.acts = 0; const before = l.acts; E.beginYear(l, {}); if (l.acts > 0) auto++; }
-    ok(auto > 25 && auto < 160, 'năm trước không tự làm gì thì game tự chọn ngẫu nhiên một việc (' + auto + '/200)');
+  // đo trên 2.000 đời: tỉ lệ thật ~13–15% (chỉ chen khi trong năm còn chỗ); 200 đời quá ít nên trước đây lúc đạt lúc trượt
+  { let auto = 0; for (let i = 0; i < 2000; i++) { const l = mk(80100 + i, 25); l.prevActs = 0; l.acts = 0; E.beginYear(l, {}); if (l.acts > 0) auto++; }
+    ok(auto > 160 && auto < 1600, 'năm trước không tự làm gì thì game tự chọn ngẫu nhiên một việc (' + auto + '/2000)');
     let none = 0; for (let i = 0; i < 200; i++) { const l = mk(80400 + i, 25); l.acts = 2; E.beginYear(l, {}); if (l.acts > 0) none++; } ok(none === 0, 'năm trước đã tự làm việc thì game không chen vào (' + none + ')'); }
   // trọng tâm cân bằng
   ok(/'balance', 'Cân bằng'/.test(appSrc) && /f\[5\] && a < f\[5\]/.test(appSrc), 'có trọng tâm "Cân bằng" từ 21 tuổi');
@@ -2737,7 +2739,7 @@ section('65. Bản 6.9.1: trẻ chưa tự lập thì bố mẹ chi tiền, bớ
   const t = E.createLife({ mode: 'vn', seed: 65600 }); t.age = 16; t.money = 0.2; t.pending = []; E.DEC.t2 = { make: () => ({ id: 't2', title: 'Album', text: '', opts: [{ k: 'buy', l: 'Mua' }] }), auto: () => 'buy', apply: (l, d, kk, r, log) => { E.H.cash(l, -0.5, 'Mua album'); log('Ôm album về.', 'good'); }, valid: () => true };
   t.pending = [E.DEC.t2.make()]; E.resolve(t, 'buy'); delete E.DEC.t2; const tl = t.log[t.log.length - 1];
   ok(Math.abs(t.money) < 1e-9 && /tự chi [^)]* từ tiền tiêu vặt, (bố mẹ|mẹ|bố) chi /.test(tl.t), '16 tuổi: tự chi bằng tiền tiêu vặt, thiếu thì bố mẹ bù — ' + tl.t);
-  ok(/placeholder="vd: mercy"/.test(fs.readFileSync(path.join(ROOT, 'js/account.js'), 'utf8')), 'gợi ý tên đăng nhập "mercy"');
+  ok(/id="accUser"[^>]*placeholder="[^"]+"/.test(fs.readFileSync(path.join(ROOT, 'js/account.js'), 'utf8')), 'ô tên đăng nhập có chữ gợi ý'); // gợi ý "vd: mercy" đã được thay bằng "Tên đăng nhập của bạn" từ commit bfacbef
 }
 section('66. Bản 7.0.0: rà soát lỗi logic toàn hệ thống');
 {
@@ -3116,9 +3118,10 @@ function isVNx(l) { return E.isVN(l); }
 console.log('\n' + '='.repeat(60));
 console.log('KẾT QUẢ: ' + pass + ' đạt, ' + fail + ' lỗi');
 if (fail) {
-  const uniq = [...new Set(fails)];
-  console.log('Lỗi (tối đa 40 dòng đầu, ' + uniq.length + ' loại):');
-  uniq.slice(0, 40).forEach(f => console.log('  ✗ ' + f));
+  // gộp các lỗi cùng loại (khác nhau ở số thứ tự #N) để một loại lỗi lặp nhiều lần không che mất các loại khác
+  const groups = new Map(); fails.forEach(f => { const k = f.replace(/ #d+$/, ''); groups.set(k, (groups.get(k) || 0) + 1); });
+  console.log('Lỗi (' + groups.size + ' loại, tối đa 40 loại đầu):');
+  [...groups].slice(0, 40).forEach(([f, n]) => console.log('  ✗ ' + f + (n > 1 ? '  (×' + n + ')' : '')));
   process.exit(1);
 }
 console.log('✓ Tất cả bài kiểm thử hồi quy đều đạt.');

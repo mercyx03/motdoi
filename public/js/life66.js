@@ -40,14 +40,14 @@
     var p=paid(l,k,'school',quote(l,'school',key),fn);if(!p.ok)return p;var s=k.family53;if(s.school!==key)log(l,fn,'Chọn '+SCHOOLS[key].name.toLowerCase()+' cho '+k.name+' ở bậc '+stage(l,k).toLowerCase()+'.');s.school=key;s.context=context(l);return {ok:true,message:'Đã lưu trường. Học phí bổ sung được đóng mỗi năm; đổi sang gói rẻ hơn không hoàn phần đã đóng.'};}
   function train(l,id,talent,course,at,fn){var k=valid(l,id,at);if(!k||age(l,k)<4||age(l,k)>=18||!TALENTS[talent]||!COURSES[course])return {ok:false,message:'Hoạt động dành cho con từ 4 đến 17 tuổi.'};
     var p=paid(l,k,'course',quote(l,'course',course),fn);if(!p.ok)return p;var s=k.family53;if(s.activity!==talent||s.course!==course)log(l,fn,'Đồng hành cùng '+k.name+' khám phá '+TALENTS[talent].toLowerCase()+' · '+COURSES[course].name.toLowerCase()+'.');s.activity=talent;s.course=course;s.context=context(l);return {ok:true,message:'Đã lưu hoạt động. Kỹ năng tiến bộ sau mỗi năm; năng khiếu bẩm sinh không bị thay đổi.'};}
-  E.HOOKS.year.push(function(l,r,fn){if(!l.alive)return;init(l).forEach(function(k){var s=k.family53;if(!care(l,k)||s.year===l.age)return;s.year=l.age;
+  E.HOOKS.year.push(yearHook);function yearHook(l,r,fn){if(!l.alive)return;init(l).forEach(function(k){var s=k.family53;if(!care(l,k)||s.year===l.age)return;s.year=l.age;
     if(s.context&&s.context!==context(l)){s.school='public';s.course='home';log(l,fn,'Đã thay đổi nơi sống; chọn lại trường hoặc lớp cho '+k.name+' nếu cần.');}s.context=context(l);
     if(schoolOK(l,k)){if(!paid(l,k,'school',quote(l,'school',s.school),fn).ok){s.school='public';log(l,fn,'Ngân sách chưa đủ học phí của '+k.name+'; gia đình chuyển sang chương trình công để con tiếp tục học.');}if(s.school!=='public')k.study=U.clamp((k.study==null?50:k.study)+1,0,100);}
     if(age(l,k)>=4&&age(l,k)<18&&s.activity){if(!paid(l,k,'course',quote(l,'course',s.course),fn).ok){s.course='home';log(l,fn,'Chưa đủ tiền lớp của '+k.name+'; tiếp tục luyện tập miễn phí cùng gia đình.');}
       var t=s.activity;s.skills[t]=U.clamp((s.skills[t]||0)+2+(t===s.innate?1:0)+(s.course==='coach'?1:0),0,100);if(t==='science'||t==='language')k.study=U.clamp((k.study==null?50:k.study)+.5,0,100);
       if(s.skills[t]>=25&&!s['milestone_'+t]){s['milestone_'+t]=true;log(l,fn,k.name+' tự tin thể hiện '+TALENTS[t].toLowerCase()+' sau thời gian luyện tập.');H.mem(l,'Lần đầu '+k.name+' tự tin thể hiện '+TALENTS[t].toLowerCase()+'.',3);}
     }
-  });});
+  });}
   var oldMig=E.migrateExt;E.migrateExt=function(l){if(oldMig)oldMig(l);init(l);};
-  E.FAMILY53={init:init,find:find,age:age,free:free,care:care,schoolOK:schoolOK,stage:stage,quote:quote,name:name,school:school,train:train,talents:TALENTS,schools:SCHOOLS,courses:COURSES};
+  E.FAMILY53={yearHook:yearHook,init:init,find:find,age:age,free:free,care:care,schoolOK:schoolOK,stage:stage,quote:quote,name:name,school:school,train:train,talents:TALENTS,schools:SCHOOLS,courses:COURSES};
 })(G);

@@ -4,7 +4,7 @@ const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(roo
 for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E,F=E.FAMILY53;let n=0;function ok(v,t){assert.ok(v,t);n++;}function near(a,b,t){ok(Math.abs(a-b)<1e-7,t);}
 function life(age=6){const l=E.createLife({mode:'vn',seed:530});l.age=35;l.indep=true;l.pending=[];l.money=10000;l.school=null;l.kids=[{name:'Nguyễn An',sex:'M',born:35-age,alive:true,study:50,close:70}];F.init(l);return l;}
-function year(l){E.HOOKS.year[E.HOOKS.year.length-1](l,()=>.5,()=>{},l.age);}
+function year(l){F.yearHook(l,()=>.5,()=>{},l.age);} // gọi đúng hook của module nuôi con, không phụ thuộc thứ tự nạp module
 {
  const l=life(0),k=l.kids[0],id=k.parentId,innate=k.family53.innate,rs=l.rs;F.init(l);E.migrate(l);ok(k.parentId===id&&k.family53.innate===innate&&l.rs===rs,'stable ID and innate, no reroll');
  ok(F.name(l,id,'Trần Bình',l.age).ok&&k.name==='Trần Bình','name newborn');ok(!F.name(l,id,'<img src=x onerror=alert(1)>',l.age).ok,'reject HTML name');

@@ -1356,7 +1356,10 @@
         var k = kidsLive[+b.dataset.heir]; if (!k) return;
         l.finalWords = words(); updRecent();
         var ka = l.death.age - k.born, share = E.heirShare ? E.heirShare(l, k) : 0, P = l.sex === 'M' ? 'bố' : 'mẹ';
-        var inh = share > 0 ? 'Phần thừa kế của ' + k.name + ': ' + money(l, share) + '.' : E.netWorth(l) < 0 ? l.name + ' để lại nợ; theo luật con không phải trả quá phần di sản được hưởng.' : 'Theo di chúc, ' + k.name + ' không nhận phần tài sản nào.';
+        // v8.4.0: ghi rõ nhà, đất, cơ sở kinh doanh người con được sang tên, phần còn lại là tiền mặt
+        var mine = E.ESTATE84 ? E.ESTATE84.allocate(l).list.filter(function (x) { return x.kid === l.kids.indexOf(k); })[0] : null;
+        var what = mine && mine.items.length ? ' — gồm ' + mine.items.map(function (x) { return x.n + ' (' + money(l, x.v) + ')'; }).join(', ') + (mine.cash > 0.5 ? ' và ' + money(l, mine.cash) + ' tiền mặt' : mine.cash < -0.5 ? '; phải bù ' + money(l, -mine.cash) + ' chênh lệch cho anh chị em' : '') : '';
+        var inh = share > 0 ? 'Phần thừa kế của ' + k.name + ': ' + money(l, share) + what + '.' : E.netWorth(l) < 0 ? l.name + ' để lại nợ; theo luật con không phải trả quá phần di sản được hưởng.' : 'Theo di chúc, ' + k.name + ' không nhận phần tài sản nào.';
         modal('<h2>Sống tiếp đời ' + esc(k.name) + '</h2><p>' + esc(inh) + '</p><div class="opts">' +
           (ka > 0 ? '<button class="opt" data-hm="now"><b>Tiếp tục ở tuổi hiện tại (' + ka + ' tuổi) — tiếp quản cơ ngơi</b><span>' + esc('Giữ nguyên nghề nghiệp, học vấn của ' + k.name + ' như hồ sơ đời trước; bắt đầu từ năm ' + P + ' mất và nhận thừa kế.') + '</span></button>' : '') +
           '<button class="opt" data-hm="birth"><b>Từ lúc chào đời</b><span>' + esc('Sinh ra trong gia cảnh lúc ' + l.name + ' ' + k.born + ' tuổi. ' + U.cap(P) + ' sẽ ra đi khi con ' + ka + ' tuổi và để lại đúng phần thừa kế này.') + '</span></button>' +
