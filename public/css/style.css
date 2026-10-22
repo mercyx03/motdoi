@@ -492,3 +492,9 @@ footer .disclaimer b { color: var(--accent); }
 .modal.about-modal p:last-child { margin-bottom: 0; }
 .about-x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent; color: var(--ink, inherit); font-size: 20px; cursor: pointer; opacity: .8; }
 .about-x:hover { opacity: 1; background: rgba(127, 127, 127, .15); }
+
+/* Unread account notifications share the same badge on every page. */
+#accountBtn { position: relative; overflow: visible; }
+.account-unread-badge { display: inline-flex; align-items: center; justify-content: center; position: absolute; top: -8px; right: -8px; min-width: 22px; height: 22px; padding: 0 5px; border: 2px solid var(--bg, #0a1520); border-radius: 999px; background: #d91b38; color: #fff; font: 800 12px/1 'Be Vietnam Pro', sans-serif; box-sizing: border-box; box-shadow: 0 2px 6px #0004; white-space: nowrap; pointer-events: none; }
+.account-unread-inline { position: static; vertical-align: middle; margin-left: 6px; }
+.account-unread-badge[hidden] { display: none; }
