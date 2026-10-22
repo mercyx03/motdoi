@@ -781,6 +781,9 @@
     if (l.partner) {
       var p = l.partner, w = p.status === 'dating' ? 'Người yêu' : p.status === 'cohabit' ? 'Bạn đời' : (p.sex === l.sex ? 'Bạn đời' : p.sex === 'M' ? 'Chồng' : 'Vợ');
       var pj = p.job ? ' · ' + esc(p.job) : '';
+      if(p.residence108)pj+=' · sống ở '+esc(p.residence108);
+      if(p.school108)pj+=' · '+esc(p.school108);
+      if(p.affection108!=null)pj+=' · tình cảm '+Math.round(p.affection108)+'/100';
       var pi = p.job && p.job !== 'sinh viên' ? (E.H.partnerIncKnown && E.H.partnerIncKnown(l, p) ? ' · <b>' + esc(money(l, p.inc || 0)) + '/tháng</b>' : ' · <span class="muted">thu nhập: chưa rõ</span>') : '';
       var partnerHome=E.HOMETOWN&&E.HOMETOWN.partner(l,p);
       var hometown=partnerHome?' · quê '+esc(partnerHome.name)+' <small class="muted">(địa giới cũ)</small>':'';
@@ -789,6 +792,8 @@
     } else if (l.widowed) row('Góa bụa');
     l.kids.forEach(function (k) {
       var ka = a - k.born, info = '';
+      if(E.childRelation108)info+=' · '+esc(E.childRelation108(l,k));
+      if(k.careerTrial108)info+=' · hướng nghiệp: '+esc(k.careerWish108==='business'?'kinh doanh':k.careerWish108==='tradition'?'tìm hiểu nghề gia đình':k.careerWish108==='pressure'?'theo kỳ vọng cha mẹ':'tự chọn');
       if (k.alive) {
         if (k.jail && ka < k.jail) info = ' · đang thụ án';
         else if (k.job) info = ' · ' + esc(E.kidTitle(k)) + (k.inc ? ' · ' + esc(money(l, k.inc)) + '/tháng' : '');
@@ -824,6 +829,8 @@
     var title=child?(k.sex==='M'?'Con trai':'Con gái'):k.status==='dating'?'Người yêu':k.sex==='M'?'Chồng / bạn đời':'Vợ / bạn đời';
     function fact(label,value){return '<li><span>'+esc(label)+'</span><b>'+esc(value)+'</b></li>';}
     var facts=fact('Năm sinh',l.birthYear+l.age-a)+fact('Tình trạng',k.alive===false?'Đã mất'+(Number.isFinite(k.died)?' · '+(k.died-k.born)+' tuổi':''):a+' tuổi')+fact('Gắn kết',Math.round(k.close==null?50:k.close)+'/100');
+    if(!child){if(k.residence108)facts+=fact('Nơi ở hiện tại',k.residence108);if(k.school108)facts+=fact('Trường học',k.school108);if(k.workplace108)facts+=fact('Nơi gặp',k.workplace108);if(k.affection108!=null)facts+=fact('Tình cảm',Math.round(k.affection108)+'/100');}
+    if(child&&E.childRelation108)facts+=fact('Gia đình',E.childRelation108(l,k));
     if(child){facts+=fact('Học vấn',k.vice==='bỏ học'?'Đã nghỉ học':k.alive===false?'Hồ sơ lưu niệm':F.stage(l,k))+fact('Trường',k.alive!==false&&a>=3&&a<18&&k.vice!=='bỏ học'?F.schools[s.school].name:'—')+fact('Năng khiếu bẩm sinh',model.age<6?'Chưa bộc lộ':F.talents[s.innate]||'Đang khám phá')+fact(k.alive===false?'Hoạt động đã theo':'Đang rèn luyện',F.talents[s.activity]||'Chưa chọn hoạt động');
       if(s.nickname)facts+=fact('Tên gọi ở nhà',s.nickname);
       Object.keys(s.skills).forEach(function(t){facts+=fact(F.talents[t]||t,Math.round(s.skills[t])+'/100');});

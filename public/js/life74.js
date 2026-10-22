@@ -129,20 +129,20 @@
   // 3. HẸN HÒ VỚI BẠN THÂN
   // ===================================================================
   function okSex(l, s) { return l.orient === 'gay' ? s === l.sex : l.orient === 'bi' ? true : s !== l.sex; }
-  function crushes(l) { if (l.partner || l.age < 16) return []; return E.friendsOf(l).filter(function (f) { var fa = l.age + (f.d || 0); return !f.lover && !f.taken && (f.close || 0) >= 55 && okSex(l, f.sex) && fa >= 16 && Math.abs(f.d || 0) <= 10; }); }
+  function crushes(l) { if (l.partner || l.age < 16) return []; return E.friendsOf(l).filter(function (f) { var fa = l.age + (f.d || 0); return !f.lover && !f.taken && !f.wed && !f.married && f.status !== 'married' && (f.close || 0) >= 55 && okSex(l, f.sex) && fa >= 16 && Math.abs(f.d || 0) <= 10; }); }
   SC('yeu_ban_than', {
     title: 'Tình bạn hay tình yêu?',
     prep: function (l, r) { var c = crushes(l), f = c.length ? U.pick(r, c) : null; return { n: f ? f.name : '' }; },
     valid: function (l, d) { return crushes(l).some(function (f) { return !d || !d.n || f.name === d.n; }); },
     text: function (l, d) { var f = find(l, d.n); return 'Bạn và ' + d.n + ' thân nhau đã ' + Math.max(1, l.age - (f && f.since != null ? f.since : l.age)) + ' năm. Dạo gần đây, mỗi lần ' + d.n + ' cười, tim bạn lại lỡ một nhịp. Nói ra thì sợ mất bạn, không nói thì sợ mất người.'; },
     opts: [
-      { k: 'to_tinh', l: 'Tỏ tình', ai: { w: 0.9, risk: 1 }, run: function (l, r, log, d) { var f = find(l, d.n); if (!f) return; if (ch(r, U.clamp(0.3 + (f.close || 50) / 200, 0.3, 0.8))) becomeLovers(l, r, log, f, 'Bạn lấy hết can đảm tỏ tình. ' + f.name + ' im lặng một lúc rồi cười: "Mình cũng thích cậu từ lâu rồi."'); else { f.close = Math.max(0, (f.close || 50) - 20); fx(l, { hap: -5 }); log(f.name + ' từ chối nhẹ nhàng: "Mình chỉ coi cậu là bạn thân thôi." Hai người ngại ngùng mất một thời gian.', 'bad'); } } },
-      { k: 'cho', l: 'Chờ xem người ấy có tình cảm không', ai: { w: 0.8 }, run: function (l, r, log, d) { var f = find(l, d.n); if (f && ch(r, 0.3)) becomeLovers(l, r, log, f, 'Một tối đi về, ' + f.name + ' bất ngờ nắm tay bạn: "Mình thích cậu." Hóa ra cả hai cùng chờ nhau.'); else log('Bạn giữ cảm xúc trong lòng, vẫn bên ' + d.n + ' như một người bạn.', 'neutral'); } },
+      { k: 'to_tinh', l: 'Tỏ tình', ai: { w: 0.9, risk: 1 }, run: function (l, r, log, d) { var f = find(l, d.n); if (!f || !crushes(l).some(function (x) { return x.name === d.n; })) return; if (ch(r, U.clamp(0.3 + (f.close || 50) / 200, 0.3, 0.8))) becomeLovers(l, r, log, f, 'Bạn lấy hết can đảm tỏ tình. ' + f.name + ' im lặng một lúc rồi cười: "Mình cũng thích cậu từ lâu rồi."'); else { f.close = Math.max(0, (f.close || 50) - 20); fx(l, { hap: -5 }); log(f.name + ' từ chối nhẹ nhàng: "Mình chỉ coi cậu là bạn thân thôi." Hai người ngại ngùng mất một thời gian.', 'bad'); } } },
+      { k: 'cho', l: 'Chờ xem người ấy có tình cảm không', ai: { w: 0.8 }, run: function (l, r, log, d) { var f = find(l, d.n); if (!f || !crushes(l).some(function (x) { return x.name === d.n; })) return; if (ch(r, 0.3)) becomeLovers(l, r, log, f, 'Một tối đi về, ' + f.name + ' bất ngờ nắm tay bạn: "Mình thích cậu." Hóa ra cả hai cùng chờ nhau.'); else log('Bạn giữ cảm xúc trong lòng, vẫn bên ' + d.n + ' như một người bạn.', 'neutral'); } },
       { k: 'giu', l: 'Giữ tình bạn, không nói ra', ai: { w: 0.7 }, run: function (l, r, log, d) { log('Bạn chọn giữ tình bạn với ' + d.n + '. Có những người, ở bên như bạn đã là đủ.', 'neutral'); } }
     ]
   });
   function becomeLovers(l, r, log, f, t) {
-    if (l.partner) return;
+    if (l.partner || !f || f.wed || f.married || f.status === 'married' || f.taken) return;
     var p = { name: f.name, sex: f.sex, age: l.age + (f.d || 0), status: 'dating', since: l.age, alive: true, fromFriend: true };
     if (p.age >= 18 && H.partnerJob) H.partnerJob(l, p, r);
     l.partner = p; f.lover = true; f.close = Math.min(100, (f.close || 50) + 15);

@@ -1,6 +1,6 @@
 /* Adult postgraduate choices and voluntary civic pathways. */
 (function(G){'use strict';var E=G.E,H=E.H,U=G.U;
-function free(l){return l&&l.alive&&['vn','world'].includes(l.mode)&&E.FAMILY53.free(l)&&!(l.flags.military&&l.age<l.flags.military)&&!(l.abroad&&l.abroad.study);}
+function free(l){return l&&l.alive&&['vn','world'].includes(l.mode)&&E.FAMILY53.free(l)&&!(l.flags.military&&l.age<l.flags.military)&&!(l.abroad&&l.abroad.study&&!(l.flags.pg106&&l.flags.pg106.abroad&&!l.flags.pg106.done&&l.flags.study107));}
 function eligible(l,lv){return free(l)&&l.age>=22&&!l.school&&!l.flags.researchStudy&&l.edu>=lv-1&&l.edu<lv;}
 function stamp(l){return {at:l.age,done:false};}
 function live(l,d){return d&&!d.done&&d.at===l.age;}

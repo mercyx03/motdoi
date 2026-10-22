@@ -1,6 +1,38 @@
 {
-  "generatedAt": "2026-10-22T15:02:12.381Z",
+  "generatedAt": "2026-10-22T23:40:11.908Z",
   "entries": [
+    {
+      "id": "relationships-oct23",
+      "publishedAt": "2026-10-23T04:00:00.000Z",
+      "title": "Yêu chậm hơn, có thêm chuyện gia đình",
+      "summary": "Chọn người muốn tìm hiểu, cùng bàn chuyện cưới và lên kế hoạch có con.",
+      "details": [
+        "Tìm người yêu theo độ tuổi, giới tính và quốc tịch; hồ sơ ghi nơi sống, trường học và công việc. Tình cảm cần được bồi đắp trước khi cưới, hai người cùng quyết định chuyện tài sản.",
+        "Có thể có con trước cưới hoặc từ quan hệ ngoài hôn nhân. Thử có con có thể chưa thành công, có thời gian chờ và khoảng cách sinh; con chung, con riêng giữ đúng người cùng làm cha mẹ.",
+        "Thêm mập mờ với nhiều người, gặp gỡ một đêm và mái nhà bí mật; có trách nhiệm nuôi con, chi phí và nguy cơ bị phát hiện. Cha mẹ có thể hướng nghiệp cho con; nhân vật nhiều tiền có thêm golf, du thuyền, sưu tầm và tiệc riêng.",
+        "Mục Học tập có hướng dẫn và nút đăng ký cao học, tiến sĩ để học tiếp lúc đủ điều kiện."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
+    {
+      "id": "life-paths-oct23",
+      "publishedAt": "2026-10-23T03:00:00.000Z",
+      "title": "Thêm lựa chọn học tập, công việc và tình cảm",
+      "summary": "Chọn ngành trong cùng trường, chủ động học cao hơn hoặc du học; thêm đường phát triển trong quân đội, công an và showbiz.",
+      "details": [
+        "Mỗi trường có thêm nhiều ngành để xếp nguyện vọng. Người chơi tự chọn thời điểm, trường và ngành khi học thạc sĩ, tiến sĩ; du học có thể chọn quốc gia, trường và ngành.",
+        "Có thêm nhiệm vụ diễu binh, cứu hộ, chiến dịch để tích lũy thành tích xin xét quân hàm sớm; chức vụ được ghi cụ thể từ cấp đơn vị đến lãnh đạo bộ.",
+        "Nghệ sĩ có thể nâng đỡ đàn em; người chơi tự bật việc thay điện thoại, máy tính mỗi năm và đặt ngân sách cho từng lần mua.",
+        "Thêm chuyện ngoại tình, ly hôn và hòa giải tài sản. Sửa lựa chọn tình cảm với bạn thân đã cưới và giới hạn hợp lý cho tình huống CSGT ở tuổi cao."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
     {
       "id": "adult-study-civic-oct22",
       "publishedAt": "2026-10-22T15:01:00.000Z",

@@ -435,7 +435,7 @@
   T('den_vang', function (l, a) { return a >= 16 && a <= 75 && vehicle(l) && free(l); }, 0.07, 3);
 
   SC('csgt', {
-    title: 'CSGT ra hiệu dừng xe', prep: function (l, r, arg) {
+    title: 'CSGT ra hiệu dừng xe', valid: function (l) { return l.age >= 16 && l.age <= 85 && vehicle(l) && !l.flags.driverHired && free(l); }, prep: function (l, r, arg) {
       if (arg && arg.why) return arg;
       var opts = [];
       if (!l.lic.A1 && l.veh === 'xe máy' && !l.flags.driverHired) opts.push({ why: 'chạy xe máy không có bằng lái', f: 3 });
@@ -464,7 +464,7 @@
       } }
     ]
   });
-  T('csgt', function (l, a) { return a >= 16 && vehicle(l) && free(l); }, function (l) { return (!l.lic.A1 && l.veh === 'xe máy') || (!l.lic.B && l.veh === 'ô tô') ? 0.12 : 0.04; }, 2);
+  T('csgt', function (l, a) { return a >= 16 && a <= 85 && vehicle(l) && !l.flags.driverHired && free(l); }, function (l) { return (!l.lic.A1 && l.veh === 'xe máy') || (!l.lic.B && l.veh === 'ô tô') ? 0.12 : 0.04; }, 2);
 
   SC('an_va', {
     title: 'Ăn vạ giữa đường', text: 'Đang đi chậm thì một người đàn ông bất ngờ ngã lăn ra trước đầu xe, ôm chân la lối, đòi bồi thường "tiền thuốc men" ngay.',
