@@ -783,7 +783,7 @@
       var partnerHome=E.HOMETOWN&&E.HOMETOWN.partner(l,p);
       var hometown=partnerHome?' · quê '+esc(partnerHome.name)+' <small class="muted">(địa giới cũ)</small>':'';
       if(p.alive!==false&&p.family100&&E.FAMILY100)pj+=' · '+esc(E.FAMILY100.summary(l,'partner',0));
-      row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi' + hometown + pj + pi + ' <button class="btn sm family-open" data-family-partner>Hồ sơ</button>');
+      row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi' + hometown + pj + pi + ' <button class="btn sm family-open" data-family-partner>Hồ sơ</button>'+(E.canRenameSpouse&&E.canRenameSpouse(l)?' <button class="btn sm" data-family-partner-rename>Đổi tên</button>':''));
     } else if (l.widowed) row('Góa bụa');
     l.kids.forEach(function (k) {
       var ka = a - k.born, info = '';
@@ -809,6 +809,7 @@
     if (l.veh === 'ô tô' && l.vehName) home += ' · đi ' + l.vehName;
     $('#famPanel').innerHTML = '<h3>Gia đình & những người thân</h3><ul class="fam">' + li.join('') + '</ul><div class="small muted" style="margin-top:8px">' + esc(home) + '</div>';
     $$('[data-family-child]', $('#famPanel')).forEach(function(b){b.onclick=function(){familyProfile(b.dataset.familyChild);};});
+    var renamePartnerButton=$('[data-family-partner-rename]',$('#famPanel'));if(renamePartnerButton)renamePartnerButton.onclick=function(){familyProfile('partner');var input=$('#spouseName');if(input)input.focus();};
     var partnerButton=$('[data-family-partner]', $('#famPanel'));if(partnerButton)partnerButton.onclick=function(){familyProfile('partner');};
   }
   function familyProfile(id, resumePause) {
@@ -832,10 +833,12 @@
     if(can&&a<18)controls+='<form id="familyNameForm" class="family-form"><label for="familyName">'+(a<=2?'Đặt tên cho bé':'Tên gọi ở nhà')+'</label><input id="familyName" maxlength="60" value="'+esc(a<=2?k.name:s.nickname||'')+'" autocomplete="off"><button class="btn" type="submit">Lưu tên</button></form>';
     if(can&&F.schoolOK(l,k))controls+='<form id="familySchoolForm" class="family-form"><label for="familySchool">Chọn trường · học phí bổ sung mỗi năm</label><select id="familySchool">'+Object.keys(F.schools).map(function(t){return '<option value="'+t+'"'+(s.school===t?' selected':'')+'>'+esc(F.schools[t].name+' · '+money(l,F.quote(l,'school',t))+'/năm')+'</option>';}).join('')+'</select><button class="btn" type="submit">Chọn trường / đóng học phí</button></form>';
     if(can&&a>=4&&a<18)controls+='<form id="familyTalentForm" class="family-form"><label for="familyTalent">Khám phá và bồi dưỡng năng khiếu</label><select id="familyTalent">'+Object.keys(F.talents).map(function(t){return '<option value="'+t+'"'+((s.activity||s.interest)===t?' selected':'')+'>'+esc(F.talents[t]+(t===s.interest?' · con yêu thích':''))+'</option>';}).join('')+'</select><label for="familyCourse">Cách học</label><select id="familyCourse">'+Object.keys(F.courses).map(function(t){return '<option value="'+t+'"'+(s.course===t?' selected':'')+'>'+esc(F.courses[t].name+' · '+money(l,F.quote(l,'course',t))+'/năm')+'</option>';}).join('')+'</select><button class="btn" type="submit">Đăng ký hoạt động</button></form>';
-    if(controls)controls+='<p class="small muted">Các gói học đã đăng ký được đóng lại mỗi năm. Đổi sang gói rẻ hơn không hoàn học phí; thiếu tiền sẽ chuyển sang lựa chọn miễn phí. Trẻ lớn tự quyết con đường của mình.</p>';
+    if(can&&controls)controls+='<p class="small muted">Các gói học đã đăng ký được đóng lại mỗi năm. Đổi sang gói rẻ hơn không hoàn học phí; thiếu tiền sẽ chuyển sang lựa chọn miễn phí. Trẻ lớn tự quyết con đường của mình.</p>';
+    if(!child&&E.canRenameSpouse&&E.canRenameSpouse(l))controls+='<form id="spouseNameForm" class="family-form"><label for="spouseName">Tên '+(k.sex==='M'?'chồng':'vợ')+'</label><input id="spouseName" maxlength="60" required value="'+esc(k.name)+'" autocomplete="off"><button class="btn" type="submit">Lưu tên</button></form>';
     modal('<div class="prof-top">'+E.art.avatar(model)+'<div><div class="eyebrow">THẺ GIA ĐÌNH · '+esc(title)+'</div><h2>'+esc(k.name)+'</h2></div></div><ul class="finev family-facts">'+facts+'</ul>'+controls+'<p id="familyMessage" role="status"></p><button class="btn" id="familyClose">Đóng hồ sơ</button>',function(box){
       function logger(t,kind){var entry={a:l.age,y:l.birthYear+l.age,t:t,k:kind||'good'};l.log.push(entry);addLog(entry);}
       function done(result){persist();renderAll();if(result.ok){familyProfile(id,was);$('#familyMessage').textContent=result.message;}else $('#familyMessage',box).textContent=result.message;}
+      var spouseForm=$('#spouseNameForm',box);if(spouseForm)spouseForm.onsubmit=function(e){e.preventDefault();done(E.renameSpouse(l,$('#spouseName',box).value,k,at,logger));};
       var nf=$('#familyNameForm',box);if(nf)nf.onsubmit=function(e){e.preventDefault();done(F.name(l,id,$('#familyName',box).value,at,logger));};
       var sf=$('#familySchoolForm',box);if(sf)sf.onsubmit=function(e){e.preventDefault();done(F.school(l,id,$('#familySchool',box).value,at,logger));};
       var tf=$('#familyTalentForm',box);if(tf)tf.onsubmit=function(e){e.preventDefault();done(F.train(l,id,$('#familyTalent',box).value,$('#familyCourse',box).value,at,logger));};

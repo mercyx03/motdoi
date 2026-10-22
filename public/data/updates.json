@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-10-22T09:53:35.139Z",
+  "generatedAt": "2026-10-22T10:11:39.760Z",
   "entries": [
+    {
+      "id": "family-storm-oct22",
+      "publishedAt": "2026-10-22T10:11:39.671Z",
+      "title": "Đổi tên vợ chồng, sửa thiệt hại sau bão",
+      "summary": "Kết hôn rồi có thể đổi tên vợ/chồng trong thanh Gia đình.",
+      "details": [
+        "Kết hôn rồi có thể đổi tên vợ/chồng trong thanh Gia đình.",
+        "Sửa cảnh sau bão: nhà không làm nông không còn tự dưng mất ruộng, mất mùa; trẻ chưa tự lập không bị trừ tiền thay bố mẹ."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
     {
       "id": "fantasy-maintenance-oct22",
       "publishedAt": "2026-10-22T09:53:33.787Z",
