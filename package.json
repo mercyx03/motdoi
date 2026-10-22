@@ -23,7 +23,7 @@
     "test:continuity": "node tests/continuity101.js",
     "test:family": "node tests/family830.js",
     "test:fantasy:rpg": "node tests/fantasy-rpg.js",
-    "test:notifications": "node tests/notifications.js",
+    "test:notifications": "node tests/notifications.js && node tests/community-speed.js && node tests/inbox-client.js",
     "test:fantasy:narrative": "node tests/fantasy-narrative.js",
     "data:fantasy:scenes": "node tools/build-fantasy-scenes.js"
   }

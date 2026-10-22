@@ -105,21 +105,31 @@ async function pbkdf2(password, saltHex) {
 }
 function sameHex(a, b) { if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; }
 async function initAccounts(db) {
-  if (!accountSchemas.has(db)) accountSchemas.set(db, db.batch([
-    db.prepare('CREATE TABLE IF NOT EXISTS game_accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pass_hash TEXT NOT NULL, salt TEXT NOT NULL, created_at INTEGER NOT NULL, fail_count INTEGER NOT NULL DEFAULT 0, lock_until INTEGER NOT NULL DEFAULT 0)'),
-    db.prepare('CREATE TABLE IF NOT EXISTS game_sessions (token_hash TEXT PRIMARY KEY, account_id INTEGER NOT NULL, created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL)'),
-    db.prepare('CREATE INDEX IF NOT EXISTS game_sessions_account ON game_sessions(account_id)'),
-    db.prepare('CREATE TABLE IF NOT EXISTS game_saves (account_id INTEGER PRIMARY KEY, data TEXT NOT NULL, rev INTEGER NOT NULL, updated_at INTEGER NOT NULL)')
-  ]).then(async () => {
-    const columns = await db.prepare('PRAGMA table_info(game_accounts)').all();
-    if (!columns.results.some(x => x.name === 'display_name')) {
-      try { await db.prepare("ALTER TABLE game_accounts ADD COLUMN display_name TEXT NOT NULL DEFAULT ''").run(); }
-      catch (e) { const retry = await db.prepare('PRAGMA table_info(game_accounts)').all(); if (!retry.results.some(x => x.name === 'display_name')) throw e; }
+  if (!accountSchemas.has(db)) accountSchemas.set(db, (async () => {
+    // A persistent migration marker avoids DDL and PRAGMA on every cold isolate.
+    try { const ready = await db.prepare('SELECT version FROM game_account_schema WHERE version = 2').first(); if (ready) return; }
+    catch (e) { if (!/no such table/i.test(String(e.message))) throw e; }
+    await db.batch([
+      db.prepare("CREATE TABLE IF NOT EXISTS game_accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pass_hash TEXT NOT NULL, salt TEXT NOT NULL, created_at INTEGER NOT NULL, fail_count INTEGER NOT NULL DEFAULT 0, lock_until INTEGER NOT NULL DEFAULT 0, display_name TEXT NOT NULL DEFAULT '')"),
+      db.prepare('CREATE TABLE IF NOT EXISTS game_sessions (token_hash TEXT PRIMARY KEY, account_id INTEGER NOT NULL, created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL)'),
+      db.prepare('CREATE INDEX IF NOT EXISTS game_sessions_account ON game_sessions(account_id)'),
+      db.prepare('CREATE TABLE IF NOT EXISTS game_saves (account_id INTEGER PRIMARY KEY, data TEXT NOT NULL, rev INTEGER NOT NULL, updated_at INTEGER NOT NULL)'),
+      db.prepare("CREATE TABLE IF NOT EXISTS game_account_roles (account_id INTEGER PRIMARY KEY, role TEXT NOT NULL CHECK(role = 'admin'))"),
+      db.prepare('CREATE TABLE IF NOT EXISTS game_update_comments (id INTEGER PRIMARY KEY AUTOINCREMENT, account_id INTEGER NOT NULL, parent_id INTEGER, body TEXT NOT NULL, created_at INTEGER NOT NULL, reply_to_id INTEGER)'),
+      db.prepare('CREATE TABLE IF NOT EXISTS game_notification_reads (account_id INTEGER PRIMARY KEY, last_id INTEGER NOT NULL DEFAULT 0)'),
+      db.prepare('CREATE TABLE IF NOT EXISTS game_account_schema (version INTEGER PRIMARY KEY)')
+    ]);
+    const columns = await db.batch([db.prepare('PRAGMA table_info(game_accounts)'),db.prepare('PRAGMA table_info(game_update_comments)')]);
+    for (const [i, column, sql] of [[0,'display_name',"ALTER TABLE game_accounts ADD COLUMN display_name TEXT NOT NULL DEFAULT ''"],[1,'reply_to_id','ALTER TABLE game_update_comments ADD COLUMN reply_to_id INTEGER']]) {
+      if (!columns[i].results.some(x=>x.name===column)) { try { await db.prepare(sql).run(); } catch(e) { if(!/duplicate column/i.test(String(e.message)))throw e; } }
     }
-    await db.batch([db.prepare("CREATE TABLE IF NOT EXISTS game_account_roles (account_id INTEGER PRIMARY KEY, role TEXT NOT NULL CHECK(role = 'admin'))"),db.prepare("CREATE TABLE IF NOT EXISTS game_update_comments (id INTEGER PRIMARY KEY AUTOINCREMENT, account_id INTEGER NOT NULL, parent_id INTEGER, body TEXT NOT NULL, created_at INTEGER NOT NULL)"),db.prepare('CREATE INDEX IF NOT EXISTS game_comments_parent ON game_update_comments(parent_id, id DESC)'),db.prepare('CREATE INDEX IF NOT EXISTS game_comments_author ON game_update_comments(account_id, created_at DESC)')]);
-    const commentColumns = await db.prepare('PRAGMA table_info(game_update_comments)').all();
-    if(!commentColumns.results.some(x=>x.name==='reply_to_id')) { try { await db.prepare('ALTER TABLE game_update_comments ADD COLUMN reply_to_id INTEGER').run(); } catch(e) { const retry=await db.prepare('PRAGMA table_info(game_update_comments)').all(); if(!retry.results.some(x=>x.name==='reply_to_id'))throw e; } }
-  }).catch(e => { accountSchemas.delete(db); throw e; }));
+    await db.batch([
+      db.prepare('CREATE INDEX IF NOT EXISTS game_comments_parent ON game_update_comments(parent_id, id DESC)'),
+      db.prepare('CREATE INDEX IF NOT EXISTS game_comments_author ON game_update_comments(account_id, created_at DESC)'),
+      db.prepare('CREATE INDEX IF NOT EXISTS game_comments_recipient ON game_update_comments(reply_to_id, id)'),
+      db.prepare('INSERT OR IGNORE INTO game_account_schema(version) VALUES (2)')
+    ]);
+  })().catch(e => { accountSchemas.delete(db); throw e; }));
   await accountSchemas.get(db);
 }
 async function readJsonBody(request, limit) {
@@ -139,7 +149,7 @@ async function newSession(db, accountId, now) {
 }
 async function sessionAccount(db, request, now) {
   const m = /^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('Authorization') || ''); if (!m) return null;
-  const row = await db.prepare('SELECT s.account_id AS id, a.username AS username, a.display_name AS displayName, s.token_hash AS th FROM game_sessions s JOIN game_accounts a ON a.id = s.account_id WHERE s.token_hash = ? AND s.expires_at > ?').bind(await sha256(m[1]), now).first();
+  const row = await db.prepare('SELECT s.account_id AS id, a.username AS username, a.display_name AS displayName, s.token_hash AS th, COALESCE(r.role,\'member\') AS role FROM game_sessions s JOIN game_accounts a ON a.id = s.account_id LEFT JOIN game_account_roles r ON r.account_id = a.id WHERE s.token_hash = ? AND s.expires_at > ?').bind(await sha256(m[1]), now).first();
   return row || null;
 }
 async function account(request, env, url) {
@@ -181,18 +191,26 @@ async function account(request, env, url) {
   const me = await sessionAccount(db, request, now);
   if (!me) return accJson(401, { ok: false, code: 'NOT_LOGGED_IN' });
   if (action === 'notifications' || action === 'notifications_read') {
-    await db.prepare('CREATE TABLE IF NOT EXISTS game_notification_reads (account_id INTEGER PRIMARY KEY, last_id INTEGER NOT NULL DEFAULT 0)').run();
-    const admin = await accountRole(db, me.id) === 'admin';
-    const filter = ' FROM game_update_comments c LEFT JOIN game_update_comments p ON p.id = COALESCE(c.reply_to_id,c.parent_id) LEFT JOIN game_accounts a ON a.id = c.account_id WHERE c.account_id != ? AND (? = 1 OR p.account_id = ?)';
-    const latest = await db.prepare('SELECT COALESCE(MAX(c.id),0) AS id'+filter).bind(me.id,admin?1:0,me.id).first();
-    if(action === 'notifications_read') { const id = Number(body.lastId); if(!Number.isSafeInteger(id)||id<0||id>latest.id)return accJson(400,{ok:false,code:'INVALID_CURSOR'}); await db.prepare('INSERT INTO game_notification_reads(account_id,last_id) VALUES (?,?) ON CONFLICT(account_id) DO UPDATE SET last_id = MAX(last_id,excluded.last_id)').bind(me.id,id).run(); }
-    const seen = await db.prepare('SELECT last_id FROM game_notification_reads WHERE account_id = ?').bind(me.id).first();
-    const unread = await db.prepare('SELECT COUNT(*) AS count'+filter+' AND c.id > ?').bind(me.id,admin?1:0,me.id,seen?seen.last_id:0).first();
-    const rows = await db.prepare("SELECT c.id, COALESCE(c.parent_id,c.id) AS threadId, c.body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name,''),'Người chơi') AS displayName"+filter+' ORDER BY c.id DESC LIMIT 30').bind(me.id,admin?1:0,me.id).all();
-    return accJson(200,{ok:true,count:unread.count,lastId:latest.id,items:rows.results});
+    const admin = me.role === 'admin';
+    // Separate indexed recipient branches; no OR over every author's comments.
+    const visible = admin ? 'SELECT c.id FROM game_update_comments c WHERE c.account_id != ?' : 'SELECT c.id FROM game_update_comments p JOIN game_update_comments c ON c.reply_to_id = p.id WHERE p.account_id = ? AND c.account_id != ? UNION SELECT c.id FROM game_update_comments p JOIN game_update_comments c ON c.parent_id = p.id WHERE p.account_id = ? AND c.reply_to_id IS NULL AND c.account_id != ?';
+    const args = admin ? [me.id] : [me.id,me.id,me.id,me.id];
+    const cte = 'WITH visible AS ('+visible+') ';
+    if(action === 'notifications_read') {
+      const id = body.lastId;
+      if(!Number.isSafeInteger(id)||id<0)return accJson(400,{ok:false,code:'INVALID_CURSOR'});
+      const result = await db.prepare(cte+'INSERT INTO game_notification_reads(account_id,last_id) SELECT ?, ? WHERE ? <= (SELECT COALESCE(MAX(id),0) FROM visible) ON CONFLICT(account_id) DO UPDATE SET last_id = MAX(last_id,excluded.last_id)').bind(...args,me.id,id,id).run();
+      if(!result.meta.changes)return accJson(400,{ok:false,code:'INVALID_CURSOR'});
+      return accJson(200,{ok:true});
+    }
+    const result = await db.batch([
+      db.prepare(cte+'SELECT COALESCE(MAX(id),0) AS lastId, COUNT(CASE WHEN id > COALESCE((SELECT last_id FROM game_notification_reads WHERE account_id = ?),0) THEN 1 END) AS count FROM visible').bind(...args,me.id),
+      db.prepare(cte+"SELECT c.id, COALESCE(c.parent_id,c.id) AS threadId, SUBSTR(c.body,1,140) AS body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name,''),'Người chơi') AS displayName FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id WHERE c.id IN (SELECT id FROM visible ORDER BY id DESC LIMIT 30) ORDER BY c.id DESC").bind(...args)
+    ]);
+    return accJson(200,{ok:true,...result[0].results[0],items:result[1].results});
   }
-  if (action === 'me') return accJson(200, { ok: true, username: me.username, displayName: me.displayName, role: await accountRole(db, me.id) });
-  if (action === 'profile') { const name = cleanDisplayName(body.displayName); if (!name) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' }); await db.prepare('UPDATE game_accounts SET display_name = ? WHERE id = ?').bind(name, me.id).run(); return accJson(200, { ok: true, username: me.username, displayName: name, role: await accountRole(db, me.id) }); }
+  if (action === 'me') return accJson(200, { ok: true, username: me.username, displayName: me.displayName, role: me.role });
+  if (action === 'profile') { const name = cleanDisplayName(body.displayName); if (!name) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' }); await db.prepare('UPDATE game_accounts SET display_name = ? WHERE id = ?').bind(name, me.id).run(); return accJson(200, { ok: true, username: me.username, displayName: name, role: me.role }); }
   if (action === 'logout') { await db.prepare('DELETE FROM game_sessions WHERE token_hash = ?').bind(me.th).run(); return accJson(200, { ok: true }); }
   if (action === 'load') { const s = await db.prepare('SELECT data, rev, updated_at FROM game_saves WHERE account_id = ?').bind(me.id).first(); return accJson(200, { ok: true, username: me.username, rev: s ? s.rev : 0, updatedAt: s ? s.updated_at : 0, data: s ? JSON.parse(s.data) : null }); }
   if (action === 'save') {
@@ -233,10 +251,23 @@ async function comments(request, env, url) {
   if(request.method==='GET') {
     const raw=url.searchParams.get('offset')||'0',thread=url.searchParams.get('thread')||'';
     if(!/^\d{1,7}$/.test(raw)||thread&&!/^[1-9]\d{0,12}$/.test(thread))return accJson(400,{ok:false,code:'INVALID_PAGE'});
-    if(thread) {const root=await db.prepare(COMMENT_SELECT+' WHERE c.id = ? AND c.parent_id IS NULL').bind(Number(thread)).first();if(!root)return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});const rows=await db.prepare(COMMENT_SELECT+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20 OFFSET ?').bind(Number(thread),Number(raw)).all(),count=await db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id = ?').bind(Number(thread)).first();return accJson(200,{ok:true,root:root,replies:rows.results,total:count.count});}
-    const rows=await db.prepare(COMMENT_SELECT+' WHERE c.parent_id IS NULL ORDER BY c.id DESC LIMIT 10 OFFSET ?').bind(Number(raw)).all(),total=await db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id IS NULL').first();
-    const roots=rows.results;const replies=roots.length?await db.batch(roots.map(root=>db.prepare(COMMENT_SELECT+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20').bind(root.id))):[],counts=roots.length?await db.batch(roots.map(root=>db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id = ?').bind(root.id))):[];
-    return accJson(200,{ok:true,total:total.count,comments:roots.map((root,i)=>({...root,replies:replies[i].results,replyCount:counts[i].results[0].count}))});
+    if(thread) {
+      const result=await db.batch([
+        db.prepare(COMMENT_SELECT+' WHERE c.id = ? AND c.parent_id IS NULL').bind(Number(thread)),
+        db.prepare(COMMENT_SELECT+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20 OFFSET ?').bind(Number(thread),Number(raw)),
+        db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id = ?').bind(Number(thread))
+      ]);
+      if(!result[0].results.length)return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
+      return accJson(200,{ok:true,root:result[0].results[0],replies:result[1].results,total:result[2].results[0].count});
+    }
+    const page = 'SELECT id FROM game_update_comments WHERE parent_id IS NULL ORDER BY id DESC LIMIT 10 OFFSET ?';
+    const result=await db.batch([
+      db.prepare(COMMENT_SELECT.replace('SELECT c.id,','SELECT (SELECT COUNT(*) FROM game_update_comments replies WHERE replies.parent_id = c.id) AS replyCount, c.id,')+' WHERE c.id IN ('+page+') ORDER BY c.id DESC').bind(Number(raw)),
+      db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id IS NULL'),
+      db.prepare(COMMENT_SELECT+' WHERE c.id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY parent_id ORDER BY id ASC) AS pos FROM game_update_comments WHERE parent_id IN ('+page+')) WHERE pos <= '+(url.searchParams.get('preview')==='1'?3:20)+') ORDER BY c.id ASC').bind(Number(raw))
+    ]);
+    const grouped=new Map();for(const reply of result[2].results){if(!grouped.has(reply.parentId))grouped.set(reply.parentId,[]);grouped.get(reply.parentId).push(reply);}
+    return accJson(200,{ok:true,total:result[1].results[0].count,comments:result[0].results.map(root=>({...root,replies:grouped.get(root.id)||[]}))});
   }
   if(request.headers.get('Origin')!==url.origin)return accJson(403,{ok:false,code:'ORIGIN'});
   if(!(request.headers.get('Content-Type')||'').toLowerCase().startsWith('application/json'))return accJson(415,{ok:false,code:'CONTENT_TYPE'});
