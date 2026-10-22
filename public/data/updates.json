@@ -2,6 +2,21 @@
   "generatedAt": "2026-10-21T22:44:36.148Z",
   "entries": [
     {
+      "id": "fantasy-narrative-oct22",
+      "publishedAt": "2026-10-21T23:07:03.466Z",
+      "title": "Fantasy: kể rõ chuyện, bớt những câu lặp",
+      "summary": "Viết lại các cảnh tuổi thơ, học tập và sự kiện để có bối cảnh, người gặp và chuyện đang xảy ra.",
+      "details": [
+        "Viết lại các cảnh tuổi thơ, học tập và sự kiện để có bối cảnh, người gặp và chuyện đang xảy ra.",
+        "Mỗi lựa chọn có đoạn kết riêng, thay vì chỉ chép lại tên nút vào nhật ký.",
+        "Trò chuyện theo nghề và từng vùng; các buổi học liên tiếp có nội dung khác nhau."
+      ],
+      "tags": [
+        "Fantasy",
+        "Tính năng"
+      ]
+    },
+    {
       "id": "continuity-oct22",
       "publishedAt": "2026-10-21T22:43:57.111Z",
       "title": "Thêm chức danh, chuyện tình cảm và sửa bản lưu",

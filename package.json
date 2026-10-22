@@ -21,6 +21,8 @@
     "data:fantasy:politics": "node tools/fetch-fantasy-politics.js && python tools/build-fantasy-politics.py",
     "test:community": "node tests/community.js && node tests/update550.js && node tests/update651.js && node tests/update690.js",
     "test:continuity": "node tests/continuity101.js",
-    "test:family": "node tests/family830.js"
+    "test:family": "node tests/family830.js",
+    "test:fantasy:narrative": "node tests/fantasy-narrative.js",
+    "data:fantasy:scenes": "node tools/build-fantasy-scenes.js"
   }
 }
