@@ -7,6 +7,7 @@ function element(id){return elements[id]||(elements[id]={id,innerHTML:'',hidden:
 const home=element('home');screens.push(home);const doc={createElement(){return element('fantasy-root');},body:{appendChild(x){screens.push(x);}},getElementById:element,querySelectorAll(){return screens;}};
 let now=0;const timers=[];class Clock extends Date{static now(){return now;}}
 const context={Date:Clock,setInterval:f=>timers.push(f),G,document:doc,localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},window:{scrollTo(){},confirm(){return true;}},console,Blob,URL:{createObjectURL(){return 'blob:test';},revokeObjectURL(){}},setTimeout:f=>f()};
+G.FANTASY_ACCESS={enabled:true}; // Exercise unreleased UI explicitly; production stays closed.
 vm.runInNewContext(fs.readFileSync('public/js/fantasy-ui.js','utf8'),context);
 const root=elements['fantasy-root'],entry=elements.fantasyMode;
 function click(fx,id){root.handlers.click({target:{closest(){return{dataset:{fx,id,event:fx==='choose'?((JSON.parse(store.get('motdoi.fantasy.current.v1')||'null')||{}).age+':'+((JSON.parse(store.get('motdoi.fantasy.current.v1')||'null')||{}).pending||{}).id):undefined},disabled:false};}}});ok(!/undefined|NaN|\[object/.test(root.innerHTML),'clean rendered text for '+fx);}

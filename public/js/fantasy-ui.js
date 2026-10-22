@@ -1,4 +1,7 @@
 (function(G){'use strict';if(typeof document==='undefined')return;
+var access=G.FANTASY_ACCESS,accessEntry=document.getElementById('fantasyMode');
+if(accessEntry){accessEntry.disabled=!(access&&access.enabled);accessEntry.textContent=access&&access.enabled?'✦ Fantasy gia tộc (thử nghiệm)':'✦ Fantasy gia tộc · Tạm khóa để điều chỉnh';accessEntry.title=access&&access.enabled?'':'Tạm khóa Fantasy gia tộc để điều chỉnh.';}
+if(!access||!access.enabled)return;
 var F=G.FANTASY,D=F.data,I=G.FANTASY_IMPORTS,esc=G.U.esc,KEY='motdoi.fantasy.current.v1',ARCHIVE='motdoi.fantasy.archive.v1',l=null,tab='map',profileOpen=false,page=0,filter='',fullLog=false,paused=false,speed=1,nextYear=Date.now()+30000,inSetup=true,lastPulse=Date.now(),lastSpiritSave=Date.now();
 var root=document.createElement('section');root.id='fantasy';root.className='screen';document.body.appendChild(root);
 function read(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}}

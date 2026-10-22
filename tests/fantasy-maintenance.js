@@ -1,0 +1,6 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),assert=require('assert');let checks=0;function ok(v,m){assert(v,m);checks++;}
+const source=fs.readFileSync('public/js/fantasy-ui.js','utf8'),config=fs.readFileSync('public/js/fantasy-access.js','utf8');
+for(const configured of [true,false]){const button={},c={G:{},document:{getElementById:id=>id==='fantasyMode'?button:null,createElement(){throw Error('Locked UI must not mount');}},localStorage:{getItem(){throw Error('Do not read or mutate saved lives while closed');},setItem(){throw Error('Do not overwrite saves');}},setInterval(){throw Error('Locked mode must not start timers');}};c.globalThis=c;vm.createContext(c);if(configured)vm.runInContext(config,c);vm.runInContext(source,c);ok(button.disabled===true,'lock defaults closed, including missing config');ok(button.textContent.includes('Tạm khóa để điều chỉnh'),'button explains maintenance');}
+const html=fs.readFileSync('public/index.html','utf8');ok(/id="fantasyMode"[^>]*disabled/.test(html),'HTML blocks entry even before JavaScript loads');ok(html.indexOf('js/fantasy-access.js')<html.indexOf('js/fantasy-ui.js'),'release switch loads before controller');
+console.log('Fantasy maintenance: '+checks+' entry, fail-closed and save-preservation checks passed');
