@@ -52,7 +52,7 @@ for(const e of stories)for(let i=0;i<e.choices.length;i++){let life=adult('kiem'
 for(let seed=0;seed<30;seed++){let life=F.create({seed:91000+seed}),seen=new Set();for(let year=0;year<12;year++){if(life.pending){ok(!seen.has(life.pending.id),'early stories never repeat before twelve');seen.add(life.pending.id);F.choose(life,'0');}F.advance(life);}}
 function novice(){let x=F.create({seed:93001,origin:'dan'});x.age=16;x.pending=null;x.ap=100;x.gold=10000;x.location='lang';return x;}
 let spirit=novice();ok(F.spiritRate(spirit).base===10&&F.spiritRate(spirit).total===10&&F.spiritNeeded(spirit)===100,'initial rate 10/s, first threshold 100');
-F.absorb(spirit,5);F.absorb(spirit,5);F.absorb(spirit,1);ok(spirit.xp===110&&spirit.level===1,'seconds accumulate power without an automatic level or overflow clamp');
+F.toggleCultivation(spirit);F.absorb(spirit,5);F.absorb(spirit,5);F.absorb(spirit,1);ok(spirit.xp===110&&spirit.level===1,'seconds accumulate power without an automatic level or overflow clamp');
 ok(F.breakthrough(spirit)&&spirit.xp===10&&spirit.level===2&&F.spiritNeeded(spirit)>100,'110 minus 100 leaves exactly ten for next stage');
 before=JSON.stringify(spirit);ok(!F.breakthrough(spirit)&&JSON.stringify(spirit)===before,'insufficient breakthrough preserves all resources');
 let scholarRate=novice();ok(F.study(scholarRate)&&F.spiritRate(scholarRate).total===11,'reading adds ten percent: ten becomes eleven per second');

@@ -60,7 +60,8 @@
   function toast(m) { var t = document.createElement('div'); t.className = 'toast'; t.textContent = m; document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2600); }
   function modal(html, bind) { var root = document.getElementById('modalRoot'); root.innerHTML = '<div class="overlay"><div class="card modal account-modal" role="dialog" aria-modal="true">' + html + '</div></div>'; bind(root.querySelector('.modal')); }
   function close() { document.getElementById('modalRoot').innerHTML = ''; }
-  function label() { var b = document.getElementById('accountBtn'), a = acc(); if (b) b.textContent = a ? '👤 ' + a.u : '👤 Tài khoản'; }
+  var unreadCount=0;
+  function label() { var b = document.getElementById('accountBtn'), a = acc(); if (b) b.textContent = a ? '👤 ' + a.u + (unreadCount?' · 🔔 '+unreadCount:'') : '👤 Tài khoản'; }
   function counts() { var d = localData(); return Object.keys(d.ach || {}).length + ' thành tựu · ' + (d.tree || []).length + ' đời trong gia phả · ' + (d.mem || []).length + ' đời ở đài tưởng niệm'; }
   function open() {
     var a = acc();
@@ -83,9 +84,10 @@
       return;
     }
     modal('<div class="agep">Tài khoản</div><h2>' + esc(a.u) + '</h2><form id="accProfile" class="family-form"><label for="accDisplayName">Tên hiển thị công khai</label><input id="accDisplayName" maxlength="32" minlength="2" value="'+esc(a.displayName||'')+'" required placeholder="Đặt tên để bình luận"><button class="btn" type="submit">Lưu tên hiển thị</button><p id="accProfileStatus" role="status"></p></form><p class="small muted">Đồng bộ lần cuối: ' + (lastSync ? new Date(lastSync).toLocaleString('vi-VN') : 'chưa') + '</p><p class="small">' + esc(counts()) + '</p>' +
-      '<div class="go-row"><button class="btn primary" id="accSync">Đồng bộ ngay</button><button class="btn" id="accOut">Đăng xuất</button><button class="btn ghost" id="accClose">Đóng</button></div><p id="accStatus" role="status" aria-live="polite"></p>' +
+      '<section aria-label="Thông báo"><h3>🔔 Thông báo <span id="accUnread"></span></h3><div id="accNotifications" role="status">Đang tải…</div><button class="btn" id="accReadNotifications">Đánh dấu đã đọc</button></section><div class="go-row"><button class="btn primary" id="accSync">Đồng bộ ngay</button><button class="btn" id="accOut">Đăng xuất</button><button class="btn ghost" id="accClose">Đóng</button></div><p id="accStatus" role="status" aria-live="polite"></p>' +
       '<details class="small" style="margin-top:12px"><summary>Xóa tài khoản</summary><p class="muted">Xóa vĩnh viễn tài khoản và bản lưu trên máy chủ. Dữ liệu trên máy này vẫn giữ nguyên.</p><input id="accDelPass" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu để xác nhận"> <button class="btn sm" id="accDel">Xóa vĩnh viễn</button></details>', function (box) {
       var st = box.querySelector('#accStatus');
+      inbox(box);
       box.querySelector('#accProfile').onsubmit = async function(e){e.preventDefault();var status=box.querySelector('#accProfileStatus'),button=this.querySelector('button');button.disabled=true;try{var r=await api('profile',{displayName:box.querySelector('#accDisplayName').value},true);var current=acc();if(current){current.displayName=r.displayName;current.role=r.role;set(KEY,current);}status.textContent='Đã lưu tên. Bạn có thể bình luận ở trang Cập nhật.';label();document.dispatchEvent(new Event('account-profile-changed'));}catch(err){status.textContent=err.message;}finally{button.disabled=false;}};
       api('me',null,true).then(function(r){var current=acc();if(current){current.displayName=r.displayName||'';current.role=r.role;set(KEY,current);box.querySelector('#accDisplayName').value=r.displayName||'';}}).catch(function(){});
       box.querySelector('#accClose').onclick = close;
@@ -94,10 +96,14 @@
       box.querySelector('#accDel').onclick = async function () { var p = box.querySelector('#accDelPass').value; if (!p) { st.textContent = 'Hãy nhập mật khẩu để xác nhận.'; return; } if (!this.dataset.sure) { this.dataset.sure = '1'; this.textContent = 'Bấm lần nữa để xóa vĩnh viễn'; return; } try { await api('delete', { password: p }, true); del(KEY); label(); document.dispatchEvent(new Event('account-profile-changed')); close(); toast('Đã xóa tài khoản.'); } catch (e) { st.textContent = e.message; } };
     });
   }
+    async function inbox(box){try{var owner=acc()&&acc().u;if(!owner){unreadCount=0;label();return;}var r=await api('notifications',{},true);if(!acc()||acc().u!==owner)return;unreadCount=r.count;label();if(!box)return;box.querySelector('#accUnread').textContent=r.count?'· '+r.count+' chưa đọc':'';var panel=box.querySelector('#accNotifications');panel.replaceChildren();if(!r.items.length)panel.textContent='Chưa có thông báo mới.';r.items.forEach(function(item){var row=document.createElement('p'),link=document.createElement('a');link.href='updates.html?thread='+item.threadId+'#comment-'+item.id;link.textContent=item.displayName+': '+item.body.slice(0,140);row.append(link);panel.append(row);});box.querySelector('#accReadNotifications').onclick=async function(){this.disabled=true;try{await api('notifications_read',{lastId:r.lastId},true);await inbox(box);}catch(e){panel.textContent=e.message;}finally{this.disabled=false;}};}catch(e){if(box)box.querySelector('#accNotifications').textContent='Chưa tải được thông báo. Mở lại tài khoản để thử lại.';}}
+  document.addEventListener('account-profile-changed',function(){unreadCount=0;label();inbox();});
+  setInterval(function(){if(!document.hidden&&acc())inbox();},45000);
+  window.addEventListener('focus',function(){inbox();});
   var timer = null;
   function autoSync() { if (!acc()) return; clearTimeout(timer); timer = setTimeout(function () { sync('auto').catch(function (e) { if (e.code === 'NOT_LOGGED_IN') { del(KEY); label(); document.dispatchEvent(new Event('account-profile-changed')); } }); }, 1500); }
   window.G = window.G || {}; window.G.Account = { open: open, sync: sync, autoSync: autoSync, merge: merge, signedIn: function () { return !!acc(); }, profile: function(){var a=acc();return a?{displayName:a.displayName||'',username:a.u}:null;}, auth: function(action,body){return api(action,body,true);} };
   document.addEventListener('DOMContentLoaded', init); if (document.readyState !== 'loading') init();
   var inited = false;
-  function init() { if (inited) return; inited = true; var b = document.getElementById('accountBtn'); if (b) b.onclick = open; label(); if (acc()) autoSync(); }
+  function init() { if (inited) return; inited = true; var b = document.getElementById('accountBtn'); if (b) b.onclick = open; label(); if (acc()) {autoSync();inbox();} }
 })();
