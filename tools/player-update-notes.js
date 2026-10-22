@@ -39,6 +39,7 @@ function playerLine(value) {
  return technical.test(text)?null:text;
 }
 function playerEntry(entry) {
+ if(entry.private)return null;
  const edited=copy.get(entry.id);
  if(edited)return {...entry,title:edited.title,summary:edited.details[0],details:edited.details};
  const details=entry.details.map(playerLine).filter(Boolean);

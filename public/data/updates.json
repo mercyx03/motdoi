@@ -1,19 +1,6 @@
 {
-  "generatedAt": "2026-10-22T04:51:26.736Z",
+  "generatedAt": "2026-10-22T05:00:02.915Z",
   "entries": [
-    {
-      "id": "community-speed-oct22",
-      "publishedAt": "2026-10-22T04:51:26.640Z",
-      "title": "Đọc bình luận, nhận thông báo nhanh hơn",
-      "summary": "Bình luận và thông báo tải nhẹ hơn; mở tài khoản nhiều lần không còn phải đợi tải lại từ đầu.",
-      "details": [
-        "Bình luận và thông báo tải nhẹ hơn; mở tài khoản nhiều lần không còn phải đợi tải lại từ đầu."
-      ],
-      "tags": [
-        "Sửa lỗi",
-        "Cộng đồng"
-      ]
-    },
     {
       "id": "fantasy-gear-inbox-oct22",
       "publishedAt": "2026-10-22T04:40:32.867Z",
@@ -21,8 +8,7 @@
       "summary": "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
       "details": [
         "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
-        "Chủ động tu luyện, chuẩn bị đủ sức trước khi sang vùng khó; có thể xã giao, tặng quà và cứu người để kết thân với chủ quản.",
-        "Có thông báo khi bình luận được phản hồi, bấm vào để quay lại cuộc trò chuyện."
+        "Chủ động tu luyện, chuẩn bị đủ sức trước khi sang vùng khó; có thể xã giao, tặng quà và cứu người để kết thân với chủ quản."
       ],
       "tags": [
         "Fantasy",
