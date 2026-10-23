@@ -14,5 +14,6 @@ module.exports=function(publicDir,files){
   ctx.S.preview=opts;vm.runInContext('renderProfile()',ctx);
   profiles.push({opts,html:ctx.nodes['#heroProfile'].innerHTML});
  }
+ profiles.jobCount=Object.keys(ctx.G.E.CAR).filter(k=>!['scam_kh','phu_giup'].includes(k)).length;
  return profiles;
 };

@@ -34,7 +34,7 @@ function build(outDir){
  const fontCss=read('css/fonts.css').replaceAll('../fonts/','fonts/');
  const fonts=[...new Set([...fontCss.matchAll(/url\(['"]?(fonts\/[^)'"]+)/g)].map(m=>m[1]))];
  for(const font of fonts)put(font,fs.readFileSync(path.join(PUB,font)));
- put('fonts-LICENSE.txt',['Be Vietnam Pro',read('fonts/be-vietnam-OFL.txt'),'Playfair Display',read('fonts/playfair-OFL.txt')].join('\n\n'));
+ put('fonts-LICENSE.txt',['Be Vietnam Pro',read('fonts/be-vietnam-OFL.txt'),'Playfair Display',read('fonts/playfair-OFL.txt'),'Lora',read('fonts/lora-OFL.txt')].join('\n\n'));
  function inlineStyles(page){
   const cssFiles=[...page.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="(css\/[^"?]+)[^"]*"[^>]*>/g)].map(m=>m[1]);
   const css=fontCss+'\n'+cssFiles.filter(f=>f!=='css/fonts.css').map(read).join('\n');
@@ -46,7 +46,7 @@ function build(outDir){
  const profiles=require('./start-profile')(PUB,files);
  const placeholder='<div class="profile" id="heroProfile"><h3>Hồ sơ xuất phát</h3><p role="status">Đang chuẩn bị hồ sơ…</p></div>';
  if(!html.includes(placeholder))throw Error('Missing starting profile placeholder');
- let home=inlineStyles(html.replace(pattern,'').replace(placeholder,'<div class="profile" id="heroProfile">'+profiles[0].html+'</div>'));
+ let home=inlineStyles(html.replace(/(id="statJobs">)[^<]+/,'$1'+(Math.floor(profiles.jobCount/10)*10)+'+').replace(pattern,'').replace(placeholder,'<div class="profile" id="heroProfile">'+profiles[0].html+'</div>'));
  const profileData=JSON.stringify(profiles).replace(/</g,'\\u003c');
  home=home.replace('</body>','<script type="application/json" id="startingProfiles">'+profileData+'</script></body>');
  const primary=fonts.find(f=>/be-vietnam-400-full\./.test(f));
