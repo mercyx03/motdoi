@@ -47,7 +47,7 @@ section('0. Phiên bản & trang');
   ok(refs.length === MODULES.length + UI_SCRIPTS.length + 3, 'index.html nạp đủ ' + (MODULES.length + UI_SCRIPTS.length) + ' script + loader + 2 stylesheets (' + refs.length + ')');
   UI_SCRIPTS.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp ' + m));
   MODULES.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp module ' + m));
-  ok(html.indexOf('logo.svg?v=' + G.VERSION) >= 0 && fs.existsSync(path.join(ROOT, 'logo.svg')), 'logo Một Đời tồn tại & được dùng');
+  ok(html.indexOf('logo.webp?v=' + G.VERSION) >= 0 && fs.existsSync(path.join(ROOT, 'logo.webp')), 'logo Một Đời tồn tại & được dùng');
   ok(/<title>Một Đời/.test(html), 'tên game là "Một Đời"');
   ok(refs.every(r => r.indexOf('?v=') > 0 && r.indexOf(G.VERSION) > r.indexOf('?v=')), 'mọi tài nguyên có ?v= chứa ' + G.VERSION + ' (tránh cache cũ sau khi cập nhật; cho phép hậu tố như ' + G.VERSION + '-community)');
   refs.forEach(r => { const f = r.split('"')[1].split('?')[0]; ok(fs.existsSync(path.join(ROOT, f)), 'tệp tồn tại: ' + f); });

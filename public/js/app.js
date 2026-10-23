@@ -403,7 +403,7 @@
     }
     var sec = secPerYear(l);
     $('#birthWrap').innerHTML =
-      '<header class="top"><div class="brand" data-go2="home"><img class="logo" src="logo.svg?v=' + G.VERSION + '" alt="">Một Đời</div></header>' +
+      '<header class="top"><div class="brand" data-go2="home"><img class="logo" src="logo.webp?v=logo2-' + G.VERSION + '" alt="Một Đời" width="160" height="80"></div></header>' +
       '<div class="card cert"><div class="cert-head">Giấy khai sinh <small>Số: ' + esc(certNo) + '</small></div><div class="cert-body">' +
       '<div class="avatarbox">' + E.art.avatar(l) + '</div>' +
       '<div class="fact"><div class="k">Họ và tên</div></div><h1 class="name">' + esc(l.name) + '</h1>' + (l.nameSub ? '<div class="native">' + esc(l.nameSub) + '</div>' : '') +
@@ -1330,7 +1330,7 @@
     var refl = Object.keys(l.refl || {}).map(function (k) { return '<blockquote>' + k + ' tuổi — ' + esc(l.refl[k]) + '</blockquote>'; }).join('');
     var stars = E.starred(l), kidsLive = l.kids.filter(function (k) { return k.alive; });
     $('#endWrap').innerHTML =
-      '<header class="top"><div class="brand" data-go3="home"><img class="logo" src="logo.svg?v=' + G.VERSION + '" alt="">Một Đời</div></header>' +
+      '<header class="top"><div class="brand" data-go3="home"><img class="logo" src="logo.webp?v=logo2-' + G.VERSION + '" alt="Một Đời" width="160" height="80"></div></header>' +
       '<div class="card pad"><div class="eyebrow">Một đời người</div><h1 style="font-size:clamp(32px,6vw,48px);margin:6px 0 2px">' + esc(l.name) + '</h1>' +
       (l.nameSub ? '<div class="muted">' + esc(l.nameSub) + '</div>' : '') +
       '<div class="years">' + esc(lifeYears(l) + ' · ' + memWhere(l) + ' · ' + l.death.age + ' tuổi') + '</div>' +
@@ -1421,7 +1421,7 @@
   function renderShared(s, own) {
     var mems = (s.mem || []).map(function (x) { var p = String(x).split('|'); return '<li>' + esc(p[0]) + ' tuổi — ' + esc(p.slice(1).join('|')) + '</li>'; }).join('');
     $('#sharedWrap').innerHTML =
-      '<header class="top"><div class="brand" data-go4="home"><img class="logo" src="logo.svg?v=' + G.VERSION + '" alt="">Một Đời</div></header>' +
+      '<header class="top"><div class="brand" data-go4="home"><img class="logo" src="logo.webp?v=logo2-' + G.VERSION + '" alt="Một Đời" width="160" height="80"></div></header>' +
       '<div class="card pad"><div class="eyebrow">' + (own ? 'Một cuộc đời bạn đã sống' : 'Một người bạn đã chia sẻ cuộc đời này') + '</div>' +
       '<h1 style="font-size:clamp(32px,6vw,48px);margin:6px 0 2px">' + esc(s.n) + '</h1>' + (s.s ? '<div class="muted">' + esc(s.s) + '</div>' : '') +
       '<div class="years">' + esc(s.y + ' · ' + s.w + ' · ' + s.a + ' tuổi') + '</div>' +
