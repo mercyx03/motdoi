@@ -60,7 +60,7 @@
   }
   E.ESTATE84 = { items: itemsOf, allocate: allocate };
 
-  function itemLine(l, x) { return (x.t === 'home' ? 'nhà đang ở: ' : x.t === 'venture' ? 'cơ sở kinh doanh: ' : x.t === 'land' ? '' : 'nhà cho thuê: ') + x.n + ' (' + mo(l, x.v) + (x.t === 'home' && x.debt > 0.5 ? ', khoản vay mua nhà được trả từ di sản' : '') + ')'; }
+  function itemLine(l, x) { return (x.t === 'home' ? 'nhà đang ở: ' : x.t === 'venture' ? 'cơ sở kinh doanh: ' : x.t === 'land' ? '' : x.data && x.data.residential112 ? 'nhà để ở: ' : 'nhà cho thuê: ') + x.n + ' (' + mo(l, x.v) + (x.t === 'home' && x.debt > 0.5 ? ', khoản vay mua nhà được trả từ di sản' : '') + ')'; }
   // khúc cuối đời: ghi rõ ai nhận nhà, đất, cửa hàng nào
   var fin = E.finale;
   E.finale = function (l) {

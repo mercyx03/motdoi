@@ -30,7 +30,7 @@ l=life();E.startJob(l,'ke_toan',()=>.5,()=>{},true);const resign=E.DEC.nghi_viec
 E.CAREER109.loss(l,{id:'ke_toan'}); // not lost yet
 ok(!l.flags.career109.unemployment,'still employed no shock');
 l.job=null;E.CAREER109.loss(l,{id:'ke_toan'});ok(l.flags.career109.unemployment.at===32,'loss persisted');
-choose(l,'recovery109','save');ok(l.spend==='save','explicit lower budget');const year=E.HOOKS.year[E.HOOKS.year.length-1];l.age++;year(l,()=>.5,()=>{});ok(l.flags.career109.unemployment.years===1&&l.spend==='save','next-year aftermath persists');year(l,()=>.5,()=>{});ok(l.flags.career109.unemployment.years===1,'no duplicate followup');
+choose(l,'recovery109','save');ok(l.spend==='save','explicit lower budget');const year=E.CAREER109_YEAR;l.age++;year(l,()=>.5,()=>{});ok(l.flags.career109.unemployment.years===1&&l.spend==='save','next-year aftermath persists');year(l,()=>.5,()=>{});ok(l.flags.career109.unemployment.years===1,'no duplicate followup');
 E.startJob(l,'ke_toan',()=>.5,()=>{},true);l.age++;year(l,()=>.5,()=>{});ok(l.flags.career109.unemployment.closed&&l.spend==='save','employment recovery never resets budget');
 l=life();l.partner={name:'Người yêu',alive:true,age:30,status:'dating',family100:{uid:'partner:109',trust:50,tension:40,lastActivity:31}};
 choose(l,'repair109','promise');ok(!!l.partner.family100.promise109,'promise persists');l.age++;l.partner.family100.lastActivity=l.age;year(l,()=>.5,()=>{});ok(l.partner.family100.trust===53&&l.partner.family100.tension===36,'keeping promise heals gradually');

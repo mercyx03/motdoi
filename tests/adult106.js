@@ -1,6 +1,6 @@
 'use strict';
 const assert=require('assert'),{gameContext}=require('./hardcore-isolation'),G=gameContext(),E=G.E;let n=0;function ok(v,m){assert(v,m);n++;}
-function life(mode='vn',difficulty='normal'){let l=E.createLife({mode,country:mode==='vn'?'VN':'US',difficulty,seed:106});Object.assign(l,{age:40,indep:true,school:null,schoolEnd:null,edu:5,money:l.base*10,job:{id:'giao_vien',rank:0,yrs:0},pending:[],sched:[]});return l;}
+function life(mode='vn',difficulty='normal'){let l=E.createLife({mode,country:mode==='vn'?'VN':'US',difficulty,seed:106});Object.assign(l,{age:40,indep:true,school:null,schoolEnd:null,edu:5,money:l.base*10,job:{id:'giao_vien',rank:0,yrs:0},pending:[],sched:[]});l.lang={en:4};l.langAt={en:40};l.langExp={};return l;}
 function choose(l,id,k,r=()=>.1,arg){const d=E.DEC[id].make(l,r,arg);E.DEC[id].apply(l,d,k,r,()=>{});return d;}
 function enroll(l,lv,field='it'){choose(l,'pg106_'+lv,field);let d=l.pending.pop();assert(d.id==='pg106_'+lv+'_school');E.DEC[d.id].apply(l,d,'0',()=>.1,()=>{});return d;}
 for(const mode of ['vn','world'])for(const difficulty of ['normal','hardcore']){

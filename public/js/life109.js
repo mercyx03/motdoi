@@ -94,6 +94,7 @@ E.HOOKS.year.push(function(l,r,log){
  if(u&&!u.closed&&u.lastYear!==l.age){u.lastYear=l.age;if(!l.job){u.years++;if(u.years<=3)log('Một năm nữa chưa tìm được việc ổn định. Bạn vẫn đang chi tiêu '+(l.spend==='save'?'tiết kiệm':'theo mức đã chọn')+'; có thể mở kế hoạch sau mất việc để điều chỉnh.','neutral');}else{u.closed=true;log('Bạn đã trở lại làm việc. Mức chi tiêu đã chọn vẫn giữ nguyên; hãy tự cân nhắc khi nào tăng trở lại.','good');}}
  people(l).forEach(function(p){var promise=p.s.promise109;if(!promise||promise.at>=l.age)return;delete p.s.promise109;if(p.s.lastActivity>=promise.at+1){p.s.trust=Math.min(100,p.s.trust+3);p.s.tension=Math.max(0,p.s.tension-4);log('Bạn đã dành thời gian cho '+p.name+' sau lời hẹn trước. Sự tin cậy được xây lại từng chút.','good');}else{p.s.tension=Math.min(100,p.s.tension+2);log('Lời hẹn với '+p.name+' chưa được thực hiện. Người ấy còn dè dặt, vấn đề vẫn cần tiếp nối.','neutral');}});
 });
+E.CAREER109_YEAR=E.HOOKS.year[E.HOOKS.year.length-1];
 var resolve=E.resolve;E.resolve=function(l){var before=l.job&&{id:l.job.id},out=resolve.apply(this,arguments);loss(l,before);return out;};
 // Conditions are evaluated on snapshots so showing a menu never changes a save.
 var actions=E.actions;E.actions=function(l){l=JSON.parse(JSON.stringify(l));return actions(l).map(function(x){x.catalogHidden=x.ok!==true&&/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok);var a=E.ACT.find(function(a){return a.id===x.id;}),D=a&&E.DEC[a.sc||a.id];

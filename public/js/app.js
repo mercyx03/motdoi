@@ -894,7 +894,7 @@
   }
   function renderActions() {
     var l = S.life, p = $('#actPanel');
-    if (!l.alive || l.age < 8) { p.innerHTML = '<h3>Việc bạn muốn làm</h3><p class="muted small" style="margin:0">' + (l.alive ? 'Từ 8 tuổi, bạn có thể chủ động làm những việc mình muốn.' : '—') + '</p>'; return; }
+    if (!l.alive || l.age < 5) { p.innerHTML = '<h3>Việc bạn muốn làm</h3><p class="muted small" style="margin:0">' + (l.alive ? 'Từ 5 tuổi, bạn có thể tập luyện năng khiếu qua những việc phù hợp lứa tuổi.' : '—') + '</p>'; return; }
     var acts = E.actions(l), groups = {}; if(S.showLocked===undefined)S.showLocked=!!LS.get('mkn.showLocked',false);
     // v3.6: mục "Chi tiêu" gom mọi việc tiêu tiền + chi tiêu định kỳ tự động mỗi năm
     var SPEND = '💰 Chi tiêu', spendIds = E.SPEND_ACTS || [];
@@ -914,6 +914,10 @@
       (sel ? '<div class="chips actlist">' + groups[sel].map(function (x) {
         return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + (x.ok===true?'':'<small class="action-reason">'+esc(x.ok)+'</small>') + '</button>';
       }).join('') + '</div>' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
+    if(S.life.flags.expansion110 && S.life.flags.expansion110.livingParent && LS.get('mkn.branch112',null)) {
+      var back112=document.createElement('button');back112.className='btn ghost sm';back112.id='returnParent112';back112.textContent='Quay lại bản lưu đời cha/mẹ';p.appendChild(back112);
+      back112.onclick=function(){ask('Quay lại đời cha/mẹ','Đời con hiện tại được giữ riêng; bản cha/mẹ tiếp tục từ thời điểm bạn chuyển góc nhìn.','Quay lại',function(){var b=LS.get('mkn.branch112',null);if(!b||!b.life)return;LS.set('mkn.childBranch112',{life:S.life,cohort:S.cohort,speed:S.speed,auto:S.auto});S.life=E.migrate?E.migrate(b.life):b.life;S.cohort=b.cohort||[];S.speed=b.speed||1;S.auto=false;S.preview=null;closeModal();persist();enterLife();},'Ở lại đời con');};
+    }
     $('#showLockedActions',p).onchange=function(){S.showLocked=this.checked;LS.set('mkn.showLocked',S.showLocked);renderActions();};
     $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); if (S.actG && !S.paused && S.phase !== 'dead') { S.paused = true; S.actPause = true; renderTopbar(); toast('Đã tạm dừng để bạn chọn việc — bấm Tiếp tục khi xong'); } else if (!S.actG && S.actPause) { S.actPause = false; S.paused = false; S.last = performance.now(); renderTopbar(); } renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });
@@ -1184,6 +1188,24 @@
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
     var entries = E.resolve(S.life, k);
+    var change112 = S.life.flags.expansion110 && S.life.flags.expansion110.switchChild;
+    if (change112 && E.ASSETS112) {
+      delete S.life.flags.expansion110.switchChild;
+      var child112 = (S.life.kids || []).find(function(c){return c.alive!==false && c.uid110===change112;});
+      if (child112) {
+        var parent112 = S.life;
+        if(!LS.set('mkn.branch112', {life:parent112,cohort:S.cohort,speed:S.speed,auto:S.auto})){toast('Chưa lưu được đời cha/mẹ; hãy giải phóng bộ nhớ trước khi chuyển đời.');afterChoose(entries,wasManual,rest);return;}
+        modal('<h2>Tiếp tục đời '+esc(child112.name)+'</h2><p>Đang dựng lại tuổi hiện tại của con; cha/mẹ vẫn còn sống, chưa chia thừa kế…</p>');
+        setTimeout(function(){
+          var new112=null;try{new112=E.heirAtAge(parent112,child112);}catch(e){if(window.console)console.error(e);}
+          closeModal();
+          if(!new112){toast('Chưa dựng được đời con. Bản lưu cha/mẹ vẫn được giữ.');afterChoose(entries,wasManual,rest);return;}
+          S.life=new112;S.cohort=E.makeCohort(new112);S.speed=1;S.auto=false;S.skipping=false;S.preview=null;persist();enterLife();
+          toast('Đã chuyển sang đời '+new112.name+'; cha/mẹ vẫn còn sống');
+        },30);return;
+      }
+    }
+
     if(byHand&&S.life.alive&&S.life.kids.length>kids0){
       E.FAMILY53.init(S.life);var baby=S.life.kids[S.life.kids.length-1],birthAge=S.life.age;persist();
       modal('<div class="eyebrow">Chào đón thành viên mới</div><h2>Đặt tên cho bé</h2><form id="babyNameForm" class="family-form"><label for="babyName">Tên của con</label><input id="babyName" maxlength="60" required value="'+esc(baby.name)+'"><button class="btn gold" type="submit">Chọn tên này</button></form><p id="babyNameStatus" role="status"></p><button class="btn" id="babyNameKeep">Giữ tên hiện tại</button>',function(box){

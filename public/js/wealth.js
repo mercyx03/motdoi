@@ -373,6 +373,7 @@
     // nhà cho thuê: giá theo thị trường đất, tiền thuê theo năm; thỉnh thoảng bỏ trống
     var empties = [];
     (l.props || []).forEach(function (p) {
+      if (p.residential112) return; // Homes kept for living never produce rent.
       var g = { 'bình thường': 0.03, 'sốt': 0.15, 'vỡ bong bóng': -0.2, 'đóng băng': -0.02 }[mkt] || 0.02;
       p.v = Math.max(p.basis * 0.3, p.v * (1 + g + U.normal(r) * 0.03));
       var occupied = ch(r, 0.12) ? 0.4 : 1;

@@ -1,6 +1,51 @@
 {
-  "generatedAt": "2026-10-23T03:32:44.974Z",
+  "generatedAt": "2026-10-23T06:56:14.553Z",
   "entries": [
+    {
+      "id": "expansion842-life",
+      "publishedAt": "2026-10-23T15:02:00.000Z",
+      "title": "Những biến cố cần nhiều năm để giải quyết",
+      "summary": "Gia đình có truyền thống, luyện năng khiếu từ nhỏ và các hồ sơ tiếp nối.",
+      "details": [
+        "Từ 5 tuổi có thể luyện năng khiếu phù hợp tuổi. Hoạt động đọc sách, gặp bạn và nghỉ ngơi ghi rõ tác dụng lên chỉ số.",
+        "Có dấu hiệu ngoại tình, vi phạm, biển thủ và bạo lực gia đình; xác minh theo từng bước, ưu tiên an toàn và hỗ trợ.",
+        "Thêm dịch bệnh, quốc tang mô phỏng, cướp giật và rủi ro an ninh. Có lựa chọn triệt sản tự nguyện, vẫn được xin nhận con nuôi."
+      ],
+      "tags": [
+        "Tính năng",
+        "Đời sống"
+      ]
+    },
+    {
+      "id": "expansion842-family",
+      "publishedAt": "2026-10-23T15:01:00.000Z",
+      "title": "Chủ động truyền lại cơ ngơi và chuyển đời",
+      "summary": "Tặng tài sản khi còn sống, nhà ở nhiều nơi, ngân hàng và nhân sự gia đình.",
+      "details": [
+        "Tặng cửa hàng, nhà và tài sản cho con trưởng thành; không tính lại trong thừa kế. Có thể sống tiếp đời con khi cha/mẹ chưa qua đời.",
+        "Mua nhà để ở tại nhiều nơi và dọn qua lại. Chọn ngân hàng mô phỏng, gói và kỳ hạn; rút trước hạn hưởng lãi khác.",
+        "Thuê giúp việc, tài xế, đầu bếp, bác sĩ, bảo mẫu, gia sư và vệ sĩ; chi phí duy trì được tính mỗi năm."
+      ],
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ]
+    },
+    {
+      "id": "expansion842-study",
+      "publishedAt": "2026-10-23T15:00:00.000Z",
+      "title": "Học tập và con đường học thuật rộng hơn",
+      "summary": "Thêm cuộc thi, chuẩn ngoại ngữ, cao học sĩ quan và công trình nghiên cứu dài hạn.",
+      "details": [
+        "HSG và Olympic khó hơn; chủ động xin tuyển thẳng đúng nhóm ngành. Thêm khoa học kỹ thuật, hùng biện tiếng Anh và tranh biện.",
+        "Học viện lực lượng có nơi nội trú; chức vụ chỉ hiện bậc cao hơn. Có cao học sĩ quan, điều kiện ngoại ngữ theo chương trình.",
+        "Làm đề tài nhiều năm, thí nghiệm, công bố và nộp hồ sơ PGS/GS. Giáo sư đủ uy tín có cơ hội lãnh đạo tổ chức khoa học."
+      ],
+      "tags": [
+        "Tính năng",
+        "Học tập"
+      ]
+    },
     {
       "id": "career-paths109",
       "publishedAt": "2026-10-23T12:00:00.000Z",

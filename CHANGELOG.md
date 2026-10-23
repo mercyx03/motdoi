@@ -1,3 +1,11 @@
+## v8.4.2 — Học tập, cơ ngơi và biến cố nhiều năm
+
+- Thêm thi quốc gia, tuyển thẳng chủ động, ngoại ngữ theo chương trình, nội trú học viện và cao học sĩ quan.
+- Tách học hàm khỏi bậc nghề; làm đề tài dài hạn, công bố, nộp hồ sơ PGS/GS và ứng cử lãnh đạo khoa học.
+- Tặng tài sản đúng người con, nhà để ở nhiều nơi, gửi ngân hàng theo kỳ hạn, thuê nhân sự và chuyển đời khi cha/mẹ còn sống.
+- Luyện năng khiếu từ 5 tuổi, hoạt động ghi chỉ số, triệt sản tự nguyện, dịch bệnh và hồ sơ gia đình tiếp nối.
+- Thẩm tra lý lịch gia đình theo hồ sơ, không suy đoán điều kiện tôn giáo ngoài căn cứ.
+
 ## Cơ hội sau cấp 10 cho mọi năng khiếu
 
 - Mở dự án chuyên gia và khởi nghiệp theo đủ 13 năng khiếu; xét kinh nghiệm, hồ sơ, vốn và rủi ro thay vì tự thăng chức.
