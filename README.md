@@ -67,9 +67,9 @@ Phải in ra `✓ Tất cả bài kiểm thử hồi quy đều đạt.` Bộ te
 ### Cách 1 — Kéo thả trên dash.cloudflare.com (dễ nhất)
 1. Vào https://dash.cloudflare.com → **Workers & Pages** → **Create** → tab **Pages** → **Upload assets**.
 2. Đặt tên dự án, ví dụ `mot-doi` → **Create project**.
-3. Chạy `npm run build` (tạo thư mục `dist`), rồi kéo thả **thư mục `dist`** → **Deploy site**.
+3. Chạy `npm ci` khi mới tải source, sau đó `npm run build` (tạo thư mục `dist`), rồi kéo thả **thư mục `dist`** → **Deploy site**.
 
-Cập nhật bản mới: chạy `npm run build`, vào dự án → **Create deployment** → kéo thả lại thư mục `dist`. (Kéo thả `public` vẫn chạy được, chỉ tải chậm hơn vì phải tải hơn 80 file js riêng lẻ.)
+Cập nhật bản mới: chạy `npm run build`, vào dự án → **Create deployment** → kéo thả lại thư mục `dist`. Chỉ tải `dist` hoặc `dist.zip`; không tải `public` vì đó là mã nguồn phát triển.
 Người chơi cũ không mất dữ liệu: khóa lưu trữ được giữ nguyên và dữ liệu cũ tự nâng cấp.
 
 ### Cách 2 — Dòng lệnh (Wrangler)

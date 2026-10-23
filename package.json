@@ -26,5 +26,8 @@
     "test:relationships": "node tests/relationships108.js && node tests/relationships841.js",
     "test:fixes": "node tests/relationships841.js",
     "test:loading": "node tools/build.js && node tests/loading.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

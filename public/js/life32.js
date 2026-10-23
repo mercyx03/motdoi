@@ -332,6 +332,7 @@
     log('Cho con ' + k.name + ' ' + mo(l, x) + ' ' + pick(r, ['mua nhà', 'làm vốn kinh doanh', 'lo cho các cháu ăn học', 'trả nợ ngân hàng']) + ' — "bố mẹ còn khỏe, giúp được gì thì giúp".', 'good');
     fx(l, { hap: 4, karma: 2 });
   });
+  E.HOOKS.year[E.HOOKS.year.length - 1].legacyAutoGift = true;
 
   // ===================================================================
   // 5. THI LẠI CHỨNG CHỈ (tự chọn trong "Việc bạn muốn làm"), TIỀN MÃ HÓA

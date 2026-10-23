@@ -1,3 +1,9 @@
+## Build production gọn 24 file
+
+- Gom game thành bốn gói tải muộn; nén JavaScript/CSS, rút gọn tên biến, bỏ chú thích và không xuất source map.
+- Chỉ đưa tài nguyên cần chạy vào dist; gom font thành bốn file WOFF2 và gom script trang phụ.
+- Giữ trang đầu nhẹ, trạng thái tải và thử lại sau lỗi mạng; đối chiếu tám cuộc đời giống bản nguồn.
+
 ## Tối ưu tải trang và giao diện điện thoại
 
 - Trang chủ dùng bộ khởi động nhỏ; engine và dữ liệu tải khi cần, giữ thứ tự các module, cho phép thử lại sau lỗi mạng.

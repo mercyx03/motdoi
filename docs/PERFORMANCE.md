@@ -1,24 +1,24 @@
-# Tải trang và giao diện điện thoại
+# Build production gọn
 
-## Thay đổi
+Chạy npm ci một lần sau khi tải source, rồi npm run build. Chỉ tải thư mục dist hoặc dist.zip lên Cloudflare; public là mã nguồn phát triển.
 
-- Trang chủ chỉ chạy bộ khởi động 5.860 byte JavaScript trước nén; 110 module game được chia thành 28 phần, tải khi khu vực thiết lập sắp xuất hiện hoặc người chơi bấm một chức năng cần engine.
-- Mỗi phần giữ nguyên nội dung và thứ tự phụ thuộc. Tải tệp song song nhưng thực thi tuần tự, nhường một lượt xử lý giữa các phần.
-- Khi mạng lỗi, hiện trạng thái và cho thử lại từ phần chưa tải; lưu thao tác bấm đầu tiên để thực hiện sau khi khởi tạo. Chưa chạy game thì không dựng engine, không mở vòng lặp mô phỏng.
-- Font WOFF2 lưu trong public/fonts, kèm giấy phép SIL OFL; giữ Be Vietnam Pro 400/600/700 và Playfair Display 700. Bỏ Lora, dùng Georgia cho lời kể serif; tải trước hai subset của Be Vietnam Pro 400 để ưu tiên đoạn giới thiệu. Giữ font-display: swap.
-- Build chèn toàn bộ CSS trang chủ vào HTML, không trì hoãn stylesheet khiến trang mất định dạng. Bản source vẫn dùng stylesheet trực tiếp.
-- Tệp JavaScript và font có hash cache một năm, immutable. HTML, sitemap, robots, lịch sử cập nhật và tài nguyên tên cố định được kiểm tra lại để không giữ bản cũ.
-- Điện thoại dùng thanh điều khiển gọn, menu nút phụ, nhóm hành động theo lưới, nhật ký cuộn và hộp lựa chọn vừa màn hình.
+- Đúng 24 file triển khai; JavaScript trang đầu 3.840 byte trước nén; bốn gói game tải khi cần.
+- esbuild nén JS/CSS, rút gọn tên biến, bỏ chú thích; không xuất source map hay sao chép module nguồn, tài liệu, package.json vào dist.
+- Giữ đầy đủ CSS trong HTML để không hiện trang mất định dạng. Gom font thành bốn WOFF2 đầy đủ ký tự, font-display: swap.
+- Giữ logo mới, cache theo hash, thao tác bấm trong lúc đang tải và cơ chế thử lại khi mạng lỗi.
+- Nhận diện sự kiện du lịch/cho con tiền bằng nhãn ổn định thay vì hình thức mã hàm, tránh minify đổi hành vi.
+- Mã chạy trong trình duyệt vẫn có thể tải xuống. Minify làm mã khó đọc hơn, không phải biện pháp bảo mật hay mã hóa bí mật.
 
-## Xác minh
+## Kiểm tra
 
-- npm run test:loading: ngân sách bộ khởi động dưới 10 KB, hash từng phần, cú pháp JS, nội dung và thứ tự mọi module, font nội bộ, CSS, sitemap, robots và cache.
-- Edge headless: chỉ một script lúc mở trang; không gọi Google Fonts; đổi giao diện, chào đời Hardcore, tải tiếp bản lưu, mở tài khoản/nghề nghiệp và thử lại khi một phần tải lỗi.
-- Bản source chưa build: chọn Toàn thế giới trước khi engine tải xong vẫn được thực hiện, chào đời, tạm dừng, menu điện thoại và hồ sơ hoạt động.
-- Kiểm tra không tràn ngang ở 320, 360, 390, 430 và 1280 px.
-- 260 kiểm tra cấu trúc trang; 336 kiểm tra sửa thai kỳ/gia đình; 3.566 kiểm tra giao lưu gia đình; 76 kiểm tra quan hệ; 141 kiểm tra thừa kế; 9 kiểm tra Đài tưởng niệm đã qua.
-- Đối chiếu bốn cuộc đời hoàn chỉnh với bundle trước tối ưu: Việt Nam, Nhật, Mỹ và Hardcore cho JSON trạng thái giống hệt nhau.
-- Bộ snapshot v7.6.0 trong tests/hardcore-isolation.js chưa khớp các thay đổi gameplay có trước lần tối ưu này. Đã đối chiếu trực tiếp với dist trước tối ưu để xác nhận không phải sai khác mới; không tự ghi đè fixture cũ.
-- Tạo lại lịch sử cập nhật để kiểm tra các mục đã xóa không được thêm trở lại.
+- tests/loading.js: 24 file; không có source map/module nguồn rời; hash/cú pháp, font, CSS, canonical, sitemap/robots và cache.
+- Tám cuộc đời hoàn chỉnh cho trạng thái JSON giống hệt giữa nguồn và bản nén: Việt Nam 34/63 tỉnh, Nhật, Mỹ, Đức, Ấn Độ và Hardcore.
+- tests/update660.js: 14 kiểm tra build và một cuộc đời hoàn chỉnh trong engine production.
+- Edge: một script lúc mở trang, không tải font Google; chào đời Hardcore, lưu/tải, Toàn thế giới, tài khoản/nghề nghiệp và thử lại sau lỗi mạng.
+- 23 kiểm tra API trên Worker đã nén: tài khoản, bình luận, phân trang, chuyển đổi đánh giá và gửi sao.
+- 336 kiểm tra thai kỳ/gia đình, 3.566 kiểm tra giao lưu gia đình đã qua.
+- Logo/CSS không tràn ngang ở ba trang điện thoại; bản source chưa build vẫn chạy được.
 
-Chưa đo lại Lighthouse trên website đã triển khai. Số đo trình duyệt localhost không thay thế Lighthouse giả lập mạng/CPU và dữ liệu INP thực tế. Cần tải dist mới lên Cloudflare rồi đo lại Mobile/Desktop, LCP, TBT và theo dõi INP thực tế; không công bố điểm số mục tiêu như kết quả đã đạt.
+Chưa đo lại Lighthouse trên website đã triển khai. Số đo localhost không thay thế Lighthouse giả lập mạng/CPU hoặc INP thực tế.
+
+Kiểm tra cũ ngoài phạm vi: snapshot v7.6.0 không còn khớp gameplay các phiên bản sau; bộ community đầy đủ có một khẳng định biên tập về độ dài/số gạch đầu dòng nhật ký cập nhật. Không ghi đè fixture hoặc bỏ kiểm tra; API trên Worker đã nén được kiểm tra riêng.

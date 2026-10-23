@@ -1063,6 +1063,7 @@
     var dest = isVN(l) ? (l.money > l.base * 2 ? pick(r, ['Thái Lan', 'Hàn Quốc', 'Nhật Bản', 'Singapore']) : pick(r, ['Đà Lạt', 'Phú Quốc', 'Sa Pa', 'Hội An', 'Hạ Long', 'Nha Trang', 'Côn Đảo'])) : 'nước ngoài';
     log('Đi du lịch ' + dest + (l.partner ? ' cùng ' + pw(l) : '') + '.', 'good'); cashB(l, -0.05, 'Du lịch'); fx(l, { hap: 4 });
   });
+  E.EVENTS[E.EVENTS.length - 1].travelCompat = true;
   EV(function (l, a) { return a >= 25 && a <= 60; }, 0.03, function (l, a, r, log) { log(U.pick(r, ['Giúp đỡ một người bạn cũ đang gặp khó khăn.', 'Người bạn cũ gọi điện nhờ vả lúc túng quẫn, bạn giúp được chút nào hay chút ấy.', 'Nghe tin bạn học cũ gặp chuyện, bạn ghé thăm và góp một tay.', 'Một người quen cũ vừa mất việc, bạn giới thiệu cho chỗ làm tạm.', 'Bạn cho người bạn cũ ở nhờ vài hôm khi họ gặp khó.', 'Góp tiền cùng nhóm bạn cũ giúp một người đang nằm viện.']), 'good'); fx(l, { soc: 4, hap: 2, karma: 2 }); });
   EV(function (l, a) { return a >= 40 && (!l.bff || !l.bff.alive); }, 0.015, function (l, a, r, log) { log('Một người bạn cũ qua đời đột ngột vì ' + pick(r, a < 60 ? ['tai nạn giao thông', 'nhồi máu cơ tim', 'đột quỵ', 'ung thư phát hiện muộn'] : ['đột quỵ', 'nhồi máu cơ tim', 'viêm phổi', 'ung thư']) + '.', 'bad'); fx(l, { hap: -5 }); });
 
