@@ -1,3 +1,18 @@
+## v8.4.1 — Đồng bộ thai kỳ và quan hệ gia đình
+
+- Sửa ba lựa chọn giữ thai trong Tin bất ngờ không tạo con; giữ đúng người cùng làm cha mẹ, quyền nuôi con của nhánh đơn thân và không sinh trùng khi đã có thai kỳ chờ.
+- Không giữ thai sẽ hủy đúng thai kỳ tương ứng; không tác động thai kỳ của người khác hoặc hồ sơ nhận nuôi.
+- Hàn gắn hôn nhân thực sự kết thúc mối ngoại tình tương ứng trong danh sách quan hệ, không xóa người khác hay thông tin cha/mẹ của con.
+- Câu hỏi ly hôn gắn với đúng người và năm, không chia tài sản với bạn đời mới từ câu hỏi cũ.
+- Hòa giải tài sản kiểm tra tên hồ sơ và các khoản tiền trước khi tính toán; dữ liệu thiếu hoặc không hữu hạn không được phép trừ tiền / tạo NaN.
+- Quyền nuôi con ban đầu chỉ được giải quyết một lần cho mỗi cuộc ly hôn, không bị hỏi lại và trừ gắn kết lần nữa từ hai luồng theo dõi.
+- Tự chơi không chọn cưới khi lựa chọn đó chưa mở vì tình cảm chưa đủ.
+- Đồng bộ lựa chọn sinh con / nhận nuôi với xác suất được hiển thị.
+- Tự lên đời công nghệ có thêm hạn mức một lần mua cho từng loại máy, đồng thời giữ tổng ngân sách năm và tiền dự phòng sinh hoạt.
+- Giữ nhãn con chung / con riêng và hướng nghiệp khi bảng gia đình hiện thông tin học tập hoặc nghề nghiệp của con.
+- Đồng bộ phiên bản tài nguyên 8.4.1 và tạo lại bản dist.zip; kiểm thử mới cho cả Việt Nam / Thế giới, Thường / Hardcore.
+- Đối chiếu chức năng đã cập nhật: docs/FEATURE-AUDIT-841.md.
+
 ## v8.4.0 — Khối năng khiếu có trường nghệ thuật thật, học bổ túc văn hóa
 
 - Khối thi năng khiếu: H00 (Văn – Hình họa – Bố cục màu), thêm V00 (Toán – Lý – Vẽ mỹ thuật, ngành kiến trúc), S00 (Văn + năng khiếu sân khấu – điện ảnh), N00 (Văn + năng khiếu âm nhạc). Chọn khối năng khiếu thì có ôn năng khiếu từ lớp 11.

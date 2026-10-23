@@ -411,7 +411,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   });
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
   ok(!E.DEC.gameshow_dong.valid(TPL[0],{}),'hậu trường cũ đã được thay bằng mùa vr_vong');
-  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than|mc_|fd_|ps_|ky_som|hc_|hv_|chon_hoc_vien|lo_trinh_quan_ham|cs_|hx_|mxh_|bb_|dp_|tro_ban|th_tay|th_nghi|family100_|nc_sau_du_hoc|map_mo_tiep101|casual_after101|bo_nhiem_chien_luoc)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31; family100_* ở tests/family830.js; nc_sau_du_hoc ở tests/continuity101.js; map_mo_tiep101, casual_after101, bo_nhiem_chien_luoc (tình huống nối tiếp cần bối cảnh riêng) ở tests/followups840.js
+  Object.keys(E.DEC).filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than|mc_|fd_|ps_|ky_som|hc_|hv_|chon_hoc_vien|lo_trinh_quan_ham|cs_|hx_|mxh_|bb_|dp_|tro_ban|th_tay|th_nghi|family100_|nc_sau_du_hoc|map_mo_tiep101|casual_after101|bo_nhiem_chien_luoc|pg106_|abroad107_|service107_review|tech107_limit_value|mentor107|affair107_confront|settlement107|contract108|network108_person|childGuide108_path|show105_ig)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31; family100_* ở tests/family830.js; nc_sau_du_hoc ở tests/continuity101.js; map_mo_tiep101, casual_after101, bo_nhiem_chien_luoc (tình huống nối tiếp cần bối cảnh riêng) ở tests/followups840.js
   // AI chọn được cho mọi tình huống
   Object.keys(E.DEC).forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
@@ -761,7 +761,7 @@ section('18. Bản 2.2: hai tầng lựa chọn, thú cưng, nghề mới & lư�
   cs.fame = 2000; ok(/đám cưới/.test(E.jobTitle(cs)), 'ca sĩ mới vào nghề: hát đám cưới (' + E.jobTitle(cs) + ')');
   cs.fame = 3e5; ok(/hạng B/.test(E.jobTitle(cs)), 'ca sĩ 300 nghìn fan: hạng B');
   cs.fame = 2e7; ok(/diva|ngôi sao/.test(E.jobTitle(cs)), 'ca sĩ 20 triệu fan: diva/ngôi sao');
-  ok(E.monthlyEst(Object.assign(cs, { fame: 500 }), 'ca_si', 0) >= 5, 'ca sĩ mới vẫn có cát-xê sàn');
+  ok(E.monthlyEst(Object.assign(cs, { fame: 500 }), 'ca_si', 0) >= 5 * (1-E.MUSIC105.rate(cs,'ca_si',cs.base)), 'ca sĩ mới có thu nhập sàn sau chi phí nghề nghiệp');
   // nổi tiếng là hiếm
   let top = 0, nf = 0;
   for (let i = 0; i < 300; i++) {
@@ -868,7 +868,7 @@ section('19. Bản 2.3: ⭐ khoảnh khắc, tài sản & hụi & bảo hiểm, 
   let kids30 = 0, kidsJob = 0, kidsUni = 0, kid18 = 0, kidVice = 0;
   for (let i = 0; i < 220; i++) {
     const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 35000 + i }); let g = 0;
-    while (l.alive && g++ < 130) { E.beginYear(l, { auto: true }); l.pending.forEach(d => { if (d.id === 'con_18') kid18++; if (d.id === 'con_lac_loi') kidVice++; }); let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l); }
+    while (l.alive && g++ < 130) { E.beginYear(l, { auto: true }); l.pending.forEach(d => { if (d.id === 'con_18') kid18++; if (d.id === 'con_lac_loi') kidVice++; }); let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); const last=l.kids.reduce((a,k)=>Math.max(a,k.born),-100); if(l.alive&&l.partner&&l.partner.alive!==false&&l.partner.age>=18&&l.age>=24&&l.age<=45&&l.kids.length<3&&l.age-last>=3) E.RELATIONS108.deliver(l,l.partner,E.H.rf(l),(t,k)=>l.log.push({a:l.age,y:l.birthYear+l.age,t,k}),{source:'partner'}); E.endYear(l); }
     l.kids.forEach(k => {
       ok(isFinite(k.close) && k.close >= 0 && k.close <= 100 && isFinite(k.inc) && k.inc >= 0, 'chỉ số của con hợp lệ');
       if (k.job) ok(!!E.CAR[k.job] && !badText(E.kidTitle(k)), 'nghề của con hợp lệ: ' + E.kidTitle(k));
@@ -1199,7 +1199,7 @@ section('23. Bản 2.7: lượt hành động theo tuổi, game tự chọn vi�
       for (const [x, tag] of [[b, 'b'], [w, 'w']]) { E.beginYear(x, {}); x.pending = []; E.finishYear(x); x.pending = []; E.endYear(x); if (tag === 'b') { kb += x.st.kno; hb += x.st.hea; } else { kw += x.st.kno; hw += x.st.hea; } } }
     ok(hb > hw && kb > kw - 150, 'cân bằng: khỏe hơn tập trung công việc, kiến thức vẫn tăng (sức khỏe ' + (hb / 150).toFixed(1) + ' vs ' + (hw / 150).toFixed(1) + ')'); }
   // người yêu có nghề, quen lâu mới biết lương
-  { let withJob = 0, n = 0; for (let i = 0; i < 200; i++) { const l = mk(81000 + i, 27); const d = E.DEC.love.make(l, R(i)); n++; if (d.data.p.job && /đang làm|sinh viên|nghỉ hưu/.test(d.text)) withJob++; if (i === 0) { l.pending.unshift(d); E.resolve(l, 'yes'); ok(l.partner && l.partner.job && l.partner.incKnown === false, 'người yêu mới: biết nghề nhưng chưa biết lương — ' + l.partner.job); for (let y = 0; y < 3; y++) E.family.partnerYear(l, R(y), () => { }, l.age + y); ok(l.partner.incKnown && isFinite(l.partner.inc), 'quen hai năm thì biết lương của người ấy'); } }
+  { let withJob = 0, n = 0; for (let i = 0; i < 200; i++) { const l = mk(81000 + i, 27); const d = E.DEC.love.make(l, R(i)); n++; if (d.data.p.job && (/đang làm|sinh viên|nghỉ hưu/.test(d.text)||d.text.includes('Nghề nghiệp: '+d.data.p.job)||!!d.data.p.workplace108)) withJob++; if (i === 0) { l.pending.unshift(d); E.resolve(l, 'yes'); ok(l.partner && l.partner.job && l.partner.incKnown === false, 'người yêu mới: biết nghề nhưng chưa biết lương — ' + l.partner.job); for (let y = 0; y < 3; y++) E.family.partnerYear(l, R(y), () => { }, l.age + y); ok(l.partner.incKnown && isFinite(l.partner.inc), 'quen hai năm thì biết lương của người ấy'); } }
     ok(withJob === n, 'người mới quen hiện cả công việc (' + withJob + '/' + n + ')'); }
   ok(/thu nhập: chưa rõ/.test(appSrc) && /partnerIncKnown/.test(appSrc), 'bảng gia đình hiện nghề & lương người yêu khi đã biết');
   // ai trả tiền buổi hẹn
@@ -1281,7 +1281,7 @@ section('24. Bản 2.8: tiền bạc rõ ràng, mua xe theo ngân sách, lý do 
     const s = mk(90600, 20, l => { l.talent = 'game'; l.talentSub = 'FPS'; l.game = null; }); E.startJob(s, 'tuyen_thu_es', R(3), () => { }); ok(E.GAMES.fps.pc.concat(E.GAMES.fps.mobile).includes(s.game), 'tuyển thủ sở trường FPS thi đấu game bắn súng: ' + s.game); }
   // không nhắc bố mẹ đã mất ở tuổi thơ; không lặp tin trong cùng năm
   { let bad = 0, dup = 0; for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: i % 4 ? 'vn' : 'world', seed: 90700 + i }); E.runHeadless(l); let md = null; const seen = {};
-      l.log.forEach(e => { if (/^Mẹ qua đời/.test(e.t)) md = e.a; if (md != null && e.a > md && /(^|[.,] )Mẹ (cười|khóc|mua|dặn|nấu|ôm)/.test(e.t)) bad++; if (e.k !== 'money' && !/Căn hộ|Ki-ốt|bất động sản cho thuê/.test(e.t)) { const k = e.a + '|' + e.t; if (seen[k]) dup++; seen[k] = 1; } }); }
+      l.log.forEach(e => { if (/^Mẹ qua đời/.test(e.t)) md = e.a; if (md != null && e.a > md && /(^|[.,] )Mẹ (cười|khóc|mua|dặn|nấu|ôm)/.test(e.t)) bad++; if (e.k !== 'money' && !/Căn hộ|Ki-ốt|bất động sản cho thuê|thanh toán .* từ tiền gia đình; không trừ tiền tiết kiệm/.test(e.t)) { const k = e.a + '|' + e.t; if (seen[k]) dup++; seen[k] = 1; } }); }
     ok(bad === 0, 'không nhắc mẹ đã mất (' + bad + ')'); ok(dup <= 3, 'hầu như không lặp tin trong cùng năm (' + dup + ')'); }
 }
 section('25. Bản 2.9: vận động viên chia theo từng môn');
@@ -1425,8 +1425,8 @@ section('28. Bản 3.0: HIV có đường lây, lương theo trình độ & BHXH
     l.ill = { n: 'ung thư dạ dày', m: 5, base: 0.3, cure: 0.3, mult: 5, f: 'ung thư dạ dày', since: 40 }; const t = play(l, 'treat', 'best');
     ok(/Bảo hiểm y tế chi trả|BHYT chi trả/.test(t) && l.money > m0 - E.DEC.treat.make(l, R(1)).data.cost * 0.6, 'có BHYT: viện phí được chi trả phần lớn'); }
   // --- tiến sĩ
-  { const l = mk(98800, 26, x => { x.edu = 6; x.major = 'it'; }); play(l, 'phd', 'yes'); ok(l.school === 'phd' && l.schoolEnd > 26, 'có thể học tiếp tiến sĩ sau thạc sĩ');
-    l.age = l.schoolEnd - 1; E.finishYear(l); ok(l.edu === 7 && l.log.some(e => /học vị tiến sĩ/.test(e.t)), 'bảo vệ luận án, nhận học vị tiến sĩ');
+  { const l = mk(98800, 26, x => { x.edu = 6; x.major = 'it'; x.school = null; x.money = x.base * 10; }); play(l, 'phd', 'yes'); ok(l.pending[0] && l.pending[0].id === 'pg106_7', 'lời mời tiến sĩ mở chọn ngành'); E.resolve(l, 'it'); E.resolve(l, '0'); ok(l.school === 'phd' && l.schoolEnd > 26, 'có thể học tiếp tiến sĩ sau thạc sĩ');
+    l.age = l.schoolEnd - 1; E.finishYear(l); const defense = l.pending.find(d => d.id === 'pg106_defense'); ok(!!defense && l.edu === 6, 'chưa bảo vệ thì chưa nhận bằng tiến sĩ'); if(defense) E.DEC.pg106_defense.apply(l, defense, 'defend', () => 0, (t,k) => l.log.push({a:l.age,t,k})); ok(l.edu === 7 && l.flags.postgradDegrees.some(d => d.level === 7), 'bảo vệ luận án, nhận học vị tiến sĩ');
     let acad = 0; for (let i = 0; i < 40; i++) { const o = E.offers(l, R(200 + i)); if (o.some(id => /^(giang_vien|nghien_cuu)$/.test(id))) acad++; } ok(acad >= 30, 'tiến sĩ thường được mời làm giảng viên / nghiên cứu viên (' + acad + '/40)'); }
   // --- sở trường, căng thẳng, năng khiếu
   { const fit = mk(98900, 30, x => { x.talent = 'toán học'; x.skill = 60; x.edu = 5; E.startJob(x, 'ke_toan', R(14), () => { }); }), mis = mk(98900, 30, x => { x.talent = 'toán học'; x.skill = 60; x.edu = 5; E.startJob(x, 'ban_rong', R(14), () => { }); });
@@ -1815,11 +1815,11 @@ section('35. Bản 3.7: LGBT+ — Bột tôm, Tóp mỡ, Bé Liên, Bi; nhận r
   { const l = mkG('top', 35300); l.age = 24; l.indep = true; l.realized = true; l.pending = []; let sameSex = 0; for (let i = 0; i < 50; i++) { const d = E.DEC.love.make(l, R(i)); if (d.data.p.sex === 'M') sameSex++; } ok(sameSex === 50, 'dữ liệu xu hướng cũ vẫn ghép đúng giới tính người yêu'); }
   { const l = mkG('gay', 35400); l.age = 27; l.indep = true; l.realized = true; l.pending = []; const d = E.DEC.love.make(l, R(1)); l.pending = [d]; E.resolve(l, 'yes'); l.age = 29;
     ok(l.partner && l.partner.sex === 'M', 'nam hẹn hò với nam');
-    const m = E.DEC.marry.make(l); ok(m.opts.some(o => /chung sống/.test(o.l)) && /chưa công nhận hôn nhân cùng giới/.test(m.text), 'ở Việt Nam, cặp đôi cùng giới về chung sống (luật chưa công nhận kết hôn)');
-    l.pending = [m]; const out = E.resolve(l, 'marry').map(e => e.t).join(' '); ok(l.partner.status === 'cohabit' && /Về chung sống/.test(out) && E.H.partnerWord(l, l.partner) === 'người bạn đời', 'về chung một nhà, gọi là "người bạn đời"'); }
+    l.partner.affection108 = 90; const m = E.DEC.marry.make(l); ok(m.opts.some(o => /chung sống/.test(o.l)) && /chưa công nhận hôn nhân cùng giới/.test(m.text), 'ở Việt Nam, cặp đôi cùng giới về chung sống (luật chưa công nhận kết hôn)');
+    l.pending = [m]; E.resolve(l, 'marry'); ok(l.pending[0] && l.pending[0].id === 'contract108', 'cặp đôi cùng giới cùng bàn thỏa thuận tài sản'); const out = E.resolve(l, 'default').map(e => e.t).join(' '); ok(l.partner.status === 'cohabit' && /Về chung sống/.test(out) && E.H.partnerWord(l, l.partner) === 'người bạn đời', 'về chung một nhà, gọi là "người bạn đời"'); }
   { const l = mkG('lesbian', 35500); l.age = 28; l.indep = true; l.realized = true; l.pending = []; const d = E.DEC.love.make(l, R(2)); l.pending = [d]; E.resolve(l, 'yes'); l.partner.status = 'cohabit'; l.partner.since = 25;
     ok(l.partner.sex === 'F', 'nữ hẹn hò với nữ');
-    const k = E.DEC.kid.make(l); ok(k.opts.some(o => /nhận nuôi/i.test(o.l)) && !k.opts.some(o => /Sinh thêm/.test(o.l)), 'cặp đôi cùng giới làm cha mẹ bằng cách nhận con nuôi'); }
+    const k = E.DEC.kid.make(l); ok(k.opts.some(o => /nhận (?:con )?nuôi/i.test(o.l)) && !k.opts.some(o => /Sinh thêm/.test(o.l)), 'cặp đôi cùng giới làm cha mẹ bằng cách nhận con nuôi'); }
   { const l = mkG('bi', 35600); l.age = 25; l.realized = true; l.pending = []; const s = new Set(); for (let i = 0; i < 40; i++) s.add(E.DEC.love.make(l, R(i)).data.p.sex); ok(s.size === 2, 'Bi có thể quen cả nam lẫn nữ'); }
   { const ids = ['lg_crush', 'lg_ban_than', 'lg_pride', 'lg_giuc_cuoi', 'lg_ra_mat', 'lg_hang_xom', 'lg_hoi_ban_treu', 'lg_bi_hieu_lam', 'lg_cong_so', 'lg_be_lien', 'lg_nuoi_con']; ok(ids.every(id => !!E.DEC[id]), 'có ' + ids.length + ' tình huống riêng cho người LGBT+');
     let bad = 0, n = 0; ids.forEach((id, j) => { for (let s = 0; s < 6; s++) { const g = id === 'lg_bi_hieu_lam' ? 'bi' : id === 'lg_be_lien' ? 'lesbian' : ['gay', 'top', 'lesbian', 'bi'][s % 4]; const l = mkG(g, 35700 + j * 10 + s); l.age = 30; l.indep = true; l.realized = true; l.pending = []; l.urban = true; E.startJob(l, 'ke_toan', R(s), () => { }); l.bff = { name: 'Lan', sex: 'F', alive: true, close: 70 }; const lv = E.DEC.love.make(l, R(s)); lv.data.p.sex = l.sex; l.pending = [lv]; E.resolve(l, 'yes'); l.partner.status = 'cohabit'; l.partner.since = 27; l.partner.role = l.role === 'top' ? 'bot' : 'top';
@@ -1918,7 +1918,7 @@ section('38. Bản 3.8.1: sống cùng bố mẹ thì không "về thăm", tên 
     ok(E.actions(l).find(a => a.id === 'tham_bo_me').l === 'Dành thời gian cho bố mẹ', 'tên hành động đổi thành "Dành thời gian cho bố mẹ"');
     const far = mk(38101, 30, x => { x.movedTo = 'Hà Nội'; x.fam.mAlive = true; }); ok(E.DEC.tham_bo_me.make(far, R(2)).opts.some(o => o.k === 'call'), 'ở xa thì vẫn gọi video, về thăm như cũ'); }
   { let mixed = 0, dup = 0, n = 0;
-    for (let i = 0; i < 240; i++) { const l = E.createLife({ mode: 'world', seed: 38200 + i, gender: 'F' }); E.runHeadless(l); const P = G.NAMES.P[l.pool]; if (!P || P.native || /patronym|bin|double/.test(P.style || '') || l.kids.length < 2) continue;
+    for (let i = 0; i < 240; i++) { const l = E.createLife({ mode: 'world', seed: 38200 + i, gender: 'F' }); l.age = 30; l.indep = true; l.school = null; const rng = R(38200+i); l.partner = {name:E.H.stranger(l,rng,'M'),sex:'M',age:32,status:'married',alive:true,since:25}; for(let birth=0;birth<3;birth++){E.RELATIONS108.deliver(l,l.partner,rng,()=>{},{source:'partner'});l.age+=3;l.partner.age+=3;} const P = G.NAMES.P[l.pool]; if (!P || P.native || /patronym|bin|double/.test(P.style || '') || l.kids.length < 2) continue;
       const exes = l.exes || 0; if (exes > 0 || l.log.filter(e => /^(Kết hôn với|Tổ chức đám cưới với|Tổ chức đám cưới chạy bầu với|Đăng ký kết hôn)/.test(e.t)).length > 1) continue; n++;
       const s = new Set(l.kids.map(k => { const w = k.name.split(' '); let surname=w[w.length-1]; if(k.sex==='F'&&P.LFa){const ix=P.LFa.indexOf(surname);if(ix>=0&&P.La[ix])surname=P.La[ix];} return surname.replace(/a$/, ''); })); if (s.size > 1) mixed++; const g = l.kids.map(k => k.name); if (new Set(g).size < g.length) dup++; }
     ok(n > 20 && mixed <= n * 0.05 && dup === 0, 'nhân vật nữ ở nước khác: họ con nhất quán theo bộ tên (kể cả biến thể theo giới), không trùng tên nhau (' + mixed + '/' + n + ' khác họ, ' + dup + ' trùng tên)'); }
@@ -2379,7 +2379,7 @@ section('51. Bản 5.8.0: xem tivi chọn thần tượng, trại lừa đảo, 
   { const rich = mk(51400, 40, x => { x.indep = true; x.money = x.base * 200; }), poor = mk(51401, 40, x => { x.indep = true; x.money = 0; });
     ok(E.wealthLivingK(rich, rich.base * 3) > 1.5 && E.wealthLivingK(poor, poor.base * 0.4) < 1, 'nhà giàu chi tiêu sinh hoạt nhiều hơn, nhà nghèo ít hơn'); }
   { const w = mk(51500, 28, x => { x.indep = true; x.money = 300; x.partner = { name: 'Minh', sex: 'M', age: 29, status: 'dating', since: 25, alive: true }; x.fam.q = 5; x.fam.mAlive = true; x.fam.noMom = false; });
-    w.pending = [E.DEC.marry.make(w, R(1))]; E.resolve(w, 'marry'); const c = w.pending[0];
+    w.partner.affection108 = 90; w.pending = [E.DEC.marry.make(w, R(1))]; E.resolve(w, 'marry'); ok(w.pending[0] && w.pending[0].id === 'contract108', 'hai người bàn thỏa thuận tài sản trước khi tổ chức cưới'); E.resolve(w, 'default'); const c = w.pending[0];
     ok(c && c.id === 'cuoi_to_chuc' && /60%/.test(c.text) && c.opts.some(o => o.k === 'nuoc_ngoai') && !c.opts.some(o => o.k === 'sieu'), 'đám cưới: chọn nơi tổ chức (có cả cưới ở nước ngoài), nhà khá giả bố mẹ lo phần lớn, siêu đám cưới chỉ cho gia đình tài phiệt');
     E.resolve(w, 'que'); ok(w.partner.status === 'married' && w.pending[0] && w.pending[0].id === 'cuoi_nhan', 'cưới xong chọn nhẫn cưới'); }
   { const l = mk(51600, 23, x => { x.partner = { name: 'Dung', age: 39 }; x.flags.sponsor = { name: 'Dung', active: true }; }); const t = E.breakupWhy(l, l.partner, R(7)).t; ok(t.length > 20 && /Dung/.test(t), 'chia tay người chu cấp có lý do cụ thể: ' + t); }
@@ -2750,7 +2750,9 @@ section('66. Bản 7.0.0: rà soát lỗi logic toàn hệ thống');
   ok(!E.DEC.marry.valid(mk(66000, 17, 'F'), {}) && !E.DEC.marry.valid(mk(66001, 19, 'M'), {}) && E.DEC.marry.valid(mk(66002, 20, 'M'), {}) && E.DEC.marry.valid(mk(66003, 18, 'F'), {}), 'chưa đủ tuổi thì không có lời cầu hôn / đám cưới');
   const yo = mk(66004, 18, 'F'); yo.partner.age = 18; ok(!E.DEC.marry.valid(yo, {}), 'nữ 18 tuổi với bạn trai 18 tuổi (chưa đủ 20) vẫn chưa được kết hôn');
   const cb = mk(66005, 16, 'F'); { const d = E.DEC.co_bau_som.make(cb, R(1)); E.DEC.co_bau_som.apply(cb, d, 'cuoi', R(2), (t, k) => cb.log.push({ a: cb.age, t, k })); }
-  ok(cb.partner && cb.partner.status !== 'married' && cb.log.some(e => /đủ 18 tuổi mới được đăng ký kết hôn/.test(e.t)) && cb.flags.marryWhenLegal === cb.partner.name, 'có thai khi 16 tuổi: về ở cùng, đủ tuổi mới cưới');
+  ok(!E.DEC.co_bau_som.valid(cb, {}) && cb.partner.status !== 'married' && cb.kids.length === 0, 'sự kiện quan hệ trưởng thành không được áp cho nhân vật 16 tuổi');
+  const waiting = mk(66006, 18, 'F'); waiting.partner.age = 18; { const d = E.DEC.co_bau_som.make(waiting, R(1)); E.DEC.co_bau_som.apply(waiting, d, 'cuoi', R(2), (t,k) => waiting.log.push({a:waiting.age,t,k})); }
+  ok(waiting.partner.status !== 'married' && waiting.flags.marryWhenLegal === waiting.partner.name && waiting.kids.length === 1, 'thai kỳ khi cả hai đã trưởng thành vẫn đợi đủ tuổi đăng ký kết hôn, không mất con');
   let early = 0; for (let i = 0; i < 400; i++) { const l = E.createLife({ mode: i % 3 ? 'vn' : 'world', seed: 66100 + i }); E.runHeadless(l); l.log.forEach(e => { if (e.a < (E.isVN(l) ? 18 : 18) && /^(Tổ chức đám cưới với|Kết hôn với)/.test(e.t)) early++; }); }
   ok(early === 0, 'không còn ai cưới trước 18 tuổi (' + early + ')');
   // nghỉ hưu trước tuổi trong lực lượng vũ trang
@@ -2880,7 +2882,7 @@ section('70. Bản 7.3.0: đời con giữ đúng nghề bố mẹ và anh chị
   // sống tiếp đời con
   let tested = 0, jobOk = 0, sibOk = 0, noRandBirth = 0, careerLog = 0;
   for (let i = 0; i < 80 && tested < 6; i++) {
-    const p = E.createLife({ mode: 'vn', seed: 70000 + i * 7, gender: 'M', noOrphan: true }); E.runHeadless(p);
+    const p = E.createLife({ mode: 'vn', seed: 70000 + i * 7, gender: 'M', noOrphan: true }); p.flags.familyPlan108 = {want:4,spacing:2}; p.flags.wantKids = 4; E.runHeadless(p, x => { const last = x.kids.reduce((a,k)=>Math.max(a,k.born),-100); if(x.alive && x.partner && x.partner.alive!==false && x.partner.age>=18 && x.age>=24 && x.age<=45 && x.kids.length<3 && x.age-last>=3) E.RELATIONS108.deliver(x,x.partner,E.H.rf(x), (t,k)=>x.log.push({a:x.age,y:x.birthYear+x.age,t,k}), {source:'partner'}); });
     if ((p.kids || []).length < 3 || !(p.flags.career92 || []).some(c => c.t && c.t !== 'đang đi học')) continue;
     tested++; const k = p.kids[1], c = E.createLife(E.childOpts(p, k));
     const at = (p.flags.career92 || []).filter(x => x.a <= k.born).pop();

@@ -792,8 +792,6 @@
     } else if (l.widowed) row('Góa bụa');
     l.kids.forEach(function (k) {
       var ka = a - k.born, info = '';
-      if(E.childRelation108)info+=' · '+esc(E.childRelation108(l,k));
-      if(k.careerTrial108)info+=' · hướng nghiệp: '+esc(k.careerWish108==='business'?'kinh doanh':k.careerWish108==='tradition'?'tìm hiểu nghề gia đình':k.careerWish108==='pressure'?'theo kỳ vọng cha mẹ':'tự chọn');
       if (k.alive) {
         if (k.jail && ka < k.jail) info = ' · đang thụ án';
         else if (k.job) info = ' · ' + esc(E.kidTitle(k)) + (k.inc ? ' · ' + esc(money(l, k.inc)) + '/tháng' : '');
@@ -805,6 +803,8 @@
         if(k.family100&&E.FAMILY100)info+=' · '+esc(E.FAMILY100.summary(l,'child',l.kids.indexOf(k)));
         if (E.kidWhere) info += ' · ' + esc(E.kidWhere(l, k)); // v7.5: con đang ở đâu
       }
+      if(E.childRelation108)info+=' · '+esc(E.childRelation108(l,k));
+      if(k.careerTrial108)info+=' · hướng nghiệp: '+esc(k.careerWish108==='business'?'kinh doanh':k.careerWish108==='tradition'?'tìm hiểu nghề gia đình':k.careerWish108==='pressure'?'theo kỳ vọng cha mẹ':'tự chọn');
       row((k.sex === 'M' ? 'Con trai' : 'Con gái') + ': ' + esc(k.name) + ' · ' + (k.alive ? ka + ' tuổi' : 'đã mất') + info + ' <button class="btn sm family-open" data-family-child="' + esc(k.parentId) + '">Hồ sơ</button>', !k.alive);
     });
     if (l.grand) row('Cháu: ' + l.grand + (l.ggrand ? ' · Chắt: ' + l.ggrand : ''));
