@@ -1,3 +1,12 @@
+## v8.4.4 — Sửa logic tiền bạc và điều kiện hành động
+
+- Sửa một số trường hợp trả nợ bị trừ tiền hai lần, như xử lý nợ quá hạn và tất toán khoản vay nhà lúc lớn tuổi.
+- Khi có nhiều khoản vay, tiền đã dùng trả khoản trước không còn được tính là tiền có thể dùng cho khoản sau.
+- Khoản trả góp mua nhà từ các lượt chơi cũ nay được tính đầy đủ trong tổng chi và số tiền tiết kiệm của năm.
+- Muốn nộp hồ sơ định cư phải có đúng chứng chỉ ngoại ngữ được yêu cầu. Chưa từng học ngôn ngữ đó sẽ không được xem là đã đủ điều kiện.
+- Khi rời công việc lãnh đạo để đổi nghề, tên chức vụ cũ không còn hiện thay cho nghề mới.
+- Nội dung cập nhật được viết bằng lời dễ hiểu, liệt kê đủ thay đổi và điều kiện sử dụng, không đưa chi tiết lập trình vào.
+
 ## v8.4.3 — Chủ động chăm lo gia đình và cân bằng tích lũy
 
 - Chủ động chia tay khi đang hẹn hò, kể cả mối tình từ tuổi thiếu niên. Chia tay không tự chia tài sản như ly hôn; thai kỳ và trách nhiệm với con chung vẫn tiếp tục.

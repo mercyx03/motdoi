@@ -1667,11 +1667,11 @@
         if (L.type === 'home') { log('Không trả nổi nợ, ngân hàng phát mại căn nhà.', 'bad'); life.ownHouse = false; life.houseVal = 0; H.fx(life, { hap: -15 }); H.mem(life, 'Ngày ngân hàng niêm phong căn nhà của bạn.', 6); }
         else if (L.type === 'appden' || L.type === 'nong') { log('Bọn đòi nợ kéo đến tận nhà đập phá, đánh bạn một trận rồi "xí xóa" phần còn lại.', 'bad'); H.fx(life, { hea: -10, hap: -10 }); H.mem(life, 'Đêm bọn đòi nợ kéo đến đập phá nhà.', 5); }
         else if (L.type === 'family') { log('Người thân thương tình, xóa khoản nợ cho bạn.', 'neutral'); }
-        else { var part = Math.min(L.bal * 0.2, Math.max(0, life.money)); life.money -= part; F.debt += part; log('Khoản ' + L.name + ' bị chuyển cho công ty thu hồi nợ. Trả được một phần, phần còn lại bị xóa — nhưng tên bạn nằm trong danh sách nợ xấu nhiều năm.', 'bad'); life.credit = { bad: true, since: a }; H.fx(life, { hap: -6 }); }
+        else { var part = Math.min(L.bal * 0.2, Math.max(0, life.money - F.debt)); F.debt += part; log('Khoản ' + L.name + ' bị chuyển cho công ty thu hồi nợ. Trả được một phần, phần còn lại bị xóa — nhưng tên bạn nằm trong danh sách nợ xấu nhiều năm.', 'bad'); life.credit = { bad: true, since: a }; H.fx(life, { hap: -6 }); }
         L.bal = 0; L.closed = true; return;
       }
       var due = L.pay ? Math.min(L.bal, L.pay) : Math.min(L.bal, Math.max(L.bal * L.minShare, L.type === 'home' ? b * 0.25 : 0)); // v4.4: trả góp có kỳ hạn, số tiền cố định mỗi năm
-      var avail = life.money + income + F.partner - F.food - F.rent - F.kids;
+      var avail = life.money + income + F.partner - F.food - F.rent - F.kids - F.travel - F.parents - F.health - F.debt;
       var paid = avail >= due ? due : Math.max(0, Math.min(due, avail * 0.6));
       L.bal -= paid; F.debt += paid;
       if (L.pay && paid > 0.01) { L.paidN = (L.paidN || 0) + 1; log('Góp tiền trả góp ' + (E.loanWhat ? E.loanWhat(life, L) : L.name) + ' năm thứ ' + L.paidN + (L.term ? '/' + L.term : '') + ': ' + fmtMoney(life, paid) + (L.bal > 0.5 ? ' · còn nợ ' + fmtMoney(life, L.bal) : ' · đã trả xong') + '.', 'money'); }
@@ -1697,8 +1697,8 @@
     (life.loans || []).forEach(function (L) {
       if (L.type !== 'home' || L.bal <= 0.5 || a < 75) return;
       var kidsHelp = life.kids.filter(function (k) { return k.alive && a - k.born >= 25; }).length;
-      if (life.money >= L.bal) { life.money -= L.bal; F.debt += L.bal; log('Dùng tiền tích lũy tất toán khoản vay mua nhà trước khi quá già.', 'good'); }
-      else if (kidsHelp && life.money + life.base * kidsHelp * 2 >= L.bal) { var own = Math.max(0, Math.min(life.money, L.bal)); life.money -= own; F.debt += own; log('Các con góp tiền trả nốt khoản vay mua nhà cho ' + (life.sex === 'M' ? 'bố' : 'mẹ') + '.', 'good'); H.mem(life, 'Ngày các con góp tiền trả hết nợ nhà cho mình.', 4); }
+      if (life.money - F.debt >= L.bal) { F.debt += L.bal; log('Dùng tiền tích lũy tất toán khoản vay mua nhà trước khi quá già.', 'good'); }
+      else if (kidsHelp && life.money - F.debt + life.base * kidsHelp * 2 >= L.bal) { var own = Math.max(0, Math.min(life.money - F.debt, L.bal)); F.debt += own; log('Các con góp tiền trả nốt khoản vay mua nhà cho ' + (life.sex === 'M' ? 'bố' : 'mẹ') + '.', 'good'); H.mem(life, 'Ngày các con góp tiền trả hết nợ nhà cho mình.', 4); }
       else if (life.ownHouse) { var left = Math.max(0, life.houseVal * 0.9 - L.bal); life.money += left; life.ownHouse = false; life.houseVal = 0; log('Không trả nổi khoản vay mua nhà ở tuổi ' + a + ', phải bán nhà trả ngân hàng' + (left > 0 ? ', còn dư ' + fmtMoney(life, left) + '.' : '.'), 'bad'); H.fx(life, { hap: -10 }); H.mem(life, 'Ngày bán căn nhà đã ở mấy chục năm để trả nợ.', 5); }
       L.bal = 0; L.closed = true;
     });
@@ -1727,7 +1727,7 @@
     if (life.mortgage > 0) { // khoản vay mua nhà kiểu cũ (bản 1.0)
       life.mortgage *= 1.07;
       var pay = Math.min(life.mortgage, Math.max(b * 0.25, life.mortgage * 0.08));
-      life.mortgage -= pay; life.money -= pay; F.debt += pay;
+      life.mortgage -= pay; life.money -= pay; F.debt += pay; F.spend += pay; F.save -= pay;
       if (life.mortgage < 0.5) { life.mortgage = 0; log('Trả hết khoản vay mua nhà.', 'good'); H.fx(life, { hap: 4 }); }
     }
     life.income = income;

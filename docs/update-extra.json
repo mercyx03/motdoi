@@ -1,5 +1,23 @@
 [
   {
+    "id": "logic844",
+    "publishedAt": "2026-10-23T07:48:42.412Z",
+    "title": "Sửa lỗi trả nợ, định cư và hiển thị nghề nghiệp",
+    "summary": "Tiền trả nợ được tính đúng, điều kiện định cư rõ ràng hơn và nội dung cập nhật dễ đọc hơn.",
+    "tags": [
+      "Sửa lỗi",
+      "Cộng đồng"
+    ],
+    "details": [
+      "Sửa một số trường hợp trả nợ bị trừ tiền hai lần, như xử lý nợ quá hạn và tất toán khoản vay nhà lúc lớn tuổi.",
+      "Khi có nhiều khoản vay, tiền đã dùng trả khoản trước không còn được tính là tiền có thể dùng cho khoản sau.",
+      "Khoản trả góp mua nhà từ các lượt chơi cũ nay được tính đầy đủ trong tổng chi và số tiền tiết kiệm của năm.",
+      "Muốn nộp hồ sơ định cư phải có đúng chứng chỉ ngoại ngữ được yêu cầu. Chưa từng học ngôn ngữ đó sẽ không được xem là đã đủ điều kiện.",
+      "Khi rời công việc lãnh đạo để đổi nghề, tên chức vụ cũ không còn hiện thay cho nghề mới.",
+      "Nội dung cập nhật được viết bằng lời dễ hiểu, liệt kê đủ thay đổi và điều kiện sử dụng, không đưa chi tiết lập trình vào."
+    ]
+  },
+  {
     "id": "feedback843",
     "publishedAt": "2026-10-23T07:39:50.512Z",
     "title": "Chủ động chăm lo gia đình, chia tay và cân đối cuộc sống",
