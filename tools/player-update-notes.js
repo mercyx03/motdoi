@@ -3,7 +3,7 @@ const fs=require('fs'),path=require('path');
 const copy=new Map(fs.readFileSync(path.join(__dirname,'../docs/update-copy.tsv'),'utf8').trim().split(/\r?\n/).map(line=>{
  const [id,title,...details]=line.split('\t');return [id,{title,details}];
 }));
-// Keep the full engineering history in CHANGELOG; publish player-facing changes.
+// Publish every player-facing change without a line/item cap. Keep code details out.
 const rewrites = [
  ['Nhà giàu không bị biến thành thiếu thốn', 'Sửa tình huống nhà giàu bỗng thiếu thốn sau vài lựa chọn; bỏ lời giải thích lặp lại trong hồ sơ, gợi ý và nhật ký. Bản lưu cũ được cập nhật lời kể, giữ nguyên chi phí đã chọn.'],
  ['Hai hành động mới chỉ do người chơi chọn', 'Hai hành động luyện tập mới chỉ được thực hiện khi người chơi chủ động chọn.'],
@@ -37,7 +37,7 @@ function playerLine(value) {
 function playerEntry(entry) {
  if(entry.private)return null;
  const edited=copy.get(entry.id);
- if(edited)return {...entry,title:edited.title,summary:edited.details[0],details:edited.details};
+ if(edited)entry={...entry,title:edited.title,summary:edited.details[0],details:edited.details};
  const details=entry.details.map(playerLine).filter(Boolean);
  if(!details.length)return null;
  const titles={

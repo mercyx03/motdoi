@@ -21,9 +21,10 @@ if(fs.existsSync(extraPath))entries.unshift(...JSON.parse(fs.readFileSync(extraP
 const previousPath=path.join(root,'public/data/updates.json');
 if(fs.existsSync(previousPath)){
  const previous=new Map(JSON.parse(fs.readFileSync(previousPath,'utf8')).entries.map(e=>[e.id,e.publishedAt]));
- entries.forEach(e=>{if(previous.has(e.id))e.publishedAt=previous.get(e.id);});
+ entries.forEach(e=>{if(previous.has(e.id)&&!e.correctedAt)e.publishedAt=previous.get(e.id);});
 }
 entries.sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
 const publicEntries=entries.map(playerEntry).filter(Boolean);
+for(const entry of publicEntries){const at=Date.parse(entry.publishedAt);if(!Number.isFinite(at)||at>Date.now())throw Error('Invalid or future update time: '+entry.id);}
 fs.writeFileSync(path.join(root,'public/data/updates.json'),JSON.stringify({generatedAt:new Date().toISOString(),entries:publicEntries},null,2)+'\n');
 console.log('Built '+entries.length+' dated update entries from '+releases.length+' release commits; version labels omitted.');

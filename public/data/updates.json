@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-23T07:22:53.304Z",
+  "generatedAt": "2026-10-23T07:39:50.637Z",
   "entries": [
     {
       "id": "feedback843",
-      "publishedAt": "2026-10-23T18:00:00.000Z",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
       "title": "Chủ động chăm lo gia đình, chia tay và cân đối cuộc sống",
       "summary": "Bổ sung lựa chọn từ góp ý người chơi và điều chỉnh khả năng tích lũy tiền.",
       "tags": [
@@ -28,30 +28,35 @@
         "Xe, bảo vệ và tổ giúp việc cấp lãnh đạo là nguồn lực làm nhiệm vụ, không được cộng vào tài sản hoặc thu nhập cá nhân.",
         "Cân bằng tiền: bảo vệ nhóm lương thấp, giảm phần thu nhập rất cao và lợi nhuận kinh doanh bất thường; tiền mặt chỉ hưởng lãi rất thấp, muốn tiết kiệm có kỳ hạn cần mở sổ. Nhà có năm giảm giá và phát sinh bảo trì kể cả không cho thuê.",
         "Nhật ký cập nhật trình bày đầy đủ từng thay đổi, không giới hạn ba dòng. Các nội dung của đợt học tập, ngân hàng, nghiên cứu và gia đình trước đó đã được mở rộng."
-      ]
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
     },
     {
-      "id": "expansion842-life",
-      "publishedAt": "2026-10-23T15:02:00.000Z",
-      "title": "Những biến cố cần nhiều năm để giải quyết",
-      "summary": "Gia đình có truyền thống, luyện năng khiếu từ nhỏ và các hồ sơ tiếp nối.",
+      "id": "expansion842-study",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Học tập và con đường học thuật rộng hơn",
+      "summary": "Thêm cuộc thi, chuẩn ngoại ngữ, cao học sĩ quan và công trình nghiên cứu dài hạn.",
       "details": [
-        "Có gia đình truyền thống quân đội/nhà nước, lời hướng nghiệp ở tuổi 7/12/16; không bảo đảm trúng tuyển hoặc ép chọn nghề.",
-        "Menu hoạt động thường niên ghi từng chỉ số; bổ sung tác dụng cụ thể vào lựa chọn đọc sách, ăn cùng bạn và thiền/yoga hiện có.",
-        "Tin quốc tang mô phỏng điều chỉnh lịch biểu diễn; chu kỳ dịch bệnh 3 năm có sức khỏe và chi phí duy trì kinh doanh. Không giả làm tin thời sự thật.",
-        "Từ 5 tuổi chủ động tự luyện hoặc xin tham gia câu lạc bộ, bài tập phù hợp tuổi; mỗi năm một đợt, trẻ không bị tự trừ học phí.",
-        "Phát hiện dấu hiệu quan hệ ngoài cam kết hoặc vi phạm của bạn đời, cha/mẹ, con trưởng thành. Gắn đúng danh tính; dấu hiệu chưa phải kết luận.",
-        "Hồ sơ nhiều năm cho ngoại tình, nghi vấn biển thủ, vụ án, bạo lực gia đình. Xác minh, hỗ trợ, trình báo và phản hồi về sau; không ép nạn nhân hòa giải.",
-        "Tư vấn rồi tự nguyện triệt sản, có chi phí và hồi phục; ngăn thụ thai tự nhiên, giữ lựa chọn nhận nuôi, không hủy thai kỳ đang có."
+        "Trúng tuyển học viện công an/quân đội chuyển nhân vật tới địa bàn trường, ở nội trú; không chuyển cả gia đình. Hải quân/Thông tin ở Khánh Hòa, không gom mọi trường về Hà Nội.",
+        "Điều chỉnh độ khó các vòng HSG/Olympic, có trượt và các mức giải. Thêm nút nộp hồ sơ tuyển thẳng theo thành tích đúng nhóm ngành.",
+        "Khoa học kỹ thuật toàn quốc, hùng biện tiếng Anh và tranh biện học đường; trẻ nhỏ dự vòng trường, từ THPT mới xét vòng quốc gia.",
+        "Chuẩn ngoại ngữ theo chương trình: một số trường có đầu vào IELTS 5.5, trường khác cho học bổ trợ; đầu ra đại học 4.5 hoặc 5.5. Thạc sĩ đầu vào 5.5/đầu ra 6.5, tiến sĩ 6.5/7.5 trong mô phỏng. Chứng chỉ hết hạn không đủ điều kiện.",
+        "Sĩ quan chủ động xin học thạc sĩ/tiến sĩ ở các học viện lực lượng: kỹ thuật quân sự, chỉ huy tham mưu, chính trị, an ninh, tội phạm học. Cần bằng trước, ngoại ngữ, học phí và đơn vị đồng ý.",
+        "Danh sách chức vụ chỉ còn những vị trí cao hơn đương nhiệm. Chặn cả lựa chọn cũ đã mở trước khi đổi chức vụ.",
+        "Thẩm tra lý lịch bản thân, bạn đời và hồ sơ ba thế hệ được giữ khi chuyển đời. Chặn vấn đề pháp lý chưa giải quyết. Không tự cấm cả gia đình chỉ vì tôn giáo: nguồn chính thức không xác nhận quy tắc chung đó.",
+        "Đề tài 1/3/10/20 năm công việc, thí nghiệm, dữ liệu, tranh biện, hướng dẫn học viên, nghiệm thu và công bố qua phản biện; có tốn phí, chậm tiến độ, sửa và từ chối.",
+        "Chủ động nộp hồ sơ PGS/GS, xét bằng tiến sĩ, bài báo, giảng dạy/hướng dẫn và uy tín. Tách bậc nghề khỏi học hàm; giữ học hàm hợp lệ trong bản lưu cũ.",
+        "Giáo sư đủ uy tín có thể ứng cử chức vụ lãnh đạo khoa học trong bối cảnh mô phỏng, cần vị trí/phiếu tín nhiệm, nhiệm kỳ 5 năm."
       ],
       "tags": [
         "Tính năng",
-        "Đời sống"
-      ]
+        "Học tập"
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
     },
     {
       "id": "expansion842-family",
-      "publishedAt": "2026-10-23T15:01:00.000Z",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
       "title": "Chủ động truyền lại cơ ngơi và chuyển đời",
       "summary": "Tặng tài sản khi còn sống, nhà ở nhiều nơi, ngân hàng và nhân sự gia đình.",
       "details": [
@@ -65,33 +70,32 @@
       "tags": [
         "Tính năng",
         "Gia đình"
-      ]
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
     },
     {
-      "id": "expansion842-study",
-      "publishedAt": "2026-10-23T15:00:00.000Z",
-      "title": "Học tập và con đường học thuật rộng hơn",
-      "summary": "Thêm cuộc thi, chuẩn ngoại ngữ, cao học sĩ quan và công trình nghiên cứu dài hạn.",
+      "id": "expansion842-life",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Những biến cố cần nhiều năm để giải quyết",
+      "summary": "Gia đình có truyền thống, luyện năng khiếu từ nhỏ và các hồ sơ tiếp nối.",
       "details": [
-        "Trúng tuyển học viện công an/quân đội chuyển nhân vật tới địa bàn trường, ở nội trú; không chuyển cả gia đình. Hải quân/Thông tin ở Khánh Hòa, không gom mọi trường về Hà Nội.",
-        "Sửa công thức vòng HSG/Olympic, có trượt và các mức giải. Thêm nút nộp hồ sơ tuyển thẳng theo thành tích đúng nhóm ngành.",
-        "Khoa học kỹ thuật toàn quốc, hùng biện tiếng Anh và tranh biện học đường; trẻ nhỏ dự vòng trường, từ THPT mới xét vòng quốc gia.",
-        "Chuẩn ngoại ngữ theo chương trình: một số trường có đầu vào IELTS 5.5, trường khác cho học bổ trợ; đầu ra đại học 4.5 hoặc 5.5. Thạc sĩ đầu vào 5.5/đầu ra 6.5, tiến sĩ 6.5/7.5 trong mô phỏng. Chứng chỉ hết hạn không đủ điều kiện.",
-        "Sĩ quan chủ động xin học thạc sĩ/tiến sĩ ở các học viện lực lượng: kỹ thuật quân sự, chỉ huy tham mưu, chính trị, an ninh, tội phạm học. Cần bằng trước, ngoại ngữ, học phí và đơn vị đồng ý.",
-        "Danh sách chức vụ chỉ còn những vị trí cao hơn đương nhiệm. Chặn cả lựa chọn cũ đã mở trước khi đổi chức vụ.",
-        "Thẩm tra lý lịch bản thân, bạn đời và hồ sơ ba thế hệ được giữ khi chuyển đời. Chặn vấn đề pháp lý chưa giải quyết. Không tự cấm cả gia đình chỉ vì tôn giáo: nguồn chính thức không xác nhận quy tắc chung đó.",
-        "Đề tài 1/3/10/20 năm công việc, thí nghiệm, dữ liệu, tranh biện, hướng dẫn học viên, nghiệm thu và công bố qua phản biện; có tốn phí, chậm tiến độ, sửa và từ chối.",
-        "Chủ động nộp hồ sơ PGS/GS, xét bằng tiến sĩ, bài báo, giảng dạy/hướng dẫn và uy tín. Tách bậc nghề khỏi học hàm; giữ học hàm hợp lệ trong bản lưu cũ.",
-        "Giáo sư đủ uy tín có thể ứng cử chức vụ lãnh đạo khoa học trong bối cảnh mô phỏng, cần vị trí/phiếu tín nhiệm, nhiệm kỳ 5 năm."
+        "Có gia đình truyền thống quân đội/nhà nước, lời hướng nghiệp ở tuổi 7/12/16; không bảo đảm trúng tuyển hoặc ép chọn nghề.",
+        "Các hoạt động thường niên ghi từng chỉ số; bổ sung tác dụng cụ thể vào lựa chọn đọc sách, ăn cùng bạn và thiền/yoga hiện có.",
+        "Tin quốc tang mô phỏng điều chỉnh lịch biểu diễn; chu kỳ dịch bệnh 3 năm có sức khỏe và chi phí duy trì kinh doanh. Không giả làm tin thời sự thật.",
+        "Từ 5 tuổi chủ động tự luyện hoặc xin tham gia câu lạc bộ, bài tập phù hợp tuổi; mỗi năm một đợt, trẻ không bị tự trừ học phí.",
+        "Phát hiện dấu hiệu quan hệ ngoài cam kết hoặc vi phạm của bạn đời, cha/mẹ, con trưởng thành. Vụ việc đi theo đúng người liên quan; dấu hiệu chưa phải kết luận.",
+        "Hồ sơ nhiều năm cho ngoại tình, nghi vấn biển thủ, vụ án, bạo lực gia đình. Xác minh, hỗ trợ, trình báo và phản hồi về sau; không ép nạn nhân hòa giải.",
+        "Tư vấn rồi tự nguyện triệt sản, có chi phí và hồi phục; ngăn thụ thai tự nhiên, giữ lựa chọn nhận nuôi, không hủy thai kỳ đang có."
       ],
       "tags": [
         "Tính năng",
-        "Học tập"
-      ]
+        "Đời sống"
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
     },
     {
       "id": "career-paths109",
-      "publishedAt": "2026-10-23T12:00:00.000Z",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
       "title": "Sau cấp 10: chọn bước tiếp theo trong nghề",
       "summary": "Mọi năng khiếu có dự án chuyên gia và hướng kinh doanh phù hợp.",
       "details": [
@@ -102,7 +106,8 @@
       "tags": [
         "Tính năng",
         "Sửa lỗi"
-      ]
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
     },
     {
       "id": "relationships-oct23",
@@ -417,7 +422,7 @@
     {
       "id": "git-119bce2a2116",
       "publishedAt": "2026-10-19T12:32:43Z",
-      "title": "Có tài khoản để giữ tiến trình",
+      "title": "Tài khoản, lưu tiến trình và xuất thân theo từng tỉnh",
       "summary": "Có thể đăng nhập để giữ cuộc đời đang chơi, thành tựu và gia phả, rồi chơi tiếp trên máy khác.",
       "details": [
         "Có thể đăng nhập để giữ cuộc đời đang chơi, thành tựu và gia phả, rồi chơi tiếp trên máy khác.",
@@ -431,7 +436,7 @@
     {
       "id": "git-cf06f858b276",
       "publishedAt": "2026-10-19T11:43:31Z",
-      "title": "Chỉnh lại xuất thân và thêm thành tựu",
+      "title": "Hoàn thiện mô phỏng cuộc sống Việt Nam và thêm thành tựu",
       "summary": "Bổ sung thông tin để hoàn cảnh nhân vật và cuộc sống ở Việt Nam sát thực tế hơn.",
       "details": [
         "Bổ sung thông tin để hoàn cảnh nhân vật và cuộc sống ở Việt Nam sát thực tế hơn.",
@@ -445,7 +450,7 @@
     {
       "id": "git-e4842dfb3efd",
       "publishedAt": "2026-10-19T09:47:32Z",
-      "title": "Thêm lễ hội, di sản và chuyện ở từng địa phương",
+      "title": "Sửa số lượt đánh giá, mở rộng con người, văn hóa và lịch sử Việt Nam",
       "summary": "Có thể gặp lễ hội, xem biểu diễn hoặc xin học từ nghệ nhân ở đúng vùng văn hóa.",
       "details": [
         "Có thể gặp lễ hội, xem biểu diễn hoặc xin học từ nghệ nhân ở đúng vùng văn hóa.",
