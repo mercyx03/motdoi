@@ -4,7 +4,7 @@ Mở Tài khoản → Thư viện toàn bộ sự kiện sau khi đăng nhập t
 
 Có 1.316 mục từ registry game: lựa chọn, biến cố ngẫu nhiên, lời kể và diễn biến hằng năm. Hỗ trợ tìm kiếm nội dung/mã, lọc nhóm, mở chi tiết và tải JSON. Mỗi lần hiện 20 mục để tránh giao diện quá nặng.
 
-Nội dung động hiển thị công thức/hàm điều kiện và xử lý, không giả định có cùng kết quả cho mọi nhân vật. Không chạy thử sự kiện trên cuộc đời đang chơi. Registry phản ánh định nghĩa đang hoạt động của bản build, không bao gồm phiên bản định nghĩa đã bị module sau thay thế.
+Nội dung hiển thị bằng câu chữ tiếng Việt, có bối cảnh mô phỏng, lựa chọn và kết quả ví dụ. Các tình huống chưa dựng được mẫu đầy đủ chỉ hiện trích lời kể và ghi rõ giới hạn; không xuất mã hàm. Kết quả thay đổi theo nhân vật và vận may. Không chạy thử sự kiện trên cuộc đời đang chơi. Registry phản ánh định nghĩa đang hoạt động của bản build, không bao gồm phiên bản định nghĩa đã bị module sau thay thế.
 
 Dữ liệu được nhúng trong Worker phía máy chủ, không có file JSON công khai. API kiểm tra phiên đăng nhập và role admin từ D1 trong từng yêu cầu, trả no-store. Mã nguồn local có placeholder; dùng npm run build để đưa catalog đầy đủ vào dist.
 

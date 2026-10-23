@@ -36,13 +36,17 @@
         function draw(){
           var q=box.querySelector('#eventSearch').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),type=box.querySelector('#eventType').value;
           var filtered=rows.filter(function(x){return(!type||x.type===type)&&JSON.stringify(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);});
-          box.querySelector('#eventStatus').textContent=filtered.length+' / '+rows.length+' mục. Chỉ đọc, không thay đổi cuộc đời đang chơi. Phần động hiển thị công thức điều kiện, không phải kết quả cố định cho mọi nhân vật.';
+          box.querySelector('#eventStatus').textContent=filtered.length+' / '+rows.length+' mục. Chỉ đọc, không thay đổi cuộc đời đang chơi. Bối cảnh và kết quả là ví dụ mô phỏng, có thể thay đổi theo nhân vật.';
           var host=box.querySelector('#eventRows');host.replaceChildren();
           filtered.slice(0,limit).forEach(function(x){
-            var d=document.createElement('details'),s=document.createElement('summary'),pre=document.createElement('pre');
-            s.textContent=x.type+' · '+x.title+' · '+x.id;pre.textContent=JSON.stringify(x.data,null,2);
-            pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:55vh;overflow:auto';
-            d.append(s,pre);host.append(d);
+            var d=document.createElement('details'),s=document.createElement('summary'),body=document.createElement('div');
+            s.textContent=x.type+' · '+x.title;
+            function paragraph(label,text){if(!text)return;var p=document.createElement('p'),b=document.createElement('b');b.textContent=label;p.append(b,document.createTextNode(text));body.append(p);}
+            paragraph('Bối cảnh: ',x.data.context);paragraph('',x.data.text);
+            (x.data.choices||[]).forEach(function(o,i){var card=document.createElement('section');card.className='admin-event-choice';var title=document.createElement('h4');title.textContent=(i+1)+'. '+o.label;card.append(title);if(o.hint){var hint=document.createElement('p');hint.textContent=o.hint;card.append(hint);}var result=document.createElement('p');result.textContent='Kết quả ví dụ: '+((o.result||[]).join(' ')||'Chưa có lời kể kết quả trong ví dụ này.');card.append(result);if(o.changes&&o.changes.length){var change=document.createElement('p');change.textContent=o.changes.join(' · ');card.append(change);}body.append(card);});
+            paragraph('Lưu ý: ',x.data.note);paragraph('Mã tra cứu: ',x.id);
+            d.append(s,body);host.append(d);
+
           });
           box.querySelector('#eventMore').hidden=limit>=filtered.length;
         }

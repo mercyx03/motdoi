@@ -611,3 +611,12 @@ footer .disclaimer b { color: var(--accent); }
 .brand { align-items: center; }
 .brand .logo, .topbar .brand .logo { width: 160px; height: 80px; object-fit: contain; border-radius: 0; transform: none; box-shadow: none; }
 @media (max-width: 760px) { .brand .logo, .topbar .brand .logo { width: 140px; height: 70px; } .topbar .wrap { gap: 8px; padding-top: 6px; } }
+
+/* Consistent Vietnamese glyphs and line height in all text surfaces. */
+:root { --serif: 'Be Vietnam Pro', system-ui, sans-serif; --display: 'Be Vietnam Pro', system-ui, sans-serif; }
+h1,h2,h3,h4 { line-height: 1.4; }
+#eventRows details { margin: 12px 0; padding: 12px; border: 1px solid var(--line); border-radius: 12px; }
+#eventRows summary { cursor: pointer; font-weight: 700; }
+#eventRows p { white-space: pre-line; overflow-wrap: anywhere; line-height: 1.8; }
+.admin-event-choice { padding: 12px; margin: 10px 0; background: var(--surface-2); border-radius: 10px; }
+.admin-event-choice h4 { margin: 0; }
