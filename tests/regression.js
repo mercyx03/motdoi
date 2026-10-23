@@ -10,7 +10,7 @@ const ctx = { console, Math, Date, JSON, TextEncoder, TextDecoder, Buffer };
 ctx.globalThis = ctx;
 vm.createContext(ctx);
 // Lấy đúng danh sách & thứ tự script của trang (trừ các script chỉ chạy trên trình duyệt) — không để danh sách viết tay bị cũ khi thêm module mới
-const MODULES = [...fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8').matchAll(/<script src="(js\/[^"?]+)/g)].map(m => m[1]).filter(f => !['js/music.js', 'js/card.js', 'js/app.js', 'js/account.js', 'js/fantasy-ui.js'].includes(f));
+const MODULES = [...fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8').matchAll(/<script src="(js\/[^"?]+)/g)].map(m => m[1]).filter(f => !['js/music.js', 'js/card.js', 'js/app.js', 'js/account.js'].includes(f));
 for (const f of MODULES) {
   if (process.env.MOTDOI_TEST_NATIVE === '1') vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f });
   else vm.runInContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), ctx, { filename: f });
@@ -43,8 +43,8 @@ section('0. Phiên bản & trang');
 {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const refs = html.match(/(?:src|href)="(?:js|css)\/[^"]+"/g) || [];
-  const UI_SCRIPTS = ['js/music.js', 'js/card.js', 'js/app.js', 'js/account.js', 'js/fantasy-ui.js']; // chỉ chạy trên trình duyệt
-  ok(refs.length === MODULES.length + UI_SCRIPTS.length + 2, 'index.html nạp đủ ' + (MODULES.length + UI_SCRIPTS.length) + ' script + 2 stylesheets (' + refs.length + ')');
+  const UI_SCRIPTS = ['js/music.js', 'js/card.js', 'js/app.js', 'js/account.js']; // chỉ chạy trên trình duyệt
+  ok(refs.length === MODULES.length + UI_SCRIPTS.length + 3, 'index.html nạp đủ ' + (MODULES.length + UI_SCRIPTS.length) + ' script + loader + 2 stylesheets (' + refs.length + ')');
   UI_SCRIPTS.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp ' + m));
   MODULES.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp module ' + m));
   ok(html.indexOf('logo.svg?v=' + G.VERSION) >= 0 && fs.existsSync(path.join(ROOT, 'logo.svg')), 'logo Một Đời tồn tại & được dùng');

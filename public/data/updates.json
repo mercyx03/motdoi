@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T23:40:11.908Z",
+  "generatedAt": "2026-10-23T01:59:26.501Z",
   "entries": [
     {
       "id": "relationships-oct23",
@@ -88,32 +88,6 @@
       ]
     },
     {
-      "id": "fantasy-maintenance-oct22",
-      "publishedAt": "2026-10-22T09:53:33.787Z",
-      "title": "Tạm khóa Fantasy gia tộc để điều chỉnh",
-      "summary": "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau.",
-      "details": [
-        "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau."
-      ],
-      "tags": [
-        "Fantasy"
-      ]
-    },
-    {
-      "id": "fantasy-gear-inbox-oct22",
-      "publishedAt": "2026-10-22T04:40:32.867Z",
-      "title": "Sắm đồ đi săn, kết giao chủ quản",
-      "summary": "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
-      "details": [
-        "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
-        "Chủ động tu luyện, chuẩn bị đủ sức trước khi sang vùng khó; có thể xã giao, tặng quà và cứu người để kết thân với chủ quản."
-      ],
-      "tags": [
-        "Fantasy",
-        "Tính năng"
-      ]
-    },
-    {
       "id": "arts-gdtx-estate-oct22",
       "publishedAt": "2026-10-22T03:45:49.312Z",
       "title": "Thi khối năng khiếu, học bổ túc và thừa kế nhà đất",
@@ -126,21 +100,6 @@
       "tags": [
         "Tính năng",
         "Sửa lỗi"
-      ]
-    },
-    {
-      "id": "fantasy-narrative-oct22",
-      "publishedAt": "2026-10-21T23:07:03.466Z",
-      "title": "Fantasy: kể rõ chuyện, bớt những câu lặp",
-      "summary": "Viết lại các cảnh tuổi thơ, học tập và sự kiện để có bối cảnh, người gặp và chuyện đang xảy ra.",
-      "details": [
-        "Viết lại các cảnh tuổi thơ, học tập và sự kiện để có bối cảnh, người gặp và chuyện đang xảy ra.",
-        "Mỗi lựa chọn có đoạn kết riêng, thay vì chỉ chép lại tên nút vào nhật ký.",
-        "Trò chuyện theo nghề và từng vùng; các buổi học liên tiếp có nội dung khác nhau."
-      ],
-      "tags": [
-        "Fantasy",
-        "Tính năng"
       ]
     },
     {
@@ -175,36 +134,6 @@
       ]
     },
     {
-      "id": "spiritual-cultivation",
-      "publishedAt": "2026-10-21T10:42:07Z",
-      "title": "Mở bãi farm đầu, đổi cách tích linh lực",
-      "summary": "Đồng Cỏ Gió đã mở từ cảnh giới đầu. Map đủ điều kiện thì có thể đi thẳng tới.",
-      "tags": [
-        "Fantasy",
-        "Sửa lỗi"
-      ],
-      "details": [
-        "Đồng Cỏ Gió đã mở từ cảnh giới đầu. Map đủ điều kiện thì có thể đi thẳng tới.",
-        "Linh lực tăng theo giây; lên cảnh giới và học sách giúp hấp thụ nhanh hơn.",
-        "Đột phá xong vẫn giữ linh lực dư cho cấp sau."
-      ]
-    },
-    {
-      "id": "fantasy-expansion",
-      "publishedAt": "2026-10-21T10:12:45Z",
-      "title": "Fantasy có học viện, cửa hàng và thợ rèn",
-      "summary": "Gom lại các nút, đưa nhật ký lên chỗ dễ nhìn hơn trên điện thoại.",
-      "tags": [
-        "Fantasy",
-        "Tính năng"
-      ],
-      "details": [
-        "Gom lại các nút, đưa nhật ký lên chỗ dễ nhìn hơn trên điện thoại.",
-        "Thêm khóa học, tâm pháp và kỹ năng bị động. Kỹ năng có thể lên cấp 10.",
-        "Mỗi vùng có NPC và đồ riêng; thêm mua thuốc, chế đồ, cường hóa. Săn linh thú không tốn lượt hoạt động."
-      ]
-    },
-    {
       "id": "git-3cbed702799c",
       "publishedAt": "2026-10-21T08:47:54Z",
       "title": "Có thêm chuyện để nói với người nhà",
@@ -216,50 +145,6 @@
       ],
       "tags": [
         "Tính năng"
-      ]
-    },
-    {
-      "id": "git-58c1fbc618db",
-      "publishedAt": "2026-10-21T07:31:37Z",
-      "title": "Chọn đường tu luyện, học và nâng kỹ năng",
-      "summary": "Fantasy có lựa chọn hướng chiến đấu, kỹ năng và điều kiện học riêng cho từng nhánh.",
-      "details": [
-        "Fantasy có lựa chọn hướng chiến đấu, kỹ năng và điều kiện học riêng cho từng nhánh.",
-        "Có nút tạm dừng và đổi tốc độ; gặp sự kiện hoặc vào trận thì game dừng để chờ bạn chọn.",
-        "Nhật ký và bản tin chiến sự dễ theo dõi hơn."
-      ],
-      "tags": [
-        "Fantasy",
-        "Sửa lỗi"
-      ]
-    },
-    {
-      "id": "git-b7332f0224f5",
-      "publishedAt": "2026-10-21T06:24:55Z",
-      "title": "Các gia tộc bắt đầu có chuyện với nhau",
-      "summary": "Thêm quan hệ giữa các tộc, tranh quyền, kế nhiệm và chiến tranh kéo dài nhiều năm.",
-      "details": [
-        "Thêm quan hệ giữa các tộc, tranh quyền, kế nhiệm và chiến tranh kéo dài nhiều năm.",
-        "Có nhiệm vụ mặt trận, hộ vệ, cứu trợ, đình chiến và ký hiệp ước.",
-        "Giá chợ và chuyện gặp trên đường thay đổi theo tình hình từng vùng."
-      ],
-      "tags": [
-        "Fantasy",
-        "Sửa lỗi"
-      ]
-    },
-    {
-      "id": "git-8508fc135a32",
-      "publishedAt": "2026-10-21T05:52:25Z",
-      "title": "Thêm chế độ Fantasy gia tộc",
-      "summary": "Bắt đầu từ lúc chào đời, lớn lên trong một gia tộc rồi có thể sống tiếp đời con.",
-      "details": [
-        "Bắt đầu từ lúc chào đời, lớn lên trong một gia tộc rồi có thể sống tiếp đời con.",
-        "Có 20 vùng đất, kiếm kỹ, ma pháp, nghề rèn, dược thuật và các trận đánh theo lượt.",
-        "Hardcore cũng sửa cách kể ở tuổi nhỏ: bạn chọn việc của đứa trẻ, không quyết thay bố mẹ."
-      ],
-      "tags": [
-        "Fantasy"
       ]
     },
     {

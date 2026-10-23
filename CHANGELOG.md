@@ -1,3 +1,10 @@
+## Tối ưu tải trang và giao diện điện thoại
+
+- Trang chủ dùng bộ khởi động nhỏ; engine và dữ liệu tải khi cần, giữ thứ tự các module, cho phép thử lại sau lỗi mạng.
+- Font WOFF2 được lưu cùng website, giảm số họ font và độ đậm; giữ font-display: swap và ưu tiên font đoạn giới thiệu.
+- Build đưa đầy đủ CSS trang chủ vào HTML, chia game thành nhiều phần có hash và đặt cache dài cho tài nguyên có hash.
+- Sắp xếp lại thanh điều khiển, nhóm hành động, nhật ký và hộp lựa chọn trên điện thoại; sửa tràn ngang ở màn hình 320 px.
+
 ## v8.4.1 — Đồng bộ thai kỳ và quan hệ gia đình
 
 - Sửa ba lựa chọn giữ thai trong Tin bất ngờ không tạo con; giữ đúng người cùng làm cha mẹ, quyền nuôi con của nhánh đơn thân và không sinh trùng khi đã có thai kỳ chờ.
@@ -27,40 +34,11 @@
 
 ## v8.3.0 — Giao lưu với con, tính cách bố mẹ và tình cảm
 
-- Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore; không đổi Fantasy.
+- Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore.
 - Thêm mục Gia đình: chọn từng người con để chăm sóc, trò chuyện, bàn ranh giới hoặc hỗ trợ một khoản có kiểm tra tiền. Mỗi người có lượt riêng trong năm; sống xa liên lạc từ xa, trẻ sơ sinh thông qua người chăm sóc.
 - Thêm trò chuyện riêng với bố/mẹ theo 16 tính cách hiện có và mục Tình cảm để tâm sự, xin lỗi, bàn riêng tư/kế hoạch/ngân sách. Lời đề nghị có thể chưa được chấp thuận.
 - 40 tình huống tự nhiên: 16 theo tính cách bố mẹ, 12 về từng giai đoạn tuổi của con, 12 về tình cảm. Giới hạn tần suất và kiểm tra người còn sống, tuổi, nơi ở, tình trạng quan hệ; không kết tội ngoại tình từ lời đồn, không quyết việc làm/hôn nhân thay con trưởng thành.
 - Tin cậy và căng thẳng theo từng mối quan hệ ảnh hưởng phản hồi; gắn bó cập nhật vào hồ sơ con/bạn đời hiện có. Bản lưu cũ được bổ sung trạng thái khi dùng, không đổi tên hay tuổi người thân.
-- Kiểm tra 4 biến thể đời thực, mọi lựa chọn mới, tiền, người đã mất/đổi bạn đời và đối chiếu nguyên vẹn 9 cuộc đời Fantasy với bản trước.
-
-## v8.2.0 — Fantasy thử nghiệm: nhánh tu luyện, kỹ năng và nhịp chơi
-
-- Đồng bộ font với giao diện chính, ghi Fantasy gia tộc (thử nghiệm) trước khi vào; thêm thanh EXP rõ ràng ở khu trung tâm và bản tin chiến sự có lịch sử.
-- Tự chuyển năm mỗi 6 giây, có tạm dừng và tốc độ 1×/2×/4×. Dừng khi có sự kiện, trận đấu, đọc nhật ký cũ, chuyển tab hoặc rời Fantasy. Giữ vị trí cuộn khi dựng lại giao diện; nhật ký một cột, hỗ trợ cuộn và bàn phím.
-- Chọn một con đường chiến đấu từ 6 tuổi (Hắc ma pháp từ 16), chỉ mở nhánh tu luyện/lĩnh ngộ đó. Rèn khí và Dược thuật là nhánh chung. Bản lưu cũ giữ nền tảng, kỹ năng và điểm; người chơi tự chọn nhánh chiến đấu.
-- Kỹ năng chiến đấu cấp 1–5: hệ số nền 100%, 112%, 124%, 136%, 148%; nâng cấp có phí điểm, lượt và yêu cầu cấp nhân vật. Mô tả riêng hiệu ứng, ma lực, cảnh giới và giới hạn; hệ số áp vào chiến đấu thật. Kỹ năng nghề tối đa 1 cấp, không có hệ số sát thương.
-- Chặn thao tác lựa chọn từ nút cũ, dọn câu hỏi đã giải quyết trong bản lưu và chống lặp chủ đề nhập trong sáu năm.
-
-## v8.1.0 — Thế cuộc Fantasy và chiến tranh gia tộc
-
-- Thêm năm nguồn Aurelia trên Hugging Face, xử lý 715.460 bản ghi thuộc các phân vùng đã chọn; giữ revision, checksum và ghi công. Dữ liệu được tổng hợp thành thuộc tính/tần suất, không đếm số dòng thành truyện chơi được.
-- Thêm trạng thái vùng, quan hệ từng cặp gia tộc, tộc trưởng/kế nhiệm, chiến tranh nhiều năm, hậu cần, hộ vệ, nhiệm vụ mặt trận, đình chiến, hiệp ước, cứu trợ và giá chợ theo hoàn cảnh.
-- Bổ sung các cảnh chính trị viết tiếng Việt theo tuổi, địa vị và điều kiện hiện tại; hồ sơ đối chất, thiếu tài nguyên, di tản, trạm dược, tranh quyền và giao lưu. Trẻ em chỉ chọn việc của bản thân.
-- Chặn chiếm đất lúc hòa bình, chiến tranh từ xa, phá đình chiến, trùng mặt trận, lặp thưởng cứu trợ, thiếu tài nguyên, cảnh sai địa điểm và gửi dân về vùng còn đánh nhau. Lưu 8.0.0 được nâng cấp trong chế độ Fantasy.
-- Chi tiết: docs/FANTASY-POLITICS.md. Chế độ đời thực và bản lưu của chúng được giữ riêng.
-
-## v8.0.0 — Góc nhìn nhân vật và thế giới Fantasy gia tộc
-
-- Hardcore: giai đoạn 0–2 tuổi chỉ có quan sát và tác động chăm sóc tự động, không đưa quyết định của bố mẹ cho người chơi. Từ 3 tuổi, lựa chọn là hành động của trẻ: nói điều mình cần, nhờ giúp, tự thử, học, nghỉ hoặc im lặng. Người lớn có thể từ chối tùy áp lực và phản ứng của họ; lựa chọn của trẻ không tự rút quỹ gia đình hay ra lệnh người lớn phải thay đổi. Cập nhật cả sự kiện đang mở trong bản lưu cũ.
-- Thêm **Fantasy gia tộc** ở cạnh Việt Nam / Toàn thế giới. Dùng engine, trạng thái và khóa lưu riêng; có hồ sơ, xuất thân, cha mẹ, hôn nhân, con, tử vong và truyền đời từ sơ sinh. Không nạp nghề nghiệp, tiền tệ hoặc biến cố đời thực vào cuộc đời Fantasy.
-- Sáu xuất thân, 12 gia tộc, 20 vùng đất, tước từ thường dân tới công tước và tám cảnh giới sức mạnh. Tước gia đình, tước cá nhân, chức trong hội nghề và sức chiến đấu được theo dõi riêng. Có xác nhận kế vị khi trưởng thành, không cho trẻ cai trị chỉ vì sinh vào nhà quý tộc.
-- Kiếm kỹ, ma pháp, hắc ma pháp, rèn khí và dược thuật; 19 kỹ năng có điều kiện trước/sau; luyện tập giới hạn theo năm, học cùng thầy, học bổng và xin hỗ trợ gia tộc do NPC xét. Hắc thuật tăng tà nhiễm, có thanh tẩy và hậu quả nếu lạm dụng.
-- Bản đồ di chuyển có chi phí, giới hạn tuổi / cảnh giới, giao tranh theo lượt, tiêu hao ma lực, khắc hệ, thủ thế, trói, phá giáp, hồi phục, rút lui và tử trận. Quái cho kinh nghiệm, tiền, vật liệu và đôi khi trang bị; không có thưởng khi rút chạy. Có giới hạn để không trói đối thủ vô hạn hay nhận thưởng lặp.
-- Thu thập, giao thương có chênh lệch mua/bán, chế tác, trang bị rơi, khắc phù, nhiệm vụ có tiến độ và nộp tài nguyên thật. Năm hội nghề có điều kiện gia nhập, thâm niên, chức bậc và phụ cấp. Có tranh chấp tài nguyên, chiến dịch chiếm lãnh địa, tái thiết, ngoại giao và biến động biên giới làm đổi chủ lãnh thổ.
-- Nhập đủ 3.280 bản ghi linh thú Anh–Nga, 3.750 tương tác NPC, 202 mô tả địa hình, 5 nhiệm vụ tiếng Bồ Đào Nha và 2.996 mô-típ giữ lại từ 3.072 hội thoại tổng hợp. Năm nguồn Hugging Face có thẻ MIT; chuyển thể thuộc tính và chủ đề sang tiếng Việt, không tuyên bố đã dịch nguyên văn mọi đoạn. Bản nguồn, checksum, công cụ tái tạo và ghi công được lưu; dữ liệu không được thực thi thành mã.
-- Giữ đúng cha/mẹ lúc con sinh ra khi người chơi có bạn đời mới; di sản chỉ được nhận sau lúc cha/mẹ qua đời và khi con đủ tuổi. Đời con không kế thừa cấp chiến đấu. Có xuất bản lưu JSON và bách khoa linh thú có tìm kiếm / phân trang.
-- Thêm kiểm thử hàng trăm vòng đời Fantasy, mọi nhánh truyện, cây kỹ năng, chiến đấu, vật phẩm, tài nguyên, truyền đời, lưu giữa trận, tách chế độ và luồng giao diện. Giữ đối chiếu 12 cuộc đời Thường với bản gốc trước các cập nhật Hardcore.
 
 ## v7.7.1 — Hardcore theo gia cảnh, luyện tài năng thể thao và training esports
 

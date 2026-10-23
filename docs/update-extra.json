@@ -86,18 +86,6 @@
     ]
   },
   {
-    "id": "fantasy-maintenance-oct22",
-    "publishedAt": "2026-10-22T09:53:33.787Z",
-    "title": "Tạm khóa Fantasy gia tộc để điều chỉnh",
-    "summary": "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau.",
-    "details": [
-      "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau."
-    ],
-    "tags": [
-      "Fantasy"
-    ]
-  },
-  {
     "id": "community-speed-oct22",
     "publishedAt": "2026-10-22T04:51:26.640Z",
     "title": "Đọc bình luận, nhận thông báo nhanh hơn",
@@ -112,20 +100,6 @@
     "private": true
   },
   {
-    "id": "fantasy-gear-inbox-oct22",
-    "publishedAt": "2026-10-22T04:40:32.867Z",
-    "title": "Sắm đồ đi săn, kết giao chủ quản",
-    "summary": "Trang bị đủ bộ, tu luyện chủ động và kết thân với chủ quản.",
-    "details": [
-      "Fantasy có mũ, găng, giày, trang sức và hiệu ứng bộ đồ; xem chỉ số trước khi thay, bán được đồ dư và tinh thạch.",
-      "Tu luyện cần chủ động bắt đầu. Muốn tiến vào vùng khó hơn phải đủ sức và đã săn ở vùng trước; có thể giao thiệp, tặng quà hoặc cứu người để kết thân với chủ quản."
-    ],
-    "tags": [
-      "Fantasy",
-      "Tính năng"
-    ]
-  },
-  {
     "id": "arts-gdtx-estate-oct22",
     "publishedAt": "2026-10-22T03:45:49.312Z",
     "title": "Thi khối năng khiếu, học bổ túc và thừa kế nhà đất",
@@ -134,17 +108,6 @@
     "tags": [
       "Tính năng",
       "Sửa lỗi"
-    ]
-  },
-  {
-    "id": "fantasy-narrative-oct22",
-    "publishedAt": "2026-10-21T23:07:03.466Z",
-    "title": "Fantasy: kể rõ chuyện, bớt những câu lặp",
-    "summary": "Viết lại những câu chuyện trong Fantasy.",
-    "details": [],
-    "tags": [
-      "Fantasy",
-      "Tính năng"
     ]
   },
   {

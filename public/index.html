@@ -9,11 +9,8 @@
   <meta property="og:description" content="Bạn sẽ sống cuộc đời như thế nào? Trải nghiệm game mô phỏng cuộc sống với những lựa chọn bất ngờ.">
   <meta name="theme-color" content="#0a1520">
   <link rel="icon" href="logo.svg?v=8.4.1" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=8.4.1-contact">
-  <link rel="stylesheet" href="css/fantasy.css?v=8.4.1-fantasy3">
+  <link rel="stylesheet" href="css/fonts.css?v=8.4.1">
+  <link rel="stylesheet" href="css/style.css?v=8.4.1-performance">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://motdoi.site/">
   <meta property="og:type" content="website">
@@ -66,7 +63,7 @@
               <a class="btn big" href="#recentSection" style="text-decoration:none">Các cuộc đời đã lưu</a>
             </div>
           </div>
-          <div class="profile" id="heroProfile"></div>
+          <div class="profile" id="heroProfile"><div class="eyebrow">Cuộc đời của bạn</div><h3>Mỗi lần chơi, một khởi đầu</h3><p>Sinh ra trong một gia đình ngẫu nhiên, lớn lên và tự chọn hướng đi của mình.</p><a class="btn gold" href="#tryLife">Bắt đầu khám phá ›</a></div>
         </div>
       </div>
 
@@ -107,7 +104,6 @@
           <div class="tabs" role="tablist">
             <button class="tab on" data-mode="vn" role="tab">Việt Nam</button>
             <button class="tab" data-mode="world" role="tab">Toàn thế giới</button>
-            <button class="btn fantasy-mode-btn" id="fantasyMode" disabled title="Tạm khóa Fantasy gia tộc để điều chỉnh.">✦ Fantasy gia tộc · Tạm khóa để điều chỉnh</button>
           </div>
 
           <div id="vnOpts">
@@ -121,12 +117,12 @@
             <div class="grid2">
               <div class="field">
                 <label for="provSel">Tỉnh / thành phố</label>
-                <select id="provSel"></select>
+                <select id="provSel"><option value="">🎲 Ngẫu nhiên (theo dân số)</option></select>
                 <div class="hint" id="provHint">Ngẫu nhiên: quay theo dân số thực tế của từng tỉnh.</div>
               </div>
               <div class="field">
                 <label for="ethSel">Dân tộc</label>
-                <select id="ethSel"></select>
+                <select id="ethSel"><option value="">🎲 Ngẫu nhiên</option></select>
                 <div class="hint">Ngẫu nhiên: Kinh 86%, 53 dân tộc còn lại chia 14% theo dân số thực tế.</div>
               </div>
             </div>
@@ -328,129 +324,118 @@
   </section>
 
   <div id="modalRoot"></div>
+  <noscript><p class="wrap">Bật JavaScript để bắt đầu chơi Một Đời. Bạn vẫn có thể đọc giới thiệu và nhật ký cập nhật.</p></noscript>
 
-  <script src="js/util.js?v=8.4.1"></script>
-  <script src="js/data-vn.js?v=8.4.1"></script>
-  <script src="js/data-world.js?v=8.4.1"></script>
-  <script src="js/names.js?v=8.4.1"></script>
-  <script src="js/currency.js?v=8.4.1"></script>
-  <script src="js/world-economy.js?v=8.4.1"></script>
-  <script src="js/engine.js?v=8.4.1"></script>
-  <script src="js/careers.js?v=8.4.1"></script>
-  <script src="js/scenarios.js?v=community-8.4.1"></script>
-  <script src="js/expansion.js?v=8.4.1"></script>
-  <script src="js/wealth.js?v=8.4.1"></script>
-  <script src="js/jobs.js?v=8.4.1"></script>
-  <script src="js/childhood.js?v=8.4.1"></script>
-  <script src="js/family.js?v=8.4.1"></script>
-  <script src="js/sports.js?v=8.4.1"></script>
-  <script src="js/talent.js?v=8.4.1"></script>
-  <script src="js/leisure.js?v=8.4.1"></script>
-  <script src="js/lottery.js?v=8.4.1"></script>
-  <script src="js/life3.js?v=8.4.1"></script>
-  <script src="js/life32.js?v=community-8.4.1"></script>
-  <script src="js/life33.js?v=8.4.1"></script>
-  <script src="js/jobs2.js?v=8.4.1"></script>
-  <script src="js/life34.js?v=8.4.1"></script>
-  <script src="js/life35.js?v=8.4.1"></script>
-  <script src="js/life36.js?v=8.4.1"></script>
-  <script src="js/life37.js?v=8.4.1"></script>
-  <script src="js/life38.js?v=8.4.1"></script>
-  <script src="js/life39.js?v=8.4.1"></script>
-  <script src="js/life40.js?v=8.4.1"></script>
-  <script src="js/life41.js?v=8.4.1"></script>
-  <script src="js/life42.js?v=8.4.1"></script>
-  <script src="js/life43.js?v=8.4.1"></script>
-  <script src="js/life44.js?v=8.4.1"></script>
-  <script src="js/life45.js?v=8.4.1"></script>
-  <script src="js/life46.js?v=8.4.1"></script>
-  <script src="js/life47.js?v=8.4.1"></script>
-  <script src="js/life48.js?v=8.4.1"></script>
-  <script src="js/life49.js?v=8.4.1"></script>
-  <script src="js/life50.js?v=8.4.1"></script>
-  <script src="js/life51.js?v=8.4.1"></script>
-  <script src="js/life52.js?v=8.4.1"></script>
-  <script src="js/life53.js?v=8.4.1"></script>
-  <script src="js/life54.js?v=8.4.1"></script>
-  <script src="js/life55.js?v=8.4.1"></script>
-  <script src="js/life56.js?v=8.4.1"></script>
-  <script src="js/life57.js?v=8.4.1"></script>
-  <script src="js/market-data.js?v=8.4.1"></script>
-  <script src="js/life58.js?v=8.4.1"></script>
-  <script src="js/life59.js?v=8.4.1"></script>
-  <script src="js/life60.js?v=8.4.1"></script>
-  <script src="js/life61.js?v=8.4.1"></script>
-  <script src="js/leisure-data.js?v=8.4.1"></script>
-  <script src="js/life62.js?v=8.4.1"></script>
-  <script src="js/life63.js?v=8.4.1"></script>
-  <script src="js/life64.js?v=8.4.1"></script>
-  <script src="js/life65.js?v=8.4.1"></script>
-  <script src="js/life66.js?v=8.4.1"></script>
-  <script src="js/life67.js?v=8.4.1"></script>
-  <script src="js/finale.js?v=8.4.1"></script>
-  <script src="js/life68.js?v=8.4.1"></script>
-  <script src="js/esports-data.js?v=8.4.1"></script>
-  <script src="js/life69.js?v=8.4.1"></script>
-  <script src="js/esports-finance.js?v=8.4.1"></script>
-  <script src="js/life70.js?v=8.4.1"></script>
-  <script src="js/life71.js?v=8.4.1"></script>
-  <script src="js/life72.js?v=8.4.1"></script>
-  <script src="js/life73.js?v=8.4.1"></script>
-  <script src="js/life74.js?v=8.4.1"></script>
-  <script src="js/life75.js?v=8.4.1"></script>
-  <script src="js/life76.js?v=8.4.1"></script>
-  <script src="js/life77.js?v=8.4.1"></script>
-  <script src="js/life78.js?v=8.4.1"></script>
-  <script src="js/life79.js?v=8.4.1"></script>
-  <script src="js/life80.js?v=8.4.1"></script>
-  <script src="js/life81.js?v=8.4.1"></script>
-  <script src="js/life82.js?v=8.4.1"></script>
-  <script src="js/life83.js?v=8.4.1"></script>
-  <script src="js/life84.js?v=8.4.1"></script>
-  <script src="js/data-personas-vn.js?v=8.4.1"></script>
-  <script src="js/life85.js?v=8.4.1"></script>
-  <script src="js/life86.js?v=8.4.1"></script>
-  <script src="js/life87.js?v=8.4.1"></script>
-  <script src="js/life88.js?v=8.4.1"></script>
-  <script src="js/life89.js?v=8.4.1"></script>
-  <script src="js/life90.js?v=8.4.1"></script>
-  <script src="js/life91.js?v=8.4.1"></script>
-  <script src="js/life92.js?v=8.4.1"></script>
-  <script src="js/life93.js?v=community-8.4.1"></script>
-  <script src="js/life94.js?v=8.4.1"></script>
-  <script src="js/life95.js?v=8.4.1"></script>
-  <script src="js/life96.js?v=8.4.1"></script>
-  <script src="js/life97.js?v=8.4.1"></script>
-  <script src="js/life98.js?v=8.4.1"></script>
-  <script src="js/life99.js?v=8.4.1"></script>
-  <script src="js/life100.js?v=8.4.1"></script>
-  <script src="js/life101.js?v=8.4.1-continuity"></script>
-  <script src="js/life102.js?v=8.4.1"></script>
-  <script src="js/life103.js?v=8.4.1"></script>
-  <script src="js/life104.js?v=8.4.1-family-storm"></script>
-  <script src="js/life105.js?v=8.4.1-active-careers"></script>
-  <script src="js/life106.js?v=8.4.1-adult-study"></script>
-  <script src="js/life107.js?v=8.4.1-player-paths"></script>
-  <script src="js/life108.js?v=8.4.1-relationships"></script>
-  <script src="js/fantasy-imports.js?v=8.4.1"></script>
-  <script src="js/fantasy-world.js?v=8.4.1-fantasy3"></script>
-  <script src="js/fantasy-engine.js?v=8.4.1-fantasy3"></script>
-  <script src="js/fantasy-politics-data.js?v=8.4.1"></script>
-  <script src="js/fantasy-politics.js?v=8.4.1"></script>
-  <script src="js/fantasy-politics-events.js?v=8.4.1"></script>
-  <script src="js/fantasy-progression.js?v=8.4.1-fantasy3"></script>
-  <script src="js/fantasy-cultivation.js?v=8.4.1-fantasy3"></script>
-  <script src="js/fantasy-rpg.js?v=8.4.1-rpg"></script>
-<script src="js/fantasy-narrative-data.js?v=8.4.1-story"></script>
-  <script src="js/fantasy-narrative.js?v=8.4.1-story"></script>
-  <script src="js/scene.js?v=8.4.1"></script>
-  <script src="js/scene2d.js?v=8.4.1"></script>
-  <script src="js/music.js?v=8.4.1"></script>
-  <script src="js/card.js?v=8.4.1"></script>
-  <script src="js/memorial-history.js?v=8.4.1-completed-lives"></script>
-  <script src="js/app.js?v=8.4.1-community"></script>
-  <script src="js/fantasy-access.js?v=8.4.1-maintenance"></script>
-  <script src="js/fantasy-ui.js?v=8.4.1-fantasy3"></script>
-  <script src="js/account.js?v=community-8.4.1"></script>
+  <script src="js/util.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/data-vn.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/data-world.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/names.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/currency.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/world-economy.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/engine.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/careers.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/scenarios.js?v=community-8.4.1" type="text/plain" data-game></script>
+  <script src="js/expansion.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/wealth.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/jobs.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/childhood.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/family.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/sports.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/talent.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/leisure.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/lottery.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life3.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life32.js?v=community-8.4.1" type="text/plain" data-game></script>
+  <script src="js/life33.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/jobs2.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life34.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life35.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life36.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life37.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life38.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life39.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life40.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life41.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life42.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life43.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life44.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life45.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life46.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life47.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life48.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life49.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life50.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life51.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life52.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life53.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life54.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life55.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life56.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life57.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/market-data.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life58.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life59.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life60.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life61.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/leisure-data.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life62.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life63.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life64.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life65.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life66.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life67.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/finale.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life68.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/esports-data.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life69.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/esports-finance.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life70.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life71.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life72.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life73.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life74.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life75.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life76.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life77.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life78.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life79.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life80.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life81.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life82.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life83.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life84.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/data-personas-vn.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life85.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life86.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life87.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life88.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life89.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life90.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life91.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life92.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life93.js?v=community-8.4.1" type="text/plain" data-game></script>
+  <script src="js/life94.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life95.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life96.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life97.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life98.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life99.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life100.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life101.js?v=8.4.1-continuity" type="text/plain" data-game></script>
+  <script src="js/life102.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life103.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/life104.js?v=8.4.1-family-storm" type="text/plain" data-game></script>
+  <script src="js/life105.js?v=8.4.1-active-careers" type="text/plain" data-game></script>
+  <script src="js/life106.js?v=8.4.1-adult-study" type="text/plain" data-game></script>
+  <script src="js/life107.js?v=8.4.1-player-paths" type="text/plain" data-game></script>
+  <script src="js/life108.js?v=8.4.1-relationships" type="text/plain" data-game></script>
+  <script src="js/scene.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/scene2d.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/music.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/card.js?v=8.4.1" type="text/plain" data-game></script>
+  <script src="js/memorial-history.js?v=8.4.1-completed-lives" type="text/plain" data-game></script>
+  <script src="js/app.js?v=8.4.1-community" type="text/plain" data-game></script>
+  <script src="js/account.js?v=community-8.4.1" type="text/plain" data-game></script>
+  <script defer src="js/boot.js?v=8.4.1"></script>
 </body>
 </html>

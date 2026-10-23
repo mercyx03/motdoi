@@ -1,33 +1,8 @@
 [
   {
-    "sha": "1303b2669c0ebceccc964c7cb088d82087d38985",
-    "publishedAt": "2026-10-21T10:42:07Z",
-    "message": "Fantasy: unlock starter farming and add per-second spiritual cultivation\n\nAllow direct travel to eligible maps and open Dong Co Gio at the first realm, with beginner encounters tuned for new characters.\n\nReplace path mastery with real-time spiritual power, realm base absorption, additive research/book bonuses and explicit breakthroughs. Subtract only the required threshold and carry all surplus into the next stage; preserve legacy save progress.\n\nCover real-time UI behavior, pause/hidden tabs, overflow, book stacking, migration and thirty complete novice farming trips. Preserve Vietnam and World gameplay."
-  },
-  {
-    "sha": "022f65284290224ace8cbee6b8f58a267d17cf2f",
-    "publishedAt": "2026-10-21T10:12:45Z",
-    "message": "Fantasy: simplify interface, unlock free hunting and expand maps, academy and events\n\nGroup the interface into six sections with character/family details behind one control and move the journal up. Fix settlement travel at Linh Tuyen and align map buttons with travel rules; add regional NPC services, crafting, enhancement and equipment.\n\nSeparate hunting from annual learning actions, extend skills to level 10, replace the level-40 display/cap with path mastery and add five academy courses with permanent mind/passive progression. Add 36 authored situations, 40 regional variants and varied infant scenes with source research notes.\n\nValidate Fantasy lifecycle, combat, services, academy, UI/save isolation and real-world/family isolation. Real-world gameplay files are unchanged."
-  },
-  {
     "sha": "3cbed702799c9fb26cf31d0c58421a9168be2870",
     "publishedAt": "2026-10-21T08:47:54Z",
     "message": "8.3.0: add contextual family, parenting and relationship interactions"
-  },
-  {
-    "sha": "58c1fbc618db6ab0c2d7f0cad1bb0f22da1b83f4",
-    "publishedAt": "2026-10-21T07:31:37Z",
-    "message": "v8.2.0: fix Fantasy play loop, readable UI and class-specific progression\n\nUse the main Vietnamese font system and mark Fantasy experimental. Add persistent war news, visible EXP, timed progression with pause/speed controls and reading-aware log scroll retention. Restrict combat training and skills to the chosen path while sharing forging/alchemy; implement five skill ranks with real damage scaling and truthful descriptions. Reject stale choice clicks and avoid repeated imported topics. Preserve legacy skills and normal-mode snapshots; include tests and Cloudflare dist.zip."
-  },
-  {
-    "sha": "b7332f0224f5103935a6e177cccbcb10877ee81a",
-    "publishedAt": "2026-10-21T06:24:55Z",
-    "message": "v8.1.0: expand Fantasy clan politics with causal wars and contextual events\n\nAdapt five pinned Aurelia Hugging Face sources into compact simulation profiles. Add regional resources, pairwise relations, succession, multi-year border wars, armies and supply, treaties, ceasefires, relief, front orders and market prices. Gate player decisions by age, title, ownership and actual resources; expire stale scenes and isolate all real-world modes. Include attribution, reproducible data tools, regression coverage and Cloudflare dist.zip."
-  },
-  {
-    "sha": "8508fc135a32edfd68177ecf1992ee667705d4c3",
-    "publishedAt": "2026-10-21T05:52:25Z",
-    "message": "v8.0.0: add independent Fantasy clan RPG and restore child agency in Hardcore\n\nIntegrate five attributed Hugging Face datasets with Vietnamese adaptations, lifecycle, training, combat, guilds, quests, territories and succession. Keep ordinary modes and saves isolated. Include reproducible data tooling, regression coverage and Cloudflare dist.zip."
   },
   {
     "sha": "c8002dc1004b81d0cb09ba096e65b3784979d4c0",

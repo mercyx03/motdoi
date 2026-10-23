@@ -5,9 +5,6 @@ const copy=new Map(fs.readFileSync(path.join(__dirname,'../docs/update-copy.tsv'
 }));
 // Keep the full engineering history in CHANGELOG; publish player-facing changes.
 const rewrites = [
- ['Thêm năm nguồn Aurelia', 'Bổ sung chất liệu cho các câu chuyện Fantasy và những biến cố giữa các gia tộc.'],
- ['Nhập đủ 3.280 bản ghi', 'Bổ sung linh thú, tương tác với nhân vật, mô tả địa hình và nhiệm vụ được chuyển thể sang tiếng Việt.'],
- ['Thêm Fantasy gia tộc ở cạnh', 'Thêm Fantasy gia tộc cạnh Việt Nam / Toàn thế giới, với bản lưu riêng, xuất thân, cha mẹ, hôn nhân, con cái và truyền đời từ sơ sinh.'],
  ['Nhà giàu không bị biến thành thiếu thốn', 'Sửa tình huống nhà giàu bỗng thiếu thốn sau vài lựa chọn; bỏ lời giải thích lặp lại trong hồ sơ, gợi ý và nhật ký. Bản lưu cũ được cập nhật lời kể, giữ nguyên chi phí đã chọn.'],
  ['Hai hành động mới chỉ do người chơi chọn', 'Hai hành động luyện tập mới chỉ được thực hiện khi người chơi chủ động chọn.'],
  ['Gia cố danh sách anh chị em khi tiếp đời', 'Sửa danh sách anh chị em khi tiếp đời: giữ đúng tên, giới tính và thứ tự sinh, kể cả gia đình định cư ở Nhật và nhân vật là con một.'],
@@ -34,8 +31,7 @@ function playerLine(value) {
  let text=value.trim();
  const rewrite=rewrites.find(([prefix])=>text.startsWith(prefix));
  if(rewrite)return rewrite[1];
- text=text.replace(/ Có xuất bản lưu JSON và bách khoa linh thú có tìm kiếm \/ phân trang\./,' Có thể xuất bản lưu và tìm kiếm trong bách khoa linh thú.')
-  .replace(/SVG minh họa 2D/g,'hình minh họa 2D');
+ text=text.replace(/SVG minh họa 2D/g,'hình minh họa 2D');
  return technical.test(text)?null:text;
 }
 function playerEntry(entry) {

@@ -22,6 +22,6 @@
 | Single, EP, album lớn | Đã có mức vốn khác nhau; mỗi đợt phát hành dùng hai phần quỹ thời gian, có thể lỗ | life105; careers105 |
 | Thu nhập sau chi phí; học chuyên môn / việc thêm | Đã có mức chi phí theo nghề và hai hành động riêng cho nghề phù hợp | life105; careers105 |
 
-Phạm vi sửa là các luồng đời thực ở Việt Nam / Toàn thế giới, Thường / Hardcore; không đổi nội dung hoặc engine Fantasy. Bản cũ có câu hỏi ly hôn thiếu danh tính không được phép tự chia tài sản; cần mở lại hành động để lấy câu hỏi mới gắn đúng người.
+Phạm vi sửa là các luồng đời thực ở Việt Nam / Toàn thế giới, Thường / Hardcore. Bản cũ có câu hỏi ly hôn thiếu danh tính không được phép tự chia tài sản; cần mở lại hành động để lấy câu hỏi mới gắn đúng người.
 
 Bộ kiểm tra hồi quy cũ được cập nhật để đi qua chọn ngành/trường, học phí, bảo vệ luận án và thỏa thuận tài sản trước cưới. Các fixture kiểm tra đặt tên và thừa kế chủ động có nhiều con đúng khoảng cách, không phụ thuộc xác suất thụ thai của chế độ tự chạy; giữ nguyên số mẫu và các kiểm tra tính toàn vẹn.
