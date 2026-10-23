@@ -2,7 +2,7 @@
 
 Chạy npm ci một lần sau khi tải source, rồi npm run build. Chỉ tải thư mục dist hoặc dist.zip lên Cloudflare; public là mã nguồn phát triển.
 
-- Đúng 24 file triển khai; JavaScript trang đầu 3.840 byte trước nén; bốn gói game tải khi cần.
+- Đúng 24 file triển khai; JavaScript trang đầu 4.391 byte trước nén; bốn gói game tải khi cần.
 - esbuild nén JS/CSS, rút gọn tên biến, bỏ chú thích; không xuất source map hay sao chép module nguồn, tài liệu, package.json vào dist.
 - Giữ đầy đủ CSS trong HTML để không hiện trang mất định dạng. Gom font thành bốn WOFF2 đầy đủ ký tự, font-display: swap.
 - Giữ logo mới, cache theo hash, thao tác bấm trong lúc đang tải và cơ chế thử lại khi mạng lỗi.
@@ -22,3 +22,7 @@ Chạy npm ci một lần sau khi tải source, rồi npm run build. Chỉ tải
 Chưa đo lại Lighthouse trên website đã triển khai. Số đo localhost không thay thế Lighthouse giả lập mạng/CPU hoặc INP thực tế.
 
 Kiểm tra cũ ngoài phạm vi: snapshot v7.6.0 không còn khớp gameplay các phiên bản sau; bộ community đầy đủ có một khẳng định biên tập về độ dài/số gạch đầu dòng nhật ký cập nhật. Không ghi đè fixture hoặc bỏ kiểm tra; API trên Worker đã nén được kiểm tra riêng.
+
+## Hồ sơ xuất phát
+
+Hồ sơ đầy đủ được dựng sẵn từ engine và cùng template giao diện khi build, theo Việt Nam/Toàn thế giới, bản đồ và độ khó. Trang hiển thị hồ sơ trước khi tải engine; khi bấm Sống đời này, chuyển đúng seed đang xem vào game. Xuất phát điểm khác tạo hồ sơ mới bằng engine. Giữ 24 file và JavaScript/CSS minified.

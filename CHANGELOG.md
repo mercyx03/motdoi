@@ -1,3 +1,9 @@
+## Khôi phục hồ sơ xuất phát
+
+- Hiện lại chân dung, nơi sinh, gia đình, thu nhập, bối cảnh, năng khiếu và hai nút Xuất phát điểm khác / Sống đời này ngay trên trang chủ.
+- Giữ đúng seed khi bắt đầu từ hồ sơ đang xem; đổi chế độ/bản đồ thì cập nhật hồ sơ tương ứng.
+- Giữ build 24 file đã minify và tải engine khi cần.
+
 ## Build production gọn 24 file
 
 - Gom game thành bốn gói tải muộn; nén JavaScript/CSS, rút gọn tên biến, bỏ chú thích và không xuất source map.

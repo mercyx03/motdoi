@@ -42,7 +42,12 @@ function build(outDir){
   page=page.replace(/<link\b[^>]*rel="stylesheet"[^>]*href="css\/[^"]+"[^>]*>\r?\n?/g,'');
   return page.replace('</head>','<style>'+compact.replace(/<\/style/gi,'<\\/style')+'</style></head>');
  }
- let home=inlineStyles(html.replace(pattern,''));
+ const profiles=require('./start-profile')(PUB,files);
+ const placeholder='<div class="profile" id="heroProfile"><h3>Hồ sơ xuất phát</h3><p role="status">Đang chuẩn bị hồ sơ…</p></div>';
+ if(!html.includes(placeholder))throw Error('Missing starting profile placeholder');
+ let home=inlineStyles(html.replace(pattern,'').replace(placeholder,'<div class="profile" id="heroProfile">'+profiles[0].html+'</div>'));
+ const profileData=JSON.stringify(profiles).replace(/</g,'\\u003c');
+ home=home.replace('</body>','<script type="application/json" id="startingProfiles">'+profileData+'</script></body>');
  const primary=fonts.find(f=>/be-vietnam-400-full\./.test(f));
  home=home.replace('</head>','<link rel="preload" href="'+primary+'" as="font" type="font/woff2" crossorigin></head>');
  home=home.replace(/<script defer src="js\/boot.js[^"]*"><\/script>/,'<script defer src="'+bootName+'"></script>');

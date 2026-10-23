@@ -6,6 +6,13 @@
   function read(key, fallback){try{return JSON.parse(localStorage.getItem(key))||fallback;}catch(e){return fallback;}}
   var theme=read('mkn.theme',null);
   if(theme)document.documentElement.dataset.theme=theme;
+  var poolNode=document.getElementById('startingProfiles');
+  if(poolNode){
+    var options=read('mkn.settings',{}),mode=options.mode==='world'?'world':'vn',variant=options.variant==='63'?'63':'34',difficulty=options.difficulty==='hardcore'?'hardcore':'normal';
+    var pool=JSON.parse(poolNode.textContent).filter(function(p){return p.opts.mode===mode&&p.opts.variant===(mode==='world'?'34':variant)&&p.opts.difficulty===difficulty;});
+    var preview=pool[Math.floor(Math.random()*pool.length)];
+    if(preview){window.MOTDOI_PREVIEW=Object.assign({},preview.opts,{lifeMin:options.lifeMin||30});document.getElementById('heroProfile').innerHTML=preview.html;}
+  }
   var status=document.createElement('div');
   status.className='toast hidden';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.appendChild(status);
   function message(text){status.textContent=text;status.classList.remove('hidden');}
@@ -64,6 +71,7 @@
   if('IntersectionObserver' in window){
     var observer=new IntersectionObserver(function(entries){if(entries.some(function(e){return e.isIntersecting;})){observer.disconnect();start();}},{rootMargin:'160px'});
     observer.observe(document.getElementById('setup'));
+    if(!poolNode)observer.observe(document.getElementById('heroProfile'));
   }
   // Restore only an invitation here; migration and save parsing stay in the engine.
   var current=read('mkn.current',null);

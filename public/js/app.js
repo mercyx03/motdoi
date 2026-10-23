@@ -20,6 +20,7 @@
     life: null, cohort: null, speed: 1, paused: false, auto: false, skipping: false,
     progress: 0, queue: [], phase: 'idle', yearRunning: false, last: 0, modalTimer: null
   };
+  if (window.MOTDOI_PREVIEW) { S.preview = Object.assign({}, window.MOTDOI_PREVIEW); delete window.MOTDOI_PREVIEW; }
   S.set.name = '';
   S.set.difficulty = S.set.difficulty === 'hardcore' ? 'hardcore' : 'normal';
   S.minorOnly = !!S.set.minorOnly;
@@ -265,8 +266,8 @@
   }
 
   // sự kiện trang chủ
-  $$('.tab').forEach(function (t) { t.onclick = function () { S.set.mode = t.dataset.mode; saveSettings(); syncSetupUI(); }; });
-  $$('#variantChips .chip').forEach(function (c) { c.onclick = function () { S.set.variant = c.dataset.variant; S.set.prov = ''; saveSettings(); syncSetupUI(); fillSelects(); }; });
+  $$('.tab').forEach(function (t) { t.onclick = function () { S.set.mode = t.dataset.mode; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); }; });
+  $$('#variantChips .chip').forEach(function (c) { c.onclick = function () { S.set.variant = c.dataset.variant; S.set.prov = ''; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); }; });
   $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); };
   $('#ethSel').onchange = function () { S.set.eth = this.value; saveSettings(); };
   $('#nameInp').oninput = function () { S.set.name = this.value; };
