@@ -1,3 +1,22 @@
+## v8.4.3 — Chủ động chăm lo gia đình và cân bằng tích lũy
+
+- Chủ động chia tay khi đang hẹn hò, kể cả mối tình từ tuổi thiếu niên. Chia tay không tự chia tài sản như ly hôn; thai kỳ và trách nhiệm với con chung vẫn tiếp tục.
+- Chọn từng con để tặng tiền, từ khoản nhỏ đến hỗ trợ lớn. Tiền trừ khỏi quỹ cha mẹ và ghi vào quỹ của con; mỗi con nhận một khoản mỗi năm. Phần chưa chi đi theo con khi chuyển đời.
+- Tặng nhà và cửa hàng cho con đã có từ đợt trước; tiếp tục dùng mục tặng tài sản. Tài sản đã tặng không còn tạo thu nhập cho cha mẹ hay chia lại trong thừa kế.
+- Đầu tư học thêm, ngoại ngữ và khóa nghề cho con theo độ tuổi. Con có thể muốn học hướng khác; trả học phí không bảo đảm đỗ chứng chỉ hoặc thành công.
+- Du lịch gần nhà hoặc nghỉ dưỡng cùng bố mẹ, bạn đời và con cái; tính chi phí theo số người, tăng hạnh phúc và quan hệ, có thể hoãn vì chưa thu xếp được lịch.
+- Chủ động chuẩn bị hồ sơ định cư theo tuyến lao động kỹ năng mô phỏng: chọn nước, ngoại ngữ, quỹ chuyển đi, chờ hai năm xét hồ sơ. Có thể bị từ chối; khi được chấp thuận, tự quyết định chuyển trong thời hạn.
+- Chuyển định cư kết thúc công việc hiện tại để tìm việc mới, bán nhà chính tất toán nợ và quy đổi tiền. Có nút chủ động xin quốc tịch khi đủ thời gian cư trú và điều kiện; không phải cứ nộp là được.
+- Bổ sung tiêu chí nghề nghiệp và thu nhập bạn đời, kết hợp bộ lọc tuổi, giới tính và quốc tịch đã có. Hồ sơ có thể không phù hợp; không tạo người giàu theo yêu cầu và không đồng nhất lương cao với tài sản lớn.
+- Trả nợ chủ động theo từng khoản: trả một phần hoặc tối đa tiền đang có, gồm khoản vay nhà cũ. Không cần đợi biến cố; trả hết nợ không xóa ngay lịch sử nợ xấu.
+- Thi IELTS xếp trình độ dựa vào kỹ năng ngoại ngữ, kiến thức và phong độ. Năng khiếu ngoại ngữ cao có thể đạt thẳng bậc cao, không phải bắt đầu từ 4.5. Có phí, giới hạn lần thi và thời hạn chứng chỉ.
+- Làm thêm sinh viên đã có các lựa chọn phục vụ, gia sư, giao hàng, bán hàng và lễ tân. Giữ cơ chế tiền công đi kèm giảm thời gian học và mệt mỏi.
+- Chủ động chọn trọ ghép, phòng riêng, căn hộ và mức ăn uống. Chi phí áp dụng khi quyết toán năm; nhà sở hữu không bị tính thêm tiền thuê, chỗ ở sinh viên tính riêng.
+- Bộ trưởng có nhiệm vụ công vụ để xây dựng uy tín và tuyến xét sang vai trò lãnh đạo dân sự cấp quốc gia. Cần thời gian, học vấn, hồ sơ và được lựa chọn; có thể không được bổ nhiệm. Nhiệm kỳ hữu hạn, không nhận lương hai chức vụ.
+- Xe, bảo vệ và tổ giúp việc cấp lãnh đạo là nguồn lực làm nhiệm vụ, không được cộng vào tài sản hoặc thu nhập cá nhân.
+- Cân bằng tiền: bảo vệ nhóm lương thấp, giảm phần thu nhập rất cao và lợi nhuận kinh doanh bất thường; tiền mặt chỉ hưởng lãi rất thấp, muốn tiết kiệm có kỳ hạn cần mở sổ. Nhà có năm giảm giá và phát sinh bảo trì kể cả không cho thuê.
+- Nhật ký cập nhật trình bày đầy đủ từng thay đổi, không giới hạn ba dòng. Các nội dung của đợt học tập, ngân hàng, nghiên cứu và gia đình trước đó đã được mở rộng.
+
 ## v8.4.2 — Học tập, cơ ngơi và biến cố nhiều năm
 
 - Thêm thi quốc gia, tuyển thẳng chủ động, ngoại ngữ theo chương trình, nội trú học viện và cao học sĩ quan.

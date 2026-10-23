@@ -1612,6 +1612,7 @@
     var b = life.base, p = life.partner && life.partner.status !== 'dating' && life.partner.alive ? life.partner : null;
     var kidsHome = life.kids.filter(function (k) { return k.alive && a - k.born < 22 && k.custody !== 'other'; }).length; // v5.9.0: con sống với người kia thì trả tiền chu cấp thay vì chi phí nuôi con
     F.partner = p && !(life.jailUntil != null && a < life.jailUntil) && p.inc > 0 && isFinite(p.inc) ? p.inc * 12 * 0.55 : 0; // chỉ góp từ thu nhập thực, không tự tạo thu nhập khi thất nghiệp / đang học
+    if (E.economy114Income) F.partner = E.economy114Income(life, F.partner);
     F.partner *= difficulty(life).income;
     if (E.sponsorContributionAllowed && !E.sponsorContributionAllowed(life)) F.partner = 0;
     var styleK = E.lifestyleFactor ? E.lifestyleFactor(life) : ({ save: 0.82, normal: 1, lavish: 1.25 }[life.spend] || 1);
@@ -1632,6 +1633,7 @@
     if (life.abroad && !life.abroad.perm) { F.food *= 1.5; F.rent = b * 0.2; }
     if (life.jailUntil != null && a < life.jailUntil) { F.food = 0; F.rent = 0; F.travel = E.vehicleAnnual ? E.vehicleAnnual(life).total : 0; }
     if (life.flags.military && a < life.flags.military) { F.food = b * 0.03; F.rent = 0; F.travel = E.vehicleAnnual ? E.vehicleAnnual(life).total : 0; F.kids = 0; } // xe để lại vẫn cần bảo dưỡng / bảo hiểm, không đổ xăng khi bị giam hoặc tại ngũ
+    if (E.budget114) E.budget114(life, F);
     if (E.vehicleAnnual) F.vehicle = E.vehicleAnnual(life);
     if (E.esportsLiving) E.esportsLiving(life, F, b, styleK, log);
     // gửi tiền cho bố mẹ già
@@ -1711,7 +1713,7 @@
     F.life = life.money >= 0 && surplus > 0 ? surplus * share : 0;
     if (focus === 'rest') F.life += b * 0.06;
     if (life.money < 0) { F.life = 0; var cut = Math.max(0, ess - Math.max(ess * 0.8, income + F.partner)); F.food -= Math.min(cut, F.food * 0.2); }
-    F.interest = life.money < 0 ? life.money * 0.06 : life.money * 0.015;
+    F.interest = life.money < 0 ? life.money * 0.06 : life.money * 0.001;
     if (F.interest > 0) F.interest *= difficulty(life).passive;
     var spend = F.food + F.rent + F.travel + F.kids + F.parents + F.health + F.debt + F.life;
     life.money += income + F.partner + F.interest - spend;
@@ -1720,7 +1722,7 @@
       life.money = -b * 3;
       if (!life.flags.debtHelp) { life.flags.debtHelp = true; log(life.kids.some(function (k) { return k.alive && a - k.born >= 22; }) ? 'Các con góp tiền giúp trả bớt nợ.' : 'Được người thân giúp đỡ trả bớt nợ.', 'neutral'); }
     }
-    if (life.ownHouse) life.houseVal *= 1.015;
+    if (life.ownHouse) life.houseVal *= 1 + ((life.birthYear + a) % 5 === 0 ? -.025 : .008);
     if (life.vehVal) life.vehVal *= 0.88;
     if (life.mortgage > 0) { // khoản vay mua nhà kiểu cũ (bản 1.0)
       life.mortgage *= 1.07;
@@ -1827,6 +1829,7 @@
     var income = 0;
     if (inJail) log('Một năm nữa trôi qua sau song sắt' + (life.jailUntil - a > 1 ? ' — còn ' + (life.jailUntil - a - 1) + ' năm.' : '.'), 'bad');
     else income = E.careerYear(life, r, log, focus);
+    if (income > 0 && E.economy114Income) income = E.economy114Income(life, income);
     if (income > 0) income *= difficulty(life).income;
     // v2.4: đã có lương hưu mà vẫn kinh doanh / làm thêm thì vẫn nhận lương hưu
     if (!life.retired && life.job && life.pensioned && life.pensionInc) income += life.pensionInc * difficulty(life).pension;

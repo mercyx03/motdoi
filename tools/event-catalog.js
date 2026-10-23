@@ -45,6 +45,13 @@ module.exports=function(pub,files){
   l.flags.expansion110.bankBooks=[{id:'preview-bank',bank:'Ngân hàng An Tín',principal:l.base,at:44,due:47,term:3,rate:.047}];
   function sample(id,arg){try{const x=clone(l),D=E.DEC[id],d=D.make(x,()=>.3,arg||{});if(!D.valid||D.valid(x,d.data))capture(x,d);}catch{}}
   ['bank112','homes112','gift112','childHome112','succession112','routine113','train113','sterile113','staff113'].forEach(id=>sample(id));
+  if(E.LIFE114){
+   ['support114','familyTrip114','ielts114','dateFilters114','budget114'].forEach(id=>sample(id));sample('supportChild114',{kid:l.kids[0].uid110});
+   l.partner={name:'Nguyễn Thanh Mai',age:40,alive:true,status:'dating',since:43};sample('breakup114');
+   l.loans=[{type:'bank',name:'Vay ngân hàng',bal:l.base,rate:.08}];sample('repay114');l.loans=[];
+   sample('migrate114');l.flags.life114={approved:{country:'CA',until:47}};sample('move114');
+   E.startJob(l,'cong_an',()=>.5,()=>{},true);l.job.rank=10;l.flags.service107={post:{name:'Bộ trưởng Bộ Công an',at:40,track:'cong_an',rank:10}};l.flags.life114.publicRep=45;l.flags.dangVien=true;sample('leadership115');l.job=null;
+  }
   sample('bankTerm112',{bank:'public'});sample('giftAsset112',{kid:l.kids[0].uid110});
   E.startJob(l,'nghien_cuu',()=>.5,()=>{},true);['research113','titles113','scienceLeader113'].forEach(id=>sample(id));
   l.partner={name:'Nguyễn Thanh Mai',alive:true,age:42,status:'married',sex:'F'};

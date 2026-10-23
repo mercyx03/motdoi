@@ -400,6 +400,7 @@
       var manager = a >= 65 || l.job ? rev * .03 : 0;
       var cost = rev * B.vc + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
       if (rev > cost) cost += (rev - cost) * (1 - E.difficulty(l).passive);
+      if (E.economy114Business && rev > cost) cost += rev - cost - E.economy114Business(l, rev - cost, v.cap);
       var prof = rev - cost, rate = prof / Math.max(1e-9, v.cap);
       v.last = { rev: rev, cost: cost, prof: prof };
       H.cash(l, prof, prof >= 0 ? 'Lãi ' + v.n : 'Lỗ ' + v.n);
