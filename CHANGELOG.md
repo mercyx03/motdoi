@@ -1,3 +1,10 @@
+## Cơ hội sau cấp 10 cho mọi năng khiếu
+
+- Mở dự án chuyên gia và khởi nghiệp theo đủ 13 năng khiếu; xét kinh nghiệm, hồ sơ, vốn và rủi ro thay vì tự thăng chức.
+- Thêm bậc chuyên gia và giám đốc dự án cho makeup/stylist; chọn lĩnh vực khi khởi nghiệp.
+- Hiện lý do nút bị khóa, tùy chọn xem hoạt động chưa đủ điều kiện; sửa mở nhóm hành động.
+- Theo dõi mất việc, ngân sách và lời hẹn hàn gắn gia đình qua các năm.
+- Đối chiếu các bộ lọc hẹn hò, sinh con trước cưới, thỏa thuận tài sản, quan hệ mở rộng và hướng nghiệp con đã có.
 ## Khôi phục hồ sơ xuất phát
 
 - Hiện lại chân dung, nơi sinh, gia đình, thu nhập, bối cảnh, năng khiếu và hai nút Xuất phát điểm khác / Sống đời này ngay trên trang chủ.

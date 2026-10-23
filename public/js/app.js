@@ -895,24 +895,26 @@
   function renderActions() {
     var l = S.life, p = $('#actPanel');
     if (!l.alive || l.age < 8) { p.innerHTML = '<h3>Việc bạn muốn làm</h3><p class="muted small" style="margin:0">' + (l.alive ? 'Từ 8 tuổi, bạn có thể chủ động làm những việc mình muốn.' : '—') + '</p>'; return; }
-    var acts = E.actions(l), groups = {};
+    var acts = E.actions(l), groups = {}; if(S.showLocked===undefined)S.showLocked=!!LS.get('mkn.showLocked',false);
     // v3.6: mục "Chi tiêu" gom mọi việc tiêu tiền + chi tiêu định kỳ tự động mỗi năm
     var SPEND = '💰 Chi tiêu', spendIds = E.SPEND_ACTS || [];
-    if (E.recurList && l.age >= 16) groups[SPEND] = spendIds.map(function (id) { return acts.filter(function (x) { return x.id === id; })[0]; }).filter(function (x) { return x && (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok)); });
-    acts.forEach(function (x) { if (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok)) (groups[x.g] = groups[x.g] || []).push(x); });
+    if (E.recurList && l.age >= 16) groups[SPEND] = spendIds.map(function (id) { return acts.filter(function (x) { return x.id === id; })[0]; }).filter(function (x) { return x && (S.showLocked || !x.catalogHidden && (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok))); });
+    acts.forEach(function (x) { if (S.showLocked || !x.catalogHidden && (x.ok === true || !/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok))) (groups[x.g] = groups[x.g] || []).push(x); });
     // v2.7: gọn hơn — chỉ hiện hàng nhóm việc; bấm một nhóm mới mở danh sách việc của nhóm đó
     var lim = E.actsLimit(l), left = lim === Infinity ? null : Math.max(0, lim - (l.acts || 0));
     if (S.actG === undefined) S.actG = LS.get('mkn.actg', null);
     var sel = S.actG && groups[S.actG] ? S.actG : null;
     p.innerHTML = '<h3>Việc bạn muốn làm <span class="muted small" style="text-transform:none;letter-spacing:0">· ' + (left == null ? 'không giới hạn lượt' : 'còn ' + left + '/' + lim + ' lượt năm nay') + '</span></h3>' +
+      '<label class="small muted action-locked-toggle"><input type="checkbox" id="showLockedActions"'+(S.showLocked?' checked':'')+'> Hiện cả việc chưa đủ điều kiện</label>' +
       '<div class="chips actgroups">' + Object.keys(groups).map(function (g) {
         var n = groups[g].filter(function (x) { return x.ok === true; }).length;
         return '<button class="chip sm' + (g === sel ? ' on' : '') + (n ? '' : ' off') + '" data-ag="' + esc(g) + '">' + esc(g) + (n ? ' <small>' + n + '</small>' : '') + '</button>';
       }).join('') + '</div>' +
       (sel === SPEND ? recurHtml(l) + '<div class="recur-h">Chi tiêu một lần</div>' : '') +
       (sel ? '<div class="chips actlist">' + groups[sel].map(function (x) {
-        return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + '</button>';
+        return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + (x.ok===true?'':'<small class="action-reason">'+esc(x.ok)+'</small>') + '</button>';
       }).join('') + '</div>' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
+    $('#showLockedActions',p).onchange=function(){S.showLocked=this.checked;LS.set('mkn.showLocked',S.showLocked);renderActions();};
     $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); if (S.actG && !S.paused && S.phase !== 'dead') { S.paused = true; S.actPause = true; renderTopbar(); toast('Đã tạm dừng để bạn chọn việc — bấm Tiếp tục khi xong'); } else if (!S.actG && S.actPause) { S.actPause = false; S.paused = false; S.last = performance.now(); renderTopbar(); } renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });
     $$('[data-recur]', p).forEach(function (b) { b.onclick = function () { var on = E.recurToggle(S.life, b.dataset.recur); toast(on ? 'Đã bật — từ năm nay sẽ tự động chi mỗi kỳ' : 'Đã tắt khoản chi định kỳ này'); persist(); renderActions(); }; });
@@ -929,7 +931,7 @@
     if (!l || !l.alive || S.phase === 'decision' || S.phase === 'reflect' || S.phase === 'dead') return;
     var waiting = S.phase === 'decmin';
     var d = E.act(l, id);
-    if (!d) { toast('Chưa thể làm việc này lúc này'); return; }
+    if (!d) { var why=E.actions(l).find(function(x){return x.id===id;});toast(why&&why.ok!==true?why.ok:'Điều kiện đã thay đổi; hãy mở lại danh sách để kiểm tra');renderActions();return; }
     if (waiting) { clearDecPill(); toast('Làm xong việc này sẽ quay lại lựa chọn đang chờ'); }
     d.manual = true; // người chơi tự bấm thì người chơi tự chọn, kể cả khi bật chế độ tự động
     S.skipping = false; renderTopbar(); showDecision();
