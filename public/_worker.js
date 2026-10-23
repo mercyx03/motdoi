@@ -1,3 +1,4 @@
+const ADMIN_EVENT_CATALOG = /* admin-catalog */ [];
 /* Cloudflare Pages advanced mode: chỉ đọc bảng giá công khai; không nhận lệnh giao dịch thật. */
 const VN = ['E1VFVN30', 'VCB', 'FPT', 'VNM', 'HPG', 'MWG', 'GAS'];
 const US = ['SPY', 'AAPL', 'MSFT', 'NVDA', 'KO', 'TM'];
@@ -210,6 +211,7 @@ async function account(request, env, url) {
     ]);
     return accJson(200,{ok:true,...result[0].results[0],items:result[1].results});
   }
+  if (action === 'admin_events') { if(me.role!=='admin')return accJson(403,{ok:false,code:'FORBIDDEN'}); return accJson(200,{ok:true,entries:ADMIN_EVENT_CATALOG}); }
   if (action === 'me') return accJson(200, { ok: true, username: me.username, displayName: me.displayName, role: me.role });
   if (action === 'profile') { const name = cleanDisplayName(body.displayName); if (!name) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' }); await db.prepare('UPDATE game_accounts SET display_name = ? WHERE id = ?').bind(name, me.id).run(); return accJson(200, { ok: true, username: me.username, displayName: name, role: me.role }); }
   if (action === 'logout') { await db.prepare('DELETE FROM game_sessions WHERE token_hash = ?').bind(me.th).run(); return accJson(200, { ok: true }); }

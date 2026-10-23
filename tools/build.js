@@ -26,7 +26,8 @@ function build(outDir){
  function put(p,data){fs.mkdirSync(path.dirname(path.join(OUT,p)),{recursive:true});fs.writeFileSync(path.join(OUT,p),data);}
  // Explicit deployment allowlist. Never copy source modules, docs, tools or source maps.
  for(const file of ['_headers','_routes.json','logo.webp','favicon.png','robots.txt','sitemap.xml','data/updates.json','data/market-prices.json'])put(file,fs.readFileSync(path.join(PUB,file)));
- put('_worker.js',minifyJS(read('_worker.js')));
+ const catalogue=require('./event-catalog')(PUB,files);
+ put('_worker.js',minifyJS(read('_worker.js').replace('/* admin-catalog */ []',JSON.stringify(catalogue))));
  for(const c of chunks)put(c.name,c.content);
  const loader=minifyJS('window.MOTDOI_GAME_FILES='+JSON.stringify(chunks.map(c=>c.name))+';\n'+read('js/boot.js'));
  const bootName='assets/boot.'+digest(loader)+'.js';put(bootName,loader);
