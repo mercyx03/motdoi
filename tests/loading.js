@@ -49,3 +49,8 @@ for(const opts of [
 }
 }
 console.log('PASS: 28 deployment files, minified JS/CSS, no source maps/raw modules, resource hashes, font/SEO/cache checks and 8 identical full-life simulations.');
+
+const updatePage=read('updates.html'),embeddedHistory=JSON.parse(/<script type="application\/json" id="updateHistoryData">([\s\S]*?)<\/script>/.exec(updatePage)[1]);
+assert.deepStrictEqual(embeddedHistory,JSON.parse(read('data/updates.json')),'updates shipped directly with page match release data');
+assert.equal(embeddedHistory.entries[0].id,'family-payment126','family/investment update is first on deployed page');
+console.log('PASS: newest family/investment release notes embedded in updates page.');

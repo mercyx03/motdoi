@@ -60,6 +60,7 @@ function build(outDir){
   const code=minifyJS(scripts.map(f=>read(f)+'\n;\n').join(''));
   const name='assets/'+page.replace('.html','')+'.'+digest(code)+'.js';put(name,code);
   text=inlineStyles(text).replace(/<script\b[^>]*src="js\/[^"]+"[^>]*><\/script>/g,'');
+  if(page==='updates.html'){const history=JSON.stringify(JSON.parse(read('data/updates.json'))).replace(/</g,'\\u003c');text=text.replace('</body>','<script type="application/json" id="updateHistoryData">'+history+'</script></body>');}
   text=text.replace('</body>','<script defer src="'+name+'"></script></body>');
   put(page,text.replace(/<!--[\s\S]*?-->/g,''));
  }
