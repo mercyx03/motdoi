@@ -28,7 +28,7 @@
   var LGBT_SUB = ['top', 'bot', 'les', 'bi'];
   if (['straight', 'lgbt'].concat(LGBT_SUB).indexOf(S.set.orient) < 0) S.set.orient = null; // xu hướng tính dục: không bắt buộc
 
-  function migrate(life) { return E.migrate(life); }
+  function migrate(life) { var l=E.migrate(life);if(E.FAMILY129&&l.flags.expansion110&&l.flags.expansion110.livingParent){var b=LS.get('mkn.branch112',null);if(b&&b.life)E.FAMILY129.restoreEstate(l,b.life);}return l; }
 
   // ---------- tiện ích giao diện ----------
   function show(id) {
@@ -779,6 +779,8 @@
       row(w + ': ' + esc(s.n) + ' · ' + (s.alive ? sa + ' tuổi' + (sa >= 18 ? ' · ' + esc(sa >= 65 ? 'đã nghỉ ngơi' : s.job) : '') + (sa >= 8 ? ' · ' + (s.close >= 70 ? '❤ thân thiết' : s.close >= 40 ? 'bình thường' : 'xa cách') : '') : 'đã mất'), !s.alive);
     });
     else if (f.sibs) row('Anh chị: ' + f.sibs);
+    var step129=E.FAMILY129&&E.FAMILY129.state(l).stepParent;
+    if(step129)row((step129.sex==='M'?'Bố dượng: ':'Mẹ kế: ')+esc(step129.name)+' · '+(step129.alive?(a-step129.born)+' tuổi':'đã mất'),!step129.alive);
     if (l.gen > 1) row('🌳 Thế hệ thứ ' + l.gen + ' · ' + esc((l.lineage || []).map(function (x) { return x.n; }).join(' → ')) + ' → bạn');
     if (l.partner) {
       var p = l.partner, w = p.status === 'dating' ? 'Người yêu' : p.status === 'cohabit' ? 'Bạn đời' : (p.sex === l.sex ? 'Bạn đời' : p.sex === 'M' ? 'Chồng' : 'Vợ');
@@ -832,11 +834,18 @@
     function fact(label,value){return '<li><span>'+esc(label)+'</span><b>'+esc(value)+'</b></li>';}
     var facts=fact('Năm sinh',l.birthYear+l.age-a)+fact('Tình trạng',k.alive===false?'Đã mất'+(Number.isFinite(k.died)?' · '+(k.died-k.born)+' tuổi':''):a+' tuổi')+fact('Gắn kết',Math.round(k.close==null?50:k.close)+'/100');
     if(!child){if(k.residence108)facts+=fact('Nơi ở hiện tại',k.residence108);if(k.school108)facts+=fact('Trường học',k.school108);if(k.workplace108)facts+=fact('Nơi gặp',k.workplace108);if(k.affection108!=null)facts+=fact('Tình cảm',Math.round(k.affection108)+'/100');}
+    if(E.FAMILY130){if(child){var private130=E.FAMILY130.identity(l,k);facts+=fact('Xu hướng tính dục',private130.disclosed?E.FAMILY130.orientation(k):'Con chưa chia sẻ')+fact('Hỗ trợ tự nguyện',k.support130&&k.support130.stopped?'Đã ngừng':k.support130?'Đang hỗ trợ định kỳ':'Theo từng khoản');}else facts+=fact('Tính cách',E.FAMILY130.personality(l,k).join(', '));}
     if(child&&E.childRelation108)facts+=fact('Gia đình',E.childRelation108(l,k));
     if(child){facts+=fact('Học vấn',k.vice==='bỏ học'?'Đã nghỉ học':k.alive===false?'Hồ sơ lưu niệm':F.stage(l,k))+fact('Trường',k.alive!==false&&a>=3&&a<18&&k.vice!=='bỏ học'?F.schools[s.school].name:'—')+fact('Năng khiếu bẩm sinh',model.age<6?'Chưa bộc lộ':F.talents[s.innate]||'Đang khám phá')+fact(k.alive===false?'Hoạt động đã theo':'Đang rèn luyện',F.talents[s.activity]||'Chưa chọn hoạt động');
       if(s.nickname)facts+=fact('Tên gọi ở nhà',s.nickname);
       Object.keys(s.skills).forEach(function(t){facts+=fact(F.talents[t]||t,Math.round(s.skills[t])+'/100');});
       if(E.FAMILY126){var future=E.FAMILY126.init(l,k);facts+=fact('Tính cách',future.trait)+fact('Định hướng gia đình',future.plan||'Chưa đặt')+(future.match?fact('Đang tìm hiểu',future.match.person.name):'')+(k.spouse126?fact('Bạn đời',k.spouse126.name):'');}
+      if(E.FAMILY129){
+        facts+=fact('Nơi ở',E.kidWhere(l,k))+fact('Hôn nhân',k.married?'Đã kết hôn':'Chưa kết hôn')+fact('Quan điểm hôn nhân',({early:'Có thể lập gia đình sớm',usual:'Tìm hiểu khi sẵn sàng',late:'Ưu tiên kết hôn muộn',single:'Muốn sống độc thân'})[E.FAMILY129.marriagePlan(l,k)]);
+        if(k.spouse126)facts+=fact('Tuổi bạn đời',k.spouse126.age)+fact('Thu nhập bạn đời',money(l,k.spouse126.inc||0)+'/tháng');
+        if(k.grandchildren129&&k.grandchildren129.length)facts+=fact('Các cháu',k.grandchildren129.map(function(g){return g.name+' · '+(l.age-g.born)+' tuổi';}).join('; '));
+        if(k.adoption129)facts+=fact('Hoàn cảnh trước nhận nuôi',k.adoption129.story);
+      }
       if(k.job)facts+=fact('Công việc',E.kidTitle(k));
     }else{var home=E.HOMETOWN&&E.HOMETOWN.partner(l,k);facts+=fact('Quê quán',home?home.name:'Chưa rõ')+fact('Công việc',a<18&&/sinh viên/.test(k.job||'')?'Chưa đến tuổi đại học':k.job||'Chưa rõ');
       if(E.H.partnerIncKnown&&E.H.partnerIncKnown(l,k))facts+=fact('Thu nhập',money(l,k.inc||0)+'/tháng');

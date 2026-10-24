@@ -1618,7 +1618,7 @@
       if (life.age >= 18 && life.money < -life.base * 3) { var help = -life.base * 3 - life.money; life.money += help; F.other += help; F.items.push({v:help,t:'Hỗ trợ xử lý nợ sinh hoạt khi còn đi học'}); if(!life.flags.debtHelp){life.flags.debtHelp=true;log('Gia đình cùng bạn thu xếp trả bớt nợ sinh hoạt trong thời gian đi học.','neutral');} }
       life.fin = F; return F; }
     var b = life.base, p = life.partner && life.partner.status !== 'dating' && life.partner.alive ? life.partner : null;
-    var kidsHome = life.kids.filter(function (k) { return k.alive && a - k.born < 22 && k.custody !== 'other'; }).length; // v5.9.0: con sống với người kia thì trả tiền chu cấp thay vì chi phí nuôi con
+    var kidsHome = life.kids.filter(function (k) { return k.alive && a - k.born < 22 && k.custody !== 'other' && k.custody !== 'ex'; }).length; // v5.9.0: con sống với người kia thì trả tiền chu cấp thay vì chi phí nuôi con
     F.partner = p && !(life.jailUntil != null && a < life.jailUntil) && p.inc > 0 && isFinite(p.inc) ? p.inc * 12 * 0.55 : 0; // chỉ góp từ thu nhập thực, không tự tạo thu nhập khi thất nghiệp / đang học
     if (E.economy114Income) F.partner = E.economy114Income(life, F.partner);
     F.partner *= difficulty(life).income;
@@ -1892,8 +1892,8 @@
       if (ka >= 1 && ka <= 6 && r() < (k.vac === false ? 0.12 : 0.06)) { log('Con ' + k.name + ' ốm phải nhập viện nhi, ' + (life.partner && life.partner.alive ? (life.partner.status === 'married' && life.partner.sex !== life.sex ? 'vợ chồng' : 'hai người') + ' thay nhau trực.' : 'một mình bạn thức trắng trông con.'), 'bad'); H.cash(life, -life.base * 0.04, 'Viện phí cho con'); st.hap -= 2; }
       if (ka === 6) log('Con ' + k.name + ' vào lớp 1.', 'good');
       // v2.3: chuyện con 18 tuổi đi học hay đi làm do module mở rộng xử lý (tình huống con_18)
-      if (E.childMarriage126) E.childMarriage126(life, k, r, log);
-      if (ka >= 23 && ka <= 35 && !k.married && !(k.future126 && k.future126.match) && r() < 0.15) { k.married = true; log('Con ' + k.name + ' lập gia đình.', 'good'); H.cash(life, -life.base * 0.25, 'Lo đám cưới cho con'); st.hap += 4; H.mem(life, 'Dắt tay ' + k.name + ' trong ngày cưới của con.', 4); }
+      var marriageHandled = E.childMarriage126 && E.childMarriage126(life, k, r, log);
+      if (!marriageHandled && ka >= 23 && ka <= 35 && !k.married && !(k.future126 && k.future126.match) && r() < 0.15) { k.married = true; log('Con ' + k.name + ' lập gia đình.', 'good'); H.cash(life, -life.base * 0.25, 'Lo đám cưới cho con'); st.hap += 4; H.mem(life, 'Dắt tay ' + k.name + ' trong ngày cưới của con.', 4); }
       if (k.married && ka <= 45 && k.kids < 3 && r() < 0.14) {
         k.kids++; life.grand++;
         log((life.grand === 1 ? 'Lên chức ông bà: ' : 'Có thêm cháu: ') + 'con ' + k.name + ' sinh ' + (r() < 0.5 ? 'bé trai' : 'bé gái') + '.', 'good'); st.hap += 5;

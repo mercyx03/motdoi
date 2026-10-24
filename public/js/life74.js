@@ -64,7 +64,7 @@
   E.HOOKS.year.unshift(function (l, r, log, a) {
     if (!l.alive || !l.indep) return;
     (l.kids || []).forEach(function (k) {
-      if (k.alive === false || k.custody !== 'other') return; var age = a - k.born; if (age < 0 || age >= 18) return;
+      if (k.alive === false || k.custody !== 'other' && k.custody !== 'ex') return; var age = a - k.born; if (age < 0 || age >= 18) return;
       var x = V(l, 48); H.cash(l, -x, 'Tiền chu cấp nuôi con ' + k.name);
       if (age === 0 || age % 5 === 0) log('Gửi tiền nuôi con ' + k.name + ' (' + age + ' tuổi) cho mẹ của bé, cuối tuần đến đón con đi chơi.', 'neutral');
     });
@@ -247,7 +247,7 @@
     ]
   });
   T('dc_bao_lanh', function (l) { return settled(l) && !!parentWord(l) && !l.flags.parentsAbroad && l.indep && yrsHere(l) >= 4 && !!l.job; }, 0.15, 5, 2);
-  function kidsHere(l) { return (l.kids || []).filter(function (k) { var x = l.age - k.born; return k.alive !== false && x >= 5 && x <= 15 && k.custody !== 'other'; }); }
+  function kidsHere(l) { return (l.kids || []).filter(function (k) { var x = l.age - k.born; return k.alive !== false && x >= 5 && x <= 15 && k.custody !== 'other' && k.custody !== 'ex'; }); }
   SC('dc_con_tieng_me_de', {
     title: 'Con quên tiếng mẹ đẻ', valid: function (l) { return settled(l) && kidsHere(l).length > 0; },
     text: function (l) { var k = kidsHere(l)[0]; return k.name + ' lớn lên ở ' + host(l) + ', nói ' + langName(l) + ' giỏi hơn tiếng ' + (isVN(l) || l.country === 'VN' ? 'Việt' : 'mẹ đẻ') + ', gọi điện cho ông bà mà nói không trôi.'; },

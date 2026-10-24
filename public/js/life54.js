@@ -16,7 +16,7 @@
     return k;
   }
   function children(l) { return (l.kids || []).filter(function (k) { return k.alive && age(l, k) >= 0; }).map(function (k) { return init(l, k); }); }
-  function home(l, k) { return k.custody !== 'ex' && !l.abroad && !(k.jail && age(l, k) < k.jail); }
+  function home(l, k) { return k.custody !== 'ex' && k.custody !== 'other' && !l.abroad && !(k.jail && age(l, k) < k.jail); }
   function school(l, k) { return age(l, k) >= 6 && age(l, k) <= 17 && k.vice !== 'bỏ học'; }
   function budget(l, n) { return l.cur === 'vnd' ? n : n / 90 * l.base; }
   var CASES = [

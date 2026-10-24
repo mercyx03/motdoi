@@ -136,6 +136,7 @@
       }
     });
   }
+  E.ESTATE84.receive = receive;
   // nhận tài sản đúng năm bố / mẹ ra đi (chạy sau phần tiền mặt của bản cũ); chưa đủ 18 tuổi thì người giám hộ giữ hộ
   E.HOOKS.year.push(function (l, r, log, a) {
     var f = l.flags.heirOf;

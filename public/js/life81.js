@@ -131,7 +131,7 @@
   });
   T('vd_vay_chua_benh', function (l) { return !!pw(l) && l.indep && l.age >= 20 && poor(l); }, P(0.04, 3), 8, 1);
   SC('vd_hoc_phi_con', {
-    title: 'Tiền học của con', valid: function (l) { return l.indep && (l.kids || []).some(function (k) { var x = l.age - k.born; return k.alive !== false && x >= 11 && x <= 17 && k.custody !== 'other'; }); },
+    title: 'Tiền học của con', valid: function (l) { return l.indep && (l.kids || []).some(function (k) { var x = l.age - k.born; return k.alive !== false && x >= 11 && x <= 17 && k.custody !== 'other' && k.custody !== 'ex'; }); },
     text: 'Đầu năm học, tiền học, tiền sách, tiền học thêm của con dồn vào một lúc. Lương tháng này đã hết từ giữa tháng.',
     opts: [
       { k: 'ca_dem', l: 'Nhận thêm việc ca đêm', ai: { w: 1 }, run: function (l, r, log) { H.cash(l, V(l, 8), 'Làm thêm ca đêm'); fx(l, { hea: -4 }); stress(l, 6); log('Bạn nhận thêm việc ca đêm, ngủ mỗi ngày bốn tiếng, đủ tiền cho con đi học.', 'neutral'); } },

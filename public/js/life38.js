@@ -226,7 +226,7 @@
     if (!f.noMom && f.mAlive) c.push({ k: 'mom', n: '', w: 'mẹ', I: 'mẹ', U: 'con' });
     if (!f.noDad && f.fAlive) c.push({ k: 'dad', n: '', w: 'bố', I: 'bố', U: 'con' });
     (l.sibList || []).filter(function (x) { return x.alive; }).forEach(function (x) { var old = x.born < 0, I = old ? (x.sex === 'M' ? 'anh' : 'chị') : 'em'; c.push({ k: 's', n: x.n.split(' ').pop(), w: I, I: I, U: old ? 'em' : you(l), s: x }); });
-    (l.kids || []).filter(function (k) { return k.alive !== false && l.age - k.born >= 6 && k.custody !== 'other'; }).forEach(function (k) { c.push({ k: 'kid', n: k.name.split(' ').pop(), w: 'con', I: 'con', U: l.sex === 'F' ? 'mẹ' : 'bố', kid: k }); });
+    (l.kids || []).filter(function (k) { return k.alive !== false && l.age - k.born >= 6 && k.custody !== 'other' && k.custody !== 'ex'; }).forEach(function (k) { c.push({ k: 'kid', n: k.name.split(' ').pop(), w: 'con', I: 'con', U: l.sex === 'F' ? 'mẹ' : 'bố', kid: k }); });
     if (l.bff && l.bff.alive) c.push({ k: 'b', n: l.bff.name, w: 'bạn thân', I: 'tớ', U: 'cậu' });
     (l.friends || []).filter(function (x) { return x.alive !== false && !x.lover; }).forEach(function (x) { c.push({ k: 'f', n: x.name, w: 'bạn thân', I: 'tớ', U: 'cậu', fr: x }); });
     return c;

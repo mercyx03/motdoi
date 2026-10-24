@@ -77,6 +77,7 @@
     var ka = l.age - k.born, here = l.abroad && l.abroad.perm ? ' ở ' + l.abroad.name : '';
     if (k.jail && ka < k.jail) return 'trong trại giam';
     if (k.custody === 'other' || k.custody === 'ex') return 'ở với ' + (l.sex === 'M' ? 'mẹ' : 'bố') + ' của bé';
+    if (k.custody === 'both' && ka < 18) return 'luân phiên ở nhà bố và mẹ';
     if (k.uniUntil && k.abroadStudy) return 'đang du học';
     if (ka < 18) return 'sống cùng bạn' + here;
     if (k.uniUntil) return 'ở trọ đi học đại học';

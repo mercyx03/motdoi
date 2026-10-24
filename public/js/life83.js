@@ -395,7 +395,7 @@
   E.HOOKS.year.unshift(function (l, r, log, a) {
     var h = l.flags.heirOf, f = l.fam;
     if (l.flags.heirTrust > 0 && a >= 18) { var t = l.flags.heirTrust; l.flags.heirTrust = 0; H.cash(l, t, 'Nhận phần thừa kế được giữ hộ'); log('Tròn 18 tuổi, bạn nhận lại phần thừa kế ' + H.money(l, t) + ' mà ' + (h && h.sex === 'M' ? 'bố' : 'mẹ') + ' để lại, người giám hộ đã giữ hộ bấy lâu.', 'good'); }
-    if (!h || h.done || a !== h.at) return;
+    if (!h || h.done || a < h.at) return;
     h.done = true; if (l.flags.heirKeep) l.flags.heirKeep = null;
     var P = h.sex === 'M' ? 'Bố' : 'Mẹ', p = P.toLowerCase();
     if (f[h.side + 'Alive']) {

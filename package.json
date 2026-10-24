@@ -20,7 +20,7 @@
     "test:active-careers": "node tests/careers105.js",
     "test:memorial": "node tests/memorial-history.js",
     "test:continuity": "node tests/continuity101.js",
-    "test:family": "node tests/family830.js && node tests/family104.js",
+    "test:family": "node tests/family830.js && node tests/family104.js && node tests/family126.js && node tests/family129.js && node tests/family130.js",
     "test:notifications": "node tests/notifications.js && node tests/community-speed.js && node tests/inbox-client.js",
     "test:adult-study": "node tests/adult106.js",
     "test:relationships": "node tests/relationships108.js && node tests/relationships841.js",

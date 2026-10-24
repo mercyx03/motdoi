@@ -122,7 +122,7 @@
     if (!l.indep || a < 18) E.H.sibs(l).slice(0, 3).forEach(function (s) { list.push(person(l, Math.max(0, a - s.born), s.sex, 'sibling-' + s.n, '#7c9477')); });
     list.push(Object.assign(person(l, a, l.sex, 0), { me: true }));
     if (l.partner && l.partner.alive !== false && l.partner.status !== 'dating') list.push(person(l, l.partner.age, l.partner.sex, 'partner-' + l.partner.name, '#9380a8'));
-    (l.kids || []).filter(function (c) { return c.alive && c.custody !== 'ex' && a - c.born < 25; }).slice(0, 4).forEach(function (c) { list.push(person(l, a - c.born, c.sex, 'child-' + (c.name || c.born + c.sex), '#c6a46d')); });
+    (l.kids || []).filter(function (c) { return c.alive && c.custody !== 'ex' && c.custody !== 'other' && a - c.born < 25; }).slice(0, 4).forEach(function (c) { list.push(person(l, a - c.born, c.sex, 'child-' + (c.name || c.born + c.sex), '#c6a46d')); });
     return list.slice(0, 8);
   }
   function house(o, kind, night) {
@@ -170,7 +170,7 @@
     if (!l.indep || a < 20 || l.flags.caring) { if (f.mAlive && f.fAlive && !f.noDad) who.push('bố mẹ'); else if (f.mAlive) who.push('mẹ'); else if (f.fAlive && !f.noDad) who.push('bố'); }
     if ((!l.indep || a < 18) && E.H.sibs(l).length) who.push(E.H.sibs(l).length + ' anh chị em');
     if (l.partner && l.partner.alive !== false && l.partner.status !== 'dating') who.push(E.H.partnerWord(l, l.partner));
-    var kids = (l.kids || []).filter(function (c) { return c.alive && c.custody !== 'ex' && a - c.born < 25; }); if (kids.length) who.push(kids.length + ' con');
+    var kids = (l.kids || []).filter(function (c) { return c.alive && c.custody !== 'ex' && c.custody !== 'other' && a - c.born < 25; }); if (kids.length) who.push(kids.length + ' con');
     E.H.pets(l).slice(0, 2).forEach(function (p) { who.push(p.k + ' ' + p.n); });
     var where = l.abroad ? l.abroad.name : l.cityStudent ? l.cityStudent.city : l.movedTo || l.place || 'Nơi đang sống';
     return where + ' · ' + (HOUSE_NAMES[kind] || 'nhà ở') + (who.length ? ' · cùng ' + who.join(', ') : ' · một mình');
