@@ -27,7 +27,8 @@
   function fertile(l) { var p = l.partner; return dating(l) && p.sex !== l.sex && l.age >= 18 && p.age >= 18 && momAge(l) <= 44; }
   function birth(l, r, log, mark) {
     var n0 = l.kids.length, p = l.partner; if (!p) return null;
-    E.DEC.kid.apply(l, { id: 'kid', data: { adopt: false }, opts: [] }, 'yes', r, log);
+    if (E.RELATIONS108) E.RELATIONS108.deliver(l, p, r, log, {source:'outside'});
+    else E.DEC.kid.apply(l, { id: 'kid', data: { adopt: false }, opts: [] }, 'yes', r, log);
     var k = l.kids.length > n0 ? l.kids[l.kids.length - 1] : null;
     if (k) { k.oow = true; k.otherParent = p.name; if (mark) for (var x in mark) k[x] = mark[x]; }
     return k;
@@ -53,6 +54,7 @@
         if (d.me) { l.flags.singleParent = true; log(U.pick(r, [name + ' không muốn có trách nhiệm, cắt đứt liên lạc. Bạn một mình vượt cạn, một mình nuôi con.', 'Hai người chia tay trước ngày sinh. Bạn quyết định làm mẹ đơn thân, ôm con vào lòng mà tự nhủ phải mạnh mẽ.']), 'bad'); H.mem(l, 'Một mình bế con ' + (k ? k.name : '') + ' về nhà sau ngày sinh.', 6); }
         else { log('Bạn và ' + name + ' chia tay, con ở với mẹ. Bạn nhận con, ký giấy chu cấp nuôi con hằng tháng và vẫn thường đến thăm.', 'neutral'); } } },
       { k: 'chua_giu', l: 'Chưa sẵn sàng, quyết định không giữ thai', h: 'Được bác sĩ tư vấn ở cơ sở y tế uy tín', ai: { w: 0.4 }, run: function (l, r, log, d) {
+        if (E.RELATIONS108) E.RELATIONS108.cancelPregnancy(l, l.partner);
         l.st.hap -= 8; stress(l, 8); log('Sau nhiều đêm suy nghĩ, hai bạn quyết định chưa giữ lại em bé. ' + (d.me ? 'Bạn' : d.pid) + ' đến cơ sở y tế uy tín, được bác sĩ tư vấn kỹ. Chuyện ấy để lại một khoảng lặng rất lâu.', 'bad'); H.mem(l, 'Quyết định khó khăn nhất năm ' + l.age + ' tuổi.', 4);
         if (ch(r, 0.3) && l.partner) { var n = l.partner.name; l.partner = null; l.exes = (l.exes || 0) + 1; log('Sau chuyện ấy, bạn và ' + n + ' dần xa nhau rồi chia tay.', 'bad'); } } }
     ]

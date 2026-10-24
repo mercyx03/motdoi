@@ -662,7 +662,7 @@
     };
   }
   E.EVENTS.forEach(function (ev) {
-    if (/'Đi du lịch ' \+ dest/.test(ev.run.toString())) {
+    if (ev.travelCompat) {
       ev.run = function (l, a, r, log) {
         var w = where(l), abroadTrip = l.money > l.base * 2 && r() < 0.5;
         var dest = abroadTrip ? pick(r, ['Thái Lan', 'Hàn Quốc', 'Nhật Bản', 'Singapore', 'Đài Loan', 'châu Âu'].filter(function (x) { return x !== w.country; })) : nearTrip(l, r);

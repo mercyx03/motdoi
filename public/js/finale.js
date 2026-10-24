@@ -44,7 +44,7 @@
     if (!l.flags.will70 && l.flags.will === 'charity') w.push('Phần tài sản đã hứa, nhớ mang tặng ngôi trường trên bản cho ' + me + '.');
     if (l.movedTo || (l.abroad && l.abroad.perm)) w.push('Đưa ' + me + ' về quê, cho ' + me + ' nằm cạnh ông bà.');
     if (/Phật/.test(l.religion || '')) w.push('Làm lễ theo nghi thức nhà Phật, đừng làm linh đình tốn kém.');
-    else if (/Công giáo|Tin Lành|Kitô|Chính Thống/.test(l.religion || '')) w.push('Cho ' + me + ' được an nghỉ trong nghĩa trang của giáo xứ.');
+    else if (/Công giáo|Tin Lành|Kitô|Chính Thống|Anh giáo/.test(l.religion || '')) w.push('Cho ' + me + ' được an nghỉ trong nghĩa trang của giáo xứ.');
     if (l.bff && l.bff.alive) w.push('Nhắn với ' + l.bff.name + ': cảm ơn vì đã làm bạn với ' + me + ' suốt một đời.');
     if (lost.length) w.push('Kiếp sau, mong được gặp lại ' + lost[0].name + '.');
     if (l.ins && l.ins.type === 'protect' && (kids.length || l.partner)) w.push('Hợp đồng bảo hiểm ' + me + ' cất trong tủ, nhớ làm thủ tục nhận tiền mà lo cho gia đình.');

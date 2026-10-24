@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E,A=E.EDUCATION54;let n=0;function ok(v,t){assert.ok(v,t);n++;}
 function life(age=16){let l=E.createLife({mode:'vn',seed:540});l.age=age;l.country='VN';l.abroad=null;l.school=age<18?'upper':null;l.schoolEnd=18;l.edu=age<18?2:3;l.pending=[];l.job=null;l.retired=false;l.jailUntil=null;l.flags.military=null;l.st.kno=99;l.mind.stress=0;return l;}
 function pick(l,id,k,r=()=>.5){let d=E.DEC[id].make(l,r);ok(d.opts.some(x=>x.k===k),'offered '+id+':'+k);E.DEC[id].apply(l,d,k,r,()=>{});return d;}

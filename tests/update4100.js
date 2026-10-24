@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const {E,U}=G,F=E.FILM;let count=0;function ok(v,t){assert.ok(v,t);count++;}function near(a,b,t){ok(Math.abs(a-b)<1e-7*Math.max(1,Math.abs(b)),t);}
 function life(seed=41001,country='VN'){let l=E.createLife({mode:country==='VN'?'vn':'world',country,seed});l.age=30;l.edu=5;l.school=null;l.major='art';l.pending=[];l.flags={};l.alive=true;l.st.hea=90;l.indep=true;l.money=l.base*1000;E.startJob(l,'dao_dien',()=>.5,()=>{},true);l.job.rank=1;l.job.rankSince=25;return l;}
 function run(l,k){return E.resolve(l,k);}

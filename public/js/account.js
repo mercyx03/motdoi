@@ -24,6 +24,40 @@
     } catch (e) { if (e.name === 'AbortError') throw Error('Máy chủ phản hồi chậm, hãy thử lại.'); if (e.name === 'TypeError') throw Error('Không kết nối được máy chủ.'); throw e; }
     finally { clearTimeout(tm); }
   }
+
+  // Read-only admin catalogue; permission is checked by the server on every request.
+  async function openEventLibrary(){
+    modal('<h2>Thư viện sự kiện</h2><p id="eventStatus" role="status">Đang xác minh quyền và tải dữ liệu…</p><div id="eventTools" hidden><label>Tìm nội dung hoặc mã<input id="eventSearch" type="search" placeholder="Tên, lời kể, điều kiện, lựa chọn…"></label><label>Nhóm<select id="eventType"><option value="">Tất cả</option><option>Lựa chọn</option><option>Biến cố</option><option>Lời kể</option><option>Hằng năm</option></select></label><button class="btn" id="eventExport">Tải danh sách JSON</button></div><div id="eventRows"></div><button class="btn" id="eventMore" hidden>Xem thêm</button><button class="btn" id="eventBack">Về tài khoản</button>',function(box){
+      box.querySelector('#eventBack').onclick=open;
+      api('admin_events',{},true).then(function(r){
+        if(!box.isConnected)return;
+        var rows=r.entries,limit=20;
+        box.querySelector('#eventTools').hidden=false;
+        function draw(){
+          var q=box.querySelector('#eventSearch').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),type=box.querySelector('#eventType').value;
+          var filtered=rows.filter(function(x){return(!type||x.type===type)&&JSON.stringify(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);});
+          box.querySelector('#eventStatus').textContent=filtered.length+' / '+rows.length+' mục. Chỉ đọc, không thay đổi cuộc đời đang chơi. Bối cảnh và kết quả là ví dụ mô phỏng, có thể thay đổi theo nhân vật.';
+          var host=box.querySelector('#eventRows');host.replaceChildren();
+          filtered.slice(0,limit).forEach(function(x){
+            var d=document.createElement('details'),s=document.createElement('summary'),body=document.createElement('div');
+            s.textContent=x.type+' · '+x.title;
+            function paragraph(label,text){if(!text)return;var p=document.createElement('p'),b=document.createElement('b');b.textContent=label;p.append(b,document.createTextNode(text));body.append(p);}
+            paragraph('Bối cảnh: ',x.data.context);paragraph('',x.data.text);
+            (x.data.choices||[]).forEach(function(o,i){var card=document.createElement('section');card.className='admin-event-choice';var title=document.createElement('h4');title.textContent=(i+1)+'. '+o.label;card.append(title);if(o.hint){var hint=document.createElement('p');hint.textContent=o.hint;card.append(hint);}var result=document.createElement('p');result.textContent='Kết quả ví dụ: '+((o.result||[]).join(' ')||'Chưa có lời kể kết quả trong ví dụ này.');card.append(result);if(o.changes&&o.changes.length){var change=document.createElement('p');change.textContent=o.changes.join(' · ');card.append(change);}body.append(card);});
+            paragraph('Lưu ý: ',x.data.note);paragraph('Mã tra cứu: ',x.id);
+            d.append(s,body);host.append(d);
+
+          });
+          box.querySelector('#eventMore').hidden=limit>=filtered.length;
+        }
+        box.querySelector('#eventSearch').oninput=box.querySelector('#eventType').onchange=function(){limit=20;draw();};
+        box.querySelector('#eventMore').onclick=function(){limit+=20;draw();};
+        box.querySelector('#eventExport').onclick=function(){var u=URL.createObjectURL(new Blob([JSON.stringify(rows,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download='motdoi-events.json';a.click();setTimeout(function(){URL.revokeObjectURL(u);},1000);};
+        draw();
+      }).catch(function(e){if(box.isConnected)box.querySelector('#eventStatus').textContent=e.code==='FORBIDDEN'?'Tài khoản này không có quyền xem thư viện sự kiện.':e.message;});
+    });
+  }
+
   // ---------- gộp dữ liệu ----------
   function mergeAch(a, b) { var o = {}; [a || {}, b || {}].forEach(function (s) { Object.keys(s).forEach(function (k) { var x = s[k]; if (!x) return; if (!o[k] || (x.at && x.at < o[k].at)) o[k] = x; }); }); return o; }
   function mergeBy(a, b, key, newer, max) { var m = {}, order = []; (a || []).concat(b || []).forEach(function (x) { if (!x || x[key] == null) return; var k = String(x[key]); if (!m[k]) { order.push(k); m[k] = x; } else if ((x[newer] || 0) > (m[k][newer] || 0)) m[k] = Object.assign({}, m[k], x); else m[k] = Object.assign({}, x, m[k]); }); var out = order.map(function (k) { return m[k]; }); if (newer) out.sort(function (p, q) { return (p[newer] || 0) - (q[newer] || 0); }); return max ? out.slice(-max) : out; }
@@ -32,6 +66,17 @@
     remote = remote || {};
     var curR = remote.cur, curL = local.cur, cur = curL;
     if (curR && curR.life && (!curL || !curL.life || (curR.at || 0) > (curL.at || 0))) cur = curR;
+    // Preserve advanced local progress when a server-side refund is awaiting delivery.
+    var refundKey='inheritanceRefund20261023',rl=curR&&curR.life,ll=curL&&curL.life;
+    if(rl&&ll&&rl.id===ll.id&&rl.cur==='vnd'&&ll.cur==='vnd'&&rl.flags&&rl.flags[refundKey]===3512440){
+      cur=JSON.parse(JSON.stringify(ll.age>=rl.age?curL:curR));
+      cur.life.flags=cur.life.flags||{};
+      if(cur.life.flags[refundKey]!==3512440){
+        cur.life.money+=3512440;cur.life.flags[refundKey]=3512440;
+        (cur.life.log||(cur.life.log=[])).push({a:cur.life.age,y:cur.life.birthYear+cur.life.age,t:'Bồi hoàn 3.512,44 tỷ đồng do lỗi tiền thừa kế giữ hộ.',k:'good'});
+      }
+      cur.at=Math.max(Date.now(),curL.at||0,curR.at||0)+1;
+    }
     return { v: 1, ach: mergeAch(remote.ach, local.ach), tree: mergeBy(remote.tree, local.tree, 'id', 'at', 400), mem: mergeBy(remote.mem, local.mem, 'id', 'savedAt', 60), recent: mergeBy(local.recent, remote.recent, 'id', null, 10), cur: cur };
   }
   function applyLocal(d) {
@@ -48,7 +93,10 @@
     if (!acc()) return null; if (busy) return busy;
     busy = (async function () {
       for (var t = 0; t < 3; t++) {
-        var remote = await api('load', null, true), merged = merge(remote.data, localData()), changed = applyLocal(merged), p = packed(merged);
+        var remote = await api('load', null, true);
+        var activeApp=window.G&&window.G.App;
+        if(remote.data&&remote.data.cur&&remote.data.cur.life&&remote.data.cur.life.flags&&remote.data.cur.life.flags.inheritanceRefund20261023===3512440&&activeApp&&activeApp.inLife&&activeApp.inLife())throw Error('Có khoản bồi hoàn chờ nhận. Hãy lưu và về trang chủ game, rồi bấm Đồng bộ ngay để giữ tiến trình hiện tại và nhận tiền.');
+        var merged = merge(remote.data, localData()), changed = applyLocal(merged), p = packed(merged);
         try { var r = await api('save', { data: p.data, rev: remote.rev }, true); lastSync = Date.now(); set('mkn.accountSync', lastSync); return { changedCur: changed, droppedCur: p.droppedCur, rev: r.rev }; }
         catch (e) { if (e.code !== 'CONFLICT') throw e; }
       }
@@ -84,12 +132,12 @@
       return;
     }
     modal('<div class="agep">Tài khoản</div><h2>' + esc(a.u) + '</h2><form id="accProfile" class="family-form"><label for="accDisplayName">Tên hiển thị công khai</label><input id="accDisplayName" maxlength="32" minlength="2" value="'+esc(a.displayName||'')+'" required placeholder="Đặt tên để bình luận"><button class="btn" type="submit">Lưu tên hiển thị</button><p id="accProfileStatus" role="status"></p></form><p class="small muted">Đồng bộ lần cuối: ' + (lastSync ? new Date(lastSync).toLocaleString('vi-VN') : 'chưa') + '</p><p class="small">' + esc(counts()) + '</p>' +
-      '<section aria-label="Thông báo"><h3>🔔 Thông báo <span id="accUnread" class="account-unread-badge account-unread-inline" hidden></span></h3><div id="accNotifications" role="status">Đang tải…</div><button class="btn" id="accReadNotifications">Đánh dấu đã đọc</button></section><div class="go-row"><button class="btn primary" id="accSync">Đồng bộ ngay</button><button class="btn" id="accOut">Đăng xuất</button><button class="btn ghost" id="accClose">Đóng</button></div><p id="accStatus" role="status" aria-live="polite"></p>' +
+      '<button class="btn" id="adminEvents" hidden>Thư viện toàn bộ sự kiện</button><section aria-label="Thông báo"><h3>🔔 Thông báo <span id="accUnread" class="account-unread-badge account-unread-inline" hidden></span></h3><div id="accNotifications" role="status">Đang tải…</div><button class="btn" id="accReadNotifications">Đánh dấu đã đọc</button></section><div class="go-row"><button class="btn primary" id="accSync">Đồng bộ ngay</button><button class="btn" id="accOut">Đăng xuất</button><button class="btn ghost" id="accClose">Đóng</button></div><p id="accStatus" role="status" aria-live="polite"></p>' +
       '<details class="small" style="margin-top:12px"><summary>Xóa tài khoản</summary><p class="muted">Xóa vĩnh viễn tài khoản và bản lưu trên máy chủ. Dữ liệu trên máy này vẫn giữ nguyên.</p><input id="accDelPass" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu để xác nhận"> <button class="btn sm" id="accDel">Xóa vĩnh viễn</button></details>', function (box) {
       var st = box.querySelector('#accStatus');
       inbox(box);
       box.querySelector('#accProfile').onsubmit = async function(e){e.preventDefault();var status=box.querySelector('#accProfileStatus'),button=this.querySelector('button');button.disabled=true;try{var r=await api('profile',{displayName:box.querySelector('#accDisplayName').value},true);var current=acc();if(current){current.displayName=r.displayName;current.role=r.role;set(KEY,current);}status.textContent='Đã lưu tên. Bạn có thể bình luận ở trang Cập nhật.';label();document.dispatchEvent(new Event('account-profile-changed'));}catch(err){status.textContent=err.message;}finally{button.disabled=false;}};
-      api('me',null,true).then(function(r){var current=acc();if(current){current.displayName=r.displayName||'';current.role=r.role;set(KEY,current);box.querySelector('#accDisplayName').value=r.displayName||'';}}).catch(function(){});
+      api('me',null,true).then(function(r){var current=acc();if(current){current.displayName=r.displayName||'';current.role=r.role;set(KEY,current);box.querySelector('#accDisplayName').value=r.displayName||'';var adminButton=box.querySelector('#adminEvents');adminButton.hidden=r.role!=='admin';adminButton.onclick=openEventLibrary;}}).catch(function(){});
       box.querySelector('#accClose').onclick = close;
       box.querySelector('#accSync').onclick = async function () { this.disabled = true; st.textContent = 'Đang đồng bộ…'; try { var s = await sync('manual'); st.textContent = 'Đã đồng bộ' + (s.changedCur ? ', đã tải cuộc đời đang chơi mới hơn' : '') + (s.droppedCur ? '. Cuộc đời đang chơi quá dài nên chưa lưu lên được, các dữ liệu khác đã lưu.' : '.'); } catch (e) { st.textContent = e.message; if (e.code === 'NOT_LOGGED_IN') { del(KEY); label(); document.dispatchEvent(new Event('account-profile-changed')); } } finally { this.disabled = false; } };
       box.querySelector('#accOut').onclick = async function () { try { await api('logout', null, true); } catch (e) { } del(KEY); label(); document.dispatchEvent(new Event('account-profile-changed')); close(); toast('Đã đăng xuất. Dữ liệu trên máy này vẫn còn.'); };

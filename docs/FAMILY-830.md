@@ -1,6 +1,6 @@
 # Gia đình và tình cảm — 8.3.0
 
-Áp dụng cho Việt Nam và Toàn thế giới, cả chế độ Thường và Hardcore. Không áp dụng cho Fantasy gia tộc.
+Áp dụng cho Việt Nam và Toàn thế giới, cả chế độ Thường và Hardcore.
 
 ## Chủ động giao lưu
 
@@ -33,4 +33,4 @@ Tin cậy và căng thẳng giữ riêng cho từng người; gắn bó của co
 
 Người đã mất không tham gia; một lời hẹn cũ không áp vào người con khác hay bạn đời mới. Khi hoàn cảnh thay đổi trước lúc chọn, tình huống cũ được bỏ qua. Không tính tiền nếu không còn đủ điều kiện. Dữ liệu mới bổ sung khi cần trong bản lưu cũ, không tạo lại danh tính người thân.
 
-Kiểm thử: `npm run test:family`. Tệp kiểm tra đối chiếu 9 cuộc đời Fantasy với bản chụp trước cập nhật này để xác nhận Fantasy không thay đổi. Các fixture Thường từ v7.6.0 vẫn được kiểm tra trên bộ module cũ, loại riêng `life100.js` vì đây là thay đổi đời thực đã được yêu cầu; kiểm tra hồi quy đầy đủ và các bài mới chạy với module này được bật.
+Kiểm thử: `npm run test:family`. Các fixture Thường từ v7.6.0 vẫn được kiểm tra trên bộ module cũ, loại riêng `life100.js` vì đây là thay đổi đời thực đã được yêu cầu; kiểm tra hồi quy đầy đủ và các bài mới chạy với module này được bật.

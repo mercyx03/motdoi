@@ -517,6 +517,7 @@
     else retAge = isVN(l) ? (formal ? (l.sex === 'M' ? 62 : 60) : 65 + U.randint(r, 0, 7)) : (l.gdp > 15 ? 65 : 68 + U.randint(r, 0, 5));
     if (l.flags.afterRet && !c.ladder) retAge = Math.max(retAge, l.flags.afterRet); // đã nghỉ hưu rồi đi làm/kinh doanh tiếp
     if (c.ladder && l.job.rank >= 8) retAge = Math.max(retAge, 65); // senior command extension in the simulation
+    if (E.retirementAge125) retAge = E.retirementAge125(l, retAge);
     if (l.job.retireNow) retAge = Math.min(retAge, a); // v3.6: người chơi tự chọn nghỉ hưu
     if (a >= retAge || (a >= 55 && l.st.hea < 25)) {
       var firstRet = !l.flags.retOnce;

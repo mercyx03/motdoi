@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E,P=E.PARENTING;let n=0;const ok=(x,t)=>{assert.ok(x,t);n++;};
 function life(childAge=8){const l=E.createLife({mode:'vn',seed:46001,gender:'F'});l.age=Math.max(40,childAge+22);l.indep=true;l.school=null;l.pending=[];l.money=100;l.abroad=null;l.flags={};l.kids=[{name:'An',sex:'M',born:l.age-childAge,alive:true,close:65,study:60,edu:0}];return l;}
 function scene(l,k,id,auto=false){P.children(l);const pool=P.pool(l,k),idx=pool.findIndex(c=>c.id===id);assert.ok(idx>=0,'có tình huống '+id);const d=E.DEC.nd_su_kien.make(l,()=>(idx+.1)/pool.length,auto?undefined:{pid:k.parentId});assert.equal(d.data.caseId,id);return d;}

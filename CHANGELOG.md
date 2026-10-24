@@ -1,3 +1,80 @@
+## v8.4.4 — Sửa logic tiền bạc và điều kiện hành động
+
+- Sửa một số trường hợp trả nợ bị trừ tiền hai lần, như xử lý nợ quá hạn và tất toán khoản vay nhà lúc lớn tuổi.
+- Khi có nhiều khoản vay, tiền đã dùng trả khoản trước không còn được tính là tiền có thể dùng cho khoản sau.
+- Khoản trả góp mua nhà từ các lượt chơi cũ nay được tính đầy đủ trong tổng chi và số tiền tiết kiệm của năm.
+- Muốn nộp hồ sơ định cư phải có đúng chứng chỉ ngoại ngữ được yêu cầu. Chưa từng học ngôn ngữ đó sẽ không được xem là đã đủ điều kiện.
+- Khi rời công việc lãnh đạo để đổi nghề, tên chức vụ cũ không còn hiện thay cho nghề mới.
+- Nội dung cập nhật được viết bằng lời dễ hiểu, liệt kê đủ thay đổi và điều kiện sử dụng, không đưa chi tiết lập trình vào.
+
+## v8.4.3 — Chủ động chăm lo gia đình và cân bằng tích lũy
+
+- Chủ động chia tay khi đang hẹn hò, kể cả mối tình từ tuổi thiếu niên. Chia tay không tự chia tài sản như ly hôn; thai kỳ và trách nhiệm với con chung vẫn tiếp tục.
+- Chọn từng con để tặng tiền, từ khoản nhỏ đến hỗ trợ lớn. Tiền trừ khỏi quỹ cha mẹ và ghi vào quỹ của con; mỗi con nhận một khoản mỗi năm. Phần chưa chi đi theo con khi chuyển đời.
+- Tặng nhà và cửa hàng cho con đã có từ đợt trước; tiếp tục dùng mục tặng tài sản. Tài sản đã tặng không còn tạo thu nhập cho cha mẹ hay chia lại trong thừa kế.
+- Đầu tư học thêm, ngoại ngữ và khóa nghề cho con theo độ tuổi. Con có thể muốn học hướng khác; trả học phí không bảo đảm đỗ chứng chỉ hoặc thành công.
+- Du lịch gần nhà hoặc nghỉ dưỡng cùng bố mẹ, bạn đời và con cái; tính chi phí theo số người, tăng hạnh phúc và quan hệ, có thể hoãn vì chưa thu xếp được lịch.
+- Chủ động chuẩn bị hồ sơ định cư theo tuyến lao động kỹ năng mô phỏng: chọn nước, ngoại ngữ, quỹ chuyển đi, chờ hai năm xét hồ sơ. Có thể bị từ chối; khi được chấp thuận, tự quyết định chuyển trong thời hạn.
+- Chuyển định cư kết thúc công việc hiện tại để tìm việc mới, bán nhà chính tất toán nợ và quy đổi tiền. Có nút chủ động xin quốc tịch khi đủ thời gian cư trú và điều kiện; không phải cứ nộp là được.
+- Bổ sung tiêu chí nghề nghiệp và thu nhập bạn đời, kết hợp bộ lọc tuổi, giới tính và quốc tịch đã có. Hồ sơ có thể không phù hợp; không tạo người giàu theo yêu cầu và không đồng nhất lương cao với tài sản lớn.
+- Trả nợ chủ động theo từng khoản: trả một phần hoặc tối đa tiền đang có, gồm khoản vay nhà cũ. Không cần đợi biến cố; trả hết nợ không xóa ngay lịch sử nợ xấu.
+- Thi IELTS xếp trình độ dựa vào kỹ năng ngoại ngữ, kiến thức và phong độ. Năng khiếu ngoại ngữ cao có thể đạt thẳng bậc cao, không phải bắt đầu từ 4.5. Có phí, giới hạn lần thi và thời hạn chứng chỉ.
+- Làm thêm sinh viên đã có các lựa chọn phục vụ, gia sư, giao hàng, bán hàng và lễ tân. Giữ cơ chế tiền công đi kèm giảm thời gian học và mệt mỏi.
+- Chủ động chọn trọ ghép, phòng riêng, căn hộ và mức ăn uống. Chi phí áp dụng khi quyết toán năm; nhà sở hữu không bị tính thêm tiền thuê, chỗ ở sinh viên tính riêng.
+- Bộ trưởng có nhiệm vụ công vụ để xây dựng uy tín và tuyến xét sang vai trò lãnh đạo dân sự cấp quốc gia. Cần thời gian, học vấn, hồ sơ và được lựa chọn; có thể không được bổ nhiệm. Nhiệm kỳ hữu hạn, không nhận lương hai chức vụ.
+- Xe, bảo vệ và tổ giúp việc cấp lãnh đạo là nguồn lực làm nhiệm vụ, không được cộng vào tài sản hoặc thu nhập cá nhân.
+- Cân bằng tiền: bảo vệ nhóm lương thấp, giảm phần thu nhập rất cao và lợi nhuận kinh doanh bất thường; tiền mặt chỉ hưởng lãi rất thấp, muốn tiết kiệm có kỳ hạn cần mở sổ. Nhà có năm giảm giá và phát sinh bảo trì kể cả không cho thuê.
+- Nhật ký cập nhật trình bày đầy đủ từng thay đổi, không giới hạn ba dòng. Các nội dung của đợt học tập, ngân hàng, nghiên cứu và gia đình trước đó đã được mở rộng.
+
+## v8.4.2 — Học tập, cơ ngơi và biến cố nhiều năm
+
+- Thêm thi quốc gia, tuyển thẳng chủ động, ngoại ngữ theo chương trình, nội trú học viện và cao học sĩ quan.
+- Tách học hàm khỏi bậc nghề; làm đề tài dài hạn, công bố, nộp hồ sơ PGS/GS và ứng cử lãnh đạo khoa học.
+- Tặng tài sản đúng người con, nhà để ở nhiều nơi, gửi ngân hàng theo kỳ hạn, thuê nhân sự và chuyển đời khi cha/mẹ còn sống.
+- Luyện năng khiếu từ 5 tuổi, hoạt động ghi chỉ số, triệt sản tự nguyện, dịch bệnh và hồ sơ gia đình tiếp nối.
+- Thẩm tra lý lịch gia đình theo hồ sơ, không suy đoán điều kiện tôn giáo ngoài căn cứ.
+
+## Cơ hội sau cấp 10 cho mọi năng khiếu
+
+- Mở dự án chuyên gia và khởi nghiệp theo đủ 13 năng khiếu; xét kinh nghiệm, hồ sơ, vốn và rủi ro thay vì tự thăng chức.
+- Thêm bậc chuyên gia và giám đốc dự án cho makeup/stylist; chọn lĩnh vực khi khởi nghiệp.
+- Hiện lý do nút bị khóa, tùy chọn xem hoạt động chưa đủ điều kiện; sửa mở nhóm hành động.
+- Theo dõi mất việc, ngân sách và lời hẹn hàn gắn gia đình qua các năm.
+- Đối chiếu các bộ lọc hẹn hò, sinh con trước cưới, thỏa thuận tài sản, quan hệ mở rộng và hướng nghiệp con đã có.
+## Khôi phục hồ sơ xuất phát
+
+- Hiện lại chân dung, nơi sinh, gia đình, thu nhập, bối cảnh, năng khiếu và hai nút Xuất phát điểm khác / Sống đời này ngay trên trang chủ.
+- Giữ đúng seed khi bắt đầu từ hồ sơ đang xem; đổi chế độ/bản đồ thì cập nhật hồ sơ tương ứng.
+- Giữ build 24 file đã minify và tải engine khi cần.
+
+## Build production gọn 24 file
+
+- Gom game thành bốn gói tải muộn; nén JavaScript/CSS, rút gọn tên biến, bỏ chú thích và không xuất source map.
+- Chỉ đưa tài nguyên cần chạy vào dist; gom font thành bốn file WOFF2 và gom script trang phụ.
+- Giữ trang đầu nhẹ, trạng thái tải và thử lại sau lỗi mạng; đối chiếu tám cuộc đời giống bản nguồn.
+
+## Tối ưu tải trang và giao diện điện thoại
+
+- Trang chủ dùng bộ khởi động nhỏ; engine và dữ liệu tải khi cần, giữ thứ tự các module, cho phép thử lại sau lỗi mạng.
+- Font WOFF2 được lưu cùng website, giảm số họ font và độ đậm; giữ font-display: swap và ưu tiên font đoạn giới thiệu.
+- Build đưa đầy đủ CSS trang chủ vào HTML, chia game thành nhiều phần có hash và đặt cache dài cho tài nguyên có hash.
+- Sắp xếp lại thanh điều khiển, nhóm hành động, nhật ký và hộp lựa chọn trên điện thoại; sửa tràn ngang ở màn hình 320 px.
+
+## v8.4.1 — Đồng bộ thai kỳ và quan hệ gia đình
+
+- Sửa ba lựa chọn giữ thai trong Tin bất ngờ không tạo con; giữ đúng người cùng làm cha mẹ, quyền nuôi con của nhánh đơn thân và không sinh trùng khi đã có thai kỳ chờ.
+- Không giữ thai sẽ hủy đúng thai kỳ tương ứng; không tác động thai kỳ của người khác hoặc hồ sơ nhận nuôi.
+- Hàn gắn hôn nhân thực sự kết thúc mối ngoại tình tương ứng trong danh sách quan hệ, không xóa người khác hay thông tin cha/mẹ của con.
+- Câu hỏi ly hôn gắn với đúng người và năm, không chia tài sản với bạn đời mới từ câu hỏi cũ.
+- Hòa giải tài sản kiểm tra tên hồ sơ và các khoản tiền trước khi tính toán; dữ liệu thiếu hoặc không hữu hạn không được phép trừ tiền / tạo NaN.
+- Quyền nuôi con ban đầu chỉ được giải quyết một lần cho mỗi cuộc ly hôn, không bị hỏi lại và trừ gắn kết lần nữa từ hai luồng theo dõi.
+- Tự chơi không chọn cưới khi lựa chọn đó chưa mở vì tình cảm chưa đủ.
+- Đồng bộ lựa chọn sinh con / nhận nuôi với xác suất được hiển thị.
+- Tự lên đời công nghệ có thêm hạn mức một lần mua cho từng loại máy, đồng thời giữ tổng ngân sách năm và tiền dự phòng sinh hoạt.
+- Giữ nhãn con chung / con riêng và hướng nghiệp khi bảng gia đình hiện thông tin học tập hoặc nghề nghiệp của con.
+- Đồng bộ phiên bản tài nguyên 8.4.1 và tạo lại bản dist.zip; kiểm thử mới cho cả Việt Nam / Thế giới, Thường / Hardcore.
+- Đối chiếu chức năng đã cập nhật: docs/FEATURE-AUDIT-841.md.
+
 ## v8.4.0 — Khối năng khiếu có trường nghệ thuật thật, học bổ túc văn hóa
 
 - Khối thi năng khiếu: H00 (Văn – Hình họa – Bố cục màu), thêm V00 (Toán – Lý – Vẽ mỹ thuật, ngành kiến trúc), S00 (Văn + năng khiếu sân khấu – điện ảnh), N00 (Văn + năng khiếu âm nhạc). Chọn khối năng khiếu thì có ôn năng khiếu từ lớp 11.
@@ -12,40 +89,11 @@
 
 ## v8.3.0 — Giao lưu với con, tính cách bố mẹ và tình cảm
 
-- Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore; không đổi Fantasy.
+- Chỉ áp dụng Việt Nam/Toàn thế giới ở cả Thường và Hardcore.
 - Thêm mục Gia đình: chọn từng người con để chăm sóc, trò chuyện, bàn ranh giới hoặc hỗ trợ một khoản có kiểm tra tiền. Mỗi người có lượt riêng trong năm; sống xa liên lạc từ xa, trẻ sơ sinh thông qua người chăm sóc.
 - Thêm trò chuyện riêng với bố/mẹ theo 16 tính cách hiện có và mục Tình cảm để tâm sự, xin lỗi, bàn riêng tư/kế hoạch/ngân sách. Lời đề nghị có thể chưa được chấp thuận.
 - 40 tình huống tự nhiên: 16 theo tính cách bố mẹ, 12 về từng giai đoạn tuổi của con, 12 về tình cảm. Giới hạn tần suất và kiểm tra người còn sống, tuổi, nơi ở, tình trạng quan hệ; không kết tội ngoại tình từ lời đồn, không quyết việc làm/hôn nhân thay con trưởng thành.
 - Tin cậy và căng thẳng theo từng mối quan hệ ảnh hưởng phản hồi; gắn bó cập nhật vào hồ sơ con/bạn đời hiện có. Bản lưu cũ được bổ sung trạng thái khi dùng, không đổi tên hay tuổi người thân.
-- Kiểm tra 4 biến thể đời thực, mọi lựa chọn mới, tiền, người đã mất/đổi bạn đời và đối chiếu nguyên vẹn 9 cuộc đời Fantasy với bản trước.
-
-## v8.2.0 — Fantasy thử nghiệm: nhánh tu luyện, kỹ năng và nhịp chơi
-
-- Đồng bộ font với giao diện chính, ghi Fantasy gia tộc (thử nghiệm) trước khi vào; thêm thanh EXP rõ ràng ở khu trung tâm và bản tin chiến sự có lịch sử.
-- Tự chuyển năm mỗi 6 giây, có tạm dừng và tốc độ 1×/2×/4×. Dừng khi có sự kiện, trận đấu, đọc nhật ký cũ, chuyển tab hoặc rời Fantasy. Giữ vị trí cuộn khi dựng lại giao diện; nhật ký một cột, hỗ trợ cuộn và bàn phím.
-- Chọn một con đường chiến đấu từ 6 tuổi (Hắc ma pháp từ 16), chỉ mở nhánh tu luyện/lĩnh ngộ đó. Rèn khí và Dược thuật là nhánh chung. Bản lưu cũ giữ nền tảng, kỹ năng và điểm; người chơi tự chọn nhánh chiến đấu.
-- Kỹ năng chiến đấu cấp 1–5: hệ số nền 100%, 112%, 124%, 136%, 148%; nâng cấp có phí điểm, lượt và yêu cầu cấp nhân vật. Mô tả riêng hiệu ứng, ma lực, cảnh giới và giới hạn; hệ số áp vào chiến đấu thật. Kỹ năng nghề tối đa 1 cấp, không có hệ số sát thương.
-- Chặn thao tác lựa chọn từ nút cũ, dọn câu hỏi đã giải quyết trong bản lưu và chống lặp chủ đề nhập trong sáu năm.
-
-## v8.1.0 — Thế cuộc Fantasy và chiến tranh gia tộc
-
-- Thêm năm nguồn Aurelia trên Hugging Face, xử lý 715.460 bản ghi thuộc các phân vùng đã chọn; giữ revision, checksum và ghi công. Dữ liệu được tổng hợp thành thuộc tính/tần suất, không đếm số dòng thành truyện chơi được.
-- Thêm trạng thái vùng, quan hệ từng cặp gia tộc, tộc trưởng/kế nhiệm, chiến tranh nhiều năm, hậu cần, hộ vệ, nhiệm vụ mặt trận, đình chiến, hiệp ước, cứu trợ và giá chợ theo hoàn cảnh.
-- Bổ sung các cảnh chính trị viết tiếng Việt theo tuổi, địa vị và điều kiện hiện tại; hồ sơ đối chất, thiếu tài nguyên, di tản, trạm dược, tranh quyền và giao lưu. Trẻ em chỉ chọn việc của bản thân.
-- Chặn chiếm đất lúc hòa bình, chiến tranh từ xa, phá đình chiến, trùng mặt trận, lặp thưởng cứu trợ, thiếu tài nguyên, cảnh sai địa điểm và gửi dân về vùng còn đánh nhau. Lưu 8.0.0 được nâng cấp trong chế độ Fantasy.
-- Chi tiết: docs/FANTASY-POLITICS.md. Chế độ đời thực và bản lưu của chúng được giữ riêng.
-
-## v8.0.0 — Góc nhìn nhân vật và thế giới Fantasy gia tộc
-
-- Hardcore: giai đoạn 0–2 tuổi chỉ có quan sát và tác động chăm sóc tự động, không đưa quyết định của bố mẹ cho người chơi. Từ 3 tuổi, lựa chọn là hành động của trẻ: nói điều mình cần, nhờ giúp, tự thử, học, nghỉ hoặc im lặng. Người lớn có thể từ chối tùy áp lực và phản ứng của họ; lựa chọn của trẻ không tự rút quỹ gia đình hay ra lệnh người lớn phải thay đổi. Cập nhật cả sự kiện đang mở trong bản lưu cũ.
-- Thêm **Fantasy gia tộc** ở cạnh Việt Nam / Toàn thế giới. Dùng engine, trạng thái và khóa lưu riêng; có hồ sơ, xuất thân, cha mẹ, hôn nhân, con, tử vong và truyền đời từ sơ sinh. Không nạp nghề nghiệp, tiền tệ hoặc biến cố đời thực vào cuộc đời Fantasy.
-- Sáu xuất thân, 12 gia tộc, 20 vùng đất, tước từ thường dân tới công tước và tám cảnh giới sức mạnh. Tước gia đình, tước cá nhân, chức trong hội nghề và sức chiến đấu được theo dõi riêng. Có xác nhận kế vị khi trưởng thành, không cho trẻ cai trị chỉ vì sinh vào nhà quý tộc.
-- Kiếm kỹ, ma pháp, hắc ma pháp, rèn khí và dược thuật; 19 kỹ năng có điều kiện trước/sau; luyện tập giới hạn theo năm, học cùng thầy, học bổng và xin hỗ trợ gia tộc do NPC xét. Hắc thuật tăng tà nhiễm, có thanh tẩy và hậu quả nếu lạm dụng.
-- Bản đồ di chuyển có chi phí, giới hạn tuổi / cảnh giới, giao tranh theo lượt, tiêu hao ma lực, khắc hệ, thủ thế, trói, phá giáp, hồi phục, rút lui và tử trận. Quái cho kinh nghiệm, tiền, vật liệu và đôi khi trang bị; không có thưởng khi rút chạy. Có giới hạn để không trói đối thủ vô hạn hay nhận thưởng lặp.
-- Thu thập, giao thương có chênh lệch mua/bán, chế tác, trang bị rơi, khắc phù, nhiệm vụ có tiến độ và nộp tài nguyên thật. Năm hội nghề có điều kiện gia nhập, thâm niên, chức bậc và phụ cấp. Có tranh chấp tài nguyên, chiến dịch chiếm lãnh địa, tái thiết, ngoại giao và biến động biên giới làm đổi chủ lãnh thổ.
-- Nhập đủ 3.280 bản ghi linh thú Anh–Nga, 3.750 tương tác NPC, 202 mô tả địa hình, 5 nhiệm vụ tiếng Bồ Đào Nha và 2.996 mô-típ giữ lại từ 3.072 hội thoại tổng hợp. Năm nguồn Hugging Face có thẻ MIT; chuyển thể thuộc tính và chủ đề sang tiếng Việt, không tuyên bố đã dịch nguyên văn mọi đoạn. Bản nguồn, checksum, công cụ tái tạo và ghi công được lưu; dữ liệu không được thực thi thành mã.
-- Giữ đúng cha/mẹ lúc con sinh ra khi người chơi có bạn đời mới; di sản chỉ được nhận sau lúc cha/mẹ qua đời và khi con đủ tuổi. Đời con không kế thừa cấp chiến đấu. Có xuất bản lưu JSON và bách khoa linh thú có tìm kiếm / phân trang.
-- Thêm kiểm thử hàng trăm vòng đời Fantasy, mọi nhánh truyện, cây kỹ năng, chiến đấu, vật phẩm, tài nguyên, truyền đời, lưu giữa trận, tách chế độ và luồng giao diện. Giữ đối chiếu 12 cuộc đời Thường với bản gốc trước các cập nhật Hardcore.
 
 ## v7.7.1 — Hardcore theo gia cảnh, luyện tài năng thể thao và training esports
 

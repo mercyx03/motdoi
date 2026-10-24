@@ -1,0 +1,7 @@
+const assert=require('assert'),G=require('./hardcore-isolation').gameContext(),E=G.E;let n=0;function ok(x,s){assert(x,s);n++;}function life(){let l=E.createLife({mode:'vn',seed:12624,noOrphan:true});Object.assign(l,{age:30,school:null,pending:[],indep:true,money:l.base*10});l.flags.military=0;l.st.hea=100;return l;}
+let l=life();l.indep=false;l.school='uni';l.schoolEnd=40;l.money=-l.base*100;E.finishYear(l);ok(l.money>=-l.base*4,'dependent adult student receives existing debt relief too');
+l=life();l.school='uni';l.uniName=null;l.uniCity='Hà Nội';let messages=[];E.STUDY121.relocate(l,t=>messages.push(t));ok(messages.length===0,'legacy university without school name is not a named relocation');
+l=life();E.startJob(l,'quan_doi',()=>0,()=>{},true);l.birthYear=2031-l.age;ok(!E.DEC.anniversary122.valid(l,{}),'ceremony not available outside named anniversary');l.birthYear=2030-l.age;ok(E.DEC.anniversary122.valid(l,{}),'ceremony available on anniversary');
+l=life();l.age=18;l.edu=3;l.lang={};let state=E.EDUCATION54.state(l);state.wishes=[{school:'ftu',major:'eco'}];let key=E.DEC.study_wishes54.auto(l,{opts:[{k:'submit'},{k:'remove_0'}]},()=>0);ok(key==='remove_0','automatic wishes remove unavailable language requirement instead of retrying forever');
+for(let i=0;i<90;i++){l=E.createLife({mode:'vn',seed:51000+i});if(l.fam.elite)ok(!['cán bộ nhà nước','sĩ quan quân đội'].includes(l.fam.fJob),'family tradition never replaces existing elite profession');}
+console.log('Review fixes: '+n+' checks passed.');

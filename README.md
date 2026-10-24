@@ -9,7 +9,7 @@ Trang web hoàn toàn tĩnh (HTML/CSS/JS thuần, không cần máy chủ, khôn
 
 **Cập nhật v7.7.1:** biến cố Hardcore phân theo gia cảnh và nguồn lực thực tế; gia đình có điều kiện gặp áp lực quan hệ và kỳ vọng thay vì thiếu tiền mua đồ thiết yếu. Bỏ lời giải thích cơ chế lặp lại trong tình huống. Ở bảng hành động, tài năng thể thao có **Luyện tập / nâng kỹ năng** từ 6 tuổi; tuyển thủ esports đang thi đấu có **Training phản xạ / chiến thuật / phong độ**, mỗi năm một đợt. Chạy `node tests/update770.js` để kiểm tra các nhánh mới.
 
-**Fantasy gia tộc (v8.0.0):** chế độ thứ ba, tách bản lưu và engine khỏi Việt Nam / Toàn thế giới. Có vòng đời từ sơ sinh, 12 gia tộc, 20 vùng, tước quý tộc, kiếm kỹ / ma pháp / hắc thuật, bản đồ săn linh thú, chiến đấu theo lượt, vật phẩm, chế tác, hội nghề và chiến tranh lãnh địa. Kho dữ liệu chuyển thể từ 5 nguồn Hugging Face gồm 3.280 linh thú, 3.750 tương tác NPC, 202 mô tả địa hình, 5 tuyến nhiệm vụ và 2.996 mô-típ hội thoại. Xem [hướng dẫn Fantasy](docs/FANTASY.md) và [nguồn / cách Việt hóa](docs/fantasy-sources/README.md).
+
 
 **Hardcore v8.0.0:** sơ sinh không chọn thay bố mẹ. Từ lúc đủ tuổi, các lựa chọn là hành động của chính trẻ; xin giúp đỡ không buộc người lớn phải đồng ý. Không rút quỹ gia đình theo lựa chọn của trẻ.
 
@@ -67,9 +67,9 @@ Phải in ra `✓ Tất cả bài kiểm thử hồi quy đều đạt.` Bộ te
 ### Cách 1 — Kéo thả trên dash.cloudflare.com (dễ nhất)
 1. Vào https://dash.cloudflare.com → **Workers & Pages** → **Create** → tab **Pages** → **Upload assets**.
 2. Đặt tên dự án, ví dụ `mot-doi` → **Create project**.
-3. Chạy `npm run build` (tạo thư mục `dist`), rồi kéo thả **thư mục `dist`** → **Deploy site**.
+3. Chạy `npm ci` khi mới tải source, sau đó `npm run build` (tạo thư mục `dist`), rồi kéo thả **thư mục `dist`** → **Deploy site**.
 
-Cập nhật bản mới: chạy `npm run build`, vào dự án → **Create deployment** → kéo thả lại thư mục `dist`. (Kéo thả `public` vẫn chạy được, chỉ tải chậm hơn vì phải tải hơn 80 file js riêng lẻ.)
+Cập nhật bản mới: chạy `npm run build`, vào dự án → **Create deployment** → kéo thả lại thư mục `dist`. Chỉ tải `dist` hoặc `dist.zip`; không tải `public` vì đó là mã nguồn phát triển.
 Người chơi cũ không mất dữ liệu: khóa lưu trữ được giữ nguyên và dữ liệu cũ tự nâng cấp.
 
 ### Cách 2 — Dòng lệnh (Wrangler)
@@ -116,10 +116,6 @@ T('ten_tinh_huong', function (l, a) { return a >= 18; }, 0.05, 3); // điều ki
 ## Về số liệu
 Số liệu được làm tròn từ Tổng cục Thống kê (Niên giám 2023, Tổng điều tra 2019), Nghị quyết 202/2025/QH15, UN World Population Prospects 2024, World Bank; tỷ giá xấp xỉ 2025. Lương các nghề, tỷ lệ đô thị và thu nhập từng tỉnh là ước tính. Đây là trò chơi để suy ngẫm, không phải công cụ thống kê.
 
-### Fantasy 8.1.0 — Thế cuộc
-
-Thêm chuỗi chiến tranh gia tộc có biên giới, hậu cần, hiệp ước, đình chiến, dân di tản và tái thiết; biến cố theo tuổi/quyền hạn và trạng thái địa phương. Dữ liệu tổng hợp từ năm nguồn Aurelia bổ sung, không tính mỗi dòng nguồn là một truyện riêng. Xem [hướng dẫn và nguồn](docs/FANTASY-POLITICS.md).
-
 ### Gia đình và tình cảm 8.3.0
 
-Áp dụng cho Việt Nam/Toàn thế giới, cả Thường và Hardcore. Trong Việc bạn muốn làm, mở Gia đình để giao lưu với từng con hoặc nói chuyện với bố/mẹ; mở Tình cảm để trò chuyện với người yêu/bạn đời. Xem [hướng dẫn và điều kiện](docs/FAMILY-830.md). Fantasy giữ nguyên.
+Áp dụng cho Việt Nam/Toàn thế giới, cả Thường và Hardcore. Trong Việc bạn muốn làm, mở Gia đình để giao lưu với từng con hoặc nói chuyện với bố/mẹ; mở Tình cảm để trò chuyện với người yêu/bạn đời. Xem [hướng dẫn và điều kiện](docs/FAMILY-830.md).

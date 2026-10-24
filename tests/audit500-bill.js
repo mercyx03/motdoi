@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const {E,U,W}=G,T=E.TRAVEL50,D=E.DATE50,L=E.LIFESTYLE,B=E.LEISURE_BILL;let n=0;
 function ok(v,t){assert.ok(v,t);n++;}function near(a,b,t){ok(Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b)),t);}
 function life(country='VN',seed=50001){const l=E.createLife({mode:country==='VN'?'vn':'world',country,seed});l.age=30;l.alive=true;l.indep=true;l.school=null;l.pending=[];l.flags={};l.job=null;l.money=L.unit(l,10000);l.yr={items:[]};l.partner={name:'Minh An',age:28,alive:true,since:28,status:'dating',sex:'F',inc:L.unit(l,30),close:60};return l;}

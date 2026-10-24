@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm'), assert = require('assert');
 const root = path.join(__dirname, '..', 'public'), html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-for (const [, file] of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g)) if (!['js/app.js', 'js/music.js', 'js/card.js'].includes(file)) vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
+for (const [, file] of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g)) if (!['js/app.js', 'js/music.js', 'js/card.js', 'js/account.js'].includes(file)) vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
 const { E, U } = globalThis.G;
 let checks = 0;
 function ok(x, label) { assert.ok(x, label); checks++; }

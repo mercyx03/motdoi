@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 
 const {E,W}=G,T=E.WORLD_STORIES;let n=0;function ok(x,t){assert.ok(x,t);n++;}
 function life(code='US',age=30){const l=E.createLife({mode:'world',country:code,seed:47001});l.age=age;l.alive=true;l.pending=[];l.flags={};l.abroad=null;l.jailUntil=null;l.school=age<18?'upper':null;l.job={id:'van_phong',rank:0,yrs:1,rep:50};l.money=Math.max(l.base,1);l.urban=true;l.partner={name:'An',age:30,alive:true,close:50};l.kids=[{name:'B',born:age-7,alive:true,close:50}];l.fam.mAlive=true;return l;}

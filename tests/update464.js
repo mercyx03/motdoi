@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const {E,U,VN}=G,T=E.HOMETOWN;let n=0;function ok(x,t){assert.ok(x,t);n++;}
 function life(name='Hà Nội',other='Quảng Nam',variant='63'){const l=E.createLife({mode:'vn',variant,oldProv:name,seed:464001});l.age=30;l.school=null;l.indep=true;l.pending=[];l.flags={};l.abroad=null;l.movedTo=null;l.cityStudent=null;l.money=100;l.partner={name:'An',sex:l.sex==='M'?'F':'M',age:29,alive:true,status:'dating',since:28,homeCountry:'VN',home63:other,job:'kế toán',inc:100,close:60};T.partner(l,l.partner);return l;}
 function run(l,d,k){l.pending=[d];return E.resolve(l,k);}

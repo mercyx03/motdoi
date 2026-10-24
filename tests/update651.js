@@ -5,7 +5,7 @@ const assert=require('assert'),fs=require('fs'),path=require('path');let n=0;fun
  const get=async q=>{const r=await worker.fetch(new Request(origin+'/api/reviews'+q),env);return {status:r.status,data:await r.json()};};
  // 150 đánh giá: sao 1..5 xoay vòng, một nửa có nội dung
  await get('');
- for(let i=0;i<150;i++){if(i%5===0){await db.prepare("INSERT INTO game_reviews(voter_hash,stars,created_at,updated_at,review_text) VALUES (?,1,?,?, '')").bind('legacy-one-'+i,1000+i,1000+i).run();}else{const r=await post({voter:i.toString(16).padStart(64,'0'),stars:i%5+1,review:''});ok(r.status===200,'saved '+i);}}
+ for(let i=0;i<150;i++){if(i%5<3){await db.prepare("INSERT INTO game_reviews(voter_hash,stars,created_at,updated_at,review_text) VALUES (?,?,?,?, '')").bind('legacy-low-'+i,i%5+1,1000+i,1000+i).run();}else{const r=await post({voter:i.toString(16).padStart(64,'0'),stars:i%5+1,review:''});ok(r.status===200,'saved '+i);}}
  let r=await get('?offset=0');ok(r.data.total===150&&r.data.matched===150&&r.data.reviews.length===20,'mặc định 20 dòng, tổng 150');
  r=await get('?offset=0&stars=5');ok(r.data.matched===30&&r.data.reviews.length===20&&r.data.reviews.every(x=>x.stars===5)&&r.data.total===150,'lọc 5 sao: chỉ trả review 5 sao, vẫn giữ tổng và phân bố');
  r=await get('?offset=20&stars=5');ok(r.data.reviews.length===10&&r.data.reviews.every(x=>x.stars===5),'lọc 5 sao trang 2');

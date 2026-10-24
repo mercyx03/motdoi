@@ -1,0 +1,16 @@
+# Một Đời — Game Mô Phỏng Cuộc Đời
+
+> Một Đời là trò chơi mô phỏng cuộc đời trực tuyến, với các lựa chọn ảnh hưởng đến hành trình của nhân vật. Chơi ngay trên trình duyệt tại https://motdoi.site/.
+
+## Trang chính
+
+- [Chơi Một Đời](https://motdoi.site/): Trang chủ và trò chơi mô phỏng cuộc đời.
+- [Nhật ký cập nhật](https://motdoi.site/updates.html): Tin tức và thay đổi của trò chơi.
+- [Đánh giá và góp ý](https://motdoi.site/reviews.html): Phản hồi của người chơi.
+
+## Thông tin
+
+- Tên: Một Đời
+- Thể loại: Game mô phỏng cuộc đời, lựa chọn tương tác
+- Nền tảng: Trình duyệt web
+- Website: https://motdoi.site/

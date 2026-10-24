@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm'), assert = require('assert');
 const root = path.join(__dirname, '..', 'public'), html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-for (const [, file] of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g)) if (!['js/app.js', 'js/music.js', 'js/card.js'].includes(file)) vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
+for (const [, file] of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g)) if (!['js/app.js', 'js/music.js', 'js/card.js', 'js/account.js'].includes(file)) vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
 const E = G.E; let n = 0; const ok = (x, t) => { assert.ok(x, t); n++; };
 const r = () => 0.1;
 function life() { const l = E.createLife({ mode: 'vn', seed: 45401, gender: 'M' }); l.age = 12; l.pending = []; l.money = 10; l.game = 'Valorant'; return l; }

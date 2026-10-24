@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E,F=E.LIFE51,L=E.LOCAL51;let n=0;function ok(x,t){assert.ok(x,t);n++;}
 function life(seed=510,variant='63'){const l=E.createLife({mode:'vn',seed,variant});l.age=28;l.indep=true;l.money=5000;l.pending=[];l.school=null;l.st.hea=100;return l;}
 function open(l,id,arg){const d=E.DEC[id].make(l,()=>.5,arg);l.pending=[d];return d;}

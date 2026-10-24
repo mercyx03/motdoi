@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E,F=E.FAMILY53;let n=0;function ok(v,t){assert.ok(v,t);n++;}function near(a,b,t){ok(Math.abs(a-b)<1e-7,t);}
 function life(age=6){const l=E.createLife({mode:'vn',seed:530});l.age=35;l.indep=true;l.pending=[];l.money=10000;l.school=null;l.kids=[{name:'Nguyễn An',sex:'M',born:35-age,alive:true,study:50,close:70}];F.init(l);return l;}
 function year(l){F.yearHook(l,()=>.5,()=>{},l.age);} // gọi đúng hook của module nuôi con, không phụ thuộc thứ tự nạp module

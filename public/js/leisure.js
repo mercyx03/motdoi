@@ -272,7 +272,7 @@
   // ===================================================================
   function rel(l) {
     var s = l.religion || '';
-    if (/Công giáo|Kitô|Chính Thống/.test(s)) return 'cg'; if (/Tin Lành/.test(s)) return 'tl'; if (/Hòa Hảo/.test(s)) return 'hh'; if (/Phật/.test(s)) return 'pg';
+    if (/Công giáo|Kitô|Chính Thống|Anh giáo/.test(s)) return 'cg'; if (/Tin Lành/.test(s)) return 'tl'; if (/Hòa Hảo/.test(s)) return 'hh'; if (/Phật/.test(s)) return 'pg';
     if (/Cao Đài/.test(s)) return 'cd'; if (/Hồi/.test(s)) return 'hoi'; if (/Bà La Môn/.test(s)) return 'blm';
     if (/Hindu/.test(s)) return 'hin'; if (/Sikh/.test(s)) return 'sik'; if (/Do Thái/.test(s)) return 'dt'; if (/Đạo giáo/.test(s)) return 'dao';
     return isVN(l) || /tổ tiên|truyền thống|dân gian/.test(s) ? 'none' : 'free';

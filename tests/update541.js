@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),vm=require('vm'),path=require('path'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E;let n=0;function ok(v,t){assert.ok(v,t);n++;}
 function life(spend){let l=E.createLife({mode:'vn',seed:541});l.age=28;l.school=null;l.indep=true;l.money=10000;l.pending=[];l.spend=spend;l.partner={name:'Nguyễn An',age:27,sex:'F',status:'dating',alive:true,close:80};return l;}
 for(const spend of ['normal','save','lavish']){

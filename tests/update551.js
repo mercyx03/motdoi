@@ -1,4 +1,4 @@
-const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.readFileSync('public/index.html','utf8');for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync('public/'+f,'utf8'));
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.readFileSync('public/index.html','utf8');for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync('public/'+f,'utf8'));
 const E=G.E,W=E.WILL70;let n=0;function ok(x,t){assert.ok(x,t);n++;}function life(age=70){const l=E.createLife({mode:'vn',seed:551});l.age=age;l.school=null;l.indep=true;l.money=100;l.pending=[];l.kids=[];l.partner=null;return l;}
 function save(l,plan,note='Lời nhắn cho gia đình'){const d=E.act(l,'di_chuc70');d.data.plan=plan;d.data.note=note;E.resolve(l,'save');return d;}
 {

@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E,U=G.U;let checks=0;function ok(x,t){assert.ok(x,t);checks++;}
 function life(seed=463){const l=E.createLife({mode:'vn',seed,gender:seed%2?'M':'F'});l.age=28;l.birthYear=2032;l.indep=true;l.pending=[];l.school=null;l.flags={};l.abroad=null;l.money=1000;l.st.hea=100;l.st.soc=60;l.st.kno=70;E.startJob(l,'dien_vien',()=>.5,()=>{});l.fame=500000;return l;}
 function open(l,k,manual=false){const d=E.DEC.gameshow.make(l,()=>U.rand(l));d.manual=manual;l.pending=[d];E.resolve(l,k);return l.pending[0];}

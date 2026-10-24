@@ -1,3 +1,4 @@
+const ADMIN_EVENT_CATALOG = /* admin-catalog */ [];
 /* Cloudflare Pages advanced mode: chỉ đọc bảng giá công khai; không nhận lệnh giao dịch thật. */
 const VN = ['E1VFVN30', 'VCB', 'FPT', 'VNM', 'HPG', 'MWG', 'GAS'];
 const US = ['SPY', 'AAPL', 'MSFT', 'NVDA', 'KO', 'TM'];
@@ -68,7 +69,8 @@ async function reviews(request, env, url) {
     data = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(buffer));
   } catch { return ratingJson(400, { ok: false, code: 'INVALID_JSON' }); }
   if (!data || !Number.isInteger(data.stars) || data.stars < 1 || data.stars > 5 || typeof data.voter !== 'string' || !/^[a-f0-9]{64}$/.test(data.voter)) return ratingJson(400, { ok: false, code: 'INVALID_RATING' });
-  if (data.stars === 1) return ratingJson(400, { ok: false, code: 'ONE_STAR_BLOCKED' });
+
+  if (data.stars <= 2) return ratingJson(400, { ok: false, code: 'LOW_STARS_BLOCKED', message: 'Nếu bạn không thích game thì mời bạn đi ra thay vì cố đánh giá dìm hàng công sức của 1 người hết lòng lắng nghe mọi góp ý và điều chỉnh theo ý của bạn.' });
   if (data.review != null && (typeof data.review !== 'string' || data.review.trim())) return ratingJson(400, { ok: false, code: 'COMMENTS_MOVED' });
   const review = '';
   const now = Date.now(), ip = request.headers.get('CF-Connecting-IP');
@@ -210,6 +212,7 @@ async function account(request, env, url) {
     ]);
     return accJson(200,{ok:true,...result[0].results[0],items:result[1].results});
   }
+  if (action === 'admin_events') { if(me.role!=='admin')return accJson(403,{ok:false,code:'FORBIDDEN'}); return accJson(200,{ok:true,entries:ADMIN_EVENT_CATALOG}); }
   if (action === 'me') return accJson(200, { ok: true, username: me.username, displayName: me.displayName, role: me.role });
   if (action === 'profile') { const name = cleanDisplayName(body.displayName); if (!name) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' }); await db.prepare('UPDATE game_accounts SET display_name = ? WHERE id = ?').bind(name, me.id).run(); return accJson(200, { ok: true, username: me.username, displayName: name, role: me.role }); }
   if (action === 'logout') { await db.prepare('DELETE FROM game_sessions WHERE token_hash = ?').bind(me.th).run(); return accJson(200, { ok: true }); }
@@ -244,7 +247,8 @@ function cleanDisplayName(value) {
   return /^[\p{L}\p{N}\p{M} ._'’-]{2,32}$/u.test(name) && !/^(admin|administrator|quản trị viên)$/iu.test(name) ? name : null;
 }
 async function accountRole(db, id) { const row = await db.prepare("SELECT role FROM game_account_roles WHERE account_id = ?").bind(id).first(); return row && row.role === 'admin' ? 'admin' : 'member'; }
-const COMMENT_SELECT = "SELECT c.id, c.parent_id AS parentId, c.body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name, ''), 'Người chơi đã rời đi') AS displayName, CASE WHEN a.id IS NOT NULL AND r.role = 'admin' THEN 'admin' ELSE 'member' END AS role FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id LEFT JOIN game_account_roles r ON r.account_id = a.id";
+const PINNED_COMMENT_ID = "(SELECT MIN(pc.id) FROM game_update_comments pc JOIN game_account_roles pr ON pr.account_id = pc.account_id AND pr.role = 'admin' WHERE pc.parent_id IS NULL)";
+const COMMENT_SELECT = "SELECT CASE WHEN c.id = "+PINNED_COMMENT_ID+" THEN 1 ELSE 0 END AS pinned, c.id, c.parent_id AS parentId, c.body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name, ''), 'Người chơi đã rời đi') AS displayName, CASE WHEN a.id IS NOT NULL AND r.role = 'admin' THEN 'admin' ELSE 'member' END AS role FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id LEFT JOIN game_account_roles r ON r.account_id = a.id";
 async function comments(request, env, url) {
   if (!['GET','POST'].includes(request.method)) return accJson(405,{ok:false,code:'METHOD_NOT_ALLOWED'});
   const db=env.REVIEWS_DB;if(!db)return accJson(503,{ok:false,code:'COMMENTS_NOT_CONFIGURED'});
@@ -261,9 +265,9 @@ async function comments(request, env, url) {
       if(!result[0].results.length)return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
       return accJson(200,{ok:true,root:result[0].results[0],replies:result[1].results,total:result[2].results[0].count});
     }
-    const page = 'SELECT id FROM game_update_comments WHERE parent_id IS NULL ORDER BY id DESC LIMIT 10 OFFSET ?';
+    const page = 'SELECT id FROM game_update_comments WHERE parent_id IS NULL ORDER BY (id = '+PINNED_COMMENT_ID+') DESC, id DESC LIMIT 10 OFFSET ?';
     const result=await db.batch([
-      db.prepare(COMMENT_SELECT.replace('SELECT c.id,','SELECT (SELECT COUNT(*) FROM game_update_comments replies WHERE replies.parent_id = c.id) AS replyCount, c.id,')+' WHERE c.id IN ('+page+') ORDER BY c.id DESC').bind(Number(raw)),
+      db.prepare(COMMENT_SELECT.replace('SELECT CASE','SELECT (SELECT COUNT(*) FROM game_update_comments replies WHERE replies.parent_id = c.id) AS replyCount, CASE')+' WHERE c.id IN ('+page+') ORDER BY pinned DESC, c.id DESC').bind(Number(raw)),
       db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id IS NULL'),
       db.prepare(COMMENT_SELECT+' WHERE c.id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY parent_id ORDER BY id ASC) AS pos FROM game_update_comments WHERE parent_id IN ('+page+')) WHERE pos <= '+(url.searchParams.get('preview')==='1'?3:20)+') ORDER BY c.id ASC').bind(Number(raw))
     ]);

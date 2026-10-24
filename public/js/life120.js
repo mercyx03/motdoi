@@ -1,0 +1,13 @@
+/* Shared state and guarded incidents for place, education and institutions. */
+(function(G){'use strict';var E=G.E,H=E.H,X=E.UPDATE110;
+function s(l){return l.flags.world120||(l.flags.world120={});}function p(l){return l.flags.world120||{};}function adult(l){return X.reason(l,18);}function job(l){return l.job?E.resolveJob(l.job.id):'';}function officer(l){return !l.retired&&['quan_doi','cong_an'].includes(job(l));}function once(l,k,min){var w=X.reason(l,min==null?18:min);return w!==true?w:p(l)[k]===l.age?'Đã thực hiện năm nay':true;}
+function province(l){return l.prov&&l.prov.old||'';}
+function move(l,name,log,reason){var dest=G.VN.byName[name];if(!dest||!H.isVN(l)||l.abroad)return false;var old=province(l);if(old===dest.name)return true;if(l.ownHouse&&!s(l).houseLocation)s(l).houseLocation=old;var np=G.VN.P34.find(function(p){return p.name===dest.newName;});l.prov={old:dest.name,oldId:dest.id,neu:np.name,neuId:np.id,kind:np.kind,region:dest.region,merged:np.members.length>1};l.provLabel=l.variant==='63'?dest.name:np.name;l.provNote='';l.place=dest.city;l.city=dest.city;l.urban=true;l.region=dest.region;l.coast=dest.coast;l.wealthIdx=dest.wealth;l.gdp=G.VN.STATS.gdpPPP*dest.wealth;delete l.cityWealth;l.fin=null;H.setBase(l);log(reason+': chuyển từ '+(old||'nơi ở cũ')+' đến '+dest.name+'. Nhà đất đã sở hữu vẫn được giữ.','neutral');return true;}
+function incident(id,title,why,text,rows){X.menu(id,title,why,text,rows,18);}
+function queue(l,id,r,arg){if(!E.DEC[id]||l.pending.some(function(d){return d.id===id;}))return false;var d=E.DEC[id].make(l,r,arg);d.manual=true;l.pending.push(d);return true;}
+function event(id,when,prob,arg){E.HOOKS.year.push(function(l,r,log){var q=s(l);if(!l.alive||q[id+'At']===l.age||!when(l)||r()>=prob)return;q[id+'At']=l.age;queue(l,id,r,arg?arg(l,r):{});});}
+function wrap(id,fn){var D=E.DEC[id];if(!D)return;var apply=D.apply;D.apply=function(l,d,k,r,log){return fn.call(this,apply,l,d,k,r,log);};}
+var moveToCity=H.moveToCity;H.moveToCity=function(l,dest){if(H.isVN(l)&&!l.abroad){var p=G.VN.byName[dest]||G.VN.P63.find(function(p){return p.city===dest;});if(p)return move(l,p.name,function(){},'Chuyển nơi ở');}return moveToCity.apply(this,arguments);};
+['house','doi_nha'].forEach(function(id){wrap(id,function(old,l,d,k,r,log){var previous=l.houseVal,owned=l.ownHouse,out=old(l,d,k,r,log);if(l.ownHouse&&(!owned||l.houseVal!==previous))s(l).houseLocation=province(l);if(!l.ownHouse)delete s(l).houseLocation;return out;});});
+E.WORLD120={s:s,p:p,adult:adult,job:job,officer:officer,once:once,move:move,province:province,incident:incident,queue:queue,event:event,wrap:wrap};
+})(globalThis.G);

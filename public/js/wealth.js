@@ -373,9 +373,10 @@
     // nhà cho thuê: giá theo thị trường đất, tiền thuê theo năm; thỉnh thoảng bỏ trống
     var empties = [];
     (l.props || []).forEach(function (p) {
+      if (p.residential112) return; // Homes kept for living never produce rent.
       var g = { 'bình thường': 0.03, 'sốt': 0.15, 'vỡ bong bóng': -0.2, 'đóng băng': -0.02 }[mkt] || 0.02;
       p.v = Math.max(p.basis * 0.3, p.v * (1 + g + U.normal(r) * 0.03));
-      var occupied = ch(r, 0.12) ? 0.4 : 1;
+      var occupied = ch(r, E.assetTeam123 && E.assetTeam123(l) ? 0.06 : 0.12) ? 0.4 : 1;
       if (occupied < 1) { p.empty++; empties.push(p.n); }
       H.cash(l, p.v * p.y * occupied * E.difficulty(l).passive, 'Tiền cho thuê ' + p.n);
       H.cash(l, -p.v * .012, 'Bảo trì và quản lý ' + p.n);
@@ -398,9 +399,11 @@
       var renewal = v.cap * .025;
       var manager = a >= 65 || l.job ? rev * .03 : 0;
       var cost = rev * B.vc + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
+      var operatingProfit = rev - cost;
       if (rev > cost) cost += (rev - cost) * (1 - E.difficulty(l).passive);
+      if (E.economy114Business && rev > cost) cost += rev - cost - E.economy114Business(l, rev - cost, v.cap);
       var prof = rev - cost, rate = prof / Math.max(1e-9, v.cap);
-      v.last = { rev: rev, cost: cost, prof: prof };
+      v.last = { rev: rev, cost: cost, prof: prof, operatingProfit: operatingProfit, capitalAtStart: v.cap };
       H.cash(l, prof, prof >= 0 ? 'Lãi ' + v.n : 'Lỗ ' + v.n);
       if (prof >= R * B.mg * 0.8) { v.good++; v.bad = 0; } else if (prof < 0) { v.bad++; v.good = 0; } else { v.good = Math.max(0, v.good - 1); }
       // tay nghề quản lý khá lên theo năm (hoặc mất khách dần nếu bỏ bê)

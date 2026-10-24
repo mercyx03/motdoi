@@ -116,6 +116,7 @@ ok(nkTried === 160 && artIn > 30 && artIn < 150 && refused > 10, 'thi nÄƒng khiá
     while (l.alive && g++ < 70) {
       E.beginYear(l, { auto: true });
       if (l.age === 15 && l.pending.some(d => d.id === 'hs')) { const d = l.pending.find(x => x.id === 'hs'); if (d.opts.some(o => o.k === 'work')) { l.pending = [d]; E.resolve(l, 'work'); } }
+      if(l.age>=20&&!l._requestedGdtx&&E.DEC.bo_tuc.valid(l)){l._requestedGdtx=true;const request=E.DEC.bo_tuc.make(l,H.rf(l));request.manual=true;E.DEC.bo_tuc.apply(l,request,l.edu===2?'thpt':'lien',H.rf(l),function(t,k){l.log.push({a:l.age,t,k});});}
       let k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l));
       if (l.alive) E.finishYear(l); k = 0; while (l.pending.length && l.alive && k++ < 30) E.resolve(l, E.autoKey(l)); E.endYear(l);
       if (l.flags.gdtx && !l._j) { l._j = 1; joined++; }

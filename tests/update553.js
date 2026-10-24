@@ -1,4 +1,4 @@
-const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.readFileSync('public/index.html','utf8');for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync('public/'+f,'utf8'));
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.readFileSync('public/index.html','utf8');for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync('public/'+f,'utf8'));
 const E=G.E;let n=0;function ok(x,t){assert.ok(x,t);n++;}function life(id,rank=0){const l=E.createLife({mode:'vn',seed:553});l.age=35;l.school=null;l.retired=false;l.indep=true;l.pending=[];l.job={id,rank,yrs:0};return l;}
 const economy=E.EVENTS.find(x=>x.run.toString().includes('công ty cắt giảm nhân sự'));ok(economy,'economic event found');
 for(const id of Object.keys(E.CAR)){

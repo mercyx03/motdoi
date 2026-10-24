@@ -416,7 +416,7 @@
   // ===================================================================
   var REL_VN = ['Phật giáo', 'Công giáo', 'Tin Lành', 'Cao Đài', 'Phật giáo Hòa Hảo', 'Hồi giáo (Islam)', 'Không theo tôn giáo (thờ cúng tổ tiên)'];
   var REL_W = ['Kitô giáo', 'Hồi giáo', 'Phật giáo', 'Hindu giáo', 'Do Thái giáo', 'Không tôn giáo'];
-  function relKey(s) { s = s || ''; return /Công giáo|Kitô|Chính Thống/.test(s) ? 'cg' : /Tin Lành/.test(s) ? 'tl' : /Hòa Hảo/.test(s) ? 'hh' : /Phật/.test(s) ? 'pg' : /Cao Đài/.test(s) ? 'cd' : /Hồi/.test(s) ? 'hoi' : /Hindu/.test(s) ? 'hin' : /Do Thái/.test(s) ? 'dt' : /Bà La Môn/.test(s) ? 'blm' : 'none'; }
+  function relKey(s) { s = s || ''; return /Công giáo|Kitô|Chính Thống|Anh giáo/.test(s) ? 'cg' : /Tin Lành/.test(s) ? 'tl' : /Hòa Hảo/.test(s) ? 'hh' : /Phật/.test(s) ? 'pg' : /Cao Đài/.test(s) ? 'cd' : /Hồi/.test(s) ? 'hoi' : /Hindu/.test(s) ? 'hin' : /Do Thái/.test(s) ? 'dt' : /Bà La Môn/.test(s) ? 'blm' : 'none'; }
   SC('doi_ton_giao', {
     title: 'Tìm hiểu một tôn giáo khác',
     prep: function (l) { var me = relKey(l.religion), L = (isVN(l) && !(l.abroad && l.abroad.perm) ? REL_VN : REL_W).filter(function (x) { return relKey(x) !== me; }); return { cs: L.slice(0, 6) }; },

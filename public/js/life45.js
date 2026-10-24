@@ -75,7 +75,7 @@
   // ===================================================================
   // 4. CHO CON TIỀN: HỎI Ý KIẾN, KHÔNG TRÙNG
   // ===================================================================
-  E.HOOKS.year.forEach(function (h, i) { if (/giftAt/.test(h.toString()) && /mua nhà/.test(h.toString())) E.HOOKS.year[i] = function () { }; });
+  E.HOOKS.year.forEach(function (h, i) { if (h.legacyAutoGift) E.HOOKS.year[i] = function () { }; });
   function giftable(l, a) { return (l.kids || []).filter(function (k) { return k.alive && a - k.born >= 22 && !(k.gotAt != null && a - k.gotAt < 8); }); }
   SC('cho_con_tien', {
     title: 'Giúp con một khoản', valid: function (l) { return giftable(l, l.age).length > 0 && l.money > l.base * 10; },

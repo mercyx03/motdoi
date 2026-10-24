@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E;let n=0;const ok=(x,t)=>{assert.ok(x,t);n++;};
 function life(){const l=E.createLife({mode:'vn',seed:45901,gender:'F'});l.age=12;l.indep=false;l.school='lower';l.money=0;l.base=500/3;l.fam.q=5;l.fam.mAlive=l.fam.fAlive=true;l.fam.noDad=false;l.fam.mInc=l.fam.fInc=100;l.pending=[];l.yr={items:[]};return l;}
 function run(l,id,k,random=()=>.5){l.pending=[E.DEC[id].make(l,random)];return E.resolve(l,k).map(e=>e.t).join(' ');}

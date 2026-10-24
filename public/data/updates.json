@@ -1,6 +1,288 @@
 {
-  "generatedAt": "2026-10-22T23:30:43.203Z",
+  "generatedAt": "2026-10-24T04:59:23.051Z",
   "entries": [
+    {
+      "id": "family-payment126",
+      "publishedAt": "2026-10-24T00:19:00.461971Z",
+      "title": "Cân nhắc trước khoản chi lớn, cùng con bàn chuyện tương lai",
+      "summary": "Thêm xác nhận trước khi chi nhiều tiền, nhập ngân sách đầu tư và hồ sơ định hướng cho con.",
+      "tags": [
+        "Tính năng",
+        "Điều chỉnh"
+      ],
+      "details": [
+        "Game sẽ hỏi lại trước những khoản chi lớn cho con hoặc đầu tư. Nếu bấm nhầm, chọn “Không chắc” để quay lại mà chưa mất tiền.",
+        "Khi mua vàng, cổ phiếu, bạn có thể nhập ngân sách như 500 triệu, 1 tỷ hay 10 tỷ rồi xem lại số lượng trước khi mua.",
+        "Con có tính cách và sở thích riêng. Cha mẹ có thể gợi ý hướng quân đội, kinh doanh, nghệ thuật, giải trí, y học hoặc nghiên cứu; con có thể đồng ý hoặc chọn đường khác.",
+        "Khi con trưởng thành, bạn có thể xem hồ sơ và giới thiệu người phù hợp. Hai người cần thời gian tìm hiểu và tự nguyện kết hôn; ép buộc sẽ khiến quan hệ gia đình xấu đi.",
+        "Sửa một số lỗi ở nguyện vọng đại học, tên trường và khoản nợ sinh hoạt khi chậm tốt nghiệp; giảm thông báo lặp lại."
+      ]
+    },
+    {
+      "id": "study-place121",
+      "title": "Đi học có trường, có nơi ở, có những lần phải học lại",
+      "summary": "Rõ hơn chuyện thi lớp 10, học đại học xa nhà và hoàn thành từng điều kiện ra trường.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Thêm nguyện vọng lớp 10 với trường chuyên có tên, địa chỉ, điểm thi và phương án dự phòng. Không đạt điểm hoặc thiếu chỉ tiêu vẫn có thể lỡ đợt nhập học. Điểm chuẩn là mô phỏng, không dùng thay thông tin tuyển sinh thật.",
+        "Đỗ trường ở địa phương khác có thể phải đổi chỗ ở. Đại học gắn với thành phố của trường; sau khi học xong có thể ở lại tìm việc hoặc về nơi ở cũ. Nhà đất không tự bán khi chuyển đi.",
+        "Có nợ tín chỉ, thiếu chuyên cần, học lại và chậm tốt nghiệp. Bảo vệ công trình còn tranh chấp cần được làm rõ; đã trả đủ tín chỉ vẫn phải đạt các điều kiện ra trường của chương trình.",
+        "Không tự nhắc người trưởng thành quay về học THCS. Học bổ túc vẫn dành cho người thật sự thiếu bằng và tự muốn đăng ký; kiến thức 100 không thay thế bằng cấp. Bằng đã nhận có hồ sơ xác nhận được giữ đúng.",
+        "Giải học sinh giỏi có tiền thưởng khuyến học trong game, không mặc định được cộng điểm lớp 10 ở mọi tỉnh.",
+        "Thêm đồ vật thôi nôi, sở thích ban đầu và sự bồi dưỡng của gia đình. Có thể bật nếp sống học tập, sức khỏe hoặc cân bằng để tự thực hiện một số việc an toàn mỗi năm, trong giới hạn lượt."
+      ],
+      "publishedAt": "2026-10-23T23:56:56.081549Z"
+    },
+    {
+      "id": "service-world122",
+      "title": "Công tác, đi xa và lựa chọn trước mùa bầu cử",
+      "summary": "Thêm hồ sơ phép đi nước ngoài, đơn vị công tác, chương trình ứng cử và tác động chính sách trong mô phỏng.",
+      "tags": [
+        "Tính năng",
+        "Điều chỉnh"
+      ],
+      "details": [
+        "Người đang công tác quân đội, công an phải xin phép chuyến đi riêng. Có nguồn nhiệm vụ đi học, hợp tác quốc tế hoặc huấn luyện gìn giữ hòa bình; quyết định công tác không tự cho phép định cư hay bỏ qua hạn chế xuất cảnh.",
+        "Thêm quyết định tạm hoãn xuất cảnh, hạn chế tái nhập cảnh có thời hạn và quyền đề nghị rà soát. Không tự cấm xuất cảnh chỉ vì có tranh chấp tài sản.",
+        "Hồ sơ sĩ quan có đơn vị, trung đoàn, sư đoàn và địa bàn quân khu minh họa. Có thuyên chuyển địa bàn, bàn giao và đề nghị xem xét hoàn cảnh gia đình; quân hàm không tự đổi vì chuyển đơn vị.",
+        "Bỏ diễu binh khỏi việc thường niên. Đợt tuyển chọn có thể xuất hiện bất ngờ ở các mốc kỷ niệm như 2030, 2045, 2054; có tuyển chọn, huấn luyện và thành tích nếu hoàn thành.",
+        "Có thể đọc chương trình của ứng cử viên hư cấu rồi bỏ phiếu. Kết quả tập thể và gói chính sách được xem xét có thể ảnh hưởng hỗ trợ, chi phí và cơ hội kinh tế; một lá phiếu không tự quyết kết quả. Thêm lấy ý kiến, chỉnh lý và thông qua dự thảo trong kịch bản.",
+        "Có hồ sơ xin kéo dài công tác theo nhu cầu, sức khỏe và quyết định có thời hạn. Vai trò lãnh đạo đặc thù được xét riêng, không nâng tuổi nghỉ hưu của tất cả cán bộ lên 80.",
+        "Thêm biến cố khẩn cấp biên giới rất hiếm và khuyến nghị hỗ trợ người Việt ở vùng bất ổn hồi hương. Đây đều là kịch bản hư cấu, không phải tin chiến sự hoặc dự báo về quốc gia thật."
+      ],
+      "publishedAt": "2026-10-23T23:56:56.081549Z"
+    },
+    {
+      "id": "career-company123",
+      "title": "Tìm việc đúng nơi, gây dựng doanh nghiệp từng bước",
+      "summary": "Thêm địa bàn tìm việc, đơn vị tuyển dụng, công ty con và quản lý danh mục tài sản.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Các đô thị lớn có thêm cơ hội chuyên môn. Có thể tìm việc tại nơi muốn đến, giữ công việc cũ khi hồ sơ chưa được duyệt, rồi mới chuyển chỗ ở khi nhận việc. Cùng nghề có thể khác lương theo địa bàn và đơn vị.",
+        "Thêm cơ hội công tác mô phỏng tại Petrovietnam, Ngân hàng Nhà nước, Xây dựng Trường Sơn và Tân Cảng Sài Gòn. Tên tổ chức có thật, nhưng vị trí tuyển và mức thu nhập trong game không phải thông báo tuyển dụng thật.",
+        "Tự lập công ty, mở công ty con, mua cổ phần, chào mua để giành quyền kiểm soát, sáp nhập và thoái vốn. Chỉ kiểm soát trên 50% mới quản lý công ty; cần ít nhất ba công ty đang kiểm soát để tổ chức mô hình tập đoàn.",
+        "Có chi phí bộ máy, cải tổ, kiểm toán, sức ép HĐQT, cổ tức và tổn thất vốn. Tiền mua cổ phần được trừ thật; sáp nhập không tự nhân đôi tài sản.",
+        "Người có tài sản có thể thuê quản lý, luật sư hoặc kiểm toán. Phí được trả định kỳ, giảm một phần rủi ro vận hành và nhà cho thuê bỏ trống, không bảo lãnh lợi nhuận.",
+        "Thêm cú sốc tài chính theo khu vực và giá năng lượng, ảnh hưởng thu nhập tư nhân, dòng tiền doanh nghiệp và sinh hoạt phí trong thời hạn nhất định.",
+        "Có người hướng dẫn, giới thiệu cơ hội nghề nghiệp; thêm phản ánh, tố cáo và quá trình xác minh tại nơi làm việc. Bịa cáo buộc có thể bị kỷ luật, không tự được chiếm vị trí của người khác. Tình huống chi ngoài hợp đồng có lựa chọn từ chối, phản ánh hoặc chịu hậu quả khi vi phạm; các bên đều hư cấu."
+      ],
+      "publishedAt": "2026-10-23T23:56:56.081549Z"
+    },
+    {
+      "id": "community-health124",
+      "title": "Thêm những lựa chọn để chăm mình và giúp người",
+      "summary": "Bổ sung Anh giáo, lễ hội, Phật sự, từ thiện và lựa chọn cơ sở điều trị.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Bổ sung Anh giáo ở Anh, Úc, Mỹ và Canada; có thể tìm hiểu cộng đồng rồi tự nguyện lựa chọn sau thời gian tìm hiểu.",
+        "Thêm Vía Bà Chúa Xứ, lễ Khai sáng PGHH 18/5, lễ Đản sinh Đức Huỳnh Giáo chủ 25/11, Hội Yến Diêu Trì Cung, Phật đản và lễ hội đền Bà Chúa Kho. Ngày lễ theo âm lịch và truyền thống; không phải lịch tổ chức thực tế từng năm.",
+        "Có thể tìm hiểu xuất gia, thu xếp trách nhiệm gia đình, tu học, làm Phật sự và được xem xét giao trách nhiệm lâu dài. Chức danh không được mua bằng tiền, quỹ công đức không thành tài sản riêng; có thể hoàn tục để trở lại đời sống dân sự.",
+        "Từ thiện có hỗ trợ hộ khó khăn, học bổng, viện phí và tổ chức quyên góp. Tiền cộng đồng đi vào quỹ dành cho người nhận, có báo cáo đối chiếu, không vào ví nhân vật.",
+        "Có thể chọn cơ sở địa phương, Bạch Mai, Chợ Rẫy hoặc Trung ương Quân đội 108. Bệnh phức tạp cần cơ sở chuyên sâu; điều trị không bảo đảm khỏi ngay. Viện Pasteur ở nhánh xét nghiệm, tiêm ngừa và dự phòng.",
+        "Bác sĩ có thêm hướng chuyên khoa, thời gian đào tạo, đánh giá và nộp hồ sơ chuyển bệnh viện. Giữ việc cũ khi chưa được nhận, thu nhập theo nơi công tác mới.",
+        "Thêm cảnh báo bão, mưa đá, giông lốc, nguy cơ cháy rừng và rung chấn hiếm. Nguy cơ theo vùng đang sống; thiệt hại mới chỉ tính nhà thực sự sở hữu, không tự gán ruộng đồng cho người ở phố.",
+        "Có thể gặp tranh chấp công trình hoặc bị tố cáo đạo nhái, cần lưu bản thảo, dữ liệu và giải trình với hội đồng; có thể phản ánh dấu hiệu vi phạm tới cơ quan có thẩm quyền. Không gán chuyện này cho người thật."
+      ],
+      "publishedAt": "2026-10-23T23:56:56.081549Z"
+    },
+    {
+      "id": "action-visibility119",
+      "publishedAt": "2026-10-23T14:39:29.177629Z",
+      "title": "Danh sách việc làm gọn hơn",
+      "summary": "Chỉ hiện những việc bạn có thể làm ở thời điểm hiện tại.",
+      "tags": [
+        "Điều chỉnh"
+      ],
+      "details": [
+        "Ẩn các việc chưa đủ điều kiện hoặc đã thực hiện hết trong năm. Khi đủ tuổi, đúng nghề hay có hoàn cảnh phù hợp, lựa chọn sẽ tự xuất hiện.",
+        "Nhóm không còn việc khả dụng được ẩn để dễ tìm những lựa chọn đang dùng được. Khoản chi định kỳ đang bật vẫn được giữ để bạn có thể tắt khi cần."
+      ]
+    },
+    {
+      "id": "civic118",
+      "publishedAt": "2026-10-23T14:27:51.179080Z",
+      "title": "Đi đường dài với công vụ và cộng đồng",
+      "summary": "Thêm lộ trình cấp ủy, nhiệm kỳ và những việc cụ thể để đại biểu, người tham gia Mặt trận có thể đóng góp.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Bổ sung Tỉnh ủy viên, Ban Thường vụ Tỉnh ủy, Ban Chấp hành Trung ương và Bộ Chính trị. Mỗi vai trò có điều kiện học vấn, bồi dưỡng, kinh nghiệm, uy tín và kết quả công tác; đủ hồ sơ vẫn cần qua đợt lựa chọn.",
+        "Vai trò trong Đảng được ghi riêng với nghề nghiệp và tư cách đại biểu. Mỗi vai trò ghi rõ trách nhiệm, phạm vi tham gia quyết định tập thể và thời hạn nhiệm kỳ. Các ngưỡng tuổi, điểm và thời gian là quy tắc mô phỏng của trò chơi.",
+        "Đã tham gia Mặt trận hoặc đang là đại biểu HĐND sẽ mở công việc tiếp nhận, xác minh, chuyển và theo dõi kiến nghị, thay vì phải đăng ký lại hàng năm. Có hồ sơ về thủ tục hành chính, nước sạch và việc đến trường của trẻ khó khăn.",
+        "HĐND có thể chuẩn bị chất vấn, đề nghị giám sát chuyên đề. Kiến nghị cần thời gian nhận phản hồi; gửi đi chưa được coi là giải quyết xong.",
+        "Hoàn tất hồ sơ giúp tăng uy tín, quan hệ và thành tích. Với người đang làm công vụ, tối đa một hồ sơ mỗi năm được tính thêm vào lộ trình xét chức vụ sớm. Tham gia hoạt động không tự sinh tiền thưởng hay chuyển ngân sách thành tiền riêng.",
+        "Hết nhiệm kỳ cần xét lại; kết quả công tác được giữ. Thăng lên các nấc Trung ương, Bộ Chính trị của tuyến chính trị cũng cần có vai trò tương ứng, thay vì chỉ đợi tăng bậc nghề."
+      ]
+    },
+    {
+      "id": "public-service116",
+      "publishedAt": "2026-10-23T12:39:10.591Z",
+      "title": "Có thành tích để phấn đấu, có lộ trình để luân chuyển",
+      "summary": "Cán bộ có kinh nghiệm được xét vị trí UBND phù hợp; thêm nhiệm vụ chủ động, hồ sơ thăng chức và thu nhập chuyên môn.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khi ứng tuyển UBND, người đang công tác trong công an, quân đội hoặc hành chính có thể chọn luân chuyển theo kinh nghiệm. Chức vụ cũ được giữ đến khi hồ sơ được thông qua và bạn đồng ý nhận nhiệm vụ mới.",
+        "Hồ sơ lãnh đạo cấp cao có thể được xem xét vào vị trí quản lý sở hoặc lãnh đạo UBND tỉnh, tùy học vấn, tuổi, quá trình công tác, chức vụ và tư cách đảng viên. Giám đốc Công an tỉnh không bị bắt đầu lại từ chuyên viên, nhưng cũng không tự động trở thành Chủ tịch UBND.",
+        "Có thể chủ động cải tiến thủ tục, điều phối nhiệm vụ hiện trường hoặc kiểm tra chuyên môn. Mỗi năm hoàn thành một nhiệm vụ trọng tâm sẽ ghi nhận thành tích; kết quả nổi bật được thêm điểm.",
+        "Cán bộ hành chính đủ hồ sơ có thể xin xét chức vụ sớm tối đa hai năm, vẫn cần ít nhất hai năm giữ chức và đủ điều kiện của tuyến nghề. Những đợt chưa có vị trí phù hợp giữ lại thành tích và được xét ưu tiên về sau.",
+        "Thành tích nhiệm vụ của công an, quân đội cũng được bổ sung vào hồ sơ xét quân hàm trước hạn hiện có.",
+        "Thêm khoản chi nhiệm vụ và cơ hội tập huấn, biên soạn chuyên môn ngoài lịch công tác được cho phép. Tổng thu nhập thêm của các hoạt động mới được giới hạn theo ba tháng lương trong năm; chế độ khó nhận ít hơn.",
+        "Hồ sơ nghề nghiệp ghi số nhiệm vụ, điểm thành tích và thu nhập bổ sung trong năm. Đã nghỉ hưu, đang vướng kỷ luật hoặc không đủ điều kiện công tác sẽ không thể dùng các hoạt động này để nhận lợi ích."
+      ]
+    },
+    {
+      "id": "logic844",
+      "publishedAt": "2026-10-23T07:48:42.412Z",
+      "title": "Sửa lỗi trả nợ, định cư và hiển thị nghề nghiệp",
+      "summary": "Tiền trả nợ được tính đúng, điều kiện định cư rõ ràng hơn và nội dung cập nhật dễ đọc hơn.",
+      "tags": [
+        "Sửa lỗi",
+        "Cộng đồng"
+      ],
+      "details": [
+        "Sửa một số trường hợp trả nợ bị trừ tiền hai lần, như xử lý nợ quá hạn và tất toán khoản vay nhà lúc lớn tuổi.",
+        "Khi có nhiều khoản vay, tiền đã dùng trả khoản trước không còn được tính là tiền có thể dùng cho khoản sau.",
+        "Khoản trả góp mua nhà từ các lượt chơi cũ nay được tính đầy đủ trong tổng chi và số tiền tiết kiệm của năm.",
+        "Muốn nộp hồ sơ định cư phải có đúng chứng chỉ ngoại ngữ được yêu cầu. Chưa từng học ngôn ngữ đó sẽ không được xem là đã đủ điều kiện.",
+        "Khi rời công việc lãnh đạo để đổi nghề, tên chức vụ cũ không còn hiện thay cho nghề mới.",
+        "Nội dung cập nhật được viết bằng lời dễ hiểu, liệt kê đủ thay đổi và điều kiện sử dụng, không đưa chi tiết lập trình vào."
+      ]
+    },
+    {
+      "id": "feedback843",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Chủ động chăm lo gia đình, chia tay và cân đối cuộc sống",
+      "summary": "Bổ sung lựa chọn từ góp ý người chơi và điều chỉnh khả năng tích lũy tiền.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi",
+        "Gia đình"
+      ],
+      "details": [
+        "Chủ động chia tay khi đang hẹn hò, kể cả mối tình từ tuổi thiếu niên. Chia tay không tự chia tài sản như ly hôn; thai kỳ và trách nhiệm với con chung vẫn tiếp tục.",
+        "Chọn từng con để tặng tiền, từ khoản nhỏ đến hỗ trợ lớn. Tiền trừ khỏi quỹ cha mẹ và ghi vào quỹ của con; mỗi con nhận một khoản mỗi năm. Phần chưa chi đi theo con khi chuyển đời.",
+        "Tặng nhà và cửa hàng cho con đã có từ đợt trước; tiếp tục dùng mục tặng tài sản. Tài sản đã tặng không còn tạo thu nhập cho cha mẹ hay chia lại trong thừa kế.",
+        "Đầu tư học thêm, ngoại ngữ và khóa nghề cho con theo độ tuổi. Con có thể muốn học hướng khác; trả học phí không bảo đảm đỗ chứng chỉ hoặc thành công.",
+        "Du lịch gần nhà hoặc nghỉ dưỡng cùng bố mẹ, bạn đời và con cái; tính chi phí theo số người, tăng hạnh phúc và quan hệ, có thể hoãn vì chưa thu xếp được lịch.",
+        "Chủ động chuẩn bị hồ sơ định cư theo tuyến lao động kỹ năng mô phỏng: chọn nước, ngoại ngữ, quỹ chuyển đi, chờ hai năm xét hồ sơ. Có thể bị từ chối; khi được chấp thuận, tự quyết định chuyển trong thời hạn.",
+        "Chuyển định cư kết thúc công việc hiện tại để tìm việc mới, bán nhà chính tất toán nợ và quy đổi tiền. Có nút chủ động xin quốc tịch khi đủ thời gian cư trú và điều kiện; không phải cứ nộp là được.",
+        "Bổ sung tiêu chí nghề nghiệp và thu nhập bạn đời, kết hợp bộ lọc tuổi, giới tính và quốc tịch đã có. Hồ sơ có thể không phù hợp; không tạo người giàu theo yêu cầu và không đồng nhất lương cao với tài sản lớn.",
+        "Trả nợ chủ động theo từng khoản: trả một phần hoặc tối đa tiền đang có, gồm khoản vay nhà cũ. Không cần đợi biến cố; trả hết nợ không xóa ngay lịch sử nợ xấu.",
+        "Thi IELTS xếp trình độ dựa vào kỹ năng ngoại ngữ, kiến thức và phong độ. Năng khiếu ngoại ngữ cao có thể đạt thẳng bậc cao, không phải bắt đầu từ 4.5. Có phí, giới hạn lần thi và thời hạn chứng chỉ.",
+        "Làm thêm sinh viên đã có các lựa chọn phục vụ, gia sư, giao hàng, bán hàng và lễ tân. Giữ cơ chế tiền công đi kèm giảm thời gian học và mệt mỏi.",
+        "Chủ động chọn trọ ghép, phòng riêng, căn hộ và mức ăn uống. Chi phí áp dụng khi quyết toán năm; nhà sở hữu không bị tính thêm tiền thuê, chỗ ở sinh viên tính riêng.",
+        "Bộ trưởng có nhiệm vụ công vụ để xây dựng uy tín và tuyến xét sang vai trò lãnh đạo dân sự cấp quốc gia. Cần thời gian, học vấn, hồ sơ và được lựa chọn; có thể không được bổ nhiệm. Nhiệm kỳ hữu hạn, không nhận lương hai chức vụ.",
+        "Xe, bảo vệ và tổ giúp việc cấp lãnh đạo là nguồn lực làm nhiệm vụ, không được cộng vào tài sản hoặc thu nhập cá nhân.",
+        "Cân bằng tiền: bảo vệ nhóm lương thấp, giảm phần thu nhập rất cao và lợi nhuận kinh doanh bất thường; tiền mặt chỉ hưởng lãi rất thấp, muốn tiết kiệm có kỳ hạn cần mở sổ. Nhà có năm giảm giá và phát sinh bảo trì kể cả không cho thuê.",
+        "Nhật ký cập nhật trình bày đầy đủ từng thay đổi, không giới hạn ba dòng. Các nội dung của đợt học tập, ngân hàng, nghiên cứu và gia đình trước đó đã được mở rộng."
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
+    },
+    {
+      "id": "expansion842-study",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Học tập và con đường học thuật rộng hơn",
+      "summary": "Thêm cuộc thi, chuẩn ngoại ngữ, cao học sĩ quan và công trình nghiên cứu dài hạn.",
+      "details": [
+        "Trúng tuyển học viện công an/quân đội chuyển nhân vật tới địa bàn trường, ở nội trú; không chuyển cả gia đình. Hải quân/Thông tin ở Khánh Hòa, không gom mọi trường về Hà Nội.",
+        "Điều chỉnh độ khó các vòng HSG/Olympic, có trượt và các mức giải. Thêm nút nộp hồ sơ tuyển thẳng theo thành tích đúng nhóm ngành.",
+        "Khoa học kỹ thuật toàn quốc, hùng biện tiếng Anh và tranh biện học đường; trẻ nhỏ dự vòng trường, từ THPT mới xét vòng quốc gia.",
+        "Chuẩn ngoại ngữ theo chương trình: một số trường có đầu vào IELTS 5.5, trường khác cho học bổ trợ; đầu ra đại học 4.5 hoặc 5.5. Thạc sĩ đầu vào 5.5/đầu ra 6.5, tiến sĩ 6.5/7.5 trong mô phỏng. Chứng chỉ hết hạn không đủ điều kiện.",
+        "Sĩ quan chủ động xin học thạc sĩ/tiến sĩ ở các học viện lực lượng: kỹ thuật quân sự, chỉ huy tham mưu, chính trị, an ninh, tội phạm học. Cần bằng trước, ngoại ngữ, học phí và đơn vị đồng ý.",
+        "Danh sách chức vụ chỉ còn những vị trí cao hơn đương nhiệm. Chặn cả lựa chọn cũ đã mở trước khi đổi chức vụ.",
+        "Thẩm tra lý lịch bản thân, bạn đời và hồ sơ ba thế hệ được giữ khi chuyển đời. Chặn vấn đề pháp lý chưa giải quyết. Không tự cấm cả gia đình chỉ vì tôn giáo: nguồn chính thức không xác nhận quy tắc chung đó.",
+        "Đề tài 1/3/10/20 năm công việc, thí nghiệm, dữ liệu, tranh biện, hướng dẫn học viên, nghiệm thu và công bố qua phản biện; có tốn phí, chậm tiến độ, sửa và từ chối.",
+        "Chủ động nộp hồ sơ PGS/GS, xét bằng tiến sĩ, bài báo, giảng dạy/hướng dẫn và uy tín. Tách bậc nghề khỏi học hàm; giữ học hàm hợp lệ trong bản lưu cũ.",
+        "Giáo sư đủ uy tín có thể ứng cử chức vụ lãnh đạo khoa học trong bối cảnh mô phỏng, cần vị trí/phiếu tín nhiệm, nhiệm kỳ 5 năm."
+      ],
+      "tags": [
+        "Tính năng",
+        "Học tập"
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
+    },
+    {
+      "id": "expansion842-family",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Chủ động truyền lại cơ ngơi và chuyển đời",
+      "summary": "Tặng tài sản khi còn sống, nhà ở nhiều nơi, ngân hàng và nhân sự gia đình.",
+      "details": [
+        "Tặng nhà, tài sản đầu tư và cơ sở kinh doanh cho người con trưởng thành có đồng ý. Trừ quyền sở hữu và phí, chuyển đúng người con; không tính lại trong di sản.",
+        "Chủ động chuyển sang đời con còn sống ở tuổi hiện tại, khi cha/mẹ còn sống. Lưu riêng đời cha/mẹ, có nút quay lại; không phát thừa kế trước hạn. Có thể đi tiếp các thế hệ sau bằng cùng cơ chế.",
+        "Ba ngân hàng hư cấu, gói quầy/trực tuyến, các mức tiền gửi, kỳ hạn 1/2/3 năm; khóa lãi suất, tất toán, rút trước hạn 0,2%, không tự tái tục.",
+        "Cướp giật và trường hợp con mất liên lạc/nghi bị bắt cóc ở gia đình rất giàu; báo cơ quan chức năng ngay, theo dõi hồ sơ. Vệ sĩ giảm xác suất, không bảo đảm tuyệt đối.",
+        "Thuê/dừng giúp việc, tài xế, đầu bếp, bác sĩ riêng, bảo mẫu, gia sư, bảo vệ; trả phí năm đầu và hằng năm, thiếu quỹ thì dừng.",
+        "Mua tối đa 12 nhà dự phòng để ở ở nhiều địa phương; dọn qua lại giữ căn cũ, không cho thuê tự động; tặng nhà và hỗ trợ con chuyển vào nhà đã thuộc con."
+      ],
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
+    },
+    {
+      "id": "expansion842-life",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Những biến cố cần nhiều năm để giải quyết",
+      "summary": "Gia đình có truyền thống, luyện năng khiếu từ nhỏ và các hồ sơ tiếp nối.",
+      "details": [
+        "Có gia đình truyền thống quân đội/nhà nước, lời hướng nghiệp ở tuổi 7/12/16; không bảo đảm trúng tuyển hoặc ép chọn nghề.",
+        "Các hoạt động thường niên ghi từng chỉ số; bổ sung tác dụng cụ thể vào lựa chọn đọc sách, ăn cùng bạn và thiền/yoga hiện có.",
+        "Tin quốc tang mô phỏng điều chỉnh lịch biểu diễn; chu kỳ dịch bệnh 3 năm có sức khỏe và chi phí duy trì kinh doanh. Không giả làm tin thời sự thật.",
+        "Từ 5 tuổi chủ động tự luyện hoặc xin tham gia câu lạc bộ, bài tập phù hợp tuổi; mỗi năm một đợt, trẻ không bị tự trừ học phí.",
+        "Phát hiện dấu hiệu quan hệ ngoài cam kết hoặc vi phạm của bạn đời, cha/mẹ, con trưởng thành. Vụ việc đi theo đúng người liên quan; dấu hiệu chưa phải kết luận.",
+        "Hồ sơ nhiều năm cho ngoại tình, nghi vấn biển thủ, vụ án, bạo lực gia đình. Xác minh, hỗ trợ, trình báo và phản hồi về sau; không ép nạn nhân hòa giải.",
+        "Tư vấn rồi tự nguyện triệt sản, có chi phí và hồi phục; ngăn thụ thai tự nhiên, giữ lựa chọn nhận nuôi, không hủy thai kỳ đang có."
+      ],
+      "tags": [
+        "Tính năng",
+        "Đời sống"
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
+    },
+    {
+      "id": "career-paths109",
+      "publishedAt": "2026-10-23T07:39:50.512Z",
+      "title": "Sau cấp 10: chọn bước tiếp theo trong nghề",
+      "summary": "Mọi năng khiếu có dự án chuyên gia và hướng kinh doanh phù hợp.",
+      "details": [
+        "Đạt cấp 10 mở dự án chuyên gia; tiến nghề còn cần kinh nghiệm, hồ sơ và sự chấp thuận. Makeup và stylist có thêm các bậc chuyên môn.",
+        "Chủ động chọn kinh doanh theo năng khiếu, tính vốn và giữ dự phòng. Nút bị khóa hiện lý do; có thể bật xem cả việc chưa đủ điều kiện.",
+        "Sau mất việc có kế hoạch tìm việc và ngân sách kéo dài nhiều năm. Bất đồng gia đình có lời hẹn cần giữ, không hết căng thẳng chỉ sau một lần xin lỗi."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "correctedAt": "2026-10-23T07:39:50.512Z"
+    },
+    {
+      "id": "relationships-oct23",
+      "publishedAt": "2026-10-23T04:00:00.000Z",
+      "title": "Yêu chậm hơn, có thêm chuyện gia đình",
+      "summary": "Chọn người muốn tìm hiểu, cùng bàn chuyện cưới và lên kế hoạch có con.",
+      "details": [
+        "Tìm người yêu theo độ tuổi, giới tính và quốc tịch; hồ sơ ghi nơi sống, trường học và công việc. Tình cảm cần được bồi đắp trước khi cưới, hai người cùng quyết định chuyện tài sản.",
+        "Có thể có con trước cưới hoặc từ quan hệ ngoài hôn nhân. Thử có con có thể chưa thành công, có thời gian chờ và khoảng cách sinh; con chung, con riêng giữ đúng người cùng làm cha mẹ.",
+        "Thêm mập mờ với nhiều người, gặp gỡ một đêm và mái nhà bí mật; có trách nhiệm nuôi con, chi phí và nguy cơ bị phát hiện. Cha mẹ có thể hướng nghiệp cho con; nhân vật nhiều tiền có thêm golf, du thuyền, sưu tầm và tiệc riêng.",
+        "Mục Học tập có hướng dẫn và nút đăng ký cao học, tiến sĩ để học tiếp lúc đủ điều kiện."
+      ],
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ]
+    },
     {
       "id": "life-paths-oct23",
       "publishedAt": "2026-10-23T03:00:00.000Z",
@@ -72,32 +354,6 @@
       ]
     },
     {
-      "id": "fantasy-maintenance-oct22",
-      "publishedAt": "2026-10-22T09:53:33.787Z",
-      "title": "Tạm khóa Fantasy gia tộc để điều chỉnh",
-      "summary": "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau.",
-      "details": [
-        "Fantasy gia tộc tạm đóng để điều chỉnh. Chế độ sẽ được mở lại sau."
-      ],
-      "tags": [
-        "Fantasy"
-      ]
-    },
-    {
-      "id": "fantasy-gear-inbox-oct22",
-      "publishedAt": "2026-10-22T04:40:32.867Z",
-      "title": "Sắm đồ đi săn, kết giao chủ quản",
-      "summary": "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
-      "details": [
-        "Fantasy có thêm mũ, găng, giày, trang sức và kích bộ; xem chỉ số khi thay đồ, bán được trang bị dư và tinh thạch.",
-        "Chủ động tu luyện, chuẩn bị đủ sức trước khi sang vùng khó; có thể xã giao, tặng quà và cứu người để kết thân với chủ quản."
-      ],
-      "tags": [
-        "Fantasy",
-        "Tính năng"
-      ]
-    },
-    {
       "id": "arts-gdtx-estate-oct22",
       "publishedAt": "2026-10-22T03:45:49.312Z",
       "title": "Thi khối năng khiếu, học bổ túc và thừa kế nhà đất",
@@ -110,21 +366,6 @@
       "tags": [
         "Tính năng",
         "Sửa lỗi"
-      ]
-    },
-    {
-      "id": "fantasy-narrative-oct22",
-      "publishedAt": "2026-10-21T23:07:03.466Z",
-      "title": "Fantasy: kể rõ chuyện, bớt những câu lặp",
-      "summary": "Viết lại các cảnh tuổi thơ, học tập và sự kiện để có bối cảnh, người gặp và chuyện đang xảy ra.",
-      "details": [
-        "Viết lại các cảnh tuổi thơ, học tập và sự kiện để có bối cảnh, người gặp và chuyện đang xảy ra.",
-        "Mỗi lựa chọn có đoạn kết riêng, thay vì chỉ chép lại tên nút vào nhật ký.",
-        "Trò chuyện theo nghề và từng vùng; các buổi học liên tiếp có nội dung khác nhau."
-      ],
-      "tags": [
-        "Fantasy",
-        "Tính năng"
       ]
     },
     {
@@ -159,36 +400,6 @@
       ]
     },
     {
-      "id": "spiritual-cultivation",
-      "publishedAt": "2026-10-21T10:42:07Z",
-      "title": "Mở bãi farm đầu, đổi cách tích linh lực",
-      "summary": "Đồng Cỏ Gió đã mở từ cảnh giới đầu. Map đủ điều kiện thì có thể đi thẳng tới.",
-      "tags": [
-        "Fantasy",
-        "Sửa lỗi"
-      ],
-      "details": [
-        "Đồng Cỏ Gió đã mở từ cảnh giới đầu. Map đủ điều kiện thì có thể đi thẳng tới.",
-        "Linh lực tăng theo giây; lên cảnh giới và học sách giúp hấp thụ nhanh hơn.",
-        "Đột phá xong vẫn giữ linh lực dư cho cấp sau."
-      ]
-    },
-    {
-      "id": "fantasy-expansion",
-      "publishedAt": "2026-10-21T10:12:45Z",
-      "title": "Fantasy có học viện, cửa hàng và thợ rèn",
-      "summary": "Gom lại các nút, đưa nhật ký lên chỗ dễ nhìn hơn trên điện thoại.",
-      "tags": [
-        "Fantasy",
-        "Tính năng"
-      ],
-      "details": [
-        "Gom lại các nút, đưa nhật ký lên chỗ dễ nhìn hơn trên điện thoại.",
-        "Thêm khóa học, tâm pháp và kỹ năng bị động. Kỹ năng có thể lên cấp 10.",
-        "Mỗi vùng có NPC và đồ riêng; thêm mua thuốc, chế đồ, cường hóa. Săn linh thú không tốn lượt hoạt động."
-      ]
-    },
-    {
       "id": "git-3cbed702799c",
       "publishedAt": "2026-10-21T08:47:54Z",
       "title": "Có thêm chuyện để nói với người nhà",
@@ -200,50 +411,6 @@
       ],
       "tags": [
         "Tính năng"
-      ]
-    },
-    {
-      "id": "git-58c1fbc618db",
-      "publishedAt": "2026-10-21T07:31:37Z",
-      "title": "Chọn đường tu luyện, học và nâng kỹ năng",
-      "summary": "Fantasy có lựa chọn hướng chiến đấu, kỹ năng và điều kiện học riêng cho từng nhánh.",
-      "details": [
-        "Fantasy có lựa chọn hướng chiến đấu, kỹ năng và điều kiện học riêng cho từng nhánh.",
-        "Có nút tạm dừng và đổi tốc độ; gặp sự kiện hoặc vào trận thì game dừng để chờ bạn chọn.",
-        "Nhật ký và bản tin chiến sự dễ theo dõi hơn."
-      ],
-      "tags": [
-        "Fantasy",
-        "Sửa lỗi"
-      ]
-    },
-    {
-      "id": "git-b7332f0224f5",
-      "publishedAt": "2026-10-21T06:24:55Z",
-      "title": "Các gia tộc bắt đầu có chuyện với nhau",
-      "summary": "Thêm quan hệ giữa các tộc, tranh quyền, kế nhiệm và chiến tranh kéo dài nhiều năm.",
-      "details": [
-        "Thêm quan hệ giữa các tộc, tranh quyền, kế nhiệm và chiến tranh kéo dài nhiều năm.",
-        "Có nhiệm vụ mặt trận, hộ vệ, cứu trợ, đình chiến và ký hiệp ước.",
-        "Giá chợ và chuyện gặp trên đường thay đổi theo tình hình từng vùng."
-      ],
-      "tags": [
-        "Fantasy",
-        "Sửa lỗi"
-      ]
-    },
-    {
-      "id": "git-8508fc135a32",
-      "publishedAt": "2026-10-21T05:52:25Z",
-      "title": "Thêm chế độ Fantasy gia tộc",
-      "summary": "Bắt đầu từ lúc chào đời, lớn lên trong một gia tộc rồi có thể sống tiếp đời con.",
-      "details": [
-        "Bắt đầu từ lúc chào đời, lớn lên trong một gia tộc rồi có thể sống tiếp đời con.",
-        "Có 20 vùng đất, kiếm kỹ, ma pháp, nghề rèn, dược thuật và các trận đánh theo lượt.",
-        "Hardcore cũng sửa cách kể ở tuổi nhỏ: bạn chọn việc của đứa trẻ, không quyết thay bố mẹ."
-      ],
-      "tags": [
-        "Fantasy"
       ]
     },
     {
@@ -413,7 +580,7 @@
     {
       "id": "git-119bce2a2116",
       "publishedAt": "2026-10-19T12:32:43Z",
-      "title": "Có tài khoản để giữ tiến trình",
+      "title": "Tài khoản, lưu tiến trình và xuất thân theo từng tỉnh",
       "summary": "Có thể đăng nhập để giữ cuộc đời đang chơi, thành tựu và gia phả, rồi chơi tiếp trên máy khác.",
       "details": [
         "Có thể đăng nhập để giữ cuộc đời đang chơi, thành tựu và gia phả, rồi chơi tiếp trên máy khác.",
@@ -427,7 +594,7 @@
     {
       "id": "git-cf06f858b276",
       "publishedAt": "2026-10-19T11:43:31Z",
-      "title": "Chỉnh lại xuất thân và thêm thành tựu",
+      "title": "Hoàn thiện mô phỏng cuộc sống Việt Nam và thêm thành tựu",
       "summary": "Bổ sung thông tin để hoàn cảnh nhân vật và cuộc sống ở Việt Nam sát thực tế hơn.",
       "details": [
         "Bổ sung thông tin để hoàn cảnh nhân vật và cuộc sống ở Việt Nam sát thực tế hơn.",
@@ -441,7 +608,7 @@
     {
       "id": "git-e4842dfb3efd",
       "publishedAt": "2026-10-19T09:47:32Z",
-      "title": "Thêm lễ hội, di sản và chuyện ở từng địa phương",
+      "title": "Sửa số lượt đánh giá, mở rộng con người, văn hóa và lịch sử Việt Nam",
       "summary": "Có thể gặp lễ hội, xem biểu diễn hoặc xin học từ nghệ nhân ở đúng vùng văn hóa.",
       "details": [
         "Có thể gặp lễ hội, xem biểu diễn hoặc xin học từ nghệ nhân ở đúng vùng văn hóa.",

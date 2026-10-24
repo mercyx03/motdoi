@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-for(const [,f]of fs.readFileSync('public/index.html','utf8').matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync('public/'+f,'utf8'));
+for(const [,f]of fs.readFileSync('public/index.html','utf8').matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync('public/'+f,'utf8'));
 const E=G.E,X=E.ESPORTS,F=X.finance,D=X.data;let n=0;function ok(x,t){assert.ok(x,t);n++;}
 function life(age=20){const l=E.createLife({mode:'vn',seed:560});l.age=age;l.alive=true;l.school=null;l.indep=true;l.retired=false;l.money=100;l.skill=80;l.st.kno=80;l.st.soc=70;l.pending=[];l.sched=[];l.partner=null;l.kids=[];l.job=null;return l;}
 function choose(l,id,k,arg,r=()=>.5){const d=E.DEC[id].make(l,r,arg);E.DEC[id].apply(l,d,k,r,()=>{});return d;}

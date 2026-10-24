@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.join(__dirname,'..','public'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-for(const [,f]of html.matchAll(/<script src="(js\/[^?]+)\?v=[^"]+"><\/script>/g))if(!['js/app.js','js/music.js','js/card.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
+for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/script>/g))if(!['js/app.js','js/music.js','js/card.js','js/account.js'].includes(f))vm.runInThisContext(fs.readFileSync(path.join(root,f),'utf8'),{filename:f});
 const E=G.E;let checks=0;function ok(x,t){assert.ok(x,t);checks++;}
 function life(seed=461){const l=E.createLife({mode:'vn',seed,gender:'M'});l.age=30;l.flags={};l.pending=[];l.school=null;l.partner=null;l.money=100;l.abroad=null;return l;}
 for(let age=12;age<18;age++){const l=life(),p={age,job:'sinh viên',inc:20};E.normalizePartnerAge(l,p,()=>.4);ok(/^học sinh/.test(p.job)&&p.inc===0,'học sinh chưa 18 tuổi');}
