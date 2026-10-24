@@ -1,3 +1,12 @@
+## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
+
+- Quy mô vốn, tỷ lệ cổ phần và hồ sơ quản lý doanh nghiệp.
+- Điểm từng môn phản ánh thành tích đội tuyển.
+- Xác nhận chi lớn, định hướng con và ghi nhận lựa chọn trong nhật ký.
+- Sửa hồ sơ con và đối tượng liên hôn hiển thị sai bối cảnh.
+- Lựa chọn chủ động hết điều kiện không tự đổi sang phương án khác; báo rõ chưa thực hiện.
+- Rà soát luồng hành động, bản lưu và đối chiếu bản đóng gói.
+
 ## v8.4.4 — Sửa logic tiền bạc và điều kiện hành động
 
 - Sửa một số trường hợp trả nợ bị trừ tiền hai lần, như xử lý nợ quá hạn và tất toán khoản vay nhà lúc lớn tuổi.

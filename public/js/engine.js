@@ -316,6 +316,10 @@
 
   // Định nghĩa tình huống gọn: SC(id, {title, text, prep, opts:[{k,l,h,req,ai,run}]})
   function val(x, l, d) { return typeof x === 'function' ? x(l, d) : x; }
+  function releaseUnusedAction(l, d) {
+    var x=d&&d.data,id=x&&x.actionId850,year=x&&x.actionYear850;
+    if(id&&year===l.age&&l.flags.actAt&&l.flags.actAt[id]===year){delete l.flags.actAt[id];l.acts=Math.max(0,(l.acts||0)-1);delete x.actionId850;delete x.actionYear850;}
+  }
   function SC(id, def) {
     DEC[id] = {
       def: def,
@@ -335,7 +339,7 @@
       apply: function (l, dec, k, r, log) {
         var o = def.opts.filter(function (x) { return x.k === k; })[0];
         // v2.4: hoàn cảnh đã đổi trong năm (bị bắt, mất việc, hết tiền…) thì lựa chọn không còn hợp lệ → lấy phương án cuối còn làm được (thường là "thôi / giữ nguyên")
-        if (o && o.req && !o.req(l, dec.data)) o = def.opts.filter(function (x) { return !x.req || x.req(l, dec.data); }).pop();
+        if (o && o.req && !o.req(l, dec.data)) { if(dec.manual){releaseUnusedAction(l,dec);log('Điều kiện của lựa chọn này đã thay đổi; chưa thực hiện và không trừ tiền. Hãy mở lại để chọn phương án phù hợp.','neutral');return;} o = def.opts.filter(function (x) { return !x.req || x.req(l, dec.data); }).pop(); }
         if (o && o.run) o.run(l, r, log, dec.data);
       },
       valid: function (l, d) { return def.valid ? def.valid(l, d) : true; } // v3.2: luôn đọc điều kiện mới nhất (module sau có thể thay đổi)
@@ -1466,7 +1470,7 @@
   function resolve(life, key) {
     var d = life.pending[0];
     if (!d) return [];
-    if (DEC[d.id] && DEC[d.id].valid && !DEC[d.id].valid(life, d.data || {})) { life.pending.shift(); prune(life); return []; }
+    if (DEC[d.id] && DEC[d.id].valid && !DEC[d.id].valid(life, d.data || {})) { life.pending.shift(); prune(life); if(d.manual&&life.alive){releaseUnusedAction(life,d);var expired={a:life.age,y:life.birthYear+life.age,t:'Lựa chọn “'+d.title+'” không còn phù hợp với hoàn cảnh hiện tại; chưa thực hiện và không trừ tiền.',k:'neutral'};life.log.push(expired);return [expired];} return []; }
     var r = RF(life), out = [];
     var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: life.age, y: life.birthYear + life.age, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
     var valid = d.opts.some(function (o) { return o.k === key; });
@@ -1540,7 +1544,7 @@
     if (D.valid && !D.valid(l, { requested: true })) return null;
     l.acts++; (l.flags.actAt || (l.flags.actAt = {}))[a.id] = l.age;
     var d = DEC[a.sc || a.id].make(l, RF(l), a.arg ? a.arg(l) : null);
-    d.data = d.data || {}; d.data.requested = true; d.manual = true;
+    d.data = d.data || {}; d.data.requested = true; d.data.actionId850=a.id; d.data.actionYear850=l.age; d.manual = true;
     l.pending.unshift(d);
     return d;
   }

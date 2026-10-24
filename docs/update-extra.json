@@ -1,5 +1,21 @@
 [
   {
+    "id": "release850-review",
+    "publishedAt": "2026-10-24T09:14:23.651102Z",
+    "title": "Hồ sơ gia đình rõ hơn, lựa chọn không còn bị bỏ qua im lặng",
+    "summary": "Hoàn thiện các thay đổi về doanh nghiệp, học tập và gia đình.",
+    "tags": [
+      "Sửa lỗi",
+      "Điều chỉnh"
+    ],
+    "details": [
+      "Sửa hồ sơ định hướng con và người được giới thiệu: hiển thị đúng tên, tính cách, nghề nghiệp và gia cảnh thay vì báo hoàn cảnh đã thay đổi.",
+      "Khi một lựa chọn cũ không còn phù hợp, nhật ký thông báo rõ chưa thực hiện, không trừ tiền.",
+      "Nếu đang mở hộp lựa chọn mà ngân sách hoặc điều kiện thay đổi, game sẽ dừng và báo lại, không tự đổi sang một phương án khác.",
+      "Giữ các thay đổi mới về vốn công ty, tỷ lệ cổ phần và điểm thi theo thành tích từng môn."
+    ]
+  },
+  {
     "id": "business-capital128",
     "publishedAt": "2026-10-24T09:04:49.645337Z",
     "title": "Quản lý doanh nghiệp, chọn vốn và tỷ lệ cổ phần",

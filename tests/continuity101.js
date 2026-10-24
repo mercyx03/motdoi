@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('assert'),{gameContext}=require('./hardcore-isolation');const G=gameContext(),E=G.E;let checks=0;
 function ok(v,m){assert(v,m);checks++;}
-function life(mode='vn',difficulty='normal'){const l=E.createLife({mode,country:mode==='world'?'US':'VN',difficulty,seed:10122});l.age=26;l.school=null;l.schoolEnd=null;l.edu=6;l.indep=true;l.pending=[];l.sched=[];l.money=l.base*5;l.st.hea=95;l.st.kno=95;return l;}
+function life(mode='vn',difficulty='normal'){const l=E.createLife({mode,country:mode==='world'?'US':'VN',difficulty,seed:10122});l.age=26;l.school=null;l.schoolEnd=null;l.edu=6;l.indep=true;l.pending=[];l.sched=[];l.money=l.base*5;l.st.hea=95;l.st.kno=95;l.lang={en:5};l.langExp={};return l;}
 function log(l){return(t,k)=>l.log.push({a:l.age,t,k});}
 for(const mode of ['vn','world'])for(const difficulty of ['normal','hardcore'])for(const dest of [['FR','Pháp','fr'],['JP','Nhật Bản','jp'],['DE','Đức','de'],['KR','Hàn Quốc','kr'],['AU','Úc','en'],['US','Mỹ','en']]){
  const l=life(mode,difficulty),original=JSON.parse(JSON.stringify(l)),note=log(l);E.startResearchStudy(l,dest,()=>.5,note);
