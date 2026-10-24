@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-10-24T05:06:12.209Z",
+  "generatedAt": "2026-10-24T05:11:30.844Z",
   "entries": [
+    {
+      "id": "exam-achievements127",
+      "publishedAt": "2026-10-24T05:11:12.195919Z",
+      "title": "Thành tích đội tuyển được tính vào điểm thi đại học",
+      "summary": "Công sức ôn đội tuyển giờ được phản ánh ở đúng môn trong khối thi.",
+      "tags": [
+        "Điều chỉnh",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Giải cấp trường bảo đảm ít nhất 7,5 điểm, tỉnh/thành phố 8,5 điểm, quốc gia 9 điểm và giải Olympic quốc tế 10 điểm ở môn tương ứng trong game.",
+        "Điểm được cộng theo đúng ba môn của khối thi; thành tích ở môn ngoài khối không tự cộng sang môn khác. Nhật ký ghi rõ điểm từng môn."
+      ]
+    },
     {
       "id": "family-payment126",
       "publishedAt": "2026-10-24T00:19:00.461971Z",
