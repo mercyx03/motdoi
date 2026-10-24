@@ -685,6 +685,7 @@
       '<div class="stat"><div class="row"><span>Nhân cách</span><b>' + karmaWord(k) + '</b></div><div class="track karma"><div class="fill" style="left:' + (k < 0 ? 50 + k / 2 : 50) + '%;width:' + Math.abs(k) / 2 + '%;background:' + (k < 0 ? 'var(--bad)' : 'var(--good)') + '"></div></div></div>' +
       '<div style="margin-top:14px" class="small muted">Tài sản ròng <span title="Tất cả những gì bạn có trừ đi tất cả những gì bạn nợ">ⓘ</span></div>' +
       '<div class="money">' + (l.indep ? esc(money(l, nw)) : '—') + '</div>' + wealthBreak(l) +
+      (E.BUSINESS128 && E.BUSINESS123.equity(l)>0 ? (function(){var t=E.BUSINESS128.totals(l);return '<dl class="finrows"><dt>Tài sản cá nhân ngoài doanh nghiệp</dt><dd>'+esc(money(l,t.personal))+'</dd><dt>Giá trị cổ phần của bạn</dt><dd>'+esc(money(l,t.equity))+'</dd><dt>Tổng vốn các công ty (gồm cổ đông khác)</dt><dd>'+esc(money(l,t.company))+'</dd></dl>';})() : '') +
       (l.indep && l.cur !== 'vnd' ? '<div class="small muted">≈ ' + esc(G.CUR.fmtVND(G.CUR.toVND(E.H.resCode(l) === l.country ? l.gdp : (W.BY[l.abroad.code] || { gdp: l.gdp }).gdp, nw))) + '</div>' : '') +
       '<div class="small muted" style="margin-top:4px">Gia đình gốc: ' + esc(E.QUINT[l.fam.q]) + '</div>';
   }

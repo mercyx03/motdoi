@@ -1,6 +1,23 @@
 {
-  "generatedAt": "2026-10-24T05:11:30.844Z",
+  "generatedAt": "2026-10-24T09:05:10.068Z",
   "entries": [
+    {
+      "id": "business-capital128",
+      "publishedAt": "2026-10-24T09:04:49.645337Z",
+      "title": "Quản lý doanh nghiệp, chọn vốn và tỷ lệ cổ phần",
+      "summary": "Doanh nghiệp có mục quản lý riêng, quy mô vốn phù hợp tài sản và thông tin sở hữu rõ hơn.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Chọn vốn thành lập từ 200 triệu, có các quy mô gợi ý theo tài sản và tiền mặt đang có; giữ lại quỹ sinh hoạt.",
+        "Thêm điều kiện học vấn, tự lập và hồ sơ pháp lý trong game trước khi mở hoặc trực tiếp điều hành doanh nghiệp.",
+        "Mua cổ phần theo nhiều tỷ lệ, mua thêm từng phần để đạt quyền kiểm soát; có thể thoái vốn.",
+        "Hồ sơ tách tài sản cá nhân ngoài doanh nghiệp, giá trị cổ phần của bạn và tổng vốn công ty, tránh nhầm vốn của cổ đông khác là tiền của mình.",
+        "Sửa trường hợp tự chọn hành động nhưng nhật ký không có dòng ghi nhận."
+      ]
+    },
     {
       "id": "exam-achievements127",
       "publishedAt": "2026-10-24T05:11:12.195919Z",
