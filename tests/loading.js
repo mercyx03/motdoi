@@ -54,3 +54,6 @@ const updatePage=read('updates.html'),embeddedHistory=JSON.parse(/<script type="
 assert.deepStrictEqual(embeddedHistory,JSON.parse(read('data/updates.json')),'updates shipped directly with page match release data');
 assert(embeddedHistory.entries.some(e=>e.id==='family-payment126'),'family/investment release notes remain on deployed page');
 console.log('PASS: newest family/investment release notes embedded in updates page.');
+
+for(const id of ['family-inheritance129','family-relationships130']) assert(embeddedHistory.entries.some(e=>e.id===id),'latest family release visible: '+id);
+console.log('PASS: family129 and family130 release notes embedded in deployment.');
