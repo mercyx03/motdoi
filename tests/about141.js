@@ -1,0 +1,8 @@
+'use strict';const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const html=fs.readFileSync('public/index.html','utf8');assert(!html.includes('href="#about"'));assert(html.includes('type="button" data-about-open'));
+const source=/<script id="aboutDialogScript">([\s\S]*?)<\/script>/.exec(html)[1];let handlers={},cancel,focused=0,opened=0,prevented=0,stopped=0;
+const dialog={open:false,showModal(){this.open=true;opened++;},close(){this.open=false;},addEventListener(k,f){cancel=f;},getBoundingClientRect(){return {left:20,right:600,top:20,bottom:600};}},button={focus(){focused++;}};
+vm.runInNewContext(source,{document:{getElementById:()=>dialog,querySelector:()=>button,addEventListener:(k,f)=>handlers[k]=f}});
+function click(selector){handlers.click({target:{closest:s=>s===selector?button:null},preventDefault(){prevented++;},stopImmediatePropagation(){stopped++;}});}
+click('[data-about-open]');assert(dialog.open&&opened===1&&prevented===1&&stopped===1,'opens without window.G, engine, network or anchor scrolling');click('[data-about-open]');assert(opened===1,'no duplicate modal');click('[data-about-close]');assert(!dialog.open&&focused===1);click('[data-about-open]');cancel({preventDefault(){}});assert(!dialog.open&&focused===2);click('[data-about-open]');dialog.closest=()=>null;handlers.click({target:dialog,clientX:0,clientY:0});assert(!dialog.open,'backdrop closes');
+assert(html.indexOf('id="aboutDialogScript"')<html.indexOf('<script defer src="js/boot.js'),'independent handler installed before boot');console.log('PASS standalone introduction: no engine dependency, no anchor scroll; open, close, Escape and backdrop.');

@@ -629,3 +629,9 @@ footer .disclaimer b { color: var(--accent); }
 /* Keep account and voluntary support together across screen sizes. */
 .nav-account-actions{display:inline-flex;align-items:center;gap:8px;flex-shrink:0}.nav-account-actions .pill{white-space:nowrap}.support-open{border-color:#9e804d66;background:linear-gradient(135deg,#d9b26a18,#d9b26a08)}
 @media(max-width:760px){.topbar .navpills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;padding:2px 0;gap:7px}.topbar .navpills>.pill,.nav-account-actions .pill{min-width:0;width:100%;justify-content:center;text-align:center;white-space:nowrap;padding:9px 6px;box-sizing:border-box;font-size:11px}.nav-account-actions{grid-column:1/-1;grid-row:1;display:grid;grid-template-columns:1fr 1fr;gap:7px}.nav-account-actions .pill{font-size:13px;min-height:44px}.topbar .navpills>.hide-sm{display:none}}
+
+/* The introduction is available before any deferred game scripts load. */
+#aboutDialog { margin: auto; color: var(--ink); max-height: 88vh; max-height: 88dvh; overflow-y: auto; border: 1px solid var(--line); }
+#aboutDialog:not([open]) { display: none; }
+#aboutDialog::backdrop { background: rgba(15,10,5,.65); }
+@media(max-width:600px) { #aboutDialog { width: calc(100% - 24px); padding: 24px 20px; } }

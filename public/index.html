@@ -25,7 +25,7 @@
       <div class="brand" data-go="home"><img class="logo" src="logo.webp?v=8.5.0" alt="Một Đời" width="160" height="80"></div>
       <nav class="navpills">
         <span class="pill hide-sm" style="cursor:default"><span class="dot"></span>TRÒ CHƠI MÔ PHỎNG CUỘC SỐNG</span>
-        <a class="pill" href="#about">Giới thiệu</a>
+        <button class="pill" type="button" data-about-open aria-haspopup="dialog" aria-controls="aboutDialog">Giới thiệu</button>
         <a class="pill" href="#tryLife">Thử một đời</a>
         <button class="pill keep" id="jobsBtn">Nghề &amp; lương</button>
         <span class="nav-account-actions"><button class="pill keep" id="accountBtn" title="Tài khoản và lưu tiến trình">👤 Tài khoản</button><button type="button" class="pill keep support-open" id="supportOpen"><span aria-hidden="true">♡</span> Ủng hộ</button></span>
@@ -464,6 +464,28 @@
   <script src="js/memorial-history.js?v=8.5.0" type="text/plain" data-game></script>
   <script src="js/app.js?v=8.5.0" type="text/plain" data-game></script>
   <script src="js/account.js?v=8.5.0" type="text/plain" data-game></script>
+
+  <dialog id="aboutDialog" class="card modal about-modal" aria-labelledby="aboutDialogTitle">
+    <button class="about-x" type="button" data-about-close aria-label="Đóng">✕</button>
+    <h2 id="aboutDialogTitle" class="about-title">Một Đời</h2>
+    <p>Một Đời là trò chơi mô phỏng cuộc sống dành cho cộng đồng. Mỗi nhân vật bắt đầu với một hoàn cảnh khác nhau: quê quán, gia cảnh, tính cách bố mẹ, có khi mồ côi từ thuở lọt lòng. Từ đó bạn tự xây dựng hành trình qua học tập, nghề nghiệp, tình cảm, vận may và những biến cố đời thường.</p>
+    <p>Trò chơi có 195 quốc gia, chế độ Việt Nam với 63 tỉnh/thành lịch sử hoặc 34 tỉnh/thành hiện hành, 54 dân tộc, hàng trăm nghề có thang bậc và mức lương riêng, cùng muôn vàn chuyện đời: drama gia đình, công sở, hàng xóm, mạng xã hội. Bạn có thể tự chọn hướng đi hoặc bật chế độ tự động; khi nhân vật qua đời, có thể sống tiếp đời con.</p>
+    <p>Cuộc đời đang chơi được lưu ngay trong trình duyệt. Tạo <b>tài khoản</b> (chỉ cần tên đăng nhập và mật khẩu, không cần email) để đồng bộ thành tựu, gia phả, đài tưởng niệm và cuộc đời đang chơi giữa các thiết bị. Mật khẩu được mã hóa một chiều, không ai xem lại được, nên bạn nhớ ghi lại nhé.</p>
+    <p>Đây là trò chơi mô phỏng hư cấu phục vụ giải trí. Các mức thu nhập, xác suất và kết quả sự kiện không phải dự báo hay dữ liệu thực tế của từng cá nhân. Một phần dữ liệu nhân vật tham khảo bộ Nemotron-Personas-Vietnam (CC BY 4.0, xem mục Nguồn dữ liệu). Một Đời sẽ tiếp tục được cập nhật để mở rộng nội dung và trải nghiệm người chơi.</p>
+  </dialog>
+  <script id="aboutDialogScript">
+  (function(){
+    var dialog=document.getElementById('aboutDialog'),trigger=document.querySelector('[data-about-open]');
+    if(!dialog||!trigger)return;
+    function close(){dialog.close();trigger.focus({preventScroll:true});}
+    document.addEventListener('click',function(e){
+      if(e.target.closest('[data-about-open]')){e.preventDefault();e.stopImmediatePropagation();if(!dialog.open)dialog.showModal();return;}
+      if(e.target.closest('[data-about-close]')){e.preventDefault();e.stopImmediatePropagation();close();return;}
+      if(e.target===dialog){var rect=dialog.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)close();}
+    },true);
+    dialog.addEventListener('cancel',function(e){e.preventDefault();close();});
+  })();
+  </script>
   <script defer src="js/boot.js?v=8.5.0"></script>
 <script defer src="js/support.js?v=8.5.0"></script></body>
 </html>

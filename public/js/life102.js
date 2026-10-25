@@ -141,7 +141,7 @@
   WISH.apply = function (l, d, k, r, log) {
     if (k !== 'submit') return wa.apply(this, arguments);
     var s = EDU54.state(l);
-    if (!WISH.valid(l, d.data) || !d.opts.some(function (o) { return o.k === k; }) || !s.wishes.length) return;
+    if (!WISH.valid(l, d.data) || d.data.view !== (s.selected || s.region || 'list') || !d.opts.some(function (o) { return o.k === k; }) || !s.wishes.length) return;
     s.submitted = true; s.kind = null;
     if (!Number.isFinite(l.examScore)) l.examScore = E.rollExamScore(l, r);
     log('Điểm xét tuyển: ' + U.fmtNum(l.examScore, 2) + '/30' + (l.khoi ? ' (khối ' + l.khoi + ')' : '') + '.', 'neutral');
@@ -149,6 +149,8 @@
     for (var i = 0; i < s.wishes.length && !found; i++) {
       var x = s.wishes[i], u = school(x.school); if (!u) continue;
       if (!fits(l, u, x.major)) { log('NV' + (i + 1) + ' (' + u.name + ') không xét khối ' + l.khoi + ' — hồ sơ không hợp lệ.', 'neutral'); continue; }
+      var entryReason = EDU54.entryReason && EDU54.entryReason(l, u);
+      if (entryReason) { log('NV' + (i + 1) + ' (' + u.name + ') không đủ điều kiện: ' + entryReason + '.', 'neutral'); continue; }
       if (u.nk) {
         var t = nkDone[u.id] != null ? nkDone[u.id] : (nkDone[u.id] = nkScore(l, u, r));
         var cult = l.examScore >= u.score;
@@ -158,9 +160,10 @@
     }
     if (!found) { log('Chưa đạt các nguyện vọng đã nộp. Bạn có thể ôn thi lại, học nghề hoặc đi làm.', 'neutral'); l.pending.unshift(E.DEC.uniFail.make(l, r)); return; }
     var a = school(found.school);
-    s.admitted = { school: found.school, major: found.major, age: l.age };
+    s.admitted = { school: found.school, major: found.major, program: found.program, age: l.age };
     l.uniName = a.name; l.uniCity = a.city; l.uniTier = a.nk ? (a.score >= 19 ? 1.15 : 1.08) : a.score >= 25 ? 1.15 : 1; l.cityStudent = { city: a.city, since: l.age };
     E.DEC.major.apply(l, E.DEC.major.make(l), found.major, r, log);
+    if (found.program) l.majorName = found.program;
     if (a.nk) {
       l.majorName = a.mn;
       // ra trường được gợi ý nghề đúng chuyên ngành (dùng chung luồng của các trường năng khiếu)

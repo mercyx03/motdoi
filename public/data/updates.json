@@ -1,6 +1,31 @@
 {
-  "generatedAt": "2026-10-25T12:30:59.649Z",
+  "generatedAt": "2026-10-25T12:42:08.476100+00:00",
   "entries": [
+    {
+      "id": "wishes142",
+      "publishedAt": "2026-10-25T12:42:08.476100+00:00",
+      "title": "Sửa lỗi lặp màn hình nộp nguyện vọng đại học",
+      "summary": "Nộp được danh sách nguyện vọng dù một số trường chưa đủ điều kiện ngoại ngữ.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mỗi nguyện vọng được xét riêng theo thứ tự ưu tiên. Trường thiếu chứng chỉ được ghi rõ lý do, không chặn cả danh sách. Nếu không đạt nguyện vọng nào, chuyển sang lựa chọn học tiếp, học nghề hoặc đi làm.",
+        "Hiển thị cảnh báo ngoại ngữ trước khi nộp; giữ đúng tên chương trình đã chọn khi nhập học."
+      ]
+    },
+    {
+      "id": "about141",
+      "publishedAt": "2026-10-25T12:36:27.424Z",
+      "title": "Bảng Giới thiệu mở độc lập, không cuộn trang",
+      "summary": "Nút Giới thiệu mở ngay bảng thông tin kể cả khi game chưa tải hoặc tải lỗi.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Đổi liên kết cuộn trang thành nút mở hộp thoại. Nội dung bảng giới thiệu được đóng gói sẵn trong trang chủ, không phụ thuộc bộ tải game. Hỗ trợ nút đóng, Escape và chạm ngoài bảng."
+      ]
+    },
     {
       "id": "about140",
       "publishedAt": "2026-10-25T12:30:59.649Z",
