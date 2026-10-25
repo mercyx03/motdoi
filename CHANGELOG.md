@@ -1,6 +1,7 @@
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
 - Quy mô vốn, tỷ lệ cổ phần và hồ sơ quản lý doanh nghiệp.
+- Lợi nhuận công ty theo vốn và ngành nghề, bổ nhiệm ban điều hành, phát hành thêm cổ phiếu và ghế chủ tịch tập đoàn.
 - Điểm từng môn phản ánh thành tích đội tuyển.
 - Xác nhận chi lớn, định hướng con và ghi nhận lựa chọn trong nhật ký.
 - Sửa hồ sơ con và đối tượng liên hôn hiển thị sai bối cảnh.

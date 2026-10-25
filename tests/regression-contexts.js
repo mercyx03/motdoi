@@ -21,4 +21,6 @@ add('serviceExtension125',l=>{l.age=60;E.startJob(l,'cong_chuc',()=>0,()=>{},tru
 add('future126,childFuture126,childMatch126',l=>{l.kids=[{name:'Minh',alive:true,born:20,sex:'M',study:80,edu:5,close:90}];E.DEC.future126.make(l,()=>0);});
 for(const id of ['childFuture126','childMatch126'])out[id].arg={id:out[id].life.kids[0].parentId};
 out.childMatch126.arg.person={name:'An Nhiên',sex:'F',age:25,home:'Hà Nội',education:'Đại học',job:'kỹ sư',family:'Gia đình lao động',values:'Ưa cuộc sống giản dị',compatibility:.8};
+add('companySector133',l=>{l.money=l.base*100;});
+add('groupSector133,companyRole133,companyIssue133',l=>{l.money=l.base*400;E.WORLD120.s(l).companies=[0,1,2].map(k=>({name:'Công ty kiểm thử '+k,value:l.base*50,share:k?100:60,created:40,governance:0,sector:'general'}));E.WORLD120.s(l).group={since:44};},{i:0,role:'ceo'});
 return out;};
