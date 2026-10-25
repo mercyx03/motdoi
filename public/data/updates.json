@@ -1,6 +1,23 @@
 {
-  "generatedAt": "2026-10-25T06:33:41.722Z",
+  "generatedAt": "2026-10-25T07:40:19.671Z",
   "entries": [
+    {
+      "id": "university136",
+      "publishedAt": "2026-10-25T07:40:19.671Z",
+      "title": "Sửa tình trạng học đại học kéo dài không có điểm kết thúc",
+      "summary": "Nhắc rõ điều kiện còn thiếu và theo dõi thời gian gia hạn khi chưa tốt nghiệp.",
+      "tags": [
+        "Sửa lỗi",
+        "Điều chỉnh"
+      ],
+      "details": [
+        "Thêm mục Tiến độ đại học: hiển thị tín chỉ còn nợ, chuyên cần, hạn dự kiến và lối vào đăng ký học lại. Khi bị hoãn tốt nghiệp, game mở lời nhắc để xử lý thay vì chỉ báo một lần.",
+        "Thi học lại đạt sẽ xóa nợ tín chỉ và thiếu chuyên cần cũ; chuẩn ngoại ngữ và bảo vệ vẫn xét riêng.",
+        "Giới hạn tối đa 4 năm gia hạn sau hạn dự kiến trong mô phỏng. Hết hạn mà chưa đủ điều kiện thì kết thúc đợt học, giữ bằng cấp đã có, không cấp bằng đại học. Có thể chủ động xác nhận dừng học sớm.",
+        "Bản lưu cũ chưa ghi hạn gốc dùng hạn hiện tại làm mốc theo dõi từ bản cập nhật này, không tự suy đoán tuổi nhập học hoặc cấp bằng hồi tố. Người nhập học muộn vẫn được học theo thời hạn khóa học.",
+        "Khóa đại học mới không mang theo nợ tín chỉ, thiếu chuyên cần hoặc kết quả bảo vệ của đợt cũ."
+      ]
+    },
     {
       "id": "audit135",
       "publishedAt": "2026-10-25T06:33:41.722Z",
