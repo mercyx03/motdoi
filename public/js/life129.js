@@ -22,7 +22,7 @@ function estateRecord(l,k){
 }
 var opts=E.childOpts;
 E.childOpts=function(l,k){var o=opts.apply(this,arguments);if(l.alive)o.parent.livingEstate129=estateRecord(l,k);return o;};
-function scaleEstate(l,f,factor){f.amt*=factor;(f.items||[]).forEach(function(x){x.v*=factor;if(x.data)['v','basis','cap','unit','R'].forEach(function(k){if(typeof x.data[k]==='number')x.data[k]*=factor;});});f.cur=l.cur;f.base=l.base;}
+function scaleEstate(l,f,factor){f.amt*=factor;(f.items||[]).forEach(function(x){x.v*=factor;if(E.BUSINESS137)E.BUSINESS137.scaleItem(x,factor);if(x.data)['v','basis','cap','unit','R'].forEach(function(k){if(typeof x.data[k]==='number')x.data[k]*=factor;});});f.cur=l.cur;f.base=l.base;}
 var create=E.createLife;
 E.createLife=function(o){var l=create.apply(this,arguments);if(o&&o.parent&&o.parent.livingEstate129){var f=clone(o.parent.livingEstate129);if(f.cur!==l.cur||f.ctx!==(l.abroad&&l.abroad.perm?l.abroad.code:l.country))scaleEstate(l,f,l.base/f.base);state(l).estate=f;}return l;};
 function restoreEstate(l,parent){

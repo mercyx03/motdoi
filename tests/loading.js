@@ -65,3 +65,5 @@ assert(embeddedHistory.entries.some(e=>e.id==='creator132'),'creator careers rel
 assert(embeddedHistory.entries.some(e=>e.id==='audit135'),'audit fixes release shipped');
 
 assert(embeddedHistory.entries.some(e=>e.id==='university136'),'university fixes shipped');
+
+assert(embeddedHistory.entries.some(e=>e.id==='business137'),'corporate update shipped');

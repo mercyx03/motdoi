@@ -21,6 +21,7 @@
     (l.props || []).forEach(function (p, i) { if ((p.v || 0) > 0) a.push({ t: 'prop', n: p.n, v: p.v, i: i, data: clone(p) }); });
     (l.ventures || []).forEach(function (x, i) { if ((x.cap || 0) > 0) a.push({ t: 'venture', n: x.n + (x.br > 1 ? ' (' + x.br + ' cơ sở)' : ''), v: x.cap, i: i, data: clone(x) }); });
     if (l.assets && l.assets.land > 0.5) a.push({ t: 'land', n: 'lô đất', v: l.assets.land });
+    if(E.BUSINESS137)a=a.concat(E.BUSINESS137.estateItems(l));
     return a.filter(function (x) { return x.v > 0.5; });
   }
   // những người nhận (gộp phần theo di chúc và theo pháp luật)
@@ -39,9 +40,10 @@
     var hs = heirsOf(l), list = hs.list, items = itemsOf(l), sold = [];
     if (!list.length || hs.net <= 0.5) return { net: hs.net, list: list, sold: items, items: items };
     // nợ lớn: tổng tài sản sang tên không được vượt quá di sản ròng — bán bớt tài sản nhỏ trước
+    if(E.BUSINESS137)items=E.BUSINESS137.allocateCompanies(l,hs,items);
     items.sort(function (a, b) { return b.v - a.v; });
     var total = items.reduce(function (s, x) { return s + x.v; }, 0);
-    while (items.length && total > hs.net + 1e-6) { var x = items.pop(); sold.push(x); total -= x.v; }
+    while (items.length && total > hs.net - list.reduce(function(s,p){return s+p.items.reduce(function(n,x){return n+x.v;},0);},0) + 1e-6) { var x = items.pop(); sold.push(x); total -= x.v; }
     var people = list.filter(function (p) { return !p.society; }); // quỹ xã hội nhận tiền
     function left(p) { return p.amount - p.items.reduce(function (s, x) { return s + x.v; }, 0); }
     function give(p, x) { p.items.push(x); x.to = p.key; }
@@ -56,11 +58,11 @@
       if (left(p) >= x.v * 0.7 || (x.t === 'home' && p.spouse && left(p) >= x.v * 0.4)) give(p, x); else sold.push(x);
     });
     list.forEach(function (p) { p.cash = left(p); });
-    return { net: hs.net, list: list, sold: sold, items: items };
+    return { net: hs.net, list: list, sold: sold, items: items.concat(list.reduce(function(a,p){return a.concat(p.items.filter(function(x){return x.t==='company137';}));},[])) };
   }
   E.ESTATE84 = { items: itemsOf, allocate: allocate };
 
-  function itemLine(l, x) { return (x.t === 'home' ? 'nhà đang ở: ' : x.t === 'venture' ? 'cơ sở kinh doanh: ' : x.t === 'land' ? '' : x.data && x.data.residential112 ? 'nhà để ở: ' : 'nhà cho thuê: ') + x.n + ' (' + mo(l, x.v) + (x.t === 'home' && x.debt > 0.5 ? ', khoản vay mua nhà được trả từ di sản' : '') + ')'; }
+  function itemLine(l, x) { return (x.t === 'company137' ? 'cổ phần doanh nghiệp: ' : x.t === 'home' ? 'nhà đang ở: ' : x.t === 'venture' ? 'cơ sở kinh doanh: ' : x.t === 'land' ? '' : x.data && x.data.residential112 ? 'nhà để ở: ' : 'nhà cho thuê: ') + x.n + ' (' + mo(l, x.v) + (x.t === 'home' && x.debt > 0.5 ? ', khoản vay mua nhà được trả từ di sản' : '') + ')'; }
   // khúc cuối đời: ghi rõ ai nhận nhà, đất, cửa hàng nào
   var fin = E.finale;
   E.finale = function (l) {
@@ -86,7 +88,7 @@
     if (!h || !l.death) return o;
     var A = allocate(l), p = A.list.filter(function (x) { return x.kid === h.idx; })[0];
     if (!p || !p.items.length) return o;
-    h.items = p.items.map(function (x) { return { t: x.t, n: x.n, v: x.v, k: x.k || null, tier: x.tier || null, data: x.data || null }; });
+    h.items = p.items.map(function (x) { return { t: x.t, n: x.n, v: x.v, k: x.k || null, tier: x.tier || null, data: x.data || null, group137:x.group137||null, age137:x.age137, to:x.to||null }; });
     h.amt = Math.max(0, p.cash); h.pay = Math.max(0, -p.cash);
     h.place = l.movedTo || l.city || l.place || '';
     return o;
@@ -96,7 +98,7 @@
     var life = createLife.apply(this, arguments), h = opts && opts.parent && opts.parent.heir, f = life.flags.heirOf;
     if (h && f && h.items && h.items.length) {
       var scale = h.cur === life.cur && h.ctx === (life.abroad && life.abroad.perm ? life.abroad.code : life.country) ? 1 : life.base / h.base;
-      f.items = h.items.map(function (x) { var y = clone(x); y.v *= scale; if (y.data) { ['v', 'basis', 'cap', 'unit', 'R'].forEach(function (k) { if (typeof y.data[k] === 'number') y.data[k] *= scale; }); } return y; });
+      f.items = h.items.map(function (x) { var y = clone(x); y.v *= scale; if(E.BUSINESS137)E.BUSINESS137.scaleItem(y,scale); if (y.data) { ['v', 'basis', 'cap', 'unit', 'R'].forEach(function (k) { if (typeof y.data[k] === 'number') y.data[k] *= scale; }); } return y; });
       f.pay = (h.pay || 0) * scale; f.place = h.place;
     }
     return life;
@@ -104,7 +106,8 @@
   function P(f) { return f && f.sex === 'M' ? 'bố' : 'mẹ'; }
   function receive(l, f, items, log, a) {
     items.forEach(function (x) {
-      if (x.t === 'home') {
+      if(x.t==='company137'&&E.BUSINESS137){E.BUSINESS137.receiveCompany(l,x,log);
+      } else if (x.t === 'home') {
         if (!l.ownHouse) {
           l.ownHouse = true; l.houseVal = x.v; l.houseName = x.n; if (x.k) l.houseK = x.k; if (x.tier) l.houseTier = x.tier; l.flags.ownedHome = true;
           log('Bạn được thừa kế ' + x.n + (f.place ? ' ở ' + f.place : '') + ' của ' + P(f) + ', trị giá ' + mo(l, x.v) + '. Từ nay bạn có nhà riêng.', 'big');

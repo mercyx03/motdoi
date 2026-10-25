@@ -6,7 +6,7 @@
   'use strict';
   var E=G.E,H=E.H;
   var CAUSES={hoc:'Quỹ khuyến học cho học sinh nghèo ở quê nhà',benh:'Quỹ hỗ trợ bệnh nhi ung thư',tre:'Mái ấm, trại trẻ mồ côi',truong:'Quỹ học bổng mang tên bạn ở trường cũ',tho:'Nơi thờ tự bạn vẫn hay lui tới',rung:'Quỹ trồng rừng, bảo vệ môi trường',gia:'Viện dưỡng lão cho người già neo đơn'};
-  function allowed(l){return l.alive&&l.age>=70;}
+  function allowed(l){return l.alive&&l.age>=18;}
   function kids(l){return(l.kids||[]).filter(function(k){return k.alive!==false;});}
   function spouse(l){return l.partner&&l.partner.alive!==false&&l.partner.status!=='dating'?l.partner:null;}
   function partnerKey(l,p){return p&&(p.heritageId||[p.name,p.sex,l.birthYear+l.age-p.age].join(':'));}
@@ -52,10 +52,10 @@
       if(d.data.plan==='charity')w.cause=CAUSES[d.data.cause]?d.data.cause:'hoc';
       if(d.data.plan==='custom'){var sh={},rs=recipients(l);Object.keys(d.data.shares||{}).forEach(function(key){var v=+d.data.shares[key];if(v>0){sh[key]=v;var x=rs.filter(function(y){return y.key===key;})[0];if(x&&x.kind==='kid')(w.kidNames||(w.kidNames={}))[key]=x.name;}});w.shares=sh;if(sh.s)w.cause=d.data.cause;if(sh.o)w.otherName=d.data.otherName.trim();}
       l.flags.will70=w;l.flags.will=d.data.plan;log((old?'Cập nhật':'Lưu')+' di chúc ở tuổi '+l.age+'.','neutral');}};
-  E.ACT.push({id:'di_chuc70',g:'Tiền bạc',l:'Viết / sửa di chúc',min:70,jail:true,trap:true,mil:true,sc:'di_chuc',avail:function(l){return allowed(l)?true:'Từ 70 tuổi';},ai:{w:0}});
+  E.ACT.push({id:'di_chuc70',g:'Tiền bạc',l:'Viết / sửa di chúc',min:18,jail:true,trap:true,mil:true,sc:'di_chuc',avail:function(l){return allowed(l)?true:'Từ 18 tuổi';},ai:{w:0}});
   var actions=E.actions,act=E.act,avail=E.actAvail;
-  E.actions=function(l){return actions.apply(this,arguments).map(function(a){if(a.id==='di_chuc70')a.ok=allowed(l)?true:'Từ 70 tuổi';return a;});};
-  E.actAvail=function(l,a){return a&&a.id==='di_chuc70'?(allowed(l)?true:'Từ 70 tuổi'):avail.apply(this,arguments);};
+  E.actions=function(l){return actions.apply(this,arguments).map(function(a){if(a.id==='di_chuc70')a.ok=allowed(l)?true:'Từ 18 tuổi';return a;});};
+  E.actAvail=function(l,a){return a&&a.id==='di_chuc70'?(allowed(l)?true:'Từ 18 tuổi'):avail.apply(this,arguments);};
   E.act=function(l,id){if(id!=='di_chuc70')return act.apply(this,arguments);if(!allowed(l))return null;var d=E.DEC.di_chuc.make(l);d.manual=true;l.pending=(l.pending||[]).filter(function(x){return x.id!=='di_chuc';});l.pending.unshift(d);return d;};
   // người thừa kế theo pháp luật (hàng thứ nhất): các con còn sống và bạn đời còn sống
   function legalHeirs(l){var a=[];(l.kids||[]).forEach(function(k,i){if(k.alive!==false)a.push({name:k.name,kid:i});});var p=spouse(l);if(p)a.push({name:p.name,spouse:true});return a;}

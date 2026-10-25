@@ -1158,6 +1158,13 @@
     };
     if (d.id !== 'market_trade' && d.manual && (!S.marketChecked || Date.now() - S.marketChecked > 300000)) { S.marketChecked = Date.now(); refresh.click(); }
   }
+  function businessForm(l,d){
+    if(!E.BUSINESS137)return '';var fields=E.BUSINESS137.form(l,d);if(!fields.length)return '';
+    return '<div class="family-form">'+fields.map(function(f){var key=esc(f.key),v=esc(f.value==null?'':f.value);var input=f.type==='checks'?f.options.map(function(o){return '<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" data-business="'+key+'" value="'+esc(o.value)+'"'+(f.value.includes(o.value)?' checked':'')+'><span>'+esc(o.label)+'</span></label>';}).join(''):f.type==='select'?'<select data-business="'+key+'">'+f.options.map(function(o){return '<option value="'+esc(o.value)+'"'+(o.value===f.value?' selected':'')+'>'+esc(o.label)+'</option>';}).join('')+'</select>':'<input data-business="'+key+'" type="'+f.type+'" '+(f.type==='number'?'min="0.000001" max="100" step="any" inputmode="decimal"':'maxlength="80"')+' value="'+v+'">';return '<div><label>'+esc(f.label)+'</label>'+input+'</div>';}).join('')+'<p id="businessError" role="status"></p></div>';
+  }
+  function bindBusiness(box,l,d){
+    if(!E.BUSINESS137)return;$$('[data-business]',box).forEach(function(input){input.oninput=input.onchange=function(){var key=input.dataset.business;if(input.type==='checkbox')d.data[key]=$$('input[data-business="'+key+'"]',box).filter(function(x){return x.checked;}).map(function(x){return x.value;});else d.data[key]=input.type==='number'?Number(input.value):input.value;persist();var error=$('#businessError',box);if(error)error.textContent=E.BUSINESS137.check(l,d);};});
+  }
   function willForm(l,d){
     if(d.id!=='di_chuc'||!E.WILL70)return '';
     var W=E.WILL70,sh=d.data.shares||{},rs=W.recipients?W.recipients(l):[],causes=W.causes||{};
@@ -1187,7 +1194,7 @@
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
       '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
-      willForm(l, d) + marketForm(l, d) + '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
+      willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {
@@ -1195,6 +1202,7 @@
         $('#decMin', box).onclick = minimizeDecision;
         bindMarket(box, l, d);
         bindWill(box,l,d);
+        bindBusiness(box,l,d);
         if (aiPick) {
           var k = E.autoKey(l), fast = !S.auto;
           S.modalTimer = setTimeout(function () {
@@ -1208,6 +1216,7 @@
   function choose(k, byHand, paymentConfirmed) {
     var trade = S.life && S.life.pending[0];
     if (byHand && k === 'confirm' && trade && trade.id === 'market_trade' && !E.MARKET.evaluate(S.life, trade.data).ok) { toast(E.MARKET.evaluate(S.life, trade.data).message); return; }
+    if(byHand&&trade&&k==='save'&&E.BUSINESS137){var corporateError=E.BUSINESS137.check(S.life,trade);if(corporateError){var corporateStatus=$('#businessError');if(corporateStatus)corporateStatus.textContent=corporateError;return;}}
     if(byHand&&trade&&trade.id==='di_chuc'&&k==='save'&&E.WILL70){var problem=E.WILL70.check(S.life,trade.data);if(problem){$('#willError').textContent=problem;return;}}
     if(byHand&&!paymentConfirmed&&trade&&E.FAMILY126){trade.manual=true;if(S.modalTimer){clearTimeout(S.modalTimer);S.modalTimer=null;}var payment=E.FAMILY126.quote(S.life,trade,k);if(E.FAMILY126.large(S.life,payment)){var expectedLife=S.life,expectedDecision=trade;ask('Xác nhận khoản chi lớn','Bạn có chắc với lựa chọn này không? Có thể chi tới '+money(S.life,payment)+'. Tiền hiện có: '+money(S.life,S.life.money)+'.','Chắc chắn, tiếp tục',function(){if(S.life===expectedLife&&S.life.pending[0]===expectedDecision)choose(k,true,true);else toast('Hoàn cảnh đã thay đổi, hãy chọn lại.');},'Không chắc, quay lại',function(){if(S.life===expectedLife&&S.life.pending[0]===expectedDecision)showDecision();});return;}}
     closeModal();

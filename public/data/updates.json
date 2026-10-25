@@ -1,6 +1,26 @@
 {
-  "generatedAt": "2026-10-25T07:40:19.671Z",
+  "generatedAt": "2026-10-25T10:23:25.712Z",
   "entries": [
+    {
+      "id": "business137",
+      "publishedAt": "2026-10-25T10:23:25.712Z",
+      "title": "Quản trị tập đoàn, cổ phần gia đình và thừa kế doanh nghiệp",
+      "summary": "Tự đặt tên, chọn người điều hành, sáp nhập nhiều công ty và giữ nguyên doanh nghiệp khi chuyển đời.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Bật/tắt thuê kiểm toán, luật sư và quản trị hằng năm; không thu trùng khi bật lại trong cùng năm. Thiếu ngân sách thì bỏ kỳ thuê và thử gia hạn năm sau.",
+        "Chuyển tỷ lệ cổ phần tự chọn cho con, vợ/chồng, anh chị em. Phần đã cho không còn tính vào tài sản của bạn; phát hành thêm và sáp nhập quy đổi cả cổ phần người thân.",
+        "Bổ nhiệm người thân cụ thể đủ 18 tuổi vào ban điều hành công ty hoặc tập đoàn. Lương quản lý và chủ tịch tăng theo quy mô, được tính vào chi phí doanh nghiệp.",
+        "Đặt tên công ty/tập đoàn; đối tác có tên riêng. Mở được nhiều công ty cùng ngành và có phân trang danh mục khi sở hữu nhiều công ty.",
+        "Chọn nhiều công ty và công ty nhận sáp nhập; công ty không chọn được giữ nguyên. Tổng giá trị sở hữu không tự tăng sau sáp nhập.",
+        "Công ty và mô hình tập đoàn được lưu trong di sản, giữ vốn, ngành, bộ máy và tỷ lệ sở hữu khi con tiếp quản, gồm cả trường hợp chuyển đời trước khi bố mẹ mất.",
+        "Mở di chúc từ 18 tuổi, cho phép chia tỷ lệ khác nhau hoặc toàn bộ cho một người con; các phần bảo vệ người thừa kế hiện có trong game vẫn được áp dụng.",
+        "Vốn gợi ý có thêm các mức theo tiền mặt; giá đối tác không tăng vô hạn theo tài sản ròng. Có giao dịch cổ phần và phát hành quy mô nhỏ cho doanh nghiệp rất lớn. Giá trị doanh nghiệp không thay thế tiền mặt cần để giao dịch."
+      ]
+    },
     {
       "id": "university136",
       "publishedAt": "2026-10-25T07:40:19.671Z",
