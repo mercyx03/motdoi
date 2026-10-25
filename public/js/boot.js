@@ -55,7 +55,7 @@
     if(el.tagName==='A'){
       var href=el.getAttribute('href');
       if(href==='#tryLife'){start();return;}
-      if(href!=='#recentSection')return;
+      if(href!=='#recentSection'&&href!=='#about')return;
     }
     if(el.dataset.go==='home')return;
     e.preventDefault();e.stopImmediatePropagation();

@@ -1,6 +1,18 @@
 {
-  "generatedAt": "2026-10-25T12:07:46.401Z",
+  "generatedAt": "2026-10-25T12:30:59.649Z",
   "entries": [
+    {
+      "id": "about140",
+      "publishedAt": "2026-10-25T12:30:59.649Z",
+      "title": "Khôi phục bảng Giới thiệu ngay từ lần bấm đầu",
+      "summary": "Nút Giới thiệu mở đúng bảng thông tin cũ kể cả khi trò chơi chưa tải xong.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khi mới vào trang, bấm Giới thiệu sẽ tải phần giao diện cần thiết rồi mở bảng giới thiệu; không chỉ cuộn xuống nội dung dưới trang. Nội dung và bố cục bảng cũ được giữ."
+      ]
+    },
     {
       "id": "life138-path139",
       "publishedAt": "2026-10-25T12:07:46.401Z",
