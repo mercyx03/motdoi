@@ -59,3 +59,5 @@ for(const id of ['family-inheritance129','family-relationships130']) assert(embe
 console.log('PASS: family129 and family130 release notes embedded in deployment.');
 
 assert(embeddedHistory.entries.some(e=>e.id==='social131-mobile-qr'),'social and QR release visible');
+
+assert(embeddedHistory.entries.some(e=>e.id==='creator132'),'creator careers release shipped');
