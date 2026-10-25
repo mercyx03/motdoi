@@ -31,6 +31,7 @@ function year(l,r,log){var s=state(l);if(!l.alive||s.year===l.age)return;s.year=
 E.HOOKS.year.push(year);
 var convert=E.abroadConvert;E.abroadConvert=function(l,f){var out=convert.apply(this,arguments);state(l).channels.forEach(function(c){c.totalRevenue*=f;Object.keys(c.revenue||{}).forEach(function(k){c.revenue[k]*=f;});});return out;};
 var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments);state(l).channels.forEach(function(c){p.jobInfo.push(summary(l,c));});return p;};
-E.SOCIAL131={state:state,setApps:setApps,apps:function(){return apps;},topics:topics,year:year,summary:summary};
-if(typeof window!=='undefined'&&typeof fetch==='function')fetch('/api/social-apps',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error();return r.json();}).then(function(v){if(v.ok)setApps(v.apps);}).catch(function(){});
+function saveApps(list,at){var previous=apps;if(!setApps(list))return false;try{localStorage.setItem('mkn.socialApps131',JSON.stringify({apps:apps,at:at||Date.now()}));return true;}catch(e){apps=previous;return false;}}
+E.SOCIAL131={state:state,setApps:setApps,saveApps:saveApps,apps:function(){return apps.map(function(a){return Object.assign({},a);});},topics:topics,year:year,summary:summary};
+try{if(typeof localStorage!=='undefined'){var saved=JSON.parse(localStorage.getItem('mkn.socialApps131')||'null');if(saved)setApps(saved.apps);}}catch(e){}
 })(globalThis.G);

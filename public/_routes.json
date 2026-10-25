@@ -4,8 +4,7 @@
     "/api/market",
     "/api/reviews",
     "/api/account",
-    "/api/comments",
-    "/api/social-apps"
+    "/api/comments"
   ],
   "exclude": []
 }
