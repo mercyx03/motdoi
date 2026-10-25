@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-25T07:30:00.000Z",
+  "generatedAt": "2026-10-25T06:08:04.000Z",
   "entries": [
     {
       "id": "looks134",
-      "publishedAt": "2026-10-25T07:30:00.000Z",
+      "publishedAt": "2026-10-25T06:08:04.000Z",
       "title": "Ngoại hình, sức hút mạng xã hội và chăm sóc bản thân",
       "summary": "Thêm chỉ số ngoại hình cho bạn, người yêu và con cái; mạng xã hội ảnh hưởng công việc; thêm nha sĩ, tái khám, phẫu thuật và tăng lợi ích các dịp sum họp gia đình.",
       "tags": [
@@ -17,22 +17,6 @@
         "Từ 10.000 người theo dõi, mạng xã hội giúp việc kinh doanh có thêm khách và doanh thu, người đi làm nhận thêm hợp đồng quảng bá. Ngược lại, một ồn ào trên mạng có thể làm mất khách, mất người theo dõi hoặc bị cấp trên nhắc nhở.",
         "Đón Tết, mừng sinh nhật, dự cưới họ hàng và nhờ ông bà trông cháu giờ mang lại +5 hạnh phúc và +5 gắn kết với gia đình.",
         "Mập mờ, gặp gỡ một đêm và quan hệ riêng: tối đa 4 lần gặp mỗi năm (mỗi người tối đa 2 lần). Nhân vật nam có thể có nhiều con với những người khác nhau trong một năm; nhân vật nữ mang một thai mỗi lần."
-      ]
-    },
-    {
-      "id": "fixes133",
-      "publishedAt": "2026-10-25T04:30:00.000Z",
-      "title": "Sửa lựa chọn bị báo hết hạn và tình huống gia đình hợp tuổi",
-      "summary": "Các lựa chọn phát sinh cuối năm không còn bị báo \"không còn phù hợp\"; tình huống với bố mẹ viết lại theo lứa tuổi; mục mạng xã hội trong tài khoản hiện ở mọi trang.",
-      "tags": [
-        "Sửa lỗi"
-      ],
-      "details": [
-        "Sửa lỗi các tình huống phát sinh vào cuối năm (gia đình, thời tiết, dự thảo luật, biến động kinh tế, kết quả học phần, thuyên chuyển, con xin cưới…) bị dời sang năm sau rồi báo \"không còn phù hợp với hoàn cảnh hiện tại\" khi bấm chọn. Giờ chúng hiện và được chọn ngay trong năm.",
-        "Bản lưu cũ còn lựa chọn đã hết hạn sẽ được tự dọn, không bắt bấm rồi mới báo lỗi.",
-        "Không còn hỏi lại quyền nuôi con lần thứ hai khi đã thỏa thuận lúc ly hôn.",
-        "Tình huống với bố mẹ khi nhân vật 6–11 tuổi được viết lại theo đời thường của trẻ nhỏ (giờ đi ngủ, bị so với bạn cùng lớp, bị kể chuyện xấu hổ trong bữa giỗ…); các lựa chọn với bố mẹ và người yêu dùng lời nói tự nhiên hơn.",
-        "Mục Quản lý ứng dụng mạng xã hội trong tài khoản dùng được cả ở trang cập nhật và trước khi vào game, không còn báo \"Trò chơi đang tải\"."
       ]
     },
     {
@@ -53,6 +37,22 @@
         "Chọn chính sách chia cổ tức 20%, 50% hoặc 80% lợi nhuận; phần giữ lại làm công ty tăng vốn.",
         "Khi lập tập đoàn, bạn đảm nhiệm ghế chủ tịch làm công việc chính, không nhận việc khác cho đến khi chủ động rời ghế; rời ghế vẫn giữ cổ phần và có thể quay lại. Chọn ngành mũi nhọn để các công ty cùng ngành được cộng hưởng.",
         "Bản lưu cũ được giữ nguyên: công ty cũ xếp vào ngành thương mại dịch vụ tổng hợp; người đang có công việc khác không bị buộc đổi việc."
+      ]
+    },
+    {
+      "id": "fixes133",
+      "publishedAt": "2026-10-25T04:39:19.000Z",
+      "title": "Sửa lựa chọn bị báo hết hạn và tình huống gia đình hợp tuổi",
+      "summary": "Các lựa chọn phát sinh cuối năm không còn bị báo \"không còn phù hợp\"; tình huống với bố mẹ viết lại theo lứa tuổi; mục mạng xã hội trong tài khoản hiện ở mọi trang.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sửa lỗi các tình huống phát sinh vào cuối năm (gia đình, thời tiết, dự thảo luật, biến động kinh tế, kết quả học phần, thuyên chuyển, con xin cưới…) bị dời sang năm sau rồi báo \"không còn phù hợp với hoàn cảnh hiện tại\" khi bấm chọn. Giờ chúng hiện và được chọn ngay trong năm.",
+        "Bản lưu cũ còn lựa chọn đã hết hạn sẽ được tự dọn, không bắt bấm rồi mới báo lỗi.",
+        "Không còn hỏi lại quyền nuôi con lần thứ hai khi đã thỏa thuận lúc ly hôn.",
+        "Tình huống với bố mẹ khi nhân vật 6–11 tuổi được viết lại theo đời thường của trẻ nhỏ (giờ đi ngủ, bị so với bạn cùng lớp, bị kể chuyện xấu hổ trong bữa giỗ…); các lựa chọn với bố mẹ và người yêu dùng lời nói tự nhiên hơn.",
+        "Mục Quản lý ứng dụng mạng xã hội trong tài khoản dùng được cả ở trang cập nhật và trước khi vào game, không còn báo \"Trò chơi đang tải\"."
       ]
     },
     {
