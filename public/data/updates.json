@@ -1,24 +1,6 @@
 {
-  "generatedAt": "2026-10-25T02:15:22.398Z",
+  "generatedAt": "2026-10-25T02:12:14.346Z",
   "entries": [
-    {
-      "id": "anglican-community134",
-      "publishedAt": "2026-10-25T02:15:22.398Z",
-      "title": "Cộng đồng Anh giáo có khuynh hướng theo khu vực",
-      "summary": "Thêm trọng số mô phỏng cho cộng đồng địa phương và các buổi sinh hoạt khác nhau.",
-      "tags": [
-        "Tính năng",
-        "Điều chỉnh"
-      ],
-      "details": [
-        "Trọng số mô phỏng do người chơi đề xuất, không phải tỷ lệ dân số hoặc thống kê giáo hội: UK 45% cởi mở, 30% truyền thống, 25% Phúc âm; Mỹ/Canada 65%, 20%, 15%.",
-        "Nigeria, Uganda, Kenya, Congo, Tanzania, Rwanda và Burundi: 2% cởi mở, 13% truyền thống, 85% Phúc âm. Không áp dụng chung cho toàn châu Phi.",
-        "Úc: 35% cởi mở, 25% truyền thống, 40% Phúc âm. Bối cảnh Sydney dùng khuynh hướng Phúc âm riêng; chưa tự gán tỷ lệ thành phố khác.",
-        "Solomon, Vanuatu, New Caledonia, Barbados, Antigua và Barbuda, Bahamas, Jamaica: 10% cởi mở, 50% truyền thống, 40% Phúc âm.",
-        "Khuynh hướng cộng đồng được giữ khi tải lại hoặc quay về cùng khu vực, tách khỏi lựa chọn cá nhân. Có sinh hoạt phụng vụ, học Kinh Thánh hoặc trao đổi về hòa nhập tùy cộng đồng.",
-        "Khác biệt quan điểm có thể xuất hiện trong buổi trao đổi, không tự gán đạo đức hoặc tính cách cho tín hữu và không thay đổi điều kiện phong chức."
-      ]
-    },
     {
       "id": "anglican133",
       "publishedAt": "2026-10-25T02:12:14.346Z",
