@@ -685,7 +685,7 @@
     var l = S.life, st = l.st, k = l.karma || 0;
     var nw = E.netWorth(l);
     $('#statsPanel').innerHTML = '<h3>Tình trạng · 0–100</h3>' +
-      bar('Sức khỏe', st.hea, 'var(--good)') + bar('Hạnh phúc', st.hap, 'var(--gold)') + bar('Kiến thức', st.kno, '#3d7cc9') + bar('Các mối quan hệ', st.soc, 'var(--accent)') +
+      bar('Sức khỏe', st.hea, 'var(--good)') + bar('Hạnh phúc', st.hap, 'var(--gold)') + bar('Kiến thức', st.kno, '#3d7cc9') + bar('Các mối quan hệ', st.soc, 'var(--accent)') + (E.LOOKS134 ? bar('Ngoại hình', E.LOOKS134.looks(l), '#c76fa8', Math.round(E.LOOKS134.looks(l)) + '/100 · ' + E.LOOKS134.label(E.LOOKS134.looks(l), l.sex)) + '<div class="stresslbl">0–39 kém hấp dẫn · 40–59 bình thường · 60–79 ưa nhìn · 80+ hấp dẫn</div>' : '') +
       (l.mind && l.age >= 12 ? bar('Căng thẳng', l.mind.stress, l.mind.stress >= 70 ? 'var(--bad)' : l.mind.stress >= 50 ? '#d08a3a' : '#6aa58a', Math.round(l.mind.stress) + '/100 · ' + (E.stressLabel ? E.stressLabel(l.mind.stress) : '')) + '<div class="stresslbl">0–29 thư thái · 30–49 bình thường · 50–69 căng thẳng · 70–84 quá tải · 85+ báo động</div>' : '') +
       '<div class="stat"><div class="row"><span>Nhân cách</span><b>' + karmaWord(k) + '</b></div><div class="track karma"><div class="fill" style="left:' + (k < 0 ? 50 + k / 2 : 50) + '%;width:' + Math.abs(k) / 2 + '%;background:' + (k < 0 ? 'var(--bad)' : 'var(--good)') + '"></div></div></div>' +
       '<div style="margin-top:14px" class="small muted">Tài sản ròng <span title="Tất cả những gì bạn có trừ đi tất cả những gì bạn nợ">ⓘ</span></div>' +
@@ -797,6 +797,7 @@
       var partnerHome=E.HOMETOWN&&E.HOMETOWN.partner(l,p);
       var hometown=partnerHome?' · quê '+esc(partnerHome.name)+' <small class="muted">(địa giới cũ)</small>':'';
       if(p.alive!==false&&p.family100&&E.FAMILY100)pj+=' · '+esc(E.FAMILY100.summary(l,'partner',0));
+      if(p.alive!==false&&E.LOOKS134)pj+=' · '+esc(E.LOOKS134.text(E.LOOKS134.partnerLooks(l,p),p.sex));
       row(w + ': ' + esc(p.name) + ' · ' + p.age + ' tuổi' + hometown + pj + pi + ' <button class="btn sm family-open" data-family-partner>Hồ sơ</button>'+(E.canRenameSpouse&&E.canRenameSpouse(l)?' <button class="btn sm" data-family-partner-rename>Đổi tên</button>':''));
     } else if (l.widowed) row('Góa bụa');
     l.kids.forEach(function (k) {
@@ -811,6 +812,7 @@
         if (ka >= 10 && k.close != null) info += ' · ' + (k.close >= 70 ? '❤ thân thiết' : k.close >= 40 ? 'bình thường' : 'xa cách');
         if(k.family100&&E.FAMILY100)info+=' · '+esc(E.FAMILY100.summary(l,'child',l.kids.indexOf(k)));
         if (E.kidWhere) info += ' · ' + esc(E.kidWhere(l, k)); // v7.5: con đang ở đâu
+        if (E.LOOKS134) info += ' · ' + esc(E.LOOKS134.text(E.LOOKS134.kidLooks(l, k), k.sex));
       }
       if(E.childRelation108)info+=' · '+esc(E.childRelation108(l,k));
       if(k.careerTrial108)info+=' · hướng nghiệp: '+esc(k.careerWish108==='business'?'kinh doanh':k.careerWish108==='tradition'?'tìm hiểu nghề gia đình':k.careerWish108==='pressure'?'theo kỳ vọng cha mẹ':'tự chọn');

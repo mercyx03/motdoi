@@ -1407,7 +1407,7 @@
     // tình cảm
     var p = life.partner;
     if (!p && a >= 17 && a <= (E.LOVE_MAX || 60) && !(life.flags.earlyMarried && a < 18)) {
-      var pm = 0.13 + (life.focus === 'social' ? 0.07 : 0) - (a > 40 ? 0.08 : 0) + (life.st.soc - 50) / 400;
+      var pm = 0.13 + (life.focus === 'social' ? 0.07 : 0) - (a > 40 ? 0.08 : 0) + (life.st.soc - 50) / 400 + (E.LOOKS134 ? E.LOOKS134.loveBonus(life) : 0); // ngoại hình ưa nhìn dễ có người yêu hơn
       if (r() < pm) add('love');
     } else if (p && p.status === 'dating' && a - p.since >= 1 && (life.flags.marryAskAt == null || a - life.flags.marryAskAt >= 2 + Math.min(4, life.flags.marryWait || 0)) && r() < 0.4) { add('marry'); life.flags.marryAskAt = a; } // v3.0: không hỏi chuyện cưới năm nào cũng như năm nào
     if (p && p.status !== 'dating' && a <= 50 && (life.flags.noKidUntil == null || a >= life.flags.noKidUntil) && (life.flags.kidAskAt == null || a - life.flags.kidAskAt >= 2) && life.kids.length < (life.flags.familyPlan108 ? life.flags.familyPlan108.want : 2) && !(life.flags.pregnancy108) && (!E.RELATIONS108 || E.RELATIONS108.fertile(life,p)) && r() < (life.kids.length >= 1 ? 0.08 : 0.2)) { add('kid'); life.flags.kidAskAt = a; }

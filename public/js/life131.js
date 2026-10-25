@@ -43,7 +43,7 @@ function formats(c){return c.app==='youtube'?[['long','Video dài',1.3,.04],['sh
 function publish(l,c,r,log,f){if(yearCount(c,l.age)>=4)return;if(c.topic==='Game'&&games().indexOf(c.game)<0){log('Hãy chọn một game trong mục Hướng làm nội dung trước khi quay.','neutral');return;}
  if(c.postsAt!==l.age){c.postsAt=l.age;c.posts=0;}c.posts++;
  var practice=c.topic==='Game'&&E.playedGames(l).indexOf(c.game)>=0?10:0;
- var quality=U.clamp(l.st.kno*.3+(l.st.soc||50)*.2+c.equipment*8+c.staff*6+c.studio*8+20+practice,10,100),viral=r()<.035+quality/2500,reach=Math.round((100+c.followers*.08+quality*10)*f[2]*(viral?12+r()*20:.3+r()*1.7)),gain=Math.max(1,Math.round(reach*(.015+c.engagement/2000)));
+ var quality=U.clamp(l.st.kno*.3+(l.st.soc||50)*.2+c.equipment*8+c.staff*6+c.studio*8+20+practice,10,100),viral=r()<.035+quality/2500,reach=Math.round((100+c.followers*.08+quality*10)*f[2]*(viral?12+r()*20:.3+r()*1.7)),gain=Math.max(1,Math.round(reach*(.015+c.engagement/2000)*(E.LOOKS134?E.LOOKS134.followerFactor(l):1)));
  c.followers=Math.min(1e9,c.followers+gain);c.engagement=U.clamp(c.engagement+(viral?8:2),0,100);c.reputation=U.clamp(c.reputation+1,0,100);l.fame=(l.fame||0)+gain;influence(c);
  var title=(c.direction||directions[c.topic][0])+(c.topic==='Game'?' · '+c.game:''),revenue=l.age>=18&&l.indep&&c.followers>=1000?l.base*Math.min(3,reach/100000)*f[3]:0;
  (c.videos||(c.videos=[])).push({at:l.age,title:title,format:f[1],views:reach,viral:viral,revenue:revenue});if(c.videos.length>40)c.videos.shift();
