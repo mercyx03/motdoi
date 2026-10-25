@@ -1,6 +1,19 @@
 {
-  "generatedAt": "2026-10-25T12:42:08.476100+00:00",
+  "generatedAt": "2026-10-25T13:21:33.281041+00:00",
   "entries": [
+    {
+      "id": "business143",
+      "publishedAt": "2026-10-25T13:21:33.281041+00:00",
+      "title": "Sửa điều kiện kinh doanh sau khi nghỉ hưu",
+      "summary": "Nghề công vụ cũ không còn chặn việc mở công ty và đầu tư sau khi nhân vật đã nghỉ hưu.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Chỉ áp dụng hạn chế điều hành do nghề công vụ với nhân vật đang làm việc. Nhân vật đã nghỉ hưu có thể mở thêm công ty, đầu tư doanh nghiệp và mua cổ phần khi đáp ứng các điều kiện còn lại.",
+        "Kiểm tra mở nhiều công ty cùng ngành với tổng vốn hơn một triệu tỷ đồng, giữ đúng khấu trừ tiền mặt và giá trị cổ phần."
+      ]
+    },
     {
       "id": "wishes142",
       "publishedAt": "2026-10-25T12:42:08.476100+00:00",
