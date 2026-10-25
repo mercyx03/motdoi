@@ -35,7 +35,8 @@
     "test:civic": "node tests/civic118.js",
     "test:world-life": "node tests/world120.js",
     "test:family-payments": "node tests/family126.js && node tests/payment-ui126.js && node tests/budget-ui126.js && node tests/family104.js",
-    "test:release850": "node tests/release850.js && node tests/business128.js && node tests/exam127.js && node tests/world120.js && node tests/family126.js && node tests/continuity101.js"
+    "test:release850": "node tests/release850.js && node tests/business128.js && node tests/exam127.js && node tests/world120.js && node tests/family126.js && node tests/continuity101.js",
+    "test:social": "node tests/social131.js && node tests/social-admin131.js"
   },
   "devDependencies": {
     "esbuild": "0.28.2"

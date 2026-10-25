@@ -57,3 +57,5 @@ console.log('PASS: newest family/investment release notes embedded in updates pa
 
 for(const id of ['family-inheritance129','family-relationships130']) assert(embeddedHistory.entries.some(e=>e.id===id),'latest family release visible: '+id);
 console.log('PASS: family129 and family130 release notes embedded in deployment.');
+
+assert(embeddedHistory.entries.some(e=>e.id==='social131-mobile-qr'),'social and QR release visible');

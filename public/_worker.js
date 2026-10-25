@@ -212,6 +212,19 @@ async function account(request, env, url) {
     ]);
     return accJson(200,{ok:true,...result[0].results[0],items:result[1].results});
   }
+  if (action === 'admin_social_apps') {
+    if(me.role!=='admin')return accJson(403,{ok:false,code:'FORBIDDEN'});
+    await initSocialApps(db);
+    if(body.app){
+      const a=body.app;
+      if(!a||typeof a.id!=='string'||!/^[a-z][a-z0-9_-]{1,31}$/.test(a.id)||typeof a.name!=='string'||a.name.trim().length<2||a.name.trim().length>40||/[<>\x00-\x1f]/.test(a.name)||typeof a.enabled!=='boolean')return accJson(400,{ok:false,code:'INVALID_SOCIAL_APP'});
+      const exists=await db.prepare('SELECT id FROM game_social_apps WHERE id=?').bind(a.id).first();
+      const count=await db.prepare('SELECT COUNT(*) AS n FROM game_social_apps').first();
+      if(!exists&&count.n>=20)return accJson(400,{ok:false,code:'SOCIAL_APP_LIMIT'});
+      await db.prepare('INSERT INTO game_social_apps(id,name,enabled) VALUES(?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,enabled=excluded.enabled').bind(a.id,a.name.trim(),a.enabled?1:0).run();
+    }
+    return accJson(200,{ok:true,apps:(await db.prepare('SELECT id,name,enabled FROM game_social_apps ORDER BY id').all()).results.map(a=>({...a,enabled:!!a.enabled}))});
+  }
   if (action === 'admin_events') { if(me.role!=='admin')return accJson(403,{ok:false,code:'FORBIDDEN'}); return accJson(200,{ok:true,entries:ADMIN_EVENT_CATALOG}); }
   if (action === 'me') return accJson(200, { ok: true, username: me.username, displayName: me.displayName, role: me.role });
   if (action === 'profile') { const name = cleanDisplayName(body.displayName); if (!name) return accJson(400, { ok: false, code: 'INVALID_DISPLAY_NAME' }); await db.prepare('UPDATE game_accounts SET display_name = ? WHERE id = ?').bind(name, me.id).run(); return accJson(200, { ok: true, username: me.username, displayName: name, role: me.role }); }
@@ -290,11 +303,23 @@ async function comments(request, env, url) {
   return accJson(201,{ok:true});
 }
 
+const SOCIAL_DEFAULTS=[['facebook','Facebook'],['tiktok','TikTok'],['youtube','YouTube'],['instagram','Instagram']];
+async function initSocialApps(db){
+ await db.prepare('CREATE TABLE IF NOT EXISTS game_social_apps(id TEXT PRIMARY KEY,name TEXT NOT NULL,enabled INTEGER NOT NULL)').run();
+ await db.batch(SOCIAL_DEFAULTS.map(a=>db.prepare('INSERT OR IGNORE INTO game_social_apps(id,name,enabled) VALUES(?,?,1)').bind(...a)));
+}
+async function socialApps(request,env){
+ if(request.method!=='GET')return accJson(405,{ok:false,code:'METHOD_NOT_ALLOWED'});
+ if(!env.REVIEWS_DB)return accJson(200,{ok:true,apps:SOCIAL_DEFAULTS.map(a=>({id:a[0],name:a[1],enabled:true}))});
+ await initSocialApps(env.REVIEWS_DB);
+ return accJson(200,{ok:true,apps:(await env.REVIEWS_DB.prepare('SELECT id,name,enabled FROM game_social_apps ORDER BY id').all()).results.map(a=>({...a,enabled:!!a.enabled}))});
+}
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     let decodedPath;try{decodedPath=decodeURIComponent(url.pathname);}catch{return new Response('Bad request',{status:400});}
     if (['/_worker.js', '/_headers', '/_routes.json', '/.assetsignore'].includes(decodedPath)) return new Response('Not found', { status: 404 });
+    if (url.pathname === '/api/social-apps') {try{return await socialApps(request,env);}catch{return accJson(503,{ok:false,code:'SOCIAL_UNAVAILABLE'});}}
     if (url.pathname === '/api/feedback') return new Response('Not found', { status: 404 });
     if (url.pathname === '/api/comments') { try { return await comments(request, env, url); } catch { return accJson(503, { ok: false, code: 'COMMENTS_UNAVAILABLE' }); } }
     if (url.pathname === '/api/account') { try { return await account(request, env, url); } catch { return accJson(503, { ok: false, code: 'ACCOUNTS_UNAVAILABLE' }); } }
