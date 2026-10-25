@@ -1527,7 +1527,7 @@
     { k: 'drugs', l: 'Vào trại cai nghiện ma túy', req: function (l) { return l.addict && l.addict.drugs; }, run: function (l, r, log) { cashB(l, -0.1, 'Cai nghiện'); if (ch(r, 0.35)) { l.addict.drugs = false; log('Cai nghiện thành công sau một năm trong trại.', 'good'); fx(l, { hea: 8, hap: 8, karma: 6 }); H.mem(l, 'Ngày bước ra khỏi trại cai nghiện, sạch sẽ.', 7); } else log('Tái nghiện sau khi ra trại.', 'bad'); } },
     { k: 'gamble', l: 'Cai cờ bạc', req: function (l) { return l.addict && l.addict.gamble; }, run: function (l, r, log) { if (ch(r, 0.4)) { l.addict.gamble = false; log('Bỏ được cờ bạc.', 'good'); fx(l, { hap: 6 }); } else log('Lại sa vào cờ bạc.', 'bad'); } }
   ] });
-  SC('di_chua', { title: 'Tĩnh tâm', text: function (l) { return /Phật/.test(l.religion) ? 'Bạn lên chùa thắp hương, nghe sư thầy giảng.' : /Kitô|Công giáo|Tin Lành|Chính Thống/.test(l.religion) ? 'Bạn đến nhà thờ dự lễ.' : /Hồi/.test(l.religion) ? 'Bạn đến thánh đường cầu nguyện.' : 'Bạn ngồi lặng trước bàn thờ tổ tiên.'; }, opts: [
+  SC('di_chua', { title: 'Tĩnh tâm', text: function (l) { return /Phật/.test(l.religion) ? 'Bạn lên chùa thắp hương, nghe sư thầy giảng.' : /Kitô|Công giáo|Tin Lành|Chính Thống|Anh giáo/.test(l.religion) ? 'Bạn đến nhà thờ dự lễ.' : /Hồi/.test(l.religion) ? 'Bạn đến thánh đường cầu nguyện.' : 'Bạn ngồi lặng trước bàn thờ tổ tiên.'; }, opts: [
     { k: 'ok', l: 'Cầu bình an cho gia đình', run: function (l, r, log) { log('Lòng thấy nhẹ nhõm, bình yên hơn.', 'good'); fx(l, { hap: 4, karma: 1 }); } }
   ] });
   // v2.4: chỉ nhắc đến người còn sống (trước đây bố đã mất vẫn "khoe cây cảnh")
