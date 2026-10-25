@@ -20,13 +20,13 @@ function resetMenu(l,type){if(l.flags.actAt)delete l.flags.actAt[type==='child'?
 function queue(l,id,arg){var d=E.DEC[id].make(l,H.rf(l),arg);d.manual=true;l.pending.unshift(d);}
 function stress(l,n){if(l.mind)l.mind.stress=U.clamp(l.mind.stress+n,0,100);}
 function delta(l,d,trust,tension){var s=info(l,d.type,d.index),a=actor(l,d.type,d.index);s.trust=U.clamp(s.trust+trust,0,100);s.tension=U.clamp(s.tension+tension,0,100);if(d.type==='child'||d.type==='partner')a.close=U.clamp((a.close==null?d.type==='child'?70:60:a.close)+trust*.65,0,100);}
-function response(l,d,r,log){var s=info(l,d.type,d.index),trait=style(l,d.type,d.index),open=['coi_mo','am_ap','hai_huoc','direct'].includes(trait)?.12:['nong_tinh','gia_truong','private','quiet'].includes(trait)?-.1:['sensitive','anxious'].includes(trait)?-.04:0,chance=U.clamp(.3+s.trust*.004-s.tension*.002+open,.15,.85);if(r()<chance){delta(l,d,3,-6);log(U.cap(d.name)+' sẵn lòng trao đổi thêm; hai bên hiểu rõ nhau hơn một chút.','good');return true;}delta(l,d,0,1);log(U.cap(d.name)+' chưa muốn nói tiếp. Bạn đã nêu mong muốn của mình, nhưng chuyện này vẫn cần thời gian.','neutral');return false;}
-function finish(l,d,kind,r,log,automatic){if(!valid(l,d)||!automatic&&!unused(l,d.type,d.index))return false;var writer=log,scene=cases.find(function(c){return c.id===d.caseId;}),heading=scene?scene.title:d.type==='child'?'Dành thời gian cho con':d.type==='parent'?'Trò chuyện với người thân':'Chuyện của hai người';log=function(t,k){writer(heading+' · '+d.name+': '+t,k);};d.done=true;var s=info(l,d.type,d.index);if(!automatic){s.lastActivity=l.age;resetMenu(l,d.type);}else state(l).seen[d.caseId+':'+d.uid]=l.age;
+function response(l,d,r,log){var s=info(l,d.type,d.index),trait=style(l,d.type,d.index),open=['coi_mo','am_ap','hai_huoc','direct'].includes(trait)?.12:['nong_tinh','gia_truong','private','quiet'].includes(trait)?-.1:['sensitive','anxious'].includes(trait)?-.04:0,chance=U.clamp(.3+s.trust*.004-s.tension*.002+open,.15,.85);var kid=d.type==='parent'&&l.age<12;if(r()<chance){delta(l,d,3,-6);log(kid?U.cap(d.name)+' nghe bạn nói hết, dịu giọng lại và hứa lần sau sẽ để ý hơn.':U.cap(d.name)+' sẵn lòng trao đổi thêm; hai bên hiểu rõ nhau hơn một chút.','good');return true;}delta(l,d,0,1);log(kid?U.cap(d.name)+' vẫn giữ ý mình. Bạn hơi buồn, nhưng ít ra đã nói ra được.':U.cap(d.name)+' chưa muốn nói tiếp. Bạn đã nêu mong muốn của mình, nhưng chuyện này vẫn cần thời gian.','neutral');return false;}
+function finish(l,d,kind,r,log,automatic){if(!valid(l,d)||!automatic&&!unused(l,d.type,d.index))return false;var writer=log,scene=cases.find(function(c){return c.id===d.caseId;}),head=scene?heading(scene,l):d.type==='child'?'Dành thời gian cho con':d.type==='parent'?'Trò chuyện với người thân':'Chuyện của hai người';log=function(t,k){writer(head+' · '+d.name+': '+t,k);};d.done=true;var s=info(l,d.type,d.index);if(!automatic){s.lastActivity=l.age;resetMenu(l,d.type);}else state(l).seen[d.caseId+':'+d.uid]=l.age;
  if(kind==='listen'){delta(l,d,2,-2);response(l,d,r,log);H.fx(l,{hap:1,soc:1});stress(l,-1);}
- else if(kind==='boundary'){delta(l,d,0,-1);log('Bạn nói rõ điều mình có thể làm, phần mình không đồng ý và đề nghị trao đổi khi cả hai bình tĩnh.');response(l,d,r,log);stress(l,-2);}
+ else if(kind==='boundary'){delta(l,d,0,-1);log(d.type==='parent'&&l.age<12?'Bạn nói thật điều mình muốn; người lớn vẫn là người quyết định cuối cùng.':'Bạn nói rõ điều mình có thể làm, phần mình không đồng ý và đề nghị trao đổi khi cả hai bình tĩnh.');response(l,d,r,log);stress(l,-2);}
  else if(kind==='care'){delta(l,d,4,-3);H.fx(l,{hap:2});log('Bạn dành thời gian chăm sóc '+d.name+' trong khả năng của mình, không ép người ấy phải trò chuyện.','good');}
  else if(kind==='pressure'){delta(l,d,-5,8);stress(l,2);log('Bạn nói nặng lời và muốn '+d.name+' làm theo. Cuộc trao đổi trở nên căng thẳng, chưa có điều gì được thống nhất.','bad');}
- else if(kind==='pause'){if(d.type==='child'&&l.age-l.kids[d.index].born<3)log('Bạn nghỉ một chút và đề nghị người đang cùng chăm bé hỗ trợ; việc sắp xếp còn tùy người ấy.');else{delta(l,d,0,1);log('Bạn xin dừng cuộc trao đổi, hẹn một lúc khác; vấn đề chưa được giải quyết.');}}
+ else if(kind==='pause'){if(d.type==='child'&&l.age-l.kids[d.index].born<3)log('Bạn nghỉ một chút và đề nghị người đang cùng chăm bé hỗ trợ; việc sắp xếp còn tùy người ấy.');else{delta(l,d,0,1);log(d.type==='parent'&&l.age<12?'Bạn tạm im lặng, để lúc khác mới nói tiếp; chuyện vẫn còn đó.':'Bạn xin dừng cuộc trao đổi, hẹn một lúc khác; vấn đề chưa được giải quyết.');}}
  else if(kind==='support'){if(d.fee<=0||l.money<d.fee)return false;H.cash(l,-d.fee,'Khoản hỗ trợ đã tự nguyện thống nhất');delta(l,d,2,-2);log('Bạn dành '+H.money(l,d.fee)+' cho nhu cầu đã trao đổi với '+d.name+'. Khoản tiền không tự giải quyết mọi bất đồng.','neutral');}
  return true;}
 // Child-specific activities: every living child gets one turn each year.
@@ -49,33 +49,54 @@ SC('family100_romance',{title:'Người yêu / bạn đời: dành thời gian c
  {k:'pause',l:'Hẹn một lúc khác để cả hai bớt căng thẳng',run:function(l,r,log,d){finish(l,d,'pause',r,log);}}
  ]});
 [['family100_children','Gia đình','Giao lưu với từng người con',16,'child'],['family100_parents','Gia đình','Nói chuyện với bố / mẹ',8,'parent'],['family100_romance','Tình cảm','Trò chuyện, xin lỗi và đặt ranh giới',16,'partner']].forEach(function(a){E.ACT.push({id:a[0],g:a[1],l:a[2],min:a[3],avail:function(l){return free(l)&&targets(l,a[4]).some(function(i){return unused(l,a[4],i);})?true:'Cần người thân còn sống và chưa tương tác riêng trong năm';}});});
-function add(id,type,min,max,title,text,opts,filter){if(personalChoices[id])opts=opts.map(function(o,i){return[o[0],personalChoices[id][i]||o[1]];});var c={id:'family100_'+id,type:type,min:min,max:max,title:title,text:text,opts:opts,filter:filter||function(){return true;}};cases.push(c);SC(c.id,{title:c.title,valid:function(l,d){return d&&d.uid?valid(l,d)&&c.filter(l,d.index)&&state(l).seen[c.id+':'+d.uid]!==l.age:eligible(l,c).length>0;},prep:function(l,r,arg){var i=arg&&arg.index!=null?arg.index:U.pick(r,eligible(l,c));return i==null?{at:l.age}:snapshot(l,type,i,{caseId:c.id,automatic:true});},text:function(l,d){return renderText(l,d,typeof c.text==='function'?c.text(l,d):c.text);},opts:opts.map(function(o){return{k:o[0],l:o[1],h:o[0]==='support'?function(l,d){return H.money(l,d.fee);}:null,req:function(l,d){return !!d.uid&&(o[0]!=='support'||d.fee>0&&l.money>=d.fee);},ai:{w:o[0]==='listen'?1.5:o[0]==='pressure'?.35:1},run:function(l,r,log,d){finish(l,d,o[0],r,log,true);}};})});}
+function add(id,type,min,max,title,text,opts,filter,kid){if(personalChoices[id])opts=opts.map(function(o,i){return[o[0],personalChoices[id][i]||o[1]];});var c={id:'family100_'+id,type:type,min:min,max:max,title:title,text:text,opts:opts,kid:kid||null,filter:filter||function(){return true;}};cases.push(c);SC(c.id,{title:function(l){return heading(c,l);},valid:function(l,d){return d&&d.uid?valid(l,d)&&c.filter(l,d.index)&&state(l).seen[c.id+':'+d.uid]!==l.age:eligible(l,c).length>0;},prep:function(l,r,arg){var i=arg&&arg.index!=null?arg.index:U.pick(r,eligible(l,c));return i==null?{at:l.age}:snapshot(l,type,i,{caseId:c.id,automatic:true});},text:function(l,d){return renderText(l,d,young(c,l)?c.kid[1]:typeof c.text==='function'?c.text(l,d):c.text);},opts:opts.map(function(o,n){return{k:o[0],l:function(l,d){return fill(d,young(c,l)&&c.kid[2][n]||o[1]);},h:o[0]==='support'?function(l,d){return H.money(l,d.fee);}:null,req:function(l,d){return !!d.uid&&(o[0]!=='support'||d.fee>0&&l.money>=d.fee);},ai:{w:o[0]==='listen'?1.5:o[0]==='pressure'?.35:1},run:function(l,r,log,d){finish(l,d,o[0],r,log,true);}};})});}
 function eligible(l,c){return free(l)&&l.age>=c.min&&l.age<=c.max?targets(l,c.type).filter(function(i){return c.filter(l,i);}):[];}
-function renderText(l,d,t){return t.replace(/\{n\}/g,d.name).replace(/\{age\}/g,d.type==='child'?l.age-l.kids[d.index].born:l.age)+' ' +summary(l,d.type,d.index)+'.';}
+function young(c,l){return !!c.kid&&l.age<12;}function heading(c,l){return young(c,l)?c.kid[0]:c.title;}
+function fill(d,t){return t.replace(/\{r\}/g,d&&d.type==='parent'?d.index==='m'?'mẹ':'bố':'người ấy');}
+function renderText(l,d,t){return U.cap(fill(d,t).replace(/\{n\}/g,d.name)).replace(/\{age\}/g,d.type==='child'?l.age-l.kids[d.index].born:l.age)+' ' +summary(l,d.type,d.index)+'.';}
 var talk=[['listen','Hỏi rõ điều người ấy mong muốn, nói điều mình cần'],['boundary','Nói phần mình có thể nhận và giới hạn của mình'],['pause','Xin dừng để cả hai bình tĩnh']];
 var personalChoices={
- parent_nghiem:['Trình bày lịch của mình, hỏi điều gì có thể điều chỉnh','Xin tự chịu trách nhiệm một phần phù hợp với tuổi','Ghi lại điều còn vướng, hẹn trao đổi khi bớt căng'],
- parent_chieu:['Nói mình cần thời gian bên nhau hơn là một món quà','Cảm ơn, nhưng xin được tự làm phần việc của mình','Nhận lời hỏi thăm, để lúc riêng nói về điều đã buồn'],
- parent_bao_boc:['Hỏi điều người thân lo nhất khi mình tự làm','Xin thử một bước nhỏ và nói cách mình giữ an toàn','Chưa tranh luận thêm, chuẩn bị kỹ rồi nói lại'],
- parent_gia_truong:['Xin được nêu ý kiến trước khi người lớn kết luận','Nói điều mình chưa đồng ý mà không xúc phạm ai','Xin dừng khi lời nói của mình chưa được nghe'],
- parent_so_sanh:['Kể về nỗ lực của mình thay vì thành tích người khác','Xin được góp ý vào việc cụ thể, không đem ra so sánh','Đổi sang lúc riêng để nói mình thấy áp lực'],
- parent_ky_vong:['Nói cả điều mình muốn thử và giới hạn đang gặp','Đề nghị một mục tiêu vừa sức trước khi nhận thêm','Xin thời gian tìm hiểu thay vì hứa ngay kết quả'],
- parent_coi_mo:['Thử kể một phần điều mình đang băn khoăn','Nói rõ mình cần được nghe hay cần lời khuyên','Cảm ơn vì được lắng nghe, hẹn khi sẵn sàng kể thêm'],
- parent_nong_tinh:['Nói ngắn điều mình hiểu khác, tránh nói qua tiếng quát','Xin chỉ nói tiếp khi hai bên hạ giọng','Tạm rời cuộc tranh luận, tìm người tin cậy nếu cần'],
- parent_tan_tien:['Hỏi điều gì khiến khoản chi bị xem là chưa cần','Nói giá trị mình mong nhận, không tự hứa vượt khả năng','Chưa chi vội, tìm thêm thông tin để bàn lại'],
- parent_si_dien:['Kể cảm giác khi chuyện riêng bị nhắc trước mọi người','Xin được hỏi ý kiến trước khi công khai kế hoạch của mình','Không tranh luận trước đám đông, hẹn nói riêng'],
- parent_tam_linh:['Hỏi niềm tin ấy có ý nghĩa gì với người thân','Tôn trọng niềm tin nhưng nói điều mình không muốn làm','Để lúc bình tĩnh đối chiếu thêm điều kiện thực tế'],
- parent_cuong_viec:['Kể một lần mình đã chờ và cảm thấy bị bỏ quên','Xin một lời hẹn ngắn nhưng thực tế, có báo khi đổi lịch','Gửi điều muốn nói để người thân đọc khi rảnh'],
- parent_hai_huoc:['Nói mình biết ý tốt nhưng lúc này đang buồn thật','Xin được nghe nghiêm túc trước khi pha trò','Nghỉ một chút, trở lại khi có thể nói trọn chuyện'],
- parent_hay_lo:['Hỏi điều khiến người thân lo khi mình chậm trả lời','Đề nghị cách báo tin vừa đủ, có cả thời gian riêng','Nhắn mình vẫn ổn, hẹn lúc có thể nói chuyện dài hơn'],
- parent_thien_vi:['Nêu một việc cụ thể làm mình thấy bị bỏ qua','Xin được nhìn vào nhu cầu của từng người thay vì so hơn kém','Chưa kết luận về tình cảm, đợi lúc riêng để nói'],
- parent_am_ap:['Nói mình quý sự quan tâm nhưng còn chuyện khó kể','Xin giữ một phần riêng cho tới khi sẵn sàng','Nhận lời hỏi thăm, hẹn người thân một lúc khác'],
- love_schedule:['Cùng nhắc lại mỗi người đã hiểu lời hẹn thế nào','Đề nghị cách xác nhận và báo khi phải đổi lịch','Dời cuộc trao đổi tới khi cả hai có thời gian'],
- love_messages:['Giải thích hoàn cảnh lúc nhắn, hỏi người ấy đã hiểu ra sao','Bàn cách báo đang bận mà không phải trả lời liên tục','Xin nói bằng cuộc gọi khi thuận tiện thay vì nhắn vội'],
- love_future:['Hỏi điều quan trọng nhất trong hình dung của mỗi người','Nói rõ điều mình chưa sẵn sàng cam kết','Dành thời gian suy nghĩ, không hứa chỉ để yên chuyện'],
- love_work:['Hỏi khoảng thời gian nào người ấy thấy thiếu vắng nhất','Đề nghị một lịch ngắn nhưng cả hai có thể giữ','Hoãn trao đổi tới lúc không còn bị công việc chen ngang'],
- love_budget:['Hỏi khoản nào người ấy coi là chung và vì sao','Trình phần ngân sách mình có thể tự nguyện đóng góp','Chưa nhận thêm cam kết tiền khi hai bên còn hiểu khác'],
- love_families:['Hỏi điều mỗi người mong ở thời gian dành cho người thân','Đề nghị thay phiên và có quyền báo không thu xếp được','Hẹn xem lại lịch thay vì tranh hơn thua ngay lúc này']
+ parent_nghiem:['Nói rõ lịch của mình, hỏi {r} chỗ nào cần đổi','Xin tự lo phần việc đó, sai thì mình chịu','Nói "để con nghĩ thêm", tối nói tiếp'],
+ parent_chieu:['Nói thật: con cần {r} có mặt hơn là quà','Cảm ơn, nhưng xin lần sau đừng lỡ hẹn nữa','Nhận quà cho {r} vui, chuyện buồn để nói sau'],
+ parent_bao_boc:['Hỏi {r} lo nhất điều gì nếu mình tự làm','Xin làm thử một lần, có gì gọi {r} ngay','Thôi không cãi, chuẩn bị kỹ rồi nói lại'],
+ parent_gia_truong:['Xin {r} cho mình nói xong rồi hẵng quyết','Nói thẳng chỗ mình không đồng ý, giữ giọng bình tĩnh','Thấy chưa nói được, xin dừng lại đã'],
+ parent_so_sanh:['Kể mình đã cố thế nào, không so với ai','Nói thẳng: bị so sánh làm con nản lắm','Lảng sang chuyện khác, lúc riêng mới nói'],
+ parent_ky_vong:['Nói điều mình thực sự muốn làm và chỗ mình còn yếu','Đề nghị một mục tiêu vừa sức trước đã','Xin thời gian tìm hiểu, chưa hứa gì'],
+ parent_coi_mo:['Kể một phần chuyện đang làm mình lo','Nói trước: con chỉ cần {r} nghe, chưa cần khuyên','Cảm ơn {r}, hẹn khi nào sẵn sàng sẽ kể'],
+ parent_nong_tinh:['Nói ngắn gọn chỗ hai bên hiểu khác nhau','Nói "{r} nói nhỏ thôi thì con mới nói tiếp được"','Ra ngoài một lúc cho bình tĩnh'],
+ parent_tan_tien:['Hỏi {r} vì sao thấy khoản đó chưa cần','Giải thích mình dùng vào việc gì, tiền ở đâu ra','Hoãn mua, xem thêm giá rồi bàn lại'],
+ parent_si_dien:['Nói riêng với {r}: con ngại khi chuyện đó bị kể ra','Dặn {r} lần sau hỏi con trước khi kể với người ngoài','Cười cho qua trước mặt khách, về nhà mới nói'],
+ parent_tam_linh:['Hỏi {r} việc đó có ý nghĩa thế nào','Tôn trọng niềm tin của {r}, nhưng nói rõ việc mình không làm','Để lúc bình tĩnh tính cả lịch và chi phí thực tế'],
+ parent_cuong_viec:['Kể lần gần nhất mình đã chờ mà {r} không đến','Xin {r} hẹn ít thôi nhưng giữ đúng, đổi thì báo trước','Nhắn tin để {r} đọc lúc rảnh'],
+ parent_hai_huoc:['Nói thẳng: lần này con buồn thật, không đùa được','Xin {r} nghe hết đã rồi muốn đùa thì đùa','Để lúc khác, khi nói được trọn chuyện'],
+ parent_hay_lo:['Hỏi vì sao {r} lo khi mình trả lời chậm','Hẹn mỗi ngày nhắn một tin cho {r} yên tâm','Nhắn "con ổn, tối gọi lại"'],
+ parent_thien_vi:['Kể một chuyện cụ thể làm mình thấy bị thiệt','Xin {r} đừng so ai hơn ai, mỗi người cần một kiểu','Chưa kết luận, đợi lúc riêng hỏi {r}'],
+ parent_am_ap:['Cảm ơn {r} hỏi han, nói có chuyện con chưa kể được','Xin {r} để con tự kể khi sẵn sàng','Nhận lời hỏi thăm, hẹn hôm khác nói chuyện lâu hơn'],
+ love_schedule:['Cùng xem lại mỗi người hiểu lời hẹn thế nào','Từ nay hẹn gì thì nhắn xác nhận lại một câu','Để tối rảnh rồi nói, giờ ai cũng đang vội'],
+ love_messages:['Giải thích lúc đó mình đang bận việc gì','Thống nhất: bận thì nhắn một chữ "bận" là được','Gọi điện nói chuyện thay vì nhắn qua lại'],
+ love_future:['Hỏi người ấy muốn sống ở đâu, làm gì vài năm tới','Nói rõ chuyện mình chưa sẵn sàng hứa','Xin thời gian suy nghĩ, không hứa cho xong chuyện'],
+ love_work:['Hỏi người ấy thấy thiếu mình nhất vào lúc nào','Hẹn mỗi tuần một buổi tối dành riêng cho nhau','Đợi qua đợt bận rồi ngồi nói chuyện đàng hoàng'],
+ love_budget:['Hỏi khoản nào người ấy coi là tiền chung','Nói rõ mỗi tháng mình góp được bao nhiêu','Chưa nhận thêm khoản chung khi hai người còn hiểu khác'],
+ love_families:['Hỏi người ấy muốn chia thời gian cho hai bên ra sao','Đề nghị luân phiên, bên nào bận thì báo trước','Hẹn ngồi xem lịch cùng nhau, đừng cãi lúc này']
+};
+// Trẻ 6–11 tuổi gặp phiên bản đời thường hợp lứa tuổi; từ 12 tuổi dùng câu chuyện ở parentStories.
+var kidStories={
+ nghiem:['Giờ đi ngủ','{n} bắt bạn tắt tivi đi ngủ đúng giờ, đúng lúc phim hoạt hình đang đến đoạn hay.',['Xin xem nốt tập này rồi tự đi đánh răng','Hỏi cuối tuần có được thức muộn hơn một chút không','Tắt tivi đi ngủ, mai nói với {r} sau']],
+ chieu:['Món quà thay lời hứa','{n} lỡ hẹn đưa bạn đi công viên, tối về mua cho bạn một món đồ chơi mới.',['Cảm ơn, rồi nói con thích được đi chơi với {r} hơn','Hỏi {r} chủ nhật này đi bù được không','Nhận quà, hôm khác mới kể là mình buồn']],
+ bao_boc:['Muốn tự làm','{n} cứ buộc dây giày, soạn cặp hộ dù bạn đã tự làm được.',['Nói "con tự làm được mà", xin {r} đứng xem','Xin tự soạn cặp, {r} kiểm tra lại sau','Để {r} làm hôm nay, mai dậy sớm tự làm']],
+ gia_truong:['Không được hỏi ý','{n} đăng ký cho bạn học thêm buổi tối mà không hỏi bạn có muốn không.',['Hỏi {r} vì sao muốn con đi học thêm','Xin bớt một buổi để còn thời gian chơi','Cứ đi học trước, lúc {r} vui thì nói']],
+ so_sanh:['Bị so với bạn cùng lớp','{n} khen bạn cùng lớp được điểm 10 rồi hỏi sao bạn chỉ được điểm 7.',['Kể bài này con đã cố thế nào','Nói con buồn khi bị so với bạn khác','Không cãi, cầm vở về phòng làm lại bài']],
+ ky_vong:['Muốn con thật giỏi','{n} muốn bạn đi thi học sinh giỏi, còn bạn chỉ thích vẽ và chơi với bạn sau giờ học.',['Cho {r} xem tranh mình vẽ, kể vì sao thích','Hứa học đủ bài, xin giữ buổi chiều để chơi','Chưa trả lời, để nghĩ thêm']],
+ coi_mo:['Chuyện khó nói','{n} hỏi han nhẹ nhàng, nhưng bạn sợ kể chuyện lỡ làm vỡ đồ ở lớp thì {r} sẽ buồn.',['Kể thật với {r} chuyện ở lớp','Xin {r} nghe hết rồi mới mắng','Tối nay chưa kể, mai lấy can đảm nói']],
+ nong_tinh:['Bị quát','{n} quát to vì bạn đi chơi về muộn hơn giờ hẹn.',['Xin lỗi, kể lý do mình về muộn','Xin {r} nói nhỏ lại để con nghe rõ','Về phòng ngồi im, đợi {r} hết giận']],
+ tan_tien:['Món đồ muốn mua','{n} không mua đôi giày bạn thích vì cho rằng giày cũ vẫn đi được.',['Hỏi {r} khi nào giày hỏng thì mua được không','Xin để dành tiền lì xì tự mua','Thôi không đòi nữa']],
+ si_dien:['Chuyện riêng bị kể ra','{n} kể chuyện xấu hổ hồi bé của bạn cho cả nhà nghe trong bữa giỗ, ai cũng cười.',['Kéo áo {r}, nói nhỏ là con xấu hổ','Xin {r} lần sau đừng kể chuyện đó trước người khác','Chạy ra chỗ khác, tối mới nói với {r}']],
+ tam_linh:['Kiêng cữ trong nhà','{n} không cho bạn đi dã ngoại với lớp vì hôm đó là ngày xấu theo lịch.',['Hỏi {r} vì sao hôm đó lại không tốt','Xin đi cùng cô giáo, hứa luôn đi theo cả lớp','Ở nhà, hẹn lần sau đi cùng lớp']],
+ cuong_viec:['Lại không đến được','{n} hứa đến xem bạn biểu diễn văn nghệ ở trường nhưng lại phải đi làm.',['Nói con đã chờ {r} lâu lắm','Xin {r} lần sau báo trước nếu không đến được','Nhờ người khác quay video cho {r} xem']],
+ hai_huoc:['Đùa không đúng lúc','Bạn khóc vì bị trêu ở lớp, {n} lại pha trò cho bạn cười.',['Nói con đang buồn thật, không muốn đùa','Xin {r} nghe con kể hết đã','Lau nước mắt, lát nữa kể tiếp']],
+ hay_lo:['Hỏi han không ngớt','{n} gọi cho cô giáo hỏi han liên tục khi bạn đi dã ngoại cùng lớp.',['Nói con vẫn ổn, cô trông các bạn cẩn thận','Hứa trưa gọi về một lần cho {r} yên tâm','Về nhà ôm {r}, kể lại chuyến đi']],
+ thien_vi:['Cảm giác bị ra rìa','Bạn thấy {n} để ý đến người khác trong nhà nhiều hơn mình.',['Kể lần mình thấy bị đối xử chưa công bằng','Xin {r} nghe cả hai bên rồi mới phân xử','Thôi không tranh nữa, tối nói riêng với {r}']],
+ am_ap:['Hỏi quá nhiều','{n} hỏi đi hỏi lại chuyện ở lớp, trong khi bạn chỉ muốn chơi một mình một lúc.',['Kể vài chuyện vui ở lớp cho {r} nghe','Xin chơi một lúc rồi kể sau','Ôm {r} một cái, nói con hơi mệt']]
 };
 var parentStories={
  nghiem:['Quy tắc chưa kịp nói rõ','{n} muốn mọi việc theo một lịch cố định, trong khi bạn có một kế hoạch chưa kịp trao đổi.'],
@@ -87,7 +108,7 @@ var parentStories={
  coi_mo:['Được lắng nghe nhưng vẫn khó nói','{n} sẵn lòng nghe, còn bạn lo một điều mình nói ra sẽ làm người thân thất vọng.'],
  nong_tinh:['Cuộc nói chuyện lên giọng','{n} bắt đầu nói lớn khi hai bên hiểu khác nhau về một lời hẹn.'],
  tan_tien:['Giá trị của một khoản chi','{n} cho rằng một khoản chi chưa cần thiết. Hai bên đang nhìn khác nhau về điều gì là đáng tiền, không hẳn vì thiếu tiền.'],
- si_dien:['Chuyện riêng trước người ngoài','{n} kể thành tích và kế hoạch của bạn với người khác khi bạn chưa muốn công khai.'],
+ si_dien:['Chuyện riêng trước người ngoài','{n} đem điểm số, công việc hay chuyện riêng của bạn ra kể với họ hàng, hàng xóm khi bạn chưa muốn ai biết.'],
  tam_linh:['Một niềm tin khác nhau','{n} muốn chọn một dịp theo niềm tin riêng; bạn muốn cân nhắc cả lịch và điều kiện thực tế.'],
  cuong_viec:['Lời hẹn bị công việc chen ngang','{n} lại phải đổi lịch vì công việc. Bạn muốn nói về cảm giác luôn phải đợi.'],
  hai_huoc:['Câu đùa không đúng lúc','{n} pha trò để làm không khí nhẹ đi, nhưng bạn cảm thấy chuyện mình đang buồn chưa được nghe nghiêm túc.'],
@@ -95,7 +116,7 @@ var parentStories={
  thien_vi:['Cảm giác chưa được đối xử như nhau','Bạn thấy {n} dành nhiều chú ý cho người khác trong nhà. Bạn chưa chắc đã hiểu hết lý do.'],
  am_ap:['Sự quan tâm vượt khoảng riêng','{n} muốn hỏi thật nhiều để chăm sóc bạn, còn có một chuyện bạn chưa sẵn sàng kể.']
 };
-Object.keys(parentStories).forEach(function(trait){var x=parentStories[trait];add('parent_'+trait,'parent',6,85,x[0],x[1],talk,function(l,i){return style(l,'parent',i)===trait;});});
+Object.keys(parentStories).forEach(function(trait){var x=parentStories[trait];add('parent_'+trait,'parent',6,85,x[0],x[1],talk,function(l,i){return style(l,'parent',i)===trait;},kidStories[trait]);});
 function age(l,i){return l.age-l.kids[i].born;}function childRange(lo,hi,local){return function(l,i){return age(l,i)>=lo&&age(l,i)<=hi&&(!local||localChild(l,l.kids[i]));};}
 add('baby_routine','child',16,70,'Nhịp sinh hoạt của bé','{n} khó ngủ sau khi lịch chăm sóc thay đổi. Bé cần được dỗ dành, chưa thể hiểu một lời trách móc.',[['care','Tự thu xếp thời gian chăm bé theo nhịp quen'],['pause','Nghỉ một chút, nhờ người đang chăm cùng hỗ trợ']],childRange(0,2,true));
 add('child_promise','child',16,80,'Lời hứa bị lỡ','{n} chờ một việc bạn đã hứa cùng làm, nhưng hôm ấy bạn không thu xếp được.',[['listen','Nhận phần mình lỡ hẹn, hỏi con cảm thấy thế nào'],['care','Chọn một khoảng thời gian thực tế để cùng làm'],['pressure','Trách con đòi hỏi quá nhiều']],childRange(3,11,true));

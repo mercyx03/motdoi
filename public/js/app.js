@@ -486,6 +486,11 @@
     S.queue = entries.map(function (e, i) { return { e: e, t: (i + 1) / (entries.length + 1) }; });
     S.progress = 0; S.phase = 'running'; S.yearRunning = true; S.last = performance.now();
     renderAll();
+    // Tình huống phát sinh trong năm (thời tiết, gia đình, học phần…) phải chọn ngay trong năm đó; để sang năm sau sẽ bị coi là hết hạn.
+    if (l.alive && l.pending.length) {
+      if (!(S.minorOnly && !S.auto && l.pending.every(function (d) { return !E.isMajor(d); }))) S.skipping = false;
+      renderTopbar(); showDecision();
+    }
   }
   function completeYear() {
     var l = S.life;

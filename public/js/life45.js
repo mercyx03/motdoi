@@ -154,7 +154,7 @@
     if (!l.alive) return;
     var F = l.flags, P = F.relPrev || {}, f = l.fam;
     // ly hôn
-    if (P.st && P.st !== 'dating' && (l.exes || 0) > (P.ex || 0) && (!l.partner || l.partner.name !== P.n)) { F.divAt = a; F.divEx = P.n; stress(l, 10); if (minors(l).length && E.DEC.quyen_nuoi_con) l.pending.push(E.DEC.quyen_nuoi_con.make(l, r)); }
+    if (P.st && P.st !== 'dating' && (l.exes || 0) > (P.ex || 0) && (!l.partner || l.partner.name !== P.n)) { F.divAt = a; F.divEx = P.n; stress(l, 10); if (minors(l).length && E.DEC.quyen_nuoi_con && E.DEC.quyen_nuoi_con.valid(l, {}) && !l.pending.some(function (d) { return d.id === 'quyen_nuoi_con'; })) l.pending.push(E.DEC.quyen_nuoi_con.make(l, r)); } // đã thỏa thuận quyền nuôi con lúc ly hôn thì không hỏi lại
     // góa
     if (P.st && P.st !== 'dating' && (l.widowed || 0) > (P.wid || 0)) { F.widowAt = a; F.lateSpouse = P.n; (F.spouses = F.spouses || []).indexOf(P.n) < 0 && F.spouses.push(P.n); stress(l, 15); }
     // bố mẹ mất

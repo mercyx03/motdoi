@@ -1337,7 +1337,10 @@
   // ================= VÒNG NĂM =================
   // opts.auto = true: AI tự chủ động làm các hành động (dùng cho chế độ tự động, em bé cùng giây, kiểm thử)
   function beginYear(life, opts) {
-    if (!life.alive || life.pending.length) return life.pending;
+    if (!life.alive) return life.pending;
+    // Bản lưu cũ có thể còn lựa chọn của năm trước đã hết hạn: bỏ đi thay vì bắt người chơi bấm rồi báo "không còn phù hợp".
+    if (life.pending.length) life.pending = life.pending.filter(function (d) { return !DEC[d.id] || !DEC[d.id].valid || DEC[d.id].valid(life, d.data || {}); });
+    if (life.pending.length) return life.pending;
     var r = RF(life), a = life.age, q = [];
     life.prevActs = life.acts || 0; life.acts = 0; life.yr = { items: [] };
     var cap = difficulty(life).cap;

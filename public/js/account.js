@@ -58,11 +58,20 @@
     });
   }
 
+  // Kho ứng dụng tối giản khi trang chưa tải engine (trang cập nhật, trước khi bấm Chơi); cùng khoá với life131.js.
+  function localSocialApps(){
+    var KEY='mkn.socialApps131',apps=[['facebook','Facebook'],['tiktok','TikTok'],['youtube','YouTube'],['instagram','Instagram']].map(function(a){return{id:a[0],name:a[1],enabled:true};});
+    function valid(a){var ids={};return Array.isArray(a)&&a.length<=20&&a.every(function(x){if(!x||typeof x.id!=='string'||!/^[a-z][a-z0-9_-]{1,31}$/.test(x.id)||ids[x.id]||typeof x.name!=='string'||x.name.length<2||x.name.length>40||/[<>]/.test(x.name)||typeof x.enabled!=='boolean')return false;ids[x.id]=true;return true;});}
+    function copy(a){return a.map(function(x){return{id:x.id,name:x.name,enabled:x.enabled};});}
+    var saved=get(KEY,null);if(saved&&valid(saved.apps))apps=copy(saved.apps);
+    return{apps:function(){return copy(apps);},setApps:function(a){if(!valid(a))return false;apps=copy(a);return true;},saveApps:function(a){if(!valid(a))return false;try{localStorage.setItem(KEY,JSON.stringify({apps:copy(a),at:Date.now()}));}catch(e){return false;}apps=copy(a);return true;}};
+  }
+
   function openSocialApps(){
-    modal('<h2>Ứng dụng mạng xã hội trong game</h2><p>Tự thêm, đổi tên hoặc bật/tắt ứng dụng cho riêng bạn. Kênh đã tạo được giữ lại khi ứng dụng tắt.</p><div id="socialAppList"></div><form id="socialAppForm"><label>Mã ứng dụng<input id="socialAppId" required pattern="[a-z][a-z0-9_-]{1,31}" maxlength="32" placeholder="youtube"></label><label>Tên hiển thị<input id="socialAppName" required minlength="2" maxlength="40" placeholder="YouTube"></label><label><input type="checkbox" id="socialAppEnabled" checked> Cho phép sử dụng</label><button class="btn primary" type="submit">Lưu ứng dụng</button></form><p id="socialAppStatus" role="status"></p><button class="btn" id="socialAppBack">Về tài khoản</button>',function(box){
+    modal('<h2>Ứng dụng mạng xã hội trong game</h2><p>Tự thêm, đổi tên hoặc bật/tắt ứng dụng cho riêng bạn. Kênh đã tạo được giữ lại khi ứng dụng tắt.</p><div id="socialAppList"></div><form id="socialAppForm" class="family-form"><label>Mã ứng dụng<input id="socialAppId" required pattern="[a-z][a-z0-9_-]{1,31}" maxlength="32" placeholder="youtube"></label><label>Tên hiển thị<input id="socialAppName" required minlength="2" maxlength="40" placeholder="YouTube"></label><label><input type="checkbox" id="socialAppEnabled" checked> Cho phép sử dụng</label><button class="btn primary" type="submit">Lưu ứng dụng</button></form><p id="socialAppStatus" role="status"></p><button class="btn" id="socialAppBack">Về tài khoản</button>',function(box){
       var status=box.querySelector('#socialAppStatus'),form=box.querySelector('#socialAppForm');
-      function draw(v){var host=box.querySelector('#socialAppList');host.replaceChildren();v.apps.forEach(function(a){var b=document.createElement('button');b.className='btn';b.textContent=a.name+' · '+(a.enabled?'Đang bật':'Đã tắt');b.onclick=function(){box.querySelector('#socialAppId').value=a.id;box.querySelector('#socialAppName').value=a.name;box.querySelector('#socialAppEnabled').checked=a.enabled;};host.append(b);});if(window.G&&G.E&&G.E.SOCIAL131)G.E.SOCIAL131.setApps(v.apps);}
-      var social=window.G&&G.E&&G.E.SOCIAL131;if(!social){status.textContent='Trò chơi đang tải, hãy mở lại sau ít giây.';form.hidden=true;}else draw({apps:social.apps()});
+      function draw(v){var host=box.querySelector('#socialAppList');host.replaceChildren();v.apps.forEach(function(a){var b=document.createElement('button');b.className='btn';b.textContent=a.name+' · '+(a.enabled?'Đang bật':'Đã tắt');b.onclick=function(){box.querySelector('#socialAppId').value=a.id;box.querySelector('#socialAppName').value=a.name;box.querySelector('#socialAppEnabled').checked=a.enabled;};host.append(b);});if(window.G&&G.E&&G.E.SOCIAL131&&G.E.SOCIAL131!==social)G.E.SOCIAL131.setApps(v.apps);}
+      var social=window.G&&G.E&&G.E.SOCIAL131||localSocialApps();draw({apps:social.apps()});
       form.onsubmit=function(e){e.preventDefault();if(!social)return;var a={id:box.querySelector('#socialAppId').value.trim(),name:box.querySelector('#socialAppName').value.trim(),enabled:box.querySelector('#socialAppEnabled').checked},list=social.apps().map(function(x){return Object.assign({},x);}),i=list.findIndex(function(x){return x.id===a.id;});if(i<0)list.push(a);else list[i]=a;if(!social.saveApps(list)){status.textContent='Không lưu được: kiểm tra mã, tên, giới hạn 20 ứng dụng hoặc bộ nhớ thiết bị.';return;}draw({apps:social.apps()});status.textContent='Đã lưu ứng dụng của bạn. Đăng nhập và đồng bộ để dùng trên thiết bị khác.';};
       box.querySelector('#socialAppBack').onclick=open;
     });
