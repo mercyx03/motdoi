@@ -67,3 +67,5 @@ assert(embeddedHistory.entries.some(e=>e.id==='audit135'),'audit fixes release s
 assert(embeddedHistory.entries.some(e=>e.id==='university136'),'university fixes shipped');
 
 assert(embeddedHistory.entries.some(e=>e.id==='business137'),'corporate update shipped');
+
+assert(embeddedHistory.entries.some(e=>e.id==='life138-path139'),'family and life pathways update shipped');

@@ -47,7 +47,7 @@
   // ===================================================================
   function together(l) { return E.parentsWithYouAbroad ? E.parentsWithYouAbroad(l) : !!(l.flags.parentsAbroad && l.abroad && l.abroad.perm); }
   function homeName(l) { return isVN(l) ? (l.provLabel || (l.prov && l.prov.old) || 'quê nhà') : (l.city || l.countryName || 'quê nhà'); }
-  function guardian(l) { var f = l.fam || {}; return f.mAlive && f.fAlive && !f.noDad ? 'bố mẹ' : f.mAlive ? 'mẹ' : f.fAlive && !f.noDad ? 'bố' : (E.orphanCarer && E.orphanCarer(l)) || 'người thân'; }
+  function guardian(l) { if(l.flags.life138&&l.flags.life138.care)return l.flags.life138.care;var f = l.fam || {}; return f.mAlive && f.fAlive && !f.noDad ? 'bố mẹ' : f.mAlive ? 'mẹ' : f.fAlive && !f.noDad ? 'bố' : (E.orphanCarer && E.orphanCarer(l)) || 'người thân'; }
   E.whereNow = function (l) {
     if (l.jailUntil != null && l.age < l.jailUntil) return 'Đang thụ án trong trại giam';
     var A = l.abroad;

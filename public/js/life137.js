@@ -10,7 +10,7 @@ function familyShares(c){return (c.holders137||[]).reduce(function(n,h){return n
 function available(c){return Math.max(0,100-c.share-familyShares(c));}
 function relatives(l){
  E.FAMILY53.init(l);var out=[];
- function add(p,kind,age){if(p&&p.alive!==false)out.push({id:X.uid(l,p),name:p.name,kind:kind,age:age,person:p});}
+ function add(p,kind,age){if(p&&p.alive!==false)out.push({id:X.uid(l,p),name:p.name||p.n,kind:kind,age:age,person:p});}
  (l.kids||[]).forEach(function(k){add(k,'con',l.age-k.born);});
  if(l.partner&&l.partner.status==='married')add(l.partner,'vợ/chồng',l.partner.age);
  (l.sibList||[]).forEach(function(s){add(s,'anh/chị/em',l.age-s.born);});return out;
