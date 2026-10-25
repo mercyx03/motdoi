@@ -33,7 +33,7 @@ let msg=[];ok(E.startJob(l,'van_phong',()=>0,t=>msg.push(t))===false&&E.resolveJ
 let eq=E.BUSINESS123.equity(l);pick(l,'companies123','chairLeave');ok(!B.seated(l)&&!l.job&&E.BUSINESS123.equity(l)===eq,'leaving seat keeps shares');
 E.startJob(l,'van_phong',()=>0,log,true);ok(l.job&&E.resolveJob(l.job.id)==='van_phong','other job allowed after leaving');
 pick(l,'companies123','chairReturn');ok(B.seated(l)&&E.resolveJob(l.job.id)===B.chair,'can return to seat');
-l.job=null;E.HOOKS.year[E.HOOKS.year.length-1](l,rng(3),log);ok(l.job&&E.resolveJob(l.job.id)===B.chair,'seat restores chairman job');
+l.job=null;B.chairYear(l,rng(3),log);ok(l.job&&E.resolveJob(l.job.id)===B.chair,'seat restores chairman job');
 // 6. Bản lưu cũ.
 let old=life();E.startJob(old,'van_phong',()=>0,log,true);old.flags.world120={companies:[{name:'Cũ',value:3000,share:100,created:30,governance:0}],group:{since:30}};let saved=JSON.parse(JSON.stringify(old));E.migrate(saved);
 ok(saved.flags.world120.companies[0].sector==='general'&&saved.flags.world120.chair133&&saved.flags.world120.chair133.active===false,'old save migrates without forcing job');ok(E.resolveJob(saved.job.id)==='van_phong','old job kept');

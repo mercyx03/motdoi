@@ -472,6 +472,13 @@
   function startYear() {
     var l = S.life;
     if (!l.alive) return toFinale();
+    // A saved mid-year life already received its income/events. Resume its pending choices, not the annual simulation.
+    if (l._yearRun) {
+      S.queue = []; S.progress = 0; S.yearRunning = true; S.last = performance.now();
+      if (l.pending.length) { renderTopbar(); showDecision(); }
+      else S.phase = 'running';
+      return;
+    }
     var decs = E.beginYear(l, { auto: S.auto });
     if (decs.length) {
       // chế độ "chỉ ngã rẽ lớn": tua nhanh vẫn tiếp tục qua những lựa chọn thường ngày

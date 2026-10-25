@@ -64,7 +64,7 @@
     function valid(a){var ids={};return Array.isArray(a)&&a.length<=20&&a.every(function(x){if(!x||typeof x.id!=='string'||!/^[a-z][a-z0-9_-]{1,31}$/.test(x.id)||ids[x.id]||typeof x.name!=='string'||x.name.length<2||x.name.length>40||/[<>]/.test(x.name)||typeof x.enabled!=='boolean')return false;ids[x.id]=true;return true;});}
     function copy(a){return a.map(function(x){return{id:x.id,name:x.name,enabled:x.enabled};});}
     var saved=get(KEY,null);if(saved&&valid(saved.apps))apps=copy(saved.apps);
-    return{apps:function(){return copy(apps);},setApps:function(a){if(!valid(a))return false;apps=copy(a);return true;},saveApps:function(a){if(!valid(a))return false;try{localStorage.setItem(KEY,JSON.stringify({apps:copy(a),at:Date.now()}));}catch(e){return false;}apps=copy(a);return true;}};
+    return{apps:function(){return copy(apps);},setApps:function(a){if(!valid(a))return false;apps=copy(a);return true;},saveApps:function(a,at){if(!valid(a))return false;try{localStorage.setItem(KEY,JSON.stringify({apps:copy(a),at:at||Date.now()}));}catch(e){return false;}apps=copy(a);return true;}};
   }
 
   function openSocialApps(){
@@ -99,7 +99,7 @@
     return { v: 1, ach: mergeAch(remote.ach, local.ach), tree: mergeBy(remote.tree, local.tree, 'id', 'at', 400), mem: mergeBy(remote.mem, local.mem, 'id', 'savedAt', 60), recent: mergeBy(local.recent, remote.recent, 'id', null, 10), cur: cur, socialApps: !local.socialApps?remote.socialApps:!remote.socialApps?local.socialApps:(remote.socialApps.at>local.socialApps.at?remote.socialApps:local.socialApps) };
   }
   function applyLocal(d) {
-    if(d.socialApps&&window.G&&G.E&&G.E.SOCIAL131)G.E.SOCIAL131.saveApps(d.socialApps.apps,d.socialApps.at);
+    if(d.socialApps){if(window.G&&G.E&&G.E.SOCIAL131)G.E.SOCIAL131.saveApps(d.socialApps.apps,d.socialApps.at);else localSocialApps().saveApps(d.socialApps.apps,d.socialApps.at);}
     set(K.ach, d.ach); set(K.tree, d.tree); set(K.mem, d.mem); set(K.recent, d.recent);
     var app = window.G && window.G.App, playing = app && app.inLife && app.inLife();
     var changedCur = false;

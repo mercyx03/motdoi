@@ -38,7 +38,8 @@
     "test:release850": "node tests/release850.js && node tests/business128.js && node tests/business133.js && node tests/exam127.js && node tests/world120.js && node tests/family126.js && node tests/continuity101.js",
     "test:business": "node tests/business128.js && node tests/business133.js",
     "test:social": "node tests/social131.js && node tests/social-personal131.js && node tests/creator132.js",
-    "test:looks": "node tests/looks134.js"
+    "test:looks": "node tests/looks134.js",
+    "test:audit135": "node tests/resume135.js && node tests/social-personal131.js && node tests/business133.js && node tests/looks134.js"
   },
   "devDependencies": {
     "esbuild": "0.28.2"

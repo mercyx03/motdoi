@@ -28,3 +28,6 @@ function casualYear(seed,sex){const l=life(seed,l=>{l.sex=sex;}),net=E.RELATIONS
 let most=0,delivered=true,femaleMax=0;for(let i=0;i<40;i++){const x=casualYear(1000+i,'M');ok(x.met===4,'four meetings per year ('+x.met+')');most=Math.max(most,x.babies);const k0=x.l.kids.length;x.l.age++;E.HOOKS.year.forEach(h=>{try{h(x.l,()=>.5,()=>{},x.l.age);}catch(e){}});if(x.l.kids.length-k0!==x.babies)delivered=false;const f=casualYear(2000+i,'F');femaleMax=Math.max(femaleMax,f.babies);}
 ok(most>=2&&most<=3,'male player can have 2-3 children in one year ('+most+')');ok(delivered,'every pregnancy is delivered next year');ok(femaleMax===1,'female player carries one pregnancy at a time');
 console.log('PASS looks134: '+n+' checks');
+// Adopted children do not inherit the adoptive parent's appearance score.
+let low=life(81234),high=JSON.parse(JSON.stringify(low));low.looks134=10;high.looks134=95;let child={name:'Con nuôi',born:20,adopted:true};let c1=JSON.parse(JSON.stringify(child)),c2=JSON.parse(JSON.stringify(child));ok(L.kidLooks(low,c1)===L.kidLooks(high,c2),'adopted child appearance independent of adoptive parent');
+console.log('PASS adopted child appearance regression');

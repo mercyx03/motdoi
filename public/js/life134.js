@@ -8,7 +8,7 @@ function state(l){return l.flags.looks134||(l.flags.looks134={});}
 // Player, partner and children each keep their own score; old saves get a stable score on first read.
 function looks(l){if(l.looks134==null)l.looks134=roll((l.id||'')+':'+l.name+':'+l.birthYear);return l.looks134;}
 function partnerLooks(l,p){if(!p)return null;if(p.looks134==null)p.looks134=roll((p.name||'')+':'+(p.since==null?'':p.since)+':'+(p.age==null?'':p.age));return p.looks134;}
-function kidLooks(l,k){if(!k)return null;if(k.looks134==null){var other=l.partner&&k.coParent108&&l.partner.relation108===k.coParent108.id?partnerLooks(l,l.partner):52,base=k.adopt?roll(k.name+':adopt'):(looks(l)+other)/2;k.looks134=Math.round(U.clamp(base+(hash(k.name+':'+k.born)/4294967296-.5)*20,15,95));}return k.looks134;}
+function kidLooks(l,k){if(!k)return null;if(k.looks134==null){var other=l.partner&&k.coParent108&&l.partner.relation108===k.coParent108.id?partnerLooks(l,l.partner):52,base=(k.adopted||k.adopt)?roll(k.name+':adopt'):(looks(l)+other)/2;k.looks134=Math.round(U.clamp(base+(hash(k.name+':'+k.born)/4294967296-.5)*20,15,95));}return k.looks134;}
 function label(v,sex){v=Math.round(v);return v<40?'Kém hấp dẫn':v<60?'Bình thường':v<80?'Ưa nhìn':v>=90?'Cực phẩm':sex==='M'?'Đẹp trai, hấp dẫn':sex==='F'?'Xinh đẹp, hấp dẫn':'Rất đẹp, hấp dẫn';}
 function text(v,sex){return 'ngoại hình '+Math.round(v)+'/100 · '+label(v,sex);}
 function add(o,key,n){o[key]=Math.round(U.clamp((o[key]==null?52:o[key])+n,0,100));}

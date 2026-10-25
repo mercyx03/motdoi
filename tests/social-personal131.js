@@ -18,3 +18,6 @@ assert.equal(sandbox.merge({socialApps:fresh},{socialApps:old}).socialApps.at,20
 assert.equal(sandbox.merge({socialApps:fresh},{}).socialApps.at,20);
 sandbox.applyLocal({socialApps:fresh});assert(a.apps().some(x=>x.id==='newapp'));assert.equal(JSON.parse(aStore['mkn.socialApps131']).at,20);
 console.log('PASS social sync: newest settings win on either device; cloud settings applied with original timestamp');
+// Cloud sync on updates/reviews pages must work without loading the game engine.
+const store={};const noEngine={Date,JSON,window:{},localStorage:{setItem:(k,v)=>store[k]=v},get:(k,d)=>store[k]?JSON.parse(store[k]):d,set:(k,v)=>{store[k]=JSON.stringify(v);return true;},K:{ach:'ach',tree:'tree',mem:'mem',recent:'recent'}};vm.createContext(noEngine);vm.runInContext(account.slice(account.indexOf('  function localSocialApps'),account.indexOf('  function openSocialApps'))+mergeCode,noEngine);noEngine.applyLocal({socialApps:fresh});assert.equal(JSON.parse(store['mkn.socialApps131']).at,20);assert(noEngine.localSocialApps().apps().some(x=>x.id==='newapp'));noEngine.applyLocal({socialApps:{apps:[{id:'bad',name:'<script>',enabled:true}],at:30}});assert.equal(JSON.parse(store['mkn.socialApps131']).at,20);
+console.log('PASS social sync without engine: cloud config applied on standalone pages, timestamp retained, invalid data rejected');

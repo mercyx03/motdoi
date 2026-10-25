@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-10-25T06:08:04.000Z",
+  "generatedAt": "2026-10-25T06:33:41.722Z",
   "entries": [
+    {
+      "id": "audit135",
+      "publishedAt": "2026-10-25T06:33:41.722Z",
+      "title": "Giữ đúng tiến trình khi tải lại và đồng bộ mạng xã hội",
+      "summary": "Sửa lỗi tiếp tục giữa năm, danh sách ứng dụng ở trang cập nhật và ngoại hình con nuôi.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tải lại cuộc đời đang xử lý sự kiện cuối năm sẽ tiếp tục lựa chọn đang chờ, không chạy lại thu nhập và sự kiện của năm đó.",
+        "Đồng bộ danh sách ứng dụng mạng xã hội hoạt động cả trên trang Cập nhật và Đánh giá khi chưa tải game; giữ thời điểm sửa để chọn đúng bản mới hơn.",
+        "Ngoại hình con nuôi được tạo riêng, không tính di truyền từ bố mẹ nuôi."
+      ]
+    },
     {
       "id": "looks134",
       "publishedAt": "2026-10-25T06:08:04.000Z",
