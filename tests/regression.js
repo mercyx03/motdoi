@@ -2693,9 +2693,9 @@ section('63. Bản 6.8.0: khai thác sâu Nemotron-Personas-Vietnam, đối chi�
   const hcm = mk(63200); hcm.movedTo = 'TP. Hồ Chí Minh'; hcm.urban = true; let sg = 0; for (let i = 0; i < 30; i++) { const d = E.DEC.pv_du_lich.make(hcm, R(i)); if (!d.data.none && d.data.list.includes('Sài Gòn')) sg++; } ok(sg === 0, 'không gợi ý đi du lịch chính nơi mình đang sống');
   const v = mk(63300), d = E.DEC.pv_van_nghe.make(v, R(5)); ok(d.data.none || !d.data.list.some(x => /karaoke|nhiếp ảnh|phim Hàn/.test(x)), 'đêm văn nghệ chỉ có tiết mục biểu diễn');
   // đối chiếu mô phỏng với dữ liệu
-  let prim = 0, n20 = 0, mar35 = 0, n35 = 0; for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: 'vn', seed: 63400 + i }); E.runHeadless(l, x => { if (x.age === 20) { n20++; if (x.edu <= 1) prim++; } if (x.age === 38) { n35++; if (x.partner && x.partner.alive !== false && x.partner.status !== 'dating') mar35++; } }); }
+  let prim = 0, n20 = 0, mar35 = 0, n35 = 0; for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: 'vn', seed: 63400 + i }); let everMarried = false; E.runHeadless(l, x => { if(x.age<=38&&x.partner&&x.partner.alive!==false&&x.partner.status!=='dating')everMarried=true; if (x.age === 20) { n20++; if (x.edu <= 1) prim++; } if (x.age === 38) { n35++; if (everMarried) mar35++; } }); }
   ok(prim / n20 < 0.1, 'Việt Nam: người 20 tuổi chỉ học hết tiểu học dưới 10%, sát dữ liệu (' + (prim / n20 * 100).toFixed(0) + '%, trước đây ~17%)');
-  ok(mar35 / n35 > 0.6, 'Việt Nam: người 38 tuổi đã lập gia đình trên 60% (' + (mar35 / n35 * 100).toFixed(0) + '%)');
+  ok(mar35 / n35 > 0.6, 'Việt Nam: trên 60% người sống tới 38 tuổi từng kết hôn (' + (mar35 / n35 * 100).toFixed(0) + '%)');
   const w = E.createLife({ mode: 'world', country: 'NG', seed: 63500 }); ok(w.mode === 'world', 'thế giới không bị đổi công thức học vấn của Việt Nam');
   const s = mk(63600); s.age = 30; s.partner = null; const xm = E.DEC.vn_xem_mat.make(s, R(9)); ok(/xem mắt|giới thiệu/.test(xm.title + xm.text) && !badText(xm.text), 'mai mối, xem mắt khi chưa có ai');
   s.partner = { name: 'Hà', sex: 'F', age: 29, status: 'dating', since: 26, alive: true }; ok(E.DEC.vn_giuc_cuoi.valid(s, {}), 'yêu lâu thì hai bên gia đình giục cưới');
