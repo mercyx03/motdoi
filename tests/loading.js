@@ -63,3 +63,5 @@ assert(embeddedHistory.entries.some(e=>e.id==='social131-mobile-qr'),'social and
 assert(embeddedHistory.entries.some(e=>e.id==='creator132'),'creator careers release shipped');
 
 assert(embeddedHistory.entries.some(e=>e.id==='anglican133'),'regional Anglican release shipped');
+
+assert(embeddedHistory.entries.some(e=>e.id==='anglican-community134'),'community weights release shipped');
