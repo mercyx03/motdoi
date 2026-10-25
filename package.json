@@ -41,7 +41,10 @@
     "test:looks": "node tests/looks134.js",
     "test:audit135": "node tests/resume135.js && node tests/social-personal131.js && node tests/business133.js && node tests/looks134.js",
     "test:university": "node tests/university136.js && node tests/world120.js && node tests/adult106.js",
-    "test:life138": "node tests/life138.js && node tests/looks134.js && node tests/family129.js && node tests/business137.js"
+    "test:life138": "node tests/life138.js && node tests/looks134.js && node tests/family129.js && node tests/business137.js",
+    "test:audition": "node tests/audition139.js && node tests/life138.js",
+    "test:debt": "node tests/debt140.js",
+    "test:children": "node tests/children141.js && node tests/family129.js && node tests/family130.js"
   },
   "devDependencies": {
     "esbuild": "0.28.2"

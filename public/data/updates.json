@@ -1,6 +1,51 @@
 {
-  "generatedAt": "2026-10-25T13:21:33.281041+00:00",
+  "generatedAt": "2026-10-25T17:09:59.042Z",
   "entries": [
+    {
+      "id": "children146",
+      "publishedAt": "2026-10-25T17:09:59.042Z",
+      "title": "Con cái có tính cách riêng và tự lớn lên",
+      "summary": "Mỗi người con có tính cách, sở thích, ước mơ và phản ứng riêng trước quyết định của bố mẹ; sau 18 tuổi con tự quyết cuộc đời mình.",
+      "tags": [
+        "Tính năng mới",
+        "Gia đình"
+      ],
+      "details": [
+        "Mười nét tính cách (bốc đồng – biết kiềm chế, hướng nội – hướng ngoại, độc lập, chăm chỉ, nhạy cảm, hoài bão, tò mò, đồng cảm, điều tiết cảm xúc, tự lập) sinh ra khi con chào đời và thay đổi dần. Tính cách chỉ làm thay đổi khả năng xảy ra, không định sẵn kết quả.",
+        "Con có thể đồng ý, miễn cưỡng làm theo, từ chối, cãi lại, âm thầm làm ngược lại hoặc xin thương lượng. Từ 19 tuổi, bố mẹ chỉ góp ý hoặc hỗ trợ; con tự chọn nghề, nơi ở, hôn nhân và chuyện có con.",
+        "Sự kiện theo từng giai đoạn 0–2, 3–5, 6–11, 12–15, 16–18, 19–25 và từ 25 tuổi; mỗi sự kiện chỉ xảy ra một lần với mỗi người con. Gia đình thu nhập thấp, khá giả hay giàu có đều có áp lực và cơ hội riêng; sự kiện hiếm luôn có hướng giải quyết.",
+        "Kết quả học tập phụ thuộc năng lực, sự chăm chỉ, hứng thú, tâm trạng, điều kiện gia đình và sự hỗ trợ — không phụ thuộc việc con có nghe lời hay không. Trượt đại học, con tự chọn thi lại, học nghề, đi làm, học tư thục, nghỉ một năm hoặc buôn bán nhỏ theo tính cách và khả năng tài chính.",
+        "Theo dõi riêng sự tin tưởng, gắn bó và áp lực; kỷ niệm quan trọng có thể được con nhắc lại nhiều năm sau. Có thể xin lỗi để hàn gắn. Hồ sơ con ở mục Tình cảm & gia đình mô tả bằng lời, không dùng phần trăm. Bản lưu cũ vẫn dùng được."
+      ]
+    },
+    {
+      "id": "debt145",
+      "publishedAt": "2026-10-25T17:09:59.042Z",
+      "title": "Nợ quá hạn bị bán cho bên đòi nợ",
+      "summary": "Khoản vay ngân hàng quá hạn hơn 2 năm có thể bị bán cho bên ngoài; người đòi nợ quấy rối cả gia đình.",
+      "tags": [
+        "Tính năng mới",
+        "Tiền bạc"
+      ],
+      "details": [
+        "Chỉ áp dụng cho khoản vay ngân hàng, thẻ, ví trả sau và công ty tài chính không có tài sản bảo đảm; khoản nợ càng lớn, quá hạn càng lâu thì càng dễ bị bán. Bên mua nợ là hư cấu.",
+        "Người đòi nợ gọi điện, đến nhà, đến chỗ làm của vợ/chồng, chờ trước cổng trường của con và gọi cho họ hàng. Cuộc sống không tự tốt lên khi nợ còn đó.",
+        "Hai lối thoát: sa vào con đường phạm pháp (dùng các nghề phi pháp sẵn có, có thể vào tù) để kiếm tiền nhanh trả nợ, hoặc cùng gia đình bỏ trốn đến thành phố khác sống ẩn — nếu không may vẫn có thể bị tìm ra và đánh. Có tiền thì có thể trả dứt điểm. Bản lưu cũ vẫn dùng được."
+      ]
+    },
+    {
+      "id": "audition144",
+      "publishedAt": "2026-10-25T17:09:59.042Z",
+      "title": "Sửa lỗi audition và về nước sau thực tập",
+      "summary": "Về nước sau khi đi đào tạo không còn làm mất hơn một nửa tài sản; đề nghị thực tập sinh có thể từ chối.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khi trở về nơi ở trước, tiền được quy đổi ngược đúng tỷ giá lúc đi thay vì theo tỷ lệ chi phí sinh hoạt. Bản lưu cũ chưa ghi tỷ giá vẫn được quy đổi ngược theo công thức chuẩn.",
+        "Đề nghị thực tập sinh chưa đủ ngoại ngữ không còn bị kẹt: có thể từ chối và nộp audition lại vào năm sau. Ẩn lựa chọn trở về khi đã rời nơi đào tạo bằng cách khác."
+      ]
+    },
     {
       "id": "business143",
       "publishedAt": "2026-10-25T13:21:33.281041+00:00",
