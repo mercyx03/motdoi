@@ -37,3 +37,23 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 - Đã sửa lỗi cảnh hôn nhân life130 / `familyObjection130` / `status129` / `map_mo101` / `casual101` / `public_scandal101` (xem PACE-GD5.md); mục ghi ở GĐ4 về lỗi này đã xử lý.
 - Bấm giờ chế độ tự động và kiểm giao diện các cảnh vừa mở lại trên trình duyệt.
 - Tỷ lệ có con: GĐ5 thấp hơn 1,9 điểm khi tắt điều tiết (trong sai số); đo lại với mẫu lớn.
+
+## Sau GĐ6
+
+### Đã xử lý trong GĐ6
+
+- Các mục GĐ3–GĐ5 "chưa chạy" ở trên: regression đầy đủ đã chạy trên mã GĐ6 (xem ACCEPTANCE-GD6.md).
+- Chế độ Tự động đứng chờ: sự kiện hệ thống (thời tiết, người đòi nợ, chuyển nơi ở, khoảnh khắc với con, đám cưới của con, con chia sẻ chuyện riêng, kết thúc du học…) bị gắn nhầm "người chơi tự mở"; bước nối tiếp của lựa chọn do AI chốt cũng bị gắn như vậy. Đổi Tự động khi đang có lựa chọn không có tác dụng.
+- `familyObjection130` xuất hiện với vợ chồng đã cưới nhiều năm → chỉ còn với cặp chưa cưới.
+- Ba bộ test module hỏng từ GĐ5 do bọc `ev.run` và ghi lịch sử khi lựa chọn không có tác dụng; `community` hỏng từ GĐ3 do cấm số phiên bản trong toàn bộ nhật ký.
+- Regression lượt 2–3 bắt thêm: crash chuỗi hôn nhân GĐ4 khi bạn đời không còn; cờ học bổng lệch điểm thi lại; quy tắc AI của GĐ5 chặn việc tự chọn giúp ở chế độ thủ công; nhóm "đổi nghề" của GĐ5 làm giảm đổi hướng sự nghiệp ~45%. Đã sửa cả bốn.
+
+### Còn lại
+
+- Tỷ lệ AI có con thấp (đã ghi từ GĐ2.5) — hạng mục cân bằng gameplay, không thuộc GĐ6.
+- `life.id` phụ thuộc giờ thật: cùng seed với giờ thật cho đời khác nhau (cảnh báo smoke) — không đổi cấu trúc ID trong GĐ6.
+- Điều kiện lập di chúc theo hoàn cảnh (`di_chuc70`) — mục đầu tiên của backlog, chưa triển khai.
+- Danh sách nhóm chủ đề chống lặp (GĐ5) mới bao phủ các cụm đã thấy trong số liệu; mở rộng khi có thêm dữ liệu người chơi.
+- Bấm giờ chế độ Tự động trên thiết bị người chơi thật; profiling giao diện điện thoại.
+- Bản lưu thật của người chơi chưa có mẫu để kiểm (chỉ có bản lưu do máy tạo).
+- 25 nâng cấp gameplay chuyên sâu: chưa bắt đầu, chờ chủ dự án giao.

@@ -1463,7 +1463,7 @@
       var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai && !(aAt[x.id] != null && a - aAt[x.id] < 3) && (aN[x.id] || 0) < 3; }); // v3.7: game tự chọn thì mỗi việc tối đa 3 lần một đời
       if (av.length) {
         var pick = U.wpick(r, av, function (x) { return aiW(life, x.ai); });
-        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null, { ai: pick }); if (q.length > n1) { life.acts++; aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
+        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null, { ai: pick, auto: !!opts.auto }); if (q.length > n1) { life.acts++; aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
       }
     }
 
@@ -1956,7 +1956,7 @@
         if (!ev.c(life, a)) continue;
         var pr = typeof ev.p === 'function' ? ev.p(life, a) : ev.p;
         if (pr < 1 && !ev.rep && evAt[ei] != null && a - evAt[ei] < (ev.cd || 3)) continue; // v3.0: chuyện kể ngẫu nhiên không lặp lại năm nào cũng như năm nào
-        if (r() < pr) { var o0 = out.length, i0 = life.yr.items.length; ev.run(life, a, r, log); moneyNote(life, life.yr.items, i0, out.slice(o0), log); if (pr < 1) { n++; evAt[ei] = a; } }
+        if (r() < pr) { var o0 = out.length, i0 = life.yr.items.length; ev.run(life, a, r, E.PACE145 && E.PACE145.quietLog ? E.PACE145.quietLog(life, log) : log); /* GĐ5: không kể lại câu giống hệt trong 6 năm */ moneyNote(life, life.yr.items, i0, out.slice(o0), log); if (pr < 1) { n++; evAt[ei] = a; } }
       }
     }
     if (!life.alive) { clampSt(life); return out; }

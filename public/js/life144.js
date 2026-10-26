@@ -63,7 +63,8 @@
   // ---------- giai đoạn có lựa chọn ----------
   function stageDec(kind, idx, st) {
     var id = st.dec;
-    function ok(l, d) { var c = d && chain(l, d.cid); return !!(l.alive && c && c.kind === kind && c.stage === idx && c.open && c.open.token === d.token && !d.done && (!st.valid || st.valid(l, c))); }
+    // GĐ6: điều kiện hủy chuỗi (bạn đời không còn, bố/mẹ đã mất, nợ đã xong…) cũng chặn lựa chọn đã hẹn, kể cả khi hook năm chưa kịp khép chuỗi.
+    function ok(l, d) { var c = d && chain(l, d.cid), K = KINDS[kind]; return !!(l.alive && c && c.kind === kind && c.stage === idx && c.open && c.open.token === d.token && !d.done && !(K.cancel && K.cancel(l, c)) && (!st.valid || st.valid(l, c))); }
     SC(id, {
       title: function (l, d) { var c = d && chain(l, d.cid); return c ? (typeof st.title === 'function' ? st.title(l, c) : st.title) : 'Chuyện cũ'; },
       tone: st.tone || '',

@@ -7,5 +7,5 @@ l=life();k=l.kids[0];let cash=l.money;run(l,'childSupport130',k.parentId+'start'
 l=life();l.partner.status='dating';l.flags.giveSup={name:l.partner.name,monthly:30};let who=E.UPDATE110.uid(l,l.partner);run(l,'supportRules130',who+'all',{},()=>.99);ok(!l.flags.giveSup&&!l.partner,'refusal ends sponsor dating');
 l=life();l.flags.giveSup={name:l.partner.name,monthly:30};who=E.UPDATE110.uid(l,l.partner);run(l,'supportRules130',who+'all',{},()=>.99);ok(l.partner&&!l.flags.giveSup,'marriage requires separate divorce');
 l=life();let tr=E.TRIG.find(t=>t.id==='sn_loi_moi'),base=tr.p(l);F.state(l).wealthWish=true;ok(tr.p(l)>base,'more offers for stated wish');
-l=life();d=E.DEC.familyObjection130.make(l,()=>.2);run(l,'familyObjection130','delay');ok(l.partner.weddingHold130===l.age,'family objection postpones wedding');
+l=life();ok(!E.DEC.familyObjection130.valid(l,{}),'GĐ6: no wedding objection after marriage');l.partner.status='dating';d=E.DEC.familyObjection130.make(l,()=>.2);run(l,'familyObjection130','delay');ok(l.partner.weddingHold130===l.age,'family objection postpones wedding');
 console.log('PASS family130: '+n+' checks');

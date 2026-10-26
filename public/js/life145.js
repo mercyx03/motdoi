@@ -47,7 +47,7 @@
     { key: 'relationPressure', gap: 4, re: /^(familyObjection130|status129)$/ }, // vn_giuc_cuoi giữ nhịp cũ: ghép chung làm giảm cưới hỏi, sinh con
     { key: 'casual', gap: 3, re: /^(map_mo101|casual101)$/ },
     { key: 'friendCall', gap: 2, re: /^(ban_than_hen|ban_than_kho|ban_khung_hoang)$/ },
-    { key: 'careerSwitch', gap: 3, re: /^(nghe_chuyen_moi|chuyen_huong|cn_chuyen_nghe_tuoi_40)$/ },
+    // GĐ6: không ghép 'đổi nghề' — gợi ý đổi nghề (nghe_chuyen_moi) chặn mất quyết định đổi nghề thật (chuyen_huong): 22–26 → 9–15 / 400 đời.
     { key: 'petFind', gap: 2, re: /^(meo_ket|meo_theo|thu_cung|nuoi_pet|k_cho_duoi)$/ }
   ];
   function group(id) { for (var i = 0; i < GROUPS.length; i++) if (GROUPS[i].re.test(id)) return GROUPS[i]; return null; }
@@ -70,10 +70,12 @@
     s.h.push([l.age, code(tier(d)), g ? g.key : '', sig(d), d.id]);
     if (s.h.length > MAX_H) s.h.splice(0, s.h.length - MAX_H);
   }
+  // Chỉ ghi khi lựa chọn thật sự có tác dụng: lựa chọn không còn hợp lệ bị bỏ qua thì bản lưu không đổi (GĐ6).
+  function mark(l) { var s = l.st || {}; return [l.age, (l.log || []).length, l.money, l.karma, s.hea, s.hap, s.kno, s.soc, (l.pending || []).length, (l.sched || []).length, l.job && l.job.id, l.partner && l.partner.status, l.school, l.edu, l.alive, (l.kids || []).length].join('|'); }
   Object.keys(E.DEC).forEach(function (id) {
     var D = E.DEC[id], apply = D.apply;
     if (typeof apply !== 'function') return;
-    D.apply = function (l, d) { record(l, d); return apply.apply(this, arguments); };
+    D.apply = function (l, d) { var m = l && l.flags ? mark(l) : null, res = apply.apply(this, arguments); if (m !== null && mark(l) !== m) record(l, d); return res; };
   });
 
   // Điểm kiểm tra duy nhất, engine gọi cho tình huống ngẫu nhiên (trigger) và hành động AI tự chọn.
@@ -82,7 +84,8 @@
     var s = state(l), a = l.age, t = tier(d), g = group(d.id);
     var queued = q.map(function (x) { return { t: tier(x), g: group(x.id) }; });
     // Hành động AI tự chọn chỉ thêm vào năm còn thưa, để chế độ tự động không dồn nhiều hộp lựa chọn.
-    if (src && src.ai && q.length >= 2) return false;
+    // Chỉ ở chế độ tự động; việc game tự chọn giúp người chơi bỏ trống năm trước (chế độ thủ công) giữ nguyên (GĐ6).
+    if (src && src.ai && src.auto && q.length >= 2) return false;
     if (g) {
       if (queued.some(function (x) { return x.g === g; })) return false;
       if (s.h.some(function (x) { return x[2] === g.key && a - x[0] < g.gap; })) return false;
@@ -112,10 +115,11 @@
     if (shocksIn(s, a, a) > 0) return false;
     return s.h.filter(function (x) { return x[0] === a; }).length + (l.pending || []).length < 3;
   }
+  // Chặn ở điều kiện của sự kiện (không bọc ev.run) để mã nguồn sự kiện vẫn tra cứu được.
   E.EVENTS.forEach(function (ev) {
     if (!ev.travel50) return;
-    var run = ev.run;
-    ev.run = function (l) { if (!tripOk(l)) return; state(l).trip = l.age; return run.apply(this, arguments); };
+    var c = ev.c;
+    ev.c = function (l) { return tripOk(l) && c.apply(this, arguments); };
   });
   (E.ACT || []).forEach(function (x) {
     if (x.id !== 'du_lich' || !x.ai) return;
@@ -134,11 +138,7 @@
       return log(t, k);
     };
   }
-  E.EVENTS.forEach(function (ev) {
-    var run = ev.run;
-    if (typeof run !== 'function') return;
-    ev.run = function (l, a, r, log) { return run.call(this, l, a, r, quietLog(l, log)); };
-  });
+  // Engine gọi quietLog trong vòng sự kiện kể chuyện (finishYear).
 
   var migrate = E.migrateExt;
   E.migrateExt = function (l) {

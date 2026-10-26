@@ -25,3 +25,9 @@ Từ GĐ3, mục mới có version, releaseStatus=packaged và releasedAt=null k
 - Khi chủ dự án upload Production: (1) chạy node tools/release-update.js <id> --released-at 2026-10-28T20:15:00+07:00 với thời điểm thực tế; (2) npm run package:cloudflare; (3) upload dist.zip mới; (4) commit docs/update-extra.json, public/data/updates.json, dist.zip. Nếu thời điểm upload khác đã ghi, chạy lại với --correct.
 - Công cụ từ chối: thiếu ngày, thiếu múi giờ, ngày tương lai (lệch quá 5 phút), sớm hơn thời điểm chuẩn bị, ID không có; cập nhật đồng thời hai file, giữ nguyên mọi mục khác và đặt correctedAt để công cụ dựng lịch sử chấp nhận. Kiểm thử: node tests/update-release.js.
 - Gói ZIP còn mục packaged chỉ là bản Preview; nếu lỡ upload, trang sẽ ghi “chưa phát hành” cho tới khi chạy bước trên và upload lại.
+
+## Phát hành nhiều bản cùng một đợt (từ GĐ6)
+
+- Nhiều mục upload cùng lúc nhận cùng một thời điểm thực tế: `node tools/release-update.js --all-packaged --released-at <thời điểm>` hoặc liệt kê ID. Công cụ kiểm tra tất cả trên bản sao trước; một ID sai thì không ghi mục nào.
+- Quy trình đầy đủ trên Cloudflare Dashboard và cách khôi phục: `docs/RELEASE-GD6.md`.
+- Từ các bản sau: mỗi nâng cấp đáng chú ý tiếp tục bắt buộc có mục nhật ký cho người chơi, trạng thái packaged cho tới khi chủ dự án upload.

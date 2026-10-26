@@ -1,5 +1,10 @@
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
+### GĐ6 — bản đóng gói, chưa phát hành Production
+
+- Nghiệm thu tích hợp GĐ0–GĐ5: regression đầy đủ, 77 bộ test module, kiểm tra trên trình duyệt.
+- Sửa chế độ Tự động đứng chờ sự kiện hệ thống và khi đổi chế độ lúc đang có lựa chọn; gia đình phản đối chỉ khi chưa cưới; công cụ phát hành nhiều bản cùng một thời điểm.
+
 ### GĐ5 — bản đóng gói, chưa phát hành Production
 
 - Điều tiết mật độ biến cố lớn, chống lặp theo nhóm chủ đề và nội dung gần trùng, lọc câu kể lặp, nhịp tự động.

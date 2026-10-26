@@ -35,8 +35,9 @@ for (const id of scenes) {
   ok(!D.valid(young, {}), id + ': dưới 18 tuổi thì không xuất hiện');
 }
 {
-  const D = E.DEC.familyObjection130, d = D.make(M, H.rf(M));
-  ok(D.valid(M, {}) && D.valid(M, d.data) && !D.valid(M, Object.assign({}, d.data, { done: true })), 'familyObjection130: hợp lệ khi đủ điều kiện, chặn khi đã chọn');
+  const D = E.DEC.familyObjection130, U2 = clone(M); U2.partner.status = 'dating'; U2.fam.mAlive = true; const d = D.make(U2, H.rf(U2));
+  ok(D.valid(U2, {}) && D.valid(U2, d.data) && !D.valid(U2, Object.assign({}, d.data, { done: true })), 'familyObjection130: hợp lệ với cặp chưa cưới, chặn khi đã chọn');
+  ok(!D.valid(M, {}), 'familyObjection130: GĐ6 — không phản đối cưới khi đã kết hôn');
   const single = clone(M); single.partner = null; ok(!D.valid(single, {}), 'familyObjection130: không có người yêu thì không xuất hiện');
 }
 let S = null; for (let s = 700; s < 760 && !S; s++) S = grow(s, x => !x.partner && x.age >= 20 && x.age <= 35 && x.indep);
@@ -83,7 +84,8 @@ ok(E.DEC.vp_sa_thai_ai && typeof E.layoffRisk === 'function', 'vp_sa_thai_ai: đ
   let pass = 0; for (let i = 0; i < 200; i++) { const x = clone(l); x.id = 'p' + i; if (P.admit(x, shock, [Object.assign({}, shock, { id: 'x1' })], {})) pass++; }
   ok(pass > 30 && pass < 120, 'biến cố thứ hai trong năm: giảm chứ không cấm (' + pass + '/200)');
   ok(P.admit(l, shock, [], {}), 'năm yên ả: biến cố vẫn có thể xảy ra');
-  ok(!P.admit(l, daily, [daily, shock], { ai: {} }), 'hành động AI tự chọn không thêm vào năm đã có 2 lựa chọn');
+  ok(!P.admit(l, daily, [daily, shock], { ai: {}, auto: true }), 'chế độ tự động: hành động AI tự chọn không thêm vào năm đã có 2 lựa chọn');
+  ok(P.admit(l, daily, [daily, shock], { ai: {} }), 'chế độ thủ công: năm trước bỏ trống thì game vẫn tự chọn giúp một việc (GĐ6)');
   ok(P.admit(l, daily, [daily], { ai: {} }), 'hành động AI vẫn có ở năm thưa');
   const g = clone(M); P.state(g).h.push([g.age - 1, 'd', 'marriage130', 'quà', 'marriageGift130']);
   ok(!P.admit(g, { id: 'marriageTime130', title: 'Bạn đời cần thêm thời gian', text: '' }, [], {}), 'nhóm chủ đề: cảnh hôn nhân trong 3 năm bị hoãn');
@@ -120,10 +122,14 @@ ok(E.DEC.vp_sa_thai_ai && typeof E.layoffRisk === 'function', 'vp_sa_thai_ai: đ
   const engine = fs.readFileSync(path.join(__dirname, '..', 'public/js/engine.js'), 'utf8');
   ok(/E\.CONTEXT143\.probability\(T, life, pr\)/.test(engine) && /add\(T\.id, undefined, T\)/.test(engine), 'engine: vẫn nhân hệ số GĐ3 trước khi điều tiết GĐ5');
   // Lựa chọn chuỗi GĐ4 đi qua lịch hẹn, không qua bộ điều tiết: năm đầy biến cố vẫn hiện đúng một lựa chọn chuỗi.
-  const l = clone(M); l.fam.mAlive = true; l.loans = [{ type: 'family', name: 'vay người thân', bal: l.base, rate: 0, minShare: .15, late: 0, since: l.age }];
-  const c = E.CHAIN144.start(l, 'debt', { dec: 'test', k: 'x' }, { data: { loan: 'family', since: l.age, who: 'mẹ' } });
-  P.state(l).h.push([l.age + 1, 's', '', 'a', 'x1'], [l.age + 1, 's', '', 'b', 'x2']);
-  let at = null; for (let i = 0; i < 5 && at == null; i++) { E.CHAIN144.yearly(l, H.rf(l), () => {}, l.age); const s = l.sched.find(x => x.arg && x.arg.cid === c.id); if (s) at = s.at; else l.age++; }
+  // Giai đoạn chuỗi là xác suất theo nhân vật: thử vài biến thể (không đổi gameplay) để chắc chắn có một lần được hẹn.
+  let l = null, c = null, at = null;
+  for (let v = 0; v < 12 && at == null; v++) {
+    l = clone(M); l.id = M.id + ':chain' + v; l.fam.mAlive = true; l.loans = [{ type: 'family', name: 'vay người thân', bal: l.base, rate: 0, minShare: .15, late: 0, since: l.age }];
+    c = E.CHAIN144.start(l, 'debt', { dec: 'test', k: 'x' }, { data: { loan: 'family', since: l.age, who: 'mẹ' } });
+    P.state(l).h.push([l.age + 1, 's', '', 'a', 'x1'], [l.age + 1, 's', '', 'b', 'x2']);
+    for (let i = 0; i < 5 && at == null; i++) { E.CHAIN144.yearly(l, H.rf(l), () => {}, l.age); const s = l.sched.find(x => x.arg && x.arg.cid === c.id); if (s) at = s.at; else l.age++; }
+  }
   ok(at != null, 'GĐ4: chuỗi vẫn hẹn được giai đoạn');
   l.age = at; P.state(l).h.push([at, 's', '', 'c', 'x3'], [at, 's', '', 'd', 'x4']);
   E.beginYear(l, { auto: true });
@@ -141,7 +147,8 @@ ok(E.DEC.vp_sa_thai_ai && typeof E.layoffRisk === 'function', 'vp_sa_thai_ai: đ
   ok(l.log.length === 3, 'nhật ký: dòng tiền bạc không bị lọc');
   l.age += 4; log('Sáng tưới cây, chiều đánh cờ với hàng xóm.', 'neutral');
   ok(l.log.length === 4, 'nhật ký: sau 6 năm câu kể được xuất hiện lại');
-  ok(E.EVENTS.every(e => typeof e.run !== 'function' || /quietLog/.test(String(e.run))), 'nhật ký: mọi sự kiện kể chuyện đều qua bộ lọc');
+  ok(fs.readFileSync(path.join(__dirname, '..', 'public/js/engine.js'), 'utf8').includes('ev.run(life, a, r, E.PACE145 && E.PACE145.quietLog ? E.PACE145.quietLog(life, log) : log)'), 'nhật ký: engine cho mọi sự kiện kể chuyện qua bộ lọc');
+  ok(E.EVENTS.some(x => String(x.run).includes("'nv_lenh_goi'")), 'nhật ký: mã nguồn sự kiện vẫn tra cứu được (không bị bọc)');
   const t = clone(M); t.id = 'trip'; ok(P.tripOk(t), 'du lịch: năm thưa có thể được rủ đi chơi');
   P.state(t).trip = t.age; ok(!P.tripOk(t), 'du lịch: tối đa một lời rủ ngẫu nhiên mỗi năm');
   const t2 = clone(M); P.state(t2).h.push([t2.age, 's', '', 'x', 'treat']); ok(!P.tripOk(t2), 'du lịch: không rủ đi chơi trong năm có biến cố lớn');

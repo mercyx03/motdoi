@@ -2,7 +2,7 @@
 'use strict';
 const assert=require('assert'),fs=require('fs'),os=require('os'),path=require('path'),vm=require('vm');
 const root=path.join(__dirname,'..');
-const {release,pending,FILES}=require('../tools/release-update');
+const {release,releaseMany,pending,FILES}=require('../tools/release-update');
 let checks=0;const ok=(c,m)=>{assert(c,m);checks++;};
 const load=(dir,f)=>JSON.parse(fs.readFileSync(path.join(dir,f),'utf8'));
 const list=d=>Array.isArray(d)?d:d.entries;
@@ -81,5 +81,22 @@ try{
  const legacy=render([Object.assign({id:'c',publishedAt:prepared},base)]);
  ok(!/phát hành/.test(legacy.timeline),'legacy entries unchanged');
 }finally{fs.rmSync(tmp,{recursive:true,force:true});}
+
+// 5. Several notes released by one upload: same real time, all-or-nothing.
+const tmp2=fs.mkdtempSync(path.join(os.tmpdir(),'motdoi-release-many-'));
+try{
+ for(const f of FILES){fs.mkdirSync(path.dirname(path.join(tmp2,f)),{recursive:true});fs.copyFileSync(path.join(root,f),path.join(tmp2,f));}
+ const ids=pending(tmp2).map(e=>e.id),before=FILES.map(f=>fs.readFileSync(path.join(tmp2,f),'utf8'));
+ if(ids.length>=2){
+  const latest=Math.max(...pending(tmp2).map(e=>Date.parse(e.preparedAt))),now=latest+86400e3,at=new Date(now-3600e3).toISOString();
+  assert.throws(()=>releaseMany(tmp2,ids.concat('no-such-entry'),at,{now}));checks++;
+  FILES.forEach((f,i)=>ok(fs.readFileSync(path.join(tmp2,f),'utf8')===before[i],f+': one bad ID → nothing written'));
+  assert.throws(()=>releaseMany(tmp2,[ids[0],ids[0]],at,{now}));checks++;
+  const done=releaseMany(tmp2,ids,at,{now});
+  ok(done.length===ids.length&&done.every(r=>r.releasedAt===at),'all packaged notes get the same real release time');
+  ok(pending(tmp2).length===0,'nothing left pending after one release');
+  FILES.forEach(f=>{const d=load(tmp2,f);ok(list(d).filter(e=>ids.includes(e.id)).every(e=>e.releaseStatus==='released'&&e.releasedAt===at),f+': statuses updated together');});
+ }
+}finally{fs.rmSync(tmp2,{recursive:true,force:true});}
 
 console.log('PASS update-release: '+checks+' checks (status consistency, release tool guards, history merge, page labels).');

@@ -1,5 +1,26 @@
 [
   {
+    "id": "gd6-integration-release",
+    "version": "8.5.0-gd6",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-26T12:38:14.825Z",
+    "title": "Một Đời — Chơi mượt và ổn định hơn",
+    "summary": "Chế độ tự động không còn dừng giữa chừng, đổi chế độ có tác dụng ngay, cùng một số sửa lỗi về hoàn cảnh sự kiện.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Chế độ tự động không còn dừng lại chờ bạn ở những chuyện do cuộc sống tự đưa tới như cảnh báo thời tiết, người đòi nợ, chuyển đến nơi ở mới, khoảnh khắc với con, đám cưới của con hay kết thúc du học.",
+      "Khi AI vừa chọn thay bạn, các bước tiếp theo của lựa chọn đó cũng được AI làm tiếp thay vì đứng chờ.",
+      "Bật Tự động hoặc Chỉ ngã rẽ lớn khi đang có một lựa chọn trên màn hình giờ có tác dụng ngay. Trước đây game có thể đứng chờ mãi; tắt Tự động thì AI vẫn chọn thay bạn.",
+      "Tình huống gia đình phản đối, không muốn tổ chức đám cưới giờ chỉ xuất hiện khi hai người chưa cưới, không còn gặp ở những cặp vợ chồng đã chung sống nhiều năm.",
+      "Lựa chọn bị bỏ qua vì hoàn cảnh đã thay đổi không còn để lại dấu vết trong bản lưu.",
+      "Thi lại tốt nghiệp hoặc nộp nguyện vọng với điểm từ 27 trở lên giờ cũng được ghi nhận học bổng như lượt thi chính.",
+      "Sửa lỗi có thể làm game dừng khi một chuyện cũ về hôn nhân đến hẹn nhưng người ấy không còn bên bạn."
+    ]
+  },
+  {
     "id": "gd5-event-balancing",
     "version": "8.5.0-gd5",
     "releaseStatus": "packaged",

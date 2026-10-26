@@ -45,19 +45,34 @@ function release(root,id,releasedAt,opts){
  return {id,releasedAt:iso,correctedAt:stamp};
 }
 
-module.exports={pending,release,FILES};
+// Several notes released by the same upload get the same real time. All are checked on a scratch copy first,
+// so a refusal for one ID leaves every file untouched.
+function releaseMany(root,ids,releasedAt,opts){
+ if(!ids.length)throw Error('Thiếu ID mục nhật ký.');
+ if(new Set(ids).size!==ids.length)throw Error('Có ID bị lặp.');
+ const tmp=fs.mkdtempSync(path.join(require('os').tmpdir(),'motdoi-release-check-'));
+ try{
+  for(const f of FILES){fs.mkdirSync(path.dirname(path.join(tmp,f)),{recursive:true});fs.copyFileSync(path.join(root,f),path.join(tmp,f));}
+  ids.forEach(id=>release(tmp,id,releasedAt,opts));
+ }finally{fs.rmSync(tmp,{recursive:true,force:true});}
+ return ids.map(id=>release(root,id,releasedAt,opts));
+}
+
+module.exports={pending,release,releaseMany,FILES};
 
 if(require.main===module){
  const root=path.join(__dirname,'..'),args=process.argv.slice(2);
  const flag=n=>{const i=args.indexOf(n);return i<0?undefined:args[i+1];};
- const id=args.find((a,i)=>!a.startsWith('--')&&args[i-1]!=='--released-at');
+ let ids=args.filter((a,i)=>!a.startsWith('--')&&args[i-1]!=='--released-at');
+ if(args.includes('--all-packaged'))ids=pending(root).map(e=>e.id);
  try{
-  if(!id){
+  if(!ids.length&&!args.includes('--all-packaged')){
    const list=pending(root);
    console.log(list.length?'Mục chưa phát hành:\n'+list.map(e=>' - '+e.id+' ('+(e.version||'?')+') chuẩn bị '+e.preparedAt+' — '+e.title).join('\n'):'Không có mục nhật ký nào đang chờ phát hành.');
   }else{
-   const r=release(root,id,flag('--released-at'),{correct:args.includes('--correct')});
-   console.log('Đã ghi phát hành '+r.id+' lúc '+r.releasedAt+'. Chạy npm run package:cloudflare để đóng gói lại trước khi upload.');
+   const done=releaseMany(root,ids,flag('--released-at'),{correct:args.includes('--correct')});
+   done.forEach(r=>console.log('Đã ghi phát hành '+r.id+' lúc '+r.releasedAt+'.'));
+   console.log('Chạy npm run package:cloudflare để đóng gói lại trước khi upload.');
   }
  }catch(e){console.error(e.message);process.exit(1);}
 }

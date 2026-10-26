@@ -645,10 +645,16 @@
   $('#pauseBtn').onclick = function () { S.paused = !S.paused; S.actPause = false; S.last = performance.now(); renderTopbar(); };
   $('#skipBtn').onclick = function () { S.skipping = !S.skipping; S.paused = false; renderTopbar(); };
   $('#minorBtn').onclick = function () {
-    S.minorOnly = !S.minorOnly; S.set.minorOnly = S.minorOnly; saveSettings(); renderTopbar();
+    S.minorOnly = !S.minorOnly; S.set.minorOnly = S.minorOnly; saveSettings(); renderTopbar(); reapplyDecisionMode();
     toast(S.minorOnly ? 'Lựa chọn thường ngày để AI lo — chỉ dừng lại ở ngã rẽ quyết định' : 'Bạn tự chọn mọi lựa chọn');
   };
-  $('#autoBtn').onclick = function () { S.auto = !S.auto; persist(); renderTopbar(); if (S.auto) toast('Chế độ tự động: AI quyết định theo tính cách nhân vật'); };
+  $('#autoBtn').onclick = function () { S.auto = !S.auto; persist(); renderTopbar(); reapplyDecisionMode(); if (S.auto) toast('Chế độ tự động: AI quyết định theo tính cách nhân vật'); };
+  // GĐ6: đổi chế độ khi đang có lựa chọn thì áp dụng ngay. Trước đây hộp đang mở giữ chế độ cũ: bật Tự động vẫn đứng chờ mãi,
+  // tắt Tự động thì AI vẫn chọn thay. Hộp đã thu nhỏ chỉ mở lại khi AI sẽ chọn thay (người chơi vừa giao cho AI).
+  function reapplyDecisionMode() {
+    var d = S.life && S.life.pending[0]; if (!d || d.manual) return;
+    if (S.phase === 'decision' || (S.phase === 'decmin' && (S.auto || (S.minorOnly && !E.isMajor(d))))) showDecision();
+  }
   $('#exitBtn').onclick = function () {
     var was = S.paused; S.paused = true; renderTopbar();
     modal('<div class="agep">Rời đi</div><h2>Rời khỏi cuộc đời này?</h2><p>' + (S.saveFail ? 'Lần lưu gần nhất chưa thành công. Chọn “Lưu &amp; về trang chủ” để thử lưu lại; nếu vẫn lỗi, bạn sẽ ở lại để tải bản lưu về máy.' : 'Tiến trình được lưu trên trình duyệt. Bạn có thể quay lại sống tiếp bất cứ lúc nào.') + '</p>' +
@@ -1287,7 +1293,10 @@
     closeModal();
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
+    var queued0 = S.life.pending.slice(1);
     var entries = E.resolve(S.life, k);
+    // GĐ6: AI vừa chọn thay (Tự động / lựa chọn thường ngày) thì các bước nối tiếp do lựa chọn ấy mở ra cũng để AI làm tiếp, không đứng chờ.
+    if (!byHand && !wasManual) S.life.pending.forEach(function (x) { if (queued0.indexOf(x) < 0) x.manual = false; });
     var change112 = S.life.flags.expansion110 && S.life.flags.expansion110.switchChild;
     if (change112 && E.ASSETS112) {
       delete S.life.flags.expansion110.switchChild;

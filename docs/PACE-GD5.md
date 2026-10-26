@@ -31,7 +31,7 @@ Dữ liệu đã chụp vẫn được kiểm như cũ (khác người, khác n�
 
 ## 4. Chống lặp
 
-- Nhóm chủ đề (cùng chuyện, khác ID): cảnh hôn nhân life130 (3 năm), áp lực danh phận/gia đình phản đối (4), mập mờ/một đêm (3), bạn thân gọi (2), đổi nghề (3), gặp / nhận nuôi thú cưng (2 — thấy trong lần chạy thử trình duyệt: hai chuyện mèo cùng năm). Mỗi năm tối đa một tình huống mỗi nhóm. `vn_giuc_cuoi` cố ý không ghép nhóm: thử ghép làm giảm cưới hỏi và sinh con ~5 điểm phần trăm.
+- Nhóm chủ đề (cùng chuyện, khác ID): cảnh hôn nhân life130 (3 năm), áp lực danh phận/gia đình phản đối (4), mập mờ/một đêm (3), bạn thân gọi (2), ~~đổi nghề (3)~~ (bỏ ở GĐ6: chặn mất quyết định đổi nghề thật), gặp / nhận nuôi thú cưng (2 — thấy trong lần chạy thử trình duyệt: hai chuyện mèo cùng năm). Mỗi năm tối đa một tình huống mỗi nhóm. `vn_giuc_cuoi` cố ý không ghép nhóm: thử ghép làm giảm cưới hỏi và sinh con ~5 điểm phần trăm.
 - Gần trùng: dấu vân tiêu đề (bỏ tên người trong dữ liệu, tên riêng, số); tương đồng ≥ 0,75 với tình huống khác ID trong 3 năm → bỏ. Chuỗi đang diễn ra (`rep`) không bị coi là trùng.
 - Nhật ký kể chuyện (sự kiện không lựa chọn): bỏ câu giống hệt đã kể trong 6 năm; không lọc dòng tiền, cột mốc, tin xấu, qua đời.
 - Du lịch nhiều bước: tối đa một lời rủ ngẫu nhiên / chuyến AI mỗi năm, không rủ trong năm có biến cố lớn hoặc đã có ≥ 3 lựa chọn. Người chơi tự chọn du lịch như cũ.
