@@ -18,6 +18,7 @@
     "deploy": "node tests/regression.js && node tools/build.js && npx wrangler deploy",
     "deploy:pages": "node tests/regression.js && node tools/build.js && npx wrangler pages deploy dist --project-name mot-doi",
     "build": "node tools/build.js",
+    "package:cloudflare": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/package-cloudflare.ps1",
     "backup:reviews": "node tools/backup-reviews.js",
     "build:personas": "node tools/build-personas.js",
     "restore:reviews": "node tools/restore-reviews.js",
