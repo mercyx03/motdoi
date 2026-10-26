@@ -113,7 +113,9 @@ const cases = [
       t.ok(fled, me + '+' + them + ': mô phỏng được lựa chọn bỏ trốn');
       const l = clone(ctx.life); l.sex = me; l.partner = { name: 'Hà Thu Trang', sex: them, age: 40, alive: true, status: 'married', since: 30 };
       const rel = E.BUSINESS137.relatives(l).find(x => x.person === l.partner);
-      t.ok(rel && rel.kind === word, me + '+' + them + ': danh sách người thân ghi "' + (rel && rel.kind) + '"');
+      t.ok(rel && rel.label === word && rel.kind === 'vợ/chồng', me + '+' + them + ': danh sách người thân hiển thị "' + (rel && rel.label) + '" (khóa phân loại giữ "' + (rel && rel.kind) + '")');
+      const row = rel && E.DEC.companyTransfer137 && E.BUSINESS137.relatives(l).map(p => p.name + ' · ' + (p.label || p.kind)).find(x => x.indexOf('Hà Thu Trang') === 0);
+      t.ok(row === 'Hà Thu Trang · ' + word, me + '+' + them + ': dòng chọn người nhận: "' + row + '"');
     });
   } }
 ];
