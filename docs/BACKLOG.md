@@ -22,3 +22,10 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 - Kiểm thử trình duyệt toàn bộ game (không chỉ trang Cập nhật) và bản lưu thật của người chơi.
 - Theo dõi cân bằng tài chính GĐ3: mẫu 60 đời cho thấy số đời âm tiền 8→11, 6→8, 5→8; cần mẫu lớn trước khi kết luận.
 - Ghi chú rà soát GĐ3 (chưa sửa, không chặn): `E.CONTEXT143.probability` kẹp xác suất về tối đa 1 trước khi nhân hệ số độ khó sự kiện; với trigger có p gốc cao và hệ số >1, độ khó giảm sự kiện sẽ tác động từ mức đã kẹp. Chỉ ảnh hưởng 50 trigger có nhãn; đánh giá lại khi chạy phân bố đầy đủ.
+
+### Bổ sung từ GĐ4 (chưa chạy, không tính PASS)
+
+- Regression đầy đủ trên mã GĐ4: toàn bộ mục 0–75 + 5b và mục 9 đủ 1.313 tình huống (registry tăng 15 tình huống `ch144_*`). Mục 6 có ngưỡng "hơn 60% tình huống xuất hiện tự nhiên"; 15 tình huống chuỗi chỉ mở khi có sự kiện gốc nên tỷ lệ có thể giảm nhẹ — cần đo lại.
+- GĐ4 đã chạy: mục 7, mục 68, mục 9 lọc 25 tình huống liên quan (24/25 có phương án được thực thi).
+- Kiểm thử trình duyệt cho lựa chọn chuỗi trong giao diện chơi (popup, chế độ tự động, lưu giữa năm) chưa chạy; mới kiểm qua engine headless.
+- Lỗi có từ trước, chưa sửa (cần chủ dự án quyết định vì bật lại nội dung): các cảnh hôn nhân life130 và `familyObjection130` không bao giờ xuất hiện từ trigger do `valid(l, {})` trả về false. Khi sửa, cân nhắc tần suất và có thể nối thêm làm gốc chuỗi hôn nhân/gia đình của GĐ4.

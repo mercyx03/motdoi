@@ -7,6 +7,7 @@
     "dev": "node tools/serve.js",
     "test": "node tests/regression.js",
     "test:context": "node tests/context-weighting.js",
+    "test:chains": "node tests/chains-gd4.js",
     "test:smoke": "node tests/smoke.js",
     "test:saves": "node tests/saves-compat.js",
     "test:save-safety": "node tests/save-safety.js",

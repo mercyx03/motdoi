@@ -1,5 +1,29 @@
 [
   {
+    "id": "gd4-multiyear-consequences",
+    "version": "8.5.0-gd4",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-26T11:05:30.086Z",
+    "title": "Một Đời — Lựa chọn hôm nay, thay đổi cả tương lai!",
+    "summary": "Một số lựa chọn quan trọng giờ để lại hậu quả kéo dài nhiều năm và được nhắc lại đúng người, đúng lúc.",
+    "tags": [
+      "Tính năng",
+      "Điều chỉnh"
+    ],
+    "details": [
+      "Một số lựa chọn quan trọng giờ có hậu quả kéo dài nhiều năm: câu chuyện được nhắc lại đúng năm, đúng người và đúng lựa chọn bạn đã đưa ra.",
+      "Học hành: nghỉ học vì nhà khó khăn có thể khiến việc xin việc vất vả hơn vài năm sau; lớp bổ túc buổi tối vẫn mở ra cơ hội có tấm bằng muộn.",
+      "Công việc: nếu bạn nhường suất ở lại khi công ty cắt giảm, sau này người đồng nghiệp ấy có thể giới thiệu bạn trở lại nghề cũ.",
+      "Kinh doanh và tiền bạc: khoản vay nóng để trả lương hay khoản vay lo viện phí sẽ được nhắc lại khi đến hạn. Bán bớt tài sản, xin gia hạn, trả góp hay tránh mặt đều dẫn tới kết quả khác nhau; trả hết nợ có thể mở ra cơ hội mở rộng cửa hàng.",
+      "Gia đình và hôn nhân: phản đối bố mẹ đi bước nữa có thể dẫn tới nhiều năm xa cách và một cơ hội hòa giải, hoặc không còn kịp. Sau một lần hôn nhân rạn nứt, hai người còn phải vượt qua giai đoạn niềm tin chưa trở lại.",
+      "Bạn bè: ở bên bạn thân lúc khó khăn, nhiều năm sau khi bạn gặp chuyện, người ấy có thể quay lại giúp. Làm ngơ thì có thể xa cách, nhưng vẫn còn cơ hội xin lỗi.",
+      "Sức khỏe: sau tai nạn khi làm việc hoặc tai nạn giao thông, việc tập phục hồi hay mặc kệ ảnh hưởng tới những năm sau; cơn đau cũ có thể tái phát và khiến bạn phải cân nhắc đổi việc.",
+      "Diễn biến phụ thuộc hoàn cảnh hiện tại như tiền bạc, công việc, sức khỏe và mức tin cậy giữa hai người. Không có kết cục định sẵn; chuyện cũ tự khép lại khi không còn phù hợp.",
+      "Không lấn át cuộc đời: mỗi năm có tối đa một lựa chọn từ chuyện cũ, mỗi hậu quả chỉ tính tiền một lần, không phát sinh khoản vay trùng và người đã mất không quay lại trong câu chuyện. Bản lưu cũ tiếp tục chơi được."
+    ]
+  },
+  {
     "id": "gd3-context-weighting",
     "version": "8.5.0-gd3",
     "releaseStatus": "packaged",

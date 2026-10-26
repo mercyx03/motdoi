@@ -1,5 +1,10 @@
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
+### GĐ4 — bản đóng gói, chưa phát hành Production
+
+- 8 chuỗi hậu quả nhiều năm trên sự kiện sẵn có: học hành, nghề nghiệp, kinh doanh, nợ vay, gia đình, hôn nhân, bạn bè, sức khỏe.
+- Giai đoạn sau phụ thuộc hoàn cảnh hiện tại, hệ số GĐ3 và danh tính NPC GĐ2; mỗi năm tối đa một lựa chọn từ chuyện cũ, không tính tiền hai lần.
+
 ### GĐ3 — bản đóng gói, chưa phát hành Production
 
 - 50 trigger hiện hữu nhận trọng số theo hoàn cảnh, giới hạn 0,5–2,0; không thay hậu quả lựa chọn hoặc schema lưu.

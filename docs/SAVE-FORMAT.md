@@ -58,3 +58,7 @@
   - Đo cả số ký tự (≤ 1.450.000) và số byte UTF-8 (≤ 1.550.000) trước khi gửi, vì máy chủ giới hạn 1.500.000 ký tự và 1.600.000 byte.
   - Quá lớn thì bỏ cuộc đời đang chơi khỏi gói gửi; vẫn quá thì không gửi.
   - Lỗi đồng bộ tự động được ghi nhận và báo một lần cho mỗi loại lỗi. Trước đây lỗi bị bỏ qua im lặng.
+
+## Chuỗi hậu quả GĐ4 (`flags.chains144`)
+
+Không tăng `SAVE_SCHEMA`. Trường mới chỉ xuất hiện khi nhân vật gặp sự kiện gốc; tối đa 4 chuỗi đang chạy, 12 chuỗi đã khép, mỗi chuỗi giữ 6 bước gần nhất. `E.migrateExt` (life144) bỏ giá trị hỏng, lọc bản ghi thiếu trường và giữ nguyên loại chuỗi chưa biết. Lịch hẹn giai đoạn nằm trong `l.sched` như các tình huống hẹn trước khác. Chi tiết: `docs/CONSEQUENCES-GD4.md`.
