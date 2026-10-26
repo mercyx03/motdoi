@@ -12,7 +12,7 @@ function relatives(l){
  E.FAMILY53.init(l);var out=[];
  function add(p,kind,age){if(p&&p.alive!==false)out.push({id:X.uid(l,p),name:p.name||p.n,kind:kind,age:age,person:p});}
  (l.kids||[]).forEach(function(k){add(k,'con',l.age-k.born);});
- if(l.partner&&l.partner.status==='married')add(l.partner,'vợ/chồng',l.partner.age);
+ if(l.partner&&l.partner.status==='married')add(l.partner,H.partnerWord(l,l.partner),l.partner.age);/* GĐ2.5: gọi đúng vợ / chồng / người bạn đời */
  (l.sibList||[]).forEach(function(s){add(s,'anh/chị/em',l.age-s.born);});return out;
 }
 function named(l,partner){var n=(state(l).companySerial137||0)+1;state(l).companySerial137=n;var a=['An Phát','Minh Châu','Thiên Hà','Bình Minh','Hải Đăng','Tân Phú','Đông Hải','Bắc Sơn'];return (partner?'Doanh nghiệp ':'Công ty ')+a[(n-1)%a.length]+' '+n;}
@@ -20,7 +20,7 @@ function find(l,key){return active(l).find(function(c){return id(l,c)===key;});}
 function ctrl(l,c){return C.adult(l)===true&&c&&!c.merged&&c.share>50;}
 function nameCheck(v){return typeof v!=='string'||!v.trim()||v.trim().length>80||/[<>\x00-\x1f]/.test(v)?'Tên phải có 1–80 ký tự, không chứa dấu < > hoặc ký tự điều khiển.':'';}
 function form(id,title,prep,text,check,run){
- E.DEC[id]={valid:function(l,d){return C.adult(l)===true&&d&&d.at===l.age&&!d.done;},make:function(l,r,arg){var d=prep(l,arg||{});d.at=l.age;return{id:id,title:title,text:typeof text==='function'?text(l,d):text,data:d,opts:[{k:'save',l:'Xác nhận'},{k:'cancel',l:'Hủy, không thay đổi'}]};},auto:function(){return 'cancel';},apply:function(l,d,k,r,log){if(!this.valid(l,d.data)||k!=='save')return;var err=check(l,d.data);if(err){log(err,'neutral');return;}d.data.done=true;run(l,d.data,r,log);}};
+ E.DEC[id]={valid:function(l,d){return C.adult(l)===true&&d&&d.at===l.age&&!d.done;},make:function(l,r,arg){var d=prep(l,arg||{});d.at=l.age;return{id:id,title:title,text:typeof text==='function'?text(l,d):text,data:d,opts:[{k:'save',l:'Xác nhận',h:''},{k:'cancel',l:'Hủy, không thay đổi',h:''}]/* GĐ2.5: phương án luôn có gợi ý dạng chuỗi như mọi quyết định khác (SC) */};},auto:function(){return 'cancel';},apply:function(l,d,k,r,log){if(!this.valid(l,d.data)||k!=='save')return;var err=check(l,d.data);if(err){log(err,'neutral');return;}d.data.done=true;run(l,d.data,r,log);}};
  checks[id]=check;
 }
 var checks={};

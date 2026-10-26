@@ -61,7 +61,13 @@ function year(l,r,log){if(!l.alive||!['vn','world'].includes(l.mode))return;var 
  if(l.age<18&&s.care==='bố mẹ'&&(!l.fam.mAlive||!l.fam.fAlive))s.care=l.fam.mAlive?'mẹ':l.fam.fAlive&&!l.fam.noDad?'bố':E.orphanCarer&&E.orphanCarer(l)||'người thân';
  if(l.age<18&&((s.care==='bố'&&!l.fam.fAlive)||(s.care==='mẹ'&&!l.fam.mAlive)||(!l.fam.mAlive&&!l.fam.fAlive))){s.care=E.orphanCarer&&E.orphanCarer(l)||'người thân';log('Người giám hộ thu xếp để bạn sống cùng '+s.care+'.','neutral');}
  if(l.age===6&&['home','nanny'].includes(s.environment))s.environment='public';
- if(l.age<18&&ENV[s.environment][1]&&s.paidAt!==l.age){s.paidAt=l.age;if(!fund(l,ENV[s.environment][1],'chăm sóc và học tập thường niên',r,log)){s.environment=l.age<6?'home':'public';s.current=null;log('Gia đình chuyển sang phương án phù hợp ngân sách hơn.','neutral');}}
+ if(l.age<18&&ENV[s.environment][1]&&s.paidAt!==l.age){s.paidAt=l.age;
+  /* GĐ2.5: khoản thường niên vẫn chi / từ chối như cũ, nhưng chỉ ghi nhật ký khi cách chi trả thay đổi (trước đây lặp y nguyên mỗi năm), và chỉ "chuyển phương án" khi thật sự chuyển */
+  var feeLog=[],paid=fund(l,ENV[s.environment][1],'chăm sóc và học tập thường niên',r,function(t,k){feeLog.push([t,k]);}),feeKey=s.environment+'|'+(paid?'paid':'refused'),cheapest=s.environment===(l.age<6?'home':'public');
+  if(s.feeEnv!==s.environment){s.feeEnv=s.environment;s.feeSeen={};}
+  if(!(s.feeSeen||(s.feeSeen={}))[feeKey]){s.feeSeen[feeKey]=1;feeLog.forEach(function(x){log(x[0],x[1]);});}
+  if(!paid&&!cheapest){s.environment=l.age<6?'home':'public';s.current=null;log('Gia đình chuyển sang phương án phù hợp ngân sách hơn.','neutral');}
+  s.feeKey=feeKey;}
  if(s.lastPlace!==place(l)){if(s.lastPlace)log('Đến nơi ở mới: hồ sơ bạn cũ vẫn được giữ; lớp học và hoạt động địa phương cập nhật theo nơi ở.','neutral');s.lastPlace=place(l);if(l.age>=4)C.queue(l,'localLife138',r);}
  var measurements=body(s.genes,l.age,l.sex);s.measurements=s.measurements||[];s.measurements.push({age:l.age,height:measurements.height,weight:Math.round(measurements.weight*(s.weightFactor||1)*10)/10});var rec=school(l);if(rec){if(l.age<6){if(!rec.awards.length)rec.awards.push('Nhận xét: làm quen sinh hoạt nhóm, giao tiếp và tự phục vụ');}else if(!rec.grades){rec.grades={};SUBJECTS.forEach(function(sub,i){rec.grades[sub]=Math.round(U.clamp((l.st.kno||50)/12+2+r()*2+(i===4?skill(l,'draw').level/50:0),1,10)*10)/10;});if(Object.keys(rec.grades).every(function(k){return rec.grades[k]>=8;}))rec.awards.push('Học tập nổi bật');}
  if(l.age>=6&&r()<.22){var p=s.people[choose(r,rec.roster)];if(r()<.4){p.trust=Math.max(0,p.trust-15);log('Bạn và '+p.name+' bất đồng trong bài tập nhóm. Có thể trò chuyện để làm hòa.','neutral');}else{p.trust=Math.min(100,p.trust+5);log(p.name+' cùng bạn chuẩn bị hoạt động của lớp.','good');}}

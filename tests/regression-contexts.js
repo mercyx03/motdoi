@@ -23,4 +23,11 @@ for(const id of ['childFuture126','childMatch126'])out[id].arg={id:out[id].life.
 out.childMatch126.arg.person={name:'An Nhiên',sex:'F',age:25,home:'Hà Nội',education:'Đại học',job:'kỹ sư',family:'Gia đình lao động',values:'Ưa cuộc sống giản dị',compatibility:.8};
 add('companySector133',l=>{l.money=l.base*100;});
 add('groupSector133,companyRole133,companyIssue133',l=>{l.money=l.base*400;E.WORLD120.s(l).companies=[0,1,2].map(k=>({name:'Công ty kiểm thử '+k,value:l.base*50,share:k?100:60,created:40,governance:0,sector:'general'}));E.WORLD120.s(l).group={since:44};},{i:0,role:'ceo'});
+/* GĐ2.5: ngữ cảnh cho các tình huống thêm sau này mà chưa khuôn nhân vật nào mở được (trạng thái dựng bằng đúng đường của game) */
+add('academicCase125',l=>{E.startJob(l,'nghien_cuu',()=>0,()=>{},true);},{kind:'stolen'});
+add('comeOut130',l=>{l.kids=[{name:'An Nhiên',sex:'F',born:15,alive:true,close:80,orient:'gay'}];E.FAMILY53.init(l);E.FAMILY130.identity(l,l.kids[0]).disclosed=true;});out.comeOut130.arg={id:out.comeOut130.life.kids[0].parentId};
+add('supportRules130',l=>{l.partner={name:'Lan Chi',sex:'F',age:40,alive:true,status:'married',since:30};l.money=l.base*2000;const d=E.DEC.chu_cap_nguoi_yeu.make(l,()=>0.5);E.DEC.chu_cap_nguoi_yeu.apply(l,d,'vua',()=>0.5,()=>{});});
+add('groupRoles137,childrenSuccession139',l=>{l.money=l.base*400;E.WORLD120.s(l).companies=[0,1].map(k=>({name:'Công ty kiểm thử '+k,value:l.base*50,share:100,created:40,governance:0,sector:'general'}));E.WORLD120.s(l).group={since:44};l.kids=[{name:'Minh Kế',sex:'M',born:20,alive:true,close:70,edu:5}];E.FAMILY53.init(l);});
+add('auditionPrep139',l=>{l.age=19;l.edu=3;l.money=l.base*5;E.LIFE138.state(l).agency={name:'Nova Entertainment (hư cấu)',code:'KR',status:'offer',years:0};});
+add('collectors140',l=>{l.loans=[{type:'bank',name:'vay ngân hàng',bal:l.base*3,rate:.09,minShare:.12,late:3,since:40}];E.DEBT140.year(l,()=>0,()=>{});});
 return out;};

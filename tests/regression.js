@@ -191,7 +191,11 @@ section('5b. Các lỗi logic đã từng gặp (không được tái phát)');
   // v1.0.0: tài sản cuối đời âm hàng tỷ do chi tiêu khi về hưu + nợ lãi kép
   for (const mode of ['vn', 'world']) {
     const r = [];
-    for (let i = 0; i < 600; i++) { const l = E.createLife({ mode, seed: 88000 + i }); E.runHeadless(l); if (l.death.age >= 30) r.push(E.netWorth(l) / l.base); }
+    // v8.5 (life140): nợ quá hạn có thể bị BÁN cho bên đòi nợ thay vì xóa sau 3 năm; nợ đã bán tăng tối đa 12%/năm và bị chặn ở 6 lần thu nhập cơ sở.
+    // Tách hai bất biến: (a) phần vay còn lại (không tính nợ đã bán) vẫn ≤ 8 lần như v2.0; (b) nợ đã bán không phình quá trần của nó.
+    let soldBad = 0;
+    for (let i = 0; i < 600; i++) { const l = E.createLife({ mode, seed: 88000 + i }); const prev = new Map(); E.runHeadless(l, x => { const st = x.flags.world120 && x.flags.world120.debt140; (st ? st.debts : []).forEach(d => { const p = prev.get(d); if (p != null && d.bal > Math.max(p * 1.12, x.base * 6) + 1e-6) soldBad++; prev.set(d, d.bal); }); }); if (l.death.age >= 30) r.push((E.netWorth(l) + (E.DEBT140 ? E.DEBT140.owed(l) : 0)) / l.base); }
+    ok(soldBad === 0, mode + ': nợ đã bán cho bên đòi nợ không phình quá trần (tối đa +12%/năm, chặn 6 lần thu nhập cơ sở) — ' + soldBad + ' vi phạm');
     r.sort((a, b) => a - b);
     const med = r[Math.floor(r.length / 2)], neg = r.filter(x => x < -2).length / r.length;
     console.log('   Tài sản cuối đời (' + mode + '): trung vị ' + med.toFixed(1) + ' lần thu nhập cơ sở, nợ nặng ' + (neg * 100).toFixed(1) + '%');
@@ -1617,7 +1621,7 @@ section('31. Bản 3.3: lời lưu ý, nghĩa vụ quân sự 2 năm, hoạt đ�
   { const l = mk(31100, 18, x => { x.school = null; x.edu = 3; x.fam.q = 2; });
     l.pending = [E.DEC.uni.make(l, R(1))]; E.resolve(l, 'military');
     ok(l.flags.military === 20 && l.pending.map(d => d.id).join() === 'nv_tan_binh,nv_don_vi', 'nhập ngũ là vào ngay 3 tháng huấn luyện tân binh, rồi về đơn vị');
-    ok(E.actions(l).every(x => x.ok !== true), 'trong quân ngũ không làm được việc khác ("Việc bạn muốn làm" bị khóa)');
+    ok(E.actions(l).every(x => x.ok !== true || x.id === 'di_chuc70'/* di chúc: ngoại lệ có chủ đích (jail/trap/mil:true từ v5.6.0) — chỉ ngoại lệ này */), 'trong quân ngũ không làm được việc khác ("Việc bạn muốn làm" bị khóa)');
     while (l.pending.length) E.resolve(l, E.autoKey(l)); const f = E.finishYear(l); E.endYear(l);
     ok(f.some(e => /Thu nhập 1(?:,\d+)? triệu/.test(e.t)) && !f.some(e => /du lịch|concert|nhậu|tìm việc/.test(e.t)), 'năm tại ngũ: có phụ cấp, không có chuyện đời thường bên ngoài');
     E.beginYear(l, {}); const ids = l.pending.map(d => d.id);
@@ -1877,7 +1881,7 @@ section('36. Bản 3.8: thi lại đại học không kẹt, người già khôn
     const r2 = E.DEC.ru_ban_an.make(l, R(2)); ok(r2.opts.length >= 5, 'rủ bạn đi ăn: ' + r2.opts.slice(0, 5).map(o => o.l).join(', ')); }
   // trại lừa đảo
   { const l = mk(36900, 24, x => { x.money = 50; x.abroad = { code: 'KH', name: 'Campuchia', perm: false, until: 44, trapped: true }; x.recur = { dl_trong: true }; });
-    ok(E.actions(l).every(a => a.ok !== true || /^kh_act_/.test(a.id)), 'bị giam trong trại lừa đảo thì không làm được việc gì (chi tiêu, mua sắm, đi chơi…) ngoài các việc trong trại');
+    ok(E.actions(l).every(a => a.ok !== true || /^kh_act_/.test(a.id) || a.id === 'di_chuc70'/* di chúc: ngoại lệ có chủ đích (jail/trap/mil:true từ v5.6.0) — chỉ ngoại lệ này */), 'bị giam trong trại lừa đảo thì không làm được việc gì (chi tiêu, mua sắm, đi chơi…) ngoài các việc trong trại');
     let bad = 0; for (let y = 0; y < 3; y++) { E.beginYear(l, { auto: true }); if (l.pending.some(d => !/^(kh_|treat|phau_thuat)/.test(d.id))) bad++; l.pending = []; const n0 = l.log.length; E.finishYear(l); if (l.log.slice(n0).some(e => /du lịch|Mua |Tổ chức đám cưới|Chi tiêu định kỳ/.test(e.t))) bad++; l.pending = []; E.endYear(l); }
     ok(bad === 0, 'trong trại lừa đảo không có chuyện yêu đương, cưới hỏi, du lịch, mua sắm'); }
 }
@@ -2083,7 +2087,7 @@ section('42. Bản 4.2: bạn thân đã mất, không làm chủ khi chưa 18 t
   // trong tù
   { const l = mk(42900, 30, x => { x.money = 100; }); E.H.jail(l, 6, 'cướp tài sản', () => { }); E.beginYear(l, {}); const ids = l.pending.map(d => d.id);
     ok(ids.length >= 3 && ids.length <= 4 && ids.every(id => /^(tg_|trai_giam)/.test(id)), 'trong tù: mỗi năm chỉ có chuyện trong trại giam (' + ids.join(', ') + ')');
-    const acts = E.actions(l).filter(a => a.ok === true).map(a => a.id); ok(acts.length >= 4 && acts.every(id => /^tg_act_/.test(id)), 'việc bạn muốn làm trong tù đổi thành việc trong trại: ' + acts.join(', '));
+    const acts = E.actions(l).filter(a => a.ok === true).map(a => a.id); ok(acts.length >= 4 && acts.every(id => /^tg_act_/.test(id) || id === 'di_chuc70'/* di chúc: ngoại lệ có chủ đích (jail/trap/mil:true từ v5.6.0) — chỉ ngoại lệ này */), 'việc bạn muốn làm trong tù đổi thành việc trong trại: ' + acts.join(', '));
     const out = E.actions(mk(42901, 30)).filter(a => /^tg_act_/.test(a.id) && a.ok === true); ok(out.length === 0, 'ra ngoài thì không còn việc trong trại');
     let g = 0; while (l.alive && g++ < 10 && l.jailUntil != null) { while (l.pending.length) E.resolve(l, E.autoKey(l)); E.finishYear(l); while (l.pending.length && l.jailUntil != null) E.resolve(l, E.autoKey(l)); E.endYear(l); E.beginYear(l, {}); }
     while (l.pending.length && l.pending[0].id !== 'ra_tu') E.resolve(l, E.autoKey(l)); if (l.pending[0]) E.resolve(l, 'honest');
@@ -2202,7 +2206,7 @@ section('45. Bản 4.5: chức cao không bị sếp ép, trong tù, phi pháp c
   { const l = mk(45899, 31, x => { x.jailUntil = 32; x.money = 100; });
     E.finishYear(l);
     ok(l.jailUntil === 32 && !l.log.some(e => /Mãn hạn tù/.test(e.t)), 'chưa chạy xong thanh năm cuối: vẫn bị giam, chưa có nhật ký ra tù');
-    ok(E.actions(l).filter(a => a.ok === true).every(a => /^tg_/.test(a.id)), 'năm cuối trong tù chỉ mở các thao tác trong trại');
+    ok(E.actions(l).filter(a => a.ok === true).every(a => /^tg_/.test(a.id) || a.id === 'di_chuc70'/* di chúc: ngoại lệ có chủ đích (jail/trap/mil:true từ v5.6.0) — chỉ ngoại lệ này */), 'năm cuối trong tù chỉ mở các thao tác trong trại');
     E.endYear(l);
     ok(l.jailUntil === null && l.age === 32 && l.log.some(e => /Mãn hạn tù/.test(e.t)), 'hoàn tất thanh năm mới được ra tù'); }
   { const l = mk(45898, 20, x => { x.birthYear = 2006; });
@@ -2370,7 +2374,7 @@ section('51. Bản 5.8.0: xem tivi chọn thần tượng, trại lừa đảo, 
     l.pending = [E.DEC.tv_bias.make(l, R(2), { k: 'rap', p: 0 })]; E.resolve(l, 'm0'); ok(l.idol === 'Dế Choắt' && /Dế Choắt/.test(E.DEC.fan_photocard.make(l, R(3)).text), 'chọn người mình thích → photocard, fanmeeting là của đúng người ấy'); }
   { const l = mk(51200, 22, x => { x.indep = true; }); l.pending = [E.DEC.kh_den.make(l, R(1))]; E.resolve(l, 'comply');
     const shown = E.actions(l).filter(a => a.ok === true);
-    ok(l.abroad && l.abroad.trapped && shown.length >= 6 && shown.every(a => /^kh_act_/.test(a.id)), 'bị giam ở trại lừa đảo: "việc bạn muốn làm" chỉ còn các việc trong trại (' + shown.map(a => a.id).join(',') + ')');
+    ok(l.abroad && l.abroad.trapped && shown.filter(a => a.id !== 'di_chuc70').length >= 6 && shown.every(a => /^kh_act_/.test(a.id) || a.id === 'di_chuc70'/* di chúc: ngoại lệ có chủ đích (jail/trap/mil:true từ v5.6.0) — chỉ ngoại lệ này */), 'bị giam ở trại lừa đảo: "việc bạn muốn làm" chỉ còn các việc trong trại (' + shown.map(a => a.id).join(',') + ')');
     const hook = E.HOOKS.year.find(h => /khLines/.test(h.toString())); hook(l, R(4), () => { }, l.age); ok(l.pending.some(d => /^kh_/.test(d.id)), 'mỗi năm trong trại có một chuyện mới (chỉ tiêu, nạn nhân, ốm, bị bán…)');
     const d = E.DEC.kh_chi_tieu.make(l, R(5)); l.pending = [d]; const h0 = l.st.hea; E.resolve(l, 'tu_choi'); ok(l.st.hea < h0, 'từ chối lừa đảo: bị chích điện, sức khỏe giảm');
     const f = mk(51201, 25, x => { x.fam.mAlive = true; x.fam.fAlive = true; x.fam.noMom = false; x.fam.noDad = false; x.flags.khSince = 21; }); const t = E.khReturn(f, 'X.'); ok(/mẹ|Mẹ/.test(t) && /sống lại|thoát|sống tiếp/.test(t) && /4 năm/.test(t), 'trở về từ Campuchia: bố mẹ ra đón, cảm giác được sống lại: ' + t.slice(0, 120)); }
@@ -2587,7 +2591,10 @@ section('60. Bản 6.5.0: mèo đi theo, tuổi thơ đa dạng, di chúc chia t
     const h = E.heirAtAge(P, k); ok(h && h.age === ka && h.alive && h.name === k.name && h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'], 'tiếp tục ở tuổi hiện tại: bắt đầu đúng ' + ka + ' tuổi, ' + side + ' còn sống đến năm ấy');
     if (h) { const m0 = h.money; E.beginYear(h, {}); let g = 0; while (h.pending.length && g++ < 64) E.resolve(h, E.autoKey(h)); E.finishYear(h);
       ok(!h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'] && h.log.some(e => /được hưởng/.test(e.t)), 'năm ấy ' + side + ' mất và bạn nhận thừa kế');
-      const it = (h.yr.items || []).filter(x => /^Thừa kế từ/.test(x.t)); ok(it.length === 1 && Math.abs(it[0].v - h.flags.heirOf.amt) < 1e-6 && Math.abs(h.flags.heirOf.amt - sh) < 1e-6, 'tiền thừa kế được cộng đúng một lần vào tiền mặt, đúng bằng phần của con'); }
+      const it = (h.yr.items || []).filter(x => /^Thừa kế từ/.test(x.t)), hf = h.flags.heirOf;
+      // v8.4.0 (life103): phần thừa kế gồm tiền mặt + hiện vật (nhà, đất, cơ sở) − khoản phải bù; sống ở nền kinh tế khác thì quy đổi theo thu nhập cơ sở (life83/life103)
+      const ctxOf = x => x.abroad && x.abroad.perm ? x.abroad.code : x.country, scale = P.cur === h.cur && ctxOf(P) === ctxOf(h) ? 1 : h.base / P.base, whole = hf.amt + (hf.items || []).reduce((a, x) => a + x.v, 0) - (hf.pay || 0);
+      ok((hf.amt > 0 ? it.length === 1 && Math.abs(it[0].v - hf.amt) < 1e-6 : it.length === 0) && Math.abs(whole - sh * scale) < 1e-6 * Math.max(1, sh * scale), 'tiền thừa kế được cộng đúng một lần vào tiền mặt; tiền mặt + hiện vật đúng bằng phần của con (' + whole.toFixed(1) + ' / ' + (sh * scale).toFixed(1) + ')'); }
   }
   const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8');
   ok(/data-hm="now"/.test(appSrc) && /heirAtAge/.test(appSrc) && /data-share/.test(appSrc), 'màn kết thúc: chọn sống từ lúc chào đời hay ở tuổi hiện tại; di chúc nhập tỉ lệ từng người');

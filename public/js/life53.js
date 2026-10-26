@@ -12,7 +12,7 @@
       var spent = entries.reduce(function (sum, x) { return sum + x.amount; }, 0), budget = income > 0 ? income * 12 * .1 : l.base * .02;
       if (!forced && amount + spent > budget) return { ok: false, note: who + ' chưa đủ ngân sách cho khoản này, chọn cách ít tốn kém hơn.' };
       entries.push({ t: reason, amount: amount, payer: who });
-      return { ok: true, note: who + ' thanh toán ' + H.money(l, amount) + ' từ tiền gia đình; không trừ tiền tiết kiệm của bạn.' };
+      return { ok: true, note: who + ' thanh toán ' + H.money(l, amount) + (reason ? ' cho ' + String(reason).toLowerCase() : '') + ' từ tiền gia đình; không trừ tiền tiết kiệm của bạn.' }; // GĐ2.5: nói rõ khoản chi
     }
     if (l.money < amount) return { ok: false, note: 'Bạn chưa đủ tiền tiết kiệm cho khoản này, cần chọn phương án ít tốn kém hơn.' };
     H.cash(l, -amount, reason);
