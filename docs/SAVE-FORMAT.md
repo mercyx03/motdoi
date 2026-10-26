@@ -15,7 +15,7 @@
 
 ## Phiên bản cấu trúc `life.sv`
 
-- `life.sv` là phiên bản **cấu trúc dữ liệu**, khác với phiên bản game `life.v`. Bản lưu chưa có `sv` được coi là `0`. Phiên bản hiện tại là `E.SAVE_SCHEMA = 1`.
+- `life.sv` là phiên bản **cấu trúc dữ liệu**, khác với phiên bản game `life.v`. Bản lưu chưa có `sv` được coi là `0`. Phiên bản hiện tại là `E.SAVE_SCHEMA = 2`: v1 do GĐ1 đặt; v2 do GĐ2 thêm (hợp nhất danh tính và độ tin cậy NPC, xem `docs/NPC-IDENTITY-GD2.md`).
 - `E.checkSave(life)` kiểm tra mà không sửa gì, trả về `{ ok, code, sv, max }`. Các mã lỗi:
   - `INVALID`: thiếu `name`, `age` hoặc `birthYear`.
   - `BAD_SCHEMA`: `sv` không phải số nguyên ≥ 0.
@@ -30,7 +30,7 @@
 ### Thêm một bước nâng cấp
 
 1. Tăng `SAVE_SCHEMA`.
-2. Thêm `{ to: <số mới>, run: function (l) { … } }` vào cuối `SCHEMA_STEPS` trong `public/js/engine.js`. Bước này phải:
+2. Thêm `{ to: <số mới>, run: function (l) { … } }` vào cuối `SCHEMA_STEPS` trong `public/js/engine.js`, hoặc từ một module gọi `E.registerSchemaStep({ to, run })` (giống life142). Bước này phải:
    - chỉ đổi dạng dữ liệu, không đổi diễn biến gameplay;
    - không xóa trường chưa nhận diện;
    - chạy lại trên dữ liệu đã nâng cấp mà không đổi gì thêm.

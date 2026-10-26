@@ -58,7 +58,8 @@ function roundTrip(t, G, sample, who) {
 const cases = [
   { name: '1-no-schema-version', run(t, G) {
     const E = G.E, S = G.SaveStore;
-    t.ok(E.SAVE_SCHEMA === 1, 'engine khai báo phiên bản cấu trúc hiện tại = 1');
+    // GĐ1 đặt cấu trúc v1; GĐ2 (life142: hợp nhất danh tính & quan hệ NPC) đăng ký bước v2
+    t.ok(E.SAVE_SCHEMA === 2, 'engine khai báo phiên bản cấu trúc hiện tại = 2 (' + E.SAVE_SCHEMA + ')');
     t.ok(freshLife(G, 41001, 'vn', 0).sv === E.SAVE_SCHEMA, 'cuộc đời mới tạo mang sv hiện tại');
     let n = 0;
     packs().forEach(p => p.saves.forEach(item => {

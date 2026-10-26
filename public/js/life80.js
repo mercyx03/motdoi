@@ -25,9 +25,9 @@
     var p = l.partner, prev = l.flags.lastP;
     if (prev && (!p || p.name !== prev.name)) {
       var widowed = p && p.name === prev.name && p.alive === false;
-      if (!widowed && !prev.dead && !(E.isDeadPartner && E.isDeadPartner(l, prev))) { /* v7.2: người đã mất không thành "người cũ" */ var L = exes(l); if (!L.some(function (x) { return x.name === prev.name; })) L.push({ name: prev.name, sex: prev.sex, d: prev.d, married: prev.married, since: prev.since, until: a, inc: prev.inc, job: prev.job }); if (L.length > 6) L.shift(); }
+      if (!widowed && !prev.dead && !(E.isDeadPartner && E.isDeadPartner(l, prev))) { /* v7.2: người đã mất không thành "người cũ" */ var L = exes(l); if (!L.some(function (x) { return x.name === prev.name && (!x.uid || !prev.uid || x.uid === prev.uid); })) L.push({ name: prev.name, sex: prev.sex, d: prev.d, married: prev.married, since: prev.since, until: a, inc: prev.inc, job: prev.job, uid: prev.uid }); if (L.length > 6) L.shift(); }
     }
-    l.flags.lastP = p && p.alive !== false ? { name: p.name, sex: p.sex, d: (p.age || a) - a, married: p.status === 'married', since: p.since, inc: p.inc, job: p.job } : null;
+    l.flags.lastP = p && p.alive !== false ? { name: p.name, sex: p.sex, d: (p.age || a) - a, married: p.status === 'married', since: p.since, inc: p.inc, job: p.job, uid: p.uid110 } : null;
     if (p && p.alive === false && prev) prev.dead = true;
   });
   function candidates(l) { if (l.partner || l.age < 18) return []; return exes(l).filter(function (x) { return !x.closed && !x.dead && !(E.isDeadPartner && E.isDeadPartner(l, x)) && l.age - (x.until || l.age) >= 1 && l.age + (x.d || 0) <= 85; }); }

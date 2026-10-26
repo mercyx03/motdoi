@@ -2144,6 +2144,13 @@
   var SCHEMA_STEPS = [
     { to: 1, run: function () { } }
   ];
+  // Module mở rộng đăng ký bước nâng cấp của mình (ví dụ life142: hợp nhất danh tính & quan hệ NPC)
+  function registerSchemaStep(step) {
+    if (!step || !(step.to > 0) || typeof step.run !== 'function' || SCHEMA_STEPS.some(function (s) { return s.to === step.to; })) throw Error('Bước nâng cấp cấu trúc không hợp lệ hoặc bị trùng: ' + (step && step.to));
+    SCHEMA_STEPS.push(step); SCHEMA_STEPS.sort(function (a, b) { return a.to - b.to; });
+    if (step.to > SAVE_SCHEMA) { SAVE_SCHEMA = step.to; if (G.E) G.E.SAVE_SCHEMA = SAVE_SCHEMA; }
+    return SAVE_SCHEMA;
+  }
   function saveSchema(l) { var v = l && l.sv; return v == null ? 0 : typeof v === 'number' && isFinite(v) && v >= 0 && Math.floor(v) === v ? v : NaN; }
   function schemaError(code, sv) { var e = new Error(code === 'FUTURE_SCHEMA' ? 'Bản lưu thuộc cấu trúc v' + sv + ', mới hơn mức game hỗ trợ (v' + SAVE_SCHEMA + ')' : code === 'BAD_SCHEMA' ? 'Phiên bản cấu trúc bản lưu không hợp lệ' : 'Bản lưu thiếu thông tin cơ bản của nhân vật'); e.code = code; e.sv = sv; return e; }
   // Kiểm tra trước khi nạp, không sửa dữ liệu: { ok, code?, sv, max }
@@ -2192,7 +2199,7 @@
     createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
     runHeadless: runHeadless, makeCohort: makeCohort, netWorth: netWorth, obituary: obituary, statusLine: statusLine, fmtMoney: fmtMoney,
     jobTitle: jobTitle, orientLabel: orientLabel, placeText: placeText, buildMort: buildMort, qBase: qBase, migrate: migrate,
-    SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave,
+    SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave, registerSchemaStep: registerSchemaStep,
     actions: actions, act: act, actAvail: actAvail, parentMonthly: parentMonthly, PARENT_PAY: PARENT_PAY, parentKind: parentKind, parentYear: parentYear,
     isMajor: isMajor, MAJOR: MAJOR, GAMES: GAMES, gameFor: gameFor, anyGame: anyGame, PETS: PETS, GAME_SUB: GAME_SUB, ACTS_PER_YEAR: ACTS_PER_YEAR, actsLimit: actsLimit, talentText: talentText,
     EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,

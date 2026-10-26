@@ -3,7 +3,7 @@
 var traits=['nhạy cảm','ghen tuông','gia trưởng','nóng tính','hướng nội','hoạt bát','tiết kiệm','hài hước'];
 function hash(t){var h=0;for(var i=0;i<t.length;i++)h=(Math.imul(h,31)+t.charCodeAt(i))>>>0;return h;}
 function state(l){return l.flags.family130||(l.flags.family130={});}
-function personality(l,p){if(!p)return[];if(!p.traits130){var n=hash(l.id+':'+p.name);p.traits130=[traits[n%8],traits[(n%8+1+(n>>>5)%7)%8]];}return p.traits130;}
+function personality(l,p){if(!p)return[];if(!p.traits130){var n=hash(l.id+':'+(p.nameBeforeCustomization||p.name));p.traits130=[traits[n%8],traits[(n%8+1+(n>>>5)%7)%8]];}return p.traits130;}
 function children(l){E.FAMILY53.init(l);return (l.kids||[]).filter(function(k){return k.alive!==false;});}
 function kid(l,id){return children(l).find(function(k){return k.parentId===id;});}
 function identity(l,k){if(!k.identity130){var n=hash(l.id+':'+k.name+':orientation')%100;k.orient=k.orient||(n<8?'gay':n<16?'bi':'straight');k.identity130={disclosed:false,decision:'private'};}return k.identity130;}

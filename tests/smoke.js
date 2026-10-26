@@ -106,7 +106,9 @@ const cases = [
         const cur = ids(l), live = new Map();
         cur.forEach(([where, id, o]) => {
           const key = where.split('.')[1] + ':' + id;
-          if (o.alive !== false) { t.ok(!live.has(key) || live.get(key) === o, '#' + i + ' tuổi ' + l.age + ': định danh ' + key + ' bị dùng cho hai người khác nhau'); live.set(key, o); }
+          // GĐ2: bạn thân thành người yêu là CÙNG một người với hai bản ghi (bạn bè + bạn đời) nên dùng chung uid — chỉ cho phép đúng trường hợp đó
+          const samePerson = (a, b) => a && b && a.name === b.name && ((a.fromFriend && b.lover) || (b.fromFriend && a.lover));
+          if (o.alive !== false) { t.ok(!live.has(key) || live.get(key) === o || samePerson(live.get(key), o), '#' + i + ' tuổi ' + l.age + ': định danh ' + key + ' bị dùng cho hai người khác nhau'); live.set(key, o); }
           const kind = where.split('.')[1], prev = first.get(o) || {};
           if (prev[kind]) t.ok(prev[kind] === id, '#' + i + ': ' + where + ' đổi định danh ' + prev[kind] + ' → ' + id);
           else { prev[kind] = id; first.set(o, prev); seenIds++; }
