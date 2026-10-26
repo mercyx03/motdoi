@@ -151,10 +151,13 @@ function adoptIdent(l){
  });
  if(!l.flags.partnerIdent142.length)delete l.flags.partnerIdent142;
 }
+// GĐ2.5: nối theo cờ reunited (không theo "chưa có uid") — trong luồng thật có thể đã có mã khác cấp uid tạm cho người yêu vừa quay lại;
+// uid tạm đó được ánh xạ bí danh về uid cũ để mọi hồ sơ / tham chiếu vừa tạo vẫn trỏ đúng một người
 function reunite(l,before){
- var p=l.partner;if(!p||p===before||!p.reunited||p.uid110)return;
+ var p=l.partner;if(!p||p===before||!p.reunited||p.reunitLinked142)return;
  var x=(l.flags.exList||[]).filter(function(x){return x.closed&&x.name===p.name&&x.uid;}).pop();
  if(!x)return;
+ p.reunitLinked142=true;if(p.uid110&&p.uid110!==x.uid&&canon(l,p.uid110)!==x.uid)aliases(l)[p.uid110]=x.uid;
  p.uid110=x.uid;
  if(x.ident){if(x.ident.traits130)p.traits130=x.ident.traits130.slice();if(x.ident.family100)p.family100=JSON.parse(JSON.stringify(x.ident.family100));if(x.ident.nbc)p.nameBeforeCustomization=x.ident.nbc;}
 }
@@ -191,7 +194,8 @@ E.syncKnownDeaths=function(l,a){
 // ---------- nối vào vòng năm ----------
 var resolve=E.resolve;E.resolve=function(l){snapshot(l);var before=l.partner,out=resolve.apply(this,arguments);if(l.partner!==before)reunite(l,before);snapshot(l);return out;};
 var finish=E.finishYear;E.finishYear=function(l){snapshot(l);return finish.apply(this,arguments);};
-E.HOOKS.year.push(function(l){if(!l.alive)return;adoptIdent(l);ensureIds(l);snapshot(l);});
+// GĐ2.5: E.runHeadless gọi resolve nội bộ (không qua wrapper E.resolve) → nối danh tính người quay lại cả ở hook cuối năm
+E.HOOKS.year.push(function(l){if(!l.alive)return;adoptIdent(l);reunite(l);ensureIds(l);snapshot(l);});
 var create=E.createLife;E.createLife=function(){var l=create.apply(this,arguments);ensureIds(l);return l;};
 var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);ensureIds(l);};
 

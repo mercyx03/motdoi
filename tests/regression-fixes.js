@@ -108,6 +108,25 @@ const cases = [
       t.ok(!l.alive && di >= 0 && di === lines.length - 1, name + ': dòng qua đời là dòng cuối (sau đó: ' + lines.slice(di + 1).join(' | ').slice(0, 80) + ')');
     });
   } },
+  { name: 'reunion-identity-headless', timeoutMs: 150000, run(t, G) {
+    // E.runHeadless gọi resolve nội bộ (bỏ qua wrapper E.resolve): người quay lại vẫn phải mang đúng danh tính người cũ
+    const E = G.E;
+    let seen = 0;
+    for (let s = 90000; s < 90400 && seen < 4; s++) {
+      G.testClock.reset(); const l = E.createLife({ mode: s % 3 ? 'vn' : 'world', seed: s }); let checked = null;
+      E.runHeadless(l, x => { const p = x.partner; if (p && p.reunited && checked !== p) { checked = p; seen++; const ex = (x.flags.exList || []).filter(e => e.closed && e.name === p.name && e.uid).pop(); t.ok(ex && E.NPC.same(x, p.uid110, ex.uid), 'seed ' + s + ' tuổi ' + x.age + ': người quay lại mang danh tính người cũ (' + p.uid110 + ' / ' + (ex && ex.uid) + ')'); } });
+    }
+    t.ok(seen >= 2, 'mô phỏng được ' + seen + ' lần quay lại');
+  } },
+  { name: 'stranger-not-dead-stepparent', run(t, G) {
+    // Người lạ ngẫu nhiên không mang tên bố / mẹ kế (đã mất hay còn sống) — trước đây bố dượng đã mất "kể chuyện nghề"
+    const E = G.E, l = E.createLife({ mode: 'vn', seed: 91001 }); l.age = 40;
+    const seq = seed => { const h = { rs: seed }; return () => G.U.rand(h); };
+    const n1 = E.H.stranger(l, seq(777), 'M');
+    l.flags.family129 = l.flags.family129 || {}; l.flags.family129.stepParent = { name: n1, sex: 'M', born: -30, alive: false };
+    const n2 = E.H.stranger(l, seq(777), 'M');
+    t.ok(n2 !== n1, 'tên người lạ tránh tên bố dượng (' + n1 + ' → ' + n2 + ')');
+  } },
   { name: 'partner-wording', run(t, G) {
     // Câu nhắc tới bạn đời cụ thể phải gọi đúng vợ / chồng / người bạn đời, không để "vợ/chồng" chung chung (cùng giới bị gọi nhầm)
     const E = G.E, ctx = require('./regression-contexts')(G).collectors140;
