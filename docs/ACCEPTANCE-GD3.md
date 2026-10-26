@@ -57,3 +57,14 @@ Tài sản cuối đời/base trong ba mẫu 60 đời có trung vị 3,42→2,5
 Bản trước: e9fd613 (nghiệm thu bad8ed9). Khi cần quay lại, bảo vệ ba file riêng và dùng checkout khác tại e9fd613 hoặc revert commit GĐ3 sau khi xem diff; không reset --hard/git clean. Chủ dự án có thể upload lại gói ổn định trước từ commit cũ. Không sửa lịch sử hoặc database.
 
 Thông tin commit/push và SHA/kích thước artifact cuối sẽ được ghi sau khi thực hiện, không dùng artifact của lượt kiểm tra máy nhà làm gói GĐ3.
+
+## Bàn giao artifact đã kiểm chứng
+
+- Mã nguồn commit `b3ada6f810793e8ab038f902cb2fcf842d90da42` đã push origin/gd3-context-weighting, remote ref khớp.
+- `npm run package:cloudflare`: **PASS**, build mới sau commit; dist và dist.zip ở gốc dự án. **28 file, 2.302.679 byte**.
+- SHA-256 ZIP: `e259ffcdbb7a280a4a38ddd1f4738c12f29ead04038ce7bfa9a1cee8cc429cdf`.
+- ZIP đọc lại toàn bộ tên/content SHA-256 khớp dist, có index.html ở gốc, .well-known, _worker.js, _routes.json, _headers. Không có nguồn module/source maps hoặc dữ liệu D1.
+- Loading: 8 đời nguồn/bản nén giống nhau; hash/tài nguyên/font/cú pháp/cache đạt. API admin kiểm quyền với D1 trong bộ nhớ đạt, 1.506 mục catalogue.
+- `node tests/update-gd3.js` đạt trên build. Trang build qua Edge desktop/mobile, tìm kiếm/lọc/tải thêm/status và không tràn ngang/pageerror đạt.
+- Artifact và kết quả build được lưu trong commit tiếp theo trên cùng nhánh; không tạo commit rỗng, không merge main. Tên commit cuối xem lịch sử Git/biên bản chat để tránh tham chiếu hash của chính commit đang tạo.
+- **Sẵn sàng upload Production: CHƯA** (Preview, chưa regression toàn bộ và chưa kiểm binding/API thực tế). Không deploy. REVIEWS_DB phải giữ đúng database hiện hữu khi chủ dự án quyết định upload.

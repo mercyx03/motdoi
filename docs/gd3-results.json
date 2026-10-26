@@ -867,5 +867,16 @@
       }
     ]
   },
-  "performanceConclusion": "Three alternating rounds, 60 lives/version/round: +2.19%, +3.07%, +2.80% wall time per simulated year; median +2.80%. No other simulation/build run concurrently. Not browser profiling."
+  "performanceConclusion": "Three alternating rounds, 60 lives/version/round: +2.19%, +3.07%, +2.80% wall time per simulated year; median +2.80%. No other simulation/build run concurrently. Not browser profiling.",
+  "build": {
+    "sourceCommit": "b3ada6f810793e8ab038f902cb2fcf842d90da42",
+    "files": 28,
+    "zipBytes": 2302679,
+    "sha256": "e259ffcdbb7a280a4a38ddd1f4738c12f29ead04038ce7bfa9a1cee8cc429cdf",
+    "packageCheck": "PASS names and SHA256 of all ZIP entries compared to dist; index.html, _worker.js, _routes.json, _headers, .well-known preserved",
+    "loading": "PASS 8 source/bundle identical lives; resource/hash/syntax checks",
+    "admin": "PASS memory D1; 1506 catalogue entries",
+    "updates": "PASS JSON/embedded HTML/history and built UI at desktop/mobile",
+    "productionReady": false
+  }
 }
