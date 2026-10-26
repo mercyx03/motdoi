@@ -62,3 +62,7 @@
 ## Chuỗi hậu quả GĐ4 (`flags.chains144`)
 
 Không tăng `SAVE_SCHEMA`. Trường mới chỉ xuất hiện khi nhân vật gặp sự kiện gốc; tối đa 4 chuỗi đang chạy, 12 chuỗi đã khép, mỗi chuỗi giữ 6 bước gần nhất. `E.migrateExt` (life144) bỏ giá trị hỏng, lọc bản ghi thiếu trường và giữ nguyên loại chuỗi chưa biết. Lịch hẹn giai đoạn nằm trong `l.sched` như các tình huống hẹn trước khác. Chi tiết: `docs/CONSEQUENCES-GD4.md`.
+
+## Nhịp sự kiện GĐ5 (`flags.pace145`)
+
+`{ v:1, h:[[tuổi, mức 'd'|'m'|'s', nhóm, dấu vân, id], …], trip }`, tối đa 24 dòng. Không tăng `SAVE_SCHEMA`; `E.migrateExt` (life145) bỏ giá trị hỏng và dòng sai cấu trúc. Chi tiết: `docs/PACE-GD5.md`.

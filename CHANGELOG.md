@@ -1,5 +1,10 @@
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
+### GĐ5 — bản đóng gói, chưa phát hành Production
+
+- Điều tiết mật độ biến cố lớn, chống lặp theo nhóm chủ đề và nội dung gần trùng, lọc câu kể lặp, nhịp tự động.
+- Sửa 11 tình huống chưa từng xuất hiện do điều kiện hợp lệ nhận nhầm dữ liệu rỗng (cảnh hôn nhân, gia đình phản đối, danh phận, mập mờ).
+
 ### GĐ4 — bản đóng gói, chưa phát hành Production
 
 - 8 chuỗi hậu quả nhiều năm trên sự kiện sẵn có: học hành, nghề nghiệp, kinh doanh, nợ vay, gia đình, hôn nhân, bạn bè, sức khỏe.

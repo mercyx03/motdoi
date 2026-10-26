@@ -1,5 +1,29 @@
 [
   {
+    "id": "gd5-event-balancing",
+    "version": "8.5.0-gd5",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-26T12:02:27.406Z",
+    "title": "Một Đời — Cuộc sống tự nhiên hơn, ít trùng lặp hơn!",
+    "summary": "Nhịp sự kiện tự nhiên hơn: ít năm dồn dập biến cố, ít tình huống na ná nhau, chế độ tự động trôi nhanh hơn.",
+    "tags": [
+      "Điều chỉnh",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Những biến cố lớn như tai nạn, mất việc, nợ nần hay khủng hoảng gia đình không còn dồn dập nhiều cái trong cùng một năm chỉ vì trùng điều kiện. Năm có nhiều biến cố vẫn có thể xảy ra, nhưng hiếm hơn và hợp hoàn cảnh hơn.",
+      "Vừa trải qua chuỗi biến cố, nhân vật có thêm thời gian để những chuyện đời thường nhỏ, gần gũi xuất hiện.",
+      "Hạn chế những tình huống na ná nhau xuất hiện sát nhau, kể cả khi người trong chuyện khác tên. Những chuyện đang diễn ra như nợ nần, nghiện ngập không bị coi là trùng lặp.",
+      "Những câu kể chuyện đời thường giống hệt nhau không lặp lại trong vòng sáu năm. Các dòng về tiền lương, tiền thưởng, chi tiêu vẫn hiện đầy đủ.",
+      "Chế độ tự động trôi nhanh hơn: lựa chọn đời thường được chốt nhanh hơn, còn ngã rẽ quan trọng và biến cố lớn vẫn dừng đủ lâu để bạn kịp đọc. Năm đã có nhiều lựa chọn thì nhân vật không tự rủ thêm hoạt động.",
+      "Mỗi năm có tối đa một lời rủ du lịch ngẫu nhiên, và không rủ đi chơi trong năm vừa có biến cố lớn. Bạn vẫn tự lên kế hoạch du lịch được như trước.",
+      "Sửa lỗi những cảnh hôn nhân (món quà bất ngờ, cần thêm thời gian bên nhau, cơ hội việc ở tỉnh khác, chuyện mua nhà mua xe, ghen tuông, mâu thuẫn tiền bạc), cảnh gia đình phản đối mối quan hệ, đòi danh phận rõ ràng, một số chuyện tình cảm khi độc thân và tình huống dư luận với người làm nghề công chúng chưa từng xuất hiện dù đủ điều kiện.",
+      "Các cảnh hôn nhân vừa mở lại cách nhau ít nhất ba năm, mỗi cảnh tối đa bốn lần một đời, để không lấn át cuộc sống vợ chồng.",
+      "Hậu quả nhiều năm của những lựa chọn cũ và ảnh hưởng của hoàn cảnh lên khả năng gặp sự kiện vẫn giữ nguyên. Bản lưu cũ tiếp tục chơi được."
+    ]
+  },
+  {
     "id": "gd4-multiyear-consequences",
     "version": "8.5.0-gd4",
     "releaseStatus": "packaged",

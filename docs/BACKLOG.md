@@ -29,3 +29,11 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 - GĐ4 đã chạy: mục 7, mục 68, mục 9 lọc 25 tình huống liên quan (24/25 có phương án được thực thi).
 - Kiểm thử trình duyệt cho lựa chọn chuỗi trong giao diện chơi (popup, chế độ tự động, lưu giữa năm) chưa chạy; mới kiểm qua engine headless.
 - Lỗi có từ trước, chưa sửa (cần chủ dự án quyết định vì bật lại nội dung): các cảnh hôn nhân life130 và `familyObjection130` không bao giờ xuất hiện từ trigger do `valid(l, {})` trả về false. Khi sửa, cân nhắc tần suất và có thể nối thêm làm gốc chuỗi hôn nhân/gia đình của GĐ4.
+
+### Bổ sung từ GĐ5 (chưa chạy, không tính PASS)
+
+- Regression đầy đủ trên mã GĐ5; mục 6 cần đo lại vì GĐ5 mở lại 11 tình huống và thay đổi nhịp.
+- GĐ5 đã chạy: mục 7, 16, 30, mục 9 lọc 14 tình huống bị ảnh hưởng. Mục 30 lần đầu bắt `marriageMoney130` ×5 → đã hạ `max`.
+- Đã sửa lỗi cảnh hôn nhân life130 / `familyObjection130` / `status129` / `map_mo101` / `casual101` / `public_scandal101` (xem PACE-GD5.md); mục ghi ở GĐ4 về lỗi này đã xử lý.
+- Bấm giờ chế độ tự động và kiểm giao diện các cảnh vừa mở lại trên trình duyệt.
+- Tỷ lệ có con: GĐ5 thấp hơn 1,9 điểm khi tắt điều tiết (trong sai số); đo lại với mẫu lớn.

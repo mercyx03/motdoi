@@ -1268,7 +1268,8 @@
         bindWill(box,l,d);
         bindBusiness(box,l,d);
         if (aiPick) {
-          var k = E.autoKey(l), fast = !S.auto;
+          // GĐ5: ở chế độ tự động, lựa chọn đời thường được chốt nhanh hơn; ngã rẽ và biến cố lớn giữ nhịp cũ để kịp đọc.
+          var k = E.autoKey(l), fast = !S.auto || (!major && E.PACE145 && E.PACE145.tier(d) === 'daily');
           S.modalTimer = setTimeout(function () {
             if (!S.life || S.life.pending[0] !== d || S.phase !== 'decision') return;
             var b = $('[data-k="' + k + '"]', box); if (b) b.classList.add('picked');
