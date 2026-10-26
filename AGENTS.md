@@ -57,3 +57,7 @@ Chỉ đánh dấu production-ready khi hoàn tất phạm vi, test bắt buộc
 - Hướng dẫn quay lại nếu bản mới có lỗi:
 
 Không báo thành công nếu chưa thực hiện thật. Nếu chưa hoàn tất, ghi rõ trạng thái đang nghiệm thu thay vì dùng tiêu đề Hoàn thành.
+
+## Nhật ký người chơi từ GĐ3 trở đi
+
+Áp dụng GĐ3–GĐ6 và 25 hệ thống chuyên sâu: sau mỗi nâng cấp hoàn thành, viết nhật ký tiếng Việt dễ hiểu, thân thiện với người chơi; tách báo cáo kỹ thuật khỏi nội dung công bố. Đặt mục mới nhất trước, giữ nguyên lịch sử. Mỗi mục mới ghi phiên bản, thời điểm có múi giờ và trạng thái: bản đóng gói chưa phải đã phát hành. Chỉ ghi ngày phát hành thực tế khi chủ dự án xác nhận upload. Đồng bộ docs/update-extra.json và public/data/updates.json; xác minh dữ liệu và HTML trong dist/ZIP, giao diện điện thoại/máy tính. Nhật ký tĩnh không dùng D1; không sửa database Production để công bố.

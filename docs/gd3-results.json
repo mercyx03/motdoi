@@ -1,0 +1,871 @@
+{
+  "reference": "e9fd613595e5d142ce43e680af7e9e7046defb88",
+  "branch": "gd3-context-weighting",
+  "context": {
+    "checks": 4658,
+    "fixtures": 60,
+    "bernoulli": {
+      "low": 2181,
+      "high": 5529
+    },
+    "examples": {
+      "pressure": 1.7,
+      "secure": 0.6,
+      "tired": 1.5291666666666668,
+      "rested": 0.6
+    }
+  },
+  "baseline": {
+    "before": {
+      "version": "8.5.0",
+      "lives": 400,
+      "registry": {
+        "DEC": 1298,
+        "TRIG": 687,
+        "ACT": 240,
+        "EVENTS": 79,
+        "hooksYear": 123,
+        "trigConstP": 600,
+        "trigDuplicateIds": [
+          "concert",
+          "casting"
+        ]
+      },
+      "life": {
+        "avgDeathAge": 73.97,
+        "reach50Pct": 88.5,
+        "withChildPctOf50": 25.7,
+        "avgKidsOf50": 0.28,
+        "everPartnerPctOf50": 95.2,
+        "uniDegreePctVN25": 11.7,
+        "jobYearPct": 52.2,
+        "debtYearPct": 24.1
+      },
+      "events": {
+        "decisionsPerYearBegin": 2.08,
+        "decisionsPerYearFinish": 0.35,
+        "finishQueueMax": 4,
+        "topDecisions": [
+          {
+            "id": "world_doi_song",
+            "perLife": 11.89
+          },
+          {
+            "id": "nghe_chuyen_moi",
+            "perLife": 7.84
+          },
+          {
+            "id": "weather125",
+            "perLife": 4.42
+          },
+          {
+            "id": "nd_su_kien",
+            "perLife": 2.77
+          },
+          {
+            "id": "nghe_kh",
+            "perLife": 2.63
+          },
+          {
+            "id": "law122",
+            "perLife": 2.56
+          },
+          {
+            "id": "ban_than_hen",
+            "perLife": 2.48
+          },
+          {
+            "id": "marry",
+            "perLife": 2.29
+          },
+          {
+            "id": "ban_than_moi",
+            "perLife": 2.28
+          },
+          {
+            "id": "que_loi_moi",
+            "perLife": 2.23
+          },
+          {
+            "id": "job",
+            "perLife": 2.1
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.94
+          },
+          {
+            "id": "gia_dinh_hai_ben51",
+            "perLife": 1.86
+          },
+          {
+            "id": "love",
+            "perLife": 1.77
+          },
+          {
+            "id": "travel50_step",
+            "perLife": 1.71
+          }
+        ],
+        "topFinishQueued": [
+          {
+            "id": "weather125",
+            "perLife": 4.42
+          },
+          {
+            "id": "law122",
+            "perLife": 2.56
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.94
+          },
+          {
+            "id": "travel50_step",
+            "perLife": 1.57
+          },
+          {
+            "id": "patron125",
+            "perLife": 1.31
+          },
+          {
+            "id": "localLife138",
+            "perLife": 0.77
+          },
+          {
+            "id": "family100_parent_nghiem",
+            "perLife": 0.56
+          },
+          {
+            "id": "family100_love_messages",
+            "perLife": 0.55
+          },
+          {
+            "id": "family100_love_schedule",
+            "perLife": 0.54
+          },
+          {
+            "id": "studyReview136",
+            "perLife": 0.53
+          }
+        ],
+        "repeatedLogTextsPerLife": 27.7
+      },
+      "tone": {
+        "good": 56935,
+        "bad": 18096,
+        "neutral": 53917,
+        "big": 3262,
+        "money": 63754,
+        "goodToBad": 3.15,
+        "badPct": 14
+      },
+      "save": {
+        "medianKB": 147.2,
+        "maxKB": 215.5,
+        "medianLog": 543,
+        "maxLog": 837,
+        "life138PeopleAvg": 72.51,
+        "life138PeopleMax": 115,
+        "topFlagNamespacesKB": [
+          {
+            "ns": "life138",
+            "avgKB": 50.48
+          },
+          {
+            "ns": "cd",
+            "avgKB": 1.3
+          },
+          {
+            "ns": "scN",
+            "avgKB": 1.24
+          },
+          {
+            "ns": "career92",
+            "avgKB": 0.8
+          },
+          {
+            "ns": "expansion110",
+            "avgKB": 0.7
+          },
+          {
+            "ns": "world120",
+            "avgKB": 0.48
+          },
+          {
+            "ns": "travel50",
+            "avgKB": 0.44
+          },
+          {
+            "ns": "family100",
+            "avgKB": 0.41
+          }
+        ]
+      },
+      "seconds": 88.2
+    },
+    "after": {
+      "version": "8.5.0",
+      "lives": 400,
+      "registry": {
+        "DEC": 1298,
+        "TRIG": 687,
+        "ACT": 240,
+        "EVENTS": 79,
+        "hooksYear": 123,
+        "trigConstP": 600,
+        "trigDuplicateIds": [
+          "concert",
+          "casting"
+        ]
+      },
+      "life": {
+        "avgDeathAge": 73.41,
+        "reach50Pct": 88,
+        "withChildPctOf50": 26.1,
+        "avgKidsOf50": 0.27,
+        "everPartnerPctOf50": 96,
+        "uniDegreePctVN25": 13.7,
+        "jobYearPct": 52.5,
+        "debtYearPct": 23.2
+      },
+      "events": {
+        "decisionsPerYearBegin": 2.1,
+        "decisionsPerYearFinish": 0.35,
+        "finishQueueMax": 7,
+        "topDecisions": [
+          {
+            "id": "world_doi_song",
+            "perLife": 11.99
+          },
+          {
+            "id": "nghe_chuyen_moi",
+            "perLife": 7.82
+          },
+          {
+            "id": "weather125",
+            "perLife": 4.5
+          },
+          {
+            "id": "nd_su_kien",
+            "perLife": 2.73
+          },
+          {
+            "id": "nghe_kh",
+            "perLife": 2.63
+          },
+          {
+            "id": "law122",
+            "perLife": 2.54
+          },
+          {
+            "id": "ban_than_hen",
+            "perLife": 2.49
+          },
+          {
+            "id": "marry",
+            "perLife": 2.4
+          },
+          {
+            "id": "ban_than_moi",
+            "perLife": 2.36
+          },
+          {
+            "id": "que_loi_moi",
+            "perLife": 2.16
+          },
+          {
+            "id": "job",
+            "perLife": 1.99
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.86
+          },
+          {
+            "id": "love",
+            "perLife": 1.84
+          },
+          {
+            "id": "gia_dinh_hai_ben51",
+            "perLife": 1.84
+          },
+          {
+            "id": "bau_cu",
+            "perLife": 1.71
+          }
+        ],
+        "topFinishQueued": [
+          {
+            "id": "weather125",
+            "perLife": 4.5
+          },
+          {
+            "id": "law122",
+            "perLife": 2.54
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.86
+          },
+          {
+            "id": "travel50_step",
+            "perLife": 1.52
+          },
+          {
+            "id": "patron125",
+            "perLife": 1.32
+          },
+          {
+            "id": "localLife138",
+            "perLife": 0.76
+          },
+          {
+            "id": "studyReview136",
+            "perLife": 0.59
+          },
+          {
+            "id": "family100_parent_nghiem",
+            "perLife": 0.58
+          },
+          {
+            "id": "family100_love_schedule",
+            "perLife": 0.57
+          },
+          {
+            "id": "family100_love_public",
+            "perLife": 0.57
+          }
+        ],
+        "repeatedLogTextsPerLife": 27.6
+      },
+      "tone": {
+        "good": 56872,
+        "bad": 17949,
+        "neutral": 54258,
+        "big": 3332,
+        "money": 63364,
+        "goodToBad": 3.17,
+        "badPct": 13.9
+      },
+      "save": {
+        "medianKB": 146.9,
+        "maxKB": 203.2,
+        "medianLog": 539,
+        "maxLog": 809,
+        "life138PeopleAvg": 73.34,
+        "life138PeopleMax": 115,
+        "topFlagNamespacesKB": [
+          {
+            "ns": "life138",
+            "avgKB": 51.13
+          },
+          {
+            "ns": "cd",
+            "avgKB": 1.3
+          },
+          {
+            "ns": "scN",
+            "avgKB": 1.24
+          },
+          {
+            "ns": "career92",
+            "avgKB": 0.82
+          },
+          {
+            "ns": "expansion110",
+            "avgKB": 0.7
+          },
+          {
+            "ns": "world120",
+            "avgKB": 0.49
+          },
+          {
+            "ns": "travel50",
+            "avgKB": 0.42
+          },
+          {
+            "ns": "family100",
+            "avgKB": 0.41
+          }
+        ]
+      },
+      "seconds": 110.5
+    }
+  },
+  "regression": {
+    "initial": [
+      {
+        "group": "0-4",
+        "exit": 0,
+        "seconds": 0.714,
+        "tail": "\n▶ 0. Phiên bản & trang\n\n▶ 1. Dữ liệu Việt Nam\n\n▶ 2. Dữ liệu thế giới\n\n▶ 3. Sinh tên\n\n▶ 4. Tạo nhân vật — mọi lựa chọn\n\n============================================================\nKẾT QUẢ: 8709 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "7-8",
+        "exit": 0,
+        "seconds": 116.61,
+        "tail": "\n▶ 7. Lưu / tiếp tục (tất định)\n\n▶ 8. Sinh cùng giây & tiền tệ\n\n============================================================\nKẾT QUẢ: 626 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "10-12",
+        "exit": 0,
+        "seconds": 0.662,
+        "tail": "\n▶ 10. Nghề nghiệp, thang bậc, thu nhập\n   Quân hàm trung bình sau ~30 năm công tác: Trung tá (5.0)\n\n▶ 11. Tiền tệ bản địa\n\n▶ 12. Tài chính, nợ xấu, app đen\n\n============================================================\nKẾT QUẢ: 693 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "17,19,21",
+        "exit": null,
+        "error": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "seconds": 240.045,
+        "tail": "ăm tuổi thơ (1–14) có lựa chọn: 91.5% · có lễ thôi nôi: 285/285\n   Các kiểu nhà đã vẽ: ong, cc, tro, tile, tam, villa, san, trinh, prison\n\n▶ 19. Bản 2.3: ⭐ khoảnh khắc, tài sản & hụi & bảo hiểm, tâm lý, đời con cái, học hành, ảnh thẻ, nhạc lofi\n   Tài sản: có đầu tư 159 · đất sốt 143 · bong bóng vỡ 47 · chứng khoán sập 89 · bán tài sản trang trải 87 · hốt hụi 157 · vỡ hụi 54 · bảo hiểm chi trả 67 · hết hạn 272\n   Tâm lý: kiệt sức 210 · trầm cảm sau sinh 7 · khủng hoảng tuổi trung niên 92 · từng căng thẳng quá tải 107/250\n   Con cái ≥30 tuổi: 418 · có việc làm 417 · tốt nghiệp đại học 187 · ngã rẽ 18 tuổi 514 · con lạc lối 53\n   Thi THPT: 207 người · điểm TB 24.19 · có khối 207 · đạt ≥27: 22\n\n▶ 21. Bản 2.5: nghề mới, hướng đi giữa các nghề, sự kiện theo nghề, gia đình tài phiệt / chính trị\n"
+      },
+      {
+        "group": "28,30",
+        "exit": 0,
+        "seconds": 155.667,
+        "tail": "\n▶ 28. Bản 3.0: HIV có đường lây, lương theo trình độ & BHXH, sở trường & căng thẳng, bằng lái / chứng chỉ hết hạn, xe cộ, hẹn hò, chống lặp, hồ sơ\n\n▶ 30. Bản 3.2: nhà ở theo loại, bệnh viện công / tư, phẫu thuật, răng khôn, diễn viên & game show, nhắn tin tán tỉnh, chống lặp, giao diện điện thoại\n\n============================================================\nKẾT QUẢ: 95 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "46,52,55,59",
+        "exit": 0,
+        "seconds": 98.383,
+        "tail": "\n▶ 46. Bản 5.6.1: điểm thi sát thực tế (siêu giỏi vẫn đạt 30, học kém trượt tốt nghiệp và thi lại), bé gái hầu như không bị rủ đi net, bằng lái sau 60 tuổi\n\n▶ 52. Bản 5.9.0: con ngoài hôn nhân, nhiều bạn thân, hẹn hò với bạn thân, định cư nước ngoài\n\n▶ 55. Bản 6.0.0: sinh viên lên thành phố (chỗ ở, làm thêm, cạm bẫy), chuyện nghề chi tiết, quà cho nam\n\n▶ 59. Bản 6.4.0: những cuộc đời không màu hồng, ôn thi chuyên theo từng môn\n\n============================================================\nKẾT QUẢ: 40 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "68-69,75",
+        "exit": 0,
+        "seconds": 195.483,
+        "tail": "\n▶ 68. Bản 7.2.0: người đã mất không \"sống lại\", nghề nở sớm, tính cách bố mẹ, drama gia đình\n\n▶ 69. Bản 7.2.0: drama công sở, hàng xóm, mạng xã hội, trường học, bạn bè, đường phố (ngẫu nhiên)\n\n▶ 75. Hardcore: lưu chế độ, dòng tiền, biến cố và cân bằng\n   Hardcore: tài sản trung vị -2.37 vs thường 9.35 lần thu nhập cơ sở; biến cố/năm 2.34 vs 1.77; biến cố riêng 13235\n\n============================================================\nKẾT QUẢ: 2036 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      }
+    ],
+    "final": [
+      {
+        "group": "17",
+        "exit": 0,
+        "seconds": 52.202,
+        "tail": "\n▶ 17. Bản 2.1: thu nhập bố mẹ, tuổi thơ có lựa chọn, tranh pixel, quay số phận\n   Thu nhập TB cả nhà theo nhóm (triệu đ/tháng): 5.3 · 8.0 · 15.7 · 33.3 · 1255.2\n   Năm tuổi thơ (1–14) có lựa chọn: 91.5% · có lễ thôi nôi: 286/286\n   Các kiểu nhà đã vẽ: ong, cc, tro, tile, tam, villa, san, trinh, prison\n\n============================================================\nKẾT QUẢ: 13026 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "19",
+        "exit": 0,
+        "seconds": 162.515,
+        "tail": "\n▶ 19. Bản 2.3: ⭐ khoảnh khắc, tài sản & hụi & bảo hiểm, tâm lý, đời con cái, học hành, ảnh thẻ, nhạc lofi\n   Tài sản: có đầu tư 169 · đất sốt 156 · bong bóng vỡ 55 · chứng khoán sập 104 · bán tài sản trang trải 97 · hốt hụi 150 · vỡ hụi 63 · bảo hiểm chi trả 62 · hết hạn 272\n   Tâm lý: kiệt sức 194 · trầm cảm sau sinh 7 · khủng hoảng tuổi trung niên 90 · từng căng thẳng quá tải 100/250\n   Con cái ≥30 tuổi: 400 · có việc làm 400 · tốt nghiệp đại học 179 · ngã rẽ 18 tuổi 487 · con lạc lối 58\n   Thi THPT: 201 người · điểm TB 24.25 · có khối 201 · đạt ≥27: 22\n\n============================================================\nKẾT QUẢ: 195985 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "21",
+        "exit": 0,
+        "seconds": 55.551,
+        "tail": "\n▶ 21. Bản 2.5: nghề mới, hướng đi giữa các nghề, sự kiện theo nghề, gia đình tài phiệt / chính trị\n   Gia đình siêu giàu: 118/6000 {\"tp\":76,\"nh\":18,\"ct\":24}\n\n============================================================\nKẾT QUẢ: 91 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      },
+      {
+        "group": "9",
+        "selected": [
+          "doi_kem",
+          "kd_vay_nong_xoay_von",
+          "vd_vay_chua_benh",
+          "vd_hoc_phi_con",
+          "sv_vay",
+          "sv_lam_them",
+          "viec_online",
+          "chuyen_huong",
+          "cn_chuyen_nghe_tuoi_40",
+          "dev_offer_nuoc_ngoai",
+          "sale_khach_lon",
+          "bep_cuoc_thi",
+          "nc_ket_qua_dot_pha",
+          "ks_sang_che",
+          "vc_bo_nhiem",
+          "vp_sa_thai_ai",
+          "cs_cat_giam",
+          "fl_burnout_lam_dem",
+          "tai_xe_ngu_gat",
+          "pc_met_moi",
+          "yt_truc_dem_sai_sot",
+          "chan_thuong",
+          "tram_cam",
+          "nhung_ngay_toi",
+          "sau_mat_mat",
+          "marriageTime130",
+          "marriageMoney130",
+          "marriageGift130",
+          "marriageJealous130",
+          "con_hoc",
+          "con_hu",
+          "con_bo_be",
+          "bo_me_can",
+          "bo_me_mot_minh",
+          "grandCare129",
+          "ban_than_moi",
+          "ban_than_hen",
+          "ban_than_kho",
+          "ban_khung_hoang",
+          "bb_hop_lop",
+          "thi_hsg",
+          "thuc_tap",
+          "mc_hoc_bong",
+          "phat_hien",
+          "len_chuyen",
+          "k_nhom_hoc",
+          "k_ngoai_khoa",
+          "k_thich_mon",
+          "k6_diem_kem",
+          "nghi_hoc_ngheo"
+        ],
+        "exit": 0,
+        "seconds": 47.866,
+        "tail": "\n▶ 9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa dạng)\n   Đã thử 11652 lượt chọn trên 41/1298 tình huống\n\n============================================================\nKẾT QUẢ: 183290 đạt, 0 lỗi\n✓ Tất cả bài kiểm thử hồi quy đều đạt.\n"
+      }
+    ],
+    "coverage": "22 sections outside section 9; section 9 selected 50 trigger IDs, 41 had choices exercised. Not full-game regression.",
+    "totalPassedAssertions": 404591
+  },
+  "quick": {
+    "smoke": 11,
+    "savesCases": 10,
+    "fixtures": 60,
+    "saveSafety": 10,
+    "npc": 14,
+    "failures": 0
+  },
+  "regressionFixes": 8,
+  "hardcoreIsolationLives": 12,
+  "ui": {
+    "viewports": [
+      "1440x1000",
+      "390x844"
+    ],
+    "accentlessSearch": true,
+    "filters": true,
+    "loadMore": true,
+    "noOverflow": true,
+    "noPageErrors": true
+  },
+  "initialFailures": [
+    {
+      "test": "save-safety 7-hundred-year-life",
+      "cause": "Probability changes alter two seed lifespans to 90/93; replaced mortality-dependent setup with authentic accepted age-100 save fixtures, all storage assertions retained."
+    },
+    {
+      "test": "update history generator",
+      "cause": "Existing editorial entries absent from imported commits were dropped; generator now preserves previous entries unless explicitly corrected; all 91 entries verified unchanged."
+    }
+  ],
+  "comparison": {
+    "reference": "e9fd613",
+    "legacyLivesByteIdentical": 12,
+    "rounds": [
+      {
+        "before": {
+          "lives": 60,
+          "years": 4487,
+          "msPerYear": 2.419964140851348,
+          "medianBytes": 172771,
+          "wealthBase": {
+            "median": 3.4239447436808312,
+            "p10": -2.395661497866073,
+            "p90": 53.1289000334419,
+            "negative": 8
+          },
+          "events": {
+            "phat_hien": 10,
+            "ban_than_moi": 126,
+            "ban_khung_hoang": 27,
+            "ban_than_hen": 134,
+            "sau_mat_mat": 36,
+            "ban_than_kho": 84,
+            "cn_chuyen_nghe_tuoi_40": 20,
+            "k_ngoai_khoa": 8,
+            "sv_lam_them": 10,
+            "viec_online": 30,
+            "thuc_tap": 10,
+            "bo_me_can": 64,
+            "vd_vay_chua_benh": 10,
+            "cs_cat_giam": 1,
+            "bb_hop_lop": 13,
+            "grandCare129": 16,
+            "bo_me_mot_minh": 16,
+            "k6_diem_kem": 9,
+            "thi_hsg": 11,
+            "tram_cam": 11,
+            "k_nhom_hoc": 8,
+            "sv_vay": 3,
+            "len_chuyen": 3,
+            "kd_vay_nong_xoay_von": 8,
+            "nghi_hoc_ngheo": 4,
+            "mc_hoc_bong": 2,
+            "con_hoc": 4,
+            "k_thich_mon": 3,
+            "chuyen_huong": 5,
+            "chan_thuong": 2,
+            "fl_burnout_lam_dem": 4,
+            "sale_khach_lon": 1,
+            "doi_kem": 5,
+            "con_hu": 2,
+            "tai_xe_ngu_gat": 2,
+            "yt_truc_dem_sai_sot": 1
+          }
+        },
+        "after": {
+          "lives": 60,
+          "years": 4592,
+          "msPerYear": 2.473011389372822,
+          "medianBytes": 172771,
+          "wealthBase": {
+            "median": 2.5599127329088427,
+            "p10": -2.671595788161376,
+            "p90": 40.345023374061505,
+            "negative": 11
+          },
+          "events": {
+            "phat_hien": 12,
+            "ban_than_moi": 138,
+            "ban_khung_hoang": 23,
+            "ban_than_hen": 148,
+            "sau_mat_mat": 28,
+            "ban_than_kho": 91,
+            "cn_chuyen_nghe_tuoi_40": 22,
+            "k_ngoai_khoa": 9,
+            "thuc_tap": 14,
+            "sv_lam_them": 9,
+            "bb_hop_lop": 18,
+            "kd_vay_nong_xoay_von": 8,
+            "cs_cat_giam": 1,
+            "viec_online": 36,
+            "bo_me_can": 73,
+            "k6_diem_kem": 7,
+            "thi_hsg": 15,
+            "k_nhom_hoc": 11,
+            "tram_cam": 18,
+            "vd_vay_chua_benh": 8,
+            "sv_vay": 4,
+            "len_chuyen": 7,
+            "grandCare129": 7,
+            "nghi_hoc_ngheo": 4,
+            "mc_hoc_bong": 2,
+            "con_hoc": 3,
+            "k_thich_mon": 4,
+            "bo_me_mot_minh": 14,
+            "doi_kem": 9,
+            "fl_burnout_lam_dem": 5,
+            "chuyen_huong": 7,
+            "sale_khach_lon": 1,
+            "con_hu": 2,
+            "chan_thuong": 1,
+            "tai_xe_ngu_gat": 5,
+            "yt_truc_dem_sai_sot": 2
+          }
+        },
+        "timeChangePct": 2.1920675445550986
+      },
+      {
+        "before": {
+          "lives": 60,
+          "years": 4291,
+          "msPerYear": 2.5580807970170123,
+          "medianBytes": 167911,
+          "wealthBase": {
+            "median": 3.6154992311711585,
+            "p10": -0.03761388221107506,
+            "p90": 27.749967817426164,
+            "negative": 6
+          },
+          "events": {
+            "k6_diem_kem": 13,
+            "ban_than_moi": 126,
+            "phat_hien": 5,
+            "thuc_tap": 9,
+            "ban_than_kho": 83,
+            "ban_than_hen": 144,
+            "con_hoc": 7,
+            "cn_chuyen_nghe_tuoi_40": 22,
+            "bb_hop_lop": 20,
+            "k_ngoai_khoa": 9,
+            "k_nhom_hoc": 7,
+            "viec_online": 37,
+            "sv_lam_them": 5,
+            "bo_me_can": 52,
+            "sau_mat_mat": 29,
+            "k_thich_mon": 5,
+            "bo_me_mot_minh": 14,
+            "grandCare129": 11,
+            "ban_khung_hoang": 19,
+            "nghi_hoc_ngheo": 7,
+            "thi_hsg": 10,
+            "vd_vay_chua_benh": 12,
+            "kd_vay_nong_xoay_von": 5,
+            "sale_khach_lon": 4,
+            "cs_cat_giam": 8,
+            "yt_truc_dem_sai_sot": 1,
+            "fl_burnout_lam_dem": 5,
+            "sv_vay": 2,
+            "ks_sang_che": 1,
+            "tram_cam": 11,
+            "nc_ket_qua_dot_pha": 2,
+            "con_hu": 2,
+            "vp_sa_thai_ai": 2,
+            "chuyen_huong": 2,
+            "doi_kem": 1,
+            "len_chuyen": 2
+          }
+        },
+        "after": {
+          "lives": 60,
+          "years": 4232,
+          "msPerYear": 2.6366609404536856,
+          "medianBytes": 169375,
+          "wealthBase": {
+            "median": 6.108408584821539,
+            "p10": -0.44518715459408964,
+            "p90": 30.946972609707974,
+            "negative": 8
+          },
+          "events": {
+            "k6_diem_kem": 9,
+            "ban_than_moi": 133,
+            "ban_than_kho": 84,
+            "fl_burnout_lam_dem": 9,
+            "ban_than_hen": 151,
+            "bo_me_mot_minh": 16,
+            "cn_chuyen_nghe_tuoi_40": 19,
+            "bo_me_can": 62,
+            "viec_online": 35,
+            "ban_khung_hoang": 17,
+            "cs_cat_giam": 5,
+            "k_ngoai_khoa": 11,
+            "phat_hien": 8,
+            "k_nhom_hoc": 9,
+            "grandCare129": 11,
+            "k_thich_mon": 7,
+            "bb_hop_lop": 16,
+            "sau_mat_mat": 31,
+            "sv_lam_them": 9,
+            "kd_vay_nong_xoay_von": 7,
+            "tram_cam": 15,
+            "thi_hsg": 14,
+            "vd_vay_chua_benh": 10,
+            "chuyen_huong": 6,
+            "con_hoc": 3,
+            "nhung_ngay_toi": 1,
+            "nghi_hoc_ngheo": 3,
+            "sale_khach_lon": 3,
+            "thuc_tap": 11,
+            "sv_vay": 3,
+            "ks_sang_che": 8,
+            "len_chuyen": 4,
+            "doi_kem": 2,
+            "con_hu": 1,
+            "pc_met_moi": 1
+          }
+        },
+        "timeChangePct": 3.071839776456864
+      },
+      {
+        "before": {
+          "lives": 60,
+          "years": 4483,
+          "msPerYear": 2.5728681463305825,
+          "medianBytes": 166495,
+          "wealthBase": {
+            "median": 5.010858009020312,
+            "p10": 0,
+            "p90": 53.4307795653476,
+            "negative": 5
+          },
+          "events": {
+            "k_nhom_hoc": 6,
+            "viec_online": 32,
+            "thuc_tap": 12,
+            "bo_me_can": 66,
+            "cn_chuyen_nghe_tuoi_40": 16,
+            "ban_than_moi": 136,
+            "bb_hop_lop": 8,
+            "ban_than_kho": 101,
+            "ban_than_hen": 149,
+            "sau_mat_mat": 33,
+            "thi_hsg": 11,
+            "ban_khung_hoang": 25,
+            "kd_vay_nong_xoay_von": 6,
+            "sv_vay": 1,
+            "sv_lam_them": 6,
+            "bo_me_mot_minh": 15,
+            "fl_burnout_lam_dem": 4,
+            "vd_hoc_phi_con": 2,
+            "grandCare129": 13,
+            "phat_hien": 14,
+            "cs_cat_giam": 8,
+            "k6_diem_kem": 9,
+            "tram_cam": 13,
+            "chuyen_huong": 7,
+            "nghi_hoc_ngheo": 6,
+            "chan_thuong": 1,
+            "k_thich_mon": 5,
+            "con_hu": 3,
+            "con_hoc": 3,
+            "vd_vay_chua_benh": 12,
+            "k_ngoai_khoa": 4,
+            "bep_cuoc_thi": 1,
+            "tai_xe_ngu_gat": 4,
+            "len_chuyen": 1,
+            "ks_sang_che": 2,
+            "yt_truc_dem_sai_sot": 2,
+            "mc_hoc_bong": 1
+          }
+        },
+        "after": {
+          "lives": 60,
+          "years": 4361,
+          "msPerYear": 2.644897202476496,
+          "medianBytes": 164411,
+          "wealthBase": {
+            "median": 4.156721426263593,
+            "p10": -2.421608502454673,
+            "p90": 63.50752631414334,
+            "negative": 8
+          },
+          "events": {
+            "k_nhom_hoc": 8,
+            "viec_online": 37,
+            "thuc_tap": 15,
+            "ban_than_hen": 145,
+            "bo_me_can": 53,
+            "bo_me_mot_minh": 10,
+            "ban_than_moi": 129,
+            "sau_mat_mat": 32,
+            "ban_than_kho": 95,
+            "thi_hsg": 14,
+            "vd_vay_chua_benh": 12,
+            "ban_khung_hoang": 18,
+            "cn_chuyen_nghe_tuoi_40": 20,
+            "phat_hien": 14,
+            "tram_cam": 14,
+            "k6_diem_kem": 7,
+            "sv_lam_them": 7,
+            "sv_vay": 4,
+            "bb_hop_lop": 15,
+            "chuyen_huong": 7,
+            "k_thich_mon": 6,
+            "vp_sa_thai_ai": 1,
+            "grandCare129": 9,
+            "vc_bo_nhiem": 2,
+            "cs_cat_giam": 5,
+            "kd_vay_nong_xoay_von": 7,
+            "doi_kem": 4,
+            "con_hu": 3,
+            "con_hoc": 7,
+            "len_chuyen": 2,
+            "k_ngoai_khoa": 6,
+            "nghi_hoc_ngheo": 1,
+            "tai_xe_ngu_gat": 4,
+            "fl_burnout_lam_dem": 7,
+            "ks_sang_che": 2,
+            "yt_truc_dem_sai_sot": 2,
+            "mc_hoc_bong": 1
+          }
+        },
+        "timeChangePct": 2.7995626689475417
+      }
+    ]
+  },
+  "performanceConclusion": "Three alternating rounds, 60 lives/version/round: +2.19%, +3.07%, +2.80% wall time per simulated year; median +2.80%. No other simulation/build run concurrently. Not browser profiling."
+}

@@ -1,6 +1,29 @@
 {
-  "generatedAt": "2026-10-26T08:56:13.394Z",
+  "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
+    {
+      "id": "gd3-context-weighting",
+      "version": "8.5.0-gd3",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-26T09:49:57.975Z",
+      "title": "Một Đời — Mỗi cuộc đời, một hoàn cảnh khác nhau!",
+      "summary": "Cơ hội và khó khăn trong 50 tình huống quen thuộc phản ánh rõ hơn hoàn cảnh của nhân vật.",
+      "tags": [
+        "Tính năng",
+        "Điều chỉnh"
+      ],
+      "details": [
+        "Bản 8.5.0 · GĐ3 đang được chuẩn bị để chủ dự án phát hành; thời điểm trên là ngày chuẩn bị nhật ký, chưa phải ngày ra mắt trên website.",
+        "Điều chỉnh khả năng gặp 50 tình huống quen thuộc theo công việc, kỹ năng, tài chính, sức khỏe, việc học và các mối quan hệ.",
+        "Khi thiếu tiền, thất nghiệp hoặc phải lo cho con nhỏ, áp lực tài chính có thể tăng; cơ hội tìm thêm thu nhập và nhận hỗ trợ chăm con cũng được cân nhắc.",
+        "Kỹ năng, kiến thức và kinh nghiệm có thể giúp nhân vật gặp thêm cơ hội nghề nghiệp. Người có năng lực vẫn có thể gặp biến động công việc.",
+        "Căng thẳng, sức khỏe và việc ưu tiên công việc hay nghỉ ngơi ảnh hưởng đến một số tình huống mệt mỏi. Bạn bè thân thiết và việc điều trị đã có có thể giúp giảm áp lực.",
+        "Mức tin tưởng giữa các thành viên ảnh hưởng đến một số mâu thuẫn gia đình; những món quà nhỏ và cơ hội trò chuyện vẫn luôn có thể xuất hiện.",
+        "Hoàn cảnh không quyết định số phận: sự kiện vẫn có yếu tố bất ngờ, giữ giới hạn lặp và các điều kiện cần thiết. Bản lưu cũ tiếp tục được hỗ trợ.",
+        "Đợt này tập trung điều chỉnh xác suất; không bổ sung sự kiện mới hoặc đổi kết quả các phương án lựa chọn."
+      ]
+    },
     {
       "id": "save-family-fixes-oct26",
       "publishedAt": "2026-10-26T08:56:13.394Z",

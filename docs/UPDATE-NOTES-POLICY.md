@@ -13,3 +13,7 @@
 - Sau mỗi nâng cấp có thay đổi đáng công bố, thêm mục mới vào đầu danh sách và đồng bộ JSON phục vụ người chơi. Dùng ID duy nhất, thời điểm thực tế, nhãn phù hợp; không tự đổi ngày của các mục cũ. Đối chiếu toàn bộ mục cũ trước/sau, kiểm tra mục mới sống sót qua công cụ tạo lịch sử, rồi xác minh cả JSON và dữ liệu nhúng của build/ZIP.
 - Kiểm tra giao diện rộng/hẹp, tìm kiếm không dấu, bộ lọc và tải thêm. Giữ nội dung đầy đủ; không giới hạn tùy tiện số ý.
 - Việc commit/push và tạo ZIP không tự cập nhật website. Chủ dự án quyết định upload lên Cloudflare; nhật ký mới chỉ xuất hiện trên website sau lần upload đó. Không sửa hoặc ghi đè D1 để công bố nhật ký tĩnh.
+
+## Trạng thái bản đóng gói
+
+Từ GĐ3, mục mới có version, releaseStatus=packaged và releasedAt=null khi chưa upload. Giao diện ghi rõ chưa phát hành; publishedAt ở bước này là thời điểm chuẩn bị nhật ký, không phải ngày ra mắt. Khi chủ dự án xác nhận phát hành, cập nhật trạng thái/ngày thực tế cùng correctedAt trong docs/update-extra.json để công cụ dựng áp dụng sửa đổi có chủ đích. Không tự suy ra trạng thái phát hành từ commit/push/build. Công cụ giữ nguyên các mục cũ không có correctedAt, kể cả mục không xuất hiện trong dữ liệu commit nhập vào.

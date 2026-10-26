@@ -1,5 +1,11 @@
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
+### GĐ3 — bản đóng gói, chưa phát hành Production
+
+- 50 trigger hiện hữu nhận trọng số theo hoàn cảnh, giới hạn 0,5–2,0; không thay hậu quả lựa chọn hoặc schema lưu.
+- Tài chính, kỹ năng, căng thẳng và quan hệ điều chỉnh cả cơ hội lẫn khó khăn; giữ điều kiện và chống lặp.
+- Nhật ký người chơi có phiên bản và phân biệt ngày chuẩn bị với ngày phát hành.
+
 - Quy mô vốn, tỷ lệ cổ phần và hồ sơ quản lý doanh nghiệp.
 - Lợi nhuận công ty theo vốn và ngành nghề, bổ nhiệm ban điều hành, phát hành thêm cổ phiếu và ghế chủ tịch tập đoàn.
 - Điểm từng môn phản ánh thành tích đội tuyển.
