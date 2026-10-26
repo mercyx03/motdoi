@@ -95,6 +95,19 @@ const cases = [
     const k = E.createLife({ mode: 'vn', seed: 70001 }); k.age = 8; const b = E.childExpense(k, k.base * 0.01, 'Lớp vẽ', false);
     t.ok(!b.ok || /cho lớp vẽ/.test(b.note), 'câu thanh toán nói rõ khoản chi: ' + b.note);
   } },
+  { name: 'no-income-log-after-death', run(t, G) {
+    // Mất giữa năm (vd. tai nạn trong careerYear): không được ghi dòng thu nhập sau dòng qua đời
+    const E = G.E;
+    [['ca_si', 'ca sĩ'], ['cay_thue', 'cày thuê']].forEach(([job, name]) => {
+      G.testClock.reset(); const l = E.createLife({ mode: 'vn', seed: 81000 }); l.age = 30; l.indep = true; l.school = null; l.edu = 5;
+      E.startJob(l, job, () => 0.5, noop, true); l.fame = 1e6; l.skill = 80;
+      // chỉ trong môi trường kiểm thử: rủi ro nghề nghiệp chắc chắn xảy ra để cái chết xảy ra BÊN TRONG careerYear như ngoài game
+      const c = E.CAR[E.resolveJob(job)], haz = c.haz; c.haz = [0, 1, 'tai nạn khi biểu diễn'];
+      const lines = []; E.careerYear(l, () => 0.5, (t2) => lines.push(t2), 'work'); c.haz = haz;
+      const di = lines.findIndex(x => /^Qua đời/.test(x));
+      t.ok(!l.alive && di >= 0 && di === lines.length - 1, name + ': dòng qua đời là dòng cuối (sau đó: ' + lines.slice(di + 1).join(' | ').slice(0, 80) + ')');
+    });
+  } },
   { name: 'partner-wording', run(t, G) {
     // Câu nhắc tới bạn đời cụ thể phải gọi đúng vợ / chồng / người bạn đời, không để "vợ/chồng" chung chung (cùng giới bị gọi nhầm)
     const E = G.E, ctx = require('./regression-contexts')(G).collectors140;

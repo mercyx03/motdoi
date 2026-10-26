@@ -501,8 +501,10 @@
     if ($('#saveRawDrop')) $('#saveRawDrop').onclick = function () {
       ask('Bỏ bản lưu chưa mở được?', 'Game sẽ cất một bản sao vào bộ nhớ phụ (nếu còn chỗ) rồi xóa khỏi mục đang chơi dở. Nên tải về máy trước.', 'Bỏ bản lưu', function () {
         var kept = SS && SS.hold(K.cur, ins.raw, ins.status);
-        if (!kept && !confirm('Không cất được bản sao (bộ nhớ đầy hoặc bị chặn). Bỏ hẳn bản lưu này?')) return;
-        LS.del(K.cur); S.curGuard = null; toast(kept ? 'Đã cất bản sao và bỏ khỏi mục đang chơi dở.' : 'Đã bỏ bản lưu.'); renderHome();
+        var drop = function () { LS.del(K.cur); S.curGuard = null; toast(kept ? 'Đã cất bản sao và bỏ khỏi mục đang chơi dở.' : 'Đã bỏ bản lưu.'); renderHome(); };
+        if (kept) return drop();
+        // hộp xác nhận của game (trình duyệt tích hợp chặn hộp thoại xác nhận mặc định)
+        ask('Không cất được bản sao', 'Bộ nhớ đầy hoặc bị chặn nên game không cất được bản sao của bản lưu này. Nên tải về máy trước. Bỏ hẳn bản lưu?', 'Bỏ hẳn', drop, 'Giữ lại');
       });
     };
   }
