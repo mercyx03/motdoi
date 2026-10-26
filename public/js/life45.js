@@ -20,6 +20,10 @@
   function T(id, when, p, cd, max) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: p, cd: cd || 4, max: max || 1 }); }
   function stress(l, x) { if (l.mind) l.mind.stress = U.clamp(l.mind.stress + x, 0, 100); }
   function minors(l) { return (l.kids || []).filter(function (k) { return k.alive && l.age - k.born < 18; }); }
+  // Góp ý người chơi: ly hôn chỉ phân xử con của chính cuộc hôn nhân vừa kết thúc. Con riêng của cuộc trước giữ nguyên nơi ở đã thỏa thuận.
+  // Con có coParent108 khớp đúng người vừa ly hôn (theo mã quan hệ, bản lưu cũ theo tên); con chưa có thông tin người cùng nuôi chỉ được tính khi chưa từng có quyết định nơi ở.
+  function divKids(l) { var F = l.flags, id = F.divExId, n = F.divEx; return minors(l).filter(function (k) { var c = k.coParent108; if (c) return id ? c.id === id : c.name === n; return !k.custody; }); }
+  E.divorceKids = divKids;
 
   // ===================================================================
   // 1. XƯNG HÔ
@@ -101,12 +105,12 @@
   // 5. HỆ QUẢ CÁC MỐI QUAN HỆ
   // ===================================================================
   SC('quyen_nuoi_con', {
-    title: 'Quyền nuôi con', valid: function (l) { return minors(l).length > 0 && !!l.flags.divEx; },
-    text: function (l) { var ks = minors(l); return 'Ly hôn với ' + l.flags.divEx + ', còn ' + (ks.length === 1 ? 'con ' + ks[0].name + ' mới ' + (l.age - ks[0].born) + ' tuổi' : ks.length + ' đứa con nhỏ') + '. Ai sẽ nuôi con?'; },
+    title: 'Quyền nuôi con', valid: function (l) { return divKids(l).length > 0 && !!l.flags.divEx; },
+    text: function (l) { var ks = divKids(l); return 'Ly hôn với ' + l.flags.divEx + ', còn ' + (ks.length === 1 ? 'con ' + ks[0].name + ' mới ' + (l.age - ks[0].born) + ' tuổi' : ks.length + ' đứa con nhỏ') + '. Ai sẽ nuôi con?'; },
     opts: [
-      { k: 'nuoi', l: 'Giành quyền nuôi con', h: 'Một mình nuôi con, vất vả hơn', ai: { w: 1.1 }, run: function (l, r, log) { minors(l).forEach(function (k) { k.custody = 'me'; }); l.flags.single = l.age; log('Tòa giao con cho bạn nuôi. Từ nay một mình vừa đi làm vừa đưa đón con.', 'neutral'); stress(l, 8); } },
-      { k: 'ex', l: 'Để con ở với người kia, bạn cấp dưỡng hằng tháng', h: function (l) { return 'Cấp dưỡng khoảng ' + mo(l, V(l, 3)) + '/tháng mỗi con đến năm 18 tuổi'; }, ai: { w: 0.8 }, run: function (l, r, log) { minors(l).forEach(function (k) { k.custody = 'ex'; k.close = Math.max(0, (k.close || 60) - 10); }); log('Con ở với ' + l.flags.divEx + '. Bạn cấp dưỡng hằng tháng, cuối tuần đón con đi chơi.', 'neutral'); fx(l, { hap: -6 }); } },
-      { k: 'chung', l: 'Thỏa thuận cùng nuôi, con đi lại hai nhà', ai: { w: 1, soc: 1 }, run: function (l, r, log) { minors(l).forEach(function (k) { k.custody = 'both'; k.close = Math.max(0, (k.close || 60) - 4); }); log('Hai người thỏa thuận cùng nuôi con: tuần này ở nhà bố, tuần sau ở nhà mẹ. Không còn là vợ chồng nhưng vẫn là bố mẹ của con.', 'neutral'); } }
+      { k: 'nuoi', l: 'Giành quyền nuôi con', h: 'Một mình nuôi con, vất vả hơn', ai: { w: 1.1 }, run: function (l, r, log) { divKids(l).forEach(function (k) { k.custody = 'me'; }); l.flags.single = l.age; log('Tòa giao con cho bạn nuôi. Từ nay một mình vừa đi làm vừa đưa đón con.', 'neutral'); stress(l, 8); } },
+      { k: 'ex', l: 'Để con ở với người kia, bạn cấp dưỡng hằng tháng', h: function (l) { return 'Cấp dưỡng khoảng ' + mo(l, V(l, 3)) + '/tháng mỗi con đến năm 18 tuổi'; }, ai: { w: 0.8 }, run: function (l, r, log) { divKids(l).forEach(function (k) { k.custody = 'ex'; k.close = Math.max(0, (k.close || 60) - 10); }); log('Con ở với ' + l.flags.divEx + '. Bạn cấp dưỡng hằng tháng, cuối tuần đón con đi chơi.', 'neutral'); fx(l, { hap: -6 }); } },
+      { k: 'chung', l: 'Thỏa thuận cùng nuôi, con đi lại hai nhà', ai: { w: 1, soc: 1 }, run: function (l, r, log) { divKids(l).forEach(function (k) { k.custody = 'both'; k.close = Math.max(0, (k.close || 60) - 4); }); log('Hai người thỏa thuận cùng nuôi con: tuần này ở nhà bố, tuần sau ở nhà mẹ. Không còn là vợ chồng nhưng vẫn là bố mẹ của con.', 'neutral'); } }
     ]
   });
   SC('con_sau_ly_hon', {
@@ -154,7 +158,7 @@
     if (!l.alive) return;
     var F = l.flags, P = F.relPrev || {}, f = l.fam;
     // ly hôn
-    if (P.st && P.st !== 'dating' && (l.exes || 0) > (P.ex || 0) && (!l.partner || l.partner.name !== P.n)) { F.divAt = a; F.divEx = P.n; stress(l, 10); if (minors(l).length && E.DEC.quyen_nuoi_con && E.DEC.quyen_nuoi_con.valid(l, {}) && !l.pending.some(function (d) { return d.id === 'quyen_nuoi_con'; })) l.pending.push(E.DEC.quyen_nuoi_con.make(l, r)); } // đã thỏa thuận quyền nuôi con lúc ly hôn thì không hỏi lại
+    if (P.st && P.st !== 'dating' && (l.exes || 0) > (P.ex || 0) && (!l.partner || l.partner.name !== P.n)) { F.divAt = a; F.divEx = P.n; F.divExId = P.pid || null; stress(l, 10); if (divKids(l).length && E.DEC.quyen_nuoi_con && E.DEC.quyen_nuoi_con.valid(l, {}) && !l.pending.some(function (d) { return d.id === 'quyen_nuoi_con'; })) l.pending.push(E.DEC.quyen_nuoi_con.make(l, r)); } // đã thỏa thuận quyền nuôi con lúc ly hôn thì không hỏi lại
     // góa
     if (P.st && P.st !== 'dating' && (l.widowed || 0) > (P.wid || 0)) { F.widowAt = a; F.lateSpouse = P.n; (F.spouses = F.spouses || []).indexOf(P.n) < 0 && F.spouses.push(P.n); stress(l, 15); }
     // bố mẹ mất
@@ -166,7 +170,7 @@
       }
     }
     if (l.partner && l.partner.status !== 'dating') { F.spouses = F.spouses || []; if (F.spouses.indexOf(l.partner.name) < 0) F.spouses.push(l.partner.name); }
-    F.relPrev = { n: l.partner && l.partner.name, st: l.partner && l.partner.status, ex: l.exes || 0, wid: l.widowed || 0, m: !!f.mAlive, f: !!f.fAlive };
+    F.relPrev = { n: l.partner && l.partner.name, pid: l.partner && l.partner.relation108 || null, st: l.partner && l.partner.status, ex: l.exes || 0, wid: l.widowed || 0, m: !!f.mAlive, f: !!f.fAlive };
     // cấp dưỡng nuôi con
     var pay = minors(l).filter(function (k) { return k.custody === 'ex'; }).length;
     if (pay && l.indep && !inJail(l)) H.cash(l, -V(l, 36) * pay, 'Cấp dưỡng nuôi con');

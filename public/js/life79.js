@@ -20,7 +20,8 @@
     for (var i = 0; i < 5; i++) {
       var s = H.partnerSex(l, r), t = wpick(r, TYPES), age = Math.max(18, l.age + U.randint(r, -5, 5)), q = { age: age, sex: s };
       if (H.partnerJob) H.partnerJob(l, q, r);
-      var likes = []; while (likes.length < 2) { var x = U.pick(r, LIKE); if (likes.indexOf(x) < 0) likes.push(x); }
+      // Không dùng vòng lặp chờ đủ 2 sở thích khác nhau: với nguồn ngẫu nhiên lặp lại, vòng lặp đó không bao giờ dừng (treo trang).
+      var li = U.randint(r, 0, LIKE.length - 1), likes = [LIKE[li], LIKE[(li + 1 + U.randint(r, 0, LIKE.length - 2)) % LIKE.length]];
       out.push({ n: H.stranger(l, r, s), s: s, age: age, job: t === 'catfish' ? 'người mẫu ảnh' : t === 'qua_tang' ? (s === 'M' ? 'kỹ sư dầu khí ở nước ngoài' : 'bác sĩ ở nước ngoài') : q.job || 'nhân viên văn phòng', t: t, bio: U.pick(r, BIO[t]), likes: likes, km: U.randint(r, 1, t === 'qua_tang' ? 9000 : 25) });
     }
     return out;
@@ -28,7 +29,7 @@
   function card(p) { return p.n + ' · ' + p.age + ' tuổi · ' + p.job + ' · cách ' + (p.km >= 1000 ? 'rất xa' : p.km + ' km') + ' — ' + p.bio + ' Thích: ' + p.likes.join(', ') + '.'; }
   SC('app_ho_so', {
     title: function (l, d) { return d.app + ' · ' + (d.page + 1 > 1 ? 'lướt thêm' : 'gợi ý hôm nay'); },
-    prep: function (l, r, a) { var s = l.flags.appSwipe; if (!s || s.app !== (a && a.app) || (a && a.fresh)) s = l.flags.appSwipe = { app: (a && a.app) || 'Tinder', page: 0, at: l.age }; s.list = profiles(l, r); return { app: s.app, page: s.page, at: l.age }; },
+    prep: function (l, r, a) { var s = l.flags.appSwipe; if (!s || s.app !== (a && a.app) || (a && a.fresh)) s = l.flags.appSwipe = { app: (a && a.app) || 'Tinder', page: 0, at: l.age }; if (!s.list || s.listPage !== s.page || s.listAt !== l.age) { s.list = profiles(l, r); s.listPage = s.page; s.listAt = l.age; } return { app: s.app, page: s.page, at: l.age }; }, // mở lại hộp lựa chọn không đổi danh sách hồ sơ
     valid: function (l, d) { return !l.partner && l.age >= 18 && !!l.flags.appSwipe && (!d || d.at == null || d.at === l.age); },
     text: function (l, d) { var s = l.flags.appSwipe; return 'Năm hồ sơ hiện lên trên ' + d.app + ':\n' + s.list.map(function (p, i) { return (i + 1) + '. ' + card(p); }).join('\n') + '\nBạn muốn nhắn tin với ai?'; },
     opts: [0, 1, 2, 3, 4].map(function (i) {
@@ -40,7 +41,7 @@
           l.pending.unshift(E.DEC.hen_online.make(l, r, { app: s.app, s: p.s, n: p.n, t: p.t, age: p.age, job: p.job }));
         } };
     }).concat([
-      { k: 'luot', l: 'Lướt thêm 5 hồ sơ khác', req: function (l) { return !!l.flags.appSwipe && l.flags.appSwipe.page < 2; }, ai: { w: 0.4 }, run: function (l, r) { var s = l.flags.appSwipe; s.page++; l.pending.unshift(E.DEC.app_ho_so.make(l, r, { app: s.app })); } },
+      { k: 'luot', l: 'Lướt thêm 5 hồ sơ khác', req: function (l) { return !!l.flags.appSwipe && l.flags.appSwipe.page < 2; }, ai: { w: 0.4 }, run: function (l, r) { var s = l.flags.appSwipe; if (!s) return; s.page++; l.pending.unshift(E.DEC.app_ho_so.make(l, r, { app: s.app })); } },
       { k: 'thoat', l: 'Không thấy ai hợp, thoát app', ai: { w: 0.4 }, run: function (l, r, log) { var s = l.flags.appSwipe; l.flags.appSwipe = null; log('Lướt ' + (s ? s.app : 'app') + ' một lúc mà không thấy ai hợp, bạn tắt máy đi ngủ.', 'neutral'); } }
     ])
   });

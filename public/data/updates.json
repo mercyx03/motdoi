@@ -2,6 +2,27 @@
   "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
     {
+      "id": "feedback-a-family-fixes",
+      "version": "8.6.0-a",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-26T20:53:06.973Z",
+      "title": "Một Đời — Sửa lỗi con cái sau ly hôn, về nước sau du học và hẹn hò qua app",
+      "summary": "Sửa các lỗi người chơi báo về quyền nuôi con, du học, app hẹn hò; thêm bước chuẩn bị hồ sơ audition và mời bố mẹ về sống chung.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Sửa lỗi ly hôn nhiều lần: khi ly hôn, game chỉ bàn quyền nuôi những người con của chính cuộc hôn nhân đó. Con của cuộc hôn nhân trước giữ nguyên nơi ở đã thỏa thuận, không bị kéo vào tranh chấp mới.",
+        "Mục mới “Nơi ở và quyền chăm sóc của các con”: xem từng con đang sống ở đâu, ai trực tiếp chăm sóc, ai giám hộ, là con chung, con riêng hay con nuôi. Có thể đề nghị con về sống cùng, sang ở với cha/mẹ kia hoặc luân phiên hai nhà; cha/mẹ còn lại và con từ 12 tuổi có quyền đồng ý hay không.",
+        "Sửa lỗi không thể về Việt Nam khi đang du học hoặc làm việc ở nước ngoài: mục mới “Về nước / chuyển sang quốc gia khác” cho phép về quê hương hoặc chuyển sang nước khác. Nếu đang học, chương trình sẽ dừng; nếu đang theo hợp đồng, phải chịu phí chấm dứt sớm. Tiền và nhà được quy đổi, quốc tịch gốc giữ nguyên. Khi chưa đủ điều kiện, lựa chọn vẫn hiện kèm lý do.",
+        "Sửa lỗi có thể làm treo game khi lướt hồ sơ trên app hẹn hò. Mở lại hộp lựa chọn không còn làm đổi danh sách năm hồ sơ đang xem.",
+        "Audition rõ ràng hơn: chuẩn bị hồ sơ (ảnh profile, video giới thiệu năng khiếu) trước khi đăng ký; mỗi nước có một công ty tuyển chọn riêng; kết quả từng vòng hồ sơ, năng khiếu, phỏng vấn kèm lý do. Trúng tuyển thì xem hợp đồng và chuẩn bị sang nước ngoài; chưa đạt thì bổ sung hồ sơ, thử lại hoặc tự ứng tuyển trong nước. Thực tập sinh nhận tối đa 27 tuổi.",
+        "Chủ động mời bố, mẹ hoặc cả hai về sống chung, không cần chờ sự kiện. Bố mẹ có thể đồng ý hoặc từ chối tùy tuổi tác, mức tin cậy, nhà ở và hoàn cảnh; nhà cửa, tài sản của ai vẫn thuộc về người đó. Có thể để bố mẹ về lại nhà riêng."
+      ]
+    },
+    {
       "id": "gd6-integration-release",
       "version": "8.5.0-gd6",
       "releaseStatus": "packaged",
