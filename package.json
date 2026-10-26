@@ -6,6 +6,12 @@
   "scripts": {
     "dev": "node tools/serve.js",
     "test": "node tests/regression.js",
+    "test:smoke": "node tests/smoke.js",
+    "test:saves": "node tests/saves-compat.js",
+    "test:quick": "node tests/smoke.js && node tests/saves-compat.js",
+    "baseline": "node tools/baseline.js --compare",
+    "baseline:save": "node tools/baseline.js --save",
+    "fixtures:saves": "node tools/make-save-fixtures.js",
     "test:update": "node tests/update451.js && node tests/update452.js && node tests/update453.js && node tests/update454.js && node tests/update455.js && node tests/update457.js && node tests/update458.js && node tests/update459.js && node tests/update460.js && node tests/update461.js && node tests/update462.js && node tests/update463.js && node tests/update464.js && node tests/update465.js && node tests/update466.js && node tests/update470.js && node tests/update480.js && node tests/update481.js && node tests/update490.js && node tests/update4100.js && node tests/update500.js && node tests/update510.js && node tests/update511.js && node tests/update520.js && node tests/update530.js && node tests/update540.js && node tests/update550.js && node tests/update551.js && node tests/update553.js && node tests/update560.js && node tests/update651.js && node tests/update660.js && node tests/update690.js && node tests/update770.js && node tests/family830.js && node tests/update840.js && node tests/estate840.js && node tests/followups840.js && node tests/relationships841.js",
     "deploy": "node tests/regression.js && node tools/build.js && npx wrangler deploy",
     "deploy:pages": "node tests/regression.js && node tools/build.js && npx wrangler pages deploy dist --project-name mot-doi",
