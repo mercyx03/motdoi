@@ -1,6 +1,6 @@
 # Lỗi kiểm thử có sẵn trước GĐ1
 
-> **Cập nhật GĐ2.5:** mọi lỗi dưới đây đã được xử lý theo nguyên nhân gốc. Xem `docs/REGRESSION-FIXES-GD25.md`. Tài liệu này giữ lại làm lịch sử.
+> **Cập nhật GĐ2.5:** mọi lỗi dưới đây đã được xử lý theo nguyên nhân gốc. Xem `docs/REGRESSION-FIXES-GD2.5.md`. Tài liệu này giữ lại làm lịch sử.
 
 Danh sách lỗi của bộ hồi quy và các test chuyên đề, chạy trên mã **trước GĐ1** (tag `pre-gd1`, `public/` giống hệt `pre-gd0` / `3fea0d5`). GĐ1 không sửa, không xóa, không đổi kết quả mong đợi của các test này.
 
