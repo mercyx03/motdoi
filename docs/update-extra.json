@@ -1,5 +1,27 @@
 [
   {
+    "id": "save-family-fixes-oct26",
+    "publishedAt": "2026-10-26T08:56:13.394Z",
+    "title": "Lưu tiến trình an toàn hơn, gia đình nhất quán và sửa lỗi cuộc đời",
+    "summary": "Lưu tiến trình an toàn hơn: khi không lưu được, game báo rõ lý do và cho phép thử lại hoặc tải bản lưu về máy. Chỉ trở về trang chủ sau khi đã lưu thành công.",
+    "tags": [
+      "Sửa lỗi",
+      "Điều chỉnh"
+    ],
+    "details": [
+      "Lưu tiến trình an toàn hơn: khi không lưu được, game báo rõ lý do và cho phép thử lại hoặc tải bản lưu về máy. Chỉ trở về trang chủ sau khi đã lưu thành công.",
+      "Bản lưu cũ tiếp tục được hỗ trợ. Nếu bản lưu bị hỏng hoặc chưa thể mở, game giữ lại dữ liệu và cho bạn tải về, thử lại hoặc chủ động bỏ bản lưu, thay vì âm thầm ghi đè.",
+      "Đồng bộ tài khoản kiểm tra dung lượng trước khi gửi và thông báo rõ hơn khi không thể đồng bộ, thay vì bỏ qua lỗi im lặng.",
+      "Thông tin về bố mẹ, bạn đời, con cái và bạn bè nhất quán hơn giữa hồ sơ và các tình huống. Tính cách và mức độ tin tưởng được các phần liên quan sử dụng thống nhất.",
+      "Khi quay lại với người cũ hoặc bạn thân trở thành người yêu, game giữ đúng danh tính và lịch sử quan hệ. Những người trùng tên được phân biệt rõ hơn.",
+      "Sửa tuyển thẳng để giữ đúng trường đã chọn, kể cả ngành Y. Khi trượt phương án dự phòng lớp 10, có thể chọn hướng khác; chọn chờ đợt sau sẽ có cơ hội xét lại năm sau khi còn trong độ tuổi phù hợp.",
+      "Hoàn thiện các biểu mẫu đặt tên, tặng cổ phần và sáp nhập doanh nghiệp; giữ đúng phần sở hữu và sửa cách gọi người thân khi chọn người nhận cổ phần.",
+      "Nhật ký bớt lặp các khoản chăm sóc và học tập hằng năm, ghi rõ khoản chi; cách gọi vợ, chồng hoặc người bạn đời phù hợp với mối quan hệ.",
+      "Rà soát độ ổn định của chế độ Hardcore, giữ các thay đổi riêng của chế độ này tách biệt với chế độ Thường.",
+      "Sửa các trường hợp người đã mất vẫn xuất hiện như còn sống trong tin tức. Với nghề ca sĩ và cày thuê, nhật ký không ghi thêm thu nhập sau dòng qua đời."
+    ]
+  },
+  {
     "id": "release850-review",
     "publishedAt": "2026-10-24T09:14:23.651102Z",
     "title": "Hồ sơ gia đình rõ hơn, lựa chọn không còn bị bỏ qua im lặng",
