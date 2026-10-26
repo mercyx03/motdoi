@@ -1,4 +1,4 @@
-# Một Đời — GĐ3 đã triển khai, đang nghiệm thu toàn bộ (Preview)
+# Một Đời — GĐ3: HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN
 
 ## Mã nguồn và bảo vệ dữ liệu
 
@@ -68,3 +68,15 @@ Thông tin commit/push và SHA/kích thước artifact cuối sẽ được ghi 
 - `node tests/update-gd3.js` đạt trên build. Trang build qua Edge desktop/mobile, tìm kiếm/lọc/tải thêm/status và không tràn ngang/pageerror đạt.
 - Artifact và kết quả build được lưu trong commit tiếp theo trên cùng nhánh; không tạo commit rỗng, không merge main. Tên commit cuối xem lịch sử Git/biên bản chat để tránh tham chiếu hash của chính commit đang tạo.
 - **Sẵn sàng upload Production: CHƯA** (Preview, chưa regression toàn bộ và chưa kiểm binding/API thực tế). Không deploy. REVIEWS_DB phải giữ đúng database hiện hữu khi chủ dự án quyết định upload.
+
+## Chốt GĐ3 tại Claude Code — 26/10/2026
+
+Chủ dự án đổi chiến lược: không chạy lại toàn bộ regression 77 mục ở GĐ3; phần còn thiếu chuyển sang mục GĐ6 trong docs/BACKLOG.md và **không được coi là PASS**. Một lượt regression đầy đủ đã được khởi động rồi dừng theo yêu cầu trước khi nhóm nào hoàn tất; không lấy kết quả nào từ lượt đó.
+
+- Xác minh bàn giao: nhánh gd3-context-weighting, b3ada6f (mã) và cdd770f (HEAD) khớp origin; registry 1.298 DEC, manifest SHA-256 trùng GĐ2.5; đúng 50 trigger có nhãn, mỗi ID một nhóm; life143.js nạp sau mọi module đăng ký trigger. Mã gameplay không đổi sau b3ada6f.
+- Chạy lại trên mã cuối: context 4.658 kiểm tra đạt; smoke 11/11 (1 cảnh báo đã biết về life.id theo giờ thật); saves-compat 10/10; save-safety 10/10; NPC 14/14; updates-history126, update-gd3 và update-release (126 kiểm tra) đạt. Số regression 404.591 và hiệu năng +2,80% là số liệu Codex trên cùng mã gameplay, không đo lại.
+- Changelog: dòng trạng thái “đang được chuẩn bị… chưa phải ngày ra mắt” bị viết cứng trong nội dung sẽ còn lại sau khi phát hành; đã chuyển trạng thái sang giao diện (packaged → “Bản chuẩn bị · chưa phát hành”, released → “Đã phát hành” + releasedAt; ô “Mới nhất” bỏ qua mục chưa phát hành). 7 dòng nội dung thay đổi giữ nguyên; 91 mục cũ không đổi. Thêm tools/release-update.js (bắt buộc ngày thực tế có múi giờ, chặn ngày tương lai) và tests/update-release.js; package:cloudflare in danh sách mục chưa phát hành. Quy trình trong UPDATE-NOTES-POLICY.md áp dụng cho GĐ4 trở đi.
+- Production motdoi.site (chỉ đọc data/updates.json): 91 mục, chưa có GĐ3, không có mục chưa phát hành bị lộ.
+- Build: npm run package:cloudflare PASS; dist và dist.zip duy nhất tại C:/Users/bluef/Downloads/motdoi/motdoi/motdoi/motdoi-main. 28 file, ZIP 2.304.574 byte, SHA-256 bed87369686361ea34ea9b5ff06681e92957eb94ef1d9bb519654572d6265ccd; tên và nội dung 28 entry khớp dist, index.html ở gốc, có _worker.js/_routes.json/_headers/.well-known. Worker tham chiếu REVIEWS_DB; binding nằm ở Pages, không trong ZIP. Trang Cập nhật bản build kiểm trên trình duyệt 1280 và 375 px: không tràn ngang, không lỗi console.
+- Script ngoài repo C:/Users/bluef/Downloads/motdoi/motdoi/motdoi/publish-dist.ps1 trỏ tới đường dẫn cũ motdoi/motdoi-main và push main: đây là nguồn lệch đường dẫn; không chạy.
+- Sẵn sàng upload Production: chủ dự án quyết định. Trước khi upload chạy tools/release-update.js với thời điểm thực tế rồi đóng gói lại; nếu không, trang sẽ ghi “chưa phát hành”.

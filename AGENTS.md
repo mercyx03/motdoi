@@ -61,3 +61,11 @@ Không báo thành công nếu chưa thực hiện thật. Nếu chưa hoàn t�
 ## Nhật ký người chơi từ GĐ3 trở đi
 
 Áp dụng GĐ3–GĐ6 và 25 hệ thống chuyên sâu: sau mỗi nâng cấp hoàn thành, viết nhật ký tiếng Việt dễ hiểu, thân thiện với người chơi; tách báo cáo kỹ thuật khỏi nội dung công bố. Đặt mục mới nhất trước, giữ nguyên lịch sử. Mỗi mục mới ghi phiên bản, thời điểm có múi giờ và trạng thái: bản đóng gói chưa phải đã phát hành. Chỉ ghi ngày phát hành thực tế khi chủ dự án xác nhận upload. Đồng bộ docs/update-extra.json và public/data/updates.json; xác minh dữ liệu và HTML trong dist/ZIP, giao diện điện thoại/máy tính. Nhật ký tĩnh không dùng D1; không sửa database Production để công bố.
+
+## Chiến lược kiểm thử GĐ4–GĐ5 (chủ dự án quyết định 26/10/2026)
+
+- Mỗi giai đoạn chỉ chạy: test chuyên đề của phần mới, smoke, tương thích bản lưu (saves, save-safety, NPC nếu liên quan) và regression của những mục/hệ thống bị ảnh hưởng. Không chạy toàn bộ regression sau mỗi thay đổi.
+- Không có lỗi nghiêm trọng thì kết thúc giai đoạn với trạng thái “HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN”, ghi phần kiểm thử còn thiếu vào mục GĐ6 của docs/BACKLOG.md. Không tuyên bố phần chưa chạy là PASS; nhóm bị dừng/timeout không tính đạt.
+- GĐ6 dành cho nghiệm thu tổng thể và regression đầy đủ trên mã cuối.
+- Mỗi giai đoạn vẫn phải cập nhật Changelog (trạng thái packaged), commit, push nhánh và build dist/dist.zip. Không tự deploy Production.
+- Khi chủ dự án xác nhận đã/đang upload Production: chạy node tools/release-update.js <id> --released-at <thời điểm thực tế có múi giờ>, đóng gói lại, commit. Không tự điền ngày.

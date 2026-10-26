@@ -81,6 +81,8 @@ try {
     Write-Output "dist: $dist"
     Write-Output "zip: $zip"
     Write-Output 'Local build verified. Production readiness also requires phase acceptance and Pages REVIEWS_DB binding verification.'
+    # Update notes keep their packaged label until the owner records the real upload time (docs/UPDATE-NOTES-POLICY.md).
+    Run-Node @('tools/release-update.js')
 } catch {
     if ($promoted) {
         Remove-WorkspaceDirectory $dist
