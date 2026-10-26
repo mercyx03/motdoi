@@ -1,5 +1,25 @@
 [
   {
+    "id": "feedback-c-elite-life",
+    "version": "8.6.0-c",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-26T21:32:54.336Z",
+    "title": "Một Đời — Đời sống thượng lưu: tiệc tùng, thương vụ, gia tộc và bộ sưu tập",
+    "summary": "Cuộc sống thay đổi theo tầng lớp; tự tổ chức tiệc, bàn thương vụ với người quen, điều hành gia tộc, trải nghiệm xa xỉ và sưu tầm đồ quý có giá trị lên xuống.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Tầng lớp xã hội (Bình dân, Khá giả, Giàu có, Thượng lưu, Siêu giàu) được xét theo tài sản so với mức sống nơi bạn ở, danh tiếng và việc có tập đoàn riêng. Nhiều trải nghiệm chỉ xuất hiện khi đủ tầng lớp và đúng thời kỳ.",
+      "Mục mới “Tổ chức tiệc”: chọn loại tiệc (sinh nhật, tân gia, kỷ niệm ngày cưới, gặp gỡ đối tác, dạ tiệc từ thiện), quy mô, địa điểm (nhà riêng, sân vườn, nhà hàng, khách sạn, du thuyền, đảo riêng) và khách mời. Người thân, bạn bè, đối tác, người nổi tiếng có thể nhận lời hoặc từ chối. Tiệc thành công giúp tăng uy tín và quen người mới; tiệc quá tốn kém so với tài sản dễ bị bàn tán.",
+      "Mục mới “Thương vụ hợp tác”: bàn góp vốn dự án, hợp tác phân phối, liên doanh bất động sản, rót vốn khởi nghiệp với những người bạn đã quen. Đối tác có thể từ chối; thương vụ kéo dài nhiều năm, có thể lãi, lỗ hoặc gặp đối tác thiếu trung thực. Khi đó bạn có thể khởi kiện, thương lượng hoặc bỏ qua. Có thể thuê kiểm toán hoặc rút vốn sớm.",
+      "Người quen ở tiệc, sân golf hay buổi ký hợp đồng là cùng một nhân vật xuyên suốt: họ nhớ những lần gặp, già đi theo năm tháng và có thể qua đời. Tất cả đều là nhân vật hư cấu.",
+      "Mục mới “Người đứng đầu gia tộc”: họp gia đình, cấp hoặc thu hồi hỗ trợ nhà ở, quỹ học tập, phụ cấp; hỗ trợ tài chính một lần; giải quyết mâu thuẫn giữa người thân; mở nhanh mục bổ nhiệm và chọn người kế nhiệm. Bạn chỉ quyết được trên tiền và cổ phần của mình; người thân có thể từ chối, và mâu thuẫn để lâu sẽ căng thẳng hơn.",
+      "Mục mới “Trải nghiệm thượng lưu” (golf, đua ngựa, dạ tiệc gala, lái siêu xe trên trường đua, du thuyền, máy bay riêng, đảo riêng) và “Sưu tầm và tài sản xa xỉ” (đồng hồ, tranh, bình cổ, xe cổ, tác phẩm nghệ thuật, du thuyền, máy bay, đảo). Giá trị thay đổi theo năm; có thể bán đấu giá hoặc tặng người thân. Món đã tặng thuộc về người nhận; du thuyền, máy bay, đảo tốn phí duy trì."
+    ]
+  },
+  {
     "id": "feedback-b-profiles-menus",
     "version": "8.6.0-b",
     "releaseStatus": "packaged",

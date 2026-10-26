@@ -28,14 +28,18 @@ Kiểm thử mốc B: feedback-b 616 · browser-feedback-b (Chrome headless qua 
 
 ## Mốc C — Giới thượng lưu, gia tộc, tập đoàn
 
-| Yêu cầu | Trạng thái |
-|---|---|
-| C1 Phân tầng đời sống theo tài sản / địa vị | CHƯA HOÀN THÀNH |
-| C2 Tổ chức tiệc | CHƯA HOÀN THÀNH |
-| C3 Thương vụ hợp tác | CHƯA HOÀN THÀNH |
-| C4 NPC liên kết xuyên sự kiện | CHƯA HOÀN THÀNH |
-| C5 Người đứng đầu gia tộc | CHƯA HOÀN THÀNH |
-| C6 Trải nghiệm thượng lưu, sưu tầm | CHƯA HOÀN THÀNH |
+| Yêu cầu | Trạng thái | Module | Test | Ghi chú |
+|---|---|---|---|---|
+| C1 Phân tầng đời sống | HOÀN THÀNH | life148 (`tier`) | feedback-c | Tài sản ròng / `l.base` (mức sống từng nước) + tập đoàn / danh tiếng. Trải nghiệm, quy mô tiệc, địa điểm, sưu tầm khóa theo tầng và theo năm xuất hiện dịch vụ (ở Việt Nam muộn hơn). |
+| C2 Tổ chức tiệc | HOÀN THÀNH | life148 (`party148` → `_plan` → `_guests`) | feedback-c, browser-feedback-menus | 5 loại, 4 quy mô, 6 địa điểm, 4 nhóm khách. Từng khách nhận lời / từ chối theo thân thiết, khoảng cách, mâu thuẫn, chênh lệch tầng lớp. Kết quả: uy tín, thân thiết, người quen mới, bị chê phô trương, sự cố. Tối đa 2 tiệc/năm, mỗi loại 1 lần. |
+| C3 Thương vụ hợp tác | HOÀN THÀNH | life148 (`deal148`, `_terms`, `_track`, `dealYear`) | feedback-c, browser-feedback-menus | Xét tin cậy, uy tín, năng lực, quy mô so với đối tác. Kéo dài 2–4 năm; lãi bị chặn ≤ 2,5 lần vốn; thất bại; đối tác thiếu trung thực → tranh chấp → kiện (1–2 năm) / hòa giải / bỏ qua. Tối đa 3 thương vụ mở. |
+| C4 NPC liên kết xuyên sự kiện | HOÀN THÀNH | life148 (`people`, `meet`, `seen`, `label`) | feedback-c | Mã `uid110` cố định; lịch sử gặp; tính cách ẩn độc lập với giàu nghèo / nghề; già đi, qua đời; người mất không còn trong menu; trùng tên có nhãn năm sinh; tối đa 60 người, không xóa đối tác đang làm ăn. Mốc D dùng tiếp cho giới thiệu con. |
+| C5 Người đứng đầu gia tộc | HOÀN THÀNH | life148 (`familyHead148`, `_member`, `_conflict`, `familyYear`) | feedback-c, browser-feedback-menus | Họp gia đình, quyền lợi hằng năm (chi từ tiền của bạn), hỗ trợ một lần, mâu thuẫn sinh từ chức vụ / quyền lợi chênh lệch và leo thang theo năm; bổ nhiệm qua menu doanh nghiệp sẵn có (chỉ công ty > 50%); kế nhiệm qua `childrenSuccession139`; di chúc nối ở mốc E. Không đụng tài sản riêng người thân. |
+| C6 Trải nghiệm thượng lưu, sưu tầm | HOÀN THÀNH | life148 (`elite148`, `collect148`, sổ `items`) | feedback-c, browser-feedback-menus | 7 trải nghiệm; 8 loại tài sản; giá trị biến động, phí duy trì, bán gấp khi thiếu tiền; tặng đổi chủ; chỉ món của bạn tính vào tài sản ròng; quy đổi khi đổi tiền tệ. Thừa kế đồ sưu tầm hoàn thiện ở mốc E. |
+
+Kiểm thử mốc C: feedback-c 82 · browser-feedback-menus c (5 chuỗi × 2 kích thước) · feedback-a/b · smoke · saves-compat · save-safety · NPC · business137/143 · family129/830 · expansion842 · integration-gd6 · heir-family770 · estate840 · inheritance-currency117 · debt140 · pace-gd5 · chains-gd4. Ghi chú: estate840 đếm 133 thay vì 135 kiểm tra vì các kiểm tra có điều kiện sau một ván tự chơi; thêm mục hành động làm thay đổi đường đi ngẫu nhiên (đã xác minh bằng cách bỏ life148 thì về 135), không có kiểm tra nào thất bại.
+
+Giới hạn: các mục mới là hành động người chơi chủ động; chế độ Tự động không tự tổ chức tiệc / ký thương vụ (vòng năm vẫn xử lý thương vụ, quyền lợi, mâu thuẫn, giá trị tài sản trong cả hai chế độ).
 
 ## Mốc D — Quan hệ xã hội, người nổi tiếng, hôn nhân
 
@@ -60,4 +64,5 @@ Kiểm thử mốc B: feedback-b 616 · browser-feedback-b (Chrome headless qua 
 ## Checkpoint
 
 - Mốc A: commit `bab7317` (`feat(feedback-a)`).
-- Mốc B: commit xem lịch sử nhánh (`feat(feedback-b)`).
+- Mốc B: commit `07fe3c4` (`feat(feedback-b)`).
+- Mốc C: commit xem lịch sử nhánh (`feat(feedback-c)`).
