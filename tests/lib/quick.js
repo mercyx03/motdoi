@@ -16,7 +16,8 @@ function testClock() {
   const M = Object.create(Math);
   M.random = function () { s = (s + 0x6D2B79F5) >>> 0; let x = s; x = Math.imul(x ^ x >>> 15, x | 1); x ^= x + Math.imul(x ^ x >>> 7, x | 61); return ((x ^ x >>> 14) >>> 0) / 4294967296; };
   class D extends Date { constructor(...a) { if (a.length) super(...a); else super(now++); } static now() { return now++; } }
-  return { Math: M, Date: D };
+  // reset(): đưa đồng hồ về điểm xuất phát, để một cuộc đời tạo sau reset() luôn giống nhau dù trước đó đã chạy gì
+  return { Math: M, Date: D, reset() { now = FIXED_NOW; s = 20261026 >>> 0; } };
 }
 function loadGame(opt) {
   const clock = opt && opt.realClock ? { Math, Date } : testClock();
@@ -24,6 +25,7 @@ function loadGame(opt) {
   ctx.globalThis = ctx; vm.createContext(ctx);
   const files = [...fs.readFileSync(path.join(PUB, 'index.html'), 'utf8').matchAll(/<script src="(js\/[^"?]+)/g)].map(m => m[1]).filter(f => !UI_ONLY.includes(f));
   for (const f of files) vm.runInContext(fs.readFileSync(path.join(PUB, f), 'utf8'), ctx, { filename: f });
+  if (clock.reset) Object.defineProperty(ctx.G, 'testClock', { value: clock, enumerable: false });
   return ctx.G;
 }
 // Một năm giống app.js / E.runHeadless: beginYear → lựa chọn → finishYear → lựa chọn phát sinh trong năm → endYear.

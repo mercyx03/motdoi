@@ -6,9 +6,11 @@
   function $$(s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); }
 
   // ---------- lưu trữ cục bộ (an toàn khi bị chặn) ----------
+  // G.SaveStore (save-store.js): bản JSON hỏng được giữ lại trước khi có thể bị ghi đè, lỗi ghi được phân loại và ghi nhận.
+  var SS = G.SaveStore;
   var LS = {
-    get: function (k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } },
+    get: function (k, d) { if (SS) { var r = SS.read(k); return r.status === 'ok' && r.value != null ? r.value : d; } try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set: function (k, v) { if (SS) return SS.write(k, v).ok; try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } },
     del: function (k) { try { localStorage.removeItem(k); } catch (e) { /* bỏ qua */ } }
   };
   // giữ nguyên khóa lưu trữ từ bản 1.0 để người chơi không mất dữ liệu
@@ -248,15 +250,18 @@
 
   function renderHome() {
     syncSetupUI(); fillSelects(); renderProfile();
-    var cur = LS.get(K.cur, null);
     var rb = $('#resumeBox');
-    if (cur && cur.life && cur.life.alive) {
-      var l = migrate(cur.life);
+    // Kiểm tra bản đang chơi dở trên bản sao: hỏng / cấu trúc mới hơn / nâng cấp lỗi thì báo, giữ nguyên dữ liệu, không ghi đè.
+    var ins = SS ? SS.inspect(K.cur, E, migrate) : (function () { var c = LS.get(K.cur, null); try { return c && c.life && c.life.alive ? { status: 'ok', save: c, life: migrate(c.life) } : { status: 'empty' }; } catch (e) { return { status: 'migrate', error: e }; } })();
+    S.curGuard = ins.raw && /^(corrupt|invalid|future|migrate)$/.test(ins.status) ? { raw: ins.raw, reason: ins.status } : null;
+    if (ins.status === 'ok') {
+      var l = ins.life, cur = ins.save;
       rb.innerHTML = '<div class="card resume"><div><b>Bạn đang sống dở cuộc đời của ' + esc(l.name) + '</b><div class="muted small">' + ageStr(l.age) + ' · ' + esc(E.placeText(l)) + '</div></div>' +
         '<div style="display:flex;gap:8px"><button class="btn primary" id="resumeBtn">Tiếp tục sống</button><button class="btn" id="dropBtn">Bỏ</button></div></div>';
       $('#resumeBtn').onclick = function () { resumeLife(cur); };
       $('#dropBtn').onclick = function () { ask('Bỏ cuộc đời đang sống dở?', 'Tiến trình sẽ bị xóa, không thể hoàn tác.', 'Bỏ cuộc đời này', function () { LS.del(K.cur); renderHome(); }); };
-    } else rb.innerHTML = '';
+    } else if (/^(corrupt|invalid|future|migrate|blocked)$/.test(ins.status)) renderSaveProblem(rb, ins);
+    else rb.innerHTML = '';
     var rec = LS.get(K.recent, []);
     $('#recentSection').classList.toggle('hidden', !rec.length);
     $('#recentList').innerHTML = rec.map(recentCard).join('');
@@ -444,12 +449,69 @@
 
   function memorialLabels(l){return {where:memWhere(l),years:lifeYears(l),summary:E.obituary(l)};}
   function saveCompletedLife(l,stages){return G.MemorialHistory&&G.MemorialHistory.save(l,stages,S.cohort,LS,memorialLabels(l));}
-  function persist() { if(S.life&&!S.life.alive&&saveCompletedLife(S.life)){LS.del(K.cur);if(G.Account)G.Account.autoSync();return;} if (S.life) LS.set(K.cur, { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto, at: Date.now() }); }
+  // Trả về true khi tiến trình đã nằm trong bộ nhớ trình duyệt. Thất bại: bản lưu trước vẫn giữ nguyên, người chơi được báo và có thể thử lại / tải về.
+  function persist() {
+    if(S.life&&!S.life.alive&&saveCompletedLife(S.life)){LS.del(K.cur);saveOk();if(G.Account)G.Account.autoSync();return true;}
+    if (!S.life) return true;
+    // còn một bản lưu cũ không mở được: chỉ ghi đè khi đã cất được bản đó sang khóa phụ để còn tải về
+    if (S.curGuard) { if (SS && SS.hold(K.cur, S.curGuard.raw, S.curGuard.reason)) S.curGuard = null; else return saveFailed({ code: 'HELD' }); }
+    var data = { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto, at: Date.now() };
+    var r = SS ? SS.write(K.cur, data) : { ok: LS.set(K.cur, data), code: 'WRITE' };
+    return r.ok ? saveOk(r) : saveFailed(r);
+  }
+  function saveOk(r) {
+    if (S.saveFail) { S.saveFail = null; var w = document.getElementById('saveWarn'); if (w) w.remove(); toast('Đã lưu được tiến trình.'); }
+    if (r && r.large && !S.largeWarned) { S.largeWarned = true; toast('Bản lưu đang khá lớn (' + Math.round(r.chars / 1024) + ' KB). Game vẫn lưu bình thường.'); }
+    return true;
+  }
+  function saveFailed(r) {
+    var first = !S.saveFail || S.saveFail.code !== r.code;
+    S.saveFail = { code: r.code, at: Date.now() };
+    if (r.code === 'HELD' && SS) SS.logError('persist', 'HELD', 'Bản lưu cũ không mở được và chưa cất được sang khóa phụ');
+    var w = document.getElementById('saveWarn');
+    if (!w) { w = document.createElement('div'); w.id = 'saveWarn'; w.className = 'save-warn'; w.setAttribute('role', 'alert'); document.body.appendChild(w); }
+    w.innerHTML = '<div><b>Chưa lưu được.</b> ' + esc(SS ? SS.message(r.code) : 'Không ghi được dữ liệu vào trình duyệt.') + ' Bản lưu trước đó vẫn còn nguyên.</div>' +
+      '<div class="save-warn-btns"><button class="btn sm" id="saveRetry">Thử lưu lại</button>' + (S.life ? '<button class="btn sm" id="saveExport">Tải bản lưu về máy</button>' : '') + '<button class="btn ghost sm" id="saveHide" aria-label="Ẩn cảnh báo">Ẩn</button></div>';
+    $('#saveRetry', w).onclick = function () { if (persist()) toast('Đã lưu được tiến trình.'); };
+    if ($('#saveExport', w)) $('#saveExport', w).onclick = function () { exportSave(); };
+    $('#saveHide', w).onclick = function () { w.remove(); };
+    if (first) toast('Chưa lưu được tiến trình — xem cảnh báo phía dưới.');
+    return false;
+  }
+  // Tải dữ liệu về máy dưới dạng tệp .json (không dùng bộ nhớ trình duyệt)
+  function download(name, text) {
+    try { var a = document.createElement('a'), url = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.href = url; a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000); return true; }
+    catch (e) { toast('Trình duyệt không cho tải tệp về.'); return false; }
+  }
+  function fileName(base) { return 'mot-doi-' + String(base || 'ban-luu').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase() + '-' + new Date().toISOString().slice(0, 10) + '.json'; }
+  function exportSave() {
+    if (!S.life) return false;
+    var text; try { text = JSON.stringify({ storageKey: K.cur, exportedAt: Date.now(), version: G.VERSION, save: { life: S.life, cohort: S.cohort, speed: S.speed, auto: S.auto, at: Date.now() } }); }
+    catch (e) { toast('Không đóng gói được dữ liệu để tải về.'); return false; }
+    return download(fileName(S.life.name + '-' + S.life.age + 'tuoi'), text);
+  }
+  // Bản lưu không mở được: giữ nguyên, cho tải nguyên văn về, thử lại hoặc chủ động bỏ.
+  function renderSaveProblem(rb, ins) {
+    var why = { corrupt: 'Dữ liệu bản lưu bị hỏng (không đọc được JSON).', invalid: 'Bản lưu thiếu thông tin cơ bản của nhân vật.', migrate: 'Không nâng cấp được bản lưu lên phiên bản game hiện tại.', blocked: 'Trình duyệt đang chặn bộ nhớ cục bộ nên không đọc / lưu được tiến trình.',
+      future: 'Bản lưu được tạo bởi phiên bản game mới hơn (cấu trúc dữ liệu v' + ins.sv + ', bản này hỗ trợ tới v' + ins.max + '). Hãy tải lại trang (Ctrl+F5) để cập nhật game rồi mở lại.' }[ins.status];
+    rb.innerHTML = '<div class="card resume save-problem"><div><b>Chưa mở được cuộc đời đang chơi dở</b><div class="muted small">' + esc(why) + (ins.raw ? ' Dữ liệu vẫn được giữ nguyên trên máy này.' : '') + '</div></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' + (ins.raw ? '<button class="btn" id="saveRawExport">Tải bản lưu về máy</button>' : '') + '<button class="btn" id="saveRetryOpen">Thử lại</button>' + (ins.raw ? '<button class="btn ghost" id="saveRawDrop">Bỏ bản lưu này</button>' : '') + '</div></div>';
+    if ($('#saveRawExport')) $('#saveRawExport').onclick = function () { download(fileName('ban-luu-chua-mo-duoc'), ins.raw); };
+    $('#saveRetryOpen').onclick = function () { renderHome(); };
+    if ($('#saveRawDrop')) $('#saveRawDrop').onclick = function () {
+      ask('Bỏ bản lưu chưa mở được?', 'Game sẽ cất một bản sao vào bộ nhớ phụ (nếu còn chỗ) rồi xóa khỏi mục đang chơi dở. Nên tải về máy trước.', 'Bỏ bản lưu', function () {
+        var kept = SS && SS.hold(K.cur, ins.raw, ins.status);
+        if (!kept && !confirm('Không cất được bản sao (bộ nhớ đầy hoặc bị chặn). Bỏ hẳn bản lưu này?')) return;
+        LS.del(K.cur); S.curGuard = null; toast(kept ? 'Đã cất bản sao và bỏ khỏi mục đang chơi dở.' : 'Đã bỏ bản lưu.'); renderHome();
+      });
+    };
+  }
   // v6.9: cho phần tài khoản biết người chơi đang ở giữa một đời (không ghi đè) và làm mới trang chủ sau khi đồng bộ
   window.G.App = { inLife: function () { var el = document.getElementById('life'); return !!(S.life && S.life.alive && el && el.classList.contains('active')); }, refresh: function () { var h = document.getElementById('home'); if (h && h.classList.contains('active')) renderHome(); } };
 
   function resumeLife(cur) {
-    S.life = migrate(cur.life); S.cohort = cur.cohort || []; S.speed = cur.speed || 1; S.auto = !!cur.auto; S.skipping = false; S.paused = false;
+    var life; try { life = migrate(JSON.parse(JSON.stringify(cur.life))); } catch (e) { if (SS) SS.logError('resume', e && e.code || 'MIGRATE', e && e.message); toast('Chưa mở được bản lưu này; dữ liệu vẫn được giữ nguyên.'); renderHome(); return; }
+    S.life = life; S.cohort = cur.cohort || []; S.speed = cur.speed || 1; S.auto = !!cur.auto; S.skipping = false; S.paused = false;
     enterLife();
     toast('Tiếp tục cuộc đời của ' + S.life.name);
   }
@@ -587,14 +649,14 @@
   $('#autoBtn').onclick = function () { S.auto = !S.auto; persist(); renderTopbar(); if (S.auto) toast('Chế độ tự động: AI quyết định theo tính cách nhân vật'); };
   $('#exitBtn').onclick = function () {
     var was = S.paused; S.paused = true; renderTopbar();
-    modal('<div class="agep">Rời đi</div><h2>Rời khỏi cuộc đời này?</h2><p>Tiến trình đã được lưu trên trình duyệt. Bạn có thể quay lại sống tiếp bất cứ lúc nào.</p>' +
+    modal('<div class="agep">Rời đi</div><h2>Rời khỏi cuộc đời này?</h2><p>' + (S.saveFail ? 'Lần lưu gần nhất chưa thành công. Chọn “Lưu &amp; về trang chủ” để thử lưu lại; nếu vẫn lỗi, bạn sẽ ở lại để tải bản lưu về máy.' : 'Tiến trình được lưu trên trình duyệt. Bạn có thể quay lại sống tiếp bất cứ lúc nào.') + '</p>' +
       '<div class="opts"><button class="opt" data-x="save"><b>Lưu & về trang chủ</b></button><button class="opt" data-x="stay"><b>Ở lại</b></button><button class="opt" data-x="drop"><b>Bỏ cuộc đời này</b><span>Xóa tiến trình, không thể hoàn tác</span></button></div>',
       function (box) {
         $$('[data-x]', box).forEach(function (b) {
           b.onclick = function () {
             var x = b.dataset.x; closeModal();
             if (x === 'stay') { S.paused = was; renderTopbar(); return; }
-            if (x === 'save') persist(); else LS.del(K.cur);
+            if (x === 'save') { if (!persist()) { S.paused = true; renderTopbar(); return; } } else LS.del(K.cur); // chưa lưu được thì ở lại, không bỏ tiến trình
             S.phase = 'idle'; S.life = null; document.body.classList.remove('inlife'); show('home');
           };
         });
@@ -941,7 +1003,7 @@
       }).join('') + '</div>' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
     if(S.life.flags.expansion110 && S.life.flags.expansion110.livingParent && LS.get('mkn.branch112',null)) {
       var back112=document.createElement('button');back112.className='btn ghost sm';back112.id='returnParent112';back112.textContent='Quay lại bản lưu đời cha/mẹ';p.appendChild(back112);
-      back112.onclick=function(){ask('Quay lại đời cha/mẹ','Đời con hiện tại được giữ riêng; bản cha/mẹ tiếp tục từ thời điểm bạn chuyển góc nhìn.','Quay lại',function(){var b=LS.get('mkn.branch112',null);if(!b||!b.life)return;LS.set('mkn.childBranch112',{life:S.life,cohort:S.cohort,speed:S.speed,auto:S.auto});S.life=E.migrate?E.migrate(b.life):b.life;S.cohort=b.cohort||[];S.speed=b.speed||1;S.auto=false;S.preview=null;closeModal();persist();enterLife();},'Ở lại đời con');};
+      back112.onclick=function(){ask('Quay lại đời cha/mẹ','Đời con hiện tại được giữ riêng; bản cha/mẹ tiếp tục từ thời điểm bạn chuyển góc nhìn.','Quay lại',function(){var b=LS.get('mkn.branch112',null);if(!b||!b.life)return;var parentLife;try{parentLife=E.migrate?E.migrate(b.life):b.life;}catch(e){if(SS)SS.logError('branch112',e&&e.code||'MIGRATE',e&&e.message);toast('Chưa mở được bản lưu đời cha/mẹ; đời con vẫn giữ nguyên.');return;}if(!LS.set('mkn.childBranch112',{life:S.life,cohort:S.cohort,speed:S.speed,auto:S.auto})){toast('Chưa lưu được đời con nên chưa chuyển về đời cha/mẹ. Hãy giải phóng bộ nhớ hoặc tải bản lưu về máy.');return;}S.life=parentLife;S.cohort=b.cohort||[];S.speed=b.speed||1;S.auto=false;S.preview=null;closeModal();persist();enterLife();},'Ở lại đời con');};
     }
     $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); if (S.actG && !S.paused && S.phase !== 'dead') { S.paused = true; S.actPause = true; renderTopbar(); toast('Đã tạm dừng để bạn chọn việc — bấm Tiếp tục khi xong'); } else if (!S.actG && S.actPause) { S.actPause = false; S.paused = false; S.last = performance.now(); renderTopbar(); } renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });

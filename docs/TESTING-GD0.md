@@ -8,7 +8,8 @@ GĐ0 chỉ thêm công cụ kiểm thử. Không đổi gameplay, giao diện, c
 |---|---|---|
 | `npm run test:smoke` | ~15 giây | sau mỗi lần sửa |
 | `npm run test:saves` | ~5 giây | sau mỗi lần đụng tới dữ liệu lưu, `migrate`, `createLife` |
-| `npm run test:quick` | ~20 giây | gộp hai lệnh trên |
+| `npm run test:save-safety` | ~10 giây | phiên bản cấu trúc, lưu thất bại, JSON hỏng, đồng bộ tài khoản (GĐ1, xem `docs/SAVE-FORMAT.md`) |
+| `npm run test:quick` | ~30 giây | gộp ba lệnh trên |
 | `npm run baseline` | ~20 giây | so chỉ số gameplay với `tests/fixtures/baseline.json` (chỉ báo chênh lệch) |
 | `npm test` | 1–2 giờ | trước khi phát hành (bộ hồi quy đầy đủ) |
 
