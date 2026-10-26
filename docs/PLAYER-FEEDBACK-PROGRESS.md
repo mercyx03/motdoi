@@ -17,12 +17,14 @@ Kiểm thử mốc A: feedback-a 39 · smoke 11/11 · saves-compat 10/10 · save
 
 ## Mốc B — Đồng bộ dữ liệu và tinh gọn giao diện
 
-| Yêu cầu | Trạng thái |
-|---|---|
-| B1 Nghề nghiệp / thu nhập NPC thống nhất | CHƯA HOÀN THÀNH |
-| B2 Hồ sơ con cái chi tiết | CHƯA HOÀN THÀNH |
-| B3 Menu Gia đình & tình cảm 5 nhóm | CHƯA HOÀN THÀNH |
-| B4 Menu Tiền bạc & tài sản 5 nhóm | CHƯA HOÀN THÀNH |
+| Yêu cầu | Trạng thái | Module | Test | Ghi chú |
+|---|---|---|---|---|
+| B1 Nghề nghiệp / thu nhập NPC thống nhất | HOÀN THÀNH | life147 (`E.CAREER147`, bọc `E.kidTitle` / `E.kidIncome`) | feedback-b | Nguồn duy nhất là `roles[*].personId` của công ty / tập đoàn (life133, life137), so theo mã định danh nên người trùng tên không bị gán nhầm. Bổ nhiệm có hiệu lực ngay; lương công ty thay cho lương nghề cũ (không cộng đôi); nghề cũ đứng yên và được khôi phục khi miễn nhiệm. Áp dụng con, vợ/chồng; anh chị em chỉ hiển thị chức vụ. |
+| B2 Hồ sơ con cái chi tiết | HOÀN THÀNH | life147 (`E.CHILD147`), app.js trang hồ sơ | feedback-b, browser-feedback-b | Sức khỏe, dị ứng, lớp, học lực, hạnh kiểm, thành tích; thân thiết với người chơi, cha/mẹ còn lại, cha/mẹ kế, từng anh chị em, ông bà; tiết kiệm, trợ cấp, quà, tài sản riêng, thừa kế; kỷ niệm. Dữ liệu chưa có (dị ứng, độ thân với người khác) tạo một lần theo danh tính và lưu `profile147`. Mục tài sản riêng / thừa kế sẽ có dữ liệu từ mốc D–E. |
+| B3 Menu Gia đình & tình cảm 5 nhóm | HOÀN THÀNH | life147 (`E.MENU147`), app.js `renderActions` | feedback-b, browser-feedback-b | Nhóm lớn → nhóm con → danh sách; nút quay lại; ghi nhớ nhóm con. Hành động không đổi ý nghĩa; nhóm "Gia đình & bạn bè" (bạn bè, về nước sống) giữ nguyên. |
+| B4 Menu Tiền bạc & tài sản 5 nhóm | HOÀN THÀNH | như trên | feedback-b, browser-feedback-b | "Chi tiêu & sinh hoạt" chứa chi tiêu định kỳ và lối tắt các việc tiêu tiền như mục Chi tiêu cũ. Thử 390px và 1280px, không tràn ngang, không lỗi JavaScript. |
+
+Kiểm thử mốc B: feedback-b 616 · browser-feedback-b (Chrome headless qua `tests/lib/cdp.js`, 2 kích thước) · feedback-a 39 · smoke · saves-compat · save-safety 10/10 · NPC 14/14 · business128/133/137/143, business-ui137 · children141 · family104/126/129/130/830 · expansion842 · budget-ui126 · integration-gd6 30 · relationships841 · heir-family770 · estate840. Kiểm thử trình duyệt phát hiện và đã sửa một lỗi giao diện (nút nhóm con không gắn sự kiện) trước khi commit.
 
 ## Mốc C — Giới thượng lưu, gia tộc, tập đoàn
 
@@ -57,4 +59,5 @@ Kiểm thử mốc A: feedback-a 39 · smoke 11/11 · saves-compat 10/10 · save
 
 ## Checkpoint
 
-- Mốc A: commit xem lịch sử nhánh (thông điệp `feat(feedback-a)`).
+- Mốc A: commit `bab7317` (`feat(feedback-a)`).
+- Mốc B: commit xem lịch sử nhánh (`feat(feedback-b)`).

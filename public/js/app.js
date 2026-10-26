@@ -881,7 +881,7 @@
       var ka = a - k.born, info = '';
       if (k.alive) {
         if (k.jail && ka < k.jail) info = ' · đang thụ án';
-        else if (k.job) info = ' · ' + esc(E.kidTitle(k)) + (k.inc ? ' · ' + esc(money(l, k.inc)) + '/tháng' : '');
+        else if (k.job || k.role147) info = ' · ' + esc(E.kidTitle(k)) + (k.inc ? ' · ' + esc(money(l, k.inc)) + '/tháng' : '');
         else if (k.uniUntil) info = ' · ' + (k.abroadStudy ? 'du học' : 'sinh viên đại học');
         else if (ka >= 6 && ka <= 17) info = ' · học ' + (k.study >= 70 ? 'giỏi' : k.study >= 45 ? 'khá' : 'yếu');
         if (k.vice) info += ' · <span style="color:var(--bad)">' + esc(k.vice === 'game' ? 'nghiện game' : k.vice) + '</span>';
@@ -930,7 +930,7 @@
         if(k.grandchildren129&&k.grandchildren129.length)facts+=fact('Các cháu',k.grandchildren129.map(function(g){return g.name+' · '+(l.age-g.born)+' tuổi';}).join('; '));
         if(k.adoption129)facts+=fact('Hoàn cảnh trước nhận nuôi',k.adoption129.story);
       }
-      if(k.job)facts+=fact('Công việc',E.kidTitle(k));
+      if(E.CHILD147)E.CHILD147.facts(l,k).forEach(function(x){facts+=fact(x[0],x[1]);});else if(k.job)facts+=fact('Công việc',E.kidTitle(k));
     }else{var home=E.HOMETOWN&&E.HOMETOWN.partner(l,k);facts+=fact('Quê quán',home?home.name:'Chưa rõ')+fact('Công việc',a<18&&/sinh viên/.test(k.job||'')?'Chưa đến tuổi đại học':k.job||'Chưa rõ');
       if(E.H.partnerIncKnown&&E.H.partnerIncKnown(l,k))facts+=fact('Thu nhập',money(l,k.inc||0)+'/tháng');
     }
@@ -992,28 +992,32 @@
     if (!l.alive || l.age < 5) { p.innerHTML = '<h3>Việc bạn muốn làm</h3><p class="muted small" style="margin:0">' + (l.alive ? 'Từ 5 tuổi, bạn có thể tập luyện năng khiếu qua những việc phù hợp lứa tuổi.' : '—') + '</p>'; return; }
     var acts = E.actions(l).filter(function (x) { return x.ok === true; }), groups = {};
     // v3.6: mục "Chi tiêu" gom mọi việc tiêu tiền + chi tiêu định kỳ tự động mỗi năm
-    var SPEND = '💰 Chi tiêu', spendIds = E.SPEND_ACTS || [];
-    if (E.recurList && l.age >= 16) groups[SPEND] = spendIds.map(function (id) { return acts.filter(function (x) { return x.id === id; })[0]; }).filter(function (x) { return !!x; });
-    acts.forEach(function (x) { (groups[x.g] = groups[x.g] || []).push(x); });
-    Object.keys(groups).forEach(function (g) { if (!groups[g].length && !(g === SPEND && E.recurList(l).some(function (x) { return x.on || x.ok === true; }))) delete groups[g]; });
+    // Góp ý B3/B4: Gia đình & tình cảm, Tiền bạc & tài sản chia thành nhóm con; "Chi tiêu & sinh hoạt" giữ chi tiêu định kỳ
+    var M = E.MENU147, SPEND = M.MONEY, SPENDSUB = M.SPEND_SUB, spendIds = E.recurList && l.age >= 16 ? E.SPEND_ACTS || [] : [], built = M.build(acts, spendIds), subs = built.subs;
+    groups = built.groups;
+    if (E.recurList && l.age >= 16 && E.recurList(l).some(function (x) { return x.on || x.ok === true; })) { groups[SPEND] = groups[SPEND] || []; subs[SPEND] = subs[SPEND] || {}; if (!subs[SPEND][SPENDSUB]) { var reord = {}; reord[SPENDSUB] = []; Object.keys(subs[SPEND]).forEach(function (k) { reord[k] = subs[SPEND][k]; }); subs[SPEND] = reord; } }
+    Object.keys(groups).forEach(function (g) { if (!groups[g].length && !(subs[g] && Object.keys(subs[g]).length)) delete groups[g]; });
     // v2.7: gọn hơn — chỉ hiện hàng nhóm việc; bấm một nhóm mới mở danh sách việc của nhóm đó
     var lim = E.actsLimit(l), left = lim === Infinity ? null : Math.max(0, lim - (l.acts || 0));
     if (S.actG === undefined) S.actG = LS.get('mkn.actg', null);
     var sel = S.actG && groups[S.actG] ? S.actG : null;
+    if (S.actSub === undefined) S.actSub = LS.get('mkn.actsub', null);
+    var subSel = sel && subs[sel] && S.actSub && subs[sel][S.actSub] ? S.actSub : null, list = sel ? subs[sel] ? subSel ? subs[sel][subSel] : null : groups[sel] : null;
+    function actChip(x) { return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + (x.ok===true?'':'<small class="action-reason">'+esc(x.ok)+'</small>') + '</button>'; }
     p.innerHTML = '<h3>Việc bạn muốn làm <span class="muted small" style="text-transform:none;letter-spacing:0">· ' + (left == null ? 'không giới hạn lượt' : 'còn ' + left + '/' + lim + ' lượt năm nay') + '</span></h3>' +
       '<div class="chips actgroups">' + Object.keys(groups).map(function (g) {
-        var n = groups[g].filter(function (x) { return x.ok === true; }).length;
+        var n = groups[g].filter(function (x) { return x.ok === true; }).length + (subs[g] && subs[g][SPENDSUB] && g === SPEND ? subs[g][SPENDSUB].filter(function (x) { return groups[g].indexOf(x) < 0; }).length : 0);
         return '<button class="chip sm' + (g === sel ? ' on' : '') + (n ? '' : ' off') + '" data-ag="' + esc(g) + '">' + esc(g) + (n ? ' <small>' + n + '</small>' : '') + '</button>';
       }).join('') + '</div>' +
-      (sel === SPEND ? recurHtml(l) + '<div class="recur-h">Chi tiêu một lần</div>' : '') +
-      (sel ? '<div class="chips actlist">' + groups[sel].map(function (x) {
-        return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + (x.ok===true?'':'<small class="action-reason">'+esc(x.ok)+'</small>') + '</button>';
-      }).join('') + '</div>' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
+      (sel && subs[sel] ? (subSel ? '<div class="chips actsubs"><button class="chip sm" data-asub="">‹ ' + esc(sel) + '</button><button class="chip sm on" data-asub="' + esc(subSel) + '">' + esc(subSel) + '</button></div>' : '<div class="chips actsubs">' + Object.keys(subs[sel]).map(function (k) { var n = subs[sel][k].length; return '<button class="chip sm' + (n || k === SPENDSUB ? '' : ' off') + '" data-asub="' + esc(k) + '">' + esc(k) + (n ? ' <small>' + n + '</small>' : '') + '</button>'; }).join('') + '</div><p class="muted small actnote">Chọn một nhóm nhỏ để xem các việc bên trong.</p>') : '') +
+      (subSel === SPENDSUB ? recurHtml(l) + '<div class="recur-h">Chi tiêu một lần</div>' : '') +
+      (list ? '<div class="chips actlist">' + list.map(actChip).join('') + '</div>' : sel ? '' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
     if(S.life.flags.expansion110 && S.life.flags.expansion110.livingParent && LS.get('mkn.branch112',null)) {
       var back112=document.createElement('button');back112.className='btn ghost sm';back112.id='returnParent112';back112.textContent='Quay lại bản lưu đời cha/mẹ';p.appendChild(back112);
       back112.onclick=function(){ask('Quay lại đời cha/mẹ','Đời con hiện tại được giữ riêng; bản cha/mẹ tiếp tục từ thời điểm bạn chuyển góc nhìn.','Quay lại',function(){var b=LS.get('mkn.branch112',null);if(!b||!b.life)return;var parentLife;try{parentLife=E.migrate?E.migrate(b.life):b.life;}catch(e){if(SS)SS.logError('branch112',e&&e.code||'MIGRATE',e&&e.message);toast('Chưa mở được bản lưu đời cha/mẹ; đời con vẫn giữ nguyên.');return;}if(!LS.set('mkn.childBranch112',{life:S.life,cohort:S.cohort,speed:S.speed,auto:S.auto})){toast('Chưa lưu được đời con nên chưa chuyển về đời cha/mẹ. Hãy giải phóng bộ nhớ hoặc tải bản lưu về máy.');return;}S.life=parentLife;S.cohort=b.cohort||[];S.speed=b.speed||1;S.auto=false;S.preview=null;closeModal();persist();enterLife();},'Ở lại đời con');};
     }
-    $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); if (S.actG && !S.paused && S.phase !== 'dead') { S.paused = true; S.actPause = true; renderTopbar(); toast('Đã tạm dừng để bạn chọn việc — bấm Tiếp tục khi xong'); } else if (!S.actG && S.actPause) { S.actPause = false; S.paused = false; S.last = performance.now(); renderTopbar(); } renderActions(); }; });
+    $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); S.actSub = null; LS.set('mkn.actsub', null); if (S.actG && !S.paused && S.phase !== 'dead') { S.paused = true; S.actPause = true; renderTopbar(); toast('Đã tạm dừng để bạn chọn việc — bấm Tiếp tục khi xong'); } else if (!S.actG && S.actPause) { S.actPause = false; S.paused = false; S.last = performance.now(); renderTopbar(); } renderActions(); }; });
+    $$('[data-asub]', p).forEach(function (b) { b.onclick = function () { S.actSub = b.dataset.asub || null; LS.set('mkn.actsub', S.actSub); renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });
     $$('[data-recur]', p).forEach(function (b) { b.onclick = function () { var on = E.recurToggle(S.life, b.dataset.recur); toast(on ? 'Đã bật — từ năm nay sẽ tự động chi mỗi kỳ' : 'Đã tắt khoản chi định kỳ này'); persist(); renderActions(); }; });
   }

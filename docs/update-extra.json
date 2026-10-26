@@ -1,5 +1,24 @@
 [
   {
+    "id": "feedback-b-profiles-menus",
+    "version": "8.6.0-b",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-26T21:21:51.829Z",
+    "title": "Một Đời — Hồ sơ con chi tiết, chức vụ người thân hiển thị đúng và menu gọn hơn",
+    "summary": "Chức vụ, nơi làm việc và thu nhập của người thân luôn khớp với công ty; hồ sơ con có thêm sức khỏe, học tập, quan hệ, tài chính, kỷ niệm; menu Gia đình và Tiền bạc chia thành các nhóm nhỏ.",
+    "tags": [
+      "Sửa lỗi",
+      "Cải thiện"
+    ],
+    "details": [
+      "Sửa lỗi con được bổ nhiệm làm giám đốc trong doanh nghiệp gia đình nhưng hồ sơ vẫn ghi nghề cũ. Nay hồ sơ hiện đúng chức vụ, tên công ty và mức lương công ty trả; không còn cộng hai khoản lương. Khi bị miễn nhiệm, người con trở lại công việc trước đây. Áp dụng cả với vợ/chồng được bổ nhiệm.",
+      "Hồ sơ con chi tiết hơn: sức khỏe và dị ứng, lớp học, học lực, hạnh kiểm, thành tích; mức thân thiết với bạn, với cha/mẹ còn lại, cha/mẹ kế, từng anh chị em và ông bà; tiền tiết kiệm, trợ cấp, quà được tặng, tài sản riêng; kỷ niệm và các cột mốc. Thông tin giữ nguyên khi mở lại hồ sơ hay tải lại bản lưu.",
+      "Menu Gia đình & tình cảm chia thành 5 nhóm: Tình yêu & hôn nhân; Sinh con & nuôi con; Quản lý con cái; Quan hệ gia đình; Hoạt động & sự kiện gia đình.",
+      "Menu Tiền bạc & tài sản chia thành 5 nhóm: Chi tiêu & sinh hoạt (gồm chi tiêu định kỳ); Ngân hàng & vay vốn; Đầu tư; Kinh doanh & bất động sản; Phương tiện & tài sản. Có nút quay lại nhóm lớn; mọi việc cũ vẫn còn, chỉ được sắp xếp lại."
+    ]
+  },
+  {
     "id": "feedback-a-family-fixes",
     "version": "8.6.0-a",
     "releaseStatus": "packaged",
