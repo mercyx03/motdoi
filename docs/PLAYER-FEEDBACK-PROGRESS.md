@@ -43,14 +43,18 @@ Giới hạn: các mục mới là hành động người chơi chủ động; c
 
 ## Mốc D — Quan hệ xã hội, người nổi tiếng, hôn nhân
 
-| Yêu cầu | Trạng thái |
-|---|---|
-| D1 Kết bạn người có địa vị | CHƯA HOÀN THÀNH |
-| D2 Tương tác người nổi tiếng | CHƯA HOÀN THÀNH |
-| D3 Mặt tối giới giải trí | CHƯA HOÀN THÀNH |
-| D4 Giới thiệu đối tượng cho con | CHƯA HOÀN THÀNH |
-| D5 Quà tặng người thân | CHƯA HOÀN THÀNH |
-| D6 Cầu hôn | CHƯA HOÀN THÀNH |
+| Yêu cầu | Trạng thái | Module | Test | Ghi chú |
+|---|---|---|---|---|
+| D1 Kết bạn người có địa vị | HOÀN THÀNH | life149 (`social149`, `social149_person`) | feedback-d, browser-feedback-menus | Dùng mạng lưới NPC của life148. Sự kiện giao lưu theo tầng lớp (người bình dân cũng có hội nhóm nghề nghiệp); ăn tối (từ chối theo chênh lệch địa vị, tin cậy, tính cách); lời khuyên (NPC thiếu trung thực có thể khuyên vụ lợi); kết thân → `l.friends` có liên kết `contact149`. Nhân vật hư cấu. |
+| D2 Tương tác người nổi tiếng | HOÀN THÀNH | life149 | feedback-d | Hợp tác quảng bá (cần cơ sở kinh doanh, có thể thất bại); hẹn hò chỉ khi cả hai trưởng thành, độc thân, tuổi tương đồng, hợp xu hướng, đủ tin cậy; dùng đúng quy trình `E.DEC.love`; danh tiếng tăng, tin đồn đời tư hằng năm. |
+| D3 Mặt tối giới giải trí | HOÀN THÀNH | life149 (`dark149`, `darkYear`) | feedback-d | 3 tình huống (gạ gẫm trao đổi lợi ích, ép hợp đồng, ép làm việc quá sức); chỉ có từ chối / tìm hỗ trợ / lên tiếng / đổi hướng, không có lựa chọn chấp nhận; tìm hỗ trợ và lên tiếng có kết quả sau 1–2 năm; không lặp trong 6 năm; người lạm quyền không xuất hiện như bạn để kết giao; không khóa con đường nổi tiếng. |
+| D4 Giới thiệu đối tượng cho con | HOÀN THÀNH | life149 (`matchmaking149`) → `childMatch126` / `childWedding129` sẵn có | feedback-d, browser-feedback-menus | Ứng viên là con (tạo một lần, ổn định) của NPC đã quen; lọc tuổi, xu hướng, còn sống, chưa kết hôn, chưa được ghép. Hai phía đều có thể từ chối; cưới → thông gia (`inlaw149`); dừng tìm hiểu → người kia được tự do. |
+| D5 Quà tặng người thân | HOÀN THÀNH | life149 (`gifts149`), sổ tài sản life148 | feedback-d, browser-feedback-menus | 8 loại, 2–3 mức giá; chủ sở hữu là người nhận; tài sản ròng của bạn giảm đúng giá trị; hồ sơ con hiện tài sản riêng; quá đắt có thể bị từ chối và không trừ tiền; giới hạn tuổi xe; mỗi người 1 món lớn/năm. |
+| D6 Cầu hôn | HOÀN THÀNH | life149 (`proposal149`, `_venue`), nút `cau_hon` sẵn có | feedback-d, browser-feedback-menus | Nhẫn tùy chọn (không nhẫn / nhẫn đang có / mua), 6 nơi; xác suất theo tình cảm, thời gian quen, sở thích riêng tư/bất ngờ/giản dị; nhận lời = đính hôn (nhẫn sang tên người kia) → bàn chuyện cưới bằng `marry` → `contract108` sẵn có; từ chối: nhẫn vẫn của bạn, chờ 1 năm. Tự động chọn cầu hôn giản dị hoặc bàn thẳng chuyện về chung nhà. |
+
+Kiểm thử mốc D: feedback-d 78 · browser-feedback-menus d (4 chuỗi × 2 kích thước) · feedback-a/b/c · smoke 11/11 · saves-compat · save-safety 10/10 · NPC 14/14 · relationships108/841 · family104/126/129/130/830 · audition139 · expansion842 · integration-gd6 · pace-gd5 · chains-gd4 · adult106. Đo 80 đời tự chơi: kết hôn 37 (có life149) so với 39 (không), số con 21 so với 26 — trong biên độ ngẫu nhiên.
+
+Ghi chú kiểm thử: smoke `family-relations` từng thất bại ở điều kiện “mẫu 6 đời phải có con” do đường ngẫu nhiên đổi; đã sửa test để chơi thêm tối đa 6 đời khi mẫu chưa có con (bất biến kiểm tra giữ nguyên). `tests/player107.js` (“overseas postgraduate can reach defense”) thất bại cả ở mốc gốc `1f8248d` — lỗi có từ trước, chưa thuộc phạm vi đợt này, ghi vào tồn đọng.
 
 ## Mốc E — Tài sản hôn nhân, di chúc, thừa kế
 
@@ -65,4 +69,5 @@ Giới hạn: các mục mới là hành động người chơi chủ động; c
 
 - Mốc A: commit `bab7317` (`feat(feedback-a)`).
 - Mốc B: commit `07fe3c4` (`feat(feedback-b)`).
-- Mốc C: commit xem lịch sử nhánh (`feat(feedback-c)`).
+- Mốc C: commit `e1fd93f` (`feat(feedback-c)`).
+- Mốc D: commit xem lịch sử nhánh (`feat(feedback-d)`).

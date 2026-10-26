@@ -12,6 +12,12 @@ const FLOWS = {
     { name: 'elite', setup: 'rich', id: 'elite148', clicks: ['Giải golf giao hữu'], expect: 'Giải golf giao hữu ở câu lạc bộ hạng sang' },
     { name: 'head', setup: 'clan', id: 'familyHead148', clicks: ['Triệu tập họp gia đình'], expect: 'Họp gia đình' },
     { name: 'deal', setup: 'partner', id: 'deal148', clicks: ['Bàn hợp tác với Trần Quốc Bảo', 'Góp vốn dự án'], expect: 'Trần Quốc Bảo' }
+  ],
+  d: [
+    { name: 'social', setup: 'rich', id: 'social149', clicks: ['Dự sự kiện câu lạc bộ doanh nhân'], expect: 'Bạn làm quen' },
+    { name: 'gift', setup: 'rich', id: 'gifts149', clicks: ['Minh (con', 'Ô tô cỡ nhỏ'], expect: 'Bạn tặng Minh ô tô cỡ nhỏ' },
+    { name: 'match', setup: 'match', id: 'matchmaking149', clicks: ['Giới thiệu Minh với Thu'], expect: 'Thu' },
+    { name: 'propose', setup: 'dating', id: 'proposal149', clicks: ['Cầu hôn không cần nhẫn', 'Ở nhà, bữa tối tự nấu'], expect: 'nhận lời' }
   ]
 };
 function seed(kind, id) {
@@ -22,6 +28,8 @@ function seed(kind, id) {
   l.kids = [{ name: 'Minh', sex: 'M', born: 23, alive: true, edu: 5, close: 70 }, { name: 'Lan', sex: 'F', born: 25, alive: true, edu: 5, close: 60 }];
   if (kind === 'clan') E.BUSINESS123.companies(l).push({ name: 'Công ty Ánh Dương', value: 10000, share: 80, sector: 'tech', governance: 0, created: 30, roles: {} });
   if (kind === 'partner') { const p = E.ELITE148.meet(l, () => 0.3, { kind: 'business', tier: 3, where: 'tiệc gặp gỡ đối tác' }); p.name = 'Trần Quốc Bảo'; p.trust = 80; }
+  if (kind === 'match') { l.kids[0].born = 18; const f = E.ELITE148.meet(l, () => 0.3, { kind: 'business', age: 58 }); f.trust = 90; f.kids149 = [{ name: 'Thu', sex: 'F', birth: l.birthYear + l.age - 27, job: 'bác sĩ', alive: true, married: false }]; E.UPDATE110.uid(l, f.kids149[0]); }
+  if (kind === 'dating') { l.age = 30; l.kids = []; l.partner = { name: 'Mai', sex: 'F', age: 29, status: 'dating', since: 27, alive: true, affection108: 90, propPref149: 'simple' }; }
   const d = E.DEC[id].make(l, () => 0); d.manual = true; l.pending = [d];
   localStorage.setItem('mkn.current', JSON.stringify({ life: l, cohort: [], auto: false, speed: 1 }));
   return true;

@@ -583,7 +583,7 @@
     dealYear(l, r, log); familyYear(l, r, log); itemsYear(l, r, log);
   });
 
-  E.ELITE148 = { S: S, TIERS: TIERS, tier: tier, tierName: tierName, wealth: wealth, meet: meet, seen: seen, find: find, label: label, contacts: contacts, people: people, relatives: relatives,
+  E.ELITE148 = { S: S, rep: rep, TIERS: TIERS, tier: tier, tierName: tierName, wealth: wealth, meet: meet, seen: seen, find: find, label: label, contacts: contacts, people: people, relatives: relatives,
     party: party, partyCost: partyCost, venueWhy: venueWhy, propose: propose, dealChance: dealChance, dealYear: dealYear, amounts: amounts,
     meeting: meeting, grant: grant, conflict: conflict, familyYear: familyYear, benefits: benefits,
     experience: experience, buy: buy, sell: sell, itemsYear: itemsYear, addItem: addItem, transfer: transfer, mine: mine, items: items, itemValue: itemValue, CAT: CAT, EXP: EXP, DEAL: DEAL };

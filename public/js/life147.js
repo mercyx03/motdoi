@@ -170,16 +170,16 @@
     spend: [MONEY, '6. Chi tiêu & sinh hoạt'], bank: [MONEY, '7. Ngân hàng & vay vốn'], invest: [MONEY, '8. Đầu tư'], estate: [MONEY, '9. Kinh doanh & bất động sản'], things: [MONEY, '10. Phương tiện & tài sản']
   };
   var MAP = {
-    love: 'tim_nguoi_yeu hen_ho cau_hon dating108 dateFilters114 network108 bond108 affair107 breakup114 ly_hon show_hen_ho to_tinh_ban_than lien_lac_nguoi_cu que_hen_ho gift50 mua_nuoc chu_cap chu_cap_dung sn_quan_he tc_dieu_kien wealthWish130 supportRules130 family100_romance proposal149 prenup150',
+    love: 'tim_nguoi_yeu hen_ho cau_hon proposal149 dating108 dateFilters114 network108 bond108 affair107 breakup114 ly_hon show_hen_ho to_tinh_ban_than lien_lac_nguoi_cu que_hen_ho gift50 mua_nuoc chu_cap chu_cap_dung sn_quan_he tc_dieu_kien wealthWish130 supportRules130 family100_romance proposal149 prenup150',
     kids: 'sinh_con familyPlan108 orphanage129 succession112 nuoi_day_con',
     manage: 'childGuide108 support114 childSupport130 future126 children141 gift112 childHome112 custody129 residence146 family100_children weddings129 matchmaking149',
     kin: 'familyProfiles138 cases113 guardian138 family100_parents tham_bo_me gap_anh_chi parentsHome146 familyHead148',
-    events: 'familyTrip114 grandCare129 schoolMeeting129 celebration129 party148',
+    events: 'familyTrip114 grandCare129 schoolMeeting129 celebration129 party148 gifts149',
     spend: 'chi_tieu budget114 gui_bo_me mua_bao_hiem mua_nuoc_ban',
     bank: 'bank112 vay_tien tra_no repay114',
     invest: 'dau_tu market_menu ban_dau_tu_moi ve_so',
     estate: 'dau_tu_lon quan_ly_dau_tu mua_nha doi_nha homes112 chuyen_noi_o assetTeam123 deal148',
-    things: 'mua_xe tra_xe_thue ban_tai_san di_chuc70 collect148 gifts149'
+    things: 'mua_xe tra_xe_thue ban_tai_san di_chuc70 collect148'
   };
   var BY_ID = {};
   Object.keys(MAP).forEach(function (s) { MAP[s].split(' ').forEach(function (id) { BY_ID[id] = SUB[s]; }); });

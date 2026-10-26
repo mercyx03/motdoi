@@ -2,6 +2,26 @@
   "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
     {
+      "id": "feedback-d-relationships",
+      "version": "8.6.0-d",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-26T21:50:04.648Z",
+      "title": "Một Đời — Kết giao, quà tặng người thân và màn cầu hôn của riêng bạn",
+      "summary": "Mở rộng quan hệ với người có địa vị và người nổi tiếng, giới thiệu đối tượng cho con, tặng quà người thân, cầu hôn theo cách của mình; thêm những tình huống áp lực trong giới giải trí cùng các cách tự bảo vệ.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Mục mới “Kết giao, mở rộng quan hệ”: dự sự kiện để quen người mới, mời cà phê, xin lời khuyên, kết thân thành bạn bè. Người có địa vị cao hơn nhiều dễ từ chối hơn; không phải ai cũng cho lời khuyên chân thành. Mọi nhân vật đều là hư cấu.",
+        "Với người nổi tiếng trong mạng lưới quen biết: mời hợp tác quảng bá cho cơ sở kinh doanh, hoặc ngỏ ý hẹn hò nếu cả hai đều độc thân, đã trưởng thành và đủ thân thiết. Người ấy có quyền từ chối; nếu nhận lời, danh tiếng của bạn tăng nhưng đời tư cũng bị chú ý nhiều hơn.",
+        "Khi làm nghề giải trí, bạn có thể gặp người lạm quyền gợi ý trao đổi lợi ích không phù hợp, bị ép ký hợp đồng bất lợi hay làm việc quá sức. Bạn có thể từ chối, tìm luật sư và hiệp hội nghề nghiệp, lên tiếng công khai hoặc rời công ty. Một số lựa chọn cần thời gian mới có kết quả. Nổi tiếng vẫn đạt được bằng thực lực, không cần đánh đổi.",
+        "Mục mới “Giới thiệu đối tượng cho con”: người được giới thiệu là con của những người bạn thật sự quen biết. Gia đình bên kia có thể từ chối, con bạn cũng có quyền nói không; nếu hai người tìm hiểu rồi kết hôn, hai gia đình trở thành thông gia.",
+        "Mục mới “Tặng quà người thân”: nhẫn, trang sức, đồng hồ, điện thoại, laptop, xe máy, ô tô, siêu xe với nhiều mức giá, tặng vợ/chồng, người yêu, con, bố mẹ, anh chị em. Món quà thuộc về người nhận và hiện trong hồ sơ của người con; quà quá đắt so với khả năng có thể bị từ chối mà không mất tiền. Con nhỏ chưa được tặng xe.",
+        "Nút “Cầu hôn” giờ là cả một hành trình: chọn có nhẫn hay không (không bắt buộc), chọn nơi cầu hôn (ở nhà, khu vườn, nhà hàng, khách sạn, sân khấu hòa nhạc, du thuyền). Người ấy có thể nhận lời hoặc từ chối tùy tình cảm, thời gian quen nhau và việc họ thích riêng tư hay bất ngờ trước đông người. Nhận lời là đính hôn; đám cưới vẫn do hai người cùng quyết định sau. Vẫn có thể bàn thẳng chuyện về chung nhà như trước."
+      ]
+    },
+    {
       "id": "feedback-c-elite-life",
       "version": "8.6.0-c",
       "releaseStatus": "packaged",
