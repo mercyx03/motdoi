@@ -48,6 +48,14 @@ node tests/hardcore-isolation.js
 | 45 | `năm cuối trong tù chỉ mở các thao tác trong trại` |
 | 51 | `bị giam ở trại lừa đảo: "việc bạn muốn làm" chỉ còn các việc trong trại` |
 
+### Mục 60: lỗi chập chờn, phát hiện ở GĐ2, có sẵn từ trước
+
+`tiền thừa kế được cộng đúng một lần vào tiền mặt, đúng bằng phần của con`:
+- Khi người con được "sống tiếp ở tuổi hiện tại" (`E.heirAtAge`), khoản thừa kế nhận được đôi khi nhỏ hơn `E.heirShare(P, k)`, ví dụ 24.383 so với 58.316.
+- Tái hiện trên mã **trước GĐ2** (`pre-gd2`): 2/14 đời mẫu với đồng hồ cố định, 1/11 với giờ thật. Sau GĐ2: 0/11 và 2/9.
+- Test regression chỉ kiểm đời đầu tiên tìm được, mà `life.id` theo giờ thật đổi mỗi lần chạy, nên lỗi lúc hiện lúc ẩn.
+- Nằm ở phần tính thừa kế, ngoài phạm vi GĐ2; chưa sửa.
+
 Các lỗi ở mục 5b, 22, 38 là ngưỡng thống kê. Chúng có thể chập chờn vì `life.id` lấy theo đồng hồ thật (xem `docs/TESTING-GD0.md`).
 
 ## Test chuyên đề
@@ -62,6 +70,8 @@ Các lỗi ở mục 5b, 22, 38 là ngưỡng thống kê. Chúng có thể ch�
 | Lỗi hồi quy các mục liên quan lưu/tải, NPC, tài chính (7, 12, 15, 19, 20, 42, 44, 45, 52, 60, 68, 70, 72, 75) | 2 (mục 42, 45) | 2 (giống hệt) |
 | Lỗi hồi quy các mục còn lại | 7 | chưa chạy lại sau GĐ1 (bộ rất chậm; GĐ1 không đụng các luồng đó) |
 | Test chuyên đề crash | 1 (`hardcore-isolation.js`) | 1 (cùng lỗi) |
+
+**Sau GĐ2:** chạy lại 14 mục liên quan cùng 17 test chuyên đề, kết quả giống hệt GĐ1 (2 lỗi mục 42, 45; `hardcore-isolation.js` crash như cũ). Mục 0: 323/323 đạt.
 
 Số kiểm tra "đạt" giữa hai lần chạy chênh nhau vài trăm (ví dụ 203.388 so với 202.596). Nguyên nhân là `life.id` theo giờ thật làm khuôn nhân vật và số mẫu sinh ra khác nhau. Không có kiểm tra nào chuyển từ đạt sang lỗi.
 
