@@ -80,6 +80,13 @@ Chi tiết đầy đủ ở `docs/REGRESSION-FIXES-GD2.5.md`, mục E.
 | Regression mục 9, nửa sau | **Chưa hoàn tất** (bị dừng). Trên `a64130d`: 0 lỗi |
 | Regression 76 mục còn lại | **Chưa hoàn tất** (bị dừng ở mục 16). Trên `a64130d`: 1 lỗi (mục 68), đã sửa ở `a0721a5` nhưng chưa chạy lại toàn bộ |
 
+**Xác nhận khi đóng GĐ2.5** (chạy lại trên `63d34af`, mã nguồn giống `a0721a5`, chỉ khác tài liệu):
+- Kiểm cú pháp: đạt.
+- Test ngắn: smoke 11/11, bản lưu cũ 10/10, an toàn bản lưu 10/10, NPC 14/14, `regression-fixes.js` 8/8, `hardcore-isolation.js`, continuity101 (361 kiểm tra), business137 (79), family830 đạt hết.
+- Regression mục 0: 323/323.
+- Build: 28 file, `test:loading` và `test:admin-events` đạt, `dist.zip` không đổi.
+- Không chạy thêm regression quy mô lớn, theo quyết định của chủ dự án. Commit chứa đoạn này là commit cuối của nhánh `gd2-5-regression-fixes`.
+
 **Ban đầu 197 lần thất bại ở mục 9.** Lần chạy đầy đủ gần nhất (`a64130d`) còn **0**. 16 nguyên nhân gốc đã được sửa (10 engine/dữ liệu, 6 bài kiểm thử).
 
 ### Việc Codex cần làm TRƯỚC GĐ3
