@@ -388,6 +388,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   const selectedIds=process.env.MOTDOI_DEC_IDS?process.env.MOTDOI_DEC_IDS.split(','):Object.keys(E.DEC);
   let tries = 0;
   selectedIds.forEach(id => {
+    if (process.env.MOTDOI_DEC_PROGRESS === '1') console.log('DEC ' + id);
     TPL.concat(contexts[id]?[contexts[id].life]:[]).forEach((base, ti) => {
       const contextArg=contexts[id]&&ti===TPL.length?contexts[id].arg:undefined;
       let l0 = clone(base), d;
@@ -398,6 +399,7 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
       ok(!badText(d.title) && !badText(d.text) && d.opts.every(o => !badText(o.l) && !badText(o.h)), 'tình huống "' + id + '" hiển thị sạch: ' + d.title + ' / ' + d.text);
       d.opts.forEach(o => {
         for (let rep = 0; rep < 4; rep++) {
+          if (process.env.MOTDOI_DEC_PROGRESS === '2') console.log('CASE ' + id + '/' + o.k + ' template=' + ti + ' rep=' + rep);
           const l = clone(base); l.rs = (l.rs + rep * 7919 + ti) | 0;
           try {
             const dd = E.DEC[id].make(l, () => U.rand(l), contextArg || (d.data && (id === 'bi_bat' || id === 'csgt' || id === 'con_18' || id === 'con_lac_loi' || id === 'home_game_play' || id === 'market_trade') ? d.data : undefined));
@@ -419,8 +421,8 @@ section('9. Mọi tình huống & mọi lựa chọn (khuôn nhân vật đa d�
   console.log('   Đã thử ' + tries + ' lượt chọn trên ' + Object.keys(okIds).length + '/' + Object.keys(E.DEC).length + ' tình huống');
   ok(!E.DEC.gameshow_dong.valid(TPL[0],{}),'hậu trường cũ đã được thay bằng mùa vr_vong');
   selectedIds.filter(id => id!=='gameshow_dong' && id!=='me_chong' && !(E.JOBS2 && E.JOBS2[id]) && !/^(nghi_huu_chon|lg_|show_chon|bias_chon|fan|kn_|mua_nuoc|ru_ban_an|hoc_ky_nang|tv_|nk_ra_truong|nganh_y|yt_|noi_tru|chuyen_khoa|mo_phong_kham_ck|bao_ve_tn|thuc_tap|hh_|ket_hon_nn|ve_vn_song|quay_lai_nn|viec_remote|con_thanh_tai|con_pha_gia|tai_san_giam|nv_|elite_thuc_tap|elite_bai_hoc|elite_ap_luc|clb_|khai_giang|ruot_thua|sot_xuat_huyet|di_ung|toi_|tu_cu_ru|tg_|doi_ton_giao|ban_khung_hoang|nhung_ngay_toi|sau_mat_mat|dk_|cho_con_tien|quyen_nuoi_con|con_sau_ly_hon|bo_me_mot_minh|di_buoc_nua|goa_bua|dd_|mo_rong_tu|chon_game|concert_nghe_si|study_|es_|thi_lai_tn|qg_|kh_|cuoi_|r_hon_nhan|r_tri_vi|nc_bao_ve|ct_cu_tri|cn_|dc_|co_bau_som|mua_nuoc_ai|sv_|nghe_kh|nha_|app_ho_so|quay_lai_cu|vd_|chuyen_on|chu_cap_|tim_nguoi_cham_lo|ban_than_|yeu_ban_than|mc_|fd_|ps_|ky_som|hc_|hv_|chon_hoc_vien|lo_trinh_quan_ham|cs_|hx_|mxh_|bb_|dp_|tro_ban|th_tay|th_nghi|family100_|nc_sau_du_hoc|map_mo_tiep101|casual_after101|bo_nhiem_chien_luoc|pg106_|abroad107_|service107_review|tech107_limit_value|mentor107|affair107_confront|settlement107|contract108|network108_person|childGuide108_path|show105_ig)/.test(id)).forEach(id => ok(okIds[id], 'tình huống "' + id + '" kiểm tra được trên ít nhất một khuôn')); // sự kiện nghề v3.3 được kiểm tra riêng ở mục 31; family100_* ở tests/family830.js; nc_sau_du_hoc ở tests/continuity101.js; map_mo_tiep101, casual_after101, bo_nhiem_chien_luoc (tình huống nối tiếp cần bối cảnh riêng) ở tests/followups840.js
-  // AI chọn được cho mọi tình huống
-  Object.keys(E.DEC).forEach(id => {
+  // AI chọn được cho mọi tình huống đã chọn; các shard rời nhau vẫn phủ đủ registry, không lặp toàn bộ AI ở từng shard.
+  selectedIds.forEach(id => {
     const base = TPL.find(t => { try { const l = clone(t); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); return d.opts.length && (!E.DEC[id].valid || E.DEC[id].valid(l, d.data)); } catch (e) { return false; } });
     if (!base) return;
     const l = clone(base); const d = E.DEC[id].make(l, () => U.rand(l), id==='market_trade'?{symbol:'SJC',side:'buy',quantity:'1',unit:'base'}:id==='home_game_play'?{g:'Minecraft'}:undefined); l.pending.unshift(d);
@@ -610,6 +612,9 @@ section('15. Khúc cuối, chia sẻ, 10 đời gần đây, tương thích bả
 
 section('16. Người cùng giây do AI điều khiển có số phận đa dạng');
 {
+  // Isolate the statistical sample with the shared test clock: real-time life.id otherwise changes the sample despite identical seeds.
+  // Keep all 500 lives and the original limits; this changes only the test environment, never gameplay IDs.
+  const { E } = require('./lib/quick').loadGame();
   const jobs = new Set(), causes = new Set();
   for (let i = 0; i < 300; i++) { const l = E.createLife({ mode: 'vn', seed: 3000 + i }); E.runHeadless(l); (l.jobsHist || []).forEach(j => jobs.add(j.id)); causes.add(l.death.cause); }
   console.log('   300 đời VN: ' + jobs.size + ' nghề khác nhau, ' + causes.size + ' nguyên nhân mất khác nhau');
@@ -1604,8 +1609,11 @@ section('30. Bản 3.2: nhà ở theo loại, bệnh viện công / tư, phẫu 
   // chống lặp
   { const cnt = {}; Object.keys(E.DEC).forEach(id => { const D = E.DEC[id], ap = D.apply; D.apply = function (l) { if (l._c) l._c[id] = (l._c[id] || 0) + 1; return ap.apply(this, arguments); }; });
     let over = 0, worst = ''; const trig = {}; E.TRIG.forEach(t => { if (!t.rep) trig[t.id] = 1; });
+    // brand105_offer was intentionally max:12/cd:2 before GD2.5; the old v3.2 blanket limit of four does not describe this career trigger.
+    const brandOffer = E.TRIG.find(t => t.id === 'brand105_offer');
+    ok(brandOffer && brandOffer.max === 12 && brandOffer.cd === 2, 'nhan hang: giu tran 12 loi moi va cooldown 2 nam');
     for (let i = 0; i < 150; i++) { const l = E.createLife({ mode: 'vn', seed: 33000 + i }); l._c = {}; E.runHeadless(l);
-      Object.keys(l._c).forEach(id => { if (trig[id] && !/^(gplx_het_han|chung_chi_het_han|casting|nk_thi)$/.test(id) && l._c[id] > 4 && !E.ACT.some(a => (a.sc || a.id) === id)) { over++; worst = id + ' ×' + l._c[id]; } }); delete l._c; }
+      Object.keys(l._c).forEach(id => { if (trig[id] && !/^(gplx_het_han|chung_chi_het_han|casting|nk_thi)$/.test(id) && l._c[id] > (id === 'brand105_offer' && brandOffer ? brandOffer.max : 4) && !E.ACT.some(a => (a.sc || a.id) === id)) { over++; worst = id + ' ×' + l._c[id]; } }); delete l._c; }
     ok(over === 0, 'tình huống ngẫu nhiên không lặp quá vài lần trong một đời (' + (worst || 'ổn') + ')'); }
 }
 section('31. Bản 3.3: lời lưu ý, nghĩa vụ quân sự 2 năm, hoạt động hợp tuổi, khách sạn / resort, cổ phiếu & tiền ảo, sự kiện nghề theo tài liệu');

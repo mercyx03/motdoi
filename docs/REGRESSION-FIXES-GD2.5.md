@@ -68,3 +68,12 @@ Mỗi nguyên nhân gốc có một ca trong `tests/regression-fixes.js`, đư�
 - Câu nhật ký lặp −6,4%; dòng trung tính −6,1%, do không còn ghi lặp khoản phí thường niên.
 - Các chỉ số khác lệch dưới 2,5%. Dung lượng bản lưu không đổi (147 KB trung vị).
 - Chưa đo lại baseline và hiệu năng sau hai commit cuối (`a64130d`, `a0721a5`); hai commit này chỉ đổi nhật ký, cách gọi và việc nối danh tính.
+
+## G. Tiếp nhận tại Codex (26/10/2026)
+
+Các phần trên giữ kết quả lịch sử Claude. Xem `ACCEPTANCE-GD2.5-CODEX.md` cho lượt nghiệm thu mới và quy trình commit/push/build theo `AGENTS.md`.
+
+Codex phát hiện thêm hai vấn đề ở kiểm thử, không sửa gameplay:
+
+- **C1 — Mục 16 không tái lập:** cùng seed nhưng life.id theo giờ thật/ngẫu nhiên làm mẫu thống kê thay đổi; ghi nhận 201,1 và 201,6 lựa chọn/đời vượt trần 200, xen kẽ 197,4 và 194,8 đạt. Đối chiếu cùng đồng hồ cố định: pre-gd2-5 đạt 195,2; mã cuối đạt 195,0. Mục 16 chuyển sang game context đồng hồ cố định sẵn có của tests/lib/quick.js; giữ nguyên 300 + 200 đời và mọi ngưỡng, không đổi ID của game. Các lần chạy giờ thật vẫn được ghi nhận trong báo cáo.
+- **C2 — Mục 30 áp sai trần sự kiện nghề:** brand105_offer được khai báo max:12/cd:2 từ trước GĐ2.5 nhưng test v3.2 áp trần 4. Chỉ sự kiện này được kiểm theo max đã khai báo, kèm assertion max:12/cd:2; các sự kiện khác vẫn giữ trần 4. Test sau sửa đạt 29 kiểm tra; phép cố ý tăng bộ đếm vượt 12 thất bại đúng mong đợi (×26), không bỏ qua chống lặp. Quy tắc game không đổi.

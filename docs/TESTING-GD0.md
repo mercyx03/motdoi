@@ -22,8 +22,8 @@ Mỗi ca smoke / tương thích chạy trong một tiến trình riêng có th�
 
 `tests/regression.js` chậm vì hai lý do:
 
-1. Mục 5 giữ khoảng 3.300 cuộc đời trong bộ nhớ suốt quá trình chạy (~3 GB).
-2. Mục 9 thử mọi phương án của 1.298 tình huống, mỗi phương án 4 lần trên khoảng 15 khuôn nhân vật (~360.000 lượt, mỗi lượt có sao chép JSON và một năm mô phỏng).
+1. Mục 5 hiện giữ 6.300 cuộc đời trong bộ nhớ (3.000 VN, 300 VN63, 3.000 thế giới), nên tốn nhiều RAM.
+2. Mục 9 thử mọi phương án của 1.298 tình huống, mỗi phương án 4 lần trên nhiều khuôn nhân vật (lượt Codex quan sát 67 khuôn; vài trăm nghìn lượt, mỗi lượt có sao chép JSON và một năm mô phỏng).
 
 Chạy theo nhóm bằng công cụ có sẵn:
 
@@ -54,3 +54,9 @@ npm run fixtures:saves
 `createLife` đặt `life.id = Date.now() + Math.random()`, và life126/130/138/141 băm theo `l.id`. Vì vậy với giờ thật, cùng seed vẫn cho ra cuộc đời khác nhau.
 
 Môi trường kiểm thử nhanh dùng đồng hồ cố định và `Math.random` có seed để kết quả tái lập được. Game không bị thay đổi gì.
+
+## Cập nhật nghiệm thu Codex 26/10/2026
+
+Mục 9 nay áp dụng MOTDOI_DEC_IDS cho cả kiểm tra AI; khi ghép các shard rời nhau phủ đủ registry, mọi ID vẫn được kiểm tra, tránh lặp kiểm tra AI toàn registry ở từng shard. Không có bộ lọc thì hành vi kiểm tra đầy đủ giữ nguyên. Bật MOTDOI_DEC_PROGRESS=1 để in ID đang thử, hoặc =2 để in khuôn/phương án/lần lặp. Các menu nhiều phương án nên chạy theo từng ID, không chia chỉ dựa trên số lượng ID. Timeout không phải kết quả đạt.
+
+Riêng mục 16 dùng game context đồng hồ cố định của tests/lib/quick.js để mẫu thống kê tái lập; vẫn giữ 300 + 200 đời và các ngưỡng cũ. Các mục khác vẫn theo cấu hình hiện hữu. Mã game và cách sinh life.id không đổi. Xem docs/ACCEPTANCE-GD2.5-CODEX.md cho bằng chứng và giới hạn.

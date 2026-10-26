@@ -72,7 +72,11 @@ try {
     } finally { $archive.Dispose() }
     # Replace the old ZIP only after every build, runtime and byte-integrity check passes.
     Move-Item -LiteralPath $temporaryZip -Destination $zip -Force
-    Remove-WorkspaceDirectory $backup
+    # Both new artifacts are now installed. A backup-cleanup error must not roll
+    # back only dist while leaving the newly verified ZIP in place.
+    $promoted = $false
+    try { Remove-WorkspaceDirectory $backup }
+    catch { Write-Warning "Artifacts installed; old backup needs manual inspection: $backup" }
     Write-Output ("PASS: {0} files; ZIP {1} bytes; SHA256 {2}" -f $expected.Count, (Get-Item -LiteralPath $zip).Length, (File-Sha256 $zip))
     Write-Output "dist: $dist"
     Write-Output "zip: $zip"

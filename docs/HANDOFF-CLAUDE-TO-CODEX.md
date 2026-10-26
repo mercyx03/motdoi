@@ -1,5 +1,7 @@
 # Bàn giao: Claude → Codex (Một Đời v8.5.0, GĐ0–GĐ2.5)
 
+> Cập nhật Codex 26/10/2026: chủ dự án đã thay quy trình Git/build bằng `AGENTS.md`: tự commit/push nhánh hiện tại sau nghiệm thu, chuẩn bị dist và dist.zip; tuyệt đối không tự deploy. Các câu "chưa push" và yêu cầu xin quyết định push bên dưới là trạng thái lịch sử lúc Claude bàn giao. Kết quả tiếp nhận/nghiệm thu mới ở `docs/ACCEPTANCE-GD2.5-CODEX.md`; yêu cầu di_chuc70 đã được tách riêng vào `docs/BACKLOG.md`.
+
 Tài liệu này giúp người tiếp quản làm tiếp ngay mà không phải đọc lại toàn bộ lịch sử. Mọi quy tắc phát triển nằm trong `CLAUDE.md` (gốc repo) và vẫn có hiệu lực.
 
 ## 1. Trạng thái Git

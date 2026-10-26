@@ -5,7 +5,7 @@
 ## Sau mỗi giai đoạn đủ điều kiện nghiệm thu
 
 1. Hoàn thiện phạm vi đã giao; chạy test chuyên đề, smoke và tương thích bản lưu; kiểm tra lỗi mới.
-2. Build production từ mã mới nhất bằng công cụ riêng `tools/build.js` (không giả định Vite). Xác minh build, tài nguyên, API/Worker và tương thích nguồn/bản nén.
+2. Chạy `npm run package:cloudflare` trên Windows: lệnh dùng build riêng `tools/build.js`, kiểm loading/API và đóng ZIP có xác minh. Không giả định Vite. Chi tiết và giới hạn trong `docs/CLOUDFLARE-PACKAGING.md`.
 3. Luôn chuẩn bị cả `dist/` và `dist.zip` mới ở gốc dự án. ZIP chứa nội dung bên trong dist, có index.html ngay gốc, bao gồm file dấu chấm và cấu hình cần thiết. Đọc lại ZIP, so toàn bộ tên file và nội dung với dist. Không dùng artifact cũ. Nếu thất bại, giữ artifact ổn định trước đó và báo rõ đó là bản cũ.
 4. Kiểm tra status, branch, remote và quyền GitHub; xác minh đúng repository, quyền riêng tư và nguy cơ push kích hoạt deployment. Nếu thiếu quyền/remote hoặc có nguy cơ deployment ngoài ý muốn, báo phần thiếu; không tự đổi cấu hình để vượt qua.
 5. Tự động commit thay đổi hợp lệ bằng thông điệp rõ ràng và push nhánh hiện tại lên remote đã xác minh. Quy tắc này thay thế yêu cầu cũ tuyệt đối không push. Không merge main, force push, sửa lịch sử hoặc tạo commit rỗng. Stage từng đường dẫn, không dùng git add . mù quáng. Không commit mật khẩu/token/API key/dữ liệu cá nhân/bản lưu thật.
