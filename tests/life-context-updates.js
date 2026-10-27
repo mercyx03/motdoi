@@ -5,11 +5,11 @@ const extra = JSON.parse(fs.readFileSync('docs/update-extra.json')), data = JSON
 for (const [old, now] of [[base('docs/update-extra.json'), extra], [base('public/data/updates.json').entries, data.entries]]) {
   for (const e of old) assert.deepStrictEqual(now.find(n => n.id === e.id), e, 'preserve historic entry ' + e.id);
 }
-const fresh = data.entries.slice(0, 6);
-assert.deepStrictEqual(fresh.map(e => e.id), ['enterprise-operations-884', 'enterprise-reports-883', 'life-enterprise-foundation-882', 'life-contracts-881', 'life-context-bcd-preview', 'life-context-a-family']);
+const fresh = data.entries.slice(0, 7);
+assert.deepStrictEqual(fresh.map(e => e.id), ['enterprise-family-office-885', 'enterprise-operations-884', 'enterprise-reports-883', 'life-enterprise-foundation-882', 'life-contracts-881', 'life-context-bcd-preview', 'life-context-a-family']);
 for (const e of fresh) { assert(e.releaseStatus === 'packaged' && e.releasedAt === null); assert(/Z$|[+-]\d\d:\d\d$/.test(e.publishedAt)); assert.deepStrictEqual(extra.find(x => x.id === e.id), e); }
 const built = JSON.parse(fs.readFileSync('dist/data/updates.json'));
 assert.deepStrictEqual(built, data);
 const html = fs.readFileSync('dist/updates.html', 'utf8'), m = html.match(/id="updateHistoryData">([^<]+)<\/script>/);
 assert(m); assert.deepStrictEqual(JSON.parse(m[1]), data);
-console.log('PASS life-context-updates: six packaged notes synchronized/embedded, all old entries unchanged');
+console.log('PASS life-context-updates: seven packaged notes synchronized/embedded, all old entries unchanged');

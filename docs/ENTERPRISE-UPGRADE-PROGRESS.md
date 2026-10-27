@@ -1,3 +1,7 @@
+# Trạng thái hiện tại — 8.8.5-enterprise, nghiệm thu tích hợp đạt
+
+Mốc báo cáo đã push f8b9e9a; chiến lược đã push 8081574. Phạm vi mốc 4–6 và bổ sung đã lập trình, kiểm thử tích hợp và gói cuối đạt. Kết quả push được ghi riêng trong báo cáo gửi chủ dự án. Các đoạn checkpoint cũ phía dưới là lịch sử, không phải danh sách thiếu hiện tại.
+
 # Một Đời — đang triển khai nâng cấp A–E và quản trị doanh nghiệp
 
 ## Mốc 1 / 8.8.2-foundation — kiểm thử trọng điểm, chỉ Preview
@@ -27,31 +31,31 @@ Chưa hoàn thành hai nhiệm vụ tổng thể; mốc 1 đã bổ sung triển
 | B1 Báo cáo tài chính năm | Triển khai / kiểm thử trọng điểm đạt | life167: chi tiết mô hình ngành, giao dịch vận hành vào lợi nhuận/thuế một lần; quyết toán life165 |
 | B2 So sánh năm | Triển khai / kiểm thử trọng điểm đạt | So sánh giá trị, chênh lệch, tỷ lệ; không giả lịch sử |
 | B3 Biểu đồ | Triển khai / kiểm thử trọng điểm đạt | 10 kỳ, 5 chỉ số; nhân viên chỉ hiện khi có dữ liệu; Chrome 390/1280 |
-| C1 Quyết định chiến lược | Triển khai / kiểm thử trọng điểm đạt | Chi nhánh, tuyển dụng, công nghệ, chất lượng, quốc tế, giảm chi phí, tái đầu tư |
-| C2 Vòng đời chiến lược | Triển khai / kiểm thử trọng điểm đạt | Ngân sách, thời gian, người phụ trách, rủi ro, kết quả và chống bấm lặp |
-| D1 Hiệu suất doanh nghiệp | Triển khai / kiểm thử trọng điểm đạt | Chưa triển khai bộ chỉ số dẫn xuất |
-| D2 Đánh giá cuối năm | Triển khai / kiểm thử trọng điểm đạt | Chưa có nhận xét theo báo cáo và chiến lược |
-| E1 Quy mô nhân viên | Triển khai / kiểm thử trọng điểm đạt | Chưa khởi tạo nhân sự tổng hợp có giải thích cho doanh nghiệp cũ |
-| E2 Quản lý nhân sự | Triển khai / kiểm thử trọng điểm đạt | Tuyển số lượng, lương thưởng, đào tạo/đánh giá và kết nối bổ nhiệm |
-| F1 CEO xin tăng lương | Chưa hoàn thành | Chưa triển khai |
-| F2 CFO phát hiện chi bất thường | Chưa hoàn thành | Chưa triển khai |
-| F3 Giám đốc thăng chức | Chưa hoàn thành | Chưa triển khai |
-| F4 Lãnh đạo sang đối thủ | Chưa hoàn thành | Chưa triển khai |
-| F5 Con thiếu kinh nghiệm | Chưa hoàn thành | Chưa triển khai |
-| F6 HĐQT bất đồng mua lại | Chưa hoàn thành | Chưa triển khai |
-| F7 Nhân viên mất niềm tin | Chưa hoàn thành | Chưa triển khai |
-| G1 Thực tập 2–3 năm | Chưa hoàn thành | Chưa triển khai chương trình nhiều năm, trợ cấp, đánh giá và bổ nhiệm sau chương trình |
-| H1 Cố vấn dài hạn | Chưa hoàn thành | Chưa triển khai hợp đồng, người học, lĩnh vực, tiến độ và chống cộng lại khi tải |
-| H2 Nghi thức xã giao | Chưa hoàn thành | Chưa triển khai khóa dài hạn và tác động giao tiếp |
-| I1 Năm chuỗi tích hợp | Chưa hoàn thành | Chưa chạy được đầy đủ các chuỗi doanh nghiệp/khủng hoảng/kế nghiệp/giao lưu/quản trị thất bại |
-| J Sáu mốc | Chưa hoàn thành | Mốc 1 đạt kiểm thử trọng điểm; tiếp tục mốc 2–6, chưa có nghiệm thu cuối |
-| K1 Kiểm thử trọng điểm | Chưa hoàn thành | Đã kiểm phần thay đổi; các phần chưa triển khai chưa có test PASS |
-| K2 Nghiệm thu tổng thể | Chưa hoàn thành | Còn phần lớn chức năng và kiểm thử |
-| L Bảo toàn gameplay cũ | Chưa hoàn thành | Không xóa ID/registry; các nhóm liên quan đã đạt, chưa kiểm mọi luồng cũ trên mã cuối của toàn đợt |
-| M1 GitHub | Chưa hoàn thành | Ghi kết quả commit/push thực tế trong báo cáo checkpoint |
-| M2 Changelog | Hoàn thành | Mục 8.8.1-contracts chỉ công bố phần thực sự triển khai, packaged, releasedAt=null |
-| M3 Cloudflare | Chưa hoàn thành | Chưa phải artifact cuối của toàn bộ yêu cầu; ghi kết quả gói checkpoint riêng |
-| N Báo cáo cuối toàn đợt | Chưa hoàn thành | Chưa được báo hoàn thành cả hai nhiệm vụ |
+| C1 Quyết định chiến lược | Triển khai / kiểm thử đạt | life168: bảy kế hoạch, gồm quốc gia JP/US/SG và điều kiện thời kỳ. |
+| C2 Vòng đời chiến lược | Triển khai / kiểm thử đạt | Ngân sách, người phụ trách, kết quả lưu cố định, 1–3 năm, giới hạn đồng thời, khấu hao/tổn thất. |
+| D1 Hiệu suất doanh nghiệp | Triển khai / kiểm thử đạt | Biên lợi nhuận, doanh thu, thanh khoản, dòng tiền, nhân lực/chất lượng/lòng tin/quản trị dẫn xuất. |
+| D2 Đánh giá cuối năm | Triển khai / kiểm thử đạt | Nhận xét theo báo cáo, công nghệ và kết quả dự án. |
+| E1 Quy mô nhân viên | Triển khai / kiểm thử đạt | Khởi tạo theo vốn và mức sống, không giảm vốn cũ; headcount giữ qua quy đổi/sáp nhập. |
+| E2 Quản lý nhân sự | Triển khai / kiểm thử đạt | Tuyển 1/5/20, lương/thưởng, đào tạo ba mục tiêu/ba ngân sách; trả lương một lần. |
+| F1 CEO xin tăng lương | Triển khai / kiểm thử đạt | life169: đồng ý/một phần/từ chối/thưởng/đàm phán; tác động lương và gắn bó. |
+| F2 CFO phát hiện chi bất thường | Triển khai / kiểm thử đạt | Xác minh 1–2 năm, bốn kết quả; dừng đầu tư mới có hiệu lực, chi khắc phục khi có kết quả. |
+| F3 Giám đốc thăng chức | Triển khai / kiểm thử đạt | Giữ UID khi lên CEO; lương/thưởng/giao chi nhánh/quản trị có tác động. |
+| F4 Lãnh đạo sang đối thủ | Triển khai / kiểm thử đạt | Thương lượng, đãi ngộ, bàn giao; nghỉ thật xóa chức vụ, có lối tuyển người thay. |
+| F5 Con thiếu kinh nghiệm | Triển khai / kiểm thử đạt | Cố vấn/đào tạo/thử thách hai năm, có thể không đạt; đổi vai trò/giảm phạm vi. |
+| F6 HĐQT bất đồng mua lại | Triển khai / kiểm thử đạt | Gắn thương vụ mua cổ phần thực tại life128; điều kiện HĐQT hiện hữu, biểu quyết 65%, giá/điều kiện đổi phải xét lại. |
+| F7 Nhân viên mất niềm tin | Triển khai / kiểm thử đạt | Lương, đào tạo, thưởng, đối thoại; lòng tin ảnh hưởng năng suất/nghỉ việc. |
+| G1 Thực tập 2–3 năm | Triển khai / kiểm thử đạt | life170: bảy chương trình, UID con, nguyện vọng, trợ cấp vào sổ riêng, ba bước đánh giá, không tự CEO hoặc làm hai việc. |
+| H1 Cố vấn dài hạn | Triển khai / kiểm thử đạt | 13 chuyên môn, người học/người hướng dẫn, hợp đồng 0,5/1/2/3 năm; không cộng ngay hoặc khi tải. |
+| H2 Nghi thức xã giao | Triển khai / kiểm thử đạt | Khóa dài hạn, tác động giao lưu/đàm phán có trần; không tự tăng tài sản/tầng lớp. |
+| I1 Năm chuỗi tích hợp | Triển khai / kiểm thử đạt | tests/enterprise-chains173: 20 kiểm tra, gồm cả vòng năm đầy đủ. |
+| J Sáu mốc | Hoàn thành | Mốc 1–6 đã triển khai; tích hợp cuối và đóng gói đạt. |
+| K1 Kiểm thử trọng điểm | Triển khai / kiểm thử đạt | 169–170:39; 171–172:33;168:28;167:13; treasury:123; các nhóm ảnh hưởng và UI đạt. |
+| K2 Nghiệm thu tổng thể | Hoàn thành | Smoke, save, NPC, hồi quy chọn lọc, chuỗi tích hợp và UI trên dist đạt theo K1 yêu cầu gốc. |
+| L Bảo toàn gameplay cũ | Triển khai / kiểm thử đạt | Giữ registry/ID và luồng có sẵn; hồi quy chọn lọc, save fixtures 60 mẫu và NPC đạt; không chạy 77 nhóm trái phạm vi. |
+| M1 GitHub | Theo báo cáo cuối | Commit/push sau khi hoàn tất hồ sơ này; không tự ghi mã commit chưa tồn tại. |
+| M2 Changelog | Triển khai / kiểm thử đạt | 8.8.5-enterprise cùng toàn bộ lịch sử được đồng bộ; packaged/releasedAt=null. |
+| M3 Cloudflare | Hoàn thành đóng gói | Gói cuối 28 tệp; đối chiếu toàn bộ ZIP đạt. Binding Production do chủ dự án kiểm. |
+| N Báo cáo cuối toàn đợt | Hoàn thành | ENTERPRISE-UPGRADE-ACCEPTANCE.md và báo cáo bàn giao kèm kết quả Git thực tế. |
 
 ## Kiểm thử đã chạy
 
@@ -113,3 +117,19 @@ Tiếp tục mốc 2: giao diện báo cáo tài chính/năm, so sánh, biểu �
 - HOÀN THÀNH TRIỂN KHAI MỐC CHIẾN LƯỢC — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN. Chưa kiểm Pages REVIEWS_DB, chưa chạy tích hợp cuối toàn đợt.
 - Mốc báo cáo trước đã push f8b9e9a. Phục hồi mốc đó bằng checkout riêng nếu cần. Không deploy/main merge.
 - Bản nháp life169/life170 chưa nạp game: tiếp tục hoàn thiện sự kiện lãnh đạo, liên kết lương, thực tập/cố vấn; sau đó quản gia/trợ lý/tiệc theo SUPPLEMENT.
+
+## Mốc tích hợp lãnh đạo, kế nghiệp, quản gia và tiệc
+
+- Module169–172 nối các nguồn đã có, không có ví hoặc doanh nghiệp song song. Bổ sung dùng expansion110.staff, elite148.people/party và tài chính life165/163.
+- Kiểm thử mới: leadership/education 39, office/parties 33, enterprise chains 20; quick cuối smoke 11/11, saves 10/10, safety 10/10, NPC 14/14.
+- Hồi quy chọn lọc: feedback-b676/c82/e75; integration-feedback1111; family12965; contracts161-16253; audition13923; relative-finance16325; business12816/13329/13779; life-context-bcd29.
+- Chrome: 10 thao tác thực lưu kết quả ở 390/1280; biểu đồ 8 kiểm tra; nhật ký đầu/tìm kiếm/lọc/tải thêm đạt. Lượt đầu thiếu server, lượt tiếp bỏ sót bước xác nhận khoản chi lớn nên chưa thực hiện hành động: không tính PASS. Test sửa để đi qua xác nhận hiện có, giữ kiểm tra dữ liệu sau cùng.
+- Lỗi phát hiện và sửa trong nghiệm thu: phí dịch vụ tiệc trừ hai lần; dự phòng biểu diễn chưa tính phần phát sinh; bộ sinh nghề có thể ghi đè thực tập; NPC khách/nhân sự mới có thể bị dọn trước khi được giữ; lời mời mua lại cần xét lại khi điều kiện đổi.
+- Không có mẫu save thật. D1/Pages thực tế chưa kiểm chứng, không deploy hoặc sửa dữ liệu Production.
+
+## Gói nghiệm thu cuối 8.8.5
+
+- package:cloudflare PASS: 28 tệp; ZIP 2.511.045 byte; SHA-256 BDCB3BC3FA43C9BC4326FB34FB5B3F5937D977EE26D7BE7DCE2673095F8B1327. Tên và nội dung tất cả entry khớp dist; cấu hình Worker/routes/headers được giữ.
+- Loading nguồn/bundle 8 cuộc đời và API phân quyền local PASS. Nhật ký 7 mục mới giữ toàn bộ lịch sử, packaged.
+- Chrome trên chính dist: 10 hành động lưu kết quả, hai kích thước 390/1280; nhật ký tìm/lọc/tải thêm PASS. Lượt server đã dừng sau nối phiên không tính đạt; khởi động lại rồi chạy đạt.
+- Không có lỗi nghiêm trọng mới được phát hiện trong phạm vi kiểm. Chưa có save thật, chưa xác minh Pages REVIEWS_DB. Không deploy, không merge main.
