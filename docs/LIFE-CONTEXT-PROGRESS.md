@@ -58,3 +58,6 @@ Tiếp tục trên codex/life-context-upgrade; không reset về nhánh cũ. Th�
 - life-context-updates: PASS; hai mục packaged đồng bộ trong nguồn/JSON build/HTML nhúng; mọi mục lịch sử cũ nguyên vẹn.
 - Bổ sung trình duyệt riêng bảng xếp hạng: 2 luồng ở 390/1280px PASS, hiển thị tách tiền mặt/vốn/cổ phần, không tràn ngang. Tổng 10 luồng mới đã kiểm.
 - Source rollback: 7294c42. Chưa hoàn tất A–E; chỉ Preview. Chủ dự án kiểm tra binding REVIEWS_DB riêng cho môi trường thử, không dùng DB Production cho phép thử ghi.
+
+## Tiếp quản 8.8.1-contracts
+Bổ sung hợp đồng chín vai trò truyền thông, vòng đời hợp đồng K-pop và lựa chọn sum họp/nghỉ tại nhà miễn phí. Xem ENTERPRISE-UPGRADE-PROGRESS.md cho checklist toàn yêu cầu mới và kiểm thử. A–E vẫn CHƯA hoàn tất; đang mốc 1 trong sáu mốc. Không suy ra hoàn tất hệ thống doanh nghiệp từ checkpoint này.

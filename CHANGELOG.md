@@ -1,5 +1,13 @@
 ## v8.8.0-preview — checkpoint đang triển khai, packaged
 
+## 8.8.1-contracts — checkpoint Preview
+
+- Hợp đồng chín vai trò truyền thông, năng lực, lương chung và phạm vi ủy quyền.
+- Vòng đời hợp đồng K-pop: chuyển, gia hạn, tạm nghỉ, kết thúc và thử lại; giữ danh tính, kỹ năng, kinh nghiệm.
+- Sum họp và nghỉ tại nhà miễn phí, tiệc/nghỉ dưỡng theo ngân sách.
+- Chưa hoàn thành mốc 1 và toàn bộ yêu cầu quản trị doanh nghiệp. Xem docs/ENTERPRISE-UPGRADE-PROGRESS.md. Trạng thái packaged, chưa có thời điểm phát hành.
+
+
 - Gia cảnh thôi nôi, đồ chơi an toàn và hướng dẫn nghệ thuật từ người thân; nghề nghệ thuật của bố mẹ đa dạng thu nhập.
 - Sáu tầng lớp tài sản tách khỏi follower; quyền lực doanh nghiệp, chỉ số danh tiếng, bảng tài sản mô phỏng theo năm; hồ sơ người thân đọc dữ liệu đã có.
 - Hồ sơ chức vụ tự điều hành, CEO thuê hỗ trợ mở thêm công ty, ID khi thành lập, phí quản trị theo quy mô.

@@ -36,7 +36,7 @@
   // ===================================================================
   // D1 + D2: phát hiện tài năng 13–16 tuổi và quy trình nhận lời (có người giám hộ)
   // ===================================================================
-  function scoutable(l) { var s = l.flags.idol155, a = agency(l); return free(l) && l.age >= 13 && l.age <= 16 && !(a && /trainee|debut|offer|junior155/.test(a.status)) && !(s && s.stage && s.stage !== 'none' && s.stage !== 'declined') && !(s && s.scoutAt != null && l.age - s.scoutAt < 2); }
+  function scoutable(l) { var s = l.flags.idol155, a = agency(l); return free(l) && l.age >= 13 && l.age <= 16 && !(a && /trainee|debut|offer|junior155/.test(a.status)) && !(s && s.stage && s.stage !== 'none' && s.stage !== 'declined' && s.stage !== 'left') && !(s && s.scoutAt != null && l.age - s.scoutAt < 2); }
   function scoutChance(l) { var p = potential(l), cs=l.flags.social131&&l.flags.social131.channels||[], reach=cs.reduce(function(n,c){return Math.max(n,c.followers||0);},0), bonus=p>=30?Math.min(.06,Math.log10(1+reach)*.01):0; return U.clamp(0.02 + Math.max(0, p - 30) / 300 + bonus, 0.02, 0.35); }
   E.TRIG.push({ id: 'scout155', when: scoutable, p: scoutChance, cd: 2, max: 2 });
   X.menu('scout155', 'Lời mời từ công ty giải trí', function (l) { return free(l) && l.age >= 13 && l.age <= 17 ? true : 'Dành cho 13–17 tuổi'; },
@@ -70,11 +70,11 @@
     log(c.parents === 'yes' ? 'Bố mẹ đồng ý cho bạn thử sức làm thực tập sinh, kèm điều kiện về việc học.' : 'Bố mẹ chưa đồng ý cho bạn làm thực tập sinh.', 'neutral');
   }
   function sign(l, r, log) {
-    var s = S(l), c = s.offer; if (!c || c.parents !== 'yes') return;
-    s.stage = 'junior'; s.company = c; delete s.offer; s.startAge = l.age; s.months = 0; s.debt = 0; s.rank = null;
-    var rr = seeded(l.id + ':peers'); s.peers = Array.from({ length: 11 }, function () { var sex = l.sex; return { name: H.stranger(l, rr, sex), skill: Math.round(30 + rr() * 50), grow: 2 + rr() * 4, kind: pick(rr, ['chăm chỉ', 'cạnh tranh', 'hòa đồng', 'thầm lặng', 'tài năng bẩm sinh']), bond: 0, out: false }; });
+    var s = S(l), c = s.offer; if (!c || c.parents !== 'yes') return; if(E.CONTRACT162 && L.state(l).agency) E.CONTRACT162.record(l,'kết thúc hồ sơ cũ trước hợp đồng mới');
+    s.stage = 'junior'; s.company = c; delete s.offer; s.startAge = l.age; s.months = s.months || 0; s.debt = s.debt || 0; s.rank = null;
+    var rr = seeded(l.id + ':peers'); s.peers = s.peers || Array.from({ length: 11 }, function () { var sex = l.sex; return { name: H.stranger(l, rr, sex), skill: Math.round(30 + rr() * 50), grow: 2 + rr() * 4, kind: pick(rr, ['chăm chỉ', 'cạnh tranh', 'hòa đồng', 'thầm lặng', 'tài năng bẩm sinh']), bond: 0, out: false }; });
     L.state(l).agency = { name: c.name, code: 'KR', status: 'junior155', years: 0, started: l.age, minor155: true };
-    log('Bạn ký thỏa thuận đào tạo với ' + c.name + ' cùng bố mẹ: tập bán thời gian ở trung tâm đối tác trong nước, trại hè tại Seoul có người giám hộ đi cùng; việc học phổ thông tiếp tục.', 'big');
+    s.peers.forEach(function(p){ X.uid(l,p); }); if(E.CONTRACT162){ E.CONTRACT162.ensure(l); E.CONTRACT162.record(l,'ký thỏa thuận với người giám hộ'); } log('Bạn ký thỏa thuận đào tạo với ' + c.name + ' cùng bố mẹ: tập bán thời gian ở trung tâm đối tác trong nước, trại hè tại Seoul có người giám hộ đi cùng; việc học phổ thông tiếp tục.', 'big');
     H.mem(l, 'Ngày ký hợp đồng thực tập sinh đầu tiên, có bố mẹ ngồi cạnh.', 4);
   }
 

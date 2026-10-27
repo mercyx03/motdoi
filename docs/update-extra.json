@@ -1,5 +1,26 @@
 [
   {
+    "id": "life-contracts-881",
+    "version": "8.8.1-contracts",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T16:55:14.358+07:00",
+    "title": "Một Đời — Đội ngũ truyền thông và hành trình thực tập sinh",
+    "summary": "Thuê nhân sự theo chuyên môn, quản lý hợp đồng K-pop và chọn cách sum họp phù hợp ngân sách.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Đội ngũ truyền thông có quản lý cá nhân, trợ lý, Social Media Manager, Booking Manager, PR Manager, biên tập viên, nhiếp ảnh gia, quản lý quảng cáo và đội ngũ chuyên nghiệp. Mỗi hợp đồng có năng lực, lương và thời hạn 1–3 năm; có thể hết hạn, xin nghỉ hoặc được thay thế.",
+      "Lương được trả từng năm một lần. Thiếu ngân sách hoặc nền tảng tạm ngừng thì nhân sự ngừng làm việc. Đội ngũ cũ có thể chuyển sang hợp đồng và giữ cấp nhân sự, mức lương cùng kỳ đã trả. Chấm dứt nhân sự tại mục đầu tư kênh cũng dừng các hợp đồng.",
+      "Khi bật tự động, chuyên môn của nhân sự quyết định việc đăng bài, livestream, tìm quảng cáo và đề xuất giao lưu. Năng lực ảnh hưởng chất lượng nội dung, có giới hạn; thuê nhiều người không làm tăng chất lượng vô hạn. Hợp đồng quảng cáo vẫn cần bạn duyệt.",
+      "Trong mục Hợp đồng và chuyển công ty thực tập sinh, bạn có thể xin chuyển công ty K-pop, đề nghị gia hạn, tạm nghỉ vì việc học hoặc sức khỏe, tiếp tục chương trình hay kết thúc hợp đồng. Công ty có thể từ chối đề nghị hoặc kết thúc chương trình sau đánh giá yếu; công ty khác cũng có thể tiếp cận.",
+      "Thực tập sinh chưa thành niên cần người giám hộ và thu xếp việc học khi chuyển công ty hoặc quay lại. Kỹ năng, kinh nghiệm, nợ đào tạo và người quen được giữ khi ký lại. Audition và trở về nơi cư trú cũ tiếp tục qua các lựa chọn hiện có; chuyển công ty không tự đưa trẻ ra nước ngoài.",
+      "Lễ Tết, sinh nhật và cưới hỏi có cách tổ chức giản dị không tốn tiền, bên cạnh mức thông thường và tiệc nhà hàng. Gia đình cũng có thể dành thời gian nghỉ tại nhà hoặc chọn dịch vụ nghỉ dưỡng riêng. Các mức chi dùng chung giới hạn mỗi dịp, và gia đình đang nợ vẫn có lựa chọn miễn phí."
+    ]
+  },
+  {
     "id": "life-context-bcd-preview",
     "version": "8.8.0-preview",
     "releaseStatus": "packaged",
