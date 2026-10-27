@@ -16,6 +16,10 @@ const FLOWS = {
     { name: 'devilsplan', setup: 'kr', open: 'show151', clicks: ["The Devil's Plan — người chơi", 'Hợp tác'], answers: 3, expect: 'garnet' },
     { name: 'heartsignal', setup: 'kr', open: 'show151', clicks: ['Heart Signal — người tham gia', 'Kể chân thật'], answers: 3, expect: 'Những người bạn quan tâm' },
     { name: 'rapviet', setup: 'rapper', open: 'show151', clicks: ['Rap Việt — thí sinh'], answers: 2, expect: 'huấn luyện viên' }
+  ],
+  m4: [
+    { name: 'actor', setup: 'actor', open: 'actor154', clicks: ['Tìm dự án phim mới', 'Phân tích kịch bản'], answers: 0, expect: 'Đạo diễn' },
+    { name: 'gmtq', setup: 'superstar', open: 'show151', clicks: ['Gương Mặt Thân Quen — giám khảo'], answers: 2, expect: 'ghế giám khảo' }
   ]
 };
 function seed(kind, id) {
@@ -24,6 +28,8 @@ function seed(kind, id) {
   l.flags.military = 0; l.money = l.base * 10; l.st.kno = 90; l.edu = kind === 'student' ? 3 : 5; l.st.hea = 90;
   if (kind === 'star') { E.startJob(l, 'dien_vien', () => 0, () => { }, true); l.fame = 3e5; }
   if (kind === 'kr') { l.abroad = { code: 'KR', perm: true, name: 'Hàn Quốc' }; l.fame = 5e5; l.birthYear = 1995; }
+  if (kind === 'actor') { l.talent = 'diễn xuất'; l.actSk = 70; l.age = 22; }
+  if (kind === 'superstar') { E.startJob(l, 'dien_vien', () => 0, () => { }, true); l.fame = 3e6; l.age = 35; }
   if (kind === 'rapper') { E.startJob(l, 'rapper', () => 0, () => { }, true); l.skill = 70; }
   const d = E.DEC[id].make(l, () => 0); d.manual = true; l.pending = [d];
   localStorage.setItem('mkn.current', JSON.stringify({ life: l, cohort: [], auto: false, speed: 1 }));

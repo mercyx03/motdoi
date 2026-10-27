@@ -59,11 +59,26 @@ Phát hiện khi làm: chặng thi life48 ở chế độ rút gọn đã có th
 
 Kiểm thử mốc 3: showbiz-games 585 · showbiz-dating-music 69 · browser-showbiz m3 (4 chương trình × 2 kích thước) · quét chữ hiển thị mọi chương trình (0 lỗi sau khi sửa 2 chỗ "undefined") · hồi quy liên quan.
 
-## Mốc 4–6
+## Mốc 4 — Sự nghiệp diễn viên
+
+| Nội dung | Module | Trạng thái |
+|---|---|---|
+| Casting cũ (web / truyền hình / điện ảnh, học diễn, quảng cáo) | life32 | GIỮ NGUYÊN, vai nhận được ghi vào hồ sơ phim |
+| Thử vai dự án cụ thể: kịch bản, thể loại, quy mô, ngân sách, đạo diễn và bạn diễn là NPC lâu dài (life148), thử vai → vai quần chúng / phụ / chính, đàm phán cát-xê (1 lần), chuẩn bị vai theo thể loại, trường quay, sự cố, đóng máy | life154 `film154` (lựa chọn mới trong `casting`) | HOÀN THÀNH |
+| Phát hành năm sau: doanh thu / lượt xem, điểm đánh giá, thưởng doanh thu vai chính phim ≥ 100 tỷ; mùa giải thưởng năm kế tiếp (Cánh Diều, Bông Sen, Mai Vàng — tên giải; kết quả mô phỏng) | life154 | HOÀN THÀNH |
+| Hồ sơ phim, nấc nghề trùng bậc nghề `dien_vien` (quần chúng → vai phụ → vai chính → hạng A → ngôi sao) | life154 `actor154` | HOÀN THÀNH |
+| Phim thành công / đoạt giải → lời mời Running Man / 2 Ngày 1 Đêm (lời mời sẵn có của life48), Running Man Hàn Quốc khi ở Hàn | life154 `promote` | HOÀN THÀNH |
+| Nhà sản xuất (góp vốn, chia lại sau một năm, có thể lỗ), chuyển nghề đạo diễn (xưởng phim life60) | life154 | HOÀN THÀNH |
+| Gương Mặt Thân Quen (VN, từ 2013): thí sinh hóa thân 5 tuần, 3 giám khảo chấm; ngôi sao làm giám khảo | life154 | HOÀN THÀNH |
+
+Kiểm thử mốc 4: showbiz-actor 51 · browser-showbiz m4 · hồi quy mục 9 (casting, film154, actor154, hoc_dien, quang_cao, show151, gameshow, film_menu: 39.484 đạt) · career109 · careers105 · smoke · saves · save-safety · pace-gd5 · integration-feedback.
+
+## Mốc 5–6
 
 CHƯA HOÀN THÀNH (đang làm).
 
 ## Checkpoint
 
 - Mốc 1–2: commit `8d004e0` (`feat(showbiz-2)`).
-- Mốc 3: commit xem lịch sử nhánh (`feat(showbiz-3)`).
+- Mốc 3: commit `8df3c4d` (`feat(showbiz-3)`).
+- Mốc 4: commit xem lịch sử nhánh (`feat(showbiz-4)`).

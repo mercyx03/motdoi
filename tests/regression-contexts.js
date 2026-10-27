@@ -58,4 +58,6 @@ add('show151_step',l=>{l.age=30;l.st.kno=80;E.SHOW151.begin(l,()=>0.3,()=>{},'nn
 out.show151_step.arg={token:out.show151_step.life.flags.show151.active.token,step:out.show151_step.life.flags.show151.active.step};
 add('mini152',l=>{l.age=30;l.flags.mini152={kind:'rps',token:'ctx',st:E.MINI152.MINI.rps.init('ctx',{host:'người dẫn'}),done:'none',ctx:{title:'Oẳn tù tì'},manual:true,notes:[]};});
 out.mini152.arg={token:'ctx',n:0};
+add('film154,actor154',l=>{l.age=25;l.talent='diễn xuất';l.actSk=70;E.ACTOR154.startProject(l,()=>0.3,()=>{});l.pending=[];});
+out.film154.arg={token:out.film154.life.flags.actor154.project.token,stage:'read'};
 return out;};

@@ -2,6 +2,26 @@
   "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
     {
+      "id": "showbiz-m4-acting-career",
+      "version": "8.7.0-4",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-27T04:06:02.458Z",
+      "title": "Một Đời — Sự nghiệp diễn viên: thử vai, đóng phim, giải thưởng và lời mời gameshow",
+      "summary": "Theo nghiệp diễn giờ là cả một con đường: từ vai quần chúng, thử vai từng dự án, làm việc với đạo diễn và bạn diễn, chờ phim ra mắt, đến mùa giải thưởng và được mời lên gameshow.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Trong lời mời casting có thêm lựa chọn thử vai một dự án cụ thể: xem thể loại, quy mô, ngân sách, kịch bản, đạo diễn và bạn diễn; chuẩn bị cho buổi thử vai; nhận vai quần chúng, vai phụ hay vai chính tùy năng lực; có thể đàm phán cát-xê (hãng có thể chọn người khác).",
+        "Chuẩn bị vai theo thể loại (võ thuật, thoại cổ, giảm cân…), làm việc với đạo diễn khó tính hay cởi mở, tập thoại với bạn diễn, xử lý sự cố trên trường quay. Đạo diễn và bạn diễn là những người quen lâu dài, có thể gặp lại ở dự án sau.",
+        "Phim ra mắt vào năm sau với doanh thu phòng vé hoặc lượt xem và điểm đánh giá; vai chính trong phim trăm tỷ được thưởng doanh thu. Phim chất lượng được đề cử ở mùa giải thưởng năm kế tiếp.",
+        "Mục mới “Sự nghiệp diễn xuất”: hồ sơ các phim đã đóng, giải thưởng, nấc nghề (quần chúng → vai phụ → vai chính → hạng A → ngôi sao điện ảnh); tìm dự án mới, đi đóng quần chúng lấy kinh nghiệm, góp vốn làm nhà sản xuất, chuyển hướng làm đạo diễn khi đủ tầm.",
+        "Phim thành công hoặc đoạt giải mang lại lời mời quảng bá trên Running Man Việt Nam, 2 Ngày 1 Đêm (hoặc Running Man Hàn Quốc khi hoạt động ở Hàn Quốc).",
+        "Chương trình mới Gương Mặt Thân Quen: ca sĩ, diễn viên có tên tuổi bốc thăm hóa thân thành ca sĩ nổi tiếng mỗi tuần, ba giám khảo chấm điểm; ngôi sao rất nổi tiếng có thể ngồi ghế giám khảo."
+      ]
+    },
+    {
       "id": "showbiz-m3-variety-dating-music",
       "version": "8.7.0-3",
       "releaseStatus": "packaged",
