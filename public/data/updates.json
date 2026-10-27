@@ -2,6 +2,26 @@
   "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
     {
+      "id": "enterprise-operations-884",
+      "version": "8.8.4-operations",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-28T01:49:42.930+07:00",
+      "title": "Một Đời — Chiến lược và hiệu suất doanh nghiệp",
+      "summary": "Đầu tư nhiều năm, tuyển dụng và điều chỉnh đãi ngộ từ ngân sách thật của công ty.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến"
+      ],
+      "details": [
+        "Có bảy kế hoạch: chi nhánh, nhân sự, công nghệ, chất lượng, mở rộng quốc tế, tiết giảm chi phí và tái đầu tư. Mỗi năm mở tối đa một kế hoạch, tối đa hai kế hoạch đang chạy; ngân sách chi ngay, kết quả chờ một đến ba năm và có thể thất bại.",
+        "Công nghệ, chất lượng, năng suất, nhân lực và lòng tin ảnh hưởng kết quả kinh doanh. Dự án tài sản có khấu hao; thất bại có thể làm mất vốn mà không trừ tiền lần thứ hai.",
+        "Tuyển theo số lượng với khả năng thiếu ứng viên, điều chỉnh lương, thưởng khi có lãi và đào tạo một năm. Lương vào quyết toán một lần; lòng tin thấp có thể gây nghỉ việc. Công ty cũ được khởi tạo số nhân viên theo quy tắc công bố và giữ nguyên giá trị vốn.",
+        "Bảng hiệu suất giải thích biên lợi nhuận, thanh khoản, tăng trưởng, năng suất, lòng tin, uy tín và mục tiêu hoàn thành. Nhận xét cuối kỳ dựa trên số liệu và những dự án thực tế.",
+        "Lưu/tải giữ tiến độ và kết quả đã xác định. Đổi quốc gia quy đổi chi phí; sáp nhập gộp nhân sự, tài sản dự án và các kế hoạch đang thực hiện."
+      ]
+    },
+    {
       "id": "enterprise-reports-883",
       "version": "8.8.3-reports",
       "releaseStatus": "packaged",

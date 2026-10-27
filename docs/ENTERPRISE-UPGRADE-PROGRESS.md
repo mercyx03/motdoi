@@ -27,12 +27,12 @@ Chưa hoàn thành hai nhiệm vụ tổng thể; mốc 1 đã bổ sung triển
 | B1 Báo cáo tài chính năm | Triển khai / kiểm thử trọng điểm đạt | life167: chi tiết mô hình ngành, giao dịch vận hành vào lợi nhuận/thuế một lần; quyết toán life165 |
 | B2 So sánh năm | Triển khai / kiểm thử trọng điểm đạt | So sánh giá trị, chênh lệch, tỷ lệ; không giả lịch sử |
 | B3 Biểu đồ | Triển khai / kiểm thử trọng điểm đạt | 10 kỳ, 5 chỉ số; nhân viên chỉ hiện khi có dữ liệu; Chrome 390/1280 |
-| C1 Quyết định chiến lược | Chưa hoàn thành | Chi nhánh, tuyển dụng, công nghệ, chất lượng, quốc tế, giảm chi phí, tái đầu tư |
-| C2 Vòng đời chiến lược | Chưa hoàn thành | Ngân sách, thời gian, người phụ trách, rủi ro, kết quả và chống bấm lặp |
-| D1 Hiệu suất doanh nghiệp | Chưa hoàn thành | Chưa triển khai bộ chỉ số dẫn xuất |
-| D2 Đánh giá cuối năm | Chưa hoàn thành | Chưa có nhận xét theo báo cáo và chiến lược |
-| E1 Quy mô nhân viên | Chưa hoàn thành | Chưa khởi tạo nhân sự tổng hợp có giải thích cho doanh nghiệp cũ |
-| E2 Quản lý nhân sự | Chưa hoàn thành | Tuyển số lượng, lương thưởng, đào tạo/đánh giá và kết nối bổ nhiệm |
+| C1 Quyết định chiến lược | Triển khai / kiểm thử trọng điểm đạt | Chi nhánh, tuyển dụng, công nghệ, chất lượng, quốc tế, giảm chi phí, tái đầu tư |
+| C2 Vòng đời chiến lược | Triển khai / kiểm thử trọng điểm đạt | Ngân sách, thời gian, người phụ trách, rủi ro, kết quả và chống bấm lặp |
+| D1 Hiệu suất doanh nghiệp | Triển khai / kiểm thử trọng điểm đạt | Chưa triển khai bộ chỉ số dẫn xuất |
+| D2 Đánh giá cuối năm | Triển khai / kiểm thử trọng điểm đạt | Chưa có nhận xét theo báo cáo và chiến lược |
+| E1 Quy mô nhân viên | Triển khai / kiểm thử trọng điểm đạt | Chưa khởi tạo nhân sự tổng hợp có giải thích cho doanh nghiệp cũ |
+| E2 Quản lý nhân sự | Triển khai / kiểm thử trọng điểm đạt | Tuyển số lượng, lương thưởng, đào tạo/đánh giá và kết nối bổ nhiệm |
 | F1 CEO xin tăng lương | Chưa hoàn thành | Chưa triển khai |
 | F2 CFO phát hiện chi bất thường | Chưa hoàn thành | Chưa triển khai |
 | F3 Giám đốc thăng chức | Chưa hoàn thành | Chưa triển khai |
@@ -103,3 +103,13 @@ Tiếp tục mốc 2: giao diện báo cáo tài chính/năm, so sánh, biểu �
 
 - Build mốc 2 lại trên nguồn cố định PASS: 28 tệp, ZIP 2.483.554 byte, SHA-256 9A1471E7BF77869E7DB44FE84A965786169EF6E0D62B9F95F961CF9EF44052F6. Toàn bộ tên/nội dung ZIP đối chiếu dist; loading 8 cuộc đời nguồn/bundle và API local PASS. REVIEWS_DB thực tế chưa kiểm chứng.
 - Trạng thái mốc 2: HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN. Không upload Production cho đến khi toàn đợt đạt. Phục hồi nguồn từ ecc6010 bằng checkout riêng, không reset nhánh.
+
+## Mốc 3 / 8.8.4-operations
+
+- Bảy kế hoạch nhiều năm, ngân sách tiền công ty, kết quả lưu cố định, khấu hao/tổn thất; công nghệ lạc hậu, năng suất và quỹ lương ảnh hưởng quyết toán.
+- Nhân viên tổng hợp, tuyển 1/5/20, lương, thưởng, đào tạo, nghỉ việc; hiệu suất và đánh giá dẫn xuất. Bổ nhiệm cũ giữ nguyên. Bảy nhóm sự kiện lãnh đạo chưa nghiệm thu.
+- Operations168 28; reports167 13; treasury 123; business133 29; business137 79 PASS. Quick: smoke 11, saves 10, safety 10, NPC 14 PASS. Chrome kế hoạch và nhật ký tại 390/1280 đạt.
+- Build/package PASS: 28 tệp; ZIP 2.491.173 byte; SHA-256 5D2DEB5F69C592EF2775681A34C6C673172273D44B2CA545DB1B0C3DCE9BD8D7. Toàn bộ tên/hash ZIP khớp dist; loading 8 cuộc đời và API local PASS.
+- HOÀN THÀNH TRIỂN KHAI MỐC CHIẾN LƯỢC — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN. Chưa kiểm Pages REVIEWS_DB, chưa chạy tích hợp cuối toàn đợt.
+- Mốc báo cáo trước đã push f8b9e9a. Phục hồi mốc đó bằng checkout riêng nếu cần. Không deploy/main merge.
+- Bản nháp life169/life170 chưa nạp game: tiếp tục hoàn thiện sự kiện lãnh đạo, liên kết lương, thực tập/cố vấn; sau đó quản gia/trợ lý/tiệc theo SUPPLEMENT.
