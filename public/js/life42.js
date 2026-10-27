@@ -182,7 +182,7 @@
     [l.assets, l.basis].forEach(function (A) { if (A) fields(A, Object.keys(A)); });
     [l.port, l.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { fields(P[k], ['v', 'basis']); }); });
     fields(l.si, ['sum', 'm']);
-    fields(l.partner, ['inc']);if(E.RELATIVE163)E.RELATIVE163.convert(l,f);
+    fields(l.partner, ['inc']);if(E.RELATIVE163)E.RELATIVE163.convert(l,f);if(E.EDUCATION170)E.EDUCATION170.convert(l,f);if(E.OFFICE171)E.OFFICE171.convert(l,f);if(E.PARTY172)E.PARTY172.convert(l,f);
     fields(l.fam, ['mInc', 'fInc', 'mInc0', 'fInc0', 'mLost', 'fLost']);
     [l.job, l.lastJob].forEach(function (j, i, all) { if (!i || j !== all[0]) fields(j, ['last', 'floor', 'sportPrevSalary']); });
     (l.props || []).forEach(function (p) { fields(p, ['v', 'basis']); });

@@ -1,5 +1,31 @@
 [
   {
+    "id": "enterprise-family-office-885",
+    "version": "8.8.5-enterprise",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-28T02:40:49.912+07:00",
+    "title": "Một Đời — Lãnh đạo, kế nghiệp và văn phòng gia đình",
+    "summary": "Đào tạo người kế nghiệp qua nhiều năm, xử lý chuyện ban lãnh đạo, thuê quản gia và thiết kế tiệc theo ngân sách.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Ban lãnh đạo có tên và hồ sơ ổn định. CEO có thể xin tăng đãi ngộ; CFO đề nghị xác minh khoản chi; giám đốc giỏi được xem xét thăng chức; người nhận lời mời từ đối thủ có thể bàn giao rồi nghỉ. Lương thay đổi được tính chung trong chi phí công ty, thăng chức giữ đúng người.",
+      "Người thân thiếu kinh nghiệm có thể học hai năm, nhận cố vấn, đổi vai trò hoặc thử thách. Hội đồng của doanh nghiệp có cổ đông khác và cơ chế quản trị có thể yêu cầu biểu quyết trước thương vụ mua cổ phần; cần 65% phiếu. Nhân viên mất niềm tin có thể được đối thoại, tăng đãi ngộ hoặc cải thiện môi trường làm việc.",
+      "Con trưởng thành chưa có việc hay chương trình học không tương thích có thể thực tập hai hoặc ba năm ở các mảng quản trị, kinh doanh, tài chính, nhân sự, công nghệ, chi nhánh và kế nhiệm. Có thể từ chối; trợ cấp vào tiền riêng, đánh giá theo từng năm. Hoàn thành chỉ hỗ trợ việc xem xét bổ nhiệm, không tự trở thành CEO.",
+      "Có thể thuê cố vấn cho bản thân và người thân trong 13 lĩnh vực, gồm quản trị, đầu tư, nghệ thuật, ngoại ngữ và nghi thức xã giao. Khóa học kéo dài sáu tháng, một, hai hoặc ba năm; sáu tháng được tổng kết tại bước sang năm. Kỹ năng chỉ ghi sau đánh giá, được giữ khi lưu/tải; học nghi thức hỗ trợ giao lưu nhưng không tự tăng tài sản hoặc địa vị.",
+      "Sở hữu dinh thự mở tuyển quản gia trưởng và trưởng nhóm phục vụ. Có thêm trợ lý điều hành, thư ký, trợ lý đời sống, quản lý lịch, quan hệ xã hội và giám đốc văn phòng gia đình. Mỗi người có tuổi, năng lực, kinh nghiệm, hợp đồng, lương và mức gắn bó; chi phí cao và cần dự phòng tài chính thực.",
+      "Quản gia có thể báo trước nghỉ hưu hoặc thôi việc, giới thiệu con hay người thân. Ứng viên có danh tính riêng, phải đủ điều kiện và được gia chủ chấp thuận; không tự nhận chức vụ. Thiếu tiền duy trì hoặc không còn dinh thự sẽ dừng hợp đồng phù hợp.",
+      "Bật/tắt từng nhiệm vụ và hạn mức chi thường lệ: lịch họp, lịch gia đình, tổng hợp báo cáo công ty, chuẩn bị đối tác, gợi ý giao lưu, điều phối sự kiện và theo dõi bảo trì. Lương và công việc gia đình dùng tiền cá nhân; không tự rút tiền doanh nghiệp. Giao dịch lớn, chuyển tài sản, bán cổ phần và bổ nhiệm CEO vẫn cần bạn quyết định.",
+      "Thiết kế sáu cấp tiệc từ gia đình tới quốc tế, chọn mục đích, địa điểm, số khách, khách mời riêng, ẩm thực, biểu diễn, an ninh, trang trí và dịch vụ. Dự toán và dự phòng phải được duyệt trước; chi phí có thể rất lớn. Tiệc có thể thành công, ít người dự, gây tranh cãi hoặc phát sinh chi phí trong quỹ dự phòng.",
+      "Khách dự tiệc được giữ danh tính trong mạng lưới để gặp lại và đề nghị hợp tác những năm sau. Danh tiếng xét toàn bộ chi phí tiệc; tổng tiền trong lịch sử khớp khoản đã trả, không trừ dịch vụ hai lần.",
+      "Đào tạo nhân viên có lựa chọn mục tiêu năng suất, chất lượng hoặc công nghệ và ba mức ngân sách. Chương trình đang học, thực tập và kế hoạch công ty được lưu; đổi tiền, chuyển góc nhìn và sáp nhập giữ các dữ liệu liên quan."
+    ]
+  },
+  {
     "id": "enterprise-operations-884",
     "version": "8.8.4-operations",
     "releaseStatus": "packaged",

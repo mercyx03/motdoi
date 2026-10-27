@@ -75,7 +75,7 @@
       // tính cách ẩn: không phụ thuộc giàu nghèo hay nghề nghiệp
       honesty: Math.round(15 + r() * 85), warmth: Math.round(10 + r() * 90), ambition: Math.round(10 + r() * 90),
       interests: [U.pick(r, SECTORS), U.pick(r, SECTORS)].filter(function (x, i, a) { return a.indexOf(x) === i; }),
-      trust: Math.round(30 + r() * 20), met: [{ a: l.age, where: o.where || 'một buổi gặp gỡ' }], alive: true, fictional: true };
+      service171:!!o.service171,partyGuest172:!!o.partyGuest172,trust: Math.round(30 + r() * 20), met: [{ a: l.age, where: o.where || 'một buổi gặp gỡ' }], alive: true, fictional: true };
     X.uid(l, p);
     people(l).push(p);
     prune(l);
@@ -90,7 +90,7 @@
     var list = people(l); if (list.length <= 60) return;
     var busy = {}; S(l).deals.forEach(function (d) { if (d.stage !== 'closed') busy[d.pid] = 1; });
     list.sort(function (a, b) { return (alive(b) - alive(a)) || (b.trust - a.trust) || (b.met[b.met.length - 1].a - a.met[a.met.length - 1].a); });
-    for (var i = list.length - 1; i >= 0 && list.length > 60; i--) if (!busy[list[i].uid110]) list.splice(i, 1);
+    for (var i = list.length - 1; i >= 0 && list.length > 60; i--) if (!busy[list[i].uid110]&&!list[i].service171&&!list[i].partyGuest172) list.splice(i, 1);
   }
   function contacts(l, fn) { return people(l).filter(function (p) { return alive(p) && (!fn || fn(p)); }); }
 
@@ -151,6 +151,7 @@
   // C2. Tổ chức tiệc
   // ===================================================================
   var PARTY = {
+    tet: { n: 'Tiệc gặp mặt gia đình / lễ Tết', mood: 3 },
     birthday: { n: 'Tiệc sinh nhật', mood: 4 },
     housewarming: { n: 'Tiệc tân gia', mood: 3, need: function (l) { return l.ownHouse ? true : 'Cần có nhà riêng'; } },
     anniversary: { n: 'Tiệc kỷ niệm ngày cưới', mood: 4, need: function (l) { return l.partner && l.partner.status === 'married' ? true : 'Cần đang có gia đình'; } },
@@ -159,6 +160,7 @@
   };
   var SIZE = { small: { n: 'Thân mật (khoảng 15 khách)', heads: 15 }, mid: { n: 'Vừa (khoảng 60 khách)', heads: 60 }, big: { n: 'Lớn (khoảng 200 khách)', heads: 200, tier: 2 }, grand: { n: 'Đại tiệc (khoảng 500 khách)', heads: 500, tier: 3 } };
   var VENUE = {
+    mansion: { n:'tại dinh thự',per:.025,max:800,need:function(l){return E.OFFICE171&&E.OFFICE171.mansion(l)?true:'Cần sở hữu dinh thự';} },
     home: { n: 'tại nhà', per: 0.0015, max: 60, need: function (l) { return l.ownHouse || l.indep ? true : 'Cần có chỗ ở riêng'; } },
     garden: { n: 'ở sân vườn thuê riêng', per: 0.003, max: 200 },
     restaurant: { n: 'ở nhà hàng', per: 0.004, max: 300 },
@@ -217,47 +219,57 @@
         return { k: g, l: GUESTS[g].n, why: why, run: function (l, r, log) { party(l, r, log, arg.type, arg.size, arg.venue, g); } };
       });
     });
-  function party(l, r, log, type, size, venue, guests) {
+  function party(l, r, log, type, size, venue, guests, config) {
+    if(!PARTY[type]||!SIZE[size]||!VENUE[venue]||!GUESTS[guests])return null;
     var s = S(l), P = PARTY[type], cost = partyCost(l, type, size, venue);
+    if(s.partyCount===l.age&&s.partyN>=2||P.need&&P.need(l)!==true||config&&(!E.PARTY172||!E.PARTY172.valid(l,config)))return null;
+    if(config){var quoted=E.PARTY172.quote(l,config);config.extra=quoted.extra;config.overrun=Math.max(0,Math.min(quoted.planned*.15,Number.isFinite(config.overrun)?config.overrun:0));}
     if (doneThisYear(l, 'party:' + type) || venueWhy(l, size, venue) !== true || SIZE[size].tier && tier(l) < SIZE[size].tier || liquid(l) < cost + reserve(l)) { log('Bữa tiệc chưa thể tổ chức: điều kiện đã thay đổi.', 'neutral'); return null; }
+    if(config){H.cash(l,-config.extra-config.overrun,'Dịch vụ và phát sinh tiệc '+config.level);}
     mark(l, 'party:' + type); s.partyN = s.partyCount === l.age ? (s.partyN || 0) + 1 : 1; s.partyCount = l.age;
     H.cash(l, -cost, P.n + ' ' + VENUE[venue].n);
-    var came = [], declined = [], newPeople = [], t = tier(l);
-    function invite(name, p, done) { if (r() < U.clamp(p, 0.03, 0.97)) { came.push(name); if (done) done(true); } else { declined.push(name); if (done) done(false); } }
-    relatives(l).forEach(function (x) { invite(x.name, 0.45 + closeOf(x) / 200 - (abroadRel(x) ? 0.35 : 0) - openConflict(l, x.id) * 0.2, function (ok) { if (ok) adjustClose(x, 2); }); });
-    if (l.fam) ['m', 'f'].forEach(function (x) { if (x === 'm' ? l.fam.mAlive && !l.fam.noMom : l.fam.fAlive && !l.fam.noDad) invite(x === 'm' ? 'mẹ' : 'bố', 0.8, function (ok) { if (ok && E.NPC) E.NPC.adjustTrust(l, 'parent:' + x, 1); }); });
-    if (guests !== 'family') (l.friends || []).filter(function (f) { return f.alive !== false; }).slice(0, 8).concat(l.bff && l.bff.alive ? [l.bff] : []).forEach(function (f) { invite(f.name, 0.4 + (f.close || 50) / 200, function (ok) { if (ok) f.close = U.clamp((f.close || 50) + 2, 0, 100); }); });
+    var came = [], declined = [], newPeople = [], guestIds=[], invitedIds={}, t = tier(l);
+    function invite(name, p, done, id) { if(came.length>=SIZE[size].heads||id&&invitedIds[id])return;if(id)invitedIds[id]=true;if (r() < U.clamp(p, 0.03, 0.97)) { came.push(name);if(id)guestIds.push(id); if (done) done(true); } else { declined.push(name); if (done) done(false); } }
+    relatives(l).forEach(function (x) { invite(x.name, 0.45 + closeOf(x) / 200 - (abroadRel(x) ? 0.35 : 0) - openConflict(l, x.id) * 0.2, function (ok) { if (ok) adjustClose(x, 2); }, x.id); });
+    if (l.fam) ['m', 'f'].forEach(function (x) { if (x === 'm' ? l.fam.mAlive && !l.fam.noMom : l.fam.fAlive && !l.fam.noDad) invite(x === 'm' ? 'mẹ' : 'bố', 0.8, function (ok) { if (ok && E.NPC) E.NPC.adjustTrust(l, 'parent:' + x, 1); }, 'parent:'+x); });
+    if (guests !== 'family') (l.friends || []).filter(function (f) { return f.alive !== false; }).slice(0, 8).concat(l.bff && l.bff.alive ? [l.bff] : []).forEach(function (f) { invite(f.name, 0.4 + (f.close || 50) / 200, function (ok) { if (ok) f.close = U.clamp((f.close || 50) + 2, 0, 100); }, X.uid(l,f)); });
     if (guests === 'network' || guests === 'star') {
       contacts(l, function (p) { return !p.celeb; }).sort(function (a, b) { return b.trust - a.trust; }).slice(0, 10).forEach(function (p) {
-        invite(p.name, 0.25 + p.trust / 200 - Math.max(0, p.tier - t) * 0.15 + (P.net ? 0.1 : 0), function (ok) { if (ok) seen(l, p, P.n.toLowerCase() + ' của bạn', 3); });
+        invite(p.name, 0.25 + p.trust / 200 - Math.max(0, p.tier - t) * 0.15 + (P.net ? 0.1 : 0), function (ok) { if (ok) seen(l, p, P.n.toLowerCase() + ' của bạn', 3); },p.uid110);
       });
       var n = Math.min(3, 1 + Math.floor(SIZE[size].heads / 150));
-      for (var i = 0; i < n; i++) if (r() < 0.55 + (P.net ? 0.2 : 0)) { var q = meet(l, r, { where: P.n.toLowerCase() + ' của bạn', tier: U.clamp(t + (r() < 0.3 ? 1 : 0) - (r() < 0.3 ? 1 : 0), 0, 4) }); newPeople.push(q); came.push(q.name); }
+      for (var i = 0; i < n; i++) if (came.length<SIZE[size].heads&&r() < 0.55 + (P.net ? 0.2 : 0)) { var q = meet(l, r, { partyGuest172:true,where: P.n.toLowerCase() + ' của bạn', tier: U.clamp(t + (r() < 0.3 ? 1 : 0) - (r() < 0.3 ? 1 : 0), 0, 4) }); newPeople.push(q); came.push(q.name);guestIds.push(q.uid110); }
     }
+    if(config)(config.invitees||[]).forEach(function(id){var p=find(l,id);if(p&&alive(p))invite(p.name,.25+p.trust/200,function(ok){if(ok)seen(l,p,'khách mời riêng '+P.n,3);},id);});
     var fee = 0;
     if (guests === 'star') {
       var stars = contacts(l, function (p) { return p.celeb; });
-      if (!stars.length || r() < 0.5) stars.push(meet(l, r, { kind: 'artist', celeb: true, where: P.n.toLowerCase() + ' của bạn', tier: Math.max(2, t) }));
+      if (!stars.length || r() < 0.5) stars.push(meet(l, r, { partyGuest172:true,kind: 'artist', celeb: true, where: P.n.toLowerCase() + ' của bạn', tier: Math.max(2, t) }));
       stars.slice(0, 2).forEach(function (p) {
         var friendly = p.trust >= 55;
         if (!friendly) fee += l.base * (0.3 + p.tier * 0.2);
-        invite(p.name + ' (' + p.job.toLowerCase() + ')', (friendly ? 0.75 : 0.45) + ((l.fame || 0) > 1e5 ? 0.1 : 0), function (ok) { if (ok) seen(l, p, P.n.toLowerCase() + ' của bạn', 4); else fee -= friendly ? 0 : l.base * (0.3 + p.tier * 0.2); });
+        invite(p.name + ' (' + p.job.toLowerCase() + ')', (friendly ? 0.75 : 0.45) + ((l.fame || 0) > 1e5 ? 0.1 : 0), function (ok) { if (ok) seen(l, p, P.n.toLowerCase() + ' của bạn', 4); else fee -= friendly ? 0 : l.base * (0.3 + p.tier * 0.2); },p.uid110);
       });
       if (fee > 0) H.cash(l, -fee, 'Thù lao khách mời biểu diễn');
     }
-    var attend = came.length / Math.max(1, came.length + declined.length), score = attend * 0.6 + (venue === 'home' ? 0.15 : 0.25) + r() * 0.3;
-    var showy = cost > l.base * 0.3 && cost > Math.max(1, E.netWorth(l) + cost) * 0.015;
+    var etiquette=l.education170&&l.education170.skills.etiquette||0;
+    var attend = came.length / Math.max(1, came.length + declined.length), score = attend * 0.6 + (venue === 'home' ? 0.15 : 0.25) + r() * 0.3+Math.min(.08,etiquette/1000)+(config?config.service*.02:0);
+    var bill=cost+fee+(P.charity?cost*P.charity:0)+(config?config.extra+config.overrun:0);
+    var showy = bill > l.base * 0.3 && bill > Math.max(1, E.netWorth(l) + bill) * 0.015;
     var tail = '';
     if (P.charity) { var gift = cost * P.charity; H.cash(l, -gift, 'Quỹ từ thiện của dạ tiệc'); tail += ' Quỹ từ thiện nhận ' + mo(l, gift) + '.'; rep(l, 3); }
     if (showy) { rep(l, -4); tail += ' Chi phí quá lớn so với tài sản khiến không ít người bàn tán là phô trương.'; }
     else if (score >= 0.65) { rep(l, P.net ? 3 : 2); tail += ' Khách ra về vui vẻ, nhiều người nhắc mãi.'; }
     else if (score < 0.4) { rep(l, -2); tail += ' Khách đến thưa thớt, không khí khá gượng gạo.'; }
-    if (SIZE[size].heads >= 200 && r() < 0.12) { rep(l, -2); tail += ' Một nhóm khách quá chén gây ồn ào, sáng hôm sau còn lan lên mạng.'; }
+    if (SIZE[size].heads >= 200 && r() < (config?Math.max(.02,.12-config.security*.04):.12)) { rep(l, -2); tail += ' Một nhóm khách quá chén gây ồn ào, sáng hôm sau còn lan lên mạng.'; }
     H.fx(l, { hap: Math.round(P.mood * (0.5 + score)), soc: P.net || 1 });
     var names = function (a) { return a.slice(0, 6).join(', ') + (a.length > 6 ? ' và ' + (a.length - 6) + ' người khác' : ''); };
-    log(P.n + ' ' + VENUE[venue].n + ' (' + mo(l, cost) + '). ' + (came.length ? 'Đến dự: ' + names(came) + '.' : 'Gần như không ai đến.') + (declined.length ? ' Không đến được: ' + names(declined) + '.' : '') + (newPeople.length ? ' Bạn làm quen ' + newPeople.map(function (p) { return label(l, p); }).join('; ') + '.' : '') + tail, score >= 0.5 && !showy ? 'good' : 'neutral');
+    log(P.n + ' ' + VENUE[venue].n + ' (' + mo(l, bill) + '). ' + (came.length ? 'Đến dự: ' + names(came) + '.' : 'Gần như không ai đến.') + (declined.length ? ' Không đến được: ' + names(declined) + '.' : '') + (newPeople.length ? ' Bạn làm quen ' + newPeople.map(function (p) { return label(l, p); }).join('; ') + '.' : '') + tail, score >= 0.5 && !showy ? 'good' : 'neutral');
     if (score >= 0.6) H.mem(l, P.n + ' ' + VENUE[venue].n + ' năm ' + l.age + ' tuổi.', 2);
-    return { came: came, declined: declined, met: newPeople, cost: cost, score: score };
+    guestIds.forEach(function(id){var p=find(l,id);if(p)p.partyGuest172=true;});
+    var record={age:l.age,type:type,venue:venue,size:size,guestIds:guestIds.slice(),cost:cost+fee+(P.charity?cost*P.charity:0)+(config?config.extra+config.overrun:0),score:score,config:config||null};(s.partyHistory172||(s.partyHistory172=[])).push(record);
+    if(config&&config.overrun)log('Tiệc phát sinh '+mo(l,config.overrun)+' trong quỹ dự phòng đã duyệt.','neutral');
+    return { record:record,came: came, declined: declined, met: newPeople, cost: cost, score: score };
   }
 
   // ===================================================================
@@ -281,6 +293,7 @@
     if (amt < l.base * Math.pow(10, p.tier - 2)) c -= 0.1;
     if (p.ambition > 70) c += 0.05;
     if (E.STANDING158) c += Math.min(.08, E.STANDING158.power(l).score / 1250);
+    if(l.education170)c+=Math.min(.05,(l.education170.skills.etiquette||0)/2000);
     return U.clamp(c, 0.05, 0.85);
   }
   function dealWhy(l, p) {

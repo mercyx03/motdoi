@@ -1,5 +1,13 @@
 ## v8.8.0-preview — checkpoint đang triển khai, packaged
 
+## 8.8.5-enterprise — lãnh đạo, kế nghiệp và văn phòng gia đình
+
+- Hồ sơ lãnh đạo và bảy nhóm quyết định có hậu quả, trả lương chung với quyết toán.
+- Thực tập 2–3 năm, cố vấn dài hạn, đào tạo nhân viên theo mục tiêu.
+- Quản gia, đề cử kế nhiệm cần duyệt, trợ lý và ngân sách ủy quyền cá nhân.
+- Tiệc sáu cấp, chi phí đầy đủ, dự phòng và khách có danh tính bền vững.
+- Trạng thái packaged, chủ dự án tự phát hành; kiểm thử cuối ghi riêng trong báo cáo nghiệm thu.
+
 ## 8.8.4-operations — chiến lược và nhân sự tổng hợp
 
 - Bảy kế hoạch nhiều năm có ngân sách, rủi ro, khấu hao và kết quả vận hành.

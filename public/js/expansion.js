@@ -322,7 +322,7 @@
       if (!k.uniUntil) k.tuition = 0;
       if (k.tuition && l.indep) H.cash(l, -k.tuition, 'Tiền học cho ' + k.name);
       // đi làm
-      if (!k.job && !k.uniUntil && ka >= 19 && ka <= 60 && !k.jail && (ka >= 22 || k.edu < 5) && r() < 0.6) {
+      if (!k.job && !k.internship170 && !k.uniUntil && ka >= 19 && ka <= 60 && !k.jail && (ka >= 22 || k.edu < 5) && r() < 0.6) {
         if (k.vice === 'ma túy' && r() < 0.6) return;
         k.edu = Math.max(k.edu, ka >= 18 ? 3 : 2);
         k.job = kidJobPick(l, k, r); k.rank = 0; k.jyrs = 0; k.inc = kidIncome(l, k);

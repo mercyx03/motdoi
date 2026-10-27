@@ -73,3 +73,7 @@ Mốc nền tảng đã đạt kiểm thử trọng điểm. Trên mã cuối c�
 Mốc 8.8.3-reports đạt kiểm thử trọng điểm (reports 13, treasury 123, business133 29, business137 79, smoke/save/NPC, Chrome); GĐ6 đợt nâng cấp vẫn còn tích hợp chiến lược, nhân sự, lãnh đạo, thực tập, cố vấn và toàn bộ bổ sung quản gia/trợ lý/tiệc. Chưa chạy regression cuối trên toàn bộ phạm vi; không tính các mục đó PASS.
 
 Mốc chiến lược 8.8.4 đã kiểm trọng điểm và build; nghiệm thu cuối đợt vẫn thiếu leadership, thực tập/cố vấn và supplement quản gia/trợ lý/tiệc. Bản nháp chưa nạp không tính PASS.
+
+## Chốt đợt 8.8.5-enterprise — 28/10/2026
+
+Các mục triển khai còn thiếu của checkpoint 8.8.1–8.8.4 nêu trên đã được tích hợp và kiểm thử trong đợt 8.8.5. Hồ sơ hiện hành: ENTERPRISE-UPGRADE-ACCEPTANCE.md và bảng checklist ENTERPRISE-UPGRADE-PROGRESS.md; các ghi chú checkpoint trước là lịch sử. Đã chạy smoke/save/safety/NPC, hồi quy các hệ thống bị ảnh hưởng, năm chuỗi tích hợp và Chrome trên dist; package/ZIP đạt. Không chạy toàn bộ 77 nhóm theo K1 yêu cầu gốc. Còn kiểm chứng ngoài môi trường: mẫu save thật của người chơi, thiết bị thật và binding Pages REVIEWS_DB. Không tự deploy hoặc ghi trạng thái đã phát hành.

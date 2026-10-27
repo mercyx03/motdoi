@@ -26,7 +26,7 @@
     var id = uid(l, person), R = E.BUSINESS133, found = null;
     companies(l).forEach(function (c) {
       var roles = c.roles || {};
-      Object.keys(roles).forEach(function (rid) { var x = roles[rid]; if (!found && x && x.kind === 'relative' && E.NPC.same(l, x.personId, id) && R.roles[rid]) found = { company: c, rid: rid, title: R.roles[rid].n, place: c.name || 'Doanh nghiệp gia đình', year: R.pay(l, c, 'relative'), since: x.since }; });
+      Object.keys(roles).forEach(function (rid) { var x = roles[rid]; if (!found && x && x.kind === 'relative' && E.NPC.same(l, x.personId, id) && R.roles[rid]) found = { company: c, rid: rid, title: R.roles[rid].n, place: c.name || 'Doanh nghiệp gia đình', year: E.LEADERS169?E.LEADERS169.pay(l,c,x):R.pay(l, c, 'relative'), since: x.since }; });
     });
     return found;
   }
