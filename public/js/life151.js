@@ -194,7 +194,7 @@
   // Điều kiện theo vai trò; trả về true hoặc lý do
   function canJoin(l, sh, role) {
     if (!free(l)) return 'Hiện không thể tham gia';
-    if (!airing(l, sh)) return sh.to && yr(l) > sh.to ? 'Chương trình đã ngừng sản xuất' : yr(l) < sh.from ? 'Chương trình chưa ra đời' : 'Chương trình không phát sóng ở nơi bạn sống';
+    if (!E.SHOW151.airing(l, sh)) return sh.to && yr(l) > sh.to ? 'Chương trình đã ngừng sản xuất' : yr(l) < sh.from ? 'Chương trình chưa ra đời' : 'Chương trình không phát sóng ở nơi bạn sống';
     var R = sh.roles[role]; if (!R) return 'Chương trình không có vai trò này';
     if (S(l).active) return 'Đang tham gia một chương trình khác';
     var h = hist(l, sh.id).filter(function (x) { return x.role === role; }), last = h[h.length - 1];
@@ -209,13 +209,15 @@
   // ===================================================================
   var HANDLERS = {};
   function A(l) { return S(l).active; }
+  // Bộ xử lý theo vai trò (huấn luyện viên / giám khảo có luật riêng), mặc định theo chương trình
+  function hd(a) { var sh = SHOWS[a.id], R = sh && sh.roles[a.role]; return HANDLERS[R && R.handler || sh.handler]; }
   function token(l) { return A(l) && A(l).token; }
   function begin(l, r, log, id, role, o) {
     var sh = SHOWS[id], s = S(l); if (canJoin(l, sh, role) !== true) return null;
     var a = { id: id, role: role, year: yr(l), age: l.age, season: season(l, sh), token: id + ':' + yr(l) + ':' + hash(l.id + id + l.age).toString(36), step: 0, manual: o && o.manual != null ? o.manual : true, log: [] };
     s.active = a; delete s.invites[id];
-    HANDLERS[sh.handler].start(l, r, a, sh);
-    if (sh.fee && role !== 'contestant' && role !== 'player') { var fee = V(l, sh.fee * (1 + Math.log10(1 + (l.fame || 0) / 1e5))); pay(l, a, 'fee', fee, 'Cát-xê ' + sh.name); }
+    hd(a).start(l, r, a, sh);
+    var feeBase = sh.roles[role].fee || sh.fee; if (feeBase && role !== 'contestant' && role !== 'player') { var fee = V(l, feeBase * (1 + Math.log10(1 + (l.fame || 0) / 1e5))); pay(l, a, 'fee', fee, 'Cát-xê ' + sh.name); }
     log((role === 'contestant' || role === 'player' ? 'Bạn đăng ký tham gia ' : 'Bạn nhận lời ' + sh.roles[role].n + ' ') + sh.name + ' mùa ' + a.season + '.', 'neutral');
     queue(l, r);
     return a;
@@ -237,17 +239,17 @@
     if (res.mem) H.mem(l, res.mem, 4);
     return rec;
   }
-  X.menu('show151_step', function (l) { var a = A(l); return a ? SHOWS[a.id].name + ' · ' + HANDLERS[SHOWS[a.id].handler].title(l, a, SHOWS[a.id]) : 'Chương trình truyền hình'; },
+  X.menu('show151_step', function (l) { var a = A(l); return a ? SHOWS[a.id].name + ' · ' + hd(a).title(l, a, SHOWS[a.id]) : 'Chương trình truyền hình'; },
     function (l) { return A(l) ? true : 'Không có chương trình đang diễn ra'; },
-    function (l, d) { var a = A(l); if (!a || d && d.arg && d.arg.token !== a.token) return 'Chương trình đã kết thúc.'; return HANDLERS[SHOWS[a.id].handler].text(l, a, SHOWS[a.id]); },
+    function (l, d) { var a = A(l); if (!a || d && d.arg && d.arg.token !== a.token) return 'Chương trình đã kết thúc.'; return hd(a).text(l, a, SHOWS[a.id]); },
     function (l, arg) {
       var a = A(l); if (!a || arg.token !== a.token || arg.step !== a.step) return [];
-      return HANDLERS[SHOWS[a.id].handler].rows(l, a, SHOWS[a.id]).map(function (row) { var run = row.run; row.run = function (l, r, log) { var b = A(l); if (!b || b.token !== arg.token || b.step !== arg.step) return; b.step++; run(l, r, log); if (A(l) === b) queue(l, r); }; return row; });
+      return hd(a).rows(l, a, SHOWS[a.id]).map(function (row) { var run = row.run; row.run = function (l, r, log) { var b = A(l); if (!b || b.token !== arg.token || b.step !== arg.step) return; b.step++; run(l, r, log); if (A(l) === b && !b.waiting) queue(l, r); }; /* đang chơi trò nhỏ thì chờ trò đó kết thúc */ return row; });
     });
   // Chế độ Tự động trả lời theo hiểu biết của nhân vật, không phải chọn ngẫu nhiên.
   E.DEC.show151_step.auto = function (l, d, r) {
     var a = A(l), keys = d.data && d.data.keys || [], allowed = function (k) { var i = keys.indexOf(k); return i >= 0 && d.opts.some(function (o) { return o.k === String(i); }); };
-    var k = a && HANDLERS[SHOWS[a.id].handler].auto ? HANDLERS[SHOWS[a.id].handler].auto(l, a, r, allowed) : null;
+    var k = a && hd(a).auto ? hd(a).auto(l, a, r, allowed) : null;
     if (k != null && allowed(k)) return String(keys.indexOf(k));
     var first = d.opts.find(function (o) { return o.k !== 'cancel'; }); return first ? first.k : 'cancel';
   };
@@ -464,7 +466,7 @@
   function listRows(l) {
     var rows = [];
     Object.keys(SHOWS).forEach(function (id) {
-      var sh = SHOWS[id]; if (!airing(l, sh) && !(sh.to && yr(l) > sh.to && sh.country === (vn(l) ? 'VN' : 'WORLD'))) return;
+      var sh = SHOWS[id]; if (!E.SHOW151.airing(l, sh) && !(sh.to && yr(l) > sh.to && sh.country === (vn(l) ? 'VN' : 'WORLD'))) return;
       Object.keys(sh.roles).forEach(function (role) {
         var why = canJoin(l, sh, role), inv = invitedBack(l, id);
         if (sh.roles[role].hidden && why !== true) return;

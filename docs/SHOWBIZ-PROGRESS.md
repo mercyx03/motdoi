@@ -35,10 +35,35 @@ Bộ câu hỏi `E.QUIZ151`: 17 dạng (sinh theo tham số: tính nhanh, phần
 
 Kiểm thử mốc 1–2: showbiz-audit 56 · showbiz-quiz 4.047 · browser-showbiz (4 chương trình × 2 kích thước) · hồi quy mục 9 cho show151 / show151_step / show151_invite · smoke · saves-compat · save-safety · NPC · pace-gd5 · integration-gd6 · integration-feedback · feedback-b · update-*.
 
-## Mốc 3–6
+## Mốc 3 — Gameshow vận động, chiến thuật, hẹn hò, âm nhạc
+
+| Chương trình | Quốc gia, thời gian | Format / luật | Trạng thái |
+|---|---|---|---|
+| Running Man Việt Nam, 2 Ngày 1 Đêm | VN (có sẵn) | Giữ nguyên mùa quay life48 + thử thách có đáp án life64; thêm nhiệm vụ đặc biệt sau mỗi tập (chỉ thưởng danh tiếng, độ thân) | HOÀN THÀNH |
+| Running Man (Hàn Quốc) | KR, từ 2010 | Khách mời 1 tập: săn manh mối + xé bảng tên | HOÀN THÀNH |
+| New Journey to the West | KR, từ 2015 | Khách mời: oẳn tù tì, đoán số, bốc bát | HOÀN THÀNH |
+| The Genius | KR, 2013–2015 | 8 người, đấu giá kín / số duy nhất / hợp tác–phản bội, garnet, miễn loại, đấu loại bốc sỏi (Nim), chung kết | HOÀN THÀNH |
+| The Devil's Plan | KR, từ 2023 | Như trên, thứ tự trò khác | HOÀN THÀNH |
+| Bloody Game | KR, từ 2021 | Như trên, 5 vòng | HOÀN THÀNH |
+| Single's Inferno, Heart Signal, EXchange (Transit Love), I Am Solo | KR, từ 2021 / 2017 / 2021 / 2021 | Hồ sơ, gu, hấp dẫn, giới thiệu, thi giành quyền hẹn, hẹn hò, tin nhắn ẩn danh, đối thủ tình cảm, người yêu cũ, lựa chọn cuối hai chiều, tiếp tục hẹn hò bằng E.DEC.love | HOÀN THÀNH |
+| Người Ấy Là Ai, Đảo Thiên Đường, Bạn Muốn Hẹn Hò | VN (có sẵn, nhiều vòng) | Giữ nguyên | GIỮ NGUYÊN |
+| Rap Việt | VN, từ 2020 | Tuyển chọn (HLV chọn, nón vàng khi cả 4 chọn → bỏ vòng đối đầu), đối đầu, bứt phá, bán kết, chung kết | HOÀN THÀNH |
+| Giọng Hát Việt | VN, 2012–2019 | Giấu mặt (quay ghế), chọn HLV, đối đầu (có thể được giành), loại trực tiếp, liveshow, chung kết | HOÀN THÀNH |
+| Vietnam Idol | VN, 2007–2016, từ 2023 | Thử giọng 3 giám khảo (≥2 đồng ý, vé vàng), nhà hát, Gala bình chọn, chung kết | HOÀN THÀNH |
+| Ca Sĩ Mặt Nạ | VN, 2022–2023 | Nghệ sĩ nổi tiếng, mặt nạ, giấu giọng, bị đoán đủ 3 gợi ý hoặc bình chọn thấp → tháo mặt nạ, Mặt nạ vàng | HOÀN THÀNH |
+| HLV Rap Việt / Giọng Hát Việt, giám khảo Vietnam Idol | VN | Chọn 3 thí sinh, 3 vòng huấn luyện (kỹ thuật / cảm xúc / sân khấu), loại dần, kết quả mùa | HOÀN THÀNH |
+
+Trò chơi nhỏ `E.MINI152` (luật xác định, kiểm thử chơi đúng chiến thuật thắng rõ hơn): xé bảng tên 0,99 so với 0,00; manh mối 1,00 / 0,24; oẳn tù tì 0,92 / 0,07; đoán số 1,00 / 0,12; bốc bát là may rủi có thông tin (0,65).
+
+Phát hiện khi làm: chặng thi life48 ở chế độ rút gọn đã có thử thách có đáp án (life64) — giữ nguyên, không chèn đè.
+
+Kiểm thử mốc 3: showbiz-games 585 · showbiz-dating-music 69 · browser-showbiz m3 (4 chương trình × 2 kích thước) · quét chữ hiển thị mọi chương trình (0 lỗi sau khi sửa 2 chỗ "undefined") · hồi quy liên quan.
+
+## Mốc 4–6
 
 CHƯA HOÀN THÀNH (đang làm).
 
 ## Checkpoint
 
-- Mốc 1–2: commit xem lịch sử nhánh (`feat(showbiz-2)`).
+- Mốc 1–2: commit `8d004e0` (`feat(showbiz-2)`).
+- Mốc 3: commit xem lịch sử nhánh (`feat(showbiz-3)`).

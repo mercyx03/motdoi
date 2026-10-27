@@ -1,5 +1,25 @@
 [
   {
+    "id": "showbiz-m3-variety-dating-music",
+    "version": "8.7.0-3",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T03:56:35.658Z",
+    "title": "Một Đời — Gameshow vận động, chiến thuật, hẹn hò và cuộc thi âm nhạc",
+    "summary": "Nhiều chương trình mới có luật chơi riêng: trò chơi xé bảng tên, suy luận, đấu trí chiến thuật, show hẹn hò thực tế và các cuộc thi âm nhạc từ vòng giấu mặt đến chung kết.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Running Man Việt Nam và 2 Ngày 1 Đêm giữ nguyên mùa quay, thử thách và cát-xê; sau mỗi tập có thêm một nhiệm vụ đặc biệt: xé bảng tên theo khu vực (đoán đường đi của đối thủ, phục kích, liên minh có thể bị phản bội), săn hộp bí mật bằng manh mối, oẳn tù tì với người dẫn có thói quen riêng, bốc bát canh đắng, đoán số giành chỗ ngủ. Thắng nhiệm vụ giúp thêm người theo dõi và thân hơn với dàn thành viên.",
+      "Khi hoạt động ở Hàn Quốc hoặc đã rất nổi tiếng, bạn có thể làm khách mời Running Man (Hàn Quốc) và New Journey to the West.",
+      "Gameshow chiến thuật The Genius, The Devil's Plan, Bloody Game: tám người chơi với chiến thuật khác nhau (thận trọng, liều lĩnh, tham lam, công bằng…) qua các trò đấu giá kín, số lớn nhất duy nhất, hợp tác hay phản bội; người thắng nhận garnet và được miễn loại, người cuối bảng vào trận bốc sỏi đấu loại; hai người cuối cùng tranh chức vô địch.",
+      "Show hẹn hò Single's Inferno, Heart Signal, EXchange (Transit Love), I Am Solo: mỗi người tham gia có tuổi, nghề, tính cách và gu riêng; bạn giới thiệu bản thân, thi đấu giành quyền hẹn, chọn người đi hẹn, gửi tin nhắn ẩn danh, đối mặt người theo đuổi khác hay người yêu cũ. Đêm cuối chỉ thành đôi khi hai người cùng chọn nhau, sau đó có thể tiếp tục tìm hiểu. Chỉ dành cho người độc thân từ 20 tuổi.",
+      "Cuộc thi âm nhạc: Rap Việt (tuyển chọn — cả bốn huấn luyện viên chọn thì nhận nón vàng, đối đầu, bứt phá, bán kết, chung kết), Giọng Hát Việt 2012–2019 (giấu mặt — quay ghế, chọn đội, đối đầu, loại trực tiếp, liveshow), Vietnam Idol (thử giọng ba giám khảo, nhà hát, các đêm Gala; tạm dừng 2017–2022), Ca Sĩ Mặt Nạ 2022–2023 dành cho nghệ sĩ nổi tiếng (giấu thân phận, bị đoán trúng thì phải tháo mặt nạ). Kết quả dựa trên kỹ năng ca hát, bài hát bạn chọn, việc tập luyện, câu chuyện và danh tiếng.",
+      "Nghệ sĩ rất nổi tiếng có thể làm huấn luyện viên Rap Việt, Giọng Hát Việt hoặc giám khảo Vietnam Idol: chọn thí sinh, dẫn dắt đội qua các vòng; thí sinh của bạn sau này có thể trở thành người quen trong giới."
+    ]
+  },
+  {
     "id": "showbiz-m2-quiz-shows",
     "version": "8.7.0-2",
     "releaseStatus": "packaged",

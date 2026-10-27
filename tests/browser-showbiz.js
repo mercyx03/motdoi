@@ -10,12 +10,21 @@ const FLOWS = {
     { name: 'altp', setup: 'adult', open: 'show151', clicks: ['Ai Là Triệu Phú — người chơi', '50:50'], answers: 3, expect: 'Câu hỏi số' },
     { name: 'olympia', setup: 'student', open: 'show151', clicks: ['Đường Lên Đỉnh Olympia — thí sinh'], answers: 8, expect: 'Điểm: bạn' },
     { name: 'stt', setup: 'adult', open: 'show151', clicks: ['Siêu Trí Tuệ Việt Nam — thí sinh', 'Đã ghi nhớ xong'], answers: 2, expect: 'Giám khảo chấm' }
+  ],
+  m3: [
+    { name: 'runningman', setup: 'star', open: 'gameshow', clicks: ['Tham gia Running Man Việt Nam', 'Làm khách mời', '*', '*'], answers: 0, expect: 'Nhiệm vụ đặc biệt' },
+    { name: 'devilsplan', setup: 'kr', open: 'show151', clicks: ["The Devil's Plan — người chơi", 'Hợp tác'], answers: 3, expect: 'garnet' },
+    { name: 'heartsignal', setup: 'kr', open: 'show151', clicks: ['Heart Signal — người tham gia', 'Kể chân thật'], answers: 3, expect: 'Những người bạn quan tâm' },
+    { name: 'rapviet', setup: 'rapper', open: 'show151', clicks: ['Rap Việt — thí sinh'], answers: 2, expect: 'huấn luyện viên' }
   ]
 };
 function seed(kind, id) {
   const E = G.E, l = E.createLife({ mode: 'vn', seed: 151, year: kind === 'student' ? 2008 : 1995 });
   Object.assign(l, { age: kind === 'student' ? 17 : 30, alive: true, school: kind === 'student' ? 'THPT chuyên' : null, indep: kind !== 'student', pending: [], yr: { items: [] }, job: null, partner: null });
-  l.flags.military = 0; l.money = l.base * 10; l.st.kno = 90; l.edu = kind === 'student' ? 3 : 5;
+  l.flags.military = 0; l.money = l.base * 10; l.st.kno = 90; l.edu = kind === 'student' ? 3 : 5; l.st.hea = 90;
+  if (kind === 'star') { E.startJob(l, 'dien_vien', () => 0, () => { }, true); l.fame = 3e5; }
+  if (kind === 'kr') { l.abroad = { code: 'KR', perm: true, name: 'Hàn Quốc' }; l.fame = 5e5; l.birthYear = 1995; }
+  if (kind === 'rapper') { E.startJob(l, 'rapper', () => 0, () => { }, true); l.skill = 70; }
   const d = E.DEC[id].make(l, () => 0); d.manual = true; l.pending = [d];
   localStorage.setItem('mkn.current', JSON.stringify({ life: l, cohort: [], auto: false, speed: 1 }));
   return true;

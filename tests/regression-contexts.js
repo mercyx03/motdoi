@@ -56,4 +56,6 @@ add('dark149',l=>{E.startJob(l,Object.keys(E.CAR).find(k=>E.CAR[k].fame),()=>0,(
 /* Showbiz: một chương trình đang ghi hình (bắt đầu bằng hàm của game) */
 add('show151_step',l=>{l.age=30;l.st.kno=80;E.SHOW151.begin(l,()=>0.3,()=>{},'nnc','contestant');l.pending=[];});
 out.show151_step.arg={token:out.show151_step.life.flags.show151.active.token,step:out.show151_step.life.flags.show151.active.step};
+add('mini152',l=>{l.age=30;l.flags.mini152={kind:'rps',token:'ctx',st:E.MINI152.MINI.rps.init('ctx',{host:'người dẫn'}),done:'none',ctx:{title:'Oẳn tù tì'},manual:true,notes:[]};});
+out.mini152.arg={token:'ctx',n:0};
 return out;};
