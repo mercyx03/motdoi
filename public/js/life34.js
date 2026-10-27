@@ -191,7 +191,7 @@
   var cy0 = E.careerYear;
   E.careerYear = function (l, r, log) {
     var inc = cy0.apply(this, arguments);
-    if (l.job && E.resolveJob(l.job.id) === 'cay_thue' && inc > 0) {
+    if (l.alive && l.job && E.resolveJob(l.job.id) === 'cay_thue' && inc > 0) { // GĐ2.5: mất giữa năm thì không ghi thêm
       var m = boostMonth(l); inc = V(l, m.month) * 12 * Math.exp(U.normal(r) * 0.2);
       l.skill = Math.min(100, (l.skill || 30) + 1.5);
       if (!l.job.boostNoted || r() < 0.15) { l.job.boostNoted = true; log('Cày thuê ' + boostGame(l) + ': nhận đơn ' + m.tier + ' giá ~' + U.fmtNum(m.price) + ' nghìn đồng/' + m.unit + ', mỗi ngày leo được khoảng ' + U.fmtNum(Math.round(m.perDay * 10) / 10) + ' ' + m.unit + ' — tháng kiếm khoảng ' + mo(l, V(l, m.month)) + '.', 'money'); }

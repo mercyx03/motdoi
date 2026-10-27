@@ -68,6 +68,7 @@
     people(l).forEach(function (x) { a.push(x.name); });
     ((l.flags && l.flags.exList) || []).forEach(function (x) { a.push(x.name); });
     ((l.flags && l.flags.deadPartners) || []).forEach(function (x) { a.push(x.n); }); // v7.4.1: người yêu / bạn đời đã mất
+    var st = l.flags && l.flags.family129 && l.flags.family129.stepParent; if (st && st.name) a.push(st.name); // GĐ2.5: bố / mẹ kế (life129)
     return a;
   }
   H.stranger = function (l, r, sex) {

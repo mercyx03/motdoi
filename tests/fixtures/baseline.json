@@ -1,0 +1,188 @@
+{
+  "version": "8.5.0",
+  "lives": 120,
+  "registry": {
+    "DEC": 1298,
+    "TRIG": 687,
+    "ACT": 240,
+    "EVENTS": 79,
+    "hooksYear": 121,
+    "trigConstP": 600,
+    "trigDuplicateIds": [
+      "concert",
+      "casting"
+    ]
+  },
+  "life": {
+    "avgDeathAge": 73.21,
+    "reach50Pct": 84.2,
+    "withChildPctOf50": 29.7,
+    "avgKidsOf50": 0.32,
+    "everPartnerPctOf50": 94.1,
+    "uniDegreePctVN25": 10.3,
+    "jobYearPct": 50.4,
+    "debtYearPct": 28
+  },
+  "events": {
+    "decisionsPerYearBegin": 2.05,
+    "decisionsPerYearFinish": 0.37,
+    "finishQueueMax": 4,
+    "topDecisions": [
+      {
+        "id": "world_doi_song",
+        "perLife": 10.03
+      },
+      {
+        "id": "nghe_chuyen_moi",
+        "perLife": 8.07
+      },
+      {
+        "id": "weather125",
+        "perLife": 5.07
+      },
+      {
+        "id": "law122",
+        "perLife": 3.03
+      },
+      {
+        "id": "nd_su_kien",
+        "perLife": 2.94
+      },
+      {
+        "id": "ban_than_hen",
+        "perLife": 2.4
+      },
+      {
+        "id": "nghe_kh",
+        "perLife": 2.32
+      },
+      {
+        "id": "que_loi_moi",
+        "perLife": 2.24
+      },
+      {
+        "id": "ban_than_moi",
+        "perLife": 2.18
+      },
+      {
+        "id": "marry",
+        "perLife": 2.07
+      },
+      {
+        "id": "bau_cu",
+        "perLife": 2.01
+      },
+      {
+        "id": "gia_dinh_hai_ben51",
+        "perLife": 1.9
+      },
+      {
+        "id": "job",
+        "perLife": 1.89
+      },
+      {
+        "id": "crisis123",
+        "perLife": 1.85
+      },
+      {
+        "id": "van_hoi51",
+        "perLife": 1.72
+      }
+    ],
+    "topFinishQueued": [
+      {
+        "id": "weather125",
+        "perLife": 5.07
+      },
+      {
+        "id": "law122",
+        "perLife": 3.03
+      },
+      {
+        "id": "crisis123",
+        "perLife": 1.85
+      },
+      {
+        "id": "travel50_step",
+        "perLife": 1.47
+      },
+      {
+        "id": "patron125",
+        "perLife": 1.22
+      },
+      {
+        "id": "localLife138",
+        "perLife": 0.83
+      },
+      {
+        "id": "family100_love_schedule",
+        "perLife": 0.6
+      },
+      {
+        "id": "studyReview136",
+        "perLife": 0.57
+      },
+      {
+        "id": "family100_parent_gia_truong",
+        "perLife": 0.57
+      },
+      {
+        "id": "moment141",
+        "perLife": 0.57
+      }
+    ],
+    "repeatedLogTextsPerLife": 29.3
+  },
+  "tone": {
+    "good": 16825,
+    "bad": 5154,
+    "neutral": 16829,
+    "big": 954,
+    "money": 18851,
+    "goodToBad": 3.26,
+    "badPct": 13.3
+  },
+  "save": {
+    "medianKB": 149,
+    "maxKB": 199.5,
+    "medianLog": 566,
+    "maxLog": 840,
+    "life138PeopleAvg": 69.98,
+    "life138PeopleMax": 108,
+    "topFlagNamespacesKB": [
+      {
+        "ns": "life138",
+        "avgKB": 48.73
+      },
+      {
+        "ns": "cd",
+        "avgKB": 1.28
+      },
+      {
+        "ns": "scN",
+        "avgKB": 1.22
+      },
+      {
+        "ns": "career92",
+        "avgKB": 0.77
+      },
+      {
+        "ns": "expansion110",
+        "avgKB": 0.71
+      },
+      {
+        "ns": "world120",
+        "avgKB": 0.48
+      },
+      {
+        "ns": "family100",
+        "avgKB": 0.42
+      },
+      {
+        "ns": "travel50",
+        "avgKB": 0.41
+      }
+    ]
+  },
+  "seconds": 16
+}

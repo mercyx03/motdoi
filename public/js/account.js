@@ -7,8 +7,10 @@
   'use strict';
   if (typeof window === 'undefined' || typeof document === 'undefined') return; // chỉ chạy trong trình duyệt
   var KEY = 'mkn.account', K = { ach: 'mkn.ach', tree: 'mkn.tree', mem: 'mkn.memorial', recent: 'mkn.recent', cur: 'mkn.current' };
-  function get(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
-  function set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
+  // G.SaveStore (save-store.js): bản JSON hỏng được cất lại trước khi bị ghi đè bằng dữ liệu tài khoản, lỗi ghi được ghi nhận
+  var SS = window.G && window.G.SaveStore;
+  function get(k, d) { if (SS) { var r = SS.read(k); return r.status === 'ok' && r.value != null ? r.value : d; } try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function set(k, v) { if (SS) return SS.write(k, v).ok; try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
   function del(k) { try { localStorage.removeItem(k); } catch (e) { } }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function acc() { var a = get(KEY, null); return a && /^[a-f0-9]{64}$/.test(a.t || '') ? a : null; }
@@ -107,7 +109,11 @@
     if (app && app.refresh) app.refresh();
     return changedCur;
   }
-  function packed(d) { var s = JSON.stringify(d); if (s.length > 1400000 && d.cur) { var x = Object.assign({}, d, { cur: null }); return { data: x, droppedCur: true }; } return { data: d, droppedCur: false }; }
+  // Máy chủ nhận dữ liệu ≤ 1.500.000 ký tự và cả yêu cầu ≤ 1.600.000 byte UTF-8: đo cả hai. Quá lớn thì bỏ cuộc đời đang chơi; vẫn quá thì không gửi.
+  function packed(d) {
+    if (SS) { var p = SS.cloudPack(d); if (!p.ok) { var e = Error('Dữ liệu tài khoản quá lớn để đồng bộ (' + Math.round(p.bytes / 1024) + ' KB, giới hạn khoảng ' + Math.round(SS.CLOUD.bytes / 1024) + ' KB).'); e.code = 'SAVE_TOO_LARGE'; throw e; } return p; }
+    var s = JSON.stringify(d); if (s.length > 1400000 && d.cur) { var x = Object.assign({}, d, { cur: null }); return { data: x, droppedCur: true }; } return { data: d, droppedCur: false };
+  }
   var busy = null, lastSync = get('mkn.accountSync', 0);
   async function sync(why) {
     if (!acc()) return null; if (busy) return busy;
@@ -171,7 +177,13 @@
   setInterval(function(){if(!document.hidden&&acc())inbox();},45000);
   window.addEventListener('focus',function(){inbox();});
   var timer = null;
-  function autoSync() { if (!acc()) return; clearTimeout(timer); timer = setTimeout(function () { sync('auto').catch(function (e) { if (e.code === 'NOT_LOGGED_IN') { del(KEY); label(); document.dispatchEvent(new Event('account-profile-changed')); } }); }, 1500); }
+  // Đồng bộ tự động thất bại: ghi nhận lỗi và báo một lần cho mỗi loại lỗi trong phiên chơi (trước đây bị bỏ qua im lặng)
+  var syncWarned = {};
+  function autoSync() { if (!acc()) return; clearTimeout(timer); timer = setTimeout(function () { sync('auto').then(function () { syncWarned = {}; }).catch(function (e) {
+    if (e.code === 'NOT_LOGGED_IN') { del(KEY); label(); document.dispatchEvent(new Event('account-profile-changed')); return; }
+    var code = e.code || 'NETWORK'; if (SS) SS.logError('cloud', code, e.message);
+    if (!syncWarned[code]) { syncWarned[code] = true; toast('Chưa đồng bộ được lên tài khoản: ' + (e.message || 'lỗi kết nối') + ' Dữ liệu trên máy này vẫn còn nguyên.'); }
+  }); }, 1500); }
   window.G = window.G || {}; window.G.Account = { open: open, sync: sync, autoSync: autoSync, merge: merge, signedIn: function () { return !!acc(); }, profile: function(){var a=acc();return a?{displayName:a.displayName||'',username:a.u}:null;}, auth: function(action,body){return api(action,body,true);} };
   document.addEventListener('DOMContentLoaded', init); if (document.readyState !== 'loading') init();
   var inited = false;

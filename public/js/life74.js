@@ -146,6 +146,7 @@
   function becomeLovers(l, r, log, f, t) {
     if (l.partner || !f || f.wed || f.married || f.status === 'married' || f.taken) return;
     var p = { name: f.name, sex: f.sex, age: l.age + (f.d || 0), status: 'dating', since: l.age, alive: true, fromFriend: true };
+    if (E.UPDATE110) p.uid110 = E.UPDATE110.uid(l, f); // GĐ2: cùng một người — người yêu dùng chung danh tính với bạn thân
     if (p.age >= 18 && H.partnerJob) H.partnerJob(l, p, r);
     l.partner = p; f.lover = true; f.close = Math.min(100, (f.close || 50) + 15);
     if (!l.flags.everDated) { l.flags.everDated = true; if (!l.flags.firstLove) l.flags.firstLove = f.name; }

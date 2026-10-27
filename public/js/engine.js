@@ -593,7 +593,7 @@
   function createLife(opts) {
     opts = opts || {};
     var life = {
-      v: G.VERSION, id: Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36),
+      v: G.VERSION, sv: SAVE_SCHEMA, id: Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36),
       mode: opts.mode === 'world' ? 'world' : 'vn', variant: opts.variant === '63' ? '63' : '34',
       rs: opts.seed != null ? opts.seed | 0 : U.newSeed(), lifeMin: opts.lifeMin || 30, createdAt: Date.now(),
       difficulty: opts.difficulty === 'hardcore' ? 'hardcore' : 'normal'
@@ -2136,9 +2136,39 @@
 
   function jobTitle(life) { return E.jobTitleOf ? E.jobTitleOf(life) : (life.job ? (life.job.t || life.job.id) : null); }
 
+  // ================= PHIÊN BẢN CẤU TRÚC BẢN LƯU =================
+  // l.sv: phiên bản cấu trúc dữ liệu của bản lưu (không phải phiên bản game). Bản lưu cũ chưa có sv được coi là 0.
+  // Mỗi bước chỉ chạy một lần, theo thứ tự, cho bản lưu có sv nhỏ hơn `to`. Phần chuẩn hóa trường cũ bên dưới
+  // (và E.migrateExt của các module) vẫn chạy ở mọi lần nạp như trước, nên bước 0 → 1 chỉ đánh dấu phiên bản.
+  var SAVE_SCHEMA = 1;
+  var SCHEMA_STEPS = [
+    { to: 1, run: function () { } }
+  ];
+  // Module mở rộng đăng ký bước nâng cấp của mình (ví dụ life142: hợp nhất danh tính & quan hệ NPC)
+  function registerSchemaStep(step) {
+    if (!step || !(step.to > 0) || typeof step.run !== 'function' || SCHEMA_STEPS.some(function (s) { return s.to === step.to; })) throw Error('Bước nâng cấp cấu trúc không hợp lệ hoặc bị trùng: ' + (step && step.to));
+    SCHEMA_STEPS.push(step); SCHEMA_STEPS.sort(function (a, b) { return a.to - b.to; });
+    if (step.to > SAVE_SCHEMA) { SAVE_SCHEMA = step.to; if (G.E) G.E.SAVE_SCHEMA = SAVE_SCHEMA; }
+    return SAVE_SCHEMA;
+  }
+  function saveSchema(l) { var v = l && l.sv; return v == null ? 0 : typeof v === 'number' && isFinite(v) && v >= 0 && Math.floor(v) === v ? v : NaN; }
+  function schemaError(code, sv) { var e = new Error(code === 'FUTURE_SCHEMA' ? 'Bản lưu thuộc cấu trúc v' + sv + ', mới hơn mức game hỗ trợ (v' + SAVE_SCHEMA + ')' : code === 'BAD_SCHEMA' ? 'Phiên bản cấu trúc bản lưu không hợp lệ' : 'Bản lưu thiếu thông tin cơ bản của nhân vật'); e.code = code; e.sv = sv; return e; }
+  // Kiểm tra trước khi nạp, không sửa dữ liệu: { ok, code?, sv, max }
+  function checkSave(l) {
+    var sv = saveSchema(l), out = { ok: false, sv: sv, max: SAVE_SCHEMA };
+    if (!l || typeof l !== 'object' || Array.isArray(l) || typeof l.name !== 'string' || !isFinite(l.age) || !isFinite(l.birthYear)) { out.code = 'INVALID'; return out; }
+    if (sv !== sv) { out.code = 'BAD_SCHEMA'; return out; }
+    if (sv > SAVE_SCHEMA) { out.code = 'FUTURE_SCHEMA'; return out; }
+    out.ok = true; return out;
+  }
+
   // Nâng cấp dữ liệu lưu từ bản cũ để người chơi đang chơi dở không bị mất tiến trình
   function migrate(l) {
     if (!l) return l;
+    // Bản lưu của cấu trúc mới hơn: không ép về cấu trúc cũ, không sửa gì — để giao diện giữ nguyên bản lưu và báo cho người chơi.
+    var chk = checkSave(l);
+    if (!chk.ok) throw schemaError(chk.code, chk.sv);
+    for (var si = 0, sv = chk.sv; si < SCHEMA_STEPS.length; si++) if (sv < SCHEMA_STEPS[si].to) { SCHEMA_STEPS[si].run(l); sv = SCHEMA_STEPS[si].to; }
     l.difficulty = l.difficulty === 'hardcore' ? 'hardcore' : 'normal';
     if (l.prov) {
       var admin = VN.P34.find(function (p) { return p.name === l.prov.neu; });
@@ -2159,6 +2189,7 @@
     if (l.job && E.resolveJob) l.job.id = E.resolveJob(l.job.id);
     if (E.migrateExt) E.migrateExt(l); // v2.3: tài sản, tâm lý, đời con cái
     l.pending = l.pending.filter(function (d) { return DEC[d.id]; });
+    l.sv = SAVE_SCHEMA;
     return l;
   }
 
@@ -2168,6 +2199,7 @@
     createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
     runHeadless: runHeadless, makeCohort: makeCohort, netWorth: netWorth, obituary: obituary, statusLine: statusLine, fmtMoney: fmtMoney,
     jobTitle: jobTitle, orientLabel: orientLabel, placeText: placeText, buildMort: buildMort, qBase: qBase, migrate: migrate,
+    SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave, registerSchemaStep: registerSchemaStep,
     actions: actions, act: act, actAvail: actAvail, parentMonthly: parentMonthly, PARENT_PAY: PARENT_PAY, parentKind: parentKind, parentYear: parentYear,
     isMajor: isMajor, MAJOR: MAJOR, GAMES: GAMES, gameFor: gameFor, anyGame: anyGame, PETS: PETS, GAME_SUB: GAME_SUB, ACTS_PER_YEAR: ACTS_PER_YEAR, actsLimit: actsLimit, talentText: talentText,
     EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,

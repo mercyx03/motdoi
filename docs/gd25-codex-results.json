@@ -1,0 +1,2150 @@
+{
+  "date": "2026-10-26",
+  "phase": "GD2.5",
+  "gameplayCommit": "a0721a5",
+  "baseCommitBeforeAcceptance": "8adb524",
+  "publicTree": "5857328dc9f0b0ba43d387774cbf7e3df47bb9d4",
+  "regressionSourceSha256": "64b1e63840f151d600ced9a4214b1bb4f508d731c95bf5d0cdad85d2505ae6af",
+  "nonDecisionSections": 76,
+  "decisionIds": 1298,
+  "decisionManifestSha256": "3b1996364a8aefdf8f6d93548777013e1e04ea91271cbd9a60313437b81b278c",
+  "decisionManifestHashFormat": "SHA256 of UTF-8 JSON.stringify(ordered registry ID array)",
+  "decisionGroups": 15,
+  "decisionChoicesTried": 366977,
+  "decisionsExercised": 903,
+  "sectionAssertions": 592269,
+  "decisionAssertions": 5250739,
+  "sections": [
+    {
+      "group": "0-4",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.4,
+      "summary": [
+        "KẾT QUẢ: 8707 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "5b",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 271.8,
+      "summary": [
+        "KẾT QUẢ: 113 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "5",
+      "status": "PASS",
+      "seconds": 857.187,
+      "summary": [
+        "KẾT QUẢ: 10810 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "68",
+      "status": "PASS",
+      "summary": [
+        "KẾT QUẢ: 19 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "6",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 188.4,
+      "summary": [
+        "KẾT QUẢ: 234625 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "7",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 8.7,
+      "summary": [
+        "KẾT QUẢ: 30 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "8",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 65.9,
+      "summary": [
+        "KẾT QUẢ: 596 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "10",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.4,
+      "summary": [
+        "KẾT QUẢ: 679 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "11",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 7 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "12",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 7 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "13",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.4,
+      "summary": [
+        "KẾT QUẢ: 5 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "14",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.8,
+      "summary": [
+        "KẾT QUẢ: 401 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "15",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 122.1,
+      "summary": [
+        "KẾT QUẢ: 3352 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "16",
+      "status": "PASS",
+      "summary": [
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ],
+      "validation": [
+        {
+          "attempt": 1,
+          "exit": 0,
+          "seconds": 104.523,
+          "summary": [
+            "   Trung bình 195.0 lựa chọn mỗi đời",
+            "KẾT QUẢ: 9 đạt, 0 lỗi"
+          ]
+        },
+        {
+          "attempt": 2,
+          "exit": 0,
+          "seconds": 101.196,
+          "summary": [
+            "   Trung bình 195.0 lựa chọn mỗi đời",
+            "KẾT QUẢ: 9 đạt, 0 lỗi"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "17",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 46.7,
+      "summary": [
+        "KẾT QUẢ: 12813 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "18",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 75.6,
+      "summary": [
+        "KẾT QUẢ: 113302 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "19",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 140.1,
+      "summary": [
+        "KẾT QUẢ: 192850 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "20",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 330.1,
+      "summary": [
+        "KẾT QUẢ: 6658 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "21",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 55.6,
+      "summary": [
+        "KẾT QUẢ: 91 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "22",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 6.9,
+      "summary": [
+        "KẾT QUẢ: 4036 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "23",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 3.4,
+      "summary": [
+        "KẾT QUẢ: 27 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "24",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 93.1,
+      "summary": [
+        "KẾT QUẢ: 21 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "25",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 1.5,
+      "summary": [
+        "KẾT QUẢ: 26 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "26",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 79.7,
+      "summary": [
+        "KẾT QUẢ: 46 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "27",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 26 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "28",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 90.3,
+      "summary": [
+        "KẾT QUẢ: 66 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "29",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 10.6,
+      "summary": [
+        "KẾT QUẢ: 15 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "30",
+      "status": "PASS",
+      "summary": [
+        "KẾT QUẢ: 29 đạt, 0 lỗi"
+      ],
+      "mutation": "Injected excess count 26; expected exit 1 observed"
+    },
+    {
+      "group": "31",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 1,
+      "summary": [
+        "KẾT QUẢ: 28 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "32",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 2.8,
+      "summary": [
+        "KẾT QUẢ: 28 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "33",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.7,
+      "summary": [
+        "KẾT QUẢ: 20 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "34",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 25 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "35",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 40.1,
+      "summary": [
+        "KẾT QUẢ: 18 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "36",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 22.1,
+      "summary": [
+        "KẾT QUẢ: 23 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "37",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.6,
+      "summary": [
+        "KẾT QUẢ: 13 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "38",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 21.6,
+      "summary": [
+        "KẾT QUẢ: 7 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "39",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.6,
+      "summary": [
+        "KẾT QUẢ: 20 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "40",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.5,
+      "summary": [
+        "KẾT QUẢ: 19 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "41",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 28.8,
+      "summary": [
+        "KẾT QUẢ: 26 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "42",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 50,
+      "summary": [
+        "KẾT QUẢ: 26 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "43",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 37.4,
+      "summary": [
+        "KẾT QUẢ: 16 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "44",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 54.8,
+      "summary": [
+        "KẾT QUẢ: 20 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "45",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 266.1,
+      "summary": [
+        "KẾT QUẢ: 36 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "46",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.5,
+      "summary": [
+        "KẾT QUẢ: 8 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "47",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 7 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "48",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 7 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "49",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 10,
+      "summary": [
+        "KẾT QUẢ: 16 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "50",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 5.9,
+      "summary": [
+        "KẾT QUẢ: 15 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "51",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 4.4,
+      "summary": [
+        "KẾT QUẢ: 18 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "52",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 14 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "53",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 4 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "54",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 6 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "55",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 11 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "56",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 45.6,
+      "summary": [
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "57",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 6 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "58",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 8 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "59",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 89.7,
+      "summary": [
+        "KẾT QUẢ: 7 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "60",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 11.7,
+      "summary": [
+        "KẾT QUẢ: 26 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "61",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 47.3,
+      "summary": [
+        "KẾT QUẢ: 20 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "62",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 25.7,
+      "summary": [
+        "KẾT QUẢ: 96 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "63",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 43.7,
+      "summary": [
+        "KẾT QUẢ: 121 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "64",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.3,
+      "summary": [
+        "KẾT QUẢ: 58 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "65",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 36.5,
+      "summary": [
+        "KẾT QUẢ: 6 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "66",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 45.5,
+      "summary": [
+        "KẾT QUẢ: 13 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "67",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 25.3,
+      "summary": [
+        "KẾT QUẢ: 12 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "69",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 53.4,
+      "summary": [
+        "KẾT QUẢ: 8 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "70",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 1.9,
+      "summary": [
+        "KẾT QUẢ: 15 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "71",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 11 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "72",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.2,
+      "summary": [
+        "KẾT QUẢ: 11 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "73",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 4.2,
+      "summary": [
+        "KẾT QUẢ: 12 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "74",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0.4,
+      "summary": [
+        "KẾT QUẢ: 24 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "75",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 15,
+      "summary": [
+        "KẾT QUẢ: 2009 đạt, 0 lỗi"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "group": "dec:0-130",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 364.8,
+      "summary": [
+        "   Đã thử 73854 lượt chọn trên 129/1298 tình huống",
+        "KẾT QUẢ: 1059128 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:130-260",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 229.9,
+      "summary": [
+        "   Đã thử 47897 lượt chọn trên 124/1298 tình huống",
+        "KẾT QUẢ: 684456 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:260-390",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 72,
+      "summary": [
+        "   Đã thử 3532 lượt chọn trên 44/1298 tình huống",
+        "KẾT QUẢ: 51255 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:390-520",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 169.5,
+      "summary": [
+        "   Đã thử 31808 lượt chọn trên 76/1298 tình huống",
+        "KẾT QUẢ: 455773 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:520-650",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 108.7,
+      "summary": [
+        "   Đã thử 15376 lượt chọn trên 69/1298 tình huống",
+        "KẾT QUẢ: 219486 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:650-780",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 159,
+      "summary": [
+        "   Đã thử 26337 lượt chọn trên 107/1298 tình huống",
+        "KẾT QUẢ: 376619 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:780-910",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 233.7,
+      "summary": [
+        "   Đã thử 61073 lượt chọn trên 111/1298 tình huống",
+        "KẾT QUẢ: 871375 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:910-1040",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 85,
+      "summary": [
+        "   Đã thử 8680 lượt chọn trên 17/1298 tình huống",
+        "KẾT QUẢ: 123838 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1040-1170",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 285.6,
+      "summary": [
+        "   Đã thử 30972 lượt chọn trên 98/1298 tình huống",
+        "KẾT QUẢ: 442672 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1170-1202",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 103.8,
+      "lastId": "election122",
+      "summary": [
+        "   Đã thử 10056 lượt chọn trên 32/1298 tình huống",
+        "KẾT QUẢ: 143487 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1202-1234",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 265.8,
+      "lastId": "companyCapital128",
+      "summary": [
+        "   Đã thử 17988 lượt chọn trên 32/1298 tình huống",
+        "KẾT QUẢ: 257694 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1234-1266",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 128.2,
+      "lastId": "creatorLibrary132",
+      "summary": [
+        "   Đã thử 10476 lượt chọn trên 32/1298 tình huống",
+        "KẾT QUẢ: 151023 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1266-1279",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 249.2,
+      "summary": [
+        "   Đã thử 6160 lượt chọn trên 13/1298 tình huống",
+        "KẾT QUẢ: 88359 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1279-1280",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 154.8,
+      "summary": [
+        "   Đã thử 9264 lượt chọn trên 1/1298 tình huống",
+        "KẾT QUẢ: 133146 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "group": "dec:1280-1298",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 264.809,
+      "summary": [
+        "   Đã thử 13504 lượt chọn trên 18/1298 tình huống",
+        "KẾT QUẢ: 192428 đạt, 0 lỗi"
+      ]
+    }
+  ],
+  "initialFailures": [
+    {
+      "group": "16",
+      "status": "FAIL",
+      "exit": 1,
+      "seconds": 78.6,
+      "summary": [
+        "KẾT QUẢ: 8 đạt, 1 lỗi",
+        "  ✗ nhịp lựa chọn vừa phải (201.1/đời)"
+      ]
+    },
+    {
+      "group": "30",
+      "status": "FAIL",
+      "exit": 1,
+      "seconds": 24.2,
+      "summary": [
+        "KẾT QUẢ: 27 đạt, 1 lỗi",
+        "  ✗ tình huống ngẫu nhiên không lặp quá vài lần trong một đời (brand105_offer ×5)"
+      ]
+    }
+  ],
+  "section16RealClockRepeats": [
+    {
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 80.095,
+      "summary": [
+        "   Trung bình 197.4 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "attempt": 2,
+      "exit": 0,
+      "seconds": 74.59,
+      "summary": [
+        "   Trung bình 194.8 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "attempt": 3,
+      "exit": 1,
+      "seconds": 80.273,
+      "summary": [
+        "   Trung bình 201.6 lựa chọn mỗi đời",
+        "KẾT QUẢ: 8 đạt, 1 lỗi",
+        "  ✗ nhịp lựa chọn vừa phải (201.6/đời)"
+      ]
+    }
+  ],
+  "section16PreClock": {
+    "exit": 0,
+    "seconds": 80.586,
+    "summary": [
+      "   Trung bình 197.1 lựa chọn mỗi đời",
+      "KẾT QUẢ: 9 đạt, 0 lỗi"
+    ]
+  },
+  "section16PreRealClockRepeats": [
+    {
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 76.707,
+      "summary": [
+        "   Trung bình 194.0 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "attempt": 2,
+      "exit": 0,
+      "seconds": 78.083,
+      "summary": [
+        "   Trung bình 192.8 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "attempt": 3,
+      "exit": 0,
+      "seconds": 74.911,
+      "summary": [
+        "   Trung bình 193.4 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    }
+  ],
+  "section16FixedComparison": [
+    {
+      "name": "pre",
+      "exit": 0,
+      "seconds": 63.164,
+      "summary": [
+        "   Trung bình 195.2 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    },
+    {
+      "name": "current",
+      "exit": 0,
+      "seconds": 82.609,
+      "summary": [
+        "   Trung bình 195.0 lựa chọn mỗi đời",
+        "KẾT QUẢ: 9 đạt, 0 lỗi"
+      ]
+    }
+  ],
+  "timeouts": [
+    {
+      "group": "5",
+      "status": "TIMEOUT/ERROR",
+      "exit": null,
+      "seconds": 300.1,
+      "summary": []
+    },
+    {
+      "group": "dec:1170-1298",
+      "status": "TIMEOUT/ERROR",
+      "exit": null,
+      "seconds": 600,
+      "summary": []
+    },
+    {
+      "group": "dec:1266-1298",
+      "status": "TIMEOUT",
+      "exit": null,
+      "seconds": 300.1,
+      "lastId": "familyProfiles138",
+      "summary": []
+    },
+    {
+      "group": "dec:1280-1298",
+      "status": "TIMEOUT",
+      "exit": null,
+      "seconds": 300.1,
+      "summary": [
+        "   Đã thử 13964 lượt chọn trên 18/1298 tình huống"
+      ]
+    }
+  ],
+  "baseline400": {
+    "pre": {
+      "version": "8.5.0",
+      "lives": 400,
+      "registry": {
+        "DEC": 1298,
+        "TRIG": 687,
+        "ACT": 240,
+        "EVENTS": 79,
+        "hooksYear": 122,
+        "trigConstP": 600,
+        "trigDuplicateIds": [
+          "concert",
+          "casting"
+        ]
+      },
+      "life": {
+        "avgDeathAge": 74.13,
+        "reach50Pct": 88,
+        "withChildPctOf50": 26.1,
+        "avgKidsOf50": 0.28,
+        "everPartnerPctOf50": 96,
+        "uniDegreePctVN25": 11,
+        "jobYearPct": 51.7,
+        "debtYearPct": 24.7
+      },
+      "events": {
+        "decisionsPerYearBegin": 2.08,
+        "decisionsPerYearFinish": 0.35,
+        "finishQueueMax": 4,
+        "topDecisions": [
+          {
+            "id": "world_doi_song",
+            "perLife": 11.97
+          },
+          {
+            "id": "nghe_chuyen_moi",
+            "perLife": 7.68
+          },
+          {
+            "id": "weather125",
+            "perLife": 4.5
+          },
+          {
+            "id": "nd_su_kien",
+            "perLife": 2.78
+          },
+          {
+            "id": "nghe_kh",
+            "perLife": 2.51
+          },
+          {
+            "id": "law122",
+            "perLife": 2.48
+          },
+          {
+            "id": "ban_than_hen",
+            "perLife": 2.42
+          },
+          {
+            "id": "ban_than_moi",
+            "perLife": 2.31
+          },
+          {
+            "id": "marry",
+            "perLife": 2.26
+          },
+          {
+            "id": "que_loi_moi",
+            "perLife": 2.21
+          },
+          {
+            "id": "job",
+            "perLife": 2.12
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.95
+          },
+          {
+            "id": "gia_dinh_hai_ben51",
+            "perLife": 1.85
+          },
+          {
+            "id": "love",
+            "perLife": 1.77
+          },
+          {
+            "id": "van_hoi51",
+            "perLife": 1.7
+          }
+        ],
+        "topFinishQueued": [
+          {
+            "id": "weather125",
+            "perLife": 4.5
+          },
+          {
+            "id": "law122",
+            "perLife": 2.48
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.95
+          },
+          {
+            "id": "travel50_step",
+            "perLife": 1.53
+          },
+          {
+            "id": "patron125",
+            "perLife": 1.32
+          },
+          {
+            "id": "localLife138",
+            "perLife": 0.78
+          },
+          {
+            "id": "family100_love_messages",
+            "perLife": 0.59
+          },
+          {
+            "id": "family100_parent_nghiem",
+            "perLife": 0.56
+          },
+          {
+            "id": "family100_love_schedule",
+            "perLife": 0.55
+          },
+          {
+            "id": "family100_love_public",
+            "perLife": 0.55
+          }
+        ],
+        "repeatedLogTextsPerLife": 29.6
+      },
+      "tone": {
+        "good": 56891,
+        "bad": 18211,
+        "neutral": 57424,
+        "big": 3282,
+        "money": 64119,
+        "goodToBad": 3.12,
+        "badPct": 13.7
+      },
+      "save": {
+        "medianKB": 147.1,
+        "maxKB": 216.3,
+        "medianLog": 553,
+        "maxLog": 845,
+        "life138PeopleAvg": 71.44,
+        "life138PeopleMax": 115,
+        "topFlagNamespacesKB": [
+          {
+            "ns": "life138",
+            "avgKB": 49.51
+          },
+          {
+            "ns": "cd",
+            "avgKB": 1.3
+          },
+          {
+            "ns": "scN",
+            "avgKB": 1.23
+          },
+          {
+            "ns": "career92",
+            "avgKB": 0.8
+          },
+          {
+            "ns": "expansion110",
+            "avgKB": 0.7
+          },
+          {
+            "ns": "world120",
+            "avgKB": 0.48
+          },
+          {
+            "ns": "travel50",
+            "avgKB": 0.43
+          },
+          {
+            "ns": "family100",
+            "avgKB": 0.42
+          }
+        ]
+      },
+      "seconds": 82.3
+    },
+    "current": {
+      "version": "8.5.0",
+      "lives": 400,
+      "registry": {
+        "DEC": 1298,
+        "TRIG": 687,
+        "ACT": 240,
+        "EVENTS": 79,
+        "hooksYear": 123,
+        "trigConstP": 600,
+        "trigDuplicateIds": [
+          "concert",
+          "casting"
+        ]
+      },
+      "life": {
+        "avgDeathAge": 73.97,
+        "reach50Pct": 88.5,
+        "withChildPctOf50": 25.7,
+        "avgKidsOf50": 0.28,
+        "everPartnerPctOf50": 95.2,
+        "uniDegreePctVN25": 11.7,
+        "jobYearPct": 52.2,
+        "debtYearPct": 24.1
+      },
+      "events": {
+        "decisionsPerYearBegin": 2.08,
+        "decisionsPerYearFinish": 0.35,
+        "finishQueueMax": 4,
+        "topDecisions": [
+          {
+            "id": "world_doi_song",
+            "perLife": 11.89
+          },
+          {
+            "id": "nghe_chuyen_moi",
+            "perLife": 7.84
+          },
+          {
+            "id": "weather125",
+            "perLife": 4.42
+          },
+          {
+            "id": "nd_su_kien",
+            "perLife": 2.77
+          },
+          {
+            "id": "nghe_kh",
+            "perLife": 2.63
+          },
+          {
+            "id": "law122",
+            "perLife": 2.56
+          },
+          {
+            "id": "ban_than_hen",
+            "perLife": 2.48
+          },
+          {
+            "id": "marry",
+            "perLife": 2.29
+          },
+          {
+            "id": "ban_than_moi",
+            "perLife": 2.28
+          },
+          {
+            "id": "que_loi_moi",
+            "perLife": 2.23
+          },
+          {
+            "id": "job",
+            "perLife": 2.1
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.94
+          },
+          {
+            "id": "gia_dinh_hai_ben51",
+            "perLife": 1.86
+          },
+          {
+            "id": "love",
+            "perLife": 1.77
+          },
+          {
+            "id": "travel50_step",
+            "perLife": 1.71
+          }
+        ],
+        "topFinishQueued": [
+          {
+            "id": "weather125",
+            "perLife": 4.42
+          },
+          {
+            "id": "law122",
+            "perLife": 2.56
+          },
+          {
+            "id": "crisis123",
+            "perLife": 1.94
+          },
+          {
+            "id": "travel50_step",
+            "perLife": 1.57
+          },
+          {
+            "id": "patron125",
+            "perLife": 1.31
+          },
+          {
+            "id": "localLife138",
+            "perLife": 0.77
+          },
+          {
+            "id": "family100_parent_nghiem",
+            "perLife": 0.56
+          },
+          {
+            "id": "family100_love_messages",
+            "perLife": 0.55
+          },
+          {
+            "id": "family100_love_schedule",
+            "perLife": 0.54
+          },
+          {
+            "id": "studyReview136",
+            "perLife": 0.53
+          }
+        ],
+        "repeatedLogTextsPerLife": 27.7
+      },
+      "tone": {
+        "good": 56935,
+        "bad": 18096,
+        "neutral": 53917,
+        "big": 3262,
+        "money": 63754,
+        "goodToBad": 3.15,
+        "badPct": 14
+      },
+      "save": {
+        "medianKB": 147.2,
+        "maxKB": 215.5,
+        "medianLog": 543,
+        "maxLog": 837,
+        "life138PeopleAvg": 72.51,
+        "life138PeopleMax": 115,
+        "topFlagNamespacesKB": [
+          {
+            "ns": "life138",
+            "avgKB": 50.48
+          },
+          {
+            "ns": "cd",
+            "avgKB": 1.3
+          },
+          {
+            "ns": "scN",
+            "avgKB": 1.24
+          },
+          {
+            "ns": "career92",
+            "avgKB": 0.8
+          },
+          {
+            "ns": "expansion110",
+            "avgKB": 0.7
+          },
+          {
+            "ns": "world120",
+            "avgKB": 0.48
+          },
+          {
+            "ns": "travel50",
+            "avgKB": 0.44
+          },
+          {
+            "ns": "family100",
+            "avgKB": 0.41
+          }
+        ]
+      },
+      "seconds": 71
+    }
+  },
+  "performance": [
+    {
+      "name": "pre",
+      "lives": 60,
+      "years": 4447,
+      "seconds": 10.38
+    },
+    {
+      "name": "current",
+      "lives": 60,
+      "years": 4487,
+      "seconds": 12.883
+    },
+    {
+      "name": "current",
+      "lives": 60,
+      "years": 4487,
+      "seconds": 11.417
+    },
+    {
+      "name": "pre",
+      "lives": 60,
+      "years": 4447,
+      "seconds": 11.848
+    },
+    {
+      "name": "pre",
+      "lives": 60,
+      "years": 4447,
+      "seconds": 7.045
+    },
+    {
+      "name": "current",
+      "lives": 60,
+      "years": 4487,
+      "seconds": 11.899
+    }
+  ],
+  "performanceIsolated": [
+    {
+      "name": "pre",
+      "lives": 120,
+      "years": 8781,
+      "seconds": 23.706,
+      "cpuSeconds": 24.829
+    },
+    {
+      "name": "current",
+      "lives": 120,
+      "years": 8778,
+      "seconds": 23.904,
+      "cpuSeconds": 25.079
+    },
+    {
+      "name": "current",
+      "lives": 120,
+      "years": 8778,
+      "seconds": 23.228,
+      "cpuSeconds": 24.078
+    },
+    {
+      "name": "pre",
+      "lives": 120,
+      "years": 8781,
+      "seconds": 12.425,
+      "cpuSeconds": 13.859
+    },
+    {
+      "name": "pre",
+      "lives": 120,
+      "years": 8781,
+      "seconds": 15.657,
+      "cpuSeconds": 17.046
+    },
+    {
+      "name": "current",
+      "lives": 120,
+      "years": 8778,
+      "seconds": 11.277,
+      "cpuSeconds": 12.703
+    }
+  ],
+  "performanceBalanced": [
+    {
+      "repeat": 0,
+      "pre": {
+        "seconds": 11.720347099999993,
+        "cpuSeconds": 13.779999999999998,
+        "years": 8781
+      },
+      "current": {
+        "seconds": 11.7188985,
+        "cpuSeconds": 13.857999999999999,
+        "years": 8778
+      },
+      "wallPerYearChangePct": 0.021812423656863977,
+      "cpuPerYearChangePct": 0.6004075368524209
+    },
+    {
+      "repeat": 1,
+      "pre": {
+        "seconds": 11.545804900000004,
+        "cpuSeconds": 13.514999999999999,
+        "years": 8781
+      },
+      "current": {
+        "seconds": 11.610054900000017,
+        "cpuSeconds": 13.609999999999998,
+        "years": 8778
+      },
+      "wallPerYearChangePct": 0.5908457104957909,
+      "cpuPerYearChangePct": 0.7373392617857633
+    },
+    {
+      "repeat": 2,
+      "pre": {
+        "seconds": 11.409035000000003,
+        "cpuSeconds": 13.245999999999999,
+        "years": 8781
+      },
+      "current": {
+        "seconds": 11.578338600000002,
+        "cpuSeconds": 13.470000000000002,
+        "years": 8778
+      },
+      "wallPerYearChangePct": 1.5186267157578426,
+      "cpuPerYearChangePct": 1.7258308496180153
+    }
+  ],
+  "performanceBalancedBlocks": [
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 0,
+      "lives": 10,
+      "years": 685,
+      "seconds": 0.9065370000000003,
+      "cpuSeconds": 1.14
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 0,
+      "lives": 10,
+      "years": 713,
+      "seconds": 0.9169764999999989,
+      "cpuSeconds": 1.109
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 10,
+      "lives": 10,
+      "years": 623,
+      "seconds": 0.854295,
+      "cpuSeconds": 1.047
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 10,
+      "lives": 10,
+      "years": 657,
+      "seconds": 0.9067654999999996,
+      "cpuSeconds": 1.141
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 20,
+      "lives": 10,
+      "years": 805,
+      "seconds": 1.0200375999999998,
+      "cpuSeconds": 1.219
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 20,
+      "lives": 10,
+      "years": 795,
+      "seconds": 1.0087697000000007,
+      "cpuSeconds": 1.234
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 30,
+      "lives": 10,
+      "years": 753,
+      "seconds": 1.0019771,
+      "cpuSeconds": 1.125
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 30,
+      "lives": 10,
+      "years": 782,
+      "seconds": 1.0288613000000004,
+      "cpuSeconds": 1.25
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 40,
+      "lives": 10,
+      "years": 730,
+      "seconds": 0.9531085999999995,
+      "cpuSeconds": 1.109
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 40,
+      "lives": 10,
+      "years": 782,
+      "seconds": 1.0578148,
+      "cpuSeconds": 1.156
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 50,
+      "lives": 10,
+      "years": 821,
+      "seconds": 1.0897114,
+      "cpuSeconds": 1.343
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 50,
+      "lives": 10,
+      "years": 788,
+      "seconds": 1.0286759999999995,
+      "cpuSeconds": 1.156
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 60,
+      "lives": 10,
+      "years": 687,
+      "seconds": 0.9840515999999989,
+      "cpuSeconds": 1.063
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 60,
+      "lives": 10,
+      "years": 663,
+      "seconds": 0.9278813000000009,
+      "cpuSeconds": 1.046
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 70,
+      "lives": 10,
+      "years": 684,
+      "seconds": 1.0047452000000012,
+      "cpuSeconds": 1.125
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 70,
+      "lives": 10,
+      "years": 665,
+      "seconds": 0.9137067999999999,
+      "cpuSeconds": 1.078
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 80,
+      "lives": 10,
+      "years": 801,
+      "seconds": 1.158336800000001,
+      "cpuSeconds": 1.437
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 80,
+      "lives": 10,
+      "years": 800,
+      "seconds": 1.0870375999999997,
+      "cpuSeconds": 1.407
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 90,
+      "lives": 10,
+      "years": 679,
+      "seconds": 0.8773421999999992,
+      "cpuSeconds": 1.016
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 90,
+      "lives": 10,
+      "years": 729,
+      "seconds": 0.9154393999999993,
+      "cpuSeconds": 1.03
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 100,
+      "lives": 10,
+      "years": 780,
+      "seconds": 1.0520795999999972,
+      "cpuSeconds": 1.157
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 100,
+      "lives": 10,
+      "years": 776,
+      "seconds": 1.0181869999999982,
+      "cpuSeconds": 1.14
+    },
+    {
+      "repeat": 0,
+      "name": "current",
+      "start": 110,
+      "lives": 10,
+      "years": 689,
+      "seconds": 0.8741607000000003,
+      "cpuSeconds": 1.11
+    },
+    {
+      "repeat": 0,
+      "name": "pre",
+      "start": 110,
+      "lives": 10,
+      "years": 672,
+      "seconds": 0.8527468999999983,
+      "cpuSeconds": 1
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 0,
+      "lives": 10,
+      "years": 713,
+      "seconds": 0.9396843000000008,
+      "cpuSeconds": 1.047
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 0,
+      "lives": 10,
+      "years": 685,
+      "seconds": 0.9009925000000003,
+      "cpuSeconds": 0.999
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 10,
+      "lives": 10,
+      "years": 657,
+      "seconds": 0.919869200000001,
+      "cpuSeconds": 1.063
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 10,
+      "lives": 10,
+      "years": 623,
+      "seconds": 0.8408185000000012,
+      "cpuSeconds": 1.016
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 20,
+      "lives": 10,
+      "years": 795,
+      "seconds": 1.0202173000000039,
+      "cpuSeconds": 1.188
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 20,
+      "lives": 10,
+      "years": 805,
+      "seconds": 1.0572460999999966,
+      "cpuSeconds": 1.39
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 30,
+      "lives": 10,
+      "years": 782,
+      "seconds": 1.0316519000000044,
+      "cpuSeconds": 1.187
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 30,
+      "lives": 10,
+      "years": 753,
+      "seconds": 1.012145700000001,
+      "cpuSeconds": 1.345
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 40,
+      "lives": 10,
+      "years": 782,
+      "seconds": 1.0393387000000003,
+      "cpuSeconds": 1.234
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 40,
+      "lives": 10,
+      "years": 730,
+      "seconds": 0.9425492999999988,
+      "cpuSeconds": 1.14
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 50,
+      "lives": 10,
+      "years": 788,
+      "seconds": 1.0231587,
+      "cpuSeconds": 1.141
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 50,
+      "lives": 10,
+      "years": 821,
+      "seconds": 1.0782305000000052,
+      "cpuSeconds": 1.25
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 60,
+      "lives": 10,
+      "years": 663,
+      "seconds": 0.9043859000000011,
+      "cpuSeconds": 0.968
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 60,
+      "lives": 10,
+      "years": 687,
+      "seconds": 0.941530399999996,
+      "cpuSeconds": 1.11
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 70,
+      "lives": 10,
+      "years": 665,
+      "seconds": 0.8801497999999992,
+      "cpuSeconds": 0.984
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 70,
+      "lives": 10,
+      "years": 684,
+      "seconds": 0.954642200000002,
+      "cpuSeconds": 1.219
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 80,
+      "lives": 10,
+      "years": 800,
+      "seconds": 1.0925046000000003,
+      "cpuSeconds": 1.296
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 80,
+      "lives": 10,
+      "years": 801,
+      "seconds": 1.093176599999999,
+      "cpuSeconds": 1.282
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 90,
+      "lives": 10,
+      "years": 729,
+      "seconds": 0.8931359000000011,
+      "cpuSeconds": 1.016
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 90,
+      "lives": 10,
+      "years": 679,
+      "seconds": 0.856316700000003,
+      "cpuSeconds": 1.016
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 100,
+      "lives": 10,
+      "years": 776,
+      "seconds": 1.0049196000000011,
+      "cpuSeconds": 1.093
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 100,
+      "lives": 10,
+      "years": 780,
+      "seconds": 1.0204920000000057,
+      "cpuSeconds": 1.141
+    },
+    {
+      "repeat": 1,
+      "name": "pre",
+      "start": 110,
+      "lives": 10,
+      "years": 672,
+      "seconds": 0.8418525000000009,
+      "cpuSeconds": 1.062
+    },
+    {
+      "repeat": 1,
+      "name": "current",
+      "start": 110,
+      "lives": 10,
+      "years": 689,
+      "seconds": 0.8668508999999976,
+      "cpuSeconds": 0.938
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 0,
+      "lives": 10,
+      "years": 685,
+      "seconds": 0.8932506999999968,
+      "cpuSeconds": 1.031
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 0,
+      "lives": 10,
+      "years": 713,
+      "seconds": 0.9541983999999939,
+      "cpuSeconds": 1.062
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 10,
+      "lives": 10,
+      "years": 623,
+      "seconds": 0.8427895999999965,
+      "cpuSeconds": 0.907
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 10,
+      "lives": 10,
+      "years": 657,
+      "seconds": 0.8940884999999981,
+      "cpuSeconds": 1.032
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 20,
+      "lives": 10,
+      "years": 805,
+      "seconds": 0.9991896999999954,
+      "cpuSeconds": 1.218
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 20,
+      "lives": 10,
+      "years": 795,
+      "seconds": 0.9999339000000036,
+      "cpuSeconds": 1.157
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 30,
+      "lives": 10,
+      "years": 753,
+      "seconds": 0.9799307000000045,
+      "cpuSeconds": 1.171
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 30,
+      "lives": 10,
+      "years": 782,
+      "seconds": 1.0330054999999994,
+      "cpuSeconds": 1.219
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 40,
+      "lives": 10,
+      "years": 730,
+      "seconds": 0.9353090999999986,
+      "cpuSeconds": 1.077
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 40,
+      "lives": 10,
+      "years": 782,
+      "seconds": 1.0305590000000084,
+      "cpuSeconds": 1.219
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 50,
+      "lives": 10,
+      "years": 821,
+      "seconds": 1.0727817999999971,
+      "cpuSeconds": 1.296
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 50,
+      "lives": 10,
+      "years": 788,
+      "seconds": 1.0059590000000025,
+      "cpuSeconds": 1.235
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 60,
+      "lives": 10,
+      "years": 687,
+      "seconds": 0.9403113000000012,
+      "cpuSeconds": 1.031
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 60,
+      "lives": 10,
+      "years": 663,
+      "seconds": 0.9227788,
+      "cpuSeconds": 1.093
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 70,
+      "lives": 10,
+      "years": 684,
+      "seconds": 0.969289300000004,
+      "cpuSeconds": 1.079
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 70,
+      "lives": 10,
+      "years": 665,
+      "seconds": 0.8709377999999997,
+      "cpuSeconds": 1.03
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 80,
+      "lives": 10,
+      "years": 801,
+      "seconds": 1.0917570000000123,
+      "cpuSeconds": 1.313
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 80,
+      "lives": 10,
+      "years": 800,
+      "seconds": 1.0836373999999924,
+      "cpuSeconds": 1.25
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 90,
+      "lives": 10,
+      "years": 679,
+      "seconds": 0.8535899999999965,
+      "cpuSeconds": 1.016
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 90,
+      "lives": 10,
+      "years": 729,
+      "seconds": 0.8957087000000029,
+      "cpuSeconds": 0.984
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 100,
+      "lives": 10,
+      "years": 780,
+      "seconds": 1.0120598000000027,
+      "cpuSeconds": 1.155
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 100,
+      "lives": 10,
+      "years": 776,
+      "seconds": 1.001825800000006,
+      "cpuSeconds": 1.204
+    },
+    {
+      "repeat": 2,
+      "name": "current",
+      "start": 110,
+      "lives": 10,
+      "years": 689,
+      "seconds": 0.8670239000000002,
+      "cpuSeconds": 1.016
+    },
+    {
+      "repeat": 2,
+      "name": "pre",
+      "start": 110,
+      "lives": 10,
+      "years": 672,
+      "seconds": 0.837457899999994,
+      "cpuSeconds": 0.921
+    }
+  ],
+  "build": {
+    "files": 28,
+    "zipBytes": 2302166,
+    "zipSha256": "f936f559d2cc1b689ebcd16bf7b4be58a983cdacbcc0392c0d81624e27e4751f",
+    "api": "Local in-memory D1 passed; production REVIEWS_DB binding not inspected",
+    "bindingConfirmation": "Owner confirmed REVIEWS_DB points to the existing database on 2026-10-26; not inspected through Cloudflare API",
+    "productionUploadReady": true
+  },
+  "limits": [
+    "No real player saves",
+    "No browser end-to-end run",
+    "No Cloudflare production binding/database verification",
+    "Game life.id still depends on wall clock and randomness; only test section 16 uses fixed test clock"
+  ],
+  "backlog": "di_chuc70 remains unchanged; separate context-aware eligibility work requested by owner"
+}
