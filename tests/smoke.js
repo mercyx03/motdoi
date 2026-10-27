@@ -127,7 +127,12 @@ const cases = [
   { name: 'family-relations', timeoutMs: 120000, run(t, G) {
     const E = G.E;
     let partners = 0, kids = 0, friends = 0;
-    lives(E, 6).forEach((l, i) => {
+    // Mẫu 6 đời có thể tình cờ không có con (đường ngẫu nhiên đổi khi thêm tính năng); khi đó chơi thêm tối đa 6 đời để vẫn kiểm được hồ sơ con.
+    const extra = [31007, 31008, 31009, 31010, 31011, 31012].map((s, i) => () => E.createLife({ mode: i % 2 ? 'world' : 'vn', seed: s }));
+    const sample = lives(E, 6);
+    sample.concat(extra).forEach((item, i) => {
+      if (typeof item === 'function') { if (kids > 0 && partners > 0) return; item = item(); }
+      const l = item;
       for (let y = 0; y < 75 && l.alive; y++) {
         year(E, l);
         const p = l.partner;

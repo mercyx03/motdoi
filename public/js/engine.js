@@ -1344,11 +1344,12 @@
     var r = RF(life), a = life.age, q = [];
     life.prevActs = life.acts || 0; life.acts = 0; life.yr = { items: [] };
     var cap = difficulty(life).cap;
-    function add(id, arg) {
+    function add(id, arg, src) {
       if (q.length >= cap || !DEC[id] || q.some(function (d) { return d.id === id; })) return;
       if (DEC[id].valid && !DEC[id].valid(life, arg || {})) return; // tình huống hẹn trước không còn phù hợp
       var dm = DEC[id].make(life, r, arg);
       if (schoolOff(life, dm.title + ' ' + dm.text + ' ' + dm.opts.map(function (o) { return o.l; }).join(' '))) return; // v3.1: đã nghỉ học thì không có chuyện trên lớp
+      if (src && E.PACE145 && E.PACE145.admit && !E.PACE145.admit(life, dm, q, src)) return; // GĐ5: nhịp sự kiện (chỉ tình huống ngẫu nhiên, hành động AI)
       q.push(dm);
     }
 
@@ -1442,15 +1443,16 @@
       if (!T.rep && seenN >= (T.max || 3)) continue;
       var pv = life.flags.prevSeen || {}; // v3.4: chuyện đã gặp ở các đời trước thì đời này ít gặp lại hơn
       var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
-      if (r() < Math.min(1, pr * difficulty(life).events) && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
+      if (E.CONTEXT143) pr = E.CONTEXT143.probability(T, life, pr);
+      if (r() < Math.min(1, pr * difficulty(life).events) && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id, undefined, T); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
 
     // nhịp tuổi thơ: từ 1 đến 14 tuổi, năm nào cũng nên có một lựa chọn hợp lứa tuổi
     if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.85)) {
       var kidT = (hardcorePool ? [] : TRIG).filter(function (T) {
-        return T.child && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
+        return T.child && (!E.CONTEXT143 || E.CONTEXT143.factor(T, life) > 0) && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
-      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
+      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * (E.CONTEXT143 ? E.CONTEXT143.factor(T, life) : 1) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
     }
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)
@@ -1461,7 +1463,7 @@
       var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai && !(aAt[x.id] != null && a - aAt[x.id] < 3) && (aN[x.id] || 0) < 3; }); // v3.7: game tự chọn thì mỗi việc tối đa 3 lần một đời
       if (av.length) {
         var pick = U.wpick(r, av, function (x) { return aiW(life, x.ai); });
-        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null); if (q.length > n1) { life.acts++; aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
+        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null, { ai: pick, auto: !!opts.auto }); if (q.length > n1) { life.acts++; aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
       }
     }
 
@@ -1954,7 +1956,7 @@
         if (!ev.c(life, a)) continue;
         var pr = typeof ev.p === 'function' ? ev.p(life, a) : ev.p;
         if (pr < 1 && !ev.rep && evAt[ei] != null && a - evAt[ei] < (ev.cd || 3)) continue; // v3.0: chuyện kể ngẫu nhiên không lặp lại năm nào cũng như năm nào
-        if (r() < pr) { var o0 = out.length, i0 = life.yr.items.length; ev.run(life, a, r, log); moneyNote(life, life.yr.items, i0, out.slice(o0), log); if (pr < 1) { n++; evAt[ei] = a; } }
+        if (r() < pr) { var o0 = out.length, i0 = life.yr.items.length; ev.run(life, a, r, E.PACE145 && E.PACE145.quietLog ? E.PACE145.quietLog(life, log) : log); /* GĐ5: không kể lại câu giống hệt trong 6 năm */ moneyNote(life, life.yr.items, i0, out.slice(o0), log); if (pr < 1) { n++; evAt[ei] = a; } }
       }
     }
     if (!life.alive) { clampSt(life); return out; }

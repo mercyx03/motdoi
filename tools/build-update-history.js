@@ -24,7 +24,15 @@ if(fs.existsSync(previousPath)){
  entries.forEach(e=>{if(previous.has(e.id)&&!e.correctedAt)e.publishedAt=previous.get(e.id);});
 }
 entries.sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
-const publicEntries=entries.map(playerEntry).filter(Boolean);
+let publicEntries=entries.map(playerEntry).filter(Boolean);
+// Preserve published editorial history, including entries not represented in the commit import.
+// Explicit correctedAt is the existing opt-in for revising a prior entry.
+if(fs.existsSync(previousPath)){
+ const old=JSON.parse(fs.readFileSync(previousPath,'utf8')).entries;
+ const merged=new Map(publicEntries.map(e=>[e.id,e]));
+ old.forEach(e=>{const next=merged.get(e.id);if(!next||!next.correctedAt)merged.set(e.id,e);});
+ publicEntries=[...merged.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
+}
 for(const entry of publicEntries){const at=Date.parse(entry.publishedAt);if(!Number.isFinite(at)||at>Date.now())throw Error('Invalid or future update time: '+entry.id);}
 fs.writeFileSync(path.join(root,'public/data/updates.json'),JSON.stringify({generatedAt:new Date().toISOString(),entries:publicEntries},null,2)+'\n');
-console.log('Built '+entries.length+' dated update entries from '+releases.length+' release commits; version labels omitted.');
+console.log('Built '+publicEntries.length+' dated update entries; prior history and explicit version/status preserved.');

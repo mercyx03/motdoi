@@ -30,4 +30,39 @@ add('supportRules130',l=>{l.partner={name:'Lan Chi',sex:'F',age:40,alive:true,st
 add('groupRoles137,childrenSuccession139',l=>{l.money=l.base*400;E.WORLD120.s(l).companies=[0,1].map(k=>({name:'Công ty kiểm thử '+k,value:l.base*50,share:100,created:40,governance:0,sector:'general'}));E.WORLD120.s(l).group={since:44};l.kids=[{name:'Minh Kế',sex:'M',born:20,alive:true,close:70,edu:5}];E.FAMILY53.init(l);});
 add('auditionPrep139',l=>{l.age=19;l.edu=3;l.money=l.base*5;E.LIFE138.state(l).agency={name:'Nova Entertainment (hư cấu)',code:'KR',status:'offer',years:0};});
 add('collectors140',l=>{l.loans=[{type:'bank',name:'vay ngân hàng',bal:l.base*3,rate:.09,minShare:.12,late:3,since:40}];E.DEBT140.year(l,()=>0,()=>{});});
+/* GĐ4: chuỗi hậu quả — dựng chuỗi đang mở đúng giai đoạn qua E.CHAIN144 và truyền cid/token như lịch hẹn của game */
+function chain144(ids,kind,stage,setup,extra){for(const id of ids.split(',')){add(id,setup);const l=out[id].life,c=E.CHAIN144.start(l,kind,{dec:'regression',k:'x'},extra(l));c.stage=stage;c.open={at:l.age,token:c.id+'#'+stage+'@'+l.age};out[id].arg={cid:c.id,token:c.open.token};}}
+const loan=(l,type)=>{l.loans=[{type,name:type==='nong'?'vay nóng (tín dụng đen)':'vay người thân',bal:l.base*.4,rate:type==='nong'?1.5:0,minShare:.4,late:0,since:44}];};
+chain144('ch144_edu_barrier','edu',0,l=>{l.age=19;l.edu=2;l.money=l.base;},()=>({data:{edu0:2}}));
+chain144('ch144_job_search','career',0,l=>{l.age=35;l.job=null;l.lastJob={id:'van_phong',rank:1,yrs:5};l.flags.needJob=true;},()=>({npc:{ref:null,name:'Thu Hà'}}));
+chain144('ch144_job_referral','career',1,l=>{l.age=37;l.job=null;l.lastJob={id:'van_phong',rank:1,yrs:5};},()=>({npc:{ref:null,name:'Thu Hà'},data:{retrained:true}}));
+chain144('ch144_biz_debt','biz',0,l=>{E.startJob(l,'kd_quan',()=>0,()=>{},true);loan(l,'nong');},()=>({data:{loan:'nong',since:44}}));
+chain144('ch144_biz_crossroad','biz',1,l=>{E.startJob(l,'kd_quan',()=>0,()=>{},true);l.loans=[];},()=>({data:{loan:'nong',since:44,cleared:true}}));
+chain144('ch144_debt_due,ch144_debt_end','debt',0,l=>{l.fam.mAlive=true;l.veh='xe máy';l.vehVal=l.base*.5;loan(l,'family');},()=>({data:{loan:'family',since:44,who:'mẹ'}}));
+E.CHAIN144.active(out.ch144_debt_end.life,'debt').stage=1;out.ch144_debt_end.arg.token=E.CHAIN144.active(out.ch144_debt_end.life,'debt').open.token=E.CHAIN144.active(out.ch144_debt_end.life,'debt').id+'#1@45';
+chain144('ch144_fam_distance','family',0,l=>{Object.assign(l.fam,{mAlive:true,fAlive:false});l.sibList=[{n:'Lan',sex:'F',alive:true,born:2}];},()=>({data:{side:'m'}}));
+chain144('ch144_fam_reconcile','family',1,l=>{Object.assign(l.fam,{mAlive:true,fAlive:false});l.kids=[{name:'Bin',sex:'M',born:44,alive:true}];},()=>({data:{side:'m',warm:1}}));
+const spouse=l=>{l.partner={name:'Minh An',sex:'F',age:42,alive:true,status:'married',since:30,family100:{uid:'review-spouse-144',trust:50,tension:40}};};
+chain144('ch144_love_after','marriage',0,spouse,l=>({npc:{ref:E.UPDATE110.uid(l,l.partner),name:l.partner.name}}));
+chain144('ch144_love_cross','marriage',1,l=>{spouse(l);l.partner.family100.trust=45;},l=>({npc:{ref:E.UPDATE110.uid(l,l.partner),name:l.partner.name}}));
+const friend=l=>{l.friends=[{name:'Hoài Nam',sex:'M',alive:true,close:70,d:0,since:10}];l.job=null;l.money=-l.base;};
+chain144('ch144_friend_return','friend',0,friend,l=>({npc:{ref:E.UPDATE110.uid(l,l.friends[0]),name:'Hoài Nam'},data:{helped:true,why:'vừa mất việc'}}));
+chain144('ch144_friend_drift','friend',0,friend,l=>({npc:{ref:E.UPDATE110.uid(l,l.friends[0]),name:'Hoài Nam'},data:{helped:false,why:'vừa chia tay người yêu'}}));
+chain144('ch144_health_rehab','health',0,l=>{E.startJob(l,'shipper',()=>0,()=>{},true);l.flags.dauLung=true;},()=>({data:{what:'tai nạn khi làm việc'}}));
+chain144('ch144_health_flare','health',1,l=>{E.startJob(l,'shipper',()=>0,()=>{},true);l.flags.dauLung=true;},()=>({data:{what:'tai nạn khi làm việc'}}));
+/* Góp ý người chơi: thương vụ cần một doanh nhân đã quen; áp lực giới giải trí cần người làm nghề giải trí */
+add('deal148',l=>{l.money=l.base*500;const p=E.ELITE148.meet(l,()=>0.3,{kind:'business',tier:2,where:'tiệc gặp gỡ đối tác'});p.trust=80;});
+add('dark149',l=>{E.startJob(l,Object.keys(E.CAR).find(k=>E.CAR[k].fame),()=>0,()=>{},true);});
+/* Showbiz: một chương trình đang ghi hình (bắt đầu bằng hàm của game) */
+add('show151_step',l=>{l.age=30;l.st.kno=80;E.SHOW151.begin(l,()=>0.3,()=>{},'nnc','contestant');l.pending=[];});
+out.show151_step.arg={token:out.show151_step.life.flags.show151.active.token,step:out.show151_step.life.flags.show151.active.step};
+add('mini152',l=>{l.age=30;l.flags.mini152={kind:'rps',token:'ctx',st:E.MINI152.MINI.rps.init('ctx',{host:'người dẫn'}),done:'none',ctx:{title:'Oẳn tù tì'},manual:true,notes:[]};});
+out.mini152.arg={token:'ctx',n:0};
+add('film154,actor154',l=>{l.age=25;l.talent='diễn xuất';l.actSk=70;E.ACTOR154.startProject(l,()=>0.3,()=>{});l.pending=[];});
+out.film154.arg={token:out.film154.life.flags.actor154.project.token,stage:'read'};
+/* Thực tập sinh K-pop: 15 tuổi được chú ý; thực tập sinh đang đánh giá; nhóm vừa thành lập */
+add('scout155',l=>{l.age=15;l.birthYear=2010;l.school='THPT';l.indep=false;E.LIFE138.skill(l,'sing').level=70;E.LIFE138.skill(l,'dance').level=65;});
+add('eval155',l=>{l.age=16;l.birthYear=2009;l.school='THPT';l.indep=false;l.flags.idol155={stage:'junior',evals:[],peers:[{name:'Minh Anh',skill:50,grow:3,kind:'hòa đồng',bond:0}],company:{name:'Aurora Entertainment (hư cấu)',rep:80,split:0.2},months:0,debt:0};E.LIFE138.state(l).agency={name:'Aurora Entertainment (hư cấu)',code:'KR',status:'junior155',years:0,started:15};});
+add('debut155',l=>{l.age=20;l.flags.idol155={stage:'debut',evals:[],peers:[],company:{name:'Aurora Entertainment (hư cấu)',rep:80,split:0.2},group:{name:'NOVA',members:['A','B','C'],position:null,debutAge:20,fandom:0,albums:[],wins:0},debt:0};E.LIFE138.state(l).agency={name:'Aurora Entertainment (hư cấu)',code:'KR',status:'debut',years:3,started:16};});
+out.debut155.arg={step:'pos'};
 return out;};

@@ -143,7 +143,7 @@
     var s = EDU54.state(l);
     if (!WISH.valid(l, d.data) || d.data.view !== (s.selected || s.region || 'list') || !d.opts.some(function (o) { return o.k === k; }) || !s.wishes.length) return;
     s.submitted = true; s.kind = null;
-    if (!Number.isFinite(l.examScore)) l.examScore = E.rollExamScore(l, r);
+    if (!Number.isFinite(l.examScore)) { l.examScore = E.rollExamScore(l, r); if (l.examScore >= 27) l.flags.scholar = true; } // GĐ6: cùng quy tắc học bổng với lượt thi chính
     log('Điểm xét tuyển: ' + U.fmtNum(l.examScore, 2) + '/30' + (l.khoi ? ' (khối ' + l.khoi + ')' : '') + '.', 'neutral');
     var found = null, nkDone = {};
     for (var i = 0; i < s.wishes.length && !found; i++) {

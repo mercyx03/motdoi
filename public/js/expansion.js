@@ -488,7 +488,7 @@
     text: 'Năm ngoái bạn trượt tốt nghiệp THPT. Năm nay có thể đăng ký thi lại (hệ giáo dục thường xuyên hoặc thí sinh tự do), học nghề, hoặc đi làm luôn.',
     opts: [
       { k: 'thi', l: 'Ôn kỹ rồi thi lại', ai: { w: 1.3, smart: 1 }, run: function (l, r, log) {
-        var s = Math.min(30, Math.max(E.rollExamScore(l, r), 12) + 2.5 + r() * 2); s = Math.round(s * 4) / 4; l.examScore = s;
+        var s = Math.min(30, Math.max(E.rollExamScore(l, r), 12) + 2.5 + r() * 2); s = Math.round(s * 4) / 4; l.examScore = s; if (s >= 27) l.flags.scholar = true; // GĐ6: cùng quy tắc học bổng với lượt thi chính
         if (s >= 15) { l.edu = Math.max(l.edu, 3); log('Thi lại tốt nghiệp THPT: ' + U.fmtNum(s, 2).replace(/,?0+$/, '') + ' điểm — đỗ, có bằng tốt nghiệp.', 'good'); fx(l, { hap: 6 }); if (E.DEC.uni) l.pending.unshift(E.DEC.uni.make(l, r)); }
         else if ((l.flags.hsFail || 0) < 2) { l.flags.hsFail++; log('Thi lại vẫn trượt tốt nghiệp. Năm sau còn một cơ hội nữa.', 'bad'); fx(l, { hap: -6 }); H.sched(l, 'thi_lai_tn', 1); }
         else { l.flags.needJob = true; log('Thi lại vẫn trượt. Bạn quyết định thôi, đi làm kiếm sống.', 'bad'); fx(l, { hap: -5 }); }

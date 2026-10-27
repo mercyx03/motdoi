@@ -1,5 +1,303 @@
 [
   {
+    "id": "showbiz-m6-connected-careers",
+    "version": "8.7.0-6",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T04:26:27.382Z",
+    "title": "Một Đời — Sự nghiệp giải trí liền mạch và thành tựu mới",
+    "summary": "Các chương trình truyền hình, nghề diễn viên, thần tượng và show hẹn hò giờ nối vào nhau thành một hành trình, kèm 11 thành tựu mới.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Làm tốt ở một gameshow kiến thức (thắng tiền thưởng, chuỗi đúng dài, vô địch) thì khán giả nhớ tới bạn và bạn được mời sang một gameshow kiến thức khác.",
+      "Hành trình liền mạch: diễn viên từ vai quần chúng, vai phụ đến phim thành công, lên Running Man, rồi thành ngôi sao và ngồi ghế giám khảo; thực tập sinh từ 15 tuổi đến chương trình sống còn, debut, lên gameshow, lưu diễn quốc tế; người bình thường thắng Nhanh Như Chớp rồi được mời sang Ai Là Triệu Phú; cặp đôi quen nhau trên show hẹn hò có thể tiếp tục yêu và kết hôn.",
+      "11 thành tựu mới: Nhanh như chớp, Chinh phục câu hỏi số 15, Vòng nguyệt quế năm, Biệt đội siêu trí tuệ, Bậc thầy chiến thuật, Quán quân, Thành đôi trên sóng, Giải thưởng điện ảnh, Ngôi sao điện ảnh, Ngày debut, Tấm vé debut.",
+      "Chương trình đã tham gia, phim đã đóng, giải thưởng và nhóm nhạc đều hiện trong hồ sơ nhân vật; tải lại game không làm lặp lại tiền thưởng hay cát-xê."
+    ]
+  },
+  {
+    "id": "showbiz-m5-kpop-trainee",
+    "version": "8.7.0-5",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T04:16:25.431Z",
+    "title": "Một Đời — Thực tập sinh K-pop từ tuổi 14, debut thần tượng và chương trình sống còn",
+    "summary": "Có năng khiếu ca hát, nhảy múa, bạn có thể được công ty giải trí Hàn Quốc chú ý từ 14–16 tuổi, đào tạo song song với việc học, rồi debut hoặc thử sức ở các chương trình sống còn.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Từ 14–16 tuổi, bạn có thể được phát hiện qua hội diễn văn nghệ ở trường, video nhảy cover, buổi thử giọng hay người quen giới thiệu. Cơ hội phụ thuộc kỹ năng hát, nhảy, diễn, ngoại ngữ, sự tự tin và sức khỏe; ngoại hình chỉ là một phần nhỏ, và chăm luyện tập thì cơ hội tăng dần.",
+      "Quy trình nhận lời: tìm hiểu công ty (chia doanh thu, ký túc xá, hỗ trợ việc học), đi audition, thưa chuyện với bố mẹ / người giám hộ (có thể không đồng ý), rồi ký thỏa thuận đào tạo. Khi chưa đủ 18 tuổi, bạn vẫn đi học, tập bán thời gian với giờ tập giới hạn và chỉ sang Seoul dự trại hè cùng người giám hộ; đủ 18 tuổi hoặc tốt nghiệp mới sang Hàn Quốc làm thực tập sinh toàn thời gian.",
+      "Ba kỳ đánh giá mỗi năm: chọn luyện thanh, vũ đạo, rap, biểu cảm, tiếng Hàn, nghỉ ngơi hay tập cùng bạn bè; xếp hạng cùng 11 thực tập sinh khác, mỗi người một tính cách và tốc độ tiến bộ riêng. Có người rời công ty, có đối thủ cạnh tranh; không phải ai cũng được debut.",
+      "Debut: công ty thành lập nhóm, bạn chọn vị trí (giọng ca chính, nhảy chính, rapper, gương mặt đại diện, trưởng nhóm) và concept bài hát ra mắt. Mỗi năm quảng bá đĩa mới, fandom lớn dần, có thể giành cúp chương trình âm nhạc, tổ chức concert, lưu diễn quốc tế. Thu nhập chia theo hợp đồng, trừ dần chi phí đào tạo trước; nhóm nổi tiếng được mời lên Running Man (Hàn Quốc).",
+      "Chương trình sống còn cho thực tập sinh: Produce 101 (2016–2019), Girls Planet 999 (2021), Boys Planet (từ 2023), I-LAND (từ 2020), Universe Ticket (2023–2024). Có đánh giá xếp hạng A–F, nhiệm vụ nhóm, chọn vị trí hoặc tranh vị trí trung tâm, chọn bài hát theo concept, bình chọn và các vòng loại; lọt vào đội hình debut thì hoạt động trong nhóm dự án vài năm."
+    ]
+  },
+  {
+    "id": "showbiz-m4-acting-career",
+    "version": "8.7.0-4",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T04:06:02.458Z",
+    "title": "Một Đời — Sự nghiệp diễn viên: thử vai, đóng phim, giải thưởng và lời mời gameshow",
+    "summary": "Theo nghiệp diễn giờ là cả một con đường: từ vai quần chúng, thử vai từng dự án, làm việc với đạo diễn và bạn diễn, chờ phim ra mắt, đến mùa giải thưởng và được mời lên gameshow.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Trong lời mời casting có thêm lựa chọn thử vai một dự án cụ thể: xem thể loại, quy mô, ngân sách, kịch bản, đạo diễn và bạn diễn; chuẩn bị cho buổi thử vai; nhận vai quần chúng, vai phụ hay vai chính tùy năng lực; có thể đàm phán cát-xê (hãng có thể chọn người khác).",
+      "Chuẩn bị vai theo thể loại (võ thuật, thoại cổ, giảm cân…), làm việc với đạo diễn khó tính hay cởi mở, tập thoại với bạn diễn, xử lý sự cố trên trường quay. Đạo diễn và bạn diễn là những người quen lâu dài, có thể gặp lại ở dự án sau.",
+      "Phim ra mắt vào năm sau với doanh thu phòng vé hoặc lượt xem và điểm đánh giá; vai chính trong phim trăm tỷ được thưởng doanh thu. Phim chất lượng được đề cử ở mùa giải thưởng năm kế tiếp.",
+      "Mục mới “Sự nghiệp diễn xuất”: hồ sơ các phim đã đóng, giải thưởng, nấc nghề (quần chúng → vai phụ → vai chính → hạng A → ngôi sao điện ảnh); tìm dự án mới, đi đóng quần chúng lấy kinh nghiệm, góp vốn làm nhà sản xuất, chuyển hướng làm đạo diễn khi đủ tầm.",
+      "Phim thành công hoặc đoạt giải mang lại lời mời quảng bá trên Running Man Việt Nam, 2 Ngày 1 Đêm (hoặc Running Man Hàn Quốc khi hoạt động ở Hàn Quốc).",
+      "Chương trình mới Gương Mặt Thân Quen: ca sĩ, diễn viên có tên tuổi bốc thăm hóa thân thành ca sĩ nổi tiếng mỗi tuần, ba giám khảo chấm điểm; ngôi sao rất nổi tiếng có thể ngồi ghế giám khảo."
+    ]
+  },
+  {
+    "id": "showbiz-m3-variety-dating-music",
+    "version": "8.7.0-3",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T03:56:35.658Z",
+    "title": "Một Đời — Gameshow vận động, chiến thuật, hẹn hò và cuộc thi âm nhạc",
+    "summary": "Nhiều chương trình mới có luật chơi riêng: trò chơi xé bảng tên, suy luận, đấu trí chiến thuật, show hẹn hò thực tế và các cuộc thi âm nhạc từ vòng giấu mặt đến chung kết.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Running Man Việt Nam và 2 Ngày 1 Đêm giữ nguyên mùa quay, thử thách và cát-xê; sau mỗi tập có thêm một nhiệm vụ đặc biệt: xé bảng tên theo khu vực (đoán đường đi của đối thủ, phục kích, liên minh có thể bị phản bội), săn hộp bí mật bằng manh mối, oẳn tù tì với người dẫn có thói quen riêng, bốc bát canh đắng, đoán số giành chỗ ngủ. Thắng nhiệm vụ giúp thêm người theo dõi và thân hơn với dàn thành viên.",
+      "Khi hoạt động ở Hàn Quốc hoặc đã rất nổi tiếng, bạn có thể làm khách mời Running Man (Hàn Quốc) và New Journey to the West.",
+      "Gameshow chiến thuật The Genius, The Devil's Plan, Bloody Game: tám người chơi với chiến thuật khác nhau (thận trọng, liều lĩnh, tham lam, công bằng…) qua các trò đấu giá kín, số lớn nhất duy nhất, hợp tác hay phản bội; người thắng nhận garnet và được miễn loại, người cuối bảng vào trận bốc sỏi đấu loại; hai người cuối cùng tranh chức vô địch.",
+      "Show hẹn hò Single's Inferno, Heart Signal, EXchange (Transit Love), I Am Solo: mỗi người tham gia có tuổi, nghề, tính cách và gu riêng; bạn giới thiệu bản thân, thi đấu giành quyền hẹn, chọn người đi hẹn, gửi tin nhắn ẩn danh, đối mặt người theo đuổi khác hay người yêu cũ. Đêm cuối chỉ thành đôi khi hai người cùng chọn nhau, sau đó có thể tiếp tục tìm hiểu. Chỉ dành cho người độc thân từ 20 tuổi.",
+      "Cuộc thi âm nhạc: Rap Việt (tuyển chọn — cả bốn huấn luyện viên chọn thì nhận nón vàng, đối đầu, bứt phá, bán kết, chung kết), Giọng Hát Việt 2012–2019 (giấu mặt — quay ghế, chọn đội, đối đầu, loại trực tiếp, liveshow), Vietnam Idol (thử giọng ba giám khảo, nhà hát, các đêm Gala; tạm dừng 2017–2022), Ca Sĩ Mặt Nạ 2022–2023 dành cho nghệ sĩ nổi tiếng (giấu thân phận, bị đoán trúng thì phải tháo mặt nạ). Kết quả dựa trên kỹ năng ca hát, bài hát bạn chọn, việc tập luyện, câu chuyện và danh tiếng.",
+      "Nghệ sĩ rất nổi tiếng có thể làm huấn luyện viên Rap Việt, Giọng Hát Việt hoặc giám khảo Vietnam Idol: chọn thí sinh, dẫn dắt đội qua các vòng; thí sinh của bạn sau này có thể trở thành người quen trong giới."
+    ]
+  },
+  {
+    "id": "showbiz-m2-quiz-shows",
+    "version": "8.7.0-2",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T03:39:16.475Z",
+    "title": "Một Đời — Gameshow kiến thức: Nhanh Như Chớp, Ai Là Triệu Phú, Olympia và hơn thế",
+    "summary": "Mục mới “Chương trình truyền hình”: tự đăng ký làm thí sinh và trả lời từng câu hỏi trong các gameshow kiến thức, có luật chơi, tiền thưởng và kết quả riêng.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Nhanh Như Chớp: 15 câu hỏi trả lời nhanh, đúng thì lên một bậc, sai thì về bậc đầu. Đạt chuỗi 10 câu đúng liên tiếp nhận 20 triệu đồng; có thể nhờ người thân gợi ý một lần. Người nổi tiếng tham gia với vai trò khách mời, tiền thắng được gửi quỹ từ thiện.",
+      "Ai Là Triệu Phú: 15 câu hỏi theo thang tiền thưởng, mốc an toàn ở câu 5 và câu 10, bốn quyền trợ giúp (50:50, hỏi khán giả, gọi điện cho người thân, hỏi tổ tư vấn). Có thể dừng cuộc chơi để mang tiền về; trả lời sai thì về mốc an toàn gần nhất. Khi sống ở nước ngoài, bạn tham gia phiên bản quốc tế.",
+      "Đường Lên Đỉnh Olympia dành cho học sinh THPT học giỏi: bốn phần thi Khởi động (đúng +10, sai −5), Vượt chướng ngại vật (đoán từ khóa), Tăng tốc, Về đích (chọn câu 10, 20, 30 điểm) cùng ba đối thủ; thắng cuộc thi tuần thì vào tháng, quý và chung kết năm.",
+      "Siêu Trí Tuệ Việt Nam: ghi nhớ dãy số, chuỗi hình ảnh rồi trả lời khi dãy đã biến mất, kèm thử thách tính nhẩm; vượt ba vòng để vào biệt đội. Đấu Trường 100 (2006–2015): một người đấu với 100 người, có thể dừng để nhận tiền tích lũy.",
+      "Câu hỏi được tạo mới mỗi lần chơi từ nhiều dạng: tính nhanh, phần trăm, quy luật dãy số, sắp xếp, đổi đơn vị, giờ và thứ, suy luận, số nguyên tố, số La Mã, thủ đô, hành tinh, nguyên tố hóa học, mốc lịch sử, văn học, âm nhạc, điện ảnh, đố mẹo. Có ba mức khó, ít lặp lại, mỗi câu đều có giải thích. Tải lại game không làm đổi câu đang hỏi hay nhận thưởng hai lần.",
+      "Chương trình đã tham gia được ghi vào hồ sơ. Người chiến thắng hoặc gây ấn tượng có thể được mời trở lại; người nổi tiếng thỉnh thoảng nhận lời mời làm khách mời."
+    ]
+  },
+  {
+    "id": "feedback-e-assets-wills",
+    "version": "8.6.0-e",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-27T01:47:45.764Z",
+    "title": "Một Đời — Tài sản trong hôn nhân, chia tài sản khi ly hôn và di chúc chi tiết",
+    "summary": "Lập thỏa thuận tài sản trước khi cưới, ly hôn chia đúng tài sản chung thay vì chia cố định, và viết di chúc giao từng tài sản cụ thể, chọn người thi hành, giao quyền điều hành doanh nghiệp.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Thỏa thuận tài sản trước hôn nhân (tùy chọn) ở bước bàn chuyện về chung nhà: chia đôi tài sản chung; thu nhập ai nấy giữ, chỉ chia nhà ở; chia theo đóng góp 60/40; hoặc doanh nghiệp là tài sản riêng. Người kia có thể không đồng ý và hai người hoãn cưới để bàn thêm. Phần giải thích thay đổi theo nơi bạn sống; đây là mô phỏng, không phải tư vấn pháp lý.",
+      "Ly hôn không còn trừ cố định một nửa nhà và 40% tiền mặt. Tài sản có trước khi cưới và tài sản được thừa kế riêng giữ nguyên; chỉ phần tạo ra trong hôn nhân được chia, có xét thu nhập của mỗi người, lỗi ngoại tình và thỏa thuận đã ký. Có thể chia bằng tiền, nhà, bất động sản, đồ sưu tầm, cổ phần; tài sản của con, của bố mẹ và quà đã tặng không bị đem chia.",
+      "Sau ly hôn, bước thỏa thuận hiện rõ tài sản riêng, tài sản chung và phần mỗi người nhận. Ngoài chấp nhận hay nhờ hòa giải, bạn có thể ra tòa; khoảng một năm sau mới có phán quyết, có thể được hoàn lại hoặc phải trả thêm.",
+      "Hôn nhân trong bản lưu cũ giữ nguyên cách chia cũ để không làm thay đổi ván đang chơi; cách chia mới áp dụng cho các cuộc hôn nhân bắt đầu từ bản cập nhật này.",
+      "Mục mới “Di chúc chi tiết”: giao từng tài sản cụ thể (nhà, căn hộ, cơ sở kinh doanh, cổ phần, đồ sưu tầm) cho từng người; không cho một người con đã trưởng thành hưởng thừa kế; chọn người thi hành di chúc (vợ/chồng, con, bạn thân hoặc văn phòng luật); giao quyền điều hành doanh nghiệp tách khỏi quyền sở hữu cổ phần. Nợ được trả từ di sản trước khi chia; ở Việt Nam, vợ/chồng và con chưa thành niên luôn được ít nhất 2/3 suất theo pháp luật.",
+      "Di chúc chênh lệch nhiều có thể dẫn tới tranh chấp giữa các con; chọn người thi hành độc lập giúp giảm nguy cơ. Khi sống tiếp đời con, vụ tranh chấp được giải quyết sau một thời gian, đồ sưu tầm được thừa kế đúng một lần, và người được giao điều hành doanh nghiệp sẽ giữ vị trí đó."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.314Z"
+  },
+  {
+    "id": "feedback-d-relationships",
+    "version": "8.6.0-d",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T21:50:04.648Z",
+    "title": "Một Đời — Kết giao, quà tặng người thân và màn cầu hôn của riêng bạn",
+    "summary": "Mở rộng quan hệ với người có địa vị và người nổi tiếng, giới thiệu đối tượng cho con, tặng quà người thân, cầu hôn theo cách của mình; thêm những tình huống áp lực trong giới giải trí cùng các cách tự bảo vệ.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Mục mới “Kết giao, mở rộng quan hệ”: dự sự kiện để quen người mới, mời cà phê, xin lời khuyên, kết thân thành bạn bè. Người có địa vị cao hơn nhiều dễ từ chối hơn; không phải ai cũng cho lời khuyên chân thành. Mọi nhân vật đều là hư cấu.",
+      "Với người nổi tiếng trong mạng lưới quen biết: mời hợp tác quảng bá cho cơ sở kinh doanh, hoặc ngỏ ý hẹn hò nếu cả hai đều độc thân, đã trưởng thành và đủ thân thiết. Người ấy có quyền từ chối; nếu nhận lời, danh tiếng của bạn tăng nhưng đời tư cũng bị chú ý nhiều hơn.",
+      "Khi làm nghề giải trí, bạn có thể gặp người lạm quyền gợi ý trao đổi lợi ích không phù hợp, bị ép ký hợp đồng bất lợi hay làm việc quá sức. Bạn có thể từ chối, tìm luật sư và hiệp hội nghề nghiệp, lên tiếng công khai hoặc rời công ty. Một số lựa chọn cần thời gian mới có kết quả. Nổi tiếng vẫn đạt được bằng thực lực, không cần đánh đổi.",
+      "Mục mới “Giới thiệu đối tượng cho con”: người được giới thiệu là con của những người bạn thật sự quen biết. Gia đình bên kia có thể từ chối, con bạn cũng có quyền nói không; nếu hai người tìm hiểu rồi kết hôn, hai gia đình trở thành thông gia.",
+      "Mục mới “Tặng quà người thân”: nhẫn, trang sức, đồng hồ, điện thoại, laptop, xe máy, ô tô, siêu xe với nhiều mức giá, tặng vợ/chồng, người yêu, con, bố mẹ, anh chị em. Món quà thuộc về người nhận và hiện trong hồ sơ của người con; quà quá đắt so với khả năng có thể bị từ chối mà không mất tiền. Con nhỏ chưa được tặng xe.",
+      "Nút “Cầu hôn” giờ là cả một hành trình: chọn có nhẫn hay không (không bắt buộc), chọn nơi cầu hôn (ở nhà, khu vườn, nhà hàng, khách sạn, sân khấu hòa nhạc, du thuyền). Người ấy có thể nhận lời hoặc từ chối tùy tình cảm, thời gian quen nhau và việc họ thích riêng tư hay bất ngờ trước đông người. Nhận lời là đính hôn; đám cưới vẫn do hai người cùng quyết định sau. Vẫn có thể bàn thẳng chuyện về chung nhà như trước."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.317Z"
+  },
+  {
+    "id": "feedback-c-elite-life",
+    "version": "8.6.0-c",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T21:32:54.336Z",
+    "title": "Một Đời — Đời sống thượng lưu: tiệc tùng, thương vụ, gia tộc và bộ sưu tập",
+    "summary": "Cuộc sống thay đổi theo tầng lớp; tự tổ chức tiệc, bàn thương vụ với người quen, điều hành gia tộc, trải nghiệm xa xỉ và sưu tầm đồ quý có giá trị lên xuống.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Tầng lớp xã hội (Bình dân, Khá giả, Giàu có, Thượng lưu, Siêu giàu) được xét theo tài sản so với mức sống nơi bạn ở, danh tiếng và việc có tập đoàn riêng. Nhiều trải nghiệm chỉ xuất hiện khi đủ tầng lớp và đúng thời kỳ.",
+      "Mục mới “Tổ chức tiệc”: chọn loại tiệc (sinh nhật, tân gia, kỷ niệm ngày cưới, gặp gỡ đối tác, dạ tiệc từ thiện), quy mô, địa điểm (nhà riêng, sân vườn, nhà hàng, khách sạn, du thuyền, đảo riêng) và khách mời. Người thân, bạn bè, đối tác, người nổi tiếng có thể nhận lời hoặc từ chối. Tiệc thành công giúp tăng uy tín và quen người mới; tiệc quá tốn kém so với tài sản dễ bị bàn tán.",
+      "Mục mới “Thương vụ hợp tác”: bàn góp vốn dự án, hợp tác phân phối, liên doanh bất động sản, rót vốn khởi nghiệp với những người bạn đã quen. Đối tác có thể từ chối; thương vụ kéo dài nhiều năm, có thể lãi, lỗ hoặc gặp đối tác thiếu trung thực. Khi đó bạn có thể khởi kiện, thương lượng hoặc bỏ qua. Có thể thuê kiểm toán hoặc rút vốn sớm.",
+      "Người quen ở tiệc, sân golf hay buổi ký hợp đồng là cùng một nhân vật xuyên suốt: họ nhớ những lần gặp, già đi theo năm tháng và có thể qua đời. Tất cả đều là nhân vật hư cấu.",
+      "Mục mới “Người đứng đầu gia tộc”: họp gia đình, cấp hoặc thu hồi hỗ trợ nhà ở, quỹ học tập, phụ cấp; hỗ trợ tài chính một lần; giải quyết mâu thuẫn giữa người thân; mở nhanh mục bổ nhiệm và chọn người kế nhiệm. Bạn chỉ quyết được trên tiền và cổ phần của mình; người thân có thể từ chối, và mâu thuẫn để lâu sẽ căng thẳng hơn.",
+      "Mục mới “Trải nghiệm thượng lưu” (golf, đua ngựa, dạ tiệc gala, lái siêu xe trên trường đua, du thuyền, máy bay riêng, đảo riêng) và “Sưu tầm và tài sản xa xỉ” (đồng hồ, tranh, bình cổ, xe cổ, tác phẩm nghệ thuật, du thuyền, máy bay, đảo). Giá trị thay đổi theo năm; có thể bán đấu giá hoặc tặng người thân. Món đã tặng thuộc về người nhận; du thuyền, máy bay, đảo tốn phí duy trì."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.322Z"
+  },
+  {
+    "id": "feedback-b-profiles-menus",
+    "version": "8.6.0-b",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T21:21:51.829Z",
+    "title": "Một Đời — Hồ sơ con chi tiết, chức vụ người thân hiển thị đúng và menu gọn hơn",
+    "summary": "Chức vụ, nơi làm việc và thu nhập của người thân luôn khớp với công ty; hồ sơ con có thêm sức khỏe, học tập, quan hệ, tài chính, kỷ niệm; menu Gia đình và Tiền bạc chia thành các nhóm nhỏ.",
+    "tags": [
+      "Sửa lỗi",
+      "Cải thiện"
+    ],
+    "details": [
+      "Sửa lỗi con được bổ nhiệm làm giám đốc trong doanh nghiệp gia đình nhưng hồ sơ vẫn ghi nghề cũ. Nay hồ sơ hiện đúng chức vụ, tên công ty và mức lương công ty trả; không còn cộng hai khoản lương. Khi bị miễn nhiệm, người con trở lại công việc trước đây. Áp dụng cả với vợ/chồng được bổ nhiệm.",
+      "Hồ sơ con chi tiết hơn: sức khỏe và dị ứng, lớp học, học lực, hạnh kiểm, thành tích; mức thân thiết với bạn, với cha/mẹ còn lại, cha/mẹ kế, từng anh chị em và ông bà; tiền tiết kiệm, trợ cấp, quà được tặng, tài sản riêng; kỷ niệm và các cột mốc. Thông tin giữ nguyên khi mở lại hồ sơ hay tải lại bản lưu.",
+      "Menu Gia đình & tình cảm chia thành 5 nhóm: Tình yêu & hôn nhân; Sinh con & nuôi con; Quản lý con cái; Quan hệ gia đình; Hoạt động & sự kiện gia đình.",
+      "Menu Tiền bạc & tài sản chia thành 5 nhóm: Chi tiêu & sinh hoạt (gồm chi tiêu định kỳ); Ngân hàng & vay vốn; Đầu tư; Kinh doanh & bất động sản; Phương tiện & tài sản. Có nút quay lại nhóm lớn; mọi việc cũ vẫn còn, chỉ được sắp xếp lại."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.327Z"
+  },
+  {
+    "id": "feedback-a-family-fixes",
+    "version": "8.6.0-a",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T20:53:06.973Z",
+    "title": "Một Đời — Sửa lỗi con cái sau ly hôn, về nước sau du học và hẹn hò qua app",
+    "summary": "Sửa các lỗi người chơi báo về quyền nuôi con, du học, app hẹn hò; thêm bước chuẩn bị hồ sơ audition và mời bố mẹ về sống chung.",
+    "tags": [
+      "Sửa lỗi",
+      "Tính năng"
+    ],
+    "details": [
+      "Sửa lỗi ly hôn nhiều lần: khi ly hôn, game chỉ bàn quyền nuôi những người con của chính cuộc hôn nhân đó. Con của cuộc hôn nhân trước giữ nguyên nơi ở đã thỏa thuận, không bị kéo vào tranh chấp mới.",
+      "Mục mới “Nơi ở và quyền chăm sóc của các con”: xem từng con đang sống ở đâu, ai trực tiếp chăm sóc, ai giám hộ, là con chung, con riêng hay con nuôi. Có thể đề nghị con về sống cùng, sang ở với cha/mẹ kia hoặc luân phiên hai nhà; cha/mẹ còn lại và con từ 12 tuổi có quyền đồng ý hay không.",
+      "Sửa lỗi không thể về Việt Nam khi đang du học hoặc làm việc ở nước ngoài: mục mới “Về nước / chuyển sang quốc gia khác” cho phép về quê hương hoặc chuyển sang nước khác. Nếu đang học, chương trình sẽ dừng; nếu đang theo hợp đồng, phải chịu phí chấm dứt sớm. Tiền và nhà được quy đổi, quốc tịch gốc giữ nguyên. Khi chưa đủ điều kiện, lựa chọn vẫn hiện kèm lý do.",
+      "Sửa lỗi có thể làm treo game khi lướt hồ sơ trên app hẹn hò. Mở lại hộp lựa chọn không còn làm đổi danh sách năm hồ sơ đang xem.",
+      "Audition rõ ràng hơn: chuẩn bị hồ sơ (ảnh profile, video giới thiệu năng khiếu) trước khi đăng ký; mỗi nước có một công ty tuyển chọn riêng; kết quả từng vòng hồ sơ, năng khiếu, phỏng vấn kèm lý do. Trúng tuyển thì xem hợp đồng và chuẩn bị sang nước ngoài; chưa đạt thì bổ sung hồ sơ, thử lại hoặc tự ứng tuyển trong nước. Thực tập sinh nhận tối đa 27 tuổi.",
+      "Chủ động mời bố, mẹ hoặc cả hai về sống chung, không cần chờ sự kiện. Bố mẹ có thể đồng ý hoặc từ chối tùy tuổi tác, mức tin cậy, nhà ở và hoàn cảnh; nhà cửa, tài sản của ai vẫn thuộc về người đó. Có thể để bố mẹ về lại nhà riêng."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.332Z"
+  },
+  {
+    "id": "gd6-integration-release",
+    "version": "8.5.0-gd6",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T12:38:14.825Z",
+    "title": "Một Đời — Chơi mượt và ổn định hơn",
+    "summary": "Chế độ tự động không còn dừng giữa chừng, đổi chế độ có tác dụng ngay, cùng một số sửa lỗi về hoàn cảnh sự kiện.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Chế độ tự động không còn dừng lại chờ bạn ở những chuyện do cuộc sống tự đưa tới như cảnh báo thời tiết, người đòi nợ, chuyển đến nơi ở mới, khoảnh khắc với con, đám cưới của con hay kết thúc du học.",
+      "Khi AI vừa chọn thay bạn, các bước tiếp theo của lựa chọn đó cũng được AI làm tiếp thay vì đứng chờ.",
+      "Bật Tự động hoặc Chỉ ngã rẽ lớn khi đang có một lựa chọn trên màn hình giờ có tác dụng ngay. Trước đây game có thể đứng chờ mãi; tắt Tự động thì AI vẫn chọn thay bạn.",
+      "Tình huống gia đình phản đối, không muốn tổ chức đám cưới giờ chỉ xuất hiện khi hai người chưa cưới, không còn gặp ở những cặp vợ chồng đã chung sống nhiều năm.",
+      "Lựa chọn bị bỏ qua vì hoàn cảnh đã thay đổi không còn để lại dấu vết trong bản lưu.",
+      "Thi lại tốt nghiệp hoặc nộp nguyện vọng với điểm từ 27 trở lên giờ cũng được ghi nhận học bổng như lượt thi chính.",
+      "Sửa lỗi có thể làm game dừng khi một chuyện cũ về hôn nhân đến hẹn nhưng người ấy không còn bên bạn."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.337Z"
+  },
+  {
+    "id": "gd5-event-balancing",
+    "version": "8.5.0-gd5",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T12:02:27.406Z",
+    "title": "Một Đời — Cuộc sống tự nhiên hơn, ít trùng lặp hơn!",
+    "summary": "Nhịp sự kiện tự nhiên hơn: ít năm dồn dập biến cố, ít tình huống na ná nhau, chế độ tự động trôi nhanh hơn.",
+    "tags": [
+      "Điều chỉnh",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Những biến cố lớn như tai nạn, mất việc, nợ nần hay khủng hoảng gia đình không còn dồn dập nhiều cái trong cùng một năm chỉ vì trùng điều kiện. Năm có nhiều biến cố vẫn có thể xảy ra, nhưng hiếm hơn và hợp hoàn cảnh hơn.",
+      "Vừa trải qua chuỗi biến cố, nhân vật có thêm thời gian để những chuyện đời thường nhỏ, gần gũi xuất hiện.",
+      "Hạn chế những tình huống na ná nhau xuất hiện sát nhau, kể cả khi người trong chuyện khác tên. Những chuyện đang diễn ra như nợ nần, nghiện ngập không bị coi là trùng lặp.",
+      "Những câu kể chuyện đời thường giống hệt nhau không lặp lại trong vòng sáu năm. Các dòng về tiền lương, tiền thưởng, chi tiêu vẫn hiện đầy đủ.",
+      "Chế độ tự động trôi nhanh hơn: lựa chọn đời thường được chốt nhanh hơn, còn ngã rẽ quan trọng và biến cố lớn vẫn dừng đủ lâu để bạn kịp đọc. Năm đã có nhiều lựa chọn thì nhân vật không tự rủ thêm hoạt động.",
+      "Mỗi năm có tối đa một lời rủ du lịch ngẫu nhiên, và không rủ đi chơi trong năm vừa có biến cố lớn. Bạn vẫn tự lên kế hoạch du lịch được như trước.",
+      "Sửa lỗi những cảnh hôn nhân (món quà bất ngờ, cần thêm thời gian bên nhau, cơ hội việc ở tỉnh khác, chuyện mua nhà mua xe, ghen tuông, mâu thuẫn tiền bạc), cảnh gia đình phản đối mối quan hệ, đòi danh phận rõ ràng, một số chuyện tình cảm khi độc thân và tình huống dư luận với người làm nghề công chúng chưa từng xuất hiện dù đủ điều kiện.",
+      "Các cảnh hôn nhân vừa mở lại cách nhau ít nhất ba năm, mỗi cảnh tối đa bốn lần một đời, để không lấn át cuộc sống vợ chồng.",
+      "Hậu quả nhiều năm của những lựa chọn cũ và ảnh hưởng của hoàn cảnh lên khả năng gặp sự kiện vẫn giữ nguyên. Bản lưu cũ tiếp tục chơi được."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.342Z"
+  },
+  {
+    "id": "gd4-multiyear-consequences",
+    "version": "8.5.0-gd4",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T11:05:30.086Z",
+    "title": "Một Đời — Lựa chọn hôm nay, thay đổi cả tương lai!",
+    "summary": "Một số lựa chọn quan trọng giờ để lại hậu quả kéo dài nhiều năm và được nhắc lại đúng người, đúng lúc.",
+    "tags": [
+      "Tính năng",
+      "Điều chỉnh"
+    ],
+    "details": [
+      "Một số lựa chọn quan trọng giờ có hậu quả kéo dài nhiều năm: câu chuyện được nhắc lại đúng năm, đúng người và đúng lựa chọn bạn đã đưa ra.",
+      "Học hành: nghỉ học vì nhà khó khăn có thể khiến việc xin việc vất vả hơn vài năm sau; lớp bổ túc buổi tối vẫn mở ra cơ hội có tấm bằng muộn.",
+      "Công việc: nếu bạn nhường suất ở lại khi công ty cắt giảm, sau này người đồng nghiệp ấy có thể giới thiệu bạn trở lại nghề cũ.",
+      "Kinh doanh và tiền bạc: khoản vay nóng để trả lương hay khoản vay lo viện phí sẽ được nhắc lại khi đến hạn. Bán bớt tài sản, xin gia hạn, trả góp hay tránh mặt đều dẫn tới kết quả khác nhau; trả hết nợ có thể mở ra cơ hội mở rộng cửa hàng.",
+      "Gia đình và hôn nhân: phản đối bố mẹ đi bước nữa có thể dẫn tới nhiều năm xa cách và một cơ hội hòa giải, hoặc không còn kịp. Sau một lần hôn nhân rạn nứt, hai người còn phải vượt qua giai đoạn niềm tin chưa trở lại.",
+      "Bạn bè: ở bên bạn thân lúc khó khăn, nhiều năm sau khi bạn gặp chuyện, người ấy có thể quay lại giúp. Làm ngơ thì có thể xa cách, nhưng vẫn còn cơ hội xin lỗi.",
+      "Sức khỏe: sau tai nạn khi làm việc hoặc tai nạn giao thông, việc tập phục hồi hay mặc kệ ảnh hưởng tới những năm sau; cơn đau cũ có thể tái phát và khiến bạn phải cân nhắc đổi việc.",
+      "Diễn biến phụ thuộc hoàn cảnh hiện tại như tiền bạc, công việc, sức khỏe và mức tin cậy giữa hai người. Không có kết cục định sẵn; chuyện cũ tự khép lại khi không còn phù hợp.",
+      "Không lấn át cuộc đời: mỗi năm có tối đa một lựa chọn từ chuyện cũ, mỗi hậu quả chỉ tính tiền một lần, không phát sinh khoản vay trùng và người đã mất không quay lại trong câu chuyện. Bản lưu cũ tiếp tục chơi được."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.346Z"
+  },
+  {
+    "id": "gd3-context-weighting",
+    "version": "8.5.0-gd3",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "publishedAt": "2026-10-26T09:49:57.975Z",
+    "title": "Một Đời — Mỗi cuộc đời, một hoàn cảnh khác nhau!",
+    "summary": "Cơ hội và khó khăn trong 50 tình huống quen thuộc phản ánh rõ hơn hoàn cảnh của nhân vật.",
+    "tags": [
+      "Tính năng",
+      "Điều chỉnh"
+    ],
+    "details": [
+      "Điều chỉnh khả năng gặp 50 tình huống quen thuộc theo công việc, kỹ năng, tài chính, sức khỏe, việc học và các mối quan hệ.",
+      "Khi thiếu tiền, thất nghiệp hoặc phải lo cho con nhỏ, áp lực tài chính có thể tăng; cơ hội tìm thêm thu nhập và nhận hỗ trợ chăm con cũng được cân nhắc.",
+      "Kỹ năng, kiến thức và kinh nghiệm có thể giúp nhân vật gặp thêm cơ hội nghề nghiệp. Người có năng lực vẫn có thể gặp biến động công việc.",
+      "Căng thẳng, sức khỏe và việc ưu tiên công việc hay nghỉ ngơi ảnh hưởng đến một số tình huống mệt mỏi. Bạn bè thân thiết và việc điều trị đã có có thể giúp giảm áp lực.",
+      "Mức tin tưởng giữa các thành viên ảnh hưởng đến một số mâu thuẫn gia đình; những món quà nhỏ và cơ hội trò chuyện vẫn luôn có thể xuất hiện.",
+      "Hoàn cảnh không quyết định số phận: sự kiện vẫn có yếu tố bất ngờ, giữ giới hạn lặp và các điều kiện cần thiết. Bản lưu cũ tiếp tục được hỗ trợ.",
+      "Đợt này tập trung điều chỉnh xác suất; không bổ sung sự kiện mới hoặc đổi kết quả các phương án lựa chọn."
+    ],
+    "correctedAt": "2026-10-27T02:08:17.350Z"
+  },
+  {
     "id": "save-family-fixes-oct26",
     "publishedAt": "2026-10-26T08:56:13.394Z",
     "title": "Lưu tiến trình an toàn hơn, gia đình nhất quán và sửa lỗi cuộc đời",

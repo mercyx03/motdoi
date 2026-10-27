@@ -1,0 +1,402 @@
+[
+  {
+    "id": "doi_kem",
+    "group": "pressure",
+    "before": 0.4,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 16 && l.indep && l.money < -l.base * 1.2 && !l.job && (l.flags.doiKem == null || a - l.flags.doiKem >= 3) && free(l); }",
+    "child": false
+  },
+  {
+    "id": "kd_vay_nong_xoay_von",
+    "group": "pressure",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "vd_vay_chua_benh",
+    "group": "pressure",
+    "before": "function (l) { return base * (hard(l) ? (k || 4) : 1); }",
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && isVN(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "vd_hoc_phi_con",
+    "group": "pressure",
+    "before": "function (l) { return base * (hard(l) ? (k || 4) : 1); }",
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && isVN(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "sv_vay",
+    "group": "pressure",
+    "before": 0.06,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "sv_lam_them",
+    "group": "incomeOpportunity",
+    "before": 0.25,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "viec_online",
+    "group": "incomeOpportunity",
+    "before": 0.04,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 16 && a <= 45 && free(l); }",
+    "child": false
+  },
+  {
+    "id": "chuyen_huong",
+    "group": "careerChange",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return l.job && l.job.yrs >= 3 && a >= 24 && a <= 58 && !!pathFor(l) && free(l); }",
+    "child": false
+  },
+  {
+    "id": "cn_chuyen_nghe_tuoi_40",
+    "group": "careerChange",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "dev_offer_nuoc_ngoai",
+    "group": "careerOpportunity",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "sale_khach_lon",
+    "group": "careerOpportunity",
+    "before": 0.06,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "bep_cuoc_thi",
+    "group": "careerOpportunity",
+    "before": 0.05,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "nc_ket_qua_dot_pha",
+    "group": "careerOpportunity",
+    "before": 0.04,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "ks_sang_che",
+    "group": "careerOpportunity",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return jobs.indexOf(jid(l)) >= 0 && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "vc_bo_nhiem",
+    "group": "careerOpportunity",
+    "before": 0.1,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "vp_sa_thai_ai",
+    "group": "jobRisk",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "cs_cat_giam",
+    "group": "jobRisk",
+    "before": 0.008,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "fl_burnout_lam_dem",
+    "group": "fatigue",
+    "before": 0.12,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "tai_xe_ngu_gat",
+    "group": "fatigue",
+    "before": 0.15,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "pc_met_moi",
+    "group": "fatigue",
+    "before": 0.1,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "yt_truc_dem_sai_sot",
+    "group": "fatigue",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return okJob(l, jobs) && rk(l) >= rmin && rk(l) <= rmax && free(l) && (!extra || extra(l, a)); }",
+    "child": false
+  },
+  {
+    "id": "chan_thuong",
+    "group": "fatigue",
+    "before": 0.06,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return hasJob(l, ['vdv', 'tuyen_thu_es']) && free(l); }",
+    "child": false
+  },
+  {
+    "id": "tram_cam",
+    "group": "distress",
+    "before": 0.3,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 14 && l.st.hap < 28 && free(l); }",
+    "child": false
+  },
+  {
+    "id": "nhung_ngay_toi",
+    "group": "distress",
+    "before": 0.07,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "sau_mat_mat",
+    "group": "distress",
+    "before": 0.3,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "marriageTime130",
+    "group": "partnerTime",
+    "before": "function(l){var p=personality(l,l.partner);return t.id==='marriageJealous130'&&p.includes('ghen tuông')||t.id==='marriageMoney130'&&p.includes('tiết kiệm')||t.id==='marriageTime130'&&p.includes('nhạy cảm')?.24:.1;}",
+    "after": "base × bounded context factor",
+    "when": "function(l){if(!base(l))return false;personality(l,l.partner);return true;}",
+    "child": false
+  },
+  {
+    "id": "marriageMoney130",
+    "group": "partnerMoney",
+    "before": "function(l){var p=personality(l,l.partner);return t.id==='marriageJealous130'&&p.includes('ghen tuông')||t.id==='marriageMoney130'&&p.includes('tiết kiệm')||t.id==='marriageTime130'&&p.includes('nhạy cảm')?.24:.1;}",
+    "after": "base × bounded context factor",
+    "when": "function(l){if(!base(l))return false;personality(l,l.partner);return true;}",
+    "child": false
+  },
+  {
+    "id": "marriageGift130",
+    "group": "partnerGift",
+    "before": "function(l){var p=personality(l,l.partner);return t.id==='marriageJealous130'&&p.includes('ghen tuông')||t.id==='marriageMoney130'&&p.includes('tiết kiệm')||t.id==='marriageTime130'&&p.includes('nhạy cảm')?.24:.1;}",
+    "after": "base × bounded context factor",
+    "when": "function(l){if(!base(l))return false;personality(l,l.partner);return true;}",
+    "child": false
+  },
+  {
+    "id": "marriageJealous130",
+    "group": "partnerConflict",
+    "before": "function(l){var p=personality(l,l.partner);return t.id==='marriageJealous130'&&p.includes('ghen tuông')||t.id==='marriageMoney130'&&p.includes('tiết kiệm')||t.id==='marriageTime130'&&p.includes('nhạy cảm')?.24:.1;}",
+    "after": "base × bounded context factor",
+    "when": "function(l){if(!base(l))return false;personality(l,l.partner);return true;}",
+    "child": false
+  },
+  {
+    "id": "con_hoc",
+    "group": "childCost",
+    "before": 0.05,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return l.kids.some(function (k) { return k.alive && a - k.born >= 6 && a - k.born <= 17; }) && l.indep && free(l); }",
+    "child": false
+  },
+  {
+    "id": "con_hu",
+    "group": "childConflict",
+    "before": 0.05,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return l.kids.some(function (k) { return k.alive && a - k.born >= 12 && a - k.born <= 19; }) && free(l); }",
+    "child": false
+  },
+  {
+    "id": "con_bo_be",
+    "group": "childConflict",
+    "before": 0.12,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 60 && free(l) && l.kids.some(function (k) { return k.alive && k.close < 40 && a - k.born >= 25; }); }",
+    "child": false
+  },
+  {
+    "id": "bo_me_can",
+    "group": "parentCare",
+    "before": 0.07,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return l.indep && a >= 22 && ((l.fam.mAlive && l.fam.mAge + a >= 52) || (l.fam.fAlive && l.fam.fAge + a >= 52)) && free(l); }",
+    "child": false
+  },
+  {
+    "id": "bo_me_mot_minh",
+    "group": "parentCare",
+    "before": 0.2,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return ok(l) && w.apply(this, arguments); }",
+    "child": false
+  },
+  {
+    "id": "grandCare129",
+    "group": "familySupport",
+    "before": 0.15,
+    "after": "base × bounded context factor",
+    "when": "function(l){if(free(l)!==true)return false;if(x[0]==='celebration129')return kids(l).length>0&&annual(l,'tet');if(x[0]==='grandCare129')return (l.fam.mAlive||l.fam.fAlive)&&annual(l,'grandAt')&&kids(l).some(function(k){return l.age-k.born<18&&!!E.FAMILY100&&E.FAMILY100.localChild(l,k);});return kids(l).some(function(k){var a=l.age-k.born;return a>=6&&a<18&&k.meetingAt129!==l.age;});}",
+    "child": false
+  },
+  {
+    "id": "ban_than_moi",
+    "group": "socialNew",
+    "before": 0.12,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "ban_than_hen",
+    "group": "socialBond",
+    "before": 0.12,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "ban_than_kho",
+    "group": "socialBond",
+    "before": 0.06,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "ban_khung_hoang",
+    "group": "socialBond",
+    "before": 0.012,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "bb_hop_lop",
+    "group": "socialBond",
+    "before": 0.012,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "thi_hsg",
+    "group": "studyOpportunity",
+    "before": "function (l, a) { var w = typeof cw === 'function' ? cw(l, a) : (cw || 1); return 0.1 * Math.min(1.5, w); }",
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": true
+  },
+  {
+    "id": "thuc_tap",
+    "group": "studyOpportunity",
+    "before": 0.6,
+    "after": "base × bounded context factor",
+    "when": "function (l) { return free(l) && studying(l) && !!INTERN[l.major] && l.schoolEnd - l.age <= 2 && !l.flags.internDone; }",
+    "child": false
+  },
+  {
+    "id": "mc_hoc_bong",
+    "group": "studyOpportunity",
+    "before": 0.25,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return free(l) && when(l, a); }",
+    "child": false
+  },
+  {
+    "id": "phat_hien",
+    "group": "studyOpportunity",
+    "before": 0.12,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 9 && a <= 17 && /thể thao|game|cờ|âm nhạc|diễn xuất|làm đẹp/.test(l.talent || '') && !l.flags.track && !l.flags.trackAsked && free(l); }",
+    "child": true
+  },
+  {
+    "id": "len_chuyen",
+    "group": "studyOpportunity",
+    "before": 0.45,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 16 && a <= 24 && l.flags.track && !(l.job && (E.jobDef(l).skillRank != null || E.jobDef(l).fame)) && l.school !== 'police' && free(l); }",
+    "child": false
+  },
+  {
+    "id": "k_nhom_hoc",
+    "group": "studyTogether",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= a0 && a <= a1 && free(l) && (!when || when(l, a)); }",
+    "child": true
+  },
+  {
+    "id": "k_ngoai_khoa",
+    "group": "studyTogether",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= a0 && a <= a1 && free(l) && (!when || when(l, a)); }",
+    "child": true
+  },
+  {
+    "id": "k_thich_mon",
+    "group": "studyTogether",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= a0 && a <= a1 && free(l) && (!when || when(l, a)); }",
+    "child": true
+  },
+  {
+    "id": "k6_diem_kem",
+    "group": "studyPressure",
+    "before": 0.08,
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= a0 && a <= a1 && free(l) && (!when || when(l, a)); }",
+    "child": true
+  },
+  {
+    "id": "nghi_hoc_ngheo",
+    "group": "studyPressure",
+    "before": "function (l) { return l.fam.q === 1 ? 0.12 : 0.05; }",
+    "after": "base × bounded context factor",
+    "when": "function (l, a) { return a >= 11 && a <= 16 && l.school && l.fam.q <= 2 && free(l); }",
+    "child": true
+  }
+]

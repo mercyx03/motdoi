@@ -35,5 +35,6 @@ for(const c of W.C.filter(x=>x.code!=='VN')){
  ok(!l.alive,'full life '+c.code);outcomes.push({code:c.code,age:l.age,netUSD:nominal(l,E.netWorth(l))});
 }
 const cards=[...html.matchAll(/<div class="feat">/g)];ok(cards.length===8,'eight introduction cards');ok(html.includes('Một đời khắp thế giới')&&html.includes('Gia đình qua từng thế hệ'),'new cards');
-fs.writeFileSync(path.join(__dirname,'..','audit-world-520.json'),JSON.stringify({samplesUSD:samples,referenceUSD:vn,outcomes},null,2));
+// GĐ6: ghi vào .cache (bị Git bỏ qua) — audit-world-520.json ở gốc là file riêng của chủ dự án, không được ghi đè.
+fs.mkdirSync(path.join(__dirname,'..','.cache'),{recursive:true});fs.writeFileSync(path.join(__dirname,'..','.cache','audit-world-520.json'),JSON.stringify({samplesUSD:samples,referenceUSD:vn,outcomes},null,2));
 console.log('V5.2: '+n+' checks passed; 194 countries, 194 complete lives; sample guard pay USD/month '+JSON.stringify(samples));

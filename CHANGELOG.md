@@ -1,5 +1,26 @@
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
+### GĐ6 — bản đóng gói, chưa phát hành Production
+
+- Nghiệm thu tích hợp GĐ0–GĐ5: regression đầy đủ, 77 bộ test module, kiểm tra trên trình duyệt.
+- Sửa chế độ Tự động đứng chờ sự kiện hệ thống và khi đổi chế độ lúc đang có lựa chọn; gia đình phản đối chỉ khi chưa cưới; công cụ phát hành nhiều bản cùng một thời điểm.
+
+### GĐ5 — bản đóng gói, chưa phát hành Production
+
+- Điều tiết mật độ biến cố lớn, chống lặp theo nhóm chủ đề và nội dung gần trùng, lọc câu kể lặp, nhịp tự động.
+- Sửa 11 tình huống chưa từng xuất hiện do điều kiện hợp lệ nhận nhầm dữ liệu rỗng (cảnh hôn nhân, gia đình phản đối, danh phận, mập mờ).
+
+### GĐ4 — bản đóng gói, chưa phát hành Production
+
+- 8 chuỗi hậu quả nhiều năm trên sự kiện sẵn có: học hành, nghề nghiệp, kinh doanh, nợ vay, gia đình, hôn nhân, bạn bè, sức khỏe.
+- Giai đoạn sau phụ thuộc hoàn cảnh hiện tại, hệ số GĐ3 và danh tính NPC GĐ2; mỗi năm tối đa một lựa chọn từ chuyện cũ, không tính tiền hai lần.
+
+### GĐ3 — bản đóng gói, chưa phát hành Production
+
+- 50 trigger hiện hữu nhận trọng số theo hoàn cảnh, giới hạn 0,5–2,0; không thay hậu quả lựa chọn hoặc schema lưu.
+- Tài chính, kỹ năng, căng thẳng và quan hệ điều chỉnh cả cơ hội lẫn khó khăn; giữ điều kiện và chống lặp.
+- Nhật ký người chơi có phiên bản và phân biệt ngày chuẩn bị với ngày phát hành.
+
 - Quy mô vốn, tỷ lệ cổ phần và hồ sơ quản lý doanh nghiệp.
 - Lợi nhuận công ty theo vốn và ngành nghề, bổ nhiệm ban điều hành, phát hành thêm cổ phiếu và ghế chủ tịch tập đoàn.
 - Điểm từng môn phản ánh thành tích đội tuyển.
