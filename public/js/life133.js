@@ -35,13 +35,14 @@ E.startJob=function(l,id,r,log,quiet){if(seated(l)&&E.resolveJob(id)!==CHAIR){if
 function groupFormed(l,r,log){takeSeat(l,r,log);C.queue(l,'groupSector133',r);if(E.BUSINESS137)C.queue(l,'companyName137',r,{group:true});}
 // Lợi nhuận hằng năm: vốn × biên ngành ± biến động, trừ lương ban điều hành; lỗ làm giảm vốn.
 function companyYear(l,r,log){var q=S(l),crisis=q.crisis&&q.crisis.until>l.age,team=E.assetTeam123&&E.assetTeam123(l),core=q.group&&q.group.sector,total=0,notes=[];
- active(l).forEach(function(c){ensure(c);var s=sec(c),f=effects(l,c),ctrl=c.share>50,gf=ctrl&&q.group?q.groupEffect137:null;if(gf){f.m+=gf.m*.5;f.sd*=gf.sd;f.loss*=gf.loss;f.g+=gf.g*.5;f.opp+=gf.opp*.5;}var m=s.m+(c.governance||0)*.004+f.m+s.sd*f.sd*U.clamp(U.normal(r),-2.5,2.5)-(crisis?.04*s.cyc:0)+(core?(c.sector===core?.01:-.003):0);
+ active(l).forEach(function(c){ensure(c);if(c.lastAt===l.age)return;if(E.TREASURY165)E.TREASURY165.ensure(l,c);if(E.DEALS166)E.DEALS166.year(l,c,r,log);var ops=E.OPERATIONS168?E.OPERATIONS168.impact(l,c):null;var s=sec(c),f=effects(l,c),ctrl=c.share>50,gf=ctrl&&q.group?q.groupEffect137:null;if(gf){f.m+=gf.m*.5;f.sd*=gf.sd;f.loss*=gf.loss;f.g+=gf.g*.5;f.opp+=gf.opp*.5;}var m=(ops?ops.margin:0)+s.m+(c.governance||0)*.004+f.m+s.sd*f.sd*U.clamp(U.normal(r),-2.5,2.5)-(crisis?.04*s.cyc:0)+(core?(c.sector===core?.01:-.003):0);
   var opp=r()<s.opp+f.opp,shock=!opp&&r()<.04*s.cyc;if(opp){m+=s.sd*1.2;notes.push(c.name+' trúng hợp đồng lớn');}if(shock){m-=s.sd*1.5;notes.push(c.name+' gặp cú sốc ngành');}
-  var fresh=c.fresh&&c.fresh.until>l.age?c.fresh.amt*.6:0,profit=Math.max(0,c.value-fresh)*m-f.cost-(c.chairCost137||0)-(c.groupCost137||0);c.chairCost137=0;c.groupCost137=0;
+  var fresh=c.fresh&&c.fresh.until>l.age?c.fresh.amt*.6:0,overhead=f.cost+(c.chairCost137||0)+(c.groupCost137||0),profit=Math.max(0,c.value-fresh)*m-overhead-(ops?ops.payroll-ops.baselinePayroll+ops.nonCash:0);c.chairCost137=0;c.groupCost137=0;
   Object.keys(c.roles).forEach(function(id){var x=c.roles[id];if(x.kind==='relative'&&r()<.05*(1-x.skill)){profit-=c.value*.03;notes.push(c.name+': '+ROLES[id].n+' để thất thoát vốn');}});
-  if(profit>=0){var div=profit*(ctrl?c.payout:.4);c.value+=profit-div;total+=div*c.share/100*.95;}else c.value=Math.max(0,c.value+profit*f.loss*(team?.75:1));
-  if(c.value>0)c.value*=1+s.g*(r()*1.4-.2)*(profit>0?1:.3)+f.g*(profit>0?1:0);
+  if(E.TREASURY165){var settlement=E.TREASURY165.settle(l,c,profit,f.loss*(team?.75:1),overhead,ops);profit=settlement.profit;total+=settlement.dividend*c.share/100*.95;}else if(profit>=0){var div=profit*(ctrl?c.payout:.4);c.value+=profit-div;total+=div*c.share/100*.95;}else c.value=Math.max(0,c.value+profit*f.loss*(team?.75:1));
+  var beforeGrowth=c.value;if(c.value>0)c.value*=1+s.g*(r()*1.4-.2)*(profit>0?1:.3)+f.g*(profit>0?1:0);
   c.value=Math.round(c.value*100)/100;c.lastProfit=Math.round(profit*100)/100;c.lastAt=l.age;c.peak=Math.max(c.peak||0,c.value);
+  if(E.TREASURY165)E.TREASURY165.finish(l,c,beforeGrowth);
   if(c.value<c.peak*.05){c.merged=true;c.bankrupt=l.age;notes.push(c.name+' mất gần hết vốn và giải thể');}});
  if(total>0)H.cash(l,total,'Cổ tức doanh nghiệp sau thuế');
  if(total>0||notes.length)log((total>0?'Các công ty chi cổ tức cho bạn '+H.money(l,total)+' sau thuế 5%. ':'Năm nay các công ty không chia cổ tức. ')+(notes.length?notes.join('; ')+'.':'Lợi nhuận phụ thuộc vốn, ngành, ban điều hành và thị trường.'),total>0?'money':'neutral');}
@@ -53,7 +54,7 @@ X.menu('companyRole133','Bổ nhiệm ban điều hành',function(l){return C.ad
 function issue(l,c,kind,f,r,log){var price=kind==='cheap'?.7:kind==='investor'?1+U.clamp((c.lastProfit||0)/Math.max(1,c.value)*2,0,.3):1,raise=c.value*f*price,old=c.share,others=100-old;
  var pass=old>=65||r()<(kind==='self'?.5:kind==='cheap'?.25:.8);c.issuedAt=l.age;
  if(!pass){H.cash(l,-Math.min(Math.max(0,l.money),l.base*.02),'Phí triệu tập đại hội cổ đông');log('Cổ đông khác nắm '+share(others)+'% bác phương án phát hành tại '+c.name+'; tỷ lệ sở hữu giữ nguyên.','bad');return;}
- if(E.BUSINESS137)E.BUSINESS137.dilute(c,f);if(kind==='investor')c.share=old/(1+f);else{H.cash(l,-raise,'Mua cổ phiếu phát hành thêm');c.share=(old+100*f)/(1+f);}
+ if(E.TREASURY165){E.TREASURY165.ensure(l,c);E.TREASURY165.capital(l,c,raise*.98);}if(E.BUSINESS137)E.BUSINESS137.dilute(c,f);if(kind==='investor')c.share=old/(1+f);else{H.cash(l,-raise,'Mua cổ phiếu phát hành thêm');c.share=(old+100*f)/(1+f);}
  c.value+=raise*.98;c.fresh={amt:raise,until:l.age+2};c.peak=Math.max(c.peak||0,c.value);
  var msg=kind==='investor'?'Nhà đầu tư mới góp '+H.money(l,raise)+'. Tỷ lệ của bạn giảm từ '+share(old)+'% xuống '+c.share+'%'+(old>50&&c.share<=50?', bạn mất quyền kiểm soát.':'.'):'Bạn mua '+H.money(l,raise)+' cổ phiếu mới. Tỷ lệ của bạn tăng từ '+share(old)+'% lên '+c.share+'%, phe cổ đông khác bị pha loãng còn '+share(100-c.share)+'%.';
  log(msg+' Vốn mới cần khoảng hai năm triển khai nên lợi nhuận trên mỗi cổ phần tạm giảm.','big');

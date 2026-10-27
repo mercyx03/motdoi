@@ -43,7 +43,7 @@
     if ((l.fame || 0) >= 1e6) b++;
     return Math.min(1, b);
   }
-  function tier(l) { var w = wealth(l), t = 0; TIERS.forEach(function (x, i) { if (w >= x.w) t = i; }); return t >= 1 ? Math.min(4, t + standing(l)) : t; }
+  function tier(l) { if (E.STANDING158) { var st = E.STANDING158.standing(l); return st.tier == null ? 0 : st.tier; } var w = wealth(l), t = 0; TIERS.forEach(function (x, i) { if (w >= x.w) t = i; }); return t >= 1 ? Math.min(4, t + standing(l)) : t; }
   function tierName(l) { return TIERS[tier(l)].n; }
 
   // ===================================================================
@@ -280,6 +280,7 @@
     if (amt > l.base * Math.pow(10, p.tier)) c -= 0.2;
     if (amt < l.base * Math.pow(10, p.tier - 2)) c -= 0.1;
     if (p.ambition > 70) c += 0.05;
+    if (E.STANDING158) c += Math.min(.08, E.STANDING158.power(l).score / 1250);
     return U.clamp(c, 0.05, 0.85);
   }
   function dealWhy(l, p) {
@@ -433,7 +434,7 @@
       rows.push({ k: 'gift', l: 'Hỗ trợ tài chính một lần', h: mo(l, l.base), why: liquid(l) < l.base + reserve(l) ? 'Chưa đủ tiền mặt' : x.p.helpAt148 === l.age ? 'Đã hỗ trợ năm nay' : true, run: function (l, r, log) {
         x.p.helpAt148 = l.age;
         if (x.p.inc && x.p.inc * 12 > l.base * 3 && r() < 0.6) { log(x.name + ' cảm ơn nhưng từ chối nhận tiền: "Con/em tự lo được, để dành cho người cần hơn."', 'neutral'); adjustClose(x, 2); return; }
-        H.cash(l, -l.base, 'Hỗ trợ ' + x.name); adjustClose(x, 4); log('Bạn hỗ trợ ' + x.name + ' ' + mo(l, l.base) + '. Khoản tiền từ nay thuộc về ' + x.name + '.', 'good');
+        if(E.RELATIVE163&&!E.RELATIVE163.post(l,x.p,l.base,'Hỗ trợ từ gia đình','help148:'+l.age))return; H.cash(l, -l.base, 'Hỗ trợ ' + x.name); adjustClose(x, 4); log('Bạn hỗ trợ ' + x.name + ' ' + mo(l, l.base) + '. Khoản tiền từ nay thuộc về ' + x.name + '.', 'good');
       } });
       return rows;
     });

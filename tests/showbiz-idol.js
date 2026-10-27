@@ -1,4 +1,4 @@
-/* Showbiz — Mốc 5: thực tập sinh K-pop từ 14–16 tuổi (người giám hộ, việc học), đánh giá tháng, debut, chương trình sống còn. */
+/* Showbiz — Mốc 5: thực tập sinh K-pop từ 13–16 tuổi (người giám hộ, việc học), đánh giá tháng, debut, chương trình sống còn. */
 'use strict';
 const assert = require('assert');
 const { gameContext } = require('./hardcore-isolation');
@@ -25,7 +25,7 @@ function signed(o = {}) { for (let s = 0; s < 60; s++) { const l = kid(Object.as
 {
   const strong = kid({ sing: 75, dance: 70 }), weak = kid({ sing: 10, dance: 10, seed: 2 });
   ok(I.scoutable(strong) && I.scoutChance(strong) > I.scoutChance(weak) && I.scoutChance(weak) > 0, 'cơ hội được chú ý tăng theo tiềm năng, người kém vẫn có cơ hội nhỏ');
-  ok(!I.scoutable(kid({ age: 13 })) && !I.scoutable(kid({ age: 17 })), 'chỉ 14–16 tuổi mới có lượt "phát hiện tài năng"');
+  ok(I.scoutable(kid({ age: 13 })) && !I.scoutable(kid({ age: 12 })) && !I.scoutable(kid({ age: 17 })), 'chỉ 13–16 tuổi mới có lượt "phát hiện tài năng"');
   const a = kid({ seed: 3 }), b = kid({ seed: 3 }); a.looks134 = 30; b.looks134 = 90;
   if (E.LOOKS134) { a.flags.looks134 = { looks: 30 }; b.flags.looks134 = { looks: 90 }; }
   ok(Math.abs(I.potential(a) - I.potential(b)) <= 8, 'ngoại hình chỉ ảnh hưởng nhỏ tới tiềm năng');

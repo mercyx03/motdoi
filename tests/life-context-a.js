@@ -1,0 +1,36 @@
+'use strict';
+const assert = require('assert'), E = require('./hardcore-isolation').gameContext().E;
+let checks = 0;
+function ok(v, m) { assert(v, m); checks++; }
+function life(seed = 157) { return E.createLife({ mode: 'vn', seed }); }
+let l = life(); l.age = 1; l.fam.q = 1; l.fam.fAlive = true; l.fam.mAlive = true; l.fam.noDad = false; l.fam.fInc = 0; l.fam.mInc = 2.53; l.base = 90;
+let d = E.DEC.thoi_noi.make(l, () => .5), keys = d.opts.map(o => o.k);
+ok(keys.includes('simple') && keys.includes('borrow'), 'warm celebration and kin support remain accessible');
+ok(!keys.includes('may') && !keys.includes('mic') && !keys.includes('restaurant'), 'limited household cannot display expensive tray or venue');
+ok(keys.includes('bong') && keys.includes('but'), 'simple familiar toys retained');
+ok(d.opts.every(o => !/Thỏi son/.test(o.l)), 'no real cosmetic for infant');
+const cash = l.money;
+E.DEC.thoi_noi.apply(l, d, 'simple', () => .5, () => {});
+ok(l.money === cash && E.LIFE138.state(l).firstBirthday157.style === 'simple', 'simple celebration does not spend personal cash');
+let copy = E.migrate(JSON.parse(JSON.stringify(l)));
+ok(E.LIFE138.state(copy).firstBirthday157.style === 'simple', 'celebration saved');
+l = life(); l.age = 1; Object.assign(l.fam, { fAlive: true, mAlive: true, noDad: false, fInc: 1000, mInc: 1000 });
+d = E.DEC.thoi_noi.make(l, () => .5);
+ok(d.opts.some(o => o.k === 'professional') && d.opts.some(o => o.k === 'may'), 'wealthy options and legacy IDs retained');
+l = life(); l.age = 8; l.fam.fJob = 'nhạc sĩ'; l.fam.fAlive = true; l.fam.noDad = false;
+d = E.DEC.artFamily157.make(l, () => .5); let i = d.data.keys.indexOf('learn');
+E.DEC.artFamily157.apply(l, d, String(i), () => .5, () => {});
+let level = E.LIFE138.skill(l, 'sing').level;
+E.DEC.artFamily157.apply(l, d, String(i), () => .5, () => {});
+ok(level === 2 && E.LIFE138.skill(l, 'sing').level === level, 'family lesson once yearly, no guaranteed talent');
+copy = E.migrate(JSON.parse(JSON.stringify(l)));
+ok(E.LIFE138.skill(copy, 'sing').level === level, 'family learning reload stable');
+const t = { contextTags: ['studyPressure'] }; l.st.kno = 50; l.base = 90; l.indep = false;
+Object.assign(l.fam, { mAlive: true, fAlive: true, noDad: false, fInc: 0, mInc: 2 });
+let poor = E.CONTEXT143.factor(t, l); l.fam.mInc = 100;
+ok(poor > E.CONTEXT143.factor(t, l), 'child study pressure reads household resources');
+const neutral = { contextTags: ['childConflict'] };
+let a = E.CONTEXT143.factor(neutral, l); l.fam.mInc = 0;
+ok(a === E.CONTEXT143.factor(neutral, l), 'poverty does not imply family misconduct');
+ok(E.CONTEXT143.factor({ contextTags: ['studyOpportunity'] }, l) > 0, 'opportunity remains available');
+console.log('Life context A: ' + checks + ' checks passed');

@@ -1,3 +1,41 @@
+## v8.8.0-preview — checkpoint đang triển khai, packaged
+
+## 8.8.4-operations — chiến lược và nhân sự tổng hợp
+
+- Bảy kế hoạch nhiều năm có ngân sách, rủi ro, khấu hao và kết quả vận hành.
+- Quỹ lương, tuyển dụng, thưởng, đào tạo và nghỉ việc; hiệu suất dẫn xuất từ dữ liệu.
+- Packaged, chưa nghiệm thu toàn bộ ban lãnh đạo/kế nghiệp/quản gia/trợ lý/tiệc.
+
+## 8.8.3-reports — báo cáo doanh nghiệp
+
+- Báo cáo chi tiết, dòng tiền toàn kỳ, so sánh và biểu đồ mười năm.
+- Khoản vận hành ngoài quyết toán ghi vào thuế và lợi nhuận đúng một lần.
+- Packaged; mốc trung gian, chưa nghiệm thu toàn đợt.
+
+## 8.8.2-foundation — nền tảng gia đình và doanh nghiệp
+
+- Sổ tài chính người thân, vốn dự án ba năm, chuyển đời không cộng trùng tiền/nợ tiêu dùng.
+- Casting trẻ em và truyền thống nghệ thuật; mở rộng hoàn cảnh và điều kiện ngân sách.
+- Tiền mặt/nợ/cổ tức doanh nghiệp; bán cổ phần có thanh toán trễ và nhượng quyền ba năm.
+- Kiểm thử trọng điểm đạt; packaged, chưa nghiệm thu toàn đợt quản trị doanh nghiệp.
+
+
+## 8.8.1-contracts — checkpoint Preview
+
+- Hợp đồng chín vai trò truyền thông, năng lực, lương chung và phạm vi ủy quyền.
+- Vòng đời hợp đồng K-pop: chuyển, gia hạn, tạm nghỉ, kết thúc và thử lại; giữ danh tính, kỹ năng, kinh nghiệm.
+- Sum họp và nghỉ tại nhà miễn phí, tiệc/nghỉ dưỡng theo ngân sách.
+- Chưa hoàn thành mốc 1 và toàn bộ yêu cầu quản trị doanh nghiệp. Xem docs/ENTERPRISE-UPGRADE-PROGRESS.md. Trạng thái packaged, chưa có thời điểm phát hành.
+
+
+- Gia cảnh thôi nôi, đồ chơi an toàn và hướng dẫn nghệ thuật từ người thân; nghề nghệ thuật của bố mẹ đa dạng thu nhập.
+- Sáu tầng lớp tài sản tách khỏi follower; quyền lực doanh nghiệp, chỉ số danh tiếng, bảng tài sản mô phỏng theo năm; hồ sơ người thân đọc dữ liệu đã có.
+- Hồ sơ chức vụ tự điều hành, CEO thuê hỗ trợ mở thêm công ty, ID khi thành lập, phí quản trị theo quy mô.
+- Chất lượng/thời lượng rèn luyện, quỹ giờ, lớp hỗ trợ; K-pop từ 13 tuổi, kỹ năng rap và nguồn phát hiện phù hợp.
+- Ủy quyền truyền thông trên nhân sự/kênh sẵn có, báo cáo gọn, duyệt hợp đồng thủ công, giữ giới hạn và tránh lặp thu nhập.
+- Bản lưu mới hơn luôn được bảo vệ kể cả khi nhân vật đã mất.
+- **Chưa hoàn tất toàn bộ yêu cầu A–E.** Xem docs/LIFE-CONTEXT-PROGRESS.md để biết phạm vi đã kiểm chứng và phần còn lại. Không triển khai Production.
+
 ## v8.5.0 — Doanh nghiệp, thành tích học tập và rà soát logic
 
 ### GĐ6 — bản đóng gói, chưa phát hành Production

@@ -57,3 +57,19 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 - Bấm giờ chế độ Tự động trên thiết bị người chơi thật; profiling giao diện điện thoại.
 - Bản lưu thật của người chơi chưa có mẫu để kiểm (chỉ có bản lưu do máy tạo).
 - 25 nâng cấp gameplay chuyên sâu: chưa bắt đầu, chờ chủ dự án giao.
+
+
+## Sau GĐ6 — checkpoint logic cuộc sống 8.8.0-preview
+
+Không mở lại nghiệm thu GĐ0–GĐ6. Yêu cầu A–E mới chưa hoàn tất: xem LIFE-CONTEXT-PROGRESS.md cho danh sách phạm vi còn thiếu. Trên mã cuối cần kiểm thử có mục tiêu: toàn bộ ngân sách/vòng đời người thân; quyền điều hành khác cổ phần, tặng/thừa kế không lặp qua nhiều đời; chi phí/định giá tập đoàn dài hạn; mọi nhánh ủy quyền và dừng hợp đồng truyền thông; thực tập sinh chuyển/rời công ty và hành trình quốc tế. Chưa tính các mục này là PASS. Regression toàn bộ 77 nhóm chưa chạy trên checkpoint (chủ dự án yêu cầu không chạy). Chưa xác minh Pages REVIEWS_DB thực tế; artifact chỉ Preview.
+
+## GĐ6 / nghiệm thu cuối đợt A–E và quản trị doanh nghiệp 8.8.1
+Checkpoint hợp đồng chỉ hoàn tất một phần mốc 1. Theo dõi toàn bộ phạm vi còn thiếu tại docs/ENTERPRISE-UPGRADE-PROGRESS.md và yêu cầu gốc ENTERPRISE-UPGRADE-REQUEST.md. Trên mã cuối cần kiểm toàn bộ tài chính người thân/không nhân đôi, nhượng quyền, báo cáo dòng tiền/nợ/cổ tức, chiến lược, nhân sự/CEO/CFO, thực tập 2–3 năm, cố vấn dài hạn và năm chuỗi nhiều năm. Những phần này chưa triển khai hoặc chưa kiểm; không đánh dấu PASS. Giữ yêu cầu không chạy 77 nhóm sau mỗi thay đổi. Binding REVIEWS_DB thực tế chưa kiểm chứng; chưa Production-ready.
+
+
+### Nghiệm thu cuối đợt 8.8.2-foundation
+Mốc nền tảng đã đạt kiểm thử trọng điểm. Trên mã cuối cần nối và kiểm báo cáo/biểu đồ, bảy chiến lược, nhân sự/lãnh đạo, thực tập/cố vấn và năm chuỗi tích hợp; kiểm thêm giao dịch nhượng quyền sau sáp nhập/thừa kế, nhiều thế hệ có nợ bảo đảm, các chế độ tài sản hôn nhân với sổ cá nhân. Không coi các mục chưa chạy là PASS. Ba tệp riêng của chủ dự án giữ nguyên; không deploy.
+
+Mốc 8.8.3-reports đạt kiểm thử trọng điểm (reports 13, treasury 123, business133 29, business137 79, smoke/save/NPC, Chrome); GĐ6 đợt nâng cấp vẫn còn tích hợp chiến lược, nhân sự, lãnh đạo, thực tập, cố vấn và toàn bộ bổ sung quản gia/trợ lý/tiệc. Chưa chạy regression cuối trên toàn bộ phạm vi; không tính các mục đó PASS.
+
+Mốc chiến lược 8.8.4 đã kiểm trọng điểm và build; nghiệm thu cuối đợt vẫn thiếu leadership, thực tập/cố vấn và supplement quản gia/trợ lý/tiệc. Bản nháp chưa nạp không tính PASS.

@@ -1,6 +1,6 @@
 const assert=require('assert'),E=require('./hardcore-isolation').gameContext().E;let n=0;function ok(x,m){assert(x,m);n++;}
 function life(money){let l=E.createLife({mode:'vn',seed:133});Object.assign(l,{age:35,edu:5,indep:true,school:null,money:money==null?50000:money,pending:[],job:null,record:0});l.flags.military=0;l.flags.dirty=0;delete l.flags.criminal;return l;}
-function pick(l,id,key,arg,r){let d=E.DEC[id].make(l,r||(()=>0),arg),i=d.data.keys.indexOf(key);assert(i>=0,id+':'+key);d.manual=true;l.pending=[d];return E.resolve(l,String(i));}
+function pick(l,id,key,arg,r){let d=E.DEC[id].make(l,r||(()=>0),arg),i=d.data.keys.indexOf(key);assert(i>=0,id+':'+key);d.manual=true;l.pending=[d];if(r){l.pending=[];return E.DEC[id].apply(l,d,String(i),r,()=>{});}return E.resolve(l,String(i));}
 function rng(seed){return()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};}
 const B=E.BUSINESS133,cos=l=>E.BUSINESS123.companies(l),log=()=>{};
 // 1. Chọn ngành trước khi chọn vốn; ngành vốn lớn cần đủ tiền.

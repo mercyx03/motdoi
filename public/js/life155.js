@@ -1,4 +1,4 @@
-/* Showbiz — Mốc 5: thực tập sinh K-pop từ 14–16 tuổi, đánh giá hằng tháng, debut thần tượng, chương trình sống còn.
+/* Showbiz — Mốc 5: thực tập sinh K-pop từ 13–16 tuổi, đánh giá hằng tháng, debut thần tượng, chương trình sống còn.
    · Mở rộng hệ thống thực tập sinh sẵn có (life139: công ty, chuyển sang nước ngoài, đánh giá năm, debut).
    · Dưới 18 tuổi: cần cha mẹ / người giám hộ đồng ý; việc học phổ thông tiếp tục; không tự sang nước ngoài —
      đào tạo bán thời gian tại trung tâm đối tác trong nước, giờ tập giới hạn, trại hè ngắn ngày ở Seoul cùng người giám hộ.
@@ -25,20 +25,21 @@
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped); }
   // Tiềm năng: kỹ năng thật (hát, nhảy, diễn, nhạc cụ, ngoại ngữ), sự tự tin, sức khỏe, khả năng học; ngoại hình chỉ chiếm phần nhỏ.
   function potential(l) {
-    var sing = lv(l, 'sing'), dance = lv(l, 'dance'), act = lv(l, 'acting'), inst = lv(l, 'instrument'), lang = lv(l, 'language');
+    var sing = Math.max(lv(l, 'sing'),lv(l, 'rap') * .85), dance = lv(l, 'dance'), act = lv(l, 'acting'), inst = lv(l, 'instrument'), lang = lv(l, 'language');
     var stage = Math.max(sing, dance) * 0.45 + Math.min(sing, dance) * 0.15 + act * 0.08 + inst * 0.06 + lang * 0.06;
     return U.clamp(stage + ((l.st && l.st.soc) || 50) * 0.08 + ((l.st && l.st.hea) || 60) * 0.04 + ((l.st && l.st.kno) || 50) * 0.04 + (looks(l) - 50) * 0.08 + (l.talent === 'âm nhạc' || l.talent === 'nhảy múa' ? 8 : 0), 0, 100);
   }
   var COMPANIES = [{ name: 'Aurora Entertainment (hư cấu)', rep: 80, split: 0.2, dorm: 'ký túc xá 4 người', school: 'hỗ trợ học phí trường quốc tế' }, { name: 'Starlight Music (hư cấu)', rep: 65, split: 0.3, dorm: 'ký túc xá 3 người', school: 'giờ tập bố trí ngoài giờ học' }, { name: 'Blue Moon Ent. (hư cấu)', rep: 50, split: 0.35, dorm: 'căn hộ chung có quản lý', school: 'gia sư văn hóa hằng tuần' }];
   var CHANNELS = ['Một quản lý tài năng xem bạn biểu diễn ở hội diễn văn nghệ của trường', 'Video bạn nhảy cover được chia sẻ rộng trên mạng', 'Ban tuyển chọn của một công ty Hàn Quốc tổ chức buổi thử giọng tại thành phố', 'Một người quen trong giới giải trí giới thiệu bạn với công ty'];
 
+  function discoveryChannels(l) { var out=[CHANNELS[2], 'Ban tuyển chọn xem phần thử giọng online của bạn'],cs=l.flags.social131&&l.flags.social131.channels||[]; if(l.school)out.push(CHANNELS[0]);if(cs.some(function(c){return c.followers>=500&&(c.videos||[]).length;}))out.push(CHANNELS[1]);if(L.state(l).artMentor157||(l.flags.elite148&&l.flags.elite148.people||[]).some(function(p){return p.kind==='artist'&&p.alive!==false&&p.trust>=50;}))out.push(CHANNELS[3]);return out; }
   // ===================================================================
-  // D1 + D2: phát hiện tài năng 14–16 tuổi và quy trình nhận lời (có người giám hộ)
+  // D1 + D2: phát hiện tài năng 13–16 tuổi và quy trình nhận lời (có người giám hộ)
   // ===================================================================
-  function scoutable(l) { var s = l.flags.idol155, a = agency(l); return free(l) && l.age >= 14 && l.age <= 16 && !(a && /trainee|debut|offer|junior155/.test(a.status)) && !(s && s.stage && s.stage !== 'none' && s.stage !== 'declined') && !(s && s.scoutAt != null && l.age - s.scoutAt < 2); }
-  function scoutChance(l) { var p = potential(l); return U.clamp(0.02 + Math.max(0, p - 30) / 300, 0.02, 0.35); }
+  function scoutable(l) { var s = l.flags.idol155, a = agency(l); return free(l) && l.age >= 13 && l.age <= 16 && !(a && /trainee|debut|offer|junior155/.test(a.status)) && !(s && s.stage && s.stage !== 'none' && s.stage !== 'declined' && s.stage !== 'left') && !(s && s.scoutAt != null && l.age - s.scoutAt < 2); }
+  function scoutChance(l) { var p = potential(l), cs=l.flags.social131&&l.flags.social131.channels||[], reach=cs.reduce(function(n,c){return Math.max(n,c.followers||0);},0), bonus=p>=30?Math.min(.06,Math.log10(1+reach)*.01):0; return U.clamp(0.02 + Math.max(0, p - 30) / 300 + bonus, 0.02, 0.35); }
   E.TRIG.push({ id: 'scout155', when: scoutable, p: scoutChance, cd: 2, max: 2 });
-  X.menu('scout155', 'Lời mời từ công ty giải trí', function (l) { return free(l) && l.age >= 14 && l.age <= 17 ? true : 'Dành cho 14–17 tuổi'; },
+  X.menu('scout155', 'Lời mời từ công ty giải trí', function (l) { return free(l) && l.age >= 13 && l.age <= 17 ? true : 'Dành cho 13–17 tuổi'; },
     function (l, d) { var s = S(l), c = s.offer; if (!c) return 'Lời mời đã hết hạn.'; return c.channel + '. ' + c.name + ' (uy tín ' + c.rep + '/100) muốn mời bạn đi audition để vào chương trình thực tập sinh. Bạn đang ' + l.age + ' tuổi nên mọi quyết định cần bố mẹ / người giám hộ đồng ý; việc học phổ thông phải tiếp tục.' + (s.step ? '\n' + s.step : ''); },
     function (l) {
       var s = S(l), c = s.offer; if (!c) return [];
@@ -52,7 +53,7 @@
     });
   E.DEC.scout155.auto = function (l, d, r) { var keys = d.data && d.data.keys || [], s = S(l), c = s.offer, want = !c ? 'no' : !c.read ? 'read' : !c.audition ? 'audition' : c.audition === 'pass' && !c.parents ? 'parents' : c.parents === 'yes' ? (r() < 0.7 ? 'sign' : 'no') : 'no', i = keys.indexOf(want); return i >= 0 ? String(i) : d.opts[0].k; };
   var scoutMake = E.DEC.scout155.make;
-  E.DEC.scout155.make = function (l, r, arg) { var s = S(l); if (!s.offer) { var rr = seeded(l.id + ':scout' + yr(l)); s.offer = Object.assign({}, pick(rr, COMPANIES), { channel: pick(rr, CHANNELS), at: l.age }); s.scoutAt = l.age; s.stage = 'scouted'; s.step = ''; s.manual = true; } return scoutMake.call(this, l, r, arg); };
+  E.DEC.scout155.make = function (l, r, arg) { var s = S(l); if (!s.offer) { var rr = seeded(l.id + ':scout' + yr(l)); s.offer = Object.assign({}, pick(rr, COMPANIES), { channel: pick(rr, discoveryChannels(l)), at: l.age }); s.scoutAt = l.age; s.stage = 'scouted'; s.step = ''; s.manual = true; } return scoutMake.call(this, l, r, arg); };
   function audition(l, r, log) {
     var s = S(l), c = s.offer, rr = seeded(l.id + ':aud155' + yr(l)), p = potential(l), score = p / 100 + (rr() - 0.5) * 0.3;
     var rounds = [['Hát / rap', lv(l, 'sing')], ['Vũ đạo', lv(l, 'dance')], ['Phỏng vấn, biểu cảm', ((l.st && l.st.soc) || 50) * 0.6 + lv(l, 'acting') * 0.4]];
@@ -69,18 +70,18 @@
     log(c.parents === 'yes' ? 'Bố mẹ đồng ý cho bạn thử sức làm thực tập sinh, kèm điều kiện về việc học.' : 'Bố mẹ chưa đồng ý cho bạn làm thực tập sinh.', 'neutral');
   }
   function sign(l, r, log) {
-    var s = S(l), c = s.offer; if (!c || c.parents !== 'yes') return;
-    s.stage = 'junior'; s.company = c; delete s.offer; s.startAge = l.age; s.months = 0; s.debt = 0; s.rank = null;
-    var rr = seeded(l.id + ':peers'); s.peers = Array.from({ length: 11 }, function () { var sex = l.sex; return { name: H.stranger(l, rr, sex), skill: Math.round(30 + rr() * 50), grow: 2 + rr() * 4, kind: pick(rr, ['chăm chỉ', 'cạnh tranh', 'hòa đồng', 'thầm lặng', 'tài năng bẩm sinh']), bond: 0, out: false }; });
+    var s = S(l), c = s.offer; if (!c || c.parents !== 'yes') return; if(E.CONTRACT162 && L.state(l).agency) E.CONTRACT162.record(l,'kết thúc hồ sơ cũ trước hợp đồng mới');
+    s.stage = 'junior'; s.company = c; delete s.offer; s.startAge = l.age; s.months = s.months || 0; s.debt = s.debt || 0; s.rank = null;
+    var rr = seeded(l.id + ':peers'); s.peers = s.peers || Array.from({ length: 11 }, function () { var sex = l.sex; return { name: H.stranger(l, rr, sex), skill: Math.round(30 + rr() * 50), grow: 2 + rr() * 4, kind: pick(rr, ['chăm chỉ', 'cạnh tranh', 'hòa đồng', 'thầm lặng', 'tài năng bẩm sinh']), bond: 0, out: false }; });
     L.state(l).agency = { name: c.name, code: 'KR', status: 'junior155', years: 0, started: l.age, minor155: true };
-    log('Bạn ký thỏa thuận đào tạo với ' + c.name + ' cùng bố mẹ: tập bán thời gian ở trung tâm đối tác trong nước, trại hè tại Seoul có người giám hộ đi cùng; việc học phổ thông tiếp tục.', 'big');
+    s.peers.forEach(function(p){ X.uid(l,p); }); if(E.CONTRACT162){ E.CONTRACT162.ensure(l); E.CONTRACT162.record(l,'ký thỏa thuận với người giám hộ'); } log('Bạn ký thỏa thuận đào tạo với ' + c.name + ' cùng bố mẹ: tập bán thời gian ở trung tâm đối tác trong nước, trại hè tại Seoul có người giám hộ đi cùng; việc học phổ thông tiếp tục.', 'big');
     H.mem(l, 'Ngày ký hợp đồng thực tập sinh đầu tiên, có bố mẹ ngồi cạnh.', 4);
   }
 
   // ===================================================================
   // D3: cuộc sống thực tập sinh — đánh giá hằng tháng (3 kỳ / năm), xếp hạng nội bộ, bạn bè và cạnh tranh
   // ===================================================================
-  var FOCUS = { vocal: ['Luyện thanh', 'sing', 4], dance: ['Luyện vũ đạo', 'dance', 4], rap: ['Tập rap, sáng tác lời', 'sing', 2], stage: ['Luyện biểu cảm sân khấu', 'acting', 4], korean: ['Học tiếng Hàn', null, 0], rest: ['Nghỉ ngơi, chăm sóc sức khỏe, học văn hóa', null, 0] };
+  var FOCUS = { vocal: ['Luyện thanh', 'sing', 4], dance: ['Luyện vũ đạo', 'dance', 4], rap: ['Tập rap, sáng tác lời', 'rap', 4], stage: ['Luyện biểu cảm sân khấu', 'acting', 4], korean: ['Học tiếng Hàn', null, 0], rest: ['Nghỉ ngơi, chăm sóc sức khỏe, học văn hóa', null, 0] };
   function trainee(l) { var s = l.flags.idol155, a = agency(l); return !!(s && (s.stage === 'junior' || s.stage === 'trainee') && a && (a.status === 'junior155' || a.status === 'trainee')); }
   function myScore(l) { return Math.round(lv(l, 'sing') * 0.35 + lv(l, 'dance') * 0.35 + lv(l, 'acting') * 0.15 + korean(l) * 0.1 + ((l.st && l.st.hea) || 60) * 0.05); }
   function ranking(l) { var s = S(l), me = myScore(l), all = s.peers.filter(function (p) { return !p.out; }).map(function (p) { return { name: p.name, sc: p.skill }; }).concat([{ name: 'Bạn', sc: me, me: true }]).sort(function (a, b) { return b.sc - a.sc; }); return { list: all, rank: all.findIndex(function (x) { return x.me; }) + 1, score: me }; }
@@ -127,11 +128,11 @@
     function (l, d) { var s = S(l), g = s.group, step = d && d.arg && d.arg.step; return step === 'pos' ? 'Công ty công bố đội hình ' + g.name + ': bạn cùng ' + g.members.join(', ') + '. Bạn đảm nhận vị trí nào? (Hát ' + lv(l, 'sing') + ', nhảy ' + lv(l, 'dance') + ', biểu cảm ' + lv(l, 'acting') + '.)' : 'Chọn concept cho bài hát ra mắt.'; },
     function (l, arg) {
       var s = S(l), g = s.group; if (!g) return [];
-      if (arg.step === 'pos') return Object.keys(POS).map(function (k) { var need = { vocal: lv(l, 'sing'), dance: lv(l, 'dance'), rap: lv(l, 'sing') * 0.7 + lv(l, 'acting') * 0.3, visual: looks(l), leader: ((l.st && l.st.soc) || 50) }[k]; return { k: k, l: U.cap(POS[k]) + (need >= 60 ? ' — rất hợp' : need >= 40 ? '' : ' — còn yếu'), run: function (l, r) { g.position = k; X.next(l, 'debut155', r, { step: 'song' }, { manual: s.manual !== false }); } }; });
+      if (arg.step === 'pos') return Object.keys(POS).map(function (k) { var need = { vocal: lv(l, 'sing'), dance: lv(l, 'dance'), rap: Math.max(lv(l, 'rap'),lv(l, 'sing') * 0.7 + lv(l, 'acting') * 0.3), visual: looks(l), leader: ((l.st && l.st.soc) || 50) }[k]; return { k: k, l: U.cap(POS[k]) + (need >= 60 ? ' — rất hợp' : need >= 40 ? '' : ' — còn yếu'), run: function (l, r) { g.position = k; X.next(l, 'debut155', r, { step: 'song' }, { manual: s.manual !== false }); } }; });
       return [['bright', 'Tươi sáng, sôi động'], ['dark', 'Mạnh mẽ, cá tính'], ['ballad', 'Nhẹ nhàng, giàu cảm xúc']].map(function (x) { return { k: x[0], l: x[1], run: function (l, r, log) { debut(l, r, log, x[0]); } }; });
     });
   E.DEC.debut155.auto = function (l, d, r) { var keys = d.data && d.data.keys || [], k = d.data.arg.step === 'pos' ? (lv(l, 'dance') >= lv(l, 'sing') ? 'dance' : 'vocal') : pick(r, ['bright', 'dark', 'ballad']), i = keys.indexOf(k); return i >= 0 ? String(i) : d.opts[0].k; };
-  function fitPos(l, g) { return { vocal: lv(l, 'sing'), dance: lv(l, 'dance'), rap: lv(l, 'sing') * 0.7 + lv(l, 'acting') * 0.3, visual: looks(l) * 0.6 + lv(l, 'acting') * 0.4, leader: ((l.st && l.st.soc) || 50) }[g.position] || 40; }
+  function fitPos(l, g) { return { vocal: lv(l, 'sing'), dance: lv(l, 'dance'), rap: Math.max(lv(l, 'rap'),lv(l, 'sing') * 0.7 + lv(l, 'acting') * 0.3), visual: looks(l) * 0.6 + lv(l, 'acting') * 0.4, leader: ((l.st && l.st.soc) || 50) }[g.position] || 40; }
   function debut(l, r, log, concept) {
     var s = S(l), g = s.group, rr = seeded(l.id + ':dbt' + yr(l)), q = U.clamp(fitPos(l, g) / 100 * 0.5 + (s.company ? s.company.rep / 100 : 0.5) * 0.3 + rr() * 0.3, 0, 1.1);
     g.concept = concept; g.fandom = Math.round(2000 + q * 40000); l.fame = (l.fame || 0) + g.fandom * 3;
@@ -169,7 +170,7 @@
     rows: function (l, a, sh) { var R = sh.rounds[a.round], self = this; if (R.song) return [['song:dark', 'Chọn bài concept mạnh mẽ (vũ đạo khó)'], ['song:ballad', 'Chọn bài giàu cảm xúc (giọng hát nổi bật)'], ['song:bright', 'Chọn bài tươi sáng (cân bằng hát và nhảy)']].map(function (x) { return { k: x[0], l: x[1], run: function (l, r, log) { self.mission(l, r, log, a, sh, x[0]); } }; }); if (R.type === 'grade') return [['vocal', 'Trình diễn giọng hát'], ['dance', 'Trình diễn vũ đạo'], ['all', 'Vừa hát vừa nhảy']].map(function (x) { return { k: x[0], l: x[1], run: function (l, r, log) { self.grade(l, r, log, a, sh, x[0]); } }; }); return Object.keys(POS).filter(function (k) { return k !== 'leader' && k !== 'visual'; }).map(function (k) { return { k: k, l: 'Nhận vị trí ' + POS[k] + ' trong đội', run: function (l, r, log) { self.mission(l, r, log, a, sh, k); } }; }).concat([{ k: 'center', l: 'Tranh vị trí trung tâm (center)', run: function (l, r, log) { self.mission(l, r, log, a, sh, 'center'); } }]); },
     grade: function (l, r, log, a, sh, how) { var sc = how === 'vocal' ? lv(l, 'sing') : how === 'dance' ? lv(l, 'dance') : (lv(l, 'sing') + lv(l, 'dance')) / 2 + 5; a.grade = GRADES[sc >= 80 ? 0 : sc >= 62 ? 1 : sc >= 45 ? 2 : sc >= 30 ? 3 : 4]; a.votes += (5 - GRADES.indexOf(a.grade)) * 2; SH.note(a, 'Đánh giá đầu vào: hạng ' + a.grade + '.'); a.round++; },
     mission: function (l, r, log, a, sh, pos) {
-      var rr = seeded(a.token + ':m' + a.round), sk = pos === 'song:dark' ? lv(l, 'dance') : pos === 'song:ballad' ? lv(l, 'sing') : pos === 'song:bright' ? (lv(l, 'sing') + lv(l, 'dance')) / 2 + 4 : pos === 'vocal' ? lv(l, 'sing') : pos === 'dance' ? lv(l, 'dance') : pos === 'rap' ? lv(l, 'sing') * 0.7 + lv(l, 'acting') * 0.3 : (lv(l, 'sing') + lv(l, 'dance')) / 2;
+      var rr = seeded(a.token + ':m' + a.round), sk = pos === 'song:dark' ? lv(l, 'dance') : pos === 'song:ballad' ? lv(l, 'sing') : pos === 'song:bright' ? (lv(l, 'sing') + lv(l, 'dance')) / 2 + 4 : pos === 'vocal' ? lv(l, 'sing') : pos === 'dance' ? lv(l, 'dance') : pos === 'rap' ? Math.max(lv(l, 'rap'),lv(l, 'sing') * 0.7 + lv(l, 'acting') * 0.3) : (lv(l, 'sing') + lv(l, 'dance')) / 2;
       var perf = sk + (pos === 'center' ? (rr() < sk / 120 ? 12 : -10) : 3) + (rr() - 0.5) * 20; a.votes += perf / 10 + (looks(l) - 50) / 50;
       a.pool.forEach(function (p) { if (!p.out) p.score = (p.score || 0) + p.skill / 10 + p.votes * 2 + (rr() - 0.5) * 3; });
       var all = a.pool.filter(function (p) { return !p.out; }).map(function (p) { return { p: p, v: p.score }; }).concat([{ me: true, v: a.votes }]).sort(function (x, y) { return y.v - x.v; });

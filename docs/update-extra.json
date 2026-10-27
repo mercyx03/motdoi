@@ -1,9 +1,136 @@
 [
   {
-    "id": "showbiz-m6-connected-careers",
-    "version": "8.7.0-6",
+    "id": "enterprise-operations-884",
+    "version": "8.8.4-operations",
     "releaseStatus": "packaged",
     "releasedAt": null,
+    "publishedAt": "2026-10-28T01:49:42.930+07:00",
+    "title": "Một Đời — Chiến lược và hiệu suất doanh nghiệp",
+    "summary": "Đầu tư nhiều năm, tuyển dụng và điều chỉnh đãi ngộ từ ngân sách thật của công ty.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Có bảy kế hoạch: chi nhánh, nhân sự, công nghệ, chất lượng, mở rộng quốc tế, tiết giảm chi phí và tái đầu tư. Mỗi năm mở tối đa một kế hoạch, tối đa hai kế hoạch đang chạy; ngân sách chi ngay, kết quả chờ một đến ba năm và có thể thất bại.",
+      "Công nghệ, chất lượng, năng suất, nhân lực và lòng tin ảnh hưởng kết quả kinh doanh. Dự án tài sản có khấu hao; thất bại có thể làm mất vốn mà không trừ tiền lần thứ hai.",
+      "Tuyển theo số lượng với khả năng thiếu ứng viên, điều chỉnh lương, thưởng khi có lãi và đào tạo một năm. Lương vào quyết toán một lần; lòng tin thấp có thể gây nghỉ việc. Công ty cũ được khởi tạo số nhân viên theo quy tắc công bố và giữ nguyên giá trị vốn.",
+      "Bảng hiệu suất giải thích biên lợi nhuận, thanh khoản, tăng trưởng, năng suất, lòng tin, uy tín và mục tiêu hoàn thành. Nhận xét cuối kỳ dựa trên số liệu và những dự án thực tế.",
+      "Lưu/tải giữ tiến độ và kết quả đã xác định. Đổi quốc gia quy đổi chi phí; sáp nhập gộp nhân sự, tài sản dự án và các kế hoạch đang thực hiện."
+    ]
+  },
+  {
+    "id": "enterprise-reports-883",
+    "version": "8.8.3-reports",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T21:41:59.568+07:00",
+    "title": "Một Đời — Báo cáo tài chính và biểu đồ doanh nghiệp",
+    "summary": "Xem từng năm tài chính, phân biệt lợi nhuận với dòng tiền và theo dõi xu hướng công ty.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Mục báo cáo tài chính trong doanh nghiệp hiển thị doanh thu, giá vốn, lợi nhuận gộp, lương, quản lý, marketing, nghiên cứu, lãi vay, thuế, lợi nhuận và cổ tức. Phần phân bổ theo mô hình ngành có giải thích rõ; chỉ tiêu chưa có dữ liệu không được dựng thành số liệu thật.",
+      "Dòng tiền kinh doanh, đầu tư và tài trợ đối chiếu với tiền đầu kỳ và cuối kỳ. Khoản vay và trả gốc không bị tính thành doanh thu hoặc chi phí lãi. Các khoản thu, chi vận hành trong kỳ được ghi vào lợi nhuận và thuế một lần.",
+      "Biểu đồ mười năm có thể chuyển giữa doanh thu, lợi nhuận, dòng tiền, dư nợ và nhân viên khi có dữ liệu. So sánh năm trước hiển thị chênh lệch và tỷ lệ; không dựng năm trước cho công ty vừa mở sổ.",
+      "Báo cáo chốt năm được giữ khi lưu/tải. Xem lịch sử hay biểu đồ không tính lại kết quả; đổi quốc gia quy đổi tiền nhưng giữ nguyên số nhân viên."
+    ]
+  },
+  {
+    "id": "life-enterprise-foundation-882",
+    "version": "8.8.2-foundation",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T20:37:05.195+07:00",
+    "title": "Một Đời — Tiền riêng của người thân và giao dịch doanh nghiệp",
+    "summary": "Theo dõi tiền của từng người, thử vai từ tuổi đi học, quản lý tiền mặt công ty và thương lượng chuyển nhượng.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bạn đời và con có sổ thu nhập, sinh hoạt, tiết kiệm, nợ và giao dịch riêng. Phần đã góp ngân sách gia đình không được tiết kiệm lại; quỹ hỗ trợ và cổ phần vẫn có nguồn riêng. Hồ sơ ghi thêm thành tích, uy tín nghề nghiệp và hoạt động cộng đồng thực tế.",
+      "Tặng tiền ghi nhận ở cả người gửi và người nhận. Con trả khoản vay từ tiền riêng thực có. Vốn làm ăn được đưa vào dự án trong ba năm, có thể thành công hoặc thất bại; không còn nhận tiền trả nợ ba năm ngay trong một lựa chọn.",
+      "Khi tiếp tục ở tuổi hiện tại của con, tiền riêng và quỹ hỗ trợ còn lại được nhận một lần, không cộng với khoản tiền dựng lại từ quá khứ. Khoản nợ cá nhân đã ghi thay thế nợ tiêu dùng dựng lại; khoản vay có tài sản bảo đảm vẫn đi cùng nhà hoặc xe. Khi bắt đầu lại từ lúc sinh ra, trẻ không nhận trước tiền kiếm được trong tương lai.",
+      "Trẻ đi học có thể cùng người giám hộ thử vai tại địa phương, chờ lịch quay năm sau hoặc chọn con đường riêng. Việc học, sức khỏe và người giám hộ tiếp tục được kiểm tra khi nhận lịch; chỉ nhận thù lao sau khi hoàn thành. Truyền thống nghệ thuật được giữ qua các thế hệ mà không buộc con nối nghề.",
+      "Sinh nhật và một số cơ hội học tập, y tế, mua sắm, giao lưu xét ngân sách và hoàn cảnh hiện tại. Lựa chọn trả phí học thêm, bảo hiểm và chăm sóc cha mẹ xét đủ tiền; các cách tổ chức giản dị và phương án không chi thêm vẫn được giữ.",
+      "Công ty có tiền mặt và nợ tách khỏi vốn chủ sở hữu. Doanh nghiệp cũ giữ nguyên giá trị; số tiền mặt đầu kỳ được phân bổ ước tính từ vốn và có giải thích. Vay vốn không tăng tài sản ròng của chủ sở hữu; lợi nhuận tính chi phí, lãi vay và thuế mô phỏng. Chỉ chia cổ tức khi đủ lợi nhuận giữ lại và tiền mặt sau dự phòng.",
+      "Bán cổ phần cần tìm người mua, xét định giá theo lợi nhuận và nợ, thương lượng rồi đợi thanh toán từ năm sau. Người mua có thể từ chối. Cổ phần chỉ chuyển sau khi nhận tiền; vốn và tiền trong công ty không bị rút theo giao dịch.",
+      "Nhượng quyền thương hiệu có phí thiết lập, phí ký kết và phí định kỳ trong ba năm; có thể gia hạn hoặc chấm dứt. Đối tác không duy trì điều kiện có thể thất bại và ngừng trả phí. Hợp đồng nhượng quyền không chuyển cổ phần.",
+      "Phát hành cổ phần, sáp nhập, đổi tiền khi chuyển nước và thừa kế giữ liên kết với số dư doanh nghiệp. Cổ tức của người thân được chuyển vào đúng người sở hữu cổ phần."
+    ]
+  },
+  {
+    "id": "life-contracts-881",
+    "version": "8.8.1-contracts",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T16:55:14.358+07:00",
+    "title": "Một Đời — Đội ngũ truyền thông và hành trình thực tập sinh",
+    "summary": "Thuê nhân sự theo chuyên môn, quản lý hợp đồng K-pop và chọn cách sum họp phù hợp ngân sách.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Đội ngũ truyền thông có quản lý cá nhân, trợ lý, Social Media Manager, Booking Manager, PR Manager, biên tập viên, nhiếp ảnh gia, quản lý quảng cáo và đội ngũ chuyên nghiệp. Mỗi hợp đồng có năng lực, lương và thời hạn 1–3 năm; có thể hết hạn, xin nghỉ hoặc được thay thế.",
+      "Lương được trả từng năm một lần. Thiếu ngân sách hoặc nền tảng tạm ngừng thì nhân sự ngừng làm việc. Đội ngũ cũ có thể chuyển sang hợp đồng và giữ cấp nhân sự, mức lương cùng kỳ đã trả. Chấm dứt nhân sự tại mục đầu tư kênh cũng dừng các hợp đồng.",
+      "Khi bật tự động, chuyên môn của nhân sự quyết định việc đăng bài, livestream, tìm quảng cáo và đề xuất giao lưu. Năng lực ảnh hưởng chất lượng nội dung, có giới hạn; thuê nhiều người không làm tăng chất lượng vô hạn. Hợp đồng quảng cáo vẫn cần bạn duyệt.",
+      "Trong mục Hợp đồng và chuyển công ty thực tập sinh, bạn có thể xin chuyển công ty K-pop, đề nghị gia hạn, tạm nghỉ vì việc học hoặc sức khỏe, tiếp tục chương trình hay kết thúc hợp đồng. Công ty có thể từ chối đề nghị hoặc kết thúc chương trình sau đánh giá yếu; công ty khác cũng có thể tiếp cận.",
+      "Thực tập sinh chưa thành niên cần người giám hộ và thu xếp việc học khi chuyển công ty hoặc quay lại. Kỹ năng, kinh nghiệm, nợ đào tạo và người quen được giữ khi ký lại. Audition và trở về nơi cư trú cũ tiếp tục qua các lựa chọn hiện có; chuyển công ty không tự đưa trẻ ra nước ngoài.",
+      "Lễ Tết, sinh nhật và cưới hỏi có cách tổ chức giản dị không tốn tiền, bên cạnh mức thông thường và tiệc nhà hàng. Gia đình cũng có thể dành thời gian nghỉ tại nhà hoặc chọn dịch vụ nghỉ dưỡng riêng. Các mức chi dùng chung giới hạn mỗi dịp, và gia đình đang nợ vẫn có lựa chọn miễn phí."
+    ]
+  },
+  {
+    "id": "life-context-bcd-preview",
+    "version": "8.8.0-preview",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T15:48:06.701+07:00",
+    "title": "Một Đời — Hồ sơ địa vị, rèn luyện và trợ lý truyền thông",
+    "summary": "Tách tầng lớp tài sản khỏi follower, làm rõ chức vụ điều hành và bổ sung lịch truyền thông tự động theo phạm vi bạn chọn.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Hồ sơ có sáu tầng lớp từ Bình dân đến Tinh hoa xã hội, xét tài sản ròng, nguồn thu và mức sống tại nơi đang sinh sống. Quyền lực kinh tế thể hiện riêng theo doanh nghiệp kiểm soát, quy mô và vai trò điều hành; số nhân viên chưa được ghi nhận sẽ hiện chưa đủ dữ liệu. Follower không tự nâng bậc giàu có.",
+      "Xem riêng uy tín nghề nghiệp, độ nổi tiếng mạng, uy tín trong mạng lưới giao lưu và tín nhiệm nội dung. Các chỉ số đọc từ thành tích và hoạt động đã có; lĩnh vực chưa có thông tin được ghi rõ.",
+      "Bảng tài sản mô phỏng so sánh bạn với doanh nhân hư cấu có danh tính và sổ tài sản được giữ lại. Có bộ lọc quốc gia, ngành đang đầu tư và quyền lực; tài sản cập nhật theo năm, kèm lịch sử vị trí của bạn. Đây không phải thứ hạng của toàn dân số hay thế giới thực.",
+      "Bạn đời và con có thêm đặc điểm hình thể mô phỏng từ hồ sơ đã lưu và cổ phần riêng đã nhận. Trẻ nhỏ không bị gán mong muốn hôn nhân; nợ, chi phí, chứng chỉ hay tiết kiệm riêng chưa được ghi nhận sẽ hiện chưa có dữ liệu.",
+      "Tự giữ chức vụ điều hành công ty giờ hiện trên hồ sơ dù không làm thuê bên ngoài, có phân biệt vai trò kiêm nhiệm; không tự cộng lương. Công ty mới được cấp danh tính ngay khi thành lập. Không giới hạn số công ty; người chưa hoàn thành phổ thông có thể mở rộng doanh nghiệp đang có khi thuê CEO đủ năng lực và đáp ứng các điều kiện khác.",
+      "Phí kiểm toán, pháp lý và quản trị thường niên tăng theo vốn, lợi nhuận, số công ty và ngành nghề; báo giá hiển thị trước khi bật. Tài sản đang có không bị tự giảm theo một mức trần.",
+      "Rèn luyện có lớp cơ bản, nâng cao, gia sư riêng, huấn luyện chuyên nghiệp và lớp cộng đồng có hỗ trợ học phí khi đạt điều kiện. Chi phí theo thời lượng và mức sống; chất lượng cao giúp tiến nhanh hơn nhưng vẫn cần thời gian, có giới hạn giờ và tiến bộ chậm lại khi trình độ cao. Xin học trả phí thất bại vẫn có thể tự học.",
+      "Thực tập sinh K-pop có thể được chú ý từ 13 tuổi. Kỹ năng, học lực và khả năng biểu diễn vẫn quan trọng; độ nổi bật trên mạng chỉ hỗ trợ một phần. Nguồn phát hiện phù hợp hoạt động thực tế: trường học, video đã đăng, người quen hoặc buổi thử giọng trực tiếp/online. Rap có kỹ năng riêng. Các điều kiện giám hộ, tiếp tục đi học và chuẩn bị di chuyển vẫn giữ.",
+      "Trong Mạng xã hội, chọn Tự động quản lý truyền thông để giao đội ngũ hiện có đăng video, livestream, tìm lời mời quảng cáo hoặc đề xuất giao lưu. Lương và giới hạn hoạt động dùng chung với kênh; hợp đồng quảng cáo để bạn duyệt. Có báo cáo gọn và lịch sử, có thể tắt từng quyền; tải lại không làm hoạt động hay thu nhập lặp lại."
+    ]
+  },
+  {
+    "id": "life-context-a-family",
+    "version": "8.8.0-a",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T08:26:26.134Z",
+    "title": "Một Đời — Tuổi thơ gần với hoàn cảnh gia đình",
+    "summary": "Sinh nhật đầu tiên có nhiều cách kỷ niệm phù hợp túi tiền; gia đình làm nghệ thuật có thể cùng con khám phá sở thích.",
+    "tags": [
+      "Cải tiến"
+    ],
+    "details": [
+      "Mâm thôi nôi dựa trên thu nhập thực tế của người chăm sóc: gia đình khó khăn có đồ chơi sẵn có, đồ mượn hoặc chỉ quây quần hát mừng; gia đình có điều kiện có thêm cách tổ chức tiệc. Các đồ vật cũ vẫn giữ ý nghĩa gợi sở thích, được thể hiện bằng đồ chơi an toàn phù hợp trẻ nhỏ.",
+      "Bố mẹ có thể làm nghề ca hát, diễn xuất, múa, sáng tác, hội họa, nhiếp ảnh, giảng dạy nghệ thuật hoặc nghề truyền thống, với thu nhập đa dạng. Trẻ có thể luyện cùng người thân mỗi năm hoặc chia sẻ mong muốn chọn con đường riêng.",
+      "Áp lực học tập của trẻ xét nguồn thu hộ gia đình, đồng thời vẫn có cơ hội học bổng và giúp đỡ. Thu nhập thấp không làm tăng mọi rủi ro hay quyết định tính cách của các thành viên."
+    ]
+  },
+  {
+    "id": "showbiz-m6-connected-careers",
+    "version": "8.7.0-6",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T07:10:20.000Z",
     "publishedAt": "2026-10-27T04:26:27.382Z",
     "title": "Một Đời — Sự nghiệp giải trí liền mạch và thành tựu mới",
     "summary": "Các chương trình truyền hình, nghề diễn viên, thần tượng và show hẹn hò giờ nối vào nhau thành một hành trình, kèm 11 thành tựu mới.",
@@ -15,13 +142,14 @@
       "Hành trình liền mạch: diễn viên từ vai quần chúng, vai phụ đến phim thành công, lên Running Man, rồi thành ngôi sao và ngồi ghế giám khảo; thực tập sinh từ 15 tuổi đến chương trình sống còn, debut, lên gameshow, lưu diễn quốc tế; người bình thường thắng Nhanh Như Chớp rồi được mời sang Ai Là Triệu Phú; cặp đôi quen nhau trên show hẹn hò có thể tiếp tục yêu và kết hôn.",
       "11 thành tựu mới: Nhanh như chớp, Chinh phục câu hỏi số 15, Vòng nguyệt quế năm, Biệt đội siêu trí tuệ, Bậc thầy chiến thuật, Quán quân, Thành đôi trên sóng, Giải thưởng điện ảnh, Ngôi sao điện ảnh, Ngày debut, Tấm vé debut.",
       "Chương trình đã tham gia, phim đã đóng, giải thưởng và nhóm nhạc đều hiện trong hồ sơ nhân vật; tải lại game không làm lặp lại tiền thưởng hay cát-xê."
-    ]
+    ],
+    "correctedAt": "2026-10-27T07:10:20.981Z"
   },
   {
     "id": "showbiz-m5-kpop-trainee",
     "version": "8.7.0-5",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T07:10:20.000Z",
     "publishedAt": "2026-10-27T04:16:25.431Z",
     "title": "Một Đời — Thực tập sinh K-pop từ tuổi 14, debut thần tượng và chương trình sống còn",
     "summary": "Có năng khiếu ca hát, nhảy múa, bạn có thể được công ty giải trí Hàn Quốc chú ý từ 14–16 tuổi, đào tạo song song với việc học, rồi debut hoặc thử sức ở các chương trình sống còn.",
@@ -34,13 +162,14 @@
       "Ba kỳ đánh giá mỗi năm: chọn luyện thanh, vũ đạo, rap, biểu cảm, tiếng Hàn, nghỉ ngơi hay tập cùng bạn bè; xếp hạng cùng 11 thực tập sinh khác, mỗi người một tính cách và tốc độ tiến bộ riêng. Có người rời công ty, có đối thủ cạnh tranh; không phải ai cũng được debut.",
       "Debut: công ty thành lập nhóm, bạn chọn vị trí (giọng ca chính, nhảy chính, rapper, gương mặt đại diện, trưởng nhóm) và concept bài hát ra mắt. Mỗi năm quảng bá đĩa mới, fandom lớn dần, có thể giành cúp chương trình âm nhạc, tổ chức concert, lưu diễn quốc tế. Thu nhập chia theo hợp đồng, trừ dần chi phí đào tạo trước; nhóm nổi tiếng được mời lên Running Man (Hàn Quốc).",
       "Chương trình sống còn cho thực tập sinh: Produce 101 (2016–2019), Girls Planet 999 (2021), Boys Planet (từ 2023), I-LAND (từ 2020), Universe Ticket (2023–2024). Có đánh giá xếp hạng A–F, nhiệm vụ nhóm, chọn vị trí hoặc tranh vị trí trung tâm, chọn bài hát theo concept, bình chọn và các vòng loại; lọt vào đội hình debut thì hoạt động trong nhóm dự án vài năm."
-    ]
+    ],
+    "correctedAt": "2026-10-27T07:10:20.986Z"
   },
   {
     "id": "showbiz-m4-acting-career",
     "version": "8.7.0-4",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T07:10:20.000Z",
     "publishedAt": "2026-10-27T04:06:02.458Z",
     "title": "Một Đời — Sự nghiệp diễn viên: thử vai, đóng phim, giải thưởng và lời mời gameshow",
     "summary": "Theo nghiệp diễn giờ là cả một con đường: từ vai quần chúng, thử vai từng dự án, làm việc với đạo diễn và bạn diễn, chờ phim ra mắt, đến mùa giải thưởng và được mời lên gameshow.",
@@ -54,13 +183,14 @@
       "Mục mới “Sự nghiệp diễn xuất”: hồ sơ các phim đã đóng, giải thưởng, nấc nghề (quần chúng → vai phụ → vai chính → hạng A → ngôi sao điện ảnh); tìm dự án mới, đi đóng quần chúng lấy kinh nghiệm, góp vốn làm nhà sản xuất, chuyển hướng làm đạo diễn khi đủ tầm.",
       "Phim thành công hoặc đoạt giải mang lại lời mời quảng bá trên Running Man Việt Nam, 2 Ngày 1 Đêm (hoặc Running Man Hàn Quốc khi hoạt động ở Hàn Quốc).",
       "Chương trình mới Gương Mặt Thân Quen: ca sĩ, diễn viên có tên tuổi bốc thăm hóa thân thành ca sĩ nổi tiếng mỗi tuần, ba giám khảo chấm điểm; ngôi sao rất nổi tiếng có thể ngồi ghế giám khảo."
-    ]
+    ],
+    "correctedAt": "2026-10-27T07:10:20.992Z"
   },
   {
     "id": "showbiz-m3-variety-dating-music",
     "version": "8.7.0-3",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T07:10:20.000Z",
     "publishedAt": "2026-10-27T03:56:35.658Z",
     "title": "Một Đời — Gameshow vận động, chiến thuật, hẹn hò và cuộc thi âm nhạc",
     "summary": "Nhiều chương trình mới có luật chơi riêng: trò chơi xé bảng tên, suy luận, đấu trí chiến thuật, show hẹn hò thực tế và các cuộc thi âm nhạc từ vòng giấu mặt đến chung kết.",
@@ -74,13 +204,14 @@
       "Show hẹn hò Single's Inferno, Heart Signal, EXchange (Transit Love), I Am Solo: mỗi người tham gia có tuổi, nghề, tính cách và gu riêng; bạn giới thiệu bản thân, thi đấu giành quyền hẹn, chọn người đi hẹn, gửi tin nhắn ẩn danh, đối mặt người theo đuổi khác hay người yêu cũ. Đêm cuối chỉ thành đôi khi hai người cùng chọn nhau, sau đó có thể tiếp tục tìm hiểu. Chỉ dành cho người độc thân từ 20 tuổi.",
       "Cuộc thi âm nhạc: Rap Việt (tuyển chọn — cả bốn huấn luyện viên chọn thì nhận nón vàng, đối đầu, bứt phá, bán kết, chung kết), Giọng Hát Việt 2012–2019 (giấu mặt — quay ghế, chọn đội, đối đầu, loại trực tiếp, liveshow), Vietnam Idol (thử giọng ba giám khảo, nhà hát, các đêm Gala; tạm dừng 2017–2022), Ca Sĩ Mặt Nạ 2022–2023 dành cho nghệ sĩ nổi tiếng (giấu thân phận, bị đoán trúng thì phải tháo mặt nạ). Kết quả dựa trên kỹ năng ca hát, bài hát bạn chọn, việc tập luyện, câu chuyện và danh tiếng.",
       "Nghệ sĩ rất nổi tiếng có thể làm huấn luyện viên Rap Việt, Giọng Hát Việt hoặc giám khảo Vietnam Idol: chọn thí sinh, dẫn dắt đội qua các vòng; thí sinh của bạn sau này có thể trở thành người quen trong giới."
-    ]
+    ],
+    "correctedAt": "2026-10-27T07:10:20.998Z"
   },
   {
     "id": "showbiz-m2-quiz-shows",
     "version": "8.7.0-2",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T07:10:20.000Z",
     "publishedAt": "2026-10-27T03:39:16.475Z",
     "title": "Một Đời — Gameshow kiến thức: Nhanh Như Chớp, Ai Là Triệu Phú, Olympia và hơn thế",
     "summary": "Mục mới “Chương trình truyền hình”: tự đăng ký làm thí sinh và trả lời từng câu hỏi trong các gameshow kiến thức, có luật chơi, tiền thưởng và kết quả riêng.",
@@ -94,7 +225,8 @@
       "Siêu Trí Tuệ Việt Nam: ghi nhớ dãy số, chuỗi hình ảnh rồi trả lời khi dãy đã biến mất, kèm thử thách tính nhẩm; vượt ba vòng để vào biệt đội. Đấu Trường 100 (2006–2015): một người đấu với 100 người, có thể dừng để nhận tiền tích lũy.",
       "Câu hỏi được tạo mới mỗi lần chơi từ nhiều dạng: tính nhanh, phần trăm, quy luật dãy số, sắp xếp, đổi đơn vị, giờ và thứ, suy luận, số nguyên tố, số La Mã, thủ đô, hành tinh, nguyên tố hóa học, mốc lịch sử, văn học, âm nhạc, điện ảnh, đố mẹo. Có ba mức khó, ít lặp lại, mỗi câu đều có giải thích. Tải lại game không làm đổi câu đang hỏi hay nhận thưởng hai lần.",
       "Chương trình đã tham gia được ghi vào hồ sơ. Người chiến thắng hoặc gây ấn tượng có thể được mời trở lại; người nổi tiếng thỉnh thoảng nhận lời mời làm khách mời."
-    ]
+    ],
+    "correctedAt": "2026-10-27T07:10:21.003Z"
   },
   {
     "id": "feedback-e-assets-wills",
