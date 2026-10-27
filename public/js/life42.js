@@ -172,7 +172,7 @@
     // Deferred inheritance is money too: convert once with the rest of the estate.
     fields(l.flags, ['heirTrust']);
     var world120 = l.flags && l.flags.world120;
-    if (world120) { (world120.companies || []).forEach(function (company) { fields(company, ['value','peak','lastProfit','chairCost137']);fields(company.fresh,['amt']); }); fields(world120.charity, ['own', 'total']); }
+    if (world120) { (world120.companies || []).forEach(function (company) { fields(company, ['value','peak','lastProfit','chairCost137']);fields(company.fresh,['amt']);if(E.TREASURY165)E.TREASURY165.scale(company,f); }); fields(world120.charity, ['own', 'total']); }
 
     fields(l.flags && l.flags.heirOf, ['amt', 'pay']);
     var inheritedItems = [].concat(l.flags && l.flags.heirOf && l.flags.heirOf.items || [], l.flags && l.flags.heirItemsTrust && l.flags.heirItemsTrust.items || []);
@@ -182,7 +182,7 @@
     [l.assets, l.basis].forEach(function (A) { if (A) fields(A, Object.keys(A)); });
     [l.port, l.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { fields(P[k], ['v', 'basis']); }); });
     fields(l.si, ['sum', 'm']);
-    fields(l.partner, ['inc']);
+    fields(l.partner, ['inc']);if(E.RELATIVE163)E.RELATIVE163.convert(l,f);
     fields(l.fam, ['mInc', 'fInc', 'mInc0', 'fInc0', 'mLost', 'fLost']);
     [l.job, l.lastJob].forEach(function (j, i, all) { if (!i || j !== all[0]) fields(j, ['last', 'floor', 'sportPrevSalary']); });
     (l.props || []).forEach(function (p) { fields(p, ['v', 'basis']); });

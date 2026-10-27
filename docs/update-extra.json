@@ -1,5 +1,30 @@
 [
   {
+    "id": "life-enterprise-foundation-882",
+    "version": "8.8.2-foundation",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T20:37:05.195+07:00",
+    "title": "Một Đời — Tiền riêng của người thân và giao dịch doanh nghiệp",
+    "summary": "Theo dõi tiền của từng người, thử vai từ tuổi đi học, quản lý tiền mặt công ty và thương lượng chuyển nhượng.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bạn đời và con có sổ thu nhập, sinh hoạt, tiết kiệm, nợ và giao dịch riêng. Phần đã góp ngân sách gia đình không được tiết kiệm lại; quỹ hỗ trợ và cổ phần vẫn có nguồn riêng. Hồ sơ ghi thêm thành tích, uy tín nghề nghiệp và hoạt động cộng đồng thực tế.",
+      "Tặng tiền ghi nhận ở cả người gửi và người nhận. Con trả khoản vay từ tiền riêng thực có. Vốn làm ăn được đưa vào dự án trong ba năm, có thể thành công hoặc thất bại; không còn nhận tiền trả nợ ba năm ngay trong một lựa chọn.",
+      "Khi tiếp tục ở tuổi hiện tại của con, tiền riêng và quỹ hỗ trợ còn lại được nhận một lần, không cộng với khoản tiền dựng lại từ quá khứ. Khoản nợ cá nhân đã ghi thay thế nợ tiêu dùng dựng lại; khoản vay có tài sản bảo đảm vẫn đi cùng nhà hoặc xe. Khi bắt đầu lại từ lúc sinh ra, trẻ không nhận trước tiền kiếm được trong tương lai.",
+      "Trẻ đi học có thể cùng người giám hộ thử vai tại địa phương, chờ lịch quay năm sau hoặc chọn con đường riêng. Việc học, sức khỏe và người giám hộ tiếp tục được kiểm tra khi nhận lịch; chỉ nhận thù lao sau khi hoàn thành. Truyền thống nghệ thuật được giữ qua các thế hệ mà không buộc con nối nghề.",
+      "Sinh nhật và một số cơ hội học tập, y tế, mua sắm, giao lưu xét ngân sách và hoàn cảnh hiện tại. Lựa chọn trả phí học thêm, bảo hiểm và chăm sóc cha mẹ xét đủ tiền; các cách tổ chức giản dị và phương án không chi thêm vẫn được giữ.",
+      "Công ty có tiền mặt và nợ tách khỏi vốn chủ sở hữu. Doanh nghiệp cũ giữ nguyên giá trị; số tiền mặt đầu kỳ được phân bổ ước tính từ vốn và có giải thích. Vay vốn không tăng tài sản ròng của chủ sở hữu; lợi nhuận tính chi phí, lãi vay và thuế mô phỏng. Chỉ chia cổ tức khi đủ lợi nhuận giữ lại và tiền mặt sau dự phòng.",
+      "Bán cổ phần cần tìm người mua, xét định giá theo lợi nhuận và nợ, thương lượng rồi đợi thanh toán từ năm sau. Người mua có thể từ chối. Cổ phần chỉ chuyển sau khi nhận tiền; vốn và tiền trong công ty không bị rút theo giao dịch.",
+      "Nhượng quyền thương hiệu có phí thiết lập, phí ký kết và phí định kỳ trong ba năm; có thể gia hạn hoặc chấm dứt. Đối tác không duy trì điều kiện có thể thất bại và ngừng trả phí. Hợp đồng nhượng quyền không chuyển cổ phần.",
+      "Phát hành cổ phần, sáp nhập, đổi tiền khi chuyển nước và thừa kế giữ liên kết với số dư doanh nghiệp. Cổ tức của người thân được chuyển vào đúng người sở hữu cổ phần."
+    ]
+  },
+  {
     "id": "life-contracts-881",
     "version": "8.8.1-contracts",
     "releaseStatus": "packaged",

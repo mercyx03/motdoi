@@ -65,3 +65,7 @@ Không mở lại nghiệm thu GĐ0–GĐ6. Yêu cầu A–E mới chưa hoàn t
 
 ## GĐ6 / nghiệm thu cuối đợt A–E và quản trị doanh nghiệp 8.8.1
 Checkpoint hợp đồng chỉ hoàn tất một phần mốc 1. Theo dõi toàn bộ phạm vi còn thiếu tại docs/ENTERPRISE-UPGRADE-PROGRESS.md và yêu cầu gốc ENTERPRISE-UPGRADE-REQUEST.md. Trên mã cuối cần kiểm toàn bộ tài chính người thân/không nhân đôi, nhượng quyền, báo cáo dòng tiền/nợ/cổ tức, chiến lược, nhân sự/CEO/CFO, thực tập 2–3 năm, cố vấn dài hạn và năm chuỗi nhiều năm. Những phần này chưa triển khai hoặc chưa kiểm; không đánh dấu PASS. Giữ yêu cầu không chạy 77 nhóm sau mỗi thay đổi. Binding REVIEWS_DB thực tế chưa kiểm chứng; chưa Production-ready.
+
+
+### Nghiệm thu cuối đợt 8.8.2-foundation
+Mốc nền tảng đã đạt kiểm thử trọng điểm. Trên mã cuối cần nối và kiểm báo cáo/biểu đồ, bảy chiến lược, nhân sự/lãnh đạo, thực tập/cố vấn và năm chuỗi tích hợp; kiểm thêm giao dịch nhượng quyền sau sáp nhập/thừa kế, nhiều thế hệ có nợ bảo đảm, các chế độ tài sản hôn nhân với sổ cá nhân. Không coi các mục chưa chạy là PASS. Ba tệp riêng của chủ dự án giữ nguyên; không deploy.

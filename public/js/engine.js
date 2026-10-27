@@ -1750,6 +1750,7 @@
     if (life.money + assetTotal(life) < -b * 2 && !life.flags.debtNoted) { life.flags.debtNoted = true; log('Nợ nần chồng chất, những đêm mất ngủ vì lo trả nợ.', 'bad'); H.fx(life, { hap: -6 }); }
     if (life.money > 0) life.flags.debtNoted = false;
     life.fin = F;
+    if (E.RELATIVE163 && p) E.RELATIVE163.close(life, p, p.age, F.partner);
     return F;
   }
 

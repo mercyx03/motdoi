@@ -1,5 +1,13 @@
 ## v8.8.0-preview — checkpoint đang triển khai, packaged
 
+## 8.8.2-foundation — nền tảng gia đình và doanh nghiệp
+
+- Sổ tài chính người thân, vốn dự án ba năm, chuyển đời không cộng trùng tiền/nợ tiêu dùng.
+- Casting trẻ em và truyền thống nghệ thuật; mở rộng hoàn cảnh và điều kiện ngân sách.
+- Tiền mặt/nợ/cổ tức doanh nghiệp; bán cổ phần có thanh toán trễ và nhượng quyền ba năm.
+- Kiểm thử trọng điểm đạt; packaged, chưa nghiệm thu toàn đợt quản trị doanh nghiệp.
+
+
 ## 8.8.1-contracts — checkpoint Preview
 
 - Hợp đồng chín vai trò truyền thông, năng lực, lương chung và phạm vi ủy quyền.

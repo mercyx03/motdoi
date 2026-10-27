@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('assert'),E=require('./hardcore-isolation').gameContext().E;let checks=0;function ok(v,m){assert(v,m);checks++;}
+function life(age=10){let l=E.createLife({mode:'vn',seed:1640});Object.assign(l,{age,school:'primary',pending:[]});Object.assign(l.fam,{mAlive:true,fAlive:true,noDad:false,fJob:'nhạc sĩ'});l.st.hea=80;return l;}
+function pick(l,id,key,r=()=>0){let d=E.DEC[id].make(l,r),i=d.data.keys.indexOf(key);assert(d.opts.some(o=>o.k===String(i)),key+' must be available');E.DEC[id].apply(l,d,String(i),r,()=>{});return d;}
+let l=life();pick(l,'familyArt164','apply');let s=E.LIFE138.state(l);ok(s.casting164.status==='applied'&&s.casting164.until===11,'casting remains pending until following year');ok(!E.DEC.castingFollow164.valid(l,{}),'cannot film in audition year');l=E.migrate(JSON.parse(JSON.stringify(l)));l.age++;let cash=l.money,d=pick(l,'castingFollow164','film');ok(E.LIFE138.state(l).casting164.status==='completed'&&Math.abs(l.money-cash-l.base*.02)<1e-7,'delayed film completion pays fee');cash=l.money;E.DEC.castingFollow164.apply(l,d,'0',()=>0,()=>{});ok(l.money===cash,'cannot receive fee twice');ok(l.school==='primary'&&!l.job,'child stays in school, no fulltime career');
+l=life();pick(l,'familyArt164','apply');pick(l,'familyArt164','own');ok(E.LIFE138.state(l).casting164.status==='withdrawn','own career choice withdraws pending casting');
+l=life();pick(l,'familyArt164','apply');l.age++;l.fam.mAlive=l.fam.fAlive=false;d=E.DEC.castingFollow164.make(l,()=>0);ok(!d.opts.some(o=>d.data.keys[+o.k]==='film'),'must still have guardian when filming');pick(l,'castingFollow164','decline');
+l=life(17);pick(l,'familyArt164','apply');l.age=18;d=E.DEC.castingFollow164.make(l,()=>0);ok(!d.opts.some(o=>d.data.keys[+o.k]==='film'),'adult cannot accept role meant for child');
+l=life();pick(l,'familyArt164','apply',()=>.99);ok(E.LIFE138.state(l).casting164.status==='rejected','casting can fail without fee');
+l=life();let lineage=E.CONTEXT164.tradition(l);l.age=30;let k={name:'Con',sex:'F',born:20,alive:true,edu:1,close:70};l.kids=[k];let child=E.createLife(E.childOpts(l,k));ok(JSON.stringify(E.CONTEXT164.tradition(child))===JSON.stringify(lineage),'art history survives next generation');
+let poor=life();poor.st.hea=0;ok(E.CONTEXT164.context(poor,'health')>=1.24,'zero health increases care context, not treated as missing');
+console.log('Context and casting: '+checks+' checks passed');

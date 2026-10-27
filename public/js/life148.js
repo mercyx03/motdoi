@@ -434,7 +434,7 @@
       rows.push({ k: 'gift', l: 'Hỗ trợ tài chính một lần', h: mo(l, l.base), why: liquid(l) < l.base + reserve(l) ? 'Chưa đủ tiền mặt' : x.p.helpAt148 === l.age ? 'Đã hỗ trợ năm nay' : true, run: function (l, r, log) {
         x.p.helpAt148 = l.age;
         if (x.p.inc && x.p.inc * 12 > l.base * 3 && r() < 0.6) { log(x.name + ' cảm ơn nhưng từ chối nhận tiền: "Con/em tự lo được, để dành cho người cần hơn."', 'neutral'); adjustClose(x, 2); return; }
-        H.cash(l, -l.base, 'Hỗ trợ ' + x.name); adjustClose(x, 4); log('Bạn hỗ trợ ' + x.name + ' ' + mo(l, l.base) + '. Khoản tiền từ nay thuộc về ' + x.name + '.', 'good');
+        if(E.RELATIVE163&&!E.RELATIVE163.post(l,x.p,l.base,'Hỗ trợ từ gia đình','help148:'+l.age))return; H.cash(l, -l.base, 'Hỗ trợ ' + x.name); adjustClose(x, 4); log('Bạn hỗ trợ ' + x.name + ' ' + mo(l, l.base) + '. Khoản tiền từ nay thuộc về ' + x.name + '.', 'good');
       } });
       return rows;
     });
