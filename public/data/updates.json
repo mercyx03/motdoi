@@ -2,6 +2,24 @@
   "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
     {
+      "id": "showbiz-m6-connected-careers",
+      "version": "8.7.0-6",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-27T04:26:27.382Z",
+      "title": "Một Đời — Sự nghiệp giải trí liền mạch và thành tựu mới",
+      "summary": "Các chương trình truyền hình, nghề diễn viên, thần tượng và show hẹn hò giờ nối vào nhau thành một hành trình, kèm 11 thành tựu mới.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Làm tốt ở một gameshow kiến thức (thắng tiền thưởng, chuỗi đúng dài, vô địch) thì khán giả nhớ tới bạn và bạn được mời sang một gameshow kiến thức khác.",
+        "Hành trình liền mạch: diễn viên từ vai quần chúng, vai phụ đến phim thành công, lên Running Man, rồi thành ngôi sao và ngồi ghế giám khảo; thực tập sinh từ 15 tuổi đến chương trình sống còn, debut, lên gameshow, lưu diễn quốc tế; người bình thường thắng Nhanh Như Chớp rồi được mời sang Ai Là Triệu Phú; cặp đôi quen nhau trên show hẹn hò có thể tiếp tục yêu và kết hôn.",
+        "11 thành tựu mới: Nhanh như chớp, Chinh phục câu hỏi số 15, Vòng nguyệt quế năm, Biệt đội siêu trí tuệ, Bậc thầy chiến thuật, Quán quân, Thành đôi trên sóng, Giải thưởng điện ảnh, Ngôi sao điện ảnh, Ngày debut, Tấm vé debut.",
+        "Chương trình đã tham gia, phim đã đóng, giải thưởng và nhóm nhạc đều hiện trong hồ sơ nhân vật; tải lại game không làm lặp lại tiền thưởng hay cát-xê."
+      ]
+    },
+    {
       "id": "showbiz-m5-kpop-trainee",
       "version": "8.7.0-5",
       "releaseStatus": "packaged",

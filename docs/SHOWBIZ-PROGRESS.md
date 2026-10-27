@@ -88,13 +88,35 @@ Kiểm thử mốc 5: showbiz-idol 70 · browser-showbiz m5 · hồi quy mục 9
 
 Ghi chú: `npc-identity` ca 2 chọn một đời mẫu bằng tự chơi; thêm sự kiện mới làm đổi đường ngẫu nhiên, đời mẫu ly hôn trong 3 năm của ca kiểm tra nên tra định danh trả về hồ sơ người cũ (cùng định danh). Đã sửa test để chấp nhận đúng trường hợp này (cùng định danh, cùng tên), không nới các trường hợp khác.
 
-## Mốc 6
+## Mốc 6 — Tích hợp
 
-CHƯA HOÀN THÀNH (đang làm).
+| Nội dung | Module | Trạng thái |
+|---|---|---|
+| 11 thành tựu mới (E.addAchievements sẵn có) | life156 | HOÀN THÀNH |
+| Thành tích tốt ở gameshow kiến thức → lời mời gameshow kiến thức khác (một lần mỗi kết quả) | life156 | HOÀN THÀNH |
+| Bốn con đường: diễn viên (quần chúng → vai phụ → phim thành công → Running Man → ngôi sao → giám khảo), idol (15 tuổi → đánh giá → 18 tuổi toàn thời gian → Boys Planet → debut → Running Man Hàn Quốc → lưu diễn), người bình thường (Nhanh Như Chớp 20 triệu → mời Ai Là Triệu Phú), hẹn hò (Heart Signal → hẹn hò → kết hôn qua luồng cưới sẵn có) | integration-showbiz | ĐẠT |
+
+Sửa trong khi kiểm thử tích hợp: life108 gán `undefined` cho vài trường hồ sơ người yêu (vd. `workplace108`), làm thứ tự khóa sau khi lưu / tải khác bản đang chơi (lỗi ẩn có từ trước, lộ ra khi đường ngẫu nhiên đổi); nay chỉ chép trường có giá trị. Không ảnh hưởng lối chơi, nhưng giúp kiểm thử lưu / tải giống hệt từng ký tự.
+
+Kiểm thử cuối đợt: integration-showbiz 91 · showbiz-audit 56 · showbiz-quiz 4.047 · showbiz-games 585 · showbiz-dating-music 69 · showbiz-actor 51 · showbiz-idol 70 · hồi quy mục 9 cho 23 tình huống mới / liên quan (95.739 đạt, 0 lỗi) · trình duyệt: browser-showbiz 24 lượt, browser-feedback-menus 26, browser-feedback-b, browser-dating-app · audition139 · life138 · career109 · careers105 · smoke · saves-compat · save-safety · npc-identity · pace-gd5 · chains-gd4 · integration-gd6 · integration-feedback · feedback-a…e · relationships108/841 · family830 · update-release · update-showbiz / update-feedback (chạy lại sau khi dựng dist mới).
+
+## Tổng hợp
+
+- Danh mục mới (E.SHOW151): 25 chương trình + 10 chương trình sẵn có (life39: 5 show âm nhạc; life41: 3 show hẹn hò; life48: Running Man Việt Nam, 2 Ngày 1 Đêm).
+- Câu hỏi (E.QUIZ151): 17 dạng; đo 20.000 lượt mỗi dạng ra số câu khác nhau: tính nhanh 10.268, sắp xếp 20.000, số nguyên tố 16.875, suy luận chiều cao 6.372, giờ / thứ 4.911, dãy số 977, đổi đơn vị 891, tuổi 600, thối tiền 267, phần trăm 250, lịch sử 208, thủ đô / châu lục 84, số La Mã 46, nguyên tố 40, dữ kiện cố định 32, văn học – nghệ thuật 15, hành tinh 11. 100.000 lượt sinh ra 25.761 câu khác nhau. Không gian tham số lý thuyết lớn (~10¹¹, chủ yếu do bài sắp xếp số) nhưng không tuyên bố vô hạn; các dạng tra bảng có số câu hữu hạn.
+
+## Giới hạn còn lại
+
+- Các format là mô phỏng lấy cảm hứng; không tái hiện chính xác mọi luật / mùa phát sóng (ví dụ thể lệ chi tiết Olympia, Vietnam Idol 2023 chưa xác minh đầy đủ qua nguồn công khai).
+- Show Hàn Quốc chỉ mở khi sống / hoạt động ở Hàn Quốc, là thực tập sinh / idol công ty Hàn, hoặc rất nổi tiếng.
+- Thực tập sinh dưới 18 tuổi không chuyển ra nước ngoài (đào tạo bán thời gian trong nước); không mô phỏng chi tiết hợp đồng lao động thực tế từng nước.
+- Các mục mới chủ yếu là hành động người chơi chủ động; chế độ Tự động chỉ tham gia khi có lời mời / sự kiện kích hoạt (lời mời khách mời nổi tiếng, được công ty chú ý, mời quay lại).
+- Người Ấy Là Ai, Đảo Thiên Đường, Bạn Muốn Hẹn Hò giữ nguyên format cũ (đã có nhiều vòng), không nâng cấp lên bộ hẹn hò mới.
 
 ## Checkpoint
 
 - Mốc 1–2: commit `8d004e0` (`feat(showbiz-2)`).
 - Mốc 3: commit `8df3c4d` (`feat(showbiz-3)`).
 - Mốc 4: commit `9803381` (`feat(showbiz-4)`).
-- Mốc 5: commit xem lịch sử nhánh (`feat(showbiz-5)`).
+- Mốc 5: commit `30e1b3f` (`feat(showbiz-5)`).
+- Mốc 6: commit xem lịch sử nhánh (`feat(showbiz-6)`).
