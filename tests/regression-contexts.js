@@ -53,4 +53,7 @@ chain144('ch144_health_flare','health',1,l=>{E.startJob(l,'shipper',()=>0,()=>{}
 /* Góp ý người chơi: thương vụ cần một doanh nhân đã quen; áp lực giới giải trí cần người làm nghề giải trí */
 add('deal148',l=>{l.money=l.base*500;const p=E.ELITE148.meet(l,()=>0.3,{kind:'business',tier:2,where:'tiệc gặp gỡ đối tác'});p.trust=80;});
 add('dark149',l=>{E.startJob(l,Object.keys(E.CAR).find(k=>E.CAR[k].fame),()=>0,()=>{},true);});
+/* Showbiz: một chương trình đang ghi hình (bắt đầu bằng hàm của game) */
+add('show151_step',l=>{l.age=30;l.st.kno=80;E.SHOW151.begin(l,()=>0.3,()=>{},'nnc','contestant');l.pending=[];});
+out.show151_step.arg={token:out.show151_step.life.flags.show151.active.token,step:out.show151_step.life.flags.show151.active.step};
 return out;};

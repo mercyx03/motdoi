@@ -1,5 +1,25 @@
 [
   {
+    "id": "showbiz-m2-quiz-shows",
+    "version": "8.7.0-2",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T03:39:16.475Z",
+    "title": "Một Đời — Gameshow kiến thức: Nhanh Như Chớp, Ai Là Triệu Phú, Olympia và hơn thế",
+    "summary": "Mục mới “Chương trình truyền hình”: tự đăng ký làm thí sinh và trả lời từng câu hỏi trong các gameshow kiến thức, có luật chơi, tiền thưởng và kết quả riêng.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Nhanh Như Chớp: 15 câu hỏi trả lời nhanh, đúng thì lên một bậc, sai thì về bậc đầu. Đạt chuỗi 10 câu đúng liên tiếp nhận 20 triệu đồng; có thể nhờ người thân gợi ý một lần. Người nổi tiếng tham gia với vai trò khách mời, tiền thắng được gửi quỹ từ thiện.",
+      "Ai Là Triệu Phú: 15 câu hỏi theo thang tiền thưởng, mốc an toàn ở câu 5 và câu 10, bốn quyền trợ giúp (50:50, hỏi khán giả, gọi điện cho người thân, hỏi tổ tư vấn). Có thể dừng cuộc chơi để mang tiền về; trả lời sai thì về mốc an toàn gần nhất. Khi sống ở nước ngoài, bạn tham gia phiên bản quốc tế.",
+      "Đường Lên Đỉnh Olympia dành cho học sinh THPT học giỏi: bốn phần thi Khởi động (đúng +10, sai −5), Vượt chướng ngại vật (đoán từ khóa), Tăng tốc, Về đích (chọn câu 10, 20, 30 điểm) cùng ba đối thủ; thắng cuộc thi tuần thì vào tháng, quý và chung kết năm.",
+      "Siêu Trí Tuệ Việt Nam: ghi nhớ dãy số, chuỗi hình ảnh rồi trả lời khi dãy đã biến mất, kèm thử thách tính nhẩm; vượt ba vòng để vào biệt đội. Đấu Trường 100 (2006–2015): một người đấu với 100 người, có thể dừng để nhận tiền tích lũy.",
+      "Câu hỏi được tạo mới mỗi lần chơi từ nhiều dạng: tính nhanh, phần trăm, quy luật dãy số, sắp xếp, đổi đơn vị, giờ và thứ, suy luận, số nguyên tố, số La Mã, thủ đô, hành tinh, nguyên tố hóa học, mốc lịch sử, văn học, âm nhạc, điện ảnh, đố mẹo. Có ba mức khó, ít lặp lại, mỗi câu đều có giải thích. Tải lại game không làm đổi câu đang hỏi hay nhận thưởng hai lần.",
+      "Chương trình đã tham gia được ghi vào hồ sơ. Người chiến thắng hoặc gây ấn tượng có thể được mời trở lại; người nổi tiếng thỉnh thoảng nhận lời mời làm khách mời."
+    ]
+  },
+  {
     "id": "feedback-e-assets-wills",
     "version": "8.6.0-e",
     "releaseStatus": "released",
