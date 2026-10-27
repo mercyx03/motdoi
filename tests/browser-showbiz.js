@@ -20,6 +20,10 @@ const FLOWS = {
   m4: [
     { name: 'actor', setup: 'actor', open: 'actor154', clicks: ['Tìm dự án phim mới', 'Phân tích kịch bản'], answers: 0, expect: 'Đạo diễn' },
     { name: 'gmtq', setup: 'superstar', open: 'show151', clicks: ['Gương Mặt Thân Quen — giám khảo'], answers: 2, expect: 'ghế giám khảo' }
+  ],
+  m5: [
+    { name: 'scout', setup: 'teen', open: 'scout155', clicks: ['Tìm hiểu công ty', 'Tham gia buổi audition'], answers: 0, expect: 'Kết quả audition' },
+    { name: 'eval', setup: 'trainee', open: 'eval155', clicks: ['Luyện thanh'], answers: 0, expect: 'Đánh giá tháng' }
   ]
 };
 function seed(kind, id) {
@@ -28,6 +32,8 @@ function seed(kind, id) {
   l.flags.military = 0; l.money = l.base * 10; l.st.kno = 90; l.edu = kind === 'student' ? 3 : 5; l.st.hea = 90;
   if (kind === 'star') { E.startJob(l, 'dien_vien', () => 0, () => { }, true); l.fame = 3e5; }
   if (kind === 'kr') { l.abroad = { code: 'KR', perm: true, name: 'Hàn Quốc' }; l.fame = 5e5; l.birthYear = 1995; }
+  if (kind === 'teen' || kind === 'trainee') { l.age = 15; l.birthYear = 2010; l.school = 'THPT'; l.indep = false; E.LIFE138.skill(l, 'sing').level = 70; E.LIFE138.skill(l, 'dance').level = 65; }
+  if (kind === 'trainee') { const I = E.IDOL155; l.flags.idol155 = { stage: 'junior', evals: [], peers: [{ name: 'Minh Anh', skill: 50, grow: 3, kind: 'hòa đồng', bond: 0 }], company: { name: 'Aurora Entertainment (hư cấu)', rep: 80, split: 0.2 }, months: 0, debt: 0 }; E.LIFE138.state(l).agency = { name: 'Aurora Entertainment (hư cấu)', code: 'KR', status: 'junior155', years: 0, started: 15 }; }
   if (kind === 'actor') { l.talent = 'diễn xuất'; l.actSk = 70; l.age = 22; }
   if (kind === 'superstar') { E.startJob(l, 'dien_vien', () => 0, () => { }, true); l.fame = 3e6; l.age = 35; }
   if (kind === 'rapper') { E.startJob(l, 'rapper', () => 0, () => { }, true); l.skill = 70; }

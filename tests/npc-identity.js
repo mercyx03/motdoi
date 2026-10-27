@@ -62,7 +62,7 @@ const cases = [
     who.forEach((o, i) => { o.job = ['bác sĩ', 'kỹ sư', 'đầu bếp'][i]; });
     for (let y = 0; y < 3 && l.alive; y++) year(E, l);
     E.LIFE138.sync(l);
-    who.forEach((o, i) => { t.ok(o.uid110 === ids[i], 'đổi nghề không đổi định danh (' + (o.name || o.n) + ')'); const f = E.NPC.find(l, ids[i]); t.ok(!f || f.obj === o || !f.obj, 'tra định danh vẫn ra đúng người'); });
+    who.forEach((o, i) => { t.ok(o.uid110 === ids[i], 'đổi nghề không đổi định danh (' + (o.name || o.n) + ')'); const f = E.NPC.find(l, ids[i]); t.ok(!f || f.obj === o || !f.obj || f.kind === 'ex' && (f.obj.uid === ids[i] || f.obj.uid110 === ids[i]) && f.obj.name === o.name, 'tra định danh vẫn ra đúng người'); }); // nếu trong 3 năm đã ly hôn, người ấy nằm trong danh sách người cũ với cùng định danh
     t.ok(people(l)[ids[0]] && people(l)[ids[1]], 'hồ sơ người quen giữ nguyên khóa');
     t.ok(Object.keys(people(l)).length >= keys, 'không mất hồ sơ người quen');
   } },

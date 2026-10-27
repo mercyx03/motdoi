@@ -60,4 +60,9 @@ add('mini152',l=>{l.age=30;l.flags.mini152={kind:'rps',token:'ctx',st:E.MINI152.
 out.mini152.arg={token:'ctx',n:0};
 add('film154,actor154',l=>{l.age=25;l.talent='diễn xuất';l.actSk=70;E.ACTOR154.startProject(l,()=>0.3,()=>{});l.pending=[];});
 out.film154.arg={token:out.film154.life.flags.actor154.project.token,stage:'read'};
+/* Thực tập sinh K-pop: 15 tuổi được chú ý; thực tập sinh đang đánh giá; nhóm vừa thành lập */
+add('scout155',l=>{l.age=15;l.birthYear=2010;l.school='THPT';l.indep=false;E.LIFE138.skill(l,'sing').level=70;E.LIFE138.skill(l,'dance').level=65;});
+add('eval155',l=>{l.age=16;l.birthYear=2009;l.school='THPT';l.indep=false;l.flags.idol155={stage:'junior',evals:[],peers:[{name:'Minh Anh',skill:50,grow:3,kind:'hòa đồng',bond:0}],company:{name:'Aurora Entertainment (hư cấu)',rep:80,split:0.2},months:0,debt:0};E.LIFE138.state(l).agency={name:'Aurora Entertainment (hư cấu)',code:'KR',status:'junior155',years:0,started:15};});
+add('debut155',l=>{l.age=20;l.flags.idol155={stage:'debut',evals:[],peers:[],company:{name:'Aurora Entertainment (hư cấu)',rep:80,split:0.2},group:{name:'NOVA',members:['A','B','C'],position:null,debutAge:20,fandom:0,albums:[],wins:0},debt:0};E.LIFE138.state(l).agency={name:'Aurora Entertainment (hư cấu)',code:'KR',status:'debut',years:3,started:16};});
+out.debut155.arg={step:'pos'};
 return out;};

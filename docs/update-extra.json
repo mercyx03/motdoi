@@ -1,5 +1,24 @@
 [
   {
+    "id": "showbiz-m5-kpop-trainee",
+    "version": "8.7.0-5",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T04:16:25.431Z",
+    "title": "Một Đời — Thực tập sinh K-pop từ tuổi 14, debut thần tượng và chương trình sống còn",
+    "summary": "Có năng khiếu ca hát, nhảy múa, bạn có thể được công ty giải trí Hàn Quốc chú ý từ 14–16 tuổi, đào tạo song song với việc học, rồi debut hoặc thử sức ở các chương trình sống còn.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Từ 14–16 tuổi, bạn có thể được phát hiện qua hội diễn văn nghệ ở trường, video nhảy cover, buổi thử giọng hay người quen giới thiệu. Cơ hội phụ thuộc kỹ năng hát, nhảy, diễn, ngoại ngữ, sự tự tin và sức khỏe; ngoại hình chỉ là một phần nhỏ, và chăm luyện tập thì cơ hội tăng dần.",
+      "Quy trình nhận lời: tìm hiểu công ty (chia doanh thu, ký túc xá, hỗ trợ việc học), đi audition, thưa chuyện với bố mẹ / người giám hộ (có thể không đồng ý), rồi ký thỏa thuận đào tạo. Khi chưa đủ 18 tuổi, bạn vẫn đi học, tập bán thời gian với giờ tập giới hạn và chỉ sang Seoul dự trại hè cùng người giám hộ; đủ 18 tuổi hoặc tốt nghiệp mới sang Hàn Quốc làm thực tập sinh toàn thời gian.",
+      "Ba kỳ đánh giá mỗi năm: chọn luyện thanh, vũ đạo, rap, biểu cảm, tiếng Hàn, nghỉ ngơi hay tập cùng bạn bè; xếp hạng cùng 11 thực tập sinh khác, mỗi người một tính cách và tốc độ tiến bộ riêng. Có người rời công ty, có đối thủ cạnh tranh; không phải ai cũng được debut.",
+      "Debut: công ty thành lập nhóm, bạn chọn vị trí (giọng ca chính, nhảy chính, rapper, gương mặt đại diện, trưởng nhóm) và concept bài hát ra mắt. Mỗi năm quảng bá đĩa mới, fandom lớn dần, có thể giành cúp chương trình âm nhạc, tổ chức concert, lưu diễn quốc tế. Thu nhập chia theo hợp đồng, trừ dần chi phí đào tạo trước; nhóm nổi tiếng được mời lên Running Man (Hàn Quốc).",
+      "Chương trình sống còn cho thực tập sinh: Produce 101 (2016–2019), Girls Planet 999 (2021), Boys Planet (từ 2023), I-LAND (từ 2020), Universe Ticket (2023–2024). Có đánh giá xếp hạng A–F, nhiệm vụ nhóm, chọn vị trí hoặc tranh vị trí trung tâm, chọn bài hát theo concept, bình chọn và các vòng loại; lọt vào đội hình debut thì hoạt động trong nhóm dự án vài năm."
+    ]
+  },
+  {
     "id": "showbiz-m4-acting-career",
     "version": "8.7.0-4",
     "releaseStatus": "packaged",

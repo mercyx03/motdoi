@@ -73,7 +73,22 @@ Kiểm thử mốc 3: showbiz-games 585 · showbiz-dating-music 69 · browser-sh
 
 Kiểm thử mốc 4: showbiz-actor 51 · browser-showbiz m4 · hồi quy mục 9 (casting, film154, actor154, hoc_dien, quang_cao, show151, gameshow, film_menu: 39.484 đạt) · career109 · careers105 · smoke · saves · save-safety · pace-gd5 · integration-feedback.
 
-## Mốc 5–6
+## Mốc 5 — Thực tập sinh K-pop và idol
+
+| Nội dung | Module | Trạng thái |
+|---|---|---|
+| Phát hiện tài năng 14–16 tuổi (hội diễn trường, video, buổi thử giọng, người quen); xác suất theo kỹ năng thật life138 (hát, nhảy, diễn, nhạc cụ, ngoại ngữ), tự tin, sức khỏe, học lực; ngoại hình ≤ 8 điểm tiềm năng; người yếu vẫn có cơ hội nhỏ | life155 `scout155` | HOÀN THÀNH |
+| Nhận lời: tìm hiểu công ty (chia doanh thu, ký túc xá, việc học, ~20 giờ / tuần), audition 3 phần, bố mẹ / người giám hộ đồng ý hoặc không (tin cậy, học lực, uy tín công ty), ký cùng người giám hộ | life155 | HOÀN THÀNH |
+| Dưới 18 tuổi: vẫn đi học, không chuyển ra nước ngoài (đào tạo bán thời gian, trại hè có người giám hộ); 18 tuổi / tốt nghiệp → đề nghị toàn thời gian qua `audition139` / `auditionPrep139` sẵn có | life155 + life139 | HOÀN THÀNH |
+| 3 kỳ đánh giá / năm, 11 thực tập sinh NPC (năng lực, tính cách, tốc độ tiến bộ), xếp hạng, bạn bè, đối thủ, người bị cắt hợp đồng; nợ chi phí đào tạo | life155 `eval155` | HOÀN THÀNH |
+| Debut: thành lập nhóm khi xếp hạng cao (hoặc debut theo life139), chọn vị trí (5), concept; mỗi năm quảng bá, fandom, cúp âm nhạc, concert, lưu diễn; chia doanh thu theo hợp đồng sau khi trừ nợ; nhận một lần mỗi năm; mời Running Man Hàn Quốc | life155 `debut155`, `idolYear` | HOÀN THÀNH |
+| Produce 101 (2016–2019), Girls Planet 999 (2021, nữ), Boys Planet (từ 2023, nam), I-LAND (từ 2020), Universe Ticket (2023–2024, nữ): xếp hạng A–F, nhiệm vụ nhóm / vị trí / tranh center, chọn bài concept, bình chọn, cắt giảm, chung kết; vào đội hình → nhóm dự án có thời hạn | life155 `survival` | HOÀN THÀNH |
+
+Kiểm thử mốc 5: showbiz-idol 70 · browser-showbiz m5 · hồi quy mục 9 (scout155, eval155, debut155, audition139, auditionPrep139, show151…: 47.254 đạt) · audition139 · life138 · smoke · saves · save-safety · npc-identity 14/14 · pace-gd5 · integration-feedback · feedback-a.
+
+Ghi chú: `npc-identity` ca 2 chọn một đời mẫu bằng tự chơi; thêm sự kiện mới làm đổi đường ngẫu nhiên, đời mẫu ly hôn trong 3 năm của ca kiểm tra nên tra định danh trả về hồ sơ người cũ (cùng định danh). Đã sửa test để chấp nhận đúng trường hợp này (cùng định danh, cùng tên), không nới các trường hợp khác.
+
+## Mốc 6
 
 CHƯA HOÀN THÀNH (đang làm).
 
@@ -81,4 +96,5 @@ CHƯA HOÀN THÀNH (đang làm).
 
 - Mốc 1–2: commit `8d004e0` (`feat(showbiz-2)`).
 - Mốc 3: commit `8df3c4d` (`feat(showbiz-3)`).
-- Mốc 4: commit xem lịch sử nhánh (`feat(showbiz-4)`).
+- Mốc 4: commit `9803381` (`feat(showbiz-4)`).
+- Mốc 5: commit xem lịch sử nhánh (`feat(showbiz-5)`).
