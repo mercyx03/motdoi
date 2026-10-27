@@ -1,5 +1,46 @@
 [
   {
+    "id": "life-context-bcd-preview",
+    "version": "8.8.0-preview",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T15:48:06.701+07:00",
+    "title": "Một Đời — Hồ sơ địa vị, rèn luyện và trợ lý truyền thông",
+    "summary": "Tách tầng lớp tài sản khỏi follower, làm rõ chức vụ điều hành và bổ sung lịch truyền thông tự động theo phạm vi bạn chọn.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Hồ sơ có sáu tầng lớp từ Bình dân đến Tinh hoa xã hội, xét tài sản ròng, nguồn thu và mức sống tại nơi đang sinh sống. Quyền lực kinh tế thể hiện riêng theo doanh nghiệp kiểm soát, quy mô và vai trò điều hành; số nhân viên chưa được ghi nhận sẽ hiện chưa đủ dữ liệu. Follower không tự nâng bậc giàu có.",
+      "Xem riêng uy tín nghề nghiệp, độ nổi tiếng mạng, uy tín trong mạng lưới giao lưu và tín nhiệm nội dung. Các chỉ số đọc từ thành tích và hoạt động đã có; lĩnh vực chưa có thông tin được ghi rõ.",
+      "Bảng tài sản mô phỏng so sánh bạn với doanh nhân hư cấu có danh tính và sổ tài sản được giữ lại. Có bộ lọc quốc gia, ngành đang đầu tư và quyền lực; tài sản cập nhật theo năm, kèm lịch sử vị trí của bạn. Đây không phải thứ hạng của toàn dân số hay thế giới thực.",
+      "Bạn đời và con có thêm đặc điểm hình thể mô phỏng từ hồ sơ đã lưu và cổ phần riêng đã nhận. Trẻ nhỏ không bị gán mong muốn hôn nhân; nợ, chi phí, chứng chỉ hay tiết kiệm riêng chưa được ghi nhận sẽ hiện chưa có dữ liệu.",
+      "Tự giữ chức vụ điều hành công ty giờ hiện trên hồ sơ dù không làm thuê bên ngoài, có phân biệt vai trò kiêm nhiệm; không tự cộng lương. Công ty mới được cấp danh tính ngay khi thành lập. Không giới hạn số công ty; người chưa hoàn thành phổ thông có thể mở rộng doanh nghiệp đang có khi thuê CEO đủ năng lực và đáp ứng các điều kiện khác.",
+      "Phí kiểm toán, pháp lý và quản trị thường niên tăng theo vốn, lợi nhuận, số công ty và ngành nghề; báo giá hiển thị trước khi bật. Tài sản đang có không bị tự giảm theo một mức trần.",
+      "Rèn luyện có lớp cơ bản, nâng cao, gia sư riêng, huấn luyện chuyên nghiệp và lớp cộng đồng có hỗ trợ học phí khi đạt điều kiện. Chi phí theo thời lượng và mức sống; chất lượng cao giúp tiến nhanh hơn nhưng vẫn cần thời gian, có giới hạn giờ và tiến bộ chậm lại khi trình độ cao. Xin học trả phí thất bại vẫn có thể tự học.",
+      "Thực tập sinh K-pop có thể được chú ý từ 13 tuổi. Kỹ năng, học lực và khả năng biểu diễn vẫn quan trọng; độ nổi bật trên mạng chỉ hỗ trợ một phần. Nguồn phát hiện phù hợp hoạt động thực tế: trường học, video đã đăng, người quen hoặc buổi thử giọng trực tiếp/online. Rap có kỹ năng riêng. Các điều kiện giám hộ, tiếp tục đi học và chuẩn bị di chuyển vẫn giữ.",
+      "Trong Mạng xã hội, chọn Tự động quản lý truyền thông để giao đội ngũ hiện có đăng video, livestream, tìm lời mời quảng cáo hoặc đề xuất giao lưu. Lương và giới hạn hoạt động dùng chung với kênh; hợp đồng quảng cáo để bạn duyệt. Có báo cáo gọn và lịch sử, có thể tắt từng quyền; tải lại không làm hoạt động hay thu nhập lặp lại."
+    ]
+  },
+  {
+    "id": "life-context-a-family",
+    "version": "8.8.0-a",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T08:26:26.134Z",
+    "title": "Một Đời — Tuổi thơ gần với hoàn cảnh gia đình",
+    "summary": "Sinh nhật đầu tiên có nhiều cách kỷ niệm phù hợp túi tiền; gia đình làm nghệ thuật có thể cùng con khám phá sở thích.",
+    "tags": [
+      "Cải tiến"
+    ],
+    "details": [
+      "Mâm thôi nôi dựa trên thu nhập thực tế của người chăm sóc: gia đình khó khăn có đồ chơi sẵn có, đồ mượn hoặc chỉ quây quần hát mừng; gia đình có điều kiện có thêm cách tổ chức tiệc. Các đồ vật cũ vẫn giữ ý nghĩa gợi sở thích, được thể hiện bằng đồ chơi an toàn phù hợp trẻ nhỏ.",
+      "Bố mẹ có thể làm nghề ca hát, diễn xuất, múa, sáng tác, hội họa, nhiếp ảnh, giảng dạy nghệ thuật hoặc nghề truyền thống, với thu nhập đa dạng. Trẻ có thể luyện cùng người thân mỗi năm hoặc chia sẻ mong muốn chọn con đường riêng.",
+      "Áp lực học tập của trẻ xét nguồn thu hộ gia đình, đồng thời vẫn có cơ hội học bổng và giúp đỡ. Thu nhập thấp không làm tăng mọi rủi ro hay quyết định tính cách của các thành viên."
+    ]
+  },
+  {
     "id": "showbiz-m6-connected-careers",
     "version": "8.7.0-6",
     "releaseStatus": "released",

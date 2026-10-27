@@ -57,3 +57,8 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 - Bấm giờ chế độ Tự động trên thiết bị người chơi thật; profiling giao diện điện thoại.
 - Bản lưu thật của người chơi chưa có mẫu để kiểm (chỉ có bản lưu do máy tạo).
 - 25 nâng cấp gameplay chuyên sâu: chưa bắt đầu, chờ chủ dự án giao.
+
+
+## Sau GĐ6 — checkpoint logic cuộc sống 8.8.0-preview
+
+Không mở lại nghiệm thu GĐ0–GĐ6. Yêu cầu A–E mới chưa hoàn tất: xem LIFE-CONTEXT-PROGRESS.md cho danh sách phạm vi còn thiếu. Trên mã cuối cần kiểm thử có mục tiêu: toàn bộ ngân sách/vòng đời người thân; quyền điều hành khác cổ phần, tặng/thừa kế không lặp qua nhiều đời; chi phí/định giá tập đoàn dài hạn; mọi nhánh ủy quyền và dừng hợp đồng truyền thông; thực tập sinh chuyển/rời công ty và hành trình quốc tế. Chưa tính các mục này là PASS. Regression toàn bộ 77 nhóm chưa chạy trên checkpoint (chủ dự án yêu cầu không chạy). Chưa xác minh Pages REVIEWS_DB thực tế; artifact chỉ Preview.

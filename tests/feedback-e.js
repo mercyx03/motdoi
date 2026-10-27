@@ -8,6 +8,8 @@ const ok = (c, m) => { assert(c, m); checks++; };
 const near = (a, b, m, tol) => ok(Math.abs(a - b) <= (tol == null ? Math.max(1e-6, Math.abs(b) * 1e-9) : tol), m + ': ' + a + ' vs ' + b);
 const clone = o => JSON.parse(JSON.stringify(o));
 const say = l => (t, k) => l.log.push({ a: l.age, t, k });
+// Inject at the decision boundary: E.resolve uses its own RNG closure, so replacing H.rf does not control this draw.
+function resolveWithRng(l,key,r) { const D=E.DEC[l.pending[0].id],apply=D.apply;D.apply=function(l,d,k,ignored,log){return apply.call(this,l,d,k,r,log);};try{return E.resolve(l,key);}finally{D.apply=apply;} }
 function keys(l, id, arg) { return E.DEC[id].make(l, () => 0, arg).data.keys; }
 function enabled(l, id, arg) { const d = E.DEC[id].make(l, () => 0, arg); return d.opts.filter(o => o.k !== 'cancel').map(o => d.data.keys[+o.k]); }
 // Bấm như người chơi: đưa quyết định vào hàng chờ rồi E.resolve
@@ -26,7 +28,7 @@ function wed(l, regime) {
   if (!regime || regime === 'default') { E.resolve(l, 'default'); return; }
   E.resolve(l, 'custom150');
   const pn = l.pending.find(x => x.id === 'prenup150'); assert(pn, 'mở thỏa thuận chi tiết'); l.pending = [pn];
-  const realRf = H.rf; H.rf = () => () => 0.01; try { E.resolve(l, String(pn.data.keys.indexOf(regime))); } finally { H.rf = realRf; }
+  resolveWithRng(l, String(pn.data.keys.indexOf(regime)), () => .01);
 }
 function divorce(l, r = () => 0.99) { const d = E.DEC.divorce.make(l, r); E.DEC.divorce.apply(l, d, 'div', r, say(l)); }
 
@@ -44,8 +46,8 @@ function divorce(l, r = () => 0.99) { const d = E.DEC.divorce.make(l, r); E.DEC.
   near(a.partner.marital150.pre, 50 * a.base - 0, 'tài sản trước hôn nhân được ghi nhận', a.base * 2);
   // Người kia từ chối: hoãn cưới, không tự kết hôn
   const b = life(); let dd = E.DEC.marry.make(b, () => 0.5); dd.manual = true; b.pending = [dd]; E.resolve(b, 'small'); b.pending = [b.pending.find(x => x.id === 'contract108')]; E.resolve(b, 'custom150');
-  const pn = b.pending.find(x => x.id === 'prenup150'), realRf = H.rf; H.rf = () => () => 0.99; b.pending = [pn];
-  try { E.resolve(b, String(pn.data.keys.indexOf('contribution'))); } finally { H.rf = realRf; }
+  const pn = b.pending.find(x => x.id === 'prenup150'); b.pending = [pn];
+  resolveWithRng(b, String(pn.data.keys.indexOf('contribution')), () => .99);
   ok(b.partner.status === 'dating' && /hoãn cưới/.test(b.log[b.log.length - 1].t), 'điều khoản bị từ chối: hoãn cưới, chưa kết hôn');
   const c = life(); wed(c); ok(M.regimeOf(c.partner) === 'legal', 'không ký: chế độ theo luật định');
   ok(M.regimeOf({ contract108: { share: 0 } }) === 'separate' && M.regimeOf({ contract108: { share: 0.1 } }) === 'limited', 'thỏa thuận cũ được hiểu đúng');

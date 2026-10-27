@@ -47,10 +47,14 @@
   }
   function pressure(l) {
     if (!num(l.base) || l.base <= 0) return 0;
+    if (l.age < 18 && !l.indep && l.fam) {
+      var f = l.fam, income = ((f.fAlive && !f.noDad ? f.fInc || 0 : 0) + (f.mAlive ? f.mInc || 0 : 0)) * 12;
+      return clamp((l.base - income) / l.base * .35, -.25, .5);
+    }
     var b = l.base, score = num(l.money) ? clamp((b - l.money) / (b * 3), -.35, .35) : 0;
     var debt = (l.loans || []).reduce(function (s, x) { return s + (x && num(x.bal) ? Math.max(0, x.bal) : 0); }, 0);
     score += Math.min(.2, debt / b * .08);
-    if (!l.job && !l.school && !l.retired && l.age >= 18) {
+    if (!l.job && !(E.CORPORATE159 && E.CORPORATE159.title(l)) && !l.school && !l.retired && l.age >= 18) {
       score += .1;
       var u = l.flags && l.flags.career109 && l.flags.career109.unemployment;
       if (u && !u.closed && num(u.years)) score += Math.min(.15, Math.max(0, u.years) * .05);
@@ -111,9 +115,9 @@
       case 'familySupport': return Math.max(0, pressure(l)) * .4;
       case 'socialNew': return .2 * centered(s.soc, 50, 50) + (l.focus === 'social' ? .15 : 0);
       case 'socialBond': return friends(l) * .25 + (l.focus === 'social' ? .1 : 0);
-      case 'studyOpportunity': return .25 * centered(s.kno, 50, 50) + (l.focus === 'study' ? .15 : 0) + .1 * centered(l.tr && l.tr.amb, 50, 50);
+      case 'studyOpportunity': return Math.max(0, pressure(l)) * .12 + .25 * centered(s.kno, 50, 50) + (l.focus === 'study' ? .15 : 0) + .1 * centered(l.tr && l.tr.amb, 50, 50);
       case 'studyTogether': return .1 * centered(s.soc, 50, 50) + (l.focus === 'study' ? .2 : 0);
-      case 'studyPressure': return -.25 * centered(s.kno, 50, 50) + .15 * centered(l.mind && l.mind.stress, 40, 60) + (l.focus === 'study' ? -.1 : 0);
+      case 'studyPressure': return Math.max(0, pressure(l)) * .3 + -.25 * centered(s.kno, 50, 50) + .15 * centered(l.mind && l.mind.stress, 40, 60) + (l.focus === 'study' ? -.1 : 0);
       default: return 0;
     }
   }

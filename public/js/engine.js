@@ -467,6 +467,7 @@
     if (who === 'F' && v === 'gamble') return 'cờ bạc, làm thuê lặt vặt';
     if (who === 'M' && r() < (life.gdp < 5 ? 0.35 : 0.12)) return 'nội trợ';
     if (q <= 2 && r() < 0.07) return 'thất nghiệp';
+    if (r() < 0.06) return U.pick(r, q <= 2 ? ['nghệ nhân truyền thống', 'nghệ sĩ sân khấu', 'vũ công'] : q <= 4 ? ['giáo viên thanh nhạc', 'giáo viên múa', 'nhạc sĩ', 'họa sĩ', 'nhiếp ảnh gia', 'biên kịch', 'người làm truyền hình'] : ['ca sĩ', 'diễn viên', 'đạo diễn', 'nhà sản xuất âm nhạc']);
     if (!life.urban) {
       if (q <= 2) return U.pick(r, vn && life.region === 'MNPB' ? ['làm nương rẫy', 'làm ruộng bậc thang', 'chăn nuôi', 'làm thuê'] :
         life.coast ? ['đánh cá', 'nuôi trồng thủy sản', 'làm ruộng', 'làm thuê'] : ['làm ruộng', 'làm thuê theo mùa vụ', 'chăn nuôi', 'trồng rẫy', vn ? 'bán vé số' : 'bán hàng rong']);
@@ -491,6 +492,7 @@
     'shipper': 10, 'nhân viên văn phòng': 12, 'thợ may': 8, 'tài xế công nghệ': 11, 'y tá': 9, 'thợ sửa xe': 10, 'kỹ sư': 20, 'kế toán': 12, 'công chức': 11,
     'chủ cửa hàng': 20, 'công an': 14, 'bác sĩ': 22, 'giám đốc công ty': 40, 'doanh nhân': 50, 'kỹ sư phần mềm': 28, 'luật sư': 28, 'trưởng phòng ngân hàng': 30,
     'chủ chuỗi nhà hàng': 45, 'giám đốc kinh doanh': 40, 'cờ bạc, làm thuê lặt vặt': 3, 'giang hồ, đâm thuê chém mướn': 12, 'làm tay chân cho băng nhóm': 10,
+    'nghệ nhân truyền thống': 4, 'nghệ sĩ sân khấu': 5, 'vũ công': 6, 'giáo viên thanh nhạc': 10, 'giáo viên múa': 9, 'nhạc sĩ': 12, 'họa sĩ': 8, 'nhiếp ảnh gia': 10, 'biên kịch': 11, 'người làm truyền hình': 12, 'ca sĩ': 35, 'diễn viên': 40, 'đạo diễn': 45, 'nhà sản xuất âm nhạc': 50,
     'bán hàng online': 8, 'bán tạp hóa': 9
   };
   var PARENT_FORMAL = /công nhân|giáo viên|cán bộ xã|viên chức|văn phòng|y tá|kỹ sư|kế toán|công chức|công an|bác sĩ|ngân hàng|bảo vệ|giám đốc kinh doanh|bí thư|tỉnh ủy|UBND tỉnh|bộ trưởng|nghị sĩ/;

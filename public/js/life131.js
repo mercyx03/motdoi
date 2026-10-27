@@ -44,7 +44,7 @@ function publish(l,c,r,log,f){if(yearCount(c,l.age)>=4)return;if(c.topic==='Game
  if(c.postsAt!==l.age){c.postsAt=l.age;c.posts=0;}c.posts++;
  var practice=c.topic==='Game'&&E.playedGames(l).indexOf(c.game)>=0?10:0;
  var quality=U.clamp(l.st.kno*.3+(l.st.soc||50)*.2+c.equipment*8+c.staff*6+c.studio*8+20+practice,10,100),viral=r()<.035+quality/2500,reach=Math.round((100+c.followers*.08+quality*10)*f[2]*(viral?12+r()*20:.3+r()*1.7)),gain=Math.max(1,Math.round(reach*(.015+c.engagement/2000)*(E.LOOKS134?E.LOOKS134.followerFactor(l):1)));
- c.followers=Math.min(1e9,c.followers+gain);c.engagement=U.clamp(c.engagement+(viral?8:2),0,100);c.reputation=U.clamp(c.reputation+1,0,100);l.fame=(l.fame||0)+gain;influence(c);
+ gain=Math.max(0,Math.min(gain,1e9-c.followers));c.followers+=gain;c.engagement=U.clamp(c.engagement+(viral?8:2),0,100);c.reputation=U.clamp(c.reputation+1,0,100);l.fame=(l.fame||0)+gain;influence(c);
  var title=(c.direction||directions[c.topic][0])+(c.topic==='Game'?' · '+c.game:''),revenue=l.age>=18&&l.indep&&c.followers>=1000?l.base*Math.min(3,reach/100000)*f[3]:0;
  (c.videos||(c.videos=[])).push({at:l.age,title:title,format:f[1],views:reach,viral:viral,revenue:revenue});if(c.videos.length>40)c.videos.shift();
  log(f[1]+' «'+title+'»'+(viral?' bất ngờ viral! ':' đạt ')+reach.toLocaleString('vi-VN')+' lượt xem, thêm '+gain+' người theo dõi.','good');tally(l,c,'Doanh thu video',revenue,log);
@@ -61,6 +61,6 @@ X.menu('creatorOffers132','Lời mời quảng cáo',why,'Lời mời xuất hi�
 X.menu('creatorLibrary132','Video đã xuất bản',why,'Lưu tối đa 40 video gần nhất, cùng lượt xem và thu nhập đã nhận; xem lại không nhận tiền lần nữa.',function(l,arg){var c=find(l,arg.id);if(channelWhy(l,arg)!==true)return[];return(c.videos||[]).slice().reverse().map(function(v,i){return{k:String(i),l:v.at+' tuổi · '+v.format+' · '+v.title+' · '+v.views+' lượt xem · '+H.money(l,v.revenue),run:function(l,r,log){log(v.title+(v.viral?' · Viral':'')+' · Thu nhập đã nhận: '+H.money(l,v.revenue)+'.','neutral');}};});},13);
 
 function saveApps(list,at){var previous=apps;if(!setApps(list))return false;try{localStorage.setItem('mkn.socialApps131',JSON.stringify({apps:apps,at:at||Date.now()}));return true;}catch(e){apps=previous;return false;}}
-E.SOCIAL131={state:state,setApps:setApps,saveApps:saveApps,apps:function(){return apps.map(function(a){return Object.assign({},a);});},topics:topics,games:games,formats:formats,makeOffers:makeOffers,year:year,summary:summary};
+E.SOCIAL131={publish:publish,state:state,setApps:setApps,saveApps:saveApps,apps:function(){return apps.map(function(a){return Object.assign({},a);});},topics:topics,games:games,formats:formats,makeOffers:makeOffers,year:year,summary:summary};
 try{if(typeof localStorage!=='undefined'){var saved=JSON.parse(localStorage.getItem('mkn.socialApps131')||'null');if(saved)setApps(saved.apps);}}catch(e){}
 })(globalThis.G);

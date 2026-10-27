@@ -710,7 +710,7 @@
     var mrz = 'I<' + (E.isVN(l) ? 'VNM' : l.country + '<') + stripVN(l.name).toUpperCase().replace(/[^A-Z]+/g, '<') + '<<<<<<<<<<<<';
     // v2.8: đang làm chủ cửa hàng / quán (mở bằng vốn riêng) thì hiện là chủ, không phải "thất nghiệp" hay nghề cũ
     var vens = (l.ventures || []).map(function (v) { return 'chủ ' + v.n + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : ''); });
-    var job = l.job ? U.cap(E.jobTitle(l)) + (vens.length ? ' · ' + vens.join(', ') : '') : vens.length ? U.cap(vens.join(', ')) : l.retired ? 'Đã nghỉ hưu' : l.flags.military ? 'Đang tại ngũ' : l.jailUntil != null && l.age < l.jailUntil ? 'Đang thụ án' : l.school ? 'Đang đi học' : l.age < 15 ? '—' : 'Thất nghiệp';
+    var job = E.CORPORATE159 && !l.job && E.CORPORATE159.title(l) ? U.cap(E.CORPORATE159.title(l)) : l.job ? U.cap(E.jobTitle(l)) + (vens.length ? ' · ' + vens.join(', ') : '') : vens.length ? U.cap(vens.join(', ')) : l.retired ? 'Đã nghỉ hưu' : l.flags.military ? 'Đang tại ngũ' : l.jailUntil != null && l.age < l.jailUntil ? 'Đang thụ án' : l.school ? 'Đang đi học' : l.age < 15 ? '—' : 'Thất nghiệp';
     var veh = l.veh ? (l.vehName || l.veh) + (l.veh === 'xe máy' && !l.lic.A1 ? ' (chưa có bằng)' : l.veh === 'ô tô' && !l.lic.B ? ' (chưa có bằng)' : '') : '';
     var med = l.medals && l.medals.length ? l.medals.map(function (m) { return m.m; }).reduce(function (a, m) { a[m] = (a[m] || 0) + 1; return a; }, {}) : null;
     $('#idCard').innerHTML = '<h3>Căn cước · ' + esc(E.isVN(l) ? 'Việt Nam' : l.countryName) + (l.difficulty === 'hardcore' ? ' · Hardcore' : '') + '</h3>' +
@@ -934,6 +934,7 @@
     }else{var home=E.HOMETOWN&&E.HOMETOWN.partner(l,k);facts+=fact('Quê quán',home?home.name:'Chưa rõ')+fact('Công việc',a<18&&/sinh viên/.test(k.job||'')?'Chưa đến tuổi đại học':k.job||'Chưa rõ');
       if(E.H.partnerIncKnown&&E.H.partnerIncKnown(l,k))facts+=fact('Thu nhập',money(l,k.inc||0)+'/tháng');
     }
+    if(E.STANDING158)E.STANDING158.relativeFacts(l,k,child).forEach(function(x){facts+=fact(x[0],x[1]);});
     var controls='',can=child&&F.free(l)&&F.care(l,k);
     if(can&&a<18)controls+='<form id="familyNameForm" class="family-form"><label for="familyName">'+(a<=2?'Đặt tên cho bé':'Tên gọi ở nhà')+'</label><input id="familyName" maxlength="60" value="'+esc(a<=2?k.name:s.nickname||'')+'" autocomplete="off"><button class="btn" type="submit">Lưu tên</button></form>';
     if(can&&F.schoolOK(l,k))controls+='<form id="familySchoolForm" class="family-form"><label for="familySchool">Chọn trường · học phí bổ sung mỗi năm</label><select id="familySchool">'+Object.keys(F.schools).map(function(t){return '<option value="'+t+'"'+(s.school===t?' selected':'')+'>'+esc(F.schools[t].name+' · '+money(l,F.quote(l,'school',t))+'/năm')+'</option>';}).join('')+'</select><button class="btn" type="submit">Chọn trường / đóng học phí</button></form>';

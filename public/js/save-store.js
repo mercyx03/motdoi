@@ -84,9 +84,9 @@
     if (r.status !== 'ok') return r;
     var save = r.value;
     if (!save || typeof save !== 'object' || !save.life || typeof save.life !== 'object') { hold(key, r.raw, 'thiếu dữ liệu cuộc đời', st); return { status: 'invalid', raw: r.raw }; }
-    if (!save.life.alive) return { status: 'dead', save: save, raw: r.raw };
     var chk = E.checkSave ? E.checkSave(save.life) : { ok: true };
     if (!chk.ok) { if (chk.code !== 'FUTURE_SCHEMA') hold(key, r.raw, chk.code, st); return { status: chk.code === 'FUTURE_SCHEMA' ? 'future' : 'invalid', code: chk.code, sv: chk.sv, max: chk.max, raw: r.raw }; }
+    if (!save.life.alive) return { status: 'dead', save: save, raw: r.raw };
     var life;
     try { life = (migrateFn || E.migrate)(JSON.parse(r.raw).life); }
     catch (e) { hold(key, r.raw, 'migrate: ' + (e && e.message), st); logError('migrate:' + key, e && e.code || 'MIGRATE', e && e.message, st); return { status: 'migrate', error: e, raw: r.raw }; }
