@@ -1,5 +1,26 @@
 [
   {
+    "id": "feedback-e-assets-wills",
+    "version": "8.6.0-e",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T01:47:45.764Z",
+    "title": "Một Đời — Tài sản trong hôn nhân, chia tài sản khi ly hôn và di chúc chi tiết",
+    "summary": "Lập thỏa thuận tài sản trước khi cưới, ly hôn chia đúng tài sản chung thay vì chia cố định, và viết di chúc giao từng tài sản cụ thể, chọn người thi hành, giao quyền điều hành doanh nghiệp.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Thỏa thuận tài sản trước hôn nhân (tùy chọn) ở bước bàn chuyện về chung nhà: chia đôi tài sản chung; thu nhập ai nấy giữ, chỉ chia nhà ở; chia theo đóng góp 60/40; hoặc doanh nghiệp là tài sản riêng. Người kia có thể không đồng ý và hai người hoãn cưới để bàn thêm. Phần giải thích thay đổi theo nơi bạn sống; đây là mô phỏng, không phải tư vấn pháp lý.",
+      "Ly hôn không còn trừ cố định một nửa nhà và 40% tiền mặt. Tài sản có trước khi cưới và tài sản được thừa kế riêng giữ nguyên; chỉ phần tạo ra trong hôn nhân được chia, có xét thu nhập của mỗi người, lỗi ngoại tình và thỏa thuận đã ký. Có thể chia bằng tiền, nhà, bất động sản, đồ sưu tầm, cổ phần; tài sản của con, của bố mẹ và quà đã tặng không bị đem chia.",
+      "Sau ly hôn, bước thỏa thuận hiện rõ tài sản riêng, tài sản chung và phần mỗi người nhận. Ngoài chấp nhận hay nhờ hòa giải, bạn có thể ra tòa; khoảng một năm sau mới có phán quyết, có thể được hoàn lại hoặc phải trả thêm.",
+      "Hôn nhân trong bản lưu cũ giữ nguyên cách chia cũ để không làm thay đổi ván đang chơi; cách chia mới áp dụng cho các cuộc hôn nhân bắt đầu từ bản cập nhật này.",
+      "Mục mới “Di chúc chi tiết”: giao từng tài sản cụ thể (nhà, căn hộ, cơ sở kinh doanh, cổ phần, đồ sưu tầm) cho từng người; không cho một người con đã trưởng thành hưởng thừa kế; chọn người thi hành di chúc (vợ/chồng, con, bạn thân hoặc văn phòng luật); giao quyền điều hành doanh nghiệp tách khỏi quyền sở hữu cổ phần. Nợ được trả từ di sản trước khi chia; ở Việt Nam, vợ/chồng và con chưa thành niên luôn được ít nhất 2/3 suất theo pháp luật.",
+      "Di chúc chênh lệch nhiều có thể dẫn tới tranh chấp giữa các con; chọn người thi hành độc lập giúp giảm nguy cơ. Khi sống tiếp đời con, vụ tranh chấp được giải quyết sau một thời gian, đồ sưu tầm được thừa kế đúng một lần, và người được giao điều hành doanh nghiệp sẽ giữ vị trí đó."
+    ]
+  },
+  {
     "id": "feedback-d-relationships",
     "version": "8.6.0-d",
     "releaseStatus": "packaged",

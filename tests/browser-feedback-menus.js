@@ -18,6 +18,12 @@ const FLOWS = {
     { name: 'gift', setup: 'rich', id: 'gifts149', clicks: ['Minh (con', 'Ô tô cỡ nhỏ'], expect: 'Bạn tặng Minh ô tô cỡ nhỏ' },
     { name: 'match', setup: 'match', id: 'matchmaking149', clicks: ['Giới thiệu Minh với Thu'], expect: 'Thu' },
     { name: 'propose', setup: 'dating', id: 'proposal149', clicks: ['Cầu hôn không cần nhẫn', 'Ở nhà, bữa tối tự nấu'], expect: 'nhận lời' }
+  ],
+  e: [
+    { name: 'will', setup: 'rich', id: 'will150', clicks: ['Chỉ định người thi hành di chúc', 'Văn phòng luật độc lập'], expect: 'giao văn phòng luật độc lập thi hành' },
+    { name: 'will-asset', setup: 'estate', id: 'will150', clicks: ['Giao tài sản cụ thể cho từng người', 'Căn hộ cho thuê', 'Lan (con)'], expect: 'Căn hộ cho thuê giao cho Lan' },
+    { name: 'prenup', setup: 'engaged', id: 'contract108', clicks: ['Lập thỏa thuận tài sản chi tiết', 'Chia đôi tài sản chung'], expect: 'Mai' },
+    { name: 'divorce', setup: 'divorce', id: 'divorce', clicks: ['Chia tay / ly hôn'], expect: 'tài sản chung được chia' }
   ]
 };
 function seed(kind, id) {
@@ -30,7 +36,10 @@ function seed(kind, id) {
   if (kind === 'partner') { const p = E.ELITE148.meet(l, () => 0.3, { kind: 'business', tier: 3, where: 'tiệc gặp gỡ đối tác' }); p.name = 'Trần Quốc Bảo'; p.trust = 80; }
   if (kind === 'match') { l.kids[0].born = 18; const f = E.ELITE148.meet(l, () => 0.3, { kind: 'business', age: 58 }); f.trust = 90; f.kids149 = [{ name: 'Thu', sex: 'F', birth: l.birthYear + l.age - 27, job: 'bác sĩ', alive: true, married: false }]; E.UPDATE110.uid(l, f.kids149[0]); }
   if (kind === 'dating') { l.age = 30; l.kids = []; l.partner = { name: 'Mai', sex: 'F', age: 29, status: 'dating', since: 27, alive: true, affection108: 90, propPref149: 'simple' }; }
-  const d = E.DEC[id].make(l, () => 0); d.manual = true; l.pending = [d];
+  if (kind === 'estate') l.props = [{ k: 'apt', n: 'Căn hộ cho thuê', v: l.base * 20, basis: l.base * 20, y: 0.04, since: 40, empty: 0 }];
+  if (kind === 'engaged') { l.age = 30; l.kids = []; l.partner = { name: 'Mai', sex: 'F', age: 29, status: 'dating', since: 26, alive: true, affection108: 95, relation108: 'r-mai' }; }
+  if (kind === 'divorce') { l.partner.marital150 = { since: 30, pre: l.base * 100, inherited: 0, cur: l.cur, regime: 'legal' }; l.partner.relation108 = 'r-ha'; }
+  const d = kind === 'engaged' ? E.DEC.contract108.make(l, () => 0, { at: l.age, who: 'r-mai', style: 'small', done: false }) : E.DEC[id].make(l, () => 0); d.manual = true; l.pending = [d];
   localStorage.setItem('mkn.current', JSON.stringify({ life: l, cohort: [], auto: false, speed: 1 }));
   return true;
 }

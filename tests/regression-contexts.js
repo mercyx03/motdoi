@@ -50,4 +50,7 @@ chain144('ch144_friend_return','friend',0,friend,l=>({npc:{ref:E.UPDATE110.uid(l
 chain144('ch144_friend_drift','friend',0,friend,l=>({npc:{ref:E.UPDATE110.uid(l,l.friends[0]),name:'Hoài Nam'},data:{helped:false,why:'vừa chia tay người yêu'}}));
 chain144('ch144_health_rehab','health',0,l=>{E.startJob(l,'shipper',()=>0,()=>{},true);l.flags.dauLung=true;},()=>({data:{what:'tai nạn khi làm việc'}}));
 chain144('ch144_health_flare','health',1,l=>{E.startJob(l,'shipper',()=>0,()=>{},true);l.flags.dauLung=true;},()=>({data:{what:'tai nạn khi làm việc'}}));
+/* Góp ý người chơi: thương vụ cần một doanh nhân đã quen; áp lực giới giải trí cần người làm nghề giải trí */
+add('deal148',l=>{l.money=l.base*500;const p=E.ELITE148.meet(l,()=>0.3,{kind:'business',tier:2,where:'tiệc gặp gỡ đối tác'});p.trust=80;});
+add('dark149',l=>{E.startJob(l,Object.keys(E.CAR).find(k=>E.CAR[k].fame),()=>0,()=>{},true);});
 return out;};

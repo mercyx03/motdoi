@@ -9,7 +9,7 @@ Mỗi mốc: sửa code → test chuyên đề + test module bị ảnh hưởng
 |---|---|---|---|---|
 | A1 Con cái sau nhiều lần ly hôn | HOÀN THÀNH | life45 (`divKids`, lưu mã bạn đời trước ly hôn), life146 (`residence146`) | feedback-a, relationships841 | Con có `coParent108` gắn đúng cuộc hôn nhân; bản lưu cũ không có thông tin người cùng nuôi: con đã có nơi ở không bị phân xử lại. Mục xem nơi ở / chăm sóc / giám hộ và đề nghị đổi nơi ở từng con (cha/mẹ kia và con ≥ 12 tuổi có quyền từ chối). Con nuôi hiện "cha/mẹ nuôi hợp pháp"; cha/mẹ kế chưa có quyền giám hộ riêng. |
 | A2 Về Việt Nam / chuyển nước sau du học | HOÀN THÀNH | life146 (`abroadMove146`), migrate114 chỉ dẫn | feedback-a | Phân biệt học / hợp đồng / thực tập sinh / định cư; dừng học hoặc chịu phí chấm dứt hợp đồng; bán nhà, quy đổi tiền, giữ quốc tịch; chưa đủ điều kiện thì hiện lý do. Chuyển thành phố trong nước vẫn dùng mục cũ. |
-| A3 Crash khi hẹn hò qua app | HOÀN THÀNH CÓ GIỚI HẠN | life79 | feedback-a | Tìm và sửa một vòng lặp có thể chạy vô hạn khi tạo hồ sơ (sở thích); giữ danh sách hồ sơ khi mở lại. 7.190 lượt thử engine trên 240 trạng thái không lỗi. Chưa tái hiện được đúng lỗi người chơi gặp trên giao diện (khung trình duyệt kiểm thử bị ẩn, không vẽ trang). |
+| A3 Crash khi hẹn hò qua app | HOÀN THÀNH CÓ GIỚI HẠN | life79 | feedback-a, browser-dating-app | Tìm và sửa một vòng lặp có thể chạy vô hạn khi tạo hồ sơ (sở thích); giữ danh sách hồ sơ khi mở lại. 7.190 lượt thử engine không lỗi. Bổ sung ở cuối đợt: thử trên Chrome thật (headless) 12 lượt mở app → lướt thêm → thu nhỏ / mở lại → nhắn tin, VN và quốc tế, 390px / 1280px: không treo, không lỗi JavaScript, danh sách không đổi khi mở lại. Vẫn chưa tái hiện được đúng thao tác / thiết bị của người chơi đã báo lỗi nên giữ mức “có giới hạn”. |
 | A4 Quy trình Audition | HOÀN THÀNH | life139 | feedback-a, audition139 | Chuẩn bị hồ sơ (ảnh, video) → đăng ký đúng công ty theo nước, điều kiện tuổi → 3 vòng có lý do → đề nghị / chuẩn bị sang nước ngoài (luồng cũ) hoặc thử lại / ứng tuyển trong nước. |
 | A5 Mời bố mẹ về sống chung | HOÀN THÀNH | life146 (`parentsHome146`) | feedback-a | Mời bố, mẹ hoặc cả hai; xét tin cậy, tuổi, nhà ở, nước ngoài; có thể từ chối; không đổi sở hữu nhà. |
 
@@ -58,16 +58,28 @@ Ghi chú kiểm thử: smoke `family-relations` từng thất bại ở điều 
 
 ## Mốc E — Tài sản hôn nhân, di chúc, thừa kế
 
-| Yêu cầu | Trạng thái |
-|---|---|
-| E1 Thỏa thuận tài sản trước hôn nhân | CHƯA HOÀN THÀNH |
-| E2 Chia tài sản khi ly hôn | CHƯA HOÀN THÀNH |
-| E3 Di chúc chi tiết | CHƯA HOÀN THÀNH |
-| E4 Đồng bộ sở hữu tài sản | CHƯA HOÀN THÀNH |
+| Yêu cầu | Trạng thái | Module | Test | Ghi chú |
+|---|---|---|---|---|
+| E1 Thỏa thuận tài sản trước hôn nhân | HOÀN THÀNH | life150 (`prenup150`, thêm lựa chọn vào `contract108` sẵn có) | feedback-e, browser-feedback-menus | Tùy chọn; 4 điều khoản (chia đôi / chỉ nhà ở / theo đóng góp 60-40 / doanh nghiệp riêng) + luật định; người kia đồng ý theo mức công bằng với họ, từ chối → hoãn cưới; lời giải thích theo quốc gia. Thỏa thuận cũ (riêng hoàn toàn / 10%) được hiểu đúng. |
+| E2 Chia tài sản khi ly hôn | HOÀN THÀNH | life150 (`divorceSplit`, `payOut`, `court150` trong `settlement107`) | feedback-e, integration-feedback, browser-feedback-menus | Ghi nhận tài sản trước hôn nhân lúc cưới (mọi đường kết hôn qua `E.resolve` + vòng năm); thừa kế trong hôn nhân là tài sản riêng. Tỷ lệ xét đóng góp thu nhập, lỗi ngoại tình, chung sống không đăng ký; chia qua tiền, sổ tiết kiệm, vàng/cổ phiếu, bất động sản, đồ sưu tầm, nhà (kèm nợ vay), cơ sở kinh doanh, cổ phần; tài sản giảm đúng phần chia. Ra tòa: 1 năm, có giới hạn, có xét nuôi con. Hôn nhân trong bản lưu cũ giữ cách chia cũ. |
+| E3 Di chúc chi tiết | HOÀN THÀNH | life150 (`will150` + 5 menu con; bọc `E.WILL70.estate`, `estateItems`, `allocateCompanies`, `E.finale`, `E.childOpts`, `E.createLife`) | feedback-e, integration-feedback, browser-feedback-menus | Tỷ lệ (di chúc cũ), tài sản cụ thể (không vượt di sản khi nợ lớn), truất quyền con trưởng thành (vô hiệu với con chưa thành niên), người thi hành (luật sư 1%), quyền điều hành ≠ sở hữu (đời con: anh chị em hoặc chính mình điều hành, cổ phần vẫn chia), phần tài sản chung của vợ/chồng tách khỏi di sản, VN bảo đảm 2/3 suất cho vợ/chồng; tranh chấp có xác suất ổn định, giải quyết 1–2 năm sau ở đời con. |
+| E4 Đồng bộ sở hữu | HOÀN THÀNH | life148 (sổ `items`), life149, life150 | feedback-e, integration-feedback | Không chuyển món không phải của mình; đã tặng không tặng lại; di chúc ≤ 100%; không giao một tài sản hai lần; tổng chia = di sản ròng; quyền lợi gia tộc trừ một lần/năm; ly hôn không đụng tài sản con / bố mẹ / quà đã tặng; mỗi ly hôn xử lý một lần; thừa kế đồ sưu tầm đúng một lần; tải lại giữ chủ sở hữu. |
+
+Kiểm thử mốc E: feedback-e 75 · integration-feedback 1.132–1.142 (số kiểm tra trong vòng tự chơi thay đổi theo đường ngẫu nhiên) (5 kịch bản + nguyên tắc chung, 16 đời tự chơi) · browser-feedback-menus e (4 chuỗi × 2 kích thước) · feedback-a/b/c/d · estate840 · heir-family770 · inheritance-currency117 · business128/133/137/143 · career109 · chains-gd4 · family104/126/129/130/830 · feedback843 · relationships108/841 · update551 · debt140 · smoke · saves-compat · save-safety · NPC · integration-gd6 · pace-gd5 · expansion842 · children141 · audition139. Tích hợp phát hiện và đã sửa: danh sách mâu thuẫn gia tộc chưa có giới hạn khi toàn mâu thuẫn mở (nay tối đa 10 mở cùng lúc).
+
+## Hồi quy chọn lọc cuối đợt
+
+- Hồi quy mục 9 (mọi tình huống × mọi lựa chọn trên khuôn nhân vật đa dạng), lọc 42 tình huống mới hoặc bị ảnh hưởng. Lần chạy đầu phát hiện 3 lỗi thật, đều đã sửa:
+  1. `gifts149`: tên anh chị em hiện "undefined" (anh chị em lưu tên ở trường `n`).
+  2. Đồng bộ chức vụ (life147): nhật ký "undefined nhận chức…" khi bổ nhiệm anh chị em, cùng nguyên nhân.
+  3. `dark149`: không bao giờ xảy ra trong ván thật vì `l.job` là đối tượng, không phải chuỗi; test cũ gán sai kiểu nên không phát hiện. Đã sửa và cho test dùng `E.startJob`; đo 20 đời ca sĩ 15 năm: 5 đời gặp tình huống, đủ 4 kiểu lựa chọn.
+- Thêm ngữ cảnh kiểm thử cho `deal148` và `dark149` trong `tests/regression-contexts.js` (dựng trạng thái bằng hàm của game).
+- Thêm `tests/browser-dating-app.js` (A3 trên Chrome thật).
 
 ## Checkpoint
 
 - Mốc A: commit `bab7317` (`feat(feedback-a)`).
 - Mốc B: commit `07fe3c4` (`feat(feedback-b)`).
 - Mốc C: commit `e1fd93f` (`feat(feedback-c)`).
-- Mốc D: commit xem lịch sử nhánh (`feat(feedback-d)`).
+- Mốc D: commit `15a3441` (`feat(feedback-d)`).
+- Mốc E + tích hợp: commit xem lịch sử nhánh (`feat(feedback-e)`). Các commit B, C, D chưa kèm `dist.zip` (bản dựng chạy sau commit); commit cuối kèm bản dựng cuối cùng.

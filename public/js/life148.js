@@ -400,7 +400,7 @@
       var rows = [{ k: 'meeting', l: 'Triệu tập họp gia đình', why: doneThisYear(l, 'meeting') ? 'Đã họp gia đình năm nay' : relatives(l).length < 2 ? 'Cần ít nhất hai người thân trưởng thành' : true, run: meeting }];
       if (E.DEC.companies123) rows.push({ k: 'roles', l: 'Bổ nhiệm / miễn nhiệm người thân trong doanh nghiệp', why: controlled(l).length ? true : 'Chỉ áp dụng với doanh nghiệp bạn nắm trên 50% cổ phần', run: function (l, r) { X.next(l, 'companies123', r); } });
       if (E.DEC.childrenSuccession139) rows.push({ k: 'heir', l: 'Chọn người kế nhiệm', run: function (l, r) { X.next(l, 'childrenSuccession139', r); } });
-      if (E.DEC.will149) rows.push({ k: 'will', l: 'Điều chỉnh di chúc, phân chia thừa kế', run: function (l, r) { X.next(l, 'will149', r); } });
+      rows.push({ k: 'will', l: 'Điều chỉnh di chúc, phân chia thừa kế', run: function (l, r) { if (E.DEC.will150) X.next(l, 'will150', r); else { var d = E.DEC.di_chuc.make(l); d.manual = true; l.pending.unshift(d); } } });
       relatives(l).slice(0, 10).forEach(function (x) { rows.push({ k: 'm:' + x.id, l: 'Quyền lợi, hỗ trợ cho ' + x.name + ' (' + x.kind + ')', run: function (l, r) { X.next(l, 'familyHead148_member', r, { id: x.id }); } }); });
       S(l).conflicts.filter(function (c) { return !c.closed; }).slice(0, 6).forEach(function (c) { rows.push({ k: 'c:' + c.uid110, l: 'Giải quyết: ' + c.text, why: c.at === l.age && c.tried ? 'Đã xử lý mâu thuẫn này năm nay' : true, run: function (l, r) { X.next(l, 'familyHead148_conflict', r, { id: c.uid110 }); } }); });
       return rows;
@@ -446,7 +446,7 @@
     log('Bạn cấp ' + B.n.toLowerCase() + ' cho ' + x.name + ' (' + mo(l, l.base * B.cost) + '/năm). Những người thân khác sẽ để ý xem có công bằng không.', 'good');
   }
   function conflict(l, a, b, text) {
-    var s = S(l); if (s.conflicts.some(function (c) { return !c.closed && c.text === text; })) return null;
+    var s = S(l), open = s.conflicts.filter(function (c) { return !c.closed; }); if (open.length >= 10 || open.some(function (c) { return c.text === text; })) return null; /* tối đa 10 mâu thuẫn chưa giải quyết cùng lúc */
     var c = { a: a.id, b: b ? b.id : null, text: text, sev: 1, at: l.age, closed: false }; X.uid(l, c); s.conflicts.push(c);
     if (s.conflicts.length > 20) s.conflicts = s.conflicts.filter(function (x, i) { return !x.closed || i >= s.conflicts.length - 10; });
     return c;

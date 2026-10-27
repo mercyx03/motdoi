@@ -130,7 +130,7 @@
   // ===================================================================
   // D3. Mặt tối giới giải trí: lạm quyền, gạ gẫm trao đổi lợi ích, ép buộc
   // ===================================================================
-  function showbiz(l) { var c = l.job && E.CAR[l.job]; return !!(c && c.fame) || !!(l.flags.agency139 || l.flags.trainee139); }
+  function showbiz(l) { var c = l.job && E.CAR[l.job.id || l.job]; return !!(c && c.fame) || !!(l.flags.agency139 || l.flags.trainee139); }
   var DARK = [
     { k: 'favor', t: 'Một nhà sản xuất có quyền lực ngỏ ý trao vai chính, kèm gợi ý “gặp riêng để hiểu nhau hơn” — một lời trao đổi lợi ích không phù hợp.' },
     { k: 'contract', t: 'Công ty quản lý ép bạn ký phụ lục hợp đồng chia thu nhập bất lợi, dọa “đóng băng” nếu không ký ngay.' },
@@ -263,7 +263,7 @@
   };
   function recipients(l) {
     var out = [];
-    function add(p, kind, age) { if (p && p.alive !== false) out.push({ id: X.uid(l, p), p: p, name: p.name, kind: kind, age: age }); }
+    function add(p, kind, age) { if (p && p.alive !== false && (p.name || p.n)) out.push({ id: X.uid(l, p), p: p, name: p.name || p.n, kind: kind, age: age }); } /* anh chị em lưu tên ở trường n */
     if (l.partner && l.partner.status !== 'ended') add(l.partner, l.partner.status === 'married' ? 'vợ/chồng' : 'người yêu', l.partner.age);
     (l.kids || []).forEach(function (k) { if (l.age - k.born >= 6) add(k, 'con', l.age - k.born); });
     (l.sibList || []).forEach(function (s) { add(s, 'anh/chị/em', l.age - s.born); });

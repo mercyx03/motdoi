@@ -47,7 +47,7 @@
       var k = x.p, r = roleOf(l, k), cur = k.role147;
       if (r) {
         if (!cur) k.prevJob147 = { job: k.job || null, rank: k.rank || 0, inc: k.inc || 0 };
-        if (!cur || cur.rid !== r.rid || cur.place !== r.place) { k.role147 = { rid: r.rid, title: r.title, place: r.place, since: r.since }; if (log && !cur) log(k.name + ' nhận chức ' + r.title + ' tại ' + r.place + '; hồ sơ gia đình đã cập nhật.', 'neutral'); }
+        if (!cur || cur.rid !== r.rid || cur.place !== r.place) { k.role147 = { rid: r.rid, title: r.title, place: r.place, since: r.since }; if (log && !cur) log((k.name || k.n) + ' nhận chức ' + r.title + ' tại ' + r.place + '; hồ sơ gia đình đã cập nhật.', 'neutral'); }
         if (x.kid) { k.job = k.prevJob147.job; k.rank = k.prevJob147.rank; k.jyrs = -99; } /* nghề cũ không tự thăng chức trong lúc điều hành công ty */
         if (!x.sib) k.inc = r.year / 12;
       } else if (cur) {
@@ -55,7 +55,7 @@
         if (x.kid) { k.job = old ? null : p.job; k.rank = p.rank || 0; k.jyrs = 0; k.inc = k.job ? kidIncome(l, k) : old ? (p.inc || 0) * 0.5 : 0; }
         else if (x.partner) k.inc = p.inc || 0;
         delete k.role147; delete k.prevJob147;
-        if (log) log(k.name + ' thôi giữ chức ' + cur.title + ' tại ' + cur.place + (x.kid && k.job ? ', trở lại công việc trước đây.' : '.'), 'neutral');
+        if (log) log((k.name || k.n) + ' thôi giữ chức ' + cur.title + ' tại ' + cur.place + (x.kid && k.job ? ', trở lại công việc trước đây.' : '.'), 'neutral');
       }
     });
   }
@@ -179,7 +179,7 @@
     bank: 'bank112 vay_tien tra_no repay114',
     invest: 'dau_tu market_menu ban_dau_tu_moi ve_so',
     estate: 'dau_tu_lon quan_ly_dau_tu mua_nha doi_nha homes112 chuyen_noi_o assetTeam123 deal148',
-    things: 'mua_xe tra_xe_thue ban_tai_san di_chuc70 collect148'
+    things: 'mua_xe tra_xe_thue ban_tai_san di_chuc70 will150 collect148'
   };
   var BY_ID = {};
   Object.keys(MAP).forEach(function (s) { MAP[s].split(' ').forEach(function (id) { BY_ID[id] = SUB[s]; }); });

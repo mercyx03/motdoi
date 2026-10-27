@@ -68,7 +68,8 @@ function pick(l, id, key, r = () => 0, arg) { const d = E.DEC[id].make(l, r, arg
 
 // ---------- D3. Mặt tối giới giải trí ----------
 {
-  const l = life(); l.job = Object.keys(E.CAR).find(k => E.CAR[k].fame);
+  const l = life(); E.startJob(l, Object.keys(E.CAR).find(k => E.CAR[k].fame), () => 0, () => { }, true);
+  ok(l.job && typeof l.job === 'object', 'nghề được gán đúng cách của game (đối tượng)');
   ok(D.showbiz(l), 'nhận biết người làm nghề giải trí');
   const d = E.DEC.dark149.make(l, () => 0.1);
   ok(d.opts.map(o => o.k).sort().join() === 'expose,help,leave,refuse', 'chỉ có các lựa chọn từ chối / tìm hỗ trợ / lên tiếng / đổi hướng — không có lựa chọn chấp nhận');
@@ -81,11 +82,11 @@ function pick(l, id, key, r = () => 0, arg) { const d = E.DEC[id].make(l, r, arg
   ok(!E.TRIG.find(t => t.id === 'dark149').when(l), 'không lặp lại ngay sau một vụ việc');
   l.age += 6; ok(E.TRIG.find(t => t.id === 'dark149').when(l), 'nhiều năm sau có thể gặp lại áp lực khác');
   // Lên tiếng không có bằng chứng
-  const l2 = life(); l2.job = l.job; const d2 = E.DEC.dark149.make(l2, () => 0.1);
+  const l2 = life(); l2.job = clone(l.job); const d2 = E.DEC.dark149.make(l2, () => 0.1);
   E.DEC.dark149.apply(l2, d2, 'expose', () => 0.9, say(l2)); l2.age++; const rep0 = C.S(l2).rep; D.darkYear(l2, () => 0.9, say(l2));
   ok(D.S(l2).darkCase.result === 'bị phản bác' && C.S(l2).rep < rep0, 'lên tiếng thiếu bằng chứng có thể bị phản bác');
   // Từ chối / đổi hướng kết thúc ngay
-  const l3 = life(); l3.job = l.job; const d3 = E.DEC.dark149.make(l3, () => 0.1); E.DEC.dark149.apply(l3, d3, 'leave', () => 0.5, say(l3));
+  const l3 = life(); l3.job = clone(l.job); const d3 = E.DEC.dark149.make(l3, () => 0.1); E.DEC.dark149.apply(l3, d3, 'leave', () => 0.5, say(l3));
   ok(D.S(l3).darkCase.closed && l3.flags.leftAgency149 === l3.age, 'đổi hướng: rời công ty');
   // Tự động chọn một lựa chọn an toàn
   const keyAuto = E.DEC.dark149.auto(l3, E.DEC.dark149.make(l3, () => 0.1), () => 0.3); ok(['refuse', 'help', 'expose', 'leave'].includes(keyAuto), 'chế độ Tự động chọn một trong các lựa chọn an toàn');
@@ -139,6 +140,7 @@ function pick(l, id, key, r = () => 0, arg) { const d = E.DEC[id].make(l, r, arg
   const R = D.recipients(l);
   ok(R.some(x => x.kind === 'vợ/chồng') && R.filter(x => x.kind === 'con').length === 2, 'người nhận: vợ/chồng, các con');
   const kid = R.find(x => x.name === 'Bé'), minh = R.find(x => x.name === 'Minh');
+  { const s2 = life({ age: 50 }); s2.sibList = [{ n: 'Hùng', sex: 'M', born: -3, alive: true }]; const sr = D.recipients(s2).find(x => x.kind === 'anh/chị/em'); ok(sr && sr.name === 'Hùng', 'anh chị em hiện đúng tên (trường n)'); const it = D.give(s2, () => 0.99, say(s2), sr.id, 'watch', 0); ok(it && it.ownerName === 'Hùng' && !/undefined/.test(s2.log[s2.log.length - 1].t), 'tặng quà anh chị em: nhật ký sạch'); }
   ok(!enabled(l, 'gifts149_pick', { to: kid.id }).some(k => /^(car|motorbike|supercar)/.test(k)) && enabled(l, 'gifts149_pick', { to: kid.id }).includes('phone:0'), 'con nhỏ không được tặng xe, vẫn tặng điện thoại được');
   const nw = E.netWorth(l), m = l.money;
   const item = D.give(l, () => 0.99, say(l), minh.id, 'car', 0);
