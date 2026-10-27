@@ -1,7 +1,8 @@
 /* Nhật ký đợt nâng cấp theo góp ý người chơi: mỗi mốc một mục, chưa phát hành, giữ nguyên toàn bộ 95 mục trước đợt. */
 const assert=require('assert'),fs=require('fs'),cp=require('child_process');
+const kept=(n,o,m)=>{if(o.releaseStatus==='packaged'&&n&&n.releaseStatus==='released'){assert(Date.parse(n.releasedAt)>=Date.parse(n.publishedAt),'released after prepared: '+o.id);const s=x=>{const y=Object.assign({},x);delete y.releaseStatus;delete y.releasedAt;delete y.correctedAt;return y;};assert.deepStrictEqual(s(n),s(o),m);}else assert.deepStrictEqual(n,o,m);}; // ghi phát hành chỉ được đổi releaseStatus/releasedAt/correctedAt của mục đang chờ
 const now=JSON.parse(fs.readFileSync('public/data/updates.json')),old=JSON.parse(cp.execFileSync('git',['show','1f8248d:public/data/updates.json'],{encoding:'utf8'}));
-for(const e of old.entries)assert.deepStrictEqual(now.entries.find(x=>x.id===e.id),e,'entry kept: '+e.id);
+for(const e of old.entries)kept(now.entries.find(x=>x.id===e.id),e,'entry kept: '+e.id);
 const fb=now.entries.filter(x=>/^feedback-/.test(x.id));assert(fb.length>=1,'at least one milestone note');
 assert.equal(new Set(now.entries.map(x=>x.id)).size,now.entries.length,'no duplicate ids');
 const extra=JSON.parse(fs.readFileSync('docs/update-extra.json'));const {playerEntry}=require('../tools/player-update-notes');

@@ -4,8 +4,8 @@
     {
       "id": "feedback-e-assets-wills",
       "version": "8.6.0-e",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-27T01:47:45.764Z",
       "title": "Một Đời — Tài sản trong hôn nhân, chia tài sản khi ly hôn và di chúc chi tiết",
       "summary": "Lập thỏa thuận tài sản trước khi cưới, ly hôn chia đúng tài sản chung thay vì chia cố định, và viết di chúc giao từng tài sản cụ thể, chọn người thi hành, giao quyền điều hành doanh nghiệp.",
@@ -20,13 +20,14 @@
         "Hôn nhân trong bản lưu cũ giữ nguyên cách chia cũ để không làm thay đổi ván đang chơi; cách chia mới áp dụng cho các cuộc hôn nhân bắt đầu từ bản cập nhật này.",
         "Mục mới “Di chúc chi tiết”: giao từng tài sản cụ thể (nhà, căn hộ, cơ sở kinh doanh, cổ phần, đồ sưu tầm) cho từng người; không cho một người con đã trưởng thành hưởng thừa kế; chọn người thi hành di chúc (vợ/chồng, con, bạn thân hoặc văn phòng luật); giao quyền điều hành doanh nghiệp tách khỏi quyền sở hữu cổ phần. Nợ được trả từ di sản trước khi chia; ở Việt Nam, vợ/chồng và con chưa thành niên luôn được ít nhất 2/3 suất theo pháp luật.",
         "Di chúc chênh lệch nhiều có thể dẫn tới tranh chấp giữa các con; chọn người thi hành độc lập giúp giảm nguy cơ. Khi sống tiếp đời con, vụ tranh chấp được giải quyết sau một thời gian, đồ sưu tầm được thừa kế đúng một lần, và người được giao điều hành doanh nghiệp sẽ giữ vị trí đó."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.314Z"
     },
     {
       "id": "feedback-d-relationships",
       "version": "8.6.0-d",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T21:50:04.648Z",
       "title": "Một Đời — Kết giao, quà tặng người thân và màn cầu hôn của riêng bạn",
       "summary": "Mở rộng quan hệ với người có địa vị và người nổi tiếng, giới thiệu đối tượng cho con, tặng quà người thân, cầu hôn theo cách của mình; thêm những tình huống áp lực trong giới giải trí cùng các cách tự bảo vệ.",
@@ -40,13 +41,14 @@
         "Mục mới “Giới thiệu đối tượng cho con”: người được giới thiệu là con của những người bạn thật sự quen biết. Gia đình bên kia có thể từ chối, con bạn cũng có quyền nói không; nếu hai người tìm hiểu rồi kết hôn, hai gia đình trở thành thông gia.",
         "Mục mới “Tặng quà người thân”: nhẫn, trang sức, đồng hồ, điện thoại, laptop, xe máy, ô tô, siêu xe với nhiều mức giá, tặng vợ/chồng, người yêu, con, bố mẹ, anh chị em. Món quà thuộc về người nhận và hiện trong hồ sơ của người con; quà quá đắt so với khả năng có thể bị từ chối mà không mất tiền. Con nhỏ chưa được tặng xe.",
         "Nút “Cầu hôn” giờ là cả một hành trình: chọn có nhẫn hay không (không bắt buộc), chọn nơi cầu hôn (ở nhà, khu vườn, nhà hàng, khách sạn, sân khấu hòa nhạc, du thuyền). Người ấy có thể nhận lời hoặc từ chối tùy tình cảm, thời gian quen nhau và việc họ thích riêng tư hay bất ngờ trước đông người. Nhận lời là đính hôn; đám cưới vẫn do hai người cùng quyết định sau. Vẫn có thể bàn thẳng chuyện về chung nhà như trước."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.317Z"
     },
     {
       "id": "feedback-c-elite-life",
       "version": "8.6.0-c",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T21:32:54.336Z",
       "title": "Một Đời — Đời sống thượng lưu: tiệc tùng, thương vụ, gia tộc và bộ sưu tập",
       "summary": "Cuộc sống thay đổi theo tầng lớp; tự tổ chức tiệc, bàn thương vụ với người quen, điều hành gia tộc, trải nghiệm xa xỉ và sưu tầm đồ quý có giá trị lên xuống.",
@@ -60,13 +62,14 @@
         "Người quen ở tiệc, sân golf hay buổi ký hợp đồng là cùng một nhân vật xuyên suốt: họ nhớ những lần gặp, già đi theo năm tháng và có thể qua đời. Tất cả đều là nhân vật hư cấu.",
         "Mục mới “Người đứng đầu gia tộc”: họp gia đình, cấp hoặc thu hồi hỗ trợ nhà ở, quỹ học tập, phụ cấp; hỗ trợ tài chính một lần; giải quyết mâu thuẫn giữa người thân; mở nhanh mục bổ nhiệm và chọn người kế nhiệm. Bạn chỉ quyết được trên tiền và cổ phần của mình; người thân có thể từ chối, và mâu thuẫn để lâu sẽ căng thẳng hơn.",
         "Mục mới “Trải nghiệm thượng lưu” (golf, đua ngựa, dạ tiệc gala, lái siêu xe trên trường đua, du thuyền, máy bay riêng, đảo riêng) và “Sưu tầm và tài sản xa xỉ” (đồng hồ, tranh, bình cổ, xe cổ, tác phẩm nghệ thuật, du thuyền, máy bay, đảo). Giá trị thay đổi theo năm; có thể bán đấu giá hoặc tặng người thân. Món đã tặng thuộc về người nhận; du thuyền, máy bay, đảo tốn phí duy trì."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.322Z"
     },
     {
       "id": "feedback-b-profiles-menus",
       "version": "8.6.0-b",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T21:21:51.829Z",
       "title": "Một Đời — Hồ sơ con chi tiết, chức vụ người thân hiển thị đúng và menu gọn hơn",
       "summary": "Chức vụ, nơi làm việc và thu nhập của người thân luôn khớp với công ty; hồ sơ con có thêm sức khỏe, học tập, quan hệ, tài chính, kỷ niệm; menu Gia đình và Tiền bạc chia thành các nhóm nhỏ.",
@@ -79,13 +82,14 @@
         "Hồ sơ con chi tiết hơn: sức khỏe và dị ứng, lớp học, học lực, hạnh kiểm, thành tích; mức thân thiết với bạn, với cha/mẹ còn lại, cha/mẹ kế, từng anh chị em và ông bà; tiền tiết kiệm, trợ cấp, quà được tặng, tài sản riêng; kỷ niệm và các cột mốc. Thông tin giữ nguyên khi mở lại hồ sơ hay tải lại bản lưu.",
         "Menu Gia đình & tình cảm chia thành 5 nhóm: Tình yêu & hôn nhân; Sinh con & nuôi con; Quản lý con cái; Quan hệ gia đình; Hoạt động & sự kiện gia đình.",
         "Menu Tiền bạc & tài sản chia thành 5 nhóm: Chi tiêu & sinh hoạt (gồm chi tiêu định kỳ); Ngân hàng & vay vốn; Đầu tư; Kinh doanh & bất động sản; Phương tiện & tài sản. Có nút quay lại nhóm lớn; mọi việc cũ vẫn còn, chỉ được sắp xếp lại."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.327Z"
     },
     {
       "id": "feedback-a-family-fixes",
       "version": "8.6.0-a",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T20:53:06.973Z",
       "title": "Một Đời — Sửa lỗi con cái sau ly hôn, về nước sau du học và hẹn hò qua app",
       "summary": "Sửa các lỗi người chơi báo về quyền nuôi con, du học, app hẹn hò; thêm bước chuẩn bị hồ sơ audition và mời bố mẹ về sống chung.",
@@ -100,13 +104,14 @@
         "Sửa lỗi có thể làm treo game khi lướt hồ sơ trên app hẹn hò. Mở lại hộp lựa chọn không còn làm đổi danh sách năm hồ sơ đang xem.",
         "Audition rõ ràng hơn: chuẩn bị hồ sơ (ảnh profile, video giới thiệu năng khiếu) trước khi đăng ký; mỗi nước có một công ty tuyển chọn riêng; kết quả từng vòng hồ sơ, năng khiếu, phỏng vấn kèm lý do. Trúng tuyển thì xem hợp đồng và chuẩn bị sang nước ngoài; chưa đạt thì bổ sung hồ sơ, thử lại hoặc tự ứng tuyển trong nước. Thực tập sinh nhận tối đa 27 tuổi.",
         "Chủ động mời bố, mẹ hoặc cả hai về sống chung, không cần chờ sự kiện. Bố mẹ có thể đồng ý hoặc từ chối tùy tuổi tác, mức tin cậy, nhà ở và hoàn cảnh; nhà cửa, tài sản của ai vẫn thuộc về người đó. Có thể để bố mẹ về lại nhà riêng."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.332Z"
     },
     {
       "id": "gd6-integration-release",
       "version": "8.5.0-gd6",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T12:38:14.825Z",
       "title": "Một Đời — Chơi mượt và ổn định hơn",
       "summary": "Chế độ tự động không còn dừng giữa chừng, đổi chế độ có tác dụng ngay, cùng một số sửa lỗi về hoàn cảnh sự kiện.",
@@ -121,13 +126,14 @@
         "Lựa chọn bị bỏ qua vì hoàn cảnh đã thay đổi không còn để lại dấu vết trong bản lưu.",
         "Thi lại tốt nghiệp hoặc nộp nguyện vọng với điểm từ 27 trở lên giờ cũng được ghi nhận học bổng như lượt thi chính.",
         "Sửa lỗi có thể làm game dừng khi một chuyện cũ về hôn nhân đến hẹn nhưng người ấy không còn bên bạn."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.337Z"
     },
     {
       "id": "gd5-event-balancing",
       "version": "8.5.0-gd5",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T12:02:27.406Z",
       "title": "Một Đời — Cuộc sống tự nhiên hơn, ít trùng lặp hơn!",
       "summary": "Nhịp sự kiện tự nhiên hơn: ít năm dồn dập biến cố, ít tình huống na ná nhau, chế độ tự động trôi nhanh hơn.",
@@ -145,13 +151,14 @@
         "Sửa lỗi những cảnh hôn nhân (món quà bất ngờ, cần thêm thời gian bên nhau, cơ hội việc ở tỉnh khác, chuyện mua nhà mua xe, ghen tuông, mâu thuẫn tiền bạc), cảnh gia đình phản đối mối quan hệ, đòi danh phận rõ ràng, một số chuyện tình cảm khi độc thân và tình huống dư luận với người làm nghề công chúng chưa từng xuất hiện dù đủ điều kiện.",
         "Các cảnh hôn nhân vừa mở lại cách nhau ít nhất ba năm, mỗi cảnh tối đa bốn lần một đời, để không lấn át cuộc sống vợ chồng.",
         "Hậu quả nhiều năm của những lựa chọn cũ và ảnh hưởng của hoàn cảnh lên khả năng gặp sự kiện vẫn giữ nguyên. Bản lưu cũ tiếp tục chơi được."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.342Z"
     },
     {
       "id": "gd4-multiyear-consequences",
       "version": "8.5.0-gd4",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T11:05:30.086Z",
       "title": "Một Đời — Lựa chọn hôm nay, thay đổi cả tương lai!",
       "summary": "Một số lựa chọn quan trọng giờ để lại hậu quả kéo dài nhiều năm và được nhắc lại đúng người, đúng lúc.",
@@ -169,13 +176,14 @@
         "Sức khỏe: sau tai nạn khi làm việc hoặc tai nạn giao thông, việc tập phục hồi hay mặc kệ ảnh hưởng tới những năm sau; cơn đau cũ có thể tái phát và khiến bạn phải cân nhắc đổi việc.",
         "Diễn biến phụ thuộc hoàn cảnh hiện tại như tiền bạc, công việc, sức khỏe và mức tin cậy giữa hai người. Không có kết cục định sẵn; chuyện cũ tự khép lại khi không còn phù hợp.",
         "Không lấn át cuộc đời: mỗi năm có tối đa một lựa chọn từ chuyện cũ, mỗi hậu quả chỉ tính tiền một lần, không phát sinh khoản vay trùng và người đã mất không quay lại trong câu chuyện. Bản lưu cũ tiếp tục chơi được."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.346Z"
     },
     {
       "id": "gd3-context-weighting",
       "version": "8.5.0-gd3",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T02:08:17.000Z",
       "publishedAt": "2026-10-26T09:49:57.975Z",
       "title": "Một Đời — Mỗi cuộc đời, một hoàn cảnh khác nhau!",
       "summary": "Cơ hội và khó khăn trong 50 tình huống quen thuộc phản ánh rõ hơn hoàn cảnh của nhân vật.",
@@ -191,7 +199,8 @@
         "Mức tin tưởng giữa các thành viên ảnh hưởng đến một số mâu thuẫn gia đình; những món quà nhỏ và cơ hội trò chuyện vẫn luôn có thể xuất hiện.",
         "Hoàn cảnh không quyết định số phận: sự kiện vẫn có yếu tố bất ngờ, giữ giới hạn lặp và các điều kiện cần thiết. Bản lưu cũ tiếp tục được hỗ trợ.",
         "Đợt này tập trung điều chỉnh xác suất; không bổ sung sự kiện mới hoặc đổi kết quả các phương án lựa chọn."
-      ]
+      ],
+      "correctedAt": "2026-10-27T02:08:17.350Z"
     },
     {
       "id": "save-family-fixes-oct26",
