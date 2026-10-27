@@ -42,6 +42,7 @@ function companyYear(l,r,log){var q=S(l),crisis=q.crisis&&q.crisis.until>l.age,t
   if(E.TREASURY165){var settlement=E.TREASURY165.settle(l,c,profit,f.loss*(team?.75:1),overhead);profit=settlement.profit;total+=settlement.dividend*c.share/100*.95;}else if(profit>=0){var div=profit*(ctrl?c.payout:.4);c.value+=profit-div;total+=div*c.share/100*.95;}else c.value=Math.max(0,c.value+profit*f.loss*(team?.75:1));
   var beforeGrowth=c.value;if(c.value>0)c.value*=1+s.g*(r()*1.4-.2)*(profit>0?1:.3)+f.g*(profit>0?1:0);
   c.value=Math.round(c.value*100)/100;c.lastProfit=Math.round(profit*100)/100;c.lastAt=l.age;c.peak=Math.max(c.peak||0,c.value);
+  if(E.TREASURY165)E.TREASURY165.finish(l,c,beforeGrowth);
   if(c.value<c.peak*.05){c.merged=true;c.bankrupt=l.age;notes.push(c.name+' mất gần hết vốn và giải thể');}});
  if(total>0)H.cash(l,total,'Cổ tức doanh nghiệp sau thuế');
  if(total>0||notes.length)log((total>0?'Các công ty chi cổ tức cho bạn '+H.money(l,total)+' sau thuế 5%. ':'Năm nay các công ty không chia cổ tức. ')+(notes.length?notes.join('; ')+'.':'Lợi nhuận phụ thuộc vốn, ngành, ban điều hành và thị trường.'),total>0?'money':'neutral');}

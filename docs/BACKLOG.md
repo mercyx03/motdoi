@@ -69,3 +69,5 @@ Checkpoint hợp đồng chỉ hoàn tất một phần mốc 1. Theo dõi toàn
 
 ### Nghiệm thu cuối đợt 8.8.2-foundation
 Mốc nền tảng đã đạt kiểm thử trọng điểm. Trên mã cuối cần nối và kiểm báo cáo/biểu đồ, bảy chiến lược, nhân sự/lãnh đạo, thực tập/cố vấn và năm chuỗi tích hợp; kiểm thêm giao dịch nhượng quyền sau sáp nhập/thừa kế, nhiều thế hệ có nợ bảo đảm, các chế độ tài sản hôn nhân với sổ cá nhân. Không coi các mục chưa chạy là PASS. Ba tệp riêng của chủ dự án giữ nguyên; không deploy.
+
+Mốc 8.8.3-reports đạt kiểm thử trọng điểm (reports 13, treasury 123, business133 29, business137 79, smoke/save/NPC, Chrome); GĐ6 đợt nâng cấp vẫn còn tích hợp chiến lược, nhân sự, lãnh đạo, thực tập, cố vấn và toàn bộ bổ sung quản gia/trợ lý/tiệc. Chưa chạy regression cuối trên toàn bộ phạm vi; không tính các mục đó PASS.

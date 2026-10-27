@@ -1269,7 +1269,7 @@
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
       '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
-      willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
+      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {

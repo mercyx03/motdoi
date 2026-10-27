@@ -1,5 +1,25 @@
 [
   {
+    "id": "enterprise-reports-883",
+    "version": "8.8.3-reports",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-27T21:41:59.568+07:00",
+    "title": "Một Đời — Báo cáo tài chính và biểu đồ doanh nghiệp",
+    "summary": "Xem từng năm tài chính, phân biệt lợi nhuận với dòng tiền và theo dõi xu hướng công ty.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Mục báo cáo tài chính trong doanh nghiệp hiển thị doanh thu, giá vốn, lợi nhuận gộp, lương, quản lý, marketing, nghiên cứu, lãi vay, thuế, lợi nhuận và cổ tức. Phần phân bổ theo mô hình ngành có giải thích rõ; chỉ tiêu chưa có dữ liệu không được dựng thành số liệu thật.",
+      "Dòng tiền kinh doanh, đầu tư và tài trợ đối chiếu với tiền đầu kỳ và cuối kỳ. Khoản vay và trả gốc không bị tính thành doanh thu hoặc chi phí lãi. Các khoản thu, chi vận hành trong kỳ được ghi vào lợi nhuận và thuế một lần.",
+      "Biểu đồ mười năm có thể chuyển giữa doanh thu, lợi nhuận, dòng tiền, dư nợ và nhân viên khi có dữ liệu. So sánh năm trước hiển thị chênh lệch và tỷ lệ; không dựng năm trước cho công ty vừa mở sổ.",
+      "Báo cáo chốt năm được giữ khi lưu/tải. Xem lịch sử hay biểu đồ không tính lại kết quả; đổi quốc gia quy đổi tiền nhưng giữ nguyên số nhân viên."
+    ]
+  },
+  {
     "id": "life-enterprise-foundation-882",
     "version": "8.8.2-foundation",
     "releaseStatus": "packaged",

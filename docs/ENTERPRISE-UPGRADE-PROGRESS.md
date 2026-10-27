@@ -24,9 +24,9 @@ Chưa hoàn thành hai nhiệm vụ tổng thể; mốc 1 đã bổ sung triển
 | A4 Tăng trưởng/định giá dài hạn | Triển khai / kiểm thử trọng điểm đạt | Sổ tiền mặt/nợ trong vòng companyYear cũ, thuế/lãi/trả gốc/cổ tức; 123 kiểm tra có 30 năm, vốn rất lớn, thiếu thanh khoản, phát hành/sáp nhập và quy đổi. |
 | A5 Nhân sự truyền thông | Hoàn thành | Chín vai trò, hợp đồng, lương chung, hiệu suất, nghỉ việc/thay thế, chuyên môn điều khiển quyền tự động; tests/contracts161-162 và UI |
 | A6 Vòng đời thực tập sinh K-pop | Hoàn thành | Gia hạn/chuyển/rời/tạm nghỉ/hết hạn/đánh giá, tiếp cận, audition lại, giữ danh tính và kỹ năng; tests/contracts161-162, audition139, showbiz-idol và UI |
-| B1 Báo cáo tài chính năm | Chưa hoàn thành | Chưa triển khai báo cáo chi tiết, dòng tiền và chốt năm |
-| B2 So sánh năm | Chưa hoàn thành | Chưa có lịch sử báo cáo mới |
-| B3 Biểu đồ | Chưa hoàn thành | Chưa triển khai biểu đồ doanh thu/lợi nhuận/dòng tiền/nhân viên |
+| B1 Báo cáo tài chính năm | Triển khai / kiểm thử trọng điểm đạt | life167: chi tiết mô hình ngành, giao dịch vận hành vào lợi nhuận/thuế một lần; quyết toán life165 |
+| B2 So sánh năm | Triển khai / kiểm thử trọng điểm đạt | So sánh giá trị, chênh lệch, tỷ lệ; không giả lịch sử |
+| B3 Biểu đồ | Triển khai / kiểm thử trọng điểm đạt | 10 kỳ, 5 chỉ số; nhân viên chỉ hiện khi có dữ liệu; Chrome 390/1280 |
 | C1 Quyết định chiến lược | Chưa hoàn thành | Chi nhánh, tuyển dụng, công nghệ, chất lượng, quốc tế, giảm chi phí, tái đầu tư |
 | C2 Vòng đời chiến lược | Chưa hoàn thành | Ngân sách, thời gian, người phụ trách, rủi ro, kết quả và chống bấm lặp |
 | D1 Hiệu suất doanh nghiệp | Chưa hoàn thành | Chưa triển khai bộ chỉ số dẫn xuất |
@@ -90,3 +90,16 @@ Tiếp tục mốc 2: giao diện báo cáo tài chính/năm, so sánh, biểu �
 - Loading đối chiếu nguồn/bundle 8 cuộc đời PASS; kiểm quyền API local PASS; mọi entry ZIP đối chiếu SHA-256 với dist.
 - Nhật ký rộng/hẹp: mục mới đầu, tìm không dấu, bộ lọc, tải thêm PASS.
 - Remote origin được xác minh lại là mercyx03/motdoi, public, quyền push/admin; đầu nhánh remote trước commit khớp 9fd3bd7. Không có deploy trong quy trình; binding Pages vẫn chưa kiểm chứng.
+
+## Mốc 2 / 8.8.3-reports — đang nghiệm thu trọng điểm
+
+- Reports167: 13 kiểm tra, treasury-deals165-166: 123 PASS. Chrome 8 kiểm tra tại 390/1280, không lỗi/tràn ngang; lần đầu thiếu máy chủ không tính PASS.
+- Chi tiết giá vốn/nhân sự/marketing/nghiên cứu là phân bổ mô hình ngành có công bố, không trừ tiền lần nữa. Khấu hao chưa có dữ liệu thì ghi thiếu dữ liệu.
+- Bổ sung bắt buộc quản gia/trợ lý/tiệc đã lưu ở ENTERPRISE-UPGRADE-SUPPLEMENT.md; chưa triển khai, chưa nghiệm thu.
+- life168 đang soạn, chưa nạp vào game, chưa kiểm chứng; không thuộc artifact mốc 2. Tiếp tục tích hợp chiến lược, nhân sự, lãnh đạo, kế nghiệp và giáo dục trước nghiệm thu tổng thể.
+
+- Mốc 2: smoke 11, saves 10, save-safety 10, NPC 14 PASS; business133 29 PASS. Nhật ký Chrome đầu danh sách/tìm kiếm/lọc/tải thêm đạt ở hai kích thước.
+- Lượt đóng gói đầu bị loading test chặn do bản nén được đọc trước sửa bổ sung chốt định giá trong life133; nguồn mới khác bundle. Artifact cũ được phục hồi đúng chính sách. Đang build lại trên nguồn cố định; chưa tính lượt đầu là PASS.
+
+- Build mốc 2 lại trên nguồn cố định PASS: 28 tệp, ZIP 2.483.554 byte, SHA-256 9A1471E7BF77869E7DB44FE84A965786169EF6E0D62B9F95F961CF9EF44052F6. Toàn bộ tên/nội dung ZIP đối chiếu dist; loading 8 cuộc đời nguồn/bundle và API local PASS. REVIEWS_DB thực tế chưa kiểm chứng.
+- Trạng thái mốc 2: HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN. Không upload Production cho đến khi toàn đợt đạt. Phục hồi nguồn từ ecc6010 bằng checkout riêng, không reset nhánh.

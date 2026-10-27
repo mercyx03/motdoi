@@ -1,5 +1,11 @@
 ## v8.8.0-preview — checkpoint đang triển khai, packaged
 
+## 8.8.3-reports — báo cáo doanh nghiệp
+
+- Báo cáo chi tiết, dòng tiền toàn kỳ, so sánh và biểu đồ mười năm.
+- Khoản vận hành ngoài quyết toán ghi vào thuế và lợi nhuận đúng một lần.
+- Packaged; mốc trung gian, chưa nghiệm thu toàn đợt.
+
 ## 8.8.2-foundation — nền tảng gia đình và doanh nghiệp
 
 - Sổ tài chính người thân, vốn dự án ba năm, chuyển đời không cộng trùng tiền/nợ tiêu dùng.
