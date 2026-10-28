@@ -35,7 +35,7 @@ const cases = [
       t.ok(l.sex === 'M' || l.sex === 'F', tag + ': giới tính hợp lệ');
       t.ok(!badText(E.placeText(l)), tag + ': nơi sinh hiển thị sạch');
       t.ok(Number.isFinite(l.birthYear) && l.fam && Number.isFinite(l.fam.q), tag + ': năm sinh & gia đình');
-      t.ok(l.difficulty === (o.difficulty || 'normal'), tag + ': độ khó đúng');
+      t.ok(l.difficulty === 'normal', tag + ': độ khó đúng');
       t.ok(Array.isArray(l.pending) && Array.isArray(l.log) && Array.isArray(l.kids), tag + ': cấu trúc mảng cơ bản');
       statsOk(t, l, tag);
       t.ok(!badText(E.statusLine(l)), tag + ': dòng trạng thái sạch');

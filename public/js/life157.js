@@ -25,7 +25,7 @@
     if (safe[o.k]) o.l = safe[o.k];
     if (o.k === 'son') o.run = function (l, r, log) { H.fx(l, { hap: 2 }); H.mem(l, 'Ngày sinh nhật đầu tiên, bạn cầm chiếc lược đồ chơi, cả nhà vui cười.', 2); log('Bạn cầm chiếc lược đồ chơi đầu tròn, người lớn ở bên cùng chơi.', 'good'); };
   });
-  [['simple', 'Cùng người chăm sóc hát mừng, không bày mâm', 0], ['borrow', 'Người thân cho mượn bộ đồ chơi an toàn', 0], ['homeParty', 'Tiệc nhỏ tại nhà và chụp ảnh kỷ niệm', 2], ['restaurant', 'Tiệc nhà hàng cùng người thân', 3], ['professional', 'Tiệc có người tổ chức và album gia đình', 4]].forEach(function (a) {
+  [['simple', 'Cùng người chăm sóc hát mừng, không bày mâm', 0], ['borrow', 'Mượn đồ chơi của người thân để bày mâm sinh nhật', 0], ['homeParty', 'Tiệc nhỏ tại nhà và chụp ảnh kỷ niệm', 2], ['restaurant', 'Tiệc nhà hàng cùng người thân', 3], ['professional', 'Tiệc có người tổ chức và album gia đình', 4]].forEach(function (a) {
     d.opts.push({ k: a[0], l: a[1], req: function (l) { return resources(l).band >= a[2]; }, run: function (l, r, log) { var s = L.state(l); s.firstBirthday157 = { style: a[0], age: l.age, band: resources(l).band }; H.fx(l, { hap: 3, soc: 1 }); H.mem(l, 'Sinh nhật đầu tiên: ' + a[1].toLowerCase() + '.', 3); log(a[1] + '. Gia đình lưu lại một kỷ niệm ấm áp, không đặt sẵn tương lai của bé.', 'good'); } });
   });
   X.menu('artFamily157', 'Truyền thống nghệ thuật gia đình', function (l) { var w = X.reason(l, 5); return w !== true ? w : !art(l).length ? 'Chưa có người chăm sóc làm nghề nghệ thuật' : true; },

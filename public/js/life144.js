@@ -446,7 +446,7 @@
     var c = chain(l, d.cid); d.done = true; c.open = null; c.last = l.age; note(c, k); return c;
   }
   onOrigin('ban_than_kho', function (l, k, d, before) {
-    var f = E.friendsOf(l).filter(function (x) { return x.name === d.n; })[0];
+    var f = E.friendsOf(l).concat(E.friendsFar?E.friendsFar(l):[]).filter(function (x) { return d.uid894 ? X.uid(l,x)===d.uid894 : x.name === d.n; })[0];
     if (!f || !X) return;
     var unpaid = k === 'cho_vay' && l.money < before.money - V(l, 10);
     var helped = k === 'o_ben' || k === 'cho_vay' && !unpaid;

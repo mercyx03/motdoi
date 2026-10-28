@@ -1,3 +1,12 @@
+## 8.9.5-actions — 28/10/2026 (UTC+7) — packaged
+
+- Bỏ Hardcore, chuyển bản lưu cũ sang chế độ thường và giữ tài sản/lịch sử.
+- Chỉ trừ lượt khi thực hiện; xem menu, chọn người, đổi bộ lọc và hủy miễn lượt; sự kiện hệ thống không tốn lượt chủ động.
+- Gộp bạn thân thành một mục chọn người, tách gia đình/bạn bè/tình yêu; chia lại nhóm học tập/công việc, giải trí/sáng tạo và kẻ đường phân cấp.
+- Bộ lọc bạn đời đánh dấu lựa chọn, sửa câu mượn đồ chơi bày mâm sinh nhật; kiểm tra hạn chứng chỉ theo ngày cấp hiện tại.
+- An ủi từ xa đúng nơi ở; thêm chuyến về thăm có vé khứ hồi và quay lại, giữ chương trình du học.
+- Kiểm thử trọng điểm và ZIP đạt; chưa nghiệm thu toàn diện, chưa tự deploy. Chi tiết: docs/ACTIONS-895-ACCEPTANCE.md.
+
 ## 8.8.6 — 28/10/2026 (UTC+7) — packaged
 
 - Sửa debut Boys Planet thiếu peers, dùng thí sinh chung kết đúng số suất.

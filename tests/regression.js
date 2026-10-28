@@ -3053,8 +3053,14 @@ section('74. Sửa logic đời con, niên hạn quân hàm và khóa học hai 
     ok(!l.flags.midAcadStudy && !l.flags.midAcad && l.edu === 5, track + ': rời lực lượng thì dừng khóa học, không nhận bằng');
   }
 }
-section('75. Hardcore: lưu chế độ, dòng tiền, biến cố và cân bằng');
-{
+section('75. Hardcore: tương thích sau khi bỏ chế độ');
+if (!E.DIFFICULTIES.hardcore) {
+  const l=E.createLife({mode:'vn',difficulty:'hardcore',seed:75001});
+  ok(l.difficulty==='normal','tạo đời mới dùng chế độ thường');
+  l.difficulty='hardcore'; const before=l.money; l.pending=[{id:'hc_story_old',data:{}}]; l.sched=[{id:'hc_role_old',at:20}];
+  E.migrate(l); ok(l.difficulty==='normal'&&l.money===before,'bản lưu cũ chuyển chế độ, giữ tiền');
+  ok(!l.pending.length&&!l.sched.length,'gỡ lựa chọn và lịch hẹn đã bỏ');
+} else {
   const copy = x => JSON.parse(JSON.stringify(x)), R = s => { const h = { rs: s }; return () => U.rand(h); };
   const base = E.createLife({ mode: 'vn', seed: 75001, noOrphan: true });
   ok(base.difficulty === 'normal' && E.createLife({ mode: 'world', seed: 1, difficulty: 'hardcore' }).difficulty === 'hardcore', 'tạo được hai chế độ cho cả Việt Nam / thế giới');

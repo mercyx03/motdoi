@@ -1,5 +1,30 @@
 [
   {
+    "id": "actions-friends-distance-895",
+    "version": "8.9.5-actions",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-28T14:08:39.939Z",
+    "title": "Một Đời — Xem trước việc làm, menu gọn hơn và sửa tình huống ở xa",
+    "summary": "Chỉ trừ lượt khi thực hiện lựa chọn; gộp bạn thân, bỏ Hardcore, sửa hạn chứng chỉ và thêm chuyến về thăm ngắn ngày khi đang ở nước ngoài.",
+    "tags": [
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bỏ chế độ Hardcore khỏi phần tạo nhân vật. Cuộc đời Hardcore đã lưu chuyển sang chế độ thường, giữ tiền, tài sản và lịch sử; các tình huống riêng của chế độ cũ được gỡ để tiếp tục chơi.",
+      "Mở việc làm, xem nhóm nhỏ, chọn người, đổi bộ lọc và để dịp khác không tốn lượt. Chỉ khi thực hiện lựa chọn mới tính lượt; các bước xem trước đi tiếp cùng một việc. Sự kiện bắt buộc do cuộc đời đưa tới không lấy lượt hành động chủ động.",
+      "Lựa chọn đang mở được giữ khi lưu và tải lại; bản lưu cũ đã trừ lượt lúc mở được điều chỉnh một lần. Hết lượt vẫn xem được phương án, nhưng lựa chọn thực hiện sẽ chờ sang năm và không trừ tiền hay thay đổi kết quả.",
+      "Chỉ còn một mục Hẹn gặp bạn thân, mở danh sách để chọn người. Hai người trùng tên vẫn có lựa chọn riêng; bạn ở cùng nơi có thể gặp, bạn ở xa liên lạc qua video.",
+      "Tách nhóm Gia đình, Bạn bè và Tình yêu & hôn nhân. Gộp các mục học tập/công việc và giải trí/sáng tạo bị phân tán; thêm tiêu đề và đường kẻ phân cấp, nút gọn hơn trên điện thoại và máy tính.",
+      "Bộ lọc nghề nghiệp và thu nhập bạn đời đánh dấu phương án đang chọn bằng dấu ✓, cho đổi qua lại rõ ràng rồi tiếp tục chọn tuổi, giới tính, quốc tịch; không tính lượt khi chỉnh bộ lọc.",
+      "Đổi câu Người thân cho mượn bộ đồ chơi an toàn thành Mượn đồ chơi của người thân để bày mâm sinh nhật, phù hợp ngữ cảnh chuẩn bị sinh nhật đầu tiên.",
+      "Sự kiện hết hạn IELTS, TOPIK, HSK kiểm tra lại thời điểm cấp chứng chỉ hiện tại, tránh hỏi thi lại sau một năm hoặc sau khi vừa có kết quả mới. IELTS được tính đủ hai năm trong game; chứng chỉ không có hạn như JLPT vẫn giữ cơ chế riêng.",
+      "Bạn thân gặp chuyện khi ở xa được an ủi qua video, không kể rằng bạn đến trong đêm. Khi đang ở nước ngoài, có thể mở chuyến về thăm ngắn ngày từ mục về nước và một số tình huống gia đình/bạn bè cần hỗ trợ.",
+      "Chuyến về thăm có bước xem chi phí, sắp xếp nghỉ, mua vé khứ hồi rồi quay lại đúng hạn. Không tự kết thúc du học, cấp bằng hay chuyển nơi định cư; thiếu tiền hoặc bị hạn chế đi lại thì tiếp tục hỗ trợ từ xa."
+    ]
+  },
+  {
     "id": "country-minimum-eight-894",
     "version": "8.9.4-country-batch1",
     "releaseStatus": "released",

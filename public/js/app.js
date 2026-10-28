@@ -24,7 +24,7 @@
   };
   if (window.MOTDOI_PREVIEW) { S.preview = Object.assign({}, window.MOTDOI_PREVIEW); delete window.MOTDOI_PREVIEW; }
   S.set.name = '';
-  S.set.difficulty = S.set.difficulty === 'hardcore' ? 'hardcore' : 'normal';
+  S.set.difficulty = 'normal';
   S.minorOnly = !!S.set.minorOnly;
   if (['random', 'M', 'F'].indexOf(S.set.gender) < 0) S.set.gender = 'random'; // v5.6.2: giới tính sinh học nam / nữ
   var LGBT_SUB = ['top', 'bot', 'les', 'bi'];
@@ -206,7 +206,6 @@
     var talent = l.talent ? U.cap(E.talentText(l)) + (l.game && l.flags.gamePicked ? ' · ' + l.game : '') : 'Chưa bộc lộ';
     var tags = [E.QUINT[f.q].replace('một trong những ', '').replace('một ', '').replace('gia đình', 'Gia đình'), l.urban ? 'Thành thị' : 'Nông thôn'];
     if (l.eth) tags.push(l.eth); if (l.chosenOrient || l.orient !== 'straight') tags.push('LGBTQ+');
-    if (l.difficulty === 'hardcore') tags.push('Hardcore');
     $('#heroProfile').innerHTML = '<div class="eyebrow">MỘT LƯỢT MÔ PHỎNG CÓ THỂ BẮT ĐẦU NHƯ SAU</div><h3>Hồ sơ xuất phát</h3>' +
       '<div class="idhead" style="margin:6px 0 10px">' + E.art.avatar(Object.assign({}, l, { age: 6, school: 'primary', job: null })) + '<div><b style="font-size:17px">' + esc(l.name) + '</b><div class="small muted">' + (l.sex === 'M' ? 'Bé trai' : 'Bé gái') + ' · ' + esc(where) + '</div></div></div>' +
       '<div class="prow"><span>Nơi sinh</span><span>' + esc(where) + '</span></div>' +
@@ -419,7 +418,6 @@
       '<div class="avatarbox">' + E.art.avatar(l) + '</div>' +
       '<div class="fact"><div class="k">Họ và tên</div></div><h1 class="name">' + esc(l.name) + '</h1>' + (l.nameSub ? '<div class="native">' + esc(l.nameSub) + '</div>' : '') +
       '<p>' + esc(l.log[0].t) + '</p>' +
-      (l.difficulty === 'hardcore' ? '<p class="notice"><b>HARDCORE · SINH TỒN</b> · Biến cố riêng ngay từ đầu đời. Môi trường lớn lên để lại hệ quả về cảm xúc, stress và việc học. Thu nhập lao động còn 18%, lãi dương còn 12%; cơ hội vươn lên rất khó nhưng vẫn có.</p>' : '') +
       '<p class="small muted">Sống đến tuổi thọ kỳ vọng mất khoảng ' + l.lifeMin + ' phút (1 năm ≈ ' + Math.round(sec) + ' giây). Nếu bạn đóng trang, cuộc đời được lưu trên trình duyệt này và tiếp tục khi bạn quay lại.</p>' +
       '<div class="facts">' + facts + '</div>' +
       '<div class="odds">' + odds + '</div>' +
@@ -640,7 +638,7 @@
   function renderTopbar() {
     var l = S.life;
     $('#lbAge').textContent = ageStr(l.age);
-    $('#lbMeta').textContent = (l.birthYear + l.age) + ' · ' + l.name + (l.difficulty === 'hardcore' ? ' · HARDCORE' : '') + ' · 1 năm ≈ ' + Math.round(secPerYear(l) / S.speed) + ' giây';
+    $('#lbMeta').textContent = (l.birthYear + l.age) + ' · ' + l.name + ' · 1 năm ≈ ' + Math.round(secPerYear(l) / S.speed) + ' giây';
     $('#pauseBtn').textContent = S.paused ? '▶ Tiếp tục' : '❚❚ Tạm dừng';
     $('#autoBtn').classList.toggle('on', S.auto);
     $('#minorBtn').classList.toggle('on', !!S.minorOnly);
@@ -718,11 +716,10 @@
     var job = E.CORPORATE159 && !l.job && E.CORPORATE159.title(l) ? U.cap(E.CORPORATE159.title(l)) : l.job ? U.cap(E.jobTitle(l)) + (vens.length ? ' · ' + vens.join(', ') : '') : vens.length ? U.cap(vens.join(', ')) : l.retired ? 'Đã nghỉ hưu' : l.flags.military ? 'Đang tại ngũ' : l.jailUntil != null && l.age < l.jailUntil ? 'Đang thụ án' : l.school ? 'Đang đi học' : l.age < 15 ? '—' : 'Thất nghiệp';
     var veh = l.veh ? (l.vehName || l.veh) + (l.veh === 'xe máy' && !l.lic.A1 ? ' (chưa có bằng)' : l.veh === 'ô tô' && !l.lic.B ? ' (chưa có bằng)' : '') : '';
     var med = l.medals && l.medals.length ? l.medals.map(function (m) { return m.m; }).reduce(function (a, m) { a[m] = (a[m] || 0) + 1; return a; }, {}) : null;
-    $('#idCard').innerHTML = '<h3>Căn cước · ' + esc(E.isVN(l) ? 'Việt Nam' : l.countryName) + (l.difficulty === 'hardcore' ? ' · Hardcore' : '') + '</h3>' +
+    $('#idCard').innerHTML = '<h3>Căn cước · ' + esc(E.isVN(l) ? 'Việt Nam' : l.countryName) + '</h3>' +
       '<div class="idhead">' + E.art.avatar(l) + '<div class="nm">' + esc(l.name) + (l.nameSub ? '<small>' + esc(l.nameSub) + '</small>' : '') + '</div></div>' +
       '<dl class="kv"><dt>Giới tính</dt><dd>' + sexWord(l) + (l.orient !== 'straight' && (l.realized || l.chosenOrient) ? ' · ' + E.orientLabel(l) : '') + '</dd>' +
       '<dt>Sinh</dt><dd>' + (l.birthDay ? l.birthDay + '/' : '') + l.birthMonth + '/' + l.birthYear + '</dd>' +
-      (l.difficulty === 'hardcore' && E.hardcoreState ? (function () { var h = E.hardcoreState(l); return '<dt>Môi trường lớn lên</dt><dd>' + esc(h.style) + '</dd><dt>Cảm xúc · tổn thương</dt><dd>' + Math.round(h.emotion) + '/100 · ' + Math.round(h.trauma) + '/100</dd>' + (l.age < 18 ? '' : '<dt>Nền tảng phục hồi</dt><dd>Học kỹ năng ' + Math.round(h.training) + ' · chỗ dựa ' + Math.round(h.support) + '/6</dd>'); })() : '') +
       (E.astroText ? '<dt>Giờ sinh · cung</dt><dd>' + esc(E.astroText(l)) + '</dd>' : '') +
       '<dt>Sống tại</dt><dd>' + esc(currentPlace(l)) + '</dd>' +
       (l.eth ? '<dt>Dân tộc</dt><dd>' + esc(l.eth) + '</dd>' : '') +
@@ -1015,9 +1012,9 @@
         var n = groups[g].filter(function (x) { return x.ok === true; }).length + (subs[g] && subs[g][SPENDSUB] && g === SPEND ? subs[g][SPENDSUB].filter(function (x) { return groups[g].indexOf(x) < 0; }).length : 0);
         return '<button class="chip sm' + (g === sel ? ' on' : '') + (n ? '' : ' off') + '" data-ag="' + esc(g) + '">' + esc(g) + (n ? ' <small>' + n + '</small>' : '') + '</button>';
       }).join('') + '</div>' +
-      (sel && subs[sel] ? (subSel ? '<div class="chips actsubs"><button class="chip sm" data-asub="">‹ ' + esc(sel) + '</button><button class="chip sm on" data-asub="' + esc(subSel) + '">' + esc(subSel) + '</button></div>' : '<div class="chips actsubs">' + Object.keys(subs[sel]).map(function (k) { var n = subs[sel][k].length; return '<button class="chip sm' + (n || k === SPENDSUB ? '' : ' off') + '" data-asub="' + esc(k) + '">' + esc(k) + (n ? ' <small>' + n + '</small>' : '') + '</button>'; }).join('') + '</div><p class="muted small actnote">Chọn một nhóm nhỏ để xem các việc bên trong.</p>') : '') +
+      (sel && subs[sel] ? (subSel ? '<div class="action-level-label">Nhóm việc trong mục đã chọn</div><div class="chips actsubs"><button class="chip sm" data-asub="">‹ ' + esc(sel) + '</button><button class="chip sm on" data-asub="' + esc(subSel) + '">' + esc(subSel) + '</button></div>' : '<div class="action-level-label">Nhóm việc trong mục đã chọn</div><div class="chips actsubs">' + Object.keys(subs[sel]).map(function (k) { var n = subs[sel][k].length; return '<button class="chip sm' + (n || k === SPENDSUB ? '' : ' off') + '" data-asub="' + esc(k) + '">' + esc(k) + (n ? ' <small>' + n + '</small>' : '') + '</button>'; }).join('') + '</div><p class="muted small actnote">Mở nhóm để xem phương án, chỉ thực hiện lựa chọn mới trừ lượt.</p>') : '') +
       (subSel === SPENDSUB ? recurHtml(l) + '<div class="recur-h">Chi tiêu một lần</div>' : '') +
-      (list ? '<div class="chips actlist">' + list.map(actChip).join('') + '</div>' : sel ? '' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
+      (list ? '<div class="action-level-label">Các việc có thể chọn</div><div class="chips actlist">' + list.map(actChip).join('') + '</div>' : sel ? '' : '<p class="muted small actnote">Bấm một nhóm để xem các việc có thể làm. Không chọn gì thì đôi khi game sẽ tự quyết thay bạn.</p>');
     if(S.life.flags.expansion110 && S.life.flags.expansion110.livingParent && LS.get('mkn.branch112',null)) {
       var back112=document.createElement('button');back112.className='btn ghost sm';back112.id='returnParent112';back112.textContent='Quay lại bản lưu đời cha/mẹ';p.appendChild(back112);
       back112.onclick=function(){ask('Quay lại đời cha/mẹ','Đời con hiện tại được giữ riêng; bản cha/mẹ tiếp tục từ thời điểm bạn chuyển góc nhìn.','Quay lại',function(){var b=LS.get('mkn.branch112',null);if(!b||!b.life)return;var parentLife;try{parentLife=E.migrate?E.migrate(b.life):b.life;}catch(e){if(SS)SS.logError('branch112',e&&e.code||'MIGRATE',e&&e.message);toast('Chưa mở được bản lưu đời cha/mẹ; đời con vẫn giữ nguyên.');return;}if(!LS.set('mkn.childBranch112',{life:S.life,cohort:S.cohort,speed:S.speed,auto:S.auto})){toast('Chưa lưu được đời con nên chưa chuyển về đời cha/mẹ. Hãy giải phóng bộ nhớ hoặc tải bản lưu về máy.');return;}S.life=parentLife;S.cohort=b.cohort||[];S.speed=b.speed||1;S.auto=false;S.preview=null;closeModal();persist();enterLife();},'Ở lại đời con');};

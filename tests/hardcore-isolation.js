@@ -16,7 +16,8 @@ function gameContext(options) {
 }
 function game() { return gameContext().E; }
 module.exports = { game, gameContext };
-if (require.main === module) {
+if (require.main === module && !game().DIFFICULTIES.hardcore) { require('./actions894'); }
+else if (require.main === module) {
 const cases = [
   ...Array.from({ length: 6 }, (_, i) => ({ mode: 'vn', variant: i % 2 ? '63' : '34', seed: 78100 + i, year: 2026 })),
   ...['US', 'JP', 'IN', 'NG', 'DE', 'BR'].map((country, i) => ({ mode: 'world', country, seed: 78200 + i, year: 2026 }))

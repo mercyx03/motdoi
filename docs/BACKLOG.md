@@ -101,3 +101,7 @@ kiểm thế giới đội tuyển độc lập khi nhân vật vắng mặt, nh
 lên/xuống hạng CLB, lịch VCK đầy đủ và đàm phán nhãn hàng (chưa triển khai, không tính PASS).
 Chưa kiểm binding REVIEWS_DB thực tế. Nhãn nhật ký “Đã phát hành” theo chỉ thị riêng của chủ dự án
 cho bản bàn giao; không chứng minh website đã upload. Không tự deploy.
+
+## GĐ6 / hành động, bạn thân và tình huống ở xa 8.9.5
+
+Triển khai đợt sửa theo ảnh/video: bỏ Hardcore, lượt thực hiện thay cho lượt mở menu, nhóm hành động, bạn thân, chứng chỉ và chuyến về thăm. Kiểm thử trọng điểm ghi tại ACTIONS-895-ACCEPTANCE.md. Nghiệm thu cuối còn regression toàn bộ trên mã cuối, video/save thực tế gặp lỗi, thiết bị Android/iOS thật và binding Pages REVIEWS_DB. Không tính các phần chưa chạy là PASS; không tự deploy.

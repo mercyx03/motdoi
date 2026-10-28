@@ -164,7 +164,7 @@
   // ===================================================================
   // B3 / B4. Gom hành động: 5 nhóm Gia đình & tình cảm, 5 nhóm Tiền bạc & tài sản
   // ===================================================================
-  var FAMILY = '❤ Gia đình & tình cảm', MONEY = '💰 Tiền bạc & tài sản';
+  var FAMILY = 'Gia đình', MONEY = '💰 Tiền bạc & tài sản';
   var SUB = {
     love: [FAMILY, '1. Tình yêu & hôn nhân'], kids: [FAMILY, '2. Sinh con & nuôi con'], manage: [FAMILY, '3. Quản lý con cái'], kin: [FAMILY, '4. Quan hệ gia đình'], events: [FAMILY, '5. Hoạt động & sự kiện gia đình'],
     spend: [MONEY, '6. Chi tiêu & sinh hoạt'], bank: [MONEY, '7. Ngân hàng & vay vốn'], invest: [MONEY, '8. Đầu tư'], estate: [MONEY, '9. Kinh doanh & bất động sản'], things: [MONEY, '10. Phương tiện & tài sản']
