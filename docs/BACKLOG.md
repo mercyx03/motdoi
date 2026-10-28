@@ -81,3 +81,13 @@ Các mục triển khai còn thiếu của checkpoint 8.8.1–8.8.4 nêu trên �
 ## 8.8.6 — Boys Planet và quốc gia
 
 Hoàn thành triển khai, kiểm thử trọng điểm: country-survival 273, showbiz-idol70/games585/quiz4047/dating69/integration92; smoke/save/safety/NPC và Chrome390/1280 đạt. Không chạy toàn bộ regression77; chưa có bản lưu thực tế bị kẹt của người báo lỗi. Bản đóng gói mới giữ packaged tới khi chủ dự án xác nhận upload.
+
+
+## GĐ6 / nghiệm thu bóng đá chuyên nghiệp 8.9.2
+
+Mô hình rút gọn đã triển khai trực tiếp; xem FOOTBALL-CAREER.md cho audit, cơ chế và giới hạn.
+Nghiệm thu cuối còn: regression toàn bộ trên mã cuối, mẫu save thật đang làm cầu thủ, thiết bị thật;
+kiểm thế giới đội tuyển độc lập khi nhân vật vắng mặt, nhập tịch kép, thể thức theo thời kỳ,
+lên/xuống hạng CLB, lịch VCK đầy đủ và đàm phán nhãn hàng (chưa triển khai, không tính PASS).
+Chưa kiểm binding REVIEWS_DB thực tế. Nhãn nhật ký “Đã phát hành” theo chỉ thị riêng của chủ dự án
+cho bản bàn giao; không chứng minh website đã upload. Không tự deploy.

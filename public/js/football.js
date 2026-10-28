@@ -1,0 +1,402 @@
+/* Professional football extends the existing athlete career and annual finance pipeline. */
+(function (G) {
+  'use strict';
+  var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, D = E.FOOTBALL_DATA;
+  function year(l) { return l.birthYear + l.age; }
+  function peek(l) { return l.flags && l.flags.football; }
+  function club(id) { return D.clubs.find(function (c) { return c.id === id; }); }
+  function athlete(l) { return !!(l.job && E.resolveJob(l.job.id) === 'vdv' && l.talentSub === 'bóng đá'); }
+  function free(l) { return X.free(l, 10) && !(l.flags && l.flags.military); }
+  function usd(l, n) { var home = G.W.BY[H.resCode(l)]; return l.cur === 'vnd' ? n * G.CUR.VND / 1e6 : n / G.CUR.priceLevel(home ? home.gdp : l.gdp); }
+  function active(l) { var s = peek(l); return !!(s && s.stage !== 'retired' && free(l)); }
+  function init(l, r, legacySave) {
+    if (peek(l)) return peek(l);
+    r = r || function () { return .5; };
+    var s = { version: 1, stage: 'local', position: 'MF', skills: {}, potential: 55 + r() * 40,
+      form: 50, fitness: 85, stability: 50, recovery: 50, injury: 0, reputation: 0, internationalRep: 0,
+      training: 'balanced', style: 'possession', trials: {}, offers: [], contracts: [], seasons: [], trophies: [],
+      totals: { apps: 0, goals: 0, assists: 0, clean: 0, minutes: 0 }, national: { country: l.country, caps: 0, goals: 0, assists: 0, qualified: {} },
+      coaches: {}, coach: { id: l.id + ':football:local', name: H.stranger(l, r, 'M'), trust: 50, style: 'Khuyến khích, coi trọng học văn hóa', history: [] },
+      familySupport: l.fam && l.fam.q >= 3 ? 70 : 45, studyBalance: true, events: {} };
+    D.skills.forEach(function (k) { s.skills[k] = Math.min(s.potential, 22 + r() * 18 + (l.skill || 0) * .2); });
+    l.flags.football = s;
+    // A legacy athlete keeps the current career and receives a bounded transition contract.
+    if (legacySave && athlete(l)) {
+      var legacy = D.clubs.find(function (c) { return c.name === l.job.club; }) || D.clubs.find(function (c) { return c.country === H.resCode(l); });
+      if (legacy) {
+        s.club = legacy.id; s.stage = l.age < 16 ? 'youth' : 'pro';
+        D.skills.forEach(function (k) { s.skills[k] = Math.min(95, Math.max(s.skills[k], l.skill || 30)); });
+        s.potential = Math.max(s.potential, l.skill || 30);
+        if (s.stage === 'pro') s.contract = { club: legacy.id, start: year(l), end: year(l) + 2, annualUSD: wage(l, legacy), bonusUSD: 0, signingUSD: 0, signed: true, legacy: true };
+      } else s.legacyFallback = true;
+    }
+    return s;
+  }
+  function rating(l) {
+    var s = peek(l); if (!s) return 0;
+    var weights = D.weights[s.position] || D.weights.MF, total = 0, n = 0;
+    Object.keys(weights).forEach(function (k) { total += s.skills[k] * weights[k]; n += weights[k]; });
+    return U.clamp(total / n * .76 + s.form * .1 + s.fitness * .08 + s.skills.discipline * .06, 0, 100);
+  }
+  function stageFor(l) { return l.age < 15 ? 'U15' : l.age < 17 ? 'U17' : l.age < 19 ? 'U19' : 'U21'; }
+  function trialOptions(l) {
+    return D.clubs.filter(function (c) { return l.age >= c.minAge && l.age <= c.maxAge && (c.country === H.resCode(l) || l.age >= 18 && rating(l) >= 55); });
+  }
+  function trialCost(l, c) { return usd(l, c.country === H.resCode(l) ? 25 : 700) * (c.scholarship && peek(l).familySupport < 50 ? .2 : 1); }
+  function trial(l, id, r, log) {
+    var s = peek(l), c = club(id), y = year(l);
+    if (!active(l) || !c || s.contract || !trialOptions(l).includes(c) || s.trials[id] === y || l.money < trialCost(l, c)) return false;
+    H.cash(l, -trialCost(l, c), 'Đi lại và ăn ở thử tuyển bóng đá'); s.trials[id] = y;
+    var score = rating(l) + s.potential * .13 + (s.studyBalance ? 2 : 0) + r() * 24 - 12;
+    var threshold = c.competition * .6 + l.age * .65;
+    var result = score >= threshold + 9 ? 'accepted' : score >= threshold + 3 ? 'extended' : score >= threshold - 4 ? 'lower' : 'rejected';
+    if (s.injury > 0) result = 'rejected';
+    s.lastTrial = { year: y, club: id, result: result, score: score };
+    if (result === 'accepted') {
+      s.offers.push({ id: 'academy:' + id + ':' + y, club: id, kind: 'academy', expires: y, scholarship: c.scholarship });
+      log(c.name + ' nhận bạn vào ' + stageFor(l) + '. Mở lời mời để tự chọn đội.', 'good');
+      if (score > threshold + 20) {
+        var other = D.clubs.find(function (x) { return x.country === c.country && x.id !== id && x.tier === c.tier; });
+        if (other) s.offers.push({ id: 'scout:' + other.id + ':' + y, club: other.id, kind: 'academy', expires: y });
+      }
+    } else if (result === 'extended') { s.events.retrial = { club: id, year: y + 1 }; log(c.name + ' mời trở lại thử việc vào năm sau; cần duy trì thể lực và luyện tập.', 'neutral'); }
+    else if (result === 'lower') {
+      var lower = D.clubs.find(function (x) { return x.country === c.country && x.tier > c.tier; });
+      if (lower) s.offers.push({ id: 'lower:' + lower.id + ':' + y, club: lower.id, kind: 'academy', expires: y });
+      log('Chưa đạt yêu cầu đội này. ' + (lower ? lower.name + ' đề nghị một lộ trình cấp thấp hơn.' : 'Bạn có thể luyện tập rồi thử lại năm sau.'), 'neutral');
+    } else log(c.name + ' từ chối: ' + (s.injury ? 'cần hồi phục chấn thương.' : 'năng lực hoặc phong độ chưa đủ; có thể thử lại năm sau.'), 'bad');
+    return result;
+  }
+  function relocate(l, code, log) {
+    if (H.resCode(l) === code) return;
+    var dest = G.W.BY[code]; if (!dest) return;
+    var oldGDP = (G.W.BY[H.resCode(l)] || l).gdp, newCur = code === 'VN' ? 'vnd' : 'usd';
+    var oldUSD = l.cur === 'vnd' ? 1e6 / G.CUR.VND : G.CUR.priceLevel(oldGDP);
+    var newUnits = newCur === 'vnd' ? G.CUR.VND / 1e6 : 1 / G.CUR.priceLevel(dest.gdp);
+    E.abroadConvert(l, oldUSD * newUnits); l.cur = newCur;
+    l.abroad = code === l.country ? null : { code: code, name: dest.name, perm: true, football: true, pool: String(dest.pool || 'en').split(',')[0].split(':')[0] };
+    l.city = dest.cities[0]; l.place = l.city; l.urban = true; H.setBase(l);
+    log('Chuyển nơi cư trú tới ' + dest.name + ' để thi đấu; tiền và tài sản được quy đổi, quốc tịch giữ nguyên. Chi phí gia đình tiếp tục tính theo nơi sống.', 'neutral');
+    H.fx(l, { hap: -2, soc: -1 });
+  }
+  function wage(l, c) {
+    var s = peek(l), ability = rating(l), fame = 1 + Math.min(5, s.reputation / 25 + s.internationalRep / 40);
+    var age = l.age < 23 ? .7 + s.potential / 200 : l.age > 32 ? .65 : 1;
+    var role = ability > c.strength + 8 ? 1.8 : ability < c.strength - 8 ? .5 : 1;
+    return Math.round(c.financeUSD * .18 * (.35 + ability / 100) * fame * age * role * (s.position === 'FW' ? 1.1 : 1));
+  }
+  function negotiate(l, id, r, log) {
+    var s = peek(l), c = club(id), y = year(l);
+    if (!active(l) || !c || s.negotiateAt === y || l.age < 16 || s.stage === 'retired') return false;
+    var renewal = s.contract && s.contract.club === id;
+    if (!renewal && (rating(l) < c.strength - 14 || c.tier === 1 && s.reputation < c.reputation * .35)) return false;
+    if (s.contract && s.contract.end > y + 1 && !renewal && c.financeUSD < s.contract.annualUSD * 2) return false;
+    s.negotiateAt = y;
+    if (r() > U.clamp(.4 + (rating(l) - c.strength) / 80 + s.reputation / 300, .08, .85)) { log(c.name + ' chưa gửi đề nghị: cần phù hợp ngân sách và nhu cầu vị trí. Có thể đàm phán lại năm sau.', 'neutral'); return false; }
+    s.offers.push({ id: 'pro:' + id + ':' + y, club: id, kind: 'pro', expires: y, annualUSD: wage(l, c), years: l.age < 18 ? 2 : l.age > 32 ? 1 : 3,
+      transferUSD: s.contract && !renewal ? Math.round(s.contract.annualUSD * Math.max(0, s.contract.end - y)) : 0 });
+    log(c.name + ' gửi hợp đồng để bạn xem và quyết định; phí chuyển nhượng thuộc câu lạc bộ, không cộng vào tiền cá nhân.', 'good'); return true;
+  }
+  function accept(l, offerId, r, log) {
+    var s = peek(l), y = year(l), o = s && s.offers.find(function (x) { return x.id === offerId && x.expires >= y; });
+    if (!active(l) || !o || o.kind === 'pro' && l.age < 16 || l.job && !athlete(l)) return false;
+    var c = club(o.club); if (!c || s.loan) return false;
+    if (s.contract) s.contracts.push(Object.assign({}, s.contract, { closed: y }));
+    s.club = c.id;
+    s.legacyFallback = false;
+    if (o.kind === 'academy') { s.stage = 'youth'; s.scholarship = c.scholarship; s.contract = null; }
+    else {
+      s.stage = 'pro'; s.contract = { club: c.id, start: y, end: y + o.years, annualUSD: o.annualUSD, bonusUSD: o.annualUSD * .001, signingUSD: o.annualUSD * .05, signed: false };
+      if (!l.job) {
+        var school = { school: l.school, schoolEnd: l.schoolEnd, cityStudent: l.cityStudent };
+        E.startJob(l, 'vdv', r, function () {}, true);
+        if (s.studyBalance) Object.assign(l, school);
+      }
+      l.talentSub = 'bóng đá'; l.job.club = c.name; l.job.rank = 1; l.retired = false; l.indep = true;
+    }
+    relocate(l, c.country, log); s.offers = [];
+    s.coaches = s.coaches || {};
+    if (!s.coaches[c.id]) s.coaches[c.id] = { id: l.id + ':football:' + c.id, name: H.stranger(l, E.LIFE138.random(l.id + ':coach:' + c.id), 'M'), trust: 50, style: c.tactics === 'defensive' ? 'Kỷ luật, ưu tiên phòng ngự' : 'Khuyến khích kỹ thuật và phối hợp', history: [] };
+    s.coach = s.coaches[c.id];
+    s.coach.history.push({ year: y, text: 'Gia nhập ' + c.name });
+    H.mem(l, 'Gia nhập ' + c.name + (s.stage === 'youth' ? ' · ' + stageFor(l) : ' với hợp đồng chuyên nghiệp') + '.', 5);
+    log('Bạn chọn ' + c.name + '. ' + (s.stage === 'youth' ? 'Tiếp tục học văn hóa song song theo lựa chọn cá nhân.' : 'Lương sẽ đi qua ngân sách thu nhập hằng năm.'), 'good'); return true;
+  }
+  function train(l, r, log) {
+    var s = peek(l), c = club(s.club), age = l.age, peak = s.position === 'GK' ? 32 : 28;
+    if (s.injury > 0) { s.injury = Math.max(0, s.injury - Math.ceil(40 + s.recovery / 5)); s.fitness = Math.min(100, s.fitness + 10); if (!s.injury) log('Đã hoàn tất phục hồi, có thể trở lại thi đấu.', 'good'); return; }
+    var load = s.training === 'intense' ? 1.8 : s.training === 'rest' ? 0 : 1;
+    var gain = age <= peak ? (age < 22 ? 3 : 1.2) * load * (c ? .6 + c.academy / 100 : .65) * (.8 + s.familySupport / 250) : -(1 + (age - peak) * .25);
+    D.skills.forEach(function (k) {
+      var specific = s.training === k ? 1.8 : 1;
+      s.skills[k] = U.clamp(s.skills[k] + gain * specific * (.7 + r() * .6), 1, s.potential);
+    });
+    s.fitness = U.clamp(s.fitness + (load === 0 ? 25 : load > 1 ? -14 : 8), 0, 100);
+    s.stability = U.clamp(s.stability + (s.training === 'balanced' ? 2 : 0), 0, 100);
+    if (s.studyBalance && age < 22) { H.fx(l, { kno: 1 }); s.familySupport = Math.min(100, s.familySupport + 1); }
+    else if (age < 18) { H.fx(l, { kno: -2, hap: -1 }); s.familySupport = Math.max(0, s.familySupport - 3); }
+    var risk = .015 + (load > 1 ? .16 : 0) + Math.max(0, 50 - s.fitness) / 300 + Math.max(0, 60 - l.st.hea) / 400;
+    if (load && r() < risk) { s.injury = r() < .2 ? 60 : 8; H.fx(l, { hea: -5 }); log('Chấn thương khi tập luyện: cần phục hồi ' + s.injury + ' tuần, không thi đấu khi chưa bình phục.', 'bad'); }
+    if (athlete(l)) l.skill = rating(l);
+  }
+  function match(l, season, id, opponent, r, international, knockout) {
+    var prior = season.matches.find(function (m) { return m.id === id; }); if (prior) return prior;
+    var s = peek(l), c = club(s.club), quality = international ? D.markets[s.national.country][4] : c ? c.strength : 30;
+    var available = !s.injury && s.fitness > 25, ability = rating(l), coach = s.coach.trust;
+    var chance = U.clamp(.55 + (ability - quality) / 100 + (coach - 50) / 250, .08, .96);
+    var minutes = !available ? 0 : r() < chance ? 60 + Math.floor(r() * 31) : r() < .5 ? 15 + Math.floor(r() * 25) : 0;
+    var home = season.matches.length % 2 === 0, tactical = s.style === (c && c.tactics) ? 3 : 0;
+    var edge = (quality - opponent + (minutes ? ability * .1 : 0) + tactical + (home ? 3 : 0) + (s.form - 50) * .1) / 40;
+    var gf = Math.max(0, Math.floor(r() * 4 + edge)), ga = Math.max(0, Math.floor(r() * 4 - edge));
+    var won = gf > ga || knockout && gf === ga && r() < .5;
+    var goals = 0, assists = 0;
+    for (var i = 0; i < gf && minutes; i++) { if (s.position !== 'GK' && r() < (s.position === 'FW' ? .4 : .15) * minutes / 90) goals++; else if (r() < .25 * minutes / 90) assists++; }
+    var card = minutes && r() < (100 - s.skills.discipline) / 400 ? (r() < .1 ? 'đỏ' : 'vàng') : null;
+    var m = { id: id, round: id.split(':').pop(), competition: id.startsWith('league:') ? (c ? c.league : 'Giải trẻ') : id.startsWith('national:') ? 'Giao hữu quốc tế' : id.split(':')[0], opponentName: 'Đối thủ mô phỏng (sức mạnh ' + Math.round(opponent) + ')', home: home, opponent: opponent, gf: gf, ga: ga, win: won, minutes: minutes, goals: goals, assists: assists,
+      clean: s.position === 'GK' && minutes >= 60 && !ga ? 1 : 0, card: card, substituted: minutes > 0 && minutes < 90,
+      absence: minutes ? null : s.injury ? 'Chấn thương' : !available ? 'Quá tải' : 'Không được đăng ký / dự bị',
+      rating: minutes ? U.clamp(5 + (won ? 1 : 0) + goals + assists * .5 + r(), 1, 10) : null, international: !!international };
+    season.matches.push(m);
+    if (minutes) {
+      var total = international ? s.national : s.totals;
+      if (international) { total.caps++; total.goals += goals; total.assists += assists; }
+      else { total.apps++; total.goals += goals; total.assists += assists; total.minutes += minutes; total.clean += m.clean; }
+      s.form = U.clamp(s.form + (won ? 2 : -2) + goals, 10, 95);
+      s.fitness = Math.max(0, s.fitness - 1);
+      if (r() < .008 + Math.max(0, 45 - s.fitness) / 1500) { s.injury = r() < .15 ? 60 : 4; m.injury = s.injury; H.fx(l, { hea: -3 }); }
+    }
+    return m;
+  }
+  function tournament(l, z, name, strength, r, group, international) {
+    var id = name + ':' + z.year, results = [], points = 0;
+    if (group) {
+      for (var i = 0; i < 3; i++) { var m = match(l, z, id + ':group' + i, strength + i * 2, r, international, false); results.push(m); points += m.gf > m.ga ? 3 : m.gf === m.ga ? 1 : 0; }
+      if (points < 4) { z.competitions.push({ name: name, stage: 'Bị loại vòng bảng', points: points }); return false; }
+    }
+    for (var round = 0; round < 3; round++) {
+      var k = match(l, z, id + ':knockout' + round, strength + round * 3, r, international, true); results.push(k);
+      if (!k.win) { z.competitions.push({ name: name, stage: ['Tứ kết', 'Bán kết', 'Chung kết'][round] }); return false; }
+    }
+    z.competitions.push({ name: name, stage: 'Vô địch' });
+    if (results.some(function (m) { return m.minutes > 0; })) {
+      peek(l).trophies.push({ year: z.year, club: international ? null : z.club, nation: international ? peek(l).national.country : null, name: name });
+      peek(l).reputation = Math.min(100, peek(l).reputation + 4);
+    }
+    return true;
+  }
+  function national(l, z, r, log) {
+    var s = peek(l), n = s.national, market = D.markets[n.country];
+    n.called = false;
+    if (!market || s.injury || s.fitness < 35 || n.country !== l.country) { n.reason = 'Chưa đủ điều kiện đại diện hoặc thể lực.'; return; }
+    var apps = z.matches.filter(function (m) { return !m.international && m.minutes > 0; }).length;
+    var threshold = market[4] - (l.age < 23 ? 12 : 0), chance = U.clamp(.35 + (rating(l) - threshold) / 90 + apps / 150, .02, .88);
+    if (apps < 5 || rating(l) < threshold - 6 || r() >= chance) { n.reason = 'Cần ra sân ít nhất 5 trận, cải thiện năng lực vị trí và phong độ; còn cạnh tranh danh sách triệu tập.'; return; }
+    n.called = true; n.level = l.age < 17 ? 'U17' : l.age < 20 ? 'U20' : l.age < 23 ? 'U23' : 'ĐTQG';
+    n.captain = n.caps > 40 && s.skills.discipline > 75;
+    log('Được triệu tập ' + n.level + ' ' + n.country + (n.captain ? ' với vai trò đội trưởng.' : '.'), 'good');
+    var conf = D.confeds[market[0]], y = z.year;
+    if (l.age < 23) { if ((y - D.calendar.youth.anchor) % 2 === 0) tournament(l, z, 'Giải trẻ ' + n.level + ' · ' + market[0], conf.strength - 10, r, true, true); return; }
+    match(l, z, 'national:' + y + ':friendly', conf.strength, r, true, false);
+    [{ name: conf.nation, anchor: conf.anchor, cycle: conf.cycle, strength: conf.strength },
+      { name: 'FIFA World Cup', anchor: D.calendar.world.anchor, cycle: 4, strength: 86 }].forEach(function (ev) {
+      var offset = ((y - ev.anchor) % ev.cycle + ev.cycle) % ev.cycle;
+      var key = ev.name + ':' + (y + (offset === ev.cycle - 1 ? 1 : 0));
+      if (offset === ev.cycle - 1) {
+        var pts = 0;
+        for (var i = 0; i < 6; i++) { var m = match(l, z, key + ':qualifier' + i, conf.strength + i, r, true, false); pts += m.gf > m.ga ? 3 : m.gf === m.ga ? 1 : 0; }
+        n.qualified[key] = pts >= (ev.name === 'FIFA World Cup' ? 11 : 8);
+        z.competitions.push({ name: 'Vòng loại ' + ev.name, stage: n.qualified[key] ? 'Giành vé' : 'Không giành vé', points: pts, confederation: market[0], slots: conf.slots });
+      }
+      if (!offset && n.qualified[key]) { tournament(l, z, ev.name, ev.strength, r, true, true); s.internationalRep = Math.min(100, s.internationalRep + 5); }
+    });
+  }
+  function season(l, r, log) {
+    var s = peek(l), y = year(l), c = club(s.loan ? s.loan.club : s.club);
+    if (s.seasons.some(function (z) { return z.year === y; })) return s.seasons.find(function (z) { return z.year === y; });
+    var z = { year: y, club: c && c.id, stage: s.stage, matches: [], competitions: [], table: [] };
+    s.seasons.push(z);
+    if (!c || s.stage === 'local' || s.stage === 'free') return z;
+    var youth = s.stage === 'youth', peers = D.clubs.filter(function (x) { return x.country === c.country && x.tier === c.tier; });
+    var table = peers.map(function (x) { return { id: x.id, name: x.name, points: 0, gf: 0, ga: 0 }; });
+    for (var i = 0; i < peers.length; i++) for (var j = i + 1; j < peers.length; j++) for (var leg = 0; leg < 2; leg++) {
+      var a = peers[i], b = peers[j], own = a.id === c.id || b.id === c.id;
+      var m = own ? match(l, z, 'league:' + y + ':' + a.id + ':' + b.id + ':' + leg, (a.id === c.id ? b : a).strength - (youth ? 15 : 0), r, false, false) : { gf: Math.floor(r() * 4), ga: Math.floor(r() * 4) };
+      if (own) { m.opponentName = (a.id === c.id ? b : a).name; m.competition = youth ? stageFor(l) + ' · ' + c.league : c.league; }
+      var gf = own && b.id === c.id ? m.ga : m.gf, ga = own && b.id === c.id ? m.gf : m.ga;
+      table[i].gf += gf; table[i].ga += ga; table[j].gf += ga; table[j].ga += gf;
+      table[i].points += gf > ga ? 3 : gf === ga ? 1 : 0; table[j].points += ga > gf ? 3 : gf === ga ? 1 : 0;
+    }
+    table.sort(function (a, b) { return b.points - a.points || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf || a.id.localeCompare(b.id); });
+    z.table = table; z.place = table.findIndex(function (x) { return x.id === c.id; }) + 1;
+    var leagueName = youth ? stageFor(l) + ' · ' + c.league : c.league;
+    z.competitions.push({ name: leagueName, stage: 'Hạng ' + z.place });
+    if (z.place === 1 && z.matches.some(function (m) { return m.minutes > 0; })) s.trophies.push({ name: leagueName, year: y, club: c.id });
+    if (!youth) {
+      tournament(l, z, c.cup, c.strength + 4, r, false, false);
+      var previous = s.seasons.find(function (x) { return x.year === y - 1 && x.club === c.id && x.stage === 'pro'; }), conf = D.confeds[c.confed];
+      if (c.tier === 1 && previous && previous.place <= 2) {
+        var name = previous.place === 2 && conf.second ? conf.second : conf.club;
+        tournament(l, z, name, conf.strength + 8, r, true, false);
+      }
+      var winner = s.trophies.some(function (t) { return t.club === c.id && t.name === conf.club && t.year < y && t.year >= y - 4; });
+      if (y >= D.calendar.clubWorld.from && (y - D.calendar.clubWorld.anchor) % 4 === 0 && winner) tournament(l, z, 'FIFA Club World Cup', 90, r, true, false);
+    }
+    national(l, z, r, log);
+    var apps = z.matches.filter(function (m) { return !m.international && m.minutes > 0; }).length;
+    if (z.matches.reduce(function (n, m) { return n + m.goals; }, 0) >= 8) s.trophies.push({ year: y, club: c.id, name: 'Khen thưởng ghi bàn xuất sắc (mô phỏng)' });
+    s.estimatedValueUSD = Math.round(wage(l, c) * Math.max(.2, (s.contract ? s.contract.end - y : 0)) * (l.age < 25 ? 2 : 1));
+    s.role = rating(l) > c.strength + 10 && apps >= 5 ? 'Ngôi sao' : apps >= 4 ? 'Đá chính' : 'Dự bị';
+    if (s.role !== 'Dự bị' && s.skills.discipline >= 80 && s.coach.trust >= 70) s.role = 'Đội trưởng';
+    s.reputation = U.clamp(s.reputation + apps * .35 + (z.place === 1 ? 3 : 0) - (apps < 3 ? 2 : 0), 0, 100);
+    s.coach.trust = U.clamp(s.coach.trust + (s.training === 'intense' ? -3 : 2) + (s.form > 60 ? 2 : -1), 0, 100);
+    log('Mùa ' + y + ' · ' + c.name + ': hạng ' + z.place + ', ' + apps + ' lần ra sân; ' + s.role + '.', 'neutral');
+    s.seasons = s.seasons.slice(-50); return z;
+  }
+  function retire(l, log) {
+    var s = peek(l); if (!s || s.stage === 'retired') return false;
+    if (s.contract) s.contracts.push(Object.assign({}, s.contract, { retired: year(l) }));
+    s.stage = 'retired'; s.contract = null; s.loan = null; s.offers = [];
+    if (athlete(l)) { l.job = null; l.flags.needJob = true; }
+    log('Giải nghệ cầu thủ. Hồ sơ thành tích được giữ; có thể học nghề huấn luyện, tuyển trạch hoặc bình luận.', 'big'); return true;
+  }
+  function annual(l, r, log) {
+    var s = peek(l); if (!s || s.legacyFallback || s.stage === 'retired' || s.processed === year(l) || !active(l)) return;
+    s.processed = year(l); s.offers = s.offers.filter(function (o) { return o.expires >= year(l); });
+    if (s.loan && year(l) >= s.loan.end) { s.club = s.loan.parent; s.loan = null; relocate(l, club(s.club).country, log); log('Hết thời hạn cho mượn, trở lại câu lạc bộ chủ quản.', 'neutral'); }
+    if (s.contract && year(l) >= s.contract.end) { s.contracts.push(s.contract); s.contract = null; s.stage = 'free'; log('Hết hợp đồng: trở thành cầu thủ tự do, không còn lương câu lạc bộ.', 'neutral'); }
+    if (s.stage === 'youth' && l.age > 21) { s.stage = 'free'; log('Hết tuổi đội trẻ; cần hợp đồng để tiếp tục chuyên nghiệp.', 'neutral'); }
+    train(l, r, log); var z = season(l, r, log);
+    if (s.stage === 'youth') {
+      if (s.supportPaid !== year(l)) {
+        s.supportPaid = year(l);
+        var trainingClub = club(s.club), stipend = s.scholarship ? Math.min(2400, trainingClub.financeUSD * .005) : 0;
+        if (stipend) H.cash(l, usd(l, stipend), 'Hỗ trợ đào tạo bóng đá (không phải lương chuyên nghiệp)');
+      }
+      if (l.age >= 16 && rating(l) > club(s.club).strength - 18) negotiate(l, s.club, r, log);
+    }
+    if (s.stage === 'pro') {
+      l.job && athlete(l) && (l.job.club = club(s.loan ? s.loan.club : s.club).name);
+      if (s.contract.end - year(l) <= 1) negotiate(l, s.club, r, log);
+      if (z && s.reputation > 12 && r() < .4) {
+        var candidates = D.clubs.filter(function (c) { return c.id !== s.club && c.strength < rating(l) + 10 && c.reputation < s.reputation * 2 + 30 && c.financeUSD >= s.contract.annualUSD * 2; });
+        if (candidates.length && s.negotiateAt !== year(l)) negotiate(l, U.pick(r, candidates).id, r, log);
+      }
+    }
+    if (l.age >= (s.position === 'GK' ? 43 : 40) || l.age >= 33 && rating(l) < 28) retire(l, log);
+  }
+  function income(l, r, log) {
+    var s = peek(l); annual(l, r, log);
+    if (!s || s.paid === year(l)) return 0;
+    s.paid = year(l);
+    if (s.stage !== 'pro' || !s.contract || s.contract.end <= year(l) || !free(l) || !athlete(l)) return 0;
+    var c = s.contract, z = s.seasons.find(function (z) { return z.year === year(l); });
+    var apps = z ? z.matches.filter(function (m) { return !m.international && m.minutes > 0; }).length : 0;
+    var signing = c.signed ? 0 : c.signingUSD; c.signed = true;
+    var gross = c.annualUSD + c.bonusUSD * apps + signing, sponsor = s.internationalRep >= 20 ? c.annualUSD * Math.min(.5, s.reputation / 200) : 0;
+    var costs = (gross + sponsor) * .15;
+    s.earnings = { year: year(l), salaryUSD: c.annualUSD, bonusUSD: c.bonusUSD * apps, signingUSD: signing, sponsorUSD: sponsor, taxAgentUSD: costs, netUSD: gross + sponsor - costs };
+    l.yr = l.yr || { items: [] }; l.yr.gross = usd(l, gross + sponsor); l.yr.si = 0;
+    log('Bóng đá: lương ' + H.money(l, usd(l, c.annualUSD)) + '/năm; thưởng và phí ký ' + H.money(l, usd(l, c.bonusUSD * apps + signing)) + '. Khấu trừ thuế/đại diện mô phỏng 15%, sinh hoạt tính riêng.', 'money');
+    l.job.yrs = (l.job.yrs || 0) + 1; l.workYrs = (l.workYrs || 0) + 1;
+    return usd(l, s.earnings.netUSD);
+  }
+  function loan(l, r, log) {
+    var s = peek(l); if (!active(l) || !s.contract || s.loan || s.role !== 'Dự bị' || s.contract.end <= year(l) + 1) return false;
+    var c = club(s.club), dest = D.clubs.find(function (x) { return x.country === c.country && x.tier > c.tier; });
+    if (!dest) return false;
+    s.loan = { parent: s.club, club: dest.id, end: year(l) + 1 }; log('Đồng ý cho mượn một mùa tới ' + dest.name + ' để cạnh tranh thời gian ra sân. Lương theo hợp đồng chủ quản, không cộng hai lần.', 'neutral'); return true;
+  }
+  function summary(l) {
+    var s = peek(l); if (!s) return 'Có thể bắt đầu bóng đá từ 10 tuổi, luyện tập tại địa phương rồi tự chọn nơi thử tuyển. Học viện không bảo đảm một suất chuyên nghiệp.';
+    var c = club(s.loan ? s.loan.club : s.club), z = s.seasons[s.seasons.length - 1];
+    return D.positions[s.position] + ' · ' + (s.stage === 'youth' ? stageFor(l) : s.stage) + ' · ' + (c ? c.name + ' (' + c.country + ')' : 'Chưa có đội') +
+      '\nNăng lực vị trí ' + Math.round(rating(l)) + ' · tiềm năng ' + Math.round(s.potential) + ' · phong độ ' + Math.round(s.form) + ' · thể lực ' + Math.round(s.fitness) + ' · hồi phục ' + s.recovery + ' · ổn định ' + s.stability +
+      '\n' + D.skills.map(function (k, i) { return D.skillNames[i] + ' ' + Math.round(s.skills[k]); }).join(' · ') +
+      '\n' + (s.injury ? 'Chấn thương còn ' + s.injury + ' tuần.' : 'Sẵn sàng thi đấu.') + ' Vai trò: ' + (s.role || 'Chưa được xếp đội') +
+      '\n' + (s.contract ? 'Hợp đồng đến ' + s.contract.end + ': ' + H.money(l, usd(l, s.contract.annualUSD) / 12) + '/tháng; phí ký 5%, thưởng mỗi lần ra sân 0,1% lương năm.' : 'Chưa có hợp đồng chuyên nghiệp; không nhận lương nghề cầu thủ.') +
+      '\nSự nghiệp CLB: ' + s.totals.apps + ' trận · ' + s.totals.goals + ' bàn · ' + s.totals.assists + ' kiến tạo · ' + s.totals.clean + ' sạch lưới. ĐT: ' + s.national.caps + ' trận / ' + s.national.goals + ' bàn. Giá trị chuyển nhượng ước tính ' + H.money(l, usd(l, s.estimatedValueUSD || 0)) + '.' +
+      '\nTriệu tập: ' + (s.national.called ? s.national.level : s.national.reason || 'Cần thi đấu và chứng minh năng lực.') +
+      '\nHLV ' + s.coach.name + ' · ' + s.coach.style + ' · tín nhiệm ' + Math.round(s.coach.trust) + '. Hỗ trợ gia đình ' + s.familySupport + '/100.' +
+      '\n' + (z ? 'Mùa gần nhất: ' + z.competitions.map(function (e) { return e.name + ': ' + e.stage; }).join('; ') : 'Chưa có mùa giải.') +
+      '\nDanh hiệu: ' + (s.trophies.map(function (t) { return t.year + ' ' + t.name; }).join('; ') || 'Chưa có') + '\n' + D.model;
+  }
+  X.menu('footballCareer', 'Sự nghiệp bóng đá chuyên nghiệp', function (l) { return free(l) ? true : 'Cần đủ 10 tuổi và tự do đi lại'; }, summary, function (l) {
+    var s = peek(l);
+    if (!s) return [{ k: 'start', l: 'Bắt đầu bóng đá địa phương (giữ việc và việc học hiện có)', run: function (l, r, log) { init(l, r); log('Bắt đầu luyện bóng đá tại địa phương. Mở hồ sơ để chọn vị trí và nơi thử tuyển.', 'good'); } }];
+    return [{ k: 'training', l: 'Chọn vị trí, luyện tập, học văn hóa & phục hồi', run: function (l, r) { X.next(l, 'footballTraining', r); } },
+      { k: 'trials', l: 'Tự chọn câu lạc bộ thử tuyển / đàm phán', why: s.stage !== 'retired', run: function (l, r) { X.next(l, 'footballMarkets', r); } },
+      { k: 'offers', l: 'Xem và chọn lời mời (' + s.offers.length + ')', run: function (l, r) { X.next(l, 'footballOffers', r); } },
+      { k: 'results', l: 'Lịch đấu, bảng xếp hạng & kết quả từng trận', run: function (l, r) { X.next(l, 'footballResults', r); } },
+      { k: 'loan', l: 'Xin cho mượn một mùa để có cơ hội ra sân', why: s.stage === 'pro' && s.role === 'Dự bị', run: loan },
+      { k: 'coach', l: 'Trao đổi với huấn luyện viên về vai trò', why: s.coach.talkAt !== year(l), run: function (l, r, log) { s.coach.talkAt = year(l); s.coach.trust = U.clamp(s.coach.trust + (s.skills.discipline > 50 ? 5 : -5), 0, 100); s.coach.history.push({ year: year(l), text: 'Trao đổi vai trò: ' + s.role }); log('Huấn luyện viên yêu cầu duy trì kỷ luật, thể lực và phong độ; suất đá chính tiếp tục dựa trên cạnh tranh.', 'neutral'); } },
+      { k: 'retire', l: 'Giải nghệ cầu thủ', why: s.stage !== 'retired', run: function (l, r, log) { retire(l, log); } },
+      { k: 'coachJob', l: 'Chuyển sang nghề huấn luyện thể thao', why: s.stage === 'retired' && !l.job && s.totals.apps >= 20 && l.edu >= 3, run: function (l, r, log) { E.startJob(l, 'hlv_tt', r, log); } },
+      { k: 'scout', l: 'Chuyển sang nghề tuyển trạch bóng đá', why: s.stage === 'retired' && !l.job && s.totals.apps >= 20 && l.st.kno >= 45, run: function (l, r, log) { E.startJob(l, 'football_scout', r, log); } },
+      { k: 'caster', l: 'Chuyển sang nghề bình luận bóng đá', why: s.stage === 'retired' && !l.job && s.reputation >= 20 && l.st.soc >= 50, run: function (l, r, log) { E.startJob(l, 'football_caster', r, log); } }];
+  }, 10, 'Học tập & sự nghiệp');
+  X.menu('footballTraining', 'Chương trình bóng đá', function (l) { return active(l) ? true : 'Cần đang theo đuổi bóng đá'; }, summary, function (l) {
+    var s = peek(l), rows = Object.keys(D.positions).map(function (p) { return { k: p, l: 'Vị trí: ' + D.positions[p], run: function () { s.position = p; } }; });
+    ['balanced', 'intense', 'rest'].concat(D.skills).forEach(function (t, i) { rows.push({ k: t, l: 'Luyện tập: ' + (i < 3 ? ['Cân bằng', 'Cường độ cao (tăng nguy cơ chấn thương)', 'Nghỉ ngơi / phục hồi'][i] : D.skillNames[i - 3]), run: function () { s.training = t; } }); });
+    rows.push({ k: 'study', l: s.studyBalance ? 'Dồn thời gian cho bóng đá, giảm học văn hóa' : 'Cân bằng học văn hóa và bóng đá', run: function () { s.studyBalance = !s.studyBalance; } });
+    ['possession', 'counter', 'defensive'].forEach(function (t, i) { rows.push({ k: t, l: 'Lối chơi: ' + ['Kiểm soát', 'Phản công', 'Phòng ngự'][i], run: function () { s.style = t; } }); }); return rows;
+  }, 10);
+  X.menu('footballMarkets', 'Chọn quốc gia bóng đá', function (l) { return active(l) ? true : 'Cần đang theo đuổi bóng đá'; }, D.model, function (l) {
+    return Object.keys(D.markets).filter(function (code) { return l.age >= 18 || code === H.resCode(l); }).map(function (code) {
+      return { k: code, l: (G.W.BY[code] || { name: code }).name + ' · ' + D.markets[code][1], run: function (l, r) { X.next(l, 'footballClubs', r, { country: code }); } };
+    });
+  }, 10);
+  X.menu('footballClubs', 'Thử tuyển và đàm phán bóng đá', function (l) { return active(l) ? true : 'Cần đang theo đuổi bóng đá'; }, 'Thông tin là cấu hình mô phỏng. Dưới 18 tuổi chỉ thử tuyển tại quốc gia cư trú. Mỗi CLB thử một lần/năm, chỉ đàm phán hợp đồng một lần/năm. Gia nhập nghề chuyên nghiệp cần tự rời công việc khác.', function (l, arg) {
+    var s = peek(l), list = l.age <= 21 && !s.contract ? trialOptions(l) : D.clubs.filter(function (c) { return c.id === s.club || rating(l) >= c.strength - 14; });
+    return list.filter(function (c) { return c.country === (arg.country || H.resCode(l)); }).map(function (c) {
+      var youth = l.age <= 21 && !s.contract && s.stage !== 'free';
+      return { k: c.id, l: c.name + ' · ' + c.country + ' · ' + c.league,
+        h: 'Học viện / đội trẻ ' + c.minAge + '–' + c.maxAge + ' tuổi; đào tạo ' + c.academy + ', cạnh tranh ' + c.competition + ', cơ hội đội một ' + Math.round(c.promotion * 100) + '%, tuyển trạch ' + c.scout + '. ' + (c.education ? 'Có học văn hóa. ' : 'Tự sắp xếp học. ') + (c.scholarship ? 'Có hỗ trợ đào tạo; gia đình khó khăn giảm 80% chi phí thử.' : 'Không học bổng.') + ' Đi lại/ăn ở thử tuyển ' + H.money(l, trialCost(l, c)) + '. ' + c.objective + '. Lương dự kiến ' + H.money(l, usd(l, wage(l, c)) / 12) + '/tháng sau khi ký chuyên nghiệp.',
+        why: youth ? s.trials[c.id] !== year(l) && l.money >= trialCost(l, c) : l.age >= 16 && s.negotiateAt !== year(l),
+        run: function (l, r, log) { if (youth) trial(l, c.id, r, log); else negotiate(l, c.id, r, log); } };
+    });
+  }, 10);
+  X.menu('footballOffers', 'Lời mời bóng đá', function (l) { return active(l) ? true : 'Cần đang theo đuổi bóng đá'; }, 'Chọn đội muốn gia nhập. Lời mời chỉ có hiệu lực trong năm; hợp đồng không tự được chấp nhận. Học viện không trả lương chuyên nghiệp.', function (l) {
+    var s = peek(l); return s.offers.filter(function (o) { return o.expires >= year(l); }).map(function (o) { var c = club(o.club); return { k: o.id,
+      l: c.name + ' · ' + c.country + ' · ' + (o.kind === 'academy' ? stageFor(l) : H.money(l, usd(l, o.annualUSD) / 12) + '/tháng · ' + o.years + ' năm'),
+      h: 'Đào tạo ' + c.academy + ', cạnh tranh ' + c.competition + ', cơ hội đội một ' + Math.round(c.promotion * 100) + '%. ' + (o.kind === 'pro' ? 'Phí ký 5% lương năm, thưởng mỗi lần ra sân 0,1%. Phí chuyển nhượng giữa đội: ' + H.money(l, usd(l, o.transferUSD || 0)) : c.education ? 'Có học văn hóa song song.' : 'Cần tự sắp xếp học văn hóa.'),
+      why: !l.job || athlete(l), run: function (l, r, log) { accept(l, o.id, r, log); } }; });
+  }, 10);
+  X.menu('footballResults', 'Mùa giải bóng đá', function (l) { return !!peek(l) ? true : 'Chưa có hồ sơ'; }, function (l) {
+    var s = peek(l), z = s.seasons[s.seasons.length - 1]; if (!z) return 'Chưa có mùa giải.';
+    return 'Mùa ' + z.year + '\n' + z.table.map(function (t, i) { return (i + 1) + '. ' + t.name + ' · ' + t.points + ' điểm · ' + t.gf + ':' + t.ga; }).join('\n') + '\n' +
+      z.matches.map(function (m, i) { return 'Trận ' + (i + 1) + ' · ' + m.competition + ' · gặp ' + m.opponentName + ': ' + m.gf + '–' + m.ga + ' · ' + m.minutes + ' phút · ' + m.goals + ' bàn / ' + m.assists + ' kiến tạo' + (m.card ? ' · thẻ ' + m.card : '') + (m.absence ? ' · ' + m.absence : '') + (m.rating ? ' · điểm ' + m.rating.toFixed(1) : ''); }).join('\n');
+  }, function () { return []; }, 10);
+  ['football_scout', 'football_caster'].forEach(function (id, i) { E.CAR[id] = { id: id, t: [i ? 'bình luận viên bóng đá' : 'tuyển trạch viên bóng đá', i ? 'bình luận viên bóng đá nổi tiếng' : 'trưởng bộ phận tuyển trạch'], vn: [12, 28], yrs: [5], cat: 'sport', sec: 'formal', edu: 3, hidden: 1, sigma: .1, loss: .02 }; });
+  var career = E.careerYear;
+  var startJob = E.startJob; E.startJob = function (l, id, r) { var out = startJob.apply(this, arguments); if (athlete(l) && !peek(l)) init(l, r); return out; };
+  E.careerYear = function (l, r, log) {
+    if (athlete(l)) { var s = init(l, r); if (!s.legacyFallback) return income(l, r, log); }
+    return career.apply(this, arguments);
+  };
+  E.HOOKS.year.push(function (l, r, log) {
+    var s = peek(l); if (!s) return;
+    if (s.stage === 'pro' && !athlete(l)) { if (s.contract) s.contracts.push(Object.assign({}, s.contract, { closed: year(l), reason: 'Đổi nghề' })); s.contract = null; s.stage = 'free'; s.loan = null; }
+    annual(l, r, log);
+  });
+  // Old random trophies, international moves and athlete injuries must not bypass this simulation.
+  ['tt_tran_lon', 'tt_xuat_ngoai', 'chan_thuong', 'ky_som', 'ky_som_hen'].forEach(function (id) {
+    var dec = E.DEC[id]; if (!dec) return; var valid = dec.valid;
+    dec.valid = function (l, d) { return !athlete(l) && !(peek(l) && peek(l).stage !== 'retired') && valid.apply(this, arguments); };
+  });
+  E.HOOKS.year = E.HOOKS.year.map(function (fn) { if (fn !== E.sports.sportYear) return fn; return function (l) { if (!athlete(l) || peek(l) && peek(l).legacyFallback) return fn.apply(this, arguments); }; });
+  var title = E.jobTitle; E.jobTitle = function (l) { var s = peek(l); return athlete(l) && s && !s.legacyFallback ? 'Cầu thủ bóng đá · ' + (club(s.loan ? s.loan.club : s.club) || { name: 'Tự do' }).name + ' · ' + (s.role || s.stage) : title.apply(this, arguments); };
+  var sportTitle = E.sportTitle; E.sportTitle = function (l) { return athlete(l) && peek(l) && !peek(l).legacyFallback ? E.jobTitle(l) : sportTitle.apply(this, arguments); };
+  var monthly = E.monthlyEst; E.monthlyEst = function (l, id) { var s = peek(l); return E.resolveJob(id) === 'vdv' && l.talentSub === 'bóng đá' && s && !s.legacyFallback ? s.contract ? usd(l, s.contract.annualUSD) / 12 : 0 : monthly.apply(this, arguments); };
+  var profile = E.profile; E.profile = function (l) { var p = profile.apply(this, arguments); if (peek(l)) p.jobInfo.push(summary(l)); return p; };
+  // State KPI depends on knowledge/reputation which can change after year hooks.
+  // Finalise the derived profile before saving, so reload does not recompute a different KPI.
+  var endYear = E.endYear; E.endYear = function (l) { var out = endYear.apply(this, arguments); if (E.STATE174 && l.flags && l.flags.state174) E.STATE174.syncState(l); return out; };
+  var migrate = E.migrateExt; E.migrateExt = function (l) { if (migrate) migrate.apply(this, arguments); if (athlete(l) && !peek(l)) init(l, null, true); };
+  E.SC('footballDiscovery', { title: 'Cơ hội bóng đá ở địa phương', valid: function (l) { return free(l) && l.age <= 12 && !peek(l); },
+    text: 'Sau buổi chơi bóng, người phụ trách câu lạc bộ thiếu niên gợi ý bạn tập luyện nghiêm túc hơn. Gia đình cần cân nhắc học tập và chi phí; đây mới là bước đầu, chưa phải lời hứa trở thành cầu thủ.',
+    opts: [{ k: 'start', l: 'Tập ở địa phương và tiếp tục học văn hóa', run: function (l, r, log) { init(l, r); log('Bắt đầu lộ trình bóng đá thiếu niên. Bạn có thể chọn vị trí và tự đăng ký học viện.', 'good'); } },
+      { k: 'wait', l: 'Tiếp tục chơi cho vui, cân nhắc sau', run: function (l, r, log) { log('Bạn giữ bóng đá làm sở thích. Có thể chủ động bắt đầu trong mục sự nghiệp khi muốn.', 'neutral'); } }] });
+  E.TRIG.push({ id: 'footballDiscovery', when: function (l) { return free(l) && l.age <= 12 && !peek(l) && l.talentSub === 'bóng đá' && l.st.hea >= 45; }, p: .14, cd: 3, max: 1, child: true });
+  E.FOOTBALL = { init: init, peek: peek, club: club, rating: rating, trial: trial, trialOptions: trialOptions, trialCost: trialCost, negotiate: negotiate,
+    accept: accept, annual: annual, season: season, match: match, national: national, income: income, wage: wage, usd: usd, loan: loan, retire: retire, summary: summary, relocate: relocate };
+})(globalThis.G);

@@ -1,5 +1,31 @@
 [
   {
+    "id": "football-career-892",
+    "version": "8.9.2",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T08:55:41.000Z",
+    "publishedAt": "2026-10-28T15:55:32.807+07:00",
+    "title": "Một Đời — Sự nghiệp bóng đá chuyên nghiệp",
+    "summary": "Từ sân bóng thiếu niên đến học viện, hợp đồng câu lạc bộ, các mùa giải và cơ hội khoác áo đội tuyển quốc gia.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Từ 10 tuổi, bạn có thể bắt đầu tập bóng tại địa phương, chọn thủ môn, hậu vệ, tiền vệ hoặc tiền đạo rồi đăng ký nhiều học viện. Bạn tự chọn lời mời muốn nhận; thử tuyển có thể được nhận, bị từ chối, hẹn thử lại hoặc được giới thiệu đội cấp thấp hơn.",
+      "Theo dõi kỹ thuật, tốc độ, sức bền, sức mạnh, phòng ngự, chuyền bóng, dứt điểm, tư duy chiến thuật, tinh thần và kỷ luật. Chọn tập chuyên môn, tập cân bằng hoặc nghỉ ngơi; tập quá sức có nguy cơ chấn thương. Tiềm năng có giới hạn và năng lực giảm sau tuổi đỉnh cao.",
+      "Phát triển qua U15, U17, U19 và U21, cân nhắc việc học văn hóa, hỗ trợ gia đình và cơ hội đội một. Học viện có hỗ trợ đào tạo riêng, không trả ngay mức lương cầu thủ chuyên nghiệp.",
+      "Đàm phán và tự chấp nhận hợp đồng với thời hạn, lương, thưởng ra sân và phí ký. Có gia hạn, chuyển nhượng, cho mượn rồi trở về đội chủ quản; hết hợp đồng thì ngừng nhận lương. Phí chuyển nhượng giữa các đội không trở thành tiền cá nhân.",
+      "Hỗ trợ 16 thị trường bóng đá: Việt Nam, Nhật Bản, Hàn Quốc, Thái Lan, Anh, Tây Ban Nha, Đức, Ý, Pháp, Brazil, Argentina, Hoa Kỳ, Mexico, Ai Cập, Nam Phi và New Zealand. Mỗi thị trường có đội cấp cao, hạng dưới và bán chuyên với mức lương khác nhau; tài chính và một phần câu lạc bộ là dữ liệu mô phỏng.",
+      "Mùa giải rút gọn có lịch đối đầu, bảng điểm, kết quả, số phút thi đấu, bàn thắng, kiến tạo, thẻ, thay người, chấn thương và điểm cá nhân. Có giải quốc nội, cúp quốc gia, cúp châu lục và FIFA Club World Cup; cần thành tích mùa trước và đúng chu kỳ để dự cúp.",
+      "Có triệu tập đội tuyển trẻ và đội tuyển quốc gia theo nơi đủ điều kiện đại diện, phong độ, vị trí, thời gian ra sân và sức khỏe. Vòng loại World Cup, Asian Cup cùng các giải của từng liên đoàn có lịch riêng; được gọi lên tuyển không đồng nghĩa đã có vé dự vòng chung kết.",
+      "Lương, thưởng, tài trợ đủ điều kiện và khấu trừ thuế/đại diện mô phỏng đi vào ngân sách cá nhân, còn chi phí sinh hoạt và hỗ trợ gia đình vẫn tiếp tục. Chuyển ra nước ngoài cập nhật nơi cư trú và quy đổi tài sản nhưng giữ quốc tịch.",
+      "Giữ thống kê và danh hiệu theo mùa, lịch sử hợp đồng cùng quan hệ với huấn luyện viên. Khi giải nghệ có thể chuyển sang huấn luyện, tuyển trạch hoặc bình luận nếu đáp ứng yêu cầu. Các bản lưu cầu thủ cũ được chuyển tiếp, các nghề khác vẫn giữ nguyên.",
+      "Thể thức thi đấu, đối thủ tổng hợp và lương là mô hình gameplay rút gọn, không phải bản sao lịch sử hoặc lịch đấu chính thức."
+    ],
+    "correctedAt": "2026-10-28T08:55:41.911Z"
+  },
+  {
     "id": "country-survival-886",
     "version": "8.8.6",
     "releaseStatus": "packaged",
