@@ -1,0 +1,2125 @@
+[
+  {
+    "code": "AF",
+    "name": "Afghanistan",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AL",
+    "name": "Albania",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "DZ",
+    "name": "Algeria",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AD",
+    "name": "Andorra",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AO",
+    "name": "Angola",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AG",
+    "name": "Antigua và Barbuda",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AR",
+    "name": "Argentina",
+    "level": "deep",
+    "holidays": [
+      "xmas_summer"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AM",
+    "name": "Armenia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AU",
+    "name": "Úc",
+    "level": "deep",
+    "holidays": [
+      "xmas_summer"
+    ],
+    "exam": true,
+    "school": true,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AT",
+    "name": "Áo",
+    "level": "country",
+    "holidays": [
+      "christmas"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AZ",
+    "name": "Azerbaijan",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BS",
+    "name": "Bahamas",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BH",
+    "name": "Bahrain",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BD",
+    "name": "Bangladesh",
+    "level": "country",
+    "holidays": [
+      "eid_fitr",
+      "boishakh"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BB",
+    "name": "Barbados",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BY",
+    "name": "Belarus",
+    "level": "country",
+    "holidays": [
+      "novy_god"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BE",
+    "name": "Bỉ",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BZ",
+    "name": "Belize",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BJ",
+    "name": "Benin",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BT",
+    "name": "Bhutan",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BO",
+    "name": "Bolivia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BA",
+    "name": "Bosnia và Herzegovina",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BW",
+    "name": "Botswana",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BR",
+    "name": "Brazil",
+    "level": "deep",
+    "holidays": [
+      "carnaval",
+      "junina"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BN",
+    "name": "Brunei",
+    "level": "country",
+    "holidays": [
+      "hari_raya"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BG",
+    "name": "Bulgaria",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BF",
+    "name": "Burkina Faso",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "BI",
+    "name": "Burundi",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CV",
+    "name": "Cabo Verde",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KH",
+    "name": "Campuchia",
+    "level": "country",
+    "holidays": [
+      "khmer_ny"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CM",
+    "name": "Cameroon",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CA",
+    "name": "Canada",
+    "level": "deep",
+    "holidays": [
+      "thanks_ca",
+      "canada_day"
+    ],
+    "exam": true,
+    "school": true,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CF",
+    "name": "Cộng hòa Trung Phi",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TD",
+    "name": "Chad",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CL",
+    "name": "Chile",
+    "level": "country",
+    "holidays": [
+      "xmas_summer"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CN",
+    "name": "Trung Quốc",
+    "level": "deep",
+    "holidays": [
+      "chunjie",
+      "zhongqiu"
+    ],
+    "exam": true,
+    "school": true,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CO",
+    "name": "Colombia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KM",
+    "name": "Comoros",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CG",
+    "name": "Cộng hòa Congo",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CD",
+    "name": "CHDC Congo",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CR",
+    "name": "Costa Rica",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CI",
+    "name": "Bờ Biển Ngà",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "HR",
+    "name": "Croatia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CU",
+    "name": "Cuba",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CY",
+    "name": "Síp",
+    "level": "country",
+    "holidays": [
+      "pascha"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "CZ",
+    "name": "Séc",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "DK",
+    "name": "Đan Mạch",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "DJ",
+    "name": "Djibouti",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "DM",
+    "name": "Dominica",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "DO",
+    "name": "Cộng hòa Dominica",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "EC",
+    "name": "Ecuador",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "EG",
+    "name": "Ai Cập",
+    "level": "deep",
+    "holidays": [
+      "eid_fitr",
+      "sham_nessim"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SV",
+    "name": "El Salvador",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GQ",
+    "name": "Guinea Xích Đạo",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ER",
+    "name": "Eritrea",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "EE",
+    "name": "Estonia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SZ",
+    "name": "Eswatini",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ET",
+    "name": "Ethiopia",
+    "level": "country",
+    "holidays": [
+      "enkutatash",
+      "meskel"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "FJ",
+    "name": "Fiji",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "FI",
+    "name": "Phần Lan",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "FR",
+    "name": "Pháp",
+    "level": "deep",
+    "holidays": [
+      "christmas",
+      "bastille"
+    ],
+    "exam": true,
+    "school": true,
+    "work": true,
+    "coming": false
+  },
+  {
+    "code": "GA",
+    "name": "Gabon",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GM",
+    "name": "Gambia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GE",
+    "name": "Georgia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "DE",
+    "name": "Đức",
+    "level": "deep",
+    "holidays": [
+      "christmas",
+      "einheit"
+    ],
+    "exam": true,
+    "school": true,
+    "work": true,
+    "coming": false
+  },
+  {
+    "code": "GH",
+    "name": "Ghana",
+    "level": "regional",
+    "holidays": [],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GR",
+    "name": "Hy Lạp",
+    "level": "country",
+    "holidays": [
+      "pascha"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GD",
+    "name": "Grenada",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GT",
+    "name": "Guatemala",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GN",
+    "name": "Guinea",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GW",
+    "name": "Guinea-Bissau",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GY",
+    "name": "Guyana",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "HT",
+    "name": "Haiti",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "VA",
+    "name": "Thành Vatican",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "HN",
+    "name": "Honduras",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "HU",
+    "name": "Hungary",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IS",
+    "name": "Iceland",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IN",
+    "name": "Ấn Độ",
+    "level": "deep",
+    "holidays": [
+      "diwali",
+      "holi"
+    ],
+    "exam": true,
+    "school": true,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ID",
+    "name": "Indonesia",
+    "level": "deep",
+    "holidays": [
+      "lebaran"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IR",
+    "name": "Iran",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IQ",
+    "name": "Iraq",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IE",
+    "name": "Ireland",
+    "level": "country",
+    "holidays": [
+      "christmas"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IL",
+    "name": "Israel",
+    "level": "country",
+    "holidays": [
+      "rosh"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "IT",
+    "name": "Ý",
+    "level": "deep",
+    "holidays": [
+      "christmas",
+      "ferragosto"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "JM",
+    "name": "Jamaica",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "JP",
+    "name": "Nhật Bản",
+    "level": "deep",
+    "holidays": [
+      "shogatsu",
+      "obon"
+    ],
+    "exam": true,
+    "school": true,
+    "work": true,
+    "coming": true
+  },
+  {
+    "code": "JO",
+    "name": "Jordan",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KZ",
+    "name": "Kazakhstan",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KE",
+    "name": "Kenya",
+    "level": "deep",
+    "holidays": [],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KI",
+    "name": "Kiribati",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KP",
+    "name": "Triều Tiên",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KR",
+    "name": "Hàn Quốc",
+    "level": "deep",
+    "holidays": [
+      "seollal",
+      "chuseok"
+    ],
+    "exam": true,
+    "school": true,
+    "work": true,
+    "coming": true
+  },
+  {
+    "code": "KW",
+    "name": "Kuwait",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KG",
+    "name": "Kyrgyzstan",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LA",
+    "name": "Lào",
+    "level": "country",
+    "holidays": [
+      "pimai"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LV",
+    "name": "Latvia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LB",
+    "name": "Lebanon",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LS",
+    "name": "Lesotho",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LR",
+    "name": "Liberia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LY",
+    "name": "Libya",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LI",
+    "name": "Liechtenstein",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LT",
+    "name": "Lithuania",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LU",
+    "name": "Luxembourg",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MG",
+    "name": "Madagascar",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MW",
+    "name": "Malawi",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MY",
+    "name": "Malaysia",
+    "level": "deep",
+    "holidays": [
+      "hari_raya"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MV",
+    "name": "Maldives",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ML",
+    "name": "Mali",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MT",
+    "name": "Malta",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MH",
+    "name": "Quần đảo Marshall",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MR",
+    "name": "Mauritania",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MU",
+    "name": "Mauritius",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MX",
+    "name": "Mexico",
+    "level": "deep",
+    "holidays": [
+      "muertos",
+      "posadas"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "FM",
+    "name": "Micronesia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MD",
+    "name": "Moldova",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MC",
+    "name": "Monaco",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MN",
+    "name": "Mông Cổ",
+    "level": "country",
+    "holidays": [
+      "tsagaan",
+      "naadam"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ME",
+    "name": "Montenegro",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MA",
+    "name": "Morocco",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MZ",
+    "name": "Mozambique",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MM",
+    "name": "Myanmar",
+    "level": "country",
+    "holidays": [
+      "thingyan"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NA",
+    "name": "Namibia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NR",
+    "name": "Nauru",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NP",
+    "name": "Nepal",
+    "level": "country",
+    "holidays": [
+      "dashain"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NL",
+    "name": "Hà Lan",
+    "level": "deep",
+    "holidays": [
+      "sinterklaas"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NZ",
+    "name": "New Zealand",
+    "level": "country",
+    "holidays": [
+      "xmas_summer"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NI",
+    "name": "Nicaragua",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NE",
+    "name": "Niger",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NG",
+    "name": "Nigeria",
+    "level": "deep",
+    "holidays": [],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "MK",
+    "name": "Bắc Macedonia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "NO",
+    "name": "Na Uy",
+    "level": "country",
+    "holidays": [
+      "syttende",
+      "christmas"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "OM",
+    "name": "Oman",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PK",
+    "name": "Pakistan",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PW",
+    "name": "Palau",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PS",
+    "name": "Palestine",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PA",
+    "name": "Panama",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PG",
+    "name": "Papua New Guinea",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PY",
+    "name": "Paraguay",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PE",
+    "name": "Peru",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PH",
+    "name": "Philippines",
+    "level": "deep",
+    "holidays": [
+      "simbang_gabi"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PL",
+    "name": "Ba Lan",
+    "level": "country",
+    "holidays": [
+      "wigilia"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "PT",
+    "name": "Bồ Đào Nha",
+    "level": "country",
+    "holidays": [
+      "christmas"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "QA",
+    "name": "Qatar",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "RO",
+    "name": "Romania",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "RU",
+    "name": "Nga",
+    "level": "deep",
+    "holidays": [
+      "novy_god",
+      "maslenitsa"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "RW",
+    "name": "Rwanda",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "KN",
+    "name": "Saint Kitts và Nevis",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LC",
+    "name": "Saint Lucia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "VC",
+    "name": "Saint Vincent và Grenadines",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "WS",
+    "name": "Samoa",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SM",
+    "name": "San Marino",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ST",
+    "name": "São Tomé và Príncipe",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SA",
+    "name": "Ả Rập Xê Út",
+    "level": "deep",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SN",
+    "name": "Senegal",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "RS",
+    "name": "Serbia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SC",
+    "name": "Seychelles",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SL",
+    "name": "Sierra Leone",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SG",
+    "name": "Singapore",
+    "level": "deep",
+    "holidays": [
+      "chunjie",
+      "hari_raya"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SK",
+    "name": "Slovakia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SI",
+    "name": "Slovenia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SB",
+    "name": "Quần đảo Solomon",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SO",
+    "name": "Somalia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ZA",
+    "name": "Nam Phi",
+    "level": "deep",
+    "holidays": [
+      "xmas_summer",
+      "heritage_za"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SS",
+    "name": "Nam Sudan",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ES",
+    "name": "Tây Ban Nha",
+    "level": "deep",
+    "holidays": [
+      "christmas",
+      "nochevieja"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "LK",
+    "name": "Sri Lanka",
+    "level": "country",
+    "holidays": [
+      "avurudu"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SD",
+    "name": "Sudan",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SR",
+    "name": "Suriname",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SE",
+    "name": "Thụy Điển",
+    "level": "deep",
+    "holidays": [
+      "midsommar",
+      "christmas"
+    ],
+    "exam": true,
+    "school": false,
+    "work": true,
+    "coming": false
+  },
+  {
+    "code": "CH",
+    "name": "Thụy Sĩ",
+    "level": "country",
+    "holidays": [
+      "christmas"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "SY",
+    "name": "Syria",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TJ",
+    "name": "Tajikistan",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TZ",
+    "name": "Tanzania",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TH",
+    "name": "Thái Lan",
+    "level": "deep",
+    "holidays": [
+      "songkran",
+      "loy_krathong"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TL",
+    "name": "Đông Timor",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TG",
+    "name": "Togo",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TO",
+    "name": "Tonga",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TT",
+    "name": "Trinidad và Tobago",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TN",
+    "name": "Tunisia",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TR",
+    "name": "Thổ Nhĩ Kỳ",
+    "level": "country",
+    "holidays": [
+      "bayram"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TM",
+    "name": "Turkmenistan",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "TV",
+    "name": "Tuvalu",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "UG",
+    "name": "Uganda",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "UA",
+    "name": "Ukraine",
+    "level": "country",
+    "holidays": [
+      "novy_god"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "AE",
+    "name": "UAE",
+    "level": "deep",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": true,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "GB",
+    "name": "Vương quốc Anh",
+    "level": "deep",
+    "holidays": [
+      "christmas",
+      "bonfire"
+    ],
+    "exam": true,
+    "school": true,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "US",
+    "name": "Hoa Kỳ (Mỹ)",
+    "level": "deep",
+    "holidays": [
+      "thanks_us",
+      "july4"
+    ],
+    "exam": true,
+    "school": true,
+    "work": true,
+    "coming": false
+  },
+  {
+    "code": "UY",
+    "name": "Uruguay",
+    "level": "country",
+    "holidays": [
+      "xmas_summer"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "UZ",
+    "name": "Uzbekistan",
+    "level": "country",
+    "holidays": [
+      "nowruz"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "VU",
+    "name": "Vanuatu",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "VE",
+    "name": "Venezuela",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "VN",
+    "name": "Việt Nam",
+    "level": "deep",
+    "holidays": [
+      "tet_vn"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "YE",
+    "name": "Yemen",
+    "level": "country",
+    "holidays": [
+      "eid_fitr"
+    ],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ZM",
+    "name": "Zambia",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  },
+  {
+    "code": "ZW",
+    "name": "Zimbabwe",
+    "level": "regional",
+    "holidays": [],
+    "exam": false,
+    "school": false,
+    "work": false,
+    "coming": false
+  }
+]

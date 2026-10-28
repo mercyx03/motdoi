@@ -1,5 +1,14 @@
 # Nguồn dữ liệu văn hóa, con người, lịch sử — Một Đời v6.7.0
 
+## Batch chiều sâu 8.9.3 — đối chiếu 28/10/2026
+
+- Phần Lan: https://www.visitfinland.com/en/articles/finlands-traditional-and-iconic-foods/ — tên ruisleipä, karjalanpiirakka, lohikeitto, leipäjuusto, kalakukko; giữ khác biệt Karelia/Savo.
+- Ghana: https://ghanaculture.gov.gh/regional-representation-and-diversity/ — National Commission on Culture; tên kenkey, banku, tuo zaafi, akple, eto; phân biệt vùng và cộng đồng Ewe.
+- Ireland: https://www.ireland.com/en/magazine/food-and-drink/traditional-irish-food/ — Tourism Ireland; soda bread, Waterford Blaa, seafood chowder, smoked salmon, Irish lamb. Nguồn bao quát đảo Ireland; batch chỉ lấy ví dụ có tại Cộng hòa Ireland, không suy luật hay chủ quyền từ nội dung du lịch.
+- New Zealand: https://www.mch.govt.nz/engagement-maori/matariki — Ministry for Culture & Heritage; tưởng nhớ, hiện tại, tương lai và khác biệt Puanga; phiên bản ngày lễ công cộng từ 2022, lịch thay đổi theo năm. Game tiến theo năm, không giả định ngày cố định.
+- verified chỉ áp dụng tên món và mô tả được đối chiếu; không áp dụng luật lao động, cưới hỏi hay toàn hồ sơ. Chi phí 1–1,5% mức sống năm, chỉ số, xác suất nấu ăn và thành tựu là thiết kế game.
+
+
 ## Nemotron-Personas-Vietnam (NVIDIA & FPT)
 
 - Bộ dữ liệu: https://huggingface.co/datasets/nvidia/Nemotron-Personas-Vietnam
@@ -44,3 +53,38 @@ Game chỉ dùng các mốc đã được ghi nhận chính thức trong sách g
   url = {https://huggingface.co/datasets/nvidia/Nemotron-Personas-Vietnam}
 }
 ```
+
+## Hệ thống hồ sơ văn hóa và thể chế 195 quốc gia (v8.9.0 — `public/js/life173.js`)
+
+Từ phiên bản 8.9.0, game mở rộng lớp bản địa hóa văn hóa và thể chế cho toàn bộ 195 quốc gia trong `G.W.C` theo kiến trúc 3 tầng, tách biệt rõ **quốc gia cư trú hiện tại** (`resCode`) và **nguồn gốc / di sản gia đình** (`hasVNOrigin` / `culturalContext173`):
+
+### 1. Kiến trúc 3 tầng dữ liệu (`E.CULTURE173`)
+- **Tầng 1 — Hồ sơ quốc gia chuyên sâu (`level: 'deep'`, 27 quốc gia)**: Việt Nam (`VN`), Nhật Bản (`JP`), Hàn Quốc (`KR`), Trung Quốc (`CN`), Hoa Kỳ (`US`), Vương quốc Anh (`GB`), Pháp (`FR`), Đức (`DE`), Ấn Độ (`IN`), Thái Lan (`TH`), Singapore (`SG`), Malaysia (`MY`), Indonesia (`ID`), Philippines (`PH`), Úc (`AU`), Canada (`CA`), Brazil (`BR`), Mexico (`MX`), Nga (`RU`), Ý (`IT`), Tây Ban Nha (`ES`), Hà Lan (`NL`), Thụy Điển (`SE`), Thụy Sĩ (`CH`), Các Tiểu vương quốc Ả Rập Thống nhất (`AE`), Ả Rập Xê Út (`SA`), Nigeria (`NG`).
+- **Tầng 2 — Hồ sơ quốc gia xác thực (`level: 'country'`)**: Đài Loan (`TW`), Hồng Kông (`HK`), New Zealand (`NZ`), Phần Lan (`FI`), Na Uy (`NO`), Đan Mạch (`DK`), Ba Lan (`PL`), Áo (`AT`), Bỉ (`BE`), Ireland (`IE`), Bồ Đào Nha (`PT`), Hy Lạp (`GR`), Séc (`CZ`), Thổ Nhĩ Kỳ (`TR`), Ai Cập (`EG`), Maroc (`MA`), Nam Phi (`ZA`), Kenya (`KE`), Ghana (`GH`), Ethiopia (`ET`), Argentina (`AR`), Chile (`CL`), Colombia (`CO`), Peru (`PE`), Cuba (`CU`), Pakistan (`PK`), Bangladesh (`BD`), Sri Lanka (`LK`), Nepal (`NP`), Campuchia (`KH`), Lào (`LA`), Myanmar (`MM`), Kazakhstan (`KZ`), Uzbekistan (`UZ`), Israel (`IL`), Iran (`IR`), Qatar (`QA`).
+- **Tầng 3 — Khung văn hóa vùng địa lý & phổ quát (`level: 'regional'`)**: Tất cả các quốc gia còn lại trong 195 nước đều được ánh xạ vào 13 vùng văn hóa – địa lý (`east_asia`, `se_asia`, `south_asia`, `central_asia`, `mena`, `west_europe`, `north_europe`, `south_europe`, `east_europe`, `north_america`, `latam`, `sub_saharan`, `oceania`) với lễ hội, ẩm thực, học đường, trưởng thành, đám cưới và môi trường làm việc trung tính, xác thực theo vùng — tuyệt đối không gán nhầm sự kiện Việt Nam và không tự bịa phong tục thiếu căn cứ.
+
+### 2. Nguồn đối chiếu giáo dục, lễ hội và nghi thức trưởng thành
+- **UNESCO Intangible Cultural Heritage Lists**:
+  - Tết Nguyên đán / Lunar New Year, Chuseok, Seollal, Washoku (Nhật Bản), Día de Muertos (Mexico), Diwali (Ấn Độ), Songkran (Thái Lan), Nowruz (Trung Á & Tây Á), Eid al-Fitr / Eid al-Adha, Mid-Autumn Festival, Thanksgiving, Midsummer, Carnival: https://ich.unesco.org/en/lists
+- **Hệ thống kỳ thi tốt nghiệp / tuyển sinh trung học phổ thông quốc gia**:
+  - Việt Nam: Kỳ thi tốt nghiệp THPT.
+  - Nhật Bản: Kỳ thi chung tuyển sinh đại học (*Daigaku Nyūgaku Kyōtsū Tesuto*).
+  - Hàn Quốc: Kỳ thi năng lực học thuật đại học *Suneung* (CSAT).
+  - Trung Quốc: Kỳ thi đại học toàn quốc *Gaokao*.
+  - Hoa Kỳ: Học bạ trung học kèm kỳ thi chuẩn hóa *SAT / ACT*.
+  - Vương quốc Anh: Kỳ thi *GCSE* và *A-Levels* (hoặc *Scottish Highers*).
+  - Pháp: Kỳ thi tú tài *Baccalauréat (Le Bac)*.
+  - Đức: Kỳ thi tú tài *Abitur*.
+  - Ấn Độ: Kỳ thi hội đồng lớp 10 và lớp 12 (*Board Examinations*).
+  - Úc: Kỳ thi tốt nghiệp bang và xếp hạng *ATAR*.
+  - Brazil: Kỳ thi trung học quốc gia *ENEM*.
+  - Nga: Kỳ thi quốc gia thống nhất *EGE*.
+  - Singapore: Kỳ thi *GCE O-Level / A-Level*.
+  - Nigeria / Tây Phi: Kỳ thi *WASSCE*.
+- **Nghi thức trưởng thành và tuổi đầu đời**:
+  - Nghi thức tròn 1 tuổi: *Thôi nôi* (Việt Nam), *Doljanchi* (Hàn Quốc), *Erabitori / Ichigatsu* (Nhật Bản), *Zhuazhou / Chu tuế* (Trung Quốc), tiệc sinh nhật đầu đời tại các quốc gia khác.
+  - Cột mốc trưởng thành: *Seijin no Hi* (Nhật Bản, 18–20 tuổi), *Seongnyeon-ui Nal* (Hàn Quốc, 19 tuổi), *Quinceañera* (Mexico và Mỹ Latinh, 15 tuổi), *Jugendweihe / Konfirmation* (Đức), *Russefeiring* (Na Uy), *Matric Dance* (Nam Phi).
+
+### 3. Quy ước mô phỏng
+- Các sự kiện văn hóa, học đường, lễ hội, đám cưới, nơi làm việc và hòa nhập di cư luôn có lựa chọn tham gia sâu, tham gia vừa phải, giữ truyền thống gia đình gốc (với kiều bào / thế hệ thứ hai) hoặc nghỉ ngơi không tốn kém.
+- Không mặc định mọi cá nhân trong cùng một quốc gia đều theo cùng một tôn giáo hay bắt buộc tham gia một nghi lễ cụ thể.

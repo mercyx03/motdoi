@@ -2,6 +2,32 @@
   "generatedAt": "2026-10-28T08:55:41.996Z",
   "entries": [
     {
+      "id": "country-depth-achievements-893",
+      "version": "8.9.3",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-28T09:49:39.240Z",
+      "publishedAt": "2026-10-28T09:49:32.938Z",
+      "title": "Một Đời — Thành tựu quốc gia, bóng đá và căn bếp địa phương",
+      "summary": "Thêm 149 thành tựu gắn với hành trình thật trong cuộc chơi; học nấu món địa phương qua nhiều năm và giữ đúng bối cảnh khi chuyển quốc gia.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Thêm 109 thành tựu văn hóa và học tập: đón lễ địa phương qua ba năm khác nhau, đạt kết quả xuất sắc ở sự kiện đánh giá cuối cấp, tự làm thành công ba món đã học, hoặc cùng đón Matariki tại New Zealand. Điều kiện cụ thể nằm trong bảng Thành tựu & gia phả.",
+        "Thêm 40 thành tựu bóng đá: những lần đầu ra sân, ghi bàn và kiến tạo; các mốc số trận, bàn thắng, phút thi đấu và sạch lưới; cột mốc đội tuyển, hat-trick, danh hiệu thế giới và công việc sau giải nghệ.",
+        "Có thành tựu riêng cho hành trình thi đấu tại 16 thị trường bóng đá. Bạn cần thật sự có phút ra sân cho câu lạc bộ; chỉ sinh ra tại nước đó, nhận lời mời, ngồi dự bị hoặc chuyển nơi cư trú chưa đủ. Có thêm cột mốc trải nghiệm câu lạc bộ ở ba quốc gia.",
+        "Khi sống tại Phần Lan, Ghana hoặc Ireland, từ 12 tuổi bạn có thể gặp câu chuyện món ăn địa phương với năm món đã được đối chiếu nguồn ở mỗi nước. Bạn tự chọn học công thức, thực hành hoặc chỉ trò chuyện; không bắt buộc ăn món không hợp khẩu vị.",
+        "Công thức cần được học từ năm trước mới thực hành. Nấu ăn có thể chưa thành công, kinh nghiệm được giữ để thử lại năm sau; món đã làm được và công thức không mất khi chuyển nước. Chi phí và xác suất là mô phỏng của game.",
+        "Bổ sung dịp Matariki tại New Zealand từ năm 2022 theo bối cảnh ngày lễ công cộng, có ghi nhận khác biệt văn hóa giữa các cộng đồng. Game mô phỏng theo năm, không ấn định một ngày lễ cố định cho mọi năm.",
+        "Sự kiện văn hóa đang chờ sẽ kiểm tra lại nơi cư trú trước khi trừ tiền hoặc ghi nhận kết quả. Chuyển nước không mang theo một lễ địa phương không còn phù hợp; lễ theo nguồn gốc gia đình và tín ngưỡng vẫn được phân biệt rõ.",
+        "Không suy nguồn gốc văn hóa chỉ từ bộ tên của nhân vật. Thành tựu lễ địa phương đếm các năm khác nhau và nơi đã thực sự tham gia, tránh tính nhiều lần trong cùng năm.",
+        "Đây là đợt bổ sung đầu trong công việc hoàn thiện chiều sâu 195 quốc gia. Chưa phải toàn bộ 195 nước đã có đủ dữ liệu riêng về giáo dục, lễ hội, hôn nhân, ẩm thực, lao động và đời sống."
+      ],
+      "correctedAt": "2026-10-28T09:49:39.310Z"
+    },
+    {
       "id": "football-career-892",
       "version": "8.9.2",
       "releaseStatus": "released",
@@ -28,10 +54,60 @@
       "correctedAt": "2026-10-28T08:55:41.911Z"
     },
     {
+      "id": "state-career-overhaul-891",
+      "version": "8.9.1",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-28T08:35:00.000Z",
+      "publishedAt": "2026-10-28T15:20:00+07:00",
+      "title": "Một Đời — Đại tu hệ thống sự nghiệp nhà nước Việt Nam",
+      "summary": "Thăng tiến theo cấp bậc từ cơ sở đến Trung ương, tách biệt ngạch chuyên môn và chức vụ lãnh đạo, liên thông cơ quan cùng quy trình luân chuyển thực tế.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Chuẩn hóa 9 cấp bậc hành chính từ cấp xã, phường, cấp huyện, cấp sở ban ngành, lãnh đạo Ủy ban nhân dân tỉnh, Thường trực Tỉnh ủy đến cấp Bộ, ngành Trung ương và lãnh đạo cấp cao.",
+        "Tách bạch ngạch công chức chuyên môn (Chuyên viên, Chuyên viên chính, Chuyên viên cao cấp) với chức vụ lãnh đạo, quản lý. Người chơi có thể thi nâng ngạch để tăng lương và uy tín chuyên môn mà không bắt buộc phải giữ chức vụ quản lý.",
+        "Xây dựng mạng lưới liên thông hai chiều giữa khối hành chính nhà nước, khối cơ quan Đảng và các sở, ngành chuyên môn như Tài chính, Tư pháp, Giáo dục, Y tế, Công Thương, Giao thông, Xây dựng, Tài nguyên, Thanh tra, Kiểm toán và Ngân hàng Nhà nước.",
+        "Bổ sung cơ chế quy hoạch cán bộ, đào tạo lý luận chính trị từ Sơ cấp, Trung cấp đến Cao cấp và bồi dưỡng quản lý nhà nước theo đúng tiêu chuẩn từng bậc chức vụ.",
+        "Mô phỏng quy trình luân chuyển cán bộ có thời hạn 2–3 năm về địa phương hoặc cơ sở để rèn luyện thực tiễn. Hoàn thành nhiệm kỳ luân chuyển giúp mở khóa điều kiện bổ nhiệm chức vụ cao hơn thay vì bị tính như giáng chức.",
+        "Khắc phục triệt để lỗi điều chuyển ngang hoặc bổ nhiệm làm tụt chức danh từ lãnh đạo cấp sở, ngành xuống vị trí thấp hơn; chỉ hạ bậc khi có quyết định kỷ luật hoặc nhân vật chủ động xin thôi chức vụ quản lý.",
+        "Mở rộng lộ trình từ lãnh đạo cấp tỉnh và quy hoạch chiến lược lên Thứ trưởng, Bộ trưởng, Thủ tướng Chính phủ, Chủ tịch nước, Chủ tịch Quốc hội hoặc Tổng Bí thư khi hội tụ đủ thâm niên, uy tín, trình độ lý luận và tín nhiệm.",
+        "Cập nhật bảng thông tin sự nghiệp khu vực công hiển thị rõ cơ quan công tác, cấp hành chính, ngạch công chức, trình độ lý luận chính trị, trạng thái quy hoạch, tiến độ luân chuyển và điều kiện còn thiếu của các vị trí tiếp theo."
+      ],
+      "correctedAt": "2026-10-28T08:37:02.997Z"
+    },
+    {
+      "id": "world-culture-localization-890",
+      "version": "8.9.0",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-28T06:49:10.000Z",
+      "publishedAt": "2026-10-28T13:30:00+07:00",
+      "title": "Một Đời — Bản địa hóa văn hóa, giáo dục và lễ hội 195 quốc gia",
+      "summary": "Trải nghiệm lễ hội, học đường, kỳ thi cuối cấp, nghi thức trưởng thành, văn hóa công sở và đời sống kiều bào theo từng quốc gia cư trú.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tách biệt rõ quốc gia đang cư trú và nguồn gốc gia đình. Nhân vật sinh ra ở nước ngoài hoặc đã định cư lâu dài không còn gặp nhầm các sự kiện, cơ quan, kỳ thi hay sinh hoạt chỉ có tại Việt Nam.",
+        "Gia đình gốc Việt sinh sống tại nước ngoài hoặc thế hệ thứ hai có cha mẹ người Việt vẫn có thể giữ truyền thống đón Tết cổ truyền, gói bánh và lì xì nơi đất khách bên cạnh các ngày lễ của quốc gia sở tại.",
+        "Mở rộng hồ sơ văn hóa và thể chế cho toàn bộ 195 quốc gia theo 13 vùng địa lý, kết hợp hồ sơ chuyên sâu cho các quốc gia tiêu biểu với lễ hội, ẩm thực, phong tục gia đình, cưới hỏi và sinh hoạt cộng đồng đặc trưng.",
+        "Nghi thức mừng bé tròn một tuổi thay đổi theo truyền thống từng nơi: lễ thôi nôi tại Việt Nam, Doljanchi tại Hàn Quốc, Erabitori tại Nhật Bản, Chu tuế tại Trung Quốc và tiệc sinh nhật đầu đời tại các quốc gia khác.",
+        "Đời sống học đường và kỳ thi cuối cấp phổ thông phản ánh đúng hệ thống giáo dục nơi nhân vật theo học như Suneung tại Hàn Quốc, Gaokao tại Trung Quốc, kỳ thi chung tuyển sinh đại học tại Nhật Bản, tú tài Pháp, Abitur tại Đức, A-Levels tại Anh, SAT tại Hoa Kỳ, ATAR tại Úc hay ENEM tại Brazil.",
+        "Bổ sung các cột mốc trưởng thành đặc trưng theo quốc gia như lễ thành nhân Seijin no Hi tại Nhật Bản, ngày trưởng thành Seongnyeon-ui Nal tại Hàn Quốc, lễ Quinceañera tuổi 15 tại Mexico và Mỹ Latinh cùng các buổi lễ trưởng thành tuổi 18–21.",
+        "Mục tổ chức lễ gia đình và thiết kế tiệc tự động gợi ý những dịp lễ phù hợp với nơi đang sống như Shōgatsu, Seollal, Chuseok, Lễ Tạ ơn, Diwali, Songkran, Día de Muertos, Eid al-Fitr hoặc Giáng sinh, đồng thời luôn có phương án sum họp giản dị không tốn chi phí.",
+        "Thêm các tình huống văn hóa công sở theo môi trường làm việc bản địa và chuỗi sự kiện hòa nhập xã hội, kết nối cộng đồng dành cho du học sinh, người lao động quốc tế và người định cư."
+      ],
+      "correctedAt": "2026-10-28T06:49:49.555Z"
+    },
+    {
       "id": "country-survival-886",
       "version": "8.8.6",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-28T06:49:10.000Z",
       "publishedAt": "2026-10-28T07:13:17+07:00",
       "title": "Một Đời — Tiếp tục Boys Planet và chọn quốc gia sinh ra",
       "summary": "Sửa lỗi sau chung kết chương trình sống còn, kiểm tra nơi tham gia và thêm lựa chọn quốc gia ở chế độ Thế giới.",
@@ -43,7 +119,8 @@
         "Sửa lỗi có thể khiến cuộc chơi đứng lại khi debut sau Boys Planet mà nhân vật chưa từng qua chương trình thực tập sinh thiếu niên. Nhóm debut lấy thành viên từ các thí sinh chung kết và đúng số suất của chương trình.",
         "Các chương trình truyền hình gắn với một quốc gia yêu cầu bạn đang ở quốc gia đó. Danh tiếng, quốc tịch gốc hoặc hợp đồng với công ty nước ngoài không thay thế điều kiện nơi ở; thực tập tạm trú tại Hàn Quốc vẫn được tính.",
         "Trong chế độ Thế giới, bạn có thể chọn quốc gia sinh ra hoặc để ngẫu nhiên. Tên, thành phố, gia đình và các đặc điểm khác vẫn được tạo ngẫu nhiên theo quốc gia; lựa chọn được nhớ cho lần sau."
-      ]
+      ],
+      "correctedAt": "2026-10-28T06:49:49.561Z"
     },
     {
       "id": "enterprise-family-office-885",

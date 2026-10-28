@@ -80,7 +80,7 @@ X.menu('adoptChild129','Hồ sơ nhận nuôi',free,function(l,d){var c=candidat
 
 menu('celebration129','Lễ Tết, sinh nhật và cưới hỏi','Chọn dịp sum họp và mức chi phù hợp. Mỗi dịp tổ chức một lần mỗi năm, dù chọn cách giản dị hay tiệc lớn. Tình cảm gia đình không phụ thuộc giá bữa tiệc.',function(l){
  var relatives=kids(l),hasFamily=relatives.length||l.partner&&l.partner.alive!==false||l.fam.mAlive||l.fam.fAlive;if(!hasFamily)return[];
- return [['tet','Đón Tết cùng gia đình',.08],['birthday','Mừng sinh nhật người thân',.04],['wedding','Dự cưới họ hàng',.06]].reduce(function(out,x){
+ return (E.celebrationItems173?E.celebrationItems173(l):[['tet',H.inVN(l)?'Đón Tết cùng gia đình':'Sum họp lễ gia đình',.08],['birthday','Mừng sinh nhật người thân',.04],['wedding','Dự cưới họ hàng',.06]]).reduce(function(out,x){
   [['',1,''],[':simple',0,' · cùng chuẩn bị, lời chúc và kỷ niệm tại nhà'],[':venue',4,' · tổ chức tại nhà hàng']].forEach(function(style){var cost=l.base*x[2]*style[1];out.push({k:x[0]+style[0],l:x[1]+style[2]+' · '+H.money(l,cost),why:!annual(l,x[0])?'Đã tổ chức năm nay':cost===0||l.money>=cost?true:'Chưa đủ tiền',run:function(l,r,log){if(!annual(l,x[0])||cost>0&&l.money<cost)return;mark(l,x[0]);if(cost)H.cash(l,-cost,x[1]);bond(l,relatives,5);H.fx(l,{hap:5,soc:5});H.mem(l,x[1]+style[2]+'.',3);log(x[1]+style[2]+', cả nhà có thêm một kỷ niệm chung. Hạnh phúc +5, gắn kết +5.','good');}});});return out;
  },[]);
 });

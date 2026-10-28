@@ -188,7 +188,7 @@
   // ===================================================================
   // 3. CON ĐƯỜNG CHÍNH TRỊ
   // ===================================================================
-  var STATE = /^(cong_chuc|vien_chuc|can_bo_xa|thue|hai_quan|kiem_toan|ngoai_giao|giao_vien|giang_vien|bac_si|cong_an|quan_doi|nghien_cuu)$/;
+  var STATE = /^(cong_chuc|vien_chuc|can_bo_xa|hanh_chinh_cong|dang_uy|ngan_hang_nn|trung_uong|thanh_tra|thue|hai_quan|kiem_toan|tham_phan|kiem_sat|ngoai_giao|qltt|kiem_lam|dnnn|dieu_tra_vien|chap_hanh_vien|tro_giup_phap_ly|giao_vien|giang_vien|bac_si|cong_an|quan_doi|nghien_cuu)$/;
   SC('ct_quy_hoach', { title: 'Được quy hoạch cán bộ nguồn', text: 'Sau nhiều năm công tác, bạn được đưa vào diện quy hoạch, có thể được điều động sang khối Đảng, chính quyền cấp huyện / tỉnh. Việc nhiều, trách nhiệm lớn, ít thời gian cho gia đình.',
     valid: function (l) { return vnMode(l) && !!l.job && STATE.test(jid(l)) && !l.flags.ctPath; },
     opts: [

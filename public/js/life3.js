@@ -115,8 +115,8 @@
     return !!(c && (E.pensionCovered ? E.pensionCovered(l, c) : c.sec === 'formal' && H.isEmployee(l)) && c.id !== 'xkld' && !l.pensioned && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && !l.abroad.perm) && !(l.jailUntil != null && l.age < l.jailUntil));
   }
   E.insured = insured;
-  function siRate(l) { return isVN(l) ? 0.105 : 0.08; }
-  E.siLabel = function (l) { return (isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHXH, BHYT, BHTN' : 'bảo hiểm xã hội & y tế'; };
+  function siRate(l) { return H.inVN(l) ? 0.105 : 0.08; }
+  E.siLabel = function (l) { return H.inVN(l) ? 'BHXH, BHYT, BHTN' : 'bảo hiểm xã hội & y tế'; };
   var LVN = ['Mới tập', 'Làm quen', 'Khá', 'Giỏi', 'Rất giỏi', 'Xuất sắc', 'Tinh anh', 'Chuyên nghiệp', 'Bậc thầy', 'Huyền thoại'];
   function tLevel(sk) { return Math.min(10, 1 + Math.floor((sk || 0) / 10)); }
   E.talentLevel = function (l, sk) { var s = sk == null ? (l.skill || 0) : sk, lv = tLevel(s); return { lv: lv, name: LVN[lv - 1], exp: lv >= 10 ? 100 : Math.round((s % 10) * 10), next: lv >= 10 ? null : LVN[lv] }; };
@@ -150,7 +150,7 @@
       if (l.si.yrs === 1) log('Được ký hợp đồng lao động chính thức, đóng ' + E.siLabel(l) + ' — đủ 15 năm đóng sẽ có lương hưu.', 'neutral');
     }
     // vừa mất việc mà đã đóng BHTN: nhận trợ cấp thất nghiệp 60% lương, 3–12 tháng
-    if (ins0 && isVN(l) && !l.job && !l.retired && l.si && l.si.yrs >= 1 && l.alive) {
+    if (ins0 && H.inVN(l) && !l.job && !l.retired && l.si && l.si.yrs >= 1 && l.alive) {
       var months = Math.min(12, Math.max(3, l.si.yrs)), ben = l.si.m * 0.6 * months;
       H.cash(l, ben, 'Trợ cấp thất nghiệp (BHTN)');
       log('Làm thủ tục nhận trợ cấp thất nghiệp: ' + mo(l, l.si.m * 0.6) + '/tháng trong ' + months + ' tháng, trong lúc tìm việc mới.', 'neutral');
@@ -190,8 +190,8 @@
   E.DEC.treat.apply = function (l, d, k, r, log) {
     var m0 = l.money, x = ta0.apply(this, arguments), spent = m0 - l.money;
     var share = E.bhytShare ? E.bhytShare(l) : (bhyt(l) ? 0.8 : 0), priv = k === 'best' && d.data && d.data.priv;
-    if (spent > 0 && share > 0 && priv) { H.cash(l, spent * share, (isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHYT chi trả phần viện phí chuẩn' : 'Bảo hiểm chi trả phần chuẩn'); }
-    else if (spent > 0 && share > 0) { var back = spent * share; H.cash(l, back, (isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); log('Viện phí ' + mo(l, spent) + ': ' + ((isVN(l) && !(l.abroad && l.abroad.perm)) ? 'BHYT' : 'bảo hiểm') + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, back) + '), bạn trả ' + mo(l, spent - back) + '.', 'good'); }
+    if (spent > 0 && share > 0 && priv) { H.cash(l, spent * share, H.inVN(l) ? 'BHYT chi trả phần viện phí chuẩn' : 'Bảo hiểm chi trả phần chuẩn'); }
+    else if (spent > 0 && share > 0) { var back = spent * share; H.cash(l, back, H.inVN(l) ? 'BHYT chi trả viện phí' : 'Bảo hiểm y tế chi trả'); log('Viện phí ' + mo(l, spent) + ': ' + (H.inVN(l) ? 'BHYT' : 'bảo hiểm') + ' chi trả ' + Math.round(share * 100) + '% (' + mo(l, back) + '), bạn trả ' + mo(l, spent - back) + '.', 'good'); }
     return x;
   };
 
@@ -205,12 +205,12 @@
   SC('gplx_het_han', {
     title: 'Bằng lái ô tô hết hạn',
     valid: function (l) { return !!(l.lic && l.lic.B && l.licAt && l.licAt.B != null && l.age - l.licAt.B >= 10); },
-    text: function (l) { return 'Bằng lái ô tô hạng B của bạn (cấp năm ' + yr(l, l.licAt.B) + ') đã hết hạn 10 năm. Bằng xe máy A1 / A dùng vĩnh viễn, còn bằng ô tô muốn lái tiếp phải khám sức khỏe và làm thủ tục đổi bằng.' + (l.veh === 'ô tô' ? ' Bạn đang đi ' + (l.vehName || 'ô tô') + '.' : ''); },
+    text: function (l) { return (H.inVN(l) ? 'Bằng lái ô tô hạng B của bạn (cấp năm ' + yr(l, l.licAt.B) + ') đã hết hạn 10 năm. Bằng xe máy A1 / A dùng vĩnh viễn, còn bằng ô tô muốn lái tiếp phải khám sức khỏe và làm thủ tục đổi bằng.' : 'Bằng lái ô tô của bạn (cấp năm ' + yr(l, l.licAt.B) + ') đã đến kỳ gia hạn 10 năm. Muốn lái tiếp phải kiểm tra sức khỏe và làm thủ tục đổi bằng.') + (l.veh === 'ô tô' ? ' Bạn đang đi ' + (l.vehName || 'ô tô') + '.' : ''); },
     opts: [
       { k: 'renew', l: 'Đi khám sức khỏe, đổi bằng mới', h: function (l) { return 'Lệ phí đổi bằng và khám sức khỏe khoảng ' + mo(l, V(l, 0.7)); }, ai: function (l) { return l.veh === 'ô tô' || l.age < 65 ? 2 : 0.4; }, run: function (l, r, log) {
         l.flags.licDue = false;
         if (l.st.hea < 25 || l.age >= 85) { l.lic.B = false; log('Khám sức khỏe không đạt yêu cầu lái ô tô — bằng không được đổi.', 'bad'); return; }
-        H.cash(l, -V(l, 0.7), 'Đổi bằng lái ô tô'); l.licAt.B = l.age; log('Đổi bằng lái hạng B thành công, có giá trị thêm 10 năm (đến năm ' + yr(l, l.age + 10) + ').', 'good');
+        H.cash(l, -V(l, 0.7), 'Đổi bằng lái ô tô'); l.licAt.B = l.age; log('Đổi bằng lái ' + (H.inVN(l) ? 'hạng B ' : 'ô tô ') + 'thành công, có giá trị thêm 10 năm (đến năm ' + yr(l, l.age + 10) + ').', 'good');
       } },
       { k: 'no', l: 'Không đổi nữa, ít khi lái ô tô', ai: function (l) { return l.veh === 'ô tô' ? 0.1 : l.age >= 65 ? 2 : 0.6; }, run: function (l, r, log) { l.flags.licDue = false; l.lic.B = false; l.flags.licExpB = yr(l); log('Để bằng lái ô tô hết hạn' + (l.veh === 'ô tô' ? ' — từ giờ cầm lái là lái xe không có bằng hợp lệ, dễ bị phạt nặng.' : '.'), 'neutral'); } }
     ]
@@ -268,11 +268,11 @@
   ];
   SC('thue_xe', {
     title: 'Thuê xe chạy dịch vụ', valid: function (l) { return E.wealth.isDriver(l) && !l.rentVeh; },
-    text: function (l) { return 'Thay vì bỏ cả trăm triệu mua xe, nhiều tài xế thuê xe theo tháng để chạy ' + (isVN(l) ? 'Xanh SM, Grab, Be' : 'dịch vụ gọi xe') + '. Xe điện thì phải bảo dưỡng định kỳ, hai năm kiểm tra / thay pin một lần; xe xăng thì tự đổ xăng.'; },
+    text: function (l) { return 'Thay vì bỏ khoản tiền lớn mua xe, nhiều tài xế thuê xe theo tháng để chạy ' + (H.inVN(l) && yr(l) >= 2023 ? 'Xanh SM, Grab, Be' : H.inVN(l) && yr(l) >= 2014 ? 'Grab, dịch vụ gọi xe' : 'dịch vụ gọi xe') + '. Xe điện thì phải bảo dưỡng định kỳ, hai năm kiểm tra / thay pin một lần; xe xăng thì tự đổ xăng.'; },
     opts: RENT.map(function (x) {
-      return { k: x.k, l: 'Thuê ' + x.n, h: function (l) { return vnd(l) ? x.h : 'Tiền thuê ~' + mo(l, V(l, x.fee)) + '/tháng · ' + (x.ev ? 'sạc' : 'xăng') + ' ~' + mo(l, V(l, x.fuel)) + '/tháng'; },
+      return { k: x.k, l: function (l) { var nm = H.inVN(l) && yr(l) >= 2023 ? x.n : x.k === 'xsm_car' ? 'ô tô điện chạy dịch vụ' : x.k === 'grab_car' ? (H.inVN(l) && yr(l) >= 2014 ? x.n : 'ô tô sedan chạy dịch vụ') : 'xe máy điện chạy dịch vụ'; return 'Thuê ' + nm; }, h: function (l) { return vnd(l) && H.inVN(l) ? x.h : 'Tiền thuê ~' + mo(l, V(l, x.fee)) + '/tháng · ' + (x.ev ? 'sạc' : 'xăng') + ' ~' + mo(l, V(l, x.fuel)) + '/tháng'; },
         req: function (l) { return !!l.lic[x.lic]; }, ai: { w: x.car ? 1 : 0.8 },
-        run: function (l, r, log) { l.rentVeh = { k: x.k, n: x.n, fee: V(l, x.fee), fuel: V(l, x.fuel), ev: x.ev, car: x.car, since: l.age, bat: l.age }; log('Thuê ' + x.n + ' theo tháng để chạy dịch vụ.', 'good'); fx(l, { hap: 2 }); } };
+        run: function (l, r, log) { var nm = H.inVN(l) && yr(l) >= 2023 ? x.n : x.k === 'xsm_car' ? 'ô tô điện chạy dịch vụ' : x.k === 'grab_car' ? (H.inVN(l) && yr(l) >= 2014 ? x.n : 'ô tô sedan chạy dịch vụ') : 'xe máy điện chạy dịch vụ'; l.rentVeh = { k: x.k, n: nm, fee: V(l, x.fee), fuel: V(l, x.fuel), ev: x.ev, car: x.car, since: l.age, bat: l.age }; log('Thuê ' + nm + ' theo tháng để chạy dịch vụ.', 'good'); fx(l, { hap: 2 }); } };
     }).concat([{ k: 'no', l: 'Thôi, chạy xe của mình', ai: { w: 0.8 }, run: function () { } }])
   });
   SC('tra_xe_thue', {
@@ -308,7 +308,7 @@
     fb: { n: 'Facebook Hẹn hò', h: 'Gợi ý theo bạn chung, nhiều người ở gần', p: 0.45, hook: 0.08, scam: 0.08, ok: function (l) { return l.age <= 65; } },
     blued: { n: 'Blued', h: 'Ứng dụng hẹn hò dành cho nam đồng tính, song tính', p: 0.6, hook: 0.4, scam: 0.05, ok: function (l) { return l.sex === 'M' && l.orient !== 'straight' && l.age <= 55; } },
     her: { n: 'HER', h: 'Ứng dụng dành cho nữ đồng tính, song tính', p: 0.5, hook: 0.08, scam: 0.03, ok: function (l) { return l.sex === 'F' && l.orient !== 'straight' && l.age <= 55; } },
-    trung_nien: { n: 'nhóm kết bạn tuổi trung niên trên Zalo, Facebook', h: 'Nhiều người cùng cảnh, nhưng cũng nhiều kẻ lừa tình', p: 0.4, hook: 0, scam: 0.15, ok: function (l) { return l.age >= 45; } }
+    trung_nien: { n: 'nhóm kết bạn tuổi trung niên trên mạng xã hội', h: 'Nhiều người cùng cảnh, nhưng cũng nhiều kẻ lừa tình', p: 0.4, hook: 0, scam: 0.15, ok: function (l) { return l.age >= 45; } }
   };
   SC('app_hen_ho', {
     title: 'Chọn ứng dụng hẹn hò', valid: function (l) { return !l.partner && l.age >= 18; },
@@ -352,7 +352,7 @@
       return a < 30 ? 'Bạn bè lần lượt có đôi. Bạn quyết định chủ động tìm một nửa của mình.' : a < 45 ? 'Bạn bè đã yên bề gia thất, ' + (l.fam.mAlive || l.fam.fAlive ? 'bố mẹ giục mãi chuyện lập gia đình' : 'căn nhà đi làm về vắng tanh') + '. Bạn quyết định chủ động hơn.' : a < 60 ? 'Sau nhiều năm một mình, bạn muốn tìm một người cùng đi nốt quãng đường còn lại.' : 'Tuổi xế chiều, con cháu bận rộn, bạn muốn có một người bầu bạn sớm hôm.';
     };
     TN.opts = [
-      { k: 'app', l: function (l) { return l.age >= 45 ? 'Kết bạn qua mạng (Facebook Hẹn hò, nhóm Zalo…)' : 'Dùng ứng dụng hẹn hò (Tinder, Bumble…)'; }, req: function (l) { return l.age >= 18 && l.age <= 70; }, ai: { risk: 0.6 }, run: function (l, r, log) { l.pending.unshift(E.DEC.app_hen_ho.make(l, r)); } },
+      { k: 'app', l: function (l) { return l.age >= 45 ? 'Kết bạn qua mạng (' + (H.inVN(l) && yr(l) >= 2013 ? 'Facebook Hẹn hò, nhóm Zalo…' : 'nhóm kết bạn trực tuyến…') + ')' : 'Dùng ứng dụng hẹn hò (Tinder, Bumble…)'; }, req: function (l) { return l.age >= 18 && l.age <= 70; }, ai: { risk: 0.6 }, run: function (l, r, log) { l.pending.unshift(E.DEC.app_hen_ho.make(l, r)); } },
       ob('match'),
       { k: 'work', l: function (l) { return l.age >= 60 || l.retired ? 'Tham gia câu lạc bộ dưỡng sinh, hội người cao tuổi' : l.school ? 'Để ý một người ở trường' : 'Để ý một người ở chỗ làm'; }, ai: { w: 1 }, run: function (l, r, log) { var where = l.age >= 60 || l.retired ? 'ở câu lạc bộ dưỡng sinh' : l.school ? 'ở trường' : 'ở chỗ làm'; if (ch(r, 0.55)) l.pending.unshift(E.DEC.love.make(l, r, { where: where })); else log(l.age >= 60 ? 'Đi sinh hoạt đều đặn, vui là chính, chưa gặp ai hợp.' : 'Người ấy đã có người yêu.', 'neutral'); } },
       { k: 'club', l: function (l) { return l.age >= 50 ? 'Đi khiêu vũ, sinh hoạt câu lạc bộ' : 'Đi bar, câu lạc bộ, sự kiện'; }, ai: { soc: 1.2, cost: 0.05 }, run: function (l, r, log) { H.cash(l, -l.base * 0.03, 'Đi chơi'); if (ch(r, 0.4)) l.pending.unshift(E.DEC.love.make(l, r, { where: l.age >= 50 ? 'ở lớp khiêu vũ' : 'trong một buổi tiệc' })); else log('Một buổi tối vui, nhưng không thêm số điện thoại nào.', 'neutral'); } }
@@ -367,7 +367,7 @@
     if (l.game && (a < 30 || (c && /^(esport|creator)$/.test(c.cat)) || (l.talent === 'game' && a < 40))) return l.game;
     return pick(r, a < 12 ? ['Minecraft', 'Roblox', 'Play Together', 'Liên Quân Mobile'] : a < 18 ? ['Liên Quân Mobile', 'Free Fire', 'PUBG Mobile', 'Roblox', 'Minecraft', 'FC Online'] :
       a < 30 ? ['Liên Minh Huyền Thoại', 'Valorant', 'FC Online', 'PUBG', 'Liên Quân Mobile', 'Genshin Impact'] : a < 45 ? ['FC Online', 'Liên Minh Huyền Thoại', 'Đế Chế (Age of Empires)', 'game đua xe', 'Call of Duty'] :
-      a < 60 ? ['cờ tướng online', 'Tiến lên miền Nam', 'FC Online', 'Đế Chế (Age of Empires)', 'Candy Crush'] : ['cờ tướng online', 'Tiến lên miền Nam', 'Candy Crush', 'ô chữ, sudoku']);
+      a < 60 ? (H.inVN(l) || /^(CN|TW|SG|MY)$/.test(H.resCode(l)) ? ['cờ tướng online', 'Tiến lên miền Nam', 'FC Online', 'Đế Chế (Age of Empires)', 'Candy Crush'] : ['cờ vua online', 'bài Solitaire', 'FC Online', 'Age of Empires', 'Candy Crush']) : (H.inVN(l) || /^(CN|TW|SG|MY)$/.test(H.resCode(l)) ? ['cờ tướng online', 'Tiến lên miền Nam', 'Candy Crush', 'ô chữ, sudoku'] : ['cờ vua online', 'bài Solitaire', 'Candy Crush', 'ô chữ, sudoku']));
   }
   E.ageGame = ageGame;
   if (E.DEC.choi_game_nha) E.DEC.choi_game_nha.def.prep = function (l, r) { return { g: ageGame(l, r) }; };
@@ -375,8 +375,8 @@
   // ===================================================================
   // 9. ĐỘI, ĐOÀN (Việt Nam): khăn quàng đỏ từ lớp 3, không phải lớp 1
   // ===================================================================
-  EV(function (l, a) { return isVN(l) && a === 8 && l.school === 'primary' && !l.flags.doi; }, 0.92, function (l, a, r, log) { l.flags.doi = true; log('Được kết nạp vào Đội Thiếu niên Tiền phong Hồ Chí Minh — lần đầu thắt chiếc khăn quàng đỏ lên vai.', 'good'); fx(l, { hap: 3 }); H.mem(l, 'Ngày được kết nạp Đội, mẹ là chiếc khăn quàng đỏ phẳng phiu.', 2); });
-  EV(function (l, a) { return isVN(l) && a >= 16 && a <= 18 && (l.school === 'upper' || l.school === 'priv') && !l.flags.doan; }, 0.35, function (l, a, r, log) { l.flags.doan = true; log('Được kết nạp Đoàn Thanh niên Cộng sản Hồ Chí Minh, cài huy hiệu Đoàn lên áo.', 'good'); fx(l, { soc: 2 }); });
+  EV(function (l, a) { return H.inVN(l) && a === 8 && l.school === 'primary' && !l.flags.doi; }, 0.92, function (l, a, r, log) { l.flags.doi = true; log('Được kết nạp vào Đội Thiếu niên Tiền phong Hồ Chí Minh — lần đầu thắt chiếc khăn quàng đỏ lên vai.', 'good'); fx(l, { hap: 3 }); H.mem(l, 'Ngày được kết nạp Đội, mẹ là chiếc khăn quàng đỏ phẳng phiu.', 2); });
+  EV(function (l, a) { return H.inVN(l) && a >= 16 && a <= 18 && (l.school === 'upper' || l.school === 'priv') && !l.flags.doan; }, 0.35, function (l, a, r, log) { l.flags.doan = true; log('Được kết nạp Đoàn Thanh niên Cộng sản Hồ Chí Minh, cài huy hiệu Đoàn lên áo.', 'good'); fx(l, { soc: 2 }); });
 
   // ===================================================================
   // 10. VÒNG NĂM: căng thẳng, năng khiếu, bằng lái, chứng chỉ, xe thuê, thu nhập chi tiết
@@ -394,7 +394,7 @@
       else if (x.v > 0 && /BHTN|BHYT|trợ cấp|Bảo hiểm/.test(t)) P.gov += x.v;
     });
     var rows = [], inc = F.inc || 0;
-    if (y.gross > 0) { rows.push({ k: 'Lương / thu nhập từ công việc', v: y.gross }); if (y.si > 0) rows.push({ k: 'Đóng ' + E.siLabel(l) + ' (' + (isVN(l) ? '10,5%' : '8%') + ')', v: -y.si }); }
+    if (y.gross > 0) { rows.push({ k: 'Lương / thu nhập từ công việc', v: y.gross }); if (y.si > 0) rows.push({ k: 'Đóng ' + E.siLabel(l) + ' (' + (H.inVN(l) ? '10,5%' : '8%') + ')', v: -y.si }); }
     else if (inc > 0) rows.push({ k: l.retired ? (l.pensioned ? 'Lương hưu & con cái biếu' : 'Trợ cấp & con cái biếu') : 'Thu nhập', v: inc });
     if (P.biz) rows.push({ k: 'Lợi nhuận kinh doanh (cửa hàng của bạn)', v: P.biz });
     if (P.rent) rows.push({ k: 'Tiền cho thuê nhà', v: P.rent });
@@ -524,10 +524,10 @@
     // chứng chỉ, bằng lái
     var ct = [];
     Object.keys(l.lang || {}).forEach(function (k) { if (!l.lang[k]) return; var exp = EXPIRE[k], at = (l.langAt || {})[k]; ct.push(H.langCert(l, k) + (exp ? (l.langExp && l.langExp[k] ? ' · đã hết hạn' : at != null ? ' · còn hạn đến năm ' + yr(l, at + exp) : '') : ' · không thời hạn')); });
-    if (l.lic && l.lic.A1) ct.push('Bằng lái xe máy A1 · không thời hạn');
-    if (l.lic && l.lic.A) ct.push('Bằng lái xe mô tô A · không thời hạn');
-    if (l.lic && l.lic.B) ct.push('Bằng lái ô tô B' + (l.licAt && l.licAt.B != null ? ' · hết hạn năm ' + yr(l, l.licAt.B + 10) : ''));
-    else if (l.flags.licExpB) ct.push('Bằng lái ô tô B · đã hết hạn (năm ' + l.flags.licExpB + ')');
+    if (l.lic && l.lic.A1) ct.push((H.inVN(l) ? 'Bằng lái xe máy A1' : 'Bằng lái xe máy') + ' · không thời hạn');
+    if (l.lic && l.lic.A) ct.push((H.inVN(l) ? 'Bằng lái xe mô tô A' : 'Bằng lái mô tô phân khối lớn') + ' · không thời hạn');
+    if (l.lic && l.lic.B) ct.push((H.inVN(l) ? 'Bằng lái ô tô B' : 'Bằng lái ô tô') + (l.licAt && l.licAt.B != null ? ' · hết hạn năm ' + yr(l, l.licAt.B + 10) : ''));
+    else if (l.flags.licExpB) ct.push((H.inVN(l) ? 'Bằng lái ô tô B' : 'Bằng lái ô tô') + ' · đã hết hạn (năm ' + l.flags.licExpB + ')');
     P.certs = ct;
     // thành tựu
     var ach = [], seen = {};
@@ -621,7 +621,7 @@
     }
     // phong tục ở quê (tảo mộ, giỗ, ông Công ông Táo, hang đá cả xứ…) chỉ khi đang sống ở Việt Nam
     if (/Thanh minh|ông Công ông Táo|Ngày giỗ ông|Rằm tháng Giêng|tảo mộ|hang đá Giáng sinh|xứ đạo|rước kiệu/.test(src)) {
-      var c0 = ev.c; ev.c = function (l, a) { return !(l.abroad && !l.abroad.perm) && c0.apply(this, arguments); };
+      var c0 = ev.c; ev.c = function (l, a) { return (/ông Công ông Táo|Ngày giỗ ông/.test(src) ? (H.inVN(l) || (H.hasVNOrigin && H.hasVNOrigin(l) && l.abroad && l.abroad.perm)) : H.inVN(l)) && c0.apply(this, arguments); };
     }
   });
 

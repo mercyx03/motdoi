@@ -23,7 +23,16 @@
     return c.cat==='uniform'||(c.cat==='state'&&c.id!=='dnnn')||['dieu_tra_vien','chap_hanh_vien','tro_giup_phap_ly'].indexOf(c.id)>=0||life.job.employer==='public';
   }
   function stableParent(job) { return /công chức|viên chức|cán bộ (?:xã|phường)|công an|quân đội|bộ đội|sĩ quan|thẩm phán|kiểm sát|chấp hành viên|kiểm toán viên nhà nước|công lập|bí thư|tỉnh ủy|UBND|bộ trưởng|nghị sĩ/.test(job||''); }
-  function resCode(life) { return life.abroad && life.abroad.perm ? life.abroad.code : life.country; }
+  function resCode(life) { return (life && life.abroad && life.abroad.code) || (life && life.country) || 'VN'; }
+  function inVN(life) { return resCode(life) === 'VN'; }
+  function hasVNOrigin(life) {
+    if (!life) return false;
+    if (life.country === 'VN') return true;
+    if (life.fam && (life.fam.originCountry === 'VN' || life.fam.mCountry === 'VN' || life.fam.fCountry === 'VN')) return true;
+    if (life.flags && life.flags.life138 && Array.isArray(life.flags.life138.ancestry) && life.flags.life138.ancestry.indexOf('VN') >= 0) return true;
+    if (life.flags && life.flags.culture && Array.isArray(life.flags.culture.origins) && life.flags.culture.origins.indexOf('VN') >= 0) return true;
+    return false;
+  }
 
   // ================= TỬ VONG (Gompertz–Makeham hiệu chỉnh theo tuổi thọ) =================
   function buildMort(e0, u5) {
@@ -224,7 +233,7 @@
     },
     idolAge: function (l) { return l.idol && l.idolBorn ? l.birthYear + l.age - l.idolBorn : null; },
     sameSexLegal: sameSexLegal, partnerWord: partnerWord, QUINT: QUINT,
-    inVN: function (l) { return isVN(l) && !l.abroad; }, famFix: function (l, t) { return famFix(l, t); }, schoolOff: function (l, t) { return schoolOff(l, t); } // v3.1
+    inVN: inVN, hasVNOrigin: hasVNOrigin, famFix: function (l, t) { return famFix(l, t); }, schoolOff: function (l, t) { return schoolOff(l, t); } // v3.1
   };
   var LOAN_TYPES = {
     bank: { name: 'vay ngân hàng', rate: 0.09, minShare: 0.12 },
@@ -831,8 +840,8 @@
 
   // nơi học đại học theo vùng
   function uniPlaces(l) {
-    if (!isVN(l)) {
-      var c = W.BY[l.country];
+    if (!inVN(l) || !l.prov) {
+      var c = W.BY[resCode(l)] || W.BY[l.country] || W.C[0];
       return { big: c.cities[0], local: l.urban ? l.city : (c.cities[Math.min(2, c.cities.length - 1)] || c.cities[0]), inCity: l.urban && l.city === c.cities[0] };
     }
     var reg = l.region, old = l.prov.old;
@@ -869,7 +878,7 @@
     },
     hs: {
       make: function (life) {
-        var vn = isVN(life);
+        var vn = inVN(life);
         var o = [opt('thpt', vn ? 'Thi vào lớp 10, học tiếp THPT' : 'Học tiếp trung học phổ thông', vn ? 'Kiến thức càng cao, càng dễ đỗ trường công lập' : ''),
           opt('voc', 'Học trung cấp nghề', 'Ra trường sớm, có tay nghề'),
           opt('work', 'Nghỉ học, đi làm phụ giúp gia đình', 'Có thu nhập ngay')];
@@ -882,7 +891,7 @@
       auto: function (life, d, r) { var p = eduP(life); var x = r(); return x < p.upper ? 'thpt' : x < p.upper + 0.15 ? 'voc' : 'work'; },
       apply: function (life, d, k, r, log) {
         if (k === 'thpt') {
-          if (isVN(life)) {
+          if (inVN(life)) {
             var pass = U.clamp(0.5 + (life.st.kno - 50) / 70 + (life.focus === 'study' ? 0.1 : 0), 0.15, 0.97);
             if (r() < pass) { life.school = 'upper'; life.schoolEnd = 18; log('Thi đỗ vào lớp 10 trường công lập.', 'good'); life.st.hap += 4; H.mem(life, 'Cầm giấy báo đỗ lớp 10, cả nhà mừng rơi nước mắt.', 2); }
             else if (life.fam.q >= 3) { life.school = 'priv'; life.schoolEnd = 18; log('Trượt nguyện vọng trường công, bố mẹ cho học trường tư thục.', 'bad'); life.st.hap -= 3; }
@@ -894,7 +903,7 @@
     },
     uni: {
       make: function (life, r) {
-        var vn = isVN(life), P = uniPlaces(life), f = life.fam;
+        var vn = inVN(life), P = uniPlaces(life), f = life.fam;
         var o = [];
         o.push(opt('uni_big', P.inCity ? 'Thi vào đại học ở ' + P.big : 'Lên ' + P.big + ' học đại học', 'Bằng cấp được trọng dụng hơn · chi phí cao · cạm bẫy nơi phố thị'));
         if (!P.inCity) o.push(opt('uni_local', 'Học đại học ở ' + P.local + ' (gần nhà)', 'Tiết kiệm, gần gia đình'));
@@ -903,7 +912,7 @@
         o.push(opt('voc', 'Học cao đẳng / trường nghề', ''));
         o.push(opt('work', 'Đi làm kiếm tiền ngay', ''));
         if (life.flags.famHardship || /ruộng|nương|rẫy|chăn|cá|buôn/.test(f.fJob + f.mJob)) o.push(opt('home', 'Ở nhà phụ giúp bố mẹ', life.flags.famHardship ? 'Gia đình đang cần bạn' : 'Làm cùng bố mẹ'));
-        if (life.sex === 'M' && CONSCRIPT.indexOf(life.country) >= 0) o.push(opt('military', 'Đi nghĩa vụ quân sự', '2 năm rèn luyện trong quân ngũ'));
+        if (life.sex === 'M' && !life.abroad && CONSCRIPT.indexOf(resCode(life)) >= 0) o.push(opt('military', 'Đi nghĩa vụ quân sự', '2 năm rèn luyện trong quân ngũ'));
         if (vn) o.push(opt('xkld', life.flags.famDebt ? 'Đi xuất khẩu lao động, kiếm tiền trả nợ cho nhà' : 'Đi xuất khẩu lao động', 'Thu nhập cao, xa nhà, tốn phí ban đầu'));
         var tries = life.flags.uniTries || 0; // v3.8: thi lại thì tiêu đề, lời kể theo đúng tuổi và số lần thi
         return { id: 'uni', title: tries ? 'Thi lại đại học — lần thứ ' + (tries + 1) : life.age <= 18 ? 'Mười tám tuổi — ngã rẽ đầu tiên của đời người' : 'Ngã rẽ sau phổ thông', data: { P: P },
@@ -928,13 +937,13 @@
             life.uniTier = k === 'uni_big' ? 1.15 : 1; life.uniCity = city;
             log('Đỗ đại học ở ' + city + '!', 'good'); life.st.hap += 6;
             H.mem(life, 'Ngày nhận giấy báo trúng tuyển đại học ở ' + city + '.', 3);
-            if (k === 'uni_big' && !P.inCity) { life.cityStudent = { city: city, since: life.age }; if (isVN(life) && r() < 0.55) H.sched(life, 'ben_xe', 0); }
+            if (k === 'uni_big' && !P.inCity) { life.cityStudent = { city: city, since: life.age }; if (inVN(life) && r() < 0.55) H.sched(life, 'ben_xe', 0); }
             life.pending.unshift(DEC.major.make(life));
           } else { log(life.examScore != null ? 'Điểm xét tuyển ' + U.fmtNum(life.examScore, 2) + ' chưa đạt mốc ' + (k === 'uni_big' ? 23 : 18) + ' của nhóm trường đã chọn.' : 'Chưa đạt yêu cầu xét tuyển của nhóm trường đã chọn.', 'bad'); life.st.hap -= 6; life.pending.unshift(DEC.uniFail.make(life)); }
         } else if (k === 'police') {
           var pass = U.clamp(0.15 + (life.st.kno - 45) / 70 + (life.st.hea - 60) / 120, 0.05, 0.85); var passOk = r() < pass;
-          if (passOk && isVN(life) && E.DEC.chon_hoc_vien) { log('Đạt sơ tuyển vào các trường quân đội, công an (sức khỏe, lý lịch, điểm thi).', 'good'); life.pending.unshift(E.DEC.chon_hoc_vien.make(life, r)); } // v7.5: tự chọn trường
-          else if (passOk) { life.school = 'police'; life.schoolEnd = life.age + 4; life.flags.policeTrack = r() < 0.6 ? 'cong_an' : 'quan_doi'; log('Đỗ vào ' + (life.flags.policeTrack === 'cong_an' ? (isVN(life) ? 'Học viện Cảnh sát nhân dân' : 'học viện cảnh sát') : (isVN(life) ? 'trường Sĩ quan Lục quân' : 'học viện quân sự')) + '.', 'good'); life.st.hap += 6; H.mem(life, 'Lần đầu khoác lên mình bộ quân phục học viên.', 3); }
+          if (passOk && inVN(life) && E.DEC.chon_hoc_vien) { log('Đạt sơ tuyển vào các trường quân đội, công an (sức khỏe, lý lịch, điểm thi).', 'good'); life.pending.unshift(E.DEC.chon_hoc_vien.make(life, r)); } // v7.5: tự chọn trường
+          else if (passOk) { life.school = 'police'; life.schoolEnd = life.age + 4; life.flags.policeTrack = r() < 0.6 ? 'cong_an' : 'quan_doi'; log('Đỗ vào ' + (life.flags.policeTrack === 'cong_an' ? (inVN(life) ? 'Học viện Cảnh sát nhân dân' : 'học viện cảnh sát') : (inVN(life) ? 'trường Sĩ quan Lục quân' : 'học viện quân sự')) + '.', 'good'); life.st.hap += 6; H.mem(life, 'Lần đầu khoác lên mình bộ quân phục học viên.', 3); }
           else { log('Trượt kỳ thi vào trường công an / quân đội.', 'bad'); life.st.hap -= 5; life.pending.unshift(DEC.uniFail.make(life)); }
         } else if (k === 'abroad') { H.chain(life, 'du_hoc'); }
         else if (k === 'voc') { life.school = 'voc'; life.schoolEnd = life.age + 2; log('Vào học cao đẳng nghề.', 'neutral'); }
@@ -1200,7 +1209,7 @@
       auto: function (life, d, r) { return d.opts.some(function (o) { return o.k === 'cash'; }) ? (r() < 0.75 ? 'cash' : 'no') : d.opts.some(function (o) { return o.k === 'buy'; }) && r() < 0.65 ? 'buy' : 'no'; },
       apply: function (life, d, k, r, log) {
         if (k === 'no') { life.flags.houseNo = life.age + 3; return; }
-        if (k === 'denied') { log('Ngân hàng từ chối cho vay mua nhà vì bạn có tên trong danh sách nợ xấu (CIC).', 'bad'); life.st.hap -= 5; life.flags.houseNo = life.age + 3; return; }
+        if (k === 'denied') { log('Ngân hàng từ chối cho vay mua nhà vì bạn có tên trong danh sách nợ xấu' + (inVN(life) ? ' (CIC).' : ' tín dụng.'), 'bad'); life.st.hap -= 5; life.flags.houseNo = life.age + 3; return; }
         if (k === 'old') { log('Ngân hàng từ chối: tuổi đã cao, thời hạn vay không đủ để trả góp.', 'neutral'); life.flags.houseNo = life.age + 5; return; }
         var price = d.data.price;
         if (k === 'cash') H.cash(life, -price, 'Mua nhà');
@@ -1560,10 +1569,10 @@
   var CORE_EVENTS = [
     { c: function (l, a) { return a === 1; }, p: 1, run: function (l, a, r, log) { log(U.pick(r, ['Chập chững những bước đi đầu tiên.', 'Bập bẹ gọi tiếng "mẹ" đầu tiên.', 'Biết đi, biết gọi bố mẹ.']), 'good'); H.mem(l, 'Bước chân chập chững đầu tiên, mẹ dang tay đón bạn.', 2); } },
     { c: function (l, a) { return a === 3 && isVN(l); }, p: 0.85, run: function (l, a, r, log) { log('Bắt đầu đi mẫu giáo.', 'neutral'); l.st.soc += 3; } },
-    { c: function (l, a) { return a >= 7 && a <= 17 && l.school && l.st.kno > 62; }, p: 0.12, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Đạt danh hiệu học sinh giỏi.', 'Được tuyên dương học sinh tiêu biểu của trường.', 'Được nhà trường khen thưởng cuối năm.']) : 'Được trường khen thưởng vì học giỏi.', 'good'); l.st.hap += 4; l.st.kno += 2; } },
+    { c: function (l, a) { return a >= 7 && a <= 17 && l.school && l.st.kno > 62; }, p: 0.12, run: function (l, a, r, log) { log(inVN(l) ? U.pick(r, ['Đạt danh hiệu học sinh giỏi.', 'Được tuyên dương học sinh tiêu biểu của trường.', 'Được nhà trường khen thưởng cuối năm.']) : 'Được trường khen thưởng vì học giỏi.', 'good'); l.st.hap += 4; l.st.kno += 2; } },
     { c: function (l, a) { return a >= 6 && a <= 12 && l.talent && !l.flags.talentSeen; }, p: 0.25, run: function (l, a, r, log) { l.flags.talentSeen = true; log('Năng khiếu ' + talentText(l) + ' được thầy cô phát hiện.', 'good'); l.st.hap += 3; l.st.kno += 2; l.skill += 8; H.mem(l, 'Lần đầu được khen có năng khiếu ' + talentText(l) + '.', 3); } },
     { c: function (l, a) { return a >= 6 && a <= 15 && !l.flags.brokeArm; }, p: 0.03, run: function (l, a, r, log) { l.flags.brokeArm = true; log(U.pick(r, ['Bị gãy tay khi chơi đùa.', 'Ngã từ trên cây xuống, gãy tay phải bó bột cả tháng.', 'Trượt chân ở cầu thang trường, gãy tay — cả lớp thay nhau ký tên lên lớp bột.']), 'bad'); l.st.hea -= 3; } },
-    { c: function (l, a) { return a >= 7 && a <= 14 && !l.urban && l.fam.q <= 2; }, p: 0.15, run: function (l, a, r, log) { log(isVN(l) ? U.pick(r, ['Sau giờ học phụ bố mẹ chăn trâu, cắt cỏ.', 'Theo mẹ ra đồng cấy lúa những ngày mùa.', 'Đi bộ hàng cây số đến trường mỗi ngày.']) : 'Phụ giúp gia đình việc đồng áng sau giờ học.', 'neutral'); } },
+    { c: function (l, a) { return a >= 7 && a <= 14 && !l.urban && l.fam.q <= 2; }, p: 0.15, run: function (l, a, r, log) { log(inVN(l) ? U.pick(r, ['Sau giờ học phụ bố mẹ chăn trâu, cắt cỏ.', 'Theo mẹ ra đồng cấy lúa những ngày mùa.', 'Đi bộ hàng cây số đến trường mỗi ngày.']) : 'Phụ giúp gia đình việc đồng áng sau giờ học.', 'neutral'); } },
     { c: function (l, a) { return a >= 7 && a <= 14 && l.gdp < 3 && !l.school; }, p: 0.25, run: function (l, a, r, log) { log('Phải đi làm thuê để phụ giúp gia đình dù còn nhỏ.', 'bad'); l.st.hea -= 2; l.st.hap -= 3; } },
     { c: function (l, a) { return a >= 12 && a <= 17 && l.orient !== 'straight' && !l.realized; }, p: function (l, a) { return a <= 13 ? 0.8 : 0.4; }, run: function (l, a, r, log) { l.realized = true; log(E.realizeText ? E.realizeText(l, r) : l.orient === 'bi' ? 'Nhận ra mình có thể rung động với cả bạn nam lẫn bạn nữ.' : 'Nhận ra mình rung động với người cùng giới.', 'big'); } }, // v3.7: phần lớn nhận ra khoảng 12–13 tuổi
     { c: function (l, a) { return a >= 15 && a <= 17 && l.sex === 'F' && !l.partner && earlyMarriageRisk(l) > 0; }, p: function (l) { return earlyMarriageRisk(l); }, run: function (l, a, r, log) {
@@ -1584,7 +1593,7 @@
     { c: function (l, a) { return isVN(l) && a >= 18 && l.indep; }, p: 0.07, run: function (l, a, r, log) { if (l.abroad && !(E.parentsWithYouAbroad && E.parentsWithYouAbroad(l))) { log('Đón một cái Tết xa nhà ở ' + l.abroad.name + ', gọi video về nhà mà nghẹn ngào.', 'neutral'); l.st.hap -= 3; H.mem(l, 'Cái Tết xa nhà, nhìn mẹ qua màn hình điện thoại.', 2); } else if (l.abroad) { log('Tết năm nay có bố mẹ ở bên, cả nhà quây quần gói bánh chưng nơi xứ người.', 'good'); l.st.hap += 3; } else { log(U.pick(r, ['Tết năm nay cả nhà sum họp đông đủ.', 'Về quê ăn Tết, gói bánh chưng cùng gia đình.', 'Mùng Một Tết đi chúc Tết họ hàng, lì xì cho bọn trẻ.']), 'good'); l.st.hap += 3; l.st.soc += 2; } } },
     { c: function (l, a) { return l.job && !E.isCrime(l) && a >= 22 && !E.tetBonus; }, p: 0.05, run: function (l, a, r, log) { var x = Math.round(l.base * 0.15), vt = isVN(l) && !l.abroad; H.cash(l, x, vt ? 'Thưởng Tết, lương tháng 13' : 'Thưởng cuối năm'); log((vt ? 'Được thưởng lương tháng 13 và thưởng Tết ' : 'Được thưởng cuối năm ') + fmtMoney(l, x) + '.', 'good'); l.st.hap += 2; } },
     { c: function (l, a) { return a >= 35 && a <= 75 && !l.flags.exercise; }, p: 0.04, run: function (l, a, r, log) { l.flags.exercise = true; log(isVN(l) ? 'Bắt đầu tập thể dục, đi bộ mỗi sáng sớm.' : 'Bắt đầu tập thể dục đều đặn.', 'good'); l.st.hea += 5; } },
-    { c: function (l, a) { return isVN(l) && [70, 75, 80, 85, 90, 95, 100].indexOf(a) >= 0; }, p: 1, run: function (l, a, r, log) { log('Con cháu tổ chức lễ mừng thọ ' + a + ' tuổi.', 'good'); l.st.hap += 5; H.mem(l, 'Lễ mừng thọ ' + a + ', con cháu quây quần chúc thọ.', 3); } },
+    { c: function (l, a) { return (inVN(l) || hasVNOrigin(l)) && [70, 75, 80, 85, 90, 95, 100].indexOf(a) >= 0; }, p: 1, run: function (l, a, r, log) { log('Con cháu tổ chức lễ mừng thọ ' + a + ' tuổi.', 'good'); l.st.hap += 5; H.mem(l, 'Lễ mừng thọ ' + a + ', con cháu quây quần chúc thọ.', 3); } },
     { c: function (l, a) { return a >= 55 && l.grand > 0; }, p: 0.06, run: function (l, a, r, log) { log(U.pick(r, ['Trông cháu giúp con những ngày con bận rộn.', 'Đón cháu đi học về, ông bà cháu ríu rít cả buổi chiều.', 'Cuối tuần các cháu về chơi, căn nhà rộn tiếng cười.', 'Dạy cháu đọc chữ, kể chuyện ngày xưa cho cháu nghe.']), 'good'); l.st.hap += 3; l.st.soc += 2; } },
     { c: function (l, a) { return l.partner && l.partner.sex === l.sex && l.flags.famTension; }, p: 0.12, run: function (l, a, r, log) { l.flags.famTension = false; log('Bố mẹ dần chấp nhận và đón ' + l.partner.name + ' về nhà ăn cơm.', 'good'); l.st.hap += 8; H.mem(l, 'Bữa cơm đầu tiên bố mẹ gắp thức ăn cho ' + l.partner.name + '.', 4); } },
     { c: function (l, a) { return l.partner && l.partner.status === 'married' && a - l.partner.since === 25; }, p: 1, run: function (l, a, r, log) { log('Kỷ niệm 25 năm ngày cưới với ' + l.partner.name + '.', 'good'); l.st.hap += 4; H.mem(l, 'Đám cưới bạc — 25 năm bên ' + l.partner.name + '.', 4); } },
@@ -1695,7 +1704,7 @@
         if (/^(bank|home|car|card|paylater|fin)$/.test(L.type)) {
           if (!(life.credit && life.credit.bad)) {
             life.credit = { bad: true, since: a, last: a };
-            log('Trễ hạn ' + L.name + ' — bị ghi nhận nợ xấu trên CIC. Từ nay khó vay ngân hàng.', 'bad'); H.fx(life, { hap: -5 });
+            log('Trễ hạn ' + L.name + ' — bị ghi nhận nợ xấu' + (inVN(life) ? ' trên CIC' : ' trong hồ sơ tín dụng') + '. Từ nay khó vay ngân hàng.', 'bad'); H.fx(life, { hap: -5 });
             H.mem(life, 'Ngày ngân hàng gọi báo bạn đã thành nợ xấu.', 3);
           } else life.credit.last = a;
         }
@@ -1706,7 +1715,7 @@
     if (life.credit && life.credit.bad && a - (life.credit.last != null ? life.credit.last : life.credit.since) >= 5 &&
       !(life.loans || []).some(function (L) { return L.late > 0 && L.bal > 0.5; })) {
       life.credit = { bad: false, since: null };
-      log('Đã 5 năm không còn trễ hạn: thông tin nợ xấu được xóa khỏi CIC, hồ sơ tín dụng sạch trở lại.', 'good'); H.fx(life, { hap: 3 });
+      log('Đã 5 năm không còn trễ hạn: thông tin nợ xấu được xóa khỏi ' + (inVN(life) ? 'CIC' : 'hồ sơ tín dụng') + ', hồ sơ tín dụng sạch trở lại.', 'good'); H.fx(life, { hap: 3 });
     }
     // v2.4: ngân hàng không để khoản vay mua nhà kéo dài đến tuổi già — đến 75 tuổi phải tất toán
     (life.loans || []).forEach(function (L) {
@@ -2209,6 +2218,6 @@
     isMajor: isMajor, MAJOR: MAJOR, GAMES: GAMES, gameFor: gameFor, anyGame: anyGame, PETS: PETS, GAME_SUB: GAME_SUB, ACTS_PER_YEAR: ACTS_PER_YEAR, actsLimit: actsLimit, talentText: talentText,
     EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,
     LOAN_TYPES: LOAN_TYPES, IDOLS: IDOLS, IDOL_BORN: IDOL_BORN, VICE: VICE, CONSCRIPT: CONSCRIPT,
-    REFLECT_AGES: REFLECT_AGES, schoolName: schoolName, isVN: isVN, H: H, SC: SC, eduP: eduP, uniPlaces: uniPlaces, housePrice: housePrice
+    REFLECT_AGES: REFLECT_AGES, schoolName: schoolName, isVN: isVN, inVN: inVN, hasVNOrigin: hasVNOrigin, resCode: resCode, H: H, SC: SC, eduP: eduP, uniPlaces: uniPlaces, housePrice: housePrice
   };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

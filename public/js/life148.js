@@ -184,7 +184,7 @@
       return Object.keys(PARTY).map(function (k) {
         var p = PARTY[k], why = doneThisYear(l, 'party:' + k) ? 'Đã tổ chức loại tiệc này năm nay' : p.need ? p.need(l) : true;
         if (why === true && p.tier && tier(l) < p.tier) why = 'Cần thuộc tầng ' + TIERS[p.tier].n;
-        return { k: k, l: p.n, why: why, run: function (l, r) { X.next(l, 'party148_plan', r, { type: k }); } };
+        return { k: k, l: k === 'tet' && E.partyHolidayLabel173 ? E.partyHolidayLabel173(l, p.n) : p.n, why: why, run: function (l, r) { X.next(l, 'party148_plan', r, { type: k }); } };
       });
     }, 18, 'Tình cảm & gia đình');
   X.menu('party148_plan', 'Quy mô và địa điểm', function (l) { return free(l); },

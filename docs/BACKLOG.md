@@ -14,6 +14,11 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Batch quốc gia/thành tựu 8.9.3 — 28/10/2026
+
+Nhiệm vụ chiều sâu 195 quốc gia còn đang triển khai: xem COUNTRY-DEEP-COVERAGE-REPORT.md và country-depth-inventory.json. Mới bổ sung ẩm thực FI/GH/IE, Matariki NZ, kiểm soát nơi cư trú và 149 thành tựu; chưa có nước nào được nghiệm thu đủ sáu lĩnh vực. Cần hoàn thiện nguồn, dữ liệu và năm sự kiện riêng/nước theo từng batch. Chưa chạy đầy đủ 77 nhóm hồi quy. Lượt chạy nhóm 0–4,61–65,70–72 phát hiện lỗi khóa cache (đã sửa) và kiểm tra thống kê hôn nhân mục 63 chưa đạt (55% so với >60%, chưa xác định nguyên nhân). Không tính nhóm đó PASS; cần điều tra trên mã cuối, không hạ ngưỡng. Binding REVIEWS_DB Production chưa kiểm chứng. Bản đóng gói lượt này vẫn Preview/chưa nghiệm thu tổng thể, dù mục nhật ký được chủ dự án yêu cầu ghi Đã phát hành.
+
+
 Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạng thái **HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN**. Các mục dưới đây **chưa chạy trên mã GĐ3** (gameplay `b3ada6f`), không được coi là PASS. GĐ4–GĐ5 bổ sung danh sách của mình vào mục này; GĐ6 chạy toàn bộ trên mã cuối.
 
 - Regression `tests/regression.js` chưa chạy trên GĐ3: mục 5 (6.300 đời), 5b, 6, 13–16, 18, 20, 22–27, 29, 31–45, 47–51, 53–54, 56–58, 60–67, 70–74.
