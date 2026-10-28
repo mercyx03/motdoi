@@ -3,7 +3,7 @@ const assert=require('assert'),fs=require('fs'),path=require('path'),crypto=requ
 const root=path.join(__dirname,'..'),dist=path.join(root,'dist');
 const read=p=>fs.readFileSync(path.join(dist,p),'utf8'),html=read('index.html');
 const previews=JSON.parse(/<script type="application\/json" id="startingProfiles">([\s\S]*?)<\/script>/.exec(html)[1]);
-assert.equal(previews.length,12,'profiles for every mode/variant/difficulty');
+assert.equal(previews.length,6,'profiles for every mode/variant/difficulty');
 assert(previews.every(p=>p.opts.seed&&p.html.includes('Hồ sơ xuất phát')&&p.html.includes('id="liveThis"')&&p.html.includes('id="reroll"')),'complete seeded starting profiles are present before engine load');
 const scripts=[...html.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(scripts.length,2,'game bootstrap and independent support button');

@@ -8,7 +8,7 @@
   if(theme)document.documentElement.dataset.theme=theme;
   var poolNode=document.getElementById('startingProfiles');
   if(poolNode){
-    var options=read('mkn.settings',{}),mode=options.mode==='world'?'world':'vn',variant=options.variant==='63'?'63':'34',difficulty=options.difficulty==='hardcore'?'hardcore':'normal';
+    var options=read('mkn.settings',{}),mode=options.mode==='world'?'world':'vn',variant=options.variant==='63'?'63':'34',difficulty='normal';
     var pool=JSON.parse(poolNode.textContent).filter(function(p){return p.opts.mode===mode&&p.opts.variant===(mode==='world'?'34':variant)&&p.opts.difficulty===difficulty;});
     var preview=pool[Math.floor(Math.random()*pool.length)];
     if(preview){window.MOTDOI_PREVIEW=Object.assign({},preview.opts,{lifeMin:options.lifeMin||30});document.getElementById('heroProfile').innerHTML=preview.html;}

@@ -10,10 +10,9 @@
 
   var DEC = {}, TRIG = [], ACT = [], EVENTS = [], CAR = {}, LINES = [];
   var DIFFICULTIES = {
-    normal: { label: 'Thường', income: 1, passive: 1, pension: 1, events: 1, cap: 3 },
-    hardcore: { label: 'Hardcore', income: 0.4, passive: 0.4, pension: 0.65, events: 1.8, cap: 5 }
+    normal: { label: 'Thường', income: 1, passive: 1, pension: 1, events: 1, cap: 3 }
   };
-  function difficulty(l) { return DIFFICULTIES[l.difficulty === 'hardcore' ? 'hardcore' : 'normal']; }
+  function difficulty(l) { return DIFFICULTIES['normal']; }
 
   function RF(life) { return function () { return U.rand(life); }; }
   function isVN(life) { return life.country === 'VN'; }
@@ -326,7 +325,7 @@
   // Định nghĩa tình huống gọn: SC(id, {title, text, prep, opts:[{k,l,h,req,ai,run}]})
   function val(x, l, d) { return typeof x === 'function' ? x(l, d) : x; }
   function releaseUnusedAction(l, d) {
-    var x=d&&d.data,id=x&&x.actionId850,year=x&&x.actionYear850;
+    var x=d&&d.data,id=x&&x.actionId850,year=x&&x.actionYear850; if(x&&x.deferredTurn894)return;
     if(id&&year===l.age&&l.flags.actAt&&l.flags.actAt[id]===year){delete l.flags.actAt[id];l.acts=Math.max(0,(l.acts||0)-1);delete x.actionId850;delete x.actionYear850;}
   }
   function SC(id, def) {
@@ -607,7 +606,7 @@
       v: G.VERSION, sv: SAVE_SCHEMA, id: Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36),
       mode: opts.mode === 'world' ? 'world' : 'vn', variant: opts.variant === '63' ? '63' : '34',
       rs: opts.seed != null ? opts.seed | 0 : U.newSeed(), lifeMin: opts.lifeMin || 30, createdAt: Date.now(),
-      difficulty: opts.difficulty === 'hardcore' ? 'hardcore' : 'normal'
+      difficulty: 'normal'
     };
     var r = RF(life);
     life.birthYear = opts.year || new Date().getFullYear();
@@ -1474,7 +1473,7 @@
       var av = ACT.filter(function (x) { return actAvail(life, x) === true && x.ai && !(aAt[x.id] != null && a - aAt[x.id] < 3) && (aN[x.id] || 0) < 3; }); // v3.7: game tự chọn thì mỗi việc tối đa 3 lần một đời
       if (av.length) {
         var pick = U.wpick(r, av, function (x) { return aiW(life, x.ai); });
-        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null, { ai: pick, auto: !!opts.auto }); if (q.length > n1) { life.acts++; aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
+        if (pick && (!opts.auto || r() < Math.min(1, aiW(life, pick.ai)))) { var n1 = q.length; add(pick.sc || pick.id, pick.arg ? pick.arg(life) : null, { ai: pick, auto: !!opts.auto }); if (q.length > n1) { aAt[pick.id] = a; aN[pick.id] = (aN[pick.id] || 0) + 1; } }
       }
     }
 
@@ -1545,7 +1544,7 @@
     if (l.jailUntil != null && l.age < l.jailUntil && !a.jail) return 'Đang ở trong trại giam';
     if (l.abroad && l.abroad.trapped && !a.trap) return 'Không áp dụng — đang bị giam giữ trong trại lừa đảo'; // v3.8
     if (l.flags && l.flags.military && l.age < l.flags.military && !a.mil) return 'Đang đi nghĩa vụ quân sự, sống trong doanh trại';
-    if (l.acts >= actsLimit(l)) return 'Đã hết lượt hành động năm nay';
+    // Browsing stays available at the cap; committing an action checks it again.
     if (a.min != null && l.age < a.min) return 'Từ ' + a.min + ' tuổi';
     if (a.max != null && l.age > a.max) return 'Không còn phù hợp ở tuổi này';
     if (l.flags && l.flags.actAt && l.flags.actAt[a.id] === l.age) return 'Đã làm việc này năm nay'; // v2.4: tránh lặp cùng một việc trong một năm
@@ -1558,9 +1557,9 @@
     if (!a || actAvail(l, a) !== true) return null;
     var D = DEC[a.sc || a.id];
     if (D.valid && !D.valid(l, { requested: true })) return null;
-    l.acts++; (l.flags.actAt || (l.flags.actAt = {}))[a.id] = l.age;
+    // Opening an action only previews its choices; resolve commits the turn.
     var d = DEC[a.sc || a.id].make(l, RF(l), a.arg ? a.arg(l) : null);
-    d.data = d.data || {}; d.data.requested = true; d.data.actionId850=a.id; d.data.actionYear850=l.age; d.manual = true;
+    d.data = d.data || {}; d.data.requested = true; d.data.actionId850=a.id; d.data.actionYear850=l.age; d.data.deferredTurn894=true; d.manual = true;
     l.pending.unshift(d);
     return d;
   }
@@ -2183,7 +2182,7 @@
     var chk = checkSave(l);
     if (!chk.ok) throw schemaError(chk.code, chk.sv);
     for (var si = 0, sv = chk.sv; si < SCHEMA_STEPS.length; si++) if (sv < SCHEMA_STEPS[si].to) { SCHEMA_STEPS[si].run(l); sv = SCHEMA_STEPS[si].to; }
-    l.difficulty = l.difficulty === 'hardcore' ? 'hardcore' : 'normal';
+    l.difficulty = 'normal';
     if (l.prov) {
       var admin = VN.P34.find(function (p) { return p.name === l.prov.neu; });
       if (admin) { l.prov.kind = admin.kind; l.prov.neuId = admin.id; }

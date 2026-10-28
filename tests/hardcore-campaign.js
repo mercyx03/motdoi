@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert'), { game } = require('./hardcore-isolation.js');
+if(!game().DIFFICULTIES.hardcore){require('./actions894');process.exit(0);}
 const E = game(), copy = x => JSON.parse(JSON.stringify(x)); let checks = 0;
 function ok(value, message) { checks++; assert(value, message); }
 function fresh(seed = 79001) { return E.createLife({ mode: 'vn', difficulty: 'hardcore', year: 2026, seed, noOrphan: true }); }

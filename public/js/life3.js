@@ -100,7 +100,7 @@
   E.jobFit = fitOf;
   // chứng chỉ ngoại ngữ còn hạn: được trả thêm ở nghề văn phòng, dịch vụ, giáo dục…
   var EXPIRE = { en: 2, ko: 2, zh: 2 }; // IELTS, TOPIK, HSK có giá trị 2 năm; JLPT, Goethe không thời hạn
-  function certValid(l, k) { return !!(l.lang && l.lang[k]) && !(l.langExp && l.langExp[k]); }
+  function certValid(l, k) { return !!(l.lang && l.lang[k]) && !(l.langExp && l.langExp[k]) && (!EXPIRE[k] || !l.langAt || l.langAt[k] == null || l.age - l.langAt[k] < EXPIRE[k]); }
   E.certValid = certValid;
   E.certBonus = function (l, c) {
     if (!c || c.sec === 'crime' || c.fame) return 1;
@@ -220,7 +220,7 @@
   SC('chung_chi_het_han', {
     title: function (l, d) { return 'Chứng chỉ ' + CERTN[d.k] + ' hết hạn'; },
     prep: function (l, r, arg) { return arg && arg.k ? arg : { k: 'en' }; },
-    valid: function (l, d) { var k = (d && d.k) || 'en'; return !!(l.lang && l.lang[k]) && !(l.langExp && l.langExp[k]); },
+    valid: function (l, d) { var k = (d && d.k) || 'en'; return !!(l.lang && l.lang[k]) && !(l.langExp && l.langExp[k]) && l.langAt && l.langAt[k] != null && l.age - l.langAt[k] >= 2; },
     text: function (l, d) { return 'Chứng chỉ ' + certText(l, d.k) + ' của bạn đã hết hạn (chỉ có giá trị 2 năm). Trình độ thì vẫn còn, nhưng nộp hồ sơ xin việc, du học hay định cư phải có chứng chỉ còn hạn. Bạn có muốn thi lại không?'; },
     opts: [
       { k: 'retest', l: 'Đăng ký thi lại', h: function (l, d) { return 'Lệ phí thi khoảng ' + mo(l, V(l, d.k === 'en' ? 4.7 : 1.6)); }, ai: function (l) { return l.age < 40 ? 1.5 : 0.5; }, run: function (l, r, log, d) {
