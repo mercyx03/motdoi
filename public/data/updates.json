@@ -2,6 +2,36 @@
   "generatedAt": "2026-10-28T08:55:41.996Z",
   "entries": [
     {
+      "id": "country-minimum-eight-894",
+      "version": "8.9.4-country-batch1",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-28T11:52:07.859Z",
+      "publishedAt": "2026-10-28T11:52:07.795Z",
+      "title": "Một Đời — Câu chuyện riêng và sáu nhóm nội dung tại 8 quốc gia",
+      "summary": "Bổ sung 40 câu chuyện nhiều năm cùng nội dung học tập, lễ hội, cưới hỏi, món ăn và công việc cho 8 nước; tiếp tục hoàn thiện các nước còn lại.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Đợt này bổ sung nội dung cho Việt Nam, Nhật Bản, Pháp, Hoa Kỳ, Phần Lan, Ghana, Ireland và New Zealand. Mỗi nước có ít nhất 3 nội dung giáo dục, 3 lễ hoặc ngày kỷ niệm, 3 đặc điểm chuẩn bị cưới, 5 món ăn, 5 thông tin công việc và 5 câu chuyện có thể gặp trong lúc chơi.",
+        "Có 40 câu chuyện riêng: cân nhắc Lukio và học nghề ở Phần Lan; chọn hướng sau BECE ở Ghana; chuẩn bị Leaving Certificate tại Ireland; phân biệt NCEA với điều kiện vào đại học ở New Zealand; đối chiếu Common Test tại Nhật; hướng lycée tại Pháp; chương trình học khu Hoa Kỳ và hướng học sau THPT tại Việt Nam.",
+        "Trong mục Hành động có Câu chuyện riêng ở nơi đang sống. Các câu chuyện cũng có thể tự đến theo tuổi, trường học, công việc và quan hệ. Một chuyện cần bước chuẩn bị rồi những lần xem lại ở các năm sau, có thể tiến bộ, chưa thành công, giảm nhịp hoặc dừng.",
+        "Người cùng chuẩn bị được ghi nhớ cùng mục tiêu và lịch sử trao đổi. Đổi nghề, thay đổi quan hệ hoặc người cùng chuẩn bị không thể tiếp tục sẽ khép kế hoạch cũ, không chuyển thành tích của người trước cho người mới. Di cư không mang theo quyền xử lý một sự kiện sai nước.",
+        "Lựa chọn học thuật, nghề hoặc ứng dụng có ảnh hưởng khác nhau đến kiến thức, giao tiếp và căng thẳng. Kết quả giúp chuẩn bị học tập và tìm việc nhưng không tự tạo bằng cấp, tín chỉ được công nhận hay hợp đồng.",
+        "Khi đi làm, bạn có thể mở Đối chiếu điều kiện làm việc địa phương, mỗi năm một nội dung. Hồ sơ đã kiểm tra giúp những lần trao đổi công việc sau này; không tự tăng tiền lương hay tạo khoản bồi thường. Thông tin hiện đại ghi mốc tham chiếu 2026; tương lai trong game dùng giả định giữ mốc đó.",
+        "Thêm 15 mục lễ hội/ngày kỷ niệm trong thư viện hiện có, với lịch cố định, âm lịch hoặc lịch thay đổi theo năm. Có Vappu, Juhannus, Homowo, Aboakyer, Hogbetsotso, Halloween tại Ireland, Waitangi Day, Anzac Day, Setsubun, Fête de la musique, Juneteenth, Trung thu và Giỗ Tổ Hùng Vương. Các lễ cộng đồng không bị xem là phong tục bắt buộc cho mọi gia đình.",
+        "Nội dung nấu ăn hiện có 5 món cho mỗi nước trong 8 nước của đợt này. Món của một vùng được ghi rõ như Louisiana tại Hoa Kỳ, Bretagne/Provence tại Pháp hoặc Hội An tại Việt Nam; học công thức và thực hành vẫn kéo dài qua nhiều năm.",
+        "Chuẩn bị cưới có nội dung riêng theo nơi sống, chẳng hạn kon-in todoke ở Nhật, mairie tại Pháp, giấy phép theo bang tại Hoa Kỳ và các hình thức đăng ký tại Ghana. Tìm hiểu hoặc đặt lịch không tự làm hai người kết hôn. Đăng ký khác giới tại Việt Nam từ mốc luật 2015 kiểm đúng nam đủ 20, nữ đủ 18 tuổi.",
+        "Đề nghị hỗ trợ cưới của con không còn mặc định mọi gia đình phải chi sính lễ. Bạn vẫn được xem đối tượng và ngân sách trước khi quyết định hỗ trợ.",
+        "Có thêm 10 thành tựu gắn với những lễ, kết quả học tập và căn bếp vừa mở rộng; các thành tựu bóng đá và văn hóa đã có vẫn được giữ.",
+        "Giữ đúng thứ tự mới nhất của nhật ký khi các mốc thời gian được ghi bằng múi giờ khác nhau; không đổi ngày hay xóa nội dung của các bản trước.",
+        "Mục tiêu đầy đủ 195 quốc gia vẫn chưa hoàn tất: 8 nước hiện đạt độ phủ tối thiểu của đợt này, còn 187 nước cần được bổ sung và kiểm chứng tiếp. Đây không phải thông báo rằng toàn bộ 195 nước đã có đủ nội dung chuyên sâu."
+      ],
+      "correctedAt": "2026-10-28T12:03:25.810Z"
+    },
+    {
       "id": "country-depth-achievements-893",
       "version": "8.9.3",
       "releaseStatus": "released",

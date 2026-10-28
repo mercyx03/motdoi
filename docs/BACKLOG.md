@@ -14,6 +14,11 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Nội dung quốc gia 8.9.4-country-batch1
+
+Mục tiêu 195 nước chưa hoàn tất. Tám nước FI/GH/IE/NZ/JP/FR/US/VN hiện có tối thiểu 3 giáo dục, 3 lễ, 3 cưới, 5 món, 5 lao động, 5 câu chuyện/nước; 187 mã còn lại ở country-depth-inventory.json. Cần nghiên cứu/biên tập và nối gameplay cho từng nước, không tự nhân bản regional. Có 40 chuỗi theo năm, NPC riêng, đối chiếu lao động, chặn tác động sai nước và dữ liệu luật trước mốc tham chiếu. Thông tin tham chiếu 2026 không bảo đảm luật ngoài đời tương lai; tiếp tục rà ngoại lệ và lịch sử chính sách. Chưa chạy đủ 77 nhóm regression trên mã 8.9.4; kiểm tra thống kê kết hôn mục 63 vẫn cần điều tra, không hạ ngưỡng. Đợt này là Preview/chưa nghiệm thu 195 nước; xem COUNTRY-DEEP-COVERAGE-REPORT.md.
+
+
 ### Batch quốc gia/thành tựu 8.9.3 — 28/10/2026
 
 Nhiệm vụ chiều sâu 195 quốc gia còn đang triển khai: xem COUNTRY-DEEP-COVERAGE-REPORT.md và country-depth-inventory.json. Mới bổ sung ẩm thực FI/GH/IE, Matariki NZ, kiểm soát nơi cư trú và 149 thành tựu; chưa có nước nào được nghiệm thu đủ sáu lĩnh vực. Cần hoàn thiện nguồn, dữ liệu và năm sự kiện riêng/nước theo từng batch. Chưa chạy đầy đủ 77 nhóm hồi quy. Lượt chạy nhóm 0–4,61–65,70–72 phát hiện lỗi khóa cache (đã sửa) và kiểm tra thống kê hôn nhân mục 63 chưa đạt (55% so với >60%, chưa xác định nguyên nhân). Không tính nhóm đó PASS; cần điều tra trên mã cuối, không hạ ngưỡng. Binding REVIEWS_DB Production chưa kiểm chứng. Bản đóng gói lượt này vẫn Preview/chưa nghiệm thu tổng thể, dù mục nhật ký được chủ dự án yêu cầu ghi Đã phát hành.

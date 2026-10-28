@@ -1,5 +1,12 @@
 # Nguồn dữ liệu văn hóa, con người, lịch sử — Một Đời v6.7.0
 
+## Đợt 8.9.4-country-batch1 — tám nước, mốc tham chiếu 2026
+
+Danh mục URL theo từng dữ kiện có ở public/js/data-country-depth.js (sources) và docs/country-depth-inventory.json (sourceCatalogue và content từng nước). Nguồn: cơ quan giáo dục/lao động/tư pháp của FI, GH, IE, NZ, JP, FR, US, VN; cơ quan văn hóa và du lịch chính thức. Các trang/PDF khó tải toàn văn có trích đoạn chỉ mục được đối chiếu, không được diễn giải thành đã rà mọi sửa đổi pháp luật.
+
+Hồ sơ có ít nhất 3/3/3/5/5/5 mục không đồng nghĩa đã tái hiện trọn văn hóa hay luật. Các đặc điểm pháp lý, ngày lễ và món ăn được phân biệt với nhân vật, chi phí và xác suất mô phỏng. Hoa Kỳ dùng năm ví dụ món vùng Louisiana, không đại diện mọi bang. Lễ Ga/Anlo-Ewe không gán nguồn gốc đó cho toàn Ghana. Nghi thức tôn giáo, quà cưới và đổi tên đều không bắt buộc trong gameplay. Thông tin hiện đại chưa được hồi áp cho quá khứ; game tương lai ghi rõ giả định giữ mốc 2026.
+
+
 ## Batch chiều sâu 8.9.3 — đối chiếu 28/10/2026
 
 - Phần Lan: https://www.visitfinland.com/en/articles/finlands-traditional-and-iconic-foods/ — tên ruisleipä, karjalanpiirakka, lohikeitto, leipäjuusto, kalakukko; giữ khác biệt Karelia/Savo.

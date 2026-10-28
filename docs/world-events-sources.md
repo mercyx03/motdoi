@@ -1,5 +1,10 @@
 # Sự kiện thế giới — v4.7.0
 
+## Đợt 8.9.4 — 40 câu chuyện của tám quốc gia
+
+Mỗi bản ghi lifeEvents trong data-country-depth.js có ID, countryCode, nguồn, tuổi, loại điều kiện, tình huống và mục tiêu riêng. life173 đăng ký bằng WORLD120.incident/UPDATE110, chọn theo năm tất định, lưu tại culture173.cases; có lời hẹn và ít nhất hai lượt theo dõi thành công, thất bại giữ tiến độ để thử lại. Mentor hư cấu dùng LIFE138.person; đối tác tình cảm dùng ID người yêu hiện tại, không tự tạo người yêu mới. Uy tín nghề và affection108 đi vào hệ thống nghề/quan hệ hiện hữu. Không tự tạo bằng/tiền lương/bồi thường/đăng ký kết hôn. Mỗi năm một chuyện riêng mới được xếp, ưu tiên hẹn đến hạn; có menu mở chủ động. Hồ sơ sai nước, mốc năm, tuổi, nghề hoặc người yêu không được áp dụng tác động.
+
+
 ## Batch 8.9.3 — 28/10/2026
 
 Nguồn ẩm thực FI/GH/IE và lễ Matariki NZ: xem mục Batch chiều sâu 8.9.3 trong culture-sources.md. Sự kiện world_cuisine173 mở từ tuổi 12 khi tự do sinh hoạt và đang cư trú đúng nước, xác suất năm 24% bằng seed riêng. Một năm chỉ có một hành động học/nấu/trò chuyện, công thức học năm trước mới thực hành; nấu thất bại có thể thử lại năm sau. Công thức và món thành công lưu theo mã nước, không xóa khi di cư. Sự kiện chưa xử lý gắn countryCode lúc tạo và kiểm lại trước tác động; không suy nguồn gốc từ pool tên. Lễ quê gốc/tín ngưỡng vẫn có lý do riêng, không cộng vào thành tựu ba năm lễ địa phương ở nước khác.

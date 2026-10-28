@@ -176,6 +176,7 @@
       level: p.deep ? 'deep' : p.h || p.ex || p.cuisine ? 'country' : 'regional',
       holidays: (p.h || []).slice(), exam: p.ex || null, school: p.sc || null, work: p.wk || null, coming: p.co || null,
       cuisine: p.cuisine || null,
+      depth: p.depth || null,
       sources: (p.h || []).map(function (id) { return HOL[id].src; }).filter(function (v, i, a) { return a.indexOf(v) === i; })
     };
   }
@@ -545,8 +546,155 @@
   });
   E.HOOKS.year.push(function (l, r) { if (foodWhy(l) === true && roll(l, 'cuisine') < .24) queue(l, 'world_cuisine173', r); });
 
+  // Hồ sơ theo tiêu chí 3/3/3/5/5/5, mở rộng chính resolver và state văn hóa này.
+  var DEPTH = E.COUNTRY_DEPTH_DATA || { sources: {}, profiles: {} }, CASES = {};
+  Object.keys(DEPTH.profiles).forEach(function (cc) {
+    if (!G.W.BY[cc] || !/^[A-Z]{2}$/.test(cc)) throw new Error('Invalid country depth code: ' + cc);
+    var dp = DEPTH.profiles[cc], p = P[cc] || (P[cc] = {}), previousExam = p.ex;
+    p.depth = dp; p.h = p.h || [];
+    dp.festivals.forEach(function (f) {
+      if (!HOL[f.id]) HOL[f.id] = { id: f.id, n: f.name, t: f.activity, src: f.source, since: f.since || dp.metadata.referenceYear, calendar: f.date, menu: 'Cùng đón ' + f.name, party: f.name };
+      if (p.h.indexOf(f.id) < 0) p.h.push(f.id);
+    });
+    if (dp.exam) p.ex = function (y) { return y >= dp.metadata.referenceYear ? dp.exam : previousExam ? previousExam(y) : 'đánh giá cuối cấp theo chương trình trường học'; };
+    if (!FOOD[cc]) FOOD[cc] = { countryCode: cc, dishes: dp.cuisine.dishes.slice(), text: 'Bạn tìm hiểu món ăn địa phương tại ' + cname(cc) + ', hỏi rõ nguyên liệu và phong cách của từng cộng đồng; các món không bắt buộc với mọi gia đình.', source: DEPTH.sources[dp.cuisine.source], metadata: { verifiedAt: dp.metadata.verifiedAt, confidence: 'verified', scope: 'dish-names-only', sources: [DEPTH.sources[dp.cuisine.source]].concat((dp.cuisine.extraSources || []).map(function (s) { return DEPTH.sources[s]; })) } };
+    p.cuisine = FOOD[cc];
+    dp.lifeEvents.forEach(function (e) { CASES[e.id] = e; });
+  });
+  E.countryDepth173 = function (cc) { return profileOf(cc).depth; };
+  function depthAt(l) { return DEPTH.profiles[code(l)]; }
+  function currentDepth(l) { var p = depthAt(l); return p && year(l) >= p.metadata.legalFrom ? p : null; }
+  function caseState(l) { var s = st(l); if (!s.cases || typeof s.cases !== 'object' || Array.isArray(s.cases)) s.cases = {}; return s.cases; }
+  function casePeek(l, e) { var q = (peek(l).cases || {})[e.id]; return q && typeof q === 'object' && !Array.isArray(q) ? q : null; }
+  function jobToken(l) { return l.job ? l.job.id + ':' + (l.job.since == null ? '' : l.job.since) : null; }
+  function caseWhy(l, e) {
+    if (!ok(l) || code(l) !== e.countryCode || !currentDepth(l) || l.age < e.min) return 'Chưa phù hợp nơi ở, tuổi hoặc mốc tham chiếu';
+    var q = casePeek(l, e), active = q && q.status === 'active';
+    if (q && q.status === 'complete' && !(e.kind === 'safety' && l.age > q.preparedUntil)) return 'Câu chuyện đã hoàn tất';
+    if (q && q.at === l.age) return 'Đã quyết định chuyện này trong năm';
+    if (!active && e.max && l.age > e.max) return 'Đã qua giai đoạn này';
+    if (active && l.age < q.due) return 'Cần thêm thời gian';
+    if (e.kind === 'education' && !active && !l.school) return 'Cần đang đi học';
+    if (e.kind === 'work' && (!l.job || active && q.job !== jobToken(l))) return 'Công việc đã thay đổi';
+    if (e.kind === 'marriage') {
+      if (!l.partner || l.partner.alive === false || l.partner.age < 18 || l.partner.status !== 'dating') return 'Cần hai người trưởng thành đang hẹn hò';
+      if (active && q.partner !== l.partner.uid110) return 'Mối quan hệ đã thay đổi';
+    }
+    if (active && q.actor && E.LIFE138.state(l).people[q.actor] && E.LIFE138.state(l).people[q.actor].alive === false) return 'Người cùng chuẩn bị không còn tham gia được';
+    return true;
+  }
+  function caseActor(l, e, q) {
+    if (e.kind === 'marriage') return l.partner;
+    var id = q.actor || ('culture173:' + e.id + ':' + q.started), people = E.LIFE138.state(l).people;
+    if (people[id]) return people[id];
+    var r = E.LIFE138.random(l.id + ':' + id);
+    q.actor = id;
+    var p = E.LIFE138.person(l, id, H.stranger(l, r, 'F'), 'F', l.birthYear - 8, e.kind === 'education' ? 'người tư vấn học tập hư cấu' : e.kind === 'work' ? 'người phụ trách công việc hư cấu' : 'người quen địa phương hư cấu', [e.countryCode]);
+    p.goal173 = e.goal; return p;
+  }
+  function caseRecord(l, e, q, choice, text) {
+    q.at = l.age; var person = caseActor(l, e, q);
+    if (person && person.events) { person.events.push({ age: l.age, countryCode: code(l), text: text, choice: choice }); if (person.events.length > 24) person.events.shift(); }
+    if (person && person.trust != null) person.trust = U.clamp(person.trust + (choice === 'pause' ? 0 : 2), 0, 100);
+    note(l, e.title + ': ' + text);
+  }
+  function startCase(l, e, choice, rate, r, log) {
+    if (adult(l) && rate && !pay(l, rate, e.title, r, log)) return;
+    var q = casePeek(l, e) || { countryCode: code(l), started: l.age, progress: 0 }; caseState(l)[e.id] = q;
+    if (q.status === 'complete' || q.status === 'interrupted') {
+      q.previous = q.previous || []; q.previous.push({ started: q.started, progress: q.progress, partner: q.partner || null, job: q.job, actor: q.actor || null, reason: q.reason || 'review' }); if (q.previous.length > 12) q.previous.shift();
+      q.progress = 0; q.started = l.age; q.actor = null;
+    }
+    q.status = choice === 'pause' ? 'paused' : 'active'; q.choice = choice; q.due = l.age + 1; q.job = jobToken(l);
+    if (e.kind === 'marriage') q.partner = X.uid(l, l.partner);
+    if (e.kind === 'education') q.route = choice;
+    caseRecord(l, e, q, choice, choice === 'pause' ? 'Tạm hoãn, không cam kết thay người khác.' : 'Đã thống nhất bước chuẩn bị và hẹn xem lại năm sau.');
+    H.fx(l, choice === 'pause' ? { hap: 1 } : choice === 'light' ? { soc: 1 } : { kno: 1 });
+    if (choice !== 'pause') log('Bạn cùng ' + caseActor(l, e, q).name + ' chuẩn bị: ' + e.goal + '. Câu chuyện sẽ được xem lại từ năm sau.', 'neutral');
+    else log('Bạn tạm hoãn ' + e.title.toLowerCase() + '. Có thể cân nhắc lại ở năm sau khi còn phù hợp.', 'neutral');
+  }
+  function finishCase(l, e, q, r, log) {
+    var policies = (peek(l).laborReviewed || {})[code(l)] || {}, review = Object.keys(policies).length;
+    var person = caseActor(l, e, q), trust = e.kind === 'marriage' && E.RELATIONS108 ? E.RELATIONS108.bond(l, person) : person && person.trust != null ? person.trust : 50;
+    var tension = l.mind && l.mind.stress || 0;
+    var chance = U.clamp(.4 + (l.st.kno || 0) / 350 + trust / 600 + (e.kind === 'work' ? review * .025 : 0) - tension / 500, .2, .9);
+    if (r() < chance) {
+      q.progress = U.clamp(Math.floor(Number(q.progress) || 0) + 1, 0, 2); q.status = q.progress >= 2 ? 'complete' : 'active'; q.due = l.age + 1;
+      var fx = e.kind === 'education' ? { kno: q.route === 'academic' ? 3 : q.route === 'vocational' ? 2 : 1, soc: q.route === 'vocational' ? 1 : q.route === 'applied' ? 2 : 0 } : e.kind === 'training' ? { kno: 2, soc: 1 } : e.kind === 'work' ? { hap: 2, soc: 1 } : e.kind === 'safety' ? { kno: 1, hap: 2 } : { soc: 2, hap: 2 };
+      H.fx(l, fx); stress(l, -2);
+      if (e.kind === 'education' && q.route === 'academic') stress(l, 3);
+      if (e.kind === 'work' && l.job) l.job.rep = U.clamp((l.job.rep == null ? 50 : l.job.rep) + 2, 0, 100);
+      if (e.kind === 'marriage' && l.partner && E.RELATIONS108 && l.partner.countryBondAt173 !== l.age) { l.partner.affection108 = U.clamp(E.RELATIONS108.bond(l, l.partner) + 2, 0, 100); l.partner.countryBondAt173 = l.age; }
+      if (e.kind === 'safety') q.preparedUntil = l.age + 3;
+      caseRecord(l, e, q, 'review', q.status === 'complete' ? 'Hoàn thành hai lượt theo dõi qua các năm.' : 'Có tiến bộ, tiếp tục theo dõi thêm một năm.');
+      log((e.followup || 'Bạn cùng người tư vấn đối chiếu kế hoạch và khả năng thực hiện; kết quả học tập vẫn cần được đánh giá trong hệ thống giáo dục.') + (q.status === 'complete' ? ' Việc chuẩn bị đã được ghi vào hồ sơ.' : ' Hai bên hẹn xem lại ở năm sau.'), 'good');
+    } else {
+      q.due = l.age + 1;
+      caseRecord(l, e, q, 'retry', 'Còn điểm chưa thống nhất, giữ hồ sơ để thử lại.');
+      stress(l, 1); log('Việc ' + e.goal + ' chưa hoàn tất. ' + person.name + ' muốn xem lại chi tiết; bạn có thể tiếp tục, giảm nhịp hoặc dừng ở năm sau.', 'neutral');
+    }
+  }
+  function caseRows(l, e) {
+    if (caseWhy(l, e) !== true) return [];
+    var q = casePeek(l, e), active = q && q.status === 'active';
+    if (active) return [
+      { k: 'review', l: 'Cùng xem lại bước đã chuẩn bị', h: 'Có thể tiến bộ hoặc cần thử lại · không tự cấp bằng, việc làm hay đăng ký hôn nhân', run: function (l, r, log) { finishCase(l, e, q, r, log); } },
+      { k: 'light', l: 'Giảm nhịp, hẹn sang năm', h: 'Giữ công việc đang làm dở · giảm căng thẳng', run: function (l, r, log) { q.due = l.age + 1; caseRecord(l, e, q, 'light', 'Giảm nhịp và giữ hồ sơ.'); stress(l, -2); log('Bạn cùng người liên quan điều chỉnh lịch và hẹn lại năm sau.', 'neutral'); } },
+      { k: 'pause', l: 'Dừng kế hoạch hiện tại', h: 'Không tự quyết thay người yêu, trường học hay nơi làm việc', run: function (l, r, log) { q.status = 'paused'; caseRecord(l, e, q, 'pause', 'Dừng kế hoạch hiện tại.'); log('Bạn khép lại kế hoạch đang làm dở, giữ lịch sử đã trao đổi.', 'neutral'); } }
+    ];
+    if (e.kind === 'education') return depthAt(l).education.map(function (route) { return { k: route.route, l: 'Lập kế hoạch: ' + route.name, h: route.note, run: function (l, r, log) { startCase(l, e, route.route, 0, r, log); } }; });
+    if (e.kind === 'marriage') return depthAt(l).marriage.map(function (item, i) { return { k: item.id, l: 'Cùng tìm hiểu: ' + item.name, h: item.note, run: function (l, r, log) { startCase(l, e, item.id, 0, r, log); } }; });
+    var labels = e.options || ['Cùng chuẩn bị và hẹn xem lại', 'Tham gia một phần vừa sức', 'Tạm hoãn'];
+    return labels.map(function (label, i) { var rate = i === 0 && (e.kind === 'training' || e.kind === 'safety') ? .01 : 0;
+      return { k: ['plan', 'light', 'pause'][i], l: label, h: rate && adult(l) ? 'Chi phí chuẩn bị mô phỏng: ' + H.money(l, l.base * rate) : 'Không chi thêm tiền', why: !rate || !adult(l) || l.money >= l.base * rate, run: function (l, r, log) { startCase(l, e, ['plan', 'light', 'pause'][i], rate, r, log); } };
+    });
+  }
+  var depthIds = [];
+  Object.keys(CASES).forEach(function (key) {
+    var e = CASES[key], id = 'country_' + key + '173'; e.eventId = id; depthIds.push(id);
+    C.incident(id, e.title, function (l) { return caseWhy(l, e); }, function (l) {
+      var q = casePeek(l, e), p = depthAt(l); if (!p || p.countryCode !== e.countryCode) return 'Câu chuyện không thuộc quốc gia đang cư trú.';
+      var text = q && q.status === 'active' ? (e.followup || e.text) + ' Đang theo dõi bước ' + (q.progress + 1) + '/2; người cùng chuẩn bị: ' + (q.actor && E.LIFE138.state(l).people[q.actor] ? E.LIFE138.state(l).people[q.actor].name : l.partner ? l.partner.name : 'người liên quan') + '.' : e.text;
+      return text + ' Tình huống và kết quả là mô phỏng. Thông tin tham chiếu năm ' + p.metadata.referenceYear + '; tương lai trong game dùng giả định giữ mốc này.';
+    }, function (l) { return caseRows(l, e); });
+  });
+  X.menu('countryStories173', 'Câu chuyện riêng ở nơi đang sống', function (l) { return ok(l) && l.age >= 12 && currentDepth(l) ? true : 'Chưa có đợt nội dung riêng phù hợp nơi cư trú hoặc năm này'; }, function (l) { var p = depthAt(l); return p ? 'Những lựa chọn tại ' + cname(code(l)) + '. Câu chuyện được nhớ qua các năm; chỉ một chuyện mới được hệ thống đưa tới mỗi năm. Dữ liệu có mốc tham chiếu ' + p.metadata.referenceYear + '.' : 'Chưa có đợt nội dung riêng ở đây.'; }, function (l) { var p = depthAt(l); return p ? p.lifeEvents.map(function (e) { return { k: e.id, l: e.title, why: caseWhy(l, e), run: function (l, r) { X.next(l, e.eventId, r, {}, { manual: true }); } }; }) : []; }, 12, 'Cuộc sống & quan hệ');
+  X.menu('countryLabor173', 'Đối chiếu điều kiện làm việc địa phương', function (l) { return ok(l) && l.age >= 18 && l.job && currentDepth(l) ? true : 'Cần đang đi làm tại nơi có hồ sơ đã nghiên cứu'; }, function (l) { var p = depthAt(l); return p ? 'Mốc tham chiếu ' + p.metadata.referenceYear + '. Điều kiện có ngoại lệ theo ngành, hợp đồng và hoàn cảnh; đây không phải kết luận về nơi làm việc của bạn. Không tự tăng lương hoặc truy lĩnh.' : 'Chưa có hồ sơ đã nghiên cứu ở đây.'; }, function (l) {
+    var cc = code(l), reviewed = (peek(l).laborReviewed || {})[cc] || {};
+    var p = depthAt(l); return p ? p.labor.map(function (policy) { return { k: policy.id, l: policy.name + ': ' + policy.note, why: peek(l).laborAt !== l.age ? true : 'Đã đối chiếu một nội dung trong năm', run: function (l, r, log) { var s = st(l); s.laborReviewed = s.laborReviewed || {}; s.laborReviewed[cc] = s.laborReviewed[cc] || {}; s.laborReviewed[cc][policy.id] = { age: l.age, referenceYear: depthAt(l).metadata.referenceYear }; s.laborAt = l.age; stress(l, -1); log('Bạn giữ bản đối chiếu: ' + policy.name + '. Hiểu rõ thông tin sẽ giúp khi trao đổi chuyện công việc sau này.', 'neutral'); } }; }) : [];
+  }, 18, 'Học tập & sự nghiệp');
+  E.HOOKS.year.push(function (l, r, log) {
+    var p = currentDepth(l); if (!p || !ok(l)) return;
+    var s = peek(l);
+    p.lifeEvents.forEach(function (e) {
+      var q = casePeek(l, e); if (!q || q.status !== 'active') return;
+      var reason = e.kind === 'work' && q.job !== jobToken(l) ? 'Công việc đã thay đổi' : e.kind === 'marriage' && (!l.partner || l.partner.alive === false || l.partner.status !== 'dating' || q.partner !== l.partner.uid110) ? 'Mối quan hệ đã thay đổi' : q.actor && E.LIFE138.state(l).people[q.actor] && E.LIFE138.state(l).people[q.actor].alive === false ? 'Người cùng chuẩn bị không còn tham gia được' : null;
+      if (reason) { q.status = 'interrupted'; q.reason = reason; q.at = l.age; note(l, e.title + ': ' + reason); log(e.title + ': ' + reason + '. Kế hoạch cũ được khép lại, giữ lịch sử; chưa ghi thêm kết quả.', 'neutral'); }
+    });
+    if (s.safetyCalmAt !== l.age && p.lifeEvents.some(function (e) { var q = casePeek(l, e); return e.kind === 'safety' && q && q.preparedUntil >= l.age; })) { stress(l, -1); st(l).safetyCalmAt = l.age; }
+    if (s.caseQueuedAt === l.age) return;
+    var eligible = p.lifeEvents.filter(function (e) { return caseWhy(l, e) === true; });
+    var due = eligible.filter(function (e) { var q = casePeek(l, e); return q && q.status === 'active'; });
+    if (due.length) eligible = due;
+    else if (roll(l, 'country-case-arrival') >= .28) return;
+    if (!eligible.length) return;
+    var chosen = eligible[Math.floor(roll(l, 'country-case-pick') * eligible.length) % eligible.length];
+    if (queue(l, chosen.eventId, r)) st(l).caseQueuedAt = l.age;
+  });
+  var marryMake = E.DEC.marry.make;
+  var marryValid = E.DEC.marry.valid;
+  function vnMarriageAge(l) { return code(l) !== 'VN' || year(l) < 2015 || !l.partner || l.sex === l.partner.sex || l.age >= (l.sex === 'M' ? 20 : 18) && l.partner.age >= (l.partner.sex === 'M' ? 20 : 18); }
+  E.DEC.marry.valid = function (l, d) { return vnMarriageAge(l) && marryValid.apply(this, arguments); };
+  E.DEC.marry.make = function (l) { var d = marryMake.apply(this, arguments), p = currentDepth(l); if (!vnMarriageAge(l)) { d.text += ' Chưa đủ tuổi đăng ký kết hôn tại Việt Nam: nam từ đủ 20, nữ từ đủ 18.'; d.opts = [{ k: 'wait', l: 'Chờ đến khi cả hai đủ điều kiện' }]; } if (p && l.age >= 18) d.text += ' Tại ' + cname(code(l)) + ', hai bạn có thể tìm hiểu trước: ' + p.marriage.map(function (m) { return m.name; }).join('; ') + '. Các bước chuẩn bị nằm trong Câu chuyện riêng ở nơi đang sống, không bắt buộc làm lễ lớn.'; return d; };
+  var previousProfile = E.profile;
+  E.profile = function (l) { var p = previousProfile.apply(this, arguments), local = depthAt(l); if (!p || !local) return p;
+    var cases = peek(l).cases || {}, active = local.lifeEvents.filter(function (e) { return cases[e.id] && cases[e.id].status === 'active'; });
+    p.jobInfo = p.jobInfo || []; if (active.length) p.jobInfo.push('Chuyện địa phương đang theo dõi: ' + active.map(function (e) { return e.title + ' · hẹn từ tuổi ' + cases[e.id].due; }).join('; '));
+    return p;
+  };
+
   // Gắn nơi cư trú vào sự kiện khi tạo; kiểm tra lại trước mọi tác động.
-  var GUARDED = ['world_festival173', 'world_school173', 'world_exam173', 'world_coming173', 'world_workplace173', 'world_integration173', 'world_cuisine173'];
+  var GUARDED = ['world_festival173', 'world_school173', 'world_exam173', 'world_coming173', 'world_workplace173', 'world_integration173', 'world_cuisine173', 'countryStories173', 'countryLabor173'].concat(depthIds);
   GUARDED.forEach(function (id) {
     var dec = E.DEC[id], make = dec.make, apply = dec.apply, valid = dec.valid;
     dec.make = function (l, r, a) {
@@ -583,6 +731,9 @@
   newAch.push(['culture173_matariki', '✨', 'Nhìn lên Matariki', 'Cùng đón Matariki tại New Zealand từ năm 2022 trở đi.', function (l) { return ((peek(l).localFestivals || {}).NZ || {}).matariki_nz >= 1; }]);
   E.addAchievements(newAch);
   E.CULTURE173.FOOD = FOOD;
+  E.CULTURE173.DEPTH = DEPTH;
+  E.CULTURE173.CASES = CASES;
+  E.CULTURE173.caseWhy = caseWhy;
   E.CULTURE173.context = context;
   E.CULTURE173.candidates = candidates;
   E.CULTURE173.coming = coming;
