@@ -109,3 +109,7 @@ Triển khai đợt sửa theo ảnh/video: bỏ Hardcore, lượt thực hiện
 ## GĐ6 / quản gia, trợ lý và bộ nhớ 8.9.6
 
 Triển khai theo góp ý: bàn làm việc liên tục, dự toán tiệc do nhân sự lập, phạm vi ủy quyền theo nhân sự/tài chính, nén không mất dữ liệu và bản sao đầy đủ. Kiểm trọng điểm tại OFFICE-STORAGE-896-ACCEPTANCE.md. Còn regression toàn bộ trên mã cuối; iPhone Safari/PWA và thiết bị thật; mẫu dữ liệu thực báo lỗi quota; binding REVIEWS_DB Production. Không coi Chrome giả lập quota là đã kiểm Safari thật. Không tự deploy.
+
+## GĐ6 / bóng đá và cư trú 8.9.7
+
+Hoàn thành triển khai, kiểm thử trọng điểm đạt; chưa nghiệm thu toàn diện. Còn regression toàn bộ, thiết bị thật và bản lưu thật của người báo lỗi; binding REVIEWS_DB thực tế. Hai bài adult106/public116 cũng thất bại trên HEAD trước sửa, cần bảo trì riêng: kịch bản bảo vệ tiến sĩ không tạo khung ở mốc cũ; trần lương public116 còn kỳ vọng Hardcore đã loại bỏ. Không tính hai bài này PASS. Nhật ký Đã phát hành theo chỉ thị riêng, không chứng minh website đã upload.

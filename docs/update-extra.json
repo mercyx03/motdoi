@@ -1,9 +1,33 @@
 [
   {
+    "id": "football-residence-897",
+    "version": "8.9.7-football-residence",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "publishedAt": "2026-10-28T22:40:12+07:00",
+    "title": "Một Đời — Sửa sự nghiệp bóng đá và tương tác khi ở nước ngoài",
+    "summary": "Đàm phán có kết quả rõ ràng, hợp đồng cầu thủ được tính là nghề chính và các hoạt động địa phương kiểm tra nơi bạn đang sống.",
+    "tags": [
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Năng khiếu bóng đá đã luyện được nối với hồ sơ cầu thủ. Điểm kỹ năng, tiềm năng và danh tiếng ảnh hưởng cơ hội đàm phán; năng khiếu ngành khác không tự biến thành tài năng bóng đá. Điểm cao giúp tăng cơ hội nhưng không bảo đảm mọi câu lạc bộ đều nhận.",
+      "Danh sách câu lạc bộ hiển thị yêu cầu và cho xem đường thử việc học viện hoặc đàm phán chuyên nghiệp từ tuổi phù hợp. Mỗi câu lạc bộ có lượt đàm phán riêng, tối đa ba câu lạc bộ khác nhau một năm. Trường hợp thiếu tiền, chấn thương, chưa đủ tuổi hoặc bị hạn chế đi lại đều được giải thích.",
+      "Thử việc, đàm phán và ký kết có khung kết quả cùng đường quay lại. Xem câu lạc bộ và hợp đồng không tốn lượt; thực hiện thử việc, đàm phán hoặc ký mới tính lượt. Đàm phán thất bại vẫn là một lần thực hiện.",
+      "Hợp đồng chuyên nghiệp còn hiệu lực được ghi nhận là công việc vận động viên, trả lương và ngừng nhắc tìm việc tự động. Bản lưu có hợp đồng mà thiếu nghề cầu thủ được khôi phục nghề phù hợp; hợp đồng hết hạn mới trở lại tìm việc. Tham gia học viện riêng chưa phải việc làm chuyên nghiệp.",
+      "Trước khi ký, bạn xem lương, thời hạn, nơi thi đấu và ảnh hưởng đến việc học hoặc nghề hiện tại. Đổi nghề cần chọn rõ; chuyển ra nước ngoài phải đủ tuổi và đáp ứng điều kiện đi lại. Chương trình đang học ở nước cũ được dừng đúng ngữ cảnh, không tự cấp bằng.",
+      "Thi học sinh giỏi, tuyển dụng và điều chuyển cơ quan nhà nước, các hoạt động chính trị Việt Nam kiểm tra nơi đang ở. Khung cũ mở trước khi chuyển nước cũng được kiểm tra lại trước khi áp dụng; hoạt động tại nước sở tại được chọn theo nơi sống hiện tại.",
+      "Đi concert ở Việt Nam từ nước ngoài phải tính đi lại và lưu trú, đáp ứng điều kiện xuất cảnh; trẻ vị thành niên cần người giám hộ phù hợp. Xem trực tuyến vẫn được. Chuyển nước sau khi xem dự toán cần mở lại để tính đúng chuyến đi.",
+      "Chương trình phổ thông bổ sung ghi nhận quốc gia theo học. Chuyển sang nước khác sẽ tạm dừng chương trình trực tiếp cũ, không tiếp tục thu học phí hay tự trao bằng; có thể giữ chỗ hoặc kết thúc chương trình cũ để xem khóa tại nơi mới. Liên lạc gia đình từ xa và các sinh hoạt văn hóa phù hợp vẫn được giữ."
+    ],
+    "correctedAt": "2026-10-28T15:40:12.231Z"
+  },
+  {
     "id": "office-storage-896",
     "version": "8.9.6-office-storage",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-28T14:52:34.553Z",
     "title": "Một Đời — Quản gia làm việc trực tiếp và khắc phục bộ nhớ lưu",
     "summary": "Có bàn làm việc để xử lý liên tiếp, nhân sự chuẩn bị sẵn dự toán tiệc chờ duyệt và cách nén dữ liệu giữ nguyên lịch sử khi bộ nhớ đầy.",
@@ -24,13 +48,14 @@
       "Khi gặp giới hạn bộ nhớ trình duyệt, game thử nén dữ liệu cũ và lưu lại tiến trình. Cách khắc phục này không xóa cuộc đời, nhật ký hay gia phả để lấy chỗ. Bản nén được kiểm tra toàn vẹn và đọc được khi tiếp tục chơi cũng như ở trang tài khoản/cộng đồng.",
       "Trong menu dấu ba chấm có Bộ nhớ & sao lưu: xem dung lượng kho lưu, nén dữ liệu và tải bản sao đầy đủ gồm tiến trình đang chơi và lịch sử. Bản sao không kèm thông tin đăng nhập. Khi bộ nhớ vẫn không ghi được, game tiếp tục báo rõ chưa lưu để bạn tải dữ liệu về máy; không cần xóa dữ liệu Safari hay gỡ biểu tượng game.",
       "Sửa thông báo nổi che nút: các lời nhắn ngắn vẫn hiển thị nhưng không chặn thao tác chạm vào nút bên dưới, gồm nút duyệt tiệc. Khung bàn làm việc có nút đóng ở đầu và hỗ trợ phím Esc."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.238Z"
   },
   {
     "id": "actions-friends-distance-895",
     "version": "8.9.5-actions",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-28T14:08:39.939Z",
     "title": "Một Đời — Xem trước việc làm, menu gọn hơn và sửa tình huống ở xa",
     "summary": "Chỉ trừ lượt khi thực hiện lựa chọn; gộp bạn thân, bỏ Hardcore, sửa hạn chứng chỉ và thêm chuyến về thăm ngắn ngày khi đang ở nước ngoài.",
@@ -49,7 +74,8 @@
       "Sự kiện hết hạn IELTS, TOPIK, HSK kiểm tra lại thời điểm cấp chứng chỉ hiện tại, tránh hỏi thi lại sau một năm hoặc sau khi vừa có kết quả mới. IELTS được tính đủ hai năm trong game; chứng chỉ không có hạn như JLPT vẫn giữ cơ chế riêng.",
       "Bạn thân gặp chuyện khi ở xa được an ủi qua video, không kể rằng bạn đến trong đêm. Khi đang ở nước ngoài, có thể mở chuyến về thăm ngắn ngày từ mục về nước và một số tình huống gia đình/bạn bè cần hỗ trợ.",
       "Chuyến về thăm có bước xem chi phí, sắp xếp nghỉ, mua vé khứ hồi rồi quay lại đúng hạn. Không tự kết thúc du học, cấp bằng hay chuyển nơi định cư; thiếu tiền hoặc bị hạn chế đi lại thì tiếp tục hỗ trợ từ xa."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.246Z"
   },
   {
     "id": "country-minimum-eight-894",
@@ -232,8 +258,8 @@
   {
     "id": "enterprise-operations-884",
     "version": "8.8.4-operations",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-28T01:49:42.930+07:00",
     "title": "Một Đời — Chiến lược và hiệu suất doanh nghiệp",
     "summary": "Đầu tư nhiều năm, tuyển dụng và điều chỉnh đãi ngộ từ ngân sách thật của công ty.",
@@ -247,13 +273,14 @@
       "Tuyển theo số lượng với khả năng thiếu ứng viên, điều chỉnh lương, thưởng khi có lãi và đào tạo một năm. Lương vào quyết toán một lần; lòng tin thấp có thể gây nghỉ việc. Công ty cũ được khởi tạo số nhân viên theo quy tắc công bố và giữ nguyên giá trị vốn.",
       "Bảng hiệu suất giải thích biên lợi nhuận, thanh khoản, tăng trưởng, năng suất, lòng tin, uy tín và mục tiêu hoàn thành. Nhận xét cuối kỳ dựa trên số liệu và những dự án thực tế.",
       "Lưu/tải giữ tiến độ và kết quả đã xác định. Đổi quốc gia quy đổi chi phí; sáp nhập gộp nhân sự, tài sản dự án và các kế hoạch đang thực hiện."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.254Z"
   },
   {
     "id": "enterprise-reports-883",
     "version": "8.8.3-reports",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-27T21:41:59.568+07:00",
     "title": "Một Đời — Báo cáo tài chính và biểu đồ doanh nghiệp",
     "summary": "Xem từng năm tài chính, phân biệt lợi nhuận với dòng tiền và theo dõi xu hướng công ty.",
@@ -267,13 +294,14 @@
       "Dòng tiền kinh doanh, đầu tư và tài trợ đối chiếu với tiền đầu kỳ và cuối kỳ. Khoản vay và trả gốc không bị tính thành doanh thu hoặc chi phí lãi. Các khoản thu, chi vận hành trong kỳ được ghi vào lợi nhuận và thuế một lần.",
       "Biểu đồ mười năm có thể chuyển giữa doanh thu, lợi nhuận, dòng tiền, dư nợ và nhân viên khi có dữ liệu. So sánh năm trước hiển thị chênh lệch và tỷ lệ; không dựng năm trước cho công ty vừa mở sổ.",
       "Báo cáo chốt năm được giữ khi lưu/tải. Xem lịch sử hay biểu đồ không tính lại kết quả; đổi quốc gia quy đổi tiền nhưng giữ nguyên số nhân viên."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.262Z"
   },
   {
     "id": "life-enterprise-foundation-882",
     "version": "8.8.2-foundation",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-27T20:37:05.195+07:00",
     "title": "Một Đời — Tiền riêng của người thân và giao dịch doanh nghiệp",
     "summary": "Theo dõi tiền của từng người, thử vai từ tuổi đi học, quản lý tiền mặt công ty và thương lượng chuyển nhượng.",
@@ -292,13 +320,14 @@
       "Bán cổ phần cần tìm người mua, xét định giá theo lợi nhuận và nợ, thương lượng rồi đợi thanh toán từ năm sau. Người mua có thể từ chối. Cổ phần chỉ chuyển sau khi nhận tiền; vốn và tiền trong công ty không bị rút theo giao dịch.",
       "Nhượng quyền thương hiệu có phí thiết lập, phí ký kết và phí định kỳ trong ba năm; có thể gia hạn hoặc chấm dứt. Đối tác không duy trì điều kiện có thể thất bại và ngừng trả phí. Hợp đồng nhượng quyền không chuyển cổ phần.",
       "Phát hành cổ phần, sáp nhập, đổi tiền khi chuyển nước và thừa kế giữ liên kết với số dư doanh nghiệp. Cổ tức của người thân được chuyển vào đúng người sở hữu cổ phần."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.268Z"
   },
   {
     "id": "life-contracts-881",
     "version": "8.8.1-contracts",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-27T16:55:14.358+07:00",
     "title": "Một Đời — Đội ngũ truyền thông và hành trình thực tập sinh",
     "summary": "Thuê nhân sự theo chuyên môn, quản lý hợp đồng K-pop và chọn cách sum họp phù hợp ngân sách.",
@@ -313,13 +342,14 @@
       "Trong mục Hợp đồng và chuyển công ty thực tập sinh, bạn có thể xin chuyển công ty K-pop, đề nghị gia hạn, tạm nghỉ vì việc học hoặc sức khỏe, tiếp tục chương trình hay kết thúc hợp đồng. Công ty có thể từ chối đề nghị hoặc kết thúc chương trình sau đánh giá yếu; công ty khác cũng có thể tiếp cận.",
       "Thực tập sinh chưa thành niên cần người giám hộ và thu xếp việc học khi chuyển công ty hoặc quay lại. Kỹ năng, kinh nghiệm, nợ đào tạo và người quen được giữ khi ký lại. Audition và trở về nơi cư trú cũ tiếp tục qua các lựa chọn hiện có; chuyển công ty không tự đưa trẻ ra nước ngoài.",
       "Lễ Tết, sinh nhật và cưới hỏi có cách tổ chức giản dị không tốn tiền, bên cạnh mức thông thường và tiệc nhà hàng. Gia đình cũng có thể dành thời gian nghỉ tại nhà hoặc chọn dịch vụ nghỉ dưỡng riêng. Các mức chi dùng chung giới hạn mỗi dịp, và gia đình đang nợ vẫn có lựa chọn miễn phí."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.275Z"
   },
   {
     "id": "life-context-bcd-preview",
     "version": "8.8.0-preview",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-27T15:48:06.701+07:00",
     "title": "Một Đời — Hồ sơ địa vị, rèn luyện và trợ lý truyền thông",
     "summary": "Tách tầng lớp tài sản khỏi follower, làm rõ chức vụ điều hành và bổ sung lịch truyền thông tự động theo phạm vi bạn chọn.",
@@ -337,13 +367,14 @@
       "Rèn luyện có lớp cơ bản, nâng cao, gia sư riêng, huấn luyện chuyên nghiệp và lớp cộng đồng có hỗ trợ học phí khi đạt điều kiện. Chi phí theo thời lượng và mức sống; chất lượng cao giúp tiến nhanh hơn nhưng vẫn cần thời gian, có giới hạn giờ và tiến bộ chậm lại khi trình độ cao. Xin học trả phí thất bại vẫn có thể tự học.",
       "Thực tập sinh K-pop có thể được chú ý từ 13 tuổi. Kỹ năng, học lực và khả năng biểu diễn vẫn quan trọng; độ nổi bật trên mạng chỉ hỗ trợ một phần. Nguồn phát hiện phù hợp hoạt động thực tế: trường học, video đã đăng, người quen hoặc buổi thử giọng trực tiếp/online. Rap có kỹ năng riêng. Các điều kiện giám hộ, tiếp tục đi học và chuẩn bị di chuyển vẫn giữ.",
       "Trong Mạng xã hội, chọn Tự động quản lý truyền thông để giao đội ngũ hiện có đăng video, livestream, tìm lời mời quảng cáo hoặc đề xuất giao lưu. Lương và giới hạn hoạt động dùng chung với kênh; hợp đồng quảng cáo để bạn duyệt. Có báo cáo gọn và lịch sử, có thể tắt từng quyền; tải lại không làm hoạt động hay thu nhập lặp lại."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.282Z"
   },
   {
     "id": "life-context-a-family",
     "version": "8.8.0-a",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-28T15:40:12.000Z",
     "publishedAt": "2026-10-27T08:26:26.134Z",
     "title": "Một Đời — Tuổi thơ gần với hoàn cảnh gia đình",
     "summary": "Sinh nhật đầu tiên có nhiều cách kỷ niệm phù hợp túi tiền; gia đình làm nghệ thuật có thể cùng con khám phá sở thích.",
@@ -354,7 +385,8 @@
       "Mâm thôi nôi dựa trên thu nhập thực tế của người chăm sóc: gia đình khó khăn có đồ chơi sẵn có, đồ mượn hoặc chỉ quây quần hát mừng; gia đình có điều kiện có thêm cách tổ chức tiệc. Các đồ vật cũ vẫn giữ ý nghĩa gợi sở thích, được thể hiện bằng đồ chơi an toàn phù hợp trẻ nhỏ.",
       "Bố mẹ có thể làm nghề ca hát, diễn xuất, múa, sáng tác, hội họa, nhiếp ảnh, giảng dạy nghệ thuật hoặc nghề truyền thống, với thu nhập đa dạng. Trẻ có thể luyện cùng người thân mỗi năm hoặc chia sẻ mong muốn chọn con đường riêng.",
       "Áp lực học tập của trẻ xét nguồn thu hộ gia đình, đồng thời vẫn có cơ hội học bổng và giúp đỡ. Thu nhập thấp không làm tăng mọi rủi ro hay quyết định tính cách của các thành viên."
-    ]
+    ],
+    "correctedAt": "2026-10-28T15:40:12.290Z"
   },
   {
     "id": "showbiz-m6-connected-careers",

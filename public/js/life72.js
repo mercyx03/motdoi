@@ -8,7 +8,7 @@
   'use strict';
   var U = G.U, E = G.E, H = E.H, W = G.W, SC = E.SC;
   function here(l) { return (l.abroad && l.abroad.code) || l.country; }
-  function world(l) { return !!l && l.country !== 'VN' && here(l) !== 'VN' && !!W.BY[here(l)]; }
+  function world(l) { return !!l && here(l) !== 'VN' && !!W.BY[here(l)]; }
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && l.abroad.trapped); }
   function rel(l) { return E.leisure && E.leisure.rel ? E.leisure.rel(l) : ''; }
   function kids(l, a0, a1) { return (l.kids || []).filter(function (k) { var x = l.age - k.born; return k.alive !== false && x >= a0 && x <= a1; }); }
