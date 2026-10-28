@@ -397,6 +397,39 @@
     opts: [{ k: 'start', l: 'Tập ở địa phương và tiếp tục học văn hóa', run: function (l, r, log) { init(l, r); log('Bắt đầu lộ trình bóng đá thiếu niên. Bạn có thể chọn vị trí và tự đăng ký học viện.', 'good'); } },
       { k: 'wait', l: 'Tiếp tục chơi cho vui, cân nhắc sau', run: function (l, r, log) { log('Bạn giữ bóng đá làm sở thích. Có thể chủ động bắt đầu trong mục sự nghiệp khi muốn.', 'neutral'); } }] });
   E.TRIG.push({ id: 'footballDiscovery', when: function (l) { return free(l) && l.age <= 12 && !peek(l) && l.talentSub === 'bóng đá' && l.st.hea >= 45; }, p: .14, cd: 3, max: 1, child: true });
+  // Thành tựu đọc thống kê và lịch sử thi đấu, không cấp theo quốc tịch hay lời mời.
+  function eligibleAchievement(l) { var s = peek(l); return s && !s.legacyFallback ? s : null; }
+  function totalAchievement(key, value) { return function (l) { var s = eligibleAchievement(l); return !!s && Number((s.totals || {})[key]) >= value; }; }
+  var footballAch = [
+    ['football_first_app', '⚽', 'Tiếng còi đầu tiên', 'Có trận ra sân đầu tiên ở câu lạc bộ.', totalAchievement('apps', 1)],
+    ['football_50_apps', '👟', 'Đôi giày bền bỉ', 'Ra sân 50 trận cho câu lạc bộ.', totalAchievement('apps', 50)],
+    ['football_100_apps', '🏟️', 'Trăm trận sân cỏ', 'Ra sân 100 trận cho câu lạc bộ.', totalAchievement('apps', 100)],
+    ['football_300_apps', '🏟️', 'Dấu chân qua năm tháng', 'Ra sân 300 trận cho câu lạc bộ.', totalAchievement('apps', 300)],
+    ['football_first_goal', '🥅', 'Lần đầu tung lưới', 'Ghi bàn đầu tiên cho câu lạc bộ.', totalAchievement('goals', 1)],
+    ['football_50_goals', '🔥', 'Năm mươi lần ăn mừng', 'Ghi 50 bàn cho câu lạc bộ.', totalAchievement('goals', 50)],
+    ['football_100_goals', '🔥', 'Trăm bàn để nhớ', 'Ghi 100 bàn cho câu lạc bộ.', totalAchievement('goals', 100)],
+    ['football_first_assist', '🤝', 'Đường chuyền mở lối', 'Có kiến tạo đầu tiên cho câu lạc bộ.', totalAchievement('assists', 1)],
+    ['football_50_assists', '🎯', 'Người kiến thiết', 'Có 50 kiến tạo cho câu lạc bộ.', totalAchievement('assists', 50)],
+    ['football_100_assists', '🎯', 'Nhạc trưởng sân cỏ', 'Có 100 kiến tạo cho câu lạc bộ.', totalAchievement('assists', 100)],
+    ['football_25_clean', '🧤', 'Phía sau là bình yên', 'Có 25 trận sạch lưới khi thi đấu cho câu lạc bộ.', totalAchievement('clean', 25)],
+    ['football_100_clean', '🛡️', 'Bức tường trăm trận', 'Có 100 trận sạch lưới khi thi đấu cho câu lạc bộ.', totalAchievement('clean', 100)],
+    ['football_9000_minutes', '⏱️', 'Chín nghìn phút nỗ lực', 'Tích lũy 9.000 phút thi đấu câu lạc bộ.', totalAchievement('minutes', 9000)]
+  ];
+  [['caps', 1, 'Lần đầu khoác áo tuyển'], ['caps', 25, 'Hai mươi lăm lần phụng sự'], ['caps', 100, 'Trăm trận vì màu cờ'], ['goals', 1, 'Bàn thắng cho đội tuyển'], ['goals', 25, 'Niềm vui của cả đội'], ['assists', 25, 'Đồng đội trên tuyển']].forEach(function (a) {
+    footballAch.push(['football_national_' + a[0] + '_' + a[1], '🏳️', a[2], 'Đạt ' + a[1] + ' ' + ({ caps: 'lần ra sân', goals: 'bàn thắng', assists: 'kiến tạo' })[a[0]] + ' cho đội tuyển trong mô phỏng.', function (l) { var s = eligibleAchievement(l); return !!s && Number((s.national || {})[a[0]]) >= a[1]; }]);
+  });
+  Object.keys(D.markets).forEach(function (cc) {
+    footballAch.push(['football_market_' + cc, '🌍', 'Dấu giày · ' + G.W.BY[cc].name, 'Thi đấu ít nhất 10 trận có phút ra sân tại các câu lạc bộ thuộc ' + G.W.BY[cc].name + '. Chỉ nhận hợp đồng hoặc chuyển nơi ở chưa đủ.', function (l) {
+      var s = eligibleAchievement(l); return !!s && (s.seasons || []).reduce(function (n, z) { var c = club(z.club); return n + (c && c.country === cc ? (z.matches || []).filter(function (m) { return !m.international && m.minutes > 0; }).length : 0); }, 0) >= 10;
+    }]);
+  });
+  [['FIFA World Cup', 'Cúp vàng thế giới'], ['FIFA Club World Cup', 'Đỉnh cao câu lạc bộ thế giới']].forEach(function (a) {
+    footballAch.push(['football_cup_' + a[0].replace(/ /g, '_'), '🏆', a[1], 'Có danh hiệu ' + a[0] + ' được ghi nhận sau khi thực sự ra sân trong giải mô phỏng.', function (l) { var s = eligibleAchievement(l); return !!s && (s.trophies || []).some(function (t) { return t.name === a[0] && (s.seasons || []).some(function (z) { return z.year === t.year && (z.matches || []).some(function (m) { return m.minutes > 0 && m.competition === a[0] && !!m.international === !!t.nation; }); }); }); }]);
+  });
+  footballAch.push(['football_hat_trick', '🎩', 'Ba bàn một trận', 'Ghi ít nhất 3 bàn trong một trận có phút ra sân.', function (l) { var s = eligibleAchievement(l); return !!s && (s.seasons || []).some(function (z) { return (z.matches || []).some(function (m) { return m.minutes > 0 && m.goals >= 3; }); }); }]);
+  footballAch.push(['football_three_countries', '🧳', 'Hành trình ba nền bóng đá', 'Có phút ra sân ở câu lạc bộ thuộc 3 quốc gia khác nhau.', function (l) { var s = eligibleAchievement(l); if (!s) return false; var codes = {}; (s.seasons || []).forEach(function (z) { var c = club(z.club); if (c && (z.matches || []).some(function (m) { return !m.international && m.minutes > 0; })) codes[c.country] = true; }); return Object.keys(codes).length >= 3; }]);
+  footballAch.push(['football_second_career', '🎙️', 'Sau tiếng còi cuối', 'Giải nghệ sau ít nhất 20 trận, rồi làm huấn luyện, tuyển trạch hoặc bình luận bóng đá.', function (l) { var s = eligibleAchievement(l); return !!s && s.stage === 'retired' && (s.totals || {}).apps >= 20 && !!l.job && ['football_scout', 'football_caster', 'hlv_tt'].indexOf(l.job.id) >= 0; }]);
+  E.addAchievements(footballAch);
   E.FOOTBALL = { init: init, peek: peek, club: club, rating: rating, trial: trial, trialOptions: trialOptions, trialCost: trialCost, negotiate: negotiate,
     accept: accept, annual: annual, season: season, match: match, national: national, income: income, wage: wage, usd: usd, loan: loan, retire: retire, summary: summary, relocate: relocate };
 })(globalThis.G);

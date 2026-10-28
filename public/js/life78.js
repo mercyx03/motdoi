@@ -17,7 +17,7 @@
     [/^(cong_nhan|tho_may|tho_han|tho_dien|ky_thuat_vien|tho_moc|tho_mo|tai_xe_tai|thuyen_vien)$/, [1, 1.8], 'sản xuất'],
     [/^(phi_cong|tiep_vien|kskl)$/, [2, 4], 'hàng không'],
     [/^(bac_si|dieu_duong|duoc_si|nha_si|thu_y)$/, [0.8, 2], 'y tế'],
-    [/^(cong_chuc|vien_chuc|can_bo_xa|thue|hai_quan|tham_phan|kiem_sat|ngoai_giao|qltt|kiem_lam|cong_an|quan_doi|giao_vien|giang_vien|gv_mam_non|nghien_cuu|dieu_tra_vien|chap_hanh_vien)$/, [0.4, 0.8], 'khu vực nhà nước'],
+    [/^(cong_chuc|vien_chuc|can_bo_xa|hanh_chinh_cong|chinh_tri|dang_uy|ngan_hang_nn|trung_uong|thanh_tra|kiem_toan|thue|hai_quan|tham_phan|kiem_sat|ngoai_giao|qltt|kiem_lam|cong_an|quan_doi|giao_vien|giang_vien|gv_mam_non|nghien_cuu|dieu_tra_vien|chap_hanh_vien|tro_giup_phap_ly)$/, [0.4, 0.8], 'khu vực nhà nước'],
     [/^(phuc_vu|barista|bartender|le_tan|thu_ngan|dau_bep|bao_ve|giup_viec|hdv|tho_toc|barber|nail|spa|makeup)$/, [0.5, 1.2], 'dịch vụ'],
     [/^(phong_vien|mc_tv|bien_kich|dao_dien)$/, [1, 2], 'truyền thông']
   ];

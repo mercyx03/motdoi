@@ -258,7 +258,7 @@
     opts: [
       { k: 'passion', l: 'Bỏ việc, theo đuổi đam mê bấy lâu', req: function (l) { return !!l.job; }, h: 'Mất thu nhập ổn định', ai: { risk: 1.2, w: 0.5 }, run: function (l, r, log) { if (!l.job) { log('Muốn bỏ hết để sống cho mình, nhưng hoàn cảnh đã khác rồi.', 'neutral'); return; } log('Nghỉ ' + E.jobTitle(l) + ' để làm điều mình thích. Ai cũng bảo bạn điên.', 'big'); l.job = null; l.flags.needJob = true; fx(l, { hap: 8 }); l.mind.stress -= 15; H.mem(l, 'Ngày nộp đơn nghỉ việc ở tuổi ' + l.age + ' để sống cho mình.', 5); } },
       { k: 'buy', l: 'Mua một món đồ chơi đắt tiền (mô tô phân khối lớn, máy ảnh…)', h: function (l) { return mb(l, 0.4); }, req: function (l) { return l.money > l.base * 0.4; }, ai: { w: 0.6 }, run: function (l, r, log) { cashB(l, -0.4, 'Mua đồ chơi tuổi trung niên'); log('Tậu một chiếc mô tô phân khối lớn. Vui được vài tháng rồi nó nằm phủ bạt trong gara.', 'neutral'); fx(l, { hap: 4 }); } },
-      { k: 'trip', l: 'Một chuyến đi xa một mình', h: function (l) { return mb(l, 0.08); }, ai: { w: 1 }, run: function (l, r, log) { cashB(l, -0.08, 'Chuyến đi một mình'); log('Đi một mình suốt dọc Tây Bắc. Đứng trên đỉnh đèo, bạn thấy lòng nhẹ tênh.', 'good'); fx(l, { hap: 8 }); l.mind.stress -= 15; H.mem(l, 'Một mình trên đỉnh đèo lộng gió, năm ' + l.age + ' tuổi.', 4); } },
+      { k: 'trip', l: 'Một chuyến đi xa một mình', h: function (l) { return mb(l, 0.08); }, ai: { w: 1 }, run: function (l, r, log) { cashB(l, -0.08, 'Chuyến đi một mình'); log(H.inVN(l) ? 'Đi một mình suốt dọc Tây Bắc. Đứng trên đỉnh đèo, bạn thấy lòng nhẹ tênh.' : 'Xách ba lô đi một chuyến xa một mình. Đứng trước thiên nhiên rộng lớn, bạn thấy lòng nhẹ tênh.', 'good'); fx(l, { hap: 8 }); l.mind.stress -= 15; H.mem(l, 'Một mình trên đỉnh đèo lộng gió, năm ' + l.age + ' tuổi.', 4); } },
       { k: 'affair', l: 'Một mối quan hệ ngoài luồng', req: function (l) { return !!(l.partner && l.partner.status !== 'dating'); }, ai: { bad: 1.5, risk: 0.8, w: 0.3 }, run: function (l, r, log) { if (!l.partner) return; fx(l, { karma: -10 }); if (ch(r, 0.45)) { log('Bị phát hiện ngoại tình. Gia đình tan vỡ.', 'bad'); fx(l, { hap: -15 }); H.mem(l, 'Ánh mắt ' + l.partner.name + ' ngày mọi chuyện vỡ lở.', 5); H.endPartner(l, log, 'div'); } else { log('Một mối quan hệ lén lút. Mỗi đêm về nhà là một lần day dứt.', 'bad'); fx(l, { hap: -3 }); l.mind.stress += 10; } } },
       { k: 'list', l: 'Viết lại danh sách những điều muốn làm, thay đổi từng chút', ai: { smart: 0.6, w: 1 }, run: function (l, r, log) { log('Viết lại danh sách ước mơ: học đàn, chạy bộ, về thăm quê thường hơn. Cuộc sống có thêm màu sắc.', 'good'); fx(l, { hap: 5, kno: 2 }); l.flags.exercise = true; l.mind.stress -= 10; } }
     ]
@@ -386,7 +386,7 @@
     title: 'Tuổi già quạnh quẽ',
     prep: function (l) { var k = l.kids.filter(function (k) { return k.alive && k.close < 40 && l.age - k.born >= 25; })[0]; return k ? { n: k.name } : null; },
     valid: function (l) { return l.kids.some(function (k) { return k.alive && k.close < 40 && l.age - k.born >= 25; }); },
-    text: function (l, d) { return 'Tết năm nay ' + d.n + ' lại báo bận không về. Mâm cơm chiều ba mươi chỉ có ' + (l.partner ? 'hai ông bà' : 'mình bạn') + '.'; },
+    text: function (l, d) { return (H.inVN(l) || H.hasVNOrigin(l) ? 'Tết năm nay ' : 'Dịp lễ cuối năm nay ') + d.n + ' lại báo bận không về. Bữa cơm tất niên chỉ có ' + (l.partner ? 'hai ông bà' : 'mình bạn') + '.'; },
     opts: [
       { k: 'visit', l: 'Tự bắt xe lên thăm con', ai: { w: 1, soc: 0.6 }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; k.close = Math.min(100, k.close + 10); log('Xách giỏ quà quê lên thăm ' + d.n + '. Con ôm bạn, mắt đỏ hoe: "Con xin lỗi."', 'good'); fx(l, { hap: 6 }); H.mem(l, 'Chuyến xe đêm lên thành phố thăm ' + d.n + '.', 4); } },
       { k: 'call', l: 'Gọi điện nói thật lòng mình nhớ con', ai: { w: 1 }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; if (ch(r, 0.6)) { k.close = Math.min(100, k.close + 10); log('Sau cuộc gọi, ' + d.n + ' thu xếp về thăm nhà ngay tuần sau.', 'good'); fx(l, { hap: 4 }); } else { log(d.n + ' ậm ừ hứa hẹn rồi lại quên.', 'bad'); fx(l, { hap: -3 }); } } },
@@ -435,7 +435,7 @@
         run: function (l, r, log) { l.khoi = k; log('Chọn khối ' + k + ' (' + K.n + '), vào lớp ôn chuyên sâu.', 'neutral'); } };
     })
   });
-  T('chon_khoi', function (l, a) { return isVN(l) && a === 16 && !l.khoi && (l.school === 'upper' || l.school === 'priv'); }, 1, 99);
+  T('chon_khoi', function (l, a) { return H.inVN(l) && a === 16 && !l.khoi && (l.school === 'upper' || l.school === 'priv'); }, 1, 99);
   SC('luyen_thi', {
     title: 'Năm cuối cấp: luyện thi',
     text: function (l) { return 'Còn một năm nữa là thi tốt nghiệp THPT' + (l.khoi ? ' khối ' + l.khoi : '') + '. Bạn bè đứa nào cũng chạy sô ba trung tâm luyện thi.'; },
@@ -447,7 +447,7 @@
       { k: 'slack', l: 'Kệ, đến đâu hay đến đó', ai: { w: 0.4, risk: 0.6 }, run: function (l, r, log) { l.flags.luyenThi = -1; fx(l, { hap: 4, kno: -2 }); log('Năm cuối cấp vẫn ung dung chơi bời.', 'neutral'); } }
     ]
   });
-  T('luyen_thi', function (l, a) { return isVN(l) && a === 17 && (l.school === 'upper' || l.school === 'priv') && !l.flags.luyenThi; }, 0.9, 99);
+  T('luyen_thi', function (l, a) { return H.inVN(l) && a === 17 && (l.school === 'upper' || l.school === 'priv') && !l.flags.luyenThi; }, 0.9, 99);
   E.rollExamScore = function (l, r) {
     var lt = l.flags.luyenThi || 0;
     var knowledge = U.clamp(l.st.kno, 0, 100);
@@ -463,7 +463,7 @@
   };
   // điểm thi tốt nghiệp THPT (thang 30 điểm cho 3 môn của khối)
   E.HOOKS.gradUpper.push(function (l, r, log) {
-    if (!isVN(l)) return;
+    if (!H.inVN(l)) return;
     if (!l.khoi) l.khoi = KHOI_TALENT[l.talent] || (r() < 0.5 ? 'A00' : 'D01');
     var s = E.rollExamScore(l, r);
     l.examScore = s;

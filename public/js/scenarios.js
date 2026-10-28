@@ -14,7 +14,7 @@
   function mb(l, x) { return H.mb(l, x); }
   function pick(r, a) { return U.pick(r, a); }
   function ch(r, p) { return r() < p; }
-  function fine(l, trieu) { return isVN(l) ? trieu : trieu / 90 * l.base * 0.6; } // tiền phạt (triệu đồng ở VN)
+  function fine(l, trieu) { return H.inVN(l) ? trieu : trieu / 90 * l.base * 0.6; } // tiền phạt (triệu đồng ở VN)
   function hasJob(l, ids) { return !!(l.job && ids.indexOf(E.resolveJob(l.job.id)) >= 0); }
   function jobCat(l) { var c = E.jobDef(l); return c ? c.cat : ''; }
   function adult(l) { return l.age >= 18; }
@@ -91,7 +91,7 @@
       { k: 'study', l: 'Thôi, ở nhà học bài', ai: { w: 0.8, smart: 1 }, run: function (l, r, log) { log('Ở nhà học bài, nghe tiếng tụi bạn í ới ngoài ngõ.', 'neutral'); fx(l, { kno: 2 }); } }
     ]
   });
-  T('net_coi', function (l, a) { return a >= 9 && a <= 17 && (!l.urban || l.fam.q <= 3) && isVN(l) && free(l); }, function (l) { return l.sex === 'F' ? 0.0025 : l.talent === 'game' ? 0.25 : 0.1; }); // v5.6.1: bé gái hầu như không bị rủ đi net (~2% cả tuổi thơ)
+  T('net_coi', function (l, a) { return a >= 9 && a <= 17 && (!l.urban || l.fam.q <= 3) && H.inVN(l) && yr(l) >= 1998 && free(l); }, function (l) { return l.sex === 'F' ? 0.0025 : l.talent === 'game' ? 0.25 : 0.1; }); // v5.6.1: bé gái hầu như không bị rủ đi net (~2% cả tuổi thơ)
   function pick2(l, arr) { return arr[(l.rs >>> 3) % arr.length]; }
   function skillGame(l, x) { if (l.talent === 'game') l.skill = Math.min(100, (l.skill || 20) + x); }
 
@@ -130,7 +130,7 @@
       { k: 'no', l: 'Từ chối', ai: { w: 1.4 }, run: function (l, r, log) { log('Từ chối thẳng thừng. Bị trêu là "con ngoan trò giỏi", kệ.', 'good'); fx(l, { soc: -1, karma: 1 }); } }
     ]
   });
-  T('vape', function (l, a) { return a >= 14 && a <= 20 && free(l); }, 0.05);
+  T('vape', function (l, a) { return a >= 14 && a <= 20 && yr(l) >= 2012 && free(l); }, 0.05);
 
   SC('dua_xe', {
     title: 'Đi "bão" đêm', text: 'Hội bạn rủ đêm nay ra đại lộ đi "bão", nẹt pô, bốc đầu xe.',
@@ -145,7 +145,7 @@
       { k: 'no', l: 'Thôi, ở nhà', ai: { w: 1.5 }, run: function (l, r, log) { log('Từ chối, sáng ra đọc báo thấy có vụ tai nạn đua xe.', 'neutral'); } }
     ]
   });
-  T('dua_xe', function (l, a) { return a >= 15 && a <= 20 && l.sex === 'M' && isVN(l) && free(l); }, 0.04);
+  T('dua_xe', function (l, a) { return a >= 15 && a <= 20 && l.sex === 'M' && H.inVN(l) && free(l); }, 0.04);
 
   SC('to_tinh', {
     title: 'Rung động tuổi học trò', prep: function (l, r) { return { n: H.stranger(l, r, H.partnerSex(l, r)) }; },
@@ -162,7 +162,7 @@
     valid: function (l) { return l.fam.fAlive && l.fam.mAlive; },
     opts: [
       { k: 'protect', l: 'Lao vào che cho mẹ', ai: { risk: 0.6, w: 1.2 }, run: function (l, r, log) { log('Lao vào che cho mẹ, lãnh trọn mấy cú đánh.', 'bad'); fx(l, { hea: -8, hap: -6, karma: 3 }); H.mem(l, 'Đêm bạn đứng chắn trước mẹ, người run lên mà không lùi bước.', 6); } },
-      { k: 'call', l: 'Chạy sang gọi hàng xóm / gọi 111', ai: { smart: 0.8 }, run: function (l, r, log) { log('Hàng xóm sang can ngăn. Từ hôm đó bố bớt rượu chè hơn.', 'neutral'); fx(l, { hap: -3 }); if (ch(r, 0.25)) { l.fam.vice = null; log('Bố quyết tâm bỏ rượu sau đêm ấy.', 'good'); H.mem(l, 'Ngày bố hứa bỏ rượu.', 4); } } },
+      { k: 'call', l: function (l) { return H.inVN(l) ? 'Chạy sang gọi hàng xóm / gọi 111' : 'Chạy sang gọi hàng xóm / gọi cảnh sát'; }, ai: { smart: 0.8 }, run: function (l, r, log) { log('Hàng xóm sang can ngăn. Từ hôm đó bố bớt rượu chè hơn.', 'neutral'); fx(l, { hap: -3 }); if (ch(r, 0.25)) { l.fam.vice = null; log('Bố quyết tâm bỏ rượu sau đêm ấy.', 'good'); H.mem(l, 'Ngày bố hứa bỏ rượu.', 4); } } },
       { k: 'hide', l: 'Trốn vào góc nhà bịt tai', ai: { w: 0.7 }, run: function (l, r, log) { log('Trốn trong góc nhà, bịt chặt tai mà vẫn nghe tiếng mẹ khóc.', 'bad'); fx(l, { hap: -9 }); H.mem(l, 'Góc nhà tối nơi bạn trốn những đêm bố say.', 5); } }
     ]
   });
@@ -173,7 +173,7 @@
     opts: [
       { k: 'work', l: 'Bỏ học đi làm, phụ trả nợ cho bố', req: function (l) { return l.age >= 14; }, ai: { w: 0.6 }, run: function (l, r, log) { l.school = null; l.flags.needJob = true; l.flags.famDebt = true; log('Gấp sách vở, đi làm phụ trả nợ cho bố.', 'bad'); fx(l, { hap: -8, karma: 4 }); H.mem(l, 'Năm ' + l.age + ' tuổi, bạn bỏ học để trả nợ cờ bạc cho bố.', 6); } },
       { k: 'beg', l: 'Cùng mẹ năn nỉ khất nợ', ai: { w: 1 }, run: function (l, r, log) { log('Mẹ quỳ xuống năn nỉ. Họ cho khất, nhưng mang chiếc tivi đi.', 'bad'); fx(l, { hap: -7 }); l.flags.famDebt = true; H.mem(l, 'Hình ảnh mẹ quỳ xuống trước chủ nợ.', 6); } },
-      { k: 'police', l: 'Lén báo công an', ai: { smart: 1 }, run: function (l, r, log) { if (ch(r, 0.6)) { log('Công an đến giải tán nhóm đòi nợ. Bố bị gọi lên làm việc vì đánh bạc.', 'neutral'); fx(l, { hap: -2, karma: 2 }); } else { log('Báo công an xong, nhóm đòi nợ quay lại tạt sơn vào nhà.', 'bad'); fx(l, { hap: -8 }); } } }
+      { k: 'police', l: function (l) { return H.inVN(l) ? 'Lén báo công an' : 'Lén báo cảnh sát'; }, ai: { smart: 1 }, run: function (l, r, log) { var ca = H.inVN(l) ? 'Công an' : 'Cảnh sát', ca2 = H.inVN(l) ? 'công an' : 'cảnh sát'; if (ch(r, 0.6)) { log(ca + ' đến giải tán nhóm đòi nợ. Bố bị gọi lên làm việc vì đánh bạc.', 'neutral'); fx(l, { hap: -2, karma: 2 }); } else { log('Báo ' + ca2 + ' xong, nhóm đòi nợ quay lại tạt sơn vào nhà.', 'bad'); fx(l, { hap: -8 }); } } }
     ]
   });
   T('chu_no', function (l, a) { return a >= 10 && a <= 22 && l.fam.vice === 'gamble' && !l.indep; }, 0.15);
@@ -236,9 +236,9 @@
       var idol = l.idol;
       var vn = E.IDOLS.vn.indexOf(idol) >= 0 || E.IDOLS.nextVN.indexOf(idol) >= 0;
       var v = VENUE[idol] || (vn ? [pick(r, ['Hà Nội', 'TP. Hồ Chí Minh']), 1] : [pick(r, ['Bangkok', 'Singapore', 'Seoul', 'Tokyo']), 1.7]);
-      if (!isVN(l) && !vn) v = [W.BY[l.country] ? W.BY[l.country].cities[0] : v[0], 1.2];
+      if (!H.inVN(l) && !vn) v = [W.BY[H.resCode(l)] ? W.BY[H.resCode(l)].cities[0] : v[0], 1.2];
       var price = (vn ? 0.025 : 0.05) * v[1];
-      return { idol: idol, city: v[0], price: price, far: v[1] > 1.3 && isVN(l) };
+      return { idol: idol, city: v[0], price: price, far: v[1] > 1.3 && H.inVN(l) };
     },
     text: function (l, d) { return d.idol + ' tổ chức concert ở ' + d.city + '. Vé chính hãng khoảng ' + mb(l, d.price) + (d.far ? ', chưa kể vé máy bay, khách sạn' : '') + ' — và hết sạch sau 5 phút mở bán.'; },
     opts: [
@@ -311,7 +311,7 @@
       { k: 'real', l: 'Đi làm thêm thật: phục vụ quán cà phê', ai: { w: 0.8 }, run: function (l, r, log) { cashB(l, 0.04, 'Làm thêm'); log('Đi làm phục vụ quán cà phê buổi tối, có thêm tiền trang trải.', 'good'); fx(l, { hea: -1, soc: 2 }); } }
     ]
   });
-  T('viec_online', function (l, a) { return a >= 16 && a <= 45 && free(l); }, 0.04, 5);
+  T('viec_online', function (l, a) { return a >= 16 && a <= 45 && yr(l) >= 2012 && free(l); }, 0.04, 5);
 
   SC('viec_nhe', {
     title: 'Việc nhẹ lương cao', prep: function (l, r) { return { w: pick(r, ['trực page bán hàng', 'chăm sóc khách hàng casino', 'nhập liệu', 'phiên dịch']), pay: pick(r, [25, 30, 35, 40]) }; },
@@ -332,7 +332,7 @@
       { k: 'no', l: 'Linh cảm không ổn — ở lại', ai: { w: 1.2 }, run: function (l, r, log) { log('Linh cảm không ổn, bạn ở lại. Mấy tháng sau báo đưa tin giải cứu hàng trăm người từ Campuchia.', 'good'); H.mem(l, 'Linh cảm đã cứu bạn khỏi chuyến đi Campuchia.', 4); } }
     ]
   });
-  T('viec_nhe', function (l, a) { return a >= 17 && a <= 35 && (isVN(l) || /th|la|mm|id|ph|cn|my/.test(l.pool)) && !l.abroad && (l.edu <= 3 || !l.job || l.money < 0) && !l.flags.cambodia && free(l); }, function (l) { return l.money < 0 || !l.job ? 0.05 : 0.025; });
+  T('viec_nhe', function (l, a) { return a >= 17 && a <= 35 && yr(l) >= 2018 && (H.inVN(l) || /th|la|mm|id|ph|cn|my/.test(l.pool)) && !l.abroad && (l.edu <= 3 || !l.job || l.money < 0) && !l.flags.cambodia && free(l); }, function (l) { return l.money < 0 || !l.job ? 0.05 : 0.025; });
 
   SC('kh_den', {
     title: 'Bên kia biên giới', tone: 'dark',
@@ -427,7 +427,7 @@
         var x = r();
         if (x < 0.008) { H.kill(l, 'tai nạn giao thông khi vượt đèn đỏ', log, true); return; }
         if (x < 0.13) { log('Va chạm với xe từ hướng khác lao tới. Gãy tay, xe hỏng nặng.', 'bad'); fx(l, { hea: -15, hap: -6 }); cashB(l, -0.08, 'Viện phí & sửa xe sau tai nạn'); H.mem(l, 'Cú va chạm ở ngã tư khi cố vượt đèn vàng.', 4); }
-        else if (x < 0.45) { log('Vừa qua vạch thì đèn đỏ, CSGT ra hiệu dừng xe.', 'bad'); H.chain(l, 'csgt', { why: 'vượt đèn đỏ', f: l.veh === 'ô tô' ? 20 : 5 }); }
+        else if (x < 0.45) { log('Vừa qua vạch thì đèn đỏ, ' + (H.inVN(l) ? 'CSGT' : 'cảnh sát giao thông') + ' ra hiệu dừng xe.', 'bad'); H.chain(l, 'csgt', { why: 'vượt đèn đỏ', f: l.veh === 'ô tô' ? 20 : 5 }); }
         else log('Vượt qua trót lọt. Tim vẫn còn đập thình thịch.', 'neutral');
       } }
     ]
@@ -435,7 +435,7 @@
   T('den_vang', function (l, a) { return a >= 16 && a <= 75 && vehicle(l) && free(l); }, 0.07, 3);
 
   SC('csgt', {
-    title: 'CSGT ra hiệu dừng xe', valid: function (l) { return l.age >= 16 && l.age <= 85 && vehicle(l) && !l.flags.driverHired && free(l); }, prep: function (l, r, arg) {
+    title: function (l) { return (H.inVN(l) ? 'CSGT' : 'Cảnh sát giao thông') + ' ra hiệu dừng xe'; }, valid: function (l) { return l.age >= 16 && l.age <= 85 && vehicle(l) && !l.flags.driverHired && free(l); }, prep: function (l, r, arg) {
       if (arg && arg.why) return arg;
       var opts = [];
       if (!l.lic.A1 && l.veh === 'xe máy' && !l.flags.driverHired) opts.push({ why: 'chạy xe máy không có bằng lái', f: 3 });
@@ -446,12 +446,12 @@
       else opts.push({ why: 'không đội mũ bảo hiểm', f: 0.6 }, { why: 'đi sai làn', f: 1 });
       return pick(r, opts);
     },
-    text: function (l, d) { return 'Tổ CSGT ra hiệu dừng xe vì lỗi ' + d.why + '. Mức phạt khoảng ' + H.money(l, fine(l, d.f)) + '.'; },
+    text: function (l, d) { return (H.inVN(l) ? 'Tổ CSGT' : 'Cảnh sát giao thông') + ' ra hiệu dừng xe vì lỗi ' + d.why + '. Mức phạt khoảng ' + H.money(l, fine(l, d.f)) + '.'; },
     opts: [
       { k: 'stop', l: 'Dừng xe, chấp hành', ai: { w: 1.5 }, run: function (l, r, log, d) { H.cash(l, -fine(l, d.f), 'Nộp phạt giao thông: ' + d.why); log('Dừng xe chấp hành, nộp phạt ' + H.money(l, fine(l, d.f)) + ' vì ' + d.why + '.' + (/bằng lái|nồng độ/.test(d.why) ? ' Xe bị tạm giữ.' : ''), 'bad'); fx(l, { hap: -4 }); if (/bằng lái/.test(d.why)) { if (l.age > 60) { l.flags.driverHired = true; log(l.veh === 'ô tô' ? 'Tuổi đã cao, không đi thi bằng nữa — từ nay nhờ con cháu hoặc thuê tài xế lái xe.' : 'Tuổi đã cao, không đi thi bằng nữa — từ nay nhờ người nhà chở đi.', 'neutral'); } else H.sched(l, 'bang_lai', 1); } } },
       { k: 'flee', l: 'Rồ ga bỏ chạy', ai: { risk: 1.5, bad: 0.6 }, run: function (l, r, log, d) {
         var x = r();
-        if (x < 0.03) { log('Bỏ chạy, mất lái tông vào cột điện.', 'bad'); fx(l, { hea: -22 }); if (ch(r, 0.15)) { H.kill(l, 'tai nạn khi bỏ chạy CSGT', log, true); } return; }
+        if (x < 0.03) { log('Bỏ chạy, mất lái tông vào cột điện.', 'bad'); fx(l, { hea: -22 }); if (ch(r, 0.15)) { H.kill(l, 'tai nạn khi bỏ chạy ' + (H.inVN(l) ? 'CSGT' : 'cảnh sát giao thông'), log, true); } return; }
         if (x < 0.4) { H.cash(l, -fine(l, d.f) * 2.5, 'Phạt gấp vì chống người thi hành công vụ'); log('Bị đuổi kịp, khống chế ngay giữa đường. Phạt nặng gấp mấy lần vì chống đối.', 'bad'); fx(l, { hea: -4, hap: -8, karma: -4 }); return; }
         if (x < 0.75) { H.cash(l, -fine(l, d.f) * 1.5, 'Phạt nguội gửi về nhà'); log('Chạy thoát, nhưng camera đã chụp biển số. Mấy tuần sau giấy phạt nguội gửi về tận nhà.', 'bad'); fx(l, { hap: -5, karma: -2 }); return; }
         log('Luồn lách vào hẻm, thoát được. Tim đập như trống trận.', 'neutral'); fx(l, { karma: -3 });
@@ -474,13 +474,13 @@
       { k: 'argue', l: 'Cãi lý tới cùng', ai: { risk: 1 }, run: function (l, r, log) { if (ch(r, 0.3)) { log('Đồng bọn của kẻ ăn vạ xúm vào, bạn bị đánh và mất luôn ví.', 'bad'); fx(l, { hea: -6 }); cashB(l, -0.04, 'Bị cướp ví'); } else log('Cãi một hồi, người xem đông, kẻ ăn vạ đành bỏ đi.', 'neutral'); } }
     ]
   });
-  T('an_va', function (l, a) { return a >= 18 && vehicle(l) && isVN(l) && free(l); }, 0.03);
+  T('an_va', function (l, a) { return a >= 18 && vehicle(l) && H.inVN(l) && free(l); }, 0.03);
 
   SC('tong_nguoi', {
     title: 'Tai nạn bất ngờ', text: 'Trời mưa, đường trơn. Bạn phanh không kịp, va vào một người đi xe đạp. Người đó ngã, chảy máu đầu.',
     opts: [
       { k: 'help', l: 'Dừng lại, đưa người ta đi viện, bồi thường', ai: { w: 1.5, bad: -0.8 }, run: function (l, r, log) { var c = 0.08 + r() * 0.25; cashB(l, -c, 'Bồi thường tai nạn'); log('Đưa nạn nhân đi viện, trả viện phí và bồi thường ' + mb(l, c) + '. Gia đình họ cảm ơn sự tử tế của bạn.', 'neutral'); fx(l, { karma: 6, hap: -3 }); H.mem(l, 'Đêm ngồi ngoài phòng cấp cứu chờ tin người bị bạn va phải.', 4); } },
-      { k: 'flee', l: 'Bỏ chạy', ai: { bad: 1.5, risk: 1 }, run: function (l, r, log) { fx(l, { karma: -18, hap: -6 }); H.mem(l, 'Cú bỏ chạy đêm mưa — ám ảnh suốt nhiều năm.', 5); if (ch(r, 0.5)) { log('Bỏ chạy, nhưng camera an ninh ghi lại biển số. Công an tìm đến tận nhà.', 'bad'); H.sched(l, 'bi_bat', 0, { why: 'gây tai nạn rồi bỏ trốn', sev: 1 }); } else log('Bỏ chạy thoát. Không ai biết. Chỉ có bạn biết.', 'bad'); } }
+      { k: 'flee', l: 'Bỏ chạy', ai: { bad: 1.5, risk: 1 }, run: function (l, r, log) { fx(l, { karma: -18, hap: -6 }); H.mem(l, 'Cú bỏ chạy đêm mưa — ám ảnh suốt nhiều năm.', 5); if (ch(r, 0.5)) { log('Bỏ chạy, nhưng camera an ninh ghi lại biển số. ' + (H.inVN(l) ? 'Công an' : 'Cảnh sát') + ' tìm đến tận nhà.', 'bad'); H.sched(l, 'bi_bat', 0, { why: 'gây tai nạn rồi bỏ trốn', sev: 1 }); } else log('Bỏ chạy thoát. Không ai biết. Chỉ có bạn biết.', 'bad'); } }
     ]
   });
   T('tong_nguoi', function (l, a) { return a >= 18 && vehicle(l) && free(l); }, 0.012);
@@ -507,7 +507,7 @@
   T('khach_quit', function (l, a) { return l.job && ((E.jobDef(l) && E.jobDef(l).tag === 'driver') || hasJob(l, ['xe_om'])) && free(l); }, 0.07);
 
   SC('bang_lai', {
-    title: 'Thi bằng lái', prep: function (l) { return { t: !l.lic.A1 ? 'A1' : 'B', name: !l.lic.A1 ? 'bằng lái xe máy (A1)' : 'bằng lái ô tô (B)', cost: !l.lic.A1 ? 0.01 : 0.18 }; },
+    title: 'Thi bằng lái', prep: function (l) { return { t: !l.lic.A1 ? 'A1' : 'B', name: !l.lic.A1 ? (H.inVN(l) ? 'bằng lái xe máy (A1)' : 'bằng lái xe máy') : (H.inVN(l) ? 'bằng lái ô tô (B)' : 'bằng lái ô tô'), cost: !l.lic.A1 ? 0.01 : 0.18 }; },
     text: function (l, d) { return 'Bạn đăng ký thi ' + d.name + '. Học phí khoảng ' + mb(l, d.cost) + '.'; },
     valid: function (l, d) { return l.age <= 60 && !(l.lic.A1 && l.lic.B) && !(d && d.t && l.lic[d.t]); }, // v5.6.1: không thi bằng lái sau 60 tuổi // v2.8: đã đỗ bằng này trong năm thì bỏ lượt thi trùng
     opts: [
@@ -558,8 +558,8 @@
     opts: [
       { k: 'cash', l: 'Trả bằng tiền tiết kiệm', req: function (l, d) { return l.money >= d.p * l.base; }, ai: { w: 1, amb: 0.5 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); log('Mua ' + d.n + ' bằng tiền dành dụm. Vui được vài tuần.', 'neutral'); fx(l, { hap: 4 }); } },
       { k: 'card', l: 'Quẹt thẻ tín dụng', req: function (l) { return H.canBankLoan(l) && l.indep; }, h: 'Lãi ~30%/năm nếu trả chậm', ai: { risk: 0.8 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); H.addLoan(l, 'card', d.p * l.base); log('Quẹt thẻ mua ' + d.n + '. Sao kê tháng sau tính sau.', 'neutral'); fx(l, { hap: 4 }); } },
-      { k: 'paylater', l: 'Mua bằng ví trả sau', h: 'Không cần chứng minh thu nhập', ai: { risk: 1 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); H.addLoan(l, 'paylater', d.p * l.base); log('Bấm "mua trước trả sau" chỉ trong vài giây.', 'neutral'); fx(l, { hap: 4 }); } },
-      { k: 'appden', l: 'Vay app "giải ngân 5 phút"', h: 'Lãi cắt cổ, đòi nợ khủng bố', ai: { risk: 1.5, smart: -1.2 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); H.addLoan(l, 'appden', d.p * l.base); log('Vay qua ứng dụng, chỉ cần chụp CCCD và cho truy cập danh bạ.', 'bad'); fx(l, { hap: 3 }); H.mem(l, 'Cái chạm tay đồng ý cho app vay truy cập danh bạ.', 3); } },
+      { k: 'paylater', l: 'Mua bằng ví trả sau', req: function (l) { return yr(l) >= 2016; }, h: 'Không cần chứng minh thu nhập', ai: { risk: 1 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); H.addLoan(l, 'paylater', d.p * l.base); log('Bấm "mua trước trả sau" chỉ trong vài giây.', 'neutral'); fx(l, { hap: 4 }); } },
+      { k: 'appden', l: 'Vay app "giải ngân 5 phút"', req: function (l) { return yr(l) >= 2016; }, h: 'Lãi cắt cổ, đòi nợ khủng bố', ai: { risk: 1.5, smart: -1.2 }, run: function (l, r, log, d) { cashB(l, -d.p, 'Mua ' + d.n); H.addLoan(l, 'appden', d.p * l.base); log('Vay qua ứng dụng, chỉ cần ' + (H.inVN(l) ? 'chụp CCCD' : 'chụp giấy tờ tùy thân') + ' và cho truy cập danh bạ.', 'bad'); fx(l, { hap: 3 }); H.mem(l, 'Cái chạm tay đồng ý cho app vay truy cập danh bạ.', 3); } },
       { k: 'save', l: 'Để dành, khi nào đủ tiền mới mua', ai: { w: 1.3, smart: 0.6 }, run: function (l, r, log) { log('Kìm lòng, quyết định để dành.', 'good'); fx(l, { karma: 1 }); } }
     ]
   });
@@ -573,13 +573,13 @@
     },
     opts: [
       { k: 'roll', l: 'Vay app khác để đắp vào', ai: { risk: 1.2, smart: -1, w: 0.5 }, run: function (l, r, log) { var d = H.debtTotal(l) * 0.5; H.addLoan(l, 'appden', d); payOff(l, ['appden', 'nong'], d); log('Vay chỗ này đắp chỗ kia, nợ lãi mẹ đẻ lãi con.', 'bad'); fx(l, { hap: -8 }); l.flags.thugDebt = true; } },
-      { k: 'police', l: 'Trình báo công an', ai: { smart: 1.3 }, run: function (l, r, log) { if (ch(r, 0.6)) { log('Công an vào cuộc triệt phá đường dây cho vay. Bạn chỉ phải trả phần gốc.', 'good'); clearLoans(l, ['appden', 'nong'], 0.4); l.flags.thugDebt = false; fx(l, { hap: 6 }); } else { log('Trình báo xong, chúng càng khủng bố gắt hơn, tạt sơn trước cửa nhà.', 'bad'); fx(l, { hap: -10 }); } } },
+      { k: 'police', l: function (l) { return H.inVN(l) ? 'Trình báo công an' : 'Trình báo cảnh sát'; }, ai: { smart: 1.3 }, run: function (l, r, log) { if (ch(r, 0.6)) { log((H.inVN(l) ? 'Công an' : 'Cảnh sát') + ' vào cuộc triệt phá đường dây cho vay. Bạn chỉ phải trả phần gốc.', 'good'); clearLoans(l, ['appden', 'nong'], 0.4); l.flags.thugDebt = false; fx(l, { hap: 6 }); } else { log('Trình báo xong, chúng càng khủng bố gắt hơn, tạt sơn trước cửa nhà.', 'bad'); fx(l, { hap: -10 }); } } },
       { k: 'family', l: 'Thú thật với gia đình, nhờ giúp', ai: { soc: 1, w: 1.2 }, run: function (l, r, log) {
         var d = H.debtTotal(l), hw = helperWord(l); clearLoans(l, ['appden', 'nong'], 0); H.addLoan(l, 'family', Math.min(d, l.base * 3)); l.flags.thugDebt = false;
         log(hw === 'bố mẹ' || hw === 'mẹ' || hw === 'bố' ? 'Kể hết với ' + hw + '. ' + U.cap(hw) + ' bán đi chiếc xe, trả nợ thay bạn.' : 'Kể hết với ' + hw + '. Mọi người góp tiền trả nợ thay bạn, coi như cho vay không lấy lãi.', 'neutral');
         fx(l, { hap: -4, karma: 2 }); H.mem(l, 'Ngày thú nhận nợ app đen với ' + hw + '.', 6);
       } },
-      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp ' + (isVN(l) ? 'nhóm Zalo ' : 'các nhóm chat ') + (H.isEmployee(l) ? 'công ty' : 'họ hàng, hàng xóm') + '.', 'bad'); if (H.isEmployee(l) && !E.isStableService(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
+      { k: 'ignore', l: 'Mặc kệ, chặn số', ai: { risk: 1 }, run: function (l, r, log) { fx(l, { hap: -12 }); log('Chặn số này lại có số khác gọi. Ảnh ghép của bạn lan khắp ' + (H.inVN(l) && yr(l) >= 2013 ? 'nhóm Zalo ' : 'các nhóm chat ') + (H.isEmployee(l) ? 'công ty' : 'họ hàng, hàng xóm') + '.', 'bad'); if (H.isEmployee(l) && !E.isStableService(l) && ch(r, 0.35)) { log('Công ty cho bạn nghỉ việc vì "ảnh hưởng hình ảnh".', 'bad'); l.job = null; l.flags.needJob = true; } H.sched(l, 'tram_cam', 0); } }
     ]
   });
   T('khung_bo', function (l, a) { return l.flags.thugDebt && free(l); }, 0.7);
@@ -603,27 +603,27 @@
     text: 'Đêm nào cũng mơ thấy mình thắng lớn. "Gỡ lại một ván thôi rồi bỏ."',
     opts: [
       { k: 'play', l: 'Chơi tiếp để gỡ', ai: { risk: 1.5, w: 1.2 }, run: function (l, r, log) { cashB(l, -0.4, 'Thua bạc'); if (l.money < 0) H.addLoan(l, 'nong', l.base * 0.4); log('Càng gỡ càng thua. Nợ nóng chồng chất.', 'bad'); fx(l, { hap: -10, karma: -3 }); if (l.partner && l.partner.status !== 'dating' && ch(r, 0.15)) { H.endPartner(l, log, 'div'); } } },
-      { k: 'pawn', l: 'Cắm sổ đỏ để gỡ một lần cuối', req: function (l) { return l.ownHouse; }, ai: { risk: 2 }, run: function (l, r, log) { if (ch(r, 0.2)) { log('Gỡ được một ít, chuộc lại sổ đỏ. Lần này may.', 'neutral'); } else { log('Mất trắng. Căn nhà bị siết nợ, cả nhà phải ra ở trọ.', 'bad'); l.ownHouse = false; l.houseVal = 0; clearLoans(l, ['home'], 0); fx(l, { hap: -25 }); H.mem(l, 'Ngày giao chìa khóa nhà cho chủ nợ.', 8); } } },
+      { k: 'pawn', l: function (l) { return H.inVN(l) ? 'Cắm sổ đỏ để gỡ một lần cuối' : 'Thế chấp giấy tờ nhà để gỡ một lần cuối'; }, req: function (l) { return l.ownHouse; }, ai: { risk: 2 }, run: function (l, r, log) { if (ch(r, 0.2)) { log('Gỡ được một ít, ' + (H.inVN(l) ? 'chuộc lại sổ đỏ' : 'giữ lại được căn nhà') + '. Lần này may.', 'neutral'); } else { log('Mất trắng. Căn nhà bị siết nợ, cả nhà phải ra ở trọ.', 'bad'); l.ownHouse = false; l.houseVal = 0; clearLoans(l, ['home'], 0); fx(l, { hap: -25 }); H.mem(l, 'Ngày giao chìa khóa nhà cho chủ nợ.', 8); } } },
       { k: 'quit', l: 'Nhờ gia đình giám sát, quyết cai', ai: { w: 0.8, smart: 1 }, run: function (l, r, log) { if (ch(r, 0.45)) { l.addict.gamble = false; log('Đốt hết sổ sách lô đề, xóa ứng dụng cá cược. Cai được cờ bạc.', 'good'); fx(l, { hap: 8, karma: 5 }); H.mem(l, 'Ngày bỏ được cờ bạc.', 5); } else log('Cai được vài tháng rồi lại tái nghiện.', 'bad'); } }
     ]
   });
   T('nghien_bac', function (l, a) { return l.addict && l.addict.gamble && free(l) && ((l.flags.scN || {}).nghien_bac || 0) < 5; }, function (l) { return 0.4 * Math.pow(0.75, (l.flags.scN || {}).nghien_bac || 0); }, 3); // v3.7: cách ít nhất 3 năm mới hỏi lại
 
   SC('ve_so', {
-    title: 'Mua vé số', text: 'Cô bán vé số đi ngang qua: "Mua giùm cô vài tờ đi con, hôm nay ngày đẹp!"',
+    title: 'Mua vé số', text: function (l) { return H.inVN(l) ? 'Cô bán vé số đi ngang qua: "Mua giùm cô vài tờ đi con, hôm nay ngày đẹp!"' : 'Đi ngang quầy xổ số, bảng giải thưởng cộng dồn đang rất lớn.'; },
     opts: [
       { k: 'one', l: 'Mua 1 tờ cho vui', ai: { w: 1.5 }, run: function (l, r, log) { lotto(l, r, log, 1); } },
       { k: 'many', l: 'Mua cả xấp 10 tờ', ai: { risk: 1 }, run: function (l, r, log) { lotto(l, r, log, 10); } },
-      { k: 'vietlott', l: function (l) { return isVN(l) ? 'Mua vé Vietlott Power 6/55' : 'Mua vé xổ số jackpot'; }, ai: { risk: 0.8 }, run: function (l, r, log) { lotto(l, r, log, 0); } }
+      { k: 'vietlott', l: function (l) { return H.inVN(l) && yr(l) >= 2016 ? 'Mua vé Vietlott Power 6/55' : 'Mua vé xổ số jackpot'; }, ai: { risk: 0.8 }, run: function (l, r, log) { lotto(l, r, log, 0); } }
     ]
   });
   function lotto(l, r, log, n) {
     if (n === 0) { cashB(l, -0.002, 'Vé số jackpot'); if (r() < 1 / 30000) { cashB(l, 150, 'Trúng jackpot'); log('TRÚNG JACKPOT! Cả đời không dám mơ đến con số này.', 'big'); fx(l, { hap: 30 }); H.mem(l, 'Giây phút dò vé và nhận ra mình trúng jackpot.', 9); return; } if (r() < 0.03) { cashB(l, 0.01, 'Trúng giải phụ'); log('Trúng giải nhỏ, đủ mua thêm vài vé.', 'neutral'); } else log('Không trúng. Thôi, coi như góp quỹ phúc lợi.', 'neutral'); return; }
     cashB(l, -0.0001 * n * 9, 'Mua vé số');
     var x = r();
-    if (x < 0.000025 * n) { cashB(l, 20, 'Trúng giải đặc biệt xổ số'); log('Trúng giải đặc biệt xổ số kiến thiết!', 'big'); fx(l, { hap: 25 }); H.mem(l, 'Tờ vé số trúng giải đặc biệt, tay run không cầm nổi.', 8); }
+    if (x < 0.000025 * n) { cashB(l, 20, 'Trúng giải đặc biệt xổ số'); log(H.inVN(l) ? 'Trúng giải đặc biệt xổ số kiến thiết!' : 'Trúng giải đặc biệt xổ số!', 'big'); fx(l, { hap: 25 }); H.mem(l, 'Tờ vé số trúng giải đặc biệt, tay run không cầm nổi.', 8); }
     else if (x < 0.01 * n) { cashB(l, 0.01, 'Trúng giải nhỏ vé số'); log('Trúng giải khuyến khích, vui cả ngày.', 'good'); fx(l, { hap: 2 }); }
-    else log('Dò vé — trượt hết. Cô bán vé số cũng có thêm bữa cơm.', 'neutral');
+    else log(H.inVN(l) ? 'Dò vé — trượt hết. Cô bán vé số cũng có thêm bữa cơm.' : 'Dò vé — trượt hết. Hẹn may mắn lần sau.', 'neutral');
   }
 
   SC('dau_tu', {
@@ -639,7 +639,7 @@
 
   SC('vay_tien', {
     title: 'Vay tiền', prep: function (l) { return { amt: 1 }; },
-    text: function (l) { return 'Bạn cần một khoản tiền gấp. ' + (l.credit && l.credit.bad ? 'Hồ sơ của bạn đang có nợ xấu trên CIC.' : 'Hồ sơ tín dụng của bạn sạch.'); },
+    text: function (l) { return 'Bạn cần một khoản tiền gấp. ' + (l.credit && l.credit.bad ? 'Hồ sơ của bạn đang có ' + (H.inVN(l) ? 'nợ xấu trên CIC.' : 'nợ xấu tín dụng.') : 'Hồ sơ tín dụng của bạn sạch.'); },
     opts: [
       { k: 'bank', l: 'Vay ngân hàng (lãi ~9%/năm)', req: function (l) { return l.indep; }, ai: { w: 1.4, smart: 1 }, run: function (l, r, log) { if (!H.canBankLoan(l) || (l.income || 0) <= 0) { log('Ngân hàng từ chối: ' + (H.canBankLoan(l) ? 'không chứng minh được thu nhập.' : 'bạn đang có nợ xấu.'), 'bad'); fx(l, { hap: -3 }); return; } H.addLoan(l, 'bank', l.base); log('Vay ngân hàng ' + mb(l, 1) + '.', 'neutral'); } },
       { k: 'fin', l: 'Vay công ty tài chính tiêu dùng (lãi ~45%)', req: function (l) { return H.loanAgeOk(l, 'fin'); }, ai: { w: 0.8 }, run: function (l, r, log) { H.addLoan(l, 'fin', l.base * 0.7); log('Vay tiêu dùng ' + mb(l, 0.7) + ', lãi suất cao.', 'neutral'); } },
@@ -717,7 +717,7 @@
       { k: 'move', l: 'Thuyết phục chồng ra ở riêng', ai: { w: 1 }, run: function (l, r, log) { cashB(l, -0.1, 'Chuyển ra ở riêng'); log('Ra ở riêng. Xa thơm gần thối.', 'neutral'); fx(l, { hap: 4 }); } }
     ]
   });
-  T('me_chong', function (l, a) { return isVN(l) && a >= 20 && a <= 45 && l.sex === 'F' && l.partner && l.partner.status === 'married' && l.partner.sex === 'M' && free(l); }, 0.05);
+  T('me_chong', function (l, a) { return (H.inVN(l) || H.hasVNOrigin(l)) && a >= 20 && a <= 45 && l.sex === 'F' && l.partner && l.partner.status === 'married' && l.partner.sex === 'M' && free(l); }, 0.05);
 
   SC('con_om', {
     title: 'Con ốm giữa đêm', prep: function (l) { var k = l.kids.filter(function (k) { return k.alive && l.age - k.born <= 6; })[0]; return { n: k ? k.name : 'con', vac: k ? k.vac : true }; },
@@ -952,7 +952,7 @@
     opts: [
       { k: 'join', l: 'Nhận lời', h: 'Phạm pháp', ai: { bad: 1.6, risk: 1 }, run: function (l, r, log, d) { if (l.job) l.lastJob = l.job; E.startJob(l, d.id, r, log); } },
       { k: 'no', l: 'Từ chối', ai: { w: 1.6 }, run: function (l, r, log) { log(l.fam.q <= 3 && l.money < l.base * 3 ? 'Từ chối thẳng. Nghèo cũng không làm chuyện thất đức.' : 'Từ chối thẳng. Không có đồng tiền nào đáng để đánh đổi cả cuộc đời.', 'good'); fx(l, { karma: 3 }); } },
-      { k: 'report', l: 'Báo công an', ai: { w: 0.4 }, run: function (l, r, log) { log('Báo công an. Cả đường dây bị triệt phá.', 'good'); fx(l, { karma: 8 }); if (ch(r, 0.15)) { log('Bị đàn em của chúng chặn đường đánh trả thù.', 'bad'); fx(l, { hea: -10 }); } } }
+      { k: 'report', l: function (l) { return H.inVN(l) ? 'Báo công an' : 'Báo cảnh sát'; }, ai: { w: 0.4 }, run: function (l, r, log) { log('Báo ' + (H.inVN(l) ? 'công an' : 'cảnh sát') + '. Cả đường dây bị triệt phá.', 'good'); fx(l, { karma: 8 }); if (ch(r, 0.15)) { log('Bị đàn em của chúng chặn đường đánh trả thù.', 'bad'); fx(l, { hea: -10 }); } } }
     ]
   });
   T('ru_re', function (l, a) { return a >= 16 && a <= 45 && !E.isCrime(l) && (!l.job || l.money < 0 || l.fam.vice === 'gang') && free(l); }, function (l) { return 0.03 + (l.fam.vice === 'gang' ? 0.05 : 0) + (l.record ? 0.06 : 0); });
@@ -995,7 +995,7 @@
     title: 'Chiếc ví đánh rơi', prep: function (l) { return { x: 0.06 }; },
     text: function (l, d) { return 'Bạn nhặt được một chiếc ví dày cộp trên đường: ' + mb(l, d.x) + ' tiền mặt cùng giấy tờ tùy thân.'; },
     opts: [
-      { k: 'return', l: 'Tìm cách trả lại', ai: { w: 1.4 }, run: function (l, r, log) { fx(l, { karma: 8, hap: 4 }); if (ch(r, 0.35)) { cashB(l, 0.02, 'Quà cảm ơn'); log('Trả lại ví. Chủ ví rối rít cảm ơn, mời bạn bữa cơm.', 'good'); } else log('Mang ví lên đồn công an trả lại chủ.', 'good'); H.mem(l, 'Ánh mắt mừng rỡ của người nhận lại chiếc ví đánh rơi.', 3); } },
+      { k: 'return', l: 'Tìm cách trả lại', ai: { w: 1.4 }, run: function (l, r, log) { fx(l, { karma: 8, hap: 4 }); if (ch(r, 0.35)) { cashB(l, 0.02, 'Quà cảm ơn'); log('Trả lại ví. Chủ ví rối rít cảm ơn, mời bạn bữa cơm.', 'good'); } else log('Mang ví lên đồn ' + (H.inVN(l) ? 'công an' : 'cảnh sát') + ' trả lại chủ.', 'good'); H.mem(l, 'Ánh mắt mừng rỡ của người nhận lại chiếc ví đánh rơi.', 3); } },
       { k: 'keep', l: 'Giữ lấy tiền', ai: { bad: 1.2 }, run: function (l, r, log, d) { cashB(l, d.x, 'Tiền nhặt được'); fx(l, { karma: -8 }); log('Rút tiền rồi vứt chiếc ví vào thùng rác.', 'bad'); } }
     ]
   });
@@ -1049,18 +1049,18 @@
       { k: 'stay', l: 'Ở lại giữ nhà, giữ tài sản', ai: { risk: 1.3 }, run: function (l, r, log, d) { var x = r(); if (x < 0.008) { H.kill(l, /lũ|sạt/.test(d.t) ? 'lũ cuốn trôi trong mùa bão' : 'sập nhà trong bão', log, true); return; } if (x < 0.06) { log('Mái nhà sập, bạn bị thương khi cố giữ đồ đạc.', 'bad'); fx(l, { hea: -15 }); } else log('Thức trắng đêm canh nhà giữa bão. Mệt rã rời nhưng giữ được tài sản.', 'neutral'); } }
     ]
   });
-  T('bao_lu', function (l, a) { return isVN(l) && !l.movedTo && !l.abroad && a >= 12 && free(l); }, function (l) { return (STORM[l.region] || [0.05])[0] * (l.urban ? 0.6 : 1); }, 3);
+  T('bao_lu', function (l, a) { return H.inVN(l) && !l.movedTo && !l.abroad && a >= 12 && free(l); }, function (l) { return (STORM[l.region] || [0.05])[0] * (l.urban ? 0.6 : 1); }, 3);
   // thiên tai kể chuyện (giữ từ bản 1.0)
-  EV(function (l, a) { return isVN(l) && (l.region === 'BTB' || l.region === 'NTB') && a < 12; }, 0.07, function (l, a, r, log) { log(pick(r, ['Mùa lũ năm nay nước ngập vào tận nhà.', 'Bão lớn đổ bộ, tốc mái nhà.', 'Lũ quét qua làng, cả xóm phải đi sơ tán.']), 'bad'); fx(l, { hap: -4 }); });
-  EV(function (l, a) { return isVN(l) && (l.region === 'DBSH' || l.region === 'MNPB') && a < 12; }, 0.03, function (l, a, r, log) { log(l.region === 'MNPB' ? 'Mưa lớn kéo dài gây sạt lở đất gần nhà.' : 'Một cơn bão mạnh quét qua quê nhà.', 'bad'); fx(l, { hap: -3 }); });
-  EV(function (l, a) { return isVN(l) && l.region === 'DBSCL' && hasJob(l, ['nong']); }, 0.06, function (l, a, r, log) { log('Hạn mặn làm mất trắng một vụ lúa.', 'bad'); cashB(l, -0.25, 'Mất mùa do hạn mặn'); fx(l, { hap: -5 }); });
-  EV(function (l, a) { return !isVN(l) && a >= 3 && !CONFLICT[l.country]; }, function (l) { return l.gdp < 10 ? 0.02 : 0.008; }, function (l, a, r, log) { log(pick(r, ['Thiên tai gây thiệt hại nặng cho khu vực bạn sống.', 'Một trận lũ lớn tàn phá vùng bạn ở.', 'Hạn hán kéo dài, giá lương thực tăng vọt.']), 'bad'); fx(l, { hap: -4 }); if (l.indep) cashB(l, -0.1, 'Thiệt hại thiên tai'); });
+  EV(function (l, a) { return H.inVN(l) && (l.region === 'BTB' || l.region === 'NTB') && a < 12; }, 0.07, function (l, a, r, log) { log(pick(r, ['Mùa lũ năm nay nước ngập vào tận nhà.', 'Bão lớn đổ bộ, tốc mái nhà.', 'Lũ quét qua làng, cả xóm phải đi sơ tán.']), 'bad'); fx(l, { hap: -4 }); });
+  EV(function (l, a) { return H.inVN(l) && (l.region === 'DBSH' || l.region === 'MNPB') && a < 12; }, 0.03, function (l, a, r, log) { log(l.region === 'MNPB' ? 'Mưa lớn kéo dài gây sạt lở đất gần nhà.' : 'Một cơn bão mạnh quét qua quê nhà.', 'bad'); fx(l, { hap: -3 }); });
+  EV(function (l, a) { return H.inVN(l) && l.region === 'DBSCL' && hasJob(l, ['nong']); }, 0.06, function (l, a, r, log) { log('Hạn mặn làm mất trắng một vụ lúa.', 'bad'); cashB(l, -0.25, 'Mất mùa do hạn mặn'); fx(l, { hap: -5 }); });
+  EV(function (l, a) { return !H.inVN(l) && a >= 3 && !CONFLICT[H.resCode(l)]; }, function (l) { return l.gdp < 10 ? 0.02 : 0.008; }, function (l, a, r, log) { log(pick(r, ['Thiên tai gây thiệt hại nặng cho khu vực bạn sống.', 'Một trận lũ lớn tàn phá vùng bạn ở.', 'Hạn hán kéo dài, giá lương thực tăng vọt.']), 'bad'); fx(l, { hap: -4 }); if (l.indep) cashB(l, -0.1, 'Thiệt hại thiên tai'); });
   EV(function (l, a) { return a >= 3 && a <= 30 && (isVN(l) || /th|kh|la|mm|id|ph|my|in|bd|br|es_la/.test(l.pool)); }, 0.008, function (l, a, r, log) { log('Bị sốt xuất huyết, may mắn qua khỏi.', 'bad'); fx(l, { hea: -7 }); });
   EV(function (l, a) { return a >= 16 && a <= 70 && vehicle(l); }, function (l) { return (isVN(l) ? 0.014 : 0.009) * (l.flags.weakDriver ? 1.5 : 1); }, function (l, a, r, log) { log(pick(r, ['Bị tai nạn giao thông, phải khâu nhiều mũi.', 'Bị ngã xe máy, gãy chân, nghỉ ngơi hai tháng.', 'Va chạm giao thông, may chỉ bị thương nhẹ.']), 'bad'); fx(l, { hea: -8 }); });
-  EV(function (l, a) { return a >= 20 && a <= 60 && isVN(l) && vehicle(l); }, 0.012, function (l, a, r, log) { log('Bị mất trộm xe máy.', 'bad'); cashB(l, -0.2, 'Mất trộm xe'); fx(l, { hap: -3 }); });
-  EV(function (l, a) { return a >= 18 && a <= 40 && isVN(l) && l.indep; }, 0.02, function (l, a, r, log) { var x = U.clamp(0.1 + r() * 0.4, 0.1, 0.5); cashB(l, -x, 'Bị lừa đảo qua mạng'); log('Nhận cuộc gọi giả danh công an, bị lừa chuyển khoản mất ' + mb(l, x) + '.', 'bad'); fx(l, { hap: -6 }); });
+  EV(function (l, a) { return a >= 20 && a <= 60 && H.inVN(l) && vehicle(l); }, 0.012, function (l, a, r, log) { log('Bị mất trộm xe máy.', 'bad'); cashB(l, -0.2, 'Mất trộm xe'); fx(l, { hap: -3 }); });
+  EV(function (l, a) { return a >= 18 && a <= 40 && H.inVN(l) && yr(l) >= 2015 && l.indep; }, 0.02, function (l, a, r, log) { var x = U.clamp(0.1 + r() * 0.4, 0.1, 0.5); cashB(l, -x, 'Bị lừa đảo qua mạng'); log('Nhận cuộc gọi giả danh công an, bị lừa chuyển khoản mất ' + mb(l, x) + '.', 'bad'); fx(l, { hap: -6 }); });
   EV(function (l, a) { return a >= 25 && a <= 70 && l.indep && l.money > l.base * 0.3; }, 0.05, function (l, a, r, log) {
-    var dest = isVN(l) ? (l.money > l.base * 2 ? pick(r, ['Thái Lan', 'Hàn Quốc', 'Nhật Bản', 'Singapore']) : pick(r, ['Đà Lạt', 'Phú Quốc', 'Sa Pa', 'Hội An', 'Hạ Long', 'Nha Trang', 'Côn Đảo'])) : 'nước ngoài';
+    var dest = H.inVN(l) ? (l.money > l.base * 2 ? pick(r, ['Thái Lan', 'Hàn Quốc', 'Nhật Bản', 'Singapore']) : pick(r, ['Đà Lạt', 'Phú Quốc', 'Sa Pa', 'Hội An', 'Hạ Long', 'Nha Trang', 'Côn Đảo'])) : 'nước ngoài';
     log('Đi du lịch ' + dest + (l.partner ? ' cùng ' + pw(l) : '') + '.', 'good'); cashB(l, -0.05, 'Du lịch'); fx(l, { hap: 4 });
   });
   E.EVENTS[E.EVENTS.length - 1].travelCompat = true;
@@ -1134,11 +1134,11 @@
   function giveTalent(l, t, p, r) { if (!l.talent && r() < p) { l.talent = t; if (t === 'game') { if (l.talentSub !== 'FPS' && l.talentSub !== 'MOBA') l.talentSub = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = l.game || E.gameFor(l, r); } } if (l.talent === t) l.skill = Math.min(100, (l.skill || 20) + 4); }
 
   SC('thoi_noi', {
-    title: function (l) { return isVN(l) ? 'Lễ thôi nôi' : 'Sinh nhật đầu tiên'; },
-    text: function (l) { return (isVN(l) ? 'Bà bày một mâm đồ vật trước mặt bạn để "bốc thôi nôi" đoán nghề tương lai.' : 'Cả nhà bày đồ chơi trước mặt bạn trong sinh nhật đầu tiên.') + ' Cả nhà nín thở chờ xem bé chọn gì…'; },
+    title: function (l) { var rc = H.resCode(l); return H.inVN(l) || H.hasVNOrigin(l) ? 'Lễ thôi nôi' : rc === 'KR' ? 'Lễ Doljanchi (sinh nhật 1 tuổi Hàn Quốc)' : rc === 'JP' ? 'Lễ Erabitori (sinh nhật 1 tuổi Nhật Bản)' : rc === 'CN' || rc === 'TW' ? 'Lễ Chu tuế (sinh nhật 1 tuổi)' : 'Sinh nhật đầu tiên'; },
+    text: function (l) { var rc = H.resCode(l); return ((H.inVN(l) || H.hasVNOrigin(l)) ? 'Gia đình bày một mâm đồ vật trước mặt bạn để "bốc thôi nôi" đoán nghề tương lai.' : rc === 'KR' ? 'Gia đình tổ chức lễ Doljanchi và bày mâm đồ vật Doljabi trước mặt bạn để đoán nghề tương lai.' : rc === 'JP' ? 'Gia đình làm lễ bánh mochi và bày các thẻ đồ vật Erabitori trước mặt bạn trong sinh nhật đầu tiên.' : rc === 'CN' || rc === 'TW' ? 'Gia đình bày mâm đồ vật Chu tuế trước mặt bạn để đoán thiên hướng tương lai.' : 'Cả nhà bày đồ chơi trước mặt bạn trong sinh nhật đầu tiên.') + ' Cả nhà nín thở chờ xem bé chọn gì…'; },
     opts: [
-      { k: 'but', l: '✏️ Cây bút', h: 'Học giỏi, chữ đẹp', run: function (l, r, log) { giveTalent(l, 'toán học', 0.4, r); fx(l, { kno: 3 }); log('Bốc trúng cây bút — ông nội cười: "Sau này làm ' + (l.sex === 'F' ? 'cô giáo' : 'thầy giáo') + '!"', 'good'); H.mem(l, 'Ngày thôi nôi bạn bốc trúng cây bút, cả nhà vỗ tay.', 2); } },
-      { k: 'tien', l: '💰 Tờ tiền', h: 'Buôn bán giỏi', run: function (l, r, log) { giveTalent(l, 'kinh doanh', 0.4, r); log('Nắm chặt tờ tiền không buông — "Bé này sau giàu to!"', 'good'); H.mem(l, 'Ngày thôi nôi bạn nắm chặt tờ tiền, cả họ cười vang.', 2); } },
+      { k: 'but', l: '✏️ Cây bút', h: 'Học giỏi, chữ đẹp', run: function (l, r, log) { giveTalent(l, 'toán học', 0.4, r); fx(l, { kno: 3 }); log('Bốc trúng cây bút — ông nội cười: "Sau này làm ' + (l.sex === 'F' ? 'cô giáo' : 'thầy giáo') + '!"', 'good'); H.mem(l, (H.inVN(l) || H.hasVNOrigin(l) ? 'Ngày thôi nôi' : 'Sinh nhật đầu tiên') + ' bạn bốc trúng cây bút, cả nhà vỗ tay.', 2); } },
+      { k: 'tien', l: '💰 Tờ tiền', h: 'Buôn bán giỏi', run: function (l, r, log) { giveTalent(l, 'kinh doanh', 0.4, r); log('Nắm chặt tờ tiền không buông — "Bé này sau giàu to!"', 'good'); H.mem(l, (H.inVN(l) || H.hasVNOrigin(l) ? 'Ngày thôi nôi' : 'Sinh nhật đầu tiên') + ' bạn nắm chặt tờ tiền, cả họ cười vang.', 2); } },
       { k: 'bong', l: '⚽ Quả bóng', h: 'Thể thao', run: function (l, r, log) { giveTalent(l, 'thể thao', 0.4, r); if (!l.talentSub && l.talent === 'thể thao') l.talentSub = 'bóng đá'; fx(l, { hea: 2 }); log('Ôm quả bóng lăn khắp chiếu.', 'good'); } },
       { k: 'mic', l: '🎤 Cái micro', h: 'Ca hát', run: function (l, r, log) { giveTalent(l, 'âm nhạc', 0.4, r); log('Cầm micro bi bô như đang hát.', 'good'); } },
       { k: 'may', l: '🎮 Máy chơi game đồ chơi', h: 'Game thủ', run: function (l, r, log) { giveTalent(l, 'game', 0.4, r); log('Bấm lia lịa vào chiếc máy chơi game đồ chơi.', 'good'); } },
@@ -1163,7 +1163,7 @@
     text: function (l, d) { return 'Đi chợ với mẹ, bạn thấy một con ' + d.t + ' bày ở sạp. Mắt bạn sáng rực.'; },
     opts: [
       { k: 'tantrum', l: 'Nằm lăn ra đất ăn vạ', run: function (l, r, log, d) { if (l.fam.q >= 3 && ch(r, 0.6)) { log('Ăn vạ thành công, ôm ' + d.t + ' về nhà. Mẹ thở dài.', 'neutral'); fx(l, { hap: 4, karma: -1 }); } else { log('Bị mẹ xách tai về, không có ' + d.t + ' mà còn ăn roi.', 'bad'); fx(l, { hap: -3 }); } } },
-      { k: 'ask', l: function (l) { return 'Ngoan ngoãn xin ' + (l.fam.mAlive ? 'mẹ' : l.fam.fAlive ? 'bố' : 'bà'); }, run: function (l, r, log, d) { if (ch(r, l.fam.q >= 3 ? 0.7 : 0.3)) { log((l.fam.mAlive ? 'Mẹ' : l.fam.fAlive ? 'Bố' : 'Bà') + ' mua cho con ' + d.t + '. Bạn ôm ngủ suốt mấy tháng.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Con ' + d.t + ' mẹ mua cho ở chợ.', 2); } else { log('Mẹ bảo "để Tết mẹ mua". Bạn gật đầu, mắt rơm rớm.', 'neutral'); fx(l, { hap: -1 }); } } },
+      { k: 'ask', l: function (l) { return 'Ngoan ngoãn xin ' + (l.fam.mAlive ? 'mẹ' : l.fam.fAlive ? 'bố' : 'bà'); }, run: function (l, r, log, d) { if (ch(r, l.fam.q >= 3 ? 0.7 : 0.3)) { log((l.fam.mAlive ? 'Mẹ' : l.fam.fAlive ? 'Bố' : 'Bà') + ' mua cho con ' + d.t + '. Bạn ôm ngủ suốt mấy tháng.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Con ' + d.t + ' mẹ mua cho ở chợ.', 2); } else { log('Mẹ bảo ' + (H.inVN(l) || H.hasVNOrigin(l) ? '"để Tết mẹ mua"' : '"để dịp lễ mẹ mua"') + '. Bạn gật đầu, mắt rơm rớm.', 'neutral'); fx(l, { hap: -1 }); } } },
       { k: 'quiet', l: l => l.fam.q <= 2 ? 'Thôi, nhà mình nghèo, không đòi' : 'Thôi, không đòi', run: function (l, r, log) { log('Không đòi gì, chỉ ngoái nhìn món đồ chơi mãi.', 'neutral'); fx(l, { karma: 2 }); if (l.fam.q <= 2) H.mem(l, 'Món đồ chơi ở chợ năm ấy bạn không dám đòi.', 3); } }
     ]
   });
@@ -1214,10 +1214,10 @@
   SC('tien_an_sang', {
     title: 'Tiền ăn sáng', text: 'Mẹ dúi cho ít tiền ăn sáng trước giờ đến trường.',
     opts: [
-      { k: 'eat', l: 'Ăn sáng đầy đủ', run: function (l, r, log) { log('Ngày nào cũng ăn bát xôi, ổ bánh mì trước cổng trường.', 'neutral'); fx(l, { hea: 2 }); } },
+      { k: 'eat', l: 'Ăn sáng đầy đủ', run: function (l, r, log) { log(H.inVN(l) ? 'Ngày nào cũng ăn bát xôi, ổ bánh mì trước cổng trường.' : 'Ngày nào cũng ăn sáng đầy đủ trước giờ vào lớp.', 'neutral'); fx(l, { hea: 2 }); } },
       { k: 'save', l: 'Nhịn ăn, để dành mua truyện / thẻ bài', run: function (l, r, log) { log('Nhịn ăn sáng cả tháng để mua bộ truyện tranh.', 'neutral'); fx(l, { hap: 3, hea: -2 }); } },
       { k: 'gift', l: 'Dồn tiền mua quà sinh nhật mẹ', run: function (l, r, log) { log('Dồn tiền ăn sáng mua tặng mẹ chiếc kẹp tóc. Mẹ cất giữ mãi.', 'good'); fx(l, { karma: 4, hap: 3 }); H.mem(l, 'Chiếc kẹp tóc mua bằng tiền ăn sáng tặng mẹ.', 4); } },
-      { k: 'game', l: 'Nạp game', run: function (l, r, log) { skillGame(l, 3); log('Tiền ăn sáng biến thành quân huy, kim cương trong game.', 'neutral'); fx(l, { hea: -2, hap: 2 }); } }
+      { k: 'game', l: 'Nạp game', req: function (l) { return yr(l) >= 2006; }, run: function (l, r, log) { skillGame(l, 3); log(H.inVN(l) ? 'Tiền ăn sáng biến thành quân huy, kim cương trong game.' : 'Tiền ăn sáng biến thành vật phẩm trong game.', 'neutral'); fx(l, { hea: -2, hap: 2 }); } }
     ]
   });
   CT('tien_an_sang', function (l, a) { return a >= 7 && a <= 13 && l.school; }, 3);
@@ -1277,7 +1277,7 @@
     opts: [
       { k: 'walk', l: function (l, d) { return d.k === 'chó' ? 'Dắt ' + d.n + ' đi dạo công viên' : 'Chơi đùa với ' + d.n + ' cả buổi'; }, run: function (l, r, log, d) { log((d.k === 'chó' ? 'Dắt ' + d.n + ' đi dạo, làm quen thêm mấy người hàng xóm cũng nuôi chó.' : 'Cả buổi chiều chơi với ' + d.n + ', quên hết mệt mỏi.'), 'good'); fx(l, { hea: d.k === 'chó' ? 3 : 1, hap: 3, soc: d.k === 'chó' ? 2 : 0 }); } },
       { k: 'care', l: function (l, d) { return 'Tắm rửa, cắt móng, đưa ' + d.n + ' đi tiêm phòng'; }, run: function (l, r, log, d) { var p = findPet(l, d); if (p) p.life += r() < 0.5 ? 1 : 0; log('Đưa ' + d.n + ' đi tiêm phòng, tắm rửa sạch sẽ. Bác sĩ thú y khen nuôi khéo.', 'good'); if (l.indep) H.cash(l, -l.base * 0.005, 'Tiêm phòng cho ' + d.n); fx(l, { hap: 2 }); } },
-      { k: 'photo', l: function (l, d) { return 'Chụp ảnh ' + d.n + ' đăng mạng xã hội'; }, run: function (l, r, log, d) {
+      { k: 'photo', l: function (l, d) { return 'Chụp ảnh ' + d.n + ' đăng mạng xã hội'; }, req: function (l) { return yr(l) >= 2008; }, run: function (l, r, log, d) {
         if (ch(r, 0.04)) { log('Clip ' + d.n + ' làm trò bất ngờ viral hàng triệu lượt xem! Nhãn hàng thức ăn thú cưng nhắn tin mời quảng cáo.', 'big'); l.fame = (l.fame || 0) + 8000; if (adult(l)) cashB(l, 0.05, 'Quảng cáo cùng ' + d.n); fx(l, { hap: 6 }); H.mem(l, 'Clip ' + d.n + ' viral, cả nhà xem đi xem lại.', 3); }
         else { log('Đăng ảnh ' + d.n + ', được bạn bè thả tim rần rần.', 'neutral'); fx(l, { hap: 2, soc: 1 }); }
       } },
@@ -1307,7 +1307,7 @@
       { k: 'let', l: 'Đành chấp nhận', ai: { w: 0.3 }, run: function (l, r, log, d) { var p = findPet(l, d); if (p) { p.alive = false; p.lost = true; p.died = l.age; } log('Mất ' + d.n + '. Mấy hôm liền không ai trong nhà nói câu nào.', 'bad'); fx(l, { hap: -7 }); } }
     ]
   });
-  T('pet_trom', function (l, a) { return isVN(l) && free(l) && !!petOf(l, ['chó']); }, function (l) { return l.urban ? 0.015 : 0.035; }, 6);
+  T('pet_trom', function (l, a) { return H.inVN(l) && free(l) && !!petOf(l, ['chó']); }, function (l) { return l.urban ? 0.015 : 0.035; }, 6);
 
   SC('pet_lac', {
     title: 'Thú cưng đi lạc', valid: function (l, d) { return !!(d && d.n ? findPet(l, d) : petOf(l, ['chó', 'mèo'])); },
@@ -1346,7 +1346,7 @@
   T('pet_can', function (l, a) { return free(l) && !!petOf(l, ['chó']); }, 0.025, 8);
 
   SC('van_nghe', {
-    title: 'Văn nghệ ở trường', prep: function (l) { return { e: isVN(l) ? pick2(l, ['ngày 20/11', 'đêm Trung thu', 'lễ tổng kết']) : 'cuối năm' }; },
+    title: 'Văn nghệ ở trường', prep: function (l) { return { e: H.inVN(l) ? pick2(l, ['ngày 20/11', 'đêm Trung thu', 'lễ tổng kết']) : 'cuối năm' }; },
     text: function (l, d) { return 'Trường tổ chức văn nghệ ' + d.e + '. Cô chủ nhiệm hỏi ai xung phong.'; },
     opts: [
       { k: 'perform', l: 'Xung phong lên sân khấu', run: function (l, r, log) { giveTalent(l, r() < 0.5 ? 'âm nhạc' : 'diễn xuất', 0.25, r); if (ch(r, 0.7)) { log('Lên sân khấu hát, cả trường vỗ tay rần rần.', 'good'); fx(l, { soc: 4, hap: 4 }); H.mem(l, 'Lần đầu đứng trên sân khấu trường, tay run cầm micro.', 3); } else { log('Lên sân khấu quên lời, đứng đơ mất mười giây.', 'neutral'); fx(l, { hap: -2 }); } } },
@@ -1364,7 +1364,7 @@
       { k: 'save', l: 'Tự để dành tiền mua', run: function (l, r, log) { log('Để dành tiền lì xì, tiền ăn sáng suốt một năm để tự mua điện thoại cũ.', 'good'); fx(l, { karma: 2, kno: 1 }); H.mem(l, 'Chiếc điện thoại cũ tự để dành tiền mua.', 3); l.flags.phone = true; } }
     ]
   });
-  CT('xin_dien_thoai', function (l, a) { return a >= 10 && a <= 14 && !l.flags.phone; }, 99);
+  CT('xin_dien_thoai', function (l, a) { return a >= 10 && a <= 14 && yr(l) >= 2000 && !l.flags.phone; }, 99);
 
   SC('giup_nha', {
     title: 'Nhà không ai nấu cơm', text: function (l) { return (l.fam.mAlive ? 'Mẹ ốm nằm liệt giường' : 'Bà ốm') + ', bố đi làm đến tối mới về. ' + (l.fam.sibs ? 'Đám anh chị em còn đi học thêm.' : ''); },
@@ -1388,7 +1388,7 @@
   SC('thi_hsg', {
     title: 'Đội tuyển học sinh giỏi', text: 'Cô giáo chọn bạn vào đội tuyển học sinh giỏi. Phải ôn luyện cả buổi tối và cuối tuần.',
     opts: [
-      { k: 'yes', l: 'Nhận lời, ôn luyện hết sức', run: function (l, r, log) { fx(l, { kno: 4, hap: -2 }); if (ch(r, 0.35 + (l.st.kno - 60) / 100)) { log('Đạt giải học sinh giỏi cấp ' + (l.st.kno > 72 ? 'tỉnh' : 'huyện') + '! Tên bạn được đọc dưới cờ.', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Buổi chào cờ tên bạn được xướng lên nhận giải học sinh giỏi.', 4); } else log('Ôn luyện vất vả nhưng không đạt giải.', 'neutral'); } },
+      { k: 'yes', l: 'Nhận lời, ôn luyện hết sức', run: function (l, r, log) { fx(l, { kno: 4, hap: -2 }); if (ch(r, 0.35 + (l.st.kno - 60) / 100)) { log('Đạt giải học sinh giỏi cấp ' + (H.inVN(l) ? (l.st.kno > 72 ? 'tỉnh' : 'huyện') : (l.st.kno > 72 ? 'vùng' : 'thành phố')) + '! Tên bạn được đọc trước toàn trường.', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Buổi lễ toàn trường tên bạn được xướng lên nhận giải học sinh giỏi.', 4); } else log('Ôn luyện vất vả nhưng không đạt giải.', 'neutral'); } },
       { k: 'no', l: 'Từ chối, muốn có thời gian chơi', run: function (l, r, log) { log('Từ chối đội tuyển. Cô giáo hơi tiếc.', 'neutral'); fx(l, { hap: 2 }); } }
     ]
   });
@@ -1401,7 +1401,7 @@
       { k: 'home', l: 'Ở nhà phá cỗ với gia đình', run: function (l, r, log) { log('Phá cỗ với bánh nướng, bánh dẻo, bưởi xếp hình chó bông.', 'good'); fx(l, { hap: 3 }); } }
     ]
   });
-  CT('trung_thu', function (l, a) { return isVN(l) && a >= 4 && a <= 10; }, 4);
+  CT('trung_thu', function (l, a) { return (H.inVN(l) || H.hasVNOrigin(l)) && a >= 4 && a <= 10; }, 4);
 
   SC('li_xi', {
     title: 'Tiền lì xì', text: 'Tết năm nay bạn được lì xì kha khá. Mẹ bảo: "Đưa mẹ giữ cho."',
@@ -1411,7 +1411,7 @@
       { k: 'piggy', l: 'Bỏ vào heo đất', run: function (l, r, log) { l.flags.piggy = (l.flags.piggy || 0) + 1; log('Nhét tiền lì xì vào con heo đất.', 'good'); fx(l, { kno: 1 }); } }
     ]
   });
-  CT('li_xi', function (l, a) { return isVN(l) && a >= 5 && a <= 14; }, 3);
+  CT('li_xi', function (l, a) { return (H.inVN(l) || H.hasVNOrigin(l)) && a >= 5 && a <= 14; }, 3);
   EV(function (l, a) { return a === 18 && l.flags.piggy; }, 1, function (l, a, r, log) {
     var x = 0.02 * l.flags.piggy; l.flags.piggy = 0;
     H.cash(l, x * l.base, 'Đập heo đất'); log('Đập con heo đất nuôi từ bé, đếm được ' + mb(l, x) + '.', 'good'); H.mem(l, 'Ngày đập con heo đất nuôi từ thuở bé.', 2);
@@ -1455,7 +1455,7 @@
   A('gui_bo_me', G4, 'Phụng dưỡng bố mẹ', { min: 18, avail: function (l) { return (l.fam.mAlive || l.fam.fAlive) && l.indep ? true : 'Không áp dụng'; } });
   A('concert', G5, 'Đi concert thần tượng', { min: 12, max: 55, ai: { w: 0.2, fun: 1 } });
   A('du_lich', G5, 'Đi du lịch', { min: 16, sc: 'du_lich', avail: function (l) { return l.money > l.base * 0.05 ? true : 'Không đủ tiền'; }, ai: { w: 0.3 } });
-  A('di_net', G5, 'Ra quán net chơi game', { min: 8, max: 30, sc: 'net_coi', avail: function (l) { return isVN(l) ? true : 'Không áp dụng'; } });
+  A('di_net', G5, 'Ra quán net chơi game', { min: 8, max: 30, sc: 'net_coi', avail: function (l) { return H.inVN(l) && yr(l) >= 1998 ? true : 'Không áp dụng'; } });
   A('di_nhau', G5, 'Đi nhậu với bạn bè', { min: 18, sc: 'di_nhau', ai: { w: 0.15, soc: 1 } });
   A('kham', G6, 'Khám sức khỏe', { min: 16, ai: { w: 0.3 } });
   A('tap_gym', G6, 'Tập thể dục đều đặn', { min: 12, sc: 'tap_gym', avail: function (l) { return l.flags.exercise ? 'Đang tập đều rồi' : true; }, ai: { w: 0.3 } });
@@ -1496,7 +1496,7 @@
       if (l.abroad && l.abroad.perm) far = far.filter(function (x) { return x !== l.abroad.name; });
       // ưu tiên nơi chưa từng đến, nhưng thỉnh thoảng vẫn muốn quay lại chốn cũ
       var fresh = far.filter(function (x) { return !H.visited(l, x); });
-      return { near: isVN(l) ? pick(r, ['Đà Lạt', 'Phú Quốc', 'Sa Pa', 'Hội An', 'Hạ Long', 'Nha Trang', 'Hà Giang', 'Côn Đảo']) : 'một thành phố biển', far: pick(r, fresh.length && r() < 0.75 ? fresh : far) };
+      return { near: H.inVN(l) ? pick(r, ['Đà Lạt', 'Phú Quốc', 'Sa Pa', 'Hội An', 'Hạ Long', 'Nha Trang', 'Hà Giang', 'Côn Đảo']) : 'một thành phố biển', far: pick(r, fresh.length && r() < 0.75 ? fresh : far) };
     },
     text: 'Bạn muốn xách ba lô lên và đi.',
     opts: [
@@ -1516,7 +1516,7 @@
       { k: 'no', l: 'Từ chối, về nhà sớm', ai: { w: 0.8 }, run: function (l, r, log) { log('Về nhà sớm ăn cơm cùng gia đình.', 'good'); fx(l, { soc: -1 }); } }
     ]
   });
-  T('di_nhau', function (l, a) { return a >= 18 && a <= 65 && l.sex === 'M' && isVN(l) && free(l); }, 0.06);
+  T('di_nhau', function (l, a) { return a >= 18 && a <= 65 && l.sex === 'M' && H.inVN(l) && free(l); }, 0.06);
   SC('tap_gym', { title: 'Rèn luyện sức khỏe', text: 'Bạn muốn khỏe hơn.', opts: [
     { k: 'gym', l: 'Đăng ký phòng tập', h: function (l) { return mb(l, 0.03) + '/năm'; }, run: function (l, r, log) { cashB(l, -0.03, 'Phòng tập'); if (ch(r, 0.6)) { l.flags.exercise = true; log('Tập đều đặn — người khỏe ra trông thấy.', 'good'); fx(l, { hea: 6, hap: 3 }); } else { log('Đóng tiền phòng tập rồi… đi được ba buổi.', 'neutral'); } } },
     { k: 'run', l: 'Chạy bộ / đạp xe mỗi sáng', run: function (l, r, log) { l.flags.exercise = true; log('Sáng nào cũng chạy bộ quanh hồ.', 'good'); fx(l, { hea: 5 }); } }
@@ -1563,7 +1563,7 @@
     var arr = { 1: 'Năm lớp 1: tập đánh vần từng chữ, nắn nót từng nét.', 2: 'Năm lớp 2: thuộc bảng cửu chương sau bao lần bị cô gọi lên bảng.', 3: 'Năm lớp 3: được làm tổ trưởng, oai lắm.', 4: 'Năm lớp 4: mê truyện tranh, giấu dưới gầm bàn đọc lén.', 5: 'Năm lớp 5: chia tay bạn bè tiểu học, ghi lưu bút đầy cả cuốn sổ.',
       6: 'Năm lớp 6: bỡ ngỡ ngôi trường mới, bạn bè mới.', 7: 'Năm lớp 7: bắt đầu biết để ý đến vẻ ngoài của mình.', 8: 'Năm lớp 8: học thêm triền miên, sáng chiều tối.', 9: 'Năm lớp 9: ôn thi vào lớp 10 đến khuya.',
       10: 'Năm lớp 10: những ngày đầu cấp ba, mọi thứ thật mới mẻ.', 11: 'Năm lớp 11: những buổi chiều cúp tiết trốn ra quán trà đá.', 12: 'Năm lớp 12: ôn thi, viết lưu bút, khóc trong lễ tri ân.' }[g];
-    if (!isVN(l)) return 'Một năm đi học bình thường.';
+    if (!H.inVN(l)) return E.worldSchoolLine173 ? E.worldSchoolLine173(l, a, r) : 'Một năm đi học bình thường.';
     return arr || '';
   });
   L(function (l, a, r) {

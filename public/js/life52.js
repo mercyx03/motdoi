@@ -22,7 +22,7 @@
     if (log) log('Đủ ' + years + ' năm đóng bảo hiểm, bắt đầu hưởng lương hưu ' + H.money(l, l.pensionInc / 12) + '/tháng theo mức lương đóng bình quân.', 'good');
     return true;
   };
-  function pensionAge(l) { return H.isVN(l) ? l.sex === 'M' ? 62 : 60 : 65; }
+  function pensionAge(l) { return H.inVN(l) ? l.sex === 'M' ? 62 : 60 : 65; }
   var cy = E.careerYear;
   E.careerYear = function (l, r, log) {
     var had = !!l.pensioned, siAtStart = l.si && l.si.yrs || 0;

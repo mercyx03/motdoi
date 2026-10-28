@@ -31,28 +31,28 @@
   // 1. NHỮNG DÒNG KỂ CHUYỆN NHỎ (không cần lựa chọn) — chia theo tuổi, giới tính, hoàn cảnh
   // ===================================================================
   function kidLines(l, a) {
-    var vn = isVN(l), m = mom(l), d = dad(l), L = [];
+    var vn = H.inVN(l), m = mom(l), d = dad(l), L = [], y = l.birthYear + a;
     if (a <= 1) L.push('Lần đầu biết lẫy, cả nhà vỗ tay rần rần.', 'Mọc chiếc răng sữa đầu tiên, đêm nào cũng quấy khóc.', (l.fam.mAlive ? 'Bập bẹ tiếng đầu tiên — là "bà", không phải "mẹ".' : 'Bập bẹ tiếng đầu tiên — là "bà".'), 'Lần đầu ăn dặm, phun cháo đầy mặt ' + m + '.', 'Nắm chặt ngón tay ' + d + ' không chịu buông.');
     if (a >= 1 && a <= 3) L.push('Biết vẫy tay "bai bai" với khách đến nhà.', 'Ôm chặt chiếc chăn nhỏ đi khắp nhà, không cho ai giặt.', 'Bị ngã u đầu khi chạy theo con mèo.', 'Lần đầu được đi sở thú, sợ khóc thét khi thấy con voi.', 'Học được câu hát đầu tiên, hát đi hát lại cả ngày.', 'Lén bốc vụng đường trong hũ, bị bắt quả tang.');
     if (a >= 3 && a <= 6) {
       L.push('Hỏi "tại sao?" đến cả trăm lần mỗi ngày.', 'Vẽ lên tường nhà một "bức tranh" to đùng, bị mắng một trận.', 'Có một người bạn tưởng tượng tên là "Bin".', 'Sợ ma, tối nào cũng đòi ngủ với ' + m + '.', 'Lần đầu tự buộc được dây giày.', 'Rụng chiếc răng sữa đầu tiên, ' + (vn ? 'ném lên mái nhà theo lời bà dặn.' : 'giấu dưới gối chờ "tiên răng".'));
       L.push(sexW(l, 'Mặc áo choàng siêu nhân, nhảy từ ghế xuống đất "bay".', 'Lấy khăn của mẹ quấn làm váy công chúa, đi diễn khắp nhà.'), sexW(l, 'Mê xe máy xúc, đứng xem công trình cả buổi.', 'Tết tóc cho búp bê, bắt cả nhà khen đẹp.'));
-      if (!l.urban) L.push('Theo ' + d + ' ra đồng bắt châu chấu, cào cào.', 'Lần đầu được cưỡi lên lưng trâu.');
+      if (!l.urban) L.push('Theo ' + d + ' ra đồng bắt châu chấu, cào cào.', vn ? 'Lần đầu được cưỡi lên lưng trâu.' : 'Chạy nhảy trên đồng cỏ quê nhà.');
       else L.push('Được ' + d + ' chở đi một vòng phố đêm, mắt tròn xoe nhìn đèn.', 'Lần đầu đi thang máy, nắm chặt tay ' + m + '.');
     }
     if (a >= 6 && a <= 10) {
       L.push('Được cô khen chữ đẹp, về khoe cả nhà.', 'Lần đầu bị điểm kém, giấu sổ liên lạc dưới gầm giường.', 'Đổi được bộ sưu tập thẻ bài hiếm nhất lớp.', 'Bị cô phạt đứng góc lớp vì nói chuyện riêng.', 'Ốm sốt mấy ngày, được ' + m + ' nấu cháo hành.', 'Lần đầu ngủ lại nhà bạn, nửa đêm khóc đòi về.');
-      if (boy(l)) L.push('Chơi bắn bi, đánh khăng với tụi con trai cả buổi chiều.', 'Thả diều trên đê đến khi trời tối mịt.', 'Bị bạn gái cùng bàn kẻ "đường biên giới" giữa bàn.', 'Leo cây bị ngã, trầy hết đầu gối.', 'Đá bóng bằng quả bưởi trong sân.');
-      else L.push('Nhảy dây, chơi ô ăn quan với đám bạn gái giờ ra chơi.', 'Sưu tầm cả hộp giấy viết thư thơm.', 'Học tết tóc cho em, cho bạn.', 'Chơi đồ hàng, nấu "cơm" bằng lá cây với hoa dại.', 'Được bà dạy thêu chiếc khăn tay đầu tiên.');
-      if (!l.urban) L.push('Đi bắt cá, mò cua ngoài ruộng về khoe ' + m + '.', 'Chăn trâu, thả diều trên bờ đê lộng gió.', 'Mùa gặt theo ' + m + ' ra đồng, nằm trên đống rơm ngắm trời.');
+      if (boy(l)) L.push(vn ? 'Chơi bắn bi, đánh khăng với tụi con trai cả buổi chiều.' : 'Chơi bắn bi, đuổi bắt với tụi con trai cả buổi chiều.', 'Thả diều đến khi trời tối mịt.', 'Bị bạn gái cùng bàn kẻ "đường biên giới" giữa bàn.', 'Leo cây bị ngã, trầy hết đầu gối.', vn ? 'Đá bóng bằng quả bưởi trong sân.' : 'Đá bóng nhựa trong sân.');
+      else L.push(vn ? 'Nhảy dây, chơi ô ăn quan với đám bạn gái giờ ra chơi.' : 'Nhảy dây, chơi lò cò với đám bạn gái giờ ra chơi.', 'Sưu tầm cả hộp giấy viết thư thơm.', 'Học tết tóc cho em, cho bạn.', 'Chơi đồ hàng, nấu "cơm" bằng lá cây với hoa dại.', 'Được bà dạy thêu chiếc khăn tay đầu tiên.');
+      if (!l.urban) L.push(vn ? 'Đi bắt cá, mò cua ngoài ruộng về khoe ' + m + '.' : 'Ra suối bắt cá nhỏ về khoe ' + m + '.', vn ? 'Chăn trâu, thả diều trên bờ đê lộng gió.' : 'Thả diều trên cánh đồng lộng gió.', 'Mùa gặt theo ' + m + ' ra đồng, nằm trên đống rơm ngắm trời.');
       else L.push('Đi học thêm tiếng Anh mỗi tối, ngồi sau xe ' + m + ' ngủ gật.', 'Được dẫn đi siêu thị, chọn được một món đồ ăn vặt.');
       if (poor(l)) L.push(E.hasOlderSib && !E.hasOlderSib(l) ? 'Mặc lại quần áo cũ người quen cho, ống quần xắn mấy vòng.' : 'Mặc lại quần áo cũ của anh chị, ống quần xắn mấy vòng.', 'Mơ ước có một đôi giày mới đi học.');
       if (rich(l)) L.push('Được đi du lịch nước ngoài cùng gia đình dịp hè.', 'Học piano mỗi tối thứ Ba, thứ Năm.');
     }
     if (a >= 10 && a <= 15) {
-      L.push('Lần đầu được làm lớp trưởng, oai lắm.', 'Thức khuya đọc trộm truyện dưới chăn bằng đèn pin.', 'Viết nhật ký, khóa bằng ổ khóa nhỏ xíu.', 'Cãi nhau với bạn thân rồi làm lành sau ba ngày.', 'Bị ' + m + ' tịch thu điện thoại vì thức khuya.', 'Lần đầu đi chơi xa cùng lớp, cả đêm không ngủ.', 'Vỡ giọng, bị cả lớp trêu.');
+      L.push('Lần đầu được làm lớp trưởng, oai lắm.', 'Thức khuya đọc trộm truyện dưới chăn bằng đèn pin.', 'Viết nhật ký, khóa bằng ổ khóa nhỏ xíu.', 'Cãi nhau với bạn thân rồi làm lành sau ba ngày.', y >= 2000 ? 'Bị ' + m + ' tịch thu điện thoại vì thức khuya.' : 'Bị ' + m + ' tịch thu truyện tranh vì thức khuya.', 'Lần đầu đi chơi xa cùng lớp, cả đêm không ngủ.', 'Vỡ giọng, bị cả lớp trêu.');
       if (boy(l)) L.push('Lần đầu đạp xe thả dốc, tim muốn nhảy ra ngoài.', 'Tụ tập đá bóng sau giờ học đến tối mịt.', 'Lén tập hút thử điếu thuốc của ai đó rồi ho sặc sụa — và không bao giờ thử lại.', 'Cao vọt lên, quần áo năm ngoái đã ngắn cũn.');
-      else L.push('Mê đọc truyện ngôn tình, khóc sưng mắt.', 'Lần đầu được ' + m + ' dẫn đi mua áo ngực, ngại đỏ mặt.', 'Cùng nhóm bạn gái chụp ảnh "sống ảo" ở quán trà sữa.', 'Tập trang điểm theo video trên mạng, bị ' + m + ' bắt rửa mặt.', 'Có ' + (l.orient === 'straight' ? 'cậu bạn' : 'người bạn') + ' lớp bên cạnh hay đứng đợi ở cổng trường.');
+      else L.push('Mê đọc truyện tình cảm, khóc sưng mắt.', 'Lần đầu được ' + m + ' dẫn đi mua áo ngực, ngại đỏ mặt.', y >= 2008 ? 'Cùng nhóm bạn gái chụp ảnh "sống ảo" ở quán trà sữa.' : 'Cùng nhóm bạn gái dạo phố ăn quà vặt sau giờ học.', y >= 2008 ? 'Tập trang điểm theo video trên mạng, bị ' + m + ' bắt rửa mặt.' : 'Lén tập trang điểm trước gương, bị ' + m + ' bắt rửa mặt.', 'Có ' + (l.orient === 'straight' ? 'cậu bạn' : 'người bạn') + ' lớp bên cạnh hay đứng đợi ở cổng trường.');
       if (!l.urban && poor(l)) L.push('Sau giờ học phụ ' + m + ' cắt cỏ, nấu cám heo.', 'Đi bộ mấy cây số đến trường, chiều về chân rã rời.');
     }
     return L;
@@ -71,7 +71,7 @@
     title: 'Chiếc ví rơi trên đường', prep: function (l, r) { return { x: pick(r, [0.005, 0.01, 0.02]) }; },
     text: 'Trên đường đi học về, bạn nhặt được một chiếc ví, bên trong có kha khá tiền và tấm thẻ căn cước.',
     opts: [
-      { k: 'return', l: 'Mang đến đồn công an / trả lại', run: function (l, r, log) { fx(l, { karma: 5, hap: 2 }); log('Mang ví đến công an phường. Người mất tìm đến cảm ơn'+(l.school?', còn viết thư khen gửi nhà trường.':', gửi tặng bạn một lá thư cảm ơn.'), 'good'); H.mem(l, l.school?'Lá thư khen của nhà trường vì nhặt được của rơi trả người đánh mất.':'Lá thư cảm ơn vì nhặt được của rơi trả người đánh mất.', 3); } },
+      { k: 'return', l: function (l) { return H.inVN(l) ? 'Mang đến đồn công an / trả lại' : 'Mang đến đồn cảnh sát / trả lại'; }, run: function (l, r, log) { fx(l, { karma: 5, hap: 2 }); log('Mang ví đến ' + (H.inVN(l) ? 'công an phường' : 'đồn cảnh sát') + '. Người mất tìm đến cảm ơn'+(l.school?', còn viết thư khen gửi nhà trường.':', gửi tặng bạn một lá thư cảm ơn.'), 'good'); H.mem(l, l.school?'Lá thư khen của nhà trường vì nhặt được của rơi trả người đánh mất.':'Lá thư cảm ơn vì nhặt được của rơi trả người đánh mất.', 3); } },
       { k: 'keep', l: 'Giữ lại tiền, vứt ví đi', run: function (l, r, log, d) { cashB(l, d.x, 'Tiền nhặt được'); fx(l, { karma: -5 }); log('Giữ lại tiền. Mấy hôm liền không dám nhìn vào mắt ' + mom(l) + '.', 'neutral'); } },
       { k: 'parent', l: function (l) { return 'Mang về đưa ' + (l.fam.mAlive && l.fam.fAlive ? 'bố mẹ' : mom(l)); }, run: function (l, r, log) { fx(l, { karma: 3 }); log('Mang về nhà. Cả nhà cùng đi tìm người đánh rơi.', 'good'); } }
     ]
@@ -79,11 +79,11 @@
   CT('nhat_vi_be', function (l, a) { return a >= 7 && a <= 14 && l.school; }, 99);
 
   SC('trom_xoai', {
-    title: 'Cây xoài nhà hàng xóm', text: 'Cây xoài nhà ông Tư sai trĩu quả, chìa cả sang bờ rào. Tụi bạn rủ trưa nay lúc ông ngủ thì trèo hái.',
+    title: function (l) { return H.inVN(l) ? 'Cây xoài nhà hàng xóm' : 'Cây ăn quả nhà hàng xóm'; }, text: function (l) { return H.inVN(l) ? 'Cây xoài nhà ông Tư sai trĩu quả, chìa cả sang bờ rào. Tụi bạn rủ trưa nay lúc ông ngủ thì trèo hái.' : 'Cây ăn quả nhà bác hàng xóm sai trĩu, chìa cả sang bờ rào. Tụi bạn rủ trưa nay trèo lên hái.'; },
     opts: [
-      { k: 'go', l: 'Trèo lên hái', run: function (l, r, log) { if (ch(r, 0.3)) { log('Bị chó nhà ông Tư đuổi chạy té khói, rách cả quần.', 'bad'); fx(l, { hap: -2 }); H.mem(l, 'Trưa hè bị chó đuổi vì trèo hái trộm xoài.', 3); } else if (ch(r, 0.15)) { log('Trượt chân ngã từ trên cây xuống, bong gân cổ chân.', 'bad'); fx(l, { hea: -5 }); } else { log('Cả bọn ngồi bờ mương chấm xoài xanh với muối ớt, chua tê đầu lưỡi.', 'good'); fx(l, { hap: 4, soc: 2 }); H.mem(l, 'Những trưa hè chấm xoài xanh với muối ớt.', 3); } } },
-      { k: 'watch', l: 'Đứng dưới canh chừng', run: function (l, r, log) { log('Đứng canh, được chia hai quả xoài.', 'neutral'); fx(l, { hap: 2 }); } },
-      { k: 'ask', l: 'Sang xin ông Tư đàng hoàng', run: function (l, r, log) { fx(l, { karma: 3 }); log('Sang xin, ông Tư cười rồi hái cho cả rổ.', 'good'); } }
+      { k: 'go', l: 'Trèo lên hái', run: function (l, r, log) { var vn = H.inVN(l); if (ch(r, 0.3)) { log('Bị chó nhà ' + (vn ? 'ông Tư' : 'hàng xóm') + ' đuổi chạy té khói, rách cả quần.', 'bad'); fx(l, { hap: -2 }); H.mem(l, 'Trưa hè bị chó đuổi vì trèo hái trộm ' + (vn ? 'xoài' : 'quả') + '.', 3); } else if (ch(r, 0.15)) { log('Trượt chân ngã từ trên cây xuống, bong gân cổ chân.', 'bad'); fx(l, { hea: -5 }); } else { log(vn ? 'Cả bọn ngồi bờ mương chấm xoài xanh với muối ớt, chua tê đầu lưỡi.' : 'Cả bọn ngồi dưới bóng cây chia nhau từng quả chín ngọt lịm.', 'good'); fx(l, { hap: 4, soc: 2 }); H.mem(l, vn ? 'Những trưa hè chấm xoài xanh với muối ớt.' : 'Trưa hè cùng đám bạn chia nhau quả hái trên cây.', 3); } } },
+      { k: 'watch', l: 'Đứng dưới canh chừng', run: function (l, r, log) { log('Đứng canh, được chia hai quả ' + (H.inVN(l) ? 'xoài' : 'ngon') + '.', 'neutral'); fx(l, { hap: 2 }); } },
+      { k: 'ask', l: function (l) { return 'Sang xin ' + (H.inVN(l) ? 'ông Tư' : 'bác hàng xóm') + ' đàng hoàng'; }, run: function (l, r, log) { fx(l, { karma: 3 }); log('Sang xin, ' + (H.inVN(l) ? 'ông Tư' : 'bác hàng xóm') + ' cười rồi hái cho cả rổ.', 'good'); } }
     ]
   });
   CT('trom_xoai', function (l, a) { return a >= 6 && a <= 12 && !l.urban; }, 99, function (l) { return boy(l) ? 1.4 : 0.8; });
@@ -96,7 +96,7 @@
       { k: 'learn', l: 'Xin bố mẹ cho đi học bơi tử tế', run: function (l, r, log) { l.flags.swim = true; log('Được cho đi học bơi ở hồ bơi huyện. Giờ đã bơi được ếch.', 'good'); fx(l, { hea: 2 }); } }
     ]
   });
-  CT('tam_song', function (l, a) { return a >= 8 && a <= 14 && !l.urban && isVN(l); }, 4, function (l) { return boy(l) ? 1.3 : 0.6; });
+  CT('tam_song', function (l, a) { return a >= 8 && a <= 14 && !l.urban && H.inVN(l); }, 4, function (l) { return boy(l) ? 1.3 : 0.6; });
 
   SC('ban_moi', {
     title: 'Bạn mới chuyển đến', prep: function (l, r) { var s = r() < 0.5 ? 'M' : 'F'; return { n: H.stranger(l, r, s), s: s, why: pick(r, ['nói giọng vùng khác', 'mặc đồ cũ sờn', 'nhút nhát, ít nói', 'đeo kính dày cộp']) }; },
@@ -117,7 +117,7 @@
       { k: 'cheer', l: 'Từ chối, đứng ngoài cổ vũ', run: function (l, r, log) { log('Ngồi hàng ghế cổ vũ, hét khản cả cổ.', 'neutral'); fx(l, { soc: 2 }); } }
     ]
   });
-  CT('hoi_khoe', function (l, a) { return a >= 8 && a <= 14 && l.school && isVN(l); }, 3);
+  CT('hoi_khoe', function (l, a) { return a >= 8 && a <= 14 && l.school && H.inVN(l); }, 3);
 
   SC('ve_tranh', {
     title: 'Cuộc thi vẽ tranh', prep: function (l, r) { return { t: pick(r, ['Em yêu biển đảo quê hương', 'Ngôi nhà mơ ước', 'Thành phố tương lai', 'Gia đình em', 'Bảo vệ môi trường']) }; },
@@ -135,7 +135,7 @@
     text: function (l, d) { return 'Sắp đến sinh nhật ' + d.n + ' tuổi. ' + (poor(l) ? 'Nhà không dư dả gì.' : rich(l) ? 'Bố mẹ hỏi con muốn tổ chức thế nào.' : 'Bạn ước có một bữa tiệc nhỏ.'); },
     opts: [
       { k: 'party', l: function (l) { return rich(l) ? 'Tổ chức tiệc ở nhà hàng, mời cả lớp' : 'Mời vài đứa bạn thân đến nhà'; }, req: function (l) { return !poor(l); }, run: function (l, r, log) { cashB(l, rich(l) ? -0.03 : -0.005, 'Tiệc sinh nhật'); fx(l, { hap: 5, soc: 3 }); log(rich(l) ? 'Tiệc sinh nhật ở nhà hàng, có cả ảo thuật gia. Cả lớp trầm trồ.' : 'Mấy đứa bạn đến nhà, cùng thổi nến, ăn bánh kem.', 'good'); if (ch(r, 0.25)) H.mem(l, 'Bữa tiệc sinh nhật ' + l.age + ' tuổi.', 2); } },
-      { k: 'simple', l: 'Chỉ cần ' + 'cả nhà ăn một bữa cơm', run: function (l, r, log) { fx(l, { hap: 3 }); var M = mom(l).charAt(0).toUpperCase() + mom(l).slice(1); log(poor(l) ? pick(r, [M + ' luộc cho quả trứng, cắm một cây nến lên bát xôi. Bạn nhớ mãi.', M + ' nấu nồi chè đậu đen, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh và một que kem — vậy là vui cả ngày.']) : pick(r, ['Cả nhà ăn bữa cơm, ' + mom(l) + ' mua cái bánh kem nhỏ.', 'Cả nhà đi ăn lẩu, thổi nến trên chiếc bánh kem có tên mình.', M + ' tự tay làm bánh, vẽ chữ chúc mừng méo xệch mà ngon lạ.']), 'good'); if (poor(l)) H.mem(l, 'Cây nến cắm trên bát xôi ngày sinh nhật.', 4); } },
+      { k: 'simple', l: 'Chỉ cần cả nhà ăn một bữa cơm', run: function (l, r, log) { fx(l, { hap: 3 }); var M = mom(l).charAt(0).toUpperCase() + mom(l).slice(1), vn = H.inVN(l) || (H.hasVNOrigin && H.hasVNOrigin(l)); log(poor(l) ? pick(r, vn ? [M + ' luộc cho quả trứng, cắm một cây nến lên bát xôi. Bạn nhớ mãi.', M + ' nấu nồi chè đậu đen, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh và một que kem — vậy là vui cả ngày.'] : [M + ' làm một chiếc bánh nhỏ tại nhà, cắm một cây nến chúc mừng. Bạn nhớ mãi.', M + ' nấu món ăn bạn thích nhất, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh ngọt và một que kem — vậy là vui cả ngày.']) : pick(r, ['Cả nhà ăn bữa cơm, ' + mom(l) + ' mua cái bánh kem nhỏ.', 'Cả nhà đi ăn cùng nhau, thổi nến trên chiếc bánh kem có tên mình.', M + ' tự tay làm bánh, vẽ chữ chúc mừng méo xệch mà ngon lạ.']), 'good'); if (poor(l)) H.mem(l, vn ? 'Cây nến cắm trên bát xôi ngày sinh nhật.' : 'Chiếc bánh nhỏ tự làm với một cây nến ngày sinh nhật.', 4); } },
       { k: 'gift', l: 'Xin một món quà thay vì tiệc', run: function (l, r, log) { var g = pick(r, boy(l) ? ['bộ lego', 'quả bóng đá', 'xe đạp mới', 'bộ truyện tranh'] : ['con gấu bông to', 'bộ bút màu', 'chiếc váy mới', 'bộ truyện tranh']); fx(l, { hap: 4 }); log('Được tặng ' + g + ' — món quà sinh nhật nhớ nhất tuổi thơ.', 'good'); } }
     ]
   });
@@ -158,7 +158,7 @@
       { k: 'no', l: 'Thôi, trả lại chỗ cũ', run: function (l, r, log) { fx(l, { karma: 1 }); log('Đặt điện thoại về chỗ cũ, ra sân chơi.', 'neutral'); } }
     ]
   });
-  CT('dien_thoai_be', function (l, a) { return a >= 4 && a <= 9 && (l.urban || l.fam.q >= 3) && (l.fam.mAlive || l.fam.fAlive); }, 99);
+  CT('dien_thoai_be', function (l, a) { return a >= 4 && a <= 9 && (l.birthYear + a) >= 2007 && (l.urban || l.fam.q >= 3) && (l.fam.mAlive || l.fam.fAlive); }, 99);
 
   SC('da_bong_vo_kinh', {
     title: 'Quả bóng bay qua cửa kính', text: 'Đang đá bóng ngoài ngõ, bạn sút một quả thật mạnh — "choang!" — cửa kính nhà bác hàng xóm vỡ tan.',
@@ -240,7 +240,7 @@
   CT('thu_nac_danh', function (l, a) { return a >= 11 && a <= 15 && l.school; }, 99, function (l) { return girl(l) ? 1.3 : 0.8; });
 
   SC('nap_game', {
-    title: 'Skin mới ra mắt', prep: function (l, r) { return { g: l.game || pick(r, girl(l) ? ['Play Together', 'Roblox', 'Liên Quân Mobile', 'Minecraft'] : ['Liên Quân Mobile', 'Free Fire', 'PUBG Mobile', 'Mobile Legends: Bang Bang', 'Roblox', 'Minecraft']) }; },
+    title: 'Skin mới ra mắt', prep: function (l, r) { var vn = H.inVN(l); return { g: l.game || pick(r, girl(l) ? ['Play Together', 'Roblox', vn ? 'Liên Quân Mobile' : 'Mobile Legends', 'Minecraft'] : [vn ? 'Liên Quân Mobile' : 'Mobile Legends: Bang Bang', 'Free Fire', 'PUBG Mobile', 'Roblox', 'Minecraft']) }; },
     text: function (l, d) { return d.g + ' vừa ra skin giới hạn. Cả nhóm bạn đều có, chỉ mình bạn chưa.'; },
     opts: [
       { k: 'beg', l: 'Năn nỉ bố mẹ nạp tiền', run: function (l, r, log) { if (!poor(l) && ch(r, 0.4)) { cashB(l, -0.002, 'Nạp game'); log('Được nạp cho một lần, với điều kiện cuối kỳ phải học khá.', 'neutral'); fx(l, { hap: 3 }); } else { log('Bị từ chối thẳng: "Tiền đâu mà nạp game!"', 'neutral'); fx(l, { hap: -1 }); } } },
@@ -248,7 +248,7 @@
       { k: 'no', l: 'Kệ, chơi đồ mặc định cũng được', run: function (l, r, log) { fx(l, { karma: 1 }); log('Chơi bằng trang phục mặc định, vẫn thắng đều.', 'good'); } }
     ]
   });
-  CT('nap_game', function (l, a) { return a >= 9 && a <= 15; }, 4, function (l) { return l.talent === 'game' ? 2 : boy(l) ? 1 : 0.35; });
+  CT('nap_game', function (l, a) { return a >= 9 && a <= 15 && (l.birthYear + a) >= 2006; }, 4, function (l) { return l.talent === 'game' ? 2 : boy(l) ? 1 : 0.35; });
 
   SC('tiktok', {
     title: 'Video đầu tiên', prep: function (l, r) { return { t: pick(r, girl(l) ? ['nhảy theo bài hát đang hot', 'trang điểm biến hình', 'nấu món ăn vặt', 'hát cover'] : ['chơi game hài hước', 'tâng bóng', 'troll em ở nhà', 'hát cover']) }; },
@@ -258,7 +258,7 @@
       { k: 'friends', l: 'Chỉ để chế độ bạn bè', run: function (l, r, log) { log('Chỉ bạn bè xem, ai cũng thả tim.', 'good'); fx(l, { hap: 2 }); } }
     ]
   });
-  CT('tiktok', function (l, a) { return a >= 12 && a <= 15 && (l.urban || l.fam.q >= 3); }, 99);
+  CT('tiktok', function (l, a) { return a >= 12 && a <= 15 && (l.birthYear + a) >= 2010 && (l.urban || l.fam.q >= 3); }, 99);
 
   SC('meo_ket', {
     title: 'Chú mèo trên cây', text: 'Một chú mèo con kêu thảm thiết trên ngọn cây trước cổng trường, không trèo xuống được.',
@@ -288,14 +288,14 @@
       { k: 'home', l: function (l) { return 'Chạy về nhà với ' + mom(l); }, run: function (l, r, log) { log('Chạy về nhà rúc vào lòng người lớn.', 'neutral'); } }
     ]
   });
-  CT('chuyen_ma', function (l, a) { return a >= 6 && a <= 12 && isVN(l); }, 99);
+  CT('chuyen_ma', function (l, a) { return a >= 6 && a <= 12 && H.inVN(l); }, 99);
 
   SC('choi_le_hoi', {
-    title: function (l) { return isVN(l) ? 'Hội làng' : 'Lễ hội trong vùng'; }, prep: function (l, r) { return { x: 0.003 }; },
-    text: function (l) { return (isVN(l) ? 'Làng mở hội: có đu quay, bắn súng nước trúng thưởng, kẹo kéo, tò he.' : 'Lễ hội cuối năm có vòng quay, trò chơi trúng thưởng, kẹo bông.') + ' Trong túi bạn có ít tiền ' + (isVN(l) ? 'mừng tuổi' : 'tiêu vặt') + '.'; },
+    title: function (l) { return H.inVN(l) ? 'Hội làng' : 'Lễ hội trong vùng'; }, prep: function (l, r) { return { x: 0.003 }; },
+    text: function (l) { return (H.inVN(l) ? 'Làng mở hội: có đu quay, bắn súng nước trúng thưởng, kẹo kéo, tò he.' : 'Lễ hội trong vùng có vòng quay, trò chơi trúng thưởng, quầy bánh kẹo.') + ' Trong túi bạn có ít tiền ' + (H.inVN(l) ? 'mừng tuổi' : 'tiêu vặt') + '.'; },
     opts: [
       { k: 'game', l: 'Chơi trò trúng thưởng', run: function (l, r, log, d) { cashB(l, -d.x, 'Chơi hội'); log(ch(r, 0.2) ? 'Trúng một con gấu bông to, ôm về khoe cả xóm!' : 'Tiêu hết tiền mà không trúng gì. Bài học đầu đời về "trò may rủi".', 'neutral'); fx(l, { hap: 2 }); } },
-      { k: 'eat', l: 'Mua đồ ăn vặt, tò he', run: function (l, r, log, d) { cashB(l, -d.x, 'Đồ ăn hội làng'); log('Mua tò he hình con gà, kẹo kéo dài cả gang tay.', 'good'); fx(l, { hap: 3 }); } },
+      { k: 'eat', l: function (l) { return H.inVN(l) ? 'Mua đồ ăn vặt, tò he' : 'Mua kẹo bông, đồ ăn lễ hội'; }, run: function (l, r, log, d) { cashB(l, -d.x, 'Đồ ăn lễ hội'); log(H.inVN(l) ? 'Mua tò he hình con gà, kẹo kéo dài cả gang tay.' : 'Mua cây kẹo bông to đùng và bánh nướng thơm lừng.', 'good'); fx(l, { hap: 3 }); } },
       { k: 'save', l: 'Đi xem, giữ tiền lại', run: function (l, r, log) { log('Đi xem một vòng, về nhà còn nguyên tiền.', 'neutral'); fx(l, { kno: 1 }); } }
     ]
   });

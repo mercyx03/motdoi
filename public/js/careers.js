@@ -88,7 +88,7 @@
     // --- cơ quan nhà nước: lương = hệ số × lương cơ sở 2,34 triệu + phụ cấp (đã gồm phụ cấp công vụ, thâm niên) ---
     ['cong_chuc', ['chuyên viên', 'phó phòng', 'trưởng phòng', 'phó giám đốc sở', 'giám đốc sở'], [8.5, 11, 14.5, 20, 28], [4, 5, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
     ['vien_chuc', ['viên chức hạng III', 'viên chức hạng II', 'trưởng phòng đơn vị sự nghiệp', 'giám đốc trung tâm'], [8, 11, 15, 21], [4, 5, 6], { cat: 'state', sec: 'formal', edu: 5, promo: 0.25, loss: 0.004 }],
-    ['can_bo_xa', ['công chức xã / phường', 'phó chủ tịch UBND xã / phường', 'chủ tịch UBND xã / phường', 'bí thư đảng ủy xã / phường'], [7.5, 9.5, 12, 14], [5, 5, 5], { cat: 'state', sec: 'formal', edu: 5, promo: 0.2, loss: 0.004, w: 1.2 }],
+    ['can_bo_xa', ['công chức xã / phường', 'phó chủ tịch UBND xã / phường', 'chủ tịch UBND xã / phường', 'bí thư đảng ủy xã / phường'], [7.5, 9.5, 12, 14], [5, 5, 5], { cat: 'state', sec: 'formal', edu: 5, promo: 0.2, loss: 0.004, w: 1.2, vn: 1 }],
     ['thue', ['công chức thuế', 'kiểm soát viên thuế', 'đội trưởng thuế', 'trưởng thuế cơ sở', 'cục trưởng thuế'], [9, 13, 17, 23, 32], [3, 5, 6, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'eco', promo: 0.22, loss: 0.003 }],
     ['hai_quan', ['nhân viên hải quan', 'kiểm tra viên hải quan', 'đội trưởng hải quan', 'chi cục trưởng hải quan', 'cục trưởng hải quan'], [10, 14, 19, 26, 35], [3, 5, 6, 7], { cat: 'state', sec: 'formal', edu: 5, majors: ['eco', 'law'], promo: 0.22, loss: 0.003 }],
     ['tham_phan', ['thư ký tòa án', 'thẩm phán sơ cấp', 'thẩm phán trung cấp', 'thẩm phán cao cấp', 'chánh án tòa án tỉnh'], [8, 13, 18, 25, 32], [3, 6, 7, 7], { cat: 'state', sec: 'formal', edu: 5, major: 'law', promo: 0.2, loss: 0.002 }],
@@ -213,7 +213,7 @@
     if (!l.job) return null;
     if (l.job.t) return l.job.t;
     var c = J(l), rk = Math.min(l.job.rank || 0, c.t.length - 1);
-    if (c.ladder) return (c.id === 'cong_an' ? (isVN(l) ? 'Công an' : 'Cảnh sát') : 'Quân đội') + ' · ' + c.t[rk] + (c.id === 'cong_an' && l.job.br && E.POLICE_BR ? ' · ' + E.POLICE_BR[l.job.br] : '');
+    if (c.ladder) return (c.id === 'cong_an' ? (H.inVN(l) ? 'Công an' : 'Cảnh sát') : 'Quân đội') + ' · ' + c.t[rk] + (c.id === 'cong_an' && l.job.br && E.POLICE_BR ? ' · ' + E.POLICE_BR[l.job.br] : '');
     if (c.id === 'streamer') return 'streamer ' + (l.game || 'game') + ' (' + fmtFollowers(l.fame) + ' người theo dõi)';
     if (c.id === 'youtuber') return 'YouTuber / TikToker (' + fmtFollowers(l.fame) + ' người đăng ký)';
     if (c.id === 'kol_live') return c.t[Math.min(fameTier(l.fame), c.t.length - 1)] + ' (' + fmtFollowers(l.fame) + ' người theo dõi)';
@@ -223,7 +223,7 @@
     if (c.id === 'vdv') return E.sportTitle ? E.sportTitle(l, rk) : c.t[rk] + (l.talentSub ? ' môn ' + l.talentSub : ''); // v2.9: danh xưng theo từng môn
     if (c.id === 'ky_thu') return (l.titles && l.titles.length ? l.titles[l.titles.length - 1] : 'kỳ thủ') + ' ' + (l.talentSub || 'cờ');
     if (c.prod && l.job.p) return c.t[rk] + ' (' + l.job.p + ')';
-    return c.t[rk];
+    return H.inVN(l) ? c.t[rk] : c.t[rk].replace('VKSND', 'viện kiểm sát').replace('UBND', 'hội đồng');
   }
   // bằng cấp chỉ cộng thêm khi vượt yêu cầu của nghề (lương nghề cần đại học đã là lương của người có bằng đại học);
   // lương nhà nước theo hệ số, không phụ thuộc trường danh tiếng
@@ -262,8 +262,8 @@
     if (c.hidden) return false;
     if (c.minAge && l.age < c.minAge) return false;
     if (c.edu > l.edu) return false;
-    if (c.vnOnly && (!isVN(l) || (l.abroad && l.abroad.perm))) return false; // v7.0: đã định cư nước ngoài thì không làm việc chỉ có ở Việt Nam
-    if (c.cat === 'state' && l.abroad && l.abroad.perm) return false;
+    if (c.vnOnly && !H.inVN(l)) return false; // v7.0: ở ngoài Việt Nam thì không làm việc chỉ có ở Việt Nam
+    if (c.cat === 'state' && l.abroad) return false;
     if (c.major && !c.soft && c.major !== l.major) return false;
     if (c.majors && !c.soft && c.majors.indexOf(l.major) < 0) return false;
     if (c.talent && c.talent !== l.talent && !(c.soft && (c.major === l.major || (c.majors && c.majors.indexOf(l.major) >= 0)))) return false;

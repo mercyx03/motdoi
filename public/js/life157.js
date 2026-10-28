@@ -12,7 +12,8 @@
   var infant = E.DEC.thoi_noi, d = infant.def;
   d.text = function (l) {
     var b = resources(l).band;
-    return (H.isVN(l) ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ thôi nôi.' : 'Sinh nhật đầu tiên, gia đình chọn cách kỷ niệm.') +
+    var rc = H.resCode ? H.resCode(l) : (l.abroad && l.abroad.code) || l.country || 'VN';
+    return ((H.inVN(l) || H.hasVNOrigin(l)) ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ thôi nôi.' : rc === 'KR' ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ Doljanchi (돌잔치) và nghi thức Doljabi.' : rc === 'JP' ? 'Sinh nhật 1 tuổi, gia đình cân nhắc nghi thức Erabitori chọn thẻ/đồ vật tượng trưng.' : (rc === 'CN' || rc === 'TW') ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ Chu tuế (抓周) tròn 1 tuổi.' : 'Sinh nhật đầu tiên, gia đình chọn cách kỷ niệm.') +
       [' Ngân sách rất eo hẹp: có thể dùng vài đồ chơi sẵn có, nhờ người thân cho mượn hoặc chỉ quây quần bên bé.', ' Gia đình chuẩn bị mâm nhỏ với đồ chơi sẵn có hoặc đồ mượn, vẫn có niềm vui bên nhau.', ' Gia đình có thể chuẩn bị mâm đồ chơi vừa phải tại nhà.', ' Gia đình có điều kiện chuẩn bị nhiều đồ chơi và mời người thân dự tiệc.', ' Gia đình có thể tổ chức tiệc lớn, thuê người chuẩn bị và lưu kỷ niệm.'][b] +
       ' Chỉ dùng đồ chơi lớn phù hợp trẻ một tuổi, có người lớn giám sát. Đồ vật gợi sở thích, không quyết định nghề nghiệp.';
   };
