@@ -190,7 +190,7 @@
   function define(id, o) { o.id = id; SHOWS[id] = o; return o; }
   function hist(l, id) { return S(l).history.filter(function (h) { return h.id === id; }); }
   function season(l, sh) { return Math.max(1, yr(l) - sh.from + 1); }
-  function airing(l, sh) { var y = yr(l); return y >= sh.from && (!sh.to || y <= sh.to) && (sh.country === 'VN' ? vn(l) : sh.country === 'ANY' ? true : !vn(l) || sh.travel); }
+  function airing(l, sh) { var y = yr(l); return y >= sh.from && (!sh.to || y <= sh.to) && (sh.country === 'ANY' ? true : sh.country === 'WORLD' ? (l.abroad && l.abroad.code || l.country) !== 'VN' : (l.abroad && l.abroad.code || l.country) === sh.country); }
   // Điều kiện theo vai trò; trả về true hoặc lý do
   function canJoin(l, sh, role) {
     if (!free(l)) return 'Hiện không thể tham gia';

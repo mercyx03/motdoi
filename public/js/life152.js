@@ -155,12 +155,12 @@
   // ===================================================================
   // Gameshow vận động mới: Running Man Hàn Quốc, New Journey to the West (theo tập, chuỗi trò chơi nhỏ)
   // ===================================================================
-  function inKorea(l) { return (l.abroad && l.abroad.code === 'KR') || l.country === 'KR'; }
+  function inKorea(l) { return (l.abroad && l.abroad.code || l.country) === 'KR'; }
   function krIdol(l) { var a = E.LIFE138 && E.LIFE138.state(l).agency; return !!(a && a.code === 'KR' && (a.status === 'debut' || a.status === 'trainee')); }
   function krStar(l) { return inKorea(l) || krIdol(l) || (l.fame || 0) >= 1e6; }
   E.SHOW151.krStar = krStar;
   var airing = SH.airing;
-  SH.airing = function (l, sh) { if (sh.country === 'KR') { var y = yr(l); return y >= sh.from && (!sh.to || y <= sh.to) && krStar(l); } return airing.apply(this, arguments); };
+  SH.airing = function (l, sh) { return airing.apply(this, arguments); };
   SH.HANDLERS.variety = {
     start: function (l, r, a, sh) { a.ep = 0; a.eps = a.role === 'guest' ? 1 : 3; a.wins = 0; a.mvp = 0; a.games = sh.games; a.gi = 0; a.bond = {}; a.cast = cast(l, seeded(a.token), 5).map(function (c) { return c.name; }); },
     title: function (l, a) { return 'Tập ' + (a.ep + 1) + '/' + a.eps; },

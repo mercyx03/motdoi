@@ -1,11 +1,55 @@
 {
-  "generatedAt": "2026-10-26T09:50:22.185Z",
+  "generatedAt": "2026-10-28T08:55:41.996Z",
   "entries": [
+    {
+      "id": "football-career-892",
+      "version": "8.9.2",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-28T08:55:41.000Z",
+      "publishedAt": "2026-10-28T15:55:32.807+07:00",
+      "title": "Một Đời — Sự nghiệp bóng đá chuyên nghiệp",
+      "summary": "Từ sân bóng thiếu niên đến học viện, hợp đồng câu lạc bộ, các mùa giải và cơ hội khoác áo đội tuyển quốc gia.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến"
+      ],
+      "details": [
+        "Từ 10 tuổi, bạn có thể bắt đầu tập bóng tại địa phương, chọn thủ môn, hậu vệ, tiền vệ hoặc tiền đạo rồi đăng ký nhiều học viện. Bạn tự chọn lời mời muốn nhận; thử tuyển có thể được nhận, bị từ chối, hẹn thử lại hoặc được giới thiệu đội cấp thấp hơn.",
+        "Theo dõi kỹ thuật, tốc độ, sức bền, sức mạnh, phòng ngự, chuyền bóng, dứt điểm, tư duy chiến thuật, tinh thần và kỷ luật. Chọn tập chuyên môn, tập cân bằng hoặc nghỉ ngơi; tập quá sức có nguy cơ chấn thương. Tiềm năng có giới hạn và năng lực giảm sau tuổi đỉnh cao.",
+        "Phát triển qua U15, U17, U19 và U21, cân nhắc việc học văn hóa, hỗ trợ gia đình và cơ hội đội một. Học viện có hỗ trợ đào tạo riêng, không trả ngay mức lương cầu thủ chuyên nghiệp.",
+        "Đàm phán và tự chấp nhận hợp đồng với thời hạn, lương, thưởng ra sân và phí ký. Có gia hạn, chuyển nhượng, cho mượn rồi trở về đội chủ quản; hết hợp đồng thì ngừng nhận lương. Phí chuyển nhượng giữa các đội không trở thành tiền cá nhân.",
+        "Hỗ trợ 16 thị trường bóng đá: Việt Nam, Nhật Bản, Hàn Quốc, Thái Lan, Anh, Tây Ban Nha, Đức, Ý, Pháp, Brazil, Argentina, Hoa Kỳ, Mexico, Ai Cập, Nam Phi và New Zealand. Mỗi thị trường có đội cấp cao, hạng dưới và bán chuyên với mức lương khác nhau; tài chính và một phần câu lạc bộ là dữ liệu mô phỏng.",
+        "Mùa giải rút gọn có lịch đối đầu, bảng điểm, kết quả, số phút thi đấu, bàn thắng, kiến tạo, thẻ, thay người, chấn thương và điểm cá nhân. Có giải quốc nội, cúp quốc gia, cúp châu lục và FIFA Club World Cup; cần thành tích mùa trước và đúng chu kỳ để dự cúp.",
+        "Có triệu tập đội tuyển trẻ và đội tuyển quốc gia theo nơi đủ điều kiện đại diện, phong độ, vị trí, thời gian ra sân và sức khỏe. Vòng loại World Cup, Asian Cup cùng các giải của từng liên đoàn có lịch riêng; được gọi lên tuyển không đồng nghĩa đã có vé dự vòng chung kết.",
+        "Lương, thưởng, tài trợ đủ điều kiện và khấu trừ thuế/đại diện mô phỏng đi vào ngân sách cá nhân, còn chi phí sinh hoạt và hỗ trợ gia đình vẫn tiếp tục. Chuyển ra nước ngoài cập nhật nơi cư trú và quy đổi tài sản nhưng giữ quốc tịch.",
+        "Giữ thống kê và danh hiệu theo mùa, lịch sử hợp đồng cùng quan hệ với huấn luyện viên. Khi giải nghệ có thể chuyển sang huấn luyện, tuyển trạch hoặc bình luận nếu đáp ứng yêu cầu. Các bản lưu cầu thủ cũ được chuyển tiếp, các nghề khác vẫn giữ nguyên.",
+        "Thể thức thi đấu, đối thủ tổng hợp và lương là mô hình gameplay rút gọn, không phải bản sao lịch sử hoặc lịch đấu chính thức."
+      ],
+      "correctedAt": "2026-10-28T08:55:41.911Z"
+    },
+    {
+      "id": "country-survival-886",
+      "version": "8.8.6",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-28T07:13:17+07:00",
+      "title": "Một Đời — Tiếp tục Boys Planet và chọn quốc gia sinh ra",
+      "summary": "Sửa lỗi sau chung kết chương trình sống còn, kiểm tra nơi tham gia và thêm lựa chọn quốc gia ở chế độ Thế giới.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Sửa lỗi có thể khiến cuộc chơi đứng lại khi debut sau Boys Planet mà nhân vật chưa từng qua chương trình thực tập sinh thiếu niên. Nhóm debut lấy thành viên từ các thí sinh chung kết và đúng số suất của chương trình.",
+        "Các chương trình truyền hình gắn với một quốc gia yêu cầu bạn đang ở quốc gia đó. Danh tiếng, quốc tịch gốc hoặc hợp đồng với công ty nước ngoài không thay thế điều kiện nơi ở; thực tập tạm trú tại Hàn Quốc vẫn được tính.",
+        "Trong chế độ Thế giới, bạn có thể chọn quốc gia sinh ra hoặc để ngẫu nhiên. Tên, thành phố, gia đình và các đặc điểm khác vẫn được tạo ngẫu nhiên theo quốc gia; lựa chọn được nhớ cho lần sau."
+      ]
+    },
     {
       "id": "enterprise-family-office-885",
       "version": "8.8.5-enterprise",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-27T23:57:40.000Z",
       "publishedAt": "2026-10-28T02:40:49.912+07:00",
       "title": "Một Đời — Lãnh đạo, kế nghiệp và văn phòng gia đình",
       "summary": "Đào tạo người kế nghiệp qua nhiều năm, xử lý chuyện ban lãnh đạo, thuê quản gia và thiết kế tiệc theo ngân sách.",
@@ -25,7 +69,8 @@
         "Thiết kế sáu cấp tiệc từ gia đình tới quốc tế, chọn mục đích, địa điểm, số khách, khách mời riêng, ẩm thực, biểu diễn, an ninh, trang trí và dịch vụ. Dự toán và dự phòng phải được duyệt trước; chi phí có thể rất lớn. Tiệc có thể thành công, ít người dự, gây tranh cãi hoặc phát sinh chi phí trong quỹ dự phòng.",
         "Khách dự tiệc được giữ danh tính trong mạng lưới để gặp lại và đề nghị hợp tác những năm sau. Danh tiếng xét toàn bộ chi phí tiệc; tổng tiền trong lịch sử khớp khoản đã trả, không trừ dịch vụ hai lần.",
         "Đào tạo nhân viên có lựa chọn mục tiêu năng suất, chất lượng hoặc công nghệ và ba mức ngân sách. Chương trình đang học, thực tập và kế hoạch công ty được lưu; đổi tiền, chuyển góc nhìn và sáp nhập giữ các dữ liệu liên quan."
-      ]
+      ],
+      "correctedAt": "2026-10-27T23:57:45.895Z"
     },
     {
       "id": "enterprise-operations-884",

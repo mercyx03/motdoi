@@ -8,7 +8,8 @@ assert(previews.every(p=>p.opts.seed&&p.html.includes('Hồ sơ xuất phát')&&
 const scripts=[...html.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(scripts.length,2,'game bootstrap and independent support button');
 assert(scripts.some(p=>/support/.test(p)),'support available before game engine');
-assert(html.includes('id="statJobs">160+'),'career total visible before engine');
+const visibleCareers=/id="statJobs">(\d+)\+/.exec(html);
+assert(visibleCareers&&Number(visibleCareers[1])>=160,'career total visible before engine');
 assert(html.includes('font-family:Lora')||html.includes('font-family:"Lora"'),'Lora font embedded');
 assert(!html.includes("--display:'Be Vietnam Pro'"),'display serif preserved');
 const boot=read(scripts.find(p=>/boot/.test(p)));assert(Buffer.byteLength(boot)<5000,'bootstrap below 5 KB');
@@ -34,6 +35,7 @@ const tick=Date.UTC(2026,9,21);class Clock extends Date{constructor(...a){super(
 const ctx={console,Math:math,Date:Clock,JSON,Buffer,TextEncoder,TextDecoder};ctx.globalThis=ctx;vm.createContext(ctx);
 for(const p of chunks.slice(0,3))vm.runInContext(read(p),ctx,{filename:p});
 const source=require('./hardcore-isolation').gameContext();
+assert.equal(Number(visibleCareers[1]),Math.floor(Object.keys(ctx.G.E.CAR).filter(k=>!['scam_kh','phu_giup'].includes(k)).length/10)*10,'visible career count matches deployed engine');
 for(const opts of [
  {mode:'vn',variant:'34',seed:78100,year:2026},
  {mode:'vn',variant:'63',seed:78101,year:2026},

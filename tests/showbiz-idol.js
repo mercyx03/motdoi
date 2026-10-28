@@ -88,12 +88,12 @@ function signed(o = {}) { for (let s = 0; s < 60; s++) { const l = kid(Object.as
 // ---------- D5: chương trình sống còn ----------
 {
   ok(SH.canJoin(kid({ age: 18, birth: 2000 }), SH.SHOWS.produce101, 'trainee') !== true, 'người không phải thực tập sinh không dự thi');
-  const t = signed({ age: 16, birth: 2000, sex: 'F' }); t.age = 18; L.state(t).agency.status = 'trainee'; I.S(t).stage = 'trainee';
+  const t = signed({ age: 16, birth: 2000, sex: 'F' }); t.age = 18; t.abroad = {code:'KR',perm:false,entertainment139:true}; L.state(t).agency.status = 'trainee'; I.S(t).stage = 'trainee';
   ok(SH.canJoin(t, SH.SHOWS.produce101, 'trainee') === true, 'thực tập sinh đủ điều kiện Produce 101 (' + (t.birthYear + t.age) + ')');
-  { const t2 = signed({ age: 16, birth: 2005, sex: 'F' }); t2.age = 18; L.state(t2).agency.status = 'trainee'; ok(/dành cho nam/.test(SH.canJoin(t2, SH.SHOWS.boysplanet, 'trainee') || ''), 'Boys Planet chỉ dành cho nam: ' + SH.canJoin(t2, SH.SHOWS.boysplanet, 'trainee')); }
+  { const t2 = signed({ age: 16, birth: 2005, sex: 'F' }); t2.age = 18; t2.abroad = {code:'KR',perm:false,entertainment139:true}; L.state(t2).agency.status = 'trainee'; ok(/dành cho nam/.test(SH.canJoin(t2, SH.SHOWS.boysplanet, 'trainee') || ''), 'Boys Planet chỉ dành cho nam: ' + SH.canJoin(t2, SH.SHOWS.boysplanet, 'trainee')); }
   let debuted = 0, out = 0;
   for (let s = 0; s < 12; s++) {
-    const x = signed({ age: 16, birth: 2003, seed: 7000 + s * 61, sex: 'F', sing: 50 + s * 4, dance: 50 + s * 4 }); x.age = 18; L.state(x).agency.status = 'trainee'; I.S(x).stage = 'trainee'; x.st.hea = 90;
+    const x = signed({ age: 16, birth: 2003, seed: 7000 + s * 61, sex: 'F', sing: 50 + s * 4, dance: 50 + s * 4 }); x.age = 18; x.abroad = {code:'KR',perm:false,entertainment139:true}; L.state(x).agency.status = 'trainee'; I.S(x).stage = 'trainee'; x.st.hea = 90;
     SH.begin(x, H.rf(x), say(x), 'girlsplanet', 'trainee');
     let n = 0; while (top(x, 'show151_step') && n++ < 30) { const d = top(x, 'show151_step'); x.pending = x.pending.filter(y => y !== d); x.pending.unshift(d); E.resolve(x, E.autoKey(x)); }
     const h = SH.S(x).history.slice(-1)[0]; ok(h && h.id === 'girlsplanet' && /debut|dừng chân|xếp hạng/.test(h.result), 'sống còn #' + s + ': ' + h.result);
@@ -104,7 +104,7 @@ function signed(o = {}) { for (let s = 0; s < 60; s++) { const l = kid(Object.as
 }
 
 { // vòng concept: chọn bài hát hợp thế mạnh
-  const x = signed({ age: 16, birth: 2000, seed: 7777, sex: 'F', sing: 90, dance: 30 }); x.age = 18; L.state(x).agency.status = 'trainee'; I.S(x).stage = 'trainee';
+  const x = signed({ age: 16, birth: 2000, seed: 7777, sex: 'F', sing: 90, dance: 30 }); x.age = 18; x.abroad = {code:'KR',perm:false,entertainment139:true}; L.state(x).agency.status = 'trainee'; I.S(x).stage = 'trainee';
   SH.begin(x, H.rf(x), say(x), 'produce101', 'trainee'); const A = SH.S(x).active; A.round = 3; x.pending = []; SH.queue(x, H.rf(x));
   const d = top(x, 'show151_step'); ok(['song:dark', 'song:ballad', 'song:bright'].every(k => d.data.keys.includes(k)), 'vòng concept có chọn bài hát');
   ok(E.DEC.show151_step.auto(x, d, () => 0.5) === String(d.data.keys.indexOf('song:ballad')), 'giọng hát mạnh thì chọn bài giàu cảm xúc');

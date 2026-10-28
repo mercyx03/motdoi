@@ -640,3 +640,6 @@ footer .disclaimer b { color: var(--accent); }
 #aboutDialog:not([open]) { display: none; }
 #aboutDialog::backdrop { background: rgba(15,10,5,.65); }
 @media(max-width:600px) { #aboutDialog { width: calc(100% - 24px); padding: 24px 20px; } }
+
+/* Keep football profiles, standings and match reports readable on narrow screens. */
+.football-summary { white-space: pre-line; font-weight: 400; overflow-wrap: anywhere; }

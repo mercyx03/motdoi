@@ -1,3 +1,9 @@
+## 8.8.6 — 28/10/2026 (UTC+7) — packaged
+
+- Sửa debut Boys Planet thiếu peers, dùng thí sinh chung kết đúng số suất.
+- Chương trình gắn quốc gia kiểm nơi đang ở, gồm tạm trú đào tạo.
+- Chọn quốc gia sinh ra ở Thế giới, các thuộc tính khác vẫn ngẫu nhiên.
+
 ## v8.8.0-preview — checkpoint đang triển khai, packaged
 
 ## 8.8.5-enterprise — lãnh đạo, kế nghiệp và văn phòng gia đình

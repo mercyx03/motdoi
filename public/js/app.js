@@ -16,7 +16,7 @@
   // giữ nguyên khóa lưu trữ từ bản 1.0 để người chơi không mất dữ liệu
   var K = { settings: 'mkn.settings', cur: 'mkn.current', mem: 'mkn.memorial', theme: 'mkn.theme', last: 'mkn.lastEnd', recent: 'mkn.recent', ach: 'mkn.ach', tree: 'mkn.tree' };
 
-  var DEF = { mode: 'vn', variant: '34', difficulty: 'normal', prov: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
+  var DEF = { mode: 'vn', variant: '34', difficulty: 'normal', prov: '', country: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
   var S = {
     set: Object.assign({}, DEF, LS.get(K.settings, {})),
     life: null, cohort: null, speed: 1, paused: false, auto: false, skipping: false,
@@ -121,6 +121,10 @@
 
   function syncSetupUI() {
     var vn = S.set.mode === 'vn';
+    var country = $('#countrySel');
+    if (country.options.length === 1) country.innerHTML += W.C.filter(function(c){return c.births > 0;}).slice().sort(function(a,b){return a.name.localeCompare(b.name,'vi');}).map(function(c){return '<option value="'+esc(c.code)+'">'+esc(c.name)+'</option>';}).join('');
+    country.value = S.set.country || '';
+    if (!country.value) S.set.country = '';
     $$('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.mode === S.set.mode); });
     $('#vnOpts').classList.toggle('hidden', !vn);
     $('#worldOpts').classList.toggle('hidden', vn);
@@ -136,7 +140,7 @@
     $('#heroTitle').innerHTML = vn ? '1 trong <em>100 triệu</em>' : '1 trong <em>8 tỷ</em>';
     $('#heroLead').textContent = vn
       ? 'Cứ khoảng 23 giây lại có một em bé chào đời ở Việt Nam. Bạn sẽ trở thành một trong số đó và sống trọn một đời người — với những ngã rẽ, cám dỗ, mất mát và hạnh phúc. Sinh ra ở tỉnh nào, dân tộc nào, trong gia đình nào — bạn không được chọn. Cũng như ngoài đời.'
-      : 'Mỗi giây có khoảng bốn em bé chào đời trên Trái Đất. Bạn sẽ trở thành một trong số đó và sống trọn một đời người. Sinh ra ở đâu, trong gia đình nào — bạn không được chọn. Cũng như ngoài đời.';
+      : 'Mỗi giây có khoảng bốn em bé chào đời trên Trái Đất. Bạn sẽ trở thành một trong số đó và sống trọn một đời người. Bạn có thể chọn quốc gia sinh ra; thành phố, gia đình và các đặc điểm khác vẫn ngẫu nhiên.';
     renderOdds();
   }
 
@@ -191,7 +195,7 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
+  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var where = E.isVN(l) ? l.provLabel + ' · Việt Nam' : l.city + ' · ' + l.countryName;
@@ -274,6 +278,7 @@
   $$('.tab').forEach(function (t) { t.onclick = function () { S.set.mode = t.dataset.mode; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); }; });
   $$('#variantChips .chip').forEach(function (c) { c.onclick = function () { S.set.variant = c.dataset.variant; S.set.prov = ''; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); }; });
   $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); };
+  $('#countrySel').onchange = function () { S.set.country = this.value; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
   $('#ethSel').onchange = function () { S.set.eth = this.value; saveSettings(); };
   $('#nameInp').oninput = function () { S.set.name = this.value; };
   $$('#genderChips .chip').forEach(function (c) { c.onclick = function () { S.set.gender = c.dataset.g; if ((c.dataset.g === 'F' && /^(top|bot)$/.test(S.set.orient)) || (c.dataset.g === 'M' && S.set.orient === 'les')) S.set.orient = 'lgbt'; saveSettings(); syncSetupUI(); }; });
@@ -297,7 +302,7 @@
   });
 
   $('#bornBtn').onclick = function () {
-    var opts = { mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
+    var opts = { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
     bornWith(opts);
   };
@@ -1267,7 +1272,7 @@
     // v3.1: lựa chọn nào tốn tiền mà chưa ghi giá thì ghi luôn chi phí ước tính
     var costs = !aiPick && E.optCosts && d.id !== 'market_trade' ? E.optCosts(l, d) : {};
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
-      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p>' + esc(d.text) + '</p>' +
+      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p' + (/^football/.test(d.id) ? ' class="football-summary"' : '') + '>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
       (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
