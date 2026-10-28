@@ -113,3 +113,9 @@ Triển khai theo góp ý: bàn làm việc liên tục, dự toán tiệc do nh
 ## GĐ6 / bóng đá và cư trú 8.9.7
 
 Hoàn thành triển khai, kiểm thử trọng điểm đạt; chưa nghiệm thu toàn diện. Còn regression toàn bộ, thiết bị thật và bản lưu thật của người báo lỗi; binding REVIEWS_DB thực tế. Hai bài adult106/public116 cũng thất bại trên HEAD trước sửa, cần bảo trì riêng: kịch bản bảo vệ tiến sĩ không tạo khung ở mốc cũ; trần lương public116 còn kỳ vọng Hardcore đã loại bỏ. Không tính hai bài này PASS. Nhật ký Đã phát hành theo chỉ thị riêng, không chứng minh website đã upload.
+
+## GĐ6 / hoàn cảnh tuổi thơ 8.9.8
+
+Hoàn thành triển khai trong phạm vi kỳ nghỉ, sở thích và lời hẹn bạn thân; chưa tự bắt đầu 25 hệ thống trong ảnh. Còn regression toàn bộ trên mã cuối, thiết bị thật và mẫu save người báo lỗi. Hai bài chains-gd4/context-weighting thất bại giống trên HEAD trước sửa (friend uid ở kịch bản cũ; gate viec_online đã thêm điều kiện năm), không tính PASS; cần bảo trì riêng. Binding REVIEWS_DB chưa kiểm thực tế.
+
+Regression trọng điểm898:16873 đạt/1 lỗi cũ ở nhóm32 (lời thoại hẹn hò thiếu tên Lan theo test); đối chiếu riêng HEAD trước sửa có đúng lỗi27 đạt/1 FAIL. Chưa tính regression PASS; không đổi hành vi hẹn hò trong đợt tuổi thơ này.

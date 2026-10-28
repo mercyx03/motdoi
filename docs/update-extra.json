@@ -1,5 +1,29 @@
 [
   {
+    "id": "childhood-context-898",
+    "version": "8.9.8-childhood-context",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-29T06:11:56+07:00",
+    "publishedAt": "2026-10-29T06:11:56+07:00",
+    "correctedAt": "2026-10-29T06:11:56+07:00",
+    "title": "Một Đời — Tuổi thơ đúng hoàn cảnh và kỳ nghỉ có câu chuyện tiếp nối",
+    "summary": "Kỳ nghỉ theo nơi sống và ngân sách thực tế; học bơi, dự án vẽ và lời hẹn với bạn thân có diễn biến qua nhiều năm.",
+    "tags": [
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Sửa tình huống tự gửi trẻ thành thị về quê ông bà rồi chăn trâu, tắm ao, nướng khoai. Kỳ nghỉ giờ dựa trên nơi đang sống: thành thị có công viên, đọc sách và hoạt động tại nhà; nông thôn có chăm cây, khám phá quanh làng cùng người lớn. Không tự bịa nơi ở của ông bà hay nghề làm nông của gia đình.",
+      "Trẻ giàu ở thành phố có thể cân nhắc lớp vẽ riêng; vẫn cần người chăm sóc đồng ý và đủ ngân sách. Gia đình nào cũng có lựa chọn miễn phí. Trẻ giàu sống ở nông thôn vẫn có hoạt động quanh làng; trẻ ít tiền sống ở thành phố không bị ép thành trẻ nhà nông.",
+      "Khóa bơi và dự án vẽ dùng chung hồ sơ kỹ năng, giới hạn số môn và quỹ giờ đang có. Học phí đi qua người chăm sóc khi còn phụ thuộc, không tự lấy tiền tiết kiệm của trẻ. Thiếu tiền hoặc không được đồng ý thì có thể quay lại chọn cách ít tốn kém, chưa được cộng kỹ năng.",
+      "Buổi học bơi đầu tiên chưa tự biến thành biết bơi. Có lời nhắc tiếp tục trong kỳ nghỉ sau; hoàn thành hai kỳ tập có hướng dẫn mới ghi nhận kỹ năng bơi cơ bản trong mô phỏng. Bạn đã biết bơi từ trước vẫn giữ kỹ năng cũ. Dự án vẽ cũng tiếp tục từ sản phẩm đã làm, không tự phong thành tài năng.",
+      "Nếu có bạn thân cùng độ tuổi ở gần, dự định hè có thể gắn với đúng người đó. Giữ lời hoặc trao đổi giảm lịch có tác động riêng; im lặng bỏ dở có thể làm giảm tin cậy và mở một cuộc nói chuyện sau đó. Giải thích chỉ phục hồi một phần, không tự khiến bạn tha thứ hoàn toàn.",
+      "Khi chuyển nơi ở, câu chuyện tiếp nối dùng nơi mới. Bạn thân ở xa được liên lạc qua thư hoặc cuộc gọi, không tự xuất hiện để gặp trực tiếp; người đã mất không quay lại. Kỹ năng, kỷ niệm và hồ sơ người bạn được giữ sau khi câu chuyện khép lại.",
+      "Sửa cảnh trẻ nhỏ chằng mái nhà giữa bão: trẻ trú an toàn và phụ cất đồ nhẹ theo hướng dẫn; người lớn xử lý điện, cửa và sửa chữa. Những dòng kể gia đình khá giả không còn tự khẳng định đã đi du lịch nước ngoài hoặc học piano khi chưa có lựa chọn đó.",
+      "Khung kỳ nghỉ cũ còn chờ trong bản lưu được đổi sang nội dung phù hợp hoàn cảnh hiện tại. Lựa chọn được bảo vệ khỏi bấm lại để nhận thêm kỹ năng, thu học phí hai lần hoặc thay đổi quan hệ nhiều lần."
+    ]
+  },
+  {
     "id": "football-residence-897",
     "version": "8.9.7-football-residence",
     "releaseStatus": "released",

@@ -1,3 +1,10 @@
+## 8.9.8-childhood-context — 29/10/2026 (UTC+7)
+
+- Kỳ nghỉ theo nơi ở/ngân sách/người chăm sóc, không tự bịa chuyến về quê ông bà.
+- Dùng kỹ năng/quỹ giờ/ngân sách cũ cho bơi và vẽ; nối tiếp nhiều năm, lời hẹn bạn thân và hồi phục tin cậy một phần.
+- Sửa lời kể thời tiết, chi tiêu và bản lưu cũ. Nhãn phát hành theo chỉ thị chủ dự án, không tự deploy.
+- Chi tiết nghiệm thu: docs/CHILDHOOD-898-ACCEPTANCE.md.
+
 ## 8.9.7-football-residence — 28/10/2026 (UTC+7)
 
 - Nối năng khiếu với bóng đá, đàm phán từng CLB và kết quả hiển thị trực tiếp; ký hợp đồng thành nghề chính.
