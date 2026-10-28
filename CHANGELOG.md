@@ -1,3 +1,10 @@
+## 8.9.7-football-residence — 28/10/2026 (UTC+7)
+
+- Nối năng khiếu với bóng đá, đàm phán từng CLB và kết quả hiển thị trực tiếp; ký hợp đồng thành nghề chính.
+- Kiểm tra cư trú ở hoạt động giáo dục/công quyền, concert và khóa phổ thông bổ sung; giữ liên lạc từ xa hợp lý.
+- Nhật ký chuyển sang Đã phát hành theo chỉ thị chủ dự án; không tự upload website.
+- Kiểm thử trọng điểm đạt; chưa nghiệm thu toàn diện. Xem docs/FOOTBALL-RESIDENCE-897-ACCEPTANCE.md.
+
 ## 8.9.6-office-storage — 28/10/2026 (UTC+7) — packaged
 
 - Quản gia/trợ lý có bàn làm việc, báo cáo, thông báo quan trọng và xử lý liên tiếp.

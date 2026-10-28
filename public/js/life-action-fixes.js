@@ -28,7 +28,7 @@ E.resolve=function(l,key){
  var snapshot=l.acts>=limit(l)?copy(l):null,old=l.pending.slice(1),before=facts(l),used=l.acts||0,out=resolve.apply(this,arguments);
  l.acts=used; // old cancel handlers refunded an opening cost that no longer exists
  var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=/^(cancel|back|close)$/.test(key);
- var changed=facts(l)!==before,spend=!cancel&&(children.length===0||changed);
+ var changed=facts(l)!==before,spend=!cancel&&(children.length===0||changed||a.actionCommitted897===true);
  if(spend&&snapshot){restore(l,snapshot);var e={a:l.age,y:l.birthYear+l.age,t:'Đã hết lượt năm nay. Bạn vẫn có thể xem các phương án hoặc để dịp khác; lựa chọn chưa được thực hiện.',k:'neutral'};l.log.push(e);return [e];}
  if(spend){l.acts=(l.acts||0)+1;var root=E.ACT.find(function(x){return x.id===token.actionId850;});if(root&&!(E.DEC[root.sc||root.id]||{}).menu110)(l.flags.actAt||(l.flags.actAt={}))[token.actionId850]=l.age;}
  children.forEach(function(x){if(cancel||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});

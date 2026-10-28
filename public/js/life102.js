@@ -7,7 +7,7 @@
    Điểm chuẩn, điểm năng khiếu trong game là mô phỏng. */
 (function (G) {
   'use strict';
-  var E = G.E, H = E.H, U = G.U, SC = E.SC, isVN = H.isVN;
+  var E = G.E, H = E.H, U = G.U, SC = E.SC, isVN = H.inVN;
   var EDU54 = E.EDUCATION54, WISH = E.DEC.study_wishes54;
   function fx(l, o) { H.fx(l, o); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
@@ -187,7 +187,7 @@
   }
   function fee(l) { return V(l, isVN(l) ? 4 : 8); }
   function startGdtx(l, lvl, years, log, note) {
-    l.flags.gdtx = { from: l.edu, lvl: lvl, until: l.age + years, start: l.age, fee: fee(l) };
+    l.flags.gdtx = { country897:H.resCode(l), from: l.edu, lvl: lvl, until: l.age + years, start: l.age, fee: fee(l) };
     log(note, 'good'); fx(l, { hap: 3 }); stress(l, 4);
     H.mem(l, 'Năm ' + l.age + ' tuổi, bạn cắp sách đi học lại lớp buổi tối.', 4);
   }
@@ -235,7 +235,7 @@
     log('Học xong chương trình bổ túc THPT sau ' + (a + 1 - g.start) + ' năm vừa làm vừa học.', 'good');
     log(isVN(l) ? 'Tốt nghiệp THPT.' : 'Tốt nghiệp trung học phổ thông.', 'good');
     l.flags.gdtxGrad = a;
-    E.HOOKS.gradUpper.forEach(function (fn) { fn(l, r, log); });
+    if(H.inVN(l))E.HOOKS.gradUpper.forEach(function (fn) { fn(l, r, log); });
     if (l.edu < 3) return; // trượt tốt nghiệp: đã hẹn thi lại
     H.mem(l, 'Ngày cầm tấm bằng tốt nghiệp THPT hệ bổ túc, ở tuổi ' + (a + 1) + '.', 5); fx(l, { hap: 8 });
     l.pending.push(E.DEC.bo_tuc_xong.make(l, r));
