@@ -130,8 +130,9 @@ const cases = [
     // đầy bộ nhớ
     const st = storage({ quota: size + 200 }); st.setItem('other', 'x'.repeat(500));
     let r = S.write(KEY, data, null, st);
-    t.ok(!r.ok && r.code === 'QUOTA', 'đầy bộ nhớ → mã QUOTA (' + r.code + ')');
-    t.ok(st.getItem(KEY) === null && st.getItem('other').length === 500, 'không xóa dữ liệu khác để lấy chỗ');
+    t.ok(r.ok && r.compressed && S.read(KEY,st).value.life.id===life.id, 'đầy bộ nhớ → nén không mất dữ liệu rồi lưu lại');
+    t.ok(st.getItem('other').length === 500, 'không xóa dữ liệu khác để lấy chỗ');
+    const tiny=storage({quota:600});tiny.setItem('other','x'.repeat(500));var failed=S.write(KEY,data,null,tiny);t.ok(!failed.ok&&failed.code==='QUOTA'&&tiny.getItem(KEY)===null,'nén vẫn không đủ thì báo QUOTA và giữ dữ liệu cũ');
     t.ok(S.message('QUOTA').includes('CHƯA'), 'thông báo nói rõ là CHƯA lưu');
     // bị chặn (ẩn danh / quyền riêng tư)
     r = S.write(KEY, data, null, storage({ mode: 'blocked' }));

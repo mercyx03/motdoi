@@ -1,3 +1,11 @@
+## 8.9.6-office-storage — 28/10/2026 (UTC+7) — packaged
+
+- Quản gia/trợ lý có bàn làm việc, báo cáo, thông báo quan trọng và xử lý liên tiếp.
+- Nhân sự lập sẵn dự toán tiệc theo quy mô để gia chủ duyệt; đối chiếu quyền, chi phí, lịch và người phụ trách khi thực hiện.
+- Khóa phạm vi ủy quyền trước khi có nhân sự đủ điều kiện; thêm quyền tự gia hạn với dự phòng rõ ràng.
+- Nén lưu trữ không mất dữ liệu khi quota đầy, nhận biết bản nén ở trang khởi động/tài khoản; thêm công cụ bộ nhớ và bản sao đầy đủ.
+- Nhật ký packaged; chưa tự deploy. Chi tiết nghiệm thu: docs/OFFICE-STORAGE-896-ACCEPTANCE.md.
+
 ## 8.9.5-actions — 28/10/2026 (UTC+7) — packaged
 
 - Bỏ Hardcore, chuyển bản lưu cũ sang chế độ thường và giữ tài sản/lịch sử.

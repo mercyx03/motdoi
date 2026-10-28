@@ -1,6 +1,33 @@
 {
-  "generatedAt": "2026-10-28T14:08:39.939Z",
+  "generatedAt": "2026-10-28T14:52:34.553Z",
   "entries": [
+    {
+      "id": "office-storage-896",
+      "version": "8.9.6-office-storage",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-28T14:52:34.553Z",
+      "title": "Một Đời — Quản gia làm việc trực tiếp và khắc phục bộ nhớ lưu",
+      "summary": "Có bàn làm việc để xử lý liên tiếp, nhân sự chuẩn bị sẵn dự toán tiệc chờ duyệt và cách nén dữ liệu giữ nguyên lịch sử khi bộ nhớ đầy.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Thêm khung Văn phòng gia đình khi có nhân sự chuyên nghiệp. Mở một bàn làm việc để xem thông báo, báo cáo, hợp đồng và quyền ủy quyền; chọn xong vẫn ở khung đó, không phải về màn hình chính rồi tìm lại người làm.",
+        "Quản gia, trợ lý và thư ký chỉ nhận nhiệm vụ đúng vai trò, đang làm việc và đã trả lương. Có thể duyệt một gói công việc thường lệ với hạn mức rõ ràng, rồi chỉnh từng nhiệm vụ nếu muốn. Lương tách khỏi tiền làm việc; việc vượt hạn mức được báo là chưa xử lý.",
+        "Các báo cáo bảo trì, việc nhà, lịch gia đình và tài chính doanh nghiệp được tập trung tại bàn làm việc. Không thu phí tổng hợp doanh nghiệp khi chưa có doanh nghiệp, hoặc chuẩn bị gặp người quen khi chưa có người phù hợp.",
+        "Một số hồ sơ quan trọng của CEO, hội đồng và khủng hoảng doanh nghiệp được trợ lý chuyển vào khung chờ duyệt khi đã được giao nhiệm vụ báo cáo. Bạn mở hồ sơ, quyết định rồi quay lại bàn làm việc. Nhân sự không tự bán tài sản, đầu tư, mua cổ phần hay bổ nhiệm thay bạn.",
+        "Khi cần tiệc, bạn chỉ chọn tiệc gia đình, tiệc riêng hoặc gala. Nhân sự chuẩn bị địa điểm phù hợp, ẩm thực, phục vụ, trang trí, an ninh và biểu diễn cùng dự toán từng khoản và quỹ dự phòng. Có thể đổi quy mô hoặc bỏ phương án khi chưa duyệt, chưa bị thu tiền.",
+        "Duyệt tổ chức mới thanh toán và tổ chức qua cơ chế tiệc đang có. Nhận báo cáo thực chi và khách có danh tính đã đến; khách vẫn có quyền từ chối. Không thanh toán lại khi bấm duyệt hai lần; tiền mặt, lịch tiệc, địa điểm, người phụ trách và quyền được kiểm tra lại trước khi làm.",
+        "Hợp đồng sắp hết hạn, người báo nghỉ và thiếu quỹ lương được đưa vào phần cần chú ý. Có thể cho phép tự gia hạn hợp đồng thường lệ khi còn đủ dự phòng; người đã báo nghỉ và người kế nhiệm vẫn cần xử lý riêng, không tự tuyển thay.",
+        "Sửa Phạm vi ủy quyền xuất hiện quá sớm: đủ 18 tuổi chưa đủ. Cần tự lập, đủ dự phòng mới thấy đường tuyển dụng; quyền giao nhiệm vụ chỉ bật sau khi có nhân sự phù hợp đang làm việc. Khung ủy quyền cũ đang chờ trong bản lưu cũng được kiểm tra lại.",
+        "Khi gặp giới hạn bộ nhớ trình duyệt, game thử nén dữ liệu cũ và lưu lại tiến trình. Cách khắc phục này không xóa cuộc đời, nhật ký hay gia phả để lấy chỗ. Bản nén được kiểm tra toàn vẹn và đọc được khi tiếp tục chơi cũng như ở trang tài khoản/cộng đồng.",
+        "Trong menu dấu ba chấm có Bộ nhớ & sao lưu: xem dung lượng kho lưu, nén dữ liệu và tải bản sao đầy đủ gồm tiến trình đang chơi và lịch sử. Bản sao không kèm thông tin đăng nhập. Khi bộ nhớ vẫn không ghi được, game tiếp tục báo rõ chưa lưu để bạn tải dữ liệu về máy; không cần xóa dữ liệu Safari hay gỡ biểu tượng game.",
+        "Sửa thông báo nổi che nút: các lời nhắn ngắn vẫn hiển thị nhưng không chặn thao tác chạm vào nút bên dưới, gồm nút duyệt tiệc. Khung bàn làm việc có nút đóng ở đầu và hỗ trợ phím Esc."
+      ]
+    },
     {
       "id": "actions-friends-distance-895",
       "version": "8.9.5-actions",

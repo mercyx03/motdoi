@@ -105,3 +105,7 @@ cho bản bàn giao; không chứng minh website đã upload. Không tự deploy
 ## GĐ6 / hành động, bạn thân và tình huống ở xa 8.9.5
 
 Triển khai đợt sửa theo ảnh/video: bỏ Hardcore, lượt thực hiện thay cho lượt mở menu, nhóm hành động, bạn thân, chứng chỉ và chuyến về thăm. Kiểm thử trọng điểm ghi tại ACTIONS-895-ACCEPTANCE.md. Nghiệm thu cuối còn regression toàn bộ trên mã cuối, video/save thực tế gặp lỗi, thiết bị Android/iOS thật và binding Pages REVIEWS_DB. Không tính các phần chưa chạy là PASS; không tự deploy.
+
+## GĐ6 / quản gia, trợ lý và bộ nhớ 8.9.6
+
+Triển khai theo góp ý: bàn làm việc liên tục, dự toán tiệc do nhân sự lập, phạm vi ủy quyền theo nhân sự/tài chính, nén không mất dữ liệu và bản sao đầy đủ. Kiểm trọng điểm tại OFFICE-STORAGE-896-ACCEPTANCE.md. Còn regression toàn bộ trên mã cuối; iPhone Safari/PWA và thiết bị thật; mẫu dữ liệu thực báo lỗi quota; binding REVIEWS_DB Production. Không coi Chrome giả lập quota là đã kiểm Safari thật. Không tự deploy.

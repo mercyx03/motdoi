@@ -650,3 +650,20 @@ footer .disclaimer b { color: var(--accent); }
 #actPanel .actsubs .chip, #actPanel .actlist .chip { padding:10px 9px; font-size:13px; line-height:1.5; min-height:44px; text-align:left; }
 #actPanel .actlist { border-top:0; margin-top:6px; padding-top:0; }
 #actPanel .actgroups .chip { min-height:44px; }
+
+/* Staff desk remains open across approvals and administration. */
+.office-desk { margin-bottom:16px; }
+.office-dialog { width:min(880px,94vw); }
+.office-row { padding:14px 0; border-top:1px solid var(--line); overflow-wrap:anywhere; }
+.office-row ul { padding-left:22px; }
+.office-buttons { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
+.office-buttons .btn { min-height:44px; white-space:normal; }
+.office-status { padding:12px; border-left:3px solid var(--gold); }
+@media(max-width:600px){.office-buttons .btn { flex:1 1 140px; } .office-dialog { padding:18px; } }
+
+.office-header { display:flex; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:-20px; padding:8px 0; background:var(--surface); z-index:1; }
+.office-header h2 { margin:0; }
+.office-header .btn { flex:none; }
+
+/* Transient status text must never intercept action or approval taps. */
+.toast { pointer-events:none; }
