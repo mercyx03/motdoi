@@ -2,8 +2,8 @@
   {
     "id": "enterprise-family-office-885",
     "version": "8.8.5-enterprise",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-27T23:57:40.000Z",
     "publishedAt": "2026-10-28T02:40:49.912+07:00",
     "title": "Một Đời — Lãnh đạo, kế nghiệp và văn phòng gia đình",
     "summary": "Đào tạo người kế nghiệp qua nhiều năm, xử lý chuyện ban lãnh đạo, thuê quản gia và thiết kế tiệc theo ngân sách.",
@@ -23,7 +23,8 @@
       "Thiết kế sáu cấp tiệc từ gia đình tới quốc tế, chọn mục đích, địa điểm, số khách, khách mời riêng, ẩm thực, biểu diễn, an ninh, trang trí và dịch vụ. Dự toán và dự phòng phải được duyệt trước; chi phí có thể rất lớn. Tiệc có thể thành công, ít người dự, gây tranh cãi hoặc phát sinh chi phí trong quỹ dự phòng.",
       "Khách dự tiệc được giữ danh tính trong mạng lưới để gặp lại và đề nghị hợp tác những năm sau. Danh tiếng xét toàn bộ chi phí tiệc; tổng tiền trong lịch sử khớp khoản đã trả, không trừ dịch vụ hai lần.",
       "Đào tạo nhân viên có lựa chọn mục tiêu năng suất, chất lượng hoặc công nghệ và ba mức ngân sách. Chương trình đang học, thực tập và kế hoạch công ty được lưu; đổi tiền, chuyển góc nhìn và sáp nhập giữ các dữ liệu liên quan."
-    ]
+    ],
+    "correctedAt": "2026-10-27T23:57:45.895Z"
   },
   {
     "id": "enterprise-operations-884",
