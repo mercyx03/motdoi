@@ -1,0 +1,47 @@
+/* Extend OFFICE171/PARTY172: a persistent, staffed desk with executable plans. */
+(function(G){'use strict';var E=G.E,H=E.H,F=E.OFFICE171,P=E.PARTY172,N=E.ELITE148,X=E.UPDATE110,C=E.WORLD120;
+function active(l){return Object.keys(F.workers(l)).filter(function(k){var w=F.workers(l)[k],p=N.find(l,w.pid);return w.contract171&&p&&p.alive!==false&&w.until>l.age&&(!w.notice||w.notice.due>l.age)&&w.paid===l.age;});}
+function assigned(k,t){return k==='director'||k==='butler'&&['maintenance','household','calendar','events'].includes(t)||k==='service'&&['household','events'].includes(t)||k==='executive'&&['reports','partners','calendar'].includes(t)||k==='secretary'&&['calendar','partners'].includes(t)||k==='life'&&['household','calendar','events'].includes(t)||k==='schedule'&&t==='calendar'||k==='social'&&['network','events'].includes(t);}
+function person(l,task){return active(l).filter(function(k){return assigned(k,task);}).sort(function(a,b){return F.workers(l)[b].skill-F.workers(l)[a].skill;})[0];}
+function why(l){return C.adult(l)!==true?C.adult(l):!l.indep?'Cần tự lập để ký hợp đồng':active(l).length?true:'Cần thuê ít nhất một nhân sự riêng đang làm việc và đã trả lương';}
+function access(l){if(C.adult(l)!==true||!l.indep)return false;return active(l).length>0||Object.keys(F.roles).some(function(k){return (!F.roles[k].mansion||F.mansion(l))&&l.money>=F.salary(l,k)*2+l.base;});}
+function state(l){var s=F.state(l);s.plans896=s.plans896||[];return s;}
+function note(l,text,kind){X.log(l,text,kind||'neutral');}
+function recommendation(l){var out={};Object.keys(F.tasks).forEach(function(t){if(person(l,t))out[t]=true;});return out;}
+function setup(l){if(why(l)!==true)return false;var s=state(l);s.enabled=recommendation(l);s.budget=l.base;return true;}
+function manage(l,key,op,r){var w=F.workers(l)[key];if(!w||!w.contract171)return 'Hợp đồng không còn hiệu lực.';if(op==='end'){F.leave(l,key,'dismissed');l.acts=(l.acts||0)+1;return 'Đã chấm dứt hợp đồng và giữ lịch sử bàn giao.';}if(why(l)!==true)return 'Nhân sự hiện không thể tiếp tục công việc.';
+ if(active(l).indexOf(key)<0)return 'Hợp đồng này không còn được phép thực hiện công việc.';
+ if(op==='renew'){if(w.notice)return 'Nhân sự đã báo nghỉ, cần xử lý bàn giao.';if(w.renewed===l.age)return 'Đã gia hạn năm nay.';if(l.money<w.salary*2+l.base)return 'Chưa đủ dự phòng hai năm lương.';w.until=l.age+3;w.renewed=l.age;l.acts=(l.acts||0)+1;return 'Đã gia hạn ba năm; không trả trùng lương kỳ này.';}
+ if(op==='bonus'){if(w.bonusAt===l.age)return 'Đã thưởng năm nay.';if(l.money<w.salary*.2+l.base)return 'Chưa đủ tiền thưởng và dự phòng.';H.cash(l,-w.salary*.2,'Thưởng nhân sự riêng');w.bonusAt=l.age;w.loyalty=Math.min(100,w.loyalty+8);l.acts=(l.acts||0)+1;return 'Đã thưởng 20% lương và ghi vào sổ chi.';}return 'Không có thao tác này.';
+}
+function planLines(l,a){var q=P.quote(l,a),base=N.partyCost(l,a.type,a.size,a.venue),m=P.tiers[a.tier].m,rows=[{label:'Địa điểm và phục vụ cơ bản',cost:base},{label:'Tổ chức theo cấp dịch vụ đã chọn',cost:base*(m-1)}];Object.keys(P.options).forEach(function(k){if(a[k])rows.push({label:P.options[k][a[k]],cost:base*m*a[k]*.3});});var extra=q.planned-rows.reduce(function(n,x){return n+x.cost;},0);if(extra>.00001)rows.push({label:'Phí biểu diễn',cost:extra});rows.push({label:'Quỹ dự phòng và khoản bổ sung tối đa',cost:q.max-q.planned});return rows;}
+function prepare(l,brief){if(why(l)!==true)return {ok:false,message:'Chưa có nhân sự đang làm việc.'};var key=person(l,'events'),s=state(l);if(!key||!s.enabled.events)return {ok:false,message:'Cần giao nhiệm vụ Điều phối sự kiện cho quản gia hoặc trợ lý phù hợp.'};
+ var prior=s.plans896.find(function(p){return p.status==='pending'&&p.age===l.age;});if(prior&&prior.brief===brief&&prior.pid===F.workers(l)[key].pid)return {ok:true,plan:prior,message:'Đã mở lại dự toán đang chờ; chưa tạo thêm hoặc thu tiền.'};
+ var a={tier:brief==='gala'?2:brief==='private'?1:0,type:brief==='gala'?'gala':'birthday',size:brief==='gala'?'big':brief==='private'?'mid':'small',venue:brief==='gala'?'hotel':brief==='private'?'restaurant':'home',guests:brief==='gala'?'network':'family',invitees:[],cuisine:brief==='family'?0:2,performance:brief==='gala'?1:0,security:brief==='family'?0:1,decor:brief==='family'?0:1,service:2,budget:0};
+ if(N.tier(l)<P.tiers[a.tier].tier||N.venueWhy(l,a.size,a.venue)!==true)return {ok:false,message:'Vị thế hoặc địa điểm chưa phù hợp quy mô này; hãy chọn quy mô nhỏ hơn.'};
+ a.budget=P.quote(l,a).max;if(prior)prior.status='replaced';var p={id:l.id+':plan896:'+(s.serial896=(s.serial896||0)+1),age:l.age,cur:l.cur,pid:F.workers(l)[key].pid,role:key,brief:brief,status:'pending',config:a,lines:planLines(l,a),max:a.budget};s.plans896.push(p);s.plans896=s.plans896.filter(function(x){return x.status==='pending'||l.age-x.age<5;}).slice(-20);return {ok:true,plan:p,message:'Nhân sự đã chuẩn bị đầy đủ hạng mục. Chưa đặt dịch vụ, chưa trừ tiền.'};
+}
+function approve(l,id,r,log){var p=state(l).plans896.find(function(x){return x.id===id;});if(!p||p.status!=='pending')return {ok:false,message:'Dự toán không còn chờ duyệt.'};if(p.cur&&p.cur!==l.cur)return {ok:false,message:'Đã đổi tiền tệ; cần lập lại dự toán.'};if(p.age!==l.age)return {ok:false,message:'Dự toán đã sang năm khác; cần lập lại theo hoàn cảnh mới.'};
+ var key=person(l,'events');if(!key||!state(l).enabled.events||active(l).indexOf(p.role)<0||F.workers(l)[p.role].pid!==p.pid)return {ok:false,message:'Người phụ trách không còn làm việc hoặc quyền điều phối đã bị thu hồi.'};
+ var q=P.quote(l,p.config);if(!q||Math.abs(q.max-p.max)>.00001||p.config.budget!==p.max||!P.valid(l,p.config))return {ok:false,message:'Tiền mặt, địa điểm hoặc dự toán đã thay đổi. Chưa thanh toán.'};
+ var draft=P.draft(l),old=JSON.parse(JSON.stringify(draft)),result;Object.keys(draft).forEach(function(k){delete draft[k];});Object.assign(draft,p.config);try{result=P.host(l,r,log||function(t,k){note(l,t,k);});}finally{Object.keys(draft).forEach(function(k){delete draft[k];});Object.assign(draft,old);}
+ if(!result)return {ok:false,message:'Lịch tiệc hoặc điều kiện đã thay đổi; chưa tổ chức.'};p.status='done';state(l).proposals.forEach(function(x){if(x.type==='event'&&x.status==='pending')x.status='completed';});p.finished=l.age;p.actual=result.record.cost;p.attendees=(result.record.guestIds||[]).slice();l.acts=(l.acts||0)+1;state(l).history.push({age:l.age,task:'events',pid:p.pid,cost:p.actual,status:'done',plan:p.id});return {ok:true,message:'Nhân sự đã tổ chức theo dự toán được duyệt. Thực chi '+H.money(l,p.actual)+', chi tiết và khách dự đã được lưu.'};
+}
+function dismiss(l,id){var p=state(l).plans896.find(function(x){return x.id===id&&x.status==='pending';});if(!p)return false;p.status='cancelled';state(l).proposals.forEach(function(x){if(x.type==='event'&&x.status==='pending')x.status='dismissed';});return true;}
+// Gate every entry, including old pending menus and calls made outside the UI.
+['officeDelegation171','officeContract171'].forEach(function(id){var D=E.DEC[id],v=D.def.valid;D.def.valid=function(l,d){return why(l)===true&&v(l,d);};});
+var root=E.ACT.find(function(a){return a.id==='office171';});root.avail=function(l){return access(l)?true:'Cần tự lập và đủ dự phòng tuyển nhân sự chuyên nghiệp';};
+var oldYear=F.year;function year(l,r,log){
+ var existing=l.flags.expansion110&&l.flags.expansion110.office171;if(!existing)return;var s=state(l);if(s.at===l.age)return;
+ s.plans896.forEach(function(p){if(p.status==='pending'&&p.age<l.age)p.status='expired';});
+ if(s.autoRenew896)Object.keys(F.workers(l)).forEach(function(k){var w=F.workers(l)[k],p=N.find(l,w.pid);if(w.contract171&&w.until<=l.age&&!w.notice&&p&&p.alive!==false&&l.money>=w.salary*2+l.base){w.until=l.age+3;s.history.push({age:l.age,pid:w.pid,task:'contract',status:'done',reason:'auto-renewed'});}});
+ oldYear(l,r,log);
+ // Replace generic "go plan it yourself" prompts with one actionable brief.
+ var seen={};s.proposals=s.proposals.filter(function(p){if(p.status!=='pending')return true;var k=p.type+':'+(p.pid||'');if(seen[k])return false;seen[k]=true;if(p.type==='event')p.text='Nhân sự sẵn sàng lập dự toán tiệc: bạn chỉ chọn quy mô rồi duyệt hạng mục.';return true;});
+ s.history.slice(-10).forEach(function(h){if(h.task==='maintenance'&&h.status==='done')h.result='Đã kiểm tra dinh thự, xử lý hạng mục bảo trì trong hạn mức.';if(h.task==='household'&&h.status==='done')h.result='Đã điều phối người làm và công việc trong nhà.';});
+}
+var at=E.HOOKS.year.indexOf(oldYear);if(at>=0)E.HOOKS.year[at]=year;F.year=year;
+var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);if(l.flags.expansion110&&l.flags.expansion110.office171){state(l);if(why(l)!==true)l.pending=l.pending.filter(function(d){return !/^office(Delegation|Contract)171$/.test(d.id);});}};
+var convert=F.convert;F.convert=function(l,f){convert(l,f);var s=l.flags.expansion110&&l.flags.expansion110.office171;if(!s)return;(s.plans896||[]).forEach(function(p){if(p.status==='pending')p.status='currency-changed';p.max*=f;if(p.actual!=null)p.actual*=f;(p.lines||[]).forEach(function(x){x.cost*=f;});});};
+F.desk={active:active,person:person,why:why,access:access,state:state,setup:setup,manage:manage,prepare:prepare,approve:approve,dismiss:dismiss};
+})(globalThis.G);

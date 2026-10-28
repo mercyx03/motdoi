@@ -34,7 +34,7 @@ function build(outDir){
  const fontCss=read('css/fonts.css').replaceAll('../fonts/','fonts/');
  const fonts=[...new Set([...fontCss.matchAll(/url\(['"]?(fonts\/[^)'"]+)/g)].map(m=>m[1]))];
  for(const font of fonts)put(font,fs.readFileSync(path.join(PUB,font)));
- put('fonts-LICENSE.txt',['Be Vietnam Pro',read('fonts/be-vietnam-OFL.txt'),'Playfair Display',read('fonts/playfair-OFL.txt'),'Lora',read('fonts/lora-OFL.txt')].join('\n\n'));
+ put('fonts-LICENSE.txt',['Be Vietnam Pro',read('fonts/be-vietnam-OFL.txt'),'Playfair Display',read('fonts/playfair-OFL.txt'),'Lora',read('fonts/lora-OFL.txt'),'LZ-String 1.5.0 — https://github.com/pieroxy/lz-string',read('js/vendor/lz-string.LICENSE.txt')].join('\n\n'));
  function inlineStyles(page){
   const cssFiles=[...page.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="(css\/[^"?]+)[^"]*"[^>]*>/g)].map(m=>m[1]);
   const css=fontCss+'\n'+cssFiles.filter(f=>f!=='css/fonts.css').map(read).join('\n');

@@ -14,6 +14,25 @@
   var ERR_KEY = 'mkn.saveErrors', HELD_MAX = 2;
   var mem = [];
 
+  // Lossless, versioned storage envelope. Export/cloud payloads remain ordinary
+  // JSON. Never discard a life to recover quota, nor touch authentication keys.
+  var COMPACT_KEYS=['mkn.memorial','mkn.tree','mkn.lastEnd','mkn.branch112','mkn.childBranch112','mkn.recent','mkn.current'];
+  function checksum(t){var h=2166136261;for(var i=0;i<t.length;i++)h=Math.imul(h^t.charCodeAt(i),16777619);return (h>>>0).toString(16);}
+  function decode(t){var x=JSON.parse(t);if(!x||x.codec!=='motdoi-lz16-v1')return t;
+    if(typeof LZString==='undefined'||!Number.isInteger(x.length)||x.length<0||x.length>MAX_CHARS)throw Error('Định dạng nén không hợp lệ');
+    var raw=LZString.decompressFromUTF16(x.data);if(typeof raw!=='string'||raw.length!==x.length||checksum(raw)!==x.checksum)throw Error('Bản nén không toàn vẹn');return raw;
+  }
+  function encode(t){if(typeof LZString==='undefined')return t;var data=LZString.compressToUTF16(t),out=JSON.stringify({codec:'motdoi-lz16-v1',length:t.length,checksum:checksum(t),data:data});return out.length<t.length*.9&&decode(out)===t?out:t;}
+  function inventory(st){var s=storage(st),rows=[];if(!s)return rows;try{for(var i=0;i<s.length;i++){var key=s.key(i);if(key&&key.indexOf('mkn.')===0){var raw=s.getItem(key)||'';rows.push({key:key,chars:raw.length,compact:COMPACT_KEYS.indexOf(key)>=0});}}}catch(e){}return rows.sort(function(a,b){return b.chars-a.chars;});}
+  function compact(st,skip){var s=storage(st),saved=0,count=0,failed=0;if(!s)return {ok:false,saved:0,count:0};
+    COMPACT_KEYS.forEach(function(key){if(key===skip)return;try{var old=s.getItem(key);if(!old||old.length<10000)return;var text=decode(old),next=encode(text);if(next.length>=old.length)return; // validate before replacing; quota failure keeps the old value
+      s.setItem(key,next);if(s.getItem(key)!==next){failed++;return;}saved+=old.length-next.length;count++;
+    }catch(e){failed++;}});return {ok:failed===0,saved:saved,count:count,failed:failed};
+  }
+  function backup(st){var s=storage(st),out={format:'motdoi-storage-backup-v1',exportedAt:new Date().toISOString(),entries:{}};if(!s)throw Error('Bộ nhớ đang bị chặn');
+    for(var i=0;i<s.length;i++){var key=s.key(i);if(!key||key.indexOf('mkn.')!==0||/account|token|session|auth|password|saveErrors|ratingVoter/i.test(key))continue;var raw=s.getItem(key);try{out.entries[key]={value:JSON.parse(decode(raw))};}catch(e){out.entries[key]={raw:raw};}}return out;
+  }
+
   function storage(st) { if (st) return st; try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch (e) { return null; } } // chỉ đọc biến localStorage cũng có thể ném SecurityError
   function now() { return Date.now(); }
   function kind(e) {
@@ -56,7 +75,7 @@
   function read(key, st) {
     var r = readRaw(key, st);
     if (r.status !== 'raw') return r;
-    try { return { status: 'ok', value: JSON.parse(r.raw), raw: r.raw }; }
+    try { var decoded=decode(r.raw); return { status: 'ok', value: JSON.parse(decoded), raw: decoded, storedRaw:r.raw }; }
     catch (e) { var kept = hold(key, r.raw, 'JSON hỏng', st); logError('read:' + key, 'CORRUPT', e && e.message, st); return { status: 'corrupt', raw: r.raw, held: kept, error: e }; }
   }
   // Ghi JSON. Thất bại thì giá trị cũ ở khóa này vẫn còn (localStorage không xóa khi setItem lỗi).
@@ -68,11 +87,16 @@
     if (typeof text !== 'string') return fail('SERIALIZE', 'Không có dữ liệu để lưu');
     var max = opt.max || MAX_CHARS;
     if (text.length > max) return fail('TOO_LARGE', Math.round(text.length / 1024) + ' KB', text.length);
-    try { s.setItem(key, text); } catch (e) { return fail(kind(e), e && (e.name + ': ' + e.message), text.length); }
+    var encoded=text.length>=500000?encode(text):text;
+    try { s.setItem(key, encoded); } catch (e) {
+      if(kind(e)!=='QUOTA')return fail(kind(e),e&&e.message,text.length);
+      compact(st,key); encoded=encode(text);
+      try{s.setItem(key,encoded);}catch(retry){return fail(kind(retry),retry&&retry.message,text.length);}
+    }
     // một số trình duyệt (chế độ riêng tư cũ) nhận lệnh nhưng không lưu: đọc lại để chắc chắn
     var back; try { back = s.getItem(key); } catch (e) { back = null; }
-    if (back !== text) return fail('VERIFY', 'Đọc lại không khớp dữ liệu vừa ghi', text.length);
-    return { ok: true, chars: text.length, large: text.length > WARN_CHARS };
+    if (back !== encoded) return fail('VERIFY', 'Đọc lại không khớp dữ liệu vừa ghi', text.length);
+    return { ok: true, chars: text.length, storedChars:encoded.length, compressed:encoded!==text, large: text.length > WARN_CHARS };
     function fail(code, detail, n) { if (!opt.quiet) logError('write:' + key, code, detail, st); return { ok: false, code: code, detail: detail, chars: n || 0 }; }
   }
   function remove(key, st) { var s = storage(st); try { if (s) s.removeItem(key); return true; } catch (e) { return false; } }
@@ -119,6 +143,6 @@
   };
   function message(code) { return MSG[code] || MSG.WRITE; }
 
-  G.SaveStore = { read: read, write: write, remove: remove, readRaw: readRaw, hold: hold, held: held, inspect: inspect, cloudPack: cloudPack, bytes: bytes,
+  G.SaveStore = { read: read, write: write, remove: remove, readRaw: readRaw, hold: hold, held: held, inspect: inspect, cloudPack: cloudPack, bytes: bytes, compact:compact, inventory:inventory, backup:backup, decode:decode,
     logError: logError, errors: errors, message: message, MAX_CHARS: MAX_CHARS, WARN_CHARS: WARN_CHARS, CLOUD: CLOUD };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

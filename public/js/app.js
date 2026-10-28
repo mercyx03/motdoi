@@ -474,9 +474,10 @@
     var w = document.getElementById('saveWarn');
     if (!w) { w = document.createElement('div'); w.id = 'saveWarn'; w.className = 'save-warn'; w.setAttribute('role', 'alert'); document.body.appendChild(w); }
     w.innerHTML = '<div><b>Chưa lưu được.</b> ' + esc(SS ? SS.message(r.code) : 'Không ghi được dữ liệu vào trình duyệt.') + ' Bản lưu trước đó vẫn còn nguyên.</div>' +
-      '<div class="save-warn-btns"><button class="btn sm" id="saveRetry">Thử lưu lại</button>' + (S.life ? '<button class="btn sm" id="saveExport">Tải bản lưu về máy</button>' : '') + '<button class="btn ghost sm" id="saveHide" aria-label="Ẩn cảnh báo">Ẩn</button></div>';
+      '<div class="save-warn-btns"><button class="btn sm" id="saveRetry">Thử lưu lại</button>' + (S.life ? '<button class="btn sm" id="saveExport">Tải bản lưu về máy</button>' : '') + '<button class="btn sm" id="saveStorage896">Bộ nhớ & bản sao đầy đủ</button><button class="btn ghost sm" id="saveHide" aria-label="Ẩn cảnh báo">Ẩn</button></div>';
     $('#saveRetry', w).onclick = function () { if (persist()) toast('Đã lưu được tiến trình.'); };
     if ($('#saveExport', w)) $('#saveExport', w).onclick = function () { exportSave(); };
+    $('#saveStorage896',w).onclick=showStorage896;
     $('#saveHide', w).onclick = function () { w.remove(); };
     if (first) toast('Chưa lưu được tiến trình — xem cảnh báo phía dưới.');
     return false;
@@ -658,6 +659,7 @@
     var d = S.life && S.life.pending[0]; if (!d || d.manual) return;
     if (S.phase === 'decision' || (S.phase === 'decmin' && (S.auto || (S.minorOnly && !E.isMajor(d))))) showDecision();
   }
+  $('#storageTools896').onclick=showStorage896;
   $('#exitBtn').onclick = function () {
     var was = S.paused; S.paused = true; renderTopbar();
     modal('<div class="agep">Rời đi</div><h2>Rời khỏi cuộc đời này?</h2><p>' + (S.saveFail ? 'Lần lưu gần nhất chưa thành công. Chọn “Lưu &amp; về trang chủ” để thử lưu lại; nếu vẫn lỗi, bạn sẽ ở lại để tải bản lưu về máy.' : 'Tiến trình được lưu trên trình duyệt. Bạn có thể quay lại sống tiếp bất cứ lúc nào.') + '</p>' +
@@ -674,6 +676,8 @@
       });
   };
   document.addEventListener('keydown', function (e) {
+    if(e.key==='Escape'&&$('.office-dialog')){e.preventDefault();$('[data-office=close]').click();return;}
+    if(e.key==='Escape'&&$('#storageClose896')){e.preventDefault();$('#storageClose896').click();return;}
     if (e.key === 'Escape' && S.phase === 'decision') { e.preventDefault(); minimizeDecision(); return; }
     if (e.key === 'Escape' && S.phase === 'decmin') { e.preventDefault(); showDecision(); return; }
     if (e.code === 'Space' && S.phase === 'decmin' && !/INPUT|TEXTAREA|SELECT|BUTTON/.test(document.activeElement.tagName)) { e.preventDefault(); showDecision(); return; }
@@ -687,7 +691,85 @@
     var l = S.life;
     $('#scenePanel').innerHTML = E.art.scene(l) + '<div class="cap">' + esc(E.art.caption(l)) + '</div>';
   }
-  function renderAll() { if (!S.life) return; renderTopbar(); renderScene(); renderId(); renderStats(); renderFin(); renderFam(); renderFocus(); renderActions(); renderCohort(); renderMap(); renderPlace(); }
+  function renderOfficeDesk() {
+    var old=$('#officeDesk896'),l=S.life,F=E.OFFICE171,D=F&&F.desk;
+    if(!l||!l.alive||!D){if(old)old.remove();return;}
+    var existing=l.flags.expansion110&&l.flags.expansion110.office171;
+    if(!D.active(l).length&&!(existing&&(existing.history.length||existing.proposals.length))){if(old)old.remove();return;}
+    var s=D.state(l),planCount=s.plans896.filter(function(p){return p.status==='pending';}).length,count=planCount+s.proposals.filter(function(p){return p.status==='pending'&&!(p.type==='event'&&planCount);}).length+(l.pending||[]).filter(function(d){return /^(company|board|crisis123|academicCase125)/.test(d.id);}).length+s.issues.filter(function(x){return x.status==='open';}).length;
+    var box=old||document.createElement('section');box.id='officeDesk896';box.className='card office-desk';
+    box.innerHTML='<h3>Văn phòng gia đình</h3><p>'+D.active(l).length+' nhân sự đang làm việc · '+count+' việc chờ duyệt</p><p class="muted small">Việc thường lệ được xử lý trong quyền và hạn mức đã giao. Việc lớn có dự toán để bạn duyệt.</p><button class="btn primary" id="openOffice896">Mở bàn làm việc'+(count?' · '+count:'')+'</button>';
+    if(!old)$('#actPanel').parentNode.insertBefore(box,$('#actPanel'));
+    $('#openOffice896',box).onclick=function(){openOffice896('inbox');};
+  }
+  function openOffice896(view,message) {
+    var l=S.life,F=E.OFFICE171,D=F.desk,s=D.state(l);view=view||'inbox';
+    if(S.phase==='decision')minimizeDecision();
+    if(S.officePause896==null)S.officePause896=S.paused;
+    S.paused=true;renderTopbar();
+    function b(label,action,value,disabled){return '<button class="btn sm" data-office="'+action+'" data-value="'+esc(value==null?'':value)+'"'+(disabled?' disabled':'')+'>'+esc(label)+'</button>';}
+    function row(text,buttons){return '<section class="office-row"><p>'+text+'</p><div class="office-buttons">'+(buttons||'')+'</div></section>';}
+    var body='',active=D.active(l),enabled=D.why(l)===true;
+    if(view==='delegation'){
+      body+='<p>Ngân sách nhiệm vụ tách khỏi lương. Chỉ giao việc cho người phù hợp đang làm việc; giao dịch tài sản, đầu tư và bổ nhiệm vẫn cần bạn quyết định.</p>';
+      if(!enabled)body+=row(esc(D.why(l)),b('Xem tuyển dụng','tab','staff'));
+      else {
+        body+=row('Gói đề xuất: bật các nhiệm vụ có người phụ trách, hạn mức '+esc(money(l,l.base))+'/năm.',b('Duyệt gói công việc thường lệ','setup'));
+        Object.keys(F.tasks).forEach(function(t){var key=D.person(l,t),w=key&&F.workers(l)[key],p=w&&E.ELITE148.find(l,w.pid);body+=row('<b>'+esc(F.tasks[t])+'</b><br>'+esc(p?'Phụ trách: '+p.name:'Chưa có nhân sự phù hợp'),b((s.enabled[t]?'Tắt ':'Bật ')+F.tasks[t],'toggle',t,!key));});
+        body+=row('Hạn mức hiện tại '+esc(money(l,s.budget))+'/năm · chỉ chi khi làm nhiệm vụ.',[0,.5,1,3,10].map(function(v){return b(money(l,l.base*v)+'/năm','budget',v);}).join(''));
+        body+=row('Gia hạn hợp đồng thường lệ khi đủ dự phòng hai năm lương; người đã báo nghỉ không được tự gia hạn.',b((s.autoRenew896?'Tắt':'Bật')+' tự gia hạn','autoRenew'));
+      }
+    } else if(view==='staff'){
+      Object.keys(F.roles).forEach(function(key){var role=F.roles[key],w=F.workers(l)[key],p=w&&E.ELITE148.find(l,w.pid);if(w&&w.contract171){body+=row('<b>'+esc(role.name)+' · '+esc(p?p.name:'không còn')+'</b><br>'+esc(money(l,w.salary)+'/năm · hợp đồng đến tuổi '+w.until+(w.notice?' · đã báo nghỉ':'')),b('Gia hạn 3 năm','renew',key)+b('Thưởng 20% lương','bonus',key)+b('Chấm dứt','end',key));}else{var cost=F.salary(l,key),ok=E.WORLD120.adult(l)===true&&l.indep&&(!role.mansion||F.mansion(l))&&l.money>=cost*2+l.base;body+=row('<b>'+esc(role.name)+'</b><br>'+esc(money(l,cost)+'/năm · cần dự phòng hai năm lương'+(role.mansion?' và sở hữu dinh thự':'')),b('Tuyển '+role.name,'hire',key,!ok));}});
+    } else if(view==='party'){
+      body+='<p>Chọn quy mô. Nhân sự sẽ chọn địa điểm phù hợp, ẩm thực, phục vụ, trang trí và an ninh rồi gửi dự toán đầy đủ. Chưa duyệt thì chưa đặt hay thanh toán.</p><div class="office-buttons">'+b('Tiệc gia đình · 15 khách','prepare','family')+b('Tiệc riêng · 60 khách','prepare','private')+b('Gala · 200 khách','prepare','gala')+'</div>';
+      var plan=s.plans896.filter(function(p){return p.status==='pending';}).slice(-1)[0];
+      if(plan){var who=E.ELITE148.find(l,plan.pid),a=plan.config;body+=row('<b>Dự toán của '+esc(who?who.name:'nhân sự đã nghỉ')+'</b><br>'+esc(E.PARTY172.tiers[a.tier].n)+' · '+esc(({home:'Nhà riêng',restaurant:'Nhà hàng',hotel:'Khách sạn'})[a.venue]||a.venue)+'<br>'+esc('Ẩm thực: '+E.PARTY172.options.cuisine[a.cuisine]+' · '+E.PARTY172.options.service[a.service])+'<ul>'+plan.lines.map(function(x){return '<li>'+esc(x.label)+': <b>'+esc(money(l,x.cost))+'</b></li>';}).join('')+'</ul><strong>Tối đa '+esc(money(l,plan.max))+'</strong><p class="muted small">Bao gồm dự phòng; thực chi và khách nhận lời được ghi sau tiệc. Thiếu tiền, đổi địa điểm hoặc nhân sự nghỉ sẽ chặn thực hiện.</p>',b('Duyệt tổ chức · tối đa '+money(l,plan.max),'approvePlan',plan.id)+b('Không tổ chức, bỏ dự toán','cancelPlan',plan.id));}
+    } else {
+      body+='<p>Chi nhiệm vụ gần nhất: '+esc(money(l,s.spent||0))+'. Lương được ghi riêng. Các việc dưới hạn mức đã giao được nhân sự xử lý, bạn chỉ duyệt việc cần quyết định.</p>';
+      Object.keys(F.workers(l)).forEach(function(key){var w=F.workers(l)[key],p=E.ELITE148.find(l,w.pid);if(w.contract171&&(w.notice||w.until<=l.age+1))body+=row('<b>Cần xem hợp đồng: '+esc(p?p.name:F.roles[key].name)+'</b><br>'+esc(w.notice?'Đã báo nghỉ, cần bàn giao':'Sắp hết hạn ở tuổi '+w.until),b('Xem nhân sự và bàn giao','tab','staff'));});
+      s.issues.filter(function(x){return x.status==='open';}).forEach(function(x){body+=row('<b>'+esc(x.type==='payroll'?'Dịch vụ đã dừng vì thiếu quỹ lương':'Hạng mục bảo trì chưa xử lý')+'</b><br>Chưa tự vay hay chi vượt hạn mức.',b('Xem quyền và hạn mức','tab','delegation'));});
+      body+=b('Yêu cầu nhân sự chuẩn bị tiệc','tab','party',!D.person(l,'events'));
+      s.plans896.filter(function(p){return p.status==='pending';}).forEach(function(p){body+=row('Dự toán tiệc đang chờ · tối đa '+esc(money(l,p.max)),b('Xem và duyệt các hạng mục','tab','party'));});
+      s.proposals.forEach(function(p,i){if(p.status!=='pending')return;var text=p.type==='successor'?'Đề cử người kế nhiệm: '+((E.ELITE148.find(l,p.pid)||{}).name||'không còn'):p.text||'Đề xuất cần xem';body+=row(esc(text),p.type==='event'?b('Chọn quy mô để nhân sự lập kế hoạch','tab','party'):p.type==='successor'?b('Phỏng vấn và duyệt tuyển','successor',i):p.pid?b('Xem hồ sơ và gặp người được đề xuất','contact',i):b('Đã đọc','read',i));});
+      (l.pending||[]).filter(function(d){return /^(company|board|crisis123|academicCase125)/.test(d.id);}).forEach(function(d){body+=row('Cần bạn quyết định: '+esc(d.title),b('Xem sự việc','review',d.id));});
+      body+='<h3>Báo cáo đã xử lý</h3>';
+      body+=s.history.slice(-16).reverse().map(function(h){var p=E.ELITE148.find(l,h.pid),desc=h.result||F.tasks[h.task]||({ 'auto-renewed':'Đã tự gia hạn theo quyền được giao','contract-expired':'Hợp đồng hết hạn',dismissed:'Chấm dứt hợp đồng'})[h.reason]||'Cập nhật nhân sự';return row('<b>Tuổi '+h.age+' · '+esc(desc)+'</b><br>'+esc((p?p.name+' · ':'')+(h.status==='budget-blocked'?'Vượt hạn mức, chưa thực hiện':h.status==='done'?'Đã thực hiện':'Đã ghi nhận')+(h.cost?' · '+money(l,h.cost):''))+(h.events?'<p>'+esc(h.events.join('; '))+'</p>':'')+(h.reports?'<ul>'+h.reports.map(function(c){return '<li>'+esc(c.name||'Doanh nghiệp')+': '+esc(c.year==null?'chưa chốt năm':'Năm '+c.year+' · lợi nhuận '+money(l,c.profit)+' · tiền mặt '+money(l,c.cash))+'</li>';}).join('')+'</ul>':''));}).join('')||'<p class="muted">Chưa có công việc đã xử lý. Sau khi giao nhiệm vụ và hạn mức, báo cáo sẽ đến tại đây.</p>';
+      body+=s.plans896.filter(function(p){return p.status==='done';}).slice(-5).map(function(p){return row('Đã tổ chức tiệc · thực chi '+esc(money(l,p.actual))+' · '+p.attendees.length+' khách có danh tính đã dự');}).join('');
+    }
+    modal('<div class="office-header"><h2>Bàn làm việc của gia chủ</h2>'+b('Đóng','close')+'</div><p class="office-status" role="status">'+esc(message||'Xử lý liên tiếp trong khung này; không cần tìm lại nhân sự sau mỗi lựa chọn.')+'</p><nav class="office-buttons">'+b('Thông báo & báo cáo','tab','inbox')+b('Nhân sự','tab','staff')+b('Ủy quyền','tab','delegation',!enabled)+b('Chuẩn bị tiệc','tab','party',!D.person(l,'events'))+'</nav>'+body+b('Đóng bàn làm việc','close'),function(box){
+      $$('[data-office]',box).forEach(function(el){el.onclick=function(){var op=el.dataset.office,v=el.dataset.value,msg='',rng=function(){return U.rand(l);};
+        if(op==='tab'){openOffice896(v);return;}
+        if(op==='close'){closeModal();S.paused=S.officePause896;S.officePause896=null;renderTopbar();if(l.pending.length){S.phase='decmin';minimizeDecision896();}else if(S.yearRunning){S.phase='running';S.last=performance.now();}return;}
+        if(op==='setup')msg=D.setup(l)?'Đã giao gói thường lệ và duyệt hạn mức.':'Chưa có người đủ điều kiện.';
+        if(op==='toggle'){if(D.why(l)===true&&D.person(l,v)){s.enabled[v]=!s.enabled[v];msg='Đã cập nhật nhiệm vụ.';}}
+        if(op==='budget'){if(D.why(l)===true)s.budget=l.base*Number(v);msg='Đã cập nhật hạn mức nhiệm vụ, chưa thu tiền.';}
+        if(op==='autoRenew'){s.autoRenew896=!s.autoRenew896;msg='Đã cập nhật quyền gia hạn hợp đồng.';}
+        if(op==='hire'){var hired=F.hire(l,v,rng);if(hired)l.acts=(l.acts||0)+1;msg=hired?'Đã tuyển và trả lương năm đầu. Hãy duyệt gói công việc thường lệ để bắt đầu.':'Điều kiện tuyển hoặc ngân sách đã thay đổi.';}
+        if(['renew','bonus','end'].includes(op))msg=D.manage(l,v,op,rng);
+        if(op==='prepare'){var made=D.prepare(l,v);msg=made.message;}
+        if(op==='approvePlan')msg=D.approve(l,v,rng,function(t,k){E.UPDATE110.log(l,t,k);}).message;
+        if(op==='cancelPlan'){D.dismiss(l,v);msg='Đã bỏ dự toán, chưa thanh toán.';}
+        if(op==='successor')msg=F.approve(l,Number(v),rng)?'Đã duyệt đúng người kế nhiệm và ký hợp đồng riêng.':'Ứng viên, vị trí hoặc dự phòng chưa đủ điều kiện.';
+        if(op==='read'){if(s.proposals[Number(v)])s.proposals[Number(v)].status='reviewed';msg='Đã ghi nhận đề xuất.';}
+        if(op==='contact'){var prop=s.proposals[Number(v)],p=prop&&E.ELITE148.find(l,prop.pid);if(!p||p.alive===false){openOffice896(view,'Người được đề xuất không còn liên lạc được.');return;}var dec=E.DEC.social149_person.make(l,rng,{id:prop.pid});dec.manual=true;l.pending.unshift(dec);S.officeReturn896=true;S.officeProposal896=Number(v);closeModal();showDecision();return;}
+        if(op==='review'){var at=l.pending.findIndex(function(d){return d.id===v;});if(at>=0){var dec=l.pending.splice(at,1)[0];dec.manual=true;l.pending.unshift(dec);S.officeReturn896=true;closeModal();showDecision();return;}}
+        persist();renderAll();openOffice896(view,msg);
+      };});
+    },'office-dialog');
+  }
+  function minimizeDecision896(){if(!S.life.pending.length)return;S.phase='decision';minimizeDecision();}
+  function showStorage896(){
+    var storageOffice896=!!document.querySelector('.office-dialog'),storagePaused896=S.paused;if(S.phase==='decision')minimizeDecision();S.paused=true;renderTopbar();
+    var rows=SS.inventory(),total=rows.reduce(function(n,r){return n+r.chars;},0);
+    modal('<h2>Bộ nhớ và bản lưu</h2><p>Dữ liệu trò chơi đang dùng khoảng '+Math.round(total*2/1024)+' KB trong kho lưu cục bộ. Dung lượng Safari báo cho website còn gồm dữ liệu khác và không thể dùng để suy ra chỗ trống của kho này.</p><p>Nén dữ liệu giữ nguyên các cuộc đời, nhật ký và gia phả. Không cần xóa dữ liệu website hoặc gỡ biểu tượng game.</p><div class="opts"><button class="opt" id="compact896"><b>Nén dữ liệu cũ và thử lưu lại</b></button><button class="opt" id="backup896"><b>Tải toàn bộ dữ liệu trò chơi về máy</b></button><button class="opt" id="storageClose896"><b>Đóng</b></button></div><p id="storageStatus896" role="status"></p>',function(box){
+      $('#compact896',box).onclick=function(){var result=SS.compact();var ok=persist();$('#storageStatus896',box).textContent='Đã nén '+result.count+' mục, giảm khoảng '+Math.round(result.saved*2/1024)+' KB. '+(ok?'Tiến trình mới nhất đã lưu.':'Vẫn chưa lưu được; hãy tải bản sao về máy. Không mục lịch sử nào bị xóa.');};
+      $('#backup896',box).onclick=function(){try{var data=SS.backup();if(S.life)data.entries[K.cur]={value:{life:S.life,cohort:S.cohort,speed:S.speed,auto:S.auto,at:Date.now()}};$('#storageStatus896',box).textContent=download(fileName('toan-bo-du-lieu'),JSON.stringify(data))?'Đã yêu cầu tải bản sao, hãy kiểm tra tệp trong mục Tải về.':'Trình duyệt chưa cho tải tệp.';}catch(e){$('#storageStatus896',box).textContent='Chưa đọc được dữ liệu; dữ liệu gốc vẫn được giữ.';}};
+      $('#storageClose896',box).onclick=function(){closeModal();S.paused=storagePaused896;renderTopbar();if(storageOffice896)openOffice896('inbox');};
+    });
+  }
+
+  function renderAll() { if (!S.life) return; renderTopbar(); renderScene(); renderId(); renderStats(); renderFin(); renderFam(); renderFocus(); renderActions(); renderCohort(); renderMap(); renderPlace(); renderOfficeDesk(); }
 
   function currentPlace(l) {
     if (l.jailUntil != null && l.age < l.jailUntil) return 'Trại giam';
@@ -1034,6 +1116,8 @@
   function doAction(id) {
     var l = S.life;
     if (!l || !l.alive || S.phase === 'decision' || S.phase === 'reflect' || S.phase === 'dead') return;
+    if(id==='office171'){openOffice896('inbox');return;}
+    if((id==='party148'||id==='luxuryParty172')&&E.OFFICE171.desk.person(l,'events')){openOffice896('party');return;}
     var waiting = S.phase === 'decmin';
     var d = E.act(l, id);
     if (!d) { var why=E.actions(l).find(function(x){return x.id===id;});toast(why&&why.ok!==true?why.ok:'Điều kiện đã thay đổi; hãy mở lại danh sách để kiểm tra');renderActions();return; }
@@ -1262,6 +1346,8 @@
     clearDecPill();
     var l = S.life, d = l.pending[0];
     if (!d) { afterDecisions(); return; }
+    if(/^office(171|Delegation171|Contract171|Reports171)$/.test(d.id)&&d.manual){l.pending.shift();openOffice896(d.id==='officeDelegation171'?'delegation':d.id==='officeContract171'?'staff':'inbox');return;}
+    if(!d.manual&&/^(companyLeadershipCase169|board123|crisis123)$/.test(d.id)&&E.OFFICE171.desk.person(l,'reports')&&E.OFFICE171.state(l).enabled.reports){if(d.officeInbox896){openOffice896('inbox');return;}d.officeInbox896=true;S.phase='decision';minimizeDecision();renderOfficeDesk();toast('Trợ lý có hồ sơ quan trọng cần bạn duyệt tại Văn phòng gia đình.');return;}
     if (E.refreshActingWarning) E.refreshActingWarning(l, d);
     S.phase = 'decision';
     var major = E.isMajor(d);
@@ -1366,6 +1452,7 @@
       S.queue = []; S.yearRunning = false; S.phase = 'dead'; if(saveCompletedLife(S.life))LS.del(K.cur);else persist();
       setTimeout(toFinale, 1200); return;
     }
+    if(S.officeReturn896&&S.life.pending.length<=rest){S.officeReturn896=false;if(S.officeProposal896!=null){var pp=E.OFFICE171.state(S.life).proposals[S.officeProposal896];if(pp&&entries.length)pp.status='reviewed';S.officeProposal896=null;}openOffice896('inbox','Đã trở lại bàn làm việc. Bạn có thể xử lý việc tiếp theo.');return;}
     if (S.life.pending.length) showDecision(); else afterDecisions();
   }
   function afterDecisions() {

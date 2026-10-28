@@ -75,7 +75,7 @@
   }
   // Restore only an invitation here; migration and save parsing stay in the engine.
   var current=read('mkn.current',null);
-  if(current&&current.life&&current.life.alive){
+  if(current&&(current.life&&current.life.alive||current.codec==='motdoi-lz16-v1')){
     var box=document.getElementById('resumeBox'),card=document.createElement('div'),label=document.createElement('b'),button=document.createElement('button');
     card.className='card resume';label.textContent='Bạn có một cuộc đời đang chơi dở';button.className='btn primary';button.id='resumeBtn';button.textContent='Tiếp tục sống';card.append(label,button);box.append(card);
   }
