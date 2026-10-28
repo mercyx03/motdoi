@@ -117,8 +117,8 @@
   // ===================================================================
   var POS = { vocal: 'giọng ca chính', dance: 'nhảy chính', rap: 'rapper chính', visual: 'gương mặt đại diện', leader: 'trưởng nhóm' };
   var GROUPS = ['NOVA', 'ASTRA', 'LUMEN', 'ORBIT', 'HALO', 'PRISM', 'ECHO', 'VERSE'];
-  function formGroup(l, r, log, how, later) {
-    var s = S(l), rr = seeded(l.id + ':grp' + yr(l)), size = ri(rr, 4, 7), mates = s.peers.filter(function (p) { return !p.out; }).sort(function (a, b) { return b.skill - a.skill; }).slice(0, size - 1);
+  function formGroup(l, r, log, how, later, finalists) {
+    var s = S(l), rr = seeded(l.id + ':grp' + yr(l)), size = finalists ? finalists.length + 1 : ri(rr, 4, 7), mates = (finalists || s.peers || []).filter(function (p) { return !p.out; }).sort(function (a, b) { return b.skill - a.skill; }).slice(0, size - 1);
     s.group = { name: pick(rr, GROUPS) + (how === 'survival' ? ' (nhóm dự án)' : ''), members: mates.map(function (p) { return p.name; }), position: null, debutAge: l.age, fandom: 0, albums: [], wins: 0, project: how === 'survival', until: how === 'survival' ? l.age + 3 : null };
     s.stage = 'debut'; var a = agency(l); if (a) a.status = 'debut';
     if (!l.job || l.job.id !== 'ca_si') E.startJob(l, 'ca_si', rr, function () { }, true);
@@ -178,7 +178,7 @@
       SH.note(a, R.n + ': bạn ' + (/^song/.test(pos) ? 'chọn bài ' + { 'song:dark': 'concept mạnh mẽ', 'song:ballad': 'giàu cảm xúc', 'song:bright': 'tươi sáng' }[pos] : 'đảm nhận ' + (pos === 'center' ? 'vị trí trung tâm' : POS[pos])) + ', tiết mục ' + (perf >= 70 ? 'được giám khảo khen ngợi' : perf >= 50 ? 'ổn định' : 'còn nhiều lỗi') + '; thứ hạng bình chọn ' + a.rank + '/' + all.length + '.');
       if (R.cut) { all.slice(R.cut).forEach(function (x) { if (x.p) x.p.out = true; }); if (a.rank > R.cut) return SH.finish(l, log, { result: 'dừng chân ở ' + R.n + ' (hạng ' + a.rank + ')', fame: 4e4 * (a.round + 1), good: a.round >= 2, hap: -2, rank: a.rank }); }
       a.round++;
-      if (a.round >= sh.rounds.length) { var made = a.rank <= sh.debut; SH.finish(l, log, { result: made ? 'lọt vào đội hình debut ' + sh.debut + ' người (hạng ' + a.rank + ')' : 'xếp hạng ' + a.rank + ' chung kết, chưa vào đội hình debut', fame: made ? 6e5 : 1.5e5, good: true, hap: made ? 12 : 3, rank: a.rank, mem: made ? 'Đêm chung kết ' + sh.name + ', tên bạn được xướng trong đội hình debut.' : null }); if (made) { S(l).manual = a.manual; formGroup(l, r, log, 'survival'); } }
+      if (a.round >= sh.rounds.length) { var made = a.rank <= sh.debut; SH.finish(l, log, { result: made ? 'lọt vào đội hình debut ' + sh.debut + ' người (hạng ' + a.rank + ')' : 'xếp hạng ' + a.rank + ' chung kết, chưa vào đội hình debut', fame: made ? 6e5 : 1.5e5, good: true, hap: made ? 12 : 3, rank: a.rank, mem: made ? 'Đêm chung kết ' + sh.name + ', tên bạn được xướng trong đội hình debut.' : null }); if (made) { S(l).manual = a.manual; formGroup(l, r, log, 'survival', false, all.filter(function (x) { return x.p; }).slice(0, sh.debut - 1).map(function (x) { return x.p; })); } }
     },
     auto: function (l, a, r) { var R = SH.SHOWS[a.id].rounds[a.round]; if (R.song) return lv(l, 'dance') > lv(l, 'sing') + 5 ? 'song:dark' : lv(l, 'sing') > lv(l, 'dance') + 5 ? 'song:ballad' : 'song:bright'; if (R.type === 'grade') return lv(l, 'sing') >= lv(l, 'dance') ? 'vocal' : 'dance'; return lv(l, 'dance') >= lv(l, 'sing') ? 'dance' : 'vocal'; }
   };

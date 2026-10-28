@@ -2,6 +2,24 @@
   "generatedAt": "2026-10-26T09:50:22.185Z",
   "entries": [
     {
+      "id": "country-survival-886",
+      "version": "8.8.6",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-28T07:13:17+07:00",
+      "title": "Một Đời — Tiếp tục Boys Planet và chọn quốc gia sinh ra",
+      "summary": "Sửa lỗi sau chung kết chương trình sống còn, kiểm tra nơi tham gia và thêm lựa chọn quốc gia ở chế độ Thế giới.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Sửa lỗi có thể khiến cuộc chơi đứng lại khi debut sau Boys Planet mà nhân vật chưa từng qua chương trình thực tập sinh thiếu niên. Nhóm debut lấy thành viên từ các thí sinh chung kết và đúng số suất của chương trình.",
+        "Các chương trình truyền hình gắn với một quốc gia yêu cầu bạn đang ở quốc gia đó. Danh tiếng, quốc tịch gốc hoặc hợp đồng với công ty nước ngoài không thay thế điều kiện nơi ở; thực tập tạm trú tại Hàn Quốc vẫn được tính.",
+        "Trong chế độ Thế giới, bạn có thể chọn quốc gia sinh ra hoặc để ngẫu nhiên. Tên, thành phố, gia đình và các đặc điểm khác vẫn được tạo ngẫu nhiên theo quốc gia; lựa chọn được nhớ cho lần sau."
+      ]
+    },
+    {
       "id": "enterprise-family-office-885",
       "version": "8.8.5-enterprise",
       "releaseStatus": "released",

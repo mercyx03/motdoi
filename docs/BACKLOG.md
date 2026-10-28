@@ -77,3 +77,7 @@ Mốc chiến lược 8.8.4 đã kiểm trọng điểm và build; nghiệm thu 
 ## Chốt đợt 8.8.5-enterprise — 28/10/2026
 
 Các mục triển khai còn thiếu của checkpoint 8.8.1–8.8.4 nêu trên đã được tích hợp và kiểm thử trong đợt 8.8.5. Hồ sơ hiện hành: ENTERPRISE-UPGRADE-ACCEPTANCE.md và bảng checklist ENTERPRISE-UPGRADE-PROGRESS.md; các ghi chú checkpoint trước là lịch sử. Đã chạy smoke/save/safety/NPC, hồi quy các hệ thống bị ảnh hưởng, năm chuỗi tích hợp và Chrome trên dist; package/ZIP đạt. Không chạy toàn bộ 77 nhóm theo K1 yêu cầu gốc. Còn kiểm chứng ngoài môi trường: mẫu save thật của người chơi, thiết bị thật và binding Pages REVIEWS_DB. Không tự deploy hoặc ghi trạng thái đã phát hành.
+
+## 8.8.6 — Boys Planet và quốc gia
+
+Hoàn thành triển khai, kiểm thử trọng điểm: country-survival 273, showbiz-idol70/games585/quiz4047/dating69/integration92; smoke/save/safety/NPC và Chrome390/1280 đạt. Không chạy toàn bộ regression77; chưa có bản lưu thực tế bị kẹt của người báo lỗi. Bản đóng gói mới giữ packaged tới khi chủ dự án xác nhận upload.
