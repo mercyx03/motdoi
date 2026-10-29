@@ -446,7 +446,7 @@
   function sibAge(l, s) { return l.age - s.born; }
   function sibs(l) { return (l.sibList || []).filter(function (s) { return s.alive; }); }
   // cách gọi theo vai vế: anh/chị (lớn hơn), em (nhỏ hơn)
-  function sibWord(l, s) { return s.born < 0 ? (s.sex === 'M' ? 'anh' : 'chị') : 'em'; }
+  function sibWord(l, s) { return s.twinOrigins ? (s.older ? (s.sex === 'M' ? 'anh' : 'chị') : 'em') + ' sinh đôi' : s.born < 0 ? (s.sex === 'M' ? 'anh' : 'chị') : 'em'; }
   function given(l, n) { var w = String(n).split(' '); return l.pool === 'vn' ? w[w.length - 1] : w[0]; } // tên gọi: người Việt là chữ cuối, nước ngoài là chữ đầu
   function sibCall(l, s) { return sibWord(l, s) + ' ' + given(l, s.n); }
   H.sibs = sibs; H.sibCall = sibCall; H.sibWord = sibWord;

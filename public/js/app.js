@@ -122,9 +122,8 @@
   function syncSetupUI() {
     var vn = S.set.mode === 'vn';
     var country = $('#countrySel');
-    if (country.options.length === 1) country.innerHTML += W.C.filter(function(c){return c.births > 0;}).slice().sort(function(a,b){return a.name.localeCompare(b.name,'vi');}).map(function(c){return '<option value="'+esc(c.code)+'">'+esc(c.name)+'</option>';}).join('');
-    country.value = S.set.country || '';
-    if (!country.value) S.set.country = '';
+    country.innerHTML = '<option value="">🎲 Ngẫu nhiên theo nơi sinh trên toàn thế giới</option>';
+    country.value = ''; country.disabled = true; S.set.country = '';
     $$('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.mode === S.set.mode); });
     $('#vnOpts').classList.toggle('hidden', !vn);
     $('#worldOpts').classList.toggle('hidden', vn);
@@ -195,7 +194,7 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
+  function profileOpts() { return { country: '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var where = E.isVN(l) ? l.provLabel + ' · Việt Nam' : l.city + ' · ' + l.countryName;
@@ -301,7 +300,7 @@
   });
 
   $('#bornBtn').onclick = function () {
-    var opts = { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
+    var opts = { country: '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
     bornWith(opts);
   };
@@ -941,7 +940,7 @@
     if(E.FAMILY100&&l.flags.family100&&l.flags.family100.parents)['m','f'].forEach(function(side){var q=l.flags.family100.parents[side];if(q&&q.family100&&f[side+'Alive']&&!(side==='f'&&f.noDad))row('Quan hệ với '+(side==='m'?'mẹ':'bố')+': '+esc(E.FAMILY100.summary(l,'parent',side)));});
     // v2.4: từng anh chị em ruột (tên, tuổi, nghề, độ thân thiết)
     if (l.sibList && l.sibList.length) l.sibList.slice().sort(function (x, y) { return x.born - y.born; }).forEach(function (s) {
-      var sa = a - s.born, w = s.born < 0 ? (s.sex === 'M' ? 'Anh trai' : 'Chị gái') : (s.sex === 'M' ? 'Em trai' : 'Em gái');
+      var sa = a - s.born, w = s.twinOrigins ? ((s.older ? (s.sex === 'M' ? 'Anh' : 'Chị') : 'Em') + ' sinh đôi') : s.born < 0 ? (s.sex === 'M' ? 'Anh trai' : 'Chị gái') : (s.sex === 'M' ? 'Em trai' : 'Em gái');
       if (sa < 0) return;
       row(w + ': ' + esc(s.n) + ' · ' + (s.alive ? sa + ' tuổi' + (sa >= 18 ? ' · ' + esc(sa >= 65 ? 'đã nghỉ ngơi' : s.job) : '') + (sa >= 8 ? ' · ' + (s.close >= 70 ? '❤ thân thiết' : s.close >= 40 ? 'bình thường' : 'xa cách') : '') : 'đã mất'), !s.alive);
     });

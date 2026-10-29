@@ -133,3 +133,10 @@ Phạm vi gồm chuỗi sức khỏe/tuổi già nhiều bước, hồ sơ bện
 ## GĐ6 / nghề nghiệp và di cư 8.10.0
 
 Hoàn thành triển khai theo yêu cầu chủ dự án; kiểm thử trọng điểm đạt, chưa nghiệm thu toàn diện. Chi tiết CAREER-ABROAD-8100-ACCEPTANCE.md. Còn regression đầy đủ trên mã cuối, cân bằng nhiều mùa/fame/chấn thương/thu nhập, Android/iOS và save thật, binding Pages REVIEWS_DB thực tế. Visa là mô phỏng; chưa thay mọi sự kiện du lịch cũ hoặc mô phỏng mọi trường/mọi trận của mọi môn. Nhật ký packaged; không tự deploy.
+
+
+## GĐ6 / gia đình nguồn cội và học đường thế giới 8.10.4
+
+Hoàn thành triển khai; kiểm thử trọng điểm mới, smoke/save/save-safety/NPC, văn hóa 195 nước, cư trú, đại học và thi cử đạt. Còn regression toàn bộ trên mã cuối, Android/iOS thật, mẫu save người chơi và binding Pages REVIEWS_DB thực tế. Ba bài family830 (tương tác người con thứ hai), family129 (purchase 1), adult106 (khung bảo vệ tiến sĩ) lỗi giống HEAD 07e5fec trước sửa; không tính PASS. Cần bảo trì riêng tại GĐ6. Mới có 7 trường thật ở JP/KR/CN/TH; các quốc gia khác dùng trường mô phỏng, chưa là danh mục trường thật toàn cầu. Tuyển sinh dùng thang điểm game, chưa mô phỏng đầy đủ điều kiện pháp lý/từng chương trình của mọi quốc gia. Nhãn nhật ký Đã phát hành theo chỉ thị riêng của chủ dự án, không chứng minh website đã upload. Không tự deploy.
+
+Regression trọng điểm 904: các nhóm 46,50,65,67,68,70,72,73 chạy trọn, 97 đạt/1 lỗi ở nhóm50: kỳ vọng người Việt định cư nước ngoài không dùng chuyện địa phương (đã được văn hóa173 thay đổi). Đối chiếu nguyên HEAD trước sửa nhóm50 cũng 14 đạt/1 cùng lỗi; không tính nhóm này PASS. Ba lỗi kiểm thử cũ nêu trên vẫn còn.

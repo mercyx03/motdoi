@@ -2,6 +2,30 @@
   "generatedAt": "2026-10-29T04:47:56.980Z",
   "entries": [
     {
+      "id": "family-world-school-904",
+      "version": "8.10.4-family-world-school",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-29T06:44:10.634Z",
+      "publishedAt": "2026-10-29T06:44:10.634Z",
+      "correctedAt": "2026-10-29T06:44:10.634Z",
+      "title": "Một Đời — Gia đình nhận nuôi, tìm về nguồn cội và câu lạc bộ học đường",
+      "summary": "Thêm hành trình gặp lại gia đình ruột, anh chị em sinh đôi và đời sống câu lạc bộ qua nhiều năm; chọn trường đại học theo quốc gia đang sống.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến"
+      ],
+      "details": [
+        "Trẻ lớn lên tại mái ấm hoặc nhà chùa có thể được gia đình nhận nuôi từ 1 đến 15 tuổi. Sau khi về nhà mới, người chăm sóc, hồ sơ bố mẹ và ngân sách được cập nhật theo gia đình nuôi; vẫn lưu xuất thân và kỷ niệm trước đó. Có thể có thêm cơ hội nhận nuôi ở năm sau nếu lần đầu chưa thành.",
+        "Với xuất thân không rõ tung tích cha mẹ ruột, ba, mẹ hoặc cả hai có thể đến tìm. Hồ sơ được xác minh trước khi gặp; người đến có tên và hoàn cảnh sống riêng, cha mẹ có thể còn bên nhau hoặc đã chia tay. Hồ sơ tìm người thân chưa có kết quả có thể tiếp tục trong những năm sau.",
+        "Bạn có thể ở lại với gia đình đang nuôi mình, gặp gỡ để xây dựng tin cậy hoặc tạm dừng liên hệ. Sau ít nhất hai lần gặp qua các năm, có thể đề nghị chuyển về sống cùng người thân ruột thịt. Việc chuyển nơi chăm sóc cần thời gian thu xếp, không xảy ra ngay khi bấm lựa chọn; gia đình cũ và các kỷ niệm vẫn được lưu.",
+        "Nhân vật mới có cơ hội có anh, chị hoặc em sinh đôi cùng tuổi, có tên và tính cách riêng. Hồ sơ xuất hiện trong gia đình, có thể trò chuyện, hỗ trợ nhau hoặc chịu áp lực so sánh; mức gắn bó và lựa chọn được giữ qua các năm. Bản lưu cũ không tự được thêm người sinh đôi.",
+        "Chế độ Toàn thế giới chỉ dùng quốc gia sinh ngẫu nhiên, không còn danh sách tự chọn quốc gia. Tùy chọn quốc gia cũ không được áp dụng khi tạo nhân vật mới trên giao diện. Việc du học và chuyển nước trong cuộc đời vẫn theo điều kiện sẵn có.",
+        "Chọn trường và nhóm ngành tại quốc gia đang sống bằng luồng nguyện vọng đại học. Nhật có University of Tokyo và Kyoto University; Hàn có Seoul National University và Yonsei University; Trung có Peking University và Tsinghua University; Thái có Chulalongkorn University. Mỗi trường có nhóm ngành phù hợp; nơi chưa có dữ liệu trường thật dùng trường công lập ghi rõ mô phỏng. Điểm xét tuyển vẫn là thang mô phỏng trong game, không phải quy đổi điểm thi thực tế.",
+        "Học sinh phổ thông 15–18 tuổi có thể chọn nhóm thể thao, âm nhạc, mỹ thuật, khoa học, ngoại ngữ hoặc câu lạc bộ về nhà. Hoạt động gợi theo nơi sống, như bukatsu ở Nhật và dongari ở Hàn; không tham gia nhóm nào cũng được ghi rõ.",
+        "Sinh hoạt câu lạc bộ giúp phát triển kỹ năng và quan hệ. Cần duy trì luyện tập qua ít nhất hai năm để dự giải đấu, biểu diễn, trưng bày hoặc giao lưu liên trường; kết quả được lưu. Đổi nhóm, đổi trường hay quốc gia sẽ bắt đầu tiến trình phù hợp, giữ lại lịch sử cũ; hoạt động câu lạc bộ không tự cấp bằng hay bảo đảm trúng tuyển đại học."
+      ]
+    },
+    {
       "id": "football-payroll-901",
       "version": "8.10.3-football-payroll",
       "releaseStatus": "released",
