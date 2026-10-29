@@ -129,6 +129,21 @@ const cases = [
     let partners = 0, kids = 0, friends = 0;
     // Mẫu 6 đời có thể tình cờ không có con (đường ngẫu nhiên đổi khi thêm tính năng); khi đó chơi thêm tối đa 6 đời để vẫn kiểm được hồ sơ con.
     const extra = [31007, 31008, 31009, 31010, 31011, 31012].map((s, i) => () => E.createLife({ mode: i % 2 ? 'world' : 'vn', seed: s }));
+    // If all twelve random lives have no children, exercise the actual planned
+    // pregnancy/birth path; do not inject a child or weaken the identity checks.
+    extra.push(() => {
+      const l = E.createLife({ mode: 'vn', seed: 31013 });
+      Object.assign(l, { age: 30, school: null, indep: true, money: l.base * 20, orient: 'straight' });
+      l.st.hea = 90;
+      l.partner = { name: 'Người bạn đời trong ca kiểm thử', sex: l.sex === 'M' ? 'F' : 'M', age: 30, status: 'married', alive: true, since: 25, affection108: 85 };
+      const d = E.DEC.kid.make(l, () => 0);
+      E.DEC.kid.apply(l, d, 'yes', () => 0, () => {});
+      l.age++;
+      E.HOOKS.year.find(fn => String(fn).includes('pregnancy=l.flags.pregnancy108'))(l, () => .1, () => {});
+      t.ok(l.kids.length > 0, 'lựa chọn kế hoạch sinh con thực tạo hồ sơ con sau thời gian mang thai');
+      t.info('Bổ sung một gia đình qua luồng sinh con thực vì mười hai đời ngẫu nhiên không có con.');
+      return l;
+    });
     const sample = lives(E, 6);
     sample.concat(extra).forEach((item, i) => {
       if (typeof item === 'function') { if (kids > 0 && partners > 0) return; item = item(); }

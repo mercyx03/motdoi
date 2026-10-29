@@ -572,7 +572,7 @@
     text: function (l, d) { return 'Gia đình sắp xếp cho bạn gặp ' + d.n + ' — ' + d.who + '. "Hai nhà mà thành thông gia thì cả hai cùng lớn mạnh."' + (l.partner ? ' Trong khi đó bạn đang yêu ' + l.partner.name + '.' : ''); },
     opts: [
       { k: 'yes', l: 'Đồng ý kết hôn theo sắp xếp', ai: { w: 1.2 }, run: function (l, r, log, d) { l.flags.eliteMarry = true; if (l.partner) { log('Chia tay ' + l.partner.name + ' trong nước mắt.', 'bad'); l.exes++; } l.partner = { name: d.n, sex: d.sex, age: l.age + U.randint(r, -2, 3), status: 'married', since: l.age, alive: true }; log('Đám cưới xa hoa ở khách sạn năm sao, báo chí gọi là "đám cưới thế kỷ". Hai gia đình bắt tay nhau.', 'big'); cashB(l, 20, 'Của hồi môn & quà cưới'); fx(l, { hap: -2 }); H.mem(l, 'Đám cưới thế kỷ với ' + d.n + ' — người bạn mới gặp vài lần.', 6); } },
-      { k: 'love', l: function (l) { return l.partner ? 'Xin cưới người mình yêu' : 'Xin được tự tìm hiểu, tự yêu'; }, ai: { w: 0.8 }, run: function (l, r, log) { l.flags.eliteMarry = true; if (ch(r, 0.4)) { log('Bố mẹ giận suốt nửa năm, rồi cũng mềm lòng: "Miễn là con hạnh phúc."', 'good'); fx(l, { hap: 4 }); } else { l.flags.eliteCut = true; log('Bố mẹ tuyên bố: không nghe lời thì đừng hòng nhận một đồng nào. Bạn bị gạch tên khỏi ban điều hành.', 'bad'); fx(l, { hap: -6 }); if (l.job && jid(l) === eliteJob(l)) { l.job = null; l.flags.needJob = true; } } } }
+      { k: 'love', l: function (l) { return l.partner ? 'Xin cưới người mình yêu' : 'Xin được tự tìm hiểu, tự yêu'; }, ai: { w: 0.8 }, run: function (l, r, log) { l.flags.eliteMarry = true; if (ch(r, 0.4)) { log('Bố mẹ giận suốt nửa năm, rồi cũng mềm lòng: "Miễn là con hạnh phúc."', 'good'); fx(l, { hap: 4 }); } else { l.flags.eliteMarriageIndependent899 = true; log('Gia đình chưa đồng ý với lựa chọn hôn nhân, nhưng hợp đồng và lương công việc hiện tại không bị hủy vì việc này. Hai bên cần thêm thời gian trao đổi.', 'neutral'); fx(l, { hap: -2 }); } } }
     ]
   });
   T('elite_hon_nhan', function (l, a) { return follower(l) && a >= 23 && a <= 32 && !l.flags.eliteMarry && free(l); }, 0.3, 2);
@@ -614,10 +614,10 @@
     if (follower(l) && a >= 16 && a <= 40) cashB(l, e.allow, 'Gia đình chu cấp');
     // ra trường: vào thẳng cơ nghiệp gia đình
     var ej = eliteJob(l);
-    if (follower(l) && !l.school && a >= 21 && !(l.abroad && !l.abroad.perm) && (!l.job || jid(l) !== ej) && !l.flags.eliteJobDone && free(l)) {
+    if (follower(l) && !l.school && a >= 21 && !(l.abroad && !l.abroad.perm) && !l.job && !l.retired && H.resCode(l) === l.country && !l.flags.eliteJobDone && free(l)) {
       l.flags.eliteJobDone = true;
       if (l.abroad && l.abroad.study) l.abroad = null;
-      E.startJob(l, ej, r, log, true); l.edu = Math.max(l.edu, 5); l.job.fam = true; // cơ nghiệp gia đình: không bị "cắt giảm nhân sự"
+      E.startJob(l, ej, r, log, true); if (!l.job || jid(l) !== ej) { l.flags.eliteJobDone = false; return; } l.edu = Math.max(l.edu, 5); l.job.fam = true; // cơ nghiệp gia đình: không bị "cắt giảm nhân sự"
       log('Về ' + (e.n === 'chính trị' ? 'nhận công tác: ' : 'gia nhập cơ nghiệp gia đình: ') + E.jobTitle(l) + '. Ai cũng biết bạn là con ai.', 'big');
       H.mem(l, 'Ngày đầu tiên đi làm ở ' + (e.n === 'chính trị' ? 'cơ quan bố sắp xếp' : 'tòa nhà mang tên gia đình') + '.', 4);
     }

@@ -159,6 +159,7 @@ function reunite(l,before){
  if(!x)return;
  p.reunitLinked142=true;if(p.uid110&&p.uid110!==x.uid&&canon(l,p.uid110)!==x.uid)aliases(l)[p.uid110]=x.uid;
  p.uid110=x.uid;
+ var linked=friendsAll(l).find(function(f){return f.alive!==false&&f.uid110&&same(l,f.uid110,p.uid110);});if(linked){p.fromFriend=true;linked.lover=true;}
  if(x.ident){if(x.ident.traits130)p.traits130=x.ident.traits130.slice();if(x.ident.family100)p.family100=JSON.parse(JSON.stringify(x.ident.family100));if(x.ident.nbc)p.nameBeforeCustomization=x.ident.nbc;}
 }
 

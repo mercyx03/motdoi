@@ -1,3 +1,10 @@
+## 8.9.9-life-depth — 29/10/2026 (UTC+7)
+
+- Chiều sâu hệ thống7–9: chuỗi hệ quả, bệnh mạn/tái khám/tái phát/phục hồi nhiều đợt, lịch làm theo sức khỏe, tự lập/cô đơn/chăm sóc tuổi già và ký ức gửi lại.
+- Sửa từ chối mai mối xóa việc; đường trở lại cơ nghiệp, giữ hồ sơ bậc nghề/lương, xác nhận trước khi đổi nghề.
+- Sửa nối danh tính khi người yêu cũ vốn là bạn thân quay lại.
+- Nhật ký Đã phát hành theo chỉ thị chủ dự án; không deploy. Chi tiết nghiệm thu: docs/DEPTH-899-ACCEPTANCE.md.
+
 ## 8.9.8-childhood-context — 29/10/2026 (UTC+7)
 
 - Kỳ nghỉ theo nơi ở/ngân sách/người chăm sóc, không tự bịa chuyến về quê ông bà.
