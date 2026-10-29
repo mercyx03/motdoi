@@ -10,7 +10,8 @@ function scope(id,policy,stamp){var d=E.DEC[id];if(!d)return;rules[id]=policy;va
  E.TRIG.filter(function(t){return t.id===id;}).forEach(function(t){var w=t.when;t.when=function(l){return policy(l)&&w.apply(this,arguments);};});
  E.ACT.filter(function(a){return (a.sc||a.id)===id;}).forEach(function(a){var av=a.avail;a.avail=function(l){return policy(l)?av?av.apply(this,arguments):true:'Cần đúng nơi cư trú và đủ điều kiện của cơ quan / chương trình';};});
 }
-['doi_tuyen54','study_team54','study_contest54','study_special54','study_wishes54','thi_hsg','contests111','direct111','officer111','stateEmployer123','posting122','bau_cu'].forEach(function(id){scope(id,local,true);});
+['doi_tuyen54','study_team54','study_contest54','study_special54','thi_hsg','contests111','direct111','officer111','stateEmployer123','posting122','bau_cu'].forEach(function(id){scope(id,local,true);});
+scope('study_wishes54',function(){return true;},true);
 Object.keys(E.DEC).filter(function(id){return /^(civic106_|civic118|civicWork118|state174_|stateCareer174|stateWork174|stateTransfer174|stateParty174)/.test(id);}).forEach(function(id){scope(id,local,true);});
 ['service107_rescue','service107_campaign','service107_review','service107_post'].forEach(function(id){scope(id,function(l){var m=l.flags.world120&&l.flags.world120.mission;return local(l)||['service107_review','service107_post'].includes(id)&&!!(m&&m.until>=l.age&&E.WORLD120.officer(l));},true);});
 scope('election122',function(l){return here(l)===l.country;},true);scope('law122',function(){return true;},true);

@@ -1,3 +1,18 @@
+## 8.10.5-study-visa — 29/10/2026 (UTC+7)
+
+- Sửa thiếu bước chuẩn bị giấy tờ và kế hoạch trong thư nhận học, tự mở màn hình visa sau trúng tuyển.
+- Thêm đường tiếp tục trong Học tập và quay về từ hồ sơ chung; hỗ trợ bản lưu tiến sĩ đang chờ visa.
+- Dùng chung thao tác chuẩn bị hiện có, giữ phí, giới hạn năm, điều kiện và quá trình nhập học.
+- Nhật ký Đã phát hành theo yêu cầu trước của chủ dự án; không deploy. Chi tiết: docs/VISA-905-ACCEPTANCE.md.
+
+## 8.10.4-family-world-school — 29/10/2026 (UTC+7)
+
+- Nhận nuôi mở rộng đến 15 tuổi; hồ sơ gia đình ruột, xác minh, gặp qua nhiều năm, lựa chọn ở lại/chuyển nơi chăm sóc và lưu gia đình trước.
+- Anh chị em sinh đôi từ khi sinh, quan hệ và lựa chọn được lưu; không tự thêm vào bản lưu cũ.
+- Quốc gia sinh trong Toàn thế giới chỉ ngẫu nhiên; nguyện vọng dùng trường/ngành ở nơi cư trú.
+- Câu lạc bộ phổ thông, luyện tập, hoạt động liên trường và lịch sử theo trường/quốc gia.
+- Nhãn nhật ký Đã phát hành theo chỉ thị riêng; chưa deploy. Kiểm thử và giới hạn: docs/FAMILY-WORLD-904-ACCEPTANCE.md.
+
 ## 8.10.0-career-abroad — 29/10/2026 (UTC+7)
 
 - Fandom/niềm tin, quản lý có thời hạn, định hướng và khủng hoảng qua nhiều năm; nối cát-xê/nghề/kênh hiện có.

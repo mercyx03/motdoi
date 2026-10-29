@@ -14,6 +14,10 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Sửa lương cầu thủ 8.10.3 — 29/10/2026
+
+Kiểm thử trọng điểm lương hợp đồng, tài chính cá nhân, bóng đá, sức khỏe, nghề nghiệp, smoke và bản lưu; rà soát tự động 40 đời. Chưa chạy toàn bộ regression trên mã cuối, chưa xác minh binding REVIEWS_DB Production. Artifact Preview; không tự bù lương các năm cũ vì không có lịch sử đủ tin cậy. Chờ nghiệm thu tổng thể GĐ6.
+
 ### Nội dung quốc gia 8.9.4-country-batch1
 
 Mục tiêu 195 nước chưa hoàn tất. Tám nước FI/GH/IE/NZ/JP/FR/US/VN hiện có tối thiểu 3 giáo dục, 3 lễ, 3 cưới, 5 món, 5 lao động, 5 câu chuyện/nước; 187 mã còn lại ở country-depth-inventory.json. Cần nghiên cứu/biên tập và nối gameplay cho từng nước, không tự nhân bản regional. Có 40 chuỗi theo năm, NPC riêng, đối chiếu lao động, chặn tác động sai nước và dữ liệu luật trước mốc tham chiếu. Thông tin tham chiếu 2026 không bảo đảm luật ngoài đời tương lai; tiếp tục rà ngoại lệ và lịch sử chính sách. Chưa chạy đủ 77 nhóm regression trên mã 8.9.4; kiểm tra thống kê kết hôn mục 63 vẫn cần điều tra, không hạ ngưỡng. Đợt này là Preview/chưa nghiệm thu 195 nước; xem COUNTRY-DEEP-COVERAGE-REPORT.md.
@@ -129,3 +133,17 @@ Phạm vi gồm chuỗi sức khỏe/tuổi già nhiều bước, hồ sơ bện
 ## GĐ6 / nghề nghiệp và di cư 8.10.0
 
 Hoàn thành triển khai theo yêu cầu chủ dự án; kiểm thử trọng điểm đạt, chưa nghiệm thu toàn diện. Chi tiết CAREER-ABROAD-8100-ACCEPTANCE.md. Còn regression đầy đủ trên mã cuối, cân bằng nhiều mùa/fame/chấn thương/thu nhập, Android/iOS và save thật, binding Pages REVIEWS_DB thực tế. Visa là mô phỏng; chưa thay mọi sự kiện du lịch cũ hoặc mô phỏng mọi trường/mọi trận của mọi môn. Nhật ký packaged; không tự deploy.
+
+
+## GĐ6 / gia đình nguồn cội và học đường thế giới 8.10.4
+
+Hoàn thành triển khai; kiểm thử trọng điểm mới, smoke/save/save-safety/NPC, văn hóa 195 nước, cư trú, đại học và thi cử đạt. Còn regression toàn bộ trên mã cuối, Android/iOS thật, mẫu save người chơi và binding Pages REVIEWS_DB thực tế. Ba bài family830 (tương tác người con thứ hai), family129 (purchase 1), adult106 (khung bảo vệ tiến sĩ) lỗi giống HEAD 07e5fec trước sửa; không tính PASS. Cần bảo trì riêng tại GĐ6. Mới có 7 trường thật ở JP/KR/CN/TH; các quốc gia khác dùng trường mô phỏng, chưa là danh mục trường thật toàn cầu. Tuyển sinh dùng thang điểm game, chưa mô phỏng đầy đủ điều kiện pháp lý/từng chương trình của mọi quốc gia. Nhãn nhật ký Đã phát hành theo chỉ thị riêng của chủ dự án, không chứng minh website đã upload. Không tự deploy.
+
+Regression trọng điểm 904: các nhóm 46,50,65,67,68,70,72,73 chạy trọn, 97 đạt/1 lỗi ở nhóm50: kỳ vọng người Việt định cư nước ngoài không dùng chuyện địa phương (đã được văn hóa173 thay đổi). Đối chiếu nguyên HEAD trước sửa nhóm50 cũng 14 đạt/1 cùng lỗi; không tính nhóm này PASS. Ba lỗi kiểm thử cũ nêu trên vẫn còn.
+
+
+## GĐ6 / sửa đường chuẩn bị visa tiến sĩ 8.10.5
+
+Hoàn thành triển khai, chuyên đề visa905 231 kiểm tra và depth900 58 kiểm tra đạt; cư trú897 và smoke/save/save-safety/NPC đạt. Browser 390/1280px kiểm lối Học tập, giấy tờ/kế hoạch, tải lại và nhập học tiến sĩ. Còn regression toàn bộ trên mã cuối, thiết bị thật, mẫu save thực của người báo lỗi và binding REVIEWS_DB thực tế. Không tính các lỗi cũ của GĐ6 đã ghi ở các đợt trước là đã sửa trong đợt này. Nhật ký Đã phát hành theo chỉ thị trước; không xác nhận upload website, không deploy.
+
+Đợt visa905: regression trọng điểm55/72 đạt22/22; bản dist và nhật ký đạt kiểm Chrome390/1280px; đóng gói28file và ZIP byte-identical. Chưa nghiệm thu toàn diện như giới hạn trên.
