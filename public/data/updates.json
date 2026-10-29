@@ -2,6 +2,58 @@
   "generatedAt": "2026-10-28T14:52:34.553Z",
   "entries": [
     {
+      "id": "consequences-health-ageing-899",
+      "version": "8.9.9-life-depth",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-29T06:44:16+07:00",
+      "publishedAt": "2026-10-29T06:44:16+07:00",
+      "correctedAt": "2026-10-29T06:44:16+07:00",
+      "title": "Một Đời — Hệ quả nhiều năm, sức khỏe, tuổi già và đường trở lại công việc gia đình",
+      "summary": "Hồ sơ bệnh và chăm sóc tiếp diễn qua nhiều năm; từ chối mai mối không tự mất việc, có bước xác nhận trở lại cơ nghiệp sau quãng nghỉ.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Thêm mục Những câu chuyện đang tiếp diễn để xem các việc còn đang theo dõi. Mở rộng chuỗi điều trị và tuổi già qua nhiều bước, có hẹn lại theo hoàn cảnh. Khi một chương khép lại, hồ sơ bệnh, kế hoạch chăm sóc và kỷ niệm vẫn được giữ, không coi mọi hệ quả đã biến mất.",
+        "Bệnh mạn tính có hồ sơ riêng: đang có đợt bệnh hoặc đã kiểm soát ổn định. Kiểm soát không đồng nghĩa khỏi bệnh. Thời gian theo dõi, việc hoãn và lịch sinh hoạt ảnh hưởng nguy cơ mất kiểm soát trong mô phỏng; tái phát cùng một bệnh không tăng số khoản thuốc duy trì thêm lần nữa.",
+        "Tái khám có phần tự trả sau bảo hiểm và kiểm tra tiền trước khi thực hiện; thuốc duy trì vẫn nằm ở chi phí bệnh mạn tính thường niên. Thiếu tiền có đường thu xếp hỗ trợ và lịch theo dõi, không tự báo đã điều trị hay chữa khỏi. Một hồ sơ chỉ được thực hiện một lần mỗi năm.",
+        "Chuỗi sức khỏe có bước thu xếp công việc và gia đình. Người đang làm có thể chọn lịch giảm giờ hai năm, giữ nghề và nhận mức thu nhập lao động tương ứng. Gánh nặng bệnh ảnh hưởng khả năng làm việc trong game; cổ tức và lương hưu không bị trừ theo lịch làm này, công việc không tự bị xóa.",
+        "Phục hồi sau tai nạn không còn trả tiền một lần rồi mặc định hết đau. Liệu trình có nhiều đợt đánh giá qua các năm, có thể tiếp tục, thu xếp lịch nhẹ hoặc tạm dừng. Hết liệu trình vẫn có thể còn đau kéo dài; không hứa chắc mọi người đều hồi phục hoàn toàn.",
+        "Tuổi già có mức tự lập và cảm giác cô đơn trong mô phỏng, xét sức khỏe, bệnh kéo dài, hoàn cảnh mất bạn đời và liên lạc thực tế. Có thể tham gia nhóm vừa sức hoặc từ xa, sắp lại chỗ ở và chọn phần việc còn tự làm được.",
+        "Có kế hoạch thuê hỗ trợ chăm sóc theo năm hoặc hỏi người thân trưởng thành. Người thân cần đồng ý, có thể không thu xếp được; người ở xa không tự về nhà, người đã mất không được gọi chăm sóc. Thuê người cần đủ tiền và dự phòng, không tự cho làm miễn phí hay bán nhà để trả phí. Phần đã trả trong năm được giữ khi chọn dừng từ năm sau.",
+        "Thêm lựa chọn ghi lại một ký ức đã có, giữ riêng hoặc gửi cho một người thân còn sống. Người ở xa nhận qua thư hoặc cuộc gọi. Di sản tinh thần không thay di chúc, không tự chuyển tiền, nhà hay cổ phần.",
+        "Sửa từ chối hôn sự sắp đặt làm mất công việc gia đình: bất đồng hôn nhân có thể cần trao đổi thêm, nhưng không tự hủy hợp đồng và lương đang có. Sửa hồ sơ người yêu cũ vốn là bạn thân khi quay lại để hai bản ghi được nhận đúng là cùng một người.",
+        "Thêm Công việc gia đình — hợp đồng và trở lại cho nhánh tài phiệt/ngân hàng. Sau du học hoặc quãng nghỉ, có thể xem điều kiện và xác nhận nhận việc. Bậc nghề và dữ liệu lương đã ghi nhận được giữ; không trả lương cho các năm nghỉ, không bắt đồng ý mai mối hoặc tự khôi phục mọi khoản chu cấp/thừa kế.",
+        "Không tự thay công việc khác bằng việc gia đình. Đang học, ở nước khác, nghỉ hưu hoặc có nghĩa vụ chưa bàn giao phải thu xếp trước. Bản lưu cũ thiếu hồ sơ lương không bị bịa lại con số cũ: được xem mức tuyển dụng hiện tại trước khi ký. Vai trò tự điều hành công ty riêng vẫn được phân biệt với hợp đồng có lương."
+      ]
+    },
+    {
+      "id": "childhood-context-898",
+      "version": "8.9.8-childhood-context",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-29T06:11:56+07:00",
+      "publishedAt": "2026-10-29T06:11:56+07:00",
+      "correctedAt": "2026-10-29T06:11:56+07:00",
+      "title": "Một Đời — Tuổi thơ đúng hoàn cảnh và kỳ nghỉ có câu chuyện tiếp nối",
+      "summary": "Kỳ nghỉ theo nơi sống và ngân sách thực tế; học bơi, dự án vẽ và lời hẹn với bạn thân có diễn biến qua nhiều năm.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sửa tình huống tự gửi trẻ thành thị về quê ông bà rồi chăn trâu, tắm ao, nướng khoai. Kỳ nghỉ giờ dựa trên nơi đang sống: thành thị có công viên, đọc sách và hoạt động tại nhà; nông thôn có chăm cây, khám phá quanh làng cùng người lớn. Không tự bịa nơi ở của ông bà hay nghề làm nông của gia đình.",
+        "Trẻ giàu ở thành phố có thể cân nhắc lớp vẽ riêng; vẫn cần người chăm sóc đồng ý và đủ ngân sách. Gia đình nào cũng có lựa chọn miễn phí. Trẻ giàu sống ở nông thôn vẫn có hoạt động quanh làng; trẻ ít tiền sống ở thành phố không bị ép thành trẻ nhà nông.",
+        "Khóa bơi và dự án vẽ dùng chung hồ sơ kỹ năng, giới hạn số môn và quỹ giờ đang có. Học phí đi qua người chăm sóc khi còn phụ thuộc, không tự lấy tiền tiết kiệm của trẻ. Thiếu tiền hoặc không được đồng ý thì có thể quay lại chọn cách ít tốn kém, chưa được cộng kỹ năng.",
+        "Buổi học bơi đầu tiên chưa tự biến thành biết bơi. Có lời nhắc tiếp tục trong kỳ nghỉ sau; hoàn thành hai kỳ tập có hướng dẫn mới ghi nhận kỹ năng bơi cơ bản trong mô phỏng. Bạn đã biết bơi từ trước vẫn giữ kỹ năng cũ. Dự án vẽ cũng tiếp tục từ sản phẩm đã làm, không tự phong thành tài năng.",
+        "Nếu có bạn thân cùng độ tuổi ở gần, dự định hè có thể gắn với đúng người đó. Giữ lời hoặc trao đổi giảm lịch có tác động riêng; im lặng bỏ dở có thể làm giảm tin cậy và mở một cuộc nói chuyện sau đó. Giải thích chỉ phục hồi một phần, không tự khiến bạn tha thứ hoàn toàn.",
+        "Khi chuyển nơi ở, câu chuyện tiếp nối dùng nơi mới. Bạn thân ở xa được liên lạc qua thư hoặc cuộc gọi, không tự xuất hiện để gặp trực tiếp; người đã mất không quay lại. Kỹ năng, kỷ niệm và hồ sơ người bạn được giữ sau khi câu chuyện khép lại.",
+        "Sửa cảnh trẻ nhỏ chằng mái nhà giữa bão: trẻ trú an toàn và phụ cất đồ nhẹ theo hướng dẫn; người lớn xử lý điện, cửa và sửa chữa. Những dòng kể gia đình khá giả không còn tự khẳng định đã đi du lịch nước ngoài hoặc học piano khi chưa có lựa chọn đó.",
+        "Khung kỳ nghỉ cũ còn chờ trong bản lưu được đổi sang nội dung phù hợp hoàn cảnh hiện tại. Lựa chọn được bảo vệ khỏi bấm lại để nhận thêm kỹ năng, thu học phí hai lần hoặc thay đổi quan hệ nhiều lần."
+      ]
+    },
+    {
       "id": "football-residence-897",
       "version": "8.9.7-football-residence",
       "releaseStatus": "released",

@@ -1978,7 +1978,7 @@
       var IL = life.ill, chronic = IL.chronic || ILLS.some(function (x) { return x.n === IL.n && x.chronic; });
       life.illHist = life.illHist || []; if (life.illHist.indexOf(IL.n) < 0) life.illHist.push(IL.n);
       // bệnh mạn tính không "khỏi": được kiểm soát ổn định, vẫn phải uống thuốc suốt đời
-      if (chronic) { log(U.cap(IL.n) + ' đã được kiểm soát ổn định — uống thuốc đều, tái khám định kỳ.', 'good'); life.flags.chronic = (life.flags.chronic || 0) + 1; st.hap += 3; }
+      if (chronic) { log(U.cap(IL.n) + ' đã được kiểm soát ổn định — uống thuốc đều, tái khám định kỳ.', 'good'); if (!E.HEALTH899 || E.HEALTH899.remit(life, IL)) life.flags.chronic = (life.flags.chronic || 0) + 1; st.hap += 3; }
       else { log((/^ung thư/.test(IL.n) ? 'Điều trị thành công, ' + IL.n + ' thuyên giảm hoàn toàn.' : 'Đã khỏi ' + IL.n + '.'), 'good'); st.hap += 6; }
       life.ill = null;
     }

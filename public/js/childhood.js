@@ -47,7 +47,7 @@
       if (!l.urban) L.push(vn ? 'Đi bắt cá, mò cua ngoài ruộng về khoe ' + m + '.' : 'Ra suối bắt cá nhỏ về khoe ' + m + '.', vn ? 'Chăn trâu, thả diều trên bờ đê lộng gió.' : 'Thả diều trên cánh đồng lộng gió.', 'Mùa gặt theo ' + m + ' ra đồng, nằm trên đống rơm ngắm trời.');
       else L.push('Đi học thêm tiếng Anh mỗi tối, ngồi sau xe ' + m + ' ngủ gật.', 'Được dẫn đi siêu thị, chọn được một món đồ ăn vặt.');
       if (poor(l)) L.push(E.hasOlderSib && !E.hasOlderSib(l) ? 'Mặc lại quần áo cũ người quen cho, ống quần xắn mấy vòng.' : 'Mặc lại quần áo cũ của anh chị, ống quần xắn mấy vòng.', 'Mơ ước có một đôi giày mới đi học.');
-      if (rich(l)) L.push('Được đi du lịch nước ngoài cùng gia đình dịp hè.', 'Học piano mỗi tối thứ Ba, thứ Năm.');
+      if (rich(l)) L.push('Cùng người chăm sóc cân nhắc một kỳ nghỉ theo lịch của cả nhà.', 'Có góc học sở thích riêng, tự chọn bức vẽ hoặc bài nhạc muốn thử.');
     }
     if (a >= 10 && a <= 15) {
       L.push('Lần đầu được làm lớp trưởng, oai lắm.', 'Thức khuya đọc trộm truyện dưới chăn bằng đèn pin.', 'Viết nhật ký, khóa bằng ổ khóa nhỏ xíu.', 'Cãi nhau với bạn thân rồi làm lành sau ba ngày.', y >= 2000 ? 'Bị ' + m + ' tịch thu điện thoại vì thức khuya.' : 'Bị ' + m + ' tịch thu truyện tranh vì thức khuya.', 'Lần đầu đi chơi xa cùng lớp, cả đêm không ngủ.', 'Vỡ giọng, bị cả lớp trêu.');

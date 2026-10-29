@@ -70,7 +70,7 @@
       tone: st.tone || '',
       prep: function (l, r, arg) { var c = arg && chain(l, arg.cid); var d = { cid: arg && arg.cid, token: arg && arg.token, done: false }; if (c && st.prep) Object.assign(d, st.prep(l, c)); return d; },
       valid: ok,
-      text: function (l, d) { var c = d && chain(l, d.cid); return c ? st.text(l, c, d) : ''; },
+      text: function (l, d) { var c = d && chain(l, d.cid); return c ? (typeof st.text === 'function' ? st.text(l, c, d) : st.text || '') : ''; },
       opts: st.opts.map(function (o) {
         return {
           k: o.k, l: o.l, h: o.h, ai: o.ai,
@@ -496,7 +496,7 @@
   onOrigin('phau_thuat', function (l, k, d) { if (d && /tai nạn/.test(d.why || '')) start(l, 'health', { dec: 'phau_thuat', k: k }, { data: { what: 'tai nạn giao thông' } }); });
 
   E.CHAIN144 = {
-    KINDS: KINDS, start: start, close: close, advance: advance, chain: chain, active: active, state: state, yearly: yearly,
+    KINDS: KINDS, define: define, onOrigin: onOrigin, start: start, close: close, advance: advance, chain: chain, active: active, state: state, yearly: yearly,
     summary: function (l) { var s = l.flags && l.flags.chains144; return valid(s) ? { active: s.active.map(function (c) { return { kind: c.kind, stage: c.stage, since: c.since }; }), done: s.done.map(function (c) { return { kind: c.kind, result: c.result, end: c.end }; }) } : { active: [], done: [] }; }
   };
 })(globalThis.G);

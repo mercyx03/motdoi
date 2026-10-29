@@ -1149,8 +1149,8 @@ section('21. Bản 2.5: nghề mới, hướng đi giữa các nghề, sự ki�
     ok(l.job && E.resolveJob(l.job.id) === 'chinh_tri', 'con nhà chính trị được đưa vào chính trường: ' + (l.job && E.jobTitle(l)));
     ok(l.flags.eliteBoost === 'chinh_tri', 'có "ô dù" giúp thăng tiến nhanh hơn'); }
   { const l = E.createLife({ mode: 'vn', seed: 61100 }); l.fam.elite = 'tp'; l.age = 26; l.indep = true; l.flags.eliteFollow = true; l.partner = { name: 'Người Yêu', sex: 'F', age: 25, status: 'dating', since: 24, alive: true };
-    let cutN = 0; for (let i = 0; i < 100; i++) { const c = clone(l); c.rs = 900 + i; play(c, 'elite_hon_nhan', 'love'); if (c.flags.eliteCut) cutN++; }
-    ok(cutN > 30 && cutN < 90, 'đòi cưới người mình yêu: nhiều khi bị gia đình cắt chu cấp (' + cutN + '/100)');
+    let cutN = 0, lostJob = 0; for (let i = 0; i < 100; i++) { const c = clone(l); c.rs = 900 + i; c.school = null; E.startJob(c, 'tai_phiet', R(i), () => {}, true); c.job.fam = true; const before = c.job; play(c, 'elite_hon_nhan', 'love'); if (c.flags.eliteCut) cutN++; if (c.job !== before) lostJob++; }
+    ok(cutN === 0 && lostJob === 0, 'tự chọn hôn nhân không tự cắt chu cấp hoặc hủy công việc gia đình (' + cutN + ' cut / ' + lostJob + ' lost job)');
     const y = clone(l); play(y, 'elite_hon_nhan', 'yes'); ok(y.partner && y.partner.status === 'married' && y.partner.name !== 'Người Yêu', 'hôn nhân sắp đặt môn đăng hộ đối'); }
   { const l = mk(61200, 25); l.fam.elite = 'tp'; l.flags.eliteFollow = true; const k = { name: 'Bé', sex: 'M', born: 25, alive: true, kids: 0 }; l.kids = [k]; const o = E.childOpts(l, k); ok(o.parent.elite === 'tp', 'đời con của tài phiệt vẫn sinh trong gia đình tài phiệt');
     const c = E.createLife(o); ok(c.fam.elite === 'tp' && c.fam.q === 5, 'sống tiếp đời con: vẫn là gia đình tài phiệt'); }
