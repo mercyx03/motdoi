@@ -194,4 +194,53 @@ console.log('--- BẮT ĐẦU KIỂM THỬ 5 TÍNH NĂNG THEO GÓP Ý NGƯỜI C
   console.log('✓ 5. Thuê sát thủ: Các gói thù lao, theo dõi, quấy rối, hạ sát, cam kết không khai và tự sát 44 bịt đầu mối hoạt động chuẩn xác.');
 })();
 
-console.log('=== TOÀN BỘ 5 BÀI KIỂM THỬ ĐÃ ĐẠT 100% ===');
+// 6. Kiểm thử Cố vấn riêng: Đào tạo người thừa kế toàn diện 10 năm (từ 8 tuổi)
+(function testHeirTraining10Years() {
+  const l = E.createLife({ mode: 'vn', seed: 1212 });
+  Object.assign(l, {
+    age: 38,
+    indep: true,
+    alive: true,
+    money: 150000000000, // 150 tỷ đ (đủ gói 5 triệu USD)
+    job: null,
+    pending: [],
+    yr: { items: [] }
+  });
+  l.kids = [{
+    name: 'Con Thừa Kế',
+    born: 30, // 8 tuổi
+    sex: 'M',
+    alive: true,
+    study: 60,
+    close: 90
+  }];
+
+  const child = l.kids[0];
+  const pid = E.UPDATE110.uid(l, child);
+  const D = E.EDUCATION170;
+
+  // Đăng ký gói 5 triệu USD
+  const course = D.enrollHeir(l, pid, 'heir5m', () => 0.1);
+  assert(course, 'Đăng ký đào tạo người thừa kế 10 năm thành công');
+  assert(course.years === 10, 'Thời hạn khóa học đúng 10 năm');
+  assert(course.field === 'heir_program', 'Khóa học thuộc chương trình thừa kế toàn diện');
+
+  // Mô phỏng 10 năm học tập
+  for (let y = 1; y <= 10; y++) {
+    l.age++;
+    const logs = [];
+    D.courseYear(l, () => 0.1, (t) => logs.push(t));
+    if (y < 10) {
+      assert(course.progress === y, 'Tiến trình năm ' + y + ' được ghi nhận');
+    }
+  }
+
+  assert(course.status === 'completed', 'Khóa đào tạo 10 năm hoàn thành');
+  assert(child.heirProgram170 && child.heirProgram170.completed, 'Con đạt chứng nhận đào tạo người thừa kế');
+  assert(child.heirPosture === true, 'Con sở hữu phong thái người thừa kế');
+  assert(child.study >= 90, 'Học lực và năng lực con vượt trội sau 10 năm');
+
+  console.log('✓ 6. Cố vấn riêng: Chương trình đào tạo người thừa kế 10 năm (1M/5M USD) rèn luyện toàn diện 7 kỹ năng và đạt phong thái người thừa kế thành công.');
+})();
+
+console.log('=== TOÀN BỘ CÁC BÀI KIỂM THỬ ĐÃ ĐẠT 100% ===');

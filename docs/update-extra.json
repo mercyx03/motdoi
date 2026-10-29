@@ -2,8 +2,8 @@
   {
     "id": "feedback-features-895",
     "version": "8.10.1-feedback-features",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-29T01:53:27.000Z",
     "publishedAt": "2026-10-29T08:46:00+07:00",
     "title": "Một Đời — Tổ chức tiệc trực tiếp, thực tập kế nghiệp, cố định danh mục dài, gameshow ẩm thực và dịch vụ ngầm",
     "summary": "Tiệc tại bàn làm việc được tổ chức và báo cáo ngay; con thực tập kế nghiệp hiển thị tiến trình và trợ cấp rõ ràng; cố định khung danh mục dài; bổ sung hai chương trình Bếp Trưởng Tranh Tài và Chuyện Đời Người Nổi Tiếng cùng tính năng thuê sát thủ trong thế giới ngầm.",
@@ -18,8 +18,10 @@
       "Cố định khung danh mục dài: Khung lựa chọn dài (thuê đội ngũ truyền thông, quản lý quảng cáo, danh sách nhân sự...) được cố định chiều cao, cuộn mượt mà bên trong và giữ nguyên nút Quay lại ở vị trí dễ bấm; chọn xong một mục không bị văng trở lại màn hình nhật ký, giúp người chơi thao tác liên tiếp nhiều hạng mục thuận tiện.",
       "Bếp Trưởng Tranh Tài: Gameshow ẩm thực 4 vòng thi và chung kết ba món. Đầu bếp thể hiện tài năng sáng tạo hoặc kỹ thuật chuẩn xác, tích lũy điểm số để đoạt danh hiệu Bếp trưởng, tăng mạnh danh tiếng ẩm thực, mở ra cơ hội làm bếp trưởng nhà hàng lớn hoặc khai trương nhà hàng riêng.",
       "Chuyện Đời Người Nổi Tiếng: Talk show phỏng vấn đời tư sâu sắc. Tham gia với tư cách khách mời nổi tiếng hoặc người dẫn chương trình. Câu trả lời chân thành, khéo léo hoặc gây sốc ảnh hưởng trực tiếp đến hình ảnh công chúng, độ tin cậy và có thể làm lộ những bí mật đời tư nhạy cảm.",
-      "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt."
-    ]
+      "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt.",
+      "Cố vấn riêng — Đào tạo người thừa kế toàn diện 10 năm: Cho phép gia tộc mời viện cố vấn đồng hành dài hạn cùng con cái từ khi lên 8 tuổi. Chương trình rèn luyện chuyên sâu 7 lĩnh vực cốt lõi: hình ảnh cá nhân, nghi thức xã giao, giao tiếp trang trọng, quản trị, kinh doanh, quản lý tài sản và lãnh đạo. Sau 10 năm rèn luyện, con cái toát lên phong thái người thừa kế thực thụ, đạt uy tín xã hội cao, sống có trách nhiệm và nâng cao năng suất điều hành vượt trội."
+    ],
+    "correctedAt": "2026-10-29T01:54:44.144Z"
   },
   {
     "id": "career-abroad-depth-8100",
