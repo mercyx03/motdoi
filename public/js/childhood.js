@@ -135,7 +135,42 @@
     text: function (l, d) { return 'Sắp đến sinh nhật ' + d.n + ' tuổi. ' + (poor(l) ? 'Nhà không dư dả gì.' : rich(l) ? 'Bố mẹ hỏi con muốn tổ chức thế nào.' : 'Bạn ước có một bữa tiệc nhỏ.'); },
     opts: [
       { k: 'party', l: function (l) { return rich(l) ? 'Tổ chức tiệc ở nhà hàng, mời cả lớp' : 'Mời vài đứa bạn thân đến nhà'; }, req: function (l) { return !poor(l); }, run: function (l, r, log) { cashB(l, rich(l) ? -0.03 : -0.005, 'Tiệc sinh nhật'); fx(l, { hap: 5, soc: 3 }); log(rich(l) ? 'Tiệc sinh nhật ở nhà hàng, có cả ảo thuật gia. Cả lớp trầm trồ.' : 'Mấy đứa bạn đến nhà, cùng thổi nến, ăn bánh kem.', 'good'); if (ch(r, 0.25)) H.mem(l, 'Bữa tiệc sinh nhật ' + l.age + ' tuổi.', 2); } },
-      { k: 'simple', l: 'Chỉ cần cả nhà ăn một bữa cơm', run: function (l, r, log) { fx(l, { hap: 3 }); var M = mom(l).charAt(0).toUpperCase() + mom(l).slice(1), vn = H.inVN(l) || (H.hasVNOrigin && H.hasVNOrigin(l)); log(poor(l) ? pick(r, vn ? [M + ' luộc cho quả trứng, cắm một cây nến lên bát xôi. Bạn nhớ mãi.', M + ' nấu nồi chè đậu đen, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh và một que kem — vậy là vui cả ngày.'] : [M + ' làm một chiếc bánh nhỏ tại nhà, cắm một cây nến chúc mừng. Bạn nhớ mãi.', M + ' nấu món ăn bạn thích nhất, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh ngọt và một que kem — vậy là vui cả ngày.']) : pick(r, ['Cả nhà ăn bữa cơm, ' + mom(l) + ' mua cái bánh kem nhỏ.', 'Cả nhà đi ăn cùng nhau, thổi nến trên chiếc bánh kem có tên mình.', M + ' tự tay làm bánh, vẽ chữ chúc mừng méo xệch mà ngon lạ.']), 'good'); if (poor(l)) H.mem(l, vn ? 'Cây nến cắm trên bát xôi ngày sinh nhật.' : 'Chiếc bánh nhỏ tự làm với một cây nến ngày sinh nhật.', 4); } },
+      { k: 'simple', l: function (l) {
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph) {
+          var k = l.fam.orphan.kind;
+          if (k === 'mai_am') return 'Cùng các cô và các bạn ở mái ấm ăn bữa cơm sinh nhật';
+          if (k === 'chua') return 'Cùng sư cô ăn bữa cơm chay mừng sinh nhật';
+          return 'Cùng người nuôi dưỡng ăn một bữa cơm ấm cúng';
+        }
+        return 'Chỉ cần cả nhà ăn một bữa cơm';
+      }, run: function (l, r, log) {
+        fx(l, { hap: 3 });
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph) {
+          var k = l.fam.orphan.kind;
+          if (k === 'mai_am') {
+            log(pick(r, [
+              'Các cô bảo mẫu nấu nồi chè đậu đỏ, các bạn cùng phòng vỗ tay hát chúc mừng sinh nhật bạn.',
+              'Được các cô ở mái ấm chia cho đĩa bánh kẹo và một que kem mát lạnh, cả phòng cùng chung vui.',
+              'Các cô ở mái ấm cắm một cây nến nhỏ lên đĩa xôi ngọt, chúc bạn luôn khỏe mạnh, ngoan ngoãn.'
+            ]), 'good');
+            H.mem(l, 'Cây nến nhỏ cắm trên đĩa xôi ngọt ngày sinh nhật ở mái ấm.', 4);
+            return;
+          }
+          if (k === 'chua') {
+            log('Sư cô chuẩn bị đĩa xôi chè và hoa quả, cùng các chú tiểu tụng kinh cầu an, chúc bạn thêm một tuổi an lành.', 'good');
+            H.mem(l, 'Bữa cơm chay và lời cầu chúc bình an ngày sinh nhật tại chùa.', 4);
+            return;
+          }
+          log('Người nuôi dưỡng nấu bữa cơm giản dị nhưng ấm áp, cắm một cây nến chúc mừng bạn thêm tuổi mới.', 'good');
+          H.mem(l, 'Cây nến nhỏ ngày sinh nhật bên người nuôi dưỡng.', 4);
+          return;
+        }
+        var M = mom(l).charAt(0).toUpperCase() + mom(l).slice(1), vn = H.inVN(l) || (H.hasVNOrigin && H.hasVNOrigin(l));
+        log(poor(l) ? pick(r, vn ? [M + ' luộc cho quả trứng, cắm một cây nến lên bát xôi. Bạn nhớ mãi.', M + ' nấu nồi chè đậu đen, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh và một que kem — vậy là vui cả ngày.'] : [M + ' làm một chiếc bánh nhỏ tại nhà, cắm một cây nến chúc mừng. Bạn nhớ mãi.', M + ' nấu món ăn bạn thích nhất, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được ' + mom(l) + ' mua cho gói bánh ngọt và một que kem — vậy là vui cả ngày.']) : pick(r, ['Cả nhà ăn bữa cơm, ' + mom(l) + ' mua cái bánh kem nhỏ.', 'Cả nhà đi ăn cùng nhau, thổi nến trên chiếc bánh kem có tên mình.', M + ' tự tay làm bánh, vẽ chữ chúc mừng méo xệch mà ngon lạ.']), 'good');
+        if (poor(l)) H.mem(l, vn ? 'Cây nến cắm trên bát xôi ngày sinh nhật.' : 'Chiếc bánh nhỏ tự làm với một cây nến ngày sinh nhật.', 4);
+      } },
       { k: 'gift', l: 'Xin một món quà thay vì tiệc', run: function (l, r, log) { var g = pick(r, boy(l) ? ['bộ lego', 'quả bóng đá', 'xe đạp mới', 'bộ truyện tranh'] : ['con gấu bông to', 'bộ bút màu', 'chiếc váy mới', 'bộ truyện tranh']); fx(l, { hap: 4 }); log('Được tặng ' + g + ' — món quà sinh nhật nhớ nhất tuổi thơ.', 'good'); } }
     ]
   });
