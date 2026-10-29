@@ -14,7 +14,19 @@ function migrate(l){
   a.deferredTurn894=true;
  }});
 }
-var m=E.migrateExt;E.migrateExt=function(l){if(m)m(l);migrate(l);};
+// A manual action card from this year can only be committed while a turn is
+// left. At the cap, a card without its own exit is withdrawn unchanged, so the
+// player is never left with a dialog that can neither be chosen nor closed.
+// Mandatory story cards carry no token and are never touched here.
+function capped(l){return (l.acts||0)>=limit(l);}
+function blocked(l,d){var a=d&&d.data;return !!(a&&a.deferredTurn894&&a.actionYear850===l.age&&capped(l)&&!(d.opts||[]).some(function(o){return /^(cancel|back|close)$/.test(o.k);}));}
+function dropBlocked(l){var out=[];while(l.pending&&l.pending.length&&blocked(l,l.pending[0]))out.push(l.pending.shift());return out;}
+var m=E.migrateExt;E.migrateExt=function(l){if(m)m(l);migrate(l);dropBlocked(l);};
+var CAPPED='Đã hết lượt năm nay';
+var act0=E.act,actions0=E.actions;
+E.act=function(l){return l&&capped(l)?null:act0.apply(this,arguments);};
+E.actions=function(l){var rows=actions0.apply(this,arguments);if(l&&capped(l))rows.forEach(function(a){if(a.ok===true)a.ok=CAPPED;});return rows;};
+E.ACTIONS894={capped:capped,blocked:blocked,dropBlocked:dropBlocked};
 // A token follows a manual action through its menus. Mandatory story decisions
 // have no token and never consume the player's annual action allowance.
 var resolve=E.resolve;
@@ -29,7 +41,7 @@ E.resolve=function(l,key){
  l.acts=used; // old cancel handlers refunded an opening cost that no longer exists
  var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=/^(cancel|back|close)$/.test(key);
  var changed=facts(l)!==before,spend=!cancel&&(children.length===0||changed||a.actionCommitted897===true);
- if(spend&&snapshot){restore(l,snapshot);var e={a:l.age,y:l.birthYear+l.age,t:'Đã hết lượt năm nay. Bạn vẫn có thể xem các phương án hoặc để dịp khác; lựa chọn chưa được thực hiện.',k:'neutral'};l.log.push(e);return [e];}
+ if(spend&&snapshot){restore(l,snapshot);var e={a:l.age,y:l.birthYear+l.age,t:'Đã hết lượt năm nay. Bạn vẫn có thể xem các phương án hoặc để dịp khác; lựa chọn chưa được thực hiện.',k:'neutral'};l.log.push(e);dropBlocked(l);return [e];}
  if(spend){l.acts=(l.acts||0)+1;var root=E.ACT.find(function(x){return x.id===token.actionId850;});if(root&&!(E.DEC[root.sc||root.id]||{}).menu110)(l.flags.actAt||(l.flags.actAt={}))[token.actionId850]=l.age;}
  children.forEach(function(x){if(cancel||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});
  return out;

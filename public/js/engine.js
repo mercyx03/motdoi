@@ -1838,7 +1838,7 @@
     }
 
     // ---- Lao động có thời hạn ở nước ngoài: hết hạn về nước ----
-    if (life.abroad && !life.abroad.perm && !life.abroad.study && !life.abroad.trapped && a + 1 >= life.abroad.until) {
+    if (life.abroad && !life.abroad.residence900 && !life.abroad.perm && !life.abroad.study && !life.abroad.trapped && a + 1 >= life.abroad.until) {
       var stay = r() < 0.12;
       if (stay) { life.abroad.until += 3; log('Gia hạn hợp đồng, ở lại ' + life.abroad.name + ' thêm 3 năm.', 'neutral'); }
       else {

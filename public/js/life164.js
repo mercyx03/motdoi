@@ -1,6 +1,6 @@
 /* Context metadata and family art continuity extend existing events and biographies. */
 (function(G){
- 'use strict';var E=G.E,H=E.H,X=E.UPDATE110,L=E.LIFE138;
+ 'use strict';var E=G.E,H=E.H,U=G.U,X=E.UPDATE110,L=E.LIFE138;
  var domains={celebration:['sinh_nhat','am_show_tet','dc_tet','fan_sinh_nhat'],education:['con_hoc','mc_hoc_bong','thi_hsg','len_chuyen','k_hoc_boi','k6_hoc_dan','dc_hoc_tieng','k_nhom_hoc'],health:['bao_hiem','vd_vay_chua_benh','vd_benh_nghe','nha_tram','nha_cao','nha_nieng','nha_su'],leisure:['pv_du_lich','bb_quy_du_lich','sv_tiec'],care:['bo_me_can','bo_me_mot_minh','fd_nuoi_bo_me'],business:['ks_khoi_nghiep','kd_vay_nong_xoay_von'],shopping:['mua_sam','k_xe_dap'],social:['bb_hop_lop','ban_than_moi','ban_than_hen']};
  function context(l,domain){var res=E.LIFE157.resources(l),health=l.st&&l.st.hea!=null?l.st.hea:50,network=l.st&&l.st.soc!=null?l.st.soc:50,wealth=Math.max(-.15,Math.min(.2,(res.band-2)*.07));if(domain==='education')return 1+Math.max(0,2-res.band)*.04+Math.max(-.1,Math.min(.15,((l.st&&l.st.kno!=null?l.st.kno:50)-50)/300));if(domain==='health')return 1+Math.max(0,60-health)/250;if(domain==='care')return 1+((l.fam&&l.fam.mAlive||l.fam&&l.fam.fAlive)?Math.max(0,l.age-35)/300:0);return Math.max(.75,Math.min(1.3,1+wealth+(network-50)/500+(health<35?-.15:0)));}
  Object.keys(domains).forEach(function(domain){domains[domain].forEach(function(id){E.TRIG.filter(function(t){return t.id===id;}).forEach(function(t){var old=t.contextWeight;t.lifeDomain164=domain;t.contextWeight=function(l){var previous=old==null?E.CONTEXT143.factor({contextTags:t.contextTags||[]},l):typeof old==='function'?old(l):old;return previous===0?0:previous*context(l,domain);};});});});
@@ -12,7 +12,96 @@
  // Describe the current household instead of treating the old q category as spending money.
  ['con_hoc','mua_sam','bo_me_can','bao_hiem'].forEach(function(id){var d=E.DEC[id]&&E.DEC[id].def;if(!d)return;var text=d.text;d.text=function(l,data){return (typeof text==='function'?text(l,data):text)+' Ngân sách hiện có: '+H.money(l,Math.max(0,l.money))+'. Các khoản vay và cam kết dài hạn vẫn có lịch trả riêng; có thể giữ phương án không chi thêm.';};});
  var birthday=E.DEC.sinh_nhat&&E.DEC.sinh_nhat.def;
- if(birthday){birthday.text=function(l,d){return 'Sinh nhật '+d.n+' tuổi. '+(E.LIFE157.resources(l).band<2?'Gia đình cân nhắc một buổi sum họp trong ngân sách hiện có.':'Gia đình có thể chọn buổi sum họp tại nhà hoặc dịch vụ bên ngoài.')+' Không cần chi nhiều để có kỷ niệm đẹp.';};var party=birthday.opts.find(function(o){return o.k==='party';});party.req=function(l){return E.LIFE157.resources(l).band>=1;};party.l=function(l){return E.LIFE157.resources(l).band>=3?'Tiệc nhà hàng cùng người thân và bạn học':'Mời vài bạn thân đến nhà';};party.run=function(l,r,log){var rich=E.LIFE157.resources(l).band>=3,pay=E.childExpense(l,l.base*(rich?.03:.005),'Tiệc sinh nhật');if(!pay.ok){log(pay.note+' Có thể chọn sinh nhật giản dị.','neutral');return;}H.fx(l,{hap:5,soc:3});H.mem(l,'Sinh nhật '+l.age+' tuổi bên gia đình và bạn bè.',3);log((rich?'Tiệc nhà hàng':'Tiệc nhỏ tại nhà')+' cùng người thân và bạn học. '+pay.note,'good');};}
+  if(birthday){
+    birthday.text=function(l,d){
+      var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+      if (isOrph) {
+        var kind = l.fam.orphan.kind;
+        if (kind === 'mai_am') return 'Sinh nhật ' + d.n + ' tuổi ở mái ấm. Các cô bảo mẫu và các bạn cùng phòng quây quần mừng bạn thêm một tuổi. Không cần chi nhiều để có kỷ niệm đẹp.';
+        if (kind === 'chua') return 'Sinh nhật ' + d.n + ' tuổi tại chùa. Sư cô và các phật tử chuẩn bị bữa cơm chay nhỏ mừng bạn thêm tuổi mới. Không cần chi nhiều để có kỷ niệm đẹp.';
+        return 'Sinh nhật ' + d.n + ' tuổi. Người nuôi dưỡng tổ chức một buổi nhỏ ấm cúng trong ngân sách hiện có. Không cần chi nhiều để có kỷ niệm đẹp.';
+      }
+      return 'Sinh nhật '+d.n+' tuổi. '+(E.LIFE157.resources(l).band<2?'Gia đình cân nhắc một buổi sum họp trong ngân sách hiện có.':'Gia đình có thể chọn buổi sum họp tại nhà hoặc dịch vụ bên ngoài.')+' Không cần chi nhiều để có kỷ niệm đẹp.';
+    };
+    var party=birthday.opts.find(function(o){return o.k==='party';});
+    if(party){
+      party.req=function(l){
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph && (l.fam.orphan.kind === 'mai_am' || l.fam.orphan.kind === 'chua')) return false;
+        return E.LIFE157.resources(l).band>=1;
+      };
+      party.l=function(l){
+        return E.LIFE157.resources(l).band>=3?'Tiệc nhà hàng cùng người thân và bạn học':'Mời vài bạn thân đến nhà';
+      };
+      party.run=function(l,r,log){
+        var rich=E.LIFE157.resources(l).band>=3,pay=E.childExpense(l,l.base*(rich?.03:.005),'Tiệc sinh nhật');
+        if(!pay.ok){log(pay.note+' Có thể chọn sinh nhật giản dị.','neutral');return;}
+        H.fx(l,{hap:5,soc:3});
+        H.mem(l,'Sinh nhật '+l.age+' tuổi bên gia đình và bạn bè.',3);
+        log((rich?'Tiệc nhà hàng':'Tiệc nhỏ tại nhà')+' cùng người thân và bạn học. '+pay.note,'good');
+      };
+    }
+    var simple=birthday.opts.find(function(o){return o.k==='simple';});
+    if(simple){
+      simple.l=function(l){
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph) {
+          var k = l.fam.orphan.kind;
+          if (k === 'mai_am') return 'Cùng các cô và các bạn ở mái ấm ăn bữa cơm sinh nhật';
+          if (k === 'chua') return 'Cùng sư cô ăn bữa cơm chay mừng sinh nhật';
+          return 'Cùng người nuôi dưỡng ăn một bữa cơm ấm cúng';
+        }
+        return 'Chỉ cần cả nhà ăn một bữa cơm';
+      };
+      simple.run=function(l,r,log){
+        H.fx(l, { hap: 3 });
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph) {
+          var k = l.fam.orphan.kind;
+          if (k === 'mai_am') {
+            log(U.pick(r, [
+              'Các cô bảo mẫu nấu nồi chè đậu đỏ, các bạn cùng phòng vỗ tay hát chúc mừng sinh nhật bạn.',
+              'Được các cô ở mái ấm chia cho đĩa bánh kẹo và một que kem mát lạnh, cả phòng cùng chung vui.',
+              'Các cô ở mái ấm cắm một cây nến nhỏ lên đĩa xôi ngọt, chúc bạn luôn khỏe mạnh, ngoan ngoãn.'
+            ]), 'good');
+            H.mem(l, 'Cây nến nhỏ cắm trên đĩa xôi ngọt ngày sinh nhật ở mái ấm.', 4);
+            return;
+          }
+          if (k === 'chua') {
+            log('Sư cô chuẩn bị đĩa xôi chè và hoa quả, cùng các chú tiểu tụng kinh cầu an, chúc bạn thêm một tuổi an lành.', 'good');
+            H.mem(l, 'Bữa cơm chay và lời cầu chúc bình an ngày sinh nhật tại chùa.', 4);
+            return;
+          }
+          log('Người nuôi dưỡng nấu bữa cơm giản dị nhưng ấm áp, cắm một cây nến chúc mừng bạn thêm tuổi mới.', 'good');
+          H.mem(l, 'Cây nến nhỏ ngày sinh nhật bên người nuôi dưỡng.', 4);
+          return;
+        }
+        var M = (l.fam.mAlive ? 'Mẹ' : l.fam.fAlive ? 'Bố' : 'Bà');
+        var vn = H.inVN(l) || (H.hasVNOrigin && H.hasVNOrigin(l));
+        var poor = l.fam.q <= 2;
+        log(poor ? U.pick(r, vn ? [M + ' luộc cho quả trứng, cắm một cây nến lên bát xôi. Bạn nhớ mãi.', M + ' nấu nồi chè đậu đen, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được người thân mua cho gói bánh và một que kem — vậy là vui cả ngày.'] : [M + ' làm một chiếc bánh nhỏ tại nhà, cắm một cây nến chúc mừng. Bạn nhớ mãi.', M + ' nấu món ăn bạn thích nhất, cả nhà ngồi hát chúc mừng sinh nhật.', 'Được người thân mua cho gói bánh ngọt và một que kem — vậy là vui cả ngày.']) : U.pick(r, ['Cả nhà ăn bữa cơm, mua cái bánh kem nhỏ.', 'Cả nhà đi ăn cùng nhau, thổi nến trên chiếc bánh kem có tên mình.', M + ' tự tay làm bánh, vẽ chữ chúc mừng méo xệch mà ngon lạ.']), 'good');
+        if (poor) H.mem(l, vn ? 'Cây nến cắm trên bát xôi ngày sinh nhật.' : 'Chiếc bánh nhỏ tự làm với một cây nến ngày sinh nhật.', 4);
+      };
+    }
+    var gift=birthday.opts.find(function(o){return o.k==='gift';});
+    if(gift){
+      gift.l=function(l){
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph) return 'Mong một món quà nhỏ từ nhà hảo tâm hoặc người nuôi dưỡng';
+        return 'Xin một món quà thay vì tiệc';
+      };
+      gift.run=function(l,r,log){
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        var g = U.pick(r, (l.sex === 'M') ? ['bộ xếp hình lego', 'quả bóng đá', 'bộ truyện tranh', 'chiếc xe đồ chơi'] : ['con gấu bông mềm', 'bộ bút màu', 'chiếc váy mới', 'bộ truyện tranh']);
+        H.fx(l, { hap: 4 });
+        if (isOrph) {
+          log('Đoàn từ thiện đến thăm mái ấm tặng bạn ' + g + ' — món quà sinh nhật nhớ nhất tuổi thơ.', 'good');
+        } else {
+          log('Được tặng ' + g + ' — món quà sinh nhật nhớ nhất tuổi thơ.', 'good');
+        }
+      };
+    }
+  }
  function tradition(l){var s=l.flags.life138||{};return s.artLine164||E.LIFE157.art(l).map(function(side){return{name:l.fam[side+'Name']||'Người chăm sóc',job:l.fam[side+'Job'],generation:l.gen||1};});}
  var child=E.childOpts;E.childOpts=function(l,k){var o=child.apply(this,arguments),line=tradition(l).slice(-5),job=l.job?E.jobTitle(l):'',art=/ca sĩ|diễn viên|nhạc sĩ|vũ công|đạo diễn|nghệ sĩ|họa sĩ|nhiếp ảnh/.test(job);if(art)line.push({name:l.name,job:job,generation:(l.gen||1)+1});o.parent.artLine164=line;return o;};
  var create=E.createLife;E.createLife=function(o){var l=create.apply(this,arguments);if(o&&o.parent&&o.parent.artLine164)L.state(l).artLine164=JSON.parse(JSON.stringify(o.parent.artLine164));return l;};

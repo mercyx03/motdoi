@@ -710,6 +710,7 @@
     function b(label,action,value,disabled){return '<button class="btn sm" data-office="'+action+'" data-value="'+esc(value==null?'':value)+'"'+(disabled?' disabled':'')+'>'+esc(label)+'</button>';}
     function row(text,buttons){return '<section class="office-row"><p>'+text+'</p><div class="office-buttons">'+(buttons||'')+'</div></section>';}
     var body='',active=D.active(l),enabled=D.why(l)===true;
+    if(S.officeReport896)body+='<section class="office-row office-report"><p><b>Tiệc vừa được tổ chức</b><br>'+S.officeReport896.map(esc).join('<br>')+'</p></section>';
     if(view==='delegation'){
       body+='<p>Ngân sách nhiệm vụ tách khỏi lương. Chỉ giao việc cho người phù hợp đang làm việc; giao dịch tài sản, đầu tư và bổ nhiệm vẫn cần bạn quyết định.</p>';
       if(!enabled)body+=row(esc(D.why(l)),b('Xem tuyển dụng','tab','staff'));
@@ -740,7 +741,7 @@
     modal('<div class="office-header"><h2>Bàn làm việc của gia chủ</h2>'+b('Đóng','close')+'</div><p class="office-status" role="status">'+esc(message||'Xử lý liên tiếp trong khung này; không cần tìm lại nhân sự sau mỗi lựa chọn.')+'</p><nav class="office-buttons">'+b('Thông báo & báo cáo','tab','inbox')+b('Nhân sự','tab','staff')+b('Ủy quyền','tab','delegation',!enabled)+b('Chuẩn bị tiệc','tab','party',!D.person(l,'events'))+'</nav>'+body+b('Đóng bàn làm việc','close'),function(box){
       $$('[data-office]',box).forEach(function(el){el.onclick=function(){var op=el.dataset.office,v=el.dataset.value,msg='',rng=function(){return U.rand(l);};
         if(op==='tab'){openOffice896(v);return;}
-        if(op==='close'){closeModal();S.paused=S.officePause896;S.officePause896=null;renderTopbar();if(l.pending.length){S.phase='decmin';minimizeDecision896();}else if(S.yearRunning){S.phase='running';S.last=performance.now();}return;}
+        if(op==='close'){S.officeReport896=null;closeModal();S.paused=S.officePause896;S.officePause896=null;renderTopbar();if(l.pending.length){S.phase='decmin';minimizeDecision896();}else if(S.yearRunning){S.phase='running';S.last=performance.now();}return;}
         if(op==='setup')msg=D.setup(l)?'Đã giao gói thường lệ và duyệt hạn mức.':'Chưa có người đủ điều kiện.';
         if(op==='toggle'){if(D.why(l)===true&&D.person(l,v)){s.enabled[v]=!s.enabled[v];msg='Đã cập nhật nhiệm vụ.';}}
         if(op==='budget'){if(D.why(l)===true)s.budget=l.base*Number(v);msg='Đã cập nhật hạn mức nhiệm vụ, chưa thu tiền.';}
@@ -748,8 +749,8 @@
         if(op==='hire'){var hired=F.hire(l,v,rng);if(hired)l.acts=(l.acts||0)+1;msg=hired?'Đã tuyển và trả lương năm đầu. Hãy duyệt gói công việc thường lệ để bắt đầu.':'Điều kiện tuyển hoặc ngân sách đã thay đổi.';}
         if(['renew','bonus','end'].includes(op))msg=D.manage(l,v,op,rng);
         if(op==='prepare'){var made=D.prepare(l,v);msg=made.message;}
-        if(op==='approvePlan')msg=D.approve(l,v,rng,function(t,k){E.UPDATE110.log(l,t,k);}).message;
-        if(op==='cancelPlan'){D.dismiss(l,v);msg='Đã bỏ dự toán, chưa thanh toán.';}
+        if(op==='approvePlan'){var made2=D.approve(l,v,rng,function(t,k){E.UPDATE110.log(l,t,k);});msg=made2.message;S.officeReport896=made2.ok&&made2.report&&made2.report.length?made2.report.slice():null;if(made2.ok){persist();renderAll();openOffice896('inbox',msg);return;}}
+        if(op==='cancelPlan'){S.officeReport896=null;D.dismiss(l,v);msg='Đã bỏ dự toán, chưa thanh toán.';}
         if(op==='successor')msg=F.approve(l,Number(v),rng)?'Đã duyệt đúng người kế nhiệm và ký hợp đồng riêng.':'Ứng viên, vị trí hoặc dự phòng chưa đủ điều kiện.';
         if(op==='read'){if(s.proposals[Number(v)])s.proposals[Number(v)].status='reviewed';msg='Đã ghi nhận đề xuất.';}
         if(op==='contact'){var prop=s.proposals[Number(v)],p=prop&&E.ELITE148.find(l,prop.pid);if(!p||p.alive===false){openOffice896(view,'Người được đề xuất không còn liên lạc được.');return;}var dec=E.DEC.social149_person.make(l,rng,{id:prop.pid});dec.manual=true;l.pending.unshift(dec);S.officeReturn896=true;S.officeProposal896=Number(v);closeModal();showDecision();return;}
@@ -965,6 +966,7 @@
       var ka = a - k.born, info = '';
       if (k.alive) {
         if (k.jail && ka < k.jail) info = ' · đang thụ án';
+        else if (k.internship170 && E.EDUCATION170) info = ' · ' + esc(E.EDUCATION170.describe(l, k));
         else if (k.job || k.role147) info = ' · ' + esc(E.kidTitle(k)) + (k.inc ? ' · ' + esc(money(l, k.inc)) + '/tháng' : '');
         else if (k.uniUntil) info = ' · ' + (k.abroadStudy ? 'du học' : 'sinh viên đại học');
         else if (ka >= 6 && ka <= 17) info = ' · học ' + (k.study >= 70 ? 'giỏi' : k.study >= 45 ? 'khá' : 'yếu');
@@ -1345,6 +1347,9 @@
     if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; }
     clearDecPill();
     var l = S.life, d = l.pending[0];
+    // Thẻ việc tự chọn không còn lượt và không có nút thoát thì rút lại (chưa thực hiện gì), tránh hộp không chọn được cũng không đóng được.
+    var capped894 = E.ACTIONS894 ? E.ACTIONS894.dropBlocked(l) : [];
+    if (capped894.length) { toast('Đã hết lượt năm nay — “' + capped894[0].title + '” chưa được thực hiện.'); persist(); renderAll(); d = l.pending[0]; }
     if (!d) { afterDecisions(); return; }
     if(/^office(171|Delegation171|Contract171|Reports171)$/.test(d.id)&&d.manual){l.pending.shift();openOffice896(d.id==='officeDelegation171'?'delegation':d.id==='officeContract171'?'staff':'inbox');return;}
     if(!d.manual&&/^(companyLeadershipCase169|board123|crisis123)$/.test(d.id)&&E.OFFICE171.desk.person(l,'reports')&&E.OFFICE171.state(l).enabled.reports){if(d.officeInbox896){openOffice896('inbox');return;}d.officeInbox896=true;S.phase='decision';minimizeDecision();renderOfficeDesk();toast('Trợ lý có hồ sơ quan trọng cần bạn duyệt tại Văn phòng gia đình.');return;}
@@ -1357,12 +1362,13 @@
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
       '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p' + (/^football/.test(d.id) ? ' class="football-summary"' : '') + '>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
-      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
+      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts' + (d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7 ? ' many' : '') + '">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); var many = d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7; return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(many && o.k === 'cancel' ? '← Quay lại' : o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {
         $$('[data-k]', box).forEach(function (b) { b.onclick = function () { choose(b.dataset.k, true); }; });
         $('#decMin', box).onclick = minimizeDecision;
+        if (S.keepScroll915) { var keep915 = S.keepScroll915, many915 = $('.opts.many', box); S.keepScroll915 = null; if (many915 && keep915.id === d.id) many915.scrollTop = keep915.top; }
         bindMarket(box, l, d);
         bindWill(box,l,d);
         bindBusiness(box,l,d);
@@ -1387,7 +1393,16 @@
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
     var queued0 = S.life.pending.slice(1);
+    var stick915 = !!(byHand && cur && cur.manual && k !== 'cancel' && E.DEC[cur.id] && E.DEC[cur.id].menu110 && cur.opts.length >= 7), scroll915 = stick915 ? document.querySelector('.opts.many') : null;
+    if (stick915) S.keepScroll915 = { id: cur.id, top: scroll915 ? scroll915.scrollTop : 0 };
     var entries = E.resolve(S.life, k);
+    // Menu có nhiều lựa chọn: giữ nguyên khung để chọn tiếp nhiều mục, chỉ thoát khi bấm “Quay lại”.
+    if (stick915 && S.life.alive && S.life.pending.length === queued0.length) {
+      try {
+        var again915 = E.DEC[cur.id].make(S.life, U.rand(S.life), cur.data && cur.data.arg);
+        if (again915 && again915.opts.length > 1 && E.DEC[cur.id].valid(S.life, again915.data || {})) { again915.manual = true; S.life.pending.unshift(again915); if (entries[0] && entries[0].t) toast(entries[0].t); }
+      } catch (e915) { if (window.console) console.error(e915); }
+    }
     // GĐ6: AI vừa chọn thay (Tự động / lựa chọn thường ngày) thì các bước nối tiếp do lựa chọn ấy mở ra cũng để AI làm tiếp, không đứng chờ.
     if (!byHand && !wasManual) S.life.pending.forEach(function (x) { if (queued0.indexOf(x) < 0) x.manual = false; });
     var change112 = S.life.flags.expansion110 && S.life.flags.expansion110.switchChild;

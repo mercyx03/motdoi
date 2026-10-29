@@ -13,6 +13,17 @@
   d.text = function (l) {
     var b = resources(l).band;
     var rc = H.resCode ? H.resCode(l) : (l.abroad && l.abroad.code) || l.country || 'VN';
+    var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+    if (isOrph) {
+      var kind = l.fam.orphan.kind;
+      if (kind === 'mai_am') {
+        return 'Sinh nhật đầu tiên ở mái ấm. Các cô bảo mẫu chuẩn bị vài món đồ chơi an toàn có sẵn trong phòng sinh hoạt để mừng bé tròn một tuổi. Chỉ dùng đồ chơi lớn phù hợp trẻ một tuổi, có người lớn giám sát. Đồ vật gợi sở thích, không quyết định nghề nghiệp.';
+      }
+      if (kind === 'chua') {
+        return 'Sinh nhật đầu tiên tại nhà chùa. Sư cô và các phật tử chuẩn bị vài món đồ chơi mộc mạc mừng bé tròn một tuổi. Chỉ dùng đồ chơi lớn phù hợp trẻ một tuổi, có người lớn giám sát. Đồ vật gợi sở thích, không quyết định nghề nghiệp.';
+      }
+      return 'Sinh nhật đầu tiên. Người nuôi dưỡng chuẩn bị vài món đồ chơi sẵn có để mừng bé tròn một tuổi. Chỉ dùng đồ chơi lớn phù hợp trẻ một tuổi, có người lớn giám sát. Đồ vật gợi sở thích, không quyết định nghề nghiệp.';
+    }
     return ((H.inVN(l) || H.hasVNOrigin(l)) ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ thôi nôi.' : rc === 'KR' ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ Doljanchi (돌잔치) và nghi thức Doljabi.' : rc === 'JP' ? 'Sinh nhật 1 tuổi, gia đình cân nhắc nghi thức Erabitori chọn thẻ/đồ vật tượng trưng.' : (rc === 'CN' || rc === 'TW') ? 'Sinh nhật đầu tiên, gia đình cân nhắc lễ Chu tuế (抓周) tròn 1 tuổi.' : 'Sinh nhật đầu tiên, gia đình chọn cách kỷ niệm.') +
       [' Ngân sách rất eo hẹp: có thể dùng vài đồ chơi sẵn có, nhờ người thân cho mượn hoặc chỉ quây quần bên bé.', ' Gia đình chuẩn bị mâm nhỏ với đồ chơi sẵn có hoặc đồ mượn, vẫn có niềm vui bên nhau.', ' Gia đình có thể chuẩn bị mâm đồ chơi vừa phải tại nhà.', ' Gia đình có điều kiện chuẩn bị nhiều đồ chơi và mời người thân dự tiệc.', ' Gia đình có thể tổ chức tiệc lớn, thuê người chuẩn bị và lưu kỷ niệm.'][b] +
       ' Chỉ dùng đồ chơi lớn phù hợp trẻ một tuổi, có người lớn giám sát. Đồ vật gợi sở thích, không quyết định nghề nghiệp.';
@@ -25,8 +36,47 @@
     if (safe[o.k]) o.l = safe[o.k];
     if (o.k === 'son') o.run = function (l, r, log) { H.fx(l, { hap: 2 }); H.mem(l, 'Ngày sinh nhật đầu tiên, bạn cầm chiếc lược đồ chơi, cả nhà vui cười.', 2); log('Bạn cầm chiếc lược đồ chơi đầu tròn, người lớn ở bên cùng chơi.', 'good'); };
   });
-  [['simple', 'Cùng người chăm sóc hát mừng, không bày mâm', 0], ['borrow', 'Mượn đồ chơi của người thân để bày mâm sinh nhật', 0], ['homeParty', 'Tiệc nhỏ tại nhà và chụp ảnh kỷ niệm', 2], ['restaurant', 'Tiệc nhà hàng cùng người thân', 3], ['professional', 'Tiệc có người tổ chức và album gia đình', 4]].forEach(function (a) {
-    d.opts.push({ k: a[0], l: a[1], req: function (l) { return resources(l).band >= a[2]; }, run: function (l, r, log) { var s = L.state(l); s.firstBirthday157 = { style: a[0], age: l.age, band: resources(l).band }; H.fx(l, { hap: 3, soc: 1 }); H.mem(l, 'Sinh nhật đầu tiên: ' + a[1].toLowerCase() + '.', 3); log(a[1] + '. Gia đình lưu lại một kỷ niệm ấm áp, không đặt sẵn tương lai của bé.', 'good'); } });
+  [['simple', function (l) {
+      var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+      if (isOrph) {
+        var k = l.fam.orphan.kind;
+        return k === 'mai_am' ? 'Cùng các cô ở mái ấm hát mừng, không bày mâm' : k === 'chua' ? 'Cùng sư cô tụng kinh cầu an, không bày mâm' : 'Cùng người nuôi dưỡng hát mừng, không bày mâm';
+      }
+      return 'Cùng người chăm sóc hát mừng, không bày mâm';
+    }, 0],
+   ['borrow', function (l) {
+      var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+      if (isOrph) {
+        var k = l.fam.orphan.kind;
+        return k === 'mai_am' ? 'Dùng đồ chơi chung ở mái ấm để bày mâm sinh nhật' : k === 'chua' ? 'Dùng đồ chơi do phật tử tặng để bày mâm sinh nhật' : 'Dùng đồ chơi sẵn có của người nuôi dưỡng';
+      }
+      return 'Mượn đồ chơi của người thân để bày mâm sinh nhật';
+    }, 0],
+   ['homeParty', function (l) {
+      var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+      if (isOrph) return 'Tiệc nhỏ cùng các bạn ở mái ấm và chụp ảnh kỷ niệm';
+      return 'Tiệc nhỏ tại nhà và chụp ảnh kỷ niệm';
+    }, 2],
+   ['restaurant', 'Tiệc nhà hàng cùng người thân', 3],
+   ['professional', 'Tiệc có người tổ chức và album gia đình', 4]].forEach(function (a) {
+    d.opts.push({
+      k: a[0],
+      l: typeof a[1] === 'function' ? a[1] : a[1],
+      req: function (l) {
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        if (isOrph && (a[0] === 'restaurant' || a[0] === 'professional')) return false;
+        return resources(l).band >= a[2];
+      },
+      run: function (l, r, log) {
+        var s = L.state(l);
+        var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null;
+        var textLabel = typeof a[1] === 'function' ? a[1](l) : a[1];
+        s.firstBirthday157 = { style: a[0], age: l.age, band: resources(l).band };
+        H.fx(l, { hap: 3, soc: 1 });
+        H.mem(l, 'Sinh nhật đầu tiên: ' + textLabel.toLowerCase() + '.', 3);
+        log(textLabel + '. ' + (isOrph ? 'Những người chăm sóc lưu lại một kỷ niệm ấm áp bên bé, không đặt sẵn tương lai của bé.' : 'Gia đình lưu lại một kỷ niệm ấm áp, không đặt sẵn tương lai của bé.'), 'good');
+      }
+    });
   });
   X.menu('artFamily157', 'Truyền thống nghệ thuật gia đình', function (l) { var w = X.reason(l, 5); return w !== true ? w : !art(l).length ? 'Chưa có người chăm sóc làm nghề nghệ thuật' : true; },
     'Có thể học cùng người thân hoặc chọn sở thích riêng. Nghề của bố mẹ mở cơ hội tiếp xúc, không bảo đảm tài năng hay thành công.', function (l) {

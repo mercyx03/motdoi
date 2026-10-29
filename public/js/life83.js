@@ -12,8 +12,8 @@
   function pick(r, a) { return U.pick(r, a); }
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped); }
-  function m(l) { return l.fam.mAlive ? 'mẹ' : l.fam.fAlive && !l.fam.noDad ? 'bố' : 'bà'; }
-  function b(l) { return l.fam.fAlive && !l.fam.noDad ? 'bố' : l.fam.mAlive ? 'mẹ' : 'ông'; }
+  function m(l) { if (l.fam && l.fam.orphan && l.fam.orphan.adopted == null) { var k = l.fam.orphan.kind; if (k === 'mai_am') return 'cô bảo mẫu'; if (k === 'chua') return 'sư cô'; if (k === 'ong_ba') return 'bà'; return l.fam.orphan.carer || 'người chăm sóc'; } return l.fam.mAlive ? 'mẹ' : l.fam.fAlive && !l.fam.noDad ? 'bố' : 'bà'; }
+  function b(l) { if (l.fam && l.fam.orphan && l.fam.orphan.adopted == null) { var k = l.fam.orphan.kind; if (k === 'mai_am') return 'người chăm sóc ở mái ấm'; if (k === 'chua') return 'sư thầy'; if (k === 'ong_ba') return 'ông'; return l.fam.orphan.carer || 'người chăm sóc'; } return l.fam.fAlive && !l.fam.noDad ? 'bố' : l.fam.mAlive ? 'mẹ' : 'ông'; }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function both(l) { return l.fam.mAlive && l.fam.fAlive && !l.fam.noDad; }
   function vn(l) { return H.isVN(l) && l.mode === 'vn'; }
@@ -174,11 +174,11 @@
   KID('k6_ba_vien', 8, 14, 'Bà nằm viện', ['Bà ngoại ốm nặng phải nằm viện mấy tuần.', 'Ông nội bị ngã, phải mổ và nằm viện.'], [
     { k: 'tham', l: 'Xin theo bố mẹ vào viện thăm', ai: { moral: 1, w: 1.3 }, out: [[1, 'Bạn ngồi bóp chân, kể chuyện ở trường. Người già cười móm mém: “Cháu ông bà lớn thật rồi”.', { karma: 3, hap: 1 }, 'good', mem('Ngồi bóp chân cho ông bà trong viện.', 3)]] },
     { k: 'thiep', l: 'Làm tấm thiệp chúc mau khỏe', out: [[1, 'Tấm thiệp vẽ nguệch ngoạc được dựng cạnh giường bệnh suốt mấy tuần.', { karma: 2 }, 'good']] },
-    { k: 'hoc', l: 'Ở nhà học bài', out: [[1, 'Ở nhà học bài. Ít lâu sau người già khỏe lại, về nhà.', null, 'neutral']] }]);
+    { k: 'hoc', l: 'Ở nhà học bài', out: [[1, 'Ở nhà học bài. Ít lâu sau người già khỏe lại, về nhà.', null, 'neutral']] }], function (l) { return !(l.fam && l.fam.orphan && (l.fam.orphan.kind === 'mai_am' || l.fam.orphan.kind === 'chua')) && (l.fam.mAlive || l.fam.fAlive || (l.fam.orphan && l.fam.orphan.kind === 'ong_ba')); });
 
-  KID('k6_em_ho', 6, 12, 'Em họ về ở cùng', 'Bố mẹ của em họ đi làm ăn xa, gửi em ở nhà bạn một thời gian.', [
-    { k: 'nhuong', l: 'Nhường đồ chơi, chỉ em học bài', ai: { moral: 1, w: 1.2 }, out: [[1, 'Em họ quấn bạn như hình với bóng. Ngày em về, cả hai đứa khóc.', { karma: 3, soc: 1 }, 'good']] },
-    { k: 'kho_chiu', l: 'Khó chịu vì phải chia phòng', out: [[1, 'Hai đứa tranh nhau cái quạt, cãi nhau suốt. Mãi sau mới quen.', { hap: -2 }, 'neutral']] }]);
+  KID('k6_em_ho', 6, 12, function (l) { var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null; if (isOrph) return l.fam.orphan.kind === 'chua' ? 'Chú tiểu mới vào chùa' : 'Em nhỏ mới vào mái ấm'; return 'Em họ về ở cùng'; }, [function (l) { var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null; if (isOrph) return l.fam.orphan.kind === 'chua' ? 'Chùa đón một chú tiểu mới vào, em còn bỡ ngỡ, rụt rè và hay nhớ nhà.' : 'Mái ấm đón một em nhỏ mới vào, bé còn rụt rè, bỡ ngỡ và hay khóc vì lạ lẫm.'; return 'Bố mẹ của em họ đi làm ăn xa, gửi em ở nhà bạn một thời gian.'; }], [
+    { k: 'nhuong', l: function (l) { var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null; if (isOrph) return 'Dỗ dành, nhường đồ chơi và dắt em đi ăn'; return 'Nhường đồ chơi, chỉ em học bài'; }, ai: { moral: 1, w: 1.2 }, out: [[1, function (l) { var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null; if (isOrph) return l.fam.orphan.kind === 'chua' ? 'Chú tiểu nhỏ quấn bạn như hình với bóng. Cả hai cùng nhau tụng kinh, quét lá sân chùa.' : 'Bé nhỏ quấn bạn như hình với bóng trong mái ấm. Bạn học được cách chăm sóc, che chở cho người khác.'; return 'Em họ quấn bạn như hình với bóng. Ngày em về, cả hai đứa khóc.'; }, { karma: 3, soc: 1 }, 'good']] },
+    { k: 'kho_chiu', l: function (l) { var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null; if (isOrph) return 'Khó chịu vì phải chia sẻ đồ chơi chung'; return 'Khó chịu vì phải chia phòng'; }, out: [[1, function (l) { var isOrph = l.fam && l.fam.orphan && l.fam.orphan.adopted == null; if (isOrph) return 'Hai đứa giằng nhau món đồ chơi, các cô bảo mẫu phải dỗ dành can ngăn. Mãi sau mới quen.'; return 'Hai đứa tranh nhau cái quạt, cãi nhau suốt. Mãi sau mới quen.'; }, { hap: -2 }, 'neutral']] }]);
 
   KID('k6_doi_tuyen', 9, 13, 'Đội tuyển của trường', [function () { return 'Thầy thể dục chọn bạn vào đội bóng đá của trường đi thi giải cấp huyện.'; }, function () { return 'Cô chọn bạn vào đội cầu lông / điền kinh của trường dự hội khỏe Phù Đổng.'; }], [
     { k: 'tap', l: 'Tập luyện hết mình', ai: { w: 1.2 }, out: [[0.45, 'Đội giành huy chương, bạn được tuyên dương dưới cờ.', { hea: 3, hap: 4, soc: 2 }, 'good', mem('Đứng trên bục nhận huy chương cùng đội tuyển của trường.', 3)], [0.55, 'Đội dừng bước ở bán kết, nhưng bạn khỏe hẳn lên, quen thêm nhiều bạn.', { hea: 3, hap: 1, soc: 1 }, 'neutral']] },
@@ -207,7 +207,7 @@
   KID('k6_ngu_rieng', 6, 10, 'Đêm đầu ngủ một mình', 'Bố mẹ dọn cho bạn một góc ngủ riêng. Đêm đầu tiên, bóng tối như có ai đang nhìn.', [
     { k: 'den', l: 'Xin bật đèn ngủ', out: [[1, 'Có ánh đèn vàng, bạn ngủ ngon lành.', { hap: 1 }, 'neutral']] },
     { k: 'chay', l: 'Ôm gối chạy sang phòng bố mẹ', out: [[1, 'Ngủ ké bố mẹ thêm một tuần nữa mới quen.', { hap: 2 }, 'neutral']] },
-    { k: 'gan', l: 'Tự nhủ mình đã lớn', ai: { w: 1.1 }, out: [[1, 'Đếm cừu đến ba trăm thì ngủ thiếp. Sáng ra thấy mình lớn hẳn.', { hap: 1, soc: 1 }, 'good']] }], function (l) { return l.fam.q >= 3 || l.urban; });
+    { k: 'gan', l: 'Tự nhủ mình đã lớn', ai: { w: 1.1 }, out: [[1, 'Đếm cừu đến ba trăm thì ngủ thiếp. Sáng ra thấy mình lớn hẳn.', { hap: 1, soc: 1 }, 'good']] }], function (l) { var isOrph = l.fam && l.fam.orphan && (l.fam.orphan.kind === 'mai_am' || l.fam.orphan.kind === 'chua'); return !isOrph && (l.fam.q >= 3 || l.urban); });
 
   KID('k6_xe_buyt', 10, 14, 'Lần đầu tự đi xe buýt', 'Bố mẹ bận, lần đầu tiên bạn phải tự đi xe buýt tới lớp học thêm.', [
     { k: 'di', l: 'Tự đi', ai: { w: 1.2 }, out: [[0.65, 'Tự đi trót lọt, thấy mình như người lớn.', { soc: 2, hap: 2, kno: 1 }, 'good'], [0.35, function (l) { return 'Ngồi quá bến, phải gọi điện nhờ ' + m(l) + ' đón. Lần sau thì thuộc đường.'; }, { hap: -1 }, 'neutral']] },
@@ -251,7 +251,7 @@
 
   KID('k6_ve_que', 6, 12, 'Mùa hè ở quê', [function (l) { return 'Hè này bố mẹ gửi bạn về quê ở với ông bà cả tháng.'; }], [
     { k: 'tam_ao', l: 'Theo bọn trẻ trong làng đi chăn trâu, tắm mưa', ai: { soc: 1 }, out: [[1, 'Chăn trâu, tắm mưa, nướng khoai trên đồng. Đen nhẻm mà vui chưa từng thấy.', { hap: 4, hea: 2, soc: 2 }, 'good', mem('Mùa hè đen nhẻm ở quê cùng ông bà.', 3)]] },
-    { k: 'nho_nha', l: 'Nhớ nhà, đòi về sớm', out: [[1, 'Khóc nhè đòi về, được một tuần thì bố mẹ lên đón.', { hap: -1 }, 'neutral']] }], function (l) { return l.urban; });
+    { k: 'nho_nha', l: 'Nhớ nhà, đòi về sớm', out: [[1, 'Khóc nhè đòi về, được một tuần thì bố mẹ lên đón.', { hap: -1 }, 'neutral']] }], function (l) { var isOrph = l.fam && l.fam.orphan && (l.fam.orphan.kind === 'mai_am' || l.fam.orphan.kind === 'chua'); return !isOrph && l.urban; });
 
   // thư gửi tương lai: 20 năm sau mở ra đọc
   E.HOOKS.year.unshift(function (l, r, log, a) {

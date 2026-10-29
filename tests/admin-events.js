@@ -5,10 +5,10 @@ const assert=require('assert'),fs=require('fs');
  const db=require('../tools/reviews-local')(':memory:'),env={REVIEWS_DB:db},origin='https://test.local';
  async function call(body,token){const r=await worker.fetch(new Request(origin+'/api/account',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify(body)}),env);return {status:r.status,cache:r.headers.get('Cache-Control'),...await r.json()};}
  const anon=await call({action:'admin_events'});assert.equal(anon.status,401);
- const user=await call({action:'register',username:'mercy0310',password:'test-only-password-392',displayName:'Mercy'});
+ const user=await call({action:'register',username:'test_admin',password:'test-only-password-392',displayName:'TestAdmin'});
  assert(user.token);
  assert.equal((await call({action:'admin_events',role:'admin'},user.token)).status,403);
- await db.prepare("INSERT INTO game_account_roles(account_id,role) SELECT id,'admin' FROM game_accounts WHERE username=?").bind('mercy0310').run();
+ await db.prepare("INSERT INTO game_account_roles(account_id,role) SELECT id,'admin' FROM game_accounts WHERE username=?").bind('test_admin').run();
  const result=await call({action:'admin_events'},user.token);assert.equal(result.status,200);assert.equal(result.cache,'no-store');
  for(const type of ['Lựa chọn','Biến cố','Lời kể','Hằng năm'])assert(result.entries.some(e=>e.type===type));
  assert(new Set(result.entries.map(e=>e.id)).size===result.entries.length);

@@ -184,6 +184,27 @@
     var code = e.code || 'NETWORK'; if (SS) SS.logError('cloud', code, e.message);
     if (!syncWarned[code]) { syncWarned[code] = true; toast('Chưa đồng bộ được lên tài khoản: ' + (e.message || 'lỗi kết nối') + ' Dữ liệu trên máy này vẫn còn nguyên.'); }
   }); }, 1500); }
+    window.unlockAllAchievements = async function () {
+    var all = (window.G && window.G.E && window.G.E.ACHIEVEMENTS) || [];
+    if (!all.length) { console.warn('Chưa tải xong dữ liệu thành tựu. Hãy vào màn hình chơi rồi chạy lại.'); return false; }
+    var store = get(K.ach, {}) || {};
+    all.forEach(function (a) { store[a.id] = { at: Date.now() }; });
+    set(K.ach, store);
+    console.log('Đã mở khóa ' + all.length + ' thành tựu trong bộ nhớ máy.');
+    if (acc()) {
+      try {
+        await sync('unlock_all');
+        console.log('Đã đồng bộ thành công 100% thành tựu lên Cloudflare D1 cho tài khoản ' + acc().u + '!');
+        toast('Đã mở khóa và đồng bộ toàn bộ ' + all.length + ' thành tựu!');
+        return true;
+      } catch (e) {
+        console.warn('Đã lưu cục bộ nhưng đồng bộ máy chủ gặp lỗi:', e.message);
+      }
+    } else {
+      toast('Đã mở khóa ' + all.length + ' thành tựu cục bộ! Hãy đăng nhập để lưu lên đám mây.');
+    }
+    return true;
+  };
   window.G = window.G || {}; window.G.Account = { open: open, sync: sync, autoSync: autoSync, merge: merge, signedIn: function () { return !!acc(); }, profile: function(){var a=acc();return a?{displayName:a.displayName||'',username:a.u}:null;}, auth: function(action,body){return api(action,body,true);} };
   document.addEventListener('DOMContentLoaded', init); if (document.readyState !== 'loading') init();
   var inited = false;

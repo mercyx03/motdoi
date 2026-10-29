@@ -1,5 +1,77 @@
 [
   {
+    "id": "orphan-logic-896",
+    "version": "8.10.2-orphan-logic",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-29T03:25:00.000Z",
+    "publishedAt": "2026-10-29T10:25:00+07:00",
+    "title": "Một Đời — Hoàn thiện logic bối cảnh trẻ mồ côi tại mái ấm và nhà chùa",
+    "summary": "Sửa triệt để các tình huống vô lý khi nhân vật mồ côi ở mái ấm hoặc nhà chùa: thôi nôi dùng đồ chơi chung, sinh nhật ăn cùng bảo mẫu và các bạn cùng phòng, sự kiện đón em nhỏ mới vào thay cho em họ, và rà soát loại trừ các sự kiện gia đình không phù hợp.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Lễ thôi nôi (1 tuổi) cho trẻ mồ côi: Thay đổi hoàn toàn lời dẫn và phương án lựa chọn phù hợp thực tế mái ấm và nhà chùa. Các cô bảo mẫu chuẩn bị đồ chơi an toàn trong phòng sinh hoạt chung; lựa chọn đổi thành dùng đồ chơi chung ở mái ấm thay vì mượn của người thân; người nuôi dưỡng tại chùa chuẩn bị đồ chơi do phật tử cúng dường; nhật ký ghi nhận tình cảm ấm áp của người chăm sóc thay vì gia đình ruột.",
+      "Sinh nhật 5 tuổi cho trẻ mồ côi: Loại bỏ hoàn toàn mô tả gia đình sum họp hay bố mẹ nấu ăn; ở mái ấm chuyển thành cùng các cô bảo mẫu và các bạn cùng phòng ăn bữa cơm sinh nhật ấm áp, chia chè ngọt và bánh kẹo; ở chùa cùng sư cô ăn bữa cơm chay cầu an; lựa chọn xin quà tặng được nhận từ các đoàn từ thiện / nhà hảo tâm ghé thăm mái ấm.",
+      "Em nhỏ mới vào mái ấm / Chú tiểu mới vào chùa (thay cho Em họ 6–12 tuổi): Trẻ mồ côi không còn xuất hiện sự kiện em họ xa xôi gửi về ở cùng; sự kiện chuyển thành mái ấm hoặc nhà chùa đón một em nhỏ / chú tiểu mới vào còn bỡ ngỡ, lạ lẫm; bạn dỗ dành, nhường đồ chơi và dắt em đi ăn, kết nối tình cảm che chở như anh em ruột thịt.",
+      "Rà soát & thanh lọc các sự kiện gia đình không phù hợp: Bổ sung điều kiện kiểm tra hoàn cảnh nuôi dưỡng, loại trừ các sự kiện bà nằm viện, mùa hè về quê ở với ông bà hay dọn phòng ngủ riêng đối với trẻ ở mái ấm / nhà chùa; đồng thời các đại từ xưng hô người nuôi dưỡng tự động phản ánh cô bảo mẫu / sư cô / người chăm sóc."
+    ],
+    "correctedAt": "2026-10-29T03:40:00.000Z"
+  },
+  {
+    "id": "feedback-features-895",
+    "version": "8.10.1-feedback-features",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-29T01:53:27.000Z",
+    "publishedAt": "2026-10-29T08:46:00+07:00",
+    "title": "Một Đời — Tiệc bàn làm việc, thực tập, gameshow ẩm thực và dịch vụ ngầm",
+    "summary": "Tiệc tại bàn làm việc được tổ chức và báo cáo ngay; con thực tập kế nghiệp hiển thị tiến trình và trợ cấp rõ ràng; cố định khung danh mục dài; bổ sung hai chương trình Bếp Trưởng Tranh Tài và Chuyện Đời Người Nổi Tiếng cùng tính năng thuê sát thủ trong thế giới ngầm.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bàn làm việc của gia chủ: Chuẩn bị tiệc và duyệt dự toán giờ đây tổ chức tiệc ngay lập tức trong phiên làm việc, kèm báo cáo chi tiết về khách đến dự, thực chi và lưu danh sách khách mời, không còn tình trạng chuẩn bị và duyệt nhưng tiệc không diễn ra.",
+      "Doanh nghiệp & Kế nghiệp: Cho con trưởng thành thực tập tại công ty gia đình được hiển thị rõ ràng chức danh thực tập tại từng công ty, cập nhật tiến trình từng năm (học việc, quản lý dự án, đánh giá kế nghiệp), chi trả trợ cấp thực tập và hiển thị lý do cụ thể nếu chưa đủ điều kiện tiếp nhận.",
+      "Cố định khung danh mục dài: Khung lựa chọn dài (thuê đội ngũ truyền thông, quản lý quảng cáo, danh sách nhân sự...) được cố định chiều cao, cuộn mượt mà bên trong và giữ nguyên nút Quay lại ở vị trí dễ bấm; chọn xong một mục không bị văng trở lại màn hình nhật ký, giúp người chơi thao tác liên tiếp nhiều hạng mục thuận tiện.",
+      "Bếp Trưởng Tranh Tài: Gameshow ẩm thực 4 vòng thi và chung kết ba món. Đầu bếp thể hiện tài năng sáng tạo hoặc kỹ thuật chuẩn xác, tích lũy điểm số để đoạt danh hiệu Bếp trưởng, tăng mạnh danh tiếng ẩm thực, mở ra cơ hội làm bếp trưởng nhà hàng lớn hoặc khai trương nhà hàng riêng.",
+      "Chuyện Đời Người Nổi Tiếng: Talk show phỏng vấn đời tư sâu sắc. Tham gia với tư cách khách mời nổi tiếng hoặc người dẫn chương trình. Câu trả lời chân thành, khéo léo hoặc gây sốc ảnh hưởng trực tiếp đến hình ảnh công chúng, độ tin cậy và có thể làm lộ những bí mật đời tư nhạy cảm.",
+      "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt.",
+      "Cố vấn riêng — Đào tạo người thừa kế toàn diện 10 năm: Cho phép gia tộc mời viện cố vấn đồng hành dài hạn cùng con cái từ khi lên 8 tuổi. Chương trình rèn luyện chuyên sâu 7 lĩnh vực cốt lõi: hình ảnh cá nhân, nghi thức xã giao, giao tiếp trang trọng, quản trị, kinh doanh, quản lý tài sản và lãnh đạo. Sau 10 năm rèn luyện, con cái toát lên phong thái người thừa kế thực thụ, đạt uy tín xã hội cao, sống có trách nhiệm và nâng cao năng suất điều hành vượt trội."
+    ],
+    "correctedAt": "2026-10-29T03:40:00.000Z"
+  },
+  {
+    "id": "career-abroad-depth-8100",
+    "version": "8.10.0-career-abroad",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-29T01:13:10.000Z",
+    "publishedAt": "2026-10-29T00:58:39.738Z",
+    "title": "Một Đời — Fandom, đường dài sự nghiệp và cuộc sống ở nước ngoài",
+    "summary": "Người hâm mộ nhớ cách bạn làm nghề; đồng đội, chấn thương và dư luận đi cùng nhiều mùa. Du học tách nhận học với visa, cư trú sau tốt nghiệp cần được xét tiếp.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Có mục Fandom, định hướng và quản lý cho nghề giải trí và từng kênh YouTube, TikTok, Facebook, Instagram. Fan trung thành khác tổng người theo dõi; giao lưu, cách làm nội dung và tần suất quảng cáo ảnh hưởng niềm tin, độ gắn bó và cát-xê.",
+      "Chọn hướng tác phẩm, thương mại hoặc cộng đồng. Có thể ký quản lý không độc quyền một năm hoặc độc quyền ba năm; xem phần chia thù lao và phí kết thúc sớm trước khi chọn. Hợp đồng hết hạn không tự gia hạn. Danh tiếng tốt giúp giá quảng cáo và thu nhập thuận lợi hơn, không bảo đảm thành công.",
+      "Tranh luận nội dung và hình ảnh có hồ sơ khủng hoảng. Cần xác minh, phản hồi và theo dõi từ năm sau; không trả tiền một lần rồi xóa tai tiếng. Bỏ qua có thể mất niềm tin và fan, áp lực kéo dài ảnh hưởng tinh thần.",
+      "Esports và môn đồng đội có đội hình được ghi nhớ, tính cách và tin cậy của đồng đội; đổi người cần được chấp thuận và làm giảm phối hợp ban đầu. Chuyển đội esports phải khép lại mùa đang chơi, xét phong độ rồi thương lượng lại hợp đồng. Thể thao dùng câu lạc bộ và thị trường chuyển nhượng hiện có.",
+      "Ghi nhớ đối thủ đã gặp trong esports và bóng đá. Phối hợp, chấn thương và sức ép phong độ tác động thi đấu và thu nhập. Có thể dành tiền và thời gian phục hồi, hỗ trợ tâm lý; chấn thương nặng không biến mất ngay.",
+      "Tuyển thủ vẫn giảm phản xạ sau đỉnh cao và có tuổi giải nghệ sớm. Giải nghệ giữ số tiền và danh tiếng thực có, không tự tặng danh tiếng hoặc ép chuyển nghề. Bạn có thể ứng tuyển streamer, bình luận, huấn luyện, xây kênh riêng hoặc tìm việc khác. Kênh mới nhận một phần khán giả cũ; người ít được biết đến phải gây dựng từ đầu.",
+      "Có hồ sơ visa chủ động theo nước: chuẩn bị giấy tờ, quỹ sinh hoạt, kế hoạch học. Visa du lịch và du học xét mục đích khác nhau; visa đi chơi không cho quyền học dài hạn hay làm việc. Chuyến du lịch ngắn ngày có chi phí và trở về, không đổi nơi định cư.",
+      "Trường xét nhận học hoặc học bổng trước, sau đó mới xin visa du học. Học bổng học phí không tự cấp tiền sinh hoạt. Chưa được visa vẫn giữ công việc và nơi ở; có thể bổ sung hồ sơ năm sau khi thư còn hạn. Rút hoặc hết hạn thư sẽ hoàn khoản học phí tự túc chưa sử dụng, không hoàn phí hồ sơ và visa.",
+      "Cuộc sống xa quê có hòa nhập văn hóa, nhớ nhà, sinh hoạt địa phương và gọi về cho người thân. Người đã giỏi ngôn ngữ không chịu áp lực thiếu ngôn ngữ chỉ vì chứng chỉ hết hạn; hồ sơ xét duyệt vẫn cần chứng chỉ còn giá trị.",
+      "Du học có thể xin chuyển chương trình đối tác cùng nước; cần được chấp thuận, có phí và thêm một năm học. Sau tốt nghiệp, ở lại tìm việc chỉ là cư trú có hạn; có hợp đồng mới xin chuyển sang cư trú lao động. Gia hạn cần chờ xét và có thể trượt; quá hạn tạm dừng thu nhập công việc, cần giải quyết hồ sơ hoặc thu xếp về nước.",
+      "Sau ít nhất bốn năm cư trú lao động hợp lệ trong mô phỏng, có thể nộp xét định cư với công việc, ngoại ngữ và quỹ dự phòng. Được định cư không đồng nghĩa có quốc tịch. Giữ trạng thái định cư đã có trong bản lưu cũ; các mốc và tỷ lệ là cơ chế trò chơi, không phải quy định di trú ngoài đời."
+    ],
+    "correctedAt": "2026-10-29T01:13:18.960Z"
+  },
+  {
     "id": "consequences-health-ageing-899",
     "version": "8.9.9-life-depth",
     "releaseStatus": "released",
