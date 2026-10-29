@@ -1,13 +1,34 @@
 {
-  "generatedAt": "2026-10-29T01:46:25.236Z",
+  "generatedAt": "2026-10-29T03:41:55.117Z",
   "entries": [
+    {
+      "id": "orphan-logic-896",
+      "version": "8.10.2-orphan-logic",
+      "releaseStatus": "released",
+      "releasedAt": "2026-10-29T03:25:00.000Z",
+      "publishedAt": "2026-10-29T10:25:00+07:00",
+      "title": "Một Đời — Hoàn thiện logic bối cảnh trẻ mồ côi tại mái ấm và nhà chùa",
+      "summary": "Sửa triệt để các tình huống vô lý khi nhân vật mồ côi ở mái ấm hoặc nhà chùa: thôi nôi dùng đồ chơi chung, sinh nhật ăn cùng bảo mẫu và các bạn cùng phòng, sự kiện đón em nhỏ mới vào thay cho em họ, và rà soát loại trừ các sự kiện gia đình không phù hợp.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Lễ thôi nôi (1 tuổi) cho trẻ mồ côi: Thay đổi hoàn toàn lời dẫn và phương án lựa chọn phù hợp thực tế mái ấm và nhà chùa. Các cô bảo mẫu chuẩn bị đồ chơi an toàn trong phòng sinh hoạt chung; lựa chọn đổi thành dùng đồ chơi chung ở mái ấm thay vì mượn của người thân; người nuôi dưỡng tại chùa chuẩn bị đồ chơi do phật tử cúng dường; nhật ký ghi nhận tình cảm ấm áp của người chăm sóc thay vì gia đình ruột.",
+        "Sinh nhật 5 tuổi cho trẻ mồ côi: Loại bỏ hoàn toàn mô tả gia đình sum họp hay bố mẹ nấu ăn; ở mái ấm chuyển thành cùng các cô bảo mẫu và các bạn cùng phòng ăn bữa cơm sinh nhật ấm áp, chia chè ngọt và bánh kẹo; ở chùa cùng sư cô ăn bữa cơm chay cầu an; lựa chọn xin quà tặng được nhận từ các đoàn từ thiện / nhà hảo tâm ghé thăm mái ấm.",
+        "Em nhỏ mới vào mái ấm / Chú tiểu mới vào chùa (thay cho Em họ 6–12 tuổi): Trẻ mồ côi không còn xuất hiện sự kiện em họ xa xôi gửi về ở cùng; sự kiện chuyển thành mái ấm hoặc nhà chùa đón một em nhỏ / chú tiểu mới vào còn bỡ ngỡ, lạ lẫm; bạn dỗ dành, nhường đồ chơi và dắt em đi ăn, kết nối tình cảm che chở như anh em ruột thịt.",
+        "Rà soát & thanh lọc các sự kiện gia đình không phù hợp: Bổ sung điều kiện kiểm tra hoàn cảnh nuôi dưỡng, loại trừ các sự kiện bà nằm viện, mùa hè về quê ở với ông bà hay dọn phòng ngủ riêng đối với trẻ ở mái ấm / nhà chùa; đồng thời các đại từ xưng hô người nuôi dưỡng tự động phản ánh cô bảo mẫu / sư cô / người chăm sóc."
+      ],
+      "correctedAt": "2026-10-29T03:40:00.000Z"
+    },
     {
       "id": "feedback-features-895",
       "version": "8.10.1-feedback-features",
       "releaseStatus": "released",
       "releasedAt": "2026-10-29T01:53:27.000Z",
       "publishedAt": "2026-10-29T08:46:00+07:00",
-      "title": "Một Đời — Tổ chức tiệc trực tiếp, thực tập kế nghiệp, cố định danh mục dài, gameshow ẩm thực và dịch vụ ngầm",
+      "title": "Một Đời — Tiệc bàn làm việc, thực tập, gameshow ẩm thực và dịch vụ ngầm",
       "summary": "Tiệc tại bàn làm việc được tổ chức và báo cáo ngay; con thực tập kế nghiệp hiển thị tiến trình và trợ cấp rõ ràng; cố định khung danh mục dài; bổ sung hai chương trình Bếp Trưởng Tranh Tài và Chuyện Đời Người Nổi Tiếng cùng tính năng thuê sát thủ trong thế giới ngầm.",
       "tags": [
         "Tính năng",
@@ -23,7 +44,7 @@
         "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt.",
         "Cố vấn riêng — Đào tạo người thừa kế toàn diện 10 năm: Cho phép gia tộc mời viện cố vấn đồng hành dài hạn cùng con cái từ khi lên 8 tuổi. Chương trình rèn luyện chuyên sâu 7 lĩnh vực cốt lõi: hình ảnh cá nhân, nghi thức xã giao, giao tiếp trang trọng, quản trị, kinh doanh, quản lý tài sản và lãnh đạo. Sau 10 năm rèn luyện, con cái toát lên phong thái người thừa kế thực thụ, đạt uy tín xã hội cao, sống có trách nhiệm và nâng cao năng suất điều hành vượt trội."
       ],
-      "correctedAt": "2026-10-29T01:54:44.144Z"
+      "correctedAt": "2026-10-29T03:40:00.000Z"
     },
     {
       "id": "career-abroad-depth-8100",
