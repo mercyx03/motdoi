@@ -1,6 +1,28 @@
 {
-  "generatedAt": "2026-10-29T01:04:35.706Z",
+  "generatedAt": "2026-10-29T01:46:25.236Z",
   "entries": [
+    {
+      "id": "feedback-features-895",
+      "version": "8.10.1-feedback-features",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-29T08:46:00+07:00",
+      "title": "Một Đời — Tổ chức tiệc trực tiếp, thực tập kế nghiệp, cố định danh mục dài, gameshow ẩm thực và dịch vụ ngầm",
+      "summary": "Tiệc tại bàn làm việc được tổ chức và báo cáo ngay; con thực tập kế nghiệp hiển thị tiến trình và trợ cấp rõ ràng; cố định khung danh mục dài; bổ sung hai chương trình Bếp Trưởng Tranh Tài và Chuyện Đời Người Nổi Tiếng cùng tính năng thuê sát thủ trong thế giới ngầm.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Bàn làm việc của gia chủ: Chuẩn bị tiệc và duyệt dự toán giờ đây tổ chức tiệc ngay lập tức trong phiên làm việc, kèm báo cáo chi tiết về khách đến dự, thực chi và lưu danh sách khách mời, không còn tình trạng chuẩn bị và duyệt nhưng tiệc không diễn ra.",
+        "Doanh nghiệp & Kế nghiệp: Cho con trưởng thành thực tập tại công ty gia đình được hiển thị rõ ràng chức danh thực tập tại từng công ty, cập nhật tiến trình từng năm (học việc, quản lý dự án, đánh giá kế nghiệp), chi trả trợ cấp thực tập và hiển thị lý do cụ thể nếu chưa đủ điều kiện tiếp nhận.",
+        "Cố định khung danh mục dài: Khung lựa chọn dài (thuê đội ngũ truyền thông, quản lý quảng cáo, danh sách nhân sự...) được cố định chiều cao, cuộn mượt mà bên trong và giữ nguyên nút Quay lại ở vị trí dễ bấm; chọn xong một mục không bị văng trở lại màn hình nhật ký, giúp người chơi thao tác liên tiếp nhiều hạng mục thuận tiện.",
+        "Bếp Trưởng Tranh Tài: Gameshow ẩm thực 4 vòng thi và chung kết ba món. Đầu bếp thể hiện tài năng sáng tạo hoặc kỹ thuật chuẩn xác, tích lũy điểm số để đoạt danh hiệu Bếp trưởng, tăng mạnh danh tiếng ẩm thực, mở ra cơ hội làm bếp trưởng nhà hàng lớn hoặc khai trương nhà hàng riêng.",
+        "Chuyện Đời Người Nổi Tiếng: Talk show phỏng vấn đời tư sâu sắc. Tham gia với tư cách khách mời nổi tiếng hoặc người dẫn chương trình. Câu trả lời chân thành, khéo léo hoặc gây sốc ảnh hưởng trực tiếp đến hình ảnh công chúng, độ tin cậy và có thể làm lộ những bí mật đời tư nhạy cảm.",
+        "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt."
+      ]
+    },
     {
       "id": "career-abroad-depth-8100",
       "version": "8.10.0-career-abroad",

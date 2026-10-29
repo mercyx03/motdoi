@@ -667,3 +667,7 @@ footer .disclaimer b { color: var(--accent); }
 
 /* Transient status text must never intercept action or approval taps. */
 .toast { pointer-events:none; }
+
+/* Menu nhieu lua chon giu khung co dinh, cuon ben trong, nut Quay lai luon hien o cuoi. */
+.opts.many { max-height: min(54vh, 480px); overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; }
+.opts.many .opt[data-k="cancel"] { position: sticky; bottom: 0; background: var(--surface); border-color: var(--accent); z-index: 1; }
