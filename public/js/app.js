@@ -1205,7 +1205,7 @@
     var job = [li(esc(P.job))].concat(P.jobInfo.map(function (x) { return li('<span class="muted small">' + esc(x) + '</span>'); }));
     if (P.salary) {
       job.push(li('Lương / thu nhập', esc(money(l, P.salary.gross)) + '/tháng', 'pos'));
-      if (P.salary.net < P.salary.gross - 1e-6) job.push(li('Thực nhận sau bảo hiểm', esc(money(l, P.salary.net)) + '/tháng'));
+      if (P.salary.net < P.salary.gross - 1e-6) job.push(li(P.salary.netLabel || 'Thực nhận sau bảo hiểm', esc(money(l, P.salary.net)) + '/tháng'));
     }
     if (P.si) job.push(li('Đã đóng ' + esc(E.siLabel(l)), P.si.yrs + ' năm' + (P.si.yrs < 15 && !l.pensioned ? ' (cần 15 năm để có lương hưu)' : '')));
     if (l.pensionInc) job.push(li('Lương hưu', esc(money(l, l.pensionInc / 12)) + '/tháng' + (l.pensionRate ? ' (' + Math.round(l.pensionRate * 100) + '% lương bình quân)' : ''), 'pos'));

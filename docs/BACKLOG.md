@@ -14,6 +14,10 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Sửa lương cầu thủ 8.10.3 — 29/10/2026
+
+Kiểm thử trọng điểm lương hợp đồng, tài chính cá nhân, bóng đá, sức khỏe, nghề nghiệp, smoke và bản lưu; rà soát tự động 40 đời. Chưa chạy toàn bộ regression trên mã cuối, chưa xác minh binding REVIEWS_DB Production. Artifact Preview; không tự bù lương các năm cũ vì không có lịch sử đủ tin cậy. Chờ nghiệm thu tổng thể GĐ6.
+
 ### Nội dung quốc gia 8.9.4-country-batch1
 
 Mục tiêu 195 nước chưa hoàn tất. Tám nước FI/GH/IE/NZ/JP/FR/US/VN hiện có tối thiểu 3 giáo dục, 3 lễ, 3 cưới, 5 món, 5 lao động, 5 câu chuyện/nước; 187 mã còn lại ở country-depth-inventory.json. Cần nghiên cứu/biên tập và nối gameplay cho từng nước, không tự nhân bản regional. Có 40 chuỗi theo năm, NPC riêng, đối chiếu lao động, chặn tác động sai nước và dữ liệu luật trước mốc tham chiếu. Thông tin tham chiếu 2026 không bảo đảm luật ngoài đời tương lai; tiếp tục rà ngoại lệ và lịch sử chính sách. Chưa chạy đủ 77 nhóm regression trên mã 8.9.4; kiểm tra thống kê kết hôn mục 63 vẫn cần điều tra, không hạ ngưỡng. Đợt này là Preview/chưa nghiệm thu 195 nước; xem COUNTRY-DEEP-COVERAGE-REPORT.md.

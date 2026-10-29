@@ -18,7 +18,7 @@
   function employed(l){var s=peek(l);return !!(s&&s.stage==='pro'&&s.contract&&s.contract.end>year(l)&&athlete(l));}
   function syncOccupation(l,r){var s=peek(l);if(!s||s.stage!=='pro'||!s.contract||s.contract.end<=year(l))return false;
     if(!l.job){var old=l.talentSub,school=l.school,end=l.schoolEnd,abroad=l.abroad,histLength=(l.jobsHist||[]).length,prior=(l.jobsHist||[]).slice(-1)[0];l.talentSub='bóng đá';l.school=null;E.startJob(l,'vdv',r||H.rf(l),function(){},true);l.school=school;l.schoolEnd=end;l.abroad=abroad;if(!l.job||E.resolveJob(l.job.id)!=='vdv'){l.talentSub=old;return false;}if(prior&&E.resolveJob(prior.id)==='vdv'&&prior.to==null){l.jobsHist.splice(histLength);l.job.since=prior.from;l.job.yrs=Math.max(0,l.age-prior.from);}}
-    if(athlete(l)){l.job.club=(club(s.loan?s.loan.club:s.club)||{}).name;l.flags.needJob=false;l.flags.upgradeJob=false;l.pending=(l.pending||[]).filter(function(d){return d.id!=='job'||d.manual||d.data&&d.data.requested;});return true;}return false;
+    if(athlete(l)){l.indep=true;l.job.club=(club(s.loan?s.loan.club:s.club)||{}).name;l.flags.needJob=false;l.flags.upgradeJob=false;l.pending=(l.pending||[]).filter(function(d){return d.id!=='job'||d.manual||d.data&&d.data.requested;});return true;}return false;
   }
   function negotiationWhy(l,c){var s=peek(l),y=year(l);if(!active(l)||!c)return 'Cần hồ sơ bóng đá và tự do tham gia.';if(l.age<16)return 'Từ 16 tuổi mới đàm phán hợp đồng chuyên nghiệp.';if(s.injury>0)return 'Cần hồi phục chấn thương trước khi đánh giá.';
     var attempts=s.negotiations897||{},renewal=s.contract&&s.contract.club===c.id;if(attempts[c.id]===y)return 'Đã trao đổi với CLB này trong năm; xem lời mời hoặc thử CLB khác.';
@@ -304,9 +304,9 @@
   }
   function income(l, r, log) {
     var s = peek(l); annual(l, r, log);
-    if (!s || s.paid === year(l)) return 0;
-    s.paid = year(l);
+    if (!s || s.paid === year(l) && s.earnings && s.earnings.year === year(l)) return 0;
     if (s.stage !== 'pro' || !s.contract || s.contract.end <= year(l) || !free(l) || !athlete(l)) return 0;
+    s.paid = year(l);
     var c = s.contract, z = s.seasons.find(function (z) { return z.year === year(l); });
     var apps = z ? z.matches.filter(function (m) { return !m.international && m.minutes > 0; }).length : 0;
     var signing = c.signed ? 0 : c.signingUSD; c.signed = true;
@@ -406,7 +406,21 @@
   var title = E.jobTitle; E.jobTitle = function (l) { var s = peek(l); return athlete(l) && s && !s.legacyFallback ? 'Cầu thủ bóng đá · ' + (club(s.loan ? s.loan.club : s.club) || { name: 'Tự do' }).name + ' · ' + (s.role || s.stage) : title.apply(this, arguments); };
   var sportTitle = E.sportTitle; E.sportTitle = function (l) { return athlete(l) && peek(l) && !peek(l).legacyFallback ? E.jobTitle(l) : sportTitle.apply(this, arguments); };
   var monthly = E.monthlyEst; E.monthlyEst = function (l, id) { var s = peek(l); return E.resolveJob(id) === 'vdv' && l.talentSub === 'bóng đá' && s && !s.legacyFallback ? s.contract ? usd(l, s.contract.annualUSD) / 12 : 0 : monthly.apply(this, arguments); };
-  var profile = E.profile; E.profile = function (l) { var p = profile.apply(this, arguments); if (peek(l)) p.jobInfo.push(summary(l)); return p; };
+  var incomeParts = E.incomeParts; E.incomeParts = function (l) {
+    var rows = incomeParts.apply(this, arguments), s = peek(l);
+    if (s && s.earnings && s.earnings.year === year(l) && l.yr && l.yr.gross > 0) rows.push({ k: 'Thuế / phí đại diện bóng đá (15%)', v: -usd(l, s.earnings.taxAgentUSD) });
+    return rows;
+  };
+  var profile = E.profile; E.profile = function (l) {
+    var p = profile.apply(this, arguments), s = peek(l);
+    if (s) { p.jobInfo.push(summary(l)); p.income = E.incomeParts(l); }
+    if (employed(l)) {
+      var gross = usd(l, s.contract.annualUSD) / 12;
+      p.salary = { gross: gross, net: gross * .85, netLabel: 'Sau thuế / phí đại diện (15%)' };
+      if (s.earnings && s.earnings.year === year(l)) p.jobInfo.push('Quyết toán bóng đá năm ' + year(l) + ': ' + H.money(l, usd(l, s.earnings.netUSD)) + ' sau thuế/phí, gồm lương và thưởng; sinh hoạt tính riêng.');
+    }
+    return p;
+  };
   // State KPI depends on knowledge/reputation which can change after year hooks.
   // Finalise the derived profile before saving, so reload does not recompute a different KPI.
   var endYear = E.endYear; E.endYear = function (l) { var out = endYear.apply(this, arguments); if (E.STATE174 && l.flags && l.flags.state174) E.STATE174.syncState(l); return out; };

@@ -61,7 +61,7 @@
     match:function(l,opponent,place){var s=sportState(l),p=s.rivals[opponent]||(s.rivals[opponent]={meetings:0,wins:0,first:l.age});p.meetings++;p.last=l.age;if(place===1)p.wins++;s.pressure=U.clamp(s.pressure+(place<=3?-4:3),0,100);},
     offers:function(l,c){if(!c.depth900)return;(c.offers||[]).forEach(function(o){if(o.depth900)return;o.depth900=true;o.fee*=factor(l,c);});}
   };
-  var cy=E.careerYear;E.careerYear=function(l,r,log){var id=job(l),isShow=show(l),sport=sporting(l),s=sport&&sportState(l),inc=cy.apply(this,arguments);if(isShow&&inc>0)inc*=factor(l,null);if(sport&&job(l)!==id&&!l.flags.sportRetired900)l.flags.sportRetired900={at:l.age,job:id,fame:l.fame||0,history:s.history.slice(),roster:s.roster.slice()};if(sport&&job(l)===id)inc*=U.clamp(1-s.injury/200-s.pressure/500,.3,1);return inc;};
+  var cy=E.careerYear;E.careerYear=function(l,r,log){var id=job(l),isShow=show(l),sport=sporting(l),s=sport&&sportState(l),inc=cy.apply(this,arguments);if(isShow&&inc>0)inc*=factor(l,null);if(sport&&job(l)!==id&&!l.flags.sportRetired900)l.flags.sportRetired900={at:l.age,job:id,fame:l.fame||0,history:s.history.slice(),roster:s.roster.slice()};if(sport&&job(l)===id&&!(E.FOOTBALL&&E.FOOTBALL.employed(l)))inc*=U.clamp(1-s.injury/200-s.pressure/500,.3,1);return inc;};
   // Seed only a brand-new channel, once; never mint fame or raise an existing channel.
   var create=S.state;S.state=function(l){var s=create(l),ret=l.flags.sportRetired900;if(ret)s.channels.forEach(function(c){if(c.retiredSeed900)return;c.retiredSeed900=true;if(c.followers===0&&!(c.videos||[]).length)c.followers=Math.floor(Math.min(50000,Math.max(0,l.fame||0)*.1));});return s;};
 })(globalThis.G);

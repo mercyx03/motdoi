@@ -1853,7 +1853,7 @@
     var income = 0;
     if (inJail) log('Một năm nữa trôi qua sau song sắt' + (life.jailUntil - a > 1 ? ' — còn ' + (life.jailUntil - a - 1) + ' năm.' : '.'), 'bad');
     else income = E.careerYear(life, r, log, focus);
-    if (income > 0 && E.economy114Income) income = E.economy114Income(life, income);
+    if (income > 0 && E.economy114Income) income = E.economy114Income(life, income, 'career');
     if (income > 0) income *= difficulty(life).income;
     // v2.4: đã có lương hưu mà vẫn kinh doanh / làm thêm thì vẫn nhận lương hưu
     if (!life.retired && life.job && life.pensioned && life.pensionInc) income += life.pensionInc * difficulty(life).pension;

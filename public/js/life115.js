@@ -2,7 +2,7 @@
 (function(G){'use strict';var E=G.E,H=E.H,U=G.U,X=E.UPDATE110,L=E.LIFE114,S=L.state,P=L.peek;
 // Amounts remain in the existing country/occupation currency model. This is a
 // gameplay calibration, not a copied algorithm or an empirical Gini fit.
-function income(l,v){if(!(v>0)||!(l.base>0))return v;var b=l.base,x=v/b;return b*(Math.min(x,1.2)+Math.min(Math.max(0,x-1.2),2.8)*.78+Math.min(Math.max(0,x-4),8)*.5+Math.max(0,x-12)*.28);}
+function income(l,v,source){if(source==='career'&&E.FOOTBALL&&E.FOOTBALL.employed(l)){var s=E.FOOTBALL.peek(l);if(s.earnings&&s.earnings.year===l.birthYear+l.age&&s.paid===s.earnings.year)return v;}if(!(v>0)||!(l.base>0))return v;var b=l.base,x=v/b;return b*(Math.min(x,1.2)+Math.min(Math.max(0,x-1.2),2.8)*.78+Math.min(Math.max(0,x-4),8)*.5+Math.max(0,x-12)*.28);}
 E.economy114Income=income;
 function business(l,profit,capital){if(profit<=0)return profit;var reasonable=Math.max(l.base*.2,capital*.15);return Math.min(profit,reasonable)+Math.max(0,profit-reasonable)*.45;}
 E.economy114Business=business;

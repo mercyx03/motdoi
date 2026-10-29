@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-10-29T03:41:55.117Z",
+  "generatedAt": "2026-10-29T04:47:56.980Z",
   "entries": [
+    {
+      "id": "football-payroll-901",
+      "version": "8.10.3-football-payroll",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-10-29T04:47:29.501Z",
+      "title": "Một Đời — Sửa lương hợp đồng cầu thủ và quyết toán cá nhân",
+      "summary": "Lương cầu thủ được đưa vào thu nhập cá nhân theo hợp đồng, sau thuế và phí đại diện; không bị giảm chồng bởi các hệ số thu nhập chung.",
+      "tags": [
+        "Sửa lỗi",
+        "Cải tiến"
+      ],
+      "details": [
+        "Lương hợp đồng bóng đá chỉ khấu trừ 15% thuế và phí đại diện mô phỏng. Chấn thương hoặc giảm nhịp làm việc vì sức khỏe không tự cắt lương cố định; thưởng ra sân vẫn phụ thuộc số trận thực tế. Tiền sinh hoạt tiếp tục được tính riêng khi quyết toán năm.",
+        "Hồ sơ hiển thị rõ lương cơ bản trước và sau khấu trừ, kèm quyết toán lương và thưởng của năm hiện tại.",
+        "Sửa trường hợp kiểm tra thu nhập khi chưa có hợp đồng làm mất lượt nhận lương sau khi ký trong cùng năm. Thưởng ký hợp đồng vẫn chỉ nhận một lần; tải lại bản lưu không nhận trùng.",
+        "Bản lưu cầu thủ chuyên nghiệp cũ được khôi phục trạng thái tự lập để lương tham gia quyết toán tiền cá nhân. Không tự truy lĩnh hoặc ước tính bù tiền cho các năm đã qua."
+      ]
+    },
     {
       "id": "orphan-logic-896",
       "version": "8.10.2-orphan-logic",
