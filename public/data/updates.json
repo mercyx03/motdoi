@@ -2,6 +2,26 @@
   "generatedAt": "2026-10-29T04:47:56.980Z",
   "entries": [
     {
+      "id": "doctoral-visa-905",
+      "version": "8.10.5-study-visa",
+      "releaseStatus": "released",
+      "publishedAt": "2026-10-29T07:14:10.958Z",
+      "releasedAt": "2026-10-29T07:14:10.958Z",
+      "correctedAt": "2026-10-29T07:14:10.958Z",
+      "title": "Một Đời — Sửa thiếu bước chuẩn bị visa du học tiến sĩ",
+      "summary": "Có thể chuẩn bị giấy tờ và kế hoạch học ngay từ thư nhận học, rồi tiếp tục nộp visa mà không cần đăng ký trường lại.",
+      "tags": [
+        "Sửa lỗi",
+        "Cải tiến"
+      ],
+      "details": [
+        "Sửa màn hình thư nhận học thiếu lối chuẩn bị hồ sơ: thêm kiểm tra giấy tờ, tài chính và viết kế hoạch học ngay tại bước xét visa. Sau mỗi bước, bạn trở lại hồ sơ du học để tiếp tục; nút nộp visa xuất hiện khi đủ điều kiện.",
+        "Sau khi trường chấp nhận hồ sơ tự túc hoặc học bổng, game mở ngay màn hình chuẩn bị visa. Áp dụng cho đại học, thạc sĩ và tiến sĩ; chưa có visa thì vẫn giữ công việc và nơi ở hiện tại.",
+        "Thêm mục Tiếp tục hồ sơ visa du học theo thư nhận học trong Học tập & công việc → Học tập. Bản lưu đang có thư nhận học tiến sĩ có thể mở lại từ đây, không phải nộp hồ sơ trường mới hoặc đóng học phí lại. Mục hồ sơ visa chung cũng có đường quay về thư nhận học. Màn hình visa cũ đang lưu cũng tự cập nhật lựa chọn chuẩn bị khi tải lại, giữ nguyên thư và tiền đã dự trù.",
+        "Giữ điều kiện giấy tờ, kế hoạch học, ngoại ngữ còn hạn, kinh phí và hạn thư nhận học. Chuẩn bị giấy tờ vẫn có phí và giới hạn theo năm; không tự cấp visa hay bỏ qua xét duyệt."
+      ]
+    },
+    {
       "id": "family-world-school-904",
       "version": "8.10.4-family-world-school",
       "releaseStatus": "released",
