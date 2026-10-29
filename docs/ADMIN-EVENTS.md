@@ -1,6 +1,6 @@
 # Thư viện sự kiện dành cho quản trị viên
 
-Mở Tài khoản → Thư viện toàn bộ sự kiện sau khi đăng nhập tài khoản có quyền admin trên máy chủ. Mercy0310 cần giữ quyền admin hiện có trong D1; không cấp quyền theo tên đăng nhập hay dữ liệu phía trình duyệt.
+Mở Tài khoản → Thư viện toàn bộ sự kiện sau khi đăng nhập tài khoản có quyền admin trên máy chủ. Tài khoản quản trị viên cần được cấp quyền admin trong D1 (game_account_roles); không cấp quyền theo tên đăng nhập hay dữ liệu phía trình duyệt.
 
 Có 1.316 mục từ registry game: lựa chọn, biến cố ngẫu nhiên, lời kể và diễn biến hằng năm. Hỗ trợ tìm kiếm nội dung/mã, lọc nhóm, mở chi tiết và tải JSON. Mỗi lần hiện 20 mục để tránh giao diện quá nặng.
 
