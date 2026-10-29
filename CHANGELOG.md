@@ -1,3 +1,10 @@
+## 8.10.0-career-abroad — 29/10/2026 (UTC+7)
+
+- Fandom/niềm tin, quản lý có thời hạn, định hướng và khủng hoảng qua nhiều năm; nối cát-xê/nghề/kênh hiện có.
+- Đội hình/đối thủ/chấn thương/áp lực, chuyển đội và giải nghệ tự chọn; không tự cấp 20.000 danh tiếng.
+- Thư nhận học tách visa, du lịch đúng mục đích, hòa nhập, chuyển học, cư trú tìm việc/lao động và xét định cư theo hồ sơ.
+- Nhật ký packaged, chưa phát hành; kiểm trọng điểm và giới hạn tại docs/CAREER-ABROAD-8100-ACCEPTANCE.md.
+
 ## 8.9.9-life-depth — 29/10/2026 (UTC+7)
 
 - Chiều sâu hệ thống7–9: chuỗi hệ quả, bệnh mạn/tái khám/tái phát/phục hồi nhiều đợt, lịch làm theo sức khỏe, tự lập/cô đơn/chăm sóc tuổi già và ký ức gửi lại.

@@ -125,3 +125,7 @@ Regression trọng điểm898:16873 đạt/1 lỗi cũ ở nhóm32 (lời thoạ
 Phạm vi gồm chuỗi sức khỏe/tuổi già nhiều bước, hồ sơ bệnh tồn tại sau ổn định, tái phát/chi phí/công việc, chăm sóc/tự lập/cô đơn/ký ức; sửa hợp đồng gia đình và danh tính bạn thân quay lại. Còn regression toàn bộ, thiết bị thật, mẫu save báo mất nghề/lương và binding REVIEWS_DB thực tế. Không coi phạm vi ngoài mô hình bệnh đơn đang hoạt động hoặc chuyên khoa/viện dưỡng lão đầy đủ là đã triển khai. Kiểm trọng điểm tại DEPTH-899-ACCEPTANCE.md.
 
 Đợt899: regression34/42/43/49 có82 đạt/1 lỗi cũ ở regex giao diện Chi tiêu (HEAD trước sửa cũng lỗi). Lượt20–49 rộng đã dừng sau hơn10 phút, không tính phần dở/chưa chạy PASS. Cần chạy lại toàn bộ trên mã cuối ở nghiệm thu GĐ6; kiểm547+2 chuyên đề và smoke/save/NPC đã đạt.
+
+## GĐ6 / nghề nghiệp và di cư 8.10.0
+
+Hoàn thành triển khai theo yêu cầu chủ dự án; kiểm thử trọng điểm đạt, chưa nghiệm thu toàn diện. Chi tiết CAREER-ABROAD-8100-ACCEPTANCE.md. Còn regression đầy đủ trên mã cuối, cân bằng nhiều mùa/fame/chấn thương/thu nhập, Android/iOS và save thật, binding Pages REVIEWS_DB thực tế. Visa là mô phỏng; chưa thay mọi sự kiện du lịch cũ hoặc mô phỏng mọi trường/mọi trận của mọi môn. Nhật ký packaged; không tự deploy.

@@ -1,5 +1,31 @@
 [
   {
+    "id": "career-abroad-depth-8100",
+    "version": "8.10.0-career-abroad",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-29T00:58:39.738Z",
+    "title": "Một Đời — Fandom, đường dài sự nghiệp và cuộc sống ở nước ngoài",
+    "summary": "Người hâm mộ nhớ cách bạn làm nghề; đồng đội, chấn thương và dư luận đi cùng nhiều mùa. Du học tách nhận học với visa, cư trú sau tốt nghiệp cần được xét tiếp.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Có mục Fandom, định hướng và quản lý cho nghề giải trí và từng kênh YouTube, TikTok, Facebook, Instagram. Fan trung thành khác tổng người theo dõi; giao lưu, cách làm nội dung và tần suất quảng cáo ảnh hưởng niềm tin, độ gắn bó và cát-xê.",
+      "Chọn hướng tác phẩm, thương mại hoặc cộng đồng. Có thể ký quản lý không độc quyền một năm hoặc độc quyền ba năm; xem phần chia thù lao và phí kết thúc sớm trước khi chọn. Hợp đồng hết hạn không tự gia hạn. Danh tiếng tốt giúp giá quảng cáo và thu nhập thuận lợi hơn, không bảo đảm thành công.",
+      "Tranh luận nội dung và hình ảnh có hồ sơ khủng hoảng. Cần xác minh, phản hồi và theo dõi từ năm sau; không trả tiền một lần rồi xóa tai tiếng. Bỏ qua có thể mất niềm tin và fan, áp lực kéo dài ảnh hưởng tinh thần.",
+      "Esports và môn đồng đội có đội hình được ghi nhớ, tính cách và tin cậy của đồng đội; đổi người cần được chấp thuận và làm giảm phối hợp ban đầu. Chuyển đội esports phải khép lại mùa đang chơi, xét phong độ rồi thương lượng lại hợp đồng. Thể thao dùng câu lạc bộ và thị trường chuyển nhượng hiện có.",
+      "Ghi nhớ đối thủ đã gặp trong esports và bóng đá. Phối hợp, chấn thương và sức ép phong độ tác động thi đấu và thu nhập. Có thể dành tiền và thời gian phục hồi, hỗ trợ tâm lý; chấn thương nặng không biến mất ngay.",
+      "Tuyển thủ vẫn giảm phản xạ sau đỉnh cao và có tuổi giải nghệ sớm. Giải nghệ giữ số tiền và danh tiếng thực có, không tự tặng danh tiếng hoặc ép chuyển nghề. Bạn có thể ứng tuyển streamer, bình luận, huấn luyện, xây kênh riêng hoặc tìm việc khác. Kênh mới nhận một phần khán giả cũ; người ít được biết đến phải gây dựng từ đầu.",
+      "Có hồ sơ visa chủ động theo nước: chuẩn bị giấy tờ, quỹ sinh hoạt, kế hoạch học. Visa du lịch và du học xét mục đích khác nhau; visa đi chơi không cho quyền học dài hạn hay làm việc. Chuyến du lịch ngắn ngày có chi phí và trở về, không đổi nơi định cư.",
+      "Trường xét nhận học hoặc học bổng trước, sau đó mới xin visa du học. Học bổng học phí không tự cấp tiền sinh hoạt. Chưa được visa vẫn giữ công việc và nơi ở; có thể bổ sung hồ sơ năm sau khi thư còn hạn. Rút hoặc hết hạn thư sẽ hoàn khoản học phí tự túc chưa sử dụng, không hoàn phí hồ sơ và visa.",
+      "Cuộc sống xa quê có hòa nhập văn hóa, nhớ nhà, sinh hoạt địa phương và gọi về cho người thân. Người đã giỏi ngôn ngữ không chịu áp lực thiếu ngôn ngữ chỉ vì chứng chỉ hết hạn; hồ sơ xét duyệt vẫn cần chứng chỉ còn giá trị.",
+      "Du học có thể xin chuyển chương trình đối tác cùng nước; cần được chấp thuận, có phí và thêm một năm học. Sau tốt nghiệp, ở lại tìm việc chỉ là cư trú có hạn; có hợp đồng mới xin chuyển sang cư trú lao động. Gia hạn cần chờ xét và có thể trượt; quá hạn tạm dừng thu nhập công việc, cần giải quyết hồ sơ hoặc thu xếp về nước.",
+      "Sau ít nhất bốn năm cư trú lao động hợp lệ trong mô phỏng, có thể nộp xét định cư với công việc, ngoại ngữ và quỹ dự phòng. Được định cư không đồng nghĩa có quốc tịch. Giữ trạng thái định cư đã có trong bản lưu cũ; các mốc và tỷ lệ là cơ chế trò chơi, không phải quy định di trú ngoài đời."
+    ]
+  },
+  {
     "id": "consequences-health-ageing-899",
     "version": "8.9.9-life-depth",
     "releaseStatus": "released",

@@ -23,7 +23,7 @@ var destinations=[
  ['FR','Pháp','fr',['Université Paris-Saclay','Université de Strasbourg']],
  ['CA','Canada','en',['University of Alberta','University of Ottawa']]
 ].filter(function(c){return !!G.W.BY[c[0]];});
-function abroadReady(l){return free(l)&&!l.school&&!l.abroad&&!l.flags.researchStudy&&!l.retired&&l.edu>=3&&l.edu<7;}
+function abroadReady(l){return free(l)&&!l.flags.studyVisa900&&!l.school&&!l.abroad&&!l.flags.researchStudy&&!l.retired&&l.edu>=3&&l.edu<7;}
 function lvReady(l,lv){return abroadReady(l)&&(lv===5?l.edu>=3&&l.edu<5:l.edu===lv-1);}
 function dest(code){return destinations.filter(function(c){return c[0]===code;})[0];}
 E.SC('abroad107',{title:'Tự chọn hành trình du học',prep:stamp,valid:abroadReady,text:'Bạn chọn bậc học, quốc gia, trường rồi ngành. Sau đó mới nộp hồ sơ học bổng hoặc tự túc. Nếu nhập học, công việc hiện tại kết thúc và nơi ở chuyển sang nước đến.',opts:[5,6,7].map(function(lv){return {k:String(lv),l:lv===5?'Đại học':lv===6?'Thạc sĩ':'Tiến sĩ',req:function(l){return lvReady(l,lv);},run:function(l,r,log,d){if(!live(l,d)||!lvReady(l,lv))return;d.done=true;push(l,'abroad107_country',r,{at:l.age,lv:lv,done:false});}};}).concat([{k:'cancel',l:'Chưa đi du học',run:function(l,r,log,d){if(d)d.done=true;}}])});
@@ -33,12 +33,16 @@ E.SC('abroad107_field',{title:'Chọn ngành du học',valid:function(l,d){retur
 function application(l,d){return live(l,d)&&lvReady(l,d.lv)&&!!dest(d.country)&&[0,1].includes(d.school)&&!!fields[d.field]&&d.field!=='med';}
 function tuition(l,d){return l.base*(d.lv===6?2:4);}
 function admission(l,r,log,d,scholar){if(!application(l,d)||l.money<(scholar?l.base*.02:tuition(l,d)))return;d.done=true;H.cash(l,-(scholar?l.base*.02:tuition(l,d)),scholar?'Chuẩn bị hồ sơ học bổng':'Dự trù học phí du học toàn khóa');if(r()>U.clamp((scholar?.12:.5)+l.st.kno/250,.15,scholar?.65:.9)){log('Hồ sơ vào '+dest(d.country)[3][d.school]+' chưa được chấp nhận. Bạn giữ công việc và nơi ở hiện tại. '+(scholar?'Chi phí chuẩn bị hồ sơ không được hoàn.':'Khoản học phí dự trù được trả lại.'),'neutral');if(!scholar)H.cash(l,tuition(l,d),'Hoàn học phí chưa nhập học');return;}
+ if(E.ABROAD_DEPTH900){l.flags.studyVisa900={country:d.country,lv:d.lv,school:d.school,field:d.field,scholar:scholar,until:l.age+1,deposit:scholar?0:tuition(l,d)};log('Trường đã nhận hồ sơ'+(scholar?' kèm học bổng học phí':' tự túc')+'. Cần xin visa du học tại mục Hồ sơ visa trước khi nghỉ việc và nhập học.','good');return;}
+ enroll900(l,r,log,d,scholar);}
+function enroll900(l,r,log,d,scholar){
  var c=dest(d.country),host=G.W.BY[c[0]],old=G.W.BY[l.country],home={place:l.place,city:l.city,urban:l.urban,cur:l.cur,base:l.base},duration=d.lv===6?2:4;
  l.flags.study107={at:l.age,lv:d.lv,country:c[0],school:c[3][d.school],field:d.field,home:home,finished:false,scholar:scholar};
  if(l.job){var history=l.jobsHist||[];if(history.length&&history[history.length-1].to==null)history[history.length-1].to=l.age;}l.job=null;l.income=0;l.fin=null;l.flags.needJob=false;delete l.flags.postNext;
  E.abroadConvert(l,l.cur==='vnd'?1e6/G.CUR.VND/G.CUR.priceLevel(host.gdp):G.CUR.priceLevel(old.gdp)/G.CUR.priceLevel(host.gdp));l.cur='usd';l.abroad={code:c[0],name:c[1],pool:c[2],study:true,until:l.age+duration,base:host.gdp*1000*.4};l.place=host.cities[0];l.city=l.place;l.urban=true;H.setBase(l);if(d.lv===5){l.uniName=c[3][d.school];l.uniCity=l.place;}l.flags.studiedAbroad=c[1];
  if(d.lv===5){l.major=d.field;l.majorName=fields[d.field];l.school='abroad';}else{l.school=d.lv===6?'post':'phd';l.flags.pg106={lv:d.lv,field:d.field,name:c[3][d.school],started:l.age,end:l.age+duration,residence:c[0],abroad:true,done:false};}l.schoolEnd=l.age+duration;
  log('Bạn nhập học '+c[3][d.school]+' ngành '+fields[d.field]+' tại '+c[1]+'. Công việc cũ kết thúc; từ nay nơi ở, chi phí và tiền tệ tính theo nước du học.','big');}
+E.STUDY_ENTRY900=enroll900;
 E.SC('abroad107_apply',{title:'Nộp hồ sơ du học',valid:application,text:function(l,d){return dest(d.country)[3][d.school]+' · '+fields[d.field]+' · '+(d.lv===6?2:4)+' năm. Tự túc dự trù học phí toàn khóa '+H.money(l,tuition(l,d))+'; chi phí sinh hoạt trả hằng năm tại nước đến. Hồ sơ học bổng tốn '+H.money(l,l.base*.02)+', không bảo đảm được chọn. Nhập học đồng nghĩa rời công việc hiện tại.';},opts:[{k:'scholar',l:'Nộp hồ sơ học bổng',req:function(l){return l.money>=l.base*.02;},run:function(l,r,log,d){admission(l,r,log,d,true);}},{k:'self',l:'Nộp hồ sơ tự túc',req:function(l,d){return l.money>=tuition(l,d);},run:function(l,r,log,d){admission(l,r,log,d,false);}},{k:'cancel',l:'Chưa nộp hồ sơ',run:function(l,r,log,d){if(d)d.done=true;}}]});
 action('abroad107','Học tập','Tự chọn quốc gia, trường và ngành du học',abroadReady);
 // The original school-leaving choice now also opens the country picker.

@@ -502,6 +502,7 @@
     if (maxA && (a >= maxA || (a >= maxA - 6 && l.skill < 45 && r() < 0.3))) {
       log(c.cat === 'esport' ? 'Giải nghệ thi đấu esports.' : 'Giải nghệ sau những năm thi đấu.', 'big');
       H.mem(l, 'Trận đấu cuối cùng trước khi giải nghệ — bạn cúi chào khán giả.', 5);
+      if(E.CAREER_DEPTH900){E.CAREER_DEPTH900.retire(l,r,log);return inc;}
       var next = c.id === 'tuyen_thu_es' ? U.wpick(r, ['coach_es', 'caster_es', 'streamer'], function (x) { return x === 'streamer' ? 2 : 1; }) : 'hlv_tt';
       l.job = null; startJob(l, next, r, log);
       if (next === 'streamer') l.fame = Math.max(l.fame || 0, 2e4);

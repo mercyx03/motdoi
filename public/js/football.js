@@ -160,7 +160,7 @@
   function match(l, season, id, opponent, r, international, knockout) {
     var prior = season.matches.find(function (m) { return m.id === id; }); if (prior) return prior;
     var s = peek(l), c = club(s.club), quality = international ? D.markets[s.national.country][4] : c ? c.strength : 30;
-    var available = !s.injury && s.fitness > 25, ability = rating(l), coach = s.coach.trust;
+    var available = !s.injury && s.fitness > 25 && !(E.CAREER_DEPTH900&&E.CAREER_DEPTH900.sportState(l).injury>=60), ability = rating(l)+(E.CAREER_DEPTH900?E.CAREER_DEPTH900.power(l):0), coach = s.coach.trust;
     var chance = U.clamp(.55 + (ability - quality) / 100 + (coach - 50) / 250, .08, .96);
     var minutes = !available ? 0 : r() < chance ? 60 + Math.floor(r() * 31) : r() < .5 ? 15 + Math.floor(r() * 25) : 0;
     var home = season.matches.length % 2 === 0, tactical = s.style === (c && c.tactics) ? 3 : 0;
@@ -239,7 +239,7 @@
     for (var i = 0; i < peers.length; i++) for (var j = i + 1; j < peers.length; j++) for (var leg = 0; leg < 2; leg++) {
       var a = peers[i], b = peers[j], own = a.id === c.id || b.id === c.id;
       var m = own ? match(l, z, 'league:' + y + ':' + a.id + ':' + b.id + ':' + leg, (a.id === c.id ? b : a).strength - (youth ? 15 : 0), r, false, false) : { gf: Math.floor(r() * 4), ga: Math.floor(r() * 4) };
-      if (own) { m.opponentName = (a.id === c.id ? b : a).name; m.competition = youth ? stageFor(l) + ' · ' + c.league : c.league; }
+      if (own) { m.opponentName = (a.id === c.id ? b : a).name;if(E.CAREER_DEPTH900)E.CAREER_DEPTH900.match(l,m.opponentName,m.gf>m.ga?1:5); m.competition = youth ? stageFor(l) + ' · ' + c.league : c.league; }
       var gf = own && b.id === c.id ? m.ga : m.gf, ga = own && b.id === c.id ? m.gf : m.ga;
       table[i].gf += gf; table[i].ga += ga; table[j].gf += ga; table[j].ga += gf;
       table[i].points += gf > ga ? 3 : gf === ga ? 1 : 0; table[j].points += ga > gf ? 3 : gf === ga ? 1 : 0;
