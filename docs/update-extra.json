@@ -2,8 +2,8 @@
   {
     "id": "gameshow-crime-prison-upgrade-811",
     "version": "8.10.11-gameshow-crime",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-30T23:52:21.000Z",
     "publishedAt": "2026-10-31T00:00:00.000+07:00",
     "title": "Một Đời — Câu hỏi gameshow khó hơn, lựa chọn chủ động cho đường tối",
     "summary": "Các gameshow tăng độ khó sớm hơn; hoạt động phi pháp có hồ sơ điều tra nhiều bước và thêm lựa chọn quản lý, còn sinh hoạt trong trại có thêm chuyện học nghề, hòa giải và chuẩn bị ngày trở về.",
@@ -17,7 +17,8 @@
       "Việc bị điều tra không còn tự biến ngay thành án tù. Hồ sơ có thể kéo dài sang năm sau; bạn quyết định hợp tác, nhờ luật sư nếu đủ chi phí, hoặc chờ và chấp nhận áp lực tăng. Dừng hoạt động không xóa hồ sơ đã mở.",
       "Trong trại có thêm khóa nghề qua nhiều năm, hòa giải mâu thuẫn trong tổ, viết thư và lập kế hoạch nơi ở/việc làm trước ngày ra trại. Học nghề và kế hoạch được lưu để tiếp nối khi mãn hạn; không tự bảo đảm được giảm án hay có việc làm.",
       "Kết quả hiến máu đã được kiểm tra lại: thông báo mô phỏng ghi ngày, phân biệt sự cố vận chuyển với kết quả sàng lọc cần bệnh viện đối chiếu; kết quả sàng lọc chưa phải chẩn đoán. Nhóm máu được lưu khi chưa có thông tin trước đó."
-    ]
+    ],
+    "correctedAt": "2026-10-30T23:52:24.745Z"
   },
   {
     "id": "blood-genetics-followup-910",
