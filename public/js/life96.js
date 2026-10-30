@@ -26,8 +26,13 @@
   };
   var heirAtAge = E.heirAtAge;
   if (heirAtAge) E.heirAtAge = function (l, k, tries) {
-    var best = heirAtAge.apply(this, arguments); if (!best || !best.flags.heirFF) return best;
+    var best = heirAtAge.apply(this, arguments); if (!best) return best;
     var rec = (E.childOpts(l, k).parent.heir || {}).rec || {}, h0 = { rs: (best.rs ^ 0x96a1) | 0 }, r = function () { return U.rand(h0); };
+    // Restore the selected child's recorded values after reconstructing elapsed years.
+    if(E.LOOKS134)best.looks134=E.LOOKS134.kidLooks(l,k);
+    ['hea','hap','kno','soc'].forEach(function(key){if(k.st&&Number.isFinite(k.st[key]))best.st[key]=U.clamp(k.st[key],0,100);else if(Number.isFinite(k[key]))best.st[key]=U.clamp(k[key],0,100);});
+    if(Number.isFinite(k.study))best.st.kno=U.clamp(k.study,0,100);
+    if(k.profile147)best.allergy=k.profile147.allergy;
     best.edu = rec.eduExact || 0;
     if (rec.uniLeft > 0) { if (best.job) { best.lastJob = best.job; best.job = null; } best.school = 'uni'; best.schoolEnd = best.age + rec.uniLeft; best.indep = false; if (rec.abroadStudy) best.flags.heirAbroadStudy = true; }
     else if (rec.jobId && E.CAR[rec.jobId]) {

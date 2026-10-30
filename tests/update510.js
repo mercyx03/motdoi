@@ -5,7 +5,7 @@ for(const [,f]of html.matchAll(/<script src="(js\/[^"?]+)\?v=[^"]+"[^>]*><\/scri
 const E=G.E,F=E.LIFE51,L=E.LOCAL51;let n=0;function ok(x,t){assert.ok(x,t);n++;}
 function life(seed=510,variant='63'){const l=E.createLife({mode:'vn',seed,variant});l.age=28;l.indep=true;l.money=5000;l.pending=[];l.school=null;l.st.hea=100;return l;}
 function open(l,id,arg){const d=E.DEC[id].make(l,()=>.5,arg);l.pending=[d];return d;}
-function choose(l,k){return E.resolve(l,k);}
+function choose(l,k){return resolve(l,k);}
 for(const [v,t]of [[.9,'900k đ'],[.1,'100k đ'],[.2,'200k đ'],[1,'1 triệu đ'],[1000,'1 tỷ đ'],[-1000,'−1 tỷ đ'],[0,'0 đ']])ok(G.CUR.fmtVND(v)===t,'money '+v);
 {
  const l=life();l.age=13;l.school='lower';const d=open(l,'thu_nac_danh');l.school=null;ok(!E.DEC.thu_nac_danh.valid(l,d.data),'dropout invalidates waiting letter');const h=l.st.hap;choose(l,'find');ok(l.st.hap===h&&!l.pending.length,'no stale classroom reward');
@@ -43,3 +43,6 @@ for(const show of ['rm','hai'])for(const role of ['guest','regular'])for(let see
  const l=life(seed);E.startJob(l,'dien_vien',()=>.5,()=>{});l.fame=500000;open(l,'gameshow');choose(l,show);choose(l,role);const v=l.flags.variety,labels=new Set(),before=l.money;let steps=0;while(l.pending[0]&&l.pending[0].id==='vr_vong'&&steps++<20){const d=l.pending[0];labels.add(d.opts[0].l);choose(l,d.opts[0].k);}ok(v.done&&v.completed===v.total&&steps===(role==='guest'?4:12),'short season ends');ok(labels.size>=3,'different game answers');ok(l.money===before+v.fee&&v.audienceGain>0,'fee reconciles and fame grows');
 }
 console.log('V5.1: '+n+' checks passed.');
+
+// Modern seasons interleave optional mini-games; finish those without counting them as main stages.
+function resolve(l,k){const out=E.resolve(l,k);let guard=0;while(l.pending[0]&&l.pending[0].id==='mini152'&&guard++<30)E.resolve(l,E.autoKey(l));assert(guard<30,'mini-games finish in bounded steps');return out;}

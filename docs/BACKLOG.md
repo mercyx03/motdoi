@@ -147,3 +147,11 @@ Regression trọng điểm 904: các nhóm 46,50,65,67,68,70,72,73 chạy trọn
 Hoàn thành triển khai, chuyên đề visa905 231 kiểm tra và depth900 58 kiểm tra đạt; cư trú897 và smoke/save/save-safety/NPC đạt. Browser 390/1280px kiểm lối Học tập, giấy tờ/kế hoạch, tải lại và nhập học tiến sĩ. Còn regression toàn bộ trên mã cuối, thiết bị thật, mẫu save thực của người báo lỗi và binding REVIEWS_DB thực tế. Không tính các lỗi cũ của GĐ6 đã ghi ở các đợt trước là đã sửa trong đợt này. Nhật ký Đã phát hành theo chỉ thị trước; không xác nhận upload website, không deploy.
 
 Đợt visa905: regression trọng điểm55/72 đạt22/22; bản dist và nhật ký đạt kiểm Chrome390/1280px; đóng gói28file và ZIP byte-identical. Chưa nghiệm thu toàn diện như giới hạn trên.
+
+## GĐ6 / 8.10.6–8.10.7: nghiệm thu tiếp tục sau cập nhật đi lại
+
+Đã sửa đường visa tự nhắc/gia hạn, đầy đủ lựa chọn ngoại ngữ/Goethe, giữ chỉ số đời con, menu lẫn nhóm, chuỗi bạn thân, khán giả minigame và mã lao động TW. Sau đó chủ dự án yêu cầu ưu tiên hoàn thiện chuyến máy bay về Việt Nam có giá khứ hồi, hoạt động tại nơi đến, máy bay nội địa, xe lửa gần và menu/sự kiện theo nơi đang có mặt; build/commit/push trước, tiếp tục nghiệm thu rồi build lại. Không tự deploy.
+
+Mốc 906: 154 tệp headless đạt; 77 nhóm hồi quy cũ được gọi, 58 đạt/17 lỗi/2 timeout (5 và 5b), chưa nghiệm thu toàn diện. Nhóm0 chạy lại đạt; nhóm6 sau sửa concert vẫn còn 1 kỳ vọng major cũ không được quan sát. Cần sửa fixture nhóm9 (job=null), đối chiếu đoạn kết, độ lặp, trường hợp nhắc người đã mất (nhóm68), mẫu nhiều con và hiệu chuẩn thống kê; không hạ ngưỡng để coi đạt. Chi tiết docs/CONTINUITY-906-ACCEPTANCE.md và docs/CONTINUITY-906-RESULTS.json.
+
+Mã 907 phải được kiểm lại rộng sau mốc commit ưu tiên; còn kiểm thiết bị Android/iOS thật, save người báo lỗi và binding Pages REVIEWS_DB thực tế. Chưa xác nhận mọi sân bay/tuyến tàu thật hoặc mọi nước có bộ sự kiện riêng chuyên sâu: máy bay có chặng nối, xe lửa là tuyến gần tổng quát, nội dung dùng hồ sơ quốc gia/vùng hiện có. Giá vé là mô phỏng. Báo cáo docs/TRAVEL-907-ACCEPTANCE.md.

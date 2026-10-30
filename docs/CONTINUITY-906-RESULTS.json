@@ -1,0 +1,1144 @@
+{
+  "scope": "906 acceptance before the additional 907 travel request; not full acceptance of final 907 code",
+  "headless": {
+    "total": 154,
+    "pass": 154,
+    "failed": [],
+    "files": [
+      "about140.js",
+      "about141.js",
+      "actions894.js",
+      "actions-cap895.js",
+      "adult106.js",
+      "audit500-bill.js",
+      "business128.js",
+      "audition139.js",
+      "business133.js",
+      "business143.js",
+      "business137.js",
+      "career109.js",
+      "careers105.js",
+      "childhood898.js",
+      "children141.js",
+      "civic118.js",
+      "community-speed.js",
+      "community-support.js",
+      "community.js",
+      "context-casting164.js",
+      "context-weighting.js",
+      "continuity101.js",
+      "continuity906-updates.js",
+      "chains-gd4.js",
+      "contracts161-162.js",
+      "country-depth-achievements.js",
+      "continuity906.js",
+      "country-survival.js",
+      "creator132.js",
+      "debt140.js",
+      "country-minimum-content.js",
+      "depth899.js",
+      "enterprise-chains173.js",
+      "depth900.js",
+      "exam127.js",
+      "expansion842.js",
+      "family104.js",
+      "family126.js",
+      "family129.js",
+      "family130.js",
+      "family830.js",
+      "feedback-a.js",
+      "feedback-b.js",
+      "feedback-c.js",
+      "feedback-d.js",
+      "feedback-e.js",
+      "feedback-features895.js",
+      "feedback843.js",
+      "followups840.js",
+      "football-career.js",
+      "football-payroll901.js",
+      "football897.js",
+      "estate840.js",
+      "hardcore-campaign.js",
+      "hardcore-isolation.js",
+      "inbox-client.js",
+      "heir-family770.js",
+      "inheritance-currency117.js",
+      "integration-feedback.js",
+      "integration-showbiz.js",
+      "leadership-education169-170.js",
+      "life-context-a.js",
+      "life-context-bcd.js",
+      "life-context-updates.js",
+      "life138.js",
+      "logic844.js",
+      "looks134.js",
+      "memorial-history.js",
+      "notifications.js",
+      "integration-gd6.js",
+      "office-parties171-172.js",
+      "office896.js",
+      "operations168.js",
+      "origins-clubs904.js",
+      "orphan-logic895.js",
+      "npc-identity.js",
+      "player107.js",
+      "public116.js",
+      "regression-contexts.js",
+      "pace-gd5.js",
+      "relationships108.js",
+      "relationships841.js",
+      "relative-finance163.js",
+      "release850.js",
+      "reports167.js",
+      "residence897.js",
+      "resume135.js",
+      "review126.js",
+      "save-safety.js",
+      "saves-compat.js",
+      "showbiz-actor.js",
+      "showbiz-audit.js",
+      "showbiz-dating-music.js",
+      "showbiz-games.js",
+      "regression-fixes.js",
+      "showbiz-idol.js",
+      "showbiz-quiz.js",
+      "social-personal131.js",
+      "social131.js",
+      "state-career174.js",
+      "storage896.js",
+      "treasury-deals165-166.js",
+      "university136.js",
+      "update-feedback.js",
+      "update-gd3.js",
+      "update-gd4.js",
+      "update-gd5.js",
+      "update-gd6.js",
+      "update-history-timezones.js",
+      "smoke.js",
+      "update-showbiz.js",
+      "update4100.js",
+      "update-release.js",
+      "update452.js",
+      "update453.js",
+      "update454.js",
+      "update455.js",
+      "update457.js",
+      "update458.js",
+      "update459.js",
+      "update460.js",
+      "update461.js",
+      "update462.js",
+      "update451.js",
+      "update463.js",
+      "update465.js",
+      "update466.js",
+      "audit500-students.js",
+      "update464.js",
+      "update470.js",
+      "update481.js",
+      "update490.js",
+      "update510.js",
+      "update511.js",
+      "update480.js",
+      "update530.js",
+      "update531.js",
+      "update540.js",
+      "update541.js",
+      "update550.js",
+      "update551.js",
+      "update500.js",
+      "update553.js",
+      "update651.js",
+      "update560.js",
+      "update690.js",
+      "update770.js",
+      "update840.js",
+      "visa905.js",
+      "wishes142.js",
+      "world-culture173.js",
+      "world120.js",
+      "update520.js",
+      "update660.js"
+    ]
+  },
+  "legacyRegression": {
+    "total": 77,
+    "pass": 58,
+    "fail": 17,
+    "timeout": 2,
+    "timeoutSecondsPerGroup": 600,
+    "groups": [
+      {
+        "spec": "1",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 305,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "2",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 974,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "3",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 6160,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "0",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 414,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ mọi tài nguyên có ?v= chứa 8.5.0 (tránh cache cũ sau khi cập nhật; cho phép hậu tố như 8.5.0-community)"
+        ]
+      },
+      {
+        "spec": "4",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 945,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "7",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 24,
+        "assertions": {
+          "pass": 30,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "8",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 223,
+        "assertions": {
+          "pass": 598,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "9",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 0,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ TypeError: Cannot set properties of null (setting 'rank')"
+        ]
+      },
+      {
+        "spec": "10",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 703,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "11",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 7,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "12",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 7,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "13",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 5,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "14",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 2,
+        "assertions": {
+          "pass": 402,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "6",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 482,
+        "assertions": {
+          "pass": 253382,
+          "fail": 412
+        },
+        "diagnostics": [
+          "  ✗ quyết định concert sạch: Concert Doja Cat ở Mumbai. Vé khoảng 8.154 INR — và hết sạch sau vài phút mở bán. Điểm đến undefined; dự toán đã gồm đi lại và lưu trú khứ hồi. Xem trực tuyến không cần chuyến đi.",
+          "  ✗ quyết định concert sạch: Concert LE SSERAFIM ở Bamako. Vé khoảng 37.633 XOF — và hết sạch sau vài phút mở bán. Điểm đến undefined; dự toán đã gồm đi lại và lưu trú khứ hồi. Xem trực tuyến không cần chuyến đi.",
+          "  ✗ quyết định concert sạch: Concert Sabrina Carpenter ở Lagos. Vé khoảng 41.556 NGN — và hết sạch sau vài phút mở bán. Điểm đến undefined; dự toán đã gồm đi lại và lưu trú khứ hồi. Xem trực tuyến không cần chuyến đi."
+        ]
+      },
+      {
+        "spec": "15",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 244,
+        "assertions": {
+          "pass": 3339,
+          "fail": 32
+        },
+        "diagnostics": [
+          "  ✗ chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay (sau đó là di chúc, thừa kế, cảnh các con) #7",
+          "  ✗ chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay (sau đó là di chúc, thừa kế, cảnh các con) #14",
+          "  ✗ chết vì bệnh có đủ hồi tưởng, di nguyện, xuôi tay (sau đó là di chúc, thừa kế, cảnh các con) #23"
+        ]
+      },
+      {
+        "spec": "17",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 60,
+        "assertions": {
+          "pass": 12549,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "5b",
+        "code": null,
+        "signal": "SIGTERM",
+        "timeout": true,
+        "seconds": 600,
+        "assertions": null,
+        "diagnostics": []
+      },
+      {
+        "spec": "5",
+        "code": null,
+        "signal": "SIGTERM",
+        "timeout": true,
+        "seconds": 600,
+        "assertions": null,
+        "diagnostics": []
+      },
+      {
+        "spec": "16",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 143,
+        "assertions": {
+          "pass": 8,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ nhịp lựa chọn vừa phải (235.2/đời)"
+        ]
+      },
+      {
+        "spec": "21",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 79,
+        "assertions": {
+          "pass": 90,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ nghe lời gia đình thì vào thẳng cơ nghiệp (30/56)"
+        ]
+      },
+      {
+        "spec": "18",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 153,
+        "assertions": {
+          "pass": 118673,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "23",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 4,
+        "assertions": {
+          "pass": 24,
+          "fail": 3
+        },
+        "diagnostics": [
+          "  ✗ 12 tuổi được làm tối đa 7 việc mỗi năm (đã dùng 4, làm thêm được 38)",
+          "  ✗ 8 tuổi tối đa 3 việc mỗi năm (27)",
+          "  ✗ năm trước không tự làm gì thì game tự chọn ngẫu nhiên một việc (0/2000)"
+        ]
+      },
+      {
+        "spec": "22",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 15,
+        "assertions": {
+          "pass": 4036,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "25",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 2,
+        "assertions": {
+          "pass": 24,
+          "fail": 2
+        },
+        "diagnostics": [
+          "  ✗ danh xưng theo môn: Cầu thủ bóng đá · Tự do · local / kình ngư đội tuyển quốc gia",
+          "  ✗ cầu thủ chuyên nghiệp có câu lạc bộ: Cầu thủ bóng đá · Tự do · local"
+        ]
+      },
+      {
+        "spec": "19",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 281,
+        "assertions": {
+          "pass": 202492,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "27",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 26,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "26",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 185,
+        "assertions": {
+          "pass": 45,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ huy chương IMO hiếm mà có (0/152 người theo đuổi)"
+        ]
+      },
+      {
+        "spec": "24",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 201,
+        "assertions": {
+          "pass": 20,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ hầu như không lặp tin trong cùng năm (5)"
+        ]
+      },
+      {
+        "spec": "29",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 40,
+        "assertions": {
+          "pass": 15,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "31",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 28,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "32",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 8,
+        "assertions": {
+          "pass": 28,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "33",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 20,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "34",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 24,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ giao diện có mục \"Chi tiêu\": đầu tư, tìm việc, mua nhà, chuyển nhà, du lịch… và chi tiêu định kỳ"
+        ]
+      },
+      {
+        "spec": "30",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 43,
+        "assertions": {
+          "pass": 29,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "36",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 32,
+        "assertions": {
+          "pass": 23,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "37",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 13,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "35",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 57,
+        "assertions": {
+          "pass": 18,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "39",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 19,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ rớt thì bảo vệ lại, cuối cùng vẫn ra trường (1 lần bảo vệ)"
+        ]
+      },
+      {
+        "spec": "40",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 19,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "38",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 35,
+        "assertions": {
+          "pass": 6,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ chơi ở nước khác ít lặp câu (10.2% dòng nhật ký lặp lại)"
+        ]
+      },
+      {
+        "spec": "28",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 212,
+        "assertions": {
+          "pass": 66,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "41",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 84,
+        "assertions": {
+          "pass": 26,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "42",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 119,
+        "assertions": {
+          "pass": 26,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "20",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 579,
+        "assertions": {
+          "pass": 6669,
+          "fail": 2
+        },
+        "diagnostics": [
+          "  ✗ mỗi hành động chỉ làm một lần mỗi năm",
+          "  ✗ anh chị em có tên & tuổi (157/163)"
+        ]
+      },
+      {
+        "spec": "46",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 8,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "47",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 7,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "48",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 7,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "43",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 100,
+        "assertions": {
+          "pass": 16,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "49",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 14,
+        "assertions": {
+          "pass": 16,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "51",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 9,
+        "assertions": {
+          "pass": 18,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "52",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 14,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "53",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 4,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "54",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 6,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "55",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 11,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "50",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 11,
+        "assertions": {
+          "pass": 15,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ người Việt định cư Nhật nhận chuyện địa phương tại nơi đang sống"
+        ]
+      },
+      {
+        "spec": "57",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 6,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "58",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 8,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "44",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 111,
+        "assertions": {
+          "pass": 20,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "56",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 68,
+        "assertions": {
+          "pass": 9,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "60",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 79,
+        "assertions": {
+          "pass": 19,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ tìm được đời có nhiều con để thử"
+        ]
+      },
+      {
+        "spec": "62",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 36,
+        "assertions": {
+          "pass": 96,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "59",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 142,
+        "assertions": {
+          "pass": 7,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "64",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 58,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "61",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 80,
+        "assertions": {
+          "pass": 20,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "63",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 84,
+        "assertions": {
+          "pass": 121,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "65",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 72,
+        "assertions": {
+          "pass": 6,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "66",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 114,
+        "assertions": {
+          "pass": 13,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "67",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 92,
+        "assertions": {
+          "pass": 12,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "70",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 4,
+        "assertions": {
+          "pass": 15,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "71",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 11,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "72",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 11,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "73",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 10,
+        "assertions": {
+          "pass": 12,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "74",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1,
+        "assertions": {
+          "pass": 24,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "75",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0,
+        "assertions": {
+          "pass": 3,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "69",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 108,
+        "assertions": {
+          "pass": 8,
+          "fail": 0
+        },
+        "diagnostics": []
+      },
+      {
+        "spec": "68",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 172,
+        "assertions": {
+          "pass": 18,
+          "fail": 1
+        },
+        "diagnostics": [
+          "  ✗ nhật ký không nhắc người đã mất như còn sống (1)"
+        ]
+      },
+      {
+        "spec": "45",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 459,
+        "assertions": {
+          "pass": 36,
+          "fail": 0
+        },
+        "diagnostics": []
+      }
+    ]
+  },
+  "retakes": [
+    {
+      "spec": "0",
+      "result": "PASS 415 assertions after updating the obsolete shared-cache-version expectation to module cache keys"
+    },
+    {
+      "spec": "6",
+      "result": "257062 passed, 1 failed: old core major decision not observed; undefined concert text corrected and independently checked in all 195 countries"
+    }
+  ],
+  "status": "Preview / not fully accepted"
+}

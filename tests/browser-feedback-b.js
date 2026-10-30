@@ -20,12 +20,12 @@ const texts = sel => Array.from(document.querySelectorAll(sel)).map(b => b.inner
   try {
     for (const width of [390, 1280]) {
       const p = await page(chrome, URL, { width, height: 950 });
-      await p.eval(seed); await p.reload();
+      await p.eval(async()=>{await MotDoiBoot.load();}); await p.eval(seed); await p.reload();
       assert(await p.eval(click, '#resumeBtn'), 'có nút chơi tiếp'); await sleep(600);
       await p.eval(() => { if (G.S) G.S.paused = true; return true; });
-      assert(await p.eval(click, '#actPanel [data-ag="❤ Gia đình & tình cảm"]'), 'có nhóm Gia đình & tình cảm'); await sleep(200);
+      assert(await p.eval(click, '#actPanel [data-ag="Gia đình"]'), 'có nhóm Gia đình & tình cảm'); await sleep(200);
       const subs = await p.eval(texts, '#actPanel .actsubs [data-asub]');
-      assert(subs.some(t => t.startsWith('1. Tình yêu & hôn nhân')) && subs.some(t => t.startsWith('3. Quản lý con cái')), 'nhóm con gia đình: ' + subs);
+      assert(subs.some(t => t.startsWith('2. Sinh con & nuôi con')) && subs.some(t => t.startsWith('3. Quản lý con cái')), 'nhóm con gia đình: ' + subs);
       assert.strictEqual(await p.eval(() => document.querySelectorAll('#actPanel .actlist').length), 0, 'chưa chọn nhóm con thì chưa hiện danh sách dài');
       assert(await p.eval(click, '#actPanel [data-asub="3. Quản lý con cái"]')); await sleep(200);
       assert((await p.eval(texts, '#actPanel .actlist [data-act]')).length > 0, 'nhóm Quản lý con cái có hành động');

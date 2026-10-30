@@ -1347,6 +1347,7 @@
   // ================= VÒNG NĂM =================
   // opts.auto = true: AI tự chủ động làm các hành động (dùng cho chế độ tự động, em bé cùng giây, kiểm thử)
   function beginYear(life, opts) {
+    if (E.TRANSIT907 && E.TRANSIT907.visit(life) && E.TRANSIT907.visit(life).at < life.age) E.TRANSIT907.restore(life);
     if (!life.alive) return life.pending;
     // Bản lưu cũ có thể còn lựa chọn của năm trước đã hết hạn: bỏ đi thay vì bắt người chơi bấm rồi báo "không còn phù hợp".
     if (life.pending.length) life.pending = life.pending.filter(function (d) { return !DEC[d.id] || !DEC[d.id].valid || DEC[d.id].valid(life, d.data || {}); });
@@ -1767,6 +1768,7 @@
     life._yearRun = true;
     var r = RF(life), a = life.age, out = [];
     var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death' && k !== 'money') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
+    if (E.TRANSIT907 && E.TRANSIT907.visit(life)) E.TRANSIT907.restore(life, log);
     var f = life.fam, st = life.st;
     var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
     if (a >= 6 && life.focus === 'baby') life.focus = 'study';
@@ -2068,6 +2070,7 @@
   }
 
   function endYear(life) {
+    if (life.alive && E.TRANSIT907 && E.TRANSIT907.visit(life)) E.TRANSIT907.restore(life);
     life._yearRun = false;
     if (!life.alive) return false;
     life.age++;

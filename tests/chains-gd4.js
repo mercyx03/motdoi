@@ -201,7 +201,7 @@ ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
 {
   const l = clone(social), fs2 = E.friendsOf(l).filter(f => l.age + (f.d || 0) >= 18), A = fs2[0], B = fs2[1];
   B.name = A.name; // hai người bạn trùng tên
-  const d = E.DEC.ban_than_kho.make(l, H.rf(l)); d.data.n = A.name; l.pending.unshift(d); E.resolve(l, 'o_ben');
+  const d = E.DEC.ban_than_kho.make(l, H.rf(l)); d.data.n = A.name; d.data.uid894 = E.UPDATE110.uid(l, A); l.pending.unshift(d); E.resolve(l, 'o_ben');
   const c = C.active(l, 'friend');
   ok(c && c.data.helped && c.npc.ref === A.uid110, 'friend: chuỗi gắn uid người bạn được giúp');
   B.alive = false;
@@ -298,7 +298,8 @@ ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
 // ---------- 12. GĐ3 giữ nguyên & mô phỏng nhiều năm ----------
 {
   // Hai ngữ cảnh mới, cùng trạng thái đồng hồ / Math.random (life.id phụ thuộc chúng), chỉ khác có hay không GĐ4.
-  const E = gameContext().E, without = gameContext({ skip: ['js/life144.js'] }).E;
+  const dependents=['js/childhood-context.js','js/health-aging.js'];
+  const E = gameContext({skip:dependents}).E, without = gameContext({ skip: dependents.concat(['js/life144.js']) }).E;
   ok(E.TRIG.filter(t => t.contextTags).length === 50 && without.TRIG.filter(t => t.contextTags).length === 50, 'GĐ3: vẫn đúng 50 trigger có hệ số hoàn cảnh');
   let same = 0, touched = 0, applied = 0, perYear = 0, afterDeath = 0, newLoans = 0, lives = 0;
   const started = {};

@@ -32,7 +32,7 @@ function add(l,region,school,major){pick(l,'study_wishes54','region_'+region);pi
  for(const [r,s,m]of [['Bắc','hust','it'],['Bắc','neu','eco'],['Bắc','hmu','med'],['Nam','ctu','eco'],['Nam','agu','edu']])add(l,r,s,m);ok(A.state(l).wishes.length===5&&!E.DEC.study_wishes54.make(l).opts.some(x=>x.k.startsWith('region_')),'wish cap');
  const json=JSON.stringify(l),saved=E.migrate(JSON.parse(json));ok(A.state(saved).wishes.length===5,'save migration retains order');
  l=life(17);ok(!E.DEC.uni.make(l,()=>.5).opts.some(x=>x.k==='wishes54'),'underage no university list');
- l=life(18);l.country='JP';ok(!E.DEC.uni.make(l,()=>.5).opts.some(x=>x.k==='wishes54'),'foreign life retains original admissions');
+ l=life(18);l.country='JP';ok(E.DEC.uni.make(l,()=>.5).opts.some(x=>x.k==='wishes54'),'foreign life has local admissions');ok(A.localSchools(l).every(u=>u.country==='JP'),'foreign admissions only list host-country schools');
 }
 for(const u of A.schools){ok(u.majors.length>0&&u.majors.every(m=>E.MAJORS[m]),'valid majors '+u.id);ok(Number.isFinite(u.score)&&u.score<=30,'valid simulated cutoff '+u.id);}
 console.log('V5.4: '+n+' education checks passed');

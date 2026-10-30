@@ -1,12 +1,13 @@
 'use strict';
 const assert=require('assert'),fs=require('fs'),path=require('path'),zlib=require('zlib');
 const {loadGame,year,ROOT}=require('./lib/quick');
-const G=loadGame(),E=G.E,C=E.CONTEXT143,rows=require('../docs/gd3-triggers.json');
+const G=loadGame(),E=G.E,C=E.CONTEXT143,withoutContext=require('./hardcore-isolation').gameContext({skip:['js/life143.js']}).E,rows=require('../docs/gd3-triggers.json');
 let checks=0;function ok(v,m){assert.ok(v,m);checks++;}function eq(a,b,m){assert.deepStrictEqual(a,b,m);checks++;}
 function life(){return {alive:true,age:25,base:100,money:100,lastIncome:100,flags:{},st:{kno:50,hea:70,soc:50},mind:{stress:40},tr:{amb:50},kids:[],loans:[],fam:{},job:{yrs:3},skill:50};}
 function t(id){return E.TRIG.find(x=>x.id===id);}function f(id,l){return C.factor(t(id),l);}
 eq(rows.length,50,'exactly 50 existing triggers');eq(E.TRIG.filter(t=>t.contextTags).length,50);
-rows.forEach(x=>{ok(E.DEC[x.id]&&t(x.id),'existing '+x.id);eq(typeof t(x.id).p==='function'?String(t(x.id).p):t(x.id).p,x.before,'base p preserved '+x.id);eq(String(t(x.id).when),x.when,'gate preserved '+x.id);});
+rows.forEach(x=>{ok(E.DEC[x.id]&&t(x.id),'existing '+x.id);eq(typeof t(x.id).p==='function'?String(t(x.id).p):t(x.id).p,x.before,'base p preserved '+x.id);eq(String(t(x.id).when),String(withoutContext.TRIG.find(t=>t.id===x.id).when),'current gate unchanged by context weighting '+x.id);});
+{const l=E.createLife({mode:'vn',seed:906,noOrphan:true});l.age=20;l.birthYear=1991;ok(!t('viec_online').when(l,20),'online work unavailable before 2012');l.birthYear=1992;ok(t('viec_online').when(l,20),'online work available from 2012');}
 const plain={p:.17},a=life();eq(C.probability(plain,a,.17),.17);eq(C.probability(plain,a,-1),-1,'legacy path unchanged');
 for(const v of [-100,0,.2,.5,1,2,99,NaN,Infinity,null]){const k=C.factor({contextWeight:v},a);ok(Number.isFinite(k)&&k>=0&&k<=2,'bounded '+v);}
 eq(C.factor({contextWeight:0},a),0);eq(C.factor({contextWeight:()=>99},a),2);eq(C.probability({contextWeight:2},a,0),0);eq(C.probability({contextWeight:2},a,99),1);eq(C.probability({contextWeight:2},a,-1),0);eq(C.probability({contextWeight:2},a,NaN),0);

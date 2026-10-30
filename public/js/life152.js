@@ -121,7 +121,7 @@
   function M(l) { return l.flags.mini152; }
   function startMini(l, r, kind, ctx, done) { var tok = kind + ':' + yr(l) + ':' + (l.flags.miniSerial152 = (l.flags.miniSerial152 || 0) + 1); l.flags.mini152 = { kind: kind, token: tok, st: MINI[kind].init(l.id + tok, ctx || {}), done: done, ctx: ctx || {}, manual: ctx && ctx.manual != null ? !!ctx.manual : true, notes: [] }; X.next(l, 'mini152', r, { token: tok, n: 0 }, { manual: l.flags.mini152.manual }); return l.flags.mini152; }
   var DONE = {};
-  X.menu('mini152', function (l) { var m = M(l); return m ? (m.ctx.title || MINI[m.kind].n) : 'Trò chơi'; }, function (l) { return M(l) ? true : 'Không có trò chơi'; },
+  X.menu('mini152', function (l) { var m = M(l); return m ? (m.ctx.title || MINI[m.kind].n) + ' · lượt ' + (m.notes.length+1) : 'Trò chơi'; }, function (l) { return M(l) ? true : 'Không có trò chơi'; },
     function (l, d) { var m = M(l); if (!m || d && d.arg && d.arg.token !== m.token) return 'Trò chơi đã kết thúc.'; return (m.notes.length ? m.notes.slice(-2).join('\n') + '\n\n' : '') + MINI[m.kind].text(m.st); },
     function (l, arg) { var m = M(l); if (!m || arg.token !== m.token || arg.n !== m.notes.length) return []; return MINI[m.kind].rows(m.st).map(function (row) { return { k: row.k, l: row.l, run: function (l, r, log) { var mm = M(l); if (!mm || mm.token !== arg.token || arg.n !== mm.notes.length) return; var res = MINI[mm.kind].play(mm.st, row.k); mm.notes.push(res.text); if (!res.done) { X.next(l, 'mini152', r, { token: mm.token, n: mm.notes.length }, { manual: mm.manual }); return; } delete l.flags.mini152; log((mm.ctx.title || MINI[mm.kind].n) + ': ' + res.text + (res.won ? ' Thắng!' : ''), res.won ? 'good' : 'neutral'); if (DONE[mm.done]) DONE[mm.done](l, r, log, res.won, mm); } }; }); });
   E.DEC.mini152.auto = function (l, d, r) { var m = M(l), keys = d.data && d.data.keys || []; if (!m) return 'cancel'; var k = MINI[m.kind].auto(m.st, r, U.clamp((m.ctx.skill || 0.5), 0.05, 0.95)), i = keys.indexOf(k); return i >= 0 && d.opts.some(function (o) { return o.k === String(i); }) ? String(i) : d.opts[0].k; };
@@ -144,9 +144,9 @@
   };
   DONE.varietyBonus = function (l, r, log, won, m) {
     var v = l.flags.variety; if (!v || v.token !== m.ctx.vtoken) return;
-    var bonus = won ? 6000 : 1500; l.fame = (l.fame || 0) + bonus; v.audienceGain = (v.audienceGain || 0) + bonus; v.bonus152 = (v.bonus152 || 0) + (won ? 1 : 0);
+    var bonus = won ? 6000 : 1500; l.fame = (l.fame || 0) + bonus; v.audienceGain = (v.audienceGain || 0) + bonus; v.bonus152 = (v.bonus152 || 0) + (won ? 1 : 0);var audience=l.flags.tvAudience||(l.flags.tvAudience={episodes:0,followers:0});audience.followers+=bonus;
     var mate = (m.ctx.cast || [])[0]; if (mate) { (v.bond152 || (v.bond152 = {}))[mate] = ((v.bond152 || {})[mate] || 0) + (won ? 2 : 1); }
-    log((won ? 'Bạn hoàn thành nhiệm vụ đặc biệt' : 'Nhiệm vụ đặc biệt không thành nhưng mang lại nhiều tiếng cười') + ', thêm ' + bonus + ' người theo dõi' + (mate ? '; bạn và ' + mate + ' thân nhau hơn' : '') + '.', won ? 'good' : 'neutral');
+    log(m.ctx.title+' · '+(won ? 'Bạn hoàn thành nhiệm vụ đặc biệt' : 'Nhiệm vụ đặc biệt không thành nhưng mang lại nhiều tiếng cười') + ', thêm ' + bonus + ' người theo dõi' + (mate ? '; bạn và ' + mate + ' thân nhau hơn' : '') + '.', won ? 'good' : 'neutral');
   };
   E.VARIETY152 = { special: special };
   // Trò chơi nhỏ bị bỏ dở (để dịp khác / sang năm) không giữ trạng thái treo.

@@ -49,7 +49,7 @@ section('0. Phiên bản & trang');
   MODULES.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp module ' + m));
   ok(html.indexOf('logo.webp?v=' + G.VERSION) >= 0 && fs.existsSync(path.join(ROOT, 'logo.webp')), 'logo Một Đời tồn tại & được dùng');
   ok(/<title>Một Đời/.test(html), 'tên game là "Một Đời"');
-  ok(refs.every(r => r.indexOf('?v=') > 0 && r.indexOf(G.VERSION) > r.indexOf('?v=')), 'mọi tài nguyên có ?v= chứa ' + G.VERSION + ' (tránh cache cũ sau khi cập nhật; cho phép hậu tố như ' + G.VERSION + '-community)');
+  ok(refs.every(r => /\?v=\d+\.\d+\.\d+(?:[-.][a-z0-9]+)*"$/i.test(r)), 'mọi tài nguyên có cache key phiên bản module; hash bản đóng gói được kiểm bởi loading.js');
   refs.forEach(r => { const f = r.split('"')[1].split('?')[0]; ok(fs.existsSync(path.join(ROOT, f)), 'tệp tồn tại: ' + f); });
   const cl = fs.readFileSync(path.join(__dirname, '..', 'CHANGELOG.md'), 'utf8');
   ok(cl.indexOf('## v' + G.VERSION) >= 0, 'CHANGELOG có mục cho v' + G.VERSION);
@@ -1694,7 +1694,7 @@ section('32. Bản 3.4: hẹn hò qua mạng (người tử tế, đào mỏ, l�
   { const l = mk(32500, 25, x => { x.partner = { name: 'Lan', sex: 'F', age: 24, status: 'dating', since: 24, alive: true }; x.money = 100; }); const d = E.DEC.hen_ho.make(l, R(5)); const all = E.DEC.hen_ho.def.opts.map(o => o.k);
     ok(['phim', 'to_tuong', 'thuy_cung', 'nha_sach', 'bao_tang'].every(k => all.includes(k)) && all.length >= 15, 'có nhiều hoạt động hẹn hò: xem phim, tô tượng, thủy cung, nhà sách, bảo tàng… (' + all.length + ')');
     ok(d.opts.length >= 6 && d.opts.length <= 14, 'mỗi lần chỉ hiện vài hoạt động khác nhau, có nút đổi gợi ý (' + d.opts.map(o => o.k).join(', ') + ')');
-    const t = play(l, 'hen_ho', d.opts[0].k); ok(!badText(t) && /Lan/.test(t), 'đi hẹn hò: ' + t.slice(0, 90)); }
+    l.pending.unshift(d);const selected=d.opts.find(o=>!['doi','cancel','back'].includes(o.k));const t = E.resolve(l,selected.k).map(e=>e.t).join(' | '); ok(!badText(t) && /Lan/.test(t), 'đi hẹn hò: ' + t.slice(0, 90)); }
   // rủ chơi game
   { const seen = new Set(); let bad = 0; for (let i = 0; i < 40; i++) { const l = mk(32600 + i, 20, x => { x.talent = 'game'; x.game = 'Liên Quân Mobile'; }); const t = play(l, 'ghep_game', 'choi'); if (/giả gái/.test(t)) seen.add('nam giả nữ'); if (/lớp 5/.test(t)) seen.add('học sinh lớp 5'); if (badText(t)) bad++; }
     ok(bad === 0 && seen.size === 2, 'rủ người lạ chơi game có tình huống trớ trêu: nam giả nữ, đồng đội là học sinh lớp 5'); }
@@ -2347,8 +2347,8 @@ section('50. Bản 5.7.0: đời sống từng quốc gia (chế độ Thế gi�
   ok(!!hook, 'có hook đời sống từng quốc gia');
   { let used = 0; const boom = () => { used++; return 0.5; }; let logs = 0;
     for (let i = 0; i < 20; i++) { const l = E.createLife({ mode: i % 2 ? 'world' : 'vn', seed: 50000 + i }); if (l.country !== 'VN') continue; l.age = 30; hook(l, boom, () => logs++, 30); }
-    const em = E.createLife({ mode: 'vn', seed: 50100 }); em.age = 30; em.abroad = { code: 'JP', name: 'Nhật Bản', perm: true }; hook(em, boom, () => logs++, 30);
-    ok(used === 0 && logs === 0, 'đời ở Việt Nam (kể cả người Việt định cư nước ngoài) không dùng số ngẫu nhiên, không thêm chuyện nào từ module mới'); }
+    ok(used === 0 && logs === 0,'đời ở Việt Nam không nhận chuyện quốc gia khác');const em = E.createLife({ mode: 'vn', seed: 50100 }); em.age = 30; em.abroad = { code: 'JP', name: 'Nhật Bản', perm: true }; hook(em, boom, () => logs++, 30);
+    ok(used > 0 && logs > 0, 'người Việt định cư Nhật nhận chuyện địa phương tại nơi đang sống'); }
   ok(!E.TRIG.some(t => /^qg_/.test(t.id)) && Object.keys(E.DEC).filter(k => /^qg_/.test(k)).length >= 12, 'tình huống quốc gia không thêm vào danh sách chung (không làm đời ở Việt Nam đổi khác)');
   { const mkW = (code, age, setup) => { let l = null; for (let i = 0; i < 4000 && !l; i++) { const x = E.createLife({ mode: 'world', seed: 51000 + i }); if (x.country === code) l = x; } l.age = age; l.pending = []; if (setup) setup(l); return l; };
     const jp = mkW('JP', 30, x => { x.school = null; x.indep = true; }); const P = E.worldLinePool(jp);

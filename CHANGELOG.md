@@ -1,3 +1,19 @@
+## 8.10.7-travel — 30/10/2026 (UTC+7)
+
+- Chuyến về Việt Nam có vé máy bay khứ hồi, hiện giá, hoạt động tại nơi đến và nút quay lại; giữ việc học/việc làm, quốc tịch và hạn cư trú.
+- Concert/hoạt động Việt Nam từ nước ngoài dẫn qua đặt chuyến bay.
+- Du lịch thêm máy bay nội địa chọn tỉnh/thành, xe lửa chỉ tới vùng lân cận; báo chi phí từng phần trước khi mua.
+- Menu sinh hoạt theo nước/thành phố đang có mặt, nối văn hóa173 và các hoạt động địa phương.
+- Ưu tiên build/commit/push theo chỉ thị mới; nghiệm thu toàn diện tiếp tục, không deploy. Báo cáo: docs/TRAVEL-907-ACCEPTANCE.md.
+
+## 8.10.6-continuity — 30/10/2026 (UTC+7)
+
+- Giữ ngoại hình/học lực và các chỉ số đã ghi của đúng người con khi chuyển góc nhìn sống hoặc sau tang.
+- Nhắc chuẩn bị visa còn hạn và gia hạn cư trú; thêm lối vào riêng sau du học.
+- Hiện đủ ngoại ngữ hỗ trợ, Goethe, thi lại chứng chỉ hết hạn và ngôn ngữ bảo vệ tại nơi du học.
+- Chặn chuyến quê Việt Nam tại chỗ khi ở nước ngoài; sửa TW trong hồ sơ lao động cũ, menu lẫn nhóm, lượt gia đình, chuỗi bạn thân và khán giả minigame.
+- Nhãn nhật ký Đã phát hành theo chỉ thị riêng trước đó; không xác nhận upload/deploy. Kết quả nghiệm thu: docs/CONTINUITY-906-ACCEPTANCE.md.
+
 ## 8.10.5-study-visa — 29/10/2026 (UTC+7)
 
 - Sửa thiếu bước chuẩn bị giấy tờ và kế hoạch trong thư nhận học, tự mở màn hình visa sau trúng tuyển.

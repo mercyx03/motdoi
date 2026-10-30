@@ -1,6 +1,50 @@
 {
-  "generatedAt": "2026-10-29T04:47:56.980Z",
+  "generatedAt": "2026-10-30T01:16:28.463Z",
   "entries": [
+    {
+      "id": "physical-travel-local-907",
+      "version": "8.10.7-travel",
+      "releaseStatus": "released",
+      "publishedAt": "2026-10-30T01:16:28.383Z",
+      "releasedAt": "2026-10-30T01:16:28.383Z",
+      "correctedAt": "2026-10-30T01:16:28.383Z",
+      "title": "Một Đời — Bay về Việt Nam, đi tàu gần và sinh hoạt theo nơi đang sống",
+      "summary": "Đặt vé máy bay khứ hồi trước khi về Việt Nam tham gia hoạt động; thêm máy bay nội địa, xe lửa gần và sinh hoạt địa phương tại nước đang có mặt.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khi đang ở nước ngoài, hoạt động quê Việt Nam dẫn tới bước mua vé máy bay khứ hồi có giá rõ ràng. Concert tổ chức tại Việt Nam cũng yêu cầu đặt chuyến bay trước; chưa bay thì chưa mua vé vào cửa. Về tới Việt Nam, bạn có thể mở các hoạt động tại đây theo tuổi, lịch và hoàn cảnh.",
+        "Chuyến về thăm giữ chương trình du học, công việc và hồ sơ cư trú ở nước ngoài; có nút bay trở lại bằng vé đã thanh toán. Nếu bạn chưa chủ động quay lại, game kết thúc chuyến thăm trước khi kết toán năm. Lưu/tải khi đang đi vẫn nhớ nơi đến, nơi quay lại và khoản vé đã trả.",
+        "Trong Du lịch có lựa chọn máy bay nội địa để chọn tỉnh/thành tại Việt Nam hoặc thành phố trong nước đang sống; có thể nối chặng từ sân bay phù hợp. Xe lửa dành cho chuyến gần tới vùng lân cận. Mỗi gói báo riêng vé khứ hồi, ăn ở và hoạt động trước khi xác nhận; không tự biến chuyến du lịch thành định cư.",
+        "Thêm Sinh hoạt, ẩm thực và sự kiện tại nơi đang có mặt: món ăn, dịp lễ, chuyện địa phương, bảo tàng, công viên và sinh hoạt cộng đồng thay theo quốc gia/thành phố. Kết nối nội dung quốc gia hiện có; hoạt động đòi đúng thời điểm, tuổi hoặc công việc chỉ xuất hiện khi phù hợp.",
+        "Giá vé là mô phỏng trong game: vé về Việt Nam tính theo chặng gần/xa, máy bay nội địa và xe lửa có mức riêng; hiển thị theo tiền đang sử dụng. Chuyến đi giữ quốc tịch, không tự cấp visa hoặc gia hạn giấy tờ."
+      ]
+    },
+    {
+      "id": "continuity-visa-certificates-906",
+      "version": "8.10.6-continuity",
+      "releaseStatus": "released",
+      "publishedAt": "2026-10-30T00:35:48.902Z",
+      "releasedAt": "2026-10-30T00:35:48.902Z",
+      "correctedAt": "2026-10-30T00:35:48.902Z",
+      "title": "Một Đời — Giữ đúng đời con, nhắc visa và chọn đủ ngoại ngữ",
+      "summary": "Sống tiếp đời con giữ đúng ngoại hình và học lực; hồ sơ du học và cư trú có lời nhắc, ngoại ngữ dễ tìm hơn.",
+      "tags": [
+        "Sửa lỗi",
+        "Cải tiến"
+      ],
+      "details": [
+        "Khi chuyển sang đời con ở tuổi hiện tại, ngoại hình, học lực và các chỉ số đã có trong hồ sơ của đúng người con được giữ lại, cả khi cha mẹ còn sống hoặc đã qua đời. Không đổi một người con cực phẩm thành kém sắc do dựng lại tuổi thơ.",
+        "Thư nhận học đại học, thạc sĩ và tiến sĩ tự mở bước chuẩn bị visa. Có thể để dịp khác để tiếp tục chơi và được nhắc lại năm sau khi thư còn hạn; vẫn có lối chủ động mở hồ sơ trước.",
+        "Thêm lối Gia hạn visa / cư trú sau du học và làm việc, nhắc khi gần hết hạn và khi cần thu xếp hồ sơ. Ở lại tìm việc sau du học chưa phải định cư; chuyển cư trú lao động cần công việc và kết quả xét.",
+        "Danh sách học chứng chỉ luôn có các ngoại ngữ đang hỗ trợ: IELTS, JLPT, TOPIK, HSK, Goethe tiếng Đức và tiếng Pháp mô phỏng. Chứng chỉ hết hạn có đường thi lại; bảo vệ sau đại học ở nước ngoài xét ngôn ngữ của chương trình.",
+        "Du lịch gần và hoạt động quê hương xét nơi đang sống. Ở nước ngoài không tự đi chơi quê Việt Nam tại chỗ; concert tại Việt Nam ghi rõ chuyến đi khứ hồi. Sửa tương thích hồ sơ lao động Đài Loan khi gia hạn và về nước.",
+        "Sửa một số mục bị ẩn khi gom nhóm hành động, tương tác từng người thân trong năm, chuỗi động viên bạn thân và thống kê khán giả từ nhiệm vụ game show."
+      ]
+    },
     {
       "id": "doctoral-visa-905",
       "version": "8.10.5-study-visa",
