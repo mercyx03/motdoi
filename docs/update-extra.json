@@ -1,5 +1,25 @@
 [
   {
+    "id": "gameshow-crime-prison-upgrade-811",
+    "version": "8.10.11-gameshow-crime",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-10-31T00:00:00.000+07:00",
+    "title": "Một Đời — Câu hỏi gameshow khó hơn, lựa chọn chủ động cho đường tối",
+    "summary": "Các gameshow tăng độ khó sớm hơn; hoạt động phi pháp có hồ sơ điều tra nhiều bước và thêm lựa chọn quản lý, còn sinh hoạt trong trại có thêm chuyện học nghề, hòa giải và chuẩn bị ngày trở về.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Nhanh Như Chớp và Đấu Trường 100 bắt đầu ở mức câu hỏi trung bình; câu hỏi khó xuất hiện sớm hơn theo chuỗi đúng và diễn biến cuộc thi. Ai Là Triệu Phú cũng tăng mức câu hỏi từ giữa chặng, vẫn giữ trợ giúp, mốc an toàn và tiền thưởng.",
+      "Nếu đang làm việc phi pháp, bạn có thể mở mục Đường tối để tạm dừng, thu hẹp hoạt động hoặc rời nhóm; lựa chọn ảnh hưởng đến thu nhập, áp lực điều tra, mâu thuẫn và quan hệ trong nhóm.",
+      "Việc bị điều tra không còn tự biến ngay thành án tù. Hồ sơ có thể kéo dài sang năm sau; bạn quyết định hợp tác, nhờ luật sư nếu đủ chi phí, hoặc chờ và chấp nhận áp lực tăng. Dừng hoạt động không xóa hồ sơ đã mở.",
+      "Trong trại có thêm khóa nghề qua nhiều năm, hòa giải mâu thuẫn trong tổ, viết thư và lập kế hoạch nơi ở/việc làm trước ngày ra trại. Học nghề và kế hoạch được lưu để tiếp nối khi mãn hạn; không tự bảo đảm được giảm án hay có việc làm.",
+      "Kết quả hiến máu đã được kiểm tra lại: thông báo mô phỏng ghi ngày, phân biệt sự cố vận chuyển với kết quả sàng lọc cần bệnh viện đối chiếu; kết quả sàng lọc chưa phải chẩn đoán. Nhóm máu được lưu khi chưa có thông tin trước đó."
+    ]
+  },
+  {
     "id": "blood-genetics-followup-910",
     "version": "8.10.10-blood-genetics",
     "releaseStatus": "released",
@@ -55,7 +75,7 @@
     "id": "family-branches-successors-908",
     "version": "8.10.8-dynasty",
     "releaseStatus": "released",
-    "publishedAt": "2026-10-30T07:12:07.940Z",
+    "publishedAt": "2026-10-30T07:12:07.94Z",
     "releasedAt": "2026-10-30T08:01:28.349Z",
     "title": "Một Đời — Gia tộc nhiều nhánh và người kế vị có lựa chọn riêng",
     "summary": "Hồ sơ người kế vị, vận động ủng hộ, biểu quyết điều hành, xác minh con riêng và chu cấp theo điều kiện thực tế của gia đình.",
@@ -172,7 +192,7 @@
     "id": "football-payroll-901",
     "version": "8.10.3-football-payroll",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T04:59:44.000Z",
+    "releasedAt": "2026-10-29T04:59:44Z",
     "publishedAt": "2026-10-29T04:47:29.501Z",
     "title": "Một Đời — Sửa lương hợp đồng cầu thủ và quyết toán cá nhân",
     "summary": "Lương cầu thủ được đưa vào thu nhập cá nhân theo hợp đồng, sau thuế và phí đại diện; không bị giảm chồng bởi các hệ số thu nhập chung.",
@@ -192,7 +212,7 @@
     "id": "orphan-logic-896",
     "version": "8.10.2-orphan-logic",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T03:25:00.000Z",
+    "releasedAt": "2026-10-29T03:25:00Z",
     "publishedAt": "2026-10-29T10:25:00+07:00",
     "title": "Một Đời — Hoàn thiện logic bối cảnh trẻ mồ côi tại mái ấm và nhà chùa",
     "summary": "Sửa triệt để các tình huống vô lý khi nhân vật mồ côi ở mái ấm hoặc nhà chùa: thôi nôi dùng đồ chơi chung, sinh nhật ăn cùng bảo mẫu và các bạn cùng phòng, sự kiện đón em nhỏ mới vào thay cho em họ, và rà soát loại trừ các sự kiện gia đình không phù hợp.",
@@ -207,13 +227,13 @@
       "Em nhỏ mới vào mái ấm / Chú tiểu mới vào chùa (thay cho Em họ 6–12 tuổi): Trẻ mồ côi không còn xuất hiện sự kiện em họ xa xôi gửi về ở cùng; sự kiện chuyển thành mái ấm hoặc nhà chùa đón một em nhỏ / chú tiểu mới vào còn bỡ ngỡ, lạ lẫm; bạn dỗ dành, nhường đồ chơi và dắt em đi ăn, kết nối tình cảm che chở như anh em ruột thịt.",
       "Rà soát & thanh lọc các sự kiện gia đình không phù hợp: Bổ sung điều kiện kiểm tra hoàn cảnh nuôi dưỡng, loại trừ các sự kiện bà nằm viện, mùa hè về quê ở với ông bà hay dọn phòng ngủ riêng đối với trẻ ở mái ấm / nhà chùa; đồng thời các đại từ xưng hô người nuôi dưỡng tự động phản ánh cô bảo mẫu / sư cô / người chăm sóc."
     ],
-    "correctedAt": "2026-10-29T03:40:00.000Z"
+    "correctedAt": "2026-10-29T03:40:00Z"
   },
   {
     "id": "feedback-features-895",
     "version": "8.10.1-feedback-features",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T01:53:27.000Z",
+    "releasedAt": "2026-10-29T01:53:27Z",
     "publishedAt": "2026-10-29T08:46:00+07:00",
     "title": "Một Đời — Tiệc bàn làm việc, thực tập, gameshow ẩm thực và dịch vụ ngầm",
     "summary": "Tiệc tại bàn làm việc được tổ chức và báo cáo ngay; con thực tập kế nghiệp hiển thị tiến trình và trợ cấp rõ ràng; cố định khung danh mục dài; bổ sung hai chương trình Bếp Trưởng Tranh Tài và Chuyện Đời Người Nổi Tiếng cùng tính năng thuê sát thủ trong thế giới ngầm.",
@@ -231,13 +251,13 @@
       "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt.",
       "Cố vấn riêng — Đào tạo người thừa kế toàn diện 10 năm: Cho phép gia tộc mời viện cố vấn đồng hành dài hạn cùng con cái từ khi lên 8 tuổi. Chương trình rèn luyện chuyên sâu 7 lĩnh vực cốt lõi: hình ảnh cá nhân, nghi thức xã giao, giao tiếp trang trọng, quản trị, kinh doanh, quản lý tài sản và lãnh đạo. Sau 10 năm rèn luyện, con cái toát lên phong thái người thừa kế thực thụ, đạt uy tín xã hội cao, sống có trách nhiệm và nâng cao năng suất điều hành vượt trội."
     ],
-    "correctedAt": "2026-10-29T03:40:00.000Z"
+    "correctedAt": "2026-10-29T03:40:00Z"
   },
   {
     "id": "career-abroad-depth-8100",
     "version": "8.10.0-career-abroad",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T01:13:10.000Z",
+    "releasedAt": "2026-10-29T01:13:10Z",
     "publishedAt": "2026-10-29T00:58:39.738Z",
     "title": "Một Đời — Fandom, đường dài sự nghiệp và cuộc sống ở nước ngoài",
     "summary": "Người hâm mộ nhớ cách bạn làm nghề; đồng đội, chấn thương và dư luận đi cùng nhiều mùa. Du học tách nhận học với visa, cư trú sau tốt nghiệp cần được xét tiếp.",
@@ -258,7 +278,7 @@
       "Du học có thể xin chuyển chương trình đối tác cùng nước; cần được chấp thuận, có phí và thêm một năm học. Sau tốt nghiệp, ở lại tìm việc chỉ là cư trú có hạn; có hợp đồng mới xin chuyển sang cư trú lao động. Gia hạn cần chờ xét và có thể trượt; quá hạn tạm dừng thu nhập công việc, cần giải quyết hồ sơ hoặc thu xếp về nước.",
       "Sau ít nhất bốn năm cư trú lao động hợp lệ trong mô phỏng, có thể nộp xét định cư với công việc, ngoại ngữ và quỹ dự phòng. Được định cư không đồng nghĩa có quốc tịch. Giữ trạng thái định cư đã có trong bản lưu cũ; các mốc và tỷ lệ là cơ chế trò chơi, không phải quy định di trú ngoài đời."
     ],
-    "correctedAt": "2026-10-29T01:13:18.960Z"
+    "correctedAt": "2026-10-29T01:13:18.96Z"
   },
   {
     "id": "consequences-health-ageing-899",
@@ -316,7 +336,7 @@
     "id": "football-residence-897",
     "version": "8.9.7-football-residence",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-28T22:40:12+07:00",
     "title": "Một Đời — Sửa sự nghiệp bóng đá và tương tác khi ở nước ngoài",
     "summary": "Đàm phán có kết quả rõ ràng, hợp đồng cầu thủ được tính là nghề chính và các hoạt động địa phương kiểm tra nơi bạn đang sống.",
@@ -340,7 +360,7 @@
     "id": "office-storage-896",
     "version": "8.9.6-office-storage",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-28T14:52:34.553Z",
     "title": "Một Đời — Quản gia làm việc trực tiếp và khắc phục bộ nhớ lưu",
     "summary": "Có bàn làm việc để xử lý liên tiếp, nhân sự chuẩn bị sẵn dự toán tiệc chờ duyệt và cách nén dữ liệu giữ nguyên lịch sử khi bộ nhớ đầy.",
@@ -368,7 +388,7 @@
     "id": "actions-friends-distance-895",
     "version": "8.9.5-actions",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-28T14:08:39.939Z",
     "title": "Một Đời — Xem trước việc làm, menu gọn hơn và sửa tình huống ở xa",
     "summary": "Chỉ trừ lượt khi thực hiện lựa chọn; gộp bạn thân, bỏ Hardcore, sửa hạn chứng chỉ và thêm chuyến về thăm ngắn ngày khi đang ở nước ngoài.",
@@ -418,13 +438,13 @@
       "Giữ đúng thứ tự mới nhất của nhật ký khi các mốc thời gian được ghi bằng múi giờ khác nhau; không đổi ngày hay xóa nội dung của các bản trước.",
       "Mục tiêu đầy đủ 195 quốc gia vẫn chưa hoàn tất: 8 nước hiện đạt độ phủ tối thiểu của đợt này, còn 187 nước cần được bổ sung và kiểm chứng tiếp. Đây không phải thông báo rằng toàn bộ 195 nước đã có đủ nội dung chuyên sâu."
     ],
-    "correctedAt": "2026-10-28T12:03:25.810Z"
+    "correctedAt": "2026-10-28T12:03:25.81Z"
   },
   {
     "id": "country-depth-achievements-893",
     "version": "8.9.3",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T09:49:39.240Z",
+    "releasedAt": "2026-10-28T09:49:39.24Z",
     "publishedAt": "2026-10-28T09:49:32.938Z",
     "title": "Một Đời — Thành tựu quốc gia, bóng đá và căn bếp địa phương",
     "summary": "Thêm 149 thành tựu gắn với hành trình thật trong cuộc chơi; học nấu món địa phương qua nhiều năm và giữ đúng bối cảnh khi chuyển quốc gia.",
@@ -444,13 +464,13 @@
       "Không suy nguồn gốc văn hóa chỉ từ bộ tên của nhân vật. Thành tựu lễ địa phương đếm các năm khác nhau và nơi đã thực sự tham gia, tránh tính nhiều lần trong cùng năm.",
       "Đây là đợt bổ sung đầu trong công việc hoàn thiện chiều sâu 195 quốc gia. Chưa phải toàn bộ 195 nước đã có đủ dữ liệu riêng về giáo dục, lễ hội, hôn nhân, ẩm thực, lao động và đời sống."
     ],
-    "correctedAt": "2026-10-28T09:49:39.310Z"
+    "correctedAt": "2026-10-28T09:49:39.31Z"
   },
   {
     "id": "football-career-892",
     "version": "8.9.2",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T08:55:41.000Z",
+    "releasedAt": "2026-10-28T08:55:41Z",
     "publishedAt": "2026-10-28T15:55:32.807+07:00",
     "title": "Một Đời — Sự nghiệp bóng đá chuyên nghiệp",
     "summary": "Từ sân bóng thiếu niên đến học viện, hợp đồng câu lạc bộ, các mùa giải và cơ hội khoác áo đội tuyển quốc gia.",
@@ -476,7 +496,7 @@
     "id": "state-career-overhaul-891",
     "version": "8.9.1",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T08:35:00.000Z",
+    "releasedAt": "2026-10-28T08:35:00Z",
     "publishedAt": "2026-10-28T15:20:00+07:00",
     "title": "Một Đời — Đại tu hệ thống sự nghiệp nhà nước Việt Nam",
     "summary": "Thăng tiến theo cấp bậc từ cơ sở đến Trung ương, tách biệt ngạch chuyên môn và chức vụ lãnh đạo, liên thông cơ quan cùng quy trình luân chuyển thực tế.",
@@ -501,7 +521,7 @@
     "id": "world-culture-localization-890",
     "version": "8.9.0",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T06:49:10.000Z",
+    "releasedAt": "2026-10-28T06:49:10Z",
     "publishedAt": "2026-10-28T13:30:00+07:00",
     "title": "Một Đời — Bản địa hóa văn hóa, giáo dục và lễ hội 195 quốc gia",
     "summary": "Trải nghiệm lễ hội, học đường, kỳ thi cuối cấp, nghi thức trưởng thành, văn hóa công sở và đời sống kiều bào theo từng quốc gia cư trú.",
@@ -526,7 +546,7 @@
     "id": "country-survival-886",
     "version": "8.8.6",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T06:49:10.000Z",
+    "releasedAt": "2026-10-28T06:49:10Z",
     "publishedAt": "2026-10-28T07:13:17+07:00",
     "title": "Một Đời — Tiếp tục Boys Planet và chọn quốc gia sinh ra",
     "summary": "Sửa lỗi sau chung kết chương trình sống còn, kiểm tra nơi tham gia và thêm lựa chọn quốc gia ở chế độ Thế giới.",
@@ -545,7 +565,7 @@
     "id": "enterprise-family-office-885",
     "version": "8.8.5-enterprise",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T23:57:40.000Z",
+    "releasedAt": "2026-10-27T23:57:40Z",
     "publishedAt": "2026-10-28T02:40:49.912+07:00",
     "title": "Một Đời — Lãnh đạo, kế nghiệp và văn phòng gia đình",
     "summary": "Đào tạo người kế nghiệp qua nhiều năm, xử lý chuyện ban lãnh đạo, thuê quản gia và thiết kế tiệc theo ngân sách.",
@@ -572,8 +592,8 @@
     "id": "enterprise-operations-884",
     "version": "8.8.4-operations",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
-    "publishedAt": "2026-10-28T01:49:42.930+07:00",
+    "releasedAt": "2026-10-28T15:40:12Z",
+    "publishedAt": "2026-10-28T01:49:42.93+07:00",
     "title": "Một Đời — Chiến lược và hiệu suất doanh nghiệp",
     "summary": "Đầu tư nhiều năm, tuyển dụng và điều chỉnh đãi ngộ từ ngân sách thật của công ty.",
     "tags": [
@@ -593,7 +613,7 @@
     "id": "enterprise-reports-883",
     "version": "8.8.3-reports",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T21:41:59.568+07:00",
     "title": "Một Đời — Báo cáo tài chính và biểu đồ doanh nghiệp",
     "summary": "Xem từng năm tài chính, phân biệt lợi nhuận với dòng tiền và theo dõi xu hướng công ty.",
@@ -614,7 +634,7 @@
     "id": "life-enterprise-foundation-882",
     "version": "8.8.2-foundation",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T20:37:05.195+07:00",
     "title": "Một Đời — Tiền riêng của người thân và giao dịch doanh nghiệp",
     "summary": "Theo dõi tiền của từng người, thử vai từ tuổi đi học, quản lý tiền mặt công ty và thương lượng chuyển nhượng.",
@@ -640,7 +660,7 @@
     "id": "life-contracts-881",
     "version": "8.8.1-contracts",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T16:55:14.358+07:00",
     "title": "Một Đời — Đội ngũ truyền thông và hành trình thực tập sinh",
     "summary": "Thuê nhân sự theo chuyên môn, quản lý hợp đồng K-pop và chọn cách sum họp phù hợp ngân sách.",
@@ -662,7 +682,7 @@
     "id": "life-context-bcd-preview",
     "version": "8.8.0-preview",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T15:48:06.701+07:00",
     "title": "Một Đời — Hồ sơ địa vị, rèn luyện và trợ lý truyền thông",
     "summary": "Tách tầng lớp tài sản khỏi follower, làm rõ chức vụ điều hành và bổ sung lịch truyền thông tự động theo phạm vi bạn chọn.",
@@ -687,7 +707,7 @@
     "id": "life-context-a-family",
     "version": "8.8.0-a",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T08:26:26.134Z",
     "title": "Một Đời — Tuổi thơ gần với hoàn cảnh gia đình",
     "summary": "Sinh nhật đầu tiên có nhiều cách kỷ niệm phù hợp túi tiền; gia đình làm nghệ thuật có thể cùng con khám phá sở thích.",
@@ -699,13 +719,13 @@
       "Bố mẹ có thể làm nghề ca hát, diễn xuất, múa, sáng tác, hội họa, nhiếp ảnh, giảng dạy nghệ thuật hoặc nghề truyền thống, với thu nhập đa dạng. Trẻ có thể luyện cùng người thân mỗi năm hoặc chia sẻ mong muốn chọn con đường riêng.",
       "Áp lực học tập của trẻ xét nguồn thu hộ gia đình, đồng thời vẫn có cơ hội học bổng và giúp đỡ. Thu nhập thấp không làm tăng mọi rủi ro hay quyết định tính cách của các thành viên."
     ],
-    "correctedAt": "2026-10-28T15:40:12.290Z"
+    "correctedAt": "2026-10-28T15:40:12.29Z"
   },
   {
     "id": "showbiz-m6-connected-careers",
     "version": "8.7.0-6",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T04:26:27.382Z",
     "title": "Một Đời — Sự nghiệp giải trí liền mạch và thành tựu mới",
     "summary": "Các chương trình truyền hình, nghề diễn viên, thần tượng và show hẹn hò giờ nối vào nhau thành một hành trình, kèm 11 thành tựu mới.",
@@ -724,7 +744,7 @@
     "id": "showbiz-m5-kpop-trainee",
     "version": "8.7.0-5",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T04:16:25.431Z",
     "title": "Một Đời — Thực tập sinh K-pop từ tuổi 14, debut thần tượng và chương trình sống còn",
     "summary": "Có năng khiếu ca hát, nhảy múa, bạn có thể được công ty giải trí Hàn Quốc chú ý từ 14–16 tuổi, đào tạo song song với việc học, rồi debut hoặc thử sức ở các chương trình sống còn.",
@@ -744,7 +764,7 @@
     "id": "showbiz-m4-acting-career",
     "version": "8.7.0-4",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T04:06:02.458Z",
     "title": "Một Đời — Sự nghiệp diễn viên: thử vai, đóng phim, giải thưởng và lời mời gameshow",
     "summary": "Theo nghiệp diễn giờ là cả một con đường: từ vai quần chúng, thử vai từng dự án, làm việc với đạo diễn và bạn diễn, chờ phim ra mắt, đến mùa giải thưởng và được mời lên gameshow.",
@@ -765,7 +785,7 @@
     "id": "showbiz-m3-variety-dating-music",
     "version": "8.7.0-3",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T03:56:35.658Z",
     "title": "Một Đời — Gameshow vận động, chiến thuật, hẹn hò và cuộc thi âm nhạc",
     "summary": "Nhiều chương trình mới có luật chơi riêng: trò chơi xé bảng tên, suy luận, đấu trí chiến thuật, show hẹn hò thực tế và các cuộc thi âm nhạc từ vòng giấu mặt đến chung kết.",
@@ -786,7 +806,7 @@
     "id": "showbiz-m2-quiz-shows",
     "version": "8.7.0-2",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T03:39:16.475Z",
     "title": "Một Đời — Gameshow kiến thức: Nhanh Như Chớp, Ai Là Triệu Phú, Olympia và hơn thế",
     "summary": "Mục mới “Chương trình truyền hình”: tự đăng ký làm thí sinh và trả lời từng câu hỏi trong các gameshow kiến thức, có luật chơi, tiền thưởng và kết quả riêng.",
@@ -807,7 +827,7 @@
     "id": "feedback-e-assets-wills",
     "version": "8.6.0-e",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-27T01:47:45.764Z",
     "title": "Một Đời — Tài sản trong hôn nhân, chia tài sản khi ly hôn và di chúc chi tiết",
     "summary": "Lập thỏa thuận tài sản trước khi cưới, ly hôn chia đúng tài sản chung thay vì chia cố định, và viết di chúc giao từng tài sản cụ thể, chọn người thi hành, giao quyền điều hành doanh nghiệp.",
@@ -829,7 +849,7 @@
     "id": "feedback-d-relationships",
     "version": "8.6.0-d",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T21:50:04.648Z",
     "title": "Một Đời — Kết giao, quà tặng người thân và màn cầu hôn của riêng bạn",
     "summary": "Mở rộng quan hệ với người có địa vị và người nổi tiếng, giới thiệu đối tượng cho con, tặng quà người thân, cầu hôn theo cách của mình; thêm những tình huống áp lực trong giới giải trí cùng các cách tự bảo vệ.",
@@ -850,7 +870,7 @@
     "id": "feedback-c-elite-life",
     "version": "8.6.0-c",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T21:32:54.336Z",
     "title": "Một Đời — Đời sống thượng lưu: tiệc tùng, thương vụ, gia tộc và bộ sưu tập",
     "summary": "Cuộc sống thay đổi theo tầng lớp; tự tổ chức tiệc, bàn thương vụ với người quen, điều hành gia tộc, trải nghiệm xa xỉ và sưu tầm đồ quý có giá trị lên xuống.",
@@ -871,7 +891,7 @@
     "id": "feedback-b-profiles-menus",
     "version": "8.6.0-b",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T21:21:51.829Z",
     "title": "Một Đời — Hồ sơ con chi tiết, chức vụ người thân hiển thị đúng và menu gọn hơn",
     "summary": "Chức vụ, nơi làm việc và thu nhập của người thân luôn khớp với công ty; hồ sơ con có thêm sức khỏe, học tập, quan hệ, tài chính, kỷ niệm; menu Gia đình và Tiền bạc chia thành các nhóm nhỏ.",
@@ -891,7 +911,7 @@
     "id": "feedback-a-family-fixes",
     "version": "8.6.0-a",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T20:53:06.973Z",
     "title": "Một Đời — Sửa lỗi con cái sau ly hôn, về nước sau du học và hẹn hò qua app",
     "summary": "Sửa các lỗi người chơi báo về quyền nuôi con, du học, app hẹn hò; thêm bước chuẩn bị hồ sơ audition và mời bố mẹ về sống chung.",
@@ -913,7 +933,7 @@
     "id": "gd6-integration-release",
     "version": "8.5.0-gd6",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T12:38:14.825Z",
     "title": "Một Đời — Chơi mượt và ổn định hơn",
     "summary": "Chế độ tự động không còn dừng giữa chừng, đổi chế độ có tác dụng ngay, cùng một số sửa lỗi về hoàn cảnh sự kiện.",
@@ -935,7 +955,7 @@
     "id": "gd5-event-balancing",
     "version": "8.5.0-gd5",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T12:02:27.406Z",
     "title": "Một Đời — Cuộc sống tự nhiên hơn, ít trùng lặp hơn!",
     "summary": "Nhịp sự kiện tự nhiên hơn: ít năm dồn dập biến cố, ít tình huống na ná nhau, chế độ tự động trôi nhanh hơn.",
@@ -960,7 +980,7 @@
     "id": "gd4-multiyear-consequences",
     "version": "8.5.0-gd4",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T11:05:30.086Z",
     "title": "Một Đời — Lựa chọn hôm nay, thay đổi cả tương lai!",
     "summary": "Một số lựa chọn quan trọng giờ để lại hậu quả kéo dài nhiều năm và được nhắc lại đúng người, đúng lúc.",
@@ -985,7 +1005,7 @@
     "id": "gd3-context-weighting",
     "version": "8.5.0-gd3",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T09:49:57.975Z",
     "title": "Một Đời — Mỗi cuộc đời, một hoàn cảnh khác nhau!",
     "summary": "Cơ hội và khó khăn trong 50 tình huống quen thuộc phản ánh rõ hơn hoàn cảnh của nhân vật.",
@@ -1002,7 +1022,7 @@
       "Hoàn cảnh không quyết định số phận: sự kiện vẫn có yếu tố bất ngờ, giữ giới hạn lặp và các điều kiện cần thiết. Bản lưu cũ tiếp tục được hỗ trợ.",
       "Đợt này tập trung điều chỉnh xác suất; không bổ sung sự kiện mới hoặc đổi kết quả các phương án lựa chọn."
     ],
-    "correctedAt": "2026-10-27T02:08:17.350Z"
+    "correctedAt": "2026-10-27T02:08:17.35Z"
   },
   {
     "id": "save-family-fixes-oct26",
@@ -1179,7 +1199,7 @@
   },
   {
     "id": "civic118",
-    "publishedAt": "2026-10-23T14:27:51.179080Z",
+    "publishedAt": "2026-10-23T14:27:51.17908Z",
     "title": "Đi đường dài với công vụ và cộng đồng",
     "summary": "Thêm lộ trình cấp ủy, nhiệm kỳ và những việc cụ thể để đại biểu, người tham gia Mặt trận có thể đóng góp.",
     "tags": [
@@ -1341,7 +1361,7 @@
   },
   {
     "id": "relationships-oct23",
-    "publishedAt": "2026-10-23T04:00:00.000Z",
+    "publishedAt": "2026-10-23T04:00:00Z",
     "title": "Yêu chậm hơn, có thêm chuyện gia đình",
     "summary": "Chọn người muốn tìm hiểu, cùng bàn chuyện cưới và lên kế hoạch có con.",
     "details": [
@@ -1357,7 +1377,7 @@
   },
   {
     "id": "life-paths-oct23",
-    "publishedAt": "2026-10-23T03:00:00.000Z",
+    "publishedAt": "2026-10-23T03:00:00Z",
     "title": "Thêm lựa chọn học tập, công việc và tình cảm",
     "summary": "Chọn ngành trong cùng trường, chủ động học cao hơn hoặc du học; thêm đường phát triển trong quân đội, công an và showbiz.",
     "details": [
@@ -1373,7 +1393,7 @@
   },
   {
     "id": "adult-study-civic-oct22",
-    "publishedAt": "2026-10-22T15:01:00.000Z",
+    "publishedAt": "2026-10-22T15:01:00Z",
     "title": "Đi học tiếp, chọn hướng đi mới",
     "summary": "Không cần chờ lời mời để học cao hơn hay tham gia việc chung ở địa phương.",
     "details": [
@@ -1427,7 +1447,7 @@
   },
   {
     "id": "community-speed-oct22",
-    "publishedAt": "2026-10-22T04:51:26.640Z",
+    "publishedAt": "2026-10-22T04:51:26.64Z",
     "title": "Đọc bình luận, nhận thông báo nhanh hơn",
     "summary": "Bình luận và thông báo tải nhẹ hơn; mở tài khoản nhiều lần không còn phải đợi tải lại từ đầu.",
     "details": [

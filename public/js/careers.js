@@ -481,7 +481,8 @@
       H.fx(l, { karma: -3 });
       if (c.crime[1] && r() < c.crime[1]) { H.kill(l, c.crime[2], log, true); return inc; }
       var pa = c.crime[0] * (1.15 - l.st.kno / 250) * (E.crimeRankK ? E.crimeRankK(l, c) : (l.job.rank >= 1 ? 0.85 : 1)); // v4.5: ông trùm có đàn em, có người chống lưng — ít bị bắt hơn
-      if (r() < pa) H.sched(l, 'bi_bat', 0, { why: c.crime[3], sev: c.id === 'ma_tuy' ? 3 : c.id === 'lua_dao' || c.id === 'cho_vay' ? 2 : 1 });
+      if (E.CRIME911) { E.CRIME911.pressure(l,Math.max(1,Math.min(3,1+Math.floor((l.job.rank||0)/3)))); E.CRIME911.year(l, r, log, pa, c); }
+      else if (r() < pa) H.sched(l, 'bi_bat', 0, { why: c.crime[3], sev: c.id === 'ma_tuy' ? 3 : c.id === 'lua_dao' || c.id === 'cho_vay' ? 2 : 1 });
     }
     // nguy hiểm nghề nghiệp
     if (c.haz) {

@@ -1433,6 +1433,8 @@
     if (life.job && !/^(kd_|xkld|phu_giup)/.test(life.job.id) && !E.isCrime(life) && a >= 25 && a <= 50 && (life.flags.bizAsked || 0) < 2 && life.money > life.base && r() < 0.04) add('biz');
     if (a >= 40 && a <= 70 && !life.flags.careDone && ((life.fam.mAlive && life.fam.mAge + a >= 72) || (life.fam.fAlive && life.fam.fAge + a >= 72)) && r() < 0.3) add('care');
 
+    if(E.CRIME911&&E.CRIME911.due(life)){add('crimeCase911');}
+
     // Hardcore có thêm một biến cố riêng; vẫn tuân thủ điều kiện, giới hạn và chuỗi bắt buộc.
     if (E.hardcoreEvent && q.length < cap) {
       var hc = E.hardcoreEvent(life, r, a), beforeHC = q.length;

@@ -40,7 +40,7 @@
     if (l.flags.nailPhoi && a >= 45 && !l.flags.nailPhoiNote) { l.flags.nailPhoiNote = true; log('Ho kéo dài, khó thở: bác sĩ nói phổi tổn thương do hít hóa chất làm móng nhiều năm.', 'bad'); fx(l, { hea: -10 }); }
     if (l.flags.tangLuc >= 3 && !l.flags.timMach) { l.flags.timMach = true; log('Nhiều năm thức đêm, uống nước tăng lực để lái xe — tim bắt đầu đập loạn nhịp.', 'bad'); fx(l, { hea: -10 }); }
     // "nhiệt" của người làm nghề phi pháp: càng ở lâu càng dễ bị bắt
-    if (sec(l) === 'crime') { heat(l, 6); if (ch(r, (l.heat || 0) / 500)) { var c = E.jobDef(l); arrest(l, c && c.crime ? c.crime[3] : 'hoạt động phi pháp', 2); } }
+    if (sec(l) === 'crime' && !E.CRIME911) { heat(l, 6); if (ch(r, (l.heat || 0) / 500)) { var c = E.jobDef(l); arrest(l, c && c.crime ? c.crime[3] : 'hoạt động phi pháp', 2); } }
     else if (l.heat) heat(l, -10);
     // "phốt" làm người nổi tiếng dễ dính scandal
     if (l.phot && (l.fame || 0) > 1e4 && E.DEC.scandal && ch(r, 0.1 * l.phot)) { H.sched(l, 'scandal', 0); l.phot--; }

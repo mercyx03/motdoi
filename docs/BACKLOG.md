@@ -172,3 +172,7 @@ Triển khai theo góp ý mới, mở rộng các hệ thống hiện có, khôn
 ### GĐ6 — thuế và hiến máu909 (30/10/2026, UTC+7)
 
 Đã triển khai theo yêu cầu, không mở giai đoạn mới. Xem HEALTH-TAX-909-ACCEPTANCE.md và HEALTH-TAX-909-RESULTS.json. Chuyên đề1.071 kiểm tra, smoke/save/save-safety/NPC và regression liên quan; các nhóm hồi quy GĐ6 cũ chưa khép vẫn chưa được coi là PASS. Chưa nghiệm thu toàn diện/thiết bị thật/save người báo lỗi/REVIEWS_DB. Thuế áp mốc2026 cho tiền lương nhân vật cư trúVN, giữ bảo hiểm hiện có; chưa mô phỏng mọi loại thuế, trường hợp cư trú phức tạp hoặc quyết toán cho tất cảNPC. Nhóm người phụ thuộc không có dữ liệu đầy đủ phải bổ sung qua hệ thống NPC, không tự dựng chứng cứ. Hiến máu là mô hình điều kiện/lịch/sàng lọc/quyền lợi, chưa đủ mọi tiêu chuẩn thực của mọi cơ sở; cap4/22 là quy ước bảo thủ game. Nhật ký908/909 đổi Đã phát hành theo chỉ thị trực tiếp, không chứng minh đã upload. Không tự deploy hoặc ghi D1.
+
+### GĐ6 — nghiệm thu trọng điểm game show và đường tối (31/10/2026, UTC+7)
+
+Đợt 8.10.11 đã tăng độ khó câu hỏi game show và mở rộng lựa chọn/điều tra nghề phi pháp, băng nhóm, tình huống trong tù. Test chuyên đề, smoke, save, save-safety và các regression liên quan đã chạy; còn thiếu regression đầy đủ trên mã cuối, thiết bị thật, save người báo lỗi và xác minh binding Pages REVIEWS_DB thực tế. Không coi các lỗi/nhóm timeout GĐ6 trước đó là PASS hoặc đã giải quyết. Chưa nghiệm thu toàn diện, không deploy.

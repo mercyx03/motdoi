@@ -1,3 +1,11 @@
+## 8.10.11-gameshow-crime — 31/10/2026 (UTC+7)
+
+- Gameshow kiến thức tăng độ khó sớm hơn theo chặng; luật chơi, trợ giúp và mốc thưởng được giữ.
+- Đường tối thêm quản lý chủ động; điều tra có hồ sơ nhiều bước và quyền hợp tác, luật sư hoặc chờ.
+- Trại giam có khóa nghề, hòa giải, thư từ và chuẩn bị tái hòa nhập qua nhiều năm.
+- Hiến máu giữ thông báo kết quả trì hoãn hiện có; kết quả sàng lọc không bị trình bày thành chẩn đoán.
+- Bản packaged/Preview, chưa xác nhận phát hành. Test chuyên đề: tests/crime911.js, tests/showbiz-quiz.js, tests/blood910.js.
+
 ## 8.10.10-blood-genetics — 30/10/2026 (UTC+7)
 
 - Di truyền ABO/Rh theo bố mẹ sinh học, giữ kiểu hình cũ và thông tin khi chuyển đời.
