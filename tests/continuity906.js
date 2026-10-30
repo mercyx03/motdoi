@@ -40,5 +40,3 @@ for(let k of ['en','ko','zh'])for(let flagged of [false,true]){
  let l=life();l.lang[k]=G.E.H.LANG[k].lv.length;l.langAt[k]=l.age-3;l.langExp[k]=flagged;l.pending=[E.DEC.hoc_them.make(l,()=>0)];choose(l,'renew906_'+k);ok(E.DEC.chung_chi_het_han.valid(l,l.pending[0].data),'expired flag still permits manual retake');let money=l.money;choose(l,'retest');ok(E.certValid(l,k)&&l.money<money,'retake actually renews and charges fee '+k+' '+flagged);ok(l.pending.length===0,'retake queue drains');
 }
 console.log('PASS continuity906: '+n+' checks; automatic admission/residency prompts, eight destinations/three degrees, cancel/expiry/renewal, all certificates and Goethe, living/deceased parent handoff including zero stats, residence/travel guards');
-
-

@@ -266,4 +266,13 @@ function pickMenu(l, menuId, optKey, r = () => 0.2) {
   }
 }
 
+for (const pos of Object.values(S174.POSITIONS)) {
+  ok(Number.isInteger(pos.reqEdu) && pos.reqEdu >= 0 && pos.reqEdu < E.EDU.length, 'Education requirement is valid: ' + pos.id);
+}
+for (const job of ['cong_an','quan_doi']) {
+  const l=makeLife(job,3,38);
+  const text=S174.statusSummaryText(l);
+  ok(!/undefined|NaN/.test(text), 'Uniformed career requirements render cleanly: '+job);
+  ok(S174.BY_JOB_RANK[job].every(pos=>pos.reqEdu===5), 'Officer route requires university education: '+job);
+}
 console.log('State career overhaul (STATE174): ' + passed + ' checks passed.');

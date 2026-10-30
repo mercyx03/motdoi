@@ -19,5 +19,9 @@ for(const c of G.W.C){let l=life(c.code,'world'),d=E.DEC.localLife907.make(l,()=
 {
  let l=life();l.cur='usd';l.money=l.base*100;let d=E.DEC.homeVisit907.make(l,()=>0);near(E.FAMILY126.quote(l,d,String(d.data.keys.indexOf('book'))),T.fare(l),'boarding confirmation is actual airfare, not currency conversion');T.arrive(l,()=>{});d=E.DEC.homeVisit907.make(l,()=>0);near(E.FAMILY126.quote(l,d,String(d.data.keys.indexOf('return'))),0,'prepaid return does not look like another huge expense');ok(G.CUR.toVND(G.W.BY.VN.gdp,l.base)>30,'Vietnam living base uses correct PPP units');
 }
-console.log('PASS transit907: '+n+' checks; real home visit, return/save/currency/job/visa safety; nearby trains/domestic flight selection/itemized payment; country/city activities in 195 countries; concert flight prerequisite; insufficient funds and finite queues');
 
+for(let cur of ['usd','vnd']){
+ let l=life();l.cur=cur;l.money=1e8;l.assets={save:1000,gold:2000,stock:3000,land:4000};l.basis={save:1000,gold:2000,stock:3000,land:4000};E.ABROAD_DEPTH900.residence(l);let money=l.money,assets=JSON.parse(JSON.stringify(l.assets)),visa=JSON.stringify(l.abroad),total=0;
+ for(let i=0;i<25;i++){total+=T.fare(l);ok(T.arrive(l,()=>{}),'repeat boarding only with paid airfare');let saved=E.migrate(JSON.parse(JSON.stringify(l)));ok(T.visit(saved)&&E.H.resCode(saved)==='VN','reload during repeated trip');l=saved;ok(T.restore(l,()=>{}),'repeat return');near(l.money,money-total,'25 round trips never create money');for(const k of Object.keys(assets))near(l.assets[k],assets[k],'asset principal not multiplied by FX round trip');ok(JSON.stringify(l.abroad)===visa,'residence dates preserved on repeated flights');}
+}
+console.log('PASS transit907: '+n+' checks; real home visit, return/save/currency/job/visa safety; nearby trains/domestic flight selection/itemized payment; country/city activities in 195 countries; concert flight prerequisite; insufficient funds and finite queues');

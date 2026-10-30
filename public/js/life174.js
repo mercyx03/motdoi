@@ -200,7 +200,9 @@
         var br = branchOf(jobId, r);
         var reqParty = lv >= 4 || jobId === 'dang_uy' || jobId === 'chinh_tri' || jobId === 'cong_an' || jobId === 'quan_doi';
         var reqTheory = lv >= 7 ? 3 : lv >= 5 ? 2 : lv >= 3 ? 1 : 0;
-        var reqEdu = lv >= 7 ? 5 : Math.max(c.edu || 3, lv >= 4 ? 5 : 3);
+        // edu=99 marks a specialist recruitment route, not an education index.
+        var baseEdu = c.edu === 99 ? 5 : (c.edu || 3);
+        var reqEdu = lv >= 7 ? 5 : Math.max(baseEdu, lv >= 4 ? 5 : 3);
         var reqTenure = r === 0 ? 0 : (c.yrs && c.yrs[Math.min(r - 1, c.yrs.length - 1)]) || 3;
         var reqKpi = lv >= 8 ? 78 : lv >= 6 ? 70 : lv >= 4 ? 62 : 52;
         var pos = {

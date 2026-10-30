@@ -24,4 +24,3 @@ var where=E.whereNow;E.whereNow=function(l){return visit(l)?'Đang về thăm '+
 E.HOOKS.year.push(function(l,r){if(country(l)==='VN'||l.age<12||!l.alive||used(l).promptAt===l.age||!E.DEC.localLife907.valid(l)||r()>.12)return;used(l).promptAt=l.age;if(!l.pending.some(function(d){return d.id==='localLife907';}))X.next(l,'localLife907',r,{}, {manual:false});});
 E.TRANSIT907={visit:visit,price:price,fare:fare,eligible:eligible,arrive:arrive,restore:restore};
 })(globalThis.G);
-

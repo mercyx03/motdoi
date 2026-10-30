@@ -2,6 +2,7 @@
    Ví dụ: node tests/regression-shard.js 0-5 hoặc 5b,6-8 */
 'use strict';
 const fs=require('fs'),path=require('path'),Module=require('module');
+if(process.env.MOTDOI_TEST_CLOCK==='fixed'){const clock=require('./lib/quick').testClock();global.Math=clock.Math;global.Date=clock.Date;}
 const file=path.join(__dirname,'regression.js'),source=fs.readFileSync(file,'utf8');
 const sections=[...source.matchAll(/^section\('([0-9]+[a-z]?)\./gm)];
 const spec=(process.argv[2]||'0-45').split(',');
