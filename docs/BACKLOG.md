@@ -14,6 +14,10 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Di truyền nhóm máu và sau hiến 8.10.10 — 30/10/2026
+
+Kiểm thử trọng điểm alen, bố mẹ sinh học/đổi bạn đời/con nuôi, Rh thai kỳ, chuyển đời, phản hồi sau hiến, tư vấn, lời mời thiếu máu và bạch cầu hạt; smoke/bản lưu và các hệ gia đình bị ảnh hưởng. Chưa chạy lại toàn bộ regression GĐ6 trên mã cuối; chưa kiểm chứng binding REVIEWS_DB Production. Phân bố vùng và xác suất sàng lọc/lời mời là tham số mô phỏng, D/d giản lược, không là công cụ tư vấn y khoa hoặc huyết thống. Cần mở rộng trong GĐ6 kiểm mọi lối sinh con/nhận nuôi và quy trình theo cơ sở, thuốc/chống chỉ định, anti-D và theo dõi chuyên khoa thực tế.
+
 ### Sửa lương cầu thủ 8.10.3 — 29/10/2026
 
 Kiểm thử trọng điểm lương hợp đồng, tài chính cá nhân, bóng đá, sức khỏe, nghề nghiệp, smoke và bản lưu; rà soát tự động 40 đời. Chưa chạy toàn bộ regression trên mã cuối, chưa xác minh binding REVIEWS_DB Production. Artifact Preview; không tự bù lương các năm cũ vì không có lịch sử đủ tin cậy. Chờ nghiệm thu tổng thể GĐ6.

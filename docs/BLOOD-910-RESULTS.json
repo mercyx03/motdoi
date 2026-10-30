@@ -1,0 +1,182 @@
+{
+  "recordedAt": "2026-10-30T09:06:28.328Z",
+  "status": "HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN",
+  "baseline": "619fcd8489a8005f4cc05c05a2be809636799943",
+  "branch": "codex/life-context-upgrade",
+  "source": {
+    "module": "public/js/blood-donation.js",
+    "sha256": "66acbc0cf9d0076cce3efa6b4a878848b6cdadd0014e2cb34aeac3d5ac994db4"
+  },
+  "tests": {
+    "specialized": {
+      "file": "tests/blood910.js",
+      "checks": 10556,
+      "status": "PASS"
+    },
+    "tax909": {
+      "checks": 1071,
+      "status": "PASS"
+    },
+    "regression": [
+      {
+        "file": "relationships108",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0
+      },
+      {
+        "file": "blood910",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0
+      },
+      {
+        "file": "relationships841",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1
+      },
+      {
+        "file": "health-tax909",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1
+      },
+      {
+        "file": "heir-family770",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0
+      },
+      {
+        "file": "continuity906",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 3
+      },
+      {
+        "file": "looks134",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 1
+      },
+      {
+        "file": "family129",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0
+      },
+      {
+        "file": "dynasty908",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 6
+      },
+      {
+        "file": "family130",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0
+      },
+      {
+        "file": "life138",
+        "code": 1,
+        "signal": null,
+        "timeout": false,
+        "seconds": 0
+      },
+      {
+        "file": "children141",
+        "code": 0,
+        "signal": null,
+        "timeout": false,
+        "seconds": 20
+      }
+    ],
+    "existingFailure": {
+      "file": "tests/life138.js",
+      "assertion": "sibling can succeed instead of player",
+      "baselineReproduced": true,
+      "baselineModule": "619fcd8489a8005f4cc05c05a2be809636799943:public/js/blood-donation.js",
+      "status": "FAIL, not counted as PASS"
+    },
+    "quick": [
+      "11 đạt, 0 thất bại, 0 quá hạn, 1 ca có cảnh báo · 18 giây",
+      "10 đạt, 0 thất bại, 0 quá hạn, 7 ca có cảnh báo · 5 giây",
+      "10 đạt, 0 thất bại, 0 quá hạn · 20 giây",
+      "14 đạt, 0 thất bại, 0 quá hạn · 18 giây"
+    ],
+    "releaseTool": {
+      "checks": 527,
+      "status": "PASS"
+    },
+    "browser": {
+      "widths": [
+        390,
+        1280
+      ],
+      "source": "PASS",
+      "dist": "PASS",
+      "scenarios": [
+        "delayed unit result",
+        "private free consultation",
+        "reload preserves result",
+        "no age advance/repeated reward/diagnosis",
+        "restart child from birth preserves alleles",
+        "released update9details",
+        "no JS errors/overflow"
+      ],
+      "prior909": "PASS Chrome390/1280 on final dist: registration, budget PIT, donation and saved CBC, exact reward/certificate"
+    },
+    "notes": {
+      "entries": 134,
+      "previousUnchanged": 133,
+      "status": "released per explicit owner request; upload not asserted"
+    }
+  },
+  "artifact": {
+    "productionBuild": "PASS",
+    "files": 28,
+    "zipBytes": 2720446,
+    "zipSha256": "AB8A97AAC7B6257EA63B6F88E8060FAF210185EEF477652F7CC64A10BFDD188E",
+    "zipMatchesEveryDistEntry": true,
+    "loading": "PASS,8 identical source/build full-life simulations",
+    "workerApi": "PASS,local fake DB only",
+    "REVIEWS_DBProduction": "NOT VERIFIED",
+    "readyForProduction": false,
+    "reason": "Full GĐ6 regression pending, baseline life138 failure, real Pages binding unverified"
+  },
+  "github": {
+    "repository": "mercyx03/motdoi",
+    "visibility": "public",
+    "pushPermission": true,
+    "trackedWorkflows": [],
+    "externalDeploymentHooks": "not verified",
+    "productionDeployExecuted": false
+  },
+  "changedPaths": [
+    "CHANGELOG.md",
+    "dist.zip",
+    "docs/BACKLOG.md",
+    "docs/update-extra.json",
+    "docs/BLOOD-910-ACCEPTANCE.md",
+    "docs/BLOOD-910-RESULTS.json",
+    "public/data/updates.json",
+    "public/js/blood-donation.js",
+    "tests/blood910.js",
+    "tests/blood910-browser.js",
+    "tests/blood910-updates.js",
+    "tests/health-tax909.js",
+    "tests/health-tax909-updates.js"
+  ]
+}

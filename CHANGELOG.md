@@ -1,3 +1,10 @@
+## 8.10.10-blood-genetics — 30/10/2026 (UTC+7)
+
+- Di truyền ABO/Rh theo bố mẹ sinh học, giữ kiểu hình cũ và thông tin khi chuyển đời.
+- Kết quả sau hiến theo lịch hẹn, đối chiếu riêng, lời mời thiếu máu và ca bạch cầu hạt chuyên khoa hiếm.
+- Tư vấn Rh thai kỳ có lưu kế hoạch; không tự chẩn đoán bệnh. Nhật ký Đã phát hành theo yêu cầu chủ dự án, không xác nhận upload.
+- Kiểm thử và giới hạn: docs/BLOOD-910-ACCEPTANCE.md.
+
 ## 8.10.9-tax-blood — 30/10/2026 (UTC+7)
 
 - Thuế tiền lương Việt Nam theo giảm trừ2026, đăng ký người phụ thuộc, bảng thực nhận; giữ nguyên bảo hiểm.

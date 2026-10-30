@@ -1,5 +1,30 @@
 [
   {
+    "id": "blood-genetics-followup-910",
+    "version": "8.10.10-blood-genetics",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-30T08:55:28.174Z",
+    "publishedAt": "2026-10-30T08:55:28.126Z",
+    "title": "Một Đời — Di truyền nhóm máu và hành trình sau hiến",
+    "summary": "Con nhận alen ABO/Rh từ bố mẹ sinh học; theo dõi kết quả sau hiến, lời mời khi thiếu máu và tư vấn Rh trong thai kỳ.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "ABO có các cặp AA/AO, BB/BO, AB và OO; con nhận một alen từ mỗi bố mẹ sinh học. A và B đồng trội, O lặn: hai người nhóm A có thể sinh con nhóm O khi cùng mang AO. Rh dùng mô hình D/d đơn giản: hai người Rh âm sinh con Rh âm; hai người Dd có thể sinh con dd.",
+      "Giữ nguyên nhóm máu từng có trong bản lưu, bổ sung cặp alen tương thích. Con nuôi không lấy nhóm máu từ cha mẹ nuôi. Thai kỳ ghi bố mẹ sinh học và giữ alen của thai, không đổi theo người bạn đời mới. Khi chuyển đời, giữ nhóm máu và alen của con; không chuyển giấy hiến của cha mẹ sang con.",
+      "Nhóm máu mới dùng tham số mô phỏng theo vùng: Việt Nam/Đông Á ưu tiên O rồi B, A, AB và Rh âm rất hiếm; mô hình phương Tây có Rh âm phổ biến hơn. Đây là phân bố phục vụ game, không phải thống kê chính xác của mọi nước và không dùng làm bằng chứng huyết thống.",
+      "Mẹ Rh âm và bố có thể truyền Rh dương được nhắc tư vấn sản khoa: kiểm tra kháng thể, đánh giá thai, dự phòng anti-D theo chỉ định và theo dõi sau sinh. Có lưu kế hoạch chăm sóc; bất đồng không tự biến thành bệnh hoặc kết luận thai chắc chắn gặp nguy hiểm.",
+      "Sau khi lấy máu, đơn vị còn chờ xét nghiệm và vận chuyển. Mở Thông báo sau hiến để nhận phản hồi sau vài ngày trong lịch hẹn mô phỏng; không tăng tuổi. Nếu chưa xem, kết quả đến khi sang năm. Lưu/tải không bốc lại kết quả hoặc nhận thưởng lần nữa.",
+      "Phản hồi ghi ngày/tháng/năm và nhóm máu: có đơn vị được vận chuyển an toàn, sử dụng hỗ trợ người bệnh; có đơn vị chưa dùng được vì chất lượng/vận chuyển. Kết quả sàng lọc cần đối chiếu dẫn đến lời mời tư vấn riêng miễn phí, không tự chẩn đoán bệnh truyền nhiễm. Sàng lọc đạt không bảo đảm loại trừ mọi bệnh.",
+      "Lịch sử giữ trạng thái từng đơn vị, lời mời đối chiếu và khoảng chờ tiếp theo. Kết quả cần đối chiếu sẽ tạm hoãn lượt hiến mới; có thể thu xếp tới cơ sở sau, không tự thu tiền. Kết quả thành công hoặc chưa sử dụng được ảnh hưởng nhẹ tâm trạng một lần; bị hoãn ban đầu có thể buồn nhẹ hoặc bình thường.",
+      "Có thể bật hoặc tắt nhận lời mời khi thiếu máu. Người hiến quen, đủ sức khỏe và khoảng cách có thể được cơ sở liên hệ; người hiến tiểu cầu thường xuyên có cơ hội được gọi hỗ trợ tiểu cầu. Luôn có quyền từ chối không bị phạt, và lời mời vẫn cần khám, xét nghiệm, lịch tiếp nhận.",
+      "Rất hiếm có lời mời đánh giá chuyên sâu hiến bạch cầu hạt hỗ trợ người bệnh ung thư nhiễm trùng nặng. Chỉ người hiến gạn tách có kinh nghiệm, sức khỏe tốt mới vào kịch bản; có hội chẩn trước rồi mới xác nhận đồng ý riêng, được rút lui. Không tự dùng thuốc, không tự tạo tiền hoặc giấy bồi hoàn cho ca chuyên khoa này."
+    ],
+    "correctedAt": "2026-10-30T08:55:28.222Z"
+  },
+  {
     "id": "income-tax-blood-donation-909",
     "version": "8.10.9-tax-blood",
     "releaseStatus": "released",
