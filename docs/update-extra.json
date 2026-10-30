@@ -1,5 +1,33 @@
 [
   {
+    "id": "family-branches-successors-908",
+    "version": "8.10.8-dynasty",
+    "releaseStatus": "packaged",
+    "publishedAt": "2026-10-30T07:12:07.940Z",
+    "releasedAt": null,
+    "title": "Một Đời — Gia tộc nhiều nhánh và người kế vị có lựa chọn riêng",
+    "summary": "Hồ sơ người kế vị, vận động ủng hộ, biểu quyết điều hành, xác minh con riêng và chu cấp theo điều kiện thực tế của gia đình.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Hồ sơ gia tộc hiển thị năng lực quản lý, uy tín cá nhân, liên minh–quan hệ và tham vọng từ 0 đến 100. Mỗi người giữ mong muốn và lịch sử riêng; con chung, con ngoài hôn nhân và con nuôi không bị mặc định năng lực hoặc tính cách theo xuất thân.",
+      "Ứng viên có thể vận động người thân và cổ đông. Sự ủng hộ phụ thuộc quan hệ, uy tín, năng lực, có thời hạn và không đổi thành cổ phần. Hai người trưởng thành có thể lập liên minh; thay đổi quyền lợi, bất đồng hoặc hoàn cảnh có thể khiến liên minh tan rã.",
+      "Thêm quy trình ứng cử CEO và chủ tịch: nộp kế hoạch giữ dòng tiền, mở thị trường hoặc cứu doanh nghiệp; chờ ít nhất một năm rồi biểu quyết. Cổ phần có trọng số phiếu thực, cần quá bán để được bổ nhiệm. Thừa kế cổ phần không tự trao chức vụ điều hành.",
+      "Có dự án quản trị hai năm để chứng minh năng lực: nhận ngân sách, báo cáo từng năm và đánh giá kết quả. Vốn và khoản thu hồi của dự án công ty được ghi vào sổ doanh nghiệp; hoàn thành dự án không tự được bổ nhiệm.",
+      "Những lần gặp gỡ có khả năng để lại quan hệ gia đình được ghi nhớ. Có thể nhận thông báo muộn từ người cũ về một người con đã lớn; thông báo chưa xác nhận được giữ riêng, cần sự đồng ý và hai đợt đối chiếu khác năm. Không tự thêm người chưa xác nhận vào danh sách con để chia tài sản.",
+      "Sau khi xác nhận, bạn có thể công nhận con, giữ thông tin riêng tư, thăm nom, hỗ trợ hoặc bàn việc giới thiệu với gia đình. Con và người trực tiếp nuôi dưỡng có quyền giữ khoảng cách hoặc từ chối đổi chỗ ở. Giữ kín không bảo đảm bí mật sẽ tồn tại mãi.",
+      "Bạn đời và các con có phản ứng khác nhau khi biết thông tin mới. Có thể đối thoại, tư vấn, tạm sống riêng hoặc mở hồ sơ ly hôn. Niềm tin cần thời gian; tạm sống riêng không tự chấm dứt hôn nhân và thu nhập của bạn đời không còn tự nhập ngân sách chung.",
+      "Thêm chu cấp định kỳ: gói theo điều kiện gia đình, Thượng lưu 50.000 USD/tháng và Người thừa kế 150.000 USD/tháng. Game thanh toán 12 tháng một lần, năm đăng ký trả ngay; gói cao cấp đòi tài sản và dòng tiền phù hợp. Thiếu tiền sẽ dừng, không tự vay hoặc rút tiền công ty.",
+      "Gói cao cấp dành 70% cho quỹ riêng của con và 30% cho học tập, chuyến đi, giao lưu và hỗ trợ cá nhân. Nhà riêng chuyển từ tài sản thật đang có; đào tạo dài hạn và thuê trợ lý/bảo vệ dùng các mục hiện có. Tiền quỹ chưa tiêu không bị tính thêm lần nữa vào tiết kiệm.",
+      "Có lời mời dạ tiệc, câu lạc bộ và giới thiệu đầu mối kinh doanh tại nơi đang sống khi gia đình đủ điều kiện; con trưởng thành có thể từ chối. Giao lưu mở thêm liên hệ, không tự tạo doanh thu hoặc mua được uy tín.",
+      "Các nhánh con có thể tranh luận trong bữa ăn, cảm thấy bị lu mờ trong sinh nhật, bàn chuyện học tập khác nhau, phản đối việc tặng nhà, gần gũi trở lại hoặc cùng góp vốn kinh doanh. Câu chuyện chỉ dùng người còn sống, tuổi và thành tích/tài sản phù hợp; tình cảm với người ngoài do chính người ấy lựa chọn.",
+      "Có thể yêu cầu đối chiếu kế hoạch tài sản và hòa giải sau thừa kế. Không tự sửa di chúc của người khác; khoản bù hòa giải phải có nguồn tiền thực và sự đồng thuận. Khi sống tiếp đời con, giữ hồ sơ năng lực, uy tín, tham vọng, nhánh gia đình và vai trò điều hành đã được ghi nhận."
+    ]
+  },
+  {
     "id": "physical-travel-local-907",
     "version": "8.10.7-travel",
     "releaseStatus": "released",

@@ -1,0 +1,245 @@
+{
+  "checkedAt": "2026-10-30T07:33:35.561Z",
+  "status": "HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN",
+  "beforeCommit": "81bfdc599824f92c2cc0a34258ac03109cd8ff02",
+  "branch": "codex/life-context-upgrade",
+  "remote": "origin",
+  "repository": "mercyx03/motdoi",
+  "changed": [
+    "CHANGELOG.md",
+    "dist.zip",
+    "docs/BACKLOG.md",
+    "docs/DYNASTY-908-ACCEPTANCE.md",
+    "docs/DYNASTY-908-RESULTS.json",
+    "docs/update-extra.json",
+    "public/data/updates.json",
+    "public/index.html",
+    "public/js/engine.js",
+    "public/js/family-dynasty.js",
+    "tests/dynasty908.js",
+    "tests/dynasty908-browser.js",
+    "tests/dynasty908-updates.js",
+    "tests/transit907-updates.js"
+  ],
+  "source": {
+    "deferredScripts": 189,
+    "sha256": "8b00aa5a3b33b808f711c7002910716ad83f5d1082ee369f1d20ab74b732e363"
+  },
+  "specialist": {
+    "dynasty908": 2265,
+    "feedbackE": 75,
+    "integrationFeedback": 1076
+  },
+  "quick": [
+    {
+      "suite": "smoke",
+      "passed": 11,
+      "failed": 0,
+      "timeout": 0
+    },
+    {
+      "suite": "saves-compat",
+      "passed": 10,
+      "failed": 0,
+      "timeout": 0
+    },
+    {
+      "suite": "save-safety",
+      "passed": 10,
+      "failed": 0,
+      "timeout": 0
+    },
+    {
+      "suite": "npc-identity",
+      "passed": 14,
+      "failed": 0,
+      "timeout": 0
+    }
+  ],
+  "regression": [
+    {
+      "file": "leadership-education169-170",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "treasury-deals165-166",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "relative-finance163",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "inheritance-currency117",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "heir-family770",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "transit907",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 3
+    },
+    {
+      "file": "relationships108",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "family104",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "family126",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "continuity906",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 5
+    },
+    {
+      "file": "family129",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "family130",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "business137",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 4
+    },
+    {
+      "file": "dynasty908",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 9
+    },
+    {
+      "file": "audition139",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "relationships841",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "looks134",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 2
+    },
+    {
+      "file": "public116",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "civic118",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "children141",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 22
+    },
+    {
+      "file": "estate840",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 30
+    }
+  ],
+  "browser": {
+    "viewports": [
+      390,
+      1280
+    ],
+    "source": "PASS before final additions",
+    "finalDist": "PASS branches, four metrics, recurring allowance, next-year CEO election, 12-point packaged note, accent-free search, no JS errors or horizontal overflow",
+    "visualInspection": "Profile and new update article inspected at390px"
+  },
+  "notes": {
+    "total": 132,
+    "priorPreserved": 131,
+    "newDetails": 12,
+    "releaseStatus": "packaged",
+    "generatorPreserved": true,
+    "docsPublicDistEmbedded": "PASS"
+  },
+  "artifact": {
+    "files": 28,
+    "zipBytes": 2702302,
+    "sha256": "38D8C3334648226D838850E8FB56F0628DAE63B95F94C48A89D947CA3597444F",
+    "package": "npm run package:cloudflare",
+    "nameAndByteReadback": "PASS",
+    "loading": "8 identical complete lives source/build",
+    "workerAPI": "local fake database/admin checks PASS",
+    "prosePreviews": 1032,
+    "catalogueEntries": 1640
+  },
+  "limits": [
+    "Full GĐ6 regression not accepted; unresolved old failures/timeouts remain in BACKLOG",
+    "Synthetic old saves tested; reporting player real save and real mobile devices not provided/tested",
+    "REVIEWS_DB real Pages binding not verified",
+    "No Production deployment or database write",
+    "Late-child report requires recorded plausible history; unconfirmed persons are not auto-added as children",
+    "Parental business before handoff uses existing139 value model; not a full independent NPC treasury"
+  ],
+  "rollback": "Revert update commit, package again, owner uploads verified ZIP; back up saves before downgrade"
+}

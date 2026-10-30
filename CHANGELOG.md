@@ -1,3 +1,10 @@
+## 8.10.8-dynasty — 30/10/2026 (UTC+7)
+
+- Mở rộng gia đình108/148, kế nghiệp139, sổ tiền163, doanh nghiệp137/165 và di chúc150: hồ sơ kế vị, vận động, liên minh, bầu CEO/chủ tịch, dự án hai năm.
+- Thêm nhánh con, hồ sơ xác minh hai đợt, công nhận/giới thiệu, phản ứng gia đình và chu cấp định kỳ theo khả năng tài chính.
+- Sự kiện giữa các con dùng tuổi/thành tích/tài sản thực trong bản lưu; góp vốn kinh doanh từ tiền riêng. Giữ thông tin khi chuyển đời; ly thân không tự góp ngân sách chung.
+- Nhật ký mới ở trạng thái packaged; không deploy. Kiểm thử và giới hạn: docs/DYNASTY-908-ACCEPTANCE.md.
+
 ## 8.10.7-travel — 30/10/2026 (UTC+7)
 
 - Chuyến về Việt Nam có vé máy bay khứ hồi, hiện giá, hoạt động tại nơi đến và nút quay lại; giữ việc học/việc làm, quốc tịch và hạn cư trú.
