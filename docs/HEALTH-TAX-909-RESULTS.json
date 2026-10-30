@@ -1,0 +1,251 @@
+{
+  "checkedAt": "2026-10-30T08:16:14.241Z",
+  "status": "HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN",
+  "beforeCommit": "7e92020899452620e3f3377840a076e25961804c",
+  "branch": "codex/life-context-upgrade",
+  "repository": "mercyx03/motdoi",
+  "changed": [
+    "CHANGELOG.md",
+    "dist.zip",
+    "docs/BACKLOG.md",
+    "docs/HEALTH-TAX-909-ACCEPTANCE.md",
+    "docs/HEALTH-TAX-909-RESULTS.json",
+    "docs/update-extra.json",
+    "public/data/updates.json",
+    "public/index.html",
+    "public/js/app.js",
+    "public/js/tax-resident.js",
+    "public/js/blood-donation.js",
+    "tests/business137.js",
+    "tests/dynasty908-browser.js",
+    "tests/dynasty908-updates.js",
+    "tests/health-tax909.js",
+    "tests/health-tax909-browser.js",
+    "tests/health-tax909-updates.js"
+  ],
+  "source": {
+    "scripts": 191,
+    "sha256": "eb25a27ea26e3f22976d413f968f4cbd2284105b5a196cf623233a1c192d3ff7"
+  },
+  "specialist": {
+    "healthTax909": 1071,
+    "feedbackE": 75,
+    "integrationFeedback": 1047,
+    "business137": 80
+  },
+  "quick": [
+    {
+      "suite": "smoke",
+      "passed": 11,
+      "failed": 0,
+      "timeout": 0
+    },
+    {
+      "suite": "saves-compat",
+      "passed": 10,
+      "failed": 0,
+      "timeout": 0
+    },
+    {
+      "suite": "save-safety",
+      "passed": 10,
+      "failed": 0,
+      "timeout": 0
+    },
+    {
+      "suite": "npc-identity",
+      "passed": 14,
+      "failed": 0,
+      "timeout": 0
+    }
+  ],
+  "regression": [
+    {
+      "file": "leadership-education169-170",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "treasury-deals165-166",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "relative-finance163",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "inheritance-currency117",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "heir-family770",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "transit907",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 2
+    },
+    {
+      "file": "relationships108",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "family104",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "family126",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "continuity906",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 4
+    },
+    {
+      "file": "family129",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "family130",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "business137",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 2
+    },
+    {
+      "file": "audition139",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "dynasty908",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 7
+    },
+    {
+      "file": "relationships841",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "looks134",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 1
+    },
+    {
+      "file": "public116",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "civic118",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 0
+    },
+    {
+      "file": "children141",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 20
+    },
+    {
+      "file": "estate840",
+      "code": 0,
+      "signal": null,
+      "timeout": false,
+      "seconds": 26
+    }
+  ],
+  "browser": {
+    "viewports": [
+      390,
+      1280
+    ],
+    "healthTax909": "PASS registration, budget gross/SI/deductions/PIT/net, donation/CBC reload/rewards, released909/908 notes; no JS errors/overflow",
+    "dynasty908": "PASS handoff profile, allowance, election, released historical note",
+    "visual": "Inspected mobile salary budget, CBC and released909 article"
+  },
+  "notes": {
+    "total": 133,
+    "preservedUnchanged": 131,
+    "changed908": "Only releaseStatus/releasedAt/correctedAt per explicit owner instruction",
+    "new909Details": 10,
+    "labels": "released",
+    "productionUpload": "not performed or verified",
+    "generatorAndEmbedded": "PASS"
+  },
+  "artifact": {
+    "files": 28,
+    "bytes": 2714650,
+    "sha256": "A97BDF89605A7103610B5C031522788A68263B35406361312D06CA2FBD607F4C",
+    "script": "npm run package:cloudflare",
+    "zipReadback": "all entry names and bytes match dist",
+    "loading": "8 source/build complete lives match",
+    "adminAPI": "local fake database PASS",
+    "prosePreviews": 1040,
+    "catalogue": 1648
+  },
+  "limitations": [
+    "Full GĐ6 regression remains unfinished; old failures/timeouts not passed",
+    "No real Android/iOS, reporting player save or actual Pages REVIEWS_DB verification",
+    "VN2026 wage snapshot only; existing insurance model kept per request; not all tax rules and NPC tax returns",
+    "Unknown dependent income/disability/caregiving evidence not invented",
+    "Donation risk/volume calendars and caps are game models, not clinical clearance",
+    "No severe diagnosis from screening; follow-up can remain under specialist review",
+    "Paid-donor50k travel support is a requested game facility policy, not asserted universally mandatory",
+    "No production deployment or D1 writes"
+  ],
+  "rollback": "Revert update commit and package again; back up saves before downgrading"
+}

@@ -861,8 +861,9 @@
     var rows = [];
     function row(k, v, cls) { rows.push('<dt>' + esc(k) + '</dt><dd class="' + (cls || '') + '">' + esc(v) + '</dd>'); }
     var Y = l.yr || {};
-    if (Y.si > 0) { row('Lương (trước bảo hiểm)', money(l, Y.gross / 12) + '/tháng', 'pos'); row('Đóng ' + (E.siLabel ? E.siLabel(l) : 'bảo hiểm'), '−' + money(l, Y.si / 12) + '/tháng'); row('Lương thực nhận', money(l, F.inc / 12) + '/tháng', 'pos'); }
+    if (Y.si > 0 || Y.taxBreakdown909) { row('Lương (trước bảo hiểm)', money(l, (Y.taxBreakdown909?Y.taxBreakdown909.gross:Y.gross) / 12) + '/tháng', 'pos'); row('Đóng ' + (E.siLabel ? E.siLabel(l) : 'bảo hiểm'), '−' + money(l, Y.si / 12) + '/tháng'); row('Lương thực nhận', money(l, F.inc / 12) + '/tháng', 'pos'); }
     else row(l.retired ? (l.pensioned ? 'Lương hưu / con biếu' : 'Trợ cấp / con biếu') : 'Thu nhập của bạn', money(l, F.inc / 12) + '/tháng', 'pos');
+    if (Y.taxBreakdown909) { row('Giảm trừ gia cảnh', money(l,Y.taxBreakdown909.deduction/12)+'/tháng'); row('Thu nhập tính thuế', money(l,Y.taxBreakdown909.taxable/12)+'/tháng'); row('Thuế TNCN tiền lương', '−'+money(l,(Y.pit909||0)/12)+'/tháng'); }
     if (F.partner) row((l.partner ? U.cap(E.H.partnerWord(l, l.partner)) : 'Bạn đời') + ' góp', money(l, F.partner / 12) + '/tháng', 'pos');
     row('Ăn uống & sinh hoạt', '−' + money(l, Math.max(0, F.food - (F.pets || 0))));
     if (F.pets) row('Nuôi thú cưng', '−' + money(l, F.pets));

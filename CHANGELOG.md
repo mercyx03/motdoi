@@ -1,3 +1,10 @@
+## 8.10.9-tax-blood — 30/10/2026 (UTC+7)
+
+- Thuế tiền lương Việt Nam theo giảm trừ2026, đăng ký người phụ thuộc, bảng thực nhận; giữ nguyên bảo hiểm.
+- Hiến toàn phần/tiểu cầu: lịch hẹn, sàng lọc, tạm hoãn, tư vấn, bồi dưỡng/quà và bồi hoàn cá nhân có giới hạn.
+- Đổi nhãn nhật ký908 và909 sang Đã phát hành theo chỉ thị trực tiếp; không xác nhận hay thực hiện upload Production.
+- Kiểm thử/nguồn và giới hạn: docs/HEALTH-TAX-909-ACCEPTANCE.md.
+
 ## 8.10.8-dynasty — 30/10/2026 (UTC+7)
 
 - Mở rộng gia đình108/148, kế nghiệp139, sổ tiền163, doanh nghiệp137/165 và di chúc150: hồ sơ kế vị, vận động, liên minh, bầu CEO/chủ tịch, dự án hai năm.
