@@ -1,3 +1,12 @@
+## 8.10.12-upgrade912 — 01/11/2026 (UTC+7)
+
+- Khối thi THPT: hỏi bắt buộc từ lớp 11 tới năm thi (trước đây ~14% đời bị bỏ qua vì hàng đợi đầy), chọn/xem/đổi trong Học tập, ghi nguồn manual/auto/legacy/school, không gán khối ngoài Việt Nam.
+- Hiệu năng: danh sách hành động không sao chép bản lưu cho từng hành động (đời 45 tuổi 740 ms → 16 ms); hồ sơ chi tiết có nền đặc, nút đóng không bị che.
+- Tài sản: bộ chọn chung (nhóm USD, loại, trạng thái, tìm kiếm, sắp xếp, phân trang) cho bán/tặng/di chúc; bán đúng tài sản đã chọn có bước xác nhận.
+- Tình cảm: 10 lượt tìm/năm một bộ đếm, người được gặp có thể từ chối, tìm tới 85 tuổi, làm mới danh sách mập mờ giữ nguyên hệ quả.
+- Gói cố vấn thừa kế: học phí theo tỷ giá chung (sửa sai 10^6 lần ở VN), tối đa +50 mỗi chuyên môn có sổ ghi, migrate khóa cũ.
+- Bản packaged/Preview, chưa xác nhận phát hành. Theo dõi, số đo và phần chưa làm: docs/UPGRADE-912-PROGRESS.md.
+
 ## 8.10.11-gameshow-crime — 31/10/2026 (UTC+7)
 
 - Gameshow kiến thức tăng độ khó sớm hơn theo chặng; luật chơi, trợ giúp và mốc thưởng được giữ.

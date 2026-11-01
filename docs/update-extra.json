@@ -1,5 +1,33 @@
 [
   {
+    "id": "school-assets-romance-upgrade-812",
+    "version": "8.10.12-upgrade912",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-11-01T10:10:00.000+07:00",
+    "title": "Một Đời — Chọn khối thi chắc chắn, bán đúng tài sản muốn bán, hẹn hò có lượt và có quyền từ chối",
+    "summary": "Học sinh THPT luôn được tự chọn và đổi khối thi trước kỳ thi; bảng việc làm phản hồi nhanh hơn rõ rệt, hồ sơ chi tiết trên điện thoại không còn bị trong suốt; tài sản có bộ lọc, tìm kiếm và phân trang khi bán, tặng hay lập di chúc; tìm người yêu tới 10 lượt mỗi năm và người được gặp có thể từ chối; gói cố vấn thừa kế tính học phí đúng tỷ giá và cộng rõ ràng tối đa 50 điểm mỗi chuyên môn.",
+    "tags": [
+      "Sửa lỗi",
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Lên lớp 11 ở Việt Nam, bạn luôn được hỏi chọn khối thi, kể cả năm có nhiều chuyện xảy ra cùng lúc; trước đây có đời bị bỏ qua và nhà trường tự xếp khối. Học bổ túc THPT cũng được chọn khối trước khi thi. Ở nước khác không có khối thi nên không bị gán khối.",
+      "Mục Học tập có thêm “Chọn khối thi THPT / Xem – đổi khối thi”: thấy rõ ba môn thi và nhóm ngành của từng khối, đổi tối đa 2 lần trước kỳ thi. Đổi ngay năm thi phải học bù (kiến thức giảm, áp lực tăng); thi xong thì khối được giữ cùng điểm thi. Lựa chọn ở chế độ tự động vẫn có thể đổi lại khi bạn tự chơi.",
+      "Bảng “Việc bạn muốn làm” và các nhóm việc mở gần như tức thì, kể cả ở cuối đời nhiều tài sản, quan hệ; game không còn khựng mỗi năm.",
+      "Hồ sơ chi tiết trên điện thoại có nền rõ ràng khi cuộn xuống phần dưới, nút “Đóng hồ sơ” không còn bị thanh nhắc lựa chọn đang chờ che mất.",
+      "“Bán nhà cho thuê / sang nhượng cửa hàng” nay cho chọn đúng tài sản muốn bán (trước đây chỉ bán được món đầu tiên), xem giá, lãi lỗ, tiền thuê sẽ mất và điều khoản di chúc bị ảnh hưởng trước khi xác nhận. Vẫn tối đa 4 giao dịch mỗi năm.",
+      "Khi bán, tặng con hoặc giao tài sản trong di chúc: lọc theo nhóm giá trị quy đổi USD (dưới 1 triệu, 1–5, 6–15, 16–30, 31–50, 51–100, 101–250, 251–500, 501–1.000 triệu, trên 1 tỷ), theo loại tài sản, trạng thái, tìm theo tên hoặc địa điểm, sắp xếp và chuyển trang 20 mục; không còn giới hạn chỉ thấy vài chục tài sản đầu tiên.",
+      "Tài sản đã ghi trong di chúc mà bạn bán hoặc tặng khi còn sống thì điều khoản đó hết hiệu lực và được ghi vào nhật ký; người nhận mất trước thì phần đó chia theo tỷ lệ chung. Viết di chúc không chuyển tài sản khi bạn còn sống.",
+      "Tìm người yêu được tới 10 lượt mỗi năm, dùng chung cho tìm người yêu và làm quen trong mục mập mờ; đổi tiêu chí hẹn hò không tốn lượt. Từ 56 tuổi vẫn chủ động tìm được (tới 85 tuổi).",
+      "Gặp được ai đó chưa có nghĩa là người ấy đồng ý: mức hợp nhau, khoảng cách tuổi, ngoại hình, sự ổn định, cách trò chuyện và các mối tình cũ đều ảnh hưởng. Bị từ chối liên tiếp thì những lần sau dễ có tiến triển hơn, nhưng không bao giờ chắc chắn.",
+      "Mục mập mờ có “Kết thúc và làm mới danh sách” (xem lại danh sách trước khi xác nhận, tối đa 1 lần mỗi năm); kết thúc từng người không cần còn lượt gặp. Con chung, thai kỳ, nghĩa vụ nuôi con và gia đình bí mật được giữ nguyên; người cũ có thể tình cờ gặp lại sau vài năm.",
+      "Gói cố vấn thừa kế 5 triệu USD tính học phí đúng tỷ giá (khoảng 127 tỷ đồng ở Việt Nam; trước đây bị tính sai lớn hơn rất nhiều). Mỗi chuyên môn trong 7 chuyên môn được cộng tổng cộng tối đa 50 điểm từ khóa (gói 1 triệu USD: 30 điểm): phần lớn trong 10 năm học, phần còn lại khi hoàn thành; không vượt 100 và không cộng vào mọi chỉ số khác.",
+      "Khóa cố vấn đang học trong bản lưu cũ được tính tiếp phần đã nhận, không thu phí lại; khóa đã hoàn thành trước đây được bù một lần lên mức mới. Giá dịch vụ tính bằng USD trong đường tối cũng được quy đổi đúng tỷ giá."
+    ]
+  },
+  {
     "id": "gameshow-crime-prison-upgrade-811",
     "version": "8.10.11-gameshow-crime",
     "releaseStatus": "released",
