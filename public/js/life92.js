@@ -26,7 +26,7 @@
     if (P.me && at0 && at0.t && at0.t !== 'đang đi học') { P.me.job = at0.t; if (at0.inc > 0) P.me.inc = at0.inc; }
     if (P.mate && k.mateJob) { P.mate.job = k.mateJob; if (k.mateInc2 != null) P.mate.inc = k.mateInc2; }
     P.sibList = (l.kids || []).filter(function (x) { return x !== k && !(x.name === k.name && x.born === k.born && x.sex === k.sex); }).map(function (x) {
-      return { n: x.name, sex: x.sex, born: x.born - k.born, died: x.alive === false && x.died != null ? x.died - k.born : null, close: x.close };
+      return { n: x.name, sex: x.sex, born: x.born - k.born, died: x.alive === false && x.died != null ? x.died - k.born : null, close: x.close, job: typeof x.job === 'string' && x.job ? (E.CAR[x.job] && E.CAR[x.job].t ? E.CAR[x.job].t[0] : x.job) : null };
     }).filter(function (s) { return s.died == null || s.died > 0; });
     return o;
   };
@@ -43,7 +43,7 @@
     // An empty roster is authoritative too: an only child must not get random siblings.
     if (Array.isArray(PA.sibList)) {
       var older = [], later = [];
-      PA.sibList.forEach(function (s) { var o = { n: s.n, sex: s.sex, born: s.born, alive: true, close: U.clamp(s.close != null ? s.close : 65, 30, 95), job: 'đang đi học', wed: false, kids: 0, q: f.q, diesAt: s.died }; (s.born <= 0 ? older : later).push(o); });
+      PA.sibList.forEach(function (s) { var o = { n: s.n, sex: s.sex, born: s.born, alive: true, close: U.clamp(s.close != null ? s.close : 65, 30, 95), job: s.job && -s.born >= 18 ? s.job : 'đang đi học', adultJob: s.job || null, wed: false, kids: 0, q: f.q, diesAt: s.died }; (s.born <= 0 ? older : later).push(o); });
       l.sibList = older; f.sibs = older.length; l.flags.knownSibs = true; l.flags.futureSibs = later;
     }
     return l;

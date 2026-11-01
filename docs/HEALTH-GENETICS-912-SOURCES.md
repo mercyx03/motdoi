@@ -68,5 +68,16 @@ tuổi 75 · IV  · không điều trị  : sống sau 5 năm 11% · thuyên gi�
 Toàn đời (400 đời VN tự chơi): tuổi chết trung bình 72,9 → 71,8; số ca được ghi "chết do ung thư" 100 → 126 (engine ghi nguyên nhân là bệnh đang mang trong 75% ca tử vong, nên con số này bao gồm cả người sống chung với ung thư). Giai đoạn IV có điều trị ở người 40 tuổi (67%) cao hơn số liệu SEER đại trực tràng di căn xa — chủ dự án có thể tăng `HAZ.IV` nếu muốn khắc nghiệt hơn.
 
 ## Chưa làm trong §11
-- Suy gan/suy thận như chuỗi riêng (hiện vẫn là bệnh mạn trong bảng `ILLS`; lupus ghi biến chứng thận như cờ); bệnh nhiễm trùng khác ngoài lao.
+- ~~Suy gan/suy thận như chuỗi riêng~~ → đã làm ở 8.10.17 (mục dưới); bệnh nhiễm trùng khác ngoài lao vẫn chưa làm.
 - Chẩn đoán trước sinh / xét nghiệm phôi như chuỗi riêng; nối thai kỳ cho nhánh một đêm với người nổi tiếng.
+
+## §11 (8.10.17) — Bệnh thận mạn và bệnh gan mạn theo giai đoạn
+Đọc ngày 01/11/2026 (UTC+7), mỗi URL trả HTTP 200 khi kiểm tra:
+- KDIGO 2024 CKD Evaluation and Management — https://kdigo.org/guidelines/ckd-evaluation-and-management/ (phân loại G1–G5 theo eGFR: ≥90, 60–89, 45–59, 30–44, 15–29, <15).
+- NIDDK, Choosing a Treatment for Kidney Failure — https://www.niddk.nih.gov/health-information/kidney-disease/kidney-failure/choosing-treatment (chạy thận nhân tạo, lọc màng bụng, ghép thận, điều trị bảo tồn là các lựa chọn hợp lệ).
+- NIDDK, Kidney Transplant — https://www.niddk.nih.gov/health-information/kidney-disease/kidney-failure/kidney-transplant (người hiến sống hoặc đã mất, thuốc chống thải ghép suốt đời).
+- WHO, Hepatitis B fact sheet — https://www.who.int/news-room/fact-sheets/detail/hepatitis-b (tenofovir hoặc entecavir; điều trị lâu dài, ức chế virus chứ không chữa khỏi).
+- WHO, Hepatitis C fact sheet — https://www.who.int/news-room/fact-sheets/detail/hepatitis-c (thuốc kháng virus trực tiếp chữa khỏi hơn 95% người bệnh).
+- MedlinePlus, Cirrhosis — https://medlineplus.gov/cirrhosis.html; NIDDK Cirrhosis symptoms/causes và treatment — https://www.niddk.nih.gov/health-information/liver-disease/cirrhosis/symptoms-causes, https://www.niddk.nih.gov/health-information/liver-disease/cirrhosis/treatment (còn bù/mất bù, cổ trướng, xuất huyết, bệnh não gan, tầm soát ung thư gan, ghép gan).
+
+Giản lược và tham số gameplay (`ORG` trong `health915.js`, chưa phải tiên lượng y khoa): eGFR giảm 1 + (2,5–6 nếu không kiểm soát / 1,2–2 nếu kiểm soát) mỗi năm theo nguyên nhân, điều trị tích cực giảm thêm 40%; nguy cơ tử vong năm G3a 0,6%, G3b 1,2%, G4 3%, G5 không điều trị thay thế 35%, lọc máu 12%, đã ghép 3% (tăng theo tuổi); thải ghép 3%/năm. Gan: xác suất chuyển giai đoạn mỗi năm 4–7% tùy nguyên nhân, kháng virus ×0,2, còn uống rượu ×2,5, đã cai ×0,4, có thể lùi từ xơ hóa sau 2 năm cai; ung thư gan 0,3–4%/năm theo giai đoạn, tầm soát trong 1 năm gần nhất giúp phát hiện ở giai đoạn I–II. Ghép gan do rượu cần đã cai ít nhất 1 năm (chính sách game theo thông lệ của nhiều trung tâm, không phải quy định của một nước cụ thể). Chi phí là bội số thu nhập cơ bản, phần tự trả tính qua `E.bhytShare` (VN) hoặc mức bao phủ theo GDP.

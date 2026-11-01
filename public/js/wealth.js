@@ -464,6 +464,8 @@
     }
     sibs(l).forEach(function (s) {
       var sa = sibAge(l, s), w = sibCall(l, s);
+      // 8.10.17: anh chị em mang sang từ đời trước khởi đầu là "đang đi học"; khi trưởng thành nhận nghề đã biết hoặc một nghề cố định theo tên (không tiêu RNG).
+      if (s.job === 'đang đi học' && sa >= 22) { s.job = s.adultJob || SIB_JOBS[Math.abs(String(s.n).split('').reduce(function (h, ch) { return (h * 31 + ch.charCodeAt(0)) | 0; }, 7)) % SIB_JOBS.length]; }
       // anh chị em lập gia đình, sinh con
       if (!s.wed && sa >= 22 && sa <= 38 && ch(r, 0.14)) { s.wed = true; log('Đám cưới của ' + w + '. Cả nhà tất bật mấy ngày liền.', 'good'); fx(l, { hap: 2, soc: 2 }); s.close = Math.min(100, s.close + 2); }
       // cháu gọi bạn: con của anh/chị → chú/cô (bên nội) hoặc cậu/dì (bên ngoại); con của em → bác

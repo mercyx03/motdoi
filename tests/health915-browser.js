@@ -48,10 +48,20 @@ async function openAction(p, id) {
       assert.strictEqual(await openAction(p, 'hair915'), 'ok', 'hair menu opened');
       await clickText(p, 'Hiến cho Chương trình làm tóc giả');
       assert(await p.eval(() => G.SaveStore.read('mkn.current').value.life.flags.hair915.len === 5), 'hair donation cut the real length');
+      // 8.10.17: bệnh thận mạn theo giai đoạn — mở mục, đổi mức điều trị, thấy lựa chọn người hiến cùng nhóm máu.
+      await p.eval(() => { const l = G.SaveStore.read('mkn.current').value.life; G.E.ORGAN917.newKidney(l, 22, null, null); l.flags.organ917.kidney.care = 'basic'; l.partner.blood910 = { abo: 'O' }; G.SaveStore.write('mkn.current', { life: l, cohort: [], speed: 1, auto: false, at: Date.now() }); });
+      await p.reload(); await p.eval(async () => { await MotDoiBoot.load(); document.querySelector('#resumeBtn').click(); }); await sleep(500);
+      await p.eval(() => { const b = document.getElementById('pauseBtn'); if (b && /Tạm dừng/.test(b.textContent)) b.click(); document.querySelectorAll('#modalRoot .modal').forEach(m => { const x = [...m.querySelectorAll('button')].find(y => /Thu nhỏ/.test(y.textContent)); if (x) x.click(); }); }); await sleep(150);
+      assert.strictEqual(await openAction(p, 'organ917'), 'ok', 'kidney/liver menu opened');
+      assert(await p.eval(() => /Thận: G4/.test(document.querySelector('#modalRoot').textContent) && /người hiến tạng có quyền từ chối/.test(document.querySelector('#modalRoot').textContent)), 'stage and consent explained');
+      assert(await p.eval(() => [...document.querySelectorAll('#modalRoot .opt')].some(b => /Hỏi Lê Thu Hà/.test(b.textContent))), 'compatible partner listed as potential donor');
+      await sleep(450); await p.screenshot(path.join(OUT, 'organ-' + width + '.png'));
+      await clickText(p, 'Điều trị tích cực');
+      assert(await p.eval(() => G.SaveStore.read('mkn.current').value.life.flags.organ917.kidney.care === 'full'), 'care level saved');
       assert(await p.eval(() => document.documentElement.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
       assert.deepStrictEqual(p.errors, [], 'no JS errors');
       p.close();
-      console.log('PASS health915 Chrome ' + width + ': screening menu, couple test ordered, hair donation');
+      console.log('PASS health915 Chrome ' + width + ': screening menu, couple test ordered, hair donation, kidney care');
     }
   } finally { if (c) await c.close(); if (srv) srv.stop(); clearInterval(keep); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

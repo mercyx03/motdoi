@@ -204,9 +204,180 @@
   E.HOOKS.year.push(function (l, r, log) {
     if (!l.alive) return; var s = l.flags.health915 || (l.flags.health915 = { v: V }); if (s.y === l.age) return; s.y = l.age;
     if (l.ill && cancer(l.ill)) ensurePlan(l);
-    cancerYear(l, r, log); tbYear(l, r, log); chronicYear(l, r, log); hairYear(l); devYear(l, r, log);
+    // 8.10.17: dừng ngay khi một bước trước đó đã gây tử vong (trước đây vẫn ghi chuyện mất ngủ/lupus sau dòng qua đời).
+    cancerYear(l, r, log); if (!l.alive) return; tbYear(l, r, log); if (!l.alive) return; chronicYear(l, r, log); if (!l.alive) return; hairYear(l); devYear(l, r, log);
   });
+  // ===================== 11.4 (8.10.17): suy thận mạn và bệnh gan mạn theo giai đoạn =====================
+  // Mở rộng life.ill sẵn có ('suy thận mạn', 'viêm gan B mạn tính', 'xơ gan do rượu') thành hồ sơ nhiều năm: l.flags.organ917.
+  // Giai đoạn bệnh thận theo eGFR (KDIGO G1–G5); bệnh gan: viêm mạn → xơ hóa → xơ gan còn bù → mất bù (nguồn: HEALTH-GENETICS-912-SOURCES.md).
+  // Mọi tốc độ tiến triển, nguy cơ năm, chi phí là tham số gameplay, không phải tiên lượng y khoa cho người thật.
+  var ORG = {
+    egfrStart: [30, 55], decline: { base: 1, dm: [4, 1.5], htn: [3, 1.5], lupus: [6, 2], other: [2.5, 1.2] }, fullCut: 0.4, noise: 1.5,
+    hazK: { G3a: 0.006, G3b: 0.012, G4: 0.03, G5: 0.35, dialysis: 0.12, transplant: 0.03 },
+    onset: { dm: 0.012, htn: 0.008, lupus: 0.03 },
+    cost: { basic: 0.02, full: 0.05, dialysis: 0.6, pd: 0.45, transplant: 3, antiviral: 0.03, daa: 0.15, decomp: 0.25, liverTx: 4 },
+    offer: { vn: 0.05, rich: 0.15, other: 0.08 }, txSuccess: 0.9, reject: 0.03, donorConsent: 0.55,
+    liver: { hbv: [0.05, 0.04, 0.05], hcv: [0.04, 0.03, 0.04], alcohol: [0.06, 0.06, 0.07] }, antiviralK: 0.2, drinkK: 2.5, soberK: 0.4, regress: 0.1, daaCure: 0.95,
+    liverHaz: { hepatitis: 0, fibrosis: 0.002, compensated: 0.02, decompensated: 0.2, transplanted: 0.04 },
+    hcc: { hepatitis: 0.003, fibrosis: 0.006, compensated: 0.025, decompensated: 0.04, transplanted: 0.004 }
+  };
+  var LIVER_STAGES = ['hepatitis', 'fibrosis', 'compensated', 'decompensated'];
+  var LIVER_N = { hepatitis: 'viêm gan mạn', fibrosis: 'xơ hóa gan', compensated: 'xơ gan còn bù', decompensated: 'xơ gan mất bù', transplanted: 'đã ghép gan' };
+  var CAUSE_N = { dm: 'tiểu đường', htn: 'tăng huyết áp', lupus: 'viêm thận lupus', other: 'chưa rõ', hbv: 'viêm gan B', hcv: 'viêm gan C', alcohol: 'rượu bia' };
+  function organ(l) { var o = l.flags.organ917; if (!o || typeof o !== 'object') o = l.flags.organ917 = { v: 1 }; return o; }
+  function opeek(l) { return l.flags.organ917 || {}; }
+  function oR(l, tag) { return rng(l.id + ':organ917:' + tag + ':' + l.age); }
+  function gStage(e) { return e >= 90 ? 'G1' : e >= 60 ? 'G2' : e >= 45 ? 'G3a' : e >= 30 ? 'G3b' : e >= 15 ? 'G4' : 'G5'; }
+  function hadIll(l, re) { return (l.illHist || []).some(function (n) { return re.test(n); }) || !!(l.ill && re.test(l.ill.n)); }
+  function share(l) { if (H.isVN && H.isVN(l) && E.bhytShare) return E.bhytShare(l); return (l.gdp || 10) > 40 ? 0.8 : (l.gdp || 10) > 15 ? 0.5 : 0.2; }
+  function opay(l, cost, label) { var own = l.base * cost * (1 - share(l)); if (l.money < own) return false; if (own > 0) H.cash(l, -own, label); return true; }
+  function kidneyCause(l) { return l.flags.lupus915 && l.flags.lupus915.known ? 'lupus' : hadIll(l, /tiểu đường/) ? 'dm' : hadIll(l, /huyết áp/) ? 'htn' : 'other'; }
+  function newKidney(l, egfr, why, log) {
+    var o = organ(l); if (o.kidney) return o.kidney;
+    var R = oR(l, 'k0'), e = egfr != null ? egfr : Math.round(ORG.egfrStart[0] + R() * (ORG.egfrStart[1] - ORG.egfrStart[0]));
+    o.kidney = { egfr: e, stage: gStage(e), cause: kidneyCause(l), since: l.age, known: true, care: 'basic', dialysis: null, transplant: null, wait: null, hist: [{ age: l.age, t: 'chẩn đoán ' + gStage(e) }] };
+    if (log) log((why || 'Xét nghiệm máu và nước tiểu cho thấy') + ' bệnh thận mạn ' + gStage(e) + ' (eGFR khoảng ' + e + '), nguyên nhân liên quan ' + CAUSE_N[o.kidney.cause] + '. Bệnh thường tiến triển chậm qua nhiều năm; kiểm soát tốt có thể làm chậm lại.', 'bad');
+    return o.kidney;
+  }
+  function newLiver(l, cause, stage, log) {
+    var o = organ(l); if (o.liver) return o.liver;
+    o.liver = { cause: cause, stage: stage, since: l.age, known: true, antiviral: false, cured: false, soberSince: null, screenAt: null, transplant: null, wait: null, hist: [{ age: l.age, t: 'chẩn đoán ' + LIVER_N[stage] }] };
+    if (log) log('Bác sĩ xác định bạn có ' + LIVER_N[stage] + ' do ' + CAUSE_N[cause] + '. Gan có thể tổn thương âm thầm nhiều năm; điều trị đúng và tránh rượu giúp làm chậm tiến triển.', 'bad');
+    return o.liver;
+  }
+  function khist(x, t, l) { x.hist.push({ age: l.age, t: t }); if (x.hist.length > 20) x.hist.shift(); }
+  function adultKin(l) {
+    var out = (l.kids || []).filter(function (k) { return k.alive !== false && l.age - k.born >= 18; }).map(function (k) { return { who: k, rel: 'con', abo: E.BLOOD910 && E.BLOOD910.child ? E.BLOOD910.child(l, k).abo : null, bond: k.bond != null ? k.bond : 60 }; });
+    if (l.partner && l.partner.alive !== false && l.partner.age >= 18) out.push({ who: l.partner, rel: 'bạn đời', abo: l.partner.blood910 && l.partner.blood910.abo || null, bond: E.RELATIONS108 ? E.RELATIONS108.bond(l, l.partner) : 60 });
+    return out;
+  }
+  function aboFits(donor, recip) { return !!donor && !!recip && (donor === 'O' || donor === recip || recip === 'AB'); }
+  function myAbo(l) { return E.BLOOD909 && E.BLOOD909.state ? E.BLOOD909.state(l).abo : null; }
+  function syncIll(l, log) {
+    var ill = l.ill; if (!ill) return;
+    if (ill.n === 'suy thận mạn' && !opeek(l).kidney) { newKidney(l, null, 'Chẩn đoán xác định:', log); ill.mult = 1; ill.organ917 = 'kidney'; }
+    if (ill.n === 'viêm gan B mạn tính' && !opeek(l).liver) { var R = oR(l, 'l0')(); newLiver(l, 'hbv', R < 0.6 ? 'hepatitis' : R < 0.9 ? 'fibrosis' : 'compensated', log); ill.mult = 1; ill.organ917 = 'liver'; }
+    if (ill.n === 'xơ gan do rượu' && !opeek(l).liver) { newLiver(l, 'alcohol', oR(l, 'l0')() < 0.7 ? 'compensated' : 'decompensated', log); ill.mult = 1; ill.organ917 = 'liver'; }
+  }
+  function kidneyYear(l, r, log) {
+    var o = organ(l), k = o.kidney;
+    if (!k) { var R0 = oR(l, 'kon')(), on = (l.flags.lupus915 && l.flags.lupus915.known ? ORG.onset.lupus : 0) + (hadIll(l, /tiểu đường/) ? ORG.onset.dm : 0) + (hadIll(l, /huyết áp/) ? ORG.onset.htn : 0); if (l.age >= 25 && on > 0 && R0 < on) newKidney(l, null, 'Đợt tái khám bệnh nền phát hiện', log); return; }
+    if (k.at === l.age) return; k.at = l.age;
+    if (k.transplant && !k.transplant.failed) { if (oR(l, 'rej')() < ORG.reject) { k.transplant.failed = l.age; k.egfr = 10; k.stage = 'G5'; khist(k, 'thận ghép suy chức năng', l); log('Thận ghép dần mất chức năng sau nhiều năm. Bạn cần quay lại lọc máu và có thể đăng ký ghép lại.', 'bad'); } else { if (!opay(l, ORG.cost.full, 'Thuốc chống thải ghép')) { k.transplant.missed = (k.transplant.missed || 0) + 1; log('Không đủ tiền mua thuốc chống thải ghép năm nay; nguy cơ thải ghép tăng.', 'bad'); } } }
+    else if (!k.dialysis) {
+      var c = k.cause, controlled = k.care !== 'none', d = ORG.decline[c] || ORG.decline.other, rate = ORG.decline.base + (controlled ? d[1] : d[0]);
+      if (k.care === 'full') rate *= 1 - ORG.fullCut;
+      var before = k.stage; k.egfr = Math.max(4, Math.round((k.egfr - rate + (oR(l, 'eg')() - 0.5) * 2 * ORG.noise) * 10) / 10); k.stage = gStage(k.egfr);
+      if (k.care !== 'none' && !opay(l, ORG.cost[k.care], 'Thuốc và tái khám bệnh thận')) { k.care = 'none'; log('Không đủ tiền theo dõi bệnh thận năm nay; việc kiểm soát bị gián đoạn.', 'bad'); }
+      if (k.stage !== before) { khist(k, before + ' → ' + k.stage, l); log('Kết quả tái khám: chức năng thận chuyển từ ' + before + ' sang ' + k.stage + ' (eGFR khoảng ' + Math.round(k.egfr) + ').', k.stage === 'G5' || k.stage === 'G4' ? 'bad' : 'neutral'); }
+      if (k.stage === 'G4' && !k.prepAt) { k.prepAt = l.age; X.next(l, 'kidneyPrep917', r, {}, { manual: false }); }
+      if (k.stage === 'G5' && !k.failAt) { k.failAt = l.age; X.next(l, 'kidneyFail917', r, { at: l.age }, { manual: false }); }
+    } else if (!opay(l, k.dialysis.type === 'pd' ? ORG.cost.pd : ORG.cost.dialysis, 'Lọc máu định kỳ')) { k.dialysis.missed = (k.dialysis.missed || 0) + 1; log('Không đủ tiền cho phần chi trả lọc máu; phải giảm buổi lọc, sức khỏe sa sút.', 'bad'); H.fx(l, { hea: -8 }); }
+    if (k.dialysis) H.fx(l, { hap: -2 });
+    if (k.wait && !k.transplant && oR(l, 'offer')() < (H.isVN && H.isVN(l) ? ORG.offer.vn : (l.gdp || 10) > 40 ? ORG.offer.rich : ORG.offer.other)) X.next(l, 'kidneyOffer917', r, { at: l.age }, { manual: false });
+    var key = k.transplant && !k.transplant.failed ? 'transplant' : k.dialysis ? 'dialysis' : k.stage, hz = (ORG.hazK[key] || 0) * (1 + Math.max(0, l.age - 60) / 50) * ((k.dialysis && k.dialysis.missed > 0) || (k.transplant && k.transplant.missed > 0) ? 1.6 : 1);
+    if (k.since < l.age && oR(l, 'khz')() < hz) { H.kill(l, 'suy thận', log); return true; }
+  }
+  function liverYear(l, r, log) {
+    var o = organ(l), v = o.liver;
+    if (!v) { if (l.addict && l.addict.alcohol && l.age >= 30 && oR(l, 'lon')() < 0.01) newLiver(l, 'alcohol', 'fibrosis', log); return; }
+    if (v.at === l.age) return; v.at = l.age;
+    var drinking = !!(l.addict && l.addict.alcohol);
+    if (v.cause === 'alcohol') { if (drinking) v.soberSince = null; else if (v.soberSince == null) v.soberSince = l.age; }
+    if (v.antiviral && !opay(l, ORG.cost.antiviral, 'Thuốc kháng virus viêm gan')) { v.antiviral = false; log('Không đủ tiền duy trì thuốc kháng virus; bác sĩ cảnh báo virus có thể hoạt động trở lại.', 'bad'); }
+    if (v.stage !== 'transplanted') {
+      var i = LIVER_STAGES.indexOf(v.stage), P = ORG.liver[v.cause] || ORG.liver.hbv, p = i < 3 ? P[i] : 0;
+      if (v.cause === 'hbv' && v.antiviral || v.cured) p *= ORG.antiviralK;
+      if (v.cause === 'alcohol') p *= drinking ? ORG.drinkK : ORG.soberK;
+      var before = v.stage;
+      if (p && oR(l, 'lp')() < p) v.stage = LIVER_STAGES[i + 1];
+      else if (v.cause === 'alcohol' && !drinking && v.soberSince != null && l.age - v.soberSince >= 2 && v.stage === 'fibrosis' && oR(l, 'lr')() < ORG.regress) v.stage = 'hepatitis';
+      if (v.stage !== before) { khist(v, LIVER_N[before] + ' → ' + LIVER_N[v.stage], l); log('Tái khám gan: ' + LIVER_N[before] + ' chuyển sang ' + LIVER_N[v.stage] + '.', LIVER_STAGES.indexOf(v.stage) > LIVER_STAGES.indexOf(before) ? 'bad' : 'good'); if (v.stage === 'decompensated') X.next(l, 'liverDecomp917', r, { at: l.age }, { manual: false }); }
+    } else if (!opay(l, ORG.cost.full, 'Thuốc chống thải ghép gan')) { H.fx(l, { hea: -5 }); log('Thiếu thuốc chống thải ghép gan năm nay; nguy cơ biến chứng tăng.', 'bad'); }
+    if (v.wait && v.stage !== 'transplanted' && oR(l, 'loffer')() < (H.isVN && H.isVN(l) ? ORG.offer.vn * 0.6 : ORG.offer.other)) X.next(l, 'liverOffer917', r, { at: l.age }, { manual: false });
+    // Ung thư gan trên nền bệnh gan mạn: tầm soát định kỳ giúp phát hiện sớm hơn, không ngăn được bệnh.
+    if (!l.ill && oR(l, 'hcc')() < (ORG.hcc[v.stage] || 0) * (v.cause === 'hbv' && !v.antiviral ? 1.5 : 1)) {
+      var screened = v.screenAt != null && l.age - v.screenAt <= 1, st = screened ? (oR(l, 'hccst')() < 0.6 ? 'I' : 'II') : (oR(l, 'hccst')() < 0.5 ? 'III' : 'IV');
+      l.ill = { n: 'ung thư gan', m: 6, base: 0.2, cure: 0.2, mult: 6, f: 'ung thư gan', since: l.age, chronic: false };
+      l.ill.plan915 = { v: V, stage: st, mods: {}, side: [], port: null, transfused: [], regimen: 'A', at: l.age, organ917: true };
+      khist(v, 'phát hiện ung thư gan ' + st, l); log((screened ? 'Siêu âm tầm soát định kỳ phát hiện khối u gan ở ' : 'Đau tức vùng gan, đi khám thì phát hiện ung thư gan ở ') + STAGE[st].n + '.', 'bad'); H.sched(l, 'treat', 0);
+    }
+    var hz = (ORG.liverHaz[v.stage] || 0) * (drinking && v.cause === 'alcohol' ? 1.5 : 1) * (1 + Math.max(0, l.age - 60) / 60);
+    if (v.since < l.age && oR(l, 'lhz')() < hz) { H.kill(l, 'xơ gan', log); return true; }
+  }
+  function kWhy(l) { var k = opeek(l).kidney; return k && k.known ? true : 'Chưa có chẩn đoán bệnh thận mạn'; }
+  function lWhy(l) { var v = opeek(l).liver; return v && v.known ? true : 'Chưa có chẩn đoán bệnh gan mạn'; }
+  function startDialysis(l, type, log) { var k = organ(l).kidney; if (!k || k.dialysis) return; k.dialysis = { type: type, since: l.age, missed: 0 }; k.care = 'full'; khist(k, type === 'pd' ? 'bắt đầu lọc màng bụng' : 'bắt đầu chạy thận nhân tạo', l); log(type === 'pd' ? 'Bạn được đặt ống và học cách lọc màng bụng tại nhà, vài lần mỗi ngày, cần giữ vô khuẩn.' : 'Bạn bắt đầu chạy thận nhân tạo khoảng ba buổi mỗi tuần, mỗi buổi vài giờ. Lịch làm việc và đi lại phải điều chỉnh theo.', 'neutral'); }
+  function transplant(l, kind, donor, log) {
+    var o = organ(l), x = kind === 'kidney' ? o.kidney : o.liver; if (!x) return;
+    var cost = kind === 'kidney' ? ORG.cost.transplant : ORG.cost.liverTx; if (!opay(l, cost, kind === 'kidney' ? 'Phẫu thuật ghép thận' : 'Phẫu thuật ghép gan')) { log('Chưa đủ phần chi phí phải tự trả cho ca ghép.', 'bad'); return; }
+    var okTx = oR(l, 'tx' + kind)() < ORG.txSuccess * (1 - Math.max(0, l.age - 65) / 100);
+    if (donor && donor.who) { donor.who.donated917 = { at: l.age, organ: kind }; if (donor.who.hea != null) donor.who.hea = Math.max(0, donor.who.hea - 5); }
+    if (!okTx) { khist(x, 'ca ghép không thành công', l); log('Ca ghép gặp biến chứng, cơ quan ghép không hoạt động. Bạn tiếp tục điều trị như trước.', 'bad'); x.wait = x.wait || { since: l.age }; return; }
+    if (kind === 'kidney') { x.transplant = { at: l.age, donor: donor ? donor.rel : 'người hiến đã mất', missed: 0 }; x.dialysis = null; x.egfr = 60; x.stage = 'G2'; x.wait = null; }
+    else { x.transplant = { at: l.age, donor: donor ? donor.rel : 'người hiến đã mất' }; x.stage = 'transplanted'; x.wait = null; }
+    khist(x, 'ghép ' + (kind === 'kidney' ? 'thận' : 'gan') + ' từ ' + x.transplant.donor, l);
+    if (l.ill && l.ill.organ917 === kind) { l.illHist = l.illHist || []; if (l.illHist.indexOf(l.ill.n) < 0) l.illHist.push(l.ill.n); l.ill = null; }
+    H.fx(l, { hea: 10, hap: 8 }); log('Ca ghép thành công. Bạn phải dùng thuốc chống thải ghép suốt đời và tái khám đều; ' + (donor ? donor.rel + ' của bạn cũng cần được theo dõi sức khỏe sau khi hiến.' : 'gia đình người hiến không được biết danh tính người nhận.'), 'good');
+  }
+  function donorRows(l, kind) {
+    var me = myAbo(l), o = organ(l), x = kind === 'kidney' ? o.kidney : o.liver; if (!x) return [];
+    return adultKin(l).filter(function (d) { return !d.who.donated917; }).map(function (d) {
+      var fit = aboFits(d.abo, me), asked = (x.asked || []).indexOf(X.uid(l, d.who)) >= 0;
+      return { k: 'donor:' + X.uid(l, d.who), l: 'Hỏi ' + d.who.name + ' (' + d.rel + ') về việc hiến ' + (kind === 'kidney' ? 'một quả thận' : 'một phần gan'), h: d.abo ? 'Nhóm máu ' + d.abo + (fit ? ' · tương thích ABO, còn cần xét nghiệm chéo' : ' · không tương thích ABO') : 'Chưa biết nhóm máu', why: asked ? 'Đã hỏi người này; tôn trọng quyết định của họ' : !fit ? 'Nhóm máu không tương thích' : true,
+        run: function (l, r, log) { var y = kind === 'kidney' ? organ(l).kidney : organ(l).liver; if (!y) return; y.asked = (y.asked || []).concat([X.uid(l, d.who)]); var p = U.clamp(ORG.donorConsent + (d.bond - 60) / 200, 0.15, 0.85); if (oR(l, 'consent' + X.uid(l, d.who))() < p) { log(d.who.name + ' đồng ý sau khi được tư vấn đầy đủ rủi ro của người hiến. Hội đồng y khoa xét duyệt và tiến hành ghép.', 'neutral'); transplant(l, kind, d, log); } else log(d.who.name + ' cần cân nhắc cho sức khỏe và gia đình của mình nên chưa thể hiến. Bạn tôn trọng quyết định đó; quan hệ không vì thế mà xấu đi.', 'neutral'); } };
+    });
+  }
+  E.SC('kidneyPrep917', { title: 'Chuẩn bị cho giai đoạn thận suy nặng', valid: function (l) { var k = opeek(l).kidney; return !!(k && k.stage === 'G4' && !k.dialysis && !k.prepDone); },
+    text: function (l) { var k = organ(l).kidney; return 'eGFR còn khoảng ' + Math.round(k.egfr) + '. Bác sĩ đề nghị tìm hiểu trước các lựa chọn: chạy thận nhân tạo, lọc màng bụng, ghép thận hoặc điều trị bảo tồn. Chuẩn bị sớm giúp giảm phải lọc máu cấp cứu.'; },
+    opts: [{ k: 'learn', l: 'Tìm hiểu cả ba lựa chọn cùng gia đình', ai: { w: 1.3 }, run: function (l, r, log) { var k = organ(l).kidney; if (!k) return; k.prepDone = l.age; k.care = 'full'; log('Bạn và gia đình gặp bác sĩ thận học, chuẩn bị đường lọc máu và hồ sơ ghép nếu cần.', 'neutral'); } },
+      { k: 'later', l: 'Để sau, tập trung giữ chức năng thận hiện tại', run: function (l, r, log) { var k = organ(l).kidney; if (!k) return; k.prepDone = l.age; log('Bạn chưa muốn nghĩ tới lọc máu. Bác sĩ hẹn nhắc lại khi chức năng thận giảm thêm.', 'neutral'); } }] });
+  E.SC('kidneyFail917', { title: 'Thận suy giai đoạn cuối', prep: function (l, r, a) { return Object.assign({ at: l.age }, a || {}); }, valid: function (l, d) { var k = opeek(l).kidney; return !!(k && k.stage === 'G5' && !k.dialysis && !(k.transplant && !k.transplant.failed) && k.failAt === (d && d.at)); },
+    text: function (l) { return 'Chức năng thận còn dưới 15%. Không có điều trị thay thế thận, độc chất và nước tích tụ dần đe dọa tính mạng. Mỗi lựa chọn có chi phí, thời gian và chất lượng sống khác nhau.'; },
+    opts: [{ k: 'hd', l: 'Chạy thận nhân tạo tại bệnh viện', h: function (l) { return 'Khoảng ' + H.money(l, l.base * ORG.cost.dialysis * (1 - share(l))) + '/năm phần tự trả'; }, ai: { w: 1.3 }, run: function (l, r, log) { startDialysis(l, 'hd', log); } },
+      { k: 'pd', l: 'Lọc màng bụng tại nhà', h: function (l) { return 'Khoảng ' + H.money(l, l.base * ORG.cost.pd * (1 - share(l))) + '/năm phần tự trả · cần tự thực hiện hằng ngày'; }, ai: { w: 0.9 }, run: function (l, r, log) { startDialysis(l, 'pd', log); } },
+      { k: 'conservative', l: 'Điều trị bảo tồn, giảm triệu chứng', h: 'Lựa chọn hợp lệ với một số người lớn tuổi hoặc nhiều bệnh nền; nguy cơ tử vong cao', ai: { w: 0.3 }, run: function (l, r, log) { var k = organ(l).kidney; if (!k) return; k.conservative = l.age; khist(k, 'chọn điều trị bảo tồn', l); log('Bạn chọn chăm sóc bảo tồn, ưu tiên thời gian bên gia đình. Bác sĩ vẫn theo dõi để giảm khó chịu.', 'neutral'); } }] });
+  E.SC('kidneyOffer917', { title: 'Có quả thận phù hợp từ người hiến', prep: function (l, r, a) { return Object.assign({ at: l.age }, a || {}); }, valid: function (l, d) { var k = opeek(l).kidney; return !!(k && k.wait && !(k.transplant && !k.transplant.failed) && d && d.at === l.age); },
+    text: 'Trung tâm ghép báo có một quả thận từ người hiến đã mất phù hợp nhóm máu và xét nghiệm chéo. Cần quyết định trong thời gian ngắn.',
+    opts: [{ k: 'accept', l: 'Nhận ghép', ai: { w: 1.4 }, run: function (l, r, log) { transplant(l, 'kidney', null, log); } }, { k: 'decline', l: 'Từ chối lần này', run: function (l, r, log) { log('Bạn từ chối lần này; tên vẫn nằm trong danh sách chờ.', 'neutral'); } }] });
+  E.SC('liverDecomp917', { title: 'Xơ gan mất bù', prep: function (l, r, a) { return Object.assign({ at: l.age }, a || {}); }, valid: function (l, d) { var v = opeek(l).liver; return !!(v && v.stage === 'decompensated' && !v.decompCareAt); },
+    text: function (l) { var v = organ(l).liver; return 'Bạn xuất hiện cổ trướng và có nguy cơ xuất huyết tiêu hóa, rối loạn ý thức do gan. Cần điều trị biến chứng; ghép gan là lựa chọn lâu dài cho người phù hợp' + (v.cause === 'alcohol' ? ', thường đòi hỏi đã ngừng rượu bia một thời gian.' : '.'); },
+    opts: [{ k: 'treat', l: 'Nhập viện điều trị biến chứng', h: function (l) { return 'Khoảng ' + H.money(l, l.base * ORG.cost.decomp * (1 - share(l))) + ' phần tự trả'; }, ai: { w: 1.4 }, run: function (l, r, log) { var v = organ(l).liver; if (!v) return; if (!opay(l, ORG.cost.decomp, 'Điều trị biến chứng xơ gan')) { log('Không đủ phần chi phí tự trả; chỉ điều trị cấp cứu tối thiểu.', 'bad'); return; } v.decompCareAt = l.age; H.fx(l, { hea: 6 }); log('Biến chứng được kiểm soát tạm thời. Bác sĩ dặn ăn nhạt, tái khám đều và cân nhắc ghép gan.', 'neutral'); } },
+      { k: 'list', l: 'Đăng ký danh sách chờ ghép gan', h: 'Với bệnh gan do rượu, hội đồng ghép thường yêu cầu đã ngừng rượu bia ít nhất một năm', run: function (l, r, log) { var v = organ(l).liver; if (!v || v.cause === 'alcohol' && !(v.soberSince != null && l.age - v.soberSince >= 1)) { log('Hội đồng ghép yêu cầu bạn ngừng rượu bia ít nhất một năm trước khi xét.', 'neutral'); return; } v.wait = { since: l.age }; v.decompCareAt = l.age; log('Bạn được đưa vào danh sách chờ ghép gan. Thời gian chờ không biết trước.', 'neutral'); } },
+      { k: 'home', l: 'Về nhà chăm sóc giảm nhẹ', run: function (l, r, log) { var v = organ(l).liver; if (!v) return; v.decompCareAt = l.age; log('Bạn chọn chăm sóc giảm nhẹ tại nhà cùng gia đình.', 'neutral'); } }] });
+  E.SC('liverOffer917', { title: 'Có gan phù hợp từ người hiến', prep: function (l, r, a) { return Object.assign({ at: l.age }, a || {}); }, valid: function (l, d) { var v = opeek(l).liver; return !!(v && v.wait && v.stage !== 'transplanted' && d && d.at === l.age); },
+    text: 'Trung tâm ghép báo có gan từ người hiến đã mất phù hợp với bạn.',
+    opts: [{ k: 'accept', l: 'Nhận ghép', ai: { w: 1.4 }, run: function (l, r, log) { transplant(l, 'liver', null, log); } }, { k: 'decline', l: 'Từ chối lần này', run: function (l, r, log) { log('Bạn từ chối lần này; tên vẫn nằm trong danh sách chờ.', 'neutral'); } }] });
+  X.menu('organ917', 'Bệnh thận và bệnh gan mạn', function (l) { return kWhy(l) === true || lWhy(l) === true ? true : 'Chưa có chẩn đoán bệnh thận hoặc bệnh gan mạn'; },
+    function (l) { var o = opeek(l), k = o.kidney, v = o.liver, t = [];
+      if (k) t.push('Thận: ' + (k.transplant && !k.transplant.failed ? 'đã ghép thận (từ ' + k.transplant.donor + ')' : k.dialysis ? (k.dialysis.type === 'pd' ? 'lọc màng bụng' : 'chạy thận nhân tạo') + ' từ năm ' + (l.birthYear + k.dialysis.since) : k.stage + ' · eGFR khoảng ' + Math.round(k.egfr)) + ' · nguyên nhân ' + CAUSE_N[k.cause] + ' · theo dõi ' + (k.care === 'full' ? 'tích cực' : k.care === 'basic' ? 'cơ bản' : 'gián đoạn') + (k.wait ? ' · đang chờ ghép' : '') + '.');
+      if (v) t.push('Gan: ' + LIVER_N[v.stage] + ' do ' + CAUSE_N[v.cause] + (v.antiviral ? ' · đang dùng thuốc kháng virus' : '') + (v.cured ? ' · đã sạch virus' : '') + (v.cause === 'alcohol' ? (v.soberSince != null ? ' · ngừng rượu từ năm ' + (l.birthYear + v.soberSince) : ' · vẫn còn uống rượu') : '') + (v.screenAt != null ? ' · tầm soát gần nhất năm ' + (l.birthYear + v.screenAt) : '') + (v.wait ? ' · đang chờ ghép' : '') + '.');
+      return t.join('\n') + '\nPhần tự trả đã tính bảo hiểm y tế nếu có. Điều trị làm chậm tiến triển, không bảo đảm khỏi; người hiến tạng có quyền từ chối.'; },
+    function (l) { var o = opeek(l), k = o.kidney, v = o.liver, out = [];
+      if (k && !k.dialysis && !(k.transplant && !k.transplant.failed)) ['basic', 'full'].forEach(function (c) { out.push({ k: 'k:' + c, l: c === 'full' ? 'Điều trị tích cực: thuốc bảo vệ thận, kiểm soát đường huyết/huyết áp, chế độ ăn' : 'Theo dõi cơ bản và thuốc nền', h: H.money(l, l.base * ORG.cost[c] * (1 - share(l))) + '/năm phần tự trả', why: k.care === c ? 'Đang áp dụng' : true, run: function (l) { var x = organ(l).kidney; if (x) { x.care = c; khist(x, 'đổi mức theo dõi: ' + c, l); } } }); });
+      if (k && k.stage === 'G5' && !k.dialysis && !(k.transplant && !k.transplant.failed)) { out.push({ k: 'k:hd', l: 'Bắt đầu chạy thận nhân tạo', run: function (l, r, log) { startDialysis(l, 'hd', log); } }); out.push({ k: 'k:pd', l: 'Bắt đầu lọc màng bụng tại nhà', run: function (l, r, log) { startDialysis(l, 'pd', log); } }); }
+      if (k && (k.dialysis || k.stage === 'G5' || k.stage === 'G4') && !k.wait && !(k.transplant && !k.transplant.failed)) out.push({ k: 'k:list', l: 'Đăng ký danh sách chờ ghép thận từ người hiến đã mất', run: function (l, r, log) { var x = organ(l).kidney; if (!x || x.wait) return; x.wait = { since: l.age }; log('Hồ sơ chờ ghép thận được ghi nhận; thời gian chờ không biết trước.', 'neutral'); } });
+      if (k && (k.dialysis || k.stage === 'G5' || k.stage === 'G4') && !(k.transplant && !k.transplant.failed)) out = out.concat(donorRows(l, 'kidney'));
+      if (v && v.cause === 'hbv' && !v.antiviral && v.stage !== 'transplanted') out.push({ k: 'l:av', l: 'Dùng thuốc kháng virus viêm gan B lâu dài', h: H.money(l, l.base * ORG.cost.antiviral * (1 - share(l))) + '/năm · ức chế virus, cần uống đều, không tự ngừng', run: function (l, r, log) { var x = organ(l).liver; if (!x) return; x.antiviral = true; khist(x, 'bắt đầu kháng virus', l); log('Bạn bắt đầu thuốc kháng virus. Thuốc giữ virus ở mức thấp chứ không loại bỏ hoàn toàn viêm gan B.', 'neutral'); } });
+      if (v && v.cause === 'hcv' && !v.cured) out.push({ k: 'l:daa', l: 'Điều trị viêm gan C bằng thuốc kháng virus trực tiếp (8–12 tuần)', h: H.money(l, l.base * ORG.cost.daa * (1 - share(l))) + ' phần tự trả', run: function (l, r, log) { var x = organ(l).liver; if (!x || x.cured || !opay(l, ORG.cost.daa, 'Điều trị viêm gan C')) return; if (oR(l, 'daa')() < ORG.daaCure) { x.cured = true; khist(x, 'sạch virus viêm gan C', l); log('Xét nghiệm sau điều trị không còn virus viêm gan C. Tổn thương gan đã có vẫn cần theo dõi.', 'good'); } else log('Virus chưa bị loại bỏ sau đợt này; bác sĩ sẽ cân nhắc phác đồ khác.', 'neutral'); } });
+      if (v && ['compensated', 'decompensated'].indexOf(v.stage) >= 0 || v && v.cause === 'hbv') out.push({ k: 'l:screen', l: 'Siêu âm tầm soát ung thư gan', h: 'Định kỳ khoảng 6 tháng/lần với người có nguy cơ; giúp phát hiện sớm, không ngăn bệnh', why: v.screenAt === l.age ? 'Đã tầm soát năm nay' : l.money >= l.base * 0.01 ? true : 'Thiếu chi phí', run: function (l) { var x = organ(l).liver; if (!x || x.screenAt === l.age || l.money < l.base * 0.01) return; H.cash(l, -l.base * 0.01, 'Siêu âm tầm soát gan'); x.screenAt = l.age; } });
+      if (v && v.stage === 'decompensated' && !v.wait) out.push({ k: 'l:list', l: 'Đăng ký danh sách chờ ghép gan', why: v.cause === 'alcohol' && !(v.soberSince != null && l.age - v.soberSince >= 1) ? 'Cần đã ngừng rượu bia ít nhất một năm' : true, run: function (l, r, log) { var x = organ(l).liver; if (!x || x.wait || x.cause === 'alcohol' && !(x.soberSince != null && l.age - x.soberSince >= 1)) return; x.wait = { since: l.age }; log('Bạn được đưa vào danh sách chờ ghép gan.', 'neutral'); } });
+      if (v && v.stage === 'decompensated') out = out.concat(donorRows(l, 'liver'));
+      return out; }, 18, 'Sức khỏe');
+  E.HOOKS.year.push(function (l, r, log) {
+    if (!l.alive || l.age < 15) return; var o = l.flags.organ917; if (o && o.y === l.age) return;
+    syncIll(l, log); if (!l.flags.organ917 && !l.flags.lupus915 && !hadIll(l, /tiểu đường|huyết áp/) && !(l.addict && l.addict.alcohol)) return;
+    o = organ(l); o.y = l.age;
+    if (l.ill && l.ill.organ917) l.ill.mult = 1; // nguy cơ tử vong chuyển hẳn sang nguy cơ theo giai đoạn, không cộng chồng
+    if (kidneyYear(l, r, log)) return; liverYear(l, r, log);
+  });
+  var tMake917 = treat.make;
+  treat.make = function (l) { syncIll(l, null); var d = tMake917.apply(this, arguments), o = opeek(l); if (l.ill && l.ill.organ917 === 'kidney' && o.kidney) d.text = 'Bệnh thận mạn ' + o.kidney.stage + ' (eGFR khoảng ' + Math.round(o.kidney.egfr) + '). ' + d.text + ' Theo dõi lâu dài nằm trong mục "Bệnh thận và bệnh gan mạn".'; if (l.ill && l.ill.organ917 === 'liver' && o.liver) d.text = 'Hiện ở mức ' + LIVER_N[o.liver.stage] + '. ' + d.text + ' Theo dõi lâu dài nằm trong mục "Bệnh thận và bệnh gan mạn".'; return d; };
+  var prof917 = E.profile;
+  E.profile = function (l) { var a = prof917.apply(this, arguments), o = l && l.flags && l.flags.organ917; if (a && o && (o.kidney || o.liver)) { a.jobInfo = a.jobInfo || []; if (o.kidney) a.jobInfo.push('Sức khỏe thận: ' + (o.kidney.transplant && !o.kidney.transplant.failed ? 'đã ghép' : o.kidney.dialysis ? 'đang lọc máu' : o.kidney.stage)); if (o.liver) a.jobInfo.push('Sức khỏe gan: ' + LIVER_N[o.liver.stage]); } return a; };
+  E.ORGAN917 = { ORG: ORG, organ: organ, gStage: gStage, newKidney: newKidney, newLiver: newLiver, kidneyYear: kidneyYear, liverYear: liverYear, transplant: transplant, aboFits: aboFits, share: share, syncIll: syncIll, LIVER_N: LIVER_N };
+
   var migrate = E.migrateExt;
-  E.migrateExt = function (l) { if (migrate) migrate(l); if (!l || !l.flags) return; ['health915', 'cancer915', 'sleep915', 'lupus915', 'hair915'].forEach(function (k) { if (l.flags[k] != null && typeof l.flags[k] !== 'object') delete l.flags[k]; }); };
+  E.migrateExt = function (l) { if (migrate) migrate(l); if (!l || !l.flags) return; ['health915', 'cancer915', 'sleep915', 'lupus915', 'hair915', 'organ917'].forEach(function (k) { if (l.flags[k] != null && typeof l.flags[k] !== 'object') delete l.flags[k]; }); };
   Object.assign(E.HEALTH915, { STAGE: STAGE, MOD: MOD, DEV: DEV, SUP: SUP, HAIR: HAIR, LUPUS: LUPUS, ensurePlan: ensurePlan, hazard: hazard, HAZ: HAZ, stageOf: stageOf, devOf: devOf, devYear: devYear, cancerYear: cancerYear, chronicYear: chronicYear, hair: hair, hairYear: hairYear, RELAPSE: RELAPSE });
 })(globalThis.G);
