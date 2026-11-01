@@ -1,6 +1,31 @@
 {
-  "generatedAt": "2026-11-01T10:10:00.000+07:00",
+  "generatedAt": "2026-11-01T10:36:00.000+07:00",
   "entries": [
+    {
+      "id": "sponsor-celebrity-upgrade-813",
+      "version": "8.10.13-social913",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-11-01T10:36:00.000+07:00",
+      "title": "Một Đời — Chủ động hỗ trợ một người và mở rộng quan hệ với người nổi tiếng",
+      "summary": "Bạn có thể chủ động hỗ trợ tài chính cho một người trưởng thành với điều khoản rõ ràng, người ấy có quyền đồng ý, thương lượng hoặc từ chối; mục Tình yêu & hôn nhân có thêm cách làm quen, đi chơi, xây dựng tin cậy và tiến tới hẹn hò với người nổi tiếng.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến"
+      ],
+      "details": [
+        "Mục Tình yêu & hôn nhân có “Chủ động hỗ trợ một người trưởng thành”: mỗi năm vài người phù hợp độ tuổi và giới tính trong tiêu chí hẹn hò, mỗi người có gia cảnh, khó khăn hiện tại, tính cách, nghề nghiệp, mong muốn và ranh giới riêng. Hồ sơ không thay đổi khi bạn mở lại.",
+        "Bạn tự soạn đề nghị: mức hỗ trợ, kỳ hạn 1–3 năm, mục đích, tần suất gặp và có yêu cầu độc quyền hay không. Đổi điều khoản không tốn tiền; tiền chỉ được chuyển khi hai bên thống nhất.",
+        "Người được hỗ trợ có thể đồng ý, đề nghị lại hoặc từ chối tùy ranh giới và lòng tự trọng của họ — hoàn cảnh khó khăn không có nghĩa là dễ đồng ý. Khoản hỗ trợ không kèm nghĩa vụ tình cảm hay quyền kiểm soát.",
+        "Tiền được chuyển mỗi năm một lần từ tiền riêng của bạn. Thiếu tiền một năm là trễ hạn, hai năm liền thì thỏa thuận chấm dứt. Thỏa thuận cũng kết thúc khi hết hạn, khi một bên dừng hoặc khi người nhận qua đời. Bạn có thể tăng, giảm hoặc kết thúc trong mục quản lý; tối đa 3 người cùng lúc.",
+        "Nếu đang có người yêu hoặc bạn đời, việc thường xuyên gặp người được hỗ trợ có thể bị biết và ảnh hưởng tình cảm. Khi gặp gỡ lâu dài, cả hai có thể tự nguyện tiến tới hẹn hò; người đã nói rõ không muốn gắn chuyện tình cảm sẽ không bị hỏi.",
+        "Mục mới “Mở rộng quan hệ với người nổi tiếng”: lọc theo độ tuổi (18–35, 36–50, trên 50) và nhu cầu kết bạn hay tìm người yêu. Mỗi năm có thêm vài gương mặt mới, phần lớn là người trẻ trưởng thành; người đã quen vẫn giữ nguyên tuổi và danh tính.",
+        "Hồ sơ người nổi tiếng gồm tên, tuổi, nghề, độ nổi tiếng, tính cách, tình trạng hôn nhân, nơi sống và mức tin cậy với bạn. Thông tin sức khỏe và đời tư không được tiết lộ.",
+        "Các bước gửi lời mời làm quen, mời đi chơi riêng, trò chuyện và ngỏ ý hẹn hò đều cần người kia đồng ý. Mỗi năm có tối đa 10 lần tương tác (6 lần với một người), đủ để đi từ quen biết tới hẹn hò trong một năm nếu hợp nhau. Tặng quà đắt chỉ tăng tin cậy có giới hạn, không thay được các bước.",
+        "Người nổi tiếng đã kết hôn sẽ không bỏ gia đình để hẹn hò với bạn. Hai người trưởng thành có thể đề nghị một đêm bên nhau nếu cả hai tự nguyện; nếu một trong hai đã có gia đình, đó là phản bội và có thể bị lộ.",
+        "Khi thành người yêu, đó vẫn là chính người bạn đã quen, tiếp tục đi qua hẹn hò, cầu hôn và kết hôn như các mối quan hệ khác. Tình trạng hôn nhân của người nổi tiếng thay đổi tự nhiên mỗi năm."
+      ]
+    },
     {
       "id": "school-assets-romance-upgrade-812",
       "version": "8.10.12-upgrade912",

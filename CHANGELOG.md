@@ -1,3 +1,9 @@
+## 8.10.13-social913 — 01/11/2026 (UTC+7)
+
+- Chủ động chu cấp: ứng viên trưởng thành theo bộ lọc hẹn hò, hồ sơ lưu cố định trong năm, đề nghị nhiều điều khoản, đồng ý/thương lượng/từ chối theo ranh giới (không theo giàu nghèo), trả mỗi năm một lần, trễ hạn/chấm dứt rõ ràng, tự nguyện tiến tới hẹn hò.
+- Người nổi tiếng: dùng danh bạ thượng lưu sẵn có, thêm người trẻ trưởng thành mỗi năm, chuỗi làm quen → đi chơi → tin cậy → hẹn hò, quà có giới hạn, người đã kết hôn không bỏ gia đình, một đêm tự nguyện cho người từ 18 tuổi.
+- Bản packaged/Preview, chưa xác nhận phát hành. Chi tiết: docs/UPGRADE-912-PROGRESS.md.
+
 ## 8.10.12-upgrade912 — 01/11/2026 (UTC+7)
 
 - Khối thi THPT: hỏi bắt buộc từ lớp 11 tới năm thi (trước đây ~14% đời bị bỏ qua vì hàng đợi đầy), chọn/xem/đổi trong Học tập, ghi nguồn manual/auto/legacy/school, không gán khối ngoài Việt Nam.

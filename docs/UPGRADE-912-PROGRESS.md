@@ -4,7 +4,8 @@
 
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
-- Thứ tự đề xuất cho phần còn lại: §9 chu cấp chủ động (mở rộng life129/130 + romance912) → §7 mở rộng quan hệ người nổi tiếng (mở rộng contacts life148, dùng chung lượt tìm/đồng ý của romance912) → §12 phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
+- Đã xong thêm (8.10.13): §9 chu cấp chủ động, §7 người nổi tiếng.
+- Thứ tự đề xuất cho phần còn lại: §12 phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
 - Các điểm mở rộng đã có sẵn: `E.ROMANCE912` (lượt tìm, đồng ý), `E.ASSET912` (bộ chọn/phân trang, `E.usdToLocal`), `E.KHOI912`, sổ ghi `ledger912` trong khóa thừa kế.
 
 ## Nền tảng đã ghi nhận
@@ -20,9 +21,9 @@
 | §5 | Lag, khung hồ sơ trống, click trễ | `life109.js` wrapper `E.actions` (bỏ deep-clone theo từng hành động); `css/style.css` `.modal.profile` | không đổi | Bảng hành động, hồ sơ chi tiết | `tests/perf912.js` (20), `tests/ui912-browser.js` | **Đã sửa 2 nguyên nhân gốc, đã kiểm chứng**; các màn khác chưa đo hết (xem dưới) |
 | §4 | Tài sản: lọc, phân trang, nhóm USD, di chúc | `asset-picker.js` (`E.ASSET912`): menu `sell912`/`sell912_ok` (thay luồng bán của `quan_ly_dau_tu` khi người chơi bấm), thay `will150_asset` (life150) và `giftAsset112` (life112); ô tìm kiếm trong `app.js` | không thêm trường bắt buộc; dùng `uid110` sẵn có, `flags.will150.specific`, `flags.family129.trades`; trạng thái lọc nằm trong `pending[0].data.arg` | Bán / tặng con / di chúc: nhóm USD, loại, trạng thái, tìm, sắp xếp, 20 mục/trang | `tests/assets912.js` (192), `tests/assets912-browser.js`, `feedback-e`, `estate840`, `expansion842`, `family129`, `browser-feedback-menus e` | **Đã làm, đã kiểm chứng** (cho thuê: hệ hiện tại tự cho thuê mọi BĐS đầu tư, chưa có menu chọn căn để cho thuê/ngừng thuê) |
 | §6 | Tìm người yêu 10 lượt/năm, tách gặp/đồng ý | `romance912.js` (`E.ROMANCE912`): bọc `E.resolve` (đếm lượt, gắn cờ `search912` cho chuỗi quyết định từ lượt tìm), `DEC.love.apply` (quyền từ chối), `tim_nguoi_yeu`/`dating108`/`network108` (điều kiện trong handler); `engine.js prune` cho phép quyết định từ lượt tìm tới 85 tuổi | `flags.romance912 {v,at,used,streak,hist}` | Hiển thị đã dùng/còn lại trong bộ lọc, Tìm một nửa, danh sách mập mờ; gợi ý nới bộ lọc khi quá hẹp | `tests/romance912.js` (114), `browser-dating-app`, `relationships108/841`, `family129/130` | **Đã làm, đã kiểm chứng** |
-| §7 | Mở rộng quan hệ người nổi tiếng | đã có: `life148` contacts thượng lưu | — | — | — | Chưa làm |
+| §7 | Mở rộng quan hệ người nổi tiếng | `celeb912.js` (`E.CELEB912`) trên contact của `life148` (`E.ELITE148.meet/find/contacts`); `life148 prune` giữ người đang có quan hệ | trên contact: `rel912 {stage,trust,gifts,hist,n,y}`, `fame912`, `marital912`, `orient912`, `city912`, `openness912`; `flags.celeb912 {used,demand,band}`; người yêu: `partner.contact148` | Mục “Mở rộng quan hệ với người nổi tiếng” (Tình yêu & hôn nhân) | `tests/celeb912.js` (26), `tests/social913-browser.js` | **Đã làm, đã kiểm chứng** (chưa nối thai kỳ cho nhánh một đêm) |
 | §8 | Kết thúc và làm mới danh sách mập mờ | `romance912.js`: lựa chọn `reset912` + xác nhận `network912_reset`; bọc `network108_person` (kết thúc không cần lượt gặp); làm quen người mới dùng chung lượt tìm, có thể gặp lại người cũ | `flags.network912 {v,ended[],resetAt}`; người cũ giữ `relation108` | Danh sách mập mờ | `tests/romance912.js` | **Đã làm, đã kiểm chứng** |
-| §9 | Chủ động chu cấp | đã có: chu cấp trong `life129/130` | — | — | — | Chưa làm |
+| §9 | Chủ động chu cấp | `sponsor912.js` (`E.SPONSOR912`), mở rộng hệ chu cấp life80/life130 | `flags.sponsor912 {cands[], deals[], serial}` | “Chủ động hỗ trợ một người trưởng thành”, “Các thỏa thuận hỗ trợ của bạn” | `tests/sponsor912.js` (164), `tests/social913-browser.js` | **Đã làm, đã kiểm chứng** |
 | §10 | Gói cố vấn 5 triệu USD +50/chuyên môn | `life170.js` (mở rộng tại chỗ: `usdAmount`, `heirYear`, `heirComplete`, hook bù một lần, mô tả gói); `E.usdToLocal` trong `asset-picker.js`; `life176.js usdAmount` | `courses170[*].ledger912`, `done912`, `policy912` | Mô tả gói, tiến độ trong menu chọn chuyên môn (đã cộng/tối đa/dự kiến còn) | `tests/heir912.js` (23), `feedback-features895`, `leadership-education169-170`, `enterprise-chains173` | **Đã làm, đã kiểm chứng** |
 | §11 | Y tế, di truyền, thai kỳ, phát triển trẻ | đã có: `health-aging.js`, `blood-donation.js`, `family-origins.js`, `family.js` | — | — | `blood910`, `health-tax909` | Chưa làm (cần tra nguồn y tế) |
 | §12 | Phi pháp, băng nhóm, nhà tù | đã có: `crime-depth.js` (CRIME911), `life176`, `H.jail`, `E.jailYear` | — | — | `crime911.js` | Chưa làm; chỉ sửa giá dịch vụ ngầm tính bằng USD sai 10^6 lần ở VN (`life176 usdAmount`) |
@@ -81,10 +82,25 @@
 - Phải học đủ 10 năm thực (`done912`), không tự hoàn thành chỉ vì đến tuổi cuối khóa; người học mất → dừng, không cộng sau khi mất; không đạt đánh giá → giữ 70% đã học.
 - Tối ưu kèm theo: `X.menu` (life110) tính danh sách dòng một lần cho mỗi lần dựng menu thay vì ~160 lần (menu 2000 tài sản: test assets912 từ 68–124 s xuống 25 s).
 
+## §9 / §7 — Chu cấp chủ động và người nổi tiếng (8.10.13)
+- Hệ có sẵn: life80 chỉ cho chu cấp người yêu hiện tại; tình huống `tim_nguoi_cham_lo` biến người được giúp thành người yêu ngay và mặc định gắn tiền với quan hệ. Không thay thế, chỉ mở rộng.
+- Chu cấp: 4 ứng viên/năm theo bộ lọc hẹn hò (tạo bằng RNG riêng theo uid + năm, không tiêu RNG game, không tạo lại khi mở hồ sơ). Mức đồng ý (tham số gameplay): 0,55 − 0,25 × tự trọng; khớp mục đích +0,12; vượt ranh giới (độc quyền, gặp hằng tuần, kỳ hạn dài, sai mục đích) −0,2…−0,35 và sinh đề nghị lại; mức quá thấp −0,15; kẹp 0,05–0,92. Gia cảnh giàu/nghèo không phải hệ số (có test). Thanh toán `paidAt` mỗi năm; cần đủ tiền cho năm đầu + cam kết khác + 30% thu nhập cơ bản dự phòng; trễ 2 lần → chấm dứt. Người yêu hiện tại phát hiện: 8%/năm (gặp hằng tháng), 18% (hằng tuần). Khi tin cậy ≥ 60, gặp gỡ ≥ 1 năm và người ấy cởi mở, có tình huống tự nguyện tiến tới hẹn hò; thỏa thuận giữ nguyên điều khoản (không chuyển sang khoản chu cấp người yêu của life80 vì hệ đó tự dừng và có thể chia tay khi người chơi không "giàu").
+- Người nổi tiếng: 3 người mới/năm (60% từ 18–35 tuổi; `meet()` của life148 kẹp tối thiểu 22 nên ghi lại năm sinh cho người 18–21). Mỗi năm 10 tương tác, mỗi người 6. Mức hấp dẫn: 0,45 + ngoại hình + giao tiếp + độ ấm áp của người kia − chênh lệch danh tiếng − chênh tuổi > 8 + tin cậy/400. Mô phỏng 200 seed (người chơi 28 tuổi, chọn người độc thân hợp xu hướng, dùng tối đa 6 lượt): làm quen 91–96%; hẹn hò trong năm đầu 9% (giao tiếp 50), 17% (giao tiếp 85), 20% (có danh tiếng). Không bảo đảm; có thể tiếp tục năm sau.
+- Chưa làm: thai kỳ cho nhánh một đêm với người nổi tiếng (hàm thụ thai của life108 không xuất ra ngoài); xuống dòng trong thân menu hiển thị liền một đoạn như các menu cũ.
+
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
 
-## Đóng gói và bàn giao (đợt cuối phiên này)
+## Lệnh kiểm thử đã chạy (đợt 5 — chu cấp, người nổi tiếng)
+| Lệnh | Exit | Kết quả |
+|---|---|---|
+| `node tests/sponsor912.js` | 0 | 164 checks |
+| `node tests/celeb912.js` | 0 | 26 checks |
+| `node tests/social913-browser.js` | 0 | Chrome 390 + 1280 |
+| `enterprise-chains173, family129, family130, feedback-c, feedback-d, feedback-e, integration-feedback (1073), integration-showbiz, life-context-bcd, office-parties171-172, office896, showbiz-actor, showbiz-dating-music, relationships108, relationships841, romance912` | 0 | PASS |
+| `smoke, saves-compat, save-safety, npc-identity, perf912, assets912, khoi912, heir912` | 0 | PASS (cảnh báo cũ) |
+
+## Đóng gói và bàn giao (đợt 8.10.12)
 | Bước | Kết quả |
 |---|---|
 | Nhật ký người chơi | Mục `school-assets-romance-upgrade-812` (8.10.12-upgrade912, packaged, releasedAt null) ở đầu `docs/update-extra.json` và `public/data/updates.json`; CHANGELOG 8.10.12; `tests/update-release.js` PASS 566 |
