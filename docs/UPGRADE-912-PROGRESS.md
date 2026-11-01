@@ -119,6 +119,10 @@
 - Tan máu β thể nặng, 300 trẻ × 5 năm: tử vong 20 khi chăm sóc đầy đủ so với 148 khi không chăm sóc (tham số gameplay).
 - Chưa làm: 11.4 (mất ngủ, lao, lupus, suy gan/thận, ung thư theo loại/giai đoạn, hóa trị/xạ trị, chemoport, chế phẩm máu theo chỉ định, hiến tóc), 11.5 (tự kỷ, ADHD, chậm phát triển, khuyết tật trí tuệ, lo âu, OCD), chẩn đoán trước sinh/xét nghiệm phôi như chuỗi riêng.
 
+## §11.4–11.5 — Điểm tiếp nối (chưa triển khai)
+- Bệnh mắc phải hiện nằm trong bảng `ILLS` (engine.js ~dòng 812: 5 loại ung thư, mạch vành, huyết áp, tiểu đường, lao phổi, suy thận mạn, viêm gan B, xơ gan, HIV) với `m` (độ nặng), `cure`, `chronic`, và quyết định `treat`/`phau_thuat` trong `CORE`. Chưa có loại/giai đoạn ung thư, phác đồ, tác dụng phụ, chemoport, chế phẩm máu theo chỉ định, mất ngủ, lupus, hiến tóc.
+- Hướng làm: mở rộng `life.ill` bằng trường giai đoạn/phác đồ trong module mới (bọc `CORE.treat` và hook năm), nối `blood-donation.js` cho chế phẩm máu; 11.5 gắn vào `persona141`/`cond912` của con. Cần tra nguồn (WHO, NCI, CDC) trước khi mã hóa tỷ lệ.
+
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
 
