@@ -3150,8 +3150,9 @@ console.log('KẾT QUẢ: ' + pass + ' đạt, ' + fail + ' lỗi');
 if (fail) {
   // gộp các lỗi cùng loại (khác nhau ở số thứ tự #N) để một loại lỗi lặp nhiều lần không che mất các loại khác
   const groups = new Map(); fails.forEach(f => { const k = f.replace(/ #d+$/, ''); groups.set(k, (groups.get(k) || 0) + 1); });
-  console.log('Lỗi (' + groups.size + ' loại, tối đa 40 loại đầu):');
-  [...groups].slice(0, 40).forEach(([f, n]) => console.log('  ✗ ' + f + (n > 1 ? '  (×' + n + ')' : '')));
+  const shown = +process.env.MOTDOI_FAIL_LIMIT || 40; // 8.10.17: in đủ danh sách khi cần phân loại lỗi
+  console.log('Lỗi (' + groups.size + ' loại, tối đa ' + shown + ' loại đầu):');
+  [...groups].slice(0, shown).forEach(([f, n]) => console.log('  ✗ ' + f + (n > 1 ? '  (×' + n + ')' : '')));
   process.exit(1);
 }
 console.log('✓ Tất cả bài kiểm thử hồi quy đều đạt.');
