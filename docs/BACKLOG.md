@@ -22,6 +22,7 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 - Chưa tái hiện: anh chị em "tên nam nhưng ghi em gái" (seed 777001 cũ); quét 760 đời và 12 chuỗi 4 thế hệ không có ca lệch giới tính.
 - §12/§11 mới là tham số gameplay; chưa có Monte Carlo toàn đời cho tỷ lệ khủng hoảng lãnh đạo theo nghề và tuổi thọ người bệnh thận/gan theo quốc gia.
 - Phần B (MD2): mới xong STATE-FIX-1 (8.10.18, cán bộ nguồn không làm tụt chức lãnh đạo cấp cao). Phần còn lại của B và toàn bộ Phần C (MD3) chưa làm.
+- Regression mục 0–8 chạy lại trên mã 8.10.18 (01/11/2026): 272.734 đạt / 5 lỗi (cùng 5 loại đã phân loại). Cần theo dõi: tuổi thọ TB VN mục 5 (3.000 đời) 71,4 so với 72,3 ở HEAD và nợ nặng cuối đời VN 19,9% so với 16,8% ở HEAD — có thể do chi phí lọc máu/thuốc của người không có BHYT và nguy cơ thận/gan; đo cặp 2.400 đời chỉ chênh −0,3 năm nên cần đo lại có kiểm soát và hiệu chỉnh chi phí trước khi nghiệm thu.
 - Người chơi báo "chọn cuộc đời rồi không bấm được nút nào": chưa tái hiện trên mã nguồn và dist 8.10.17 (VN/thế giới, 1280/375 px, không lỗi JS). Cần trình duyệt/thiết bị, bản đang dùng, có tiếp tục bản lưu cũ không, ảnh màn hình.
 - Regression "hơn 60% tình huống xuất hiện tự nhiên" (52,6%) do thêm 975 câu chuyện chỉ dành cho cư dân từng nước — chủ dự án quyết định có loại khỏi mẫu số không. "major từng xuất hiện" (HEAD 1/1.500) và trầm cảm sau sinh ở mẫu 250 đời là ngưỡng mong manh theo RNG. "Sự kiện sau khi qua đời" còn nguồn ngoài health915 chưa tìm (có cả ở HEAD).
 
