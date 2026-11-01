@@ -1,6 +1,30 @@
 {
-  "generatedAt": "2026-11-01T10:36:00.000+07:00",
+  "generatedAt": "2026-11-01T11:13:00.000+07:00",
   "entries": [
+    {
+      "id": "crime-crew-territory-upgrade-814",
+      "version": "8.10.14-crime912",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-11-01T11:13:00.000+07:00",
+      "title": "Một Đời — Đàn em có tên tuổi, địa bàn và bảng rủi ro cho đường tối",
+      "summary": "Đường tối có đàn em với vai trò, kỹ năng và lòng trung thành riêng, quản lý địa bàn, bảng ước tính rủi ro trước khi quyết định, cách thăng cấp không phụ thuộc điểm học, và án mới không còn làm sai ngày mãn hạn đang thi hành.",
+      "tags": [
+        "Tính năng",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục Đường tối có “Đàn em, địa bàn và rủi ro”: mỗi năm có vài người muốn vào nhóm, mỗi người có vai trò (bảo vệ, cảnh giới, kế toán, thương lượng, hậu cần), kỹ năng, tính cách và phần chia mong muốn.",
+        "Bạn giao việc, tăng hoặc giảm phần chia, đứng ra hòa giải hoặc cho người rời nhóm. Người được đối xử tốt gắn bó hơn; người bị trả thấp có thể bỏ đi, thậm chí kể chuyện với cơ quan chức năng và làm mở hồ sơ điều tra.",
+        "Bảo vệ giúp giảm nguy cơ khi bị nhóm khác đánh úp và mở thêm lựa chọn để đàn em yểm trợ rút lui; cảnh giới giảm khả năng bị chú ý; thương lượng giảm va chạm với nhóm khác; kế toán và hậu cần giúp giữ lại nhiều thu nhập hơn. Mọi mức giảm đều có giới hạn — không có cách nào miễn hoàn toàn rủi ro.",
+        "Địa bàn có mức ảnh hưởng: mở rộng tốn tiền và làm tăng va chạm, giữ nguyên hoặc nhường bớt giúp hạ nhiệt. Địa bàn mang lại thu nhập hằng năm và tan dần khi không còn ai giữ.",
+        "Trước khi quyết định kế hoạch năm, bạn thấy ước tính khả năng bị mở hồ sơ, bị đánh úp, nguy cơ nếu bị đánh úp, mức sức ép, quy mô nhóm và phần chia.",
+        "Thăng cấp trong giới dựa vào nhóm, địa bàn và sự gắn kết thay vì điểm học tập, nên không còn cảnh kẹt ở cấp thấp nhất cả chục năm. Quay lại đúng nghề cũ sau khi ra tù giữ được một phần uy tín.",
+        "Cân bằng: nguy cơ tử vong mỗi lần bị đánh úp giảm còn khoảng 60% mức cũ; trước đây gần 4/10 người theo nghề lâu năm mất mạng trong 30 năm mô phỏng.",
+        "Nếu có án mới khi đang thi hành án, hai án được tổng hợp và giữ ngày mãn hạn muộn hơn; trước đây án mới ngắn hơn có thể ghi đè làm ngày ra trại sớm bất thường. Mỗi vụ được ghi vào hồ sơ án."
+      ]
+    },
     {
       "id": "sponsor-celebrity-upgrade-813",
       "version": "8.10.13-social913",

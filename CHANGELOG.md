@@ -1,3 +1,9 @@
+## 8.10.14-crime912 — 01/11/2026 (UTC+7)
+
+- Đường tối: đàn em là NPC có vai trò/kỹ năng/lòng tin/phần chia/lịch sử, có thể rời nhóm hoặc cung cấp thông tin; địa bàn trừu tượng; bảng rủi ro; lựa chọn yểm trợ khi bị đánh úp; thăng cấp theo nhóm/địa bàn; giữ uy tín khi quay lại nghề.
+- H.jail tổng hợp án khi đang thi hành (không làm ngắn án cũ), sổ án theo vụ. Nguy cơ tử vong khi bị đánh úp còn 60% mức cũ (Monte Carlo: chết trong 30 năm 38% → 31%, có quản lý nhóm 23%).
+- Bản packaged/Preview, chưa xác nhận phát hành. Chi tiết: docs/UPGRADE-912-PROGRESS.md.
+
 ## 8.10.13-social913 — 01/11/2026 (UTC+7)
 
 - Chủ động chu cấp: ứng viên trưởng thành theo bộ lọc hẹn hò, hồ sơ lưu cố định trong năm, đề nghị nhiều điều khoản, đồng ý/thương lượng/từ chối theo ranh giới (không theo giàu nghèo), trả mỗi năm một lần, trễ hạn/chấm dứt rõ ràng, tự nguyện tiến tới hẹn hò.

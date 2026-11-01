@@ -5,7 +5,8 @@
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
 - Đã xong thêm (8.10.13): §9 chu cấp chủ động, §7 người nổi tiếng.
-- Thứ tự đề xuất cho phần còn lại: §12 phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
+- Đã xong thêm (8.10.14): phần lớn §12.
+- Thứ tự đề xuất cho phần còn lại: (phần còn lại của §12)  phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
 - Các điểm mở rộng đã có sẵn: `E.ROMANCE912` (lượt tìm, đồng ý), `E.ASSET912` (bộ chọn/phân trang, `E.usdToLocal`), `E.KHOI912`, sổ ghi `ledger912` trong khóa thừa kế.
 
 ## Nền tảng đã ghi nhận
@@ -26,7 +27,7 @@
 | §9 | Chủ động chu cấp | `sponsor912.js` (`E.SPONSOR912`), mở rộng hệ chu cấp life80/life130 | `flags.sponsor912 {cands[], deals[], serial}` | “Chủ động hỗ trợ một người trưởng thành”, “Các thỏa thuận hỗ trợ của bạn” | `tests/sponsor912.js` (164), `tests/social913-browser.js` | **Đã làm, đã kiểm chứng** |
 | §10 | Gói cố vấn 5 triệu USD +50/chuyên môn | `life170.js` (mở rộng tại chỗ: `usdAmount`, `heirYear`, `heirComplete`, hook bù một lần, mô tả gói); `E.usdToLocal` trong `asset-picker.js`; `life176.js usdAmount` | `courses170[*].ledger912`, `done912`, `policy912` | Mô tả gói, tiến độ trong menu chọn chuyên môn (đã cộng/tối đa/dự kiến còn) | `tests/heir912.js` (23), `feedback-features895`, `leadership-education169-170`, `enterprise-chains173` | **Đã làm, đã kiểm chứng** |
 | §11 | Y tế, di truyền, thai kỳ, phát triển trẻ | đã có: `health-aging.js`, `blood-donation.js`, `family-origins.js`, `family.js` | — | — | `blood910`, `health-tax909` | Chưa làm (cần tra nguồn y tế) |
-| §12 | Phi pháp, băng nhóm, nhà tù | đã có: `crime-depth.js` (CRIME911), `life176`, `H.jail`, `E.jailYear` | — | — | `crime911.js` | Chưa làm; chỉ sửa giá dịch vụ ngầm tính bằng USD sai 10^6 lần ở VN (`life176 usdAmount`) |
+| §12 | Phi pháp, băng nhóm, nhà tù | `crime912.js` (`E.CRIME912`) mở rộng CRIME911 + life47; bọc `H.jail`, `E.careerYear`, `E.startJob`, `E.underworldRisk/DeathRisk`, `CRIME911.rate`; life47/crime-depth đọc qua hàm công khai | `flags.crime912 {territory, hires, sentences}`; trên `crime911.crew[*]`: `role912, skill912, trait912, cut912, hist912` | “Đàn em, địa bàn và rủi ro”, bảng rủi ro trong kế hoạch năm, lựa chọn yểm trợ khi bị đánh úp | `tests/crime912.js` (299), `tests/crime913-browser.js`, `crime911`, `update490` | **Đã làm phần lớn, đã kiểm chứng**; trại giam giữ chuỗi sẵn có của CRIME911/life43 (chưa thêm mới) |
 | §13 | Làm sâu quốc gia | đã có: `data-country-depth.js`, `life173`, `tools/audit-country-depth.js` | — | — | bộ test quốc gia | Chưa làm |
 | §14 | Rà soát liên hệ thống | — | — | — | — | Backlog đang ghi nhận |
 
@@ -88,8 +89,39 @@
 - Người nổi tiếng: 3 người mới/năm (60% từ 18–35 tuổi; `meet()` của life148 kẹp tối thiểu 22 nên ghi lại năm sinh cho người 18–21). Mỗi năm 10 tương tác, mỗi người 6. Mức hấp dẫn: 0,45 + ngoại hình + giao tiếp + độ ấm áp của người kia − chênh lệch danh tiếng − chênh tuổi > 8 + tin cậy/400. Mô phỏng 200 seed (người chơi 28 tuổi, chọn người độc thân hợp xu hướng, dùng tối đa 6 lượt): làm quen 91–96%; hẹn hò trong năm đầu 9% (giao tiếp 50), 17% (giao tiếp 85), 20% (có danh tiếng). Không bảo đảm; có thể tiếp tục năm sau.
 - Chưa làm: thai kỳ cho nhánh một đêm với người nổi tiếng (hàm thụ thai của life108 không xuất ra ngoài); xuống dòng trong thân menu hiển thị liền một đoạn như các menu cũ.
 
+## §12 — Đường tối: kiểm kê, tái hiện và cân bằng (8.10.14)
+- Kiểm kê nguồn kết án: một hàm trung tâm `H.jail` (engine) được life43 bọc; ~20 nơi gọi trực tiếp (life43 ×10, scenarios ×4, life46 ×2, life47 ×2, life176, engine). Bắt giữ tự động từ nghề đi qua `CRIME911` (hồ sơ → `bi_bat` qua `sched`); `bi_bat.valid` đã chặn khi đang ở tù.
+- Monte Carlo trước sửa (80 đời/nghề × 7 nghề, người chơi theo nghề lâu, quay lại sau khi ra tù, ~24 năm hoạt động/đời): **0 lần kết án khi đang ngồi tù, 0 năm có nhiều án** → giả thuyết "phạt hai lần / tái bắt khi đang tù" **không tái hiện**. Nguồn kết án nhiều nhất là lựa chọn "ra đầu thú" (life43:246) và "Bị bắt" (scenarios:971).
+- Vấn đề đã xác nhận: (1) tử vong 38% trong 30 năm, chủ yếu do "bị đánh úp" (life47: 27–42% chết mỗi lần, không có cách giảm, cấp càng cao càng bị đánh úp nhiều); (2) thăng cấp gần như không có (TB cấp 0,3; nhiều người cấp 0 sau 12 năm liên tục) vì công thức chung dựa vào điểm kiến thức; (3) `H.jail` ghi đè `jailUntil`, nên án mới ngắn hơn khi đang thi hành sẽ làm ngắn án cũ (đọc mã; không xuất hiện trong mô phỏng).
+- Bảng trước/sau (tham số gameplay; 80 đời/nghề; "có quản lý" = có 1 bảo vệ + 1 cảnh giới kỹ năng 60, chia 10% mỗi người):
+
+| Nghề | Án/10 năm hoạt động (trước → sau → có quản lý) | Năm tù/đời | Chết trong 30 năm | Lãi ròng (× thu nhập cơ bản năm) | Cấp cao nhất TB |
+|---|---|---|---|---|---|
+| Đòi nợ thuê | 0,28 → 0,29 → 0,33 | 1,0 → 0,9 → 1,3 | 30 → 27 → 15 /76 | 1,8 → 2,0 → 4,3 | 0,3 → 0,5 → 0,5 |
+| Cho vay nặng lãi | 0,32 → 0,38 → 0,36 | 1,3 → 1,6 → 1,6 | 24 → 20 → 15 /76 | 5,7 → 4,2 → 2,9 | 0 → 0,2 → 0,3 |
+| Lừa đảo | 0,40 → 0,36 → 0,39 | 1,6 → 2,0 → 1,9 | 25 → 16 → 19 /74 | 9,4 → 9,9 → 6,4 | 1,0 → 1,1 → 1,1 |
+| Trộm cắp | 0,35 → 0,37 → 0,36 | 1,1 → 1,3 → 1,3 | 30 → 22 → 18 /78 | 0 → 1,6 → 1,0 | 0,1 → 0,4 → 0,5 |
+| Ma túy | 0,43 → 0,46 → 0,39 | 1,3 → 1,7 → 1,5 | 37 → 30 → 31 /78 | 6,8 → 5,7 → 18,9 | 0,3 → 0,5 → 0,5 |
+| Buôn lậu | 0,41 → 0,48 → 0,39 | 1,6 → 2,0 → 1,6 | 28 → 25 → 12 /77 | 14,7 → 19,0 → 17,0 | 0,4 → 0,6 → 0,5 |
+| Nhà cái | 0,38 → 0,38 → 0,37 | 1,4 → 1,6 → 1,4 | 29 → 24 → 15 /75 | 4,6 → 4,9 → 2,5 | 0 → 0 → 0 (nghề một bậc) |
+| **Tổng** | ≈ không đổi | | **203 → 164 → 125 /534 (38% → 31% → 23%)** | dao động lớn giữa các seed | |
+
+  Lãi ròng dao động mạnh giữa các seed; phần chia cho đàn em làm giảm lãi ở vài nghề — đó là đánh đổi có chủ đích (an toàn hơn, giữ ít tiền hơn).
+- Thay đổi: đàn em NPC (vai trò, kỹ năng, tính cách, lòng tin, phần chia, lịch sử; rời nhóm khi lòng tin < 20, 35% thành người cung cấp thông tin → mở hồ sơ, giảm còn 30% nếu "trung thành"); bảo vệ giảm tối đa 50% nguy cơ tử vong khi bị đánh úp, cảnh giới giảm tối đa 35% khả năng mở hồ sơ, thương lượng giảm tối đa 30% khả năng bị đánh úp — không bao giờ về 0; địa bàn (mở rộng +15 ảnh hưởng, thu 0,6% − chi 0,2% thu nhập cơ bản mỗi điểm/năm, tăng thù địch; mất 30 khi bị kết án, −25/năm khi không ai giữ); bảng rủi ro; thăng cấp theo nhóm/địa bàn/gắn kết (5–60%/năm khi đủ số năm); quay lại cùng nghề giữ cấp cũ − 1; tổng hợp án.
+- Không đổi: chuỗi trong trại (học nghề nhiều năm, hòa giải, thư từ, tái hòa nhập của CRIME911; thăm nuôi, lao động, đặc xá có điều kiện điểm thi đua của life43). Chưa thêm: thay đổi lãnh đạo/tan rã nhóm như một chuỗi riêng, hỗ trợ pháp lý trong trại, chuyển quốc gia khi đang có hồ sơ (chưa kiểm thử riêng).
+- Lỗi có sẵn từ HEAD gốc 30152fc (đã chạy lại bằng worktree, cùng assertion): `football-payroll901`, `update451`, `update453`, `update454`, `update460`, `life138`.
+
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
+
+## Lệnh kiểm thử đã chạy (đợt 6 — đường tối)
+| Lệnh | Exit | Kết quả |
+|---|---|---|
+| `node tests/crime912.js` | 0 | 299 checks (RNG cố định) |
+| `node tests/crime913-browser.js` | 0 | Chrome 390 + 1280 |
+| 73 test có dùng đường tối/án/thu nhập nghề (crime911, update490, careers105, career109, dynasty908, health-tax909, country-*, showbiz-*, update4xx–5xx…) | 0 | PASS, trừ 6 test hỏng sẵn từ HEAD gốc (xem trên) |
+| `smoke, saves-compat, save-safety, npc-identity` | 0 | PASS (cảnh báo cũ) |
+| Monte Carlo `crime-mc.js` (scratchpad) 80 đời × 7 nghề × 3 cấu hình | — | Bảng trên |
 
 ## Lệnh kiểm thử đã chạy (đợt 5 — chu cấp, người nổi tiếng)
 | Lệnh | Exit | Kết quả |
