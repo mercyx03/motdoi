@@ -90,7 +90,7 @@
     var list = people(l); if (list.length <= 60) return;
     var busy = {}; S(l).deals.forEach(function (d) { if (d.stage !== 'closed') busy[d.pid] = 1; });
     list.sort(function (a, b) { return (alive(b) - alive(a)) || (b.trust - a.trust) || (b.met[b.met.length - 1].a - a.met[a.met.length - 1].a); });
-    for (var i = list.length - 1; i >= 0 && list.length > 60; i--) if (!busy[list[i].uid110]&&!list[i].service171&&!list[i].partyGuest172) list.splice(i, 1);
+    for (var i = list.length - 1; i >= 0 && list.length > 60; i--) if (!busy[list[i].uid110]&&!list[i].service171&&!list[i].partyGuest172&&!(list[i].rel912&&list[i].rel912.stage!=='stranger')) list.splice(i, 1); // celeb912: không xóa người đang có quan hệ
   }
   function contacts(l, fn) { return people(l).filter(function (p) { return alive(p) && (!fn || fn(p)); }); }
 
