@@ -180,3 +180,5 @@ Triển khai theo góp ý mới, mở rộng các hệ thống hiện có, khôn
 ## GĐ6 / nâng cấp 8.10.12 (mã 912) — khối thi, hiệu năng, tài sản, tình cảm, cố vấn
 
 Trạng thái: **HOÀN THÀNH TRIỂN KHAI MỘT PHẦN — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN**. Đã làm §3, §4, §5 (hai nguyên nhân gốc), §6, §8, §10 của PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md; chưa làm §7, §9, §11, §12 (ngoài sửa tỷ giá dịch vụ ngầm), §13, phần lớn §14 — chi tiết trong UPGRADE-912-PROGRESS.md. Chưa chạy regression toàn bộ (tests/regression.js) trên mã cuối; chưa chạy `npm run test:update` đầy đủ; chưa đo trên điện thoại thật và bản lưu nhiều đời thật của người chơi; chưa xác minh binding REVIEWS_DB Production. tests/life138.js hỏng sẵn từ HEAD 30152fc (assertion "sibling can succeed instead of player"). Artifact chỉ Preview.
+
+Cập nhật 8.10.13: thêm §9 chu cấp chủ động và §7 quan hệ người nổi tiếng (kiểm thử trọng điểm đạt, xem UPGRADE-912-PROGRESS.md). Vẫn chưa làm §11, §12, §13, phần lớn §14; vẫn chưa chạy regression toàn bộ trên mã cuối; artifact chỉ Preview.
