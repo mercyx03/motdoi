@@ -176,3 +176,7 @@ Triển khai theo góp ý mới, mở rộng các hệ thống hiện có, khôn
 ### GĐ6 — nghiệm thu trọng điểm game show và đường tối (31/10/2026, UTC+7)
 
 Đợt 8.10.11 đã tăng độ khó câu hỏi game show và mở rộng lựa chọn/điều tra nghề phi pháp, băng nhóm, tình huống trong tù. Test chuyên đề, smoke, save, save-safety và các regression liên quan đã chạy; còn thiếu regression đầy đủ trên mã cuối, thiết bị thật, save người báo lỗi và xác minh binding Pages REVIEWS_DB thực tế. Không coi các lỗi/nhóm timeout GĐ6 trước đó là PASS hoặc đã giải quyết. Chưa nghiệm thu toàn diện, không deploy.
+
+## GĐ6 / nâng cấp 8.10.12 (mã 912) — khối thi, hiệu năng, tài sản, tình cảm, cố vấn
+
+Trạng thái: **HOÀN THÀNH TRIỂN KHAI MỘT PHẦN — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN**. Đã làm §3, §4, §5 (hai nguyên nhân gốc), §6, §8, §10 của PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md; chưa làm §7, §9, §11, §12 (ngoài sửa tỷ giá dịch vụ ngầm), §13, phần lớn §14 — chi tiết trong UPGRADE-912-PROGRESS.md. Chưa chạy regression toàn bộ (tests/regression.js) trên mã cuối; chưa chạy `npm run test:update` đầy đủ; chưa đo trên điện thoại thật và bản lưu nhiều đời thật của người chơi; chưa xác minh binding REVIEWS_DB Production. tests/life138.js hỏng sẵn từ HEAD 30152fc (assertion "sibling can succeed instead of player"). Artifact chỉ Preview.

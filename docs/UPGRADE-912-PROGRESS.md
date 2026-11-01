@@ -1,6 +1,11 @@
 # Nâng cấp 8.10.12 (mã 912) — theo dõi tiến độ theo PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md
 
-**Trạng thái: ĐANG TRIỂN KHAI — chưa nghiệm thu toàn diện, chưa phát hành.** Không deploy Production.
+**Trạng thái: HOÀN THÀNH TRIỂN KHAI MỘT PHẦN — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN.** Bản đóng gói 8.10.12 (packaged, chưa phát hành). Không deploy Production.
+
+## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
+- Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
+- Thứ tự đề xuất cho phần còn lại: §9 chu cấp chủ động (mở rộng life129/130 + romance912) → §7 mở rộng quan hệ người nổi tiếng (mở rộng contacts life148, dùng chung lượt tìm/đồng ý của romance912) → §12 phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
+- Các điểm mở rộng đã có sẵn: `E.ROMANCE912` (lượt tìm, đồng ý), `E.ASSET912` (bộ chọn/phân trang, `E.usdToLocal`), `E.KHOI912`, sổ ghi `ledger912` trong khóa thừa kế.
 
 ## Nền tảng đã ghi nhận
 - Nhánh `codex/life-context-upgrade`, HEAD gốc `30152fc` (8.10.11 gameshow-crime). Working tree ban đầu: `.local-state-review.txt`, `Claude.md`, `PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md` chưa theo dõi — giữ nguyên, không stage.
@@ -20,7 +25,7 @@
 | §9 | Chủ động chu cấp | đã có: chu cấp trong `life129/130` | — | — | — | Chưa làm |
 | §10 | Gói cố vấn 5 triệu USD +50/chuyên môn | `life170.js` (mở rộng tại chỗ: `usdAmount`, `heirYear`, `heirComplete`, hook bù một lần, mô tả gói); `E.usdToLocal` trong `asset-picker.js`; `life176.js usdAmount` | `courses170[*].ledger912`, `done912`, `policy912` | Mô tả gói, tiến độ trong menu chọn chuyên môn (đã cộng/tối đa/dự kiến còn) | `tests/heir912.js` (23), `feedback-features895`, `leadership-education169-170`, `enterprise-chains173` | **Đã làm, đã kiểm chứng** |
 | §11 | Y tế, di truyền, thai kỳ, phát triển trẻ | đã có: `health-aging.js`, `blood-donation.js`, `family-origins.js`, `family.js` | — | — | `blood910`, `health-tax909` | Chưa làm (cần tra nguồn y tế) |
-| §12 | Phi pháp, băng nhóm, nhà tù | đã có: `crime-depth.js` (CRIME911), `life176`, `H.jail`, `E.jailYear` | — | — | `crime911.js` | Chưa làm |
+| §12 | Phi pháp, băng nhóm, nhà tù | đã có: `crime-depth.js` (CRIME911), `life176`, `H.jail`, `E.jailYear` | — | — | `crime911.js` | Chưa làm; chỉ sửa giá dịch vụ ngầm tính bằng USD sai 10^6 lần ở VN (`life176 usdAmount`) |
 | §13 | Làm sâu quốc gia | đã có: `data-country-depth.js`, `life173`, `tools/audit-country-depth.js` | — | — | bộ test quốc gia | Chưa làm |
 | §14 | Rà soát liên hệ thống | — | — | — | — | Backlog đang ghi nhận |
 
@@ -78,6 +83,15 @@
 
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
+
+## Đóng gói và bàn giao (đợt cuối phiên này)
+| Bước | Kết quả |
+|---|---|
+| Nhật ký người chơi | Mục `school-assets-romance-upgrade-812` (8.10.12-upgrade912, packaged, releasedAt null) ở đầu `docs/update-extra.json` và `public/data/updates.json`; CHANGELOG 8.10.12; `tests/update-release.js` PASS 566 |
+| `npm run package:cloudflare` | exit 0 · 28 file triển khai · ZIP 2.743.380 byte · SHA-256 2E42842B…9959 · loading/admin-events PASS |
+| Đối chiếu dist ↔ ZIP | 28/28 tên file trùng, 0 khác biệt nội dung (SHA-256 từng file); có `index.html`, `_worker.js`, `_routes.json`, `_headers`, `.well-known/ai-catalog.json` ở gốc |
+| Bản build | `ui912-browser`, `assets912-browser` PASS trên dist (390 + 1280); trang Cập nhật hiển thị "Bản chuẩn bị · chưa phát hành", 12 ý, không tràn ngang |
+| Git | Push `codex/life-context-upgrade` 30152fc..fd4624d lên origin (không force, không merge main, không deploy) |
 
 ## Lệnh kiểm thử đã chạy (đợt 4 — gói cố vấn)
 | Lệnh | Exit | Kết quả |
