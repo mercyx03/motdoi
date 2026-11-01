@@ -40,8 +40,9 @@ async function openAction(p, id) {
       const hired = await p.eval(() => G.E.CRIME911.state(G.SaveStore.read('mkn.current').value.life).crew.filter(x => x.role912).length);
       assert(hired === 1, 'one crew member hired');
       await clickText(p, 'Quản lý ');
-      await clickText(p, 'Giao việc bảo vệ');
-      assert(await p.eval(() => G.E.CRIME911.state(G.SaveStore.read('mkn.current').value.life).crew.some(x => x.role912 === 'guard')), 'role assigned');
+      const role0 = await p.eval(() => G.E.CRIME911.state(G.SaveStore.read('mkn.current').value.life).crew.find(x => x.role912).role912);
+      await clickText(p, 'Giao việc ');
+      assert(await p.eval(r0 => { const c = G.E.CRIME911.state(G.SaveStore.read('mkn.current').value.life).crew.find(x => x.role912); return c && c.role912 !== r0; }, role0), 'role reassigned');
       await p.screenshot(path.join(OUT, 'crew-' + width + '.png'));
       assert(await p.eval(() => document.documentElement.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
       assert.deepStrictEqual(p.errors, [], 'no JS errors');
