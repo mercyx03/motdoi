@@ -1380,6 +1380,8 @@
       life.pending = q; prune(life); return life.pending;
     }
 
+    // Chọn khối THPT là quyết định bắt buộc của giai đoạn học: hỏi trước các tình huống khác cho tới khi có câu trả lời (khoi-track.js).
+    if (E.KHOI912 && E.KHOI912.due(life)) add('chon_khoi');
     // tình huống đã hẹn trước (chuỗi sự kiện)
     if (life.sched && life.sched.length) {
       var due = life.sched.filter(function (s) { return s.at <= a; });

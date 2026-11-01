@@ -57,7 +57,8 @@
     "test:life138": "node tests/life138.js && node tests/looks134.js && node tests/family129.js && node tests/business137.js",
     "test:audition": "node tests/audition139.js && node tests/life138.js",
     "test:debt": "node tests/debt140.js",
-    "test:children": "node tests/children141.js && node tests/family129.js && node tests/family130.js"
+    "test:children": "node tests/children141.js && node tests/family129.js && node tests/family130.js",
+    "test:upgrade912": "node tests/khoi912.js && node tests/perf912.js && node tests/update840.js && node tests/exam127.js"
   },
   "devDependencies": {
     "esbuild": "0.28.2"

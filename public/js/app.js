@@ -1391,6 +1391,7 @@
     if(byHand&&!paymentConfirmed&&trade&&E.FAMILY126){trade.manual=true;if(S.modalTimer){clearTimeout(S.modalTimer);S.modalTimer=null;}var payment=E.FAMILY126.quote(S.life,trade,k);if(E.FAMILY126.large(S.life,payment)){var expectedLife=S.life,expectedDecision=trade;ask('Xác nhận khoản chi lớn','Bạn có chắc với lựa chọn này không? Có thể chi tới '+money(S.life,payment)+'. Tiền hiện có: '+money(S.life,S.life.money)+'.','Chắc chắn, tiếp tục',function(){if(S.life===expectedLife&&S.life.pending[0]===expectedDecision)choose(k,true,true);else toast('Hoàn cảnh đã thay đổi, hãy chọn lại.');},'Không chắc, quay lại',function(){if(S.life===expectedLife&&S.life.pending[0]===expectedDecision)showDecision();});return;}}
     closeModal();
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
+    if (cur && byHand) cur.byHand912 = true; // nguồn lựa chọn: người chơi tự bấm (khoi-track.js)
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
     var queued0 = S.life.pending.slice(1);
     var stick915 = !!(byHand && cur && cur.manual && k !== 'cancel' && E.DEC[cur.id] && E.DEC[cur.id].menu110 && cur.opts.length >= 7), scroll915 = stick915 ? document.querySelector('.opts.many') : null;
