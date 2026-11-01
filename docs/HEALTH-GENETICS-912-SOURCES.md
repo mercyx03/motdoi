@@ -31,7 +31,42 @@
 - Nhân vật chính chỉ có tình trạng bệnh di truyền khi thừa hưởng từ đời cha/mẹ (sống tiếp đời con); nhân vật mới và con sinh trước bản này chỉ là người mang gen — để không reroll bản lưu cũ.
 - Nhóm máu ABO của trẻ sinh đôi do hệ hiến máu (blood910) tính riêng; có thể chưa khớp kiểu gen giữa hai trẻ khác trứng trong một số đường sinh.
 
+## 8.10.16 — Bệnh mắc phải, ung thư, phát triển trẻ (`public/js/health915.js`)
+| Nội dung | Nguồn | Điều lấy ra |
+|---|---|---|
+| Sống còn theo giai đoạn | SEER Cancer Stat Facts (https://seer.cancer.gov/statfacts/html/colorect.html, .../lungb.html, .../breast.html) | Khu trú sống còn 5 năm cao (đại trực tràng 91%), di căn xa thấp (phổi 10,5%, vú 33,8%) |
+| Hóa trị, tác dụng phụ | NCI — Chemotherapy to Treat Cancer (https://www.cancer.gov/about-cancer/treatment/types/chemotherapy); SEER training | Tổn thương tế bào phân chia nhanh gây rụng tóc ở "nhiều" chứ không phải tất cả bệnh nhân; tóc mọc lại sau khi ngừng |
+| Buồng truyền | NCI — Chemotherapy and You (https://www.cancer.gov/publications/patient-education/chemotherapy-and-you.pdf); tổng quan biến chứng (PMC4588233) | Đặt dưới da qua thủ thuật nhỏ; nhiễm trùng là biến chứng thường gặp nhất, ngoài ra huyết khối, tắc |
+| Lao | Cochrane CD001362; Sci Rep 2021 (PMC8295390) | Phác đồ ít nhất 6 tháng cho tỷ lệ thành công cao hơn; ~82% thành công sau 6 tháng trong một nghiên cứu lớn |
+| Lupus | Ước tính CDC National Lupus Registry (~72,8/100.000 ở Mỹ) | Hiếm, nữ nhiều hơn nam |
+| Mất ngủ | NHIS (PMC4763609); tổng quan toàn cầu 2025 (PubMed 40627924) | ~16–19% người lớn |
+| Tự kỷ | CDC ADDM, MMWR 74(SS-2), 2025 (https://www.cdc.gov/autism/data-research/index.html) | ~1/31 trẻ 8 tuổi (Mỹ, 2022), nam hơn 3 lần nữ; khác nhau theo địa phương |
+| ADHD | CDC (MMWR 2019; NSCH 2022 qua tin tổng hợp) | ~8,8–11,4% từng được chẩn đoán; nam nhiều hơn nữ |
+
+Tham số gameplay: nguy cơ tử vong do ung thư theo giai đoạn (`HAZ`), hệ số thuyên giảm (`STAGE`), tái phát (`RELAPSE`), tác dụng phụ, biến chứng buồng truyền 4%/năm, lupus, mất ngủ, tỷ lệ các đặc điểm phát triển (`DEV`) — **đều là tham số trò chơi**. Chưa xác minh: tỷ lệ lo âu, OCD, khuyết tật trí tuệ, chậm ngôn ngữ/vận động ở trẻ (ước lượng); chương trình hiến tóc trong game là **hư cấu**; chính sách tạm hoãn hiến máu (12 tháng sau truyền máu; trong lúc điều trị/5 năm theo dõi sau ung thư) là **đơn giản hóa của game**, không phải quy định chung.
+
+Kết quả mô phỏng (150 người/ô, ung thư đại trực tràng, sống sau 5 năm · thuyên giảm):
+
+```
+tuổi 40 · I   · điều trị đầy đủ : sống sau 5 năm 98% · thuyên giảm 94%
+tuổi 40 · I   · không điều trị  : sống sau 5 năm 97% · thuyên giảm 58%
+tuổi 40 · II  · điều trị đầy đủ : sống sau 5 năm 95% · thuyên giảm 89%
+tuổi 40 · II  · không điều trị  : sống sau 5 năm 77% · thuyên giảm 37%
+tuổi 40 · III · điều trị đầy đủ : sống sau 5 năm 91% · thuyên giảm 81%
+tuổi 40 · III · không điều trị  : sống sau 5 năm 68% · thuyên giảm 25%
+tuổi 40 · IV  · điều trị đầy đủ : sống sau 5 năm 67% · thuyên giảm 51%
+tuổi 40 · IV  · không điều trị  : sống sau 5 năm 15% · thuyên giảm 5%
+tuổi 75 · I   · điều trị đầy đủ : sống sau 5 năm 89% · thuyên giảm 91%
+tuổi 75 · I   · không điều trị  : sống sau 5 năm 88% · thuyên giảm 51%
+tuổi 75 · II  · điều trị đầy đủ : sống sau 5 năm 89% · thuyên giảm 87%
+tuổi 75 · II  · không điều trị  : sống sau 5 năm 79% · thuyên giảm 31%
+tuổi 75 · III · điều trị đầy đủ : sống sau 5 năm 88% · thuyên giảm 83%
+tuổi 75 · III · không điều trị  : sống sau 5 năm 52% · thuyên giảm 14%
+tuổi 75 · IV  · điều trị đầy đủ : sống sau 5 năm 56% · thuyên giảm 44%
+tuổi 75 · IV  · không điều trị  : sống sau 5 năm 11% · thuyên giảm 5%
+```
+Toàn đời (400 đời VN tự chơi): tuổi chết trung bình 72,9 → 71,8; số ca được ghi "chết do ung thư" 100 → 126 (engine ghi nguyên nhân là bệnh đang mang trong 75% ca tử vong, nên con số này bao gồm cả người sống chung với ung thư). Giai đoạn IV có điều trị ở người 40 tuổi (67%) cao hơn số liệu SEER đại trực tràng di căn xa — chủ dự án có thể tăng `HAZ.IV` nếu muốn khắc nghiệt hơn.
+
 ## Chưa làm trong §11
-- 11.4 bệnh mắc phải (mất ngủ, lao, lupus, suy gan/thận, ung thư theo loại/giai đoạn, hóa trị/xạ trị, buồng truyền, chế phẩm máu theo chỉ định, hiến tóc).
-- 11.5 phát triển trẻ và sức khỏe tâm thần (tự kỷ, ADHD, chậm phát triển, khuyết tật trí tuệ, lo âu, OCD).
-- Chẩn đoán trước sinh / xét nghiệm phôi như một chuỗi gameplay riêng (hiện chỉ có trong lời tư vấn).
+- Suy gan/suy thận như chuỗi riêng (hiện vẫn là bệnh mạn trong bảng `ILLS`; lupus ghi biến chứng thận như cờ); bệnh nhiễm trùng khác ngoài lao.
+- Chẩn đoán trước sinh / xét nghiệm phôi như chuỗi riêng; nối thai kỳ cho nhánh một đêm với người nổi tiếng.

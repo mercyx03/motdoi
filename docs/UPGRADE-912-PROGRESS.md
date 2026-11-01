@@ -7,6 +7,7 @@
 - Đã xong thêm (8.10.13): §9 chu cấp chủ động, §7 người nổi tiếng.
 - Đã xong thêm (8.10.14): phần lớn §12.
 - Đã xong thêm (8.10.15): §11.1–11.3 di truyền, sàng lọc, đa thai.
+- Đã xong thêm (8.10.16): §11.4–11.5 bệnh mắc phải, ung thư, phát triển trẻ.
 - Thứ tự đề xuất cho phần còn lại: (phần còn lại của §12)  phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
 - Các điểm mở rộng đã có sẵn: `E.ROMANCE912` (lượt tìm, đồng ý), `E.ASSET912` (bộ chọn/phân trang, `E.usdToLocal`), `E.KHOI912`, sổ ghi `ledger912` trong khóa thừa kế.
 
@@ -27,7 +28,7 @@
 | §8 | Kết thúc và làm mới danh sách mập mờ | `romance912.js`: lựa chọn `reset912` + xác nhận `network912_reset`; bọc `network108_person` (kết thúc không cần lượt gặp); làm quen người mới dùng chung lượt tìm, có thể gặp lại người cũ | `flags.network912 {v,ended[],resetAt}`; người cũ giữ `relation108` | Danh sách mập mờ | `tests/romance912.js` | **Đã làm, đã kiểm chứng** |
 | §9 | Chủ động chu cấp | `sponsor912.js` (`E.SPONSOR912`), mở rộng hệ chu cấp life80/life130 | `flags.sponsor912 {cands[], deals[], serial}` | “Chủ động hỗ trợ một người trưởng thành”, “Các thỏa thuận hỗ trợ của bạn” | `tests/sponsor912.js` (164), `tests/social913-browser.js` | **Đã làm, đã kiểm chứng** |
 | §10 | Gói cố vấn 5 triệu USD +50/chuyên môn | `life170.js` (mở rộng tại chỗ: `usdAmount`, `heirYear`, `heirComplete`, hook bù một lần, mô tả gói); `E.usdToLocal` trong `asset-picker.js`; `life176.js usdAmount` | `courses170[*].ledger912`, `done912`, `policy912` | Mô tả gói, tiến độ trong menu chọn chuyên môn (đã cộng/tối đa/dự kiến còn) | `tests/heir912.js` (23), `feedback-features895`, `leadership-education169-170`, `enterprise-chains173` | **Đã làm, đã kiểm chứng** |
-| §11 | Y tế, di truyền, thai kỳ, phát triển trẻ | `genetics912.js` (`E.GENETICS912`) theo khung di truyền ABO của `blood-donation.js`; nối `STANDING158.relativeFacts`, `childOpts/createLife`, `E.migrate`, `E.resolve` + hook năm (bắt mọi ca sinh) | `flags.genetics912 {self, parents, tests, births}`, `flags.cond912`; trên con: `genes912`, `cond912`, `multi912`, `monozygotic912`, `legacy912` | “Khám sức khỏe & sàng lọc di truyền”, “Kế hoạch chăm sóc sức khỏe cho con”, hồ sơ con | `tests/genetics912.js` (1195), `tests/health915-browser.js`, `blood910`, `health-tax909`, family* | **11.1–11.3 đã làm, đã kiểm chứng**; 11.4 bệnh mắc phải/ung thư và 11.5 phát triển trẻ **chưa làm** |
+| §11 | Y tế, di truyền, thai kỳ, phát triển trẻ | `genetics912.js` (`E.GENETICS912`) theo khung di truyền ABO của `blood-donation.js`; nối `STANDING158.relativeFacts`, `childOpts/createLife`, `E.migrate`, `E.resolve` + hook năm (bắt mọi ca sinh) | `flags.genetics912 {self, parents, tests, births}`, `flags.cond912`; trên con: `genes912`, `cond912`, `multi912`, `monozygotic912`, `legacy912` | “Khám sức khỏe & sàng lọc di truyền”, “Kế hoạch chăm sóc sức khỏe cho con”, hồ sơ con | `tests/genetics912.js` (1195), `tests/health915-browser.js`, `blood910`, `health-tax909`, family* | **11.1–11.5 đã làm, đã kiểm chứng** (`health915.js`: ung thư theo giai đoạn, phác đồ, tác dụng phụ, chế phẩm máu, buồng truyền, tái phát, lao, mất ngủ, lupus, tóc, phát triển trẻ; `tests/health915.js` 984); còn suy gan/thận chuỗi riêng |
 | §12 | Phi pháp, băng nhóm, nhà tù | `crime912.js` (`E.CRIME912`) mở rộng CRIME911 + life47; bọc `H.jail`, `E.careerYear`, `E.startJob`, `E.underworldRisk/DeathRisk`, `CRIME911.rate`; life47/crime-depth đọc qua hàm công khai | `flags.crime912 {territory, hires, sentences}`; trên `crime911.crew[*]`: `role912, skill912, trait912, cut912, hist912` | “Đàn em, địa bàn và rủi ro”, bảng rủi ro trong kế hoạch năm, lựa chọn yểm trợ khi bị đánh úp | `tests/crime912.js` (299), `tests/crime913-browser.js`, `crime911`, `update490` | **Đã làm phần lớn, đã kiểm chứng**; trại giam giữ chuỗi sẵn có của CRIME911/life43 (chưa thêm mới) |
 | §13 | Làm sâu quốc gia | đã có: `data-country-depth.js`, `life173`, `tools/audit-country-depth.js` | — | — | bộ test quốc gia | Chưa làm |
 | §14 | Rà soát liên hệ thống | — | — | — | — | Backlog đang ghi nhận |
@@ -119,12 +120,24 @@
 - Tan máu β thể nặng, 300 trẻ × 5 năm: tử vong 20 khi chăm sóc đầy đủ so với 148 khi không chăm sóc (tham số gameplay).
 - Chưa làm: 11.4 (mất ngủ, lao, lupus, suy gan/thận, ung thư theo loại/giai đoạn, hóa trị/xạ trị, chemoport, chế phẩm máu theo chỉ định, hiến tóc), 11.5 (tự kỷ, ADHD, chậm phát triển, khuyết tật trí tuệ, lo âu, OCD), chẩn đoán trước sinh/xét nghiệm phôi như chuỗi riêng.
 
-## §11.4–11.5 — Điểm tiếp nối (chưa triển khai)
-- Bệnh mắc phải hiện nằm trong bảng `ILLS` (engine.js ~dòng 812: 5 loại ung thư, mạch vành, huyết áp, tiểu đường, lao phổi, suy thận mạn, viêm gan B, xơ gan, HIV) với `m` (độ nặng), `cure`, `chronic`, và quyết định `treat`/`phau_thuat` trong `CORE`. Chưa có loại/giai đoạn ung thư, phác đồ, tác dụng phụ, chemoport, chế phẩm máu theo chỉ định, mất ngủ, lupus, hiến tóc.
-- Hướng làm: mở rộng `life.ill` bằng trường giai đoạn/phác đồ trong module mới (bọc `CORE.treat` và hook năm), nối `blood-donation.js` cho chế phẩm máu; 11.5 gắn vào `persona141`/`cond912` của con. Cần tra nguồn (WHO, NCI, CDC) trước khi mã hóa tỷ lệ.
+## §11.4–11.5 — Bệnh mắc phải, ung thư, phát triển trẻ (8.10.16)
+- Mở rộng `life.ill`/`treat` của engine. Phát hiện khi hiệu chỉnh: engine chỉ nhân hệ số với tử vong nền theo tuổi nên người 40 tuổi giai đoạn IV không điều trị vẫn sống ~88% sau 5 năm; nay nguy cơ theo giai đoạn thay hệ số cũ cho ca đã phân giai đoạn. Lần thử đầu làm tuổi thọ trung bình giảm 1,5 năm và nhãn tử vong ung thư +31% (do hệ số thuyên giảm trung bình 0,84 khiến người bệnh sống chung với bệnh lâu hơn) → cân lại hệ số trung bình ≈1 và hạ nguy cơ: tuổi chết TB 72,9 → 71,8.
+- Bảng sống còn 5 năm theo giai đoạn/tuổi/điều trị: xem `docs/HEALTH-GENETICS-912-SOURCES.md`.
+- `blood-donation.js`: thêm một điểm gọi `E.HEALTH915.deferral` (tạm hoãn sau truyền máu 12 tháng, khi điều trị/theo dõi ung thư — chính sách game).
+- `tests/blood910-browser.js` hỏng ở assertion đòi mục nhật ký mới nhất là 8.10.10 — đã sai từ HEAD gốc 30152fc (đã có 8.10.11); các kiểm tra gameplay trước đó đều đạt.
 
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
+
+## Lệnh kiểm thử đã chạy (đợt 8 — bệnh mắc phải, phát triển trẻ)
+| Lệnh | Exit | Kết quả |
+|---|---|---|
+| `node tests/health915.js` | 0 | 984 checks |
+| `node tests/health915-browser.js` (TEST_URL dev) | 0 | Chrome 390 + 1280, gồm hiến tóc |
+| `blood910, health-tax909, depth899, genetics912, children141, family129/130/830, continuity101, logic844, feedback843, followups840, update458, update461, dynasty908, relationships841` | 0 | PASS |
+| `node tests/blood910-browser.js` | 1 | Hỏng sẵn (assertion nhật ký mới nhất = 8.10.10), gameplay đạt |
+| `smoke, saves-compat, save-safety, npc-identity` | 0 | PASS |
+| 150 đời tự chơi | — | 0 lỗi |
 
 ## Lệnh kiểm thử đã chạy (đợt 7 — di truyền)
 | Lệnh | Exit | Kết quả |

@@ -1,3 +1,10 @@
+## 8.10.16-health915 — 01/11/2026 (UTC+7)
+
+- Ung thư theo giai đoạn I–IV, phác đồ theo chỉ định (phẫu thuật, hóa trị, xạ trị, chăm sóc hỗ trợ), tác dụng phụ theo phác đồ, chế phẩm máu khi có chỉ định, buồng truyền, theo dõi 5 năm và tái phát; nguy cơ tử vong theo giai đoạn thay cho hệ số chung (tuổi chết TB mô phỏng 72,9 → 71,8).
+- Lao tuân thủ 6 tháng, mất ngủ (CBT-I/thuốc ngắn hạn), lupus (đợt bùng phát, biến chứng thận), tóc và hiến tóc, tạm hoãn hiến máu theo chính sách game.
+- Phát triển trẻ: tự kỷ, ADHD, chậm ngôn ngữ/vận động, khuyết tật trí tuệ, lo âu, OCD; dấu hiệu → đánh giá → hỗ trợ; không "chữa khỏi", không đổ lỗi cha mẹ.
+- Bản packaged/Preview, chưa xác nhận phát hành. Nguồn: docs/HEALTH-GENETICS-912-SOURCES.md.
+
 ## 8.10.15-genetics912 — 01/11/2026 (UTC+7)
 
 - Di truyền theo cha/mẹ sinh học: 9 locus (lặn NST thường, liên kết X) + trisomy 21 theo tuổi mẹ; tần suất theo nhóm dân cư, đối chiếu bằng mô phỏng với MedlinePlus và số liệu Việt Nam; kiểu gen không reroll.

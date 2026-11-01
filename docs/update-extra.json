@@ -1,5 +1,31 @@
 [
   {
+    "id": "illness-cancer-development-upgrade-816",
+    "version": "8.10.16-health915",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "publishedAt": "2026-11-01T14:25:00.000+07:00",
+    "title": "Một Đời — Ung thư theo giai đoạn, chăm sóc bệnh mạn tính và hỗ trợ phát triển cho con",
+    "summary": "Ung thư được chẩn đoán theo giai đoạn với phác đồ phẫu thuật, hóa trị, xạ trị hay chăm sóc hỗ trợ theo chỉ định; có theo dõi tái phát, lao cần uống thuốc đủ 6 tháng, mất ngủ, lupus, hiến tóc, và trẻ có thể được đánh giá, hỗ trợ khi có dấu hiệu chậm phát triển hoặc khó khăn tâm lý.",
+    "tags": [
+      "Tính năng",
+      "Cân bằng"
+    ],
+    "details": [
+      "Khi phát hiện ung thư, bạn biết bệnh đang ở giai đoạn nào; khám sức khỏe định kỳ giúp phát hiện sớm hơn. Sau khi chọn nơi điều trị, bạn chọn từng phương pháp theo chỉ định: phẫu thuật, hóa trị, xạ trị (chỉ với một số loại), chăm sóc hỗ trợ.",
+      "Giai đoạn và việc điều trị ảnh hưởng rõ tới kết cục; người trẻ không còn gần như luôn qua khỏi khi bệnh đã nặng, người lớn tuổi phát hiện sớm vẫn có cơ hội tốt. Không phương pháp nào bảo đảm khỏi bệnh.",
+      "Hóa trị có tác dụng phụ khác nhau theo phác đồ và cơ thể — không phải ai cũng rụng tóc; tóc thường mọc lại sau khi ngừng. Truyền hồng cầu hay tiểu cầu chỉ xuất hiện khi xét nghiệm cho thấy cần.",
+      "Có thể đặt buồng truyền dưới da khi hóa trị kéo dài: tiện truyền thuốc hơn nhưng có chi phí, cần chăm sóc và có thể biến chứng; không làm bệnh khỏi nhanh hơn.",
+      "Sau khi thuyên giảm, bác sĩ hẹn tái khám 5 năm; bệnh vẫn có thể tái phát, nguy cơ cao hơn nếu phát hiện muộn.",
+      "Người bệnh lao được nhắc uống thuốc đủ 6 tháng; tự ý ngừng khi thấy khỏe làm bệnh dễ quay lại và khó chữa hơn.",
+      "Căng thẳng kéo dài có thể dẫn tới mất ngủ; liệu pháp thay đổi thói quen ngủ giúp nhiều người cải thiện, thuốc ngủ chỉ nên dùng ngắn hạn. Lupus ban đỏ là bệnh tự miễn hiếm, diễn tiến từng đợt và có thể ảnh hưởng tới thận nếu không được theo dõi.",
+      "Mục Sức khỏe có “Tóc và hiến tóc”: tóc mọc dần theo năm; mỗi chương trình hiến tóc trong game có điều kiện riêng về độ dài và tóc đã tẩy, cắt hiến sẽ trừ đúng phần tóc đã cắt.",
+      "Hiến máu tạm hoãn khi bạn vừa được truyền máu trong 12 tháng hoặc đang điều trị/theo dõi sau ung thư — đây là quy tắc đơn giản hóa của game, ngoài đời mỗi nơi quy định khác nhau.",
+      "Trẻ sinh từ bản cập nhật di truyền trở đi có thể có các đặc điểm phát triển riêng: tự kỷ, ADHD, chậm nói, chậm vận động, khuyết tật trí tuệ, lo âu hoặc OCD. Khi có dấu hiệu, gia đình chọn đưa con đi đánh giá hay theo dõi thêm; một dấu hiệu chưa đủ để kết luận và không phải lỗi của cách nuôi dạy.",
+      "Sau đánh giá, mục “Hỗ trợ phát triển cho con” cho chọn can thiệp ngôn ngữ, hoạt động trị liệu, điều chỉnh học tập hoặc hỗ trợ tâm lý phù hợp từng trẻ. Hỗ trợ giúp con tiến bộ dần theo cách riêng, không “chữa khỏi” đặc điểm thần kinh; một số trẻ chậm nói hoặc chậm vận động tự bắt kịp bạn bè."
+    ]
+  },
+  {
     "id": "genetics-screening-twins-upgrade-815",
     "version": "8.10.15-genetics912",
     "releaseStatus": "packaged",
