@@ -14,6 +14,17 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Phần tồn MD1 8.10.17-md1 — 01/11/2026
+
+- §13: 187 hồ sơ quốc gia `compiled-912` mới chỉ kiểm URL nguồn tồn tại/đúng nước (561/748); cần đối chiếu từng câu (luật lao động, độ tuổi kết hôn, ngày lễ) với trang nguồn và nâng `confidence` khi đã xác minh. 187 URL trang quốc gia UNESCO chưa kiểm được vì máy chủ ngắt kết nối — chạy lại `node tools/country-sources-912.js --check --retry --only=culture` vào lúc khác (tuần tự, có nghỉ, không đổi User-Agent). Câu chuyện nhiều năm của 187 nước dựng theo mẫu; có thể viết tay dần theo nước có nhiều người chơi.
+- `tests/browser-country-minimum-content.js` (đã thêm TH, KE, BR, DE, SA, FJ): toàn bộ kiểm tra gameplay đạt; assertion cuối đòi mục nhật ký mới nhất là bản "8 quốc gia" đã lỗi thời từ khi có các bản 8.10.x — cần chủ dự án quyết định cách kiểm mới (không tự nới).
+- Test hỏng sẵn, đã kiểm trên cả HEAD 30eceed và mã 8.10.17 (cùng assertion): `update451`, `update453`, `update454` (kỳ vọng cũ về khóa cache theo phiên bản chung, nay dùng khóa theo module); `update460` (hành vi đúng — không tính phí, không áp sang con khác — nhưng so sánh JSON toàn bộ con nên vỡ khi module sau tự thêm `uid110`/`blood909`); `life138` (test đòi "Xem xét" chọn ngay anh chị em, trong khi `family-dynasty.js` 8.10.8 cố ý chuyển sang đề cử/bầu năm sau); `football-payroll901` ("contract survives health and sporting reductions" — chưa điều tra, ngoài phạm vi MD1); `blood910-browser` (đòi nhật ký mới nhất là 8.10.10). Không sửa assertion trong đợt này.
+- Chưa tái hiện: anh chị em "tên nam nhưng ghi em gái" (seed 777001 cũ); quét 760 đời và 12 chuỗi 4 thế hệ không có ca lệch giới tính.
+- §12/§11 mới là tham số gameplay; chưa có Monte Carlo toàn đời cho tỷ lệ khủng hoảng lãnh đạo theo nghề và tuổi thọ người bệnh thận/gan theo quốc gia.
+- Phần B (MD2): mới xong STATE-FIX-1 (8.10.18, cán bộ nguồn không làm tụt chức lãnh đạo cấp cao). Phần còn lại của B và toàn bộ Phần C (MD3) chưa làm.
+- Người chơi báo "chọn cuộc đời rồi không bấm được nút nào": chưa tái hiện trên mã nguồn và dist 8.10.17 (VN/thế giới, 1280/375 px, không lỗi JS). Cần trình duyệt/thiết bị, bản đang dùng, có tiếp tục bản lưu cũ không, ảnh màn hình.
+- Regression "hơn 60% tình huống xuất hiện tự nhiên" (52,6%) do thêm 975 câu chuyện chỉ dành cho cư dân từng nước — chủ dự án quyết định có loại khỏi mẫu số không. "major từng xuất hiện" (HEAD 1/1.500) và trầm cảm sau sinh ở mẫu 250 đời là ngưỡng mong manh theo RNG. "Sự kiện sau khi qua đời" còn nguồn ngoài health915 chưa tìm (có cả ở HEAD).
+
 ### Di truyền nhóm máu và sau hiến 8.10.10 — 30/10/2026
 
 Kiểm thử trọng điểm alen, bố mẹ sinh học/đổi bạn đời/con nuôi, Rh thai kỳ, chuyển đời, phản hồi sau hiến, tư vấn, lời mời thiếu máu và bạch cầu hạt; smoke/bản lưu và các hệ gia đình bị ảnh hưởng. Chưa chạy lại toàn bộ regression GĐ6 trên mã cuối; chưa kiểm chứng binding REVIEWS_DB Production. Phân bố vùng và xác suất sàng lọc/lời mời là tham số mô phỏng, D/d giản lược, không là công cụ tư vấn y khoa hoặc huyết thống. Cần mở rộng trong GĐ6 kiểm mọi lối sinh con/nhận nuôi và quy trình theo cơ sở, thuốc/chống chỉ định, anti-D và theo dõi chuyên khoa thực tế.

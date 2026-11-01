@@ -1,11 +1,56 @@
 {
-  "generatedAt": "2026-11-01T14:25:00.000+07:00",
+  "generatedAt": "2026-11-01T20:45:00.000+07:00",
   "entries": [
+    {
+      "id": "state-career-source-cadre-fix-818",
+      "version": "8.10.18-state",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-11-01T20:45:00.000+07:00",
+      "title": "Một Đời — Bộ trưởng và lãnh đạo cấp cao không còn bị “quy hoạch cán bộ nguồn” làm tụt chức",
+      "summary": "Đợt quy hoạch cán bộ nguồn nay chỉ dành cho cán bộ cấp dưới; người đã giữ chức từ cấp phó sở trở lên giữ nguyên chức vụ.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Trước đây một bộ trưởng có thể nhận tình huống “Được quy hoạch cán bộ nguồn” và sau khi chọn “Nhận nhiệm vụ mới” lại thành phó chủ tịch UBND tỉnh. Nay tình huống này chỉ đến với cán bộ cấp dưới.",
+        "Người đã giữ chức từ cấp phó giám đốc sở, vụ phó hoặc tương đương trở lên (kể cả Ngân hàng Nhà nước, Tỉnh ủy, UBND tỉnh, bộ ngành) giữ nguyên chức vụ; việc điều động cấp cao đi qua mục bổ nhiệm, điều động và luân chuyển.",
+        "Nếu tình huống cũ còn nằm chờ trong bản lưu, chọn “Nhận nhiệm vụ mới” sẽ không chuyển chức mà chỉ báo bạn giữ nguyên vị trí."
+      ]
+    },
+    {
+      "id": "countries-crime-organ-integrity-817",
+      "version": "8.10.17-md1",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-01T13:30:00.000Z",
+      "publishedAt": "2026-11-01T16:00:00.000+07:00",
+      "title": "Một Đời — Đủ 195 quốc gia có câu chuyện riêng, biến động trong giới ngầm, trợ giúp pháp lý trong trại và bệnh thận, bệnh gan theo giai đoạn",
+      "summary": "Mọi quốc gia giờ đều có lộ trình học, lễ hội, chuyện cưới hỏi, món ăn, điều kiện làm việc và năm câu chuyện kéo dài nhiều năm của riêng nước đó; nhóm trong giới ngầm có người cầm đầu, có thể đổi người dẫn dắt hoặc tan rã; người đang thi hành án có thể đề nghị trợ giúp pháp lý; bệnh thận và bệnh gan mạn tiến triển theo giai đoạn với lọc máu, ghép tạng và thuốc kháng virus.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tất cả 195 quốc gia có hồ sơ riêng: ba hướng học (phổ thông, nghề, đại học) kèm kỳ thi nếu nước đó có, ba ngày lễ có thời điểm và hoạt động cụ thể, ba bước tìm hiểu chuyện cưới hỏi, năm món ăn và năm điều kiện làm việc theo luật hoặc thực tế nước đó.",
+        "Mỗi nước có năm câu chuyện nhiều năm (chọn hướng học, học thử một nghề, đổi lịch làm, góp sức cho ngày lễ, cùng người yêu chuẩn bị chuyện cưới). Câu chuyện cần theo dõi qua nhiều năm, có thể thất bại rồi thử lại, bị gián đoạn khi đổi việc hoặc chia tay; không tự cấp bằng, việc làm hay đăng ký kết hôn.",
+        "Thông tin quốc gia lấy mốc tham chiếu năm 2026 và có đường dẫn nguồn của UNESCO, ILO, Ngân hàng Thế giới hoặc cổng chính phủ; phần lớn hồ sơ mới là bản tóm lược, chưa đối chiếu từng câu với nguồn. Các chi phí, kết quả trong game là cân bằng gameplay.",
+        "Ở những nơi có hoàn cảnh đặc biệt (chiến tranh, hạn chế học tập với phụ nữ, khủng hoảng kinh tế), hồ sơ ghi nhận thực tế đó như khó khăn của nhân vật, không coi là lựa chọn của người chơi.",
+        "Giới ngầm: nếu bạn chưa đứng đầu nhóm, nhóm có một người cầm đầu cụ thể với tính cách và mức tin tưởng riêng. Khi người này bị bắt, muốn rút lui hoặc mất uy tín, bạn chọn ủng hộ người kế nhiệm, tự đứng ra (có thể thất bại), đứng ngoài hoặc rời nhóm; năm sau người dẫn dắt mới đưa ra điều kiện đóng góp để bạn chấp nhận hoặc thương lượng.",
+        "Nếu bạn đang đứng đầu, đàn em có thể thách thức vị trí của bạn: chia lại việc, giữ vị trí (không bảo đảm) hoặc nhường lại. Nhóm gắn kết thấp và nhiều mâu thuẫn có thể tan rã: giữ lại người còn tin mình, theo nhóm khác, tạm lặn hoặc rời giới. Biến động không xảy ra khi bạn đang ở trong trại.",
+        "Trong trại giam có thể đề nghị hỗ trợ pháp lý cho bản án đang thi hành: trợ giúp pháp lý miễn phí khi thuộc diện, thuê luật sư hoặc tự viết đơn. Kết quả đến ít nhất một năm sau: có thể giảm một năm, được ghi nhận đủ điều kiện xét đặc xá, hoặc không thay đổi; mỗi bản án chỉ đề nghị một lần và không bao giờ được thả ngay.",
+        "Bệnh thận mạn có giai đoạn theo chức năng thận; kiểm soát đường huyết, huyết áp và điều trị tích cực làm chậm tiến triển. Khi thận suy nặng, bạn chọn chạy thận nhân tạo, lọc màng bụng, ghép thận hoặc điều trị bảo tồn; có thể hỏi người thân cùng nhóm máu hiến thận và họ có quyền từ chối, hoặc chờ thận từ người hiến đã mất.",
+        "Bệnh gan mạn đi từ viêm gan đến xơ hóa, xơ gan còn bù và mất bù. Thuốc kháng virus làm chậm viêm gan B, viêm gan C có thể chữa khỏi bằng đợt thuốc vài tuần, ngừng rượu bia giúp gan đỡ hơn. Siêu âm tầm soát giúp phát hiện ung thư gan sớm hơn; ghép gan với bệnh do rượu cần đã ngừng rượu ít nhất một năm.",
+        "Phần chi phí bạn tự trả cho lọc máu, ghép tạng và thuốc đã tính bảo hiểm y tế nếu có; không có bảo hiểm thì trả toàn bộ.",
+        "Sửa lỗi: du học xong chọn ở lại tìm việc nay có nút “Tìm việc” trong thời hạn cư trú tìm việc (trước đây nút biến mất vì bị coi như lao động theo hợp đồng).",
+        "Sửa lỗi: anh chị em được mang sang từ đời trước không còn bị ghi “đang đi học” khi đã ngoài 40 tuổi — họ có nghề thật của mình. Sửa lỗi một chỉ số trong chu cấp có thể thành giá trị không hợp lệ, và lỗi đôi khi vẫn ghi chuyện mất ngủ sau dòng qua đời."
+      ],
+      "correctedAt": "2026-11-01T13:30:22.460Z"
+    },
     {
       "id": "illness-cancer-development-upgrade-816",
       "version": "8.10.16-health915",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T14:25:00.000+07:00",
       "title": "Một Đời — Ung thư theo giai đoạn, chăm sóc bệnh mạn tính và hỗ trợ phát triển cho con",
       "summary": "Ung thư được chẩn đoán theo giai đoạn với phác đồ phẫu thuật, hóa trị, xạ trị hay chăm sóc hỗ trợ theo chỉ định; có theo dõi tái phát, lao cần uống thuốc đủ 6 tháng, mất ngủ, lupus, hiến tóc, và trẻ có thể được đánh giá, hỗ trợ khi có dấu hiệu chậm phát triển hoặc khó khăn tâm lý.",
@@ -25,13 +70,14 @@
         "Hiến máu tạm hoãn khi bạn vừa được truyền máu trong 12 tháng hoặc đang điều trị/theo dõi sau ung thư — đây là quy tắc đơn giản hóa của game, ngoài đời mỗi nơi quy định khác nhau.",
         "Trẻ sinh từ bản cập nhật di truyền trở đi có thể có các đặc điểm phát triển riêng: tự kỷ, ADHD, chậm nói, chậm vận động, khuyết tật trí tuệ, lo âu hoặc OCD. Khi có dấu hiệu, gia đình chọn đưa con đi đánh giá hay theo dõi thêm; một dấu hiệu chưa đủ để kết luận và không phải lỗi của cách nuôi dạy.",
         "Sau đánh giá, mục “Hỗ trợ phát triển cho con” cho chọn can thiệp ngôn ngữ, hoạt động trị liệu, điều chỉnh học tập hoặc hỗ trợ tâm lý phù hợp từng trẻ. Hỗ trợ giúp con tiến bộ dần theo cách riêng, không “chữa khỏi” đặc điểm thần kinh; một số trẻ chậm nói hoặc chậm vận động tự bắt kịp bạn bè."
-      ]
+      ],
+      "correctedAt": "2026-11-01T13:30:22.288Z"
     },
     {
       "id": "genetics-screening-twins-upgrade-815",
       "version": "8.10.15-genetics912",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T11:39:00.000+07:00",
       "title": "Một Đời — Di truyền theo cha mẹ, khám sàng lọc trước hôn nhân và sinh đôi, sinh ba",
       "summary": "Mỗi đứa trẻ nhận gen từ đúng cha mẹ sinh học, có thể mang gen hoặc mắc một số bệnh di truyền với tần suất theo vùng; hai người trưởng thành có thể cùng khám sàng lọc với sự đồng ý riêng của mỗi người; gia đình có thể đón sinh đôi hoặc hiếm hơn là sinh ba.",
@@ -47,13 +93,14 @@
         "Phần tư vấn nói rõ khả năng cho con chung khi cả hai cùng mang gen và các lựa chọn có thể cân nhắc; quyết định kết hôn hay sinh con vẫn thuộc về hai người.",
         "Thỉnh thoảng gia đình đón hai em bé cùng lúc; sinh đôi cùng trứng có cùng giới tính và cùng bộ gen, sinh đôi khác trứng thì khác nhau. Sinh ba rất hiếm. Hồ sơ con ghi rõ sinh cùng lần.",
         "Con cái và nhân vật đã có từ trước bản này không bị gán bệnh mới. Khi sống tiếp đời con, nhân vật mang theo bộ gen và tình trạng sức khỏe của chính người con đó."
-      ]
+      ],
+      "correctedAt": "2026-11-01T13:30:22.152Z"
     },
     {
       "id": "crime-crew-territory-upgrade-814",
       "version": "8.10.14-crime912",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T11:13:00.000+07:00",
       "title": "Một Đời — Đàn em có tên tuổi, địa bàn và bảng rủi ro cho đường tối",
       "summary": "Đường tối có đàn em với vai trò, kỹ năng và lòng trung thành riêng, quản lý địa bàn, bảng ước tính rủi ro trước khi quyết định, cách thăng cấp không phụ thuộc điểm học, và án mới không còn làm sai ngày mãn hạn đang thi hành.",
@@ -71,13 +118,14 @@
         "Thăng cấp trong giới dựa vào nhóm, địa bàn và sự gắn kết thay vì điểm học tập, nên không còn cảnh kẹt ở cấp thấp nhất cả chục năm. Quay lại đúng nghề cũ sau khi ra tù giữ được một phần uy tín.",
         "Cân bằng: nguy cơ tử vong mỗi lần bị đánh úp giảm còn khoảng 60% mức cũ; trước đây gần 4/10 người theo nghề lâu năm mất mạng trong 30 năm mô phỏng.",
         "Nếu có án mới khi đang thi hành án, hai án được tổng hợp và giữ ngày mãn hạn muộn hơn; trước đây án mới ngắn hơn có thể ghi đè làm ngày ra trại sớm bất thường. Mỗi vụ được ghi vào hồ sơ án."
-      ]
+      ],
+      "correctedAt": "2026-11-01T13:30:21.980Z"
     },
     {
       "id": "sponsor-celebrity-upgrade-813",
       "version": "8.10.13-social913",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T10:36:00.000+07:00",
       "title": "Một Đời — Chủ động hỗ trợ một người và mở rộng quan hệ với người nổi tiếng",
       "summary": "Bạn có thể chủ động hỗ trợ tài chính cho một người trưởng thành với điều khoản rõ ràng, người ấy có quyền đồng ý, thương lượng hoặc từ chối; mục Tình yêu & hôn nhân có thêm cách làm quen, đi chơi, xây dựng tin cậy và tiến tới hẹn hò với người nổi tiếng.",
@@ -96,13 +144,14 @@
         "Các bước gửi lời mời làm quen, mời đi chơi riêng, trò chuyện và ngỏ ý hẹn hò đều cần người kia đồng ý. Mỗi năm có tối đa 10 lần tương tác (6 lần với một người), đủ để đi từ quen biết tới hẹn hò trong một năm nếu hợp nhau. Tặng quà đắt chỉ tăng tin cậy có giới hạn, không thay được các bước.",
         "Người nổi tiếng đã kết hôn sẽ không bỏ gia đình để hẹn hò với bạn. Hai người trưởng thành có thể đề nghị một đêm bên nhau nếu cả hai tự nguyện; nếu một trong hai đã có gia đình, đó là phản bội và có thể bị lộ.",
         "Khi thành người yêu, đó vẫn là chính người bạn đã quen, tiếp tục đi qua hẹn hò, cầu hôn và kết hôn như các mối quan hệ khác. Tình trạng hôn nhân của người nổi tiếng thay đổi tự nhiên mỗi năm."
-      ]
+      ],
+      "correctedAt": "2026-11-01T13:30:21.847Z"
     },
     {
       "id": "school-assets-romance-upgrade-812",
       "version": "8.10.12-upgrade912",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T10:10:00.000+07:00",
       "title": "Một Đời — Chọn khối thi chắc chắn, bán đúng tài sản muốn bán, hẹn hò có lượt và có quyền từ chối",
       "summary": "Học sinh THPT luôn được tự chọn và đổi khối thi trước kỳ thi; bảng việc làm phản hồi nhanh hơn rõ rệt, hồ sơ chi tiết trên điện thoại không còn bị trong suốt; tài sản có bộ lọc, tìm kiếm và phân trang khi bán, tặng hay lập di chúc; tìm người yêu tới 10 lượt mỗi năm và người được gặp có thể từ chối; gói cố vấn thừa kế tính học phí đúng tỷ giá và cộng rõ ràng tối đa 50 điểm mỗi chuyên môn.",
@@ -124,7 +173,8 @@
         "Mục mập mờ có “Kết thúc và làm mới danh sách” (xem lại danh sách trước khi xác nhận, tối đa 1 lần mỗi năm); kết thúc từng người không cần còn lượt gặp. Con chung, thai kỳ, nghĩa vụ nuôi con và gia đình bí mật được giữ nguyên; người cũ có thể tình cờ gặp lại sau vài năm.",
         "Gói cố vấn thừa kế 5 triệu USD tính học phí đúng tỷ giá (khoảng 127 tỷ đồng ở Việt Nam; trước đây bị tính sai lớn hơn rất nhiều). Mỗi chuyên môn trong 7 chuyên môn được cộng tổng cộng tối đa 50 điểm từ khóa (gói 1 triệu USD: 30 điểm): phần lớn trong 10 năm học, phần còn lại khi hoàn thành; không vượt 100 và không cộng vào mọi chỉ số khác.",
         "Khóa cố vấn đang học trong bản lưu cũ được tính tiếp phần đã nhận, không thu phí lại; khóa đã hoàn thành trước đây được bù một lần lên mức mới. Giá dịch vụ tính bằng USD trong đường tối cũng được quy đổi đúng tỷ giá."
-      ]
+      ],
+      "correctedAt": "2026-11-01T13:30:21.673Z"
     },
     {
       "id": "gameshow-crime-prison-upgrade-811",

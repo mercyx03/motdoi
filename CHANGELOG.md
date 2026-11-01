@@ -1,3 +1,18 @@
+## 8.10.18-state — 01/11/2026 (UTC+7)
+
+- Phần B, STATE-FIX-1: `ct_quy_hoach` (cán bộ nguồn) không còn áp cho người từ bậc 5 trở lên (phó GĐ sở/vụ phó…); kiểm lại lúc thực thi nên quyết định cũ còn chờ không chuyển chức. Tái hiện trước khi sửa: bộ trưởng `trung_uong` r5 (bậc 8) → `chinh_tri` r3 phó chủ tịch UBND tỉnh (bậc 7). Test: state-career174 (+8).
+- Nhật ký 8.10.12 → 8.10.17 chuyển sang đã phát hành theo xác nhận upload của chủ dự án (01/11/2026 20:30 +07:00).
+- Bản packaged, chưa phát hành.
+
+## 8.10.17-md1 — 01/11/2026 (UTC+7)
+
+- §13: đủ 195/195 nước đạt tối thiểu có nguồn và tích hợp gameplay (3 lộ trình học, 3 lễ, 3 bước cưới, 5 món, 5 mục lao động, 5 câu chuyện nhiều năm/nước; 975 câu chuyện). 187 hồ sơ mới loại `compiled-912`: URL UNESCO GEM/ILO/Ngân hàng Thế giới đã kiểm (561/561), 187 URL trang quốc gia UNESCO chưa kiểm được do máy chủ ngắt kết nối; chưa đối chiếu từng câu.
+- §12: thủ lĩnh nhóm NPC, đổi lãnh đạo hai giai đoạn (ủng hộ/tranh vị trí/đứng ngoài/rời nhóm → điều kiện đóng góp năm sau), bị thách thức khi đang đứng đầu, tan rã nhóm; trợ giúp pháp lý trong trại theo từng bản án (kết quả sau ≥1 năm, tối đa giảm 1 năm hoặc điểm xét đặc xá).
+- §11: bệnh thận mạn theo eGFR G1–G5 (lọc máu, ghép thận, người hiến cùng nhóm máu có quyền từ chối, danh sách chờ, thải ghép) và bệnh gan mạn theo giai đoạn (kháng virus HBV, DAA chữa HCV, cai rượu, tầm soát ung thư gan, xơ gan mất bù, ghép gan).
+- §14: bộ quét bất biến liên hệ thống (tests/integrity917.js); sửa 4 lỗi tái hiện: anh chị em thừa kế mãi "đang đi học", `sponsor.feltN` NaN, ghi chuyện sức khỏe sau khi qua đời, ILO URL mã hóa sai.
+- Sửa lỗi người chơi báo: du học (abroad107) → "Ở lại tìm việc" bị mất nút "Tìm việc" do cư trú tìm việc có `abroad.perm=false`. Hiệu chỉnh nguy cơ thận/gan (tuổi thọ TB VN mô phỏng 2.400 đời: 71,87 có chuỗi / 72,17 tắt). Build lại còn ~22 giây (event-catalog kiểm điều kiện trước khi sao chép đời mẫu).
+- Bản packaged/Preview, chưa xác nhận phát hành. Chi tiết: docs/UPGRADE-912-PROGRESS.md, docs/COUNTRY-COVERAGE-917.md.
+
 ## 8.10.16-health915 — 01/11/2026 (UTC+7)
 
 - Ung thư theo giai đoạn I–IV, phác đồ theo chỉ định (phẫu thuật, hóa trị, xạ trị, chăm sóc hỗ trợ), tác dụng phụ theo phác đồ, chế phẩm máu khi có chỉ định, buồng truyền, theo dõi 5 năm và tái phát; nguy cơ tử vong theo giai đoạn thay cho hệ số chung (tuổi chết TB mô phỏng 72,9 → 71,8).
