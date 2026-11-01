@@ -52,7 +52,7 @@
   E.ACT.push({ id: 'uw_quan_he', g: 'Đường tối', l: 'Làm ăn bất chính / quan hệ xã hội đen', min: 18, sc: 'uw_quan_he' });
 
   function ambush(l, r, log, fight) {
-    var s = state(l), p = deathRisk(l, fight);
+    var s = state(l), p = E.underworldDeathRisk(l, fight); // crime912 có thể điều chỉnh (đàn em bảo vệ)
     if (r() < p) { H.kill(l, fight ? 'chống trả không thành trong một vụ đánh úp của băng nhóm' : 'không chạy thoát trong một vụ đánh úp của băng nhóm', log); return; }
     s.hunted = true; s.attackedAt = l.age; heat(l, fight ? 25 : 15);
     H.fx(l, { hea: fight ? -25 : -14, hap: -15 });
@@ -60,10 +60,10 @@
     pursuit(l);
   }
   event('uw_can_len', 'Bị cắn lén — đánh úp', 'Một nhóm đối thủ bất ngờ chặn đường. Bạn chỉ có vài giây quyết định; cả chống trả lẫn bỏ chạy đều có nguy cơ tử vong. Sống sót cũng chưa có nghĩa là thoát khỏi việc bị truy sát.', [
-    { k: 'fight', l: 'Chống trả rồi bỏ chạy', h: function (l) { return 'Nguy cơ tử vong: ' + Math.round(deathRisk(l, true) * 100) + '%'; }, ai: { w: 0.6, risk: 1 }, run: function (l, r, log) { ambush(l, r, log, true); } },
-    { k: 'flee', l: 'Chạy trốn ngay', h: function (l) { return 'Nguy cơ không chạy thoát: ' + Math.round(deathRisk(l, false) * 100) + '%'; }, ai: { w: 1.4 }, run: function (l, r, log) { ambush(l, r, log, false); } }
+    { k: 'fight', l: 'Chống trả rồi bỏ chạy', h: function (l) { return 'Nguy cơ tử vong: ' + Math.round(E.underworldDeathRisk(l, true) * 100) + '%'; }, ai: { w: 0.6, risk: 1 }, run: function (l, r, log) { ambush(l, r, log, true); } },
+    { k: 'flee', l: 'Chạy trốn ngay', h: function (l) { return 'Nguy cơ không chạy thoát: ' + Math.round(E.underworldDeathRisk(l, false) * 100) + '%'; }, ai: { w: 1.4 }, run: function (l, r, log) { ambush(l, r, log, false); } }
   ]);
-  trigger('uw_can_len', risk, 1);
+  trigger('uw_can_len', function (l) { return E.underworldRisk(l); }, 1); // đọc hàm công khai để crime912 điều chỉnh
   E.MAJOR.uw_can_len = 1;
 
   event('uw_truy_sat', 'Những ngày bị truy sát', 'Điện thoại nhận những lời đe dọa. Bạn không còn cảm thấy an toàn khi ra đường.', [
