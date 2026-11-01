@@ -170,7 +170,166 @@
   var P = E.DEC.crimePlan911;
   if (P && P.def) { var t0 = P.def.text; P.def.text = function (l, d) { return (typeof t0 === 'function' ? t0(l, d) : t0) + '\n' + riskReport(l); }; }
 
+  // ---- §12 (8.10.17): thủ lĩnh nhóm là NPC, đổi lãnh đạo qua hai giai đoạn, tan rã nhóm ----
+  // Tham số gameplay. Khủng hoảng chỉ là xác suất theo sức ép, mâu thuẫn, gắn kết; không ai bị buộc có biến cố.
+  var LEAD = { crisisBase: 0.035, crisisPressure: 1 / 2500, crisisDispute: 0.025, crisisMax: 0.22, claimBase: 0.25, holdBase: 0.45, demand: 0.05, demandLow: 0.02, splitCohesion: 25, splitDisputes: 3, splitCooldown: 4 };
+  function jailedNow(l) { return l.jailUntil != null && l.age < l.jailUntil; }
+  function topRank(l) { var c = E.jobDef(l); return c && c.t ? c.t.length - 1 : 0; }
+  function isLeader(l) { return !!(l.job && E.isCrime(l) && (l.job.rank || 0) >= topRank(l)); }
+  function group(l) {
+    var s = state(l), g = s.group;
+    if (!g || typeof g !== 'object') g = s.group = { serial: 0, boss: null, history: [], crisis: null, dissolvedAt: null, splitAt: null };
+    if (!Array.isArray(g.history)) g.history = [];
+    return g;
+  }
+  function gnote(l, t) { var g = group(l); g.history.push({ age: l.age, year: l.birthYear + l.age, t: t }); if (g.history.length > 20) g.history.shift(); }
+  function npc(l, tag) { var g = group(l), r = rng(l.id + ':' + tag + ':' + (++g.serial)); return { id: l.id + ':' + tag + ':' + g.serial, name: H.stranger(l, r, r() < 0.8 ? 'M' : 'F'), trait: TRAITS[Math.floor(r() * TRAITS.length)], trust: 35 + Math.floor(r() * 20), since: l.age, demand: 0 }; }
+  function ensureBoss(l) { var g = group(l); if (!g.boss && E.isCrime(l) && !isLeader(l)) { g.boss = npc(l, 'boss912'); gnote(l, g.boss.name + ' là người cầm đầu nhóm bạn đang theo.'); } return g.boss; }
+  function challenger(l) { var c = crew(l).map(function (p) { return ensure(l, p); }).sort(function (a, b) { return (b.skill912 - b.trust) - (a.skill912 - a.trust); })[0]; return c ? { id: c.id, name: c.name, trait: c.trait912, trust: c.trust, since: l.age, demand: 0, fromCrew: true } : npc(l, 'rival912'); }
+  function crisisChance(l) { var s = cs(l); return U.clamp(LEAD.crisisBase + (s.pressure || 0) * LEAD.crisisPressure + (s.disputes || 0) * LEAD.crisisDispute + (s.cohesion < 40 ? 0.03 : 0), 0, LEAD.crisisMax); }
+  function leaderWhy(l, d) { var g = group(l), c = g.crisis; return !!(c && d && c.id === d.cid && c.stage === d.stage && free(l) && E.isCrime(l) && !jailedNow(l)); }
+  function closeCrisis(l, text) { var g = group(l); if (g.crisis) { g.crisis.closedAt = l.age; gnote(l, text); } g.crisis = null; }
+  function leaveCrew(l, keep) { cs(l).crew.forEach(function (p) { if (p.status === 'active' && !(keep && keep(p))) { p.status = 'separated'; hist(p, 'tách ra khi nhóm thay đổi', l); } }); }
+
+  E.SC('crimeLeader912', {
+    title: function (l, d) { return d && d.stage === 2 ? 'Nhóm sau thay đổi người dẫn dắt' : d && d.kind === 'challenge' ? 'Có người muốn thay bạn dẫn dắt nhóm' : 'Người cầm đầu nhóm không còn giữ được vị trí'; },
+    prep: function (l) { var c = group(l).crisis || {}; return { cid: c.id, stage: c.stage, kind: c.kind, cand: c.cand && c.cand.name, boss: c.oldBoss }; },
+    valid: leaderWhy,
+    text: function (l, d) {
+      var g = group(l), c = g.crisis || {};
+      if (d.stage === 2) return isLeader(l) ? 'Bạn đang dẫn dắt nhóm sau biến động năm trước. Những người còn ở lại chờ xem bạn chia việc và giữ địa bàn thế nào.' : (g.boss ? g.boss.name + ' (' + g.boss.trait + ')' : 'Người dẫn dắt mới') + ' muốn mọi người đóng góp nhiều hơn cho quỹ chung của nhóm. Lòng tin giữa hai bên: ' + (g.boss ? g.boss.trust : 0) + '/100.';
+      if (d.kind === 'challenge') return d.cand + ' tỏ ý muốn nắm quyền dẫn dắt nhóm. Mâu thuẫn ' + cs(l).disputes + ', gắn kết ' + cs(l).cohesion + '/100. Kết quả phụ thuộc vào người còn tin bạn, không bảo đảm.';
+      return (d.kind === 'arrested' ? (d.boss || 'Người cầm đầu') + ' bị tạm giữ trong một vụ khác.' : d.kind === 'retire' ? (d.boss || 'Người cầm đầu') + ' muốn rút lui vì tuổi tác và sức khỏe.' : 'Nội bộ chia rẽ, nhiều người không còn nghe ' + (d.boss || 'người cầm đầu') + '.') + ' ' + d.cand + ' đang được nhiều người nhắc tới để thay thế. Lựa chọn của bạn ảnh hưởng tới phần chia, rủi ro và vị trí trong nhóm những năm sau.';
+    },
+    opts: [
+      { k: 'back', l: function (l, d) { return 'Ủng hộ ' + d.cand + ' giữ vai trò dẫn dắt'; }, req: function (l, d) { return d.stage === 1 && d.kind !== 'challenge'; }, ai: { w: 1.2 },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; var g = group(l); g.boss = g.crisis.cand; g.boss.trust = Math.min(100, g.boss.trust + 15); cs(l).cohesion = Math.min(100, cs(l).cohesion + 5); g.crisis.stage = 2; g.crisis.at = l.age; g.crisis.choice = 'back'; gnote(l, 'Bạn ủng hộ ' + g.boss.name + ' dẫn dắt nhóm.'); log('Bạn đứng về phía ' + g.boss.name + '. Người này nhớ sự ủng hộ, nhưng cũng sẽ đòi hỏi ở năm sau.', 'neutral'); } },
+      { k: 'claim', l: 'Tự đứng ra dẫn dắt nhóm', h: function (l) { return 'Cần có người tin bạn; thất bại làm mâu thuẫn tăng và bị chú ý nhiều hơn'; }, req: function (l, d) { return d.stage === 1 && d.kind !== 'challenge' && !!l.job && (l.job.rank || 0) >= 1; }, ai: { amb: 1, w: 0.6 },
+        run: function (l, r, log, d) {
+          if (!leaderWhy(l, d)) return; var g = group(l), s = cs(l), uw = l.flags.underworld || (l.flags.underworld = { linked: false, heat: 0, hunted: false });
+          var p = U.clamp(LEAD.claimBase + crew(l).reduce(function (n, q) { return n + q.trust; }, 0) / 600 + s.cohesion / 400 + (l.job.rank || 0) * 0.04 - s.disputes * 0.04, 0.1, 0.75);
+          g.crisis.stage = 2; g.crisis.at = l.age; g.crisis.choice = 'claim';
+          if (r() < p) { l.job.rank = topRank(l); l.job.yrs = 0; g.boss = null; C9.pressure(l, 8); crew(l).forEach(function (q) { q.trust = Math.min(100, q.trust + 5); }); gnote(l, 'Bạn trở thành người dẫn dắt nhóm.'); log('Phần lớn mọi người chấp nhận bạn dẫn dắt. Quyền lớn hơn đi cùng việc bị chú ý nhiều hơn.', 'neutral'); }
+          else { s.disputes += 2; s.cohesion = Math.max(0, s.cohesion - 10); uw.heat = U.clamp((uw.heat || 0) + 10, 0, 100); g.boss = g.crisis.cand; g.boss.trust = 15; gnote(l, 'Bạn tranh vị trí dẫn dắt nhưng không thành; ' + g.boss.name + ' lên thay.'); log('Không đủ người đứng về phía bạn. ' + g.boss.name + ' nắm nhóm và dè chừng bạn.', 'bad'); }
+        } },
+      { k: 'aside', l: 'Đứng ngoài, giảm hoạt động một thời gian', req: function (l, d) { return d.stage === 1 && d.kind !== 'challenge'; }, ai: { w: 1 },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; var g = group(l); g.boss = g.crisis.cand; g.boss.trust = 30; C9.pressure(l, -6); g.crisis.stage = 2; g.crisis.at = l.age; g.crisis.choice = 'aside'; gnote(l, 'Bạn đứng ngoài cuộc thay đổi người dẫn dắt.'); log('Bạn giữ khoảng cách. ' + g.boss.name + ' lên thay; vị trí của bạn không đổi nhưng ít được tin cậy hơn.', 'neutral'); } },
+      { k: 'share', l: function (l, d) { return 'Chia lại việc, tăng phần cho ' + d.cand; }, req: function (l, d) { return d.stage === 1 && d.kind === 'challenge'; }, ai: { w: 1.2 },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; var g = group(l), q = crew(l).find(function (x) { return x.id === g.crisis.cand.id; }); if (q) { q.cut912 = Math.min(BAL.cutMax, q.cut912 + 3); q.trust = Math.min(100, q.trust + 12); hist(q, 'được chia thêm việc và phần', l); } cs(l).cohesion = Math.min(100, cs(l).cohesion + 6); g.crisis.stage = 2; g.crisis.at = l.age; g.crisis.choice = 'share'; gnote(l, 'Bạn chia lại vai trò để giữ nhóm.'); log('Bạn nhường bớt quyền và phần chia. Căng thẳng giảm, thu nhập của bạn giảm theo.', 'neutral'); } },
+      { k: 'stand', l: 'Giữ vị trí dẫn dắt', h: 'Người bảo vệ và gắn kết nhóm giúp giữ vị trí, không bảo đảm', req: function (l, d) { return d.stage === 1 && d.kind === 'challenge'; }, ai: { amb: 1, w: 0.8 },
+        run: function (l, r, log, d) {
+          if (!leaderWhy(l, d)) return; var g = group(l), s = cs(l), p = U.clamp(LEAD.holdBase + power(l, 'guard') / 250 + s.cohesion / 300 - s.disputes * 0.05, 0.2, 0.85);
+          g.crisis.stage = 2; g.crisis.at = l.age; g.crisis.choice = 'stand';
+          if (r() < p) { s.disputes += 1; gnote(l, 'Bạn giữ được vị trí dẫn dắt.'); log('Bạn giữ được vị trí, nhưng mâu thuẫn chưa hết.', 'neutral'); }
+          else { l.job.rank = Math.max(0, topRank(l) - 1); var c = g.crisis.cand; g.boss = c; c.trust = 20; var q = crew(l).find(function (x) { return x.id === c.id; }); if (q) { q.status = 'separated'; hist(q, 'tách ra để dẫn dắt nhóm', l); } gnote(l, c.name + ' thay bạn dẫn dắt nhóm.'); log(c.name + ' kéo được nhiều người về phía mình. Bạn mất vị trí đứng đầu.', 'bad'); }
+        } },
+      { k: 'step', l: function (l, d) { return 'Nhường vị trí cho ' + d.cand; }, req: function (l, d) { return d.stage === 1 && d.kind === 'challenge'; },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; var g = group(l), c = g.crisis.cand; l.job.rank = Math.max(0, topRank(l) - 1); g.boss = c; c.trust = 50; var q = crew(l).find(function (x) { return x.id === c.id; }); if (q) { q.status = 'separated'; hist(q, 'nhận vị trí dẫn dắt', l); } C9.pressure(l, -8); g.crisis.stage = 2; g.crisis.at = l.age; g.crisis.choice = 'step'; gnote(l, 'Bạn nhường vị trí dẫn dắt cho ' + c.name + '.'); log('Bạn lùi lại. Ít bị chú ý hơn, ít quyền quyết định hơn.', 'neutral'); } },
+      { k: 'accept', l: 'Chấp nhận đóng góp ' + Math.round(LEAD.demand * 100) + '% thu nhập cho quỹ nhóm', req: function (l, d) { return d.stage === 2 && !isLeader(l); }, ai: { w: 1.1 },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; var g = group(l); if (g.boss) { g.boss.demand = LEAD.demand; g.boss.trust = Math.min(100, g.boss.trust + 10); } closeCrisis(l, 'Bạn chấp nhận điều kiện của người dẫn dắt mới.'); log('Quan hệ với người dẫn dắt mới ổn định hơn; một phần thu nhập đi vào quỹ chung.', 'neutral'); } },
+      { k: 'negotiate', l: 'Thương lượng mức đóng góp thấp hơn', req: function (l, d) { return d.stage === 2 && !isLeader(l); },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; var g = group(l), b = g.boss, p = U.clamp(0.3 + power(l, 'negotiator') / 300 + (b ? b.trust : 0) / 250, 0.15, 0.8); if (b && r() < p) { b.demand = LEAD.demandLow; closeCrisis(l, 'Thương lượng được mức đóng góp thấp.'); log('Hai bên thống nhất mức đóng góp thấp hơn.', 'neutral'); } else { if (b) { b.demand = LEAD.demand; b.trust = Math.max(0, b.trust - 10); } cs(l).disputes++; closeCrisis(l, 'Thương lượng không thành, quan hệ căng hơn.'); log('Thương lượng không thành. Bạn vẫn phải đóng góp, quan hệ căng hơn trước.', 'bad'); } } },
+      { k: 'consolidate', l: 'Củng cố nhóm, phân rõ việc', req: function (l, d) { return d.stage === 2 && isLeader(l); }, ai: { w: 1 },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; cs(l).cohesion = Math.min(100, cs(l).cohesion + 8); C9.pressure(l, 3); closeCrisis(l, 'Bạn củng cố nhóm sau thay đổi.'); log('Nhóm hoạt động nền nếp hơn dưới sự dẫn dắt của bạn.', 'neutral'); } },
+      { k: 'calm', l: 'Giảm quy mô để bớt bị chú ý', req: function (l, d) { return d.stage === 2 && isLeader(l); },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; C9.pressure(l, -8); state(l).territory.influence = Math.max(0, (state(l).territory.influence || 0) - 10); closeCrisis(l, 'Bạn thu nhỏ hoạt động sau thay đổi.'); log('Bạn thu nhỏ hoạt động; thu nhập và sức ép cùng giảm.', 'neutral'); } },
+      { k: 'leave', l: 'Rời nhóm, tìm đường hợp pháp', ai: { moral: 1, w: 0.4 },
+        run: function (l, r, log, d) { if (!leaderWhy(l, d)) return; closeCrisis(l, 'Bạn rời nhóm khi nhóm thay đổi người dẫn dắt.'); leaveCrew(l); E.quitCrime(l, log, 'Rời nhóm khi nhóm thay đổi người dẫn dắt.'); log('Bạn rời đi. Hồ sơ cũ và quan hệ cũ vẫn còn đó.', 'neutral'); } }
+    ]
+  });
+
+  function splitWhy(l, d) { var g = group(l); return !!(d && g.splitPending === d.at && free(l) && E.isCrime(l) && !jailedNow(l)); }
+  E.SC('crimeSplit912', {
+    title: 'Nhóm đang tan rã',
+    prep: function (l) { return { at: group(l).splitPending }; },
+    valid: splitWhy,
+    text: function (l) { var s = cs(l); return 'Mâu thuẫn ' + s.disputes + ' vụ, gắn kết chỉ còn ' + s.cohesion + '/100. Nhiều người không còn làm theo một hướng. ' + crew(l).length + ' người còn liên lạc với bạn; mỗi người có lý do và mức tin khác nhau.'; },
+    opts: [
+      { k: 'regroup', l: 'Giữ lại những người còn tin mình, làm nhỏ lại', ai: { w: 1 },
+        run: function (l, r, log, d) { if (!splitWhy(l, d)) return; var g = group(l), s = cs(l), before = crew(l).length; leaveCrew(l, function (p) { return p.trust >= 50; }); s.cohesion = 45; s.disputes = 0; g.splitPending = null; g.splitAt = l.age; gnote(l, 'Nhóm tách ra; bạn giữ ' + crew(l).length + '/' + before + ' người.'); log('Bạn làm lại với ' + crew(l).length + ' người còn tin nhau. Ít người hơn, ít va chạm hơn.', 'neutral'); } },
+      { k: 'join', l: 'Theo một nhóm khác', h: 'Mất một bậc uy tín, đổi người cầm đầu', ai: { amb: 1, w: 0.5 },
+        run: function (l, r, log, d) { if (!splitWhy(l, d)) return; var g = group(l), s = cs(l), uw = l.flags.underworld || (l.flags.underworld = { linked: false, heat: 0, hunted: false }); leaveCrew(l, function (p) { return p.trust >= 70; }); l.job.rank = Math.max(0, (l.job.rank || 0) - 1); g.boss = npc(l, 'boss912'); s.cohesion = 40; s.disputes = 0; uw.heat = U.clamp((uw.heat || 0) + 10, 0, 100); g.splitPending = null; g.splitAt = l.age; g.dissolvedAt = l.age; gnote(l, 'Nhóm cũ tan rã; bạn theo nhóm của ' + g.boss.name + '.'); log('Nhóm cũ tan rã. Bạn bắt đầu lại dưới quyền ' + g.boss.name + ' và phải xây lại lòng tin.', 'neutral'); } },
+      { k: 'lie_low', l: 'Tạm lặn một năm, chưa quyết', ai: { w: 0.8 },
+        run: function (l, r, log, d) { if (!splitWhy(l, d)) return; var g = group(l); C9.pressure(l, -12); g.splitPending = null; g.splitAt = l.age - LEAD.splitCooldown + 1; gnote(l, 'Bạn tạm lặn khi nhóm rối ren.'); log('Bạn tạm tránh mặt. Nếu nhóm vẫn rối, chuyện này sẽ quay lại năm sau.', 'neutral'); } },
+      { k: 'legit', l: 'Rời hẳn giới, tìm đường hợp pháp', ai: { moral: 1, w: 0.6 },
+        run: function (l, r, log, d) { if (!splitWhy(l, d)) return; var g = group(l); g.splitPending = null; g.splitAt = l.age; g.dissolvedAt = l.age; leaveCrew(l); gnote(l, 'Nhóm tan rã; bạn rời giới.'); E.quitCrime(l, log, 'Rời giới khi nhóm tan rã.'); log('Nhóm tan rã và bạn rời đi. Hồ sơ cũ không tự biến mất.', 'neutral'); } }
+    ]
+  });
+
+  E.HOOKS.year.push(function (l, r, log) {
+    if (!l.alive || !l.flags.crime912) return;
+    var g = group(l); if (g.yearAt === l.age) return;
+    if (jailedNow(l)) { g.yearAt = l.age; if (g.boss) g.boss.trust = Math.max(0, g.boss.trust - 5); return; }
+    if (!E.isCrime(l)) return; g.yearAt = l.age;
+    if (!free(l)) return;
+    ensureBoss(l);
+    var queued = (l.pending || []).some(function (x) { return x.id === 'crimeLeader912' || x.id === 'crimeSplit912'; });
+    if (queued) return;
+    if (g.crisis && g.crisis.stage === 2 && g.crisis.at < l.age) { X.next(l, 'crimeLeader912', r, {}, { manual: false }); return; }
+    if (g.crisis && g.crisis.stage === 1 && g.crisis.at < l.age) { closeCrisis(l, 'Biến động lãnh đạo tự lắng xuống khi bạn không lên tiếng.'); if (g.crisis === null && !isLeader(l) && g.boss) g.boss.trust = Math.max(0, g.boss.trust - 5); }
+    var s = cs(l);
+    if (!g.crisis && s.cohesion < LEAD.splitCohesion && s.disputes >= LEAD.splitDisputes && (g.splitAt == null || l.age - g.splitAt >= LEAD.splitCooldown)) { g.splitPending = l.age; X.next(l, 'crimeSplit912', r, {}, { manual: false }); return; }
+    if (g.crisis || r() >= crisisChance(l)) return;
+    var lead = isLeader(l), kind = lead ? 'challenge' : (s.pressure >= 40 && r() < 0.5 ? 'arrested' : r() < 0.4 ? 'retire' : 'rivalry');
+    var cand = lead ? challenger(l) : npc(l, 'heir912');
+    g.crisis = { id: l.id + ':crisis912:' + (++g.serial), kind: kind, stage: 1, at: l.age, cand: cand, oldBoss: g.boss ? g.boss.name : null };
+    if (!lead && g.boss) gnote(l, g.boss.name + (kind === 'arrested' ? ' bị tạm giữ.' : kind === 'retire' ? ' muốn rút lui.' : ' mất uy tín trong nhóm.'));
+    X.next(l, 'crimeLeader912', r, {}, { manual: false });
+  });
+  // Khoản đóng góp cho người dẫn dắt mới: trừ một lần trong thu nhập nghề của năm, không cộng dồn qua wrapper khác.
+  var career1 = E.careerYear;
+  E.careerYear = function (l) { var out = career1.apply(this, arguments), g = l.flags.crime912 && l.flags.crime912.group; if (!(out > 0) || !g || !g.boss || !g.boss.demand || !E.isCrime(l) || isLeader(l)) return out; return out * (1 - g.boss.demand); };
+
+  // ---- §12 (8.10.17): hỗ trợ pháp lý trong trại, gắn với sổ án của từng vụ ----
+  // Mô phỏng hư cấu: một đề nghị cho mỗi bản án, có kết quả sau ít nhất một năm, tối đa giảm một năm hoặc thêm điểm xét đặc xá; không bao giờ mãn hạn ngay.
+  var LEGAL = { aid: 0.3, lawyer: 0.4, self: 0.15, perPoint: 0.04, cleanBonus: 0.1, longPenalty: 0.1, lawyerCost: 0.6, aidMoney: 2, pointsOnPartial: 2 };
+  function currentSentence(l) { var s = state(l); for (var i = s.sentences.length - 1; i >= 0; i--) if (s.sentences[i].until === l.jailUntil) return s.sentences[i]; return s.sentences[s.sentences.length - 1] || null; }
+  function legal(l) { var s = state(l); if (!s.legal || typeof s.legal !== 'object') s.legal = {}; return s.legal; }
+  function legalCase(l) { var sen = currentSentence(l); return sen ? legal(l)[sen.id] || null : null; }
+  function legalAsk(l) { var sen = currentSentence(l); return !!(jailedNow(l) && sen && !legal(l)[sen.id] && l.jailUntil - l.age >= 2); }
+  function legalDue(l) { var c = legalCase(l); return !!(jailedNow(l) && c && c.status === 'review' && c.at < l.age); }
+  function fileLegal(l, kind, log) {
+    var sen = currentSentence(l); if (!sen || !legalAsk(l)) return;
+    if (kind === 'lawyer') { var cost = l.base * LEGAL.lawyerCost; if (l.money < cost) return; H.cash(l, -cost, 'Phí luật sư trong thời gian thi hành án'); }
+    legal(l)[sen.id] = { status: 'review', at: l.age, kind: kind, sentence: sen.id };
+    log(kind === 'skip' ? 'Bạn chưa đề nghị hỗ trợ pháp lý lúc này.' : 'Hồ sơ đề nghị đã được chuyển đi. Kết quả xem xét cần ít nhất một năm và không bảo đảm có thay đổi.', 'neutral');
+    if (kind === 'skip') legal(l)[sen.id].status = 'declined';
+  }
+  E.SC('tg_phap_ly912', {
+    title: 'Hỗ trợ pháp lý trong thời gian thi hành án',
+    valid: function (l) { return legalAsk(l); },
+    text: function (l) { var sen = currentSentence(l); return 'Bản án ' + (sen ? sen.years + ' năm (' + sen.why + ')' : '') + ', còn ' + (l.jailUntil - l.age) + ' năm. Bạn có thể đề nghị rà soát việc tổng hợp án, điều kiện giảm án và hồ sơ xét đặc xá. Trợ giúp pháp lý của nhà nước dành cho người thuộc diện; thuê luật sư tốn tiền. Mỗi bản án chỉ đề nghị một lần.'; },
+    opts: [
+      { k: 'aid', l: 'Đề nghị trợ giúp pháp lý miễn phí', req: function (l) { return l.money < l.base * LEGAL.aidMoney; }, ai: { w: 1.3 }, run: function (l, r, log) { fileLegal(l, 'aid', log); } },
+      { k: 'lawyer', l: function (l) { return 'Thuê luật sư rà soát hồ sơ · ' + H.money(l, l.base * LEGAL.lawyerCost); }, req: function (l) { return l.money >= l.base * LEGAL.lawyerCost; }, ai: { w: 1 }, run: function (l, r, log) { fileLegal(l, 'lawyer', log); } },
+      { k: 'self', l: 'Tự tìm hiểu quy định và viết đơn', ai: { w: 0.7 }, run: function (l, r, log) { fileLegal(l, 'self', log); } },
+      { k: 'skip', l: 'Chưa đề nghị lúc này', ai: { w: 0.4 }, run: function (l, r, log) { fileLegal(l, 'skip', log); } }
+    ]
+  });
+  E.SC('tg_phap_ly912_kq', {
+    title: 'Kết quả rà soát hồ sơ pháp lý',
+    valid: function (l) { return legalDue(l); },
+    text: function (l) { var c = legalCase(l); return 'Hồ sơ nộp ' + (l.age - (c ? c.at : l.age)) + ' năm trước theo hình thức ' + (c && c.kind === 'lawyer' ? 'thuê luật sư' : c && c.kind === 'aid' ? 'trợ giúp pháp lý' : 'tự viết đơn') + ' đã có phản hồi.'; },
+    opts: [{ k: 'read', l: 'Nhận và đọc kết quả', run: function (l, r, log) {
+      var c = legalCase(l), sen = currentSentence(l); if (!c || !legalDue(l)) return;
+      var p = U.clamp((LEGAL[c.kind] || LEGAL.self) + (l.flags.jailPts || 0) * LEGAL.perPoint + ((l.record || 0) <= 1 ? LEGAL.cleanBonus : 0) - (sen && sen.years >= 10 ? LEGAL.longPenalty : 0), 0.05, 0.6), x = r();
+      c.at = l.age;
+      if (x < p && l.jailUntil - l.age > 1) { l.jailUntil--; c.status = 'reduced'; if (sen) sen.until = l.jailUntil; log('Hồ sơ được chấp nhận một phần: thời hạn chấp hành giảm một năm, mãn hạn năm ' + (l.birthYear + l.jailUntil) + '.', 'good'); }
+      else if (x < p * 2) { c.status = 'eligible'; l.flags.jailPts = (l.flags.jailPts || 0) + LEGAL.pointsOnPartial; log('Không có thay đổi ngay, nhưng hồ sơ được ghi nhận đủ điều kiện xem xét ở đợt đặc xá/giảm án tới.', 'neutral'); }
+      else { c.status = 'rejected'; log('Không đủ căn cứ thay đổi bản án. Bản rà soát vẫn giúp bạn hiểu rõ các mốc của mình.', 'neutral'); }
+    } }]
+  });
+  var jailYear0 = E.jailYear;
+  E.jailYear = function (l, r) {
+    var base = jailYear0.apply(this, arguments) || [];
+    if (!l.flags.crime912) return base;
+    var id = legalDue(l) ? 'tg_phap_ly912_kq' : legalAsk(l) && r() < 0.35 ? 'tg_phap_ly912' : null;
+    if (id && !base.some(function (x) { return x[0] === id; })) { if (base.length >= 3) base.pop(); base.unshift([id]); }
+    return base;
+  };
+
   var migrate = E.migrateExt;
   E.migrateExt = function (l) { if (migrate) migrate(l); if (l && l.flags && l.flags.crime912 != null) { if (typeof l.flags.crime912 !== 'object') delete l.flags.crime912; else state(l); } };
-  E.CRIME912 = { BAL: BAL, ROLES: ROLES, state: state, crew: crew, ensure: ensure, power: power, hires: hires, riskReport: riskReport, maxCrew: maxCrew, cutTotal: cutTotal };
+  E.CRIME912 = { BAL: BAL, ROLES: ROLES, state: state, crew: crew, ensure: ensure, power: power, hires: hires, riskReport: riskReport, maxCrew: maxCrew, cutTotal: cutTotal,
+    LEAD: LEAD, LEGAL: LEGAL, group: group, isLeader: isLeader, ensureBoss: ensureBoss, crisisChance: crisisChance, currentSentence: currentSentence, legal: legal, legalAsk: legalAsk, legalDue: legalDue };
 })(globalThis.G);
