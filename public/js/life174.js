@@ -1464,10 +1464,11 @@
     if (!l || !l.alive || !isVNState(l)) return;
     var s = syncState(l);
     // Tiến triển KPI tự nhiên hằng năm theo quá trình công tác
+    // 8.10.19 (B7): kinh nghiệm tự nhiên chỉ đưa KPI tới mức khá (70); vượt mức đó cần nhiệm vụ, dự án và kết quả thật — sống lâu không tự đạt 100.
     var focusGain = l.focus === 'work' ? 2 : 1;
-    s.kpi.expertise = U.clamp(s.kpi.expertise + focusGain, 20, 100);
-    if (levelOf(l) >= 3) s.kpi.management = U.clamp(s.kpi.management + 1, 20, 100);
-    s.kpi.coordination = U.clamp(s.kpi.coordination + 1, 20, 100);
+    if (s.kpi.expertise < 70) s.kpi.expertise = Math.min(70, s.kpi.expertise + focusGain);
+    if (levelOf(l) >= 3 && s.kpi.management < 70) s.kpi.management = Math.min(70, s.kpi.management + 1);
+    if (s.kpi.coordination < 70) s.kpi.coordination = Math.min(70, s.kpi.coordination + 1);
     updateKpiOverall(l, s);
 
     // Thông báo khi hoàn thành đủ 2 năm luân chuyển cơ sở

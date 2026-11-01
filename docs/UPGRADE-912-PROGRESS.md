@@ -1,6 +1,6 @@
 # Nâng cấp 8.10.12 (mã 912) — theo dõi tiến độ theo PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md
 
-**Trạng thái (01/11/2026, 8.10.18): phần tồn MD1 (§11–§14) HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN (regression toàn bộ còn lỗi đã phân loại, xem "Regression toàn bộ trên mã cuối"). Phần B: mới xong STATE-FIX-1; phần B còn lại và toàn bộ Phần C chưa làm. Nhật ký 8.10.12–8.10.17 đã phát hành (chủ dự án xác nhận upload 01/11/2026 20:30 +07:00); 8.10.18 là bản đóng gói, chưa phát hành.** Không tự deploy Production.
+**Trạng thái (01/11/2026, 8.10.19): phần tồn MD1 (§11–§14) HOÀN THÀNH TRIỂN KHAI; Phần B (MD2) ĐÃ LÀM B1–B8; Phần C (MD3) ĐÃ LÀM C1–C5, C8–C10 ở mức cơ chế cốt lõi, C6 một phần, C7/C11 chưa làm (xem "Đợt 10"). Kiểm thử trọng điểm đạt; chưa nghiệm thu toàn diện. Nhật ký 8.10.12–8.10.19 đã ghi phát hành theo yêu cầu của chủ dự án.** Không tự deploy Production.
 
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
@@ -9,7 +9,7 @@
 - Đã xong thêm (8.10.15): §11.1–11.3 di truyền, sàng lọc, đa thai.
 - Đã xong thêm (8.10.16): §11.4–11.5 bệnh mắc phải, ung thư, phát triển trẻ.
 - Đã xong thêm (8.10.17): §13 đủ 195/195 nước đạt tối thiểu có nguồn + tích hợp (187 hồ sơ mới loại `compiled-912`), §12 thủ lĩnh nhóm/kế vị/tan rã + trợ giúp pháp lý trong trại, §11 suy thận/suy gan theo giai đoạn, §14 bộ quét bất biến + 4 lỗi tái hiện đã sửa. Chi tiết ở mục "Đợt 9 (8.10.17)" bên dưới.
-- **Việc tiếp theo cụ thể:** Phần B — STATE-FIX-1 (`ct_quy_hoach`) đã sửa ở 8.10.18; tiếp theo là mô hình chức vụ thống nhất (bộ/tỉnh cụ thể, NHNN employer) — ghi chú gốc: (đã tái hiện: bộ trưởng `trung_uong` r5 bấm "Nhận nhiệm vụ mới" → thành `chinh_tri` r3 "phó chủ tịch UBND tỉnh", bậc 8 → 7; nguyên nhân: `life84` chỉ chặn `ctPath`, handler gọi `E.startJob(chinh_tri)` không xét cấp hiện tại; vá ở `life174 §5.4` chỉ ánh xạ bậc ≥7 về rank 3), rồi mô hình chức vụ thống nhất qua `applyPosition`.
+- **Việc tiếp theo cụ thể:** phần C còn lại theo thứ tự ưu tiên: C4 lương gộp → thực nhận theo từng quỹ (nối `tax-resident.js`), C3 ngân sách hộ gia đình, C9 visa du lịch theo hộ chiếu, C11 biến cố gắn chính sách; đọc lại nguyên văn các nguồn trong docs/ERA-POLICY-917.md.
 - Thứ tự đề xuất cho phần còn lại: (phần còn lại của §12)  phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
 - Các điểm mở rộng đã có sẵn: `E.ROMANCE912` (lượt tìm, đồng ý), `E.ASSET912` (bộ chọn/phân trang, `E.usdToLocal`), `E.KHOI912`, sổ ghi `ledger912` trong khóa thừa kế.
 
@@ -34,6 +34,32 @@
 | §12 | Phi pháp, băng nhóm, nhà tù (+8.10.17 lãnh đạo nhóm, pháp lý trong trại: `crimeLeader912`, `crimeSplit912`, `tg_phap_ly912`, `tests/crime917.js` 1.329) | `crime912.js` (`E.CRIME912`) mở rộng CRIME911 + life47; bọc `H.jail`, `E.careerYear`, `E.startJob`, `E.underworldRisk/DeathRisk`, `CRIME911.rate`; life47/crime-depth đọc qua hàm công khai | `flags.crime912 {territory, hires, sentences}`; trên `crime911.crew[*]`: `role912, skill912, trait912, cut912, hist912` | “Đàn em, địa bàn và rủi ro”, bảng rủi ro trong kế hoạch năm, lựa chọn yểm trợ khi bị đánh úp | `tests/crime912.js` (299), `tests/crime913-browser.js`, `crime911`, `update490` | **Đã làm phần lớn, đã kiểm chứng**; trại giam giữ chuỗi sẵn có của CRIME911/life43 (chưa thêm mới) |
 | §13 | Làm sâu quốc gia | `data-country-world912*.js` (dữ liệu, nạp trước `life173`) mở rộng `COUNTRY_DEPTH_DATA`; `tools/country-sources-912.js` (kiểm URL, bảng 195 × 6) | `flags.culture173.cases` sẵn có | Câu chuyện riêng ở nơi đang sống, đối chiếu lao động, lễ hội, món ăn, chuẩn bị cưới | `country-minimum-content` (399.955), `browser-country-minimum-content` (14 nước × 390/1280), `audit-country-depth` | **195/195 đạt tối thiểu có nguồn + tích hợp; 187 hồ sơ `compiled-912` chưa đối chiếu từng câu** |
 | §14 | Rà soát liên hệ thống | `tests/integrity917.js` (bất biến tiền/NaN/nhật ký/quyết định/ID/anh chị em/nhiều thế hệ); sửa `life92`, `wealth`, `life73`, `health915` | — | — | `integrity917` (160 đời: 2.633; 600 đời: 9.208) | **4 lỗi tái hiện đã sửa; phần còn lại ở backlog** |
+
+## Đợt 10 (8.10.19) — Phần B (MD2) và Phần C (MD3), phạm vi đã làm
+
+| Mục | Nội dung | File | Test | Trạng thái |
+|---|---|---|---|---|
+| B1–B3 | Chức vụ gắn bộ/tỉnh/thành phố (`l.job.post917`: agency, territory, kind, lịch sử chuyển chức, phân loại thăng/điều động/hạ); tên chức danh "· Bộ X", "· tỉnh Y", "Thành ủy · thành phố …"; NHNN `employer123` đúng; bản lưu cũ ghi "chưa xác định" (bổ sung trong mục Chức vụ), không bịa | `public/js/state917.js` | `tests/state917.js` (67) | Đã làm |
+| B4 | Xin thôi giữ chức có xác nhận (hạ một bậc, ghi hồ sơ); kiểm điểm người đứng đầu có giải trình, cách chức qua `lower()` | `state917.js` | `state917.js` | Đã làm |
+| B5–B6 | Nhân sự trong đơn vị (tên, tính cách, năng lực, liêm chính chưa biết đến khi đánh giá); thẩm quyền: không (<4), đề nghị (4–5, cấp trên có thể từ chối), quyết định (≥6); tối đa 3 việc/năm; người được nâng đỡ giúp hoặc bất đồng | `state917.js` | `state917.js` | Đã làm |
+| B7 | Dự án công: ngân sách đơn vị = thu nhập cơ sở × bậc × 1,5/năm, tách tiền riêng, tối đa 2 dự án, cú sốc tiến độ, nghiệm thu đạt/không đạt; KPI tăng tự nhiên dừng ở 70 | `state917.js`, `life174.js` | `state917.js` | Đã làm |
+| B8 | 9 chuỗi biến cố nhiều năm trên `E.CHAIN144` (không thêm bộ điều phối mới); bộ khởi phát chung: tối đa 1 chuỗi mới/năm, 2 chuỗi drama mở, chờ 6 năm/loại; cường độ Êm đềm ×0,5 / Cân bằng ×1 / Nhiều biến động ×1,6 chỉ đổi tần suất | `public/js/drama917.js` | `tests/drama917.js` (219) | Đã làm |
+| C1–C2 | Năm thế giới, bảng chính sách ba lớp có nguồn, kịch bản chọn một lần, năm hiệu lực giả định băm theo nhân vật và lưu | `public/js/era917.js`, `docs/ERA-POLICY-917.md` | `tests/era917.js` (144) | Đã làm |
+| C3 | Chỉ số giá/lương tham khảo, tích lũy từng năm, không đổi tiền | `era917.js` | `era917.js` | Đã làm phần hiển thị; ngân sách hộ chưa làm |
+| C4 | Lộ trình hưu 2019 qua `E.retirementAge125`; kịch bản Cải cách +3 tháng/năm đến 63/62 | `era917.js` | `era917.js` | Đã làm; bảng lương gộp/thực nhận theo quỹ chưa làm |
+| C5 | Thai sản (trợ cấp một lần, nghỉ hưởng thay lương, không truy lĩnh con cũ); trần thất nghiệp 5 × lương tối thiểu vùng | `era917.js`, `life3.js` | `era917.js` | Đã làm; nghỉ ốm/đào tạo lại chưa làm |
+| C6 | Trợ cấp trẻ dưới 6 tuổi (chỉ kịch bản An sinh mở rộng) | `era917.js` | — (chạy qua đời đầy đủ) | Một phần |
+| C8 | Chăm sóc da (mặc định không tốn tiền, có trần qua `LOOKS134.improve`), mụn tuổi dậy thì, phong cách trang điểm không khóa giới/sắc tộc; tóc dùng `hair915` sẵn có | `era917.js` | `era917.js` | Đã làm |
+| C9 | Quốc tịch con: đủ điều kiện ≠ có; đăng ký quốc tịch thứ hai; hộ chiếu làm thủ tục, dưới 14 tuổi 5 năm | `era917.js` | `era917.js` | Đã làm; visa du lịch chưa làm |
+| C10 | Tuổi hiến máu 60, kịch bản mở rộng 65 cho người hiến nhắc lại khỏe | `era917.js`, `blood-donation.js` | `era917.js` | Đã làm |
+| C7, C11 | Giao thông/thuế doanh nghiệp; biến cố gắn chính sách | — | — | **Chưa làm** |
+
+Lỗi tìm thấy khi viết test: hàm băm FNV-1a không có bước trộn cuối → các lần tung theo năm cùng nhân vật tương quan (có đời 25 năm "Nhiều biến động" không có chuyện nào). Đã thêm bước trộn ở `drama917` và `state917`. Một hook năm gọi lại `E.migrateExt` mỗi năm → migration "con sinh trước bản cập nhật" phải chạy một lần theo cờ `era917v`.
+
+Đo có kiểm soát (1.500 đời VN, seed 100000+i·7919, tắt/bật hook năm của drama917 + era917): tuổi thọ 71,65 → 71,23 (chênh 0,42 năm, trong biên nhiễu khi quỹ đạo rẽ nhánh, sai số chuẩn ~0,4); tài sản ròng âm lúc mất 18,9% → 18,9%; 3,53 chuỗi biến cố/đời (tranh công 2.153, tin đồn 1.031, người thân giấu nợ 860, di sản 732, đối tác 229, con ở trường 220, khiếu nại 59, định cư 17); 166 lần trợ cấp một lần khi sinh. Tranh công/tin đồn là hai loại nhiều nhất — theo dõi phản hồi người chơi trước khi chỉnh trọng số.
+
+Lệnh kiểm thử đợt 10: `node tests/state917.js`, `node tests/drama917.js`, `node tests/era917.js`, `MOTDOI_DEC_IDS=<20 quyết định mới> node tests/regression-shard.js 9` (69.143 đạt, 0 lỗi), cùng `npm run test:upgrade912` (đã thêm 3 test mới).
+Chưa kiểm chứng: đọc lại nguyên văn nguồn chính sách (xem giới hạn ở docs/ERA-POLICY-917.md); `publicReview116` sau luân chuyển; giao diện mobile của các mục mới (mới kiểm module tải được trên trình duyệt, không lỗi console).
 
 ## Đợt 9 (8.10.17) — phần tồn MD1: §13, §12, §11, §14
 

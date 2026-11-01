@@ -1,5 +1,31 @@
 [
   {
+    "id": "state-drama-era-819",
+    "version": "8.10.19-bc",
+    "releaseStatus": "released",
+    "publishedAt": "2026-11-01T22:55:00.000+07:00",
+    "title": "Một Đời — Chức vụ gắn bộ/tỉnh, biến cố kéo dài nhiều năm và chính sách theo thời đại",
+    "summary": "Chức vụ nhà nước ghi rõ bộ, tỉnh và có nhân sự, ngân sách công; thêm biến cố cuộc đời kéo dài nhiều năm; màn hình chính sách theo năm thế giới với quy định đã xác minh, dự báo và kịch bản giả định.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bộ trưởng, thứ trưởng hiển thị đúng bộ (ví dụ “bộ trưởng · Bộ Tài chính”); lãnh đạo tỉnh hiển thị đúng tỉnh, thành phố trực thuộc trung ương dùng “Thành ủy”. Bản lưu cũ không bịa bộ/tỉnh mà ghi “chưa xác định” và cho bổ sung trong mục Chức vụ.",
+      "Có thể xin thôi giữ chức (phải xác nhận), bị kiểm điểm có quyền giải trình; nhân sự trong đơn vị có tên, tính cách, năng lực; quyền đề nghị/bổ nhiệm theo cấp; người được bạn nâng đỡ có thể giúp hoặc bất đồng.",
+      "Dự án công dùng ngân sách đơn vị tách hẳn tiền riêng của bạn, có tiến độ, nghiệm thu và rủi ro. Điểm KPI tăng tự nhiên dừng ở 70; muốn cao hơn phải có kết quả.",
+      "Biến cố nhiều năm: tranh chấp di sản, người thân giấu nợ, tin đồn về người ấy, tranh công ở chỗ làm, đối tác rút vốn, khiếu nại của người dân, người được nâng đỡ phản đối, con gặp khó ở trường, bằng cấp chưa được công nhận khi định cư. Mỗi chuyện có lựa chọn, phản hồi năm sau và kết thúc; tự khép lại khi người liên quan không còn.",
+      "Mục “Nhịp biến cố của cuộc đời”: Êm đềm / Cân bằng (mặc định) / Nhiều biến động — chỉ đổi tần suất, không làm hậu quả nặng hơn.",
+      "Mục “Chính sách theo thời đại”: năm thế giới, tuổi nghỉ hưu theo lộ trình (nam 62 từ 2028, nữ 60 từ 2035), quy đổi giá và lương so với 2026 (không đổi tiền của bạn); mỗi chính sách ghi rõ Đã xác minh / Dự báo / Kịch bản giả định. Chọn kịch bản tương lai một lần cho cả đời.",
+      "Sinh con: mẹ có BHXH nhận trợ cấp một lần 2 lần lương cơ sở; nghỉ thai sản hưởng thay lương, không cộng hai lần; con sinh trước bản cập nhật không được truy lĩnh. Trợ cấp thất nghiệp có trần 5 lần lương tối thiểu vùng.",
+      "Mục “Quốc tịch và hộ chiếu của con”: xét theo quốc tịch cha mẹ và nơi sinh; đủ điều kiện chưa phải đã có; hộ chiếu phải làm thủ tục, trẻ dưới 14 tuổi hạn 5 năm.",
+      "Mục “Chăm sóc da và phong cách”: chế độ chăm sóc (mặc định không tốn tiền), mụn tuổi dậy thì có thể đi khám da liễu, nhiều phong cách trang điểm chỉ mang tính thẩm mỹ; mức cộng ngoại hình có trần.",
+      "Hiến máu vẫn 18–60 tuổi; chỉ trong kịch bản An sinh mở rộng, người hiến nhắc lại khỏe mạnh mới có thể hiến đến 65."
+    ],
+    "releasedAt": "2026-11-01T15:56:00.000Z",
+    "correctedAt": "2026-11-01T15:54:55.698Z"
+  },
+  {
     "id": "state-career-source-cadre-fix-818",
     "version": "8.10.18-state",
     "releaseStatus": "released",

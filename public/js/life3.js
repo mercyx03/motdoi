@@ -151,9 +151,9 @@
     }
     // vừa mất việc mà đã đóng BHTN: nhận trợ cấp thất nghiệp 60% lương, 3–12 tháng
     if (ins0 && H.inVN(l) && !l.job && !l.retired && l.si && l.si.yrs >= 1 && l.alive) {
-      var months = Math.min(12, Math.max(3, l.si.yrs)), ben = l.si.m * 0.6 * months;
+      var months = Math.min(12, Math.max(3, l.si.yrs)), perM = Math.min(l.si.m * 0.6, E.unemploymentCap917 ? E.unemploymentCap917(l) : Infinity), ben = perM * months; // 8.10.19: trần 5 lần lương tối thiểu vùng
       H.cash(l, ben, 'Trợ cấp thất nghiệp (BHTN)');
-      log('Làm thủ tục nhận trợ cấp thất nghiệp: ' + mo(l, l.si.m * 0.6) + '/tháng trong ' + months + ' tháng, trong lúc tìm việc mới.', 'neutral');
+      log('Làm thủ tục nhận trợ cấp thất nghiệp: ' + mo(l, perM) + '/tháng trong ' + months + ' tháng, trong lúc tìm việc mới.', 'neutral');
     }
     return inc;
   };

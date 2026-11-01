@@ -1,3 +1,11 @@
+## 8.10.19-bc — 01/11/2026 (UTC+7)
+
+- Phần B (MD2): `state917.js` — chức vụ gắn bộ/tỉnh/thành phố (`l.job.post917`, lịch sử chuyển chức), NHNN đúng đơn vị, bản lưu cũ ghi "chưa xác định" thay vì bịa; xin thôi giữ chức có xác nhận; kiểm điểm có giải trình; nhân sự có tên/tính cách/năng lực, thẩm quyền đề nghị (bậc 4–5) và quyết định (≥6), tối đa 3 việc nhân sự/năm; người được nâng đỡ giúp/bất đồng; dự án công dùng ngân sách đơn vị tách tiền riêng; KPI tăng tự nhiên dừng ở 70.
+- B8: `drama917.js` — 9 chuỗi biến cố nhiều năm trên E.CHAIN144 (di sản, người thân giấu nợ, tin đồn, tranh công, đối tác rút vốn, khiếu nại công dân, người được nâng đỡ phản đối, con gặp khó ở trường, bằng cấp khi định cư); tối đa 2 chuỗi mở, chờ 6 năm mỗi loại; cường độ Êm đềm/Cân bằng/Nhiều biến động chỉ đổi tần suất.
+- Phần C (MD3): `era917.js` — năm thế giới, bảng chính sách ba lớp verified/projection/simulated (docs/ERA-POLICY-917.md), kịch bản tương lai chọn một lần, lộ trình nghỉ hưu 2019, chỉ số giá/lương tham khảo, trợ cấp một lần khi sinh con (không truy lĩnh), trần trợ cấp thất nghiệp, quốc tịch/hộ chiếu của con, chăm sóc da/mụn/trang điểm, tuổi hiến máu theo kịch bản.
+- Sửa: hàm băm FNV trong state917 thiếu bước trộn làm xác suất theo năm tương quan.
+- Nhật ký state-drama-era-819 ghi đã phát hành theo yêu cầu của chủ dự án (01/11/2026 22:56 +07:00).
+
 ## 8.10.18-state — 01/11/2026 (UTC+7)
 
 - Phần B, STATE-FIX-1: `ct_quy_hoach` (cán bộ nguồn) không còn áp cho người từ bậc 5 trở lên (phó GĐ sở/vụ phó…); kiểm lại lúc thực thi nên quyết định cũ còn chờ không chuyển chức. Tái hiện trước khi sửa: bộ trưởng `trung_uong` r5 (bậc 8) → `chinh_tri` r3 phó chủ tịch UBND tỉnh (bậc 7). Test: state-career174 (+8).
