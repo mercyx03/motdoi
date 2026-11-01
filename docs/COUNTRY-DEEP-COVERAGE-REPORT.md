@@ -2,6 +2,15 @@
 
 Trạng thái: ĐANG TRIỂN KHAI THEO BATCH, chưa nghiệm thu nhiệm vụ 195 quốc gia.
 
+## Tiến độ mới nhất — đợt 8.10.17-md1 (01/11/2026, UTC+7)
+
+**195/195 quốc gia đạt độ phủ tối thiểu có nguồn và đường tích hợp** theo đúng tiêu chí của tools/audit-country-depth.js (3/3/3/5/5/5, nguồn https theo từng mục, sự kiện đăng ký trong E.DEC). fullyAccepted vẫn false cho mọi nước.
+
+- 8 hồ sơ cũ (FI, GH, IE, NZ, JP, FR, US, VN) giữ nguyên, nguồn quốc gia riêng.
+- 187 hồ sơ mới (`data-country-world912*.js`, authoring `compiled-912`, confidence `source-linked`): nguồn UNESCO GEM (giáo dục), ILO hoặc cổng chính phủ (lao động), trang quốc gia UNESCO (lễ, món ăn), cổng dữ liệu giới Ngân hàng Thế giới (hôn nhân). URL đã kiểm 561/748; 187 URL UNESCO chưa kiểm được do máy chủ ngắt kết nối. Nội dung chưa đối chiếu từng câu với nguồn.
+- Bảng 195 × 6 miền × nguồn × trạng thái kiểm chứng × sự kiện gameplay: COUNTRY-COVERAGE-917.md; kết quả kiểm URL: country-sources-912.json; kiểm kê: country-depth-inventory.json.
+- Kiểm thử: country-minimum-content 399.955 kiểm tra (975 câu chuyện, cách ly 195 nước); trình duyệt 14 nước × 390/1280 px.
+
 ## Tiến độ mới nhất — đợt 8.9.4-country-batch1
 
 **8/195 quốc gia đạt độ phủ tối thiểu có nguồn và đường tích hợp; còn 187 nước. Chưa hoàn tất yêu cầu tổng thể.** Không gộp dữ liệu regional, số thành tựu hoặc số bản ghi rỗng vào tám nước này.

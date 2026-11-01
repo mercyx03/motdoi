@@ -27,6 +27,6 @@ const rows = G.W.C.map(c => {
     completeSixDomains: meets, meetsRequestedMinimum: meets, fullyAccepted: false };
 });
 const complete = rows.filter(c => c.meetsRequestedMinimum).map(c => c.countryCode);
-const output = { auditedAt: '2026-10-28', total: rows.length, initialCounts: before.reduce((o, c) => (o[c.level] = (o[c.level] || 0) + 1, o), {}), newCuisineCountries: Object.keys(E.CULTURE173.FOOD), completeSixDomainsVerified: complete.length, minimumCoverageCountries: complete, remaining: rows.filter(c => !c.meetsRequestedMinimum).map(c => c.countryCode), fullyAccepted: false, sourceCatalogue: E.COUNTRY_DEPTH_DATA.sources, countries: rows };
+const output = { auditedAt: '2026-11-01', total: rows.length, initialCounts: before.reduce((o, c) => (o[c.level] = (o[c.level] || 0) + 1, o), {}), newCuisineCountries: Object.keys(E.CULTURE173.FOOD), completeSixDomainsVerified: complete.length, minimumCoverageCountries: complete, remaining: rows.filter(c => !c.meetsRequestedMinimum).map(c => c.countryCode), fullyAccepted: false, sourceCatalogue: E.COUNTRY_DEPTH_DATA.sources, countries: rows };
 fs.writeFileSync(path.join(root, 'docs/country-depth-inventory.json'), JSON.stringify(output, null, 2).replace(/\n/g, '\r\n') + '\r\n');
 console.log('PASS inventory: 195 unique indexed countries; ' + complete.length + ' meet sourced/integrated minimums; ' + (195 - complete.length) + ' remain. This is not full phase acceptance.');
