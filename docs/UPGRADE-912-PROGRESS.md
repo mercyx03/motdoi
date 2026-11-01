@@ -13,7 +13,7 @@
 |---|---|---|---|---|---|---|
 | §3 | Chọn khối THPT không bị bỏ lỡ, không âm thầm A00 | `khoi-track.js` (`E.KHOI912.due`, bọc `DEC.chon_khoi`, trigger cũ, `HOOKS.gradUpper[0]`), điểm gọi trong `engine.js beginYear` | `l.khoi` (giữ nguyên), `l.flags.khoi912 {v,src,at,changes,hist}` | Tình huống chọn khối có môn thi; mục Học tập "Chọn khối thi THPT / Xem – đổi khối thi"; `app.js` gắn `byHand912` khi người chơi bấm | `tests/khoi912.js` (269), `tests/ui912-browser.js`, `update840`, `exam127` | **Đã sửa, đã kiểm chứng** |
 | §5 | Lag, khung hồ sơ trống, click trễ | `life109.js` wrapper `E.actions` (bỏ deep-clone theo từng hành động); `css/style.css` `.modal.profile` | không đổi | Bảng hành động, hồ sơ chi tiết | `tests/perf912.js` (20), `tests/ui912-browser.js` | **Đã sửa 2 nguyên nhân gốc, đã kiểm chứng**; các màn khác chưa đo hết (xem dưới) |
-| §4 | Tài sản: lọc, phân trang, nhóm USD, di chúc | đã có: `life150.js will150_asset` (`assets(l).slice(0,30)`), `life70` di chúc, `currency.js` | — | — | `estate840.js` | Chưa làm |
+| §4 | Tài sản: lọc, phân trang, nhóm USD, di chúc | `asset-picker.js` (`E.ASSET912`): menu `sell912`/`sell912_ok` (thay luồng bán của `quan_ly_dau_tu` khi người chơi bấm), thay `will150_asset` (life150) và `giftAsset112` (life112); ô tìm kiếm trong `app.js` | không thêm trường bắt buộc; dùng `uid110` sẵn có, `flags.will150.specific`, `flags.family129.trades`; trạng thái lọc nằm trong `pending[0].data.arg` | Bán / tặng con / di chúc: nhóm USD, loại, trạng thái, tìm, sắp xếp, 20 mục/trang | `tests/assets912.js` (192), `tests/assets912-browser.js`, `feedback-e`, `estate840`, `expansion842`, `family129`, `browser-feedback-menus e` | **Đã làm, đã kiểm chứng** (cho thuê: hệ hiện tại tự cho thuê mọi BĐS đầu tư, chưa có menu chọn căn để cho thuê/ngừng thuê) |
 | §6 | Tìm người yêu 10 lượt/năm, tách gặp/đồng ý | đã có: `life108 dating108`, `life114`, `life129/130` | — | — | `relationships108/841` | Chưa làm |
 | §7 | Mở rộng quan hệ người nổi tiếng | đã có: `life148` contacts thượng lưu | — | — | — | Chưa làm |
 | §8 | Kết thúc và làm mới danh sách mập mờ | đã có: `life108 network108` (5 người, kết thúc từng người) | — | — | — | Chưa làm |
@@ -41,8 +41,25 @@
 - Đã kiểm tra: không có lỗi console/promise khi mở hồ sơ, thẻ vợ/chồng/con, bấm nhanh mở/đóng 10 lần. Mở hồ sơ ~10–80 ms.
 - Chưa đo: save nhiều đời/nhiều NPC thật của người chơi; listener/bộ nhớ dài hạn; thiết bị di động thật.
 
+## §4 — Tài sản: lỗi đã xác nhận và cách sửa
+- **Bán chỉ được món đầu tiên**: tình huống `quan_ly_dau_tu` (wealth.js) có đúng hai lựa chọn "Bán `props[0]`" và "Sang nhượng `ventures[0]`" — không chọn được căn khác. Nay hành động mở `sell912`: chọn đúng tài sản theo ID → màn xác nhận (giá, lãi/lỗ so với giá vốn, mất tiền thuê, điều khoản di chúc bị ảnh hưởng) → bán. Vẫn tính hạn mức 4 giao dịch/năm của `life129`. AI và tình huống cũ giữ nguyên.
+- **Di chúc chỉ hiện 30 tài sản đầu** (`assets(l).slice(0,30)`, thứ tự chèn, không phải theo giá) và **mọi menu UPDATE110 cắt 54 dòng** → tài sản thứ 31+/55+ không thể giao/tặng. Nay phân trang 20 mục; menu tối đa ~40 dòng.
+- Nhóm giá trị USD: [0;1), [1;6), [6;16), [16;31), [31;51), [51;101), [101;251), [251;501), [501;1001) triệu, ≥1001 triệu. Quy đổi: VN = triệu đồng × 10⁶ / `CUR.VND` (25.400); nước khác = USD sức mua × `CUR.priceLevel(gdp)` — cùng công thức hiển thị của `currency.js`, không thêm tỷ giá cứng. Tỷ giá chốt khi mở danh sách và đi theo mọi bước lọc.
+- Quy tắc ghi rõ: tài sản đã chỉ định trong di chúc mà bán/tặng khi còn sống → điều khoản hết hiệu lực (có nhật ký); người nhận mất trước → món đó chia theo tỷ lệ chung (cơ chế `allocateCompanies` sẵn có); viết di chúc không chuyển tài sản khi còn sống.
+- Tặng con: giữ nguyên quy tắc life112 (con đồng ý nhận theo độ thân, phí 1%, quỹ dự phòng 30% thu nhập cơ bản, nhà đang thế chấp không tặng được).
+- Chưa làm: chọn căn để cho thuê/ngừng cho thuê riêng lẻ (hệ hiện tại không có khái niệm này); tài sản đồng sở hữu với vợ/chồng ở bước bán (chia khi ly hôn đã có trong life150).
+
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
+
+## Lệnh kiểm thử đã chạy (đợt 2 — tài sản)
+| Lệnh | Exit | Kết quả |
+|---|---|---|
+| `node tests/assets912.js` | 0 | 192 checks |
+| `node tests/assets912-browser.js` | 0 | Chrome 390 + 1280 PASS |
+| `feedback-e, estate840, expansion842, family129` | 0 | PASS (family129: thêm bước xác nhận bán vào thao tác, giữ nguyên kỳ vọng 4 giao dịch và siết thêm: hết lượt thì không mở được) |
+| `node tests/browser-feedback-menus.js e` | 0 | 8 chuỗi menu, 390 + 1280 |
+| `smoke, saves-compat, save-safety, npc-identity, khoi912, perf912` | 0 | PASS (cảnh báo cũ như đợt 1) |
 
 ## Lệnh kiểm thử đã chạy (đợt 1)
 | Lệnh | Exit | Kết quả |
