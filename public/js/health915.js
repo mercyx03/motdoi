@@ -215,7 +215,9 @@
     egfrStart: [30, 55], decline: { base: 1, dm: [4, 1.5], htn: [3, 1.5], lupus: [6, 2], other: [2.5, 1.2] }, fullCut: 0.4, noise: 1.5,
     hazK: { G3a: 0.001, G3b: 0.003, G4: 0.012, G5: 0.35, dialysis: 0.08, transplant: 0.015 }, // 8.10.17: hiệu chỉnh để tổng tử vong gần mức trước khi thêm chuỗi
     onset: { dm: 0.003, htn: 0.002, lupus: 0.02 },
-    cost: { basic: 0.02, full: 0.05, dialysis: 0.6, pd: 0.45, transplant: 3, antiviral: 0.03, daa: 0.15, decomp: 0.25, liverTx: 4 },
+    // basic = 0: engine đã tính ngân sách y tế hằng năm cho bệnh đang mang (F.health) và thuốc bệnh mạn (flags.chronic) — không thu lần hai.
+    // full = phần thuốc/khám tích cực thêm ngoài mức đó. reserve: phần tiền sinh hoạt giữ lại (lần thu nhập cơ sở) trước khi trả chi phí chuyên khoa.
+    cost: { basic: 0, full: 0.03, dialysis: 0.6, pd: 0.45, transplant: 3, antiviral: 0.03, daa: 0.15, decomp: 0.25, liverTx: 4 }, reserve: 0.5,
     offer: { vn: 0.05, rich: 0.15, other: 0.08 }, txSuccess: 0.9, reject: 0.03, donorConsent: 0.55,
     liver: { hbv: [0.05, 0.04, 0.05], hcv: [0.04, 0.03, 0.04], alcohol: [0.06, 0.06, 0.07] }, antiviralK: 0.2, drinkK: 2.5, soberK: 0.4, regress: 0.1, daaCure: 0.95,
     liverHaz: { hepatitis: 0, fibrosis: 0.001, compensated: 0.008, decompensated: 0.12, transplanted: 0.02 },
@@ -230,7 +232,8 @@
   function gStage(e) { return e >= 90 ? 'G1' : e >= 60 ? 'G2' : e >= 45 ? 'G3a' : e >= 30 ? 'G3b' : e >= 15 ? 'G4' : 'G5'; }
   function hadIll(l, re) { return (l.illHist || []).some(function (n) { return re.test(n); }) || !!(l.ill && re.test(l.ill.n)); }
   function share(l) { if (H.isVN && H.isVN(l) && E.bhytShare) return E.bhytShare(l); return (l.gdp || 10) > 40 ? 0.8 : (l.gdp || 10) > 15 ? 0.5 : 0.2; }
-  function opay(l, cost, label) { var own = l.base * cost * (1 - share(l)); if (l.money < own) return false; if (own > 0) H.cash(l, -own, label); return true; }
+  // 8.10.18: chi phí chuyên khoa chỉ trả từ phần tiền vượt khoản dự phòng sinh hoạt; không đủ thì điều trị bị gián đoạn (nguy cơ tăng) thay vì rút cạn tiền ăn ở rồi nợ.
+  function opay(l, cost, label) { var own = l.base * cost * (1 - share(l)); if (own <= 0) return true; if (l.money - own < l.base * ORG.reserve) return false; H.cash(l, -own, label); return true; }
   function kidneyCause(l) { return l.flags.lupus915 && l.flags.lupus915.known ? 'lupus' : hadIll(l, /tiểu đường/) ? 'dm' : hadIll(l, /huyết áp/) ? 'htn' : 'other'; }
   function newKidney(l, egfr, why, log) {
     var o = organ(l); if (o.kidney) return o.kidney;
@@ -268,7 +271,7 @@
       var c = k.cause, controlled = k.care !== 'none', d = ORG.decline[c] || ORG.decline.other, rate = ORG.decline.base + (controlled ? d[1] : d[0]);
       if (k.care === 'full') rate *= 1 - ORG.fullCut;
       var before = k.stage; k.egfr = Math.max(4, Math.round((k.egfr - rate + (oR(l, 'eg')() - 0.5) * 2 * ORG.noise) * 10) / 10); k.stage = gStage(k.egfr);
-      if (k.care !== 'none' && !opay(l, ORG.cost[k.care], 'Thuốc và tái khám bệnh thận')) { k.care = 'none'; log('Không đủ tiền theo dõi bệnh thận năm nay; việc kiểm soát bị gián đoạn.', 'bad'); }
+      if (k.care === 'full' && !opay(l, ORG.cost.full, 'Thuốc bảo vệ thận và theo dõi tích cực')) { k.care = 'basic'; log('Không đủ tiền cho điều trị thận tích cực năm nay; quay về mức theo dõi cơ bản.', 'bad'); }
       if (k.stage !== before) { khist(k, before + ' → ' + k.stage, l); log('Kết quả tái khám: chức năng thận chuyển từ ' + before + ' sang ' + k.stage + ' (eGFR khoảng ' + Math.round(k.egfr) + ').', k.stage === 'G5' || k.stage === 'G4' ? 'bad' : 'neutral'); }
       if (k.stage === 'G4' && !k.prepAt) { k.prepAt = l.age; X.next(l, 'kidneyPrep917', r, {}, { manual: false }); }
       if (k.stage === 'G5' && !k.failAt) { k.failAt = l.age; X.next(l, 'kidneyFail917', r, { at: l.age }, { manual: false }); }
