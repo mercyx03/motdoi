@@ -175,5 +175,7 @@
     }
   }
 
+  // Quy đổi USD danh nghĩa → tiền nội bộ (dùng chung cho học phí, dịch vụ tính bằng USD).
+  E.usdToLocal = function (l, usd) { return usd / fxFactor(l); };
   E.ASSET912 = { BUCKETS: BUCKETS, PAGE: PAGE, fxFactor: fxFactor, bucketOf: bucketOf, all: all, view: view, rows: rows, menu: menu, requery: requery, sellable: sellable, KINDS: KINDS, STATUS: STATUS };
 })(globalThis.G);

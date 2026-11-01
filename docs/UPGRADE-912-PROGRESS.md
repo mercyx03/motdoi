@@ -18,7 +18,7 @@
 | §7 | Mở rộng quan hệ người nổi tiếng | đã có: `life148` contacts thượng lưu | — | — | — | Chưa làm |
 | §8 | Kết thúc và làm mới danh sách mập mờ | `romance912.js`: lựa chọn `reset912` + xác nhận `network912_reset`; bọc `network108_person` (kết thúc không cần lượt gặp); làm quen người mới dùng chung lượt tìm, có thể gặp lại người cũ | `flags.network912 {v,ended[],resetAt}`; người cũ giữ `relation108` | Danh sách mập mờ | `tests/romance912.js` | **Đã làm, đã kiểm chứng** |
 | §9 | Chủ động chu cấp | đã có: chu cấp trong `life129/130` | — | — | — | Chưa làm |
-| §10 | Gói cố vấn 5 triệu USD +50/chuyên môn | đã có: `life170 heir5m`, `HEIR_FIELDS` | — | — | `leadership-education169-170.js` | Chưa làm |
+| §10 | Gói cố vấn 5 triệu USD +50/chuyên môn | `life170.js` (mở rộng tại chỗ: `usdAmount`, `heirYear`, `heirComplete`, hook bù một lần, mô tả gói); `E.usdToLocal` trong `asset-picker.js`; `life176.js usdAmount` | `courses170[*].ledger912`, `done912`, `policy912` | Mô tả gói, tiến độ trong menu chọn chuyên môn (đã cộng/tối đa/dự kiến còn) | `tests/heir912.js` (23), `feedback-features895`, `leadership-education169-170`, `enterprise-chains173` | **Đã làm, đã kiểm chứng** |
 | §11 | Y tế, di truyền, thai kỳ, phát triển trẻ | đã có: `health-aging.js`, `blood-donation.js`, `family-origins.js`, `family.js` | — | — | `blood910`, `health-tax909` | Chưa làm (cần tra nguồn y tế) |
 | §12 | Phi pháp, băng nhóm, nhà tù | đã có: `crime-depth.js` (CRIME911), `life176`, `H.jail`, `E.jailYear` | — | — | `crime911.js` | Chưa làm |
 | §13 | Làm sâu quốc gia | đã có: `data-country-depth.js`, `life173`, `tools/audit-country-depth.js` | — | — | bộ test quốc gia | Chưa làm |
@@ -68,8 +68,23 @@
 - Làm mới danh sách mập mờ: xác nhận ghi số người bị kết thúc và tên; giữ gia đình bí mật (phải kết thúc riêng); con chung, thai kỳ, nghĩa vụ nuôi con không bị đụng tới; người đã kết thúc lưu trong `flags.network912.ended` (tối đa 30), có 15% cơ hội gặp lại khi làm quen sau ≥2 năm (cùng danh tính, tuổi tăng đúng số năm); làm mới tối đa 1 lần/năm.
 - Lỗi có sẵn (không do đợt này): `tests/life138.js` hỏng ở assertion "sibling can succeed instead of player" ngay trên HEAD gốc `30152fc`.
 
+## §10 — Gói cố vấn: lỗi đã xác nhận, chính sách +50
+- **Học phí sai 10^6 lần ở Việt Nam**: `usdAmount` nhân `usd × 25.000` trong khi đơn vị tiền nội bộ ở VN là triệu đồng → gói 5 triệu USD hiển thị 125.000.000 tỷ đ (đúng ≈127 tỷ đ); nước khác bỏ qua mức giá sức mua. `life176.js` (dịch vụ ngầm) cùng lỗi. Nay dùng `E.usdToLocal` (tỷ giá chung của `currency.js`). Bản lưu: với mức phí cũ không người chơi VN nào đủ tiền đăng ký, nên không có khoản cần hoàn; không thu lại phí của khóa đang học.
+- Kiểm kê luật cũ (gói 5 triệu): mỗi năm +4 cho một chuyên môn luân phiên; hoàn thành +15 mỗi chuyên môn → tổng 23 (hình ảnh, nghi thức, giao tiếp) hoặc 19 (4 chuyên môn còn lại).
+- **Chính sách mới (cách hiểu "đào tạo 10 năm xong là +50")**: mỗi chuyên môn trong 7 `HEIR_FIELDS` được cộng tổng cộng tối đa **50 điểm từ chính khóa** (gói 1 triệu: 30), 70% rải đều trong 10 năm học, 30% khi hoàn thành đủ 10 năm và đạt đánh giá; không vượt thang 100; **không** cộng 50 vào mọi chỉ số. Sổ ghi `ledger912` theo khóa/chuyên môn nên chạy lại/tải lại không cộng hai lần. Hằng số `HEIR_TOTAL`, `HEIR_STUDY_SHARE` ở đầu `life170.js` để chủ dự án chỉnh.
+- Khóa đang học từ bản lưu cũ: tính phần đã nhận theo luật cũ vào sổ ghi, học tiếp tới đúng 50; không thu phí lại. Khóa đã hoàn thành theo luật cũ: bù **một lần** lên 50 (có nhật ký, có sổ ghi); người học đã mất không được bù.
+- Phải học đủ 10 năm thực (`done912`), không tự hoàn thành chỉ vì đến tuổi cuối khóa; người học mất → dừng, không cộng sau khi mất; không đạt đánh giá → giữ 70% đã học.
+- Tối ưu kèm theo: `X.menu` (life110) tính danh sách dòng một lần cho mỗi lần dựng menu thay vì ~160 lần (menu 2000 tài sản: test assets912 từ 68–124 s xuống 25 s).
+
 ## Backlog phát hiện khi rà soát (chưa sửa, chưa tái hiện đầy đủ)
 - Save tự chơi seed 777001: "Em gái: Trần Đức Mạnh · 41 tuổi · đang đi học" — anh chị em có tên nam nhưng ghi em gái và 41 tuổi vẫn "đang đi học". Cần truy vết `sibList`.
+
+## Lệnh kiểm thử đã chạy (đợt 4 — gói cố vấn)
+| Lệnh | Exit | Kết quả |
+|---|---|---|
+| `node tests/heir912.js` | 0 | 23 checks |
+| `feedback-features895, leadership-education169-170, enterprise-chains173, crime911, career109, feedback-e, expansion842, family129, assets912` | 0 | PASS |
+| `node tests/browser-feedback-menus.js` | 0 | 26 chuỗi menu (c, d, e), 390 + 1280 |
 
 ## Lệnh kiểm thử đã chạy (đợt 3 — tình cảm)
 | Lệnh | Exit | Kết quả |
