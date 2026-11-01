@@ -84,6 +84,11 @@
 - "Chọn cuộc đời rồi không tương tác được nút nào": **chưa tái hiện được** trên mã nguồn và bản `dist` mới, chế độ Việt Nam/thế giới, khổ 1280 và 375 px (chọn đời → bỏ qua hiệu ứng → bắt đầu → bấm lựa chọn đều chạy, không lỗi JS). Ghi chú: vòng quay ở chế độ thế giới dài hơn (~10 giây), tốc độ mặc định 1 năm ≈ 25 giây nên lúc đầu trông như đứng; build cũ trước khi tối ưu event-catalog mất >25 phút và có thể để lại `dist` thiếu `index.html` nếu bị dừng giữa chừng. Cần thêm thông tin (trình duyệt/thiết bị, bản đang dùng, có tiếp tục bản lưu cũ không, ảnh màn hình).
 - Xác nhận sau khi thêm ngữ cảnh: mục 9 cho 986 tình huống mới (975 câu chuyện quốc gia, thận/gan, kế vị nhóm, pháp lý trong trại, marriageMove130) — 241.934 kiểm tra, **0 lỗi**.
 
+### Hiệu chỉnh chi phí/nguy cơ thận–gan (8.10.18)
+- Đo có kiểm soát, cùng script và seed (3.000 đời VN cho tuổi thọ; 600 đời cho nợ nặng): HEAD 30eceed 71,89 / 17,7%; 8.10.18 tắt chuỗi thận–gan 72,03 / 17,9%; bật (trước sửa) 71,69 / 17,6%; sau sửa 71,67 / 17,6%. Kết luận: chuỗi không làm tăng nợ, giảm tuổi thọ ~0,2–0,3 năm; số lệch trong regression là dao động giữa các lượt.
+- Sửa: `ORG.cost.basic = 0` vì engine đã tính ngân sách y tế hằng năm cho bệnh đang mang (`F.health`) và thuốc bệnh mạn — trước đây thu hai lần; `full` chỉ thu phần thêm; chi phí chuyên khoa (lọc máu, ghép, kháng virus, biến chứng) chỉ trả khi còn dự phòng 0,5 lần thu nhập cơ sở, thiếu thì điều trị gián đoạn (nguy cơ tăng), điều trị tích cực thiếu tiền thì về mức cơ bản.
+- Test: organ917 118, health915 984, integrity917, genetics912 1195, smoke, saves-compat, save-safety đạt.
+
 ### Phần B — STATE-FIX-1 (8.10.18): cán bộ nguồn không làm tụt chức lãnh đạo cấp cao
 - Tái hiện (trước sửa): bộ trưởng `trung_uong` r5 bậc 8, `ct_quy_hoach.valid` = true, "Nhận nhiệm vụ mới" → `chinh_tri` r3 "phó chủ tịch UBND tỉnh" bậc 7. Nguyên nhân: `life84` chỉ chặn bằng `ctPath`; bản vá cũ ở `life174 §5.4` chỉ đổi rank sau khi đã `startJob('chinh_tri')`.
 - Sửa ở `life174 §5.4` (không tạo module mới): `valid` trả false khi đang công tác nhà nước VN ở bậc ≥ 5; `nhan.run` kiểm lại lúc thực thi nên quyết định cũ còn chờ chỉ báo giữ nguyên chức. Cán bộ cấp dưới vẫn được quy hoạch như cũ.

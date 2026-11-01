@@ -1,6 +1,7 @@
 ## 8.10.18-state — 01/11/2026 (UTC+7)
 
 - Phần B, STATE-FIX-1: `ct_quy_hoach` (cán bộ nguồn) không còn áp cho người từ bậc 5 trở lên (phó GĐ sở/vụ phó…); kiểm lại lúc thực thi nên quyết định cũ còn chờ không chuyển chức. Tái hiện trước khi sửa: bộ trưởng `trung_uong` r5 (bậc 8) → `chinh_tri` r3 phó chủ tịch UBND tỉnh (bậc 7). Test: state-career174 (+8).
+- Bệnh thận/gan: không thu trùng chi phí theo dõi với ngân sách y tế sẵn có; chi phí chuyên khoa giữ khoản dự phòng sinh hoạt. Đo cùng seed: tuổi thọ VN 71,89 (HEAD) → 71,67, nợ nặng 17,7% → 17,6%.
 - Nhật ký 8.10.12 → 8.10.17 chuyển sang đã phát hành theo xác nhận upload của chủ dự án (01/11/2026 20:30 +07:00).
 - Bản packaged, chưa phát hành.
 
