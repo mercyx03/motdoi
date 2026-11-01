@@ -1,6 +1,28 @@
 {
-  "generatedAt": "2026-11-01T11:13:00.000+07:00",
+  "generatedAt": "2026-11-01T11:39:00.000+07:00",
   "entries": [
+    {
+      "id": "genetics-screening-twins-upgrade-815",
+      "version": "8.10.15-genetics912",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-11-01T11:39:00.000+07:00",
+      "title": "Một Đời — Di truyền theo cha mẹ, khám sàng lọc trước hôn nhân và sinh đôi, sinh ba",
+      "summary": "Mỗi đứa trẻ nhận gen từ đúng cha mẹ sinh học, có thể mang gen hoặc mắc một số bệnh di truyền với tần suất theo vùng; hai người trưởng thành có thể cùng khám sàng lọc với sự đồng ý riêng của mỗi người; gia đình có thể đón sinh đôi hoặc hiếm hơn là sinh ba.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Mỗi em bé nhận một nửa gen từ mẹ và một nửa từ cha sinh học. Mang gen thường không có triệu chứng và không có nghĩa là mắc bệnh. Kết quả được lưu lại, không thay đổi khi mở hồ sơ hay tải lại.",
+        "Có các tình trạng: tan máu bẩm sinh, thiếu men G6PD, máu khó đông, bạch tạng, phenylketon niệu, bệnh Wilson, teo cơ tủy sống, xơ nang và hội chứng Down. Tần suất khác nhau theo vùng dân cư và giữ ở mức hiếm, dựa trên số liệu công bố; đây là mô phỏng, không phải công cụ chẩn đoán.",
+        "Có tình trạng chỉ lộ ra khi khởi phát hoặc qua sàng lọc sơ sinh; một số người thiếu men G6PD chỉ biết khi gặp đợt tan máu. Sau khi chẩn đoán, gia đình chọn mức chăm sóc cơ bản hoặc đầy đủ; chăm sóc giảm nguy cơ biến chứng nhưng không bảo đảm khỏi.",
+        "Mục Sức khỏe có “Khám sức khỏe & sàng lọc di truyền”: gói khám chung, xét nghiệm nhiễm trùng theo chỉ định, sàng lọc người mang gen, giải trình tự exome hoặc toàn bộ hệ gen. Mỗi gói ghi rõ chi phí và giới hạn; kết quả có vào năm sau.",
+        "Khi làm cùng người yêu hoặc bạn đời, người ấy có quyền không đồng ý; khi đó kết quả của người ấy được giữ kín. Âm tính chỉ có nghĩa là không phát hiện trong phạm vi kỹ thuật đã chọn; kỹ thuật hiện đại vẫn có thể bỏ sót hoặc trả kết quả chưa rõ ý nghĩa cần xác nhận.",
+        "Phần tư vấn nói rõ khả năng cho con chung khi cả hai cùng mang gen và các lựa chọn có thể cân nhắc; quyết định kết hôn hay sinh con vẫn thuộc về hai người.",
+        "Thỉnh thoảng gia đình đón hai em bé cùng lúc; sinh đôi cùng trứng có cùng giới tính và cùng bộ gen, sinh đôi khác trứng thì khác nhau. Sinh ba rất hiếm. Hồ sơ con ghi rõ sinh cùng lần.",
+        "Con cái và nhân vật đã có từ trước bản này không bị gán bệnh mới. Khi sống tiếp đời con, nhân vật mang theo bộ gen và tình trạng sức khỏe của chính người con đó."
+      ]
+    },
     {
       "id": "crime-crew-territory-upgrade-814",
       "version": "8.10.14-crime912",

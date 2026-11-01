@@ -184,3 +184,5 @@ Trạng thái: **HOÀN THÀNH TRIỂN KHAI MỘT PHẦN — KIỂM THỬ TRỌNG
 Cập nhật 8.10.13: thêm §9 chu cấp chủ động và §7 quan hệ người nổi tiếng (kiểm thử trọng điểm đạt, xem UPGRADE-912-PROGRESS.md). Vẫn chưa làm §11, §12, §13, phần lớn §14; vẫn chưa chạy regression toàn bộ trên mã cuối; artifact chỉ Preview.
 
 Cập nhật 8.10.14: phần lớn §12 đường tối (đàn em NPC, địa bàn, bảng rủi ro, tổng hợp án, cân bằng đánh úp) — kiểm thử trọng điểm đạt. Còn §11, §13, phần nhỏ §12 (tan rã/đổi lãnh đạo nhóm, hỗ trợ pháp lý trong trại, chuyển quốc gia khi có hồ sơ), phần lớn §14; chưa chạy regression toàn bộ. 6 test hỏng sẵn từ 30152fc: football-payroll901, update451, update453, update454, update460, life138.
+
+Cập nhật 8.10.15: §11.1–11.3 (di truyền theo cha mẹ, sàng lọc đồng thuận, đa thai) — kiểm thử trọng điểm đạt. Còn §11.4 bệnh mắc phải/ung thư, §11.5 phát triển trẻ, §13 quốc gia, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ.

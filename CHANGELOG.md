@@ -1,3 +1,10 @@
+## 8.10.15-genetics912 — 01/11/2026 (UTC+7)
+
+- Di truyền theo cha/mẹ sinh học: 9 locus (lặn NST thường, liên kết X) + trisomy 21 theo tuổi mẹ; tần suất theo nhóm dân cư, đối chiếu bằng mô phỏng với MedlinePlus và số liệu Việt Nam; kiểu gen không reroll.
+- Tình trạng có tuổi khởi phát, chẩn đoán (sàng lọc sơ sinh/triệu chứng), mức chăm sóc và chi phí; con và nhân vật cũ không bị gán bệnh mới.
+- Sàng lọc trước hôn nhân: 5 gói, đồng thuận riêng từng người, giới hạn kỹ thuật, kết quả năm sau, tư vấn nguy cơ cho con chung. Sinh đôi cùng/khác trứng, sinh ba hiếm.
+- Bản packaged/Preview, chưa xác nhận phát hành. Nguồn và giản lược: docs/HEALTH-GENETICS-912-SOURCES.md.
+
 ## 8.10.14-crime912 — 01/11/2026 (UTC+7)
 
 - Đường tối: đàn em là NPC có vai trò/kỹ năng/lòng tin/phần chia/lịch sử, có thể rời nhóm hoặc cung cấp thông tin; địa bàn trừu tượng; bảng rủi ro; lựa chọn yểm trợ khi bị đánh úp; thăng cấp theo nhóm/địa bàn; giữ uy tín khi quay lại nghề.
