@@ -40,10 +40,18 @@ async function openAction(p, id) {
       const t = await p.eval(() => { const l = G.SaveStore.read('mkn.current').value.life, x = l.flags.genetics912.tests[0]; return x && { st: x.status, both: x.both, self: !!x.self, consent: x.consent }; });
       assert(t && t.st === 'pending' && t.both && t.self, 'test ordered and pending: ' + JSON.stringify(t));
       await p.screenshot(path.join(OUT, 'screen-' + width + '.png'));
+      await clickText(p, 'Quay lại');
+      await p.eval(() => { const b = document.getElementById('pauseBtn'); if (b && /Tạm dừng/.test(b.textContent)) b.click(); document.querySelectorAll('#modalRoot .modal').forEach(m => { const x = [...m.querySelectorAll('button')].find(y => /Thu nhỏ/.test(y.textContent)); if (x) x.click(); }); }); await sleep(150);
+      await p.eval(() => { const l = G.SaveStore.read('mkn.current').value.life; l.flags.hair915 = { len: 40, dyed: false, bleached: false, at: l.age }; G.SaveStore.write('mkn.current', { life: l, cohort: [], speed: 1, auto: false, at: Date.now() }); });
+      await p.reload(); await p.eval(async () => { await MotDoiBoot.load(); document.querySelector('#resumeBtn').click(); }); await sleep(500);
+      await p.eval(() => { const b = document.getElementById('pauseBtn'); if (b && /Tạm dừng/.test(b.textContent)) b.click(); document.querySelectorAll('#modalRoot .modal').forEach(m => { const x = [...m.querySelectorAll('button')].find(y => /Thu nhỏ/.test(y.textContent)); if (x) x.click(); }); }); await sleep(150);
+      assert.strictEqual(await openAction(p, 'hair915'), 'ok', 'hair menu opened');
+      await clickText(p, 'Hiến cho Chương trình làm tóc giả');
+      assert(await p.eval(() => G.SaveStore.read('mkn.current').value.life.flags.hair915.len === 5), 'hair donation cut the real length');
       assert(await p.eval(() => document.documentElement.scrollWidth <= innerWidth + 1), 'no horizontal overflow');
       assert.deepStrictEqual(p.errors, [], 'no JS errors');
       p.close();
-      console.log('PASS health915 Chrome ' + width + ': screening menu, couple test ordered, pending result');
+      console.log('PASS health915 Chrome ' + width + ': screening menu, couple test ordered, hair donation');
     }
   } finally { if (c) await c.close(); if (srv) srv.stop(); clearInterval(keep); }
 })().catch(e => { console.error(e); process.exitCode = 1; });
