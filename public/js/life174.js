@@ -805,7 +805,14 @@
     var nhanOpt = E.DEC.ct_quy_hoach.def.opts.find(function (o) { return o.k === 'nhan'; });
     if (nhanOpt) {
       var origNhanRun = nhanOpt.run;
+      // 8.10.17 (Phần B, STATE-FIX-1): "cán bộ nguồn" là quy hoạch đầu vào cho cán bộ cấp dưới. Người đã giữ chức từ cấp phó sở / vụ phó (bậc ≥ 5)
+      // trở lên — kể cả bộ trưởng — không nhận tình huống này (trước đây bộ trưởng bậc 8 thành phó chủ tịch UBND tỉnh bậc 7).
+      // Kiểm lại lúc thực thi để quyết định cũ còn nằm trong hàng chờ không ép chuyển chức. Chuyển chức cấp cao đi qua stateTransfer174.
+      var quyValid = E.DEC.ct_quy_hoach.valid;
+      var tooSenior = function (l) { return !!(l && l.job && isVNState(l) && levelOf(l) >= 5); };
+      E.DEC.ct_quy_hoach.valid = function (l, d) { return !tooSenior(l) && (!quyValid || quyValid.apply(this, arguments)); };
       nhanOpt.run = function (l, r, log) {
+        if (tooSenior(l)) { log('Đợt quy hoạch cán bộ nguồn chỉ dành cho cán bộ cấp dưới; với chức vụ ' + E.jobTitle(l) + ', việc điều động (nếu có) được xét qua quy trình bổ nhiệm, điều động riêng. Bạn giữ nguyên chức vụ hiện tại.', 'neutral'); return; }
         var beforeLv = l.job ? levelOf(l) : 1;
         var beforeRk = l.job ? (l.job.rank || 0) : 0;
         var beforeJob = l.job ? E.resolveJob(l.job.id) : '';
