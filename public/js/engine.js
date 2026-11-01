@@ -1521,7 +1521,7 @@
         case 'marry': return !!(p && p.status === 'dating');
         case 'kid': return !!(p && p.alive !== false && p.age >= 18 && life.age >= 18);
         case 'divorce': return !!(p && p.status !== 'dating');
-        case 'love': return !p && life.age <= (E.LOVE_MAX || 120); // v4.2: chỉ tìm một nửa khi dưới 55 tuổi
+        case 'love': return !p && life.age <= (d.data && d.data.search912 && E.LOVE_SEARCH_MAX || E.LOVE_MAX || 120); // v4.2: chuyện tình tự đến chỉ dưới 55 tuổi; người chủ động đi tìm thì tới 85 (romance912.js)
         case 'house': return !life.ownHouse;
         case 'biz': return !!life.job;
         case 'city': return !life.urban;
