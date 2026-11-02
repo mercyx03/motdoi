@@ -1,5 +1,39 @@
 [
   {
+    "id": "md4-multinational-822",
+    "version": "8.10.22-md4",
+    "releaseStatus": "packaged",
+    "publishedAt": "2026-11-02T17:21:00.000+07:00",
+    "title": "Một Đời — Cuộc sống đa quốc gia, gia đình, nghệ thuật, thú cưng và người theo dõi",
+    "summary": "Về thăm đúng quê nhà, gặp gỡ người bản xứ khi ở nước ngoài, người theo dõi tăng giảm có lý do, cùng nhiều hệ mới về chăm sóc, nhận nuôi, thú cưng và nghệ thuật.",
+    "tags": [
+      "Tính năng mới",
+      "Sửa lỗi",
+      "Cân bằng"
+    ],
+    "details": [
+      "Về thăm nhà khi đang du học/làm việc ở nước ngoài nay bay về đúng quê nhà, quốc tịch hoặc nơi gia đình đang sống (không còn luôn là Việt Nam); có thể chọn khi có nhiều nơi.",
+      "Ở nước ngoài, người mới quen gồm người bản xứ, sinh viên quốc tế và đồng hương theo nơi bạn đang học, làm, sống; có bộ lọc ưu tiên. Quê quán của người ấy được ghi nhớ khi thành người yêu, bạn đời.",
+      "Người theo dõi không còn tụt mạnh vô cớ mỗi năm: có bảng đầu kỳ + người mới − người rời = cuối kỳ, lý do biến động lớn, khán giả hoạt động và mức tương tác ảnh hưởng thu nhập. Có donate/quà ảo (trừ phí nền tảng, thuế) và quà của fan để giữ, chuyển tặng hoặc từ chối.",
+      "Du học 22 nước với ngôn ngữ giảng dạy, học phí, quyền làm thêm, ở lại sau tốt nghiệp; đậu trường, học bổng (% học phí hoặc toàn phần) và visa là ba bước riêng.",
+      "Tự học ngoại ngữ (sách, ứng dụng, trung tâm, gia sư, bạn quốc tế) với kỹ năng nghe–nói–đọc–viết tăng dần; chứng chỉ hết hạn không làm mất kỹ năng; trẻ học ngôn ngữ theo môi trường sống. Có ngôn ngữ ký hiệu từng nước.",
+      "Lao động quốc tế theo hợp đồng (Đài Loan, Nhật, Hàn, Romania, Ba Lan, Hungary, Đức) cần hộ chiếu, tiếng, giấy phép. Kết hôn với người nước khác: bàn nơi sống, nộp hồ sơ đoàn tụ có thể bị yêu cầu bổ sung hoặc từ chối.",
+      "Giấy tờ đi lại của từng thành viên gia đình theo hộ chiếu của mỗi người; quy tắc quốc tịch con theo từng nước; đặt tên con theo văn hóa một hoặc hai bên.",
+      "Họ tên: tên pháp lý, tên thường dùng, biệt danh, lịch sử đổi tên; đổi họ khi kết hôn theo quy định từng nước.",
+      "Ngoại hình tự nhiên (màu tóc, mắt, da) thừa hưởng đa dạng từ cha mẹ, không đổi khi chuyển nước; tóc nhuộm không di truyền.",
+      "Khuyết tật và hỗ trợ tiếp cận: đánh giá, thiết bị (máy trợ thính, gậy, khung tập đi, xe lăn, giao tiếp hỗ trợ), chó hỗ trợ, điều chỉnh ở trường và nơi làm.",
+      "Tuổi già: phân biệt quên thông thường với suy giảm nhận thức và các loại sa sút trí tuệ; chọn người đại diện, phương án chăm sóc; ông bà có thể trông cháu nếu phù hợp, hoặc gửi trẻ, thuê bảo mẫu.",
+      "Chăm sóc giảm nhẹ song song điều trị và danh sách mong ước trong đời với điều kiện thật.",
+      "Chăm sóc trẻ sơ sinh: giấc ngủ an toàn, khóa sơ cứu, máy theo dõi (không thay người trông và không ngăn đột tử).",
+      "Thú cưng có hồ sơ riêng, tiêm phòng, triệt sản, phối giống có phả hệ, bệnh theo từng loài và nguy cơ lây sang người; có thể nuôi ngựa và học cưỡi, dự giải.",
+      "Trò chơi tuổi thơ các nước (trốn tìm, oẳn tù tì, ô ăn quan, tạt lon, ayatori, gonggi, nhảy dây thun…) cùng bạn bè; nghệ thuật: piano, violin, sáo, kèn, guitar, ba lê, nhảy, patin, trượt băng, thi chứng chỉ, biểu diễn, lưu diễn.",
+      "Bảo hiểm y tế khi sống ở nước ngoài tính theo quy định nơi ở (khấu trừ, đồng chi trả, trần chi trả), khách ngắn hạn không có quyền lợi như người cư trú.",
+      "Nhận nuôi trẻ từ mái ấm qua nhiều bước (thẩm định, làm quen, ý kiến của trẻ, quyết định); người tự nhận là thân nhân phải được đối chiếu và có thể không đúng.",
+      "Lúc khó khăn (thất nghiệp, bệnh, ở tù, sống xa), người thân có thể giúp, giúp một phần hoặc xa dần; có thể chủ động làm hòa."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "fixes-821",
     "version": "8.10.21-fix",
     "releaseStatus": "released",

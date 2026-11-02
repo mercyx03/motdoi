@@ -410,9 +410,10 @@
       var f0 = l.fame || 300;
       // v2.2: nổi tiếng là chuyện hiếm — đa số dừng ở hạng thấp, càng lên cao càng khó (hiệu ứng bão hòa)
       var lf = Math.log(Math.max(50, f0)) / Math.LN10;
-      var g = Math.exp(0.6 * U.normal(r) + (l.talent === c.talent ? 0.15 : 0) + (focus === 'work' ? 0.12 : focus === 'balance' ? 0.06 : 0) + (l.skill - 50) / 250 - (a > 45 ? 0.3 : 0) - Math.max(0, lf - 4.5) * 0.4);
-      if (r() < 0.03) { g *= 5 + r() * 15; log('Một ' + (c.id === 'ca_si' || c.id === 'rapper' ? 'bài hát' : c.id === 'dien_vien' ? 'vai diễn' : c.id === 'dv_hai' ? 'tiểu phẩm' : c.id === 'nguoi_mau' ? 'bộ ảnh' : c.id === 'kol_live' ? 'phiên livestream' : 'video') + ' bất ngờ viral, lượng người theo dõi tăng vọt!', 'big'); H.mem(l, 'Đêm bạn thức trắng nhìn lượt xem tăng từng giây.', 4); }
-      l.fame = Math.min(5e7, Math.max(50, f0 * g));
+      var z919 = U.normal(r), g = Math.exp(0.6 * z919 + (l.talent === c.talent ? 0.15 : 0) + (focus === 'work' ? 0.12 : focus === 'balance' ? 0.06 : 0) + (l.skill - 50) / 250 - (a > 45 ? 0.3 : 0) - Math.max(0, lf - 4.5) * 0.4), viral919 = false;
+      if (r() < 0.03) { viral919 = 5 + r() * 15; g *= viral919; log('Một ' + (c.id === 'ca_si' || c.id === 'rapper' ? 'bài hát' : c.id === 'dien_vien' ? 'vai diễn' : c.id === 'dv_hai' ? 'tiểu phẩm' : c.id === 'nguoi_mau' ? 'bộ ảnh' : c.id === 'kol_live' ? 'phiên livestream' : 'video') + ' bất ngờ viral, lượng người theo dõi tăng vọt!', 'big'); H.mem(l, 'Đêm bạn thức trắng nhìn lượt xem tăng từng giây.', 4); }
+      // MD4 D15: E.FOLLOW919 thay hệ số nhân ngẫu nhiên bằng sổ người mới − người rời có nguyên nhân (cùng số lần rút RNG).
+      l.fame = E.FOLLOW919 ? E.FOLLOW919.careerGrowth(l, c, f0, z919, viral919, focus) : Math.min(5e7, Math.max(50, f0 * g));
       [[1e4, 'Cán mốc 10 nghìn người theo dõi.', 1], [1e5, c.cat === 'creator' ? 'Nhận nút bạc YouTube — 100 nghìn người đăng ký!' : 'Được 100 nghìn người hâm mộ biết tên.', 2], [1e6, c.cat === 'creator' ? 'Nhận nút vàng — 1 triệu người đăng ký!' : 'Trở thành người nổi tiếng với hơn 1 triệu người hâm mộ.', 3], [1e7, c.cat === 'creator' ? 'Nút kim cương — 10 triệu người đăng ký!' : 'Cán mốc 10 triệu người hâm mộ — đứng trên đỉnh cao.', 4]].forEach(function (m) {
         if (c.t.length > 1) m[1] = 'Lên hạng: giờ bạn là ' + c.t[Math.min(m[2], c.t.length - 1)] + ' (' + fmtFollowers(m[0]) + ' người hâm mộ).';
         if (f0 < m[0] && l.fame >= m[0] && !(l.flags.fameHit || (l.flags.fameHit = {}))[m[0]]) { l.flags.fameHit[m[0]] = 1; log(m[1], 'big'); H.fx(l, { hap: 6 }); if (m[0] >= 1e5) H.mem(l, m[1], m[0] >= 1e6 ? 6 : 4); if (m[0] >= 1e6 && c.cat === 'creator' && !l.flags.mediaCo) { l.flags.mediaCo = true; log('Thành lập công ty truyền thông riêng.', 'good'); } }

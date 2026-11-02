@@ -1,3 +1,10 @@
+## 8.10.22-md4 — 02/11/2026 (UTC+7) — packaged, chưa phát hành
+
+- MD4 D01–D17 (PROMPT_MOT_DOI_MD4_CAP_NHAT.md): 9 module mới `identity919, global919, followers919, care919, pets919, arts919, healthsys919, origin919, bonds919`; sửa `travel-context` (về thăm theo quê nhà/quốc tịch), `careers` (người theo dõi theo sổ, cùng số lần rút RNG), `life107` (22 điểm đến, xét tuyển ≠ học bổng), `abroad-depth` (ngôn ngữ giảng dạy khi xin visa).
+- Lỗi tái hiện đã sửa: điểm về thăm cứng Việt Nam; người gặp ở nước ngoài mang tên quê nhà khi chưa định cư; follower nghề nổi tiếng giảm ~60%/năm ở mức 10 triệu do hệ số phạt quy mô.
+- Test: `tests/md4-919.js` (456 kiểm tra). Nguồn/tham số: docs/MD4-SOURCES.md. Bảng đối chiếu: docs/UPGRADE-912-PROGRESS.md "Đợt 12".
+- Cân bằng (600 đời VN + thế giới, cùng seed): tuổi thọ 68,59 so với 68,66 (HEAD); chết với tài sản âm 14,2% so với 17,3%; 0 lần tụt nửa follower không có nguyên nhân.
+
 ## 8.10.21-fix — 02/11/2026 (UTC+7)
 
 - Nhà ở xã hội: chặn "Đổi nhà" và "Tặng nhà cho con" khi căn hộ chưa đủ 5 năm (welfare918, có lý do, không thu tiền).

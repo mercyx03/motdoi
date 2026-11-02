@@ -14,6 +14,13 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Phần tồn MD4 8.10.22-md4 — 02/11/2026
+
+- Chưa làm/giản lược: nhận nuôi quốc tế có chuyển nước (chưa có luồng di cư cho trẻ vị thành niên); học tiếng 1 năm ở nước ngoài rồi chuyển diện; đặt họ con theo luật Đức mới chỉ ở mức lựa chọn; gia súc và bệnh gia súc (game chưa có chăn nuôi); cơ sở bảo trợ "chăm sóc tạm thời" khi cha mẹ còn quyền nuôi chưa là khởi đầu riêng; D10 mới có chuỗi người thân hỗ trợ/xa cách chung, chưa có chuỗi riêng cho người trong tù/bệnh dài hạn.
+- Nguồn ở mức thứ cấp (docs/MD4-SOURCES.md): mốc 21 tuổi chọn quốc tịch Singapore, mức tiền y tế 2025 các nước, học phí 22 điểm đến, bảng miễn thị thực theo cặp hộ chiếu. Cần đọc nguyên văn trước khi nâng mức kiểm chứng.
+- Cân bằng cần theo dõi: số người nổi tiếng ≥100 nghìn follower tăng (62 so với 38 trên 600 đời) vì bỏ hệ số phạt quy mô; tỷ lệ tình trạng bẩm sinh/sa sút trí tuệ/đột tử trẻ là tham số trò chơi.
+- Chưa chạy: regression đầy đủ mục 0–99 trên mã 8.10.22; kiểm thử trình duyệt các menu mới trên điện thoại/máy tính (mới kiểm bằng engine headless).
+
 ### Phần tồn MD1 8.10.17-md1 — 01/11/2026
 
 - §13: 187 hồ sơ quốc gia `compiled-912` mới chỉ kiểm URL nguồn tồn tại/đúng nước (561/748); cần đối chiếu từng câu (luật lao động, độ tuổi kết hôn, ngày lễ) với trang nguồn và nâng `confidence` khi đã xác minh. 187 URL trang quốc gia UNESCO chưa kiểm được vì máy chủ ngắt kết nối — chạy lại `node tools/country-sources-912.js --check --retry --only=culture` vào lúc khác (tuần tự, có nghỉ, không đổi User-Agent). Câu chuyện nhiều năm của 187 nước dựng theo mẫu; có thể viết tay dần theo nước có nhiều người chơi.
