@@ -854,6 +854,7 @@
 
   var CORE = {
     treat: {
+      valid: function (life) { return !!life.ill; }, // 8.10.20: lịch hẹn điều trị không còn phù hợp khi bệnh đã khỏi/không còn
       make: function (life, r) {
         var ill = life.ill, cost = Math.round(life.base * (life.gdp > 40 ? 0.15 : 1.1));
         return {
@@ -1664,6 +1665,7 @@
     if (E.budget114) E.budget114(life, F);
     if (E.vehicleAnnual) F.vehicle = E.vehicleAnnual(life);
     if (E.esportsLiving) E.esportsLiving(life, F, b, styleK, log);
+    if (E.livingCost918) E.livingCost918(life, F); // 8.10.20: áp lực giá theo năm và giá thuê nhà ở xã hội (econ918)
     // gửi tiền cho bố mẹ già
     var parentsOld = (life.fam.mAlive && life.fam.mAge + a >= 58) || (life.fam.fAlive && life.fam.fAge + a >= 58);
     // bố mẹ không có lương hưu thì con phải gửi nhiều hơn; bố mẹ có lương hưu khá thì chỉ biếu chút quà

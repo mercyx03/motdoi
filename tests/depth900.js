@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('assert'),{gameContext}=require('./hardcore-isolation'),G=gameContext(),E=G.E,D=E.CAREER_DEPTH900,A=E.ABROAD_DEPTH900;
 let checks=0;function ok(v,msg){assert(v,msg);checks++;}
-function life(){const l=E.createLife({mode:'vn',seed:900});Object.assign(l,{age:24,alive:true,indep:true,edu:5,school:null,retired:false,abroad:null,money:l.base*100,pending:[],sched:[],job:null});l.flags.military=0;l.st.kno=90;l.st.hea=90;l.lang={en:3,ja:3,ko:3,de:3,fr:3};l.langExp={};return l;}
+function life(){const l=E.createLife({mode:'vn',seed:900});Object.assign(l,{age:24,alive:true,indep:true,edu:5,school:null,retired:false,abroad:null,money:l.base*100,pending:[],sched:[],job:null});l.flags.military=0;l.st.kno=90;l.st.hea=90;l.lang={en:3,ja:3,ko:3,de:3,fr:3};l.langExp={};l.flags.travel918={passport:{cc:'VN',issued:20,until:30},visas:{},denied:{},trips:[]};return l;} // 8.10.20: đi nước ngoài cần hộ chiếu còn hạn
 function pick(l,id,key,arg={},r=()=>0){const d=E.DEC[id].make(l,r,arg);const i=d.data.keys.indexOf(key);assert(i>=0,id+' missing '+key+' '+d.data.keys);E.DEC[id].apply(l,d,String(i),r,()=>{});return d;}
 function raw(l,id,key,arg,r=()=>0){const d=E.DEC[id].make(l,r,arg);E.DEC[id].apply(l,d,key,r,()=>{});return d;}
 let l=life();pick(l,'social131','create:youtube');let c=E.SOCIAL131.state(l).channels[0];c.followers=100000;l.fame=100000;let arg={id:c.id};

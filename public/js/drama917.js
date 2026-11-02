@@ -11,7 +11,7 @@
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, CH = E.CHAIN144;
   if (!CH || !X) return;
   var MODES = { calm: { n: 'Êm đềm', k: 0.5 }, balanced: { n: 'Cân bằng', k: 1 }, eventful: { n: 'Nhiều biến động', k: 1.6 } };
-  var BAL = { base: 0.14, cooldown: 6, maxOpen: 2 }; // tham số gameplay
+  var BAL = { base: 0.14, cooldown: 6, maxOpen: 2 }, MORE = []; // tham số gameplay
   function hash(s) { var h = 2166136261; s = String(s); for (var i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); h ^= h >>> 16; h = Math.imul(h, 2246822507); h ^= h >>> 13; h = Math.imul(h, 3266489909); h ^= h >>> 16; return h >>> 0; }
   function roll(l, tag) { return hash((l.rs || 0) + ':' + l.id + ':d917:' + tag + ':' + l.age) / 4294967296; }
   function prng(l, tag) { var a = hash(l.id + ':' + tag + ':' + l.age); return function () { a = (a + 0x6D2B79F5) >>> 0; var t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -187,9 +187,10 @@
     var kids = (l.kids || []).filter(function (k) { return k.alive !== false && l.age - k.born >= 7 && l.age - k.born <= 16; });
     if (kids.length) out.push(['d917_school', 0.9, { npc: { ref: null, name: kids[Math.floor(roll(l, 'kid') * kids.length)].name }, data: {} }]);
     if (l.abroad && l.abroad.perm && l.age >= 22) out.push(['d917_move', 0.7, { npc: { ref: null, name: '' }, data: {} }]);
+    MORE.forEach(function (fn) { try { (fn(l) || []).forEach(function (x) { out.push(x); }); } catch (e) { } }); // 8.10.20: chuỗi của module khác (econ918) dùng chung nhịp và giới hạn
     return out;
   }
-  function openCount(l) { var s = l.flags.chains144; return s && Array.isArray(s.active) ? s.active.filter(function (c) { return /^d917_/.test(c.kind); }).length : 0; }
+  function openCount(l) { var s = l.flags.chains144; return s && Array.isArray(s.active) ? s.active.filter(function (c) { return /^d91[78]_/.test(c.kind); }).length : 0; }
   function tryStart(l, log) {
     var s = st(l); if (!free(l) || l.age < 12 || s.at === l.age) return null; s.at = l.age;
     if (openCount(l) >= BAL.maxOpen) return null;
@@ -209,5 +210,5 @@
     var s = st(l); return Object.keys(MODES).map(function (k) { return { k: k, l: (s.mode === k ? '✓ ' : '') + MODES[k].n, h: k === 'calm' ? 'Ít biến cố hơn, cuộc đời êm hơn' : k === 'eventful' ? 'Nhiều chuyện xảy ra hơn, không nặng hơn' : 'Mặc định', why: s.mode === k ? 'Đang dùng' : s.modeAt === l.age ? 'Đã đổi năm nay' : true, run: function (l, r, log) { var q = st(l); if (q.modeAt === l.age) return; q.mode = k; q.modeAt = l.age; log('Nhịp biến cố chuyển sang: ' + MODES[k].n + '.', 'neutral'); } }; });
   }, 12, 'Đời sống');
   var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.drama917 != null && typeof l.flags.drama917 !== 'object') delete l.flags.drama917; };
-  E.DRAMA917 = { MODES: MODES, BAL: BAL, state: st, candidates: candidates, tryStart: tryStart, openCount: openCount };
+  E.DRAMA917 = { more: MORE, MODES: MODES, BAL: BAL, state: st, candidates: candidates, tryStart: tryStart, openCount: openCount };
 })(globalThis.G);

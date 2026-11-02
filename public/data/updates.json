@@ -1,6 +1,35 @@
 {
-  "generatedAt": "2026-11-01T22:55:00.000+07:00",
+  "generatedAt": "2026-11-02T12:00:00.000+07:00",
   "entries": [
+    {
+      "id": "household-policy-820",
+      "version": "8.10.20-c918",
+      "releaseStatus": "packaged",
+      "publishedAt": "2026-11-02T12:00:00.000+07:00",
+      "title": "Một Đời — Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu và chính sách theo thời đại",
+      "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được đối chiếu lại.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Phiếu lương: lương gộp → BHXH 8%, BHYT 1,5%, BHTN 1% → giảm trừ gia cảnh → thuế → thực nhận, khớp đúng số tiền vào tài khoản. Trần căn cứ đóng theo mức tham chiếu mới.",
+        "Ngân sách gia đình: xem chi thiết yếu, đặt quỹ khẩn cấp 3/6/12 tháng, bật tự cắt chi khi quỹ thiếu. Năm giá cả tăng nhanh hơn thu nhập, chi thiết yếu đắt hơn có giới hạn; tiền đã có và khoản nợ không bị quy đổi lại.",
+        "Khi ốm: chọn nghỉ đủ (BHXH trả 75% những ngày nghỉ trong giới hạn), nghỉ nửa ngày hoặc cố đi làm — mỗi cách có hậu quả riêng.",
+        "Đào tạo lại, học nghề ngắn hạn: học một năm, người từng đóng BHTN được hỗ trợ một phần; học xong có thêm lựa chọn khi tìm việc nếu đủ điều kiện.",
+        "Nhà ở xã hội: nộp hồ sơ khi đủ điều kiện thu nhập, chờ 1–5 năm, đến lượt xét lại; mua với vay ưu đãi 5,4% hoặc thuê với giá khoảng một nửa thị trường.",
+        "Hà Nội: vùng phát thải thấp theo lộ trình — đổi xe máy điện, kết hợp xe buýt hoặc đổi lịch đi lại. Kịch bản tương lai có thể miễn vé xe buýt cho học sinh và người cao tuổi.",
+        "Hộ chiếu và đi lại: phải làm hộ chiếu trước khi ra nước ngoài; một số nước Đông Nam Á miễn thị thực, nước khác cần visa và có thể bị từ chối (kết quả không đổi khi tải lại). Có thể du lịch cùng con khi các con đã có hộ chiếu.",
+        "Biến cố mới gắn với kinh tế: năm giá cả leo thang, chăm sóc cha mẹ già nhiều năm (nối tiếp lựa chọn đón cha mẹ về), nơi làm việc chuyển đổi số.",
+        "Chính sách theo thời đại: kịch bản Cân bằng nay áp dụng chậm và chọn lọc một số chính sách giả định; mỗi chính sách ghi rõ mức kiểm chứng nguồn. Cập nhật lương tối thiểu vùng 2026, mức tham chiếu 2,53 triệu từ 7/2026, căn cứ giảm trừ gia cảnh.",
+        "Hoàn thiện chính sách: giá nhà, y tế, học phí tăng theo thời gian có giới hạn; lương công chức theo lương cơ sở mới, lương hưu được điều chỉnh.",
+        "Bảo hiểm: BHYT hộ gia đình phải đóng hằng năm; quỹ hưu trí tự nguyện được trừ thuế; bảo hiểm nhân thọ có thời gian chờ và không chi trả bệnh có từ trước.",
+        "Lao động: tăng ca được trả 150% có giới hạn giờ, chọn cách nghỉ phép năm; sinh viên đi thực tập; trợ cấp cho người khuyết tật nặng sau khi xác định mức độ.",
+        "Vay vốn sinh viên trả sau khi ra trường; học phí trường công được miễn trong chi phí nuôi con; chủ kinh doanh nộp thuế theo quy mô; mua xe nộp lệ phí trước bạ (ô tô điện được miễn đến hết 2026).",
+        "Cán bộ cấp tỉnh có thể đề xuất thí điểm chính sách ở tỉnh mình, cấp bộ trình đề xuất toàn quốc — có thẩm định, có thể không được thông qua.",
+        "Sửa: tên nước hiện mã (VN, KR) ở mục quốc tịch của con; văn bản nhiều dòng trong các tình huống bị dồn thành một đoạn; số thập phân dùng dấu phẩy."
+      ]
+    },
     {
       "id": "state-drama-era-819",
       "version": "8.10.19-bc",

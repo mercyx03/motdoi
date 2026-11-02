@@ -642,6 +642,7 @@ footer .disclaimer b { color: var(--accent); }
 @media(max-width:600px) { #aboutDialog { width: calc(100% - 24px); padding: 24px 20px; } }
 
 /* Keep football profiles, standings and match reports readable on narrow screens. */
+.dec-lines { white-space: pre-line; overflow-wrap: anywhere; }
 .football-summary { white-space: pre-line; font-weight: 400; overflow-wrap: anywhere; }
 
 /* Distinct, compact levels in the action panel on phone and desktop. */

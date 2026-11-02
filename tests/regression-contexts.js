@@ -92,4 +92,18 @@ add('post917,staff917,project917,stepDown917,discipline917',l=>{E.startJob(l,'tr
 add('staffPerson917',l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=6;E.STATE174.syncState(l);E.STATE917.syncPost(l);});out.staffPerson917.arg={id:E.STATE917.staff(out.staffPerson917.life)[0].id};
 add('citizen917',l=>{l.partner={name:'Kim',sex:l.sex==='M'?'F':'M',age:40,alive:true,status:'married',homeCountry:'KR'};l.kids=[{name:'Min',sex:'F',born:44,alive:true}];});
 add('drama917,era917,care917',l=>{});
+// 8.10.20 Phần C tiếp: phiếu lương, ngân sách, nghỉ ốm, đào tạo lại, nhà ở xã hội, giao thông, thuế TNDN, hộ chiếu, chuỗi kinh tế.
+add('payslip918,sick918',l=>{l.birthYear=1996;E.startJob(l,'cong_chuc',()=>0,()=>{},true);l.si={yrs:16,sum:100,last:44,m:10};l.yr={gross:240,si:25.2,items:[]};l.flags.tax909={registered:{},history:[{age:45,year:2041,afterInsurance:214.8,deduction:186,taxable:28.8,tax:1.44,dependents:0,gross:240,insurance:25.2}]};l.ill='cúm nặng';});out.sick918.arg={at:out.sick918.life.age};
+add('budget918,retrain918,biztax918',l=>{E.startJob(l,'kd_quan',()=>0,()=>{},true);l.income=l.base*2;l.si={yrs:3,last:40,m:8};});
+add('housing918,housingOffer918',l=>{l.urban=true;l.ownHouse=false;l.partner=null;l.yr={gross:180,items:[]};l.income=180;l.flags.econ918={housing:{status:'waiting',applied:42,due:45}};});out.housingOffer918.arg={at:out.housingOffer918.life.age};
+add('lez918',l=>{l.birthYear=1986;l.urban=true;l.prov={neu:'Hà Nội',old:'Hà Nội',kind:'Thành phố'};l.veh='xe máy';l.vehK='wave';l.vehName='Honda Wave';});out.lez918.arg={at:out.lez918.life.age,ph:3};
+add('passport918',l=>{l.kids=[{name:'Bi',sex:'M',born:38,alive:true}];l.flags.travel918={passport:{cc:'VN',issued:44,until:54},visas:{},denied:{},trips:[]};});
+chain144('d918_squeeze_1','d918_squeeze',0,l=>{l.partner={name:'An',sex:'F',age:44,alive:true,status:'married',inc:10};},()=>({npc:{ref:null,name:''},data:{y:2041}}));
+chain144('d918_eldercare_1','d918_eldercare',0,l=>{l.fam.mAlive=true;l.fam.mAge=35;l.sibList=[{n:'Lan',sex:'F',born:-3,alive:true,close:60}];},()=>({npc:{ref:null,name:'mẹ'},data:{who:'mẹ',side:'m',path:'yes'}}));
+chain144('d918_reskill_1','d918_reskill',0,l=>{E.startJob(l,'van_phong',()=>0,()=>{},true);},l=>({npc:{ref:null,name:''},data:{since:l.job.since}}));
+// 8.10.20 Phần C hoàn thiện: BHYT/quỹ hưu, giờ làm, thực tập, khuyết tật, vay sinh viên, đề xuất chính sách.
+add('insurance918,work918',l=>{E.startJob(l,'ke_toan',()=>0,()=>{},true);l.flags.bhytVol=false;l.yr={gross:240,items:[]};l.flags.welfare918={vol:{m:1,bal:30,paid:30,since:40}};});
+add('intern918,studentLoan918',l=>{l.age=20;l.school='uni';l.major='eco';l.indep=false;l.fam.q=2;l.money=0;});
+add('disability918',l=>{l.kids=[{name:'Na',sex:'F',born:35,alive:true,dev915:{v:1,c:{id:{known:true,at:38}}}}];});
+add('policy918',l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=6;l.job.rankSince=l.age;E.STATE174.syncState(l);E.STATE917.syncPost(l);});
 return out;};

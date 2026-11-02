@@ -139,8 +139,8 @@
     valid: function (l) { return !l.ins && l.indep; },
     text: function (l, d) { return d.who + ' nhiệt tình giới thiệu gói bảo hiểm: "Vừa bảo vệ, vừa tích lũy, lãi còn cao hơn gửi tiết kiệm!"'; },
     opts: [
-      { k: 'protect', l: 'Mua gói bảo vệ sức khỏe & tử kỳ', h: function (l) { return mb(l, 0.03) + '/năm · chi trả khi bệnh hiểm nghèo, không có tiền tích lũy'; }, ai: { w: 1, smart: 0.8 }, run: function (l, r, log) { l.ins = { type: 'protect', name: 'bảo hiểm sức khỏe & tử kỳ', prem: l.base * 0.03, since: l.age, term: 20, paid: 0, val: 0 }; log('Mua bảo hiểm sức khỏe & tử kỳ. Mong là không bao giờ phải dùng đến.', 'neutral'); } },
-      { k: 'invest', l: 'Mua gói "liên kết đầu tư" 15 năm', h: function (l) { return mb(l, 0.08) + '/năm · hủy trước hạn mất phần lớn tiền'; }, ai: { w: 0.6 }, run: function (l, r, log) { var bad = r() < 0.35; l.ins = { type: 'invest', name: 'bảo hiểm liên kết đầu tư', prem: l.base * 0.08, since: l.age, term: 15, paid: 0, val: 0, poor: bad }; log('Ký hợp đồng bảo hiểm liên kết đầu tư 15 năm' + (bad ? '. Đọc kỹ mới thấy phí quản lý cao ngất.' : '.'), 'neutral'); } },
+      { k: 'protect', l: 'Mua gói bảo vệ sức khỏe & tử kỳ', h: function (l) { return mb(l, 0.03) + '/năm · chi trả khi bệnh hiểm nghèo, không có tiền tích lũy'; }, ai: { w: 1, smart: 0.8 }, run: function (l, r, log) { l.ins = { type: 'protect', name: 'bảo hiểm sức khỏe & tử kỳ', prem: l.base * 0.03, since: l.age, term: 20, paid: 0, val: 0, preChronic: !!l.flags.chronic }; log('Mua bảo hiểm sức khỏe & tử kỳ. Mong là không bao giờ phải dùng đến.', 'neutral'); } },
+      { k: 'invest', l: 'Mua gói "liên kết đầu tư" 15 năm', h: function (l) { return mb(l, 0.08) + '/năm · hủy trước hạn mất phần lớn tiền'; }, ai: { w: 0.6 }, run: function (l, r, log) { var bad = r() < 0.35; l.ins = { type: 'invest', name: 'bảo hiểm liên kết đầu tư', prem: l.base * 0.08, since: l.age, term: 15, paid: 0, val: 0, poor: bad, preChronic: !!l.flags.chronic }; log('Ký hợp đồng bảo hiểm liên kết đầu tư 15 năm' + (bad ? '. Đọc kỹ mới thấy phí quản lý cao ngất.' : '.'), 'neutral'); } },
       { k: 'no', l: 'Từ chối khéo', ai: { w: 1 }, run: function (l, r, log) { log('Từ chối mua bảo hiểm, giữ mối quan hệ.', 'neutral'); } }
     ]
   });
@@ -159,7 +159,7 @@
     H.cash(l, -I.prem, 'Phí bảo hiểm'); I.paid += I.prem;
     if (I.type === 'invest') I.val = (I.val + I.prem * (I.poor ? 0.6 : 0.85)) * (1 + (I.poor ? 0.01 : 0.03));
     // bệnh hiểm nghèo vừa phát hiện: bảo hiểm chi trả
-    if (l.ill && !l.ill.insPaid && l.ill.since >= I.since) {
+    if (l.ill && !l.ill.insPaid && l.ill.since > I.since && !(I.preChronic && l.ill.chronic)) { // 8.10.20: thời gian chờ năm đầu, loại trừ bệnh mạn tính có từ trước
       l.ill.insPaid = true; var pay = l.base * (I.type === 'protect' ? 1.5 : 0.8);
       H.cash(l, pay, 'Bảo hiểm chi trả bệnh hiểm nghèo'); log('Công ty bảo hiểm chi trả ' + mo(l, pay) + ' tiền điều trị ' + l.ill.n + '.', 'good'); H.mem(l, 'Lúc nhận khoản chi trả bảo hiểm, bạn thở phào vì đã mua năm ấy.', 2);
     }

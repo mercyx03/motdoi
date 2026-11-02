@@ -125,6 +125,7 @@
   E.careerYear = function (l, r, log, focus) {
     var c0 = jobC(l), job0 = l.job, ins0 = insured(l), rent = l.rentVeh;
     var inc = cy0.apply(this, arguments);
+    if (inc > 0 && E.wageIndex918) inc *= E.wageIndex918(l); // 8.10.20: lương công vụ theo lương cơ sở (welfare918), trước bảo hiểm và thuế
     if (!l.alive) return inc;
     var y = l.yr || (l.yr = { items: [] });
     y.gross = 0; y.si = 0;
@@ -144,7 +145,7 @@
     }
     y.gross = inc;
     if (ins0 && (!l.si || l.si.last !== l.age)) {
-      var capY = V(l, 46.8 * 12), basis = Math.min(inc, capY), si = basis * siRate(l);
+      var capY = V(l, (E.siCap918 ? E.siCap918(l) : 46.8) * 12), basis = Math.min(inc, capY), si = basis * siRate(l);
       inc -= si; y.si = si;
       l.si = l.si || { yrs: 0, sum: 0 }; l.si.yrs++; l.si.sum += basis; l.si.last = l.age; l.si.m = basis / 12;
       if (l.si.yrs === 1) log('Được ký hợp đồng lao động chính thức, đóng ' + E.siLabel(l) + ' — đủ 15 năm đóng sẽ có lương hưu.', 'neutral');

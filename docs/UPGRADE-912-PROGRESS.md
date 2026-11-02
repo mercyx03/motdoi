@@ -1,6 +1,6 @@
 # Nâng cấp 8.10.12 (mã 912) — theo dõi tiến độ theo PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md
 
-**Trạng thái (01/11/2026, 8.10.19): phần tồn MD1 (§11–§14) HOÀN THÀNH TRIỂN KHAI; Phần B (MD2) ĐÃ LÀM B1–B8; Phần C (MD3) ĐÃ LÀM C1–C5, C8–C10 ở mức cơ chế cốt lõi, C6 một phần, C7/C11 chưa làm (xem "Đợt 10"). Kiểm thử trọng điểm đạt; chưa nghiệm thu toàn diện. Nhật ký 8.10.12–8.10.19 đã ghi phát hành theo yêu cầu của chủ dự án.** Không tự deploy Production.
+**Trạng thái (02/11/2026, 8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 là bản đóng gói, chưa phát hành.** Không tự deploy Production.
 
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
@@ -9,7 +9,7 @@
 - Đã xong thêm (8.10.15): §11.1–11.3 di truyền, sàng lọc, đa thai.
 - Đã xong thêm (8.10.16): §11.4–11.5 bệnh mắc phải, ung thư, phát triển trẻ.
 - Đã xong thêm (8.10.17): §13 đủ 195/195 nước đạt tối thiểu có nguồn + tích hợp (187 hồ sơ mới loại `compiled-912`), §12 thủ lĩnh nhóm/kế vị/tan rã + trợ giúp pháp lý trong trại, §11 suy thận/suy gan theo giai đoạn, §14 bộ quét bất biến + 4 lỗi tái hiện đã sửa. Chi tiết ở mục "Đợt 9 (8.10.17)" bên dưới.
-- **Việc tiếp theo cụ thể:** phần C còn lại theo thứ tự ưu tiên: C4 lương gộp → thực nhận theo từng quỹ (nối `tax-resident.js`), C3 ngân sách hộ gia đình, C9 visa du lịch theo hộ chiếu, C11 biến cố gắn chính sách; đọc lại nguyên văn các nguồn trong docs/ERA-POLICY-917.md.
+- **Việc tiếp theo cụ thể:** chủ dự án quyết định thứ tự nén thu nhập/thuế (life115 vs tax-resident); sau đó C4 BHYT/BHNT, C3 chỉ số theo ngành, chặn bán nhà ở xã hội 5 năm, du học/lao động nước ngoài đòi hộ chiếu, đọc nguyên văn các văn bản đang ở mức "nguồn thứ cấp".
 - Thứ tự đề xuất cho phần còn lại: (phần còn lại của §12)  phi pháp/nhà tù (bắt đầu bằng kiểm kê mọi lời gọi `H.jail`, `jailUntil`, `CRIME911`, `life176`) → §11 y tế/di truyền (bắt buộc tra nguồn chính thức trước khi mã hóa, ghi URL/ngày) → §13 quốc gia (chạy lại `tools/audit-country-depth.js`, lập bảng 195 × 6 miền) → §14.
 - Các điểm mở rộng đã có sẵn: `E.ROMANCE912` (lượt tìm, đồng ý), `E.ASSET912` (bộ chọn/phân trang, `E.usdToLocal`), `E.KHOI912`, sổ ghi `ledger912` trong khóa thừa kế.
 
@@ -34,6 +34,67 @@
 | §12 | Phi pháp, băng nhóm, nhà tù (+8.10.17 lãnh đạo nhóm, pháp lý trong trại: `crimeLeader912`, `crimeSplit912`, `tg_phap_ly912`, `tests/crime917.js` 1.329) | `crime912.js` (`E.CRIME912`) mở rộng CRIME911 + life47; bọc `H.jail`, `E.careerYear`, `E.startJob`, `E.underworldRisk/DeathRisk`, `CRIME911.rate`; life47/crime-depth đọc qua hàm công khai | `flags.crime912 {territory, hires, sentences}`; trên `crime911.crew[*]`: `role912, skill912, trait912, cut912, hist912` | “Đàn em, địa bàn và rủi ro”, bảng rủi ro trong kế hoạch năm, lựa chọn yểm trợ khi bị đánh úp | `tests/crime912.js` (299), `tests/crime913-browser.js`, `crime911`, `update490` | **Đã làm phần lớn, đã kiểm chứng**; trại giam giữ chuỗi sẵn có của CRIME911/life43 (chưa thêm mới) |
 | §13 | Làm sâu quốc gia | `data-country-world912*.js` (dữ liệu, nạp trước `life173`) mở rộng `COUNTRY_DEPTH_DATA`; `tools/country-sources-912.js` (kiểm URL, bảng 195 × 6) | `flags.culture173.cases` sẵn có | Câu chuyện riêng ở nơi đang sống, đối chiếu lao động, lễ hội, món ăn, chuẩn bị cưới | `country-minimum-content` (399.955), `browser-country-minimum-content` (14 nước × 390/1280), `audit-country-depth` | **195/195 đạt tối thiểu có nguồn + tích hợp; 187 hồ sơ `compiled-912` chưa đối chiếu từng câu** |
 | §14 | Rà soát liên hệ thống | `tests/integrity917.js` (bất biến tiền/NaN/nhật ký/quyết định/ID/anh chị em/nhiều thế hệ); sửa `life92`, `wealth`, `life73`, `health915` | — | — | `integrity917` (160 đời: 2.633; 600 đời: 9.208) | **4 lỗi tái hiện đã sửa; phần còn lại ở backlog** |
+
+## Đợt 11 (8.10.20) — tiếp Phần C, kiểm chứng nguồn, thử giao diện
+
+Baseline: commit `c69d094` (8.10.19). Git sạch, khớp origin trước khi bắt đầu.
+
+**Bằng chứng phát hành 8.10.19:** mục `state-drama-era-819` mang `releaseStatus: released` (22:56 01/11/2026 +07:00) vì chủ dự án yêu cầu trong chat "nhớ ghi là đã phát hành ... để tôi phát hành" — tức được đánh dấu **trước** khi upload. Trong repository không có xác nhận upload thực tế. Coi là **chưa xác nhận đã lên Production**. Bản 8.10.20 để `packaged`, không đánh dấu phát hành.
+
+### Đối chiếu Phần C (cuối đợt 11, sau khi làm tiếp theo yêu cầu "làm hết")
+
+| Mục | Đã làm (có cơ chế + test) | Còn giản lược / giả định | Chưa kiểm chứng |
+|---|---|---|---|
+| C1 ba lớp | verified/projection/simulated; mức đối chiếu nguồn `ver` hiện trong game | — | nhiều văn bản mới đối chiếu nguồn thứ cấp (docs/ERA-POLICY-917.md) |
+| C2 đồng hồ, kịch bản | năm thế giới; kịch bản chọn một lần; vòng đời đề xuất → thí điểm → áp dụng → đánh giá lại; Cân bằng chậm, chọn lọc; **cán bộ đề xuất toàn quốc (cấp bộ) hoặc thí điểm ở tỉnh (cấp tỉnh), có thẩm định, tốn ngân sách đơn vị** | thí điểm tỉnh chỉ tác động người sống trong tỉnh đó (dữ liệu dân cư không sinh hàng loạt) | — |
+| C3 giá, lương, ngân sách | lịch sử giá chung theo nước/năm; **chỉ số riêng nhà ở, y tế, học phí, đi lại (so với mặt bằng lương, trần 0,85–1,15); lãi suất điều hành; tỷ giá**; ngân sách gia đình, quỹ khẩn cấp, tự cắt chi; **lương công vụ theo lương cơ sở 2,53 triệu và lương hưu điều chỉnh** | lãi suất/tỷ giá mới hiển thị, chưa đổi lãi khoản vay cũ (giữ hợp đồng danh nghĩa theo C3) | — |
+| C4 thuế, bảo hiểm | phiếu lương tách quỹ; **BHYT hộ gia đình đóng hằng năm, mất thẻ khi không đóng; quỹ hưu trí tự nguyện trừ thuế, rút đúng/trước tuổi; bảo hiểm nhân thọ có thời gian chờ và loại trừ bệnh có sẵn** | khám trái tuyến dùng tham số sẵn có của life77 | lỗi có sẵn: life115 nén thu nhập sau thuế |
+| C5 lao động | thai sản; nghỉ ốm; trần thất nghiệp; đào tạo lại; **tăng ca ×150% có trần 200/300 giờ, phép năm; thực tập (có/không phụ cấp) mở việc khi tốt nghiệp; người khuyết tật: xác định mức độ → trợ cấp hằng tháng, điều chỉnh nơi làm việc; thu nhập tối thiểu (giả định, An sinh mở rộng)** | khuyết tật dựa trên dev915 của health915 (trẻ sinh từ bản di truyền) | mốc ngày ốm, hệ số trợ cấp |
+| C6 gia đình, nhà ở | trợ cấp trẻ (giả định); nhà ở xã hội; **vay sinh viên NHCSXH; miễn học phí trừ vào chi phí con; BHYT trẻ dưới 16 (giả định); bán/chuyển căn hộ xã hội trước 5 năm → khoản vay ưu đãi đến hạn ngay** | khóa 5 năm xử lý sau khi giao dịch (các mục bán/tặng sẵn có không bị chặn trước) | — |
+| C7 giao thông, DN | vùng phát thải thấp Hà Nội; vé xe buýt (giả định); **thuế hộ kinh doanh/TNDN trừ tiền thật từ 2026 (ưu đãi xe đưa đón đúng cách tính); lệ phí trước bạ xe xăng/điện khi mua xe** | doanh thu ước tính = 4 × lợi nhuận; lệ phí ô tô điện sau 2027 là giả định | — |
+| C8 ngoại hình | 8.10.19 | lão hóa theo cá nhân chưa đổi | — |
+| C9 quốc tịch, hộ chiếu, visa | quốc tịch/hộ chiếu con; hộ chiếu người chơi; miễn thị thực / **e-visa** / visa; xét cố định theo năm; du lịch cùng con; **sang nước ngoài học/làm việc tự làm hộ chiếu có lệ phí** | danh sách miễn thị thực/e-visa theo nguồn thứ cấp | — |
+| C10 hiến máu | 18–60; 65 theo kịch bản | — | TT 26/2013 còn hiệu lực? |
+| C11 drama × thời đại | giá cả leo thang; chăm cha mẹ (nối tình huống `care`); chuyển đổi số; **cán bộ đề xuất chính sách** | — | — |
+| C12 kiểm thử | xem "Kiểm thử đợt 11" | Monte Carlo theo kịch bản chưa làm riêng | — |
+
+### File đã sửa
+- Mới: `public/js/econ918.js`, `public/js/travel918.js`, `public/js/welfare918.js`, `tests/econ918.js`, `tests/welfare918.js`.
+- Sửa thêm cho phần hoàn thiện: `tax-resident.js` (trừ quỹ hưu tự nguyện), `expansion.js` (bảo hiểm nhân thọ), `life3.js` (hệ số lương công vụ trước bảo hiểm/thuế), `engine.js` (điểm nối E.livingCost918), tests depth900/update500 (fixture có hộ chiếu/visa — quy tắc mới, không bỏ assertion).
+- Sửa: `public/js/era917.js` (nguồn, mức kiểm chứng, kịch bản Cân bằng, lịch sử giá chung, lương tối thiểu vùng/mức tham chiếu theo năm, `cname`, `custody`), `public/js/drama917.js` (điểm nối `more`, giới hạn chung d917/d918), `public/js/life3.js` (trần căn cứ đóng), `public/js/abroad-depth.js` (cần hộ chiếu; xét visa cố định), `public/js/life147.js` (nhóm con cho mục mới), `public/js/app.js` + `public/css/style.css` (văn bản nhiều dòng), `public/index.html` (thứ tự script, khóa cache), `tests/era917.js`, `tests/regression-contexts.js`, `package.json` (8.10.20, thêm econ918 vào test:upgrade912), `docs/ERA-POLICY-917.md`, `CHANGELOG.md`, `docs/update-extra.json`, `public/data/updates.json`.
+
+### Lỗi tìm thấy khi thử và đã sửa
+1. Phiếu lương lệch tiền thật với người thu nhập trên 1,2 lần mức cơ sở (life115 nén sau thuế) → phiếu ghi dòng "Điều chỉnh thu nhập bền vững của game", thực nhận khớp sổ (kể cả xem phiếu năm trước).
+2. Tên nước hiện mã ("VN", "KR") ở mục quốc tịch con (`cname` gọi API không tồn tại).
+3. Văn bản tình huống nhiều dòng bị dồn một đoạn (ảnh hưởng cả state917/era917/drama917 của 8.10.19).
+4. Chuỗi chăm cha mẹ ban đầu là trigger độc lập, trùng tình huống `care` của engine → chuyển thành diễn biến tiếp theo của lựa chọn gốc.
+5. Trợ cấp trẻ (8.10.19) lọc theo trường không tồn tại (`custodyOther`) → dùng `custody`.
+6. Số thập phân dùng dấu chấm.
+
+### Thử giao diện (trình duyệt tích hợp, máy chủ dev)
+Dựng bản lưu thử (VN, 40 tuổi, Phó Thủ tướng, vợ quốc tịch Hàn, 2 con, Hà Nội, xe máy), tải lại trang và "Tiếp tục sống" nhiều lần (lưu/tải). Đã bấm: Phiếu lương; Ngân sách gia đình (bật tự cắt chi, mở lại thấy trạng thái); Nhà ở xã hội (từ chối đúng vì thu nhập); Chính sách theo thời đại; Nhịp biến cố; Chăm sóc da (phân trang, "← Quay lại"); Hộ chiếu (nộp → chờ → nút ẩn → năm sau cấp); Quốc tịch và hộ chiếu của con (nộp hộ chiếu cho con → năm sau cấp, hạn 5 năm); Hồ sơ chức vụ; Nhân sự (giao nhiệm vụ, 3 → 2 việc); Dự án công (ngân sách đơn vị giảm, tiền riêng không đổi); Xin thôi giữ chức → "Suy nghĩ lại" (giữ chức); Đào tạo lại (đăng ký → khóa khác ẩn → năm sau hoàn thành); tình huống gốc "Mẹ đã già yếu" → chuỗi chăm mẹ được tạo và lưu. Mobile 375 px: phiếu lương hiển thị đủ, không tràn ngang.
+Chưa thử trên giao diện: các quyết định hệ thống nghỉ ốm, vùng phát thải thấp, đến lượt nhà ở xã hội, chuỗi giá cả leo thang (đã kiểm bằng test và regression mục 9 với ngữ cảnh dựng sẵn); du lịch gia đình bằng giao diện; trình duyệt thật ngoài khung tích hợp.
+
+### Kiểm thử đợt 11
+
+Test chuyên đề trên mã cuối: `era917` 179, `econ918` 378, `welfare918` 155, `drama917` 218, `state917` 67, `state-career174` 222, `integrity917` 2.670 (0 lỗi), `health-tax909` 1.071, `career109` 698, `abroad917` 18, `continuity906` 2.069, `feedback-b` 1.513, `feedback843` 253, `depth900` 58, `update500` 163.015, `update458` 124, `update511` 1.030, `blood910` 10.556 — đều đạt. `depth900`/`update500` đổi fixture (có hộ chiếu, visa đã cấp) vì quy tắc mới; không bỏ assertion. Regression mục 9 cho 20 quyết định mới/đổi: 103.071 đạt, 0 lỗi.
+
+Test hỏng sẵn (cũng lỗi trên baseline c69d094): `blood910-updates` (chụp nhật ký 8.10.10), `chains-gd4` (giả định có đời không chạm chuỗi, trái với drama 8.10.19).
+
+Regression toàn bộ (tests/regression-shard.js, so với baseline c69d094 trong worktree tạm):
+
+| Phần | Mã cuối 8.10.20 | Baseline 8.10.19 | Nhận xét |
+|---|---|---|---|
+| 0–8, 5b | 273.877 đạt / 4 lỗi | 272.101 / 5 | Cùng loại: nợ nặng cuối đời VN (18,5% so với 14,7%), sự kiện sau khi qua đời (1 đời), "major" (mong manh), 60% tình huống tự nhiên |
+| 10–40 | 351.413 đạt / 10 lỗi (trước khi sửa lỗi xe thuê) → sửa, mục 28 chạy lại 66/0 | 354.926 / 10 | 9 loại còn lại đều có ở baseline |
+| 41–99 | 714 / 2 | 714 / 2 | "70 tuổi…" có ở cả hai; "nhật ký nhắc người đã mất như còn sống (1)" mới thấy ở mã cuối, baseline có lỗi khác ("60% kết hôn") — chỉ số mẫu, chưa phân tích |
+| 9 (cùng tập ID từng shard) | 0 lỗi hành vi; 43 tình huống không có khuôn | 0 lỗi hành vi; 60 không có khuôn | Chỉ `nhap_quoc_tich` mới thiếu khuôn; chạy riêng thì cả hai bản đều thiếu (chỉ tới được qua `dinh_cu`) — chưa giải thích hết |
+
+Lỗi tìm thấy nhờ regression và đã sửa: tình huống `treat` hẹn trước khi bệnh đã không còn (engine thêm `valid`); chỉ số đi lại nhân cả xăng/sạc của xe thuê theo hợp đồng.
+
+Đo cân bằng 1.000 đời VN cùng seed (scratchpad bal918.js): baseline tuổi thọ 71,64, chết với tài sản âm 18,6%, tiền mặt trung vị tuổi 40 = 2,94 lần mức cơ sở → mã cuối 71,06 / 18,7% / 3,04; 4,38 chuỗi biến cố/đời (baseline 3,54); ~1,2 lần nghỉ ốm/đời. Regression mục 5: nợ nặng cuối đời VN 14,7% → 18,5% — **cần theo dõi**: chi phí thật mới (BHYT hộ gia đình, thuế kinh doanh, nghỉ ốm không lương) chưa có thu nhập tăng tương ứng ở khu vực tư.
+
+Thử giao diện thêm (sau phần hoàn thiện): BHYT và quỹ hưu trí tự nguyện (đăng ký 1 triệu/tháng), Hỗ trợ người khuyết tật (nộp hồ sơ cho con), Đề xuất và thí điểm chính sách (lãnh đạo UBND Đà Nẵng chỉ thấy 3 chính sách địa phương, nộp đề án vé xe buýt → lưu và thẩm định năm sau), chuỗi "Một năm chăm mẹ" hiện trên giao diện. Lỗi thao tác thử: bấm tự động đã chọn "nghỉ việc"/"mua nhà" ở vài tình huống — do công cụ thử, không phải game.
 
 ## Đợt 10 (8.10.19) — Phần B (MD2) và Phần C (MD3), phạm vi đã làm
 

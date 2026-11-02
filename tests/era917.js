@@ -8,7 +8,7 @@ function life(seed, o) { const l = E.createLife({ mode: 'vn', seed }); Object.as
 function hooks(l) { E.HOOKS.year.forEach(h => { try { h(l, () => .5, quiet, l.age - 1); } catch (e) { } }); }
 ok(R && R.POLICIES.length >= 10, 'policy registry loaded');
 // Mỗi chính sách có lớp, nguồn, ghi chú; giả định gắn kịch bản không mặc định.
-R.POLICIES.forEach(p => { ok(['verified', 'projection', 'simulated'].includes(p.layer) && p.src && p.note, 'policy ' + p.id + ' has layer/src/note'); if (p.layer === 'simulated') ok(p.scen && p.scen !== 'balanced', p.id + ' only in a non-default scenario'); });
+R.POLICIES.forEach(p => { ok(['verified', 'projection', 'simulated'].includes(p.layer) && p.src && p.note, 'policy ' + p.id + ' has layer/src/note'); if (p.layer === 'simulated' && !p.all) { ok(p.scen && p.scen !== 'balanced', p.id + ' originates in a non-default scenario'); const b = p.win && p.win.balanced; ok(!b || b[0] >= p.win[p.scen][0], p.id + ' balanced adopts no earlier than ' + p.scen); } });
 ok(!R.POLICIES.some(p => /chắc chắn|tất yếu/i.test(p.note)), 'no "certain/inevitable" wording for policies');
 // Lộ trình hưu: công thức độc lập.
 const roadM = y => y <= 2020 ? 60 : Math.min(62, 60 + 3 * (y - 2020) / 12), roadF = y => y <= 2020 ? 55 : Math.min(60, 55 + 4 * (y - 2020) / 12);
@@ -29,6 +29,9 @@ const roadM = y => y <= 2020 ? 60 : Math.min(62, 60 + 3 * (y - 2020) / 12), road
   E.resolve(l, String(d.data.keys.indexOf('s:expanded'))); ok(R.state(l).scen === 'expanded' && R.state(l).chosen, 'scenario chosen');
   const d2 = E.DEC.era917.make(l, () => .5, {}); ok(!d2.opts.some(o => o.k === String(d2.data.keys.indexOf('s:reform'))), 'cannot re-choose');
   ok(/Đã xác minh/.test(d2.text) && /Kịch bản giả định/.test(d2.text) && /Dự báo/.test(d2.text), 'screen shows three layers');
+  ok(d2.text.includes('Đã xác minh (nguồn chính thức)') && d2.text.includes('nguồn thứ cấp'), 'verification level shown per policy');
+  ok(R.POLICIES.filter(p => p.layer === 'verified').every(p => ['official', 'secondary', 'unread'].includes(p.ver)), 'every enacted policy has a source-check level');
+  ok(R.POLICIES.filter(p => p.ver === 'official').length >= 3 && R.POLICIES.filter(p => p.ver !== 'official' && p.layer === 'verified').every(p => !/^Đã xác minh/.test(R.layerLabel(p))), 'only officially read sources are labelled verified');
 }
 // Tuổi nghỉ hưu thực tế trong careers: công chức VN nam thời 2066 nghỉ ở 62 (không đổi hành vi cũ).
 { const l = life(4, { sex: 'M', age: 62 }); E.startJob(l, 'cong_chuc', () => .5, quiet, true); ok(E.retirementAge125(l, 62) === 62, 'balanced retirement unchanged in game era'); }
@@ -43,7 +46,7 @@ const roadM = y => y <= 2020 ? 60 : Math.min(62, 60 + 3 * (y - 2020) / 12), road
 {
   const l = life(7, { sex: 'F', age: 30 }); E.startJob(l, 'cong_chuc', () => .5, quiet, true); l.si = { yrs: 5, sum: 100, last: 29, m: 10 };
   l.kids = [{ name: 'An', sex: 'M', born: 30, alive: true, close: 60 }]; const m0 = l.money; hooks(l);
-  ok(l.kids[0].mat917 && near(l.kids[0].mat917.lump, 2 * 2.34, 0.001), 'insured mother gets lump sum 2x reference wage');
+  ok(l.kids[0].mat917 && near(l.kids[0].mat917.lump, 2 * 2.53, 0.001), 'insured mother gets lump sum 2x reference wage (2,53 triệu từ 7/2026)');
   ok(l.kids[0].mat917 && l.kids[0].mat917.lump > 0, 'lump recorded on child');
   const k0 = JSON.stringify(l.kids[0].mat917); l.age++; hooks(l); ok(JSON.stringify(l.kids[0].mat917) === k0, 'no second payment next year');
   const old = life(8, { sex: 'F', age: 35 }); old.kids = [{ name: 'Bé', sex: 'F', born: 34, alive: true }]; delete old.flags.era917v; E.migrateExt(old); ok(old.kids[0].mat917 && old.kids[0].mat917.legacy, 'legacy child marked, no back pay');
@@ -53,10 +56,10 @@ const roadM = y => y <= 2020 ? 60 : Math.min(62, 60 + 3 * (y - 2020) / 12), road
   ok(un.kids[0].mat917.who === null && /chưa ai đóng BHXH/.test(un.kids[0].mat917.note || ''), 'uninsured family explained, no payment');
 }
 // Thất nghiệp: trần 5 lần lương tối thiểu vùng.
-{ const l = life(11); l.urban = true; ok(near(E.unemploymentCap917(l), 24.8), 'urban cap 24.8 million'); l.urban = false; ok(near(E.unemploymentCap917(l), 19.3), 'rural cap 19.3 million'); l.abroad = { perm: true, code: 'JP' }; ok(E.unemploymentCap917(l) === Infinity, 'cap only for VN'); }
+{ const l = life(11); l.urban = true; ok(near(E.unemploymentCap917(l), 26.55), 'urban cap 5 x 5,31 million (NĐ 293/2025)'); l.urban = false; ok(near(E.unemploymentCap917(l), 20.7), 'rural cap 5 x 4,14 million'); l.birthYear = 1990; l.age = 30; l.urban = true; ok(near(E.unemploymentCap917(l), 24.8), '2020 uses pre-2026 regional minimum'); l.birthYear = 2026; l.abroad = { perm: true, code: 'JP' }; ok(E.unemploymentCap917(l) === Infinity, 'cap only for VN'); }
 // Hiến máu: 60 mặc định; 65 chỉ kịch bản mở rộng sau hiệu lực, người hiến nhắc lại khỏe.
 {
-  const l = life(12, { age: 63 }); l.flags.blood909 = { history: [1, 2, 3, 4] }; l.st.hea = 85; ok(R.bloodMax(l) === 60, 'default max 60');
+  const l = life(12, { age: 63 }); l.flags.blood909 = { history: [1, 2, 3, 4] }; l.st.hea = 85; l.birthYear = 2035 - 63; ok(R.bloodMax(l) === 60, 'max 60 before any scenario window (2035)'); const fb = R.effFrom(l, R.POLICIES.find(p => p.id === 'sim_blood_65'), 'balanced'); l.birthYear = fb - 64; ok(R.bloodMax(l) === 60, 'balanced: still 60 the year before its later window'); l.birthYear = fb - 63; ok(R.bloodMax(l) === 65 && fb >= 2048, 'balanced adopts 65 later (' + fb + ')');
   R.state(l).scen = 'expanded'; const f = R.state(l).eff.sim_blood_65; l.birthYear = f - 63; ok(R.bloodMax(l) === 65, 'expanded + repeat donor → 65');
   l.flags.blood909.history = [1]; ok(R.bloodMax(l) === 60, 'first-time donor stays at 60');
 }
