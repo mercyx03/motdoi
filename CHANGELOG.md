@@ -1,4 +1,4 @@
-## 8.10.20-c918 — 02/11/2026 (UTC+7)
+## 8.10.20-c918 — 02/11/2026 (UTC+7) — đã ghi phát hành 13:04 theo yêu cầu của chủ dự án
 
 - Phần C tiếp: `econ918.js` — phiếu lương (gộp → BHXH/BHYT/BHTN → giảm trừ → thuế → điều chỉnh thu nhập bền vững của game → thực nhận, khớp tiền vào sổ), trần căn cứ đóng 20 × mức tham chiếu theo năm (life3); ngân sách hộ qua E.budget114 + quỹ khẩn cấp + tự cắt chi (E.lifestyleFactor); áp lực giá theo năm lạm phát (E.ERA917.macro, chung theo nước/năm); nghỉ ốm BHXH; đào tạo lại (mở việc qua E.offers); nhà ở xã hội (chờ, xét lại, vay NHCSXH 5,4%, thuê nửa giá); vùng phát thải thấp Hà Nội và vé xe buýt giả định (E.vehicleAnnual/E.travelCost); bảng thuế TNDN ước tính; 3 chuỗi C11 trên CHAIN144 (chăm cha mẹ nối tiếp tình huống gốc `care`, không khởi phát riêng).
 - `travel918.js` — hộ chiếu của người chơi; miễn thị thực ASEAN (nguồn thứ cấp) / cần visa; xét visa cố định theo năm, bị từ chối mất lệ phí một lần; kiểm hộ chiếu/visa trước khi thu tiền gói du lịch (life62) và hồ sơ visa du lịch (abroad-depth); du lịch cùng con cần hộ chiếu của con.
@@ -8,7 +8,7 @@
 - Hoàn thiện Phần C (`welfare918.js`): chỉ số giá riêng nhà ở/y tế/học phí/đi lại so với mặt bằng lương (trần 0,9–1,1), lãi suất và tỷ giá; lương công vụ theo lương cơ sở 2,53 triệu (áp trước bảo hiểm/thuế) và lương hưu điều chỉnh; BHYT hộ gia đình đóng hằng năm; quỹ hưu trí tự nguyện trừ thuế TNCN; bảo hiểm nhân thọ có thời gian chờ và loại trừ bệnh có sẵn; tăng ca ×150% có trần, phép năm; thực tập; trợ cấp người khuyết tật nặng sau xác định mức độ; thu nhập tối thiểu (giả định); vay sinh viên NHCSXH; miễn học phí trừ vào chi phí con; BHYT trẻ dưới 16 (giả định); thuế hộ kinh doanh/TNDN trừ tiền thật từ 2026; lệ phí trước bạ xe xăng/điện; e-visa; tự làm hộ chiếu khi sang nước ngoài học/làm; cán bộ đề xuất chính sách toàn quốc hoặc thí điểm ở tỉnh; bán căn hộ xã hội trước 5 năm → khoản vay đến hạn.
 - Sửa: tình huống điều trị hẹn trước khi bệnh đã không còn (engine `treat.valid`); chỉ số đi lại không nhân phần xe thuê theo hợp đồng.
 - Cân bằng: hộ cận nghèo được hỗ trợ 70% phí BHYT; chỉ số ngành 0,9–1,1. Nợ nặng cuối đời (600 seed của regression) 14,5% so với baseline 15,0%; tuổi thọ 72,13 so với 71,94.
-- Bản đóng gói, chưa phát hành.
+- Nhật ký household-policy-820 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00), trước khi chủ dự án tự upload.
 
 ## 8.10.19-bc — 01/11/2026 (UTC+7)
 

@@ -2,7 +2,7 @@
   {
     "id": "household-policy-820",
     "version": "8.10.20-c918",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "publishedAt": "2026-11-02T12:00:00.000+07:00",
     "title": "Một Đời — Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu và chính sách theo thời đại",
     "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được đối chiếu lại.",
@@ -27,7 +27,9 @@
       "Cán bộ cấp tỉnh có thể đề xuất thí điểm chính sách ở tỉnh mình, cấp bộ trình đề xuất toàn quốc — có thẩm định, có thể không được thông qua.",
       "Sửa thứ tự tính thuế: thuế thu nhập cá nhân và thuế kinh doanh nay tính trên thu nhập sau điều chỉnh cân bằng của game, nên người thu nhập cao không còn bị tính thuế cao hơn số tiền thực nhận. Bảng tài chính năm hiện đủ từng dòng từ lương gộp đến thực nhận.",
       "Sửa: tên nước hiện mã (VN, KR) ở mục quốc tịch của con; văn bản nhiều dòng trong các tình huống bị dồn thành một đoạn; số thập phân dùng dấu phẩy."
-    ]
+    ],
+    "releasedAt": "2026-11-02T06:04:00.000Z",
+    "correctedAt": "2026-11-02T06:04:33.742Z"
   },
   {
     "id": "state-drama-era-819",
