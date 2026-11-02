@@ -3,7 +3,7 @@
 - Nhà ở xã hội: chặn "Đổi nhà" và "Tặng nhà cho con" khi căn hộ chưa đủ 5 năm (welfare918, có lý do, không thu tiền).
 - "Sếp đổ lỗi" không còn đến với người đứng đầu không có cấp trên (life91, dùng E.hasBoss).
 - Test: blood910-updates kiểm nội dung thay vì vị trí/số lượng mục; chains-gd4 loại drama917 khỏi phép so sánh GĐ4. Cả hai đạt.
-- Bản đóng gói, chưa phát hành.
+- Nhật ký fixes-821 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 16:29 +07:00).
 
 ## 8.10.20-c918 — 02/11/2026 (UTC+7) — đã ghi phát hành 13:04 theo yêu cầu của chủ dự án
 
