@@ -17,7 +17,7 @@ ok(W, 'module loaded');
   const a = life(1), b = life(2); a.age = b.age = 40;
   const x = W.sectors(a), y = W.sectors(b); ok(['housing', 'health', 'tuition', 'transport'].every(k => near(x[k], y[k])), 'same country-year indices for all lives');
   a.age = 0; ok(['housing', 'health', 'tuition', 'transport'].every(k => W.sectors(a)[k] === 1), 'base year 2026 = 1');
-  for (let t = 0; t < 120; t += 7) { a.age = t; const s = W.sectors(a); ok(['housing', 'health', 'tuition', 'transport'].every(k => s[k] >= 0.85 - 1e-12 && s[k] <= 1.15 + 1e-12), 'sector index capped ' + (2026 + t)); }
+  for (let t = 0; t < 120; t += 7) { a.age = t; const s = W.sectors(a); ok(['housing', 'health', 'tuition', 'transport'].every(k => s[k] >= 0.9 - 1e-12 && s[k] <= 1.1 + 1e-12), 'sector index capped ' + (2026 + t)); }
   const l = life(3, { age: 40 }); l.kids = [{ name: 'K', born: 30, alive: true }]; const s = W.sectors(l), F = { food: 100, rent: 20, travel: 10, kids: 50, health: 5, items: [] }, p = C.pressure(l);
   E.livingCost918(l, F);
   ok(near(F.rent, 20 * s.housing, 1e-9) && near(F.health, 5 * s.health, 1e-9) && F.travel === 10 && near(F.food, 100 * (1 + p), 1e-9), 'rent/health follow sector indices, food follows yearly pressure');
@@ -37,7 +37,7 @@ ok(W, 'module loaded');
 // BHYT hộ gia đình: tự đóng hằng năm; không đủ tiền thì mất thẻ; người thuộc diện được đóng thì không thu.
 {
   const l = life(20, { age: 40, job: null }); l.flags.bhytVol = true; l.fam.q = 3; const m0 = l.money, p = W.bhytPremium(l);
-  ok(near(p, 0.045 * 2.53 * 12, 1e-9), 'premium = 4,5% x 2,53 million x 12');
+  ok(near(p, 0.045 * 2.53 * 12, 1e-9), 'premium = 4,5% x 2,53 million x 12'); const np = life(24, { age: 40, job: null }); np.fam.q = 2; ok(near(W.bhytPremium(np), p * 0.3, 1e-9), 'near-poor household pays 30% (70% subsidy)');
   hooks(l); ok(near(m0 - l.money, p, 1e-6) || m0 - l.money >= p - 1e-6, 'household BHYT charged'); const m1 = l.money; hooks(l); ok(l.money === m1 || l.money >= m1 - 1e-6 && W.state(l).bhytAt === l.age, 'charged once per year');
   const poor = life(21, { age: 40, job: null, money: 0 }); poor.flags.bhytVol = true; poor.fam.q = 3; hooks(poor); ok(poor.flags.bhytVol === false, 'cannot pay → card lapses');
   const emp = life(22, { age: 40 }); E.startJob(emp, 'cong_chuc', () => .5, quiet, true); emp.flags.bhytVol = true; ok(W.bhytFree(emp), 'employee BHYT paid through payroll');
@@ -102,11 +102,15 @@ ok(W, 'module loaded');
 // Thuế kinh doanh trừ tiền thật.
 {
   const small = life(100, { age: 40 }); small.birthYear = 1990; E.startJob(small, 'kd_quan', () => .5, quiet, true); small.job.rank = 0;
-  const o1 = W.bizTax(small, 100, quiet); ok(o1 === 100, 'small household business under 500 million revenue: no tax');
-  small.birthYear = 2026 - 40; W.state(small).taxAt = null; const o2 = W.bizTax(small, 200, quiet); ok(near(o2, 200 - (200 * 4 - 500) * 0.015, 1e-9), 'household business: 1,5% of revenue above 500 million');
+  // 8.10.20: thuế tính trên lợi nhuận sau điều chỉnh thu nhập bền vững (life115), engine không điều chỉnh lần hai.
+  const comp = (l, v) => E.economy114Income(l, v, 'other'), fresh = l => { W.state(l).taxAt = null; l.yr = { items: [] }; };
+  fresh(small); const c1 = comp(small, 100), o1 = W.bizTax(small, 100, quiet); ok(near(o1, c1, 1e-12) && c1 * 4 <= 500, 'household business under 500 million revenue: no tax (adjusted profit only)');
+  small.birthYear = 2026 - 40; fresh(small); const c2 = comp(small, 200), o2 = W.bizTax(small, 200, quiet), rev = c2 * 4;
+  ok(near(o2, c2 - Math.max(0, rev - 500) * 0.015, 1e-9), 'household business: 1,5% of revenue above 500 million, on adjusted profit');
+  ok(near(E.economy114Income(small, o2, 'career'), o2, 1e-12), 'engine does not adjust the same income twice');
   W.state(small).taxAt = small.age; ok(W.bizTax(small, 200, quiet) === 200, 'taxed once per year');
-  const firm = life(101, { age: 40 }); firm.birthYear = 2026 - 40; E.startJob(firm, 'kd_quan', () => .5, quiet, true); firm.job.rank = 3;
-  ok(near(W.bizTax(firm, 2000, quiet), 2000 * (1 - 0.17), 1e-9), 'firm with 8 billion revenue: 17% CIT on profit');
+  const firm = life(101, { age: 40 }); firm.birthYear = 2026 - 40; E.startJob(firm, 'kd_quan', () => .5, quiet, true); firm.job.rank = 3; fresh(firm);
+  const cf = comp(firm, 2000), q = E.ECON918.cit(cf * 4 / 1000, cf, 0); ok(near(W.bizTax(firm, 2000, quiet), cf - q.tax, 1e-9), 'firm: CIT on adjusted profit with the revenue band');
   const emp = life(102, { age: 40 }); emp.birthYear = 2026 - 40; E.startJob(emp, 'ke_toan', () => .5, quiet, true); ok(W.bizTax(emp, 300, quiet) === 300, 'employees not taxed as business');
 }
 // Lệ phí trước bạ: xe xăng, xe điện theo năm.

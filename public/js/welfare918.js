@@ -15,7 +15,7 @@
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, R = E.ERA917, C9 = E.ECON918, T9 = E.TRAVEL918;
   if (!X || !R || !C9) return;
-  var BAL = { sectorCap: [0.85, 1.15], ref: 2.53, bhytRate: 0.045, volMax: 1, volReal: 0.02, volPenalty: 0.1, otPay: 1.5, otHours: { none: 0, some: 100, heavy: 200, max: 300 },
+  var BAL = { sectorCap: [0.9, 1.1], ref: 2.53, bhytRate: 0.045, volMax: 1, volReal: 0.02, volPenalty: 0.1, otPay: 1.5, otHours: { none: 0, some: 100, heavy: 200, max: 300 },
     studentMonth: 4, studentRate: 0.066, disAllow: { severe: 1.0, extreme: 1.25 }, basicIncome: 1, hkdRate: 0.015, hkdFree: 500, tuitionShare: 0.012,
     pubReal: { reform: 0, balanced: 0.003, expanded: 0.006 }, pubCap: 1.15, pensionReal: 0.5 };
   function hash(s) { var h = 2166136261; s = String(s); for (var i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); h ^= h >>> 16; h = Math.imul(h, 2246822507); h ^= h >>> 13; h = Math.imul(h, 3266489909); h ^= h >>> 16; return h >>> 0; }
@@ -88,6 +88,7 @@
   function bizTax(l, out, log) {
     if (!owner(l) || !vn(l) || year(l) < 2026) return out;
     var s = st(l); if (s.taxAt === l.age) return out; s.taxAt = l.age;
+    var y = l.yr || (l.yr = { items: [] }); if (E.economy114Income && y.pre918 !== l.age) { var raw = out; out = E.economy114Income(l, raw, 'career'); y.pre918 = l.age; } // thuế trên lợi nhuận sau điều chỉnh bền vững (life115)
     var profitVnd = toVnd(l, out), revBn = profitVnd * 4 / 1000, firm = revBn >= 3 || (l.job.rank || 0) >= 2, tax, how;
     if (!firm) { var revM = profitVnd * 4; tax = revM <= BAL.hkdFree ? 0 : (revM - BAL.hkdFree) * BAL.hkdRate; how = 'hộ kinh doanh, ' + dec(revM / 1000, 2) + ' tỷ doanh thu ước tính'; }
     else { var commute = R.active(l, 'sim_commute_deduct') && s.shuttle ? toVnd(l, l.base * 0.05) : 0, q = C9.cit(revBn, profitVnd, commute); tax = q.tax; how = 'doanh nghiệp, thuế suất ' + Math.round(q.rate * 100) + '%' + (q.saved ? ', ưu đãi xe đưa đón giảm ' + mo(l, ledger(l, q.saved)) : ''); if (commute) H.cash(l, -l.base * 0.05, 'Xe đưa đón người lao động'); }
@@ -98,7 +99,7 @@
 
   // ================= C4: BHYT hộ gia đình, quỹ hưu trí tự nguyện =================
   function bhytFree(l) { return !!((E.insured && E.insured(l)) || l.age < 6 || l.age >= 75 || l.fam && l.fam.q <= 1 || l.pensioned || l.school); }
-  function bhytPremium(l) { return ledger(l, BAL.bhytRate * BAL.ref * 12); }
+  function bhytPremium(l) { return ledger(l, BAL.bhytRate * BAL.ref * 12) * (l.fam && l.fam.q === 2 ? 0.3 : 1); } // hộ cận nghèo được ngân sách hỗ trợ 70% (hộ nghèo đã miễn qua bhytFree)
   function bhytYear(l, log) {
     if (!vn(l) || !l.indep || bhytFree(l) || !l.flags.bhytVol) return;
     var s = st(l); if (s.bhytAt === l.age) return; s.bhytAt = l.age;
@@ -193,10 +194,10 @@
 
   // ================= C9: hộ chiếu khi đi học/làm việc nước ngoài =================
   function abroadPassport(l, log) {
-    if (!T9 || !l.abroad || l.age < 14) return; var t = T9.state(l); if (T9.passport(l)) return;
-    var fee = l.country === 'VN' ? ledger(l, 0.2) : l.base * 0.015; H.cash(l, -fee, 'Lệ phí hộ chiếu');
-    t.passport = { cc: l.country, issued: l.age, until: l.age + 10, forTrip: l.abroad.code };
-    log && log('Bạn làm hộ chiếu trước khi sang ' + (l.abroad.name || l.abroad.code) + ' (lệ phí ' + mo(l, fee) + ').', 'neutral');
+    if (!T9 || !l.abroad) return; var t = T9.state(l); if (T9.passport(l)) return;
+    var fee = l.country === 'VN' ? ledger(l, 0.2) : l.base * 0.015, own = l.indep; if (own) H.cash(l, -fee, 'Lệ phí hộ chiếu');
+    t.passport = { cc: l.country, issued: l.age, until: l.age + (l.age < 14 ? 5 : 10), forTrip: l.abroad.code };
+    log && log((own ? 'Bạn làm hộ chiếu' : 'Bố mẹ làm hộ chiếu cho bạn') + ' trước khi sang ' + (l.abroad.name || l.abroad.code) + ' (lệ phí ' + mo(l, fee) + (own ? '' : ', gia đình chi') + ').', 'neutral');
   }
 
   // ================= B×C: cán bộ đề xuất / thí điểm chính sách =================

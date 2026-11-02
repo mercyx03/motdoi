@@ -36,6 +36,7 @@ ok(C && T && R && D, 'modules loaded');
   const hi = life(918190, { age: 40, edu: 5, major: 'eco', urban: true }); E.startJob(hi, 'trung_uong', () => .5, quiet, true); Object.assign(hi.job, { rank: 6, rankTracked: 6, rankSince: 40, yrs: 12, sen: 12, rep: 78 }); E.STATE174.syncState(hi); hi.si = { yrs: 16, sum: 300, last: 39, m: 20 };
   E.beginYear(hi, { auto: true }); while (hi.pending.length) E.resolve(hi, E.autoKey(hi)); E.finishYear(hi);
   const ps = C.slip(hi); ok(ps.adj > 0 && near(ps.net, hi.income, 1e-6), 'high earner: payslip net equals cash income after the sustainable-income adjustment');
+  const row = hi.flags.tax909.history.slice(-1)[0]; ok(near(row.afterInsurance, row.gross - row.insurance - row.adj918, 1e-6) && near(row.tax, E.TAX909.calculate(row.afterInsurance, 0, 12).tax, 1e-6), 'PIT computed on income after the adjustment, not on the unadjusted wage');
   hi.yr = { items: [] }; hi.age++; const ps2 = C.slip(hi); ok(ps2.adj > 0 && near(ps2.net, hi.income, 1e-6), 'last year payslip still reconciles when viewed in the next year');
 }
 // ---------- C3 ngân sách hộ, áp lực giá ----------

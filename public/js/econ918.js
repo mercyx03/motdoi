@@ -55,7 +55,7 @@
       '\n• Thực nhận: ' + m(p.net) + (p.employer ? '\nĐơn vị sử dụng lao động đóng thêm cho bạn khoảng ' + m(p.employer) + ' (BHXH 17,5%, BHYT 3%, BHTN 1%) — không trừ vào lương.' : '') +
       '\nGiảm thu nhập tính thuế không làm số thuế giảm cùng số tiền: mỗi đồng giảm trừ chỉ bớt phần thuế theo bậc đang chịu.';
   }, function () { return []; }, 18, 'Tiền bạc');
-  var ei = E.economy114Income; if (ei) E.economy114Income = function (l, v, source) { var out = ei.apply(this, arguments); if (source === 'career' && l && l.yr && v > 0 && out < v) { l.yr.adj918 = v - out; var t = l.flags && l.flags.tax909, row = t && t.history && t.history[t.history.length - 1]; if (row && row.age === l.age) row.adj918 = v - out; } return out; };
+  var ei = E.economy114Income; if (ei) E.economy114Income = function (l, v, source) { if (source === 'career' && l && l.yr && l.yr.pre918 === l.age) return v; /* đã điều chỉnh trước thuế (tax-resident / welfare918) */ var out = ei.apply(this, arguments); if (source === 'career' && l && l.yr && v > 0 && out < v) { l.yr.adj918 = v - out; var t = l.flags && l.flags.tax909, row = t && t.history && t.history[t.history.length - 1]; if (row && row.age === l.age) row.adj918 = v - out; } return out; };
   var prof = E.profile; if (prof) E.profile = function (l) {
     var p = prof.apply(this, arguments), q = slip(l);
     if (q && q.age === l.age && p && Array.isArray(p.jobInfo)) p.jobInfo.push('Phiếu lương: gộp ' + mo(l, q.gross / 12) + ' → bảo hiểm −' + mo(l, q.si / 12) + ' → thuế −' + mo(l, q.tax / 12) + ' → thực nhận ' + mo(l, q.net / 12) + '/tháng');
