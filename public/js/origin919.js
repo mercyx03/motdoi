@@ -10,11 +10,12 @@
    Kết quả băm theo nhân vật + năm (không tiêu RNG của game). */
 (function (G) {
   'use strict';
-  var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, L = E.LIFE138;
+  var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, L = E.LIFE138, W919 = G.W && G.W.BY || {};
   if (!X || !E.DEC.mc_nhan_nuoi || !E.ORIGINS) return;
   function hash(s) { var h = 2166136261; s = String(s); for (var i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); h ^= h >>> 16; h = Math.imul(h, 2246822507); h ^= h >>> 13; return h >>> 0; }
   function u(seed) { return hash(seed) / 4294967296; }
   function O(l) { return l && l.fam && l.fam.orphan || null; }
+  var RECV = ['US', 'FR', 'IT', 'ES', 'SE', 'NL', 'CA', 'AU', 'DK', 'BE']; // nước thường nhận con nuôi quốc tế (tham số trò chơi)
   var TRAITS = ['kiên nhẫn', 'nghiêm khắc nhưng ấm áp', 'vui vẻ', 'ít nói', 'hay lo lắng', 'cởi mở'];
   // Hồ sơ nguồn gốc: dựng một lần. Bản lưu cũ chỉ suy từ dữ kiện đã có, không thêm sự thật mới.
   function rec(l) {
@@ -32,8 +33,9 @@
   theo.l = 'Đồng ý làm quen với gia đình này';
   theo.run = function (l, r, log, d) {
     var o = O(l); if (!o || o.adopted != null) return; var x = rec(l), seed = l.id + ':fam919:' + l.age;
-    o.adopt919 = { stage: 'assess', at: l.age, d: { m: d.m, f: d.f, q: d.q }, fam: { trait: TRAITS[Math.floor(u(seed + ':t') * TRAITS.length)], kids: u(seed + ':k') < 0.3 ? 1 : 0, place: l.city || l.place, lang: E.ID919 ? E.ID919.langOf(H.resCode(l)) : null, fit: u(seed + ':fit') }, visits: 0, opinion: null };
-    log('Gia đình ' + d.f + ' – ' + d.m + ' nộp hồ sơ nhận nuôi. Cơ quan bảo trợ sẽ thẩm định gia đình và cho hai bên làm quen nhiều lần trước khi quyết định; chưa có gì thay đổi ngay.', 'neutral');
+    var here = H.resCode(l), recv = RECV.filter(function (c) { return W919[c] && c !== here; }), cc = o.kind === 'mai_am' && u(seed + ':intl') < 0.2 && recv.length ? recv[Math.floor(u(seed + ':cc') * recv.length)] : here;
+    o.adopt919 = { stage: 'assess', at: l.age, cc: cc, d: { m: d.m, f: d.f, q: d.q }, fam: { trait: TRAITS[Math.floor(u(seed + ':t') * TRAITS.length)], kids: u(seed + ':k') < 0.3 ? 1 : 0, place: l.city || l.place, lang: E.ID919 ? E.ID919.langOf(H.resCode(l)) : null, fit: u(seed + ':fit') }, visits: 0, opinion: null };
+    log('Gia đình ' + d.f + ' – ' + d.m + (cc !== here ? ' (đang sống ở ' + W919[cc].name + ', hồ sơ nhận nuôi quốc tế)' : '') + ' nộp hồ sơ nhận nuôi. Cơ quan bảo trợ sẽ thẩm định gia đình và cho hai bên làm quen nhiều lần trước khi quyết định; chưa có gì thay đổi ngay.', 'neutral');
   };
   // Ý kiến của trẻ: từ 7 tuổi được hỏi, từ 10 tuổi ý kiến được cân nhắc nặng hơn (tham số trò chơi theo nguyên tắc lợi ích của trẻ).
   X.menu('adopt919', 'Làm quen với gia đình muốn nhận nuôi', function (l) { var o = O(l); return o && o.adopt919 && (o.adopt919.stage === 'meet' || o.adopt919.stage === 'assess') ? true : 'Không có hồ sơ nhận nuôi đang xét'; }, function (l) {
@@ -52,11 +54,15 @@
       if (wait) { a.waited = true; a.meetFrom = l.age; log('Theo ý kiến của bạn, giai đoạn làm quen được kéo dài thêm.', 'neutral'); return; }
       if (refuse || a.fam.fit < 0.2) { a.stage = 'failed'; a.why = refuse ? 'trẻ không đồng ý' : 'hai bên chưa phù hợp'; log('Cơ quan bảo trợ quyết định chưa tiến hành nhận nuôi (' + a.why + '). Bạn vẫn ở lại và có thể có cơ hội khác.', 'neutral'); return; }
       if (a.visits < 2) { a.meetFrom = l.age; return; }
-      a.stage = 'final'; var o2 = O(l); accept0.call(theo, l, r, log, a.d); if (o2.adopted == null) { a.stage = 'failed'; return; }
+      if (a.cc && a.cc !== H.resCode(l) && a.hague == null) { a.hague = l.age; a.meetFrom = l.age; log('Hồ sơ nhận nuôi quốc tế được chuyển tới cơ quan có thẩm quyền của hai nước (theo Công ước La Hay về nuôi con nuôi quốc tế) để xác nhận; cần thêm khoảng một năm.', 'neutral'); return; }
+      a.stage = 'final'; var o2 = O(l), intl = a.cc && a.cc !== H.resCode(l) && W919[a.cc];
+      if (intl) { var b = W919[a.cc], pool = String(b.pool).split(',')[0].split(':')[0]; H.emigrate(l, [a.cc, b.name, pool], r, log); if (l.age < 18) delete l.flags.needJob; a.citPending = { cc: a.cc, due: l.age + 1 }; log('Bạn cùng gia đình mới chuyển sang ' + b.name + '. Quốc tịch gốc được giữ trong hồ sơ; quốc tịch theo cha mẹ nuôi xét theo luật nước nhận nuôi.', 'big'); }
+      accept0.call(theo, l, r, log, a.d); if (o2.adopted == null) { a.stage = 'failed'; return; }
       a.stage = 'done'; a.done = l.age; a.follow = l.age + 2; var x = rec(l); x.legal.push({ at: l.age, kind: 'adoptive', who: a.d.f + ' & ' + a.d.m }); x.care.push({ at: l.age, type: 'adoptive', who: a.d.f + ' & ' + a.d.m });
       if (E.ID919 && l.age >= 1) X.next(l, 'adoptName919', r, {}, { manual: false });
       return;
     }
+    if (a.stage === 'done' && a.citPending && l.age >= a.citPending.due) { var cc = a.citPending.cc; a.citPending = null; l.flags.citizen = l.flags.citizen || []; if (l.flags.citizen.indexOf(cc) < 0) l.flags.citizen.push(cc); log('Quốc tịch ' + (W919[cc] ? W919[cc].name : cc) + ' theo cha mẹ nuôi đã được ghi nhận (quy tắc mô phỏng; điều kiện mỗi nước khác nhau). Quốc tịch gốc không tự mất trong trò chơi.', 'good'); }
     if (a.stage === 'done' && a.follow != null && l.age <= a.follow && a.followAt !== l.age) { a.followAt = l.age; log(l.age === a.follow ? 'Đợt theo dõi sau nhận nuôi kết thúc; cán bộ ghi nhận gia đình đã gắn bó. Những ký ức ở mái ấm vẫn là một phần của bạn.' : 'Cán bộ xã hội đến thăm định kỳ sau nhận nuôi, hỏi han việc học và cảm xúc của bạn.', 'neutral'); }
   }
   // Tên sau nhận nuôi: giữ hoặc đổi theo quyền, tuổi và mong muốn; tên lúc sinh, gen, quốc tịch không đổi.

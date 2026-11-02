@@ -14,7 +14,11 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
-### Phần tồn MD4 8.10.22-md4 — 02/11/2026
+### Phần tồn MD4 sau 8.10.23 — 02/11/2026
+
+- Đã làm ở 8.10.23 các mục giản lược liệt kê ngay dưới (xem docs/UPGRADE-912-PROGRESS.md Đợt 13). Còn: ly thân khi ở tù không tự thành ly hôn pháp lý; khóa tiếng 1 năm không đổi diện tại chỗ; mức tiền y tế/hỗ trợ tiêu hủy/quy tắc quốc tịch con nuôi là tham số; regression đầy đủ 0–99 và test trình duyệt tự động vẫn chưa chạy.
+
+### (Lịch sử) Phần tồn MD4 8.10.22-md4 — 02/11/2026
 
 - Chưa làm/giản lược: nhận nuôi quốc tế có chuyển nước (chưa có luồng di cư cho trẻ vị thành niên); học tiếng 1 năm ở nước ngoài rồi chuyển diện; đặt họ con theo luật Đức mới chỉ ở mức lựa chọn; gia súc và bệnh gia súc (game chưa có chăn nuôi); cơ sở bảo trợ "chăm sóc tạm thời" khi cha mẹ còn quyền nuôi chưa là khởi đầu riêng; D10 mới có chuỗi người thân hỗ trợ/xa cách chung, chưa có chuỗi riêng cho người trong tù/bệnh dài hạn.
 - Nguồn ở mức thứ cấp (docs/MD4-SOURCES.md): mốc 21 tuổi chọn quốc tịch Singapore, mức tiền y tế 2025 các nước, học phí 22 điểm đến, bảng miễn thị thực theo cặp hộ chiếu. Cần đọc nguyên văn trước khi nâng mức kiểm chứng.

@@ -1,6 +1,6 @@
 # Nâng cấp 8.10.12 (mã 912) — theo dõi tiến độ theo PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md
 
-**Trạng thái (02/11/2026, 8.10.22): MD4 D01–D17 đã triển khai (bảng "Đợt 12", phần giản lược ghi rõ); chủ dự án xác nhận đã upload, nhật ký ghi phát hành 02/11/2026 18:06 +07:00. Trước đó (8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00) để chủ dự án tự upload; chưa có xác nhận Production.** Không tự deploy Production.
+**Trạng thái (02/11/2026, 8.10.23): MD4 hoàn thiện phần giản lược + góp ý làm đẹp/diễn viên/quan hệ (Đợt 13), packaged chưa phát hành.** Trước đó (02/11/2026, 8.10.22): MD4 D01–D17 đã triển khai (bảng "Đợt 12", phần giản lược ghi rõ); chủ dự án xác nhận đã upload, nhật ký ghi phát hành 02/11/2026 18:06 +07:00. Trước đó (8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00) để chủ dự án tự upload; chưa có xác nhận Production.** Không tự deploy Production.
 
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
@@ -34,6 +34,45 @@
 | §12 | Phi pháp, băng nhóm, nhà tù (+8.10.17 lãnh đạo nhóm, pháp lý trong trại: `crimeLeader912`, `crimeSplit912`, `tg_phap_ly912`, `tests/crime917.js` 1.329) | `crime912.js` (`E.CRIME912`) mở rộng CRIME911 + life47; bọc `H.jail`, `E.careerYear`, `E.startJob`, `E.underworldRisk/DeathRisk`, `CRIME911.rate`; life47/crime-depth đọc qua hàm công khai | `flags.crime912 {territory, hires, sentences}`; trên `crime911.crew[*]`: `role912, skill912, trait912, cut912, hist912` | “Đàn em, địa bàn và rủi ro”, bảng rủi ro trong kế hoạch năm, lựa chọn yểm trợ khi bị đánh úp | `tests/crime912.js` (299), `tests/crime913-browser.js`, `crime911`, `update490` | **Đã làm phần lớn, đã kiểm chứng**; trại giam giữ chuỗi sẵn có của CRIME911/life43 (chưa thêm mới) |
 | §13 | Làm sâu quốc gia | `data-country-world912*.js` (dữ liệu, nạp trước `life173`) mở rộng `COUNTRY_DEPTH_DATA`; `tools/country-sources-912.js` (kiểm URL, bảng 195 × 6) | `flags.culture173.cases` sẵn có | Câu chuyện riêng ở nơi đang sống, đối chiếu lao động, lễ hội, món ăn, chuẩn bị cưới | `country-minimum-content` (399.955), `browser-country-minimum-content` (14 nước × 390/1280), `audit-country-depth` | **195/195 đạt tối thiểu có nguồn + tích hợp; 187 hồ sơ `compiled-912` chưa đối chiếu từng câu** |
 | §14 | Rà soát liên hệ thống | `tests/integrity917.js` (bất biến tiền/NaN/nhật ký/quyết định/ID/anh chị em/nhiều thế hệ); sửa `life92`, `wealth`, `life73`, `health915` | — | — | `integrity917` (160 đời: 2.633; 600 đời: 9.208) | **4 lỗi tái hiện đã sửa; phần còn lại ở backlog** |
+
+## Đợt 13 (8.10.23) — hoàn thiện phần giản lược MD4 + góp ý làm đẹp, diễn viên, quan hệ
+
+Baseline: `7a0e26b` (8.10.22 đã ghi phát hành). Các mục ghi "một phần/chưa làm" ở Đợt 12 đã làm tiếp:
+
+| Mục | Đã làm (module) | Còn giản lược |
+|---|---|---|
+| D17 | Nhận nuôi quốc tế: thêm bước cơ quan trung ương hai nước (Công ước La Hay), chuyển nước bằng H.emigrate, quốc tịch theo cha mẹ nuôi ghi nhận sau 1 năm, giữ quốc tịch gốc (origin919); chăm sóc tạm thời khi cha mẹ còn quyền, lịch thăm, đoàn tụ/tự lập (md4b919); test thừa kế con nuôi = con đẻ qua E.WILL70 | Quốc tịch của trẻ được nhận nuôi theo luật từng nước là tham số chung |
+| D10 | Ở tù: thăm nuôi theo gắn bó, bạn đời chờ/chưa quyết/ly thân, tái hòa nhập, làm hòa sau khi ra; bệnh dài hạn: tải người chăm, thuê người, chia việc; anh chị em: tiếp nối "Ai nuôi bố mẹ?" thành chuỗi nhiều năm, góp tiền/luân phiên/trung gian, kết thúc khi cha mẹ mất | Ly thân không tự thành ly hôn pháp lý |
+| D09 | Phản ánh chính thức qua cơ quan theo nước, kết quả năm sau, tái diễn được ghi nhận, có lựa chọn rời môi trường | — |
+| D11 | Khóa tiếng 1 năm (visa riêng, đổi tiền khi đi/về, ý định chuyển đại học xét lại, không tự động); bảo lưu/chuyển trường/dừng học; học nghề kép Đức 3 năm; nghiên cứu sinh có hợp đồng lương | Khóa tiếng kết thúc thì về nước rồi mới xin visa đại học (không đổi diện tại chỗ) |
+| D12 | Công nhận bằng 6 cặp nước–nghề (nộp → thẩm định → học bù/thi → công nhận), tuyến DE điều dưỡng yêu cầu công nhận; lộ trình thường trú 11 nước, ngành thiếu nhân lực, vùng ưu tiên (AU/CA), Mỹ không có lộ trình theo năm | Song song với lựa chọn định cư chung của abroad-depth |
+| D13/D16 | Đặt tên mọi ca sinh; họ ghép Đức tối đa 2 phần; quy tắc tên VN/KR/DE/JP/CN; đổi tên làm hộ chiếu mất hiệu lực tới khi cập nhật; hộ chiếu bạn đời có hạn, làm lại được | — |
+| D14 | Canada theo tỉnh (Québec chờ thẻ năm đầu, thuốc, CDCP theo năm), Anh theo 4 vùng (phí thuốc kê đơn ở Anh), Mỹ/Nhật theo năm; từ 2026 dự báo +3%/năm | Số liệu mức thứ cấp |
+| D15 | Nền tảng/thị trường, donate theo tỉ trọng livestream, hợp đồng tài trợ có số nội dung, phạt khi thiếu, không trả trùng; chi phí cất quà giá trị | — |
+| D07 | Chăn nuôi trâu/bò, lợn, gia cầm; bệnh theo loài và vùng (tụ huyết trùng, lở mồm long móng, dịch tả lợn châu Phi, cúm gia cầm, Newcastle, bệnh than), khai báo/tiêu hủy có hỗ trợ (mô phỏng)/giấu dịch bị phạt; nhóm nguy cơ mang thai/suy giảm miễn dịch, quy tắc trong nhà | Mức hỗ trợ tiêu hủy là tham số |
+
+Góp ý mới của chủ dự án:
+- **Lỗi tóc:** "Tóc và hiến tóc" (health915) và "Danh tính" (identity919) mỗi nơi lưu nhuộm/tẩy riêng → gộp vào mục **Làm đẹp** (`beauty919.js`) dùng một hồ sơ `flags.hair915`; bỏ hai nút cũ. Tẩy theo level 1–4, màu cần nền đủ sáng, tạo kiểu, phục hồi, khuyên (tuổi, thời gian lành), trang sức (đeo/bán lại thấp hơn giá mua).
+- **Diễn viên** (`star919.js`): giải trong nước theo nơi sống (tên giải thật, kết quả hư cấu), liên hoan phim quốc tế theo chất lượng phim, đề cử Oscar rất hiếm; lời mời trực tiếp từ đạo diễn hư cấu đi vào giai đoạn "Lời mời vai diễn" của life154; danh tiếng quốc tế mở rộng khán giả quốc tế.
+- **Hẹn hò thu nhập cao** (`social919.js`): lỗi tái hiện — người gặp chỉ có nghề phổ thông, bậc theo tuổi, lọc sau nên gần như không ai đạt ≥3 lần mức cơ sở. Nay có khả năng gặp người thu nhập cao theo nơi sống/tài sản/vòng quan hệ (không bảo đảm).
+- **Quan hệ thượng lưu:** yến tiệc, từ thiện, diễn đàn/golf, đấu giá với người quen trong ELITE148/celeb912; tối đa 3 sự kiện/năm.
+- **Cha mẹ nổi tiếng:** hiếm (tùy hoàn cảnh gia đình), chuỗi sự kiện tích cực/tiêu cực cân bằng, người lạ bám theo có xử lý năm sau.
+
+Lỗi tìm thấy và sửa trong đợt 13: tình huống phân biệt đối xử (bias919) không bao giờ chạy vì bước chuẩn bị đặt cờ làm điều kiện hợp lệ sai; dòng "người giám hộ nhận thú cưng" ghi sau dòng tử vong; lời mời đạo diễn gọi startProject sai tham số (ra phim web thay vì điện ảnh); màu nhuộm bị khóa không nêu lý do. Đã tìm ra nguồn "sự kiện sau khi qua đời" còn tồn trong backlog: health-aging ghi "Nhịp làm việc theo sức khỏe" sau khi đã mất trong năm — nay chỉ ghi khi còn sống.
+
+### Kiểm thử đợt 13
+| Lệnh | Kết quả |
+|---|---|
+| md4-919 / md4b-919 / social919 | 456 / 133 / 93 đạt, chạy lặp ổn định |
+| smoke, saves-compat, npc-identity, update-release | đạt |
+| save-safety | đạt sau khi test chọn đời còn sống (seed 41041 nay chết vì bệnh tim ở 25 do RNG dịch chuyển; nội dung test không liên quan tử vong, assertion giữ nguyên) |
+| integrity917 | 2.585 kiểm tra, 0 lỗi (sau khi sửa ghi nhật ký sau tử vong) |
+| transit907, depth900, abroad917, university136, careers105, creator132, social131, social-personal131, family104/129/130/830, children141, relationships108/841, romance912, celeb912, genetics912, health915, health-tax909, welfare918, era917, econ918, update500, world120, adult106, continuity101, feedback-e, drama917, sponsor912, update840, career109, crime912, organ917, looks134, update4100, showbiz-actor | đạt |
+| life138 | lỗi có sẵn từ trước (đã ghi trong backlog, không đổi) |
+| npm run package:cloudflare | PASS: 28 file, ZIP 3.074.569 byte, SHA-256 C6C95B63…A4D0 |
+| Trình duyệt (dev) | Mục Làm đẹp: tẩy 2 level → nhuộm đỏ tươi mở, pastel/bạch kim khóa có lý do; mục tóc cũ chỉ còn liên kết; lời mời đạo diễn hư cấu → giai đoạn "Lời mời vai diễn" của life154 (sau khi sửa là phim điện ảnh); không lỗi console |
+
+Chưa chạy: regression đầy đủ 0–99; test trình duyệt tự động cho từng menu. Trạng thái: HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN; packaged, chưa phát hành.
 
 ## Đợt 12 (8.10.22) — MD4: D01–D17 (PROMPT_MOT_DOI_MD4_CAP_NHAT.md)
 

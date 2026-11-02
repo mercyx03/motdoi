@@ -48,6 +48,8 @@
   function skinLabel(p) { var s = p.skin; return s >= 0.85 ? 'tông rất sẫm' : s >= 0.7 ? 'tông sẫm' : s >= 0.55 ? 'tông nâu' : s >= 0.42 ? 'tông ô liu / trung bình' : s >= 0.28 ? 'tông sáng vừa' : s >= 0.16 ? 'tông sáng' : 'tông rất sáng'; }
   function describe(p, dye) { return 'tóc ' + hairLabel(p) + (dye && dye.hair ? ' (đang nhuộm ' + dye.hair + ')' : '') + ', mắt ' + eyeLabel(p) + (dye && dye.lens ? ' (đeo kính áp tròng ' + dye.lens + ')' : '') + ', da ' + skinLabel(p); }
   // Người chơi: nhận từ cha mẹ (đời trước truyền qua childOpts) hoặc dựng từ nguồn gốc hai bên một lần.
+  // Màu nhuộm lấy từ hồ sơ tóc dùng chung (hair915, mục Làm đẹp), không lưu riêng.
+  function hairDye(l) { var h = l.flags && l.flags.hair915; return h && h.color ? { hair: h.color } : null; }
   function pheno(l) {
     var s = st(l); if (s.pheno) return s.pheno; var anc = (L.state(l).ancestry || [l.country]), pa = s.parentsPheno;
     if (pa && pa.f && pa.m) s.pheno = child(l.id + ':pheno919', pa.f, pa.m);
@@ -117,9 +119,19 @@
     if (!s) return 'Tên không được để trống'; if (s.length > 80) return 'Tên quá dài (tối đa 80 ký tự)';
     if (/[\u0000-\u001f\u007f<>{}\[\]\\|`$]/.test(s)) return 'Tên có ký tự không hợp lệ';
     if (!/^[\p{L}\p{M}][\p{L}\p{M}\s'’\-.·]*$/u.test(s)) return 'Tên chỉ gồm chữ cái (có dấu), khoảng trắng, dấu nháy, gạch nối';
-    if (cc === 'VN' && s.length < 2) return 'Họ tên quá ngắn'; return true;
+    if (cc === 'VN' && s.length < 2) return 'Họ tên quá ngắn';
+    var R = NAMERULE[cc]; if (R) { var words = s.split(/\s+/).length; if (R.max && s.length > R.max) return R.note; if (R.words && (words < R.words[0] || words > R.words[1])) return R.note; if (R.latin && !/^[\p{Script=Latin}\p{M}\s'’\-.]+$/u.test(s)) return R.note; if (R.hangul && /[\uac00-\ud7a3]/.test(s) && s.replace(/\s+/g, '').length > 6) return R.note; if (R.fn && R.fn(s) !== true) return R.fn(s); }
+    return true;
   }
-  function setLegal(l, t, why) { var n = nameRec(l), s = String(t).trim().replace(/\s+/g, ' '); if (s === n.legal) return false; n.hist.push({ at: l.age, legal: s, why: why }); n.legal = s; n.display = s; l.name = s; n.docs = ['hộ chiếu', 'bằng cấp', 'tài khoản ngân hàng', 'giấy tờ nhà đất'].filter(function (d, i) { return i < 2 || l.indep; }); return true; }
+  // Quy tắc tên theo nước (mức nguồn thứ cấp, xem docs/MD4-SOURCES.md); nước khác dùng kiểm tra chung.
+  var NAMERULE = {
+    VN: { max: 50, words: [2, 8], latin: true, note: 'Việt Nam: họ tên bằng tiếng Việt hoặc tiếng dân tộc, không dùng số/ký hiệu, không quá dài khó sử dụng (Luật Hộ tịch 2014)' },
+    KR: { hangul: true, note: 'Hàn Quốc: tên bằng Hangul tối đa 5 âm tiết, cộng họ' },
+    DE: { max: 80, fn: function (t) { return /(^|\s)(Dr|Prof)\.?(\s|$)/.test(t) ? 'Đức: học vị không phải một phần của tên' : true; }, note: 'Đức: tên không chứa học vị' },
+    JP: { max: 40, note: 'Nhật: tên đăng ký bằng chữ Hán/kana; giới hạn độ dài phiên âm' },
+    CN: { max: 40, note: 'Trung Quốc: tên đăng ký bằng chữ Hán; giới hạn độ dài phiên âm' }
+  };
+  function setLegal(l, t, why) { var n = nameRec(l), s = String(t).trim().replace(/\s+/g, ' '); if (s === n.legal) return false; n.hist.push({ at: l.age, legal: s, why: why }); n.legal = s; n.display = s; l.name = s; var tp = l.flags.travel918 && l.flags.travel918.passport; if (tp && tp.until > l.age) { tp.old919 = { until: tp.until }; tp.until = l.age; tp.nameChange919 = l.age; } n.docs = ['hộ chiếu (hết hiệu lực tới khi làm lại)', 'bằng cấp', 'tài khoản ngân hàng', 'giấy tờ nhà đất'].filter(function (d, i) { return i < 2 || l.indep; }); return true; }
   // Quy tắc đổi họ khi kết hôn (lựa chọn khả dụng + ghi chú nguồn). keep: giữ · take: theo bạn đời · double: ghép hai họ.
   var MARRY = {
     VN: { opts: ['keep'], note: 'Việt Nam: vợ chồng giữ họ của mình; không có thủ tục đổi họ theo vợ/chồng.' }, CN: { opts: ['keep'], note: 'Trung Quốc: thường giữ họ riêng.' }, KR: { opts: ['keep'], note: 'Hàn Quốc: vợ chồng giữ họ khai sinh.' },
@@ -167,7 +179,7 @@
     return 'Tên pháp lý: ' + n.legal + (n.display !== n.legal ? ' · tên thường dùng: ' + n.display : '') + (n.nick ? ' · biệt danh: ' + n.nick : '') + (n.birth !== n.legal ? ' · tên lúc sinh: ' + n.birth : '') + ' (thứ tự ' + (n.order === 'family-first' ? 'họ trước tên' : 'tên trước họ') + ').' +
       (n.docs && n.docs.length ? '\nGiấy tờ cần cập nhật theo tên mới: ' + n.docs.join(', ') + '.' : '') +
       '\nQuốc tịch: ' + (E.GLOBAL919 ? E.GLOBAL919.citizenships(l) : [l.country]).map(cname).join(', ') + ' · Đang sống: ' + cname(res(l)) + ' · Nguồn gốc gia đình: ' + (b.ancestry || [l.country]).map(cname).join(' – ') + '.' +
-      '\nNgoại hình tự nhiên: ' + describe(p, s.dye) + '. Ngoại hình không quyết định quốc tịch, tính cách hay năng lực.' +
+      '\nNgoại hình tự nhiên: ' + describe(p, hairDye(l)) + '. Ngoại hình không quyết định quốc tịch, tính cách hay năng lực.' +
       '\nNgôn ngữ: ' + (langs.map(function (x) { var c = l.lang && l.lang[x.k] ? ' · chứng chỉ ' + H.langCert(l, x.k) + (E.certValid(l, x.k) ? '' : ' (hết hạn — kỹ năng vẫn còn)') : ''; return lname(x.k) + ' ' + band(x.v) + c; }).join('; ') || 'chưa ghi nhận') + '.' +
       (s.study && s.study.at === l.age ? '\nĐang học: ' + lname(s.study.k) + ' (' + METHOD[s.study.m][0].toLowerCase() + ').' : '');
   }, function (l, arg) {
@@ -176,7 +188,6 @@
     var want = ['en', 'fr', 'de', 'es', 'it', 'pl', 'cs', 'zh', 'ja', 'ko'].concat([langOf(res(l))]).concat(l.partner && l.partner.homeCountry ? [langOf(l.partner.homeCountry)] : []);
     want.filter(function (k, i) { return want.indexOf(k) === i; }).forEach(function (k) { out.push({ k: 'learn:' + k, l: 'Học ' + lname(k) + ' (' + band(skill(l, k)) + ')', why: studyWhy(l, k), run: function (l, r) { X.next(l, 'identity919', r, { learn: k }); } }); });
     var sl = signOf(res(l)); out.push({ k: 'learn:' + sl, l: 'Học ' + lname(sl) + ' (' + band(skill(l, sl)) + ')', why: studyWhy(l, sl), run: function (l, r) { X.next(l, 'identity919', r, { learn: sl }); } });
-    if (l.age >= 14) { out.push({ k: 'dye', l: s.dye && s.dye.hair ? 'Thôi nhuộm tóc (trở về màu tự nhiên dần)' : 'Nhuộm tóc màu khác', h: s.dye && s.dye.hair ? '' : mo(l, l.base * 0.004), run: function (l, r, log) { var d = st(l).dye || (st(l).dye = {}); if (d.hair) { d.hair = null; log('Bạn để tóc mọc lại màu tự nhiên.', 'neutral'); return; } d.hair = ['nâu hạt dẻ', 'vàng khói', 'đỏ rượu', 'bạch kim', 'xanh rêu'][Math.floor(r() * 5)]; H.cash(l, -l.base * 0.004, 'Nhuộm tóc'); log('Bạn nhuộm tóc ' + d.hair + '. Màu nhuộm không di truyền cho con.', 'neutral'); } }); }
     if (l.age >= 18) {
       out.push({ k: 'nick', l: 'Đặt biệt danh / tên thường gọi', run: function (l, r, log) { var n = nameRec(l), g = givenOf(l).split(/\s+/).pop(); n.nick = n.nick ? '' : g; log(n.nick ? 'Bạn bè gọi bạn là ' + n.nick + '.' : 'Bỏ biệt danh.', 'neutral'); } });
       var fee = l.base * 0.01, rule = marryRule(res(l));
@@ -184,7 +195,7 @@
         var n = nameRec(l), cc = res(l), rr = rnd(l.id + ':rename919:' + l.age); if (cc === 'VN' && rr() < 0.5) { H.cash(l, -fee * 0.3, 'Hồ sơ đổi tên'); n.changedAt = l.age; log('Hồ sơ đổi tên chưa được chấp thuận: cần lý do chính đáng (tên gây nhầm lẫn, ảnh hưởng tình cảm gia đình…).', 'neutral'); return; }
         var nm = N(l, rr), t = compose(l, n.family.join(' ')).replace(givenOf(l), nm), v = validName(t, cc); if (v !== true) return; H.cash(l, -fee, 'Thủ tục đổi tên'); n.changedAt = l.age; setLegal(l, t, 'tự đổi tên'); log('Tên pháp lý mới: ' + t + '. Cần cập nhật hộ chiếu, bằng cấp; mọi quan hệ, tài sản giữ nguyên.', 'neutral');
       } });
-      if (nameRec(l).docs && nameRec(l).docs.length) out.push({ k: 'docs', l: 'Cập nhật giấy tờ theo tên mới (' + nameRec(l).docs.join(', ') + ')', h: mo(l, l.base * 0.005), run: function (l, r, log) { var n = nameRec(l); H.cash(l, -l.base * 0.005, 'Cập nhật giấy tờ sau đổi tên'); n.docs = []; var tp = l.flags.travel918 && l.flags.travel918.passport; if (tp) tp.name919 = n.legal; log('Đã cập nhật giấy tờ theo tên ' + n.legal + '.', 'good'); } });
+      if (nameRec(l).docs && nameRec(l).docs.length) out.push({ k: 'docs', l: 'Cập nhật giấy tờ theo tên mới (' + nameRec(l).docs.join(', ') + ')', h: mo(l, l.base * 0.005), run: function (l, r, log) { var n = nameRec(l); H.cash(l, -l.base * 0.005, 'Cập nhật giấy tờ sau đổi tên'); n.docs = []; var tp = l.flags.travel918 && l.flags.travel918.passport; if (tp) { tp.name919 = n.legal; if (tp.nameChange919 != null) { tp.issued = l.age; tp.until = l.age + 10; delete tp.nameChange919; } } log('Đã cập nhật giấy tờ theo tên ' + n.legal + '.', 'good'); } });
     }
     return out;
   }, 6, 'Bản thân');
@@ -199,7 +210,7 @@
   });
   var child0 = E.childOpts; if (child0) E.childOpts = function (l, k) { var o = child0.apply(this, arguments); if (o && o.parent && l.flags.id919) { var mate = k.coParent108 || k.mate || l.partner; o.parent.id919 = { pheno: kidPheno(l, k), parents: { f: l.sex === 'M' ? pheno(l) : partnerPheno(l, mate), m: l.sex === 'F' ? pheno(l) : partnerPheno(l, mate) }, familyRes: [res(l)] }; } return o; };
   var create0 = E.createLife; E.createLife = function (o) { var l = create0.apply(this, arguments), q = o && o.parent && o.parent.id919; if (l && l.flags && q) { var s = st(l); if (q.parents && q.parents.f && q.parents.m) s.parentsPheno = JSON.parse(JSON.stringify(q.parents)); if (q.pheno) s.pheno = JSON.parse(JSON.stringify(q.pheno)); s.familyRes = q.familyRes; } return l; };
-  var prof0 = E.profile; E.profile = function (l) { var p = prof0.apply(this, arguments); if (p && p.jobInfo && l.flags && l.flags.id919 && l.flags.id919.pheno) p.jobInfo.push('Ngoại hình tự nhiên: ' + describe(l.flags.id919.pheno, l.flags.id919.dye)); return p; };
+  var prof0 = E.profile; E.profile = function (l) { var p = prof0.apply(this, arguments); if (p && p.jobInfo && l.flags && l.flags.id919 && l.flags.id919.pheno) p.jobInfo.push('Ngoại hình tự nhiên: ' + describe(l.flags.id919.pheno, hairDye(l))); return p; };
   var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.id919 != null && typeof l.flags.id919 !== 'object') delete l.flags.id919; };
-  E.ID919 = { pheno: pheno, kidPheno: kidPheno, partnerPheno: partnerPheno, founder: founder, child: child, hairLabel: hairLabel, eyeLabel: eyeLabel, skinLabel: skinLabel, describe: describe, skill: skill, rec: rec, band: band, langOf: langOf, signOf: signOf, lname: lname, langYear: langYear, exposure: exposure, startStudy: startStudy, METHOD: METHOD, nameRec: nameRec, validName: validName, setLegal: setLegal, marryRule: marryRule, marryOptions: marryOptions, MARRY: MARRY, state: st, SIGN: SIGN };
+  E.ID919 = { pheno: pheno, kidPheno: kidPheno, partnerPheno: partnerPheno, founder: founder, child: child, hairLabel: hairLabel, eyeLabel: eyeLabel, skinLabel: skinLabel, describe: describe, skill: skill, rec: rec, band: band, langOf: langOf, signOf: signOf, lname: lname, langYear: langYear, exposure: exposure, startStudy: startStudy, METHOD: METHOD, nameRec: nameRec, validName: validName, NAMERULE: NAMERULE, setLegal: setLegal, marryRule: marryRule, marryOptions: marryOptions, MARRY: MARRY, state: st, SIGN: SIGN };
 })(globalThis.G);

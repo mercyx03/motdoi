@@ -1,6 +1,36 @@
 {
-  "generatedAt": "2026-11-02T17:21:00.000+07:00",
+  "generatedAt": "2026-11-02T21:38:00.000+07:00",
   "entries": [
+    {
+      "id": "md4b-beauty-star-823",
+      "version": "8.10.23-md4b",
+      "releaseStatus": "packaged",
+      "publishedAt": "2026-11-02T21:38:00.000+07:00",
+      "title": "Một Đời — Làm đẹp, diễn viên quốc tế, quan hệ thượng lưu và hoàn thiện đời sống đa quốc gia",
+      "summary": "Gộp tẩy/nhuộm tóc vào mục Làm đẹp, thêm bấm khuyên và trang sức; diễn viên có giải thưởng, liên hoan phim, lời mời từ đạo diễn và danh tiếng quốc tế; hẹn hò tìm được người thu nhập cao; nhiều hệ du học, lao động, nhận nuôi, y tế, chăn nuôi được hoàn thiện.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi",
+        "Cân bằng"
+      ],
+      "details": [
+        "Làm đẹp: tẩy tóc theo level, nhuộm nhiều màu (màu nổi, pastel cần tẩy đủ sáng), uốn, duỗi, tết, highlight, phục hồi tóc hư; bấm khuyên nhiều vị trí và mua, đeo, bán lại trang sức. Sửa lỗi nhuộm tóc và tẩy tóc ở hai mục không khớp nhau.",
+        "Diễn viên: giải thưởng trong nước theo nơi đang sống, được chọn chiếu ở liên hoan phim quốc tế, lời mời đóng phim trực tiếp từ đạo diễn nổi tiếng trong và ngoài nước (nhân vật hư cấu), danh tiếng quốc tế mở rộng khán giả.",
+        "Hẹn hò: đặt bộ lọc thu nhập cao nay có thể gặp người phù hợp, khả năng tùy nơi sống, tài sản và vòng quan hệ của bạn.",
+        "Giới doanh nhân và người nổi tiếng: cùng dự yến tiệc, làm từ thiện, diễn đàn kinh doanh/golf, đấu giá nghệ thuật để xây dựng quan hệ.",
+        "Có thể sinh ra trong gia đình có cha hoặc mẹ là ca sĩ, diễn viên nổi tiếng: bị trêu ở trường, phóng viên chờ trước cổng, người lạ bám theo, nhưng cũng có những cơ hội riêng.",
+        "Nhận nuôi quốc tế có chuyển sang nước của gia đình mới; khởi đầu chăm sóc tạm thời khi cha mẹ vẫn giữ quyền nuôi con.",
+        "Khi ở tù, bệnh lâu ngày hay chăm cha mẹ già: người thân thăm nuôi, bạn đời chờ hoặc xa cách, anh chị em bàn chia trách nhiệm.",
+        "Phân biệt đối xử: phản ánh chính thức qua cơ quan phù hợp từng nước, có kết quả xử lý năm sau.",
+        "Du học: khóa tiếng một năm ở nước ngoài, bảo lưu, chuyển trường, dừng học; học nghề kép ở Đức; nghiên cứu sinh có lương.",
+        "Lao động: công nhận bằng nghề điều dưỡng, giáo viên; lộ trình thường trú theo từng nước, ngành thiếu nhân lực và vùng ưu tiên.",
+        "Đặt tên cho mọi em bé mới sinh, họ ghép kiểu Đức tối đa hai phần, kiểm tra tên theo quy định từng nước; đổi tên pháp lý phải làm lại hộ chiếu; hộ chiếu của bạn đời có hạn.",
+        "Bảo hiểm y tế ở Canada theo tỉnh bang, ở Anh theo vùng (phí thuốc kê đơn); số tiền thay đổi theo năm.",
+        "Người theo dõi chia theo nền tảng và thị trường; hợp đồng tài trợ có số nội dung phải giao; quà giá trị cần chi phí cất giữ.",
+        "Chăn nuôi gia súc, gia cầm với dịch bệnh theo loài và khai báo thú y; quy tắc trong nhà bảo vệ người mang thai hoặc suy giảm miễn dịch khi nuôi thú cưng."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "md4-multinational-822",
       "version": "8.10.22-md4",

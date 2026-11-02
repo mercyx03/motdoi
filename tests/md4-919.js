@@ -54,7 +54,7 @@ const { ID919: I, GLOBAL919: GL, FOLLOW919: F, CARE919: C, PETS919: P, ARTS919: 
 {
   ok(GL.entry('SG', 'VN').kind === 'free' && GL.entry('SG', 'US').kind === 'eta' && GL.entry('VN', 'US').kind === 'visa', 'free / e-authorization / visa examples');
   ok(GL.entry('FR', 'DE').kind === 'right' && GL.entry('DE', 'CH').kind === 'right', 'EU/EEA/CH free movement');
-  const l = life(30, { age: 35 }); E.TRAVEL918.state(l).passport = { at: 30, until: 45 }; l.partner = { name: 'Tan Wei', sex: 'M', age: 36, status: 'married', alive: true, homeCountry: 'SG' };
+  const l = life(30, { age: 35 }); E.TRAVEL918.state(l).passport = { at: 30, until: 45 }; l.partner = { name: 'Tan Wei', sex: 'M', age: 36, status: 'married', alive: true, homeCountry: 'SG', pp919: { cc: 'SG', until: 44 } };
   const k = { name: 'Mai', sex: 'F', born: 30, alive: true }; l.kids = [k]; const c = E.ERA917.kidRec(l, k); c.cits = ['VN', 'SG']; c.passports = [{ cc: 'SG', issued: 1, until: 6 }];
   const need = GL.familyNeeds(l, 'US'); ok(need.length === 3, 'three members'); ok(need[0].kind === 'visa' && need[1].kind === 'eta' && need[2].kind === 'eta', 'each member by own passport: VN visa, SG ETA, kid SG ETA');
   c.passports = []; ok(GL.familyNeeds(l, 'US')[2].kind === 'nopass', 'child without passport flagged, family not blocked by one person');

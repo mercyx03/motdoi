@@ -56,10 +56,32 @@
   // Hiệu quả nghề: cùng số người theo dõi nhưng khán giả hoạt động/tương tác khác nhau cho thu nhập khác nhau (có trần).
   function incomeFactor(l) { var s = st(l); return U.clamp(0.75 + s.active * 0.6 + (s.eng - 30) / 200, 0.6, 1.35); }
   var cy0 = E.careerYear; E.careerYear = function (l, r, log) { var out = cy0.apply(this, arguments); if (out > 0 && l && l.flags && fameJob(l)) { var k = incomeFactor(l); st(l).incK = k; out *= k; } return out; };
+  // Phân bổ khán giả theo nền tảng và thị trường (tham số trò chơi theo nghề và ngôn ngữ nơi sống); không tạo người theo dõi mới.
+  var PLAT = { video: 'Video dài', short: 'Video ngắn', live: 'Livestream', music: 'Nghe nhạc / podcast' };
+  function platforms(l) { var c = fameJob(l), id = c ? c.id : ''; return id === 'streamer' || id === 'kol_live' ? { video: 0.2, short: 0.25, live: 0.5, music: 0.05 } : /ca_si|rapper|nhac/.test(id) ? { video: 0.3, short: 0.3, live: 0.05, music: 0.35 } : { video: 0.45, short: 0.4, live: 0.1, music: 0.05 }; }
+  function markets(l) { var b = W.BY[res(l)], pool = b ? String(b.pool).split(',')[0].split(':')[0] : 'en', intl = BIG.test(pool) ? 0.4 : 0.15, home = 1 - intl; var o = {}; o[res(l)] = home; o.intl = intl; return { home: res(l), share: o, lang: pool }; }
+  // Hợp đồng tài trợ: thương hiệu, thị trường, kỳ hạn, số nội dung/năm, phí, phần đại diện, chi phí sản xuất, phạt khi không giao.
+  var BRANDS = [['đồ gia dụng', 'all'], ['ứng dụng học ngoại ngữ', 'all'], ['thời trang', 'all'], ['thiết bị công nghệ', 'all'], ['đồ uống có cồn', 'adult'], ['nền tảng cá cược', 'never']];
+  function dealOffers(l) {
+    var s = st(l), a = audience(l), m = markets(l); if (s.dealAt === l.age || (l.fame || 0) < 2e4) return; s.dealAt = l.age; s.offers919 = [];
+    var n = Math.min(3, Math.floor(Math.log10(Math.max(1, a.active)) - 2)); for (var i = 0; i < n; i++) { var b = BRANDS[Math.floor(u(l.id + ':brand:' + l.age + ':' + i) * 5)], local = u(l.id + ':mk:' + l.age + ':' + i) < 0.6, reach = a.active * (local ? m.share[m.home] : m.share.intl), fee = l.base * Math.min(6, Math.sqrt(reach / 5000) * 0.15) * (0.6 + s.eng / 100);
+      s.offers919.push({ id: l.age + ':' + i, brand: b[0], gate: b[1], market: local ? m.home : 'quốc tế', term: 1 + (i % 2), posts: 2 + i, fee: fee, agency: 0.15, prod: 0.1, status: 'open' }); }
+  }
+  function dealYear(l, log) {
+    var s = st(l); (s.deals919 || []).forEach(function (d) {
+      if (d.status !== 'active' || d.lastYear === l.age) return; d.lastYear = l.age;
+      var key = 'deal:' + d.id + ':' + l.age; if (s.tx[key]) return;
+      if ((d.delivered || 0) >= d.posts) { var net = d.fee * (1 - d.agency - d.prod); s.tx[key] = { status: 'settled', gross: d.fee, cut: d.fee * (d.agency + d.prod), refunded: 0, tax: 0, net: net, y: year(l) }; H.cash(l, net, 'Hợp đồng tài trợ ' + d.brand + ' (sau phí đại diện, sản xuất)'); log && log('Hoàn thành ' + d.posts + ' nội dung cho ' + d.brand + '; nhận ' + mo(l, net) + '.', 'good'); }
+      else { var pen = d.fee * 0.5; s.tx[key] = { status: 'refunded', gross: 0, cut: 0, refunded: pen, tax: 0, net: -pen, y: year(l) }; H.cash(l, -pen, 'Phạt vi phạm hợp đồng tài trợ ' + d.brand); s.eng = U.clamp(s.eng - 3, 5, 95); log && log('Không giao đủ nội dung cho ' + d.brand + ' (' + (d.delivered || 0) + '/' + d.posts + '); bị phạt ' + mo(l, pen) + ' theo hợp đồng.', 'bad'); }
+      d.delivered = 0; d.yearsLeft--; if (d.yearsLeft <= 0) d.status = 'done';
+    });
+  }
+  // Quà vật lý giá trị lớn cần chỗ cất giữ/bảo quản: chi phí hằng năm, có thể chuyển tặng.
+  function storageYear(l, log) { var s = st(l), big = s.gifts.filter(function (g) { return g.status === 'kept' && g.value >= l.base * 0.05; }); if (big.length > 2 && s.storeAt !== l.age) { s.storeAt = l.age; var c = l.base * 0.01 * (big.length - 2); H.cash(l, -c, 'Cất giữ, bảo quản quà tặng giá trị'); log && log('Chi phí cất giữ ' + big.length + ' món quà giá trị: ' + mo(l, c) + '.', 'neutral'); } }
   // Donate và quà ảo: người xem hoạt động × tỷ lệ ủng hộ × khả năng chi trả; trừ phần nền tảng, hoàn tiền, tạm trừ thuế; một giao dịch/năm.
   function donation(l) {
     var s = st(l), a = audience(l), b = W.BY[res(l)], afford = U.clamp((b ? b.gdp : 10) / 40, 0.15, 1.5), trust = U.clamp(s.eng / 50, 0.2, 1.6);
-    var payers = a.active * 0.004 * trust * (s.don.cap ? 0.5 : 1), gross = (E.usdToLocal ? E.usdToLocal(l, BAL.tipUsd) : l.base * 0.015) * afford * payers / 1000 * 12;
+    var payers = a.active * 0.004 * trust * (s.don.cap ? 0.5 : 1) * (platforms(l).live / 0.15) * 0.5, gross = (E.usdToLocal ? E.usdToLocal(l, BAL.tipUsd) : l.base * 0.015) * afford * payers / 1000 * 12;
     var cut = gross * BAL.platformCut, refunded = gross * BAL.refund, tax = (gross - cut - refunded) * BAL.taxHold, net = gross - cut - refunded - tax;
     return { gross: gross, cut: cut, refunded: refunded, tax: tax, net: net, payers: Math.round(payers) };
   }
@@ -88,6 +110,8 @@
       (last.length ? '\nSổ người theo dõi:\n' + last.map(function (e) { return '• Năm ' + e.y + ': đầu kỳ ' + fmt(e.start) + ' + mới ' + fmt(e.gain) + ' − rời ' + fmt(e.lost) + (e.shock ? ' − biến cố ' + fmt(-e.shock) : '') + (e.other ? (e.other > 0 ? ' + sự kiện ' : ' − sự kiện ') + fmt(Math.abs(e.other)) : '') + ' = cuối kỳ ' + fmt(e.end != null ? e.end : a.total) + (e.why.length ? ' (' + e.why.join('; ') + ')' : ''); }).join('\n') : '') +
       (Object.keys(s.tx).length ? '\nDoanh thu ủng hộ: ' + Object.keys(s.tx).slice(-3).map(function (k) { var t = s.tx[k]; return t.y + ': gộp ' + mo(l, t.gross) + ' − nền tảng ' + mo(l, t.cut) + ' − hoàn ' + mo(l, t.refunded) + ' − thuế tạm tính ' + mo(l, t.tax) + ' = ' + mo(l, t.net) + ' (' + t.status + ')'; }).join('; ') + '. Phân loại thuế của donate tùy quốc gia; mô phỏng tạm trừ ' + Math.round(BAL.taxHold * 100) + '%.' : '') +
       (s.gifts.length ? '\nQuà vật lý: ' + s.gifts.slice(-6).map(function (g) { return g.item + ' (' + { pending: 'chờ quyết định', kept: 'đang giữ', donated: 'đã chuyển tặng', declined: 'đã từ chối', guardian: 'người giám hộ quản lý' }[g.status] + ')'; }).join('; ') + '. Giá trị quà không cộng vào tiền mặt.' : '') +
+      '\nNền tảng: ' + Object.keys(PLAT).map(function (k) { return PLAT[k] + ' ' + Math.round(platforms(l)[k] * 100) + '%'; }).join(', ') + ' · thị trường: ' + Math.round(markets(l).share[markets(l).home] * 100) + '% tại ' + (W.BY[res(l)] ? W.BY[res(l)].name : res(l)) + ', ' + Math.round(markets(l).share.intl * 100) + '% quốc tế (ngôn ngữ nội dung quyết định độ phủ).' +
+      ((st(l).deals919 || []).filter(function (d) { return d.status === 'active'; }).length ? '\nHợp đồng tài trợ: ' + st(l).deals919.filter(function (d) { return d.status === 'active'; }).map(function (d) { return d.brand + ' (' + d.market + ', còn ' + d.yearsLeft + ' năm, đã giao ' + (d.delivered || 0) + '/' + d.posts + ' nội dung năm nay)'; }).join('; ') : '') +
       '\nDonate: ' + (l.age < 18 ? 'tắt (vị thành niên, theo người giám hộ)' : s.don.on ? 'bật' + (s.don.cap ? ', có giới hạn' : '') : 'tắt') + '.';
   }, function (l) {
     var s = st(l), out = [];
@@ -98,6 +122,9 @@
     ].forEach(function (x) { out.push({ k: x[0], l: x[1], h: x[2], why: s.used[x[0]] === l.age ? 'Đã làm năm nay' : true, run: function (l, r, log) { if (s.used[x[0]] === l.age) return; s.used[x[0]] = l.age; x[3](l, log); } }); });
     if (s.lastShock && l.age - s.lastShock.age <= 1 && !(s.recover && s.recover.age >= s.lastShock.age)) out.push({ k: 'crisis', l: 'Phản hồi khủng hoảng: xin lỗi/giải thích minh bạch', h: 'Một phần khán giả có thể quay lại năm sau; không bảo đảm', run: function (l, r, log) { var sh = 0.15 + u(l, 'rec:' + l.age) * 0.3; s.recover = { age: l.age, lost: s.lastShock.lost, share: sh }; log('Bạn phản hồi khủng hoảng công khai. Kết quả phụ thuộc mức độ sự việc và niềm tin của khán giả.', 'neutral'); } });
     if (l.age >= 18 && (liveJob(l) || channels(l).length)) { out.push({ k: 'don', l: s.don.on ? 'Tắt nhận donate/quà ảo' : 'Bật nhận donate/quà ảo', run: function (l, r, log) { s.don.on = !s.don.on; log(s.don.on ? 'Bật nhận ủng hộ.' : 'Tắt nhận ủng hộ.', 'neutral'); } }); out.push({ k: 'cap', l: s.don.cap ? 'Bỏ giới hạn ủng hộ' : 'Giới hạn mức ủng hộ (nhắc người xem không chi quá sức)', run: function (l, r, log) { s.don.cap = !s.don.cap; log(s.don.cap ? 'Đặt giới hạn mức ủng hộ.' : 'Bỏ giới hạn.', 'neutral'); } }); }
+    (s.offers919 || []).filter(function (o) { return o.status === 'open'; }).forEach(function (o) { out.push({ k: 'deal:' + o.id, l: 'Ký tài trợ ' + o.brand + ' · ' + o.market + ' · ' + o.term + ' năm · ' + o.posts + ' nội dung/năm', h: 'Phí ' + mo(l, o.fee) + '/năm, trừ 15% đại diện + 10% sản xuất; thiếu nội dung bị phạt 50%', why: o.gate === 'never' ? 'Thương hiệu không phù hợp/không hợp pháp ở nhiều nơi — từ chối' : o.gate === 'adult' && l.age < 21 ? 'Không nhận quảng cáo đồ uống có cồn khi chưa đủ tuổi' : (s.deals919 || []).filter(function (d) { return d.status === 'active'; }).length >= 2 ? 'Đang có 2 hợp đồng' : true, run: function (l, r, log) { o.status = 'signed'; s.deals919 = (s.deals919 || []).concat([{ id: o.id, brand: o.brand, market: o.market, posts: o.posts, fee: o.fee, agency: o.agency, prod: o.prod, yearsLeft: o.term, status: 'active', delivered: 0 }]); log('Ký hợp đồng tài trợ với ' + o.brand + '.', 'good'); } }); });
+    (s.deals919 || []).filter(function (d) { return d.status === 'active' && (d.delivered || 0) < d.posts; }).forEach(function (d) { out.push({ k: 'deliver:' + d.id, l: 'Làm nội dung tài trợ cho ' + d.brand + ' (' + (d.delivered || 0) + '/' + d.posts + ')', h: 'Tốn thời gian, tăng căng thẳng', run: function (l, r, log) { d.delivered = (d.delivered || 0) + 1; if (l.mind) l.mind.stress = U.clamp(l.mind.stress + 2, 0, 100); log('Hoàn thành một nội dung cho ' + d.brand + '.', 'neutral'); } }); });
+    s.gifts.filter(function (g) { return g.status === 'kept' && g.value >= l.base * 0.05; }).slice(0, 2).forEach(function (g) { out.push({ k: 'give2:' + g.id, l: 'Chuyển tặng từ thiện món quà đang cất giữ: ' + g.item, run: function (l, r, log) { g.status = 'donated'; log('Bạn chuyển ' + g.item + ' cho quỹ từ thiện, bớt chi phí cất giữ.', 'good'); } }); });
     s.gifts.filter(function (g) { return g.status === 'pending'; }).slice(0, 4).forEach(function (g) {
       out.push({ k: 'keep:' + g.id, l: 'Giữ: ' + g.item, run: function () { g.status = 'kept'; } });
       out.push({ k: 'give:' + g.id, l: 'Chuyển tặng từ thiện: ' + g.item, run: function (l, r, log) { g.status = 'donated'; H.fx(l, { karma: 1 }); log('Bạn chuyển ' + g.item + ' cho quỹ từ thiện.', 'good'); } });
@@ -106,7 +133,7 @@
     return out;
   }, 13, 'Nghề nghiệp');
 
-  E.HOOKS.year.push(function (l, r, log) { if (!l.alive || !l.flags || !['vn', 'world'].includes(l.mode)) return; if ((l.fame || 0) > 0 || l.flags.follow919) { donationYear(l, log); giftYear(l, log); reconcile(l); } });
+  E.HOOKS.year.push(function (l, r, log) { if (!l.alive || !l.flags || !['vn', 'world'].includes(l.mode)) return; if ((l.fame || 0) > 0 || l.flags.follow919) { dealYear(l, log); donationYear(l, log); giftYear(l, log); storageYear(l, log); dealOffers(l); reconcile(l); } });
   var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.follow919 != null && typeof l.flags.follow919 !== 'object') delete l.flags.follow919; if (l && !(l.fame >= 0)) l.fame = 0; };
-  E.FOLLOW919 = { BAL: BAL, careerGrowth: careerGrowth, capacity: capacity, quality: quality, audience: audience, incomeFactor: incomeFactor, donation: donation, donationYear: donationYear, giftYear: giftYear, reconcile: reconcile, state: st, entry: entry };
+  E.FOLLOW919 = { platforms: platforms, markets: markets, dealOffers: dealOffers, dealYear: dealYear, storageYear: storageYear, BAL: BAL, careerGrowth: careerGrowth, capacity: capacity, quality: quality, audience: audience, incomeFactor: incomeFactor, donation: donation, donationYear: donationYear, giftYear: giftYear, reconcile: reconcile, state: st, entry: entry };
 })(globalThis.G);

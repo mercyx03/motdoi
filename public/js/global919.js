@@ -140,7 +140,7 @@
     var out = [], tp = E.TRAVEL918 && E.TRAVEL918.passport;
     var mine = citizenships(l).filter(function (c) { return c === l.country ? !!(tp ? tp(l) : true) : true; });
     out.push({ key: 'me', name: 'Bạn', pass: mine, cits: citizenships(l) });
-    var p = l.partner; if (p && p.alive !== false && (p.status === 'married' || p.live)) { var pc = p.homeCountry || l.country; out.push({ key: 'partner', name: p.name, pass: [pc], cits: [pc] }); }
+    var p = l.partner; if (p && p.alive !== false && (p.status === 'married' || p.live)) { var pc = p.homeCountry || l.country, pp = partnerPassport(l, p); out.push({ key: 'partner', name: p.name, pass: pp.until > p.age ? [pc] : [], cits: [pc] }); }
     (l.kids || []).forEach(function (k) {
       if (k.alive === false || l.age - k.born >= 18 || k.custody === 'other') return; var c = E.ERA917 ? E.ERA917.kidRec(l, k) : null, age = l.age - k.born;
       var pass = c ? (c.passports || []).filter(function (x) { return x.until > age; }).map(function (x) { return x.cc; }) : [];
@@ -148,6 +148,8 @@
     });
     return out;
   }
+  // Hộ chiếu của bạn đời: một lần cho mỗi người, có hạn (5–10 năm); hết hạn phải làm lại, không coi là luôn còn hiệu lực.
+  function partnerPassport(l, p) { if (!p.pp919) { var x = hash(l.id + ':pp:' + (p.relation108 || p.name)) / 4294967296; p.pp919 = { cc: p.homeCountry || l.country, until: (p.age || 25) + Math.floor(x * 9) }; } return p.pp919; }
   function familyNeeds(l, dest) {
     var fv = st(l).famVisa[dest] || {};
     return members(l).map(function (m) {
@@ -200,6 +202,7 @@
     if (l.age < 18 || l.age > 45) return 'Tuyến này nhận người 18–45 tuổi'; if (res(l) === code) return 'Đang sống tại nước này';
     if (E.TRAVEL918 && E.TRAVEL918.passport && l.country === 'VN' && !E.TRAVEL918.passport(l)) return 'Cần có hộ chiếu còn hạn';
     var sk = E.ID919 ? E.ID919.skill(l, L.lang) : 0; if (sk < L.need) return 'Cần ' + (LANGNAME[L.lang] || L.lang) + ' giao tiếp cơ bản (kỹ năng ' + L.need + '+, hiện ' + Math.round(sk) + ')';
+    if (L.regulated && !(E.MD4B && E.MD4B.recognized(l, code))) return 'Nghề ' + L.regulated + ' cần công nhận bằng trước (mục Công nhận bằng nghề ở nước ngoài)';
     if (l.money < l.base * L.fee) return 'Chưa đủ phí hồ sơ, đào tạo'; return true;
   }
   function laborYear(l, log) {
@@ -294,6 +297,7 @@
         log((ok ? 'Đã cấp ' : 'Chưa được cấp ') + (x.kind === 'eta' ? 'phép điện tử' : 'thị thực') + ' ' + cname(dest) + ' cho ' + x.m.name + '.', ok ? 'good' : 'neutral');
       } });
     });
+    var p = l.partner; if (p && p.alive !== false && p.status === 'married' && partnerPassport(l, p).until <= p.age + 1) out.push({ k: 'ppPartner', l: 'Làm lại hộ chiếu ' + cname(partnerPassport(l, p).cc) + ' cho ' + p.name, h: mo(l, l.base * 0.015) + ' · cấp trong năm', why: l.money >= l.base * 0.015 ? true : 'Chưa đủ lệ phí', run: function (l, r, log) { var q = partnerPassport(l, p); H.cash(l, -l.base * 0.015, 'Lệ phí hộ chiếu của bạn đời'); q.until = p.age + 10; q.renewed = l.age; log('Hộ chiếu của ' + p.name + ' đã được làm lại, hạn 10 năm.', 'good'); } });
     if (!out.length) out.push({ k: 'ok', l: 'Không ai cần thêm giấy tờ (trừ người chưa có hộ chiếu)', run: function () { } });
     return out;
   }, 18, 'Gia đình');
@@ -318,5 +322,5 @@
     if (dualDue(l) && !s.cits.chosen && s.cits.askedAt !== l.age) { s.cits.askedAt = l.age; l.pending.push(E.DEC.dualChoice919.make(l, r)); }
   });
   var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.global919 != null && typeof l.flags.global919 !== 'object') delete l.flags.global919; };
-  E.GLOBAL919 = { homes: homes, P: P, UNIS: UNIS, program: program, trackOf: trackOf, tuitionTotal: tuitionTotal, admit: admit, scholarship: scholarship, instrLevel: instrLevel, ctx: ctx, weights: weights, CTX: CTX, entry: entry, bloc: bloc, EU: EU, EEA: EEA, SCHENGEN: SCHENGEN, members: members, familyNeeds: familyNeeds, CIT: CIT, citRule: citRule, dualDue: dualDue, LABOR: LABOR, laborWhy: laborWhy, canSponsor: canSponsor, partnerPref: partnerPref, state: st, citizenships: citizenships, stamp: stamp, LANGNAME: LANGNAME };
+  E.GLOBAL919 = { homes: homes, P: P, UNIS: UNIS, program: program, trackOf: trackOf, tuitionTotal: tuitionTotal, admit: admit, scholarship: scholarship, instrLevel: instrLevel, ctx: ctx, weights: weights, CTX: CTX, entry: entry, bloc: bloc, EU: EU, EEA: EEA, SCHENGEN: SCHENGEN, members: members, familyNeeds: familyNeeds, partnerPassport: partnerPassport, CIT: CIT, citRule: citRule, dualDue: dualDue, LABOR: LABOR, laborWhy: laborWhy, canSponsor: canSponsor, partnerPref: partnerPref, state: st, citizenships: citizenships, stamp: stamp, LANGNAME: LANGNAME };
 })(globalThis.G);
