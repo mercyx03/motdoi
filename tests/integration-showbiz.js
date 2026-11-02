@@ -117,7 +117,7 @@ function yearHooks(l, needle) { l.age++; E.HOOKS.year.forEach(fn => { if (String
   ['singlesinferno', 'heartsignal', 'genius', 'devilsplan', 'altp', 'nnc'].forEach(id => { const r = Object.keys(SH.SHOWS[id].roles)[0]; ok(SH.canJoin(kid, SH.SHOWS[id], r) !== true, '15 tuổi không tham gia ' + id); });
   // Mỗi chương trình có format thật (không chỉ tên): đều có handler với start / rows / auto
   Object.keys(SH.SHOWS).forEach(id => { const sh = SH.SHOWS[id]; Object.keys(sh.roles).forEach(role => { const h = SH.HANDLERS[sh.roles[role].handler || sh.handler]; ok(h && h.start && h.rows && h.text, id + '/' + role + ': có luật chơi riêng'); }); });
-  ok(Object.keys(SH.SHOWS).length === 25, 'danh mục mới có 25 chương trình (cộng 10 chương trình sẵn có ở life39, life41, life48): ' + Object.keys(SH.SHOWS).length);
+  ok(Object.keys(SH.SHOWS).length === 27&&SH.SHOWS.lifetalk&&Object.values(SH.SHOWS).some(s=>s.handler==='chef175'), 'danh mục có 27 chương trình, gồm nấu ăn và talk show (cộng 10 chương trình sẵn có ở life39, life41, life48): ' + Object.keys(SH.SHOWS).length);
   // Không cộng tiền hai lần: bấm lại một bước cũ sau khi đã trả lời
   const l = base({ seed: 1901, birth: 1996, age: 30 }); SH.begin(l, H.rf(l), say(l), 'altp', 'contestant');
   const old = clone(top(l, 'show151_step')), a = SH.S(l).active; choose(l, 'show151_step', 'o' + a.q.answer); const q1 = SH.S(l).active.qi;

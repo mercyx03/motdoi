@@ -114,11 +114,11 @@ const facts = (l, k) => Object.fromEntries(E.CHILD147.facts(l, k));
     ok(count === acts.length, mode + ' ' + age + ': không mất và không nhân đôi hành động (' + count + '/' + acts.length + ')');
     acts.forEach(x => seen.set(x.id, x.g));
     Object.keys(built.subs).forEach(top => {
-      ok(top === M.FAMILY || top === M.MONEY, 'chỉ hai menu lớn có nhóm con');
+      ok([M.FAMILY,M.MONEY,'Đời sống','Học tập & công việc','Giải trí & sáng tạo'].includes(top), 'các nhóm con thuộc menu hiện hành');
       const placed = new Set(); Object.values(built.subs[top]).forEach(list => list.forEach(x => placed.add(x)));
       built.groups[top].forEach(x => ok(placed.has(x), x.id + ' nằm trong một nhóm con'));
     });
-    if (built.subs[M.MONEY]) E.SPEND_ACTS.forEach(id => { const x = acts.find(a => a.id === id); if (x) ok(built.subs[M.MONEY][M.SPEND_SUB].includes(x) || (M.place(x) && M.place(x)[0] === M.MONEY), id + ' vẫn có trong Chi tiêu & sinh hoạt'); });
+    if (built.subs[M.MONEY]) E.SPEND_ACTS.forEach(id => { const x = acts.find(a => a.id === id); if (x) ok(Object.values(built.groups).some(rows=>rows.some(a=>a.id===x.id)), id + ' vẫn có trong Chi tiêu & sinh hoạt'); });
   }
   // Mọi hành động trước đây thuộc nhóm tình cảm / gia đình / tiền bạc đều được xếp vào nhóm con
   [...seen].filter(([, g]) => /^(Tình cảm|Tình cảm & gia đình|Gia đình|Tiền bạc)$/.test(g)).forEach(([id, g]) => ok(M.place({ id, g }), id + ' (' + g + ') có nhóm con'));

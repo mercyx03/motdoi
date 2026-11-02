@@ -1,5 +1,386 @@
 [
   {
+    "id": "household-policy-820",
+    "version": "8.10.20-c918",
+    "releaseStatus": "released",
+    "publishedAt": "2026-11-02T12:00:00.000+07:00",
+    "title": "Một Đời — Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu và chính sách theo thời đại",
+    "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được đối chiếu lại.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Phiếu lương: lương gộp → BHXH 8%, BHYT 1,5%, BHTN 1% → giảm trừ gia cảnh → thuế → thực nhận, khớp đúng số tiền vào tài khoản. Trần căn cứ đóng theo mức tham chiếu mới.",
+      "Ngân sách gia đình: xem chi thiết yếu, đặt quỹ khẩn cấp 3/6/12 tháng, bật tự cắt chi khi quỹ thiếu. Năm giá cả tăng nhanh hơn thu nhập, chi thiết yếu đắt hơn có giới hạn; tiền đã có và khoản nợ không bị quy đổi lại.",
+      "Khi ốm: chọn nghỉ đủ (BHXH trả 75% những ngày nghỉ trong giới hạn), nghỉ nửa ngày hoặc cố đi làm — mỗi cách có hậu quả riêng.",
+      "Đào tạo lại, học nghề ngắn hạn: học một năm, người từng đóng BHTN được hỗ trợ một phần; học xong có thêm lựa chọn khi tìm việc nếu đủ điều kiện.",
+      "Nhà ở xã hội: nộp hồ sơ khi đủ điều kiện thu nhập, chờ 1–5 năm, đến lượt xét lại; mua với vay ưu đãi 5,4% hoặc thuê với giá khoảng một nửa thị trường.",
+      "Hà Nội: vùng phát thải thấp theo lộ trình — đổi xe máy điện, kết hợp xe buýt hoặc đổi lịch đi lại. Kịch bản tương lai có thể miễn vé xe buýt cho học sinh và người cao tuổi.",
+      "Hộ chiếu và đi lại: phải làm hộ chiếu trước khi ra nước ngoài; một số nước Đông Nam Á miễn thị thực, nước khác cần visa và có thể bị từ chối (kết quả không đổi khi tải lại). Có thể du lịch cùng con khi các con đã có hộ chiếu.",
+      "Biến cố mới gắn với kinh tế: năm giá cả leo thang, chăm sóc cha mẹ già nhiều năm (nối tiếp lựa chọn đón cha mẹ về), nơi làm việc chuyển đổi số.",
+      "Chính sách theo thời đại: kịch bản Cân bằng nay áp dụng chậm và chọn lọc một số chính sách giả định; mỗi chính sách ghi rõ mức kiểm chứng nguồn. Cập nhật lương tối thiểu vùng 2026, mức tham chiếu 2,53 triệu từ 7/2026, căn cứ giảm trừ gia cảnh.",
+      "Hoàn thiện chính sách: giá nhà, y tế, học phí tăng theo thời gian có giới hạn; lương công chức theo lương cơ sở mới, lương hưu được điều chỉnh.",
+      "Bảo hiểm: BHYT hộ gia đình phải đóng hằng năm; quỹ hưu trí tự nguyện được trừ thuế; bảo hiểm nhân thọ có thời gian chờ và không chi trả bệnh có từ trước.",
+      "Lao động: tăng ca được trả 150% có giới hạn giờ, chọn cách nghỉ phép năm; sinh viên đi thực tập; trợ cấp cho người khuyết tật nặng sau khi xác định mức độ.",
+      "Vay vốn sinh viên trả sau khi ra trường; học phí trường công được miễn trong chi phí nuôi con; chủ kinh doanh nộp thuế theo quy mô; mua xe nộp lệ phí trước bạ (ô tô điện được miễn đến hết 2026).",
+      "Cán bộ cấp tỉnh có thể đề xuất thí điểm chính sách ở tỉnh mình, cấp bộ trình đề xuất toàn quốc — có thẩm định, có thể không được thông qua.",
+      "Sửa thứ tự tính thuế: thuế thu nhập cá nhân và thuế kinh doanh nay tính trên thu nhập sau điều chỉnh cân bằng của game, nên người thu nhập cao không còn bị tính thuế cao hơn số tiền thực nhận. Bảng tài chính năm hiện đủ từng dòng từ lương gộp đến thực nhận.",
+      "Sửa: tên nước hiện mã (VN, KR) ở mục quốc tịch của con; văn bản nhiều dòng trong các tình huống bị dồn thành một đoạn; số thập phân dùng dấu phẩy."
+    ],
+    "releasedAt": "2026-11-02T06:04:00.000Z",
+    "correctedAt": "2026-11-02T06:04:33.742Z"
+  },
+  {
+    "id": "state-drama-era-819",
+    "version": "8.10.19-bc",
+    "releaseStatus": "released",
+    "publishedAt": "2026-11-01T22:55:00.000+07:00",
+    "title": "Một Đời — Chức vụ gắn bộ/tỉnh, biến cố kéo dài nhiều năm và chính sách theo thời đại",
+    "summary": "Chức vụ nhà nước ghi rõ bộ, tỉnh và có nhân sự, ngân sách công; thêm biến cố cuộc đời kéo dài nhiều năm; màn hình chính sách theo năm thế giới với quy định đã xác minh, dự báo và kịch bản giả định.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bộ trưởng, thứ trưởng hiển thị đúng bộ (ví dụ “bộ trưởng · Bộ Tài chính”); lãnh đạo tỉnh hiển thị đúng tỉnh, thành phố trực thuộc trung ương dùng “Thành ủy”. Bản lưu cũ không bịa bộ/tỉnh mà ghi “chưa xác định” và cho bổ sung trong mục Chức vụ.",
+      "Có thể xin thôi giữ chức (phải xác nhận), bị kiểm điểm có quyền giải trình; nhân sự trong đơn vị có tên, tính cách, năng lực; quyền đề nghị/bổ nhiệm theo cấp; người được bạn nâng đỡ có thể giúp hoặc bất đồng.",
+      "Dự án công dùng ngân sách đơn vị tách hẳn tiền riêng của bạn, có tiến độ, nghiệm thu và rủi ro. Điểm KPI tăng tự nhiên dừng ở 70; muốn cao hơn phải có kết quả.",
+      "Biến cố nhiều năm: tranh chấp di sản, người thân giấu nợ, tin đồn về người ấy, tranh công ở chỗ làm, đối tác rút vốn, khiếu nại của người dân, người được nâng đỡ phản đối, con gặp khó ở trường, bằng cấp chưa được công nhận khi định cư. Mỗi chuyện có lựa chọn, phản hồi năm sau và kết thúc; tự khép lại khi người liên quan không còn.",
+      "Mục “Nhịp biến cố của cuộc đời”: Êm đềm / Cân bằng (mặc định) / Nhiều biến động — chỉ đổi tần suất, không làm hậu quả nặng hơn.",
+      "Mục “Chính sách theo thời đại”: năm thế giới, tuổi nghỉ hưu theo lộ trình (nam 62 từ 2028, nữ 60 từ 2035), quy đổi giá và lương so với 2026 (không đổi tiền của bạn); mỗi chính sách ghi rõ Đã xác minh / Dự báo / Kịch bản giả định. Chọn kịch bản tương lai một lần cho cả đời.",
+      "Sinh con: mẹ có BHXH nhận trợ cấp một lần 2 lần lương cơ sở; nghỉ thai sản hưởng thay lương, không cộng hai lần; con sinh trước bản cập nhật không được truy lĩnh. Trợ cấp thất nghiệp có trần 5 lần lương tối thiểu vùng.",
+      "Mục “Quốc tịch và hộ chiếu của con”: xét theo quốc tịch cha mẹ và nơi sinh; đủ điều kiện chưa phải đã có; hộ chiếu phải làm thủ tục, trẻ dưới 14 tuổi hạn 5 năm.",
+      "Mục “Chăm sóc da và phong cách”: chế độ chăm sóc (mặc định không tốn tiền), mụn tuổi dậy thì có thể đi khám da liễu, nhiều phong cách trang điểm chỉ mang tính thẩm mỹ; mức cộng ngoại hình có trần.",
+      "Hiến máu vẫn 18–60 tuổi; chỉ trong kịch bản An sinh mở rộng, người hiến nhắc lại khỏe mạnh mới có thể hiến đến 65."
+    ],
+    "releasedAt": "2026-11-01T15:56:00.000Z",
+    "correctedAt": "2026-11-01T15:54:55.698Z"
+  },
+  {
+    "id": "state-career-source-cadre-fix-818",
+    "version": "8.10.18-state",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T15:29:00.000Z",
+    "publishedAt": "2026-11-01T20:45:00.000+07:00",
+    "title": "Một Đời — Lãnh đạo cấp cao không còn bị tụt chức vì “quy hoạch cán bộ nguồn”, chi phí điều trị thận và gan hợp lý hơn",
+    "summary": "Đợt quy hoạch cán bộ nguồn nay chỉ dành cho cán bộ cấp dưới; người đã giữ chức từ cấp phó sở trở lên giữ nguyên chức vụ.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Trước đây một bộ trưởng có thể nhận tình huống “Được quy hoạch cán bộ nguồn” và sau khi chọn “Nhận nhiệm vụ mới” lại thành phó chủ tịch UBND tỉnh. Nay tình huống này chỉ đến với cán bộ cấp dưới.",
+      "Người đã giữ chức từ cấp phó giám đốc sở, vụ phó hoặc tương đương trở lên (kể cả Ngân hàng Nhà nước, Tỉnh ủy, UBND tỉnh, bộ ngành) giữ nguyên chức vụ; việc điều động cấp cao đi qua mục bổ nhiệm, điều động và luân chuyển.",
+      "Nếu tình huống cũ còn nằm chờ trong bản lưu, chọn “Nhận nhiệm vụ mới” sẽ không chuyển chức mà chỉ báo bạn giữ nguyên vị trí.",
+      "Bệnh thận và bệnh gan mạn: tiền theo dõi cơ bản không còn bị tính hai lần cùng chi phí chữa bệnh hằng năm; lọc máu, ghép tạng, thuốc kháng virus chỉ được trả khi còn tiền sinh hoạt dự phòng — nếu không đủ, việc điều trị bị gián đoạn thay vì đẩy bạn vào nợ."
+    ],
+    "correctedAt": "2026-11-01T15:29:14.847Z"
+  },
+  {
+    "id": "countries-crime-organ-integrity-817",
+    "version": "8.10.17-md1",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T13:30:00.000Z",
+    "publishedAt": "2026-11-01T16:00:00.000+07:00",
+    "title": "Một Đời — Đủ 195 quốc gia có câu chuyện riêng, biến động trong giới ngầm, trợ giúp pháp lý trong trại và bệnh thận, bệnh gan theo giai đoạn",
+    "summary": "Mọi quốc gia giờ đều có lộ trình học, lễ hội, chuyện cưới hỏi, món ăn, điều kiện làm việc và năm câu chuyện kéo dài nhiều năm của riêng nước đó; nhóm trong giới ngầm có người cầm đầu, có thể đổi người dẫn dắt hoặc tan rã; người đang thi hành án có thể đề nghị trợ giúp pháp lý; bệnh thận và bệnh gan mạn tiến triển theo giai đoạn với lọc máu, ghép tạng và thuốc kháng virus.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Tất cả 195 quốc gia có hồ sơ riêng: ba hướng học (phổ thông, nghề, đại học) kèm kỳ thi nếu nước đó có, ba ngày lễ có thời điểm và hoạt động cụ thể, ba bước tìm hiểu chuyện cưới hỏi, năm món ăn và năm điều kiện làm việc theo luật hoặc thực tế nước đó.",
+      "Mỗi nước có năm câu chuyện nhiều năm (chọn hướng học, học thử một nghề, đổi lịch làm, góp sức cho ngày lễ, cùng người yêu chuẩn bị chuyện cưới). Câu chuyện cần theo dõi qua nhiều năm, có thể thất bại rồi thử lại, bị gián đoạn khi đổi việc hoặc chia tay; không tự cấp bằng, việc làm hay đăng ký kết hôn.",
+      "Thông tin quốc gia lấy mốc tham chiếu năm 2026 và có đường dẫn nguồn của UNESCO, ILO, Ngân hàng Thế giới hoặc cổng chính phủ; phần lớn hồ sơ mới là bản tóm lược, chưa đối chiếu từng câu với nguồn. Các chi phí, kết quả trong game là cân bằng gameplay.",
+      "Ở những nơi có hoàn cảnh đặc biệt (chiến tranh, hạn chế học tập với phụ nữ, khủng hoảng kinh tế), hồ sơ ghi nhận thực tế đó như khó khăn của nhân vật, không coi là lựa chọn của người chơi.",
+      "Giới ngầm: nếu bạn chưa đứng đầu nhóm, nhóm có một người cầm đầu cụ thể với tính cách và mức tin tưởng riêng. Khi người này bị bắt, muốn rút lui hoặc mất uy tín, bạn chọn ủng hộ người kế nhiệm, tự đứng ra (có thể thất bại), đứng ngoài hoặc rời nhóm; năm sau người dẫn dắt mới đưa ra điều kiện đóng góp để bạn chấp nhận hoặc thương lượng.",
+      "Nếu bạn đang đứng đầu, đàn em có thể thách thức vị trí của bạn: chia lại việc, giữ vị trí (không bảo đảm) hoặc nhường lại. Nhóm gắn kết thấp và nhiều mâu thuẫn có thể tan rã: giữ lại người còn tin mình, theo nhóm khác, tạm lặn hoặc rời giới. Biến động không xảy ra khi bạn đang ở trong trại.",
+      "Trong trại giam có thể đề nghị hỗ trợ pháp lý cho bản án đang thi hành: trợ giúp pháp lý miễn phí khi thuộc diện, thuê luật sư hoặc tự viết đơn. Kết quả đến ít nhất một năm sau: có thể giảm một năm, được ghi nhận đủ điều kiện xét đặc xá, hoặc không thay đổi; mỗi bản án chỉ đề nghị một lần và không bao giờ được thả ngay.",
+      "Bệnh thận mạn có giai đoạn theo chức năng thận; kiểm soát đường huyết, huyết áp và điều trị tích cực làm chậm tiến triển. Khi thận suy nặng, bạn chọn chạy thận nhân tạo, lọc màng bụng, ghép thận hoặc điều trị bảo tồn; có thể hỏi người thân cùng nhóm máu hiến thận và họ có quyền từ chối, hoặc chờ thận từ người hiến đã mất.",
+      "Bệnh gan mạn đi từ viêm gan đến xơ hóa, xơ gan còn bù và mất bù. Thuốc kháng virus làm chậm viêm gan B, viêm gan C có thể chữa khỏi bằng đợt thuốc vài tuần, ngừng rượu bia giúp gan đỡ hơn. Siêu âm tầm soát giúp phát hiện ung thư gan sớm hơn; ghép gan với bệnh do rượu cần đã ngừng rượu ít nhất một năm.",
+      "Phần chi phí bạn tự trả cho lọc máu, ghép tạng và thuốc đã tính bảo hiểm y tế nếu có; không có bảo hiểm thì trả toàn bộ.",
+      "Sửa lỗi: du học xong chọn ở lại tìm việc nay có nút “Tìm việc” trong thời hạn cư trú tìm việc (trước đây nút biến mất vì bị coi như lao động theo hợp đồng).",
+      "Sửa lỗi: anh chị em được mang sang từ đời trước không còn bị ghi “đang đi học” khi đã ngoài 40 tuổi — họ có nghề thật của mình. Sửa lỗi một chỉ số trong chu cấp có thể thành giá trị không hợp lệ, và lỗi đôi khi vẫn ghi chuyện mất ngủ sau dòng qua đời."
+    ],
+    "correctedAt": "2026-11-01T13:30:22.460Z"
+  },
+  {
+    "id": "illness-cancer-development-upgrade-816",
+    "version": "8.10.16-health915",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T13:30:00.000Z",
+    "publishedAt": "2026-11-01T14:25:00.000+07:00",
+    "title": "Một Đời — Ung thư theo giai đoạn, chăm sóc bệnh mạn tính và hỗ trợ phát triển cho con",
+    "summary": "Ung thư được chẩn đoán theo giai đoạn với phác đồ phẫu thuật, hóa trị, xạ trị hay chăm sóc hỗ trợ theo chỉ định; có theo dõi tái phát, lao cần uống thuốc đủ 6 tháng, mất ngủ, lupus, hiến tóc, và trẻ có thể được đánh giá, hỗ trợ khi có dấu hiệu chậm phát triển hoặc khó khăn tâm lý.",
+    "tags": [
+      "Tính năng",
+      "Cân bằng"
+    ],
+    "details": [
+      "Khi phát hiện ung thư, bạn biết bệnh đang ở giai đoạn nào; khám sức khỏe định kỳ giúp phát hiện sớm hơn. Sau khi chọn nơi điều trị, bạn chọn từng phương pháp theo chỉ định: phẫu thuật, hóa trị, xạ trị (chỉ với một số loại), chăm sóc hỗ trợ.",
+      "Giai đoạn và việc điều trị ảnh hưởng rõ tới kết cục; người trẻ không còn gần như luôn qua khỏi khi bệnh đã nặng, người lớn tuổi phát hiện sớm vẫn có cơ hội tốt. Không phương pháp nào bảo đảm khỏi bệnh.",
+      "Hóa trị có tác dụng phụ khác nhau theo phác đồ và cơ thể — không phải ai cũng rụng tóc; tóc thường mọc lại sau khi ngừng. Truyền hồng cầu hay tiểu cầu chỉ xuất hiện khi xét nghiệm cho thấy cần.",
+      "Có thể đặt buồng truyền dưới da khi hóa trị kéo dài: tiện truyền thuốc hơn nhưng có chi phí, cần chăm sóc và có thể biến chứng; không làm bệnh khỏi nhanh hơn.",
+      "Sau khi thuyên giảm, bác sĩ hẹn tái khám 5 năm; bệnh vẫn có thể tái phát, nguy cơ cao hơn nếu phát hiện muộn.",
+      "Người bệnh lao được nhắc uống thuốc đủ 6 tháng; tự ý ngừng khi thấy khỏe làm bệnh dễ quay lại và khó chữa hơn.",
+      "Căng thẳng kéo dài có thể dẫn tới mất ngủ; liệu pháp thay đổi thói quen ngủ giúp nhiều người cải thiện, thuốc ngủ chỉ nên dùng ngắn hạn. Lupus ban đỏ là bệnh tự miễn hiếm, diễn tiến từng đợt và có thể ảnh hưởng tới thận nếu không được theo dõi.",
+      "Mục Sức khỏe có “Tóc và hiến tóc”: tóc mọc dần theo năm; mỗi chương trình hiến tóc trong game có điều kiện riêng về độ dài và tóc đã tẩy, cắt hiến sẽ trừ đúng phần tóc đã cắt.",
+      "Hiến máu tạm hoãn khi bạn vừa được truyền máu trong 12 tháng hoặc đang điều trị/theo dõi sau ung thư — đây là quy tắc đơn giản hóa của game, ngoài đời mỗi nơi quy định khác nhau.",
+      "Trẻ sinh từ bản cập nhật di truyền trở đi có thể có các đặc điểm phát triển riêng: tự kỷ, ADHD, chậm nói, chậm vận động, khuyết tật trí tuệ, lo âu hoặc OCD. Khi có dấu hiệu, gia đình chọn đưa con đi đánh giá hay theo dõi thêm; một dấu hiệu chưa đủ để kết luận và không phải lỗi của cách nuôi dạy.",
+      "Sau đánh giá, mục “Hỗ trợ phát triển cho con” cho chọn can thiệp ngôn ngữ, hoạt động trị liệu, điều chỉnh học tập hoặc hỗ trợ tâm lý phù hợp từng trẻ. Hỗ trợ giúp con tiến bộ dần theo cách riêng, không “chữa khỏi” đặc điểm thần kinh; một số trẻ chậm nói hoặc chậm vận động tự bắt kịp bạn bè."
+    ],
+    "correctedAt": "2026-11-01T13:30:22.288Z"
+  },
+  {
+    "id": "genetics-screening-twins-upgrade-815",
+    "version": "8.10.15-genetics912",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T13:30:00.000Z",
+    "publishedAt": "2026-11-01T11:39:00.000+07:00",
+    "title": "Một Đời — Di truyền theo cha mẹ, khám sàng lọc trước hôn nhân và sinh đôi, sinh ba",
+    "summary": "Mỗi đứa trẻ nhận gen từ đúng cha mẹ sinh học, có thể mang gen hoặc mắc một số bệnh di truyền với tần suất theo vùng; hai người trưởng thành có thể cùng khám sàng lọc với sự đồng ý riêng của mỗi người; gia đình có thể đón sinh đôi hoặc hiếm hơn là sinh ba.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Mỗi em bé nhận một nửa gen từ mẹ và một nửa từ cha sinh học. Mang gen thường không có triệu chứng và không có nghĩa là mắc bệnh. Kết quả được lưu lại, không thay đổi khi mở hồ sơ hay tải lại.",
+      "Có các tình trạng: tan máu bẩm sinh, thiếu men G6PD, máu khó đông, bạch tạng, phenylketon niệu, bệnh Wilson, teo cơ tủy sống, xơ nang và hội chứng Down. Tần suất khác nhau theo vùng dân cư và giữ ở mức hiếm, dựa trên số liệu công bố; đây là mô phỏng, không phải công cụ chẩn đoán.",
+      "Có tình trạng chỉ lộ ra khi khởi phát hoặc qua sàng lọc sơ sinh; một số người thiếu men G6PD chỉ biết khi gặp đợt tan máu. Sau khi chẩn đoán, gia đình chọn mức chăm sóc cơ bản hoặc đầy đủ; chăm sóc giảm nguy cơ biến chứng nhưng không bảo đảm khỏi.",
+      "Mục Sức khỏe có “Khám sức khỏe & sàng lọc di truyền”: gói khám chung, xét nghiệm nhiễm trùng theo chỉ định, sàng lọc người mang gen, giải trình tự exome hoặc toàn bộ hệ gen. Mỗi gói ghi rõ chi phí và giới hạn; kết quả có vào năm sau.",
+      "Khi làm cùng người yêu hoặc bạn đời, người ấy có quyền không đồng ý; khi đó kết quả của người ấy được giữ kín. Âm tính chỉ có nghĩa là không phát hiện trong phạm vi kỹ thuật đã chọn; kỹ thuật hiện đại vẫn có thể bỏ sót hoặc trả kết quả chưa rõ ý nghĩa cần xác nhận.",
+      "Phần tư vấn nói rõ khả năng cho con chung khi cả hai cùng mang gen và các lựa chọn có thể cân nhắc; quyết định kết hôn hay sinh con vẫn thuộc về hai người.",
+      "Thỉnh thoảng gia đình đón hai em bé cùng lúc; sinh đôi cùng trứng có cùng giới tính và cùng bộ gen, sinh đôi khác trứng thì khác nhau. Sinh ba rất hiếm. Hồ sơ con ghi rõ sinh cùng lần.",
+      "Con cái và nhân vật đã có từ trước bản này không bị gán bệnh mới. Khi sống tiếp đời con, nhân vật mang theo bộ gen và tình trạng sức khỏe của chính người con đó."
+    ],
+    "correctedAt": "2026-11-01T13:30:22.152Z"
+  },
+  {
+    "id": "crime-crew-territory-upgrade-814",
+    "version": "8.10.14-crime912",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T13:30:00.000Z",
+    "publishedAt": "2026-11-01T11:13:00.000+07:00",
+    "title": "Một Đời — Đàn em có tên tuổi, địa bàn và bảng rủi ro cho đường tối",
+    "summary": "Đường tối có đàn em với vai trò, kỹ năng và lòng trung thành riêng, quản lý địa bàn, bảng ước tính rủi ro trước khi quyết định, cách thăng cấp không phụ thuộc điểm học, và án mới không còn làm sai ngày mãn hạn đang thi hành.",
+    "tags": [
+      "Tính năng",
+      "Cân bằng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Mục Đường tối có “Đàn em, địa bàn và rủi ro”: mỗi năm có vài người muốn vào nhóm, mỗi người có vai trò (bảo vệ, cảnh giới, kế toán, thương lượng, hậu cần), kỹ năng, tính cách và phần chia mong muốn.",
+      "Bạn giao việc, tăng hoặc giảm phần chia, đứng ra hòa giải hoặc cho người rời nhóm. Người được đối xử tốt gắn bó hơn; người bị trả thấp có thể bỏ đi, thậm chí kể chuyện với cơ quan chức năng và làm mở hồ sơ điều tra.",
+      "Bảo vệ giúp giảm nguy cơ khi bị nhóm khác đánh úp và mở thêm lựa chọn để đàn em yểm trợ rút lui; cảnh giới giảm khả năng bị chú ý; thương lượng giảm va chạm với nhóm khác; kế toán và hậu cần giúp giữ lại nhiều thu nhập hơn. Mọi mức giảm đều có giới hạn — không có cách nào miễn hoàn toàn rủi ro.",
+      "Địa bàn có mức ảnh hưởng: mở rộng tốn tiền và làm tăng va chạm, giữ nguyên hoặc nhường bớt giúp hạ nhiệt. Địa bàn mang lại thu nhập hằng năm và tan dần khi không còn ai giữ.",
+      "Trước khi quyết định kế hoạch năm, bạn thấy ước tính khả năng bị mở hồ sơ, bị đánh úp, nguy cơ nếu bị đánh úp, mức sức ép, quy mô nhóm và phần chia.",
+      "Thăng cấp trong giới dựa vào nhóm, địa bàn và sự gắn kết thay vì điểm học tập, nên không còn cảnh kẹt ở cấp thấp nhất cả chục năm. Quay lại đúng nghề cũ sau khi ra tù giữ được một phần uy tín.",
+      "Cân bằng: nguy cơ tử vong mỗi lần bị đánh úp giảm còn khoảng 60% mức cũ; trước đây gần 4/10 người theo nghề lâu năm mất mạng trong 30 năm mô phỏng.",
+      "Nếu có án mới khi đang thi hành án, hai án được tổng hợp và giữ ngày mãn hạn muộn hơn; trước đây án mới ngắn hơn có thể ghi đè làm ngày ra trại sớm bất thường. Mỗi vụ được ghi vào hồ sơ án."
+    ],
+    "correctedAt": "2026-11-01T13:30:21.980Z"
+  },
+  {
+    "id": "sponsor-celebrity-upgrade-813",
+    "version": "8.10.13-social913",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T13:30:00.000Z",
+    "publishedAt": "2026-11-01T10:36:00.000+07:00",
+    "title": "Một Đời — Chủ động hỗ trợ một người và mở rộng quan hệ với người nổi tiếng",
+    "summary": "Bạn có thể chủ động hỗ trợ tài chính cho một người trưởng thành với điều khoản rõ ràng, người ấy có quyền đồng ý, thương lượng hoặc từ chối; mục Tình yêu & hôn nhân có thêm cách làm quen, đi chơi, xây dựng tin cậy và tiến tới hẹn hò với người nổi tiếng.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Mục Tình yêu & hôn nhân có “Chủ động hỗ trợ một người trưởng thành”: mỗi năm vài người phù hợp độ tuổi và giới tính trong tiêu chí hẹn hò, mỗi người có gia cảnh, khó khăn hiện tại, tính cách, nghề nghiệp, mong muốn và ranh giới riêng. Hồ sơ không thay đổi khi bạn mở lại.",
+      "Bạn tự soạn đề nghị: mức hỗ trợ, kỳ hạn 1–3 năm, mục đích, tần suất gặp và có yêu cầu độc quyền hay không. Đổi điều khoản không tốn tiền; tiền chỉ được chuyển khi hai bên thống nhất.",
+      "Người được hỗ trợ có thể đồng ý, đề nghị lại hoặc từ chối tùy ranh giới và lòng tự trọng của họ — hoàn cảnh khó khăn không có nghĩa là dễ đồng ý. Khoản hỗ trợ không kèm nghĩa vụ tình cảm hay quyền kiểm soát.",
+      "Tiền được chuyển mỗi năm một lần từ tiền riêng của bạn. Thiếu tiền một năm là trễ hạn, hai năm liền thì thỏa thuận chấm dứt. Thỏa thuận cũng kết thúc khi hết hạn, khi một bên dừng hoặc khi người nhận qua đời. Bạn có thể tăng, giảm hoặc kết thúc trong mục quản lý; tối đa 3 người cùng lúc.",
+      "Nếu đang có người yêu hoặc bạn đời, việc thường xuyên gặp người được hỗ trợ có thể bị biết và ảnh hưởng tình cảm. Khi gặp gỡ lâu dài, cả hai có thể tự nguyện tiến tới hẹn hò; người đã nói rõ không muốn gắn chuyện tình cảm sẽ không bị hỏi.",
+      "Mục mới “Mở rộng quan hệ với người nổi tiếng”: lọc theo độ tuổi (18–35, 36–50, trên 50) và nhu cầu kết bạn hay tìm người yêu. Mỗi năm có thêm vài gương mặt mới, phần lớn là người trẻ trưởng thành; người đã quen vẫn giữ nguyên tuổi và danh tính.",
+      "Hồ sơ người nổi tiếng gồm tên, tuổi, nghề, độ nổi tiếng, tính cách, tình trạng hôn nhân, nơi sống và mức tin cậy với bạn. Thông tin sức khỏe và đời tư không được tiết lộ.",
+      "Các bước gửi lời mời làm quen, mời đi chơi riêng, trò chuyện và ngỏ ý hẹn hò đều cần người kia đồng ý. Mỗi năm có tối đa 10 lần tương tác (6 lần với một người), đủ để đi từ quen biết tới hẹn hò trong một năm nếu hợp nhau. Tặng quà đắt chỉ tăng tin cậy có giới hạn, không thay được các bước.",
+      "Người nổi tiếng đã kết hôn sẽ không bỏ gia đình để hẹn hò với bạn. Hai người trưởng thành có thể đề nghị một đêm bên nhau nếu cả hai tự nguyện; nếu một trong hai đã có gia đình, đó là phản bội và có thể bị lộ.",
+      "Khi thành người yêu, đó vẫn là chính người bạn đã quen, tiếp tục đi qua hẹn hò, cầu hôn và kết hôn như các mối quan hệ khác. Tình trạng hôn nhân của người nổi tiếng thay đổi tự nhiên mỗi năm."
+    ],
+    "correctedAt": "2026-11-01T13:30:21.847Z"
+  },
+  {
+    "id": "school-assets-romance-upgrade-812",
+    "version": "8.10.12-upgrade912",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-01T13:30:00.000Z",
+    "publishedAt": "2026-11-01T10:10:00.000+07:00",
+    "title": "Một Đời — Chọn khối thi chắc chắn, bán đúng tài sản muốn bán, hẹn hò có lượt và có quyền từ chối",
+    "summary": "Học sinh THPT luôn được tự chọn và đổi khối thi trước kỳ thi; bảng việc làm phản hồi nhanh hơn rõ rệt, hồ sơ chi tiết trên điện thoại không còn bị trong suốt; tài sản có bộ lọc, tìm kiếm và phân trang khi bán, tặng hay lập di chúc; tìm người yêu tới 10 lượt mỗi năm và người được gặp có thể từ chối; gói cố vấn thừa kế tính học phí đúng tỷ giá và cộng rõ ràng tối đa 50 điểm mỗi chuyên môn.",
+    "tags": [
+      "Sửa lỗi",
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Lên lớp 11 ở Việt Nam, bạn luôn được hỏi chọn khối thi, kể cả năm có nhiều chuyện xảy ra cùng lúc; trước đây có đời bị bỏ qua và nhà trường tự xếp khối. Học bổ túc THPT cũng được chọn khối trước khi thi. Ở nước khác không có khối thi nên không bị gán khối.",
+      "Mục Học tập có thêm “Chọn khối thi THPT / Xem – đổi khối thi”: thấy rõ ba môn thi và nhóm ngành của từng khối, đổi tối đa 2 lần trước kỳ thi. Đổi ngay năm thi phải học bù (kiến thức giảm, áp lực tăng); thi xong thì khối được giữ cùng điểm thi. Lựa chọn ở chế độ tự động vẫn có thể đổi lại khi bạn tự chơi.",
+      "Bảng “Việc bạn muốn làm” và các nhóm việc mở gần như tức thì, kể cả ở cuối đời nhiều tài sản, quan hệ; game không còn khựng mỗi năm.",
+      "Hồ sơ chi tiết trên điện thoại có nền rõ ràng khi cuộn xuống phần dưới, nút “Đóng hồ sơ” không còn bị thanh nhắc lựa chọn đang chờ che mất.",
+      "“Bán nhà cho thuê / sang nhượng cửa hàng” nay cho chọn đúng tài sản muốn bán (trước đây chỉ bán được món đầu tiên), xem giá, lãi lỗ, tiền thuê sẽ mất và điều khoản di chúc bị ảnh hưởng trước khi xác nhận. Vẫn tối đa 4 giao dịch mỗi năm.",
+      "Khi bán, tặng con hoặc giao tài sản trong di chúc: lọc theo nhóm giá trị quy đổi USD (dưới 1 triệu, 1–5, 6–15, 16–30, 31–50, 51–100, 101–250, 251–500, 501–1.000 triệu, trên 1 tỷ), theo loại tài sản, trạng thái, tìm theo tên hoặc địa điểm, sắp xếp và chuyển trang 20 mục; không còn giới hạn chỉ thấy vài chục tài sản đầu tiên.",
+      "Tài sản đã ghi trong di chúc mà bạn bán hoặc tặng khi còn sống thì điều khoản đó hết hiệu lực và được ghi vào nhật ký; người nhận mất trước thì phần đó chia theo tỷ lệ chung. Viết di chúc không chuyển tài sản khi bạn còn sống.",
+      "Tìm người yêu được tới 10 lượt mỗi năm, dùng chung cho tìm người yêu và làm quen trong mục mập mờ; đổi tiêu chí hẹn hò không tốn lượt. Từ 56 tuổi vẫn chủ động tìm được (tới 85 tuổi).",
+      "Gặp được ai đó chưa có nghĩa là người ấy đồng ý: mức hợp nhau, khoảng cách tuổi, ngoại hình, sự ổn định, cách trò chuyện và các mối tình cũ đều ảnh hưởng. Bị từ chối liên tiếp thì những lần sau dễ có tiến triển hơn, nhưng không bao giờ chắc chắn.",
+      "Mục mập mờ có “Kết thúc và làm mới danh sách” (xem lại danh sách trước khi xác nhận, tối đa 1 lần mỗi năm); kết thúc từng người không cần còn lượt gặp. Con chung, thai kỳ, nghĩa vụ nuôi con và gia đình bí mật được giữ nguyên; người cũ có thể tình cờ gặp lại sau vài năm.",
+      "Gói cố vấn thừa kế 5 triệu USD tính học phí đúng tỷ giá (khoảng 127 tỷ đồng ở Việt Nam; trước đây bị tính sai lớn hơn rất nhiều). Mỗi chuyên môn trong 7 chuyên môn được cộng tổng cộng tối đa 50 điểm từ khóa (gói 1 triệu USD: 30 điểm): phần lớn trong 10 năm học, phần còn lại khi hoàn thành; không vượt 100 và không cộng vào mọi chỉ số khác.",
+      "Khóa cố vấn đang học trong bản lưu cũ được tính tiếp phần đã nhận, không thu phí lại; khóa đã hoàn thành trước đây được bù một lần lên mức mới. Giá dịch vụ tính bằng USD trong đường tối cũng được quy đổi đúng tỷ giá."
+    ],
+    "correctedAt": "2026-11-01T13:30:21.673Z"
+  },
+  {
+    "id": "gameshow-crime-prison-upgrade-811",
+    "version": "8.10.11-gameshow-crime",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-30T23:52:21.000Z",
+    "publishedAt": "2026-10-31T00:00:00.000+07:00",
+    "title": "Một Đời — Câu hỏi gameshow khó hơn, lựa chọn chủ động cho đường tối",
+    "summary": "Các gameshow tăng độ khó sớm hơn; hoạt động phi pháp có hồ sơ điều tra nhiều bước và thêm lựa chọn quản lý, còn sinh hoạt trong trại có thêm chuyện học nghề, hòa giải và chuẩn bị ngày trở về.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Nhanh Như Chớp và Đấu Trường 100 bắt đầu ở mức câu hỏi trung bình; câu hỏi khó xuất hiện sớm hơn theo chuỗi đúng và diễn biến cuộc thi. Ai Là Triệu Phú cũng tăng mức câu hỏi từ giữa chặng, vẫn giữ trợ giúp, mốc an toàn và tiền thưởng.",
+      "Nếu đang làm việc phi pháp, bạn có thể mở mục Đường tối để tạm dừng, thu hẹp hoạt động hoặc rời nhóm; lựa chọn ảnh hưởng đến thu nhập, áp lực điều tra, mâu thuẫn và quan hệ trong nhóm.",
+      "Việc bị điều tra không còn tự biến ngay thành án tù. Hồ sơ có thể kéo dài sang năm sau; bạn quyết định hợp tác, nhờ luật sư nếu đủ chi phí, hoặc chờ và chấp nhận áp lực tăng. Dừng hoạt động không xóa hồ sơ đã mở.",
+      "Trong trại có thêm khóa nghề qua nhiều năm, hòa giải mâu thuẫn trong tổ, viết thư và lập kế hoạch nơi ở/việc làm trước ngày ra trại. Học nghề và kế hoạch được lưu để tiếp nối khi mãn hạn; không tự bảo đảm được giảm án hay có việc làm.",
+      "Kết quả hiến máu đã được kiểm tra lại: thông báo mô phỏng ghi ngày, phân biệt sự cố vận chuyển với kết quả sàng lọc cần bệnh viện đối chiếu; kết quả sàng lọc chưa phải chẩn đoán. Nhóm máu được lưu khi chưa có thông tin trước đó."
+    ],
+    "correctedAt": "2026-10-30T23:52:24.745Z"
+  },
+  {
+    "id": "blood-genetics-followup-910",
+    "version": "8.10.10-blood-genetics",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-30T08:55:28.174Z",
+    "publishedAt": "2026-10-30T08:55:28.126Z",
+    "title": "Một Đời — Di truyền nhóm máu và hành trình sau hiến",
+    "summary": "Con nhận alen ABO/Rh từ bố mẹ sinh học; theo dõi kết quả sau hiến, lời mời khi thiếu máu và tư vấn Rh trong thai kỳ.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "ABO có các cặp AA/AO, BB/BO, AB và OO; con nhận một alen từ mỗi bố mẹ sinh học. A và B đồng trội, O lặn: hai người nhóm A có thể sinh con nhóm O khi cùng mang AO. Rh dùng mô hình D/d đơn giản: hai người Rh âm sinh con Rh âm; hai người Dd có thể sinh con dd.",
+      "Giữ nguyên nhóm máu từng có trong bản lưu, bổ sung cặp alen tương thích. Con nuôi không lấy nhóm máu từ cha mẹ nuôi. Thai kỳ ghi bố mẹ sinh học và giữ alen của thai, không đổi theo người bạn đời mới. Khi chuyển đời, giữ nhóm máu và alen của con; không chuyển giấy hiến của cha mẹ sang con.",
+      "Nhóm máu mới dùng tham số mô phỏng theo vùng: Việt Nam/Đông Á ưu tiên O rồi B, A, AB và Rh âm rất hiếm; mô hình phương Tây có Rh âm phổ biến hơn. Đây là phân bố phục vụ game, không phải thống kê chính xác của mọi nước và không dùng làm bằng chứng huyết thống.",
+      "Mẹ Rh âm và bố có thể truyền Rh dương được nhắc tư vấn sản khoa: kiểm tra kháng thể, đánh giá thai, dự phòng anti-D theo chỉ định và theo dõi sau sinh. Có lưu kế hoạch chăm sóc; bất đồng không tự biến thành bệnh hoặc kết luận thai chắc chắn gặp nguy hiểm.",
+      "Sau khi lấy máu, đơn vị còn chờ xét nghiệm và vận chuyển. Mở Thông báo sau hiến để nhận phản hồi sau vài ngày trong lịch hẹn mô phỏng; không tăng tuổi. Nếu chưa xem, kết quả đến khi sang năm. Lưu/tải không bốc lại kết quả hoặc nhận thưởng lần nữa.",
+      "Phản hồi ghi ngày/tháng/năm và nhóm máu: có đơn vị được vận chuyển an toàn, sử dụng hỗ trợ người bệnh; có đơn vị chưa dùng được vì chất lượng/vận chuyển. Kết quả sàng lọc cần đối chiếu dẫn đến lời mời tư vấn riêng miễn phí, không tự chẩn đoán bệnh truyền nhiễm. Sàng lọc đạt không bảo đảm loại trừ mọi bệnh.",
+      "Lịch sử giữ trạng thái từng đơn vị, lời mời đối chiếu và khoảng chờ tiếp theo. Kết quả cần đối chiếu sẽ tạm hoãn lượt hiến mới; có thể thu xếp tới cơ sở sau, không tự thu tiền. Kết quả thành công hoặc chưa sử dụng được ảnh hưởng nhẹ tâm trạng một lần; bị hoãn ban đầu có thể buồn nhẹ hoặc bình thường.",
+      "Có thể bật hoặc tắt nhận lời mời khi thiếu máu. Người hiến quen, đủ sức khỏe và khoảng cách có thể được cơ sở liên hệ; người hiến tiểu cầu thường xuyên có cơ hội được gọi hỗ trợ tiểu cầu. Luôn có quyền từ chối không bị phạt, và lời mời vẫn cần khám, xét nghiệm, lịch tiếp nhận.",
+      "Rất hiếm có lời mời đánh giá chuyên sâu hiến bạch cầu hạt hỗ trợ người bệnh ung thư nhiễm trùng nặng. Chỉ người hiến gạn tách có kinh nghiệm, sức khỏe tốt mới vào kịch bản; có hội chẩn trước rồi mới xác nhận đồng ý riêng, được rút lui. Không tự dùng thuốc, không tự tạo tiền hoặc giấy bồi hoàn cho ca chuyên khoa này."
+    ],
+    "correctedAt": "2026-10-30T08:55:28.222Z"
+  },
+  {
+    "id": "income-tax-blood-donation-909",
+    "version": "8.10.9-tax-blood",
+    "releaseStatus": "released",
+    "releasedAt": "2026-10-30T08:01:28.349Z",
+    "publishedAt": "2026-10-30T08:01:11.533Z",
+    "title": "Một Đời — Thuế theo giảm trừ gia cảnh và hiến máu có sàng lọc",
+    "summary": "Thuế tiền lương tính sau bảo hiểm và đăng ký người phụ thuộc; thêm nhóm máu, lịch hiến toàn phần/tiểu cầu, xét nghiệm, tư vấn và giấy bồi hoàn.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Mục Thuế tiền lương và người phụ thuộc dùng mốc chính sách 2026: giảm trừ bản thân 15,5 triệu/tháng và mỗi người đã đăng ký 6,2 triệu/tháng. Chỉ phần còn lại sau bảo hiểm và giảm trừ mới tính thuế lũy tiến 5%/10%/20%/30%/35%. Sau bảo hiểm 20 triệu/tháng, không người phụ thuộc, thuế là 225.000 đ;15 triệu thì thuế bằng 0. Bảo hiểm hiện có không bị đổi.",
+      "Có đăng ký/ngừng đăng ký từng người phụ thuộc, đối chiếu lại mỗi kỳ và không tự hoàn thuế kỳ đã chốt. Con dưới 18 tuổi không bị áp điều kiện thu nhập; con trưởng thành cần điều kiện học tập hoặc hồ sơ không có khả năng lao động. Ngưỡng thu nhập người phụ thuộc theo hướng dẫn mới là 3 triệu/tháng; không tự coi thất nghiệp hay ít khỏe là khuyết tật.",
+      "Bảng tài chính tách lương trước khấu trừ, bảo hiểm, giảm trừ, thu nhập tính thuế, thuế và thực nhận. Thuế Việt Nam trong mục này áp dụng tiền lương của nhân vật cư trú Việt Nam, không lấy tiền trúng thưởng/quà hiến máu để đánh thuế như lương, không đổi nơi cư trú thuế chỉ vì bay về thăm.",
+      "Thêm hồ sơ nhóm máu ABO và Rh ổn định. Đăng ký hiến từ 18 đến 60 tuổi, kiểm sức khỏe/cân nặng, thai kỳ và khám trước từng lượt. Máu toàn phần cần nữ từ 42 kg, nam từ 45 kg và chọn thể tích theo cân nặng; gạn tách cần từ 50 kg, thể tích trên 500 ml cần từ 60 kg.",
+      "Có lịch hẹn trong năm để giữ khoảng cách: toàn phần 84 ngày; tiểu cầu 14 hoặc 21 ngày theo nơi tiếp nhận mô phỏng. Lịch xét khoảng cách từ loại đã hiến gần nhất, kể cả đổi loại hoặc qua năm mới. Cơ sở game giới hạn 4 lượt toàn phần/22 lượt tiểu cầu trong năm, không coi đó là mục tiêu phải hiến đủ.",
+      "Mỗi lượt có khám và công thức máu mô phỏng. Có thể tạm hoãn vì huyết sắc tố, tiểu cầu, mẫu chưa đạt chất lượng hoặc cơ sở chưa cần tiếp nhận. Kết quả được lưu, tải lại không bốc lại cùng lượt. Lượt hoãn/hủy không lấy máu, không cấp tiền, quà hoặc giấy.",
+      "Có tư vấn theo lời mời khi sàng lọc cần đối chiếu, hoặc chủ động khám sâu hơn với phí được báo trước. Chỉ số lệch nhẹ/lỗi mẫu không tự thành bệnh nặng; phản ứng sàng lọc chưa phải chẩn đoán bệnh truyền nhiễm. Có thể giữ hồ sơ và thu xếp sau, không bị buộc mua gói khám.",
+      "Nhận bồi dưỡng toàn phần 250/350/450 ml tương ứng 195.000/320.000/430.000 đ; gạn tách theo ba mức thể tích là 400.000/600.000/700.000 đ. Tình nguyện có quà/gói trị giá theo thể tích và giấy chứng nhận; không cộng giá trị quà hay suất ăn thành tiền. Có lựa chọn nhường quà/sữa bánh nhưng giữ hỗ trợ đi lại và giấy, hoặc chỉ nhận giấy.",
+      "Giấy chứng nhận thuộc riêng người hiến, ghi lượng và thành phần còn được bồi hoàn; không truyền quyền lợi từ cha mẹ sang con. Khi có chỉ định truyền tại cơ sở công, bồi hoàn đúng phần máu còn trên giấy trước khi tính phần viện phí còn lại theo bảo hiểm. Không miễn toàn bộ chi phí điều trị, không đổi giấy thành tiền hoặc dùng lại giấy đã hết.",
+      "Lối Hiến máu trong Làm việc thiện mở cùng quy trình mới. Chương trình có quyền lợi Việt Nam đòi có mặt tại Việt Nam; nếu đang ở nước ngoài có thể xem giá vé bay về trước. Lưu/tải giữ hồ sơ, lịch hẹn, tiền/quà đã nhận và giấy đã dùng; lượt hẹn cũ không khóa việc đặt lịch năm sau."
+    ],
+    "correctedAt": "2026-10-30T08:01:28.417Z"
+  },
+  {
+    "id": "family-branches-successors-908",
+    "version": "8.10.8-dynasty",
+    "releaseStatus": "released",
+    "publishedAt": "2026-10-30T07:12:07.94Z",
+    "releasedAt": "2026-10-30T08:01:28.349Z",
+    "title": "Một Đời — Gia tộc nhiều nhánh và người kế vị có lựa chọn riêng",
+    "summary": "Hồ sơ người kế vị, vận động ủng hộ, biểu quyết điều hành, xác minh con riêng và chu cấp theo điều kiện thực tế của gia đình.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Hồ sơ gia tộc hiển thị năng lực quản lý, uy tín cá nhân, liên minh–quan hệ và tham vọng từ 0 đến 100. Mỗi người giữ mong muốn và lịch sử riêng; con chung, con ngoài hôn nhân và con nuôi không bị mặc định năng lực hoặc tính cách theo xuất thân.",
+      "Ứng viên có thể vận động người thân và cổ đông. Sự ủng hộ phụ thuộc quan hệ, uy tín, năng lực, có thời hạn và không đổi thành cổ phần. Hai người trưởng thành có thể lập liên minh; thay đổi quyền lợi, bất đồng hoặc hoàn cảnh có thể khiến liên minh tan rã.",
+      "Thêm quy trình ứng cử CEO và chủ tịch: nộp kế hoạch giữ dòng tiền, mở thị trường hoặc cứu doanh nghiệp; chờ ít nhất một năm rồi biểu quyết. Cổ phần có trọng số phiếu thực, cần quá bán để được bổ nhiệm. Thừa kế cổ phần không tự trao chức vụ điều hành.",
+      "Có dự án quản trị hai năm để chứng minh năng lực: nhận ngân sách, báo cáo từng năm và đánh giá kết quả. Vốn và khoản thu hồi của dự án công ty được ghi vào sổ doanh nghiệp; hoàn thành dự án không tự được bổ nhiệm.",
+      "Những lần gặp gỡ có khả năng để lại quan hệ gia đình được ghi nhớ. Có thể nhận thông báo muộn từ người cũ về một người con đã lớn; thông báo chưa xác nhận được giữ riêng, cần sự đồng ý và hai đợt đối chiếu khác năm. Không tự thêm người chưa xác nhận vào danh sách con để chia tài sản.",
+      "Sau khi xác nhận, bạn có thể công nhận con, giữ thông tin riêng tư, thăm nom, hỗ trợ hoặc bàn việc giới thiệu với gia đình. Con và người trực tiếp nuôi dưỡng có quyền giữ khoảng cách hoặc từ chối đổi chỗ ở. Giữ kín không bảo đảm bí mật sẽ tồn tại mãi.",
+      "Bạn đời và các con có phản ứng khác nhau khi biết thông tin mới. Có thể đối thoại, tư vấn, tạm sống riêng hoặc mở hồ sơ ly hôn. Niềm tin cần thời gian; tạm sống riêng không tự chấm dứt hôn nhân và thu nhập của bạn đời không còn tự nhập ngân sách chung.",
+      "Thêm chu cấp định kỳ: gói theo điều kiện gia đình, Thượng lưu 50.000 USD/tháng và Người thừa kế 150.000 USD/tháng. Game thanh toán 12 tháng một lần, năm đăng ký trả ngay; gói cao cấp đòi tài sản và dòng tiền phù hợp. Thiếu tiền sẽ dừng, không tự vay hoặc rút tiền công ty.",
+      "Gói cao cấp dành 70% cho quỹ riêng của con và 30% cho học tập, chuyến đi, giao lưu và hỗ trợ cá nhân. Nhà riêng chuyển từ tài sản thật đang có; đào tạo dài hạn và thuê trợ lý/bảo vệ dùng các mục hiện có. Tiền quỹ chưa tiêu không bị tính thêm lần nữa vào tiết kiệm.",
+      "Có lời mời dạ tiệc, câu lạc bộ và giới thiệu đầu mối kinh doanh tại nơi đang sống khi gia đình đủ điều kiện; con trưởng thành có thể từ chối. Giao lưu mở thêm liên hệ, không tự tạo doanh thu hoặc mua được uy tín.",
+      "Các nhánh con có thể tranh luận trong bữa ăn, cảm thấy bị lu mờ trong sinh nhật, bàn chuyện học tập khác nhau, phản đối việc tặng nhà, gần gũi trở lại hoặc cùng góp vốn kinh doanh. Câu chuyện chỉ dùng người còn sống, tuổi và thành tích/tài sản phù hợp; tình cảm với người ngoài do chính người ấy lựa chọn.",
+      "Có thể yêu cầu đối chiếu kế hoạch tài sản và hòa giải sau thừa kế. Không tự sửa di chúc của người khác; khoản bù hòa giải phải có nguồn tiền thực và sự đồng thuận. Khi sống tiếp đời con, giữ hồ sơ năng lực, uy tín, tham vọng, nhánh gia đình và vai trò điều hành đã được ghi nhận."
+    ],
+    "correctedAt": "2026-10-30T08:01:28.425Z"
+  },
+  {
+    "id": "physical-travel-local-907",
+    "version": "8.10.7-travel",
+    "releaseStatus": "released",
+    "publishedAt": "2026-10-30T01:16:28.383Z",
+    "releasedAt": "2026-10-30T01:16:28.383Z",
+    "correctedAt": "2026-10-30T01:16:28.383Z",
+    "title": "Một Đời — Bay về Việt Nam, đi tàu gần và sinh hoạt theo nơi đang sống",
+    "summary": "Đặt vé máy bay khứ hồi trước khi về Việt Nam tham gia hoạt động; thêm máy bay nội địa, xe lửa gần và sinh hoạt địa phương tại nước đang có mặt.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Khi đang ở nước ngoài, hoạt động quê Việt Nam dẫn tới bước mua vé máy bay khứ hồi có giá rõ ràng. Concert tổ chức tại Việt Nam cũng yêu cầu đặt chuyến bay trước; chưa bay thì chưa mua vé vào cửa. Về tới Việt Nam, bạn có thể mở các hoạt động tại đây theo tuổi, lịch và hoàn cảnh.",
+      "Chuyến về thăm giữ chương trình du học, công việc và hồ sơ cư trú ở nước ngoài; có nút bay trở lại bằng vé đã thanh toán. Nếu bạn chưa chủ động quay lại, game kết thúc chuyến thăm trước khi kết toán năm. Lưu/tải khi đang đi vẫn nhớ nơi đến, nơi quay lại và khoản vé đã trả.",
+      "Trong Du lịch có lựa chọn máy bay nội địa để chọn tỉnh/thành tại Việt Nam hoặc thành phố trong nước đang sống; có thể nối chặng từ sân bay phù hợp. Xe lửa dành cho chuyến gần tới vùng lân cận. Mỗi gói báo riêng vé khứ hồi, ăn ở và hoạt động trước khi xác nhận; không tự biến chuyến du lịch thành định cư.",
+      "Thêm Sinh hoạt, ẩm thực và sự kiện tại nơi đang có mặt: món ăn, dịp lễ, chuyện địa phương, bảo tàng, công viên và sinh hoạt cộng đồng thay theo quốc gia/thành phố. Kết nối nội dung quốc gia hiện có; hoạt động đòi đúng thời điểm, tuổi hoặc công việc chỉ xuất hiện khi phù hợp.",
+      "Giá vé là mô phỏng trong game: vé về Việt Nam tính theo chặng gần/xa, máy bay nội địa và xe lửa có mức riêng; hiển thị theo tiền đang sử dụng. Chuyến đi giữ quốc tịch, không tự cấp visa hoặc gia hạn giấy tờ."
+    ]
+  },
+  {
+    "id": "continuity-visa-certificates-906",
+    "version": "8.10.6-continuity",
+    "releaseStatus": "released",
+    "publishedAt": "2026-10-30T00:35:48.902Z",
+    "releasedAt": "2026-10-30T00:35:48.902Z",
+    "correctedAt": "2026-10-30T00:35:48.902Z",
+    "title": "Một Đời — Giữ đúng đời con, nhắc visa và chọn đủ ngoại ngữ",
+    "summary": "Sống tiếp đời con giữ đúng ngoại hình và học lực; hồ sơ du học và cư trú có lời nhắc, ngoại ngữ dễ tìm hơn.",
+    "tags": [
+      "Sửa lỗi",
+      "Cải tiến"
+    ],
+    "details": [
+      "Khi chuyển sang đời con ở tuổi hiện tại, ngoại hình, học lực và các chỉ số đã có trong hồ sơ của đúng người con được giữ lại, cả khi cha mẹ còn sống hoặc đã qua đời. Không đổi một người con cực phẩm thành kém sắc do dựng lại tuổi thơ.",
+      "Thư nhận học đại học, thạc sĩ và tiến sĩ tự mở bước chuẩn bị visa. Có thể để dịp khác để tiếp tục chơi và được nhắc lại năm sau khi thư còn hạn; vẫn có lối chủ động mở hồ sơ trước.",
+      "Thêm lối Gia hạn visa / cư trú sau du học và làm việc, nhắc khi gần hết hạn và khi cần thu xếp hồ sơ. Ở lại tìm việc sau du học chưa phải định cư; chuyển cư trú lao động cần công việc và kết quả xét.",
+      "Danh sách học chứng chỉ luôn có các ngoại ngữ đang hỗ trợ: IELTS, JLPT, TOPIK, HSK, Goethe tiếng Đức và tiếng Pháp mô phỏng. Chứng chỉ hết hạn có đường thi lại; bảo vệ sau đại học ở nước ngoài xét ngôn ngữ của chương trình.",
+      "Du lịch gần và hoạt động quê hương xét nơi đang sống. Ở nước ngoài không tự đi chơi quê Việt Nam tại chỗ; concert tại Việt Nam ghi rõ chuyến đi khứ hồi. Sửa tương thích hồ sơ lao động Đài Loan khi gia hạn và về nước.",
+      "Sửa một số mục bị ẩn khi gom nhóm hành động, tương tác từng người thân trong năm, chuỗi động viên bạn thân và thống kê khán giả từ nhiệm vụ game show."
+    ]
+  },
+  {
     "id": "doctoral-visa-905",
     "version": "8.10.5-study-visa",
     "releaseStatus": "released",
@@ -47,7 +428,7 @@
     "id": "football-payroll-901",
     "version": "8.10.3-football-payroll",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T04:59:44.000Z",
+    "releasedAt": "2026-10-29T04:59:44Z",
     "publishedAt": "2026-10-29T04:47:29.501Z",
     "title": "Một Đời — Sửa lương hợp đồng cầu thủ và quyết toán cá nhân",
     "summary": "Lương cầu thủ được đưa vào thu nhập cá nhân theo hợp đồng, sau thuế và phí đại diện; không bị giảm chồng bởi các hệ số thu nhập chung.",
@@ -67,7 +448,7 @@
     "id": "orphan-logic-896",
     "version": "8.10.2-orphan-logic",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T03:25:00.000Z",
+    "releasedAt": "2026-10-29T03:25:00Z",
     "publishedAt": "2026-10-29T10:25:00+07:00",
     "title": "Một Đời — Hoàn thiện logic bối cảnh trẻ mồ côi tại mái ấm và nhà chùa",
     "summary": "Sửa triệt để các tình huống vô lý khi nhân vật mồ côi ở mái ấm hoặc nhà chùa: thôi nôi dùng đồ chơi chung, sinh nhật ăn cùng bảo mẫu và các bạn cùng phòng, sự kiện đón em nhỏ mới vào thay cho em họ, và rà soát loại trừ các sự kiện gia đình không phù hợp.",
@@ -82,13 +463,13 @@
       "Em nhỏ mới vào mái ấm / Chú tiểu mới vào chùa (thay cho Em họ 6–12 tuổi): Trẻ mồ côi không còn xuất hiện sự kiện em họ xa xôi gửi về ở cùng; sự kiện chuyển thành mái ấm hoặc nhà chùa đón một em nhỏ / chú tiểu mới vào còn bỡ ngỡ, lạ lẫm; bạn dỗ dành, nhường đồ chơi và dắt em đi ăn, kết nối tình cảm che chở như anh em ruột thịt.",
       "Rà soát & thanh lọc các sự kiện gia đình không phù hợp: Bổ sung điều kiện kiểm tra hoàn cảnh nuôi dưỡng, loại trừ các sự kiện bà nằm viện, mùa hè về quê ở với ông bà hay dọn phòng ngủ riêng đối với trẻ ở mái ấm / nhà chùa; đồng thời các đại từ xưng hô người nuôi dưỡng tự động phản ánh cô bảo mẫu / sư cô / người chăm sóc."
     ],
-    "correctedAt": "2026-10-29T03:40:00.000Z"
+    "correctedAt": "2026-10-29T03:40:00Z"
   },
   {
     "id": "feedback-features-895",
     "version": "8.10.1-feedback-features",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T01:53:27.000Z",
+    "releasedAt": "2026-10-29T01:53:27Z",
     "publishedAt": "2026-10-29T08:46:00+07:00",
     "title": "Một Đời — Tiệc bàn làm việc, thực tập, gameshow ẩm thực và dịch vụ ngầm",
     "summary": "Tiệc tại bàn làm việc được tổ chức và báo cáo ngay; con thực tập kế nghiệp hiển thị tiến trình và trợ cấp rõ ràng; cố định khung danh mục dài; bổ sung hai chương trình Bếp Trưởng Tranh Tài và Chuyện Đời Người Nổi Tiếng cùng tính năng thuê sát thủ trong thế giới ngầm.",
@@ -106,13 +487,13 @@
       "Dịch vụ ngầm & Thuê sát thủ: Mở rộng thế giới ngầm cho phép thuê nhân sự bí mật giải quyết các mối nguy hoặc đối thủ. Hỗ trợ 3 nhiệm vụ (theo dõi tình trạng, quấy rối/đe dọa, hạ sát) nhắm vào kẻ thù, người trong gia đình, người có sức ảnh hưởng hoặc kẻ gây sự ngoài xã hội. Thù lao quyết định độ tin cậy và thỏa thuận bảo mật: gói giá rẻ dễ bị khai báo khiến người thuê vướng vòng lao lý; gói chuyên nghiệp cam kết im lặng nhận tội; gói tối thượng cam kết tự sát (44) để bịt đầu mối theo hợp đồng tài chính đã ký nếu bị cảnh sát vây bắt.",
       "Cố vấn riêng — Đào tạo người thừa kế toàn diện 10 năm: Cho phép gia tộc mời viện cố vấn đồng hành dài hạn cùng con cái từ khi lên 8 tuổi. Chương trình rèn luyện chuyên sâu 7 lĩnh vực cốt lõi: hình ảnh cá nhân, nghi thức xã giao, giao tiếp trang trọng, quản trị, kinh doanh, quản lý tài sản và lãnh đạo. Sau 10 năm rèn luyện, con cái toát lên phong thái người thừa kế thực thụ, đạt uy tín xã hội cao, sống có trách nhiệm và nâng cao năng suất điều hành vượt trội."
     ],
-    "correctedAt": "2026-10-29T03:40:00.000Z"
+    "correctedAt": "2026-10-29T03:40:00Z"
   },
   {
     "id": "career-abroad-depth-8100",
     "version": "8.10.0-career-abroad",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-29T01:13:10.000Z",
+    "releasedAt": "2026-10-29T01:13:10Z",
     "publishedAt": "2026-10-29T00:58:39.738Z",
     "title": "Một Đời — Fandom, đường dài sự nghiệp và cuộc sống ở nước ngoài",
     "summary": "Người hâm mộ nhớ cách bạn làm nghề; đồng đội, chấn thương và dư luận đi cùng nhiều mùa. Du học tách nhận học với visa, cư trú sau tốt nghiệp cần được xét tiếp.",
@@ -133,7 +514,7 @@
       "Du học có thể xin chuyển chương trình đối tác cùng nước; cần được chấp thuận, có phí và thêm một năm học. Sau tốt nghiệp, ở lại tìm việc chỉ là cư trú có hạn; có hợp đồng mới xin chuyển sang cư trú lao động. Gia hạn cần chờ xét và có thể trượt; quá hạn tạm dừng thu nhập công việc, cần giải quyết hồ sơ hoặc thu xếp về nước.",
       "Sau ít nhất bốn năm cư trú lao động hợp lệ trong mô phỏng, có thể nộp xét định cư với công việc, ngoại ngữ và quỹ dự phòng. Được định cư không đồng nghĩa có quốc tịch. Giữ trạng thái định cư đã có trong bản lưu cũ; các mốc và tỷ lệ là cơ chế trò chơi, không phải quy định di trú ngoài đời."
     ],
-    "correctedAt": "2026-10-29T01:13:18.960Z"
+    "correctedAt": "2026-10-29T01:13:18.96Z"
   },
   {
     "id": "consequences-health-ageing-899",
@@ -191,7 +572,7 @@
     "id": "football-residence-897",
     "version": "8.9.7-football-residence",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-28T22:40:12+07:00",
     "title": "Một Đời — Sửa sự nghiệp bóng đá và tương tác khi ở nước ngoài",
     "summary": "Đàm phán có kết quả rõ ràng, hợp đồng cầu thủ được tính là nghề chính và các hoạt động địa phương kiểm tra nơi bạn đang sống.",
@@ -215,7 +596,7 @@
     "id": "office-storage-896",
     "version": "8.9.6-office-storage",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-28T14:52:34.553Z",
     "title": "Một Đời — Quản gia làm việc trực tiếp và khắc phục bộ nhớ lưu",
     "summary": "Có bàn làm việc để xử lý liên tiếp, nhân sự chuẩn bị sẵn dự toán tiệc chờ duyệt và cách nén dữ liệu giữ nguyên lịch sử khi bộ nhớ đầy.",
@@ -243,7 +624,7 @@
     "id": "actions-friends-distance-895",
     "version": "8.9.5-actions",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-28T14:08:39.939Z",
     "title": "Một Đời — Xem trước việc làm, menu gọn hơn và sửa tình huống ở xa",
     "summary": "Chỉ trừ lượt khi thực hiện lựa chọn; gộp bạn thân, bỏ Hardcore, sửa hạn chứng chỉ và thêm chuyến về thăm ngắn ngày khi đang ở nước ngoài.",
@@ -293,13 +674,13 @@
       "Giữ đúng thứ tự mới nhất của nhật ký khi các mốc thời gian được ghi bằng múi giờ khác nhau; không đổi ngày hay xóa nội dung của các bản trước.",
       "Mục tiêu đầy đủ 195 quốc gia vẫn chưa hoàn tất: 8 nước hiện đạt độ phủ tối thiểu của đợt này, còn 187 nước cần được bổ sung và kiểm chứng tiếp. Đây không phải thông báo rằng toàn bộ 195 nước đã có đủ nội dung chuyên sâu."
     ],
-    "correctedAt": "2026-10-28T12:03:25.810Z"
+    "correctedAt": "2026-10-28T12:03:25.81Z"
   },
   {
     "id": "country-depth-achievements-893",
     "version": "8.9.3",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T09:49:39.240Z",
+    "releasedAt": "2026-10-28T09:49:39.24Z",
     "publishedAt": "2026-10-28T09:49:32.938Z",
     "title": "Một Đời — Thành tựu quốc gia, bóng đá và căn bếp địa phương",
     "summary": "Thêm 149 thành tựu gắn với hành trình thật trong cuộc chơi; học nấu món địa phương qua nhiều năm và giữ đúng bối cảnh khi chuyển quốc gia.",
@@ -319,13 +700,13 @@
       "Không suy nguồn gốc văn hóa chỉ từ bộ tên của nhân vật. Thành tựu lễ địa phương đếm các năm khác nhau và nơi đã thực sự tham gia, tránh tính nhiều lần trong cùng năm.",
       "Đây là đợt bổ sung đầu trong công việc hoàn thiện chiều sâu 195 quốc gia. Chưa phải toàn bộ 195 nước đã có đủ dữ liệu riêng về giáo dục, lễ hội, hôn nhân, ẩm thực, lao động và đời sống."
     ],
-    "correctedAt": "2026-10-28T09:49:39.310Z"
+    "correctedAt": "2026-10-28T09:49:39.31Z"
   },
   {
     "id": "football-career-892",
     "version": "8.9.2",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T08:55:41.000Z",
+    "releasedAt": "2026-10-28T08:55:41Z",
     "publishedAt": "2026-10-28T15:55:32.807+07:00",
     "title": "Một Đời — Sự nghiệp bóng đá chuyên nghiệp",
     "summary": "Từ sân bóng thiếu niên đến học viện, hợp đồng câu lạc bộ, các mùa giải và cơ hội khoác áo đội tuyển quốc gia.",
@@ -351,7 +732,7 @@
     "id": "state-career-overhaul-891",
     "version": "8.9.1",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T08:35:00.000Z",
+    "releasedAt": "2026-10-28T08:35:00Z",
     "publishedAt": "2026-10-28T15:20:00+07:00",
     "title": "Một Đời — Đại tu hệ thống sự nghiệp nhà nước Việt Nam",
     "summary": "Thăng tiến theo cấp bậc từ cơ sở đến Trung ương, tách biệt ngạch chuyên môn và chức vụ lãnh đạo, liên thông cơ quan cùng quy trình luân chuyển thực tế.",
@@ -376,7 +757,7 @@
     "id": "world-culture-localization-890",
     "version": "8.9.0",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T06:49:10.000Z",
+    "releasedAt": "2026-10-28T06:49:10Z",
     "publishedAt": "2026-10-28T13:30:00+07:00",
     "title": "Một Đời — Bản địa hóa văn hóa, giáo dục và lễ hội 195 quốc gia",
     "summary": "Trải nghiệm lễ hội, học đường, kỳ thi cuối cấp, nghi thức trưởng thành, văn hóa công sở và đời sống kiều bào theo từng quốc gia cư trú.",
@@ -401,7 +782,7 @@
     "id": "country-survival-886",
     "version": "8.8.6",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T06:49:10.000Z",
+    "releasedAt": "2026-10-28T06:49:10Z",
     "publishedAt": "2026-10-28T07:13:17+07:00",
     "title": "Một Đời — Tiếp tục Boys Planet và chọn quốc gia sinh ra",
     "summary": "Sửa lỗi sau chung kết chương trình sống còn, kiểm tra nơi tham gia và thêm lựa chọn quốc gia ở chế độ Thế giới.",
@@ -420,7 +801,7 @@
     "id": "enterprise-family-office-885",
     "version": "8.8.5-enterprise",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T23:57:40.000Z",
+    "releasedAt": "2026-10-27T23:57:40Z",
     "publishedAt": "2026-10-28T02:40:49.912+07:00",
     "title": "Một Đời — Lãnh đạo, kế nghiệp và văn phòng gia đình",
     "summary": "Đào tạo người kế nghiệp qua nhiều năm, xử lý chuyện ban lãnh đạo, thuê quản gia và thiết kế tiệc theo ngân sách.",
@@ -447,8 +828,8 @@
     "id": "enterprise-operations-884",
     "version": "8.8.4-operations",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
-    "publishedAt": "2026-10-28T01:49:42.930+07:00",
+    "releasedAt": "2026-10-28T15:40:12Z",
+    "publishedAt": "2026-10-28T01:49:42.93+07:00",
     "title": "Một Đời — Chiến lược và hiệu suất doanh nghiệp",
     "summary": "Đầu tư nhiều năm, tuyển dụng và điều chỉnh đãi ngộ từ ngân sách thật của công ty.",
     "tags": [
@@ -468,7 +849,7 @@
     "id": "enterprise-reports-883",
     "version": "8.8.3-reports",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T21:41:59.568+07:00",
     "title": "Một Đời — Báo cáo tài chính và biểu đồ doanh nghiệp",
     "summary": "Xem từng năm tài chính, phân biệt lợi nhuận với dòng tiền và theo dõi xu hướng công ty.",
@@ -489,7 +870,7 @@
     "id": "life-enterprise-foundation-882",
     "version": "8.8.2-foundation",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T20:37:05.195+07:00",
     "title": "Một Đời — Tiền riêng của người thân và giao dịch doanh nghiệp",
     "summary": "Theo dõi tiền của từng người, thử vai từ tuổi đi học, quản lý tiền mặt công ty và thương lượng chuyển nhượng.",
@@ -515,7 +896,7 @@
     "id": "life-contracts-881",
     "version": "8.8.1-contracts",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T16:55:14.358+07:00",
     "title": "Một Đời — Đội ngũ truyền thông và hành trình thực tập sinh",
     "summary": "Thuê nhân sự theo chuyên môn, quản lý hợp đồng K-pop và chọn cách sum họp phù hợp ngân sách.",
@@ -537,7 +918,7 @@
     "id": "life-context-bcd-preview",
     "version": "8.8.0-preview",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T15:48:06.701+07:00",
     "title": "Một Đời — Hồ sơ địa vị, rèn luyện và trợ lý truyền thông",
     "summary": "Tách tầng lớp tài sản khỏi follower, làm rõ chức vụ điều hành và bổ sung lịch truyền thông tự động theo phạm vi bạn chọn.",
@@ -562,7 +943,7 @@
     "id": "life-context-a-family",
     "version": "8.8.0-a",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-28T15:40:12.000Z",
+    "releasedAt": "2026-10-28T15:40:12Z",
     "publishedAt": "2026-10-27T08:26:26.134Z",
     "title": "Một Đời — Tuổi thơ gần với hoàn cảnh gia đình",
     "summary": "Sinh nhật đầu tiên có nhiều cách kỷ niệm phù hợp túi tiền; gia đình làm nghệ thuật có thể cùng con khám phá sở thích.",
@@ -574,13 +955,13 @@
       "Bố mẹ có thể làm nghề ca hát, diễn xuất, múa, sáng tác, hội họa, nhiếp ảnh, giảng dạy nghệ thuật hoặc nghề truyền thống, với thu nhập đa dạng. Trẻ có thể luyện cùng người thân mỗi năm hoặc chia sẻ mong muốn chọn con đường riêng.",
       "Áp lực học tập của trẻ xét nguồn thu hộ gia đình, đồng thời vẫn có cơ hội học bổng và giúp đỡ. Thu nhập thấp không làm tăng mọi rủi ro hay quyết định tính cách của các thành viên."
     ],
-    "correctedAt": "2026-10-28T15:40:12.290Z"
+    "correctedAt": "2026-10-28T15:40:12.29Z"
   },
   {
     "id": "showbiz-m6-connected-careers",
     "version": "8.7.0-6",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T04:26:27.382Z",
     "title": "Một Đời — Sự nghiệp giải trí liền mạch và thành tựu mới",
     "summary": "Các chương trình truyền hình, nghề diễn viên, thần tượng và show hẹn hò giờ nối vào nhau thành một hành trình, kèm 11 thành tựu mới.",
@@ -599,7 +980,7 @@
     "id": "showbiz-m5-kpop-trainee",
     "version": "8.7.0-5",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T04:16:25.431Z",
     "title": "Một Đời — Thực tập sinh K-pop từ tuổi 14, debut thần tượng và chương trình sống còn",
     "summary": "Có năng khiếu ca hát, nhảy múa, bạn có thể được công ty giải trí Hàn Quốc chú ý từ 14–16 tuổi, đào tạo song song với việc học, rồi debut hoặc thử sức ở các chương trình sống còn.",
@@ -619,7 +1000,7 @@
     "id": "showbiz-m4-acting-career",
     "version": "8.7.0-4",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T04:06:02.458Z",
     "title": "Một Đời — Sự nghiệp diễn viên: thử vai, đóng phim, giải thưởng và lời mời gameshow",
     "summary": "Theo nghiệp diễn giờ là cả một con đường: từ vai quần chúng, thử vai từng dự án, làm việc với đạo diễn và bạn diễn, chờ phim ra mắt, đến mùa giải thưởng và được mời lên gameshow.",
@@ -640,7 +1021,7 @@
     "id": "showbiz-m3-variety-dating-music",
     "version": "8.7.0-3",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T03:56:35.658Z",
     "title": "Một Đời — Gameshow vận động, chiến thuật, hẹn hò và cuộc thi âm nhạc",
     "summary": "Nhiều chương trình mới có luật chơi riêng: trò chơi xé bảng tên, suy luận, đấu trí chiến thuật, show hẹn hò thực tế và các cuộc thi âm nhạc từ vòng giấu mặt đến chung kết.",
@@ -661,7 +1042,7 @@
     "id": "showbiz-m2-quiz-shows",
     "version": "8.7.0-2",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T07:10:20.000Z",
+    "releasedAt": "2026-10-27T07:10:20Z",
     "publishedAt": "2026-10-27T03:39:16.475Z",
     "title": "Một Đời — Gameshow kiến thức: Nhanh Như Chớp, Ai Là Triệu Phú, Olympia và hơn thế",
     "summary": "Mục mới “Chương trình truyền hình”: tự đăng ký làm thí sinh và trả lời từng câu hỏi trong các gameshow kiến thức, có luật chơi, tiền thưởng và kết quả riêng.",
@@ -682,7 +1063,7 @@
     "id": "feedback-e-assets-wills",
     "version": "8.6.0-e",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-27T01:47:45.764Z",
     "title": "Một Đời — Tài sản trong hôn nhân, chia tài sản khi ly hôn và di chúc chi tiết",
     "summary": "Lập thỏa thuận tài sản trước khi cưới, ly hôn chia đúng tài sản chung thay vì chia cố định, và viết di chúc giao từng tài sản cụ thể, chọn người thi hành, giao quyền điều hành doanh nghiệp.",
@@ -704,7 +1085,7 @@
     "id": "feedback-d-relationships",
     "version": "8.6.0-d",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T21:50:04.648Z",
     "title": "Một Đời — Kết giao, quà tặng người thân và màn cầu hôn của riêng bạn",
     "summary": "Mở rộng quan hệ với người có địa vị và người nổi tiếng, giới thiệu đối tượng cho con, tặng quà người thân, cầu hôn theo cách của mình; thêm những tình huống áp lực trong giới giải trí cùng các cách tự bảo vệ.",
@@ -725,7 +1106,7 @@
     "id": "feedback-c-elite-life",
     "version": "8.6.0-c",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T21:32:54.336Z",
     "title": "Một Đời — Đời sống thượng lưu: tiệc tùng, thương vụ, gia tộc và bộ sưu tập",
     "summary": "Cuộc sống thay đổi theo tầng lớp; tự tổ chức tiệc, bàn thương vụ với người quen, điều hành gia tộc, trải nghiệm xa xỉ và sưu tầm đồ quý có giá trị lên xuống.",
@@ -746,7 +1127,7 @@
     "id": "feedback-b-profiles-menus",
     "version": "8.6.0-b",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T21:21:51.829Z",
     "title": "Một Đời — Hồ sơ con chi tiết, chức vụ người thân hiển thị đúng và menu gọn hơn",
     "summary": "Chức vụ, nơi làm việc và thu nhập của người thân luôn khớp với công ty; hồ sơ con có thêm sức khỏe, học tập, quan hệ, tài chính, kỷ niệm; menu Gia đình và Tiền bạc chia thành các nhóm nhỏ.",
@@ -766,7 +1147,7 @@
     "id": "feedback-a-family-fixes",
     "version": "8.6.0-a",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T20:53:06.973Z",
     "title": "Một Đời — Sửa lỗi con cái sau ly hôn, về nước sau du học và hẹn hò qua app",
     "summary": "Sửa các lỗi người chơi báo về quyền nuôi con, du học, app hẹn hò; thêm bước chuẩn bị hồ sơ audition và mời bố mẹ về sống chung.",
@@ -788,7 +1169,7 @@
     "id": "gd6-integration-release",
     "version": "8.5.0-gd6",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T12:38:14.825Z",
     "title": "Một Đời — Chơi mượt và ổn định hơn",
     "summary": "Chế độ tự động không còn dừng giữa chừng, đổi chế độ có tác dụng ngay, cùng một số sửa lỗi về hoàn cảnh sự kiện.",
@@ -810,7 +1191,7 @@
     "id": "gd5-event-balancing",
     "version": "8.5.0-gd5",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T12:02:27.406Z",
     "title": "Một Đời — Cuộc sống tự nhiên hơn, ít trùng lặp hơn!",
     "summary": "Nhịp sự kiện tự nhiên hơn: ít năm dồn dập biến cố, ít tình huống na ná nhau, chế độ tự động trôi nhanh hơn.",
@@ -835,7 +1216,7 @@
     "id": "gd4-multiyear-consequences",
     "version": "8.5.0-gd4",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T11:05:30.086Z",
     "title": "Một Đời — Lựa chọn hôm nay, thay đổi cả tương lai!",
     "summary": "Một số lựa chọn quan trọng giờ để lại hậu quả kéo dài nhiều năm và được nhắc lại đúng người, đúng lúc.",
@@ -860,7 +1241,7 @@
     "id": "gd3-context-weighting",
     "version": "8.5.0-gd3",
     "releaseStatus": "released",
-    "releasedAt": "2026-10-27T02:08:17.000Z",
+    "releasedAt": "2026-10-27T02:08:17Z",
     "publishedAt": "2026-10-26T09:49:57.975Z",
     "title": "Một Đời — Mỗi cuộc đời, một hoàn cảnh khác nhau!",
     "summary": "Cơ hội và khó khăn trong 50 tình huống quen thuộc phản ánh rõ hơn hoàn cảnh của nhân vật.",
@@ -877,7 +1258,7 @@
       "Hoàn cảnh không quyết định số phận: sự kiện vẫn có yếu tố bất ngờ, giữ giới hạn lặp và các điều kiện cần thiết. Bản lưu cũ tiếp tục được hỗ trợ.",
       "Đợt này tập trung điều chỉnh xác suất; không bổ sung sự kiện mới hoặc đổi kết quả các phương án lựa chọn."
     ],
-    "correctedAt": "2026-10-27T02:08:17.350Z"
+    "correctedAt": "2026-10-27T02:08:17.35Z"
   },
   {
     "id": "save-family-fixes-oct26",
@@ -1054,7 +1435,7 @@
   },
   {
     "id": "civic118",
-    "publishedAt": "2026-10-23T14:27:51.179080Z",
+    "publishedAt": "2026-10-23T14:27:51.17908Z",
     "title": "Đi đường dài với công vụ và cộng đồng",
     "summary": "Thêm lộ trình cấp ủy, nhiệm kỳ và những việc cụ thể để đại biểu, người tham gia Mặt trận có thể đóng góp.",
     "tags": [
@@ -1216,7 +1597,7 @@
   },
   {
     "id": "relationships-oct23",
-    "publishedAt": "2026-10-23T04:00:00.000Z",
+    "publishedAt": "2026-10-23T04:00:00Z",
     "title": "Yêu chậm hơn, có thêm chuyện gia đình",
     "summary": "Chọn người muốn tìm hiểu, cùng bàn chuyện cưới và lên kế hoạch có con.",
     "details": [
@@ -1232,7 +1613,7 @@
   },
   {
     "id": "life-paths-oct23",
-    "publishedAt": "2026-10-23T03:00:00.000Z",
+    "publishedAt": "2026-10-23T03:00:00Z",
     "title": "Thêm lựa chọn học tập, công việc và tình cảm",
     "summary": "Chọn ngành trong cùng trường, chủ động học cao hơn hoặc du học; thêm đường phát triển trong quân đội, công an và showbiz.",
     "details": [
@@ -1248,7 +1629,7 @@
   },
   {
     "id": "adult-study-civic-oct22",
-    "publishedAt": "2026-10-22T15:01:00.000Z",
+    "publishedAt": "2026-10-22T15:01:00Z",
     "title": "Đi học tiếp, chọn hướng đi mới",
     "summary": "Không cần chờ lời mời để học cao hơn hay tham gia việc chung ở địa phương.",
     "details": [
@@ -1302,7 +1683,7 @@
   },
   {
     "id": "community-speed-oct22",
-    "publishedAt": "2026-10-22T04:51:26.640Z",
+    "publishedAt": "2026-10-22T04:51:26.64Z",
     "title": "Đọc bình luận, nhận thông báo nhanh hơn",
     "summary": "Bình luận và thông báo tải nhẹ hơn; mở tài khoản nhiều lần không còn phải đợi tải lại từ đầu.",
     "details": [

@@ -200,7 +200,9 @@
         var br = branchOf(jobId, r);
         var reqParty = lv >= 4 || jobId === 'dang_uy' || jobId === 'chinh_tri' || jobId === 'cong_an' || jobId === 'quan_doi';
         var reqTheory = lv >= 7 ? 3 : lv >= 5 ? 2 : lv >= 3 ? 1 : 0;
-        var reqEdu = lv >= 7 ? 5 : Math.max(c.edu || 3, lv >= 4 ? 5 : 3);
+        // edu=99 marks a specialist recruitment route, not an education index.
+        var baseEdu = c.edu === 99 ? 5 : (c.edu || 3);
+        var reqEdu = lv >= 7 ? 5 : Math.max(baseEdu, lv >= 4 ? 5 : 3);
         var reqTenure = r === 0 ? 0 : (c.yrs && c.yrs[Math.min(r - 1, c.yrs.length - 1)]) || 3;
         var reqKpi = lv >= 8 ? 78 : lv >= 6 ? 70 : lv >= 4 ? 62 : 52;
         var pos = {
@@ -803,7 +805,14 @@
     var nhanOpt = E.DEC.ct_quy_hoach.def.opts.find(function (o) { return o.k === 'nhan'; });
     if (nhanOpt) {
       var origNhanRun = nhanOpt.run;
+      // 8.10.17 (Phần B, STATE-FIX-1): "cán bộ nguồn" là quy hoạch đầu vào cho cán bộ cấp dưới. Người đã giữ chức từ cấp phó sở / vụ phó (bậc ≥ 5)
+      // trở lên — kể cả bộ trưởng — không nhận tình huống này (trước đây bộ trưởng bậc 8 thành phó chủ tịch UBND tỉnh bậc 7).
+      // Kiểm lại lúc thực thi để quyết định cũ còn nằm trong hàng chờ không ép chuyển chức. Chuyển chức cấp cao đi qua stateTransfer174.
+      var quyValid = E.DEC.ct_quy_hoach.valid;
+      var tooSenior = function (l) { return !!(l && l.job && isVNState(l) && levelOf(l) >= 5); };
+      E.DEC.ct_quy_hoach.valid = function (l, d) { return !tooSenior(l) && (!quyValid || quyValid.apply(this, arguments)); };
       nhanOpt.run = function (l, r, log) {
+        if (tooSenior(l)) { log('Đợt quy hoạch cán bộ nguồn chỉ dành cho cán bộ cấp dưới; với chức vụ ' + E.jobTitle(l) + ', việc điều động (nếu có) được xét qua quy trình bổ nhiệm, điều động riêng. Bạn giữ nguyên chức vụ hiện tại.', 'neutral'); return; }
         var beforeLv = l.job ? levelOf(l) : 1;
         var beforeRk = l.job ? (l.job.rank || 0) : 0;
         var beforeJob = l.job ? E.resolveJob(l.job.id) : '';
@@ -1455,10 +1464,11 @@
     if (!l || !l.alive || !isVNState(l)) return;
     var s = syncState(l);
     // Tiến triển KPI tự nhiên hằng năm theo quá trình công tác
+    // 8.10.19 (B7): kinh nghiệm tự nhiên chỉ đưa KPI tới mức khá (70); vượt mức đó cần nhiệm vụ, dự án và kết quả thật — sống lâu không tự đạt 100.
     var focusGain = l.focus === 'work' ? 2 : 1;
-    s.kpi.expertise = U.clamp(s.kpi.expertise + focusGain, 20, 100);
-    if (levelOf(l) >= 3) s.kpi.management = U.clamp(s.kpi.management + 1, 20, 100);
-    s.kpi.coordination = U.clamp(s.kpi.coordination + 1, 20, 100);
+    if (s.kpi.expertise < 70) s.kpi.expertise = Math.min(70, s.kpi.expertise + focusGain);
+    if (levelOf(l) >= 3 && s.kpi.management < 70) s.kpi.management = Math.min(70, s.kpi.management + 1);
+    if (s.kpi.coordination < 70) s.kpi.coordination = Math.min(70, s.kpi.coordination + 1);
     updateKpiOverall(l, s);
 
     // Thông báo khi hoàn thành đủ 2 năm luân chuyển cơ sở

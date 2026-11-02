@@ -11,8 +11,8 @@ for(const spend of ['normal','save','lavish']){
  E.DEC.hen_ho.apply(l,follow,'talk',()=>.5,()=>{});ok(l.money===money&&l.partner,'free romantic conversation '+spend);
  l=life(spend);const acted=E.act(l,'hen_ho');ok(acted&&acted.id==='hen_ho','actual activity opens '+spend);
 }
-ok(html.includes('id="feedbackBtn"')&&html.includes('id="feedbackLifeBtn"'),'feedback home and life restored');
-ok(G.FEEDBACK&&typeof G.FEEDBACK.send==='function','direct feedback module restored');
-for(const file of ['index.html','js/app.js','js/feedback.js','css/style.css'])ok(!fs.readFileSync(path.join(root,file),'utf8').includes(['blueflower1803','gmail.com'].join('@')),'recipient hidden '+file);
+ok(!html.includes('id="feedbackBtn"')&&!html.includes('id="feedbackLifeBtn"')&&html.includes('updates.html'),'legacy feedback buttons replaced by updates community');
+ok(!G.FEEDBACK,'retired email feedback module is not loaded');
+for(const file of ['index.html','js/app.js','js/updates.js','css/style.css'])ok(!fs.readFileSync(path.join(root,file),'utf8').includes(['blueflower1803','gmail.com'].join('@')),'recipient hidden '+file);
 ok(!fs.readFileSync(path.join(root,'js/life59.js'),'utf8').includes('Tổ chức và tình huống đều hư cấu'),'removed repetitive disclaimer');
 console.log('V5.4.1: '+n+' checks passed');

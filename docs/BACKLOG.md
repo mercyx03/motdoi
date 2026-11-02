@@ -14,6 +14,28 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Phần tồn MD1 8.10.17-md1 — 01/11/2026
+
+- §13: 187 hồ sơ quốc gia `compiled-912` mới chỉ kiểm URL nguồn tồn tại/đúng nước (561/748); cần đối chiếu từng câu (luật lao động, độ tuổi kết hôn, ngày lễ) với trang nguồn và nâng `confidence` khi đã xác minh. 187 URL trang quốc gia UNESCO chưa kiểm được vì máy chủ ngắt kết nối — chạy lại `node tools/country-sources-912.js --check --retry --only=culture` vào lúc khác (tuần tự, có nghỉ, không đổi User-Agent). Câu chuyện nhiều năm của 187 nước dựng theo mẫu; có thể viết tay dần theo nước có nhiều người chơi.
+- `tests/browser-country-minimum-content.js` (đã thêm TH, KE, BR, DE, SA, FJ): toàn bộ kiểm tra gameplay đạt; assertion cuối đòi mục nhật ký mới nhất là bản "8 quốc gia" đã lỗi thời từ khi có các bản 8.10.x — cần chủ dự án quyết định cách kiểm mới (không tự nới).
+- Test hỏng sẵn, đã kiểm trên cả HEAD 30eceed và mã 8.10.17 (cùng assertion): `update451`, `update453`, `update454` (kỳ vọng cũ về khóa cache theo phiên bản chung, nay dùng khóa theo module); `update460` (hành vi đúng — không tính phí, không áp sang con khác — nhưng so sánh JSON toàn bộ con nên vỡ khi module sau tự thêm `uid110`/`blood909`); `life138` (test đòi "Xem xét" chọn ngay anh chị em, trong khi `family-dynasty.js` 8.10.8 cố ý chuyển sang đề cử/bầu năm sau); `football-payroll901` ("contract survives health and sporting reductions" — chưa điều tra, ngoài phạm vi MD1); `blood910-browser` (đòi nhật ký mới nhất là 8.10.10). Không sửa assertion trong đợt này.
+- Chưa tái hiện: anh chị em "tên nam nhưng ghi em gái" (seed 777001 cũ); quét 760 đời và 12 chuỗi 4 thế hệ không có ca lệch giới tính.
+- §12/§11 mới là tham số gameplay; chưa có Monte Carlo toàn đời cho tỷ lệ khủng hoảng lãnh đạo theo nghề và tuổi thọ người bệnh thận/gan theo quốc gia.
+- Phần B/C (8.10.20): B1–B8 và C1–C11 đã có cơ chế (bảng đối chiếu ở docs/UPGRADE-912-PROGRESS.md Đợt 11). Còn giản lược: lãi suất/tỷ giá mới hiển thị (không đổi khoản vay cũ theo nguyên tắc giữ hợp đồng danh nghĩa); thí điểm chính sách tỉnh chỉ tác động người sống trong tỉnh; khóa bán nhà ở xã hội xử lý sau giao dịch; doanh thu kinh doanh ước tính = 4 × lợi nhuận; lệ phí trước bạ ô tô điện sau 2027 là giả định; Monte Carlo theo kịch bản chưa làm riêng. Cần đọc nguyên văn các văn bản đang ở mức nguồn thứ cấp.
+- **Đã sửa (8.10.20, theo quyết định của chủ dự án):** thứ tự thuế — trước đây life115 nén thu nhập sau khi đã tính thuế TNCN trên lương chưa nén. Nay tax-resident (và thuế kinh doanh ở welfare918) điều chỉnh thu nhập bền vững trước rồi mới tính thuế; engine không điều chỉnh lần hai; bảng Tài chính năm có dòng "Điều chỉnh thu nhập bền vững (cân bằng game)" và thực nhận đặt sau thuế. Người thu nhập cao nộp thuế ít hơn trước (ca thử: 5,65 → 1,73 triệu/tháng).
+- Nhà ở xã hội: bán/chuyển trước 5 năm nay bị xử lý (khoản vay ưu đãi đến hạn ngay) nhưng sau khi giao dịch đã diễn ra; các mục bán/tặng/đổi nhà sẵn có (asset-picker, emigrate, life146, giftAsset112) chưa cảnh báo trước.
+- `tests/chains-gd4.js`: lỗi cả ở baseline c69d094 (assertion khác) vì chuỗi drama 8.10.19 làm gần như mọi đời "chạm chuỗi", trái giả định của test; cần chủ dự án quyết định cách kiểm mới.
+- Tình huống "Sếp đổ lỗi" vẫn đến với Phó Thủ tướng (thấy khi thử giao diện) — chưa sửa, cần lọc theo cấp.
+- `tests/blood910-updates.js`: test chụp trạng thái nhật ký 8.10.10 (đòi mục mới nhất là blood-genetics-followup-910 và tổng mục = mốc cũ + 1); lỗi có sẵn từ 8.10.11, không phải do 8.10.20; giữ nguyên assertion, cần chủ dự án quyết định cách kiểm mới.
+- Bằng chứng phát hành 8.10.19: nhật ký ghi released theo yêu cầu trong chat trước khi upload; chưa có xác nhận upload thực tế trong repository.
+- Regression mục 0–8 chạy lại trên mã 8.10.18 (01/11/2026): 272.734 đạt / 5 lỗi (cùng 5 loại đã phân loại). Chênh tuổi thọ/nợ so với HEAD trong regression (71,4/19,9% so với 72,3/16,8%) đã đo lại có kiểm soát bằng cùng script (3.000 đời VN seed 100000+i·7919, nợ trên 600 đời seed 88000+i): HEAD 71,89/17,7%, 8.10.18 trước sửa 71,69/17,6%, sau sửa 71,67/17,6% → nợ không tăng, tuổi thọ −0,2 năm do bệnh thận/gan; phần chênh còn lại là dao động giữa các lượt regression (ID đời theo giờ thật). Đã sửa thêm: chi phí theo dõi cơ bản không thu trùng với ngân sách y tế của engine; chi phí chuyên khoa giữ dự phòng 0,5 lần thu nhập cơ sở.
+- Người chơi báo "chọn cuộc đời rồi không bấm được nút nào": chưa tái hiện trên mã nguồn và dist 8.10.17 (VN/thế giới, 1280/375 px, không lỗi JS). Cần trình duyệt/thiết bị, bản đang dùng, có tiếp tục bản lưu cũ không, ảnh màn hình.
+- Regression "hơn 60% tình huống xuất hiện tự nhiên" (52,6%) do thêm 975 câu chuyện chỉ dành cho cư dân từng nước — chủ dự án quyết định có loại khỏi mẫu số không. "major từng xuất hiện" (HEAD 1/1.500) và trầm cảm sau sinh ở mẫu 250 đời là ngưỡng mong manh theo RNG. "Sự kiện sau khi qua đời" còn nguồn ngoài health915 chưa tìm (có cả ở HEAD).
+
+### Di truyền nhóm máu và sau hiến 8.10.10 — 30/10/2026
+
+Kiểm thử trọng điểm alen, bố mẹ sinh học/đổi bạn đời/con nuôi, Rh thai kỳ, chuyển đời, phản hồi sau hiến, tư vấn, lời mời thiếu máu và bạch cầu hạt; smoke/bản lưu và các hệ gia đình bị ảnh hưởng. Chưa chạy lại toàn bộ regression GĐ6 trên mã cuối; chưa kiểm chứng binding REVIEWS_DB Production. Phân bố vùng và xác suất sàng lọc/lời mời là tham số mô phỏng, D/d giản lược, không là công cụ tư vấn y khoa hoặc huyết thống. Cần mở rộng trong GĐ6 kiểm mọi lối sinh con/nhận nuôi và quy trình theo cơ sở, thuốc/chống chỉ định, anti-D và theo dõi chuyên khoa thực tế.
+
 ### Sửa lương cầu thủ 8.10.3 — 29/10/2026
 
 Kiểm thử trọng điểm lương hợp đồng, tài chính cá nhân, bóng đá, sức khỏe, nghề nghiệp, smoke và bản lưu; rà soát tự động 40 đời. Chưa chạy toàn bộ regression trên mã cuối, chưa xác minh binding REVIEWS_DB Production. Artifact Preview; không tự bù lương các năm cũ vì không có lịch sử đủ tin cậy. Chờ nghiệm thu tổng thể GĐ6.
@@ -147,3 +169,40 @@ Regression trọng điểm 904: các nhóm 46,50,65,67,68,70,72,73 chạy trọn
 Hoàn thành triển khai, chuyên đề visa905 231 kiểm tra và depth900 58 kiểm tra đạt; cư trú897 và smoke/save/save-safety/NPC đạt. Browser 390/1280px kiểm lối Học tập, giấy tờ/kế hoạch, tải lại và nhập học tiến sĩ. Còn regression toàn bộ trên mã cuối, thiết bị thật, mẫu save thực của người báo lỗi và binding REVIEWS_DB thực tế. Không tính các lỗi cũ của GĐ6 đã ghi ở các đợt trước là đã sửa trong đợt này. Nhật ký Đã phát hành theo chỉ thị trước; không xác nhận upload website, không deploy.
 
 Đợt visa905: regression trọng điểm55/72 đạt22/22; bản dist và nhật ký đạt kiểm Chrome390/1280px; đóng gói28file và ZIP byte-identical. Chưa nghiệm thu toàn diện như giới hạn trên.
+
+## GĐ6 / 8.10.6–8.10.7: nghiệm thu tiếp tục sau cập nhật đi lại
+
+Đã sửa đường visa tự nhắc/gia hạn, đầy đủ lựa chọn ngoại ngữ/Goethe, giữ chỉ số đời con, menu lẫn nhóm, chuỗi bạn thân, khán giả minigame và mã lao động TW. Sau đó chủ dự án yêu cầu ưu tiên hoàn thiện chuyến máy bay về Việt Nam có giá khứ hồi, hoạt động tại nơi đến, máy bay nội địa, xe lửa gần và menu/sự kiện theo nơi đang có mặt; build/commit/push trước, tiếp tục nghiệm thu rồi build lại. Không tự deploy.
+
+Mốc 906: 154 tệp headless đạt; 77 nhóm hồi quy cũ được gọi, 58 đạt/17 lỗi/2 timeout (5 và 5b), chưa nghiệm thu toàn diện. Nhóm0 chạy lại đạt; nhóm6 sau sửa concert vẫn còn 1 kỳ vọng major cũ không được quan sát. Cần sửa fixture nhóm9 (job=null), đối chiếu đoạn kết, độ lặp, trường hợp nhắc người đã mất (nhóm68), mẫu nhiều con và hiệu chuẩn thống kê; không hạ ngưỡng để coi đạt. Chi tiết docs/CONTINUITY-906-ACCEPTANCE.md và docs/CONTINUITY-906-RESULTS.json.
+
+Mã 907 phải được kiểm lại rộng sau mốc commit ưu tiên; còn kiểm thiết bị Android/iOS thật, save người báo lỗi và binding Pages REVIEWS_DB thực tế. Chưa xác nhận mọi sân bay/tuyến tàu thật hoặc mọi nước có bộ sự kiện riêng chuyên sâu: máy bay có chặng nối, xe lửa là tuyến gần tổng quát, nội dung dùng hồ sơ quốc gia/vùng hiện có. Giá vé là mô phỏng. Báo cáo docs/TRAVEL-907-ACCEPTANCE.md.
+
+
+### GĐ6 — nghiệm thu tiếp sau mốc907 (30/10/2026)
+
+156 tệp headless/12 browser đạt trước sửa bảng chức vụ công vụ; registry 4 shard kết thúc không timeout, 422.018 lượt chọn, còn67 assertion thất bại gồm thiếu context và2 lỗi undefined cùng nguyên nhân. reqEdu99 đã sửa, chuyên đề214/0 và registry tập trung2599/0 đạt. Bổ sung công cụ tools/acceptance-decisions.js và manifest tái lập. Nhóm0/15/20/23/50/68 chạy lại đạt; nhóm39 fixture chết trước bảo vệ lại còn19/1. Chưa giải quyết toàn bộ6/16/21/24/25/26/34/38/60 và timeout5/5b. Không hạ ngưỡng, không tính nhóm thiếu context là PASS. Cần bổ sung context cho các mã chưa kiểm được, đối chiếu lỗi thống kê/fixture, regression mã cuối, thiết bị thật, save người báo lỗi và binding REVIEWS_DB. Chi tiết TRAVEL-907-RESULTS.json / TRAVEL-907-ACCEPTANCE.md. Chưa nghiệm thu toàn diện, chưa production-ready.
+
+### GĐ6 — gia tộc và người kế vị908 (30/10/2026, UTC+7)
+
+Triển khai theo góp ý mới, mở rộng các hệ thống hiện có, không mở giai đoạn mới. Phạm vi/giới hạn tại docs/DYNASTY-908-ACCEPTANCE.md; kết quả tại DYNASTY-908-RESULTS.json. Nhật ký packaged,132 mục tổng, giữ131 mục trước. Kiểm thử trọng điểm mới, tương thích lưu và regression hệ thống bị ảnh hưởng được chạy; không coi các lỗi/timeout GĐ6 trước đó là đã giải quyết. Còn nghiệm thu toàn diện cuối, bổ sung context registry các nhánh hiếm, thiết bị thật, save người góp ý và binding REVIEWS_DB thực tế. Tình huống thông báo con muộn đòi lịch sử phù hợp, không sinh tùy tiện; dữ liệu NPC ông bà/cô chú chưa tồn tại không được bịa thành người ủng hộ. Công ty bố mẹ trước bàn giao vẫn dùng mô hình139, không tuyên bố có báo cáo kho bạc chi tiết cho mọi NPC. HOÀN THÀNH TRIỂN KHAI — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN khi các kết quả trọng điểm chốt đạt; không deploy.
+
+### GĐ6 — thuế và hiến máu909 (30/10/2026, UTC+7)
+
+Đã triển khai theo yêu cầu, không mở giai đoạn mới. Xem HEALTH-TAX-909-ACCEPTANCE.md và HEALTH-TAX-909-RESULTS.json. Chuyên đề1.071 kiểm tra, smoke/save/save-safety/NPC và regression liên quan; các nhóm hồi quy GĐ6 cũ chưa khép vẫn chưa được coi là PASS. Chưa nghiệm thu toàn diện/thiết bị thật/save người báo lỗi/REVIEWS_DB. Thuế áp mốc2026 cho tiền lương nhân vật cư trúVN, giữ bảo hiểm hiện có; chưa mô phỏng mọi loại thuế, trường hợp cư trú phức tạp hoặc quyết toán cho tất cảNPC. Nhóm người phụ thuộc không có dữ liệu đầy đủ phải bổ sung qua hệ thống NPC, không tự dựng chứng cứ. Hiến máu là mô hình điều kiện/lịch/sàng lọc/quyền lợi, chưa đủ mọi tiêu chuẩn thực của mọi cơ sở; cap4/22 là quy ước bảo thủ game. Nhật ký908/909 đổi Đã phát hành theo chỉ thị trực tiếp, không chứng minh đã upload. Không tự deploy hoặc ghi D1.
+
+### GĐ6 — nghiệm thu trọng điểm game show và đường tối (31/10/2026, UTC+7)
+
+Đợt 8.10.11 đã tăng độ khó câu hỏi game show và mở rộng lựa chọn/điều tra nghề phi pháp, băng nhóm, tình huống trong tù. Test chuyên đề, smoke, save, save-safety và các regression liên quan đã chạy; còn thiếu regression đầy đủ trên mã cuối, thiết bị thật, save người báo lỗi và xác minh binding Pages REVIEWS_DB thực tế. Không coi các lỗi/nhóm timeout GĐ6 trước đó là PASS hoặc đã giải quyết. Chưa nghiệm thu toàn diện, không deploy.
+
+## GĐ6 / nâng cấp 8.10.12 (mã 912) — khối thi, hiệu năng, tài sản, tình cảm, cố vấn
+
+Trạng thái: **HOÀN THÀNH TRIỂN KHAI MỘT PHẦN — KIỂM THỬ TRỌNG ĐIỂM ĐẠT — CHƯA NGHIỆM THU TOÀN DIỆN**. Đã làm §3, §4, §5 (hai nguyên nhân gốc), §6, §8, §10 của PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md; chưa làm §7, §9, §11, §12 (ngoài sửa tỷ giá dịch vụ ngầm), §13, phần lớn §14 — chi tiết trong UPGRADE-912-PROGRESS.md. Chưa chạy regression toàn bộ (tests/regression.js) trên mã cuối; chưa chạy `npm run test:update` đầy đủ; chưa đo trên điện thoại thật và bản lưu nhiều đời thật của người chơi; chưa xác minh binding REVIEWS_DB Production. tests/life138.js hỏng sẵn từ HEAD 30152fc (assertion "sibling can succeed instead of player"). Artifact chỉ Preview.
+
+Cập nhật 8.10.13: thêm §9 chu cấp chủ động và §7 quan hệ người nổi tiếng (kiểm thử trọng điểm đạt, xem UPGRADE-912-PROGRESS.md). Vẫn chưa làm §11, §12, §13, phần lớn §14; vẫn chưa chạy regression toàn bộ trên mã cuối; artifact chỉ Preview.
+
+Cập nhật 8.10.14: phần lớn §12 đường tối (đàn em NPC, địa bàn, bảng rủi ro, tổng hợp án, cân bằng đánh úp) — kiểm thử trọng điểm đạt. Còn §11, §13, phần nhỏ §12 (tan rã/đổi lãnh đạo nhóm, hỗ trợ pháp lý trong trại, chuyển quốc gia khi có hồ sơ), phần lớn §14; chưa chạy regression toàn bộ. 6 test hỏng sẵn từ 30152fc: football-payroll901, update451, update453, update454, update460, life138.
+
+Cập nhật 8.10.15: §11.1–11.3 (di truyền theo cha mẹ, sàng lọc đồng thuận, đa thai) — kiểm thử trọng điểm đạt. Còn §11.4 bệnh mắc phải/ung thư, §11.5 phát triển trẻ, §13 quốc gia, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ.
+
+Cập nhật 8.10.16: §11.4–11.5 (ung thư theo giai đoạn, bệnh mạn, phát triển trẻ) — kiểm thử trọng điểm đạt. Còn §13, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ. Thêm vào danh sách hỏng sẵn: blood910-browser (assertion nhật ký mới nhất).

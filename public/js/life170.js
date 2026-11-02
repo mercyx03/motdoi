@@ -2,7 +2,21 @@
 (function(G){'use strict';var E=G.E,H=E.H,X=E.UPDATE110,C=E.WORLD120,T=E.TREASURY165,B=E.BUSINESS123,R=E.BUSINESS133;
 var fields={management:'Quản trị',finance:'Tài chính',investment:'Đầu tư',startup:'Khởi nghiệp',leadership:'Lãnh đạo',communication:'Giao tiếp',language:'Ngoại ngữ',acting:'Diễn xuất',music:'Âm nhạc',image:'Hình ảnh cá nhân',career:'Nghề nghiệp',wealth:'Quản lý tài sản',etiquette:'Nghi thức xã giao',heir_program:'Đào tạo người thừa kế toàn diện (10 năm)'};
 var HEIR_FIELDS=['image','etiquette','communication','management','career','wealth','leadership'];
-function usdAmount(l,usd){return l.cur==='usd'?usd:usd*25000;}
+// v8.10.12: quy đổi USD danh nghĩa → tiền nội bộ bằng tỷ giá chung (asset-picker.js / currency.js). Trước đây VN nhân 25.000 trên đơn vị
+// triệu đồng nên học phí gói 5 triệu USD thành 125.000.000 tỷ đồng (gấp 10^6 lần), nước khác bỏ qua mức giá sức mua.
+function usdAmount(l,usd){return E.usdToLocal?E.usdToLocal(l,usd):l.cur==='usd'?usd:usd*25400/1e6;}
+// Chính sách khóa thừa kế (chủ dự án chốt "đào tạo 10 năm xong là +50"): mỗi chuyên môn trong 7 HEIR_FIELDS được cộng TỔNG CỘNG tối đa
+// HEIR_TOTAL điểm từ chính khóa học (70% rải đều trong các năm học, 30% khi hoàn thành hợp lệ), không vượt thang 100; không cộng 50 vào
+// mọi chỉ số nhân vật. Sổ ghi k.ledger912 lưu đóng góp theo khóa/chuyên môn để chạy lại hay tải lại không cộng hai lần.
+var HEIR_TOTAL={heir5m:50,heir1m:30},HEIR_STUDY_SHARE=.7;
+function heirTotal(k){return HEIR_TOTAL[k.tier]||HEIR_TOTAL.heir1m;}
+// Đóng góp của luật cũ (4 hoặc 3 điểm/năm cho một chuyên môn luân phiên; +15 hoặc +10 mỗi chuyên môn khi hoàn thành) để migrate không cộng trùng.
+function heirLegacy(k,years,done){var out={},yr=k.tier==='heir5m'?4:3;HEIR_FIELDS.forEach(function(f){out[f]=0;});for(var y=1;y<=years;y++)out[HEIR_FIELDS[(y-1)%HEIR_FIELDS.length]]+=yr;if(done)HEIR_FIELDS.forEach(function(f){out[f]+=k.tier==='heir5m'?15:10;});return out;}
+function heirLedger(k){if(!k.ledger912){k.ledger912=heirLegacy(k,Math.max(0,(k.done912!=null?k.done912:(k.progress||1)-1)),false);}return k.ledger912;}
+function heirGrant(l,p,k,field,target){var led=heirLedger(k),now=led[field]||0,add=Math.max(0,Math.min(heirTotal(k),Math.round(target))-now);if(add>0){gain(l,p,field,add);led[field]=now+add;}return add;}
+function heirYear(l,p,k){if(k.done912==null){k.done912=Math.max(0,(k.progress||1)-1);heirLedger(k);}k.done912=Math.min(k.years,k.done912+1);var share=heirTotal(k)*HEIR_STUDY_SHARE*k.done912/k.years,sum=0;HEIR_FIELDS.forEach(function(f){sum+=heirGrant(l,p,k,f,share);});k.policy912=1;return sum;}
+function heirComplete(l,p,k){var sum=0;HEIR_FIELDS.forEach(function(f){sum+=heirGrant(l,p,k,f,heirTotal(k));});k.policy912=1;return sum;}
+function heirSummary(l,k){var led=k.ledger912||heirLegacy(k,Math.max(0,k.progress||0),k.status==='completed'),got=HEIR_FIELDS.reduce(function(n,f){return n+(led[f]||0);},0),max=heirTotal(k)*HEIR_FIELDS.length;return 'đã cộng '+got+'/'+max+' điểm (tối đa '+heirTotal(k)+'/chuyên môn, không vượt 100)'+(k.status==='active'?' · dự kiến còn '+Math.max(0,max-got)+' nếu hoàn thành đủ '+k.years+' năm':'');}
 var programs={management:'Quản trị',business:'Kinh doanh',finance:'Tài chính',hr:'Nhân sự',technology:'Công nghệ',branch:'Chi nhánh',succession:'Đào tạo kế nhiệm'};
 function learners(l){return [{id:'self',name:l.name,person:l,age:l.age}].concat(E.BUSINESS137.relatives(l).filter(function(p){return p.age>=6;}));}
 function learner(l,id){return learners(l).find(function(x){return x.id===id;});}
@@ -56,21 +70,20 @@ function gain(l,target,field,amount){var p=target.person,e=education(l,p),before
 function courseYear(l,r,log){if(!l.alive)return;(l.kids||[]).forEach(function(p){if(!p.internship170)return;var c=B.companies(l).find(function(c){return X.uid(l,c)===p.internship170.cid&&!c.merged;});if(!c){delete p.internship170;return;}});courses(l).forEach(function(k){if(k.status!=='active'||k.lastAt===l.age||l.age<=k.at)return;var p=learner(l,k.learner);k.lastAt=l.age;if(!p||p.person.alive===false){k.status='ended';return;}k.progress=Math.min(k.years,l.age-k.at);
     if(k.field==='heir_program'){
       var currentField=HEIR_FIELDS[(k.progress-1)%HEIR_FIELDS.length];
-      var yrGain=k.tier==='heir5m'?4:3;
-      gain(l,p,currentField,yrGain);
+      var yrGain=heirYear(l,p,k);
       p.person.study=Math.min(100,(p.person.study||50)+2);
-      if(k.progress<k.years){
-        log(p.name+' hoàn thành năm '+k.progress+'/10 chương trình đào tạo người thừa kế toàn diện với '+k.mentor.name+' (rèn luyện '+fields[currentField]+').','neutral');
+      if(k.done912<k.years){
+        log(p.name+' hoàn thành năm '+k.done912+'/'+k.years+' chương trình đào tạo người thừa kế toàn diện với '+k.mentor.name+' (trọng tâm '+fields[currentField]+'; +'+yrGain+' điểm chia cho 7 chuyên môn).','neutral');
       }
     }
-    if(l.age<k.due)return;
+    if(l.age<k.due||k.field==='heir_program'&&(k.done912||0)<k.years)return; // phải học đủ số năm, không tự xong chỉ vì đã đến tuổi cuối khóa
 var success=k.roll<.4+k.mentor.skill*.35+k.fit*.2,amount=success?Math.max(1,Math.round(k.years*k.mentor.skill*k.fit*4)):0;gain(l,p,k.field,amount);k.gain=amount;k.status=success?'completed':'not-passed';
     k.finished=l.age;
     if(k.field==='heir_program'&&success){
       p.person.heirProgram170={completed:true,at:l.age,years:10,tier:k.tier};
       p.person.heirPosture=true;
       p.person.study=Math.max(p.person.study||50,92);
-      HEIR_FIELDS.forEach(function(f){gain(l,p,f,k.tier==='heir5m'?15:10);});
+      heirComplete(l,p,k);
       log(p.name+' đã hoàn thành xuất sắc 10 năm đào tạo người thừa kế toàn diện! Con toát lên phong thái đĩnh đạc của một người thừa kế, có uy tín xã hội cao, tinh thần trách nhiệm và năng suất làm việc vượt trội.','good');
       H.mem(l,'Ngày con '+p.name+' hoàn thành 10 năm đào tạo người thừa kế toàn diện của gia tộc.',5);
     }
@@ -81,7 +94,7 @@ function reason(l,c,id){var p=E.BUSINESS137.relatives(l).find(function(p){return
 function describe(l,k){var s=k&&k.internship170;if(!s)return '';var c=B.companies(l).find(function(c){return X.uid(l,c)===s.cid&&!c.merged;}),it=c&&internships(c).find(function(x){return x.id===s.id;});return 'thực tập tại '+(c?c.name:s.company||'doanh nghiệp gia đình')+(it?' ('+(programs[it.program]||'')+' · năm '+Math.min(it.years,it.progress+1)+'/'+it.years+')':'');}
 function internYear(l,c,r,log){internships(c).forEach(function(k){if(k.status!=='active'||k.lastAt===l.age||l.age<=k.at)return;k.lastAt=l.age;var p=E.BUSINESS137.relatives(l).find(function(p){return E.NPC.same(l,p.id,k.person);});if(!p||p.person.alive===false||c.merged){k.status='ended';return;}if(p.person.job||p.person.uniUntil||p.person.jail||E.CAREER147.roleOf(l,p.person)){k.status='left-for-job';delete p.person.internship170;return;}if(!T.spend(l,c,k.stipend,'Trợ cấp thực tập '+p.name)){k.status='funding-ended';delete p.person.internship170;return;}E.RELATIVE163.post(l,p.person,k.stipend,'Trợ cấp thực tập tại '+c.name,k.id+':'+l.age);var step=k.progress,skill=education(l,p.person).skills.management||0,passed=k.rolls[step]<.4+(p.person.study||50)/250+skill/500-step*.04;k.progress++;k.score+=passed?1:0;k.history.push({age:l.age,stage:k.progress,passed:passed,stipend:k.stipend});if(passed)gain(l,p,k.program==='technology'?'career':k.program==='hr'?'leadership':k.program==='business'?'communication':'management',2);if(k.progress<k.years)log(p.name+' hoàn thành năm thực tập '+k.progress+'/'+k.years+' tại '+c.name+(passed?', được đánh giá tốt.':', cần cố gắng hơn.')+' Trợ cấp '+H.money(l,k.stipend)+'.','neutral');if(k.progress>=k.years){k.status=k.score>=Math.ceil(k.years*.6)?'completed':'not-passed';k.finished=l.age;delete p.person.internship170;p.person.succession170={cid:X.uid(l,c),completed:k.status==='completed',at:l.age,score:k.score,years:k.years,experience:k.progress};log(p.name+' kết thúc '+k.years+' năm thực tập tại '+c.name+'. '+(k.status==='completed'?'Có thể xem xét bổ nhiệm, chưa tự nhận chức vụ.':'Cần thêm kinh nghiệm trước khi giao trách nhiệm.'),'neutral');}});}
 X.menu('education170','Cố vấn riêng và khóa dài hạn',C.adult,'Chọn người học; người thân có thể từ chối. Học phí trả từ tiền cá nhân, không tự trích tiền công ty. Khóa 6 tháng được tổng kết tại bước sang năm của mô phỏng; không cộng kỹ năng lúc ký.',function(l){return learners(l).slice(0,45).map(function(p){return{k:p.id,l:p.name+' · '+p.age+' tuổi',run:function(l,r){C.queue(l,'educationField170',r,{id:p.id});}};});},18,'Học tập');
-X.menu('educationField170','Chọn chuyên môn cố vấn',C.adult,function(l,d){var p=learner(l,d.arg.id);return p?p.name+' · '+courses(l).filter(function(k){return k.learner===p.id;}).slice(-5).map(function(k){return fields[k.field]+': '+({active:'Đang học',completed:'Hoàn thành','not-passed':'Chưa đạt',ended:'Đã dừng'})[k.status]+' '+k.progress+'/'+k.years+' năm · cố vấn '+k.mentor.name+' · năng lực '+Math.round(k.mentor.skill*100)+'/100 · phù hợp '+Math.round(k.fit*100)+'/100 · học phí '+H.money(l,k.fee);}).join('; '):'Người học không còn.';},function(l,a){
+X.menu('educationField170','Chọn chuyên môn cố vấn',C.adult,function(l,d){var p=learner(l,d.arg.id);return p?p.name+' · '+courses(l).filter(function(k){return k.learner===p.id;}).slice(-5).map(function(k){return fields[k.field]+': '+({active:'Đang học',completed:'Hoàn thành','not-passed':'Chưa đạt',ended:'Đã dừng'})[k.status]+' '+k.progress+'/'+k.years+' năm · cố vấn '+k.mentor.name+' · năng lực '+Math.round(k.mentor.skill*100)+'/100 · phù hợp '+Math.round(k.fit*100)+'/100 · học phí '+H.money(l,k.fee)+(k.field==='heir_program'?' · '+heirSummary(l,k):'');}).join('; '):'Người học không còn.';},function(l,a){
   var target=learner(l,a.id);
   var out=[];
   if(target&&target.id!=='self'&&target.age>=8){
@@ -105,7 +118,8 @@ X.menu('educationHeirTerm170','Gói đào tạo người thừa kế 10 năm',C.
     var target=learner(l,d.arg&&d.arg.id);
     return 'Người học: '+(target?target.name+' ('+target.age+' tuổi)':'')+'\n'+
            'Viện cố vấn gia tộc kèm cặp dài hạn 10 năm xuyên suốt 7 lĩnh vực: hình ảnh cá nhân, nghi thức xã giao, giao tiếp, quản trị, kinh doanh, quản lý tài sản và lãnh đạo.\n'+
-           'Sau 10 năm hoàn thành, con cái sẽ toát lên phong thái người thừa kế, tạo dựng uy tín, sống có trách nhiệm và nâng cao năng suất điều hành.';
+           'Cách tính: mỗi chuyên môn trong 7 chuyên môn được cộng tổng cộng tối đa '+HEIR_TOTAL.heir5m+' điểm (Gói Gia tộc Thượng lưu) hoặc '+HEIR_TOTAL.heir1m+' điểm (Gói Tinh hoa) từ khóa học: 70% rải đều trong các năm học, 30% khi hoàn thành đủ 10 năm và đạt đánh giá; không vượt 100 và không cộng vào mọi chỉ số khác. Dừng giữa chừng vẫn giữ phần đã học.\n'+
+           'Học phí trả một lần theo tỷ giá chung; người học có thể từ chối. Sau 10 năm hoàn thành, con cái sẽ toát lên phong thái người thừa kế, tạo dựng uy tín, sống có trách nhiệm và nâng cao năng suất điều hành.';
   },
   function(l,a){
     return [
@@ -141,8 +155,10 @@ var facts=E.STANDING158.relativeFacts;E.STANDING158.relativeFacts=function(l,p,c
 if(p.succession170)out.push(['Thực tập kế nghiệp',p.succession170.years+' năm · '+(p.succession170.completed?'đạt đánh giá':'cần thêm kinh nghiệm')]);if(p.internship170)out.push(['Đang thực tập',describe(l,p)]);return out;};
 var heir=E.heirAtAge;E.heirAtAge=function(parent,k){var life=heir.apply(this,arguments);if(life&&k.education170){life.education170=JSON.parse(JSON.stringify(k.education170));var delta=life.age-parent.age;life.education170.history.forEach(function(h){h.age+=delta;});var originals=(parent.flags.expansion110&&parent.flags.expansion110.courses170||[]).filter(function(c){return E.NPC.same(parent,c.learner,X.uid(parent,k));});X.state(life).courses170=originals.map(function(c){var copy=JSON.parse(JSON.stringify(c));copy.learner='self';['at','due','lastAt','finished'].forEach(function(key){if(copy[key]!=null)copy[key]+=delta;});copy.fee*=life.base/parent.base;return copy;});}return life;};
 function convert(l,f){courses(l).forEach(function(k){k.fee*=f;});}
-E.HOOKS.year.push(courseYear);function merge(l,cs,target){target.internships170=cs.flatMap(function(c){return c.internships170||[];});target.internships170.forEach(function(k){var p=E.BUSINESS137.relatives(l).find(function(p){return E.NPC.same(l,p.id,k.person);});if(p&&p.person.internship170)p.person.internship170.cid=X.uid(l,target);});}
+E.HOOKS.year.push(courseYear);
+// Khóa thừa kế đã hoàn thành theo luật cũ: bù một lần lên mức mới, có sổ ghi và thông báo; không bù cho người học đã mất.
+E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;courses(l).forEach(function(k){if(k.field!=='heir_program'||k.status!=='completed'||k.policy912)return;var p=learner(l,k.learner);k.policy912=1;k.ledger912=heirLegacy(k,k.years,true);if(!p||p.person.alive===false)return;var add=heirComplete(l,p,k);if(add>0)log('Bù theo chính sách mới của khóa đào tạo người thừa kế: '+p.name+' được cộng thêm '+add+' điểm để mỗi chuyên môn đạt đủ '+heirTotal(k)+' điểm từ khóa (một lần, đã ghi sổ).','neutral');});});function merge(l,cs,target){target.internships170=cs.flatMap(function(c){return c.internships170||[];});target.internships170.forEach(function(k){var p=E.BUSINESS137.relatives(l).find(function(p){return E.NPC.same(l,p.id,k.person);});if(p&&p.person.internship170)p.person.internship170.cid=X.uid(l,target);});}
 function scale(c,f){(c.internships170||[]).forEach(function(k){k.stipend*=f;k.history.forEach(function(h){h.stipend*=f;});});}
 function shift(c,d){(c.internships170||[]).forEach(function(k){['at','due','lastAt','finished'].forEach(function(f){if(k[f]!=null)k[f]+=d;});k.history.forEach(function(h){h.age+=d;});});}
-E.EDUCATION170={merge:merge,convert:convert,scale:scale,shift:shift,learners:learners,education:education,courses:courses,enroll:enroll,enrollHeir:enrollHeir,usdAmount:usdAmount,gain:gain,courseYear:courseYear,internships:internships,apply:apply,reason:reason,describe:describe,internYear:internYear,fields:fields,programs:programs};
+E.EDUCATION170={HEIR_TOTAL:HEIR_TOTAL,heirSummary:heirSummary,heirLegacy:heirLegacy,merge:merge,convert:convert,scale:scale,shift:shift,learners:learners,education:education,courses:courses,enroll:enroll,enrollHeir:enrollHeir,usdAmount:usdAmount,gain:gain,courseYear:courseYear,internships:internships,apply:apply,reason:reason,describe:describe,internYear:internYear,fields:fields,programs:programs};
 })(globalThis.G);

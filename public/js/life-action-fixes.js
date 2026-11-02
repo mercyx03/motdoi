@@ -22,6 +22,7 @@ function capped(l){return (l.acts||0)>=limit(l);}
 function blocked(l,d){var a=d&&d.data;return !!(a&&a.deferredTurn894&&a.actionYear850===l.age&&capped(l)&&!(d.opts||[]).some(function(o){return /^(cancel|back|close)$/.test(o.k);}));}
 function dropBlocked(l){var out=[];while(l.pending&&l.pending.length&&blocked(l,l.pending[0]))out.push(l.pending.shift());return out;}
 var m=E.migrateExt;E.migrateExt=function(l){if(m)m(l);migrate(l);dropBlocked(l);};
+['family100_children','family100_parents','family100_romance','dau_tu_lon','quan_ly_dau_tu'].forEach(function(id){var a=E.ACT.find(function(a){return a.id===id;}),d=a&&E.DEC[a.sc||id];if(d)d.reusableAction906=true;});
 var CAPPED='Đã hết lượt năm nay';
 var act0=E.act,actions0=E.actions;
 E.act=function(l){return l&&capped(l)?null:act0.apply(this,arguments);};
@@ -33,7 +34,7 @@ var resolve=E.resolve;
 E.resolve=function(l,key){
  var d=l.pending[0],a=d&&d.data,token=a&&a.deferredTurn894&&a.actionYear850===l.age?a:null;
  if(!token)return resolve.apply(this,arguments);
- var rootAction=E.ACT.find(function(x){return x.id===token.actionId850;}),rootMenu=rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).menu110;
+ var rootAction=E.ACT.find(function(x){return x.id===token.actionId850;}),rootMenu=rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).menu110||rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).reusableAction906;
  if(!rootMenu&&l.flags.actAt&&l.flags.actAt[token.actionId850]===l.age){l.pending.shift();return [];}
  var def=E.DEC[d.id],o=def&&def.def&&def.def.opts.find(function(x){return x.k===key;});
  if(!d.opts.some(function(x){return x.k===key;})||def&&def.valid&&!def.valid(l,a)||o&&o.req&&!o.req(l,a))return resolve.apply(this,arguments);
@@ -42,7 +43,7 @@ E.resolve=function(l,key){
  var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=/^(cancel|back|close)$/.test(key);
  var changed=facts(l)!==before,spend=!cancel&&(children.length===0||changed||a.actionCommitted897===true);
  if(spend&&snapshot){restore(l,snapshot);var e={a:l.age,y:l.birthYear+l.age,t:'Đã hết lượt năm nay. Bạn vẫn có thể xem các phương án hoặc để dịp khác; lựa chọn chưa được thực hiện.',k:'neutral'};l.log.push(e);dropBlocked(l);return [e];}
- if(spend){l.acts=(l.acts||0)+1;var root=E.ACT.find(function(x){return x.id===token.actionId850;});if(root&&!(E.DEC[root.sc||root.id]||{}).menu110)(l.flags.actAt||(l.flags.actAt={}))[token.actionId850]=l.age;}
+ if(spend){l.acts=(l.acts||0)+1;var root=E.ACT.find(function(x){return x.id===token.actionId850;});if(root&&!(E.DEC[root.sc||root.id]||{}).menu110&&!(E.DEC[root.sc||root.id]||{}).reusableAction906)(l.flags.actAt||(l.flags.actAt={}))[token.actionId850]=l.age;}
  children.forEach(function(x){if(cancel||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});
  return out;
 };
@@ -54,6 +55,10 @@ var m2=E.migrateExt;E.migrateExt=function(l){m2(l);certs(l);};
 E.HOOKS.year.unshift(certs);
 var expiry=E.DEC.chung_chi_het_han,expiryValid=expiry.def.valid;
 expiry.def.valid=function(l,d){var k=d&&d.k||'en';return expiryValid(l,d)&&(!d||!d.k||l.langAt&&l.langAt[k]!=null&&l.age-l.langAt[k]>=2);};
+var certificateText906=E.DEC.hoc_them.def.text;E.DEC.hoc_them.def.text=function(l,d){return certificateText906(l,d)+' Danh mục: '+Object.keys(H.LANG).map(function(k){return H.LANG[k].cert+' ('+H.LANG[k].n+')';}).join('; ')+'.';};
+// Keep all supported certificate paths visible, including Goethe, in every country.
+Object.keys(H.LANG).filter(function(k){return k!=='en';}).forEach(function(k){E.DEC.hoc_them.def.opts.push({k:'language906_'+k,l:function(l){return H.langLabel(l,k);},req:function(l,d){return d.ctx!==k&&H.langNext(l,k)!=null;},run:function(l,r,log){H.studyLang(l,k,r,log);}});});
+['en','ko','zh'].forEach(function(k){E.DEC.hoc_them.def.opts.push({k:'renew906_'+k,l:function(l){return 'Thi lại '+H.langCert(l,k)+' · chứng chỉ đã hết hạn';},req:function(l){return !!(l.lang&&l.lang[k])&&!E.certValid(l,k);},run:function(l,r){X.next(l,'chung_chi_het_han',r,{k:k,manual:true});}});});
 // One friend entry, with a stable identity for every person including namesakes.
 function friends(l){return [l.bff].concat(l.friends||[]).filter(function(f,i,all){return f&&f.alive!==false&&!f.faded&&all.findIndex(function(x){return x===f||x&&x.uid110&&x.uid110===f.uid110;})===i;});}
 function here(l,f){return (f.loc||'HOME')===E.locOf(l);}
@@ -70,7 +75,7 @@ if(crisis){var prep=crisis.def.prep;crisis.def.prep=function(l,r){var d=prep.app
  crisis.def.valid=function(l,d){return d&&d.n?!!target(l,d):friends(l).some(function(f){return l.age+(f.d||0)>=18;});};
  var support=crisis.def.opts.find(function(o){return o.k==='o_ben';});
  support.l=function(l,d){var f=target(l,d);return f&&!here(l,f)?'Gọi video, ở bên động viên từ xa':'Đến bên bạn để an ủi';};
- support.run=function(l,r,log,d){var f=target(l,d);if(!f)return;f.close=Math.min(100,(f.close||50)+12);H.fx(l,{karma:3,soc:2});log(here(l,f)?'Bạn đến bên '+f.name+' và ở lại lắng nghe, an ủi.':'Bạn gọi video cho '+f.name+', lắng nghe và nhờ người ở gần hỗ trợ; việc đi lại cần sắp xếp riêng.','good');};
+ support.run=function(l,r,log,d){var f=target(l,d);if(!f)return;f.close=Math.min(100,(f.close||50)+12);H.fx(l,{karma:3,soc:2});log(here(l,f)?'Bạn đến bên '+f.name+' và ở lại lắng nghe, an ủi.':'Bạn gọi video cho '+f.name+', lắng nghe và nhờ người ở gần hỗ trợ; việc đi lại cần sắp xếp riêng.','good');if(E.CHAIN144&&E.CHAIN144.friendHelp)E.CHAIN144.friendHelp(l,'o_ben',d,{money:l.money});};
 }
 function canFly(l){return !!l.abroad&&X.reason(l,18)===true;}
 function fare(l){return Math.max(l.base*.1,(E.homeTrip(l)||{}).cost||0);}
@@ -96,6 +101,7 @@ E.MENU147.build=function(acts,spend){
  if(family){var love=family['1. Tình yêu & hôn nhân'];if(love){result.groups['Tình yêu & hôn nhân']=love;result.groups[E.MENU147.FAMILY]=result.groups[E.MENU147.FAMILY].filter(function(x){return love.indexOf(x)<0;});delete family['1. Tình yêu & hôn nhân'];}}
  var category={'Học tập':'Học tập & công việc','Học thuật':'Học tập & công việc','Công việc':'Học tập & công việc','Phát triển sự nghiệp':'Học tập & công việc','Công vụ & quản lý':'Học tập & công việc','Quân đội & công an':'Học tập & công việc','Doanh nghiệp & tập đoàn':'Học tập & công việc','Sự nghiệp':'Giải trí & sáng tạo','Giải trí':'Giải trí & sáng tạo','Năng khiếu':'Giải trí & sáng tạo','Âm nhạc & sự nghiệp':'Giải trí & sáng tạo','Showbiz & người hâm mộ':'Giải trí & sáng tạo','Mạng xã hội':'Giải trí & sáng tạo','Nhà nước & cộng đồng':'Đời sống'};
  Object.keys(result.groups).forEach(function(g){var top=category[g];if(!top)return;var rows=result.groups[g];(result.groups[top]||(result.groups[top]=[])).push.apply(result.groups[top],rows);var subs=result.subs[top]||(result.subs[top]={});subs[g]=rows;delete result.groups[g];});
+ Object.keys(result.subs).forEach(function(top){var subs=result.subs[top],placed=[];Object.keys(subs).forEach(function(k){placed=placed.concat(subs[k]);});var missing=(result.groups[top]||[]).filter(function(a){return placed.indexOf(a)<0;});if(missing.length)subs[top]=missing;});
  return result;
 };
 })(globalThis.G);

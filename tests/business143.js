@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('assert'),E=require('./hardcore-isolation').gameContext().E;
 function life(){let l=E.createLife({mode:'vn',seed:143});Object.assign(l,{age:69,edu:5,indep:true,school:null,money:689610400,pending:[],job:null,record:0,retired:false});l.flags.military=0;l.flags.dirty=0;delete l.flags.criminal;delete l.flags.wanted;E.BUSINESS123.companies(l).push({name:'A',value:1044801800,share:76.1,sector:'finance',created:30,governance:0},{name:'B',value:353279190,share:66,sector:'tech',created:40,governance:0});return l;}
-function pick(l,id,key,arg){const d=E.DEC[id].make(l,()=>0,arg),i=d.data.keys.indexOf(key);assert(i>=0,id+':'+key);assert(d.opts.some(o=>o.k===String(i)),id+' missing '+key);d.manual=true;l.pending=[d];E.resolve(l,String(i));}
+function pick(l,id,key,arg){const d=E.DEC[id].make(l,()=>0,arg),i=d.data.keys.indexOf(key);assert(i>=0,id+':'+key);assert(d.opts.some(o=>o.k===String(i)),id+' missing '+key);d.manual=true;l.pending=[d];l.rs=1;E.resolve(l,String(i));}
 function expand(l){assert.strictEqual(E.BUSINESS128.why(l),true);const before=l.money,n=E.BUSINESS123.companies(l).length,worth=E.netWorth(l);pick(l,'companies123','found');assert.equal(l.pending[0].id,'companySector133');pick(l,'companySector133','finance');assert.equal(l.pending[0].id,'companyCapital128');pick(l,'companyCapital128','2000',{sector:'finance'});assert.equal(E.BUSINESS123.companies(l).length,n+1);assert.equal(l.money,before-2000);assert(Math.abs(E.netWorth(l)-worth)<.001);assert.equal(E.BUSINESS123.companies(l)[n].sector,'finance');pick(l,'companies123','stake');pick(l,'companyStake128','5');assert.equal(E.BUSINESS123.companies(l).length,n+2);}
 let l=life();expand(l);expand(l);
 l=life();l.retired=true;expand(l);

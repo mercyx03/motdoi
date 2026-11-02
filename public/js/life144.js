@@ -445,7 +445,7 @@
     if (!D || !D.valid(l, d)) return null;
     var c = chain(l, d.cid); d.done = true; c.open = null; c.last = l.age; note(c, k); return c;
   }
-  onOrigin('ban_than_kho', function (l, k, d, before) {
+  function friendHelp(l, k, d, before) {
     var f = E.friendsOf(l).concat(E.friendsFar?E.friendsFar(l):[]).filter(function (x) { return d.uid894 ? X.uid(l,x)===d.uid894 : x.name === d.n; })[0];
     if (!f || !X) return;
     var unpaid = k === 'cho_vay' && l.money < before.money - V(l, 10);
@@ -454,7 +454,8 @@
     start(l, 'friend', { dec: 'ban_than_kho', k: k }, { npc: { ref: X.uid(l, f), name: f.name }, data: { helped: helped, why: d.why } });
     var c = active(l, 'friend');
     if (c && helped) setWindow(c, [3, 12], l.age);
-  });
+  }
+  onOrigin('ban_than_kho', friendHelp);
 
   // ===================================================================
   // 8. SỨC KHỎE — tai nạn → phục hồi / mặc kệ → ảnh hưởng nhiều năm sau, đổi lối sống
@@ -496,7 +497,7 @@
   onOrigin('phau_thuat', function (l, k, d) { if (d && /tai nạn/.test(d.why || '')) start(l, 'health', { dec: 'phau_thuat', k: k }, { data: { what: 'tai nạn giao thông' } }); });
 
   E.CHAIN144 = {
-    KINDS: KINDS, define: define, onOrigin: onOrigin, start: start, close: close, advance: advance, chain: chain, active: active, state: state, yearly: yearly,
+    friendHelp:friendHelp, KINDS: KINDS, define: define, onOrigin: onOrigin, start: start, close: close, advance: advance, chain: chain, active: active, state: state, yearly: yearly,
     summary: function (l) { var s = l.flags && l.flags.chains144; return valid(s) ? { active: s.active.map(function (c) { return { kind: c.kind, stage: c.stage, since: c.since }; }), done: s.done.map(function (c) { return { kind: c.kind, result: c.result, end: c.end }; }) } : { active: [], done: [] }; }
   };
 })(globalThis.G);

@@ -24,18 +24,19 @@
     ja: { n: 'tiếng Nhật', cert: 'JLPT', lv: ['N5', 'N4', 'N3', 'N2', 'N1'], land: 'Nhật Bản' },
     ko: { n: 'tiếng Hàn', cert: 'TOPIK', lv: ['cấp 1', 'cấp 2', 'cấp 3', 'cấp 4', 'cấp 5', 'cấp 6'], land: 'Hàn Quốc' },
     zh: { n: 'tiếng Trung', cert: 'HSK', lv: ['1', '2', '3', '4', '5', '6'], land: 'Trung Quốc / Đài Loan' },
+    fr: { n: 'tiếng Pháp', cert: 'Chứng chỉ tiếng Pháp mô phỏng', lv: ['cấp 1', 'cấp 2', 'cấp 3', 'cấp 4', 'cấp 5'], land: 'Pháp' },
     de: { n: 'tiếng Đức', cert: 'Goethe', lv: ['A1', 'A2', 'B1', 'B2', 'C1'], land: 'Đức' }
   };
-  var LANG_OF = { JP: 'ja', KR: 'ko', TW: 'zh', CN: 'zh', HK: 'zh', DE: 'de', AT: 'de', CH: 'de', US: 'en', GB: 'en', AU: 'en', CA: 'en', NZ: 'en', IE: 'en', SG: 'en' };
-  var LANG_OF_NAME = { 'Nhật Bản': 'ja', 'Hàn Quốc': 'ko', 'Đài Loan': 'zh', 'Trung Quốc': 'zh', 'Đức': 'de', 'Hoa Kỳ': 'en', 'Úc': 'en', 'Anh': 'en', 'Canada': 'en', 'Singapore': 'en' };
+  var LANG_OF = { FR: 'fr', JP: 'ja', KR: 'ko', TW: 'zh', CN: 'zh', HK: 'zh', DE: 'de', AT: 'de', CH: 'de', US: 'en', GB: 'en', AU: 'en', CA: 'en', NZ: 'en', IE: 'en', SG: 'en' };
+  var LANG_OF_NAME = { 'Pháp': 'fr', 'Nhật Bản': 'ja', 'Hàn Quốc': 'ko', 'Đài Loan': 'zh', 'Trung Quốc': 'zh', 'Đức': 'de', 'Hoa Kỳ': 'en', 'Úc': 'en', 'Anh': 'en', 'Canada': 'en', 'Singapore': 'en' };
   function langLv(l, k) { return (l.lang && l.lang[k]) || 0; }
   function langCert(l, k) { var L = LANG[k], v = langLv(l, k); return v ? L.cert + ' ' + L.lv[v - 1] : ''; }
   function langNext(l, k) { var v = langLv(l, k); return v < LANG[k].lv.length ? v + 1 : null; }
   // ngôn ngữ phù hợp hoàn cảnh: đang/định sang nước nào thì học tiếng nước đó
   function langCtx(l) {
     var ab = l.abroad, k = ab ? (LANG_OF[ab.code] || LANG_OF_NAME[ab.name]) : null;
+    if (l.flags && LANG[l.flags.langGoal]) return l.flags.langGoal;
     if (k) return k;
-    if (l.flags && l.flags.langGoal) return l.flags.langGoal;
     return null;
   }
   function langLabel(l, k) {
@@ -463,6 +464,8 @@
     }
     sibs(l).forEach(function (s) {
       var sa = sibAge(l, s), w = sibCall(l, s);
+      // 8.10.17: anh chị em mang sang từ đời trước khởi đầu là "đang đi học"; khi trưởng thành nhận nghề đã biết hoặc một nghề cố định theo tên (không tiêu RNG).
+      if (s.job === 'đang đi học' && sa >= 22) { s.job = s.adultJob || SIB_JOBS[Math.abs(String(s.n).split('').reduce(function (h, ch) { return (h * 31 + ch.charCodeAt(0)) | 0; }, 7)) % SIB_JOBS.length]; }
       // anh chị em lập gia đình, sinh con
       if (!s.wed && sa >= 22 && sa <= 38 && ch(r, 0.14)) { s.wed = true; log('Đám cưới của ' + w + '. Cả nhà tất bật mấy ngày liền.', 'good'); fx(l, { hap: 2, soc: 2 }); s.close = Math.min(100, s.close + 2); }
       // cháu gọi bạn: con của anh/chị → chú/cô (bên nội) hoặc cậu/dì (bên ngoại); con của em → bác

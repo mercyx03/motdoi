@@ -42,9 +42,7 @@ for(const reason of ['breakup','death','sameNameNewPartner','jail','military','t
  const a=life();a.flags.vegetarian=true;ok(/món chay/.test(T.meal(a,T.own(a))),'tôn trọng chế độ ăn chay');a.flags.vegetarian=false;a.religion='Hồi giáo';ok(/kiêng kỵ/.test(T.meal(a,T.own(a))),'tôn trọng kiêng kỵ tôn giáo');
 }
 {
- const l=life();l.abroad={code:'US',name:'Hoa Kỳ',perm:true};l.cur='usd';l.gdp=80;l.base=80000;l.money=100000;l.partner.inc=10000;const d=invoice(l,'mine'),cost=T.quote(l,d.data);ok(Math.abs(G.CUR.toVND(l.gdp,cost)-41.6)<.01,'ngân sách từ nước ngoài quy đổi đúng sang đơn vị game');const where=JSON.stringify(l.abroad);run(l,d,'self');ok(JSON.stringify(l.abroad)===where&&l.cur==='usd','du lịch về quê rồi trở lại nước đang sống');
- const q=life();q.country='US';delete q.prov;q.partner.homeCountry='JP';delete q.partner.home63;ok(!T.own(q)&&!T.eligible(q,'mine')&&!T.eligible(q,'theirs'),'không gán quê Việt Nam cho nhân vật và người yêu nước ngoài');const invalid=E.DEC.que_chuyen_di.make(q,()=>.5,{side:'theirs'});ok(!E.DEC.que_chuyen_di.valid(q,invalid.data),'không tự đổi điểm đến khi quê được chọn không hợp lệ');
- const p=life();p.partner.homeCountry='US';delete p.partner.home63;ok(T.eligible(p,'mine')&&!T.eligible(p,'theirs'),'có thể mời người yêu nước ngoài về quê Việt Nam của mình');
+ const l=life();l.abroad={code:'US',name:'Hoa Kỳ',perm:true};const before=l.money;ok(!E.DEC.que_chuyen_di.valid(l),'ở nước ngoài không tự đi chơi quê Việt Nam như nội địa');const d=E.DEC.que_chuyen_di.make(l,()=>.5,{side:'mine'});run(l,d,'both');ok(l.money===before&&!l.pending.some(d=>d.id==='que_thanh_toan'),'không tạo hóa đơn chuyến quê tại chỗ khi ở nước ngoài');
 }
 {
  let visits=0;

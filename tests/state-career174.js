@@ -266,4 +266,31 @@ function pickMenu(l, menuId, optKey, r = () => 0.2) {
   }
 }
 
+for (const pos of Object.values(S174.POSITIONS)) {
+  ok(Number.isInteger(pos.reqEdu) && pos.reqEdu >= 0 && pos.reqEdu < E.EDU.length, 'Education requirement is valid: ' + pos.id);
+}
+for (const job of ['cong_an','quan_doi']) {
+  const l=makeLife(job,3,38);
+  const text=S174.statusSummaryText(l);
+  ok(!/undefined|NaN/.test(text), 'Uniformed career requirements render cleanly: '+job);
+  ok(S174.BY_JOB_RANK[job].every(pos=>pos.reqEdu===5), 'Officer route requires university education: '+job);
+}
+// 8.10.17 (Phần B, STATE-FIX-1): "cán bộ nguồn" không áp cho người đã giữ chức cấp phó sở trở lên; quyết định cũ còn chờ không ép chuyển.
+{
+  const minister = makeLife('trung_uong', 5, 46);
+  ok(!E.DEC.ct_quy_hoach.valid(minister), 'Test F1: minister does not receive entry-level cadre planning');
+  const d = E.DEC.ct_quy_hoach.make(minister, () => 0.5); minister.pending = [d];
+  E.DEC.ct_quy_hoach.apply(minister, d, 'nhan', () => 0.5, () => {});
+  ok(E.resolveJob(minister.job.id) === 'trung_uong' && minister.job.rank === 5 && S174.levelOf(minister) === 8, 'Test F2: stale pending decision cannot demote a minister');
+  const director = makeLife('cong_chuc', 4, 45);
+  ok(!E.DEC.ct_quy_hoach.valid(director), 'Test F3: department director (level 6) is not routed through cadre planning');
+  for (const [job, rank] of [['ngan_hang_nn', 5], ['dang_uy', 6], ['hanh_chinh_cong', 8]]) {
+    const x = makeLife(job, rank, 48); const before = S174.levelOf(x); const dd = E.DEC.ct_quy_hoach.make(x, () => 0.5); x.pending = [dd]; E.DEC.ct_quy_hoach.apply(x, dd, 'nhan', () => 0.5, () => {});
+    ok(E.resolveJob(x.job.id) === job && S174.levelOf(x) === before, 'Test F4: ' + job + ' r' + rank + ' keeps position');
+  }
+  const junior = makeLife('cong_chuc', 2, 34);
+  ok(E.DEC.ct_quy_hoach.valid(junior), 'Test F5: junior official can still be planned as a source cadre');
+  const dj = E.DEC.ct_quy_hoach.make(junior, () => 0.5); junior.pending = [dj]; E.DEC.ct_quy_hoach.apply(junior, dj, 'nhan', () => 0.5, () => {});
+  ok(E.resolveJob(junior.job.id) === 'chinh_tri' && S174.levelOf(junior) >= 4, 'Test F6: junior planning moves to the party track without demotion');
+}
 console.log('State career overhaul (STATE174): ' + passed + ' checks passed.');

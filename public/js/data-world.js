@@ -211,6 +211,9 @@
   });
   var BY = {};
   C.forEach(function (c) { BY[c.code] = c; });
+  // Existing overseas-work saves use TW. Resolve that destination without adding
+  // a random-birth entry or inventing another statistical country row.
+  BY.TW=Object.assign({},BY.CN,{code:'TW',name:'Đài Loan',cities:['Đài Bắc','Đài Trung','Cao Hùng','Hoa Liên'],births:0,compatibilityModel906:true});
 
   // Hôn nhân cùng giới hợp pháp (tính đến 2025)
   var SSM = 'NL,BE,ES,CA,ZA,NO,SE,PT,IS,AR,DK,BR,FR,UY,NZ,GB,LU,US,IE,CO,FI,MT,DE,AU,AT,EC,CR,CL,CH,SI,CU,MX,AD,EE,GR,LI,TH'.split(',');

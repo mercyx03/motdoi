@@ -467,7 +467,7 @@ footer .disclaimer b { color: var(--accent); }
 /* V5.3 family cards */
 .family-form{display:grid;gap:10px;margin:18px 0;padding:16px;border:1px solid var(--line,#294255);border-radius:12px}.family-form input:not([type=checkbox]),.family-form select,.family-form textarea{box-sizing:border-box;min-width:0;width:100%;padding:10px;border:1px solid #385367;border-radius:8px;background:#102334;color:#f4eedb;font:inherit}.family-form label{font-weight:600}.family-form textarea{resize:vertical}.family-open{margin:5px 0}.family-facts li{gap:14px}.family-facts b{overflow-wrap:anywhere}.family-profile h2{overflow-wrap:anywhere}
 
-.modal.family-profile{background:#102130}body:has(.family-profile) #decPill{visibility:hidden}
+.modal.profile{background:var(--surface);border-radius:var(--r);padding:22px}body:has(.modal.profile) #decPill{visibility:hidden}.modal.family-profile{background:#102130}body:has(.family-profile) #decPill{visibility:hidden}
 
 
 
@@ -642,6 +642,7 @@ footer .disclaimer b { color: var(--accent); }
 @media(max-width:600px) { #aboutDialog { width: calc(100% - 24px); padding: 24px 20px; } }
 
 /* Keep football profiles, standings and match reports readable on narrow screens. */
+.dec-lines { white-space: pre-line; overflow-wrap: anywhere; }
 .football-summary { white-space: pre-line; font-weight: 400; overflow-wrap: anywhere; }
 
 /* Distinct, compact levels in the action panel on phone and desktop. */

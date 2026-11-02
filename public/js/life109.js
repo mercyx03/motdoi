@@ -97,8 +97,14 @@ E.HOOKS.year.push(function(l,r,log){
 E.CAREER109_YEAR=E.HOOKS.year[E.HOOKS.year.length-1];
 var resolve=E.resolve;E.resolve=function(l){var before=l.job&&{id:l.job.id},out=resolve.apply(this,arguments);loss(l,before);return out;};
 // Conditions are evaluated on snapshots so showing a menu never changes a save.
-var actions=E.actions;E.actions=function(l){l=JSON.parse(JSON.stringify(l));return actions(l).map(function(x){x.catalogHidden=x.ok!==true&&/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok);var a=E.ACT.find(function(a){return a.id===x.id;}),D=a&&E.DEC[a.sc||a.id];
- if(x.ok===true&&D&&D.valid){try{if(!D.valid(JSON.parse(JSON.stringify(l)),{requested:true}))x.ok=explain(l,x.id);}catch{x.ok='Cần hoàn thành lựa chọn hoặc tình huống liên quan trước';}}
+// v8.10.12: mỗi lần mở bảng chỉ sao chép bản lưu hai lần (một bản để liệt kê, một bản dùng chung để kiểm tra điều kiện),
+// thay vì sao chép lại toàn bộ đời cho từng hành động (trước đây ~150 lần, 200–450 ms mỗi lần vẽ bảng ở bản lưu lớn).
+// Bản kiểm tra được sao lại nếu một điều kiện lỡ làm đổi các trường cốt lõi; bản lưu thật không bao giờ bị chạm tới.
+function probeSig(p){var s=p.st||{};return [p.alive,p.age,p.money,p.acts,p.karma,s.hea,s.hap,s.kno,s.soc,(p.pending||[]).length,(p.sched||[]).length,p.job&&p.job.id,p.partner&&p.partner.status,p.school,(p.kids||[]).length,p.jailUntil].join('|');}
+var actions=E.actions;E.actions=function(l){var json=JSON.stringify(l),probe=null,sig0=null,byId={};l=JSON.parse(json);E.ACT.forEach(function(a){if(!byId[a.id])byId[a.id]=a;});
+ function check(){if(!probe||probeSig(probe)!==sig0){probe=JSON.parse(json);sig0=probeSig(probe);}return probe;}
+ return actions(l).map(function(x){x.catalogHidden=x.ok!==true&&/^(Từ \d+ tuổi|Không áp dụng|Không còn phù hợp)/.test(x.ok);var a=byId[x.id],D=a&&E.DEC[a.sc||a.id];
+ if(x.ok===true&&D&&D.valid){try{if(!D.valid(check(),{requested:true}))x.ok=explain(l,x.id);}catch{probe=null;x.ok='Cần hoàn thành lựa chọn hoặc tình huống liên quan trước';}}
  if(x.ok!==true&&/^(Không áp dụng|Chưa phù hợp|Chưa thể làm)/.test(x.ok))x.ok=explain(l,x.id);return x;});};
 function explain(l,id){if(!l.alive)return 'Cuộc đời đã kết thúc';if(l.age<18&&/108|109/.test(id))return 'Cần đủ 18 tuổi';
  var reasons={dating108:'Cần đủ 18 tuổi và được tự do đi lại',childGuide108:'Cần có con còn sống từ 10 tuổi',network108:'Cần đủ 18 tuổi và được tự do đi lại',familyPlan108:'Cần có người cùng làm cha mẹ phù hợp; kiểm tra tuổi, khoảng cách sinh và thai kỳ',music105_training:'Cần đang làm ca sĩ, rapper hoặc nhạc sĩ; kiểm tra lượt và thời gian năm nay'};

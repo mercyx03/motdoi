@@ -854,6 +854,7 @@
 
   var CORE = {
     treat: {
+      valid: function (life) { return !!life.ill; }, // 8.10.20: lịch hẹn điều trị không còn phù hợp khi bệnh đã khỏi/không còn
       make: function (life, r) {
         var ill = life.ill, cost = Math.round(life.base * (life.gdp > 40 ? 0.15 : 1.1));
         return {
@@ -1347,6 +1348,7 @@
   // ================= VÒNG NĂM =================
   // opts.auto = true: AI tự chủ động làm các hành động (dùng cho chế độ tự động, em bé cùng giây, kiểm thử)
   function beginYear(life, opts) {
+    if (E.TRANSIT907 && E.TRANSIT907.visit(life) && E.TRANSIT907.visit(life).at < life.age) E.TRANSIT907.restore(life);
     if (!life.alive) return life.pending;
     // Bản lưu cũ có thể còn lựa chọn của năm trước đã hết hạn: bỏ đi thay vì bắt người chơi bấm rồi báo "không còn phù hợp".
     if (life.pending.length) life.pending = life.pending.filter(function (d) { return !DEC[d.id] || !DEC[d.id].valid || DEC[d.id].valid(life, d.data || {}); });
@@ -1379,6 +1381,8 @@
       life.pending = q; prune(life); return life.pending;
     }
 
+    // Chọn khối THPT là quyết định bắt buộc của giai đoạn học: hỏi trước các tình huống khác cho tới khi có câu trả lời (khoi-track.js).
+    if (E.KHOI912 && E.KHOI912.due(life)) add('chon_khoi');
     // tình huống đã hẹn trước (chuỗi sự kiện)
     if (life.sched && life.sched.length) {
       var due = life.sched.filter(function (s) { return s.at <= a; });
@@ -1431,6 +1435,8 @@
     if (!life.ownHouse && life.indep && a >= 25 && (life.flags.houseNo == null || a >= life.flags.houseNo) && life.money >= (E.homeMin ? E.homeMin(life) : housePrice(life)) * (H.loanAgeOk(life, 'home') ? 0.35 : 1) && !(life.abroad && !life.abroad.perm) && r() < 0.5) add('house');
     if (life.job && !/^(kd_|xkld|phu_giup)/.test(life.job.id) && !E.isCrime(life) && a >= 25 && a <= 50 && (life.flags.bizAsked || 0) < 2 && life.money > life.base && r() < 0.04) add('biz');
     if (a >= 40 && a <= 70 && !life.flags.careDone && ((life.fam.mAlive && life.fam.mAge + a >= 72) || (life.fam.fAlive && life.fam.fAge + a >= 72)) && r() < 0.3) add('care');
+
+    if(E.CRIME911&&E.CRIME911.due(life)){add('crimeCase911');}
 
     // Hardcore có thêm một biến cố riêng; vẫn tuân thủ điều kiện, giới hạn và chuỗi bắt buộc.
     if (E.hardcoreEvent && q.length < cap) {
@@ -1516,7 +1522,7 @@
         case 'marry': return !!(p && p.status === 'dating');
         case 'kid': return !!(p && p.alive !== false && p.age >= 18 && life.age >= 18);
         case 'divorce': return !!(p && p.status !== 'dating');
-        case 'love': return !p && life.age <= (E.LOVE_MAX || 120); // v4.2: chỉ tìm một nửa khi dưới 55 tuổi
+        case 'love': return !p && life.age <= (d.data && d.data.search912 && E.LOVE_SEARCH_MAX || E.LOVE_MAX || 120); // v4.2: chuyện tình tự đến chỉ dưới 55 tuổi; người chủ động đi tìm thì tới 85 (romance912.js)
         case 'house': return !life.ownHouse;
         case 'biz': return !!life.job;
         case 'city': return !life.urban;
@@ -1632,7 +1638,7 @@
       // Otherwise a delayed graduation skips the cap for decades.
       if (life.age >= 18 && life.money < -life.base * 3) { var help = -life.base * 3 - life.money; life.money += help; F.other += help; F.items.push({v:help,t:'Hỗ trợ xử lý nợ sinh hoạt khi còn đi học'}); if(!life.flags.debtHelp){life.flags.debtHelp=true;log('Gia đình cùng bạn thu xếp trả bớt nợ sinh hoạt trong thời gian đi học.','neutral');} }
       life.fin = F; return F; }
-    var b = life.base, p = life.partner && life.partner.status !== 'dating' && life.partner.alive ? life.partner : null;
+    var b = life.base, p = life.partner && life.partner.status !== 'dating' && life.partner.alive && !life.partner.separated908 ? life.partner : null;
     var kidsHome = life.kids.filter(function (k) { return k.alive && a - k.born < 22 && k.custody !== 'other' && k.custody !== 'ex'; }).length; // v5.9.0: con sống với người kia thì trả tiền chu cấp thay vì chi phí nuôi con
     F.partner = p && !(life.jailUntil != null && a < life.jailUntil) && p.inc > 0 && isFinite(p.inc) ? p.inc * 12 * 0.55 : 0; // chỉ góp từ thu nhập thực, không tự tạo thu nhập khi thất nghiệp / đang học
     if (E.economy114Income) F.partner = E.economy114Income(life, F.partner);
@@ -1659,6 +1665,7 @@
     if (E.budget114) E.budget114(life, F);
     if (E.vehicleAnnual) F.vehicle = E.vehicleAnnual(life);
     if (E.esportsLiving) E.esportsLiving(life, F, b, styleK, log);
+    if (E.livingCost918) E.livingCost918(life, F); // 8.10.20: áp lực giá theo năm và giá thuê nhà ở xã hội (econ918)
     // gửi tiền cho bố mẹ già
     var parentsOld = (life.fam.mAlive && life.fam.mAge + a >= 58) || (life.fam.fAlive && life.fam.fAge + a >= 58);
     // bố mẹ không có lương hưu thì con phải gửi nhiều hơn; bố mẹ có lương hưu khá thì chỉ biếu chút quà
@@ -1767,6 +1774,7 @@
     life._yearRun = true;
     var r = RF(life), a = life.age, out = [];
     var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death' && k !== 'money') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
+    if (E.TRANSIT907 && E.TRANSIT907.visit(life)) E.TRANSIT907.restore(life, log);
     var f = life.fam, st = life.st;
     var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
     if (a >= 6 && life.focus === 'baby') life.focus = 'study';
@@ -2068,6 +2076,7 @@
   }
 
   function endYear(life) {
+    if (life.alive && E.TRANSIT907 && E.TRANSIT907.visit(life)) E.TRANSIT907.restore(life);
     life._yearRun = false;
     if (!life.alive) return false;
     life.age++;

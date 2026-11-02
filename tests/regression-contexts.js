@@ -65,4 +65,45 @@ add('scout155',l=>{l.age=15;l.birthYear=2010;l.school='THPT';l.indep=false;E.LIF
 add('eval155',l=>{l.age=16;l.birthYear=2009;l.school='THPT';l.indep=false;l.flags.idol155={stage:'junior',evals:[],peers:[{name:'Minh Anh',skill:50,grow:3,kind:'hòa đồng',bond:0}],company:{name:'Aurora Entertainment (hư cấu)',rep:80,split:0.2},months:0,debt:0};E.LIFE138.state(l).agency={name:'Aurora Entertainment (hư cấu)',code:'KR',status:'junior155',years:0,started:15};});
 add('debut155',l=>{l.age=20;l.flags.idol155={stage:'debut',evals:[],peers:[],company:{name:'Aurora Entertainment (hư cấu)',rep:80,split:0.2},group:{name:'NOVA',members:['A','B','C'],position:null,debutAge:20,fandom:0,albums:[],wins:0},debt:0};E.LIFE138.state(l).agency={name:'Aurora Entertainment (hư cấu)',code:'KR',status:'debut',years:3,started:16};});
 out.debut155.arg={step:'pos'};
+// 8.10.17: khuôn ngẫu nhiên không phải lúc nào cũng có bạn đời đi làm (tình huống chỉ mở khi người ấy có thu nhập, dưới 62 tuổi).
+add('marriageMove130',l=>{l.partner={name:'Minh An',sex:l.sex==='M'?'F':'M',age:42,alive:true,status:'married',since:30,inc:12,job:'kế toán'};});
+// 8.10.17: bệnh thận/gan theo giai đoạn và kế vị nhóm — trạng thái dựng bằng API của chính module.
+add('organ917,kidneyPrep917',l=>{E.ORGAN917.newKidney(l,22,null,null);});
+add('kidneyFail917',l=>{E.ORGAN917.newKidney(l,10,null,null);l.flags.organ917.kidney.failAt=l.age;});out.kidneyFail917.arg={at:out.kidneyFail917.life.age};
+add('kidneyOffer917',l=>{E.ORGAN917.newKidney(l,10,null,null);const k=l.flags.organ917.kidney;k.dialysis={type:'hd',since:43,missed:0};k.wait={since:43};});out.kidneyOffer917.arg={at:out.kidneyOffer917.life.age};
+add('liverDecomp917',l=>{E.ORGAN917.newLiver(l,'hbv','decompensated',null);});out.liverDecomp917.arg={at:out.liverDecomp917.life.age};
+add('liverOffer917',l=>{E.ORGAN917.newLiver(l,'hbv','decompensated',null);l.flags.organ917.liver.wait={since:43};});out.liverOffer917.arg={at:out.liverOffer917.life.age};
+add('crimeLeader912',l=>{E.startJob(l,'doi_no',()=>0.5,()=>{},true);l.job.rank=1;E.migrateExt(l);const g=E.CRIME912.group(l);E.CRIME912.ensureBoss(l);g.crisis={id:'ctx:crisis',kind:'retire',stage:1,at:l.age,cand:{id:'ctx:heir',name:'Người kế nhiệm hư cấu',trait:'cẩn thận',trust:40,since:l.age,demand:0},oldBoss:g.boss&&g.boss.name};});
+// 8.10.17: câu chuyện quốc gia nhiều năm (life173) chỉ mở khi đang sống ở đúng nước, sau mốc tham chiếu, đúng hoàn cảnh (đi học / có việc / đang hẹn hò).
+Object.values(E.COUNTRY_DEPTH_DATA.profiles).forEach(p=>p.lifeEvents.forEach(e=>{const l=E.createLife({mode:'world',country:p.countryCode,seed:917017,year:e.kind==='education'?2010:2002,noOrphan:true});Object.assign(l,{age:e.kind==='education'?16:24,alive:true,indep:e.kind!=='education',retired:false,school:e.kind==='education'?'upper':null,abroad:null,pending:[],sched:[],money:l.base*30,jailUntil:null});l.flags.military=0;l.flags.dirty=0;if(e.kind==='work')l.job={id:'ke_toan',since:22,rank:0,yrs:2,rep:50};if(e.kind==='marriage')l.partner={name:'Người yêu hư cấu',sex:l.sex==='M'?'F':'M',age:24,since:21,alive:true,status:'dating',affection108:65};out[e.eventId]={life:l,arg:{}};}));
+// 8.10.19 Phần B/C: chuỗi biến cố drama917 (dựng qua CHAIN144 với cid/token), công vụ state917, thời đại era917.
+const sibs=l=>{l.sibList=[{n:'Lan',sex:'F',born:-3,alive:true,close:60,job:'kế toán'}];l.fam.fAlive=false;};
+chain144('d917_will_1','d917_will',0,sibs,()=>({npc:{ref:null,name:'Lan'},data:{who:'bố'}}));
+chain144('d917_will_2','d917_will',1,sibs,()=>({npc:{ref:null,name:'Lan'},data:{who:'bố',path:'mediate'}}));
+chain144('d917_debt_1','d917_debt',0,sibs,()=>({npc:{ref:null,name:'Lan'},data:{kind:'sib'}}));
+chain144('d917_rumor_1','d917_rumor',0,l=>{l.partner={name:'Minh An',sex:l.sex==='M'?'F':'M',age:42,alive:true,status:'married',since:30};},()=>({npc:{ref:null,name:'Minh An'},data:{}}));
+chain144('d917_credit_1','d917_credit',0,l=>{E.startJob(l,'van_phong',()=>0,()=>{},true);},l=>({npc:{ref:null,name:'Trần Bình'},data:{since:l.job.since}}));
+chain144('d917_partner_1','d917_partner',0,l=>{E.startJob(l,'kd_quan',()=>0,()=>{},true);},()=>({npc:{ref:null,name:'Phạm Hưng'},data:{}}));
+chain144('d917_complaint_1','d917_complaint',0,l=>{E.startJob(l,'hanh_chinh_cong',()=>0,()=>{},true);l.job.rank=5;E.STATE174.syncState(l);},()=>({npc:{ref:null,name:'người dân'},data:{}}));
+chain144('d917_protege_1','d917_protege',0,l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=5;E.STATE174.syncState(l);E.STATE917.state(l).allies.push({id:'ctx:ally',name:'Vũ Hà',since:40,where:'Bộ Tài chính',trust:60,active:true,helped:0,disagreed:0});},()=>({npc:{ref:null,name:'Vũ Hà'},data:{}}));
+chain144('d917_school_1','d917_school',0,l=>{l.kids=[{name:'Minh',sex:'M',born:35,alive:true,close:60}];},()=>({npc:{ref:null,name:'Minh'},data:{}}));
+chain144('d917_move_1','d917_move',0,l=>{l.abroad={code:'JP',name:'Nhật Bản',perm:true,pool:'jp'};},()=>({npc:{ref:null,name:''},data:{}}));
+add('post917,staff917,project917,stepDown917,discipline917',l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=6;l.job.rankSince=l.age;E.STATE174.syncState(l);E.STATE917.syncPost(l);E.STATE174.state(l).kpi.integrity=30;});
+add('staffPerson917',l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=6;E.STATE174.syncState(l);E.STATE917.syncPost(l);});out.staffPerson917.arg={id:E.STATE917.staff(out.staffPerson917.life)[0].id};
+add('citizen917',l=>{l.partner={name:'Kim',sex:l.sex==='M'?'F':'M',age:40,alive:true,status:'married',homeCountry:'KR'};l.kids=[{name:'Min',sex:'F',born:44,alive:true}];});
+add('drama917,era917,care917',l=>{});
+// 8.10.20 Phần C tiếp: phiếu lương, ngân sách, nghỉ ốm, đào tạo lại, nhà ở xã hội, giao thông, thuế TNDN, hộ chiếu, chuỗi kinh tế.
+add('payslip918,sick918',l=>{l.birthYear=1996;E.startJob(l,'cong_chuc',()=>0,()=>{},true);l.si={yrs:16,sum:100,last:44,m:10};l.yr={gross:240,si:25.2,items:[]};l.flags.tax909={registered:{},history:[{age:45,year:2041,afterInsurance:214.8,deduction:186,taxable:28.8,tax:1.44,dependents:0,gross:240,insurance:25.2}]};l.ill='cúm nặng';});out.sick918.arg={at:out.sick918.life.age};
+add('budget918,retrain918,biztax918',l=>{E.startJob(l,'kd_quan',()=>0,()=>{},true);l.income=l.base*2;l.si={yrs:3,last:40,m:8};});
+add('housing918,housingOffer918',l=>{l.urban=true;l.ownHouse=false;l.partner=null;l.yr={gross:180,items:[]};l.income=180;l.flags.econ918={housing:{status:'waiting',applied:42,due:45}};});out.housingOffer918.arg={at:out.housingOffer918.life.age};
+add('lez918',l=>{l.birthYear=1986;l.urban=true;l.prov={neu:'Hà Nội',old:'Hà Nội',kind:'Thành phố'};l.veh='xe máy';l.vehK='wave';l.vehName='Honda Wave';});out.lez918.arg={at:out.lez918.life.age,ph:3};
+add('passport918',l=>{l.kids=[{name:'Bi',sex:'M',born:38,alive:true}];l.flags.travel918={passport:{cc:'VN',issued:44,until:54},visas:{},denied:{},trips:[]};});
+chain144('d918_squeeze_1','d918_squeeze',0,l=>{l.partner={name:'An',sex:'F',age:44,alive:true,status:'married',inc:10};},()=>({npc:{ref:null,name:''},data:{y:2041}}));
+chain144('d918_eldercare_1','d918_eldercare',0,l=>{l.fam.mAlive=true;l.fam.mAge=35;l.sibList=[{n:'Lan',sex:'F',born:-3,alive:true,close:60}];},()=>({npc:{ref:null,name:'mẹ'},data:{who:'mẹ',side:'m',path:'yes'}}));
+chain144('d918_reskill_1','d918_reskill',0,l=>{E.startJob(l,'van_phong',()=>0,()=>{},true);},l=>({npc:{ref:null,name:''},data:{since:l.job.since}}));
+// 8.10.20 Phần C hoàn thiện: BHYT/quỹ hưu, giờ làm, thực tập, khuyết tật, vay sinh viên, đề xuất chính sách.
+add('insurance918,work918',l=>{E.startJob(l,'ke_toan',()=>0,()=>{},true);l.flags.bhytVol=false;l.yr={gross:240,items:[]};l.flags.welfare918={vol:{m:1,bal:30,paid:30,since:40}};});
+add('intern918,studentLoan918',l=>{l.age=20;l.school='uni';l.major='eco';l.indep=false;l.fam.q=2;l.money=0;});
+add('disability918',l=>{l.kids=[{name:'Na',sex:'F',born:35,alive:true,dev915:{v:1,c:{id:{known:true,at:38}}}}];});
+add('policy918',l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=6;l.job.rankSince=l.age;E.STATE174.syncState(l);E.STATE917.syncPost(l);});
 return out;};

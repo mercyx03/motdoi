@@ -3,14 +3,14 @@ const assert = require('assert'), fs = require('fs'), path = require('path'), { 
 const base = process.env.MOTDOI_URL || 'http://localhost:8084/';
 (async () => {
   let chrome, checks = 0; const keepAlive = setInterval(() => {}, 1000);
-  const timer = setTimeout(() => { if (chrome) chrome.proc.kill(); console.error('FAIL country UI timeout'); process.exit(1); }, 90000);
+  const timer = setTimeout(() => { if (chrome) chrome.proc.kill(); console.error('FAIL country UI timeout'); process.exit(1); }, 200000); // 14 nước × 2 khổ màn hình
   const ok = (v, m) => { assert(v, m); checks++; };
   fs.mkdirSync(path.join(__dirname, '../.cache/country-minimum-review'), { recursive: true });
   try {
     chrome = await launch();
     for (const width of [390, 1280]) {
       const p = await page(chrome, base, { width, height: 1000 }); await p.eval(async () => MotDoiBoot.load());
-      for (const cc of ['FI', 'GH', 'IE', 'NZ', 'JP', 'FR', 'US', 'VN']) {
+      for (const cc of ['FI', 'GH', 'IE', 'NZ', 'JP', 'FR', 'US', 'VN', 'TH', 'KE', 'BR', 'DE', 'SA', 'FJ']) { // 8.10.17: thêm nước đại diện các lô mới
         await p.eval(cc => {
           const E = G.E, l = E.createLife({ mode: 'world', country: cc, year: 2002, seed: 894 });
           Object.assign(l, { age: 24, alive: true, school: null, indep: true, money: l.base * 20, pending: [], job: { id: 'ke_toan', rank: 0, yrs: 2, since: 22, rep: 50 } }); l.flags.military = 0;

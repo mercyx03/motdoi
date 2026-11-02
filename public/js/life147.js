@@ -175,10 +175,10 @@
     manage: 'childGuide108 support114 childSupport130 future126 children141 gift112 childHome112 custody129 residence146 family100_children weddings129 matchmaking149',
     kin: 'familyProfiles138 cases113 guardian138 family100_parents tham_bo_me gap_anh_chi parentsHome146 familyHead148',
     events: 'familyTrip114 grandCare129 schoolMeeting129 celebration129 party148 gifts149',
-    spend: 'chi_tieu budget114 gui_bo_me mua_bao_hiem mua_nuoc_ban',
+    spend: 'chi_tieu budget114 gui_bo_me mua_bao_hiem mua_nuoc_ban budget918 payslip918 insurance918',
     bank: 'bank112 vay_tien tra_no repay114',
     invest: 'dau_tu market_menu ban_dau_tu_moi ve_so',
-    estate: 'dau_tu_lon quan_ly_dau_tu mua_nha doi_nha homes112 chuyen_noi_o assetTeam123 deal148',
+    estate: 'dau_tu_lon quan_ly_dau_tu mua_nha doi_nha homes112 chuyen_noi_o assetTeam123 deal148 housing918 biztax918',
     things: 'mua_xe tra_xe_thue ban_tai_san di_chuc70 will150 collect148'
   };
   var BY_ID = {};

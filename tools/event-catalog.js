@@ -65,7 +65,8 @@ module.exports=function(pub,files){
  for(const [id,d]of Object.entries(E.DEC)){
   if(examples.has(id))continue;
   for(const original of contexts){
-   try{const l=clone(original);if(d.valid&&!d.valid(l,{}))continue;const made=d.make(l,E.H.rf?E.H.rf(l):()=>.5,{});capture(l,made);if(examples.has(id))break;}catch{}
+   // 8.10.17: kiểm điều kiện trên bản gốc trước khi sao chép (975 câu chuyện quốc gia không hợp phần lớn đời mẫu → trước đây ~234.000 lần sao chép).
+   try{if(d.valid&&!d.valid(original,{}))continue;const l=clone(original);if(d.valid&&!d.valid(l,{}))continue;const made=d.make(l,E.H.rf?E.H.rf(l):()=>.5,{});capture(l,made);if(examples.has(id))break;}catch{}
   }
  }
  function passages(value){

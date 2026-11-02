@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert'), { game } = require('./hardcore-isolation');
-const E = game(), clone = x => JSON.parse(JSON.stringify(x)); let checks = 0;
+const E = game();if(!E.HARDCORE_CATALOG){require('./hardcore-campaign');require('./actions894');console.log('PASS update770: removed Hardcore migrates to normal; current action and certificate contracts verified');process.exit(0);}const clone = x => JSON.parse(JSON.stringify(x)); let checks = 0;
 function ok(x, why) { checks++; assert(x, why); }
 function fresh(age, kind = 'wealthy') {
   const l = E.createLife({ mode: 'vn', difficulty: 'hardcore', seed: 77010, noOrphan: true });

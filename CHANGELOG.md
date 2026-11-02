@@ -1,3 +1,119 @@
+## 8.10.20-c918 — 02/11/2026 (UTC+7) — đã ghi phát hành 13:04 theo yêu cầu của chủ dự án
+
+- Phần C tiếp: `econ918.js` — phiếu lương (gộp → BHXH/BHYT/BHTN → giảm trừ → thuế → điều chỉnh thu nhập bền vững của game → thực nhận, khớp tiền vào sổ), trần căn cứ đóng 20 × mức tham chiếu theo năm (life3); ngân sách hộ qua E.budget114 + quỹ khẩn cấp + tự cắt chi (E.lifestyleFactor); áp lực giá theo năm lạm phát (E.ERA917.macro, chung theo nước/năm); nghỉ ốm BHXH; đào tạo lại (mở việc qua E.offers); nhà ở xã hội (chờ, xét lại, vay NHCSXH 5,4%, thuê nửa giá); vùng phát thải thấp Hà Nội và vé xe buýt giả định (E.vehicleAnnual/E.travelCost); bảng thuế TNDN ước tính; 3 chuỗi C11 trên CHAIN144 (chăm cha mẹ nối tiếp tình huống gốc `care`, không khởi phát riêng).
+- `travel918.js` — hộ chiếu của người chơi; miễn thị thực ASEAN (nguồn thứ cấp) / cần visa; xét visa cố định theo năm, bị từ chối mất lệ phí một lần; kiểm hộ chiếu/visa trước khi thu tiền gói du lịch (life62) và hồ sơ visa du lịch (abroad-depth); du lịch cùng con cần hộ chiếu của con.
+- era917: số liệu sửa theo nguồn đọc lại 02/11/2026 (lương tối thiểu vùng 2026, mức tham chiếu 2,53 triệu từ 7/2026, NĐ 253/2026 cho giảm trừ gia cảnh, NĐ 191/2025 quốc tịch, Luật Việc làm 2025); mức kiểm chứng từng chính sách; kịch bản Cân bằng áp dụng chậm và chọn lọc chính sách giả định có vòng đời đề xuất → thí điểm → áp dụng → đánh giá lại; lịch sử giá chung theo nước/năm.
+- Sửa: tên nước hiện mã ở mục quốc tịch của con; văn bản nhiều dòng trong tình huống bị dồn (app.js + style.css .dec-lines); số thập phân kiểu Việt; trợ cấp trẻ dùng đúng trường quyền nuôi (custody); mục mới xếp vào đúng nhóm con (life147).
+- Sửa thứ tự thuế (chủ dự án duyệt): điều chỉnh thu nhập bền vững (life115) áp trước, thuế TNCN và thuế kinh doanh tính trên thu nhập sau điều chỉnh; engine không điều chỉnh lần hai; bảng Tài chính năm thêm dòng điều chỉnh, "Lương thực nhận" đặt sau thuế.
+- Hoàn thiện Phần C (`welfare918.js`): chỉ số giá riêng nhà ở/y tế/học phí/đi lại so với mặt bằng lương (trần 0,9–1,1), lãi suất và tỷ giá; lương công vụ theo lương cơ sở 2,53 triệu (áp trước bảo hiểm/thuế) và lương hưu điều chỉnh; BHYT hộ gia đình đóng hằng năm; quỹ hưu trí tự nguyện trừ thuế TNCN; bảo hiểm nhân thọ có thời gian chờ và loại trừ bệnh có sẵn; tăng ca ×150% có trần, phép năm; thực tập; trợ cấp người khuyết tật nặng sau xác định mức độ; thu nhập tối thiểu (giả định); vay sinh viên NHCSXH; miễn học phí trừ vào chi phí con; BHYT trẻ dưới 16 (giả định); thuế hộ kinh doanh/TNDN trừ tiền thật từ 2026; lệ phí trước bạ xe xăng/điện; e-visa; tự làm hộ chiếu khi sang nước ngoài học/làm; cán bộ đề xuất chính sách toàn quốc hoặc thí điểm ở tỉnh; bán căn hộ xã hội trước 5 năm → khoản vay đến hạn.
+- Sửa: tình huống điều trị hẹn trước khi bệnh đã không còn (engine `treat.valid`); chỉ số đi lại không nhân phần xe thuê theo hợp đồng.
+- Cân bằng: hộ cận nghèo được hỗ trợ 70% phí BHYT; chỉ số ngành 0,9–1,1. Nợ nặng cuối đời (600 seed của regression) 14,5% so với baseline 15,0%; tuổi thọ 72,13 so với 71,94.
+- Nhật ký household-policy-820 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00), trước khi chủ dự án tự upload.
+
+## 8.10.19-bc — 01/11/2026 (UTC+7)
+
+- Phần B (MD2): `state917.js` — chức vụ gắn bộ/tỉnh/thành phố (`l.job.post917`, lịch sử chuyển chức), NHNN đúng đơn vị, bản lưu cũ ghi "chưa xác định" thay vì bịa; xin thôi giữ chức có xác nhận; kiểm điểm có giải trình; nhân sự có tên/tính cách/năng lực, thẩm quyền đề nghị (bậc 4–5) và quyết định (≥6), tối đa 3 việc nhân sự/năm; người được nâng đỡ giúp/bất đồng; dự án công dùng ngân sách đơn vị tách tiền riêng; KPI tăng tự nhiên dừng ở 70.
+- B8: `drama917.js` — 9 chuỗi biến cố nhiều năm trên E.CHAIN144 (di sản, người thân giấu nợ, tin đồn, tranh công, đối tác rút vốn, khiếu nại công dân, người được nâng đỡ phản đối, con gặp khó ở trường, bằng cấp khi định cư); tối đa 2 chuỗi mở, chờ 6 năm mỗi loại; cường độ Êm đềm/Cân bằng/Nhiều biến động chỉ đổi tần suất.
+- Phần C (MD3): `era917.js` — năm thế giới, bảng chính sách ba lớp verified/projection/simulated (docs/ERA-POLICY-917.md), kịch bản tương lai chọn một lần, lộ trình nghỉ hưu 2019, chỉ số giá/lương tham khảo, trợ cấp một lần khi sinh con (không truy lĩnh), trần trợ cấp thất nghiệp, quốc tịch/hộ chiếu của con, chăm sóc da/mụn/trang điểm, tuổi hiến máu theo kịch bản.
+- Sửa: hàm băm FNV trong state917 thiếu bước trộn làm xác suất theo năm tương quan.
+- Nhật ký state-drama-era-819 ghi đã phát hành theo yêu cầu của chủ dự án (01/11/2026 22:56 +07:00).
+
+## 8.10.18-state — 01/11/2026 (UTC+7)
+
+- Phần B, STATE-FIX-1: `ct_quy_hoach` (cán bộ nguồn) không còn áp cho người từ bậc 5 trở lên (phó GĐ sở/vụ phó…); kiểm lại lúc thực thi nên quyết định cũ còn chờ không chuyển chức. Tái hiện trước khi sửa: bộ trưởng `trung_uong` r5 (bậc 8) → `chinh_tri` r3 phó chủ tịch UBND tỉnh (bậc 7). Test: state-career174 (+8).
+- Bệnh thận/gan: không thu trùng chi phí theo dõi với ngân sách y tế sẵn có; chi phí chuyên khoa giữ khoản dự phòng sinh hoạt. Đo cùng seed: tuổi thọ VN 71,89 (HEAD) → 71,67, nợ nặng 17,7% → 17,6%.
+- Nhật ký 8.10.12 → 8.10.17 chuyển sang đã phát hành theo xác nhận upload của chủ dự án (01/11/2026 20:30 +07:00).
+- Bản packaged, chưa phát hành.
+
+## 8.10.17-md1 — 01/11/2026 (UTC+7)
+
+- §13: đủ 195/195 nước đạt tối thiểu có nguồn và tích hợp gameplay (3 lộ trình học, 3 lễ, 3 bước cưới, 5 món, 5 mục lao động, 5 câu chuyện nhiều năm/nước; 975 câu chuyện). 187 hồ sơ mới loại `compiled-912`: URL UNESCO GEM/ILO/Ngân hàng Thế giới đã kiểm (561/561), 187 URL trang quốc gia UNESCO chưa kiểm được do máy chủ ngắt kết nối; chưa đối chiếu từng câu.
+- §12: thủ lĩnh nhóm NPC, đổi lãnh đạo hai giai đoạn (ủng hộ/tranh vị trí/đứng ngoài/rời nhóm → điều kiện đóng góp năm sau), bị thách thức khi đang đứng đầu, tan rã nhóm; trợ giúp pháp lý trong trại theo từng bản án (kết quả sau ≥1 năm, tối đa giảm 1 năm hoặc điểm xét đặc xá).
+- §11: bệnh thận mạn theo eGFR G1–G5 (lọc máu, ghép thận, người hiến cùng nhóm máu có quyền từ chối, danh sách chờ, thải ghép) và bệnh gan mạn theo giai đoạn (kháng virus HBV, DAA chữa HCV, cai rượu, tầm soát ung thư gan, xơ gan mất bù, ghép gan).
+- §14: bộ quét bất biến liên hệ thống (tests/integrity917.js); sửa 4 lỗi tái hiện: anh chị em thừa kế mãi "đang đi học", `sponsor.feltN` NaN, ghi chuyện sức khỏe sau khi qua đời, ILO URL mã hóa sai.
+- Sửa lỗi người chơi báo: du học (abroad107) → "Ở lại tìm việc" bị mất nút "Tìm việc" do cư trú tìm việc có `abroad.perm=false`. Hiệu chỉnh nguy cơ thận/gan (tuổi thọ TB VN mô phỏng 2.400 đời: 71,87 có chuỗi / 72,17 tắt). Build lại còn ~22 giây (event-catalog kiểm điều kiện trước khi sao chép đời mẫu).
+- Bản packaged/Preview, chưa xác nhận phát hành. Chi tiết: docs/UPGRADE-912-PROGRESS.md, docs/COUNTRY-COVERAGE-917.md.
+
+## 8.10.16-health915 — 01/11/2026 (UTC+7)
+
+- Ung thư theo giai đoạn I–IV, phác đồ theo chỉ định (phẫu thuật, hóa trị, xạ trị, chăm sóc hỗ trợ), tác dụng phụ theo phác đồ, chế phẩm máu khi có chỉ định, buồng truyền, theo dõi 5 năm và tái phát; nguy cơ tử vong theo giai đoạn thay cho hệ số chung (tuổi chết TB mô phỏng 72,9 → 71,8).
+- Lao tuân thủ 6 tháng, mất ngủ (CBT-I/thuốc ngắn hạn), lupus (đợt bùng phát, biến chứng thận), tóc và hiến tóc, tạm hoãn hiến máu theo chính sách game.
+- Phát triển trẻ: tự kỷ, ADHD, chậm ngôn ngữ/vận động, khuyết tật trí tuệ, lo âu, OCD; dấu hiệu → đánh giá → hỗ trợ; không "chữa khỏi", không đổ lỗi cha mẹ.
+- Bản packaged/Preview, chưa xác nhận phát hành. Nguồn: docs/HEALTH-GENETICS-912-SOURCES.md.
+
+## 8.10.15-genetics912 — 01/11/2026 (UTC+7)
+
+- Di truyền theo cha/mẹ sinh học: 9 locus (lặn NST thường, liên kết X) + trisomy 21 theo tuổi mẹ; tần suất theo nhóm dân cư, đối chiếu bằng mô phỏng với MedlinePlus và số liệu Việt Nam; kiểu gen không reroll.
+- Tình trạng có tuổi khởi phát, chẩn đoán (sàng lọc sơ sinh/triệu chứng), mức chăm sóc và chi phí; con và nhân vật cũ không bị gán bệnh mới.
+- Sàng lọc trước hôn nhân: 5 gói, đồng thuận riêng từng người, giới hạn kỹ thuật, kết quả năm sau, tư vấn nguy cơ cho con chung. Sinh đôi cùng/khác trứng, sinh ba hiếm.
+- Bản packaged/Preview, chưa xác nhận phát hành. Nguồn và giản lược: docs/HEALTH-GENETICS-912-SOURCES.md.
+
+## 8.10.14-crime912 — 01/11/2026 (UTC+7)
+
+- Đường tối: đàn em là NPC có vai trò/kỹ năng/lòng tin/phần chia/lịch sử, có thể rời nhóm hoặc cung cấp thông tin; địa bàn trừu tượng; bảng rủi ro; lựa chọn yểm trợ khi bị đánh úp; thăng cấp theo nhóm/địa bàn; giữ uy tín khi quay lại nghề.
+- H.jail tổng hợp án khi đang thi hành (không làm ngắn án cũ), sổ án theo vụ. Nguy cơ tử vong khi bị đánh úp còn 60% mức cũ (Monte Carlo: chết trong 30 năm 38% → 31%, có quản lý nhóm 23%).
+- Bản packaged/Preview, chưa xác nhận phát hành. Chi tiết: docs/UPGRADE-912-PROGRESS.md.
+
+## 8.10.13-social913 — 01/11/2026 (UTC+7)
+
+- Chủ động chu cấp: ứng viên trưởng thành theo bộ lọc hẹn hò, hồ sơ lưu cố định trong năm, đề nghị nhiều điều khoản, đồng ý/thương lượng/từ chối theo ranh giới (không theo giàu nghèo), trả mỗi năm một lần, trễ hạn/chấm dứt rõ ràng, tự nguyện tiến tới hẹn hò.
+- Người nổi tiếng: dùng danh bạ thượng lưu sẵn có, thêm người trẻ trưởng thành mỗi năm, chuỗi làm quen → đi chơi → tin cậy → hẹn hò, quà có giới hạn, người đã kết hôn không bỏ gia đình, một đêm tự nguyện cho người từ 18 tuổi.
+- Bản packaged/Preview, chưa xác nhận phát hành. Chi tiết: docs/UPGRADE-912-PROGRESS.md.
+
+## 8.10.12-upgrade912 — 01/11/2026 (UTC+7)
+
+- Khối thi THPT: hỏi bắt buộc từ lớp 11 tới năm thi (trước đây ~14% đời bị bỏ qua vì hàng đợi đầy), chọn/xem/đổi trong Học tập, ghi nguồn manual/auto/legacy/school, không gán khối ngoài Việt Nam.
+- Hiệu năng: danh sách hành động không sao chép bản lưu cho từng hành động (đời 45 tuổi 740 ms → 16 ms); hồ sơ chi tiết có nền đặc, nút đóng không bị che.
+- Tài sản: bộ chọn chung (nhóm USD, loại, trạng thái, tìm kiếm, sắp xếp, phân trang) cho bán/tặng/di chúc; bán đúng tài sản đã chọn có bước xác nhận.
+- Tình cảm: 10 lượt tìm/năm một bộ đếm, người được gặp có thể từ chối, tìm tới 85 tuổi, làm mới danh sách mập mờ giữ nguyên hệ quả.
+- Gói cố vấn thừa kế: học phí theo tỷ giá chung (sửa sai 10^6 lần ở VN), tối đa +50 mỗi chuyên môn có sổ ghi, migrate khóa cũ.
+- Bản packaged/Preview, chưa xác nhận phát hành. Theo dõi, số đo và phần chưa làm: docs/UPGRADE-912-PROGRESS.md.
+
+## 8.10.11-gameshow-crime — 31/10/2026 (UTC+7)
+
+- Gameshow kiến thức tăng độ khó sớm hơn theo chặng; luật chơi, trợ giúp và mốc thưởng được giữ.
+- Đường tối thêm quản lý chủ động; điều tra có hồ sơ nhiều bước và quyền hợp tác, luật sư hoặc chờ.
+- Trại giam có khóa nghề, hòa giải, thư từ và chuẩn bị tái hòa nhập qua nhiều năm.
+- Hiến máu giữ thông báo kết quả trì hoãn hiện có; kết quả sàng lọc không bị trình bày thành chẩn đoán.
+- Bản packaged/Preview, chưa xác nhận phát hành. Test chuyên đề: tests/crime911.js, tests/showbiz-quiz.js, tests/blood910.js.
+
+## 8.10.10-blood-genetics — 30/10/2026 (UTC+7)
+
+- Di truyền ABO/Rh theo bố mẹ sinh học, giữ kiểu hình cũ và thông tin khi chuyển đời.
+- Kết quả sau hiến theo lịch hẹn, đối chiếu riêng, lời mời thiếu máu và ca bạch cầu hạt chuyên khoa hiếm.
+- Tư vấn Rh thai kỳ có lưu kế hoạch; không tự chẩn đoán bệnh. Nhật ký Đã phát hành theo yêu cầu chủ dự án, không xác nhận upload.
+- Kiểm thử và giới hạn: docs/BLOOD-910-ACCEPTANCE.md.
+
+## 8.10.9-tax-blood — 30/10/2026 (UTC+7)
+
+- Thuế tiền lương Việt Nam theo giảm trừ2026, đăng ký người phụ thuộc, bảng thực nhận; giữ nguyên bảo hiểm.
+- Hiến toàn phần/tiểu cầu: lịch hẹn, sàng lọc, tạm hoãn, tư vấn, bồi dưỡng/quà và bồi hoàn cá nhân có giới hạn.
+- Đổi nhãn nhật ký908 và909 sang Đã phát hành theo chỉ thị trực tiếp; không xác nhận hay thực hiện upload Production.
+- Kiểm thử/nguồn và giới hạn: docs/HEALTH-TAX-909-ACCEPTANCE.md.
+
+## 8.10.8-dynasty — 30/10/2026 (UTC+7)
+
+- Mở rộng gia đình108/148, kế nghiệp139, sổ tiền163, doanh nghiệp137/165 và di chúc150: hồ sơ kế vị, vận động, liên minh, bầu CEO/chủ tịch, dự án hai năm.
+- Thêm nhánh con, hồ sơ xác minh hai đợt, công nhận/giới thiệu, phản ứng gia đình và chu cấp định kỳ theo khả năng tài chính.
+- Sự kiện giữa các con dùng tuổi/thành tích/tài sản thực trong bản lưu; góp vốn kinh doanh từ tiền riêng. Giữ thông tin khi chuyển đời; ly thân không tự góp ngân sách chung.
+- Nhật ký mới ở trạng thái packaged; không deploy. Kiểm thử và giới hạn: docs/DYNASTY-908-ACCEPTANCE.md.
+
+## 8.10.7-travel — 30/10/2026 (UTC+7)
+
+- Chuyến về Việt Nam có vé máy bay khứ hồi, hiện giá, hoạt động tại nơi đến và nút quay lại; giữ việc học/việc làm, quốc tịch và hạn cư trú.
+- Concert/hoạt động Việt Nam từ nước ngoài dẫn qua đặt chuyến bay.
+- Du lịch thêm máy bay nội địa chọn tỉnh/thành, xe lửa chỉ tới vùng lân cận; báo chi phí từng phần trước khi mua.
+- Menu sinh hoạt theo nước/thành phố đang có mặt, nối văn hóa173 và các hoạt động địa phương.
+- Ưu tiên build/commit/push theo chỉ thị mới; nghiệm thu toàn diện tiếp tục, không deploy. Báo cáo: docs/TRAVEL-907-ACCEPTANCE.md.
+
+## 8.10.6-continuity — 30/10/2026 (UTC+7)
+
+- Giữ ngoại hình/học lực và các chỉ số đã ghi của đúng người con khi chuyển góc nhìn sống hoặc sau tang.
+- Nhắc chuẩn bị visa còn hạn và gia hạn cư trú; thêm lối vào riêng sau du học.
+- Hiện đủ ngoại ngữ hỗ trợ, Goethe, thi lại chứng chỉ hết hạn và ngôn ngữ bảo vệ tại nơi du học.
+- Chặn chuyến quê Việt Nam tại chỗ khi ở nước ngoài; sửa TW trong hồ sơ lao động cũ, menu lẫn nhóm, lượt gia đình, chuỗi bạn thân và khán giả minigame.
+- Nhãn nhật ký Đã phát hành theo chỉ thị riêng trước đó; không xác nhận upload/deploy. Kết quả nghiệm thu: docs/CONTINUITY-906-ACCEPTANCE.md.
+
 ## 8.10.5-study-visa — 29/10/2026 (UTC+7)
 
 - Sửa thiếu bước chuẩn bị giấy tờ và kế hoạch trong thư nhận học, tự mở màn hình visa sau trúng tuyển.

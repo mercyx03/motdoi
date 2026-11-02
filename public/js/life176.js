@@ -25,9 +25,10 @@
 
   // Quy đổi giá trị tương đương USD (ví dụ 100k, 500k, 1M, 5M USD)
   // Nếu tiền tệ là USD thì lấy trực tiếp, nếu là VND thì tỷ giá tương đương 25.000 đ / USD
+  // v8.10.12: dùng tỷ giá chung (asset-picker.js); trước đây nhân 25.000 trên đơn vị triệu đồng nên giá ở Việt Nam gấp 10^6 lần.
   function usdAmount(l, usd) {
-    if (l.cur === 'usd') return usd;
-    return usd * 25000;
+    if (E.usdToLocal) return E.usdToLocal(l, usd);
+    return l.cur === 'usd' ? usd : usd * 25400 / 1e6;
   }
 
   var TIERS = [

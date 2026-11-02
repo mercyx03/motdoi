@@ -21,13 +21,15 @@ scope('viec_remote',function(l){return E.UPDATE110.free(l,18)&&!!l.abroad&&l.abr
 // The artist's nationality does not teleport the listener. Watching remotely
 // remains possible; attendance requires the actual destination and travel budget.
 var concert=E.DEC.concert_di;if(concert){var prep=concert.def.prep,text=concert.def.text,oldApply=concert.apply;
- concert.def.prep=function(l,r,arg){var d=prep.apply(this,arguments),from=here(l),vn=['vn','rapvn','show'].includes(d.cat),cityCode=null;
+ function locateConcert(l,d){var from=here(l),vn=['vn','rapvn','show'].includes(d.cat),cityCode=null;
   Object.keys(G.W.BY).some(function(code){if(G.W.BY[code].cities.includes(d.city)){cityCode=code;return true;}return false;});
   if(vn){if(cityCode!=='VN')d.city=G.W.BY.VN.cities[0];cityCode='VN';}else if(l.abroad&&l.country!=='VN'){cityCode=from;d.city=G.W.BY[from].cities[0];}
   d.destination897=cityCode||from;d.residence897=from;d.far=d.destination897!==from;
   if(d.far)d.trip=Math.max(d.trip,1+.2/Math.max(.001,d.price));else d.trip=1;
   return d;
- };
+ }
+ concert.def.prep=function(l){return locateConcert(l,prep.apply(this,arguments));};
+ var randomConcert=E.DEC.concert;if(randomConcert){var rp=randomConcert.def.prep,ra=randomConcert.apply,rv=randomConcert.valid;randomConcert.def.prep=function(l){return locateConcert(l,rp.apply(this,arguments));};randomConcert.valid=function(l,d){return (!rv||rv(l,d))&&(!d||d.residence897===here(l));};randomConcert.apply=function(l,d,k,r,log){if(!randomConcert.valid(l,d.data)){log('Nơi cư trú đã đổi; hãy mở lại kế hoạch concert. Chưa thu tiền.','neutral');return;}return ra.apply(this,arguments);};}
  concert.def.text=function(l,d){return text(l,d)+(d.destination897!==here(l)?' Điểm đến '+(G.W.BY[d.destination897]||{}).name+'; dự toán đã gồm đi lại và lưu trú khứ hồi. Xem trực tuyến không cần chuyến đi.':'');};
  concert.def.opts.forEach(function(o){if(o.k==='stream')return;var req=o.req;o.req=function(l,d){if(req&&!req(l,d))return false;if(d.far&&l.age<18&&o.k!=='parents')return false;if(o.k==='parents'&&l.abroad&&!E.parentsWithYouAbroad(l))return false;return !d.far||E.MOBILITY122.barrier(l,d.destination897,false)===true;};});
  concert.valid=function(l,d){return !!d&&d.residence897===here(l);};
@@ -38,6 +40,8 @@ var concert=E.DEC.concert_di;if(concert){var prep=concert.def.prep,text=concert.
 var gdtx=E.GDTX84&&E.GDTX84.yearHook;if(gdtx){var i=E.HOOKS.year.indexOf(gdtx);if(i>=0)E.HOOKS.year[i]=function(l,r,log,a){var g=l.flags.gdtx;if(g&&g.country897&&g.country897!==here(l)){g.paused897=true;if(g.pauseAt897!==a){g.pauseAt897=a;g.until++;g.pauseYears897=(g.pauseYears897||0)+1;}log('Chương trình phổ thông buổi tối tại '+(G.W.BY[g.country897]||{}).name+' được bảo lưu khi bạn chuyển quốc gia; không thu học phí hay tự cấp bằng.','neutral');return;}if(g)g.paused897=false;return gdtx.apply(this,arguments);};}
 var adultSchool=E.DEC.bo_tuc;if(adultSchool){adultSchool.def.opts.forEach(function(o){if(o.k==='no')return;var label=o.l,hint=o.h;o.l=function(l,d){return local(l)?typeof label==='function'?label(l,d):label:({thcs:'Học bậc trung học cơ sở tại nơi cư trú',lien:'Hoàn thiện phổ thông tại nơi cư trú',thpt:'Học bậc trung học phổ thông tại nơi cư trú'})[o.k]||'Học phổ thông tại nơi cư trú';};o.h=function(l,d){return local(l)?typeof hint==='function'?hint(l,d):hint:'Thời gian và kết quả theo mô hình chương trình tại nơi đang sống; không tự cấp chứng chỉ Việt Nam.';};});}
 E.UPDATE110.menu('adultSchoolTransfer897','Chương trình phổ thông đang bảo lưu',function(l){var g=l.flags.gdtx;return E.UPDATE110.free(l,16)&&g&&g.country897!==here(l)?true:'Không có chương trình cần thu xếp sau khi chuyển nước';},'Bạn có thể giữ chỗ học ở nước cũ, hoặc dừng chương trình đó để tìm chương trình tại nơi đang sống. Kết quả đã đạt được giữ, thời gian bảo lưu không tự tính là đã học xong.',function(l){return [{k:'leave',l:'Dừng chương trình cũ và tìm lớp tại nơi cư trú',run:function(l,r,log){var g=l.flags.gdtx;(l.flags.pausedSchoolHistory897||(l.flags.pausedSchoolHistory897=[])).push(Object.assign({},g,{closed:l.age}));delete l.flags.gdtx;log('Đã giữ hồ sơ học cũ. Bạn xem lớp ở nơi mới trước khi đóng học phí.','neutral');E.UPDATE110.next(l,'bo_tuc',r);}},{k:'keep',l:'Tiếp tục bảo lưu, chưa đóng học phí nơi mới',run:function(){}}];},16,'Học tập');
+// Local outings and Vietnamese domestic institutions follow residence, not ancestry.
+['que_doc','que_di51','que_hen_ho','que_chuyen_di','que_thanh_toan'].forEach(function(id){scope(id,local,true);});
 var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);var p=l.flags.world120;if(p&&p.policy&&!p.policy.country897)p.policy.country897=l.country;var g=l.flags.gdtx;if(g&&!g.country897)g.country897=l.country;};
 E.RESIDENCE897={here:here,rules:rules};
 })(globalThis.G);

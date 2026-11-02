@@ -271,7 +271,7 @@
   // Luật mô phỏng: 15 câu hỏi nhanh; đúng thì lên một bậc, sai thì về bậc 0; điểm là chuỗi đúng dài nhất.
   // Đạt chuỗi 10 câu đúng liên tiếp: giải 20 triệu đồng (bản mô phỏng Việt Nam). Không được bỏ qua câu.
   HANDLERS.streak = {
-    start: function (l, r, a, sh) { a.qi = 0; a.streak = 0; a.best = 0; a.total = sh.questions; a.helper = companion(l); newQ(l, a, 1, { choices: 3 }); },
+    start: function (l, r, a, sh) { a.qi = 0; a.streak = 0; a.best = 0; a.total = sh.questions; a.helper = companion(l); newQ(l, a, 2, { choices: 3 }); },
     title: function (l, a) { return 'Câu ' + (a.qi + 1) + '/' + a.total; },
     text: function (l, a, sh) { return recap(a) + 'Chuỗi đúng hiện tại: ' + a.streak + ' · dài nhất: ' + a.best + ' · cần ' + sh.target + ' câu liên tiếp để nhận ' + mo(l, V(l, sh.prize)) + '.' + (a.helper && !a.helperUsed ? ' Bạn có thể nhờ ' + a.helper.name + ' gợi ý một lần.' : '') + '\n\n' + a.q.text; },
     rows: function (l, a, sh) {
@@ -283,7 +283,7 @@
       a.qi++; note(a, 'Câu ' + a.qi + ': ' + verdict(a, okAns, i));
       if (okAns) { a.streak++; a.best = Math.max(a.best, a.streak); } else a.streak = 0;
       if (a.best >= sh.target || a.qi >= a.total || a.total - a.qi + a.streak < sh.target) return this.end(l, log, a, sh); /* không còn đủ câu để đạt chuỗi mục tiêu thì kết thúc, điểm là chuỗi dài nhất */
-      newQ(l, a, a.streak >= 6 ? 3 : a.streak >= 3 ? 2 : 1, { choices: 3 });
+      newQ(l, a, a.streak >= 4 ? 3 : a.streak >= 1 ? 2 : 1, { choices: 3 });
     },
     end: function (l, log, a, sh) {
       var win = a.best >= sh.target, celeb = a.role === 'celeb';
@@ -324,7 +324,7 @@
       var L = ladder(l, sh); note(a, 'Câu ' + (a.qi + 1) + ': ' + verdict(a, okAns, i)); a.hint = null;
       if (!okAns) return this.end(l, log, a, sh, a.qi >= 10 ? L[9] : a.qi >= 5 ? L[4] : 0, 'trả lời sai câu ' + (a.qi + 1));
       a.qi++; if (a.qi >= 15) return this.end(l, log, a, sh, L[14], 'vượt qua cả 15 câu hỏi');
-      newQ(l, a, a.qi >= 10 ? 3 : a.qi >= 5 ? 2 : 1);
+      newQ(l, a, a.qi >= 9 ? 3 : a.qi >= 4 ? 2 : 1);
     },
     end: function (l, log, a, sh, money, how) {
       var win = a.qi >= 15;
@@ -341,7 +341,7 @@
 
   // ---------- Đấu Trường 100: một người đấu với 100 người ----------
   HANDLERS.mob = {
-    start: function (l, r, a) { a.mob = 100; a.bank = 0; a.qi = 0; newQ(l, a, 1, { choices: 3 }); },
+    start: function (l, r, a) { a.mob = 100; a.bank = 0; a.qi = 0; newQ(l, a, 2, { choices: 3 }); },
     title: function (l, a) { return 'Còn ' + a.mob + ' người trong đấu trường'; },
     text: function (l, a, sh) { return recap(a) + 'Còn ' + a.mob + '/100 người thách đấu. Tiền tích lũy: ' + mo(l, a.bank) + '. Trả lời sai thì mất toàn bộ tiền tích lũy.\n\n' + a.q.text; },
     rows: function (l, a, sh) { var self = this, rows = qRows(l, a, function (l, r, log, okAns, i) { self.answer(l, r, log, a, sh, okAns, i); }); if (a.qi >= 3 && a.bank > 0) rows.push({ k: 'stop', l: 'Dừng lại, nhận ' + mo(l, a.bank), run: function (l, r, log) { self.end(l, log, a, sh, a.bank, 'dừng cuộc chơi khi còn ' + a.mob + ' người'); } }); return rows; },
@@ -352,7 +352,7 @@
       a.mob -= out; a.bank += V(l, sh.perHead) * out * (1 + a.qi * 0.15);
       note(a, verdict(a, true) + ' ' + out + ' người trả lời sai bị loại.');
       if (a.mob <= 0) return this.end(l, log, a, sh, V(l, sh.grand), 'đánh bại toàn bộ 100 người');
-      newQ(l, a, a.mob <= 20 ? 3 : a.mob <= 60 ? 2 : 1, { choices: 3 });
+      newQ(l, a, a.mob <= 35 ? 3 : a.mob <= 80 ? 2 : 1, { choices: 3 });
     },
     end: function (l, log, a, sh, money, how) { var win = a.mob <= 0; finish(l, log, { result: how, prize: money, fame: win ? 8e4 : 4000, good: money > 0, hap: win ? 10 : money ? 3 : -2, rank: 100 - a.mob }); },
     auto: function (l, a, r, allowed) { var p = U.clamp(0.25 + knowledge(l) * 0.7 - (a.q.diff - 1) * 0.12, 0.1, 0.95); if (a.bank > V(l, 20) && p < 0.5 && allowed('stop')) return 'stop'; return autoAnswer(l, a, r); }

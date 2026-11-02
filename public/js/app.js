@@ -861,8 +861,9 @@
     var rows = [];
     function row(k, v, cls) { rows.push('<dt>' + esc(k) + '</dt><dd class="' + (cls || '') + '">' + esc(v) + '</dd>'); }
     var Y = l.yr || {};
-    if (Y.si > 0) { row('Lương (trước bảo hiểm)', money(l, Y.gross / 12) + '/tháng', 'pos'); row('Đóng ' + (E.siLabel ? E.siLabel(l) : 'bảo hiểm'), '−' + money(l, Y.si / 12) + '/tháng'); row('Lương thực nhận', money(l, F.inc / 12) + '/tháng', 'pos'); }
+    if (Y.si > 0 || Y.taxBreakdown909) { row('Lương (trước bảo hiểm)', money(l, (Y.taxBreakdown909?Y.taxBreakdown909.gross:Y.gross) / 12) + '/tháng', 'pos'); row('Đóng ' + (E.siLabel ? E.siLabel(l) : 'bảo hiểm'), '−' + money(l, Y.si / 12) + '/tháng'); var adj918 = Y.taxBreakdown909 ? Y.taxBreakdown909.adj918 || 0 : Y.adj918 || 0; if (adj918 > 0) row('Điều chỉnh thu nhập bền vững (cân bằng game)', '−' + money(l, adj918 / 12) + '/tháng'); if (!Y.taxBreakdown909) row('Lương thực nhận', money(l, F.inc / 12) + '/tháng', 'pos'); }
     else row(l.retired ? (l.pensioned ? 'Lương hưu / con biếu' : 'Trợ cấp / con biếu') : 'Thu nhập của bạn', money(l, F.inc / 12) + '/tháng', 'pos');
+    if (Y.taxBreakdown909) { row('Giảm trừ gia cảnh', money(l,Y.taxBreakdown909.deduction/12)+'/tháng'); row('Thu nhập tính thuế', money(l,Y.taxBreakdown909.taxable/12)+'/tháng'); row('Thuế TNCN tiền lương', '−'+money(l,(Y.pit909||0)/12)+'/tháng'); row('Lương thực nhận', money(l, F.inc / 12) + '/tháng', 'pos'); }
     if (F.partner) row((l.partner ? U.cap(E.H.partnerWord(l, l.partner)) : 'Bạn đời') + ' góp', money(l, F.partner / 12) + '/tháng', 'pos');
     row('Ăn uống & sinh hoạt', '−' + money(l, Math.max(0, F.food - (F.pets || 0))));
     if (F.pets) row('Nuôi thú cưng', '−' + money(l, F.pets));
@@ -1327,6 +1328,16 @@
   function bindBusiness(box,l,d){
     if(!E.BUSINESS137)return;$$('[data-business]',box).forEach(function(input){input.oninput=input.onchange=function(){var key=input.dataset.business;if(input.type==='checkbox')d.data[key]=$$('input[data-business="'+key+'"]',box).filter(function(x){return x.checked;}).map(function(x){return x.value;});else d.data[key]=input.type==='number'?Number(input.value):input.value;persist();var error=$('#businessError',box);if(error)error.textContent=E.BUSINESS137.check(l,d);};});
   }
+  // Ô tìm tài sản theo tên / địa điểm cho bộ chọn tài sản (asset-picker.js); chỉ lọc khi ngừng gõ 300 ms.
+  function assetSearch912(d){
+    if(!E.ASSET912||!E.DEC[d.id]||!E.DEC[d.id].picker912)return '';
+    var q=d.data&&d.data.arg&&d.data.arg.q||'';
+    return '<div class="family-form" style="margin:10px 0"><label for="assetSearch912">Tìm theo tên hoặc địa điểm</label><input id="assetSearch912" maxlength="60" autocomplete="off" value="'+esc(q)+'" placeholder="Ví dụ: Đà Nẵng, căn hộ, cửa hàng"></div>';
+  }
+  function bindAssetSearch912(box,l,d){
+    var input=$('#assetSearch912',box);if(!input)return;var timer=null;
+    input.oninput=function(){if(timer)clearTimeout(timer);var value=input.value;timer=setTimeout(function(){if(!S.life||S.life!==l||S.life.pending[0]!==d)return;if(E.ASSET912.requery(l,value)){persist();showDecision();var again=$('#assetSearch912');if(again){again.focus();again.setSelectionRange(again.value.length,again.value.length);}}},300);};
+  }
   function willForm(l,d){
     if(d.id!=='di_chuc'||!E.WILL70)return '';
     var W=E.WILL70,sh=d.data.shares||{},rs=W.recipients?W.recipients(l):[],causes=W.causes||{};
@@ -1359,9 +1370,9 @@
     // v3.1: lựa chọn nào tốn tiền mà chưa ghi giá thì ghi luôn chi phí ước tính
     var costs = !aiPick && E.optCosts && d.id !== 'market_trade' ? E.optCosts(l, d) : {};
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
-      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p' + (/^football/.test(d.id) ? ' class="football-summary"' : '') + '>' + esc(d.text) + '</p>' +
+      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2><p' + (/^football/.test(d.id) ? ' class="football-summary"' : String(d.text || '').indexOf('\n') >= 0 ? ' class="dec-lines"' : '') + '>' + esc(d.text) + '</p>' +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
-      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts' + (d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7 ? ' many' : '') + '">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); var many = d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7; return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(many && o.k === 'cancel' ? '← Quay lại' : o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
+      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + assetSearch912(d) + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts' + (d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7 ? ' many' : '') + '">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); var many = d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7; return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(many && o.k === 'cancel' ? '← Quay lại' : o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {
@@ -1370,6 +1381,7 @@
         if (S.keepScroll915) { var keep915 = S.keepScroll915, many915 = $('.opts.many', box); S.keepScroll915 = null; if (many915 && keep915.id === d.id) many915.scrollTop = keep915.top; }
         bindMarket(box, l, d);
         bindWill(box,l,d);
+        bindAssetSearch912(box,l,d);
         bindBusiness(box,l,d);
         if (aiPick) {
           // GĐ5: ở chế độ tự động, lựa chọn đời thường được chốt nhanh hơn; ngã rẽ và biến cố lớn giữ nhịp cũ để kịp đọc.
@@ -1390,6 +1402,7 @@
     if(byHand&&!paymentConfirmed&&trade&&E.FAMILY126){trade.manual=true;if(S.modalTimer){clearTimeout(S.modalTimer);S.modalTimer=null;}var payment=E.FAMILY126.quote(S.life,trade,k);if(E.FAMILY126.large(S.life,payment)){var expectedLife=S.life,expectedDecision=trade;ask('Xác nhận khoản chi lớn','Bạn có chắc với lựa chọn này không? Có thể chi tới '+money(S.life,payment)+'. Tiền hiện có: '+money(S.life,S.life.money)+'.','Chắc chắn, tiếp tục',function(){if(S.life===expectedLife&&S.life.pending[0]===expectedDecision)choose(k,true,true);else toast('Hoàn cảnh đã thay đổi, hãy chọn lại.');},'Không chắc, quay lại',function(){if(S.life===expectedLife&&S.life.pending[0]===expectedDecision)showDecision();});return;}}
     closeModal();
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
+    if (cur && byHand) cur.byHand912 = true; // nguồn lựa chọn: người chơi tự bấm (khoi-track.js)
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
     var queued0 = S.life.pending.slice(1);
     var stick915 = !!(byHand && cur && cur.manual && k !== 'cancel' && E.DEC[cur.id] && E.DEC[cur.id].menu110 && cur.opts.length >= 7), scroll915 = stick915 ? document.querySelector('.opts.many') : null;
