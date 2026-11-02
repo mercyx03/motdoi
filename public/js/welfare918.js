@@ -184,6 +184,18 @@
     return res; }; }
 
   // ================= C6: khóa bán nhà ở xã hội 5 năm =================
+  function socialLock(l) { var h = l && l.flags && l.flags.econ918 && l.flags.econ918.housing; return h && h.status === 'owner' && l.ownHouse && h.noSaleUntil > l.age ? 'Căn hộ nhà ở xã hội chưa đủ 5 năm (đến ' + h.noSaleUntil + ' tuổi) nên chưa được bán, đổi hay tặng' : null; }
+  E.socialLock918 = socialLock;
+  // Chặn trước ở các lối chủ động (đổi nhà, tặng nhà cho con); module tạo các lối này có thể nạp sau nên bọc khi game đã nạp xong.
+  var lockReady = false;
+  function initLocks() {
+    if (lockReady) return; lockReady = true;
+    E.ACT.forEach(function (a) { if (a.id !== 'doi_nha') return; var av = a.avail; a.avail = function (l) { return socialLock(l) || (av ? av.apply(this, arguments) : true); }; });
+    var g = E.DEC.giftAsset112; if (g) { var ga = g.apply; g.apply = function (l, d, k, r, log) { var key = d && d.data && d.data.keys ? d.data.keys[+k] : null, why = socialLock(l); if (why && /(^|:)home$/.test(key || '')) { if (log) log(why + '. Chưa sang tên, chưa thu phí.', 'bad'); return; } return ga.apply(this, arguments); }; }
+    var dn = E.DEC.doi_nha; if (dn) { var da = dn.apply; dn.apply = function (l, d, k, r, log) { var why = socialLock(l); if (why && k !== 'no' && k !== 'cancel') { if (log) log(why + '. Chưa thu tiền.', 'bad'); return; } return da.apply(this, arguments); }; }
+  }
+  E.HOOKS.year.unshift(function () { initLocks(); });
+  var acts0 = E.actions; if (acts0) E.actions = function () { initLocks(); return acts0.apply(this, arguments); };
   function housingLock(l, log) {
     var h = l.flags.econ918 && l.flags.econ918.housing; if (!h || h.status !== 'owner' || l.ownHouse || !(h.noSaleUntil > l.age)) return;
     h.status = 'sold_early'; h.end = l.age;

@@ -1,5 +1,20 @@
 [
   {
+    "id": "fixes-821",
+    "version": "8.10.21-fix",
+    "releaseStatus": "packaged",
+    "publishedAt": "2026-11-02T14:00:00.000+07:00",
+    "title": "Một Đời — Sửa lỗi nhỏ sau bản chính sách theo thời đại",
+    "summary": "Căn hộ nhà ở xã hội chưa đủ 5 năm không đổi hay tặng được; người đứng đầu không còn gặp tình huống bị sếp đổ lỗi.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Căn hộ nhà ở xã hội mua chưa đủ 5 năm: mục \"Đổi nhà\" và \"Tặng nhà cho con\" báo rõ lý do và không thu tiền.",
+      "Bộ trưởng, chủ tịch tỉnh, phó thủ tướng… (không có cấp trên trực tiếp) không còn gặp tình huống \"Sếp đổ lỗi\"."
+    ]
+  },
+  {
     "id": "household-policy-820",
     "version": "8.10.20-c918",
     "releaseStatus": "released",

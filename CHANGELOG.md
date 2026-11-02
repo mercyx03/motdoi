@@ -1,3 +1,10 @@
+## 8.10.21-fix — 02/11/2026 (UTC+7)
+
+- Nhà ở xã hội: chặn "Đổi nhà" và "Tặng nhà cho con" khi căn hộ chưa đủ 5 năm (welfare918, có lý do, không thu tiền).
+- "Sếp đổ lỗi" không còn đến với người đứng đầu không có cấp trên (life91, dùng E.hasBoss).
+- Test: blood910-updates kiểm nội dung thay vì vị trí/số lượng mục; chains-gd4 loại drama917 khỏi phép so sánh GĐ4. Cả hai đạt.
+- Bản đóng gói, chưa phát hành.
+
 ## 8.10.20-c918 — 02/11/2026 (UTC+7) — đã ghi phát hành 13:04 theo yêu cầu của chủ dự án
 
 - Phần C tiếp: `econ918.js` — phiếu lương (gộp → BHXH/BHYT/BHTN → giảm trừ → thuế → điều chỉnh thu nhập bền vững của game → thực nhận, khớp tiền vào sổ), trần căn cứ đóng 20 × mức tham chiếu theo năm (life3); ngân sách hộ qua E.budget114 + quỹ khẩn cấp + tự cắt chi (E.lifestyleFactor); áp lực giá theo năm lạm phát (E.ERA917.macro, chung theo nước/năm); nghỉ ốm BHXH; đào tạo lại (mở việc qua E.offers); nhà ở xã hội (chờ, xét lại, vay NHCSXH 5,4%, thuê nửa giá); vùng phát thải thấp Hà Nội và vé xe buýt giả định (E.vehicleAnnual/E.travelCost); bảng thuế TNDN ước tính; 3 chuỗi C11 trên CHAIN144 (chăm cha mẹ nối tiếp tình huống gốc `care`, không khởi phát riêng).
