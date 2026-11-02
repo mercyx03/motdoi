@@ -1,4 +1,4 @@
-## 8.10.22-md4 — 02/11/2026 (UTC+7) — packaged, chưa phát hành
+## 8.10.22-md4 — 02/11/2026 (UTC+7) — đã phát hành 18:06 theo xác nhận upload của chủ dự án
 
 - MD4 D01–D17 (PROMPT_MOT_DOI_MD4_CAP_NHAT.md): 9 module mới `identity919, global919, followers919, care919, pets919, arts919, healthsys919, origin919, bonds919`; sửa `travel-context` (về thăm theo quê nhà/quốc tịch), `careers` (người theo dõi theo sổ, cùng số lần rút RNG), `life107` (22 điểm đến, xét tuyển ≠ học bổng), `abroad-depth` (ngôn ngữ giảng dạy khi xin visa).
 - Lỗi tái hiện đã sửa: điểm về thăm cứng Việt Nam; người gặp ở nước ngoài mang tên quê nhà khi chưa định cư; follower nghề nổi tiếng giảm ~60%/năm ở mức 10 triệu do hệ số phạt quy mô.

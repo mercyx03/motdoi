@@ -2,7 +2,7 @@
   {
     "id": "md4-multinational-822",
     "version": "8.10.22-md4",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "publishedAt": "2026-11-02T17:21:00.000+07:00",
     "title": "Một Đời — Cuộc sống đa quốc gia, gia đình, nghệ thuật, thú cưng và người theo dõi",
     "summary": "Về thăm đúng quê nhà, gặp gỡ người bản xứ khi ở nước ngoài, người theo dõi tăng giảm có lý do, cùng nhiều hệ mới về chăm sóc, nhận nuôi, thú cưng và nghệ thuật.",
@@ -31,7 +31,8 @@
       "Nhận nuôi trẻ từ mái ấm qua nhiều bước (thẩm định, làm quen, ý kiến của trẻ, quyết định); người tự nhận là thân nhân phải được đối chiếu và có thể không đúng.",
       "Lúc khó khăn (thất nghiệp, bệnh, ở tù, sống xa), người thân có thể giúp, giúp một phần hoặc xa dần; có thể chủ động làm hòa."
     ],
-    "releasedAt": null
+    "releasedAt": "2026-11-02T11:06:00.000Z",
+    "correctedAt": "2026-11-02T11:06:33.791Z"
   },
   {
     "id": "fixes-821",

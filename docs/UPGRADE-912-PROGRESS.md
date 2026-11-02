@@ -1,6 +1,6 @@
 # Nâng cấp 8.10.12 (mã 912) — theo dõi tiến độ theo PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md
 
-**Trạng thái (02/11/2026, 8.10.22): MD4 D01–D17 đã triển khai (bảng "Đợt 12", phần giản lược ghi rõ), packaged chưa phát hành. Trước đó (8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00) để chủ dự án tự upload; chưa có xác nhận Production.** Không tự deploy Production.
+**Trạng thái (02/11/2026, 8.10.22): MD4 D01–D17 đã triển khai (bảng "Đợt 12", phần giản lược ghi rõ); chủ dự án xác nhận đã upload, nhật ký ghi phát hành 02/11/2026 18:06 +07:00. Trước đó (8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00) để chủ dự án tự upload; chưa có xác nhận Production.** Không tự deploy Production.
 
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
