@@ -1906,7 +1906,7 @@
       if (!k.alive) return;
       var ka = a - k.born;
       var kq = ka === 0 ? life.mort.q0 : ka < 5 ? life.mort.q14 * (k.vac === false ? 1.6 : 1) : qBase(life.mort, ka) * 0.8;
-      if (r() < kq) {
+      if (r() < kq && !(ka < 5 && E.SENS920 && E.SENS920.blocks(life))) { // 8.10.24: tùy chọn tắt sự kiện mất con nhỏ (không tạo mới, không che)
         k.alive = false; k.died = a;
         log('Con ' + k.name + ' qua đời khi ' + (ka === 0 ? 'chưa tròn một tuổi' : 'mới ' + ka + ' tuổi') + ' vì ' + U.pick(r, ka < 5 ? ['viêm phổi', 'sốt cao', 'nhiễm trùng', 'tiêu chảy cấp'] : ka < 30 ? ['tai nạn giao thông', 'đuối nước', 'bệnh hiểm nghèo'] : ['bệnh nặng', 'tai nạn', 'ung thư']) + '.', 'bad');
         H.mem(life, 'Nỗi đau mất con — ' + k.name + ' mãi mãi ' + ka + ' tuổi.', 8);

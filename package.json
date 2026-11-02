@@ -1,6 +1,6 @@
 {
   "name": "mot-doi",
-  "version": "8.10.23",
+  "version": "8.10.24",
   "private": true,
   "description": "Một Đời — mô phỏng một đời người bằng số liệu thật (Việt Nam 63/34 tỉnh, 54 dân tộc; 195 quốc gia)",
   "scripts": {
@@ -59,6 +59,8 @@
     "test:debt": "node tests/debt140.js",
     "test:children": "node tests/children141.js && node tests/family129.js && node tests/family130.js",
     "test:md4": "node tests/md4-919.js && node tests/md4b-919.js && node tests/social919.js",
+    "test:md5": "node tests/md5-920.js",
+    "test:md5-browser": "node tests/md5-browser.js",
     "test:upgrade912": "node tests/md4-919.js && node tests/md4b-919.js && node tests/social919.js && node tests/khoi912.js && node tests/perf912.js && node tests/assets912.js && node tests/romance912.js && node tests/heir912.js && node tests/sponsor912.js && node tests/celeb912.js && node tests/crime912.js && node tests/crime911.js && node tests/genetics912.js && node tests/health915.js && node tests/organ917.js && node tests/crime917.js && node tests/integrity917.js && node tests/abroad917.js && node tests/state-career174.js && node tests/state917.js && node tests/drama917.js && node tests/era917.js && node tests/econ918.js && node tests/welfare918.js && node tests/update840.js && node tests/exam127.js && node tests/family129.js && node tests/feedback-e.js"
   },
   "devDependencies": {

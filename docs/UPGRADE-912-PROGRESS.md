@@ -1,6 +1,6 @@
 # Nâng cấp 8.10.12 (mã 912) — theo dõi tiến độ theo PROMPT_CLAUDE_CODE_UPDATE_MOT_DOI.md
 
-**Trạng thái (02/11/2026, 8.10.23): MD4 hoàn thiện phần giản lược + góp ý làm đẹp/diễn viên/quan hệ (Đợt 13), packaged chưa phát hành.** Trước đó (02/11/2026, 8.10.22): MD4 D01–D17 đã triển khai (bảng "Đợt 12", phần giản lược ghi rõ); chủ dự án xác nhận đã upload, nhật ký ghi phát hành 02/11/2026 18:06 +07:00. Trước đó (8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00) để chủ dự án tự upload; chưa có xác nhận Production.** Không tự deploy Production.
+**Trạng thái (03/11/2026, 8.10.24): ĐÃ PHÁT HÀNH, CHƯA NGHIỆM THU ĐẦY ĐỦ.** Theo yêu cầu, chủ dự án tự upload dist.zip; nhật ký 8.10.24 và 8.10.23 ghi phát hành lúc 2026-11-03T06:21:25+07:00 (giờ chạy lệnh, chủ dự án chọn "dùng giờ hiện tại"; sẽ sửa nếu giờ upload thực tế khác). Gói: ZIP 3.116.724 byte, SHA-256 9659…5C41. Chưa nghiệm thu: regression đầy đủ trên mã cuối còn đang chạy (mục 9/77 lúc 06:09); life138 lỗi cũ; 9/44 menu chỉ kiểm lý do khóa trên browser; nhiều nguồn mới ở mức thứ cấp. Mọi thay đổi mã sau bản này dùng phiên bản vá mới (8.10.25), không thay nội dung dưới 8.10.24. Trước đó (02/11/2026, 8.10.22): MD4 D01–D17 đã triển khai (bảng "Đợt 12", phần giản lược ghi rõ); chủ dự án xác nhận đã upload, nhật ký ghi phát hành 02/11/2026 18:06 +07:00. Trước đó (8.10.20): MD1 §11–§14 đã triển khai; Phần B (MD2) B1–B8 đã làm; Phần C (MD3) C1–C11 đã có cơ chế cốt lõi, còn nhiều mục con chưa làm/chưa kiểm chứng (bảng đối chiếu ở "Đợt 11"). Chưa nghiệm thu toàn diện. 8.10.19 ghi released theo yêu cầu trong chat, chưa có xác nhận upload; 8.10.20 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 13:04 +07:00) để chủ dự án tự upload; chưa có xác nhận Production.** Không tự deploy Production.
 
 ## Hồ sơ tiếp nối (đọc trước khi làm tiếp)
 - Đã xong và kiểm chứng: §3 khối THPT, §5 lag bảng hành động + hồ sơ trong suốt, §4 bộ chọn tài sản, §6 lượt tìm/đồng ý, §8 làm mới danh sách mập mờ, §10 gói cố vấn (+ sửa tỷ giá USD ở life170/life176).
@@ -34,6 +34,58 @@
 | §12 | Phi pháp, băng nhóm, nhà tù (+8.10.17 lãnh đạo nhóm, pháp lý trong trại: `crimeLeader912`, `crimeSplit912`, `tg_phap_ly912`, `tests/crime917.js` 1.329) | `crime912.js` (`E.CRIME912`) mở rộng CRIME911 + life47; bọc `H.jail`, `E.careerYear`, `E.startJob`, `E.underworldRisk/DeathRisk`, `CRIME911.rate`; life47/crime-depth đọc qua hàm công khai | `flags.crime912 {territory, hires, sentences}`; trên `crime911.crew[*]`: `role912, skill912, trait912, cut912, hist912` | “Đàn em, địa bàn và rủi ro”, bảng rủi ro trong kế hoạch năm, lựa chọn yểm trợ khi bị đánh úp | `tests/crime912.js` (299), `tests/crime913-browser.js`, `crime911`, `update490` | **Đã làm phần lớn, đã kiểm chứng**; trại giam giữ chuỗi sẵn có của CRIME911/life43 (chưa thêm mới) |
 | §13 | Làm sâu quốc gia | `data-country-world912*.js` (dữ liệu, nạp trước `life173`) mở rộng `COUNTRY_DEPTH_DATA`; `tools/country-sources-912.js` (kiểm URL, bảng 195 × 6) | `flags.culture173.cases` sẵn có | Câu chuyện riêng ở nơi đang sống, đối chiếu lao động, lễ hội, món ăn, chuẩn bị cưới | `country-minimum-content` (399.955), `browser-country-minimum-content` (14 nước × 390/1280), `audit-country-depth` | **195/195 đạt tối thiểu có nguồn + tích hợp; 187 hồ sơ `compiled-912` chưa đối chiếu từng câu** |
 | §14 | Rà soát liên hệ thống | `tests/integrity917.js` (bất biến tiền/NaN/nhật ký/quyết định/ID/anh chị em/nhiều thế hệ); sửa `life92`, `wealth`, `life73`, `health915` | — | — | `integrity917` (160 đời: 2.633; 600 đời: 9.208) | **4 lỗi tái hiện đã sửa; phần còn lại ở backlog** |
+
+## Đợt 14 (8.10.24) — MD5: hoàn thiện phần tồn + gia đình, trường học, hoàng gia
+
+Baseline: HEAD `c2a21cb` (8.10.23, packaged). Worktree cô lập ở scratchpad `base823`. Các cột trạng thái ghi riêng từng bước: triển khai (TK), test trọng điểm (TT), browser (BR), nguồn (NG), regression tổng (RG), đóng gói (ĐG). "—" là chưa áp dụng hoặc chưa đạt.
+
+| ID | Yêu cầu | Module / hàm cuối sau wrapper | Save / UI | Test | TK | TT | BR | NG |
+|---|---|---|---|---|---|---|---|---|
+| FIN-01 | Regression, browser, cân bằng | `tests/regression.js` (baseline + mã cuối), `tests/md5-browser.js`, Monte Carlo trong scratchpad `mc.js` | — | xem mục Kiểm thử | ✓ | ✓ | 35/44 menu | — |
+| FIN-01 | life138 | Lỗi cũ (cùng assertion trên `c2a21cb` và `30152fc`): family-dynasty 8.10.8 đổi "Xem xét" sang đề cử/bầu, người kế nghiệp không được chọn ngay | — | life138 exit 1 | — | — | — | — |
+| FIN-02 | Nguồn luật/số liệu | docs/MD5-SOURCES.md. Singapore ghi theo ICA (global919 `CIT.SG`) | — | — | ✓ | — | — | một phần |
+| FIN-03 | Ly hôn khi thụ án | `fix920` `divorceCase920`, `divYear`, kết thúc qua `H.endPartner('div')` | `flags.fin920.div` | md5-920 | ✓ | ✓ | ✓ | secondary |
+| FIN-04 | Đổi diện tại chỗ; gộp định cư | `md4b919.lyYear` + `fix920.switchRule`. `fix920.resBlock` gọi từ life114 `migrate114` và md4b `prWhy`. Màn hình `residence920` | `flags.md4b.ly.switch920`, `studyVisa900.onshore920` | md5-920 | ✓ | ✓ | ✓ | GB official, còn lại secondary |
+| FIN-05 | Quốc tịch con nuôi; tiêu hủy; nội dung nhạy cảm; tiếp cận | `fix920.adoptCit` (gọi từ origin919), `cullClaim` (md4b farm). `E.SENS920` chặn ở engine kid mortality, care919 SUID, scenarios, genetics912. app.js `modal/closeModal/showContent920` | `flags.fin920.claims`, `flags.sens920`, `mkn.settings.sens920` | md5-920, md5-browser (Tab/Esc/focus/lưu) | ✓ | ✓ | ✓ | DE official, US/FR/GB/CA/AU/JP secondary |
+| SCHOOL-01..03 | Trường, prom 24 nước, ngoại khóa, kỷ yếu | `school920` (`profile`, `plan`, `school920` menu, tủ đồ `wardrobe`) | `flags.school920.{prof,inst,mem,wardrobe}` | md5-920, md5-browser | ✓ | ✓ | ✓ | PL, FI official; còn lại secondary |
+| RITE-01..02 | Lễ trưởng thành | `school920` `rite920`; chặn trùng `world_coming173` | `flags.school920.rite` | md5-920 | ✓ | ✓ | ✓ | Maasai official; còn lại secondary; 3 mục nghiên cứu |
+| FAMILY-01 | Một người một nghề | `H.adoptJob` (family.js), life34, life153; `fix920.jobTrack/profile`, `love.make/apply` wrapper | `partner.{pid920,intro920,jobHist920,jobLast920}` | md5-920 | ✓ | ✓ | — | — |
+| FAMILY-02..04 | Gia đình hai bên, ra mắt, nơi ở | `kin920` `kin()`, `kin920`/`kinPrep920`, `home920`, `livingCost918` wrapper | `partner.kin920`, `flags.kin920.home` | md5-920, md5-browser | ✓ | ✓ | ✓ | — |
+| PARTY-01..02 | Menu tiệc, 1.000 khách | app.js bỏ chuyển hướng; office-inbox `prepare(l,brief,type)`, `pickTypes`; life148 `SIZE.huge`, `VENUE.convention`; life172 lists; `party920` bọc `ELITE148.party` + `party148_guests` | `record.cohort920`, `flags.party920.boost` | md5-920, md5-browser, office896, office-parties171-172 | ✓ | ✓ | ✓ | parameter |
+| CHILD | Con riêng, hộ, công khai | `fix920.settleKids/home/visible/present`; life114 `companions` | `kid.custody`, `kid.custody920` | md5-920 | ✓ | ✓ | — | — |
+| FAMILY-SUPPORT | Chu cấp không tạo ngoại tình | life80 (bỏ cú gieo 5%), `kin920.cheatP/cheatYear`, `doubt920`/`truth920` | `partner.commit920`, `flags.kin920.cheat` | md5-920 (A/B cùng người), Monte Carlo | ✓ | ✓ | — | — |
+| HOUSEHOLD-01..03 | Thỏa thuận nghề, nội trợ, mục tiêu | `kin920` `household920`, `setArr`, `goalAsk920`, `shopAsk920`, `helpYear`, `arrYear` | `flags.kin920.{arr,help,pbudget}`, `partner.{want920,goal920,shop920}` | md5-920, md5-browser | ✓ | ✓ | ✓ | parameter |
+| PARENTING | Nuôi dạy con, điện thoại, không đánh con | `kin920` `parenting920`, `anger920` | `kid.par920` | md5-920, md5-browser | ✓ | ✓ | ✓ | WHO official |
+| ROYAL-01..06 | Hoàng gia | `royal920` (registry, `order`, `succeed`, `royalCircle920`, `royalPerson920`, `royalRole920`, `royalDuty920`, `kidsYear`, `royalRumor920`). life84 `stipend` | `flags.royal920` | md5-920, md5-browser | ✓ | ✓ | ✓ | royal.uk official; quy tắc các nước secondary/unverified |
+
+### Regression đầy đủ (FIN-01) — đang chạy, chưa có kết quả
+
+- Lượt baseline `c2a21cb` đầu tiên (02:13): dừng ở mục 5 sau 284 s vì crash global919 (`Cannot read properties of null (reading 'res919')`), exit 1. Log: scratchpad `reg-base-crash.txt`.
+- Baseline + chỉ vá crash (PID 7984, chạy từ 02:20): lúc 06:09 đang ở mục 19/77. Chiếm 1 lõi CPU, khoảng 3,9 GB RAM. Log vẫn cập nhật (`reg-base.txt`).
+- Mã cuối (bản chụp scratchpad `final824`, PID 28156, chạy từ 03:09): lúc 06:09 đang ở mục 9/77, mục "mọi tình huống × mọi lựa chọn" (2.481 tình huống × ~15 khuôn × mọi lựa chọn × 4 lần). Mục này không in log giữa chừng nên log đứng từ 04:49. Vẫn chiếm 1 lõi CPU liên tục (10.962 s CPU), khoảng 3,8 GB RAM. Các vòng lặp đều có giới hạn; 19 tình huống mới chỉ chiếm 0,8% khối lượng. Baseline đã tiêu khoảng 13.900 s CPU để tới mục 19, nên mã cuối chưa có dấu hiệu bị treo.
+- Hai lượt không tranh CPU (máy 8 luồng, tải khoảng 26%) nhưng cùng tranh RAM: chỉ còn khoảng 570 MB trống trên 16 GB.
+
+### Cân bằng Monte Carlo (FIN-01)
+
+Cấu hình: 600 đời mỗi bên, seed 900000 + i·7919, i = 0..599. Cứ 3 đời có 2 đời VN, 1 đời thế giới. Dùng đồng hồ/RNG kiểm thử cố định (`tests/lib/quick.js`), autoplay `E.runHeadless`. Chạy 2 shard × 300 đời. Script: scratchpad `mc.js`.
+
+| Chỉ số | Baseline `c2a21cb` (a / b) | Mã cuối (a / b) | Nhận xét |
+|---|---|---|---|
+| Tuổi thọ TB | 70,25 / 69,79 (gộp 70,02) | 72,18 / 69,81 (gộp 71,00) | Shard b gần như trùng; shard a +1,9 năm. Sai số chuẩn mỗi shard khoảng 1,4 năm, RNG lệch nhịp khi thêm hook → chưa kết luận có tác động thật |
+| Tuổi thọ p10 / p50 / p90 | 37–35 / 77 / 92–90 | 37–36 / 80–77 / 92–90 | — |
+| Kết thúc với tài sản âm | 20,3% / 16,3% | 21,0% / 15,0% | Gộp 18,3% → 18,0% |
+| Tài sản ròng p50 (lần mức cơ sở) | 5,4 / 8,1 | 5,3 / 7,9 | — |
+| Người nổi tiếng ≥100k | 30 / 36 | 36 / 37 | Phân bố nghề tương tự (diễn viên, ca sĩ, VĐV, esports) |
+| "Ngoại tình do chu cấp" (life80 cũ) | 2 / 1 (trong 15 đời có chu cấp) | 0 / 0 (16 đời có chu cấp) | Đã bỏ |
+| Chuỗi phản bội chung (`truth920`) | — | 0 / 0 | Hiếm theo thiết kế; autoplay ít chọn "hỏi thẳng" |
+| Trẻ dưới 5 tuổi mất | 1 / 4 | 0 / 3 | Chế độ nội dung mặc định "đầy đủ" |
+| Đời có sự kiện trường MD5; thông báo prom | — | 289 / 287; 7 / 3 | Prom hiếm ở VN (chỉ trường có truyền thống) |
+| Nhật ký sau khi chết | 0 / 3 | 0 / 3 | Lỗi cũ, cùng số lượng |
+| ms/đời | 961 / 972 | 1018 / 974 | Không có hồi quy hiệu năng đáng kể |
+
+Giới hạn: autoplay không bấm các menu tự chọn (tiệc, hoàng gia, hẹn hò người giàu, chăn nuôi, nuôi dạy con), nên các chỉ số này bằng 0 ở cả hai bên và không đo được bằng Monte Carlo. Đã kiểm bằng test engine/browser. Metric `celebParent`/`drama_done` của script đọc sai khóa (0 ở cả hai bên); không dùng để kết luận.
+
+Quyết định thiết kế "đánh con" (PARENTING): không có hành động đánh con. Lựa chọn "nóng giận" chuyển sang ba cách: dừng lại, xin lỗi sau khi quát, học kiểm soát cảm xúc. Lý do: WHO cho thấy trừng phạt thân thể không có kết quả tích cực. Game không mô phỏng bạo lực như một lựa chọn "rẻ mà hiệu quả".
 
 ## Đợt 13 (8.10.23) — hoàn thiện phần giản lược MD4 + góp ý làm đẹp, diễn viên, quan hệ
 

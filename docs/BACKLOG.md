@@ -14,7 +14,22 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
-### Phần tồn MD4 sau 8.10.23 — 02/11/2026
+### Phần tồn sau MD5 (8.10.24) — 03/11/2026
+
+- **life138 (chặn nghiệm thu tổng thể):** lỗi cũ, lặp lại đúng assertion trên `c2a21cb` và `30152fc`. Chọn "Xem xét" ở `succession139` không chọn ngay người kế nghiệp vì family-dynasty 8.10.8 chuyển sang đề cử/bầu. Cần chủ dự án quyết định hành vi đúng; chưa sửa test, chưa nới assertion.
+- **Browser (FIN-01):** 35/44 menu MD4–MD5 đã mở, bấm, lưu/tải ở 390px và 1280px. 9 menu chỉ kiểm được lý do khóa vì cần chuỗi sự kiện mới mở: bonds919, palliative919, function919, tempCare919, illCare919, sibCare919, adopt919, petHome919, directorOffers919. Chưa có kịch bản browser cho: chuỗi nhiều bước của prom (trang phục → bạn đi cùng → dự), hoàng gia tới đám cưới, `doubt920`/`truth920`, `goalAsk920`/`shopAsk920`. Chưa đo zoom 200%; mới đo tương phản chữ phụ (.muted) ở giao diện sáng.
+- **Nguồn (FIN-02):** phần lớn bảng prom, lễ trưởng thành, quy tắc kế vị/chấp thuận hôn nhân, đổi diện tại chỗ (trừ Anh), quốc tịch con nuôi (trừ Đức) mới ở mức thứ cấp. Chưa rà lại học phí 22 nước, mức chi trả y tế, bảng miễn thị thực. Singapore: đã ghi theo ICA cho trẻ đăng ký quốc tịch; trẻ có quốc tịch từ khi sinh chưa đọc nguyên văn Hiến pháp. Mức hỗ trợ tiêu hủy là tham số.
+- **Giản lược còn lại:**
+  - Đổi diện tại chỗ khôi phục trạng thái "ở nước nhà" trong lúc xét visa đại học (không thu vé máy bay); bị từ chối thì ở lại trong nước.
+  - Ly hôn khi thụ án dùng một quy trình chung cho mọi nước.
+  - Nhà hoàng gia là hư cấu, chỉ Anh có danh mục tước chi tiết; các nước khác mới có kiểu kế vị và cơ quan chấp thuận ở mức tóm tắt.
+  - Con của người chơi với thành viên hoàng gia được xếp vào cây kế vị; chưa có chuỗi tranh chấp kế vị nhiều năm.
+  - Prom/kỷ yếu chưa có ảnh asset riêng.
+  - Ngoại tình phía người chơi vẫn dùng các hệ cũ (life107/108).
+  - Mục tiêu riêng "mở cửa hàng" của bạn đời là hồ sơ giản lược, chưa đi qua hệ doanh nghiệp BUSINESS123.
+- Lịch sử MD4: xem các mục dưới.
+
+### (Lịch sử) Phần tồn MD4 sau 8.10.23 — 02/11/2026
 
 - Đã làm ở 8.10.23 các mục giản lược liệt kê ngay dưới (xem docs/UPGRADE-912-PROGRESS.md Đợt 13). Còn: ly thân khi ở tù không tự thành ly hôn pháp lý; khóa tiếng 1 năm không đổi diện tại chỗ; mức tiền y tế/hỗ trợ tiêu hủy/quy tắc quốc tịch con nuôi là tham số; regression đầy đủ 0–99 và test trình duyệt tự động vẫn chưa chạy.
 

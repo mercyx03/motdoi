@@ -158,13 +158,14 @@
     business: { n: 'Tiệc gặp gỡ đối tác', mood: 1, net: 2 },
     gala: { n: 'Dạ tiệc gây quỹ từ thiện', mood: 2, net: 2, tier: 2, charity: 0.3 }
   };
-  var SIZE = { small: { n: 'Thân mật (khoảng 15 khách)', heads: 15 }, mid: { n: 'Vừa (khoảng 60 khách)', heads: 60 }, big: { n: 'Lớn (khoảng 200 khách)', heads: 200, tier: 2 }, grand: { n: 'Đại tiệc (khoảng 500 khách)', heads: 500, tier: 3 } };
+  var SIZE = { small: { n: 'Thân mật (khoảng 15 khách)', heads: 15 }, mid: { n: 'Vừa (khoảng 60 khách)', heads: 60 }, big: { n: 'Lớn (khoảng 200 khách)', heads: 200, tier: 2 }, grand: { n: 'Đại tiệc (khoảng 500 khách)', heads: 500, tier: 3 }, huge: { n: 'Sự kiện lớn (khoảng 1.000 khách)', heads: 1000, tier: 3 } }; // 8.10.24: 1.000 khách dùng cohort, không tạo 1.000 hồ sơ
   var VENUE = {
     mansion: { n:'tại dinh thự',per:.025,max:800,need:function(l){return E.OFFICE171&&E.OFFICE171.mansion(l)?true:'Cần sở hữu dinh thự';} },
     home: { n: 'tại nhà', per: 0.0015, max: 60, need: function (l) { return l.ownHouse || l.indep ? true : 'Cần có chỗ ở riêng'; } },
     garden: { n: 'ở sân vườn thuê riêng', per: 0.003, max: 200 },
     restaurant: { n: 'ở nhà hàng', per: 0.004, max: 300 },
     hotel: { n: 'ở khách sạn 5 sao', per: 0.012, max: 800, tier: 2 },
+    convention: { n: 'ở trung tâm hội nghị / địa điểm lớn', per: 0.006, max: 1500, tier: 2 },
     yacht: { n: 'trên du thuyền', per: 0.03, max: 80, tier: 3, cat: 'yacht' },
     island: { n: 'trên đảo riêng', per: 0.05, max: 200, tier: 4, cat: 'island' }
   };

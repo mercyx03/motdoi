@@ -62,6 +62,7 @@
       if (E.ID919 && l.age >= 1) X.next(l, 'adoptName919', r, {}, { manual: false });
       return;
     }
+    if (a.stage === 'done' && a.citPending && E.FIN920 && E.FIN920.adoptCit(l, a, log)) return; // 8.10.24: quốc tịch theo luật từng nước (fix920)
     if (a.stage === 'done' && a.citPending && l.age >= a.citPending.due) { var cc = a.citPending.cc; a.citPending = null; l.flags.citizen = l.flags.citizen || []; if (l.flags.citizen.indexOf(cc) < 0) l.flags.citizen.push(cc); log('Quốc tịch ' + (W919[cc] ? W919[cc].name : cc) + ' theo cha mẹ nuôi đã được ghi nhận (quy tắc mô phỏng; điều kiện mỗi nước khác nhau). Quốc tịch gốc không tự mất trong trò chơi.', 'good'); }
     if (a.stage === 'done' && a.follow != null && l.age <= a.follow && a.followAt !== l.age) { a.followAt = l.age; log(l.age === a.follow ? 'Đợt theo dõi sau nhận nuôi kết thúc; cán bộ ghi nhận gia đình đã gắn bó. Những ký ức ở mái ấm vẫn là một phần của bạn.' : 'Cán bộ xã hội đến thăm định kỳ sau nhận nuôi, hỏi han việc học và cảm xúc của bạn.', 'neutral'); }
   }

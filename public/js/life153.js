@@ -96,7 +96,7 @@
       if (!p) return SH.finish(l, log, { result: 'không chọn ai, ra về một mình', fame: sh.fame / 2, good: false, hap: -1 });
       var mutual = chooser(p) === 'me';
       if (mutual) {
-        var lv = E.DEC.love.make(l, r, { where: sh.name }); lv.data.p.name = p.name; lv.data.p.sex = p.sex; lv.data.p.age = p.age; lv.data.p.job = p.job;
+        var lv = E.DEC.love.make(l, r, { where: sh.name }); lv.data.p.name = p.name; lv.data.p.sex = p.sex; lv.data.p.age = p.age; H.adoptJob(l, lv.data.p, { job: p.job, jobId: p.jobId, inc: p.inc }, r);
         lv.text = 'Sau ' + sh.name + ', bạn và ' + p.name + ' (' + p.age + ' tuổi, ' + p.job + ') tiếp tục nhắn tin mỗi ngày. Hai người có muốn chính thức tìm hiểu nhau?'; lv.manual = a.manual;
         SH.finish(l, log, { result: 'cùng ' + p.name + ' chọn nhau trong đêm cuối', fame: sh.fame, good: true, hap: 8, mem: 'Đêm cuối ' + sh.name + ', bạn và ' + p.name + ' cùng chọn nhau.' });
         l.pending.unshift(lv);

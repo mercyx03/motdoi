@@ -1,4 +1,24 @@
-## 8.10.23-md4b — 02/11/2026 (UTC+7) — packaged, chưa phát hành
+## 8.10.24-md5 — 03/11/2026 03:07 (UTC+7) — đã ghi phát hành 06:21 theo yêu cầu của chủ dự án (giờ dự kiến upload); chưa nghiệm thu đầy đủ
+
+- MD5 (PROMPT_MOT_DOI_MD5_HOAN_THIEN_VA_MO_RONG.md). Module mới: `fix920` (FIN + CHILD + hồ sơ nghề), `kin920` (gia đình hai bên, nơi ở, nội trợ, nuôi dạy con, chuỗi phản bội chung), `party920` (dịch vụ tiệc chung, cohort 1.000 khách), `school920` (trường, prom 24 nước, lễ trưởng thành), `royal920` (hoàng gia hư cấu, tước vị, công vụ, ngân sách, kế vị), `guard920` (menu MD4/MD5 dựng lỗi thì tự loại khỏi hàng chờ).
+- Lỗi tái hiện đã sửa:
+  - global919 làm dừng regression ở mục 5 trên 8.10.23 (hồ sơ đoàn tụ được duyệt sau khi hôn nhân kết thúc).
+  - Người được giới thiệu qua app hẹn hò (life79 → life34) và show hẹn hò (life153) bị sinh lại nghề.
+  - Có nhân sự sự kiện thì menu "Tổ chức tiệc" bị chuyển sang bàn làm việc, mất chọn loại tiệc (app.js).
+  - Con ngoài hôn nhân của người chơi nam mặc định ở chung nhà, nên vào chuyến du lịch cùng vợ/chồng.
+  - Chu cấp có 5%/năm "ngoại tình" (life80) và chia tay ngay cả khi đã cưới, không qua ly hôn.
+- Sửa có chủ đích:
+  - Quốc tịch con nuôi quốc tế theo luật từng nước (origin919 → fix920).
+  - Học tiếng xong được đổi diện tại chỗ ở nước cho phép (md4b919).
+  - Hai lối hồ sơ định cư dùng chung kiểm tra trùng (life114, md4b919).
+  - Hỗ trợ tiêu hủy có mã hồ sơ, chỉ trả một lần.
+  - Tùy chọn nội dung nhạy cảm (engine, care919, scenarios, genetics912).
+  - Ngân sách hoàng gia tách tiền riêng và sổ công vụ (life84).
+  - Ghi chú quốc tịch Singapore theo ICA (global919).
+  - Hộp thoại: nhãn, giữ focus, Esc, trả focus (app.js).
+- Test: `tests/md5-920.js` (116), `tests/md5-browser.js` (35/44 menu MD4–MD5 tương tác thật ở 390 + 1280px), `md4b-919` cập nhật theo luật quốc tịch từng nước (133). Nguồn: docs/MD5-SOURCES.md. Bảng đối chiếu: docs/UPGRADE-912-PROGRESS.md "Đợt 14".
+
+## 8.10.23-md4b — 02/11/2026 (UTC+7) — đã ghi phát hành 03/11/2026 06:21 cùng gói 8.10.24
 
 - Hoàn thiện phần còn giản lược của MD4 (`md4b919.js` + vá origin919, global919, identity919, bonds919, pets919, healthsys919, followers919, life107): D17 nhận nuôi quốc tế có chuyển nước và quốc tịch ghi nhận sau 1 năm, khởi đầu chăm sóc tạm thời, test thừa kế con nuôi; D10 chuỗi ở tù/bệnh dài hạn/anh chị em chia trách nhiệm chăm cha mẹ (tiếp nối fd_nuoi_bo_me); D09 hồ sơ phản ánh có cơ quan theo nước, xử lý năm sau; D11 khóa tiếng 1 năm, bảo lưu/chuyển trường/dừng học, học nghề kép Đức, lương nghiên cứu sinh; D12 công nhận bằng nghề được quản lý, lộ trình thường trú theo nước/ngành/vùng; D13/D16 đặt tên mọi ca sinh, họ ghép Đức tối đa hai phần, kiểm tra tên theo nước, đổi tên làm hộ chiếu mất hiệu lực, hộ chiếu bạn đời có hạn; D14 Canada theo tỉnh, Anh theo vùng, số tiền theo năm (dự báo từ 2026); D15 nền tảng/thị trường, hợp đồng tài trợ có đầu việc, chi phí cất quà; D07 chăn nuôi và bệnh gia súc, nhóm nguy cơ mang thai/suy giảm miễn dịch.
 - Mới theo góp ý: `beauty919.js` (gộp tẩy/nhuộm tóc về một hồ sơ hair915 — sửa lỗi hai mục không khớp; tẩy theo level, màu cần nền, tạo kiểu, khuyên, trang sức), `star919.js` (giải trong nước theo nơi sống, liên hoan phim quốc tế, lời mời trực tiếp từ đạo diễn hư cấu, danh tiếng quốc tế), `social919.js` (bộ lọc thu nhập cao gặp được người phù hợp — lỗi cũ: người gặp chỉ có nghề phổ thông rồi mới bị lọc; yến tiệc/từ thiện/diễn đàn/đấu giá với người quen thượng lưu; cha/mẹ là ca sĩ/diễn viên nổi tiếng).

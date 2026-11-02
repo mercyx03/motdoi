@@ -24,7 +24,11 @@ ok(!!M, 'md4b module');
   let done = null; for (let s = 0; s < 200 && !done; s++) { const l = E.createLife({ mode: 'vn', seed: 17100 + s, orphan: true }); const o = l.fam.orphan; o.kind = 'mai_am'; o.adopted = null; l.age = 5; l.pending = [E.DEC.mc_nhan_nuoi.make(l, () => .5)]; E.resolve(l, 'theo'); const a = o.adopt919; if (!a || a.cc === 'VN') continue; a.fam.fit = 0.8; a.d.q = 3; for (let y = 0; y < 6 && a.stage !== 'done'; y++) { l.age++; if (a.stage === 'meet') a.visits++; O.adoptYear(l, () => .5, quiet); } done = { l, a }; }
   ok(done, 'an international placement is offered sometimes'); const { l, a } = done; ok(a.stage === 'done' && a.hague != null, 'international adoption passes central-authority step');
   ok(E.H.resCode(l) === a.cc && l.abroad && l.abroad.perm, 'child moves with the adoptive family'); ok(!l.flags.needJob, 'child is not sent job hunting');
-  ok(!(l.flags.citizen || []).includes(a.cc), 'citizenship not instant'); l.age++; O.adoptYear(l, () => .5, quiet); ok(l.flags.citizen.includes(a.cc) && l.country === 'VN', 'citizenship recorded after a year; origin kept');
+  // 8.10.24 (MD5 FIN-05): quốc tịch theo luật từng nước — tự có (Mỹ/Đức/Pháp) hoặc phải nộp hồ sơ/nhập tịch (nước khác, chưa xác minh)
+  const rule = E.FIN920.ADOPT[a.cc], auto = rule && rule.how === 'auto';
+  if (!auto) ok(!(l.flags.citizen || []).includes(a.cc), 'citizenship not instant where the law requires an application');
+  for (let y = 0; y < 3 && !(l.flags.citizen || []).includes(a.cc); y++) { l.age++; O.adoptYear(l, () => .5, quiet); }
+  ok((l.flags.citizen || []).includes(a.cc) && l.country === 'VN', 'citizenship recorded per country rule (' + a.cc + ': ' + (rule ? rule.how : 'chưa xác minh') + '); origin kept');
 }
 // D17: thừa kế — con nuôi và con đẻ ngang nhau theo luật trong hệ di chúc hiện có
 {

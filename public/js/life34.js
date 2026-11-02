@@ -52,7 +52,7 @@
     ]
   });
   function scammed(l, log, amt, t) { var x = pay(l, amt, 'Bị lừa qua mạng'); l.flags.scamOnline = true; fx(l, { hap: -8 }); if (l.mind) l.mind.stress += 8; log(t + ' Mất ' + mo(l, x) + '.', 'bad'); H.mem(l, 'Lần bị lừa qua ứng dụng hẹn hò — bài học đắt giá.', 3); }
-  function love(l, r, d, where) { var dec = E.DEC.love.make(l, r, { where: where }); dec.data.p.name = d.n; dec.data.p.sex = d.s; dec.data.p.age = d.age; dec.text = 'Bạn và ' + d.n + ' (' + (d.s === 'M' ? 'nam' : 'nữ') + ', ' + d.age + ' tuổi) quen nhau ' + where + '. Gặp ngoài đời còn dễ thương hơn trên mạng.'; l.pending.unshift(dec); }
+  function love(l, r, d, where) { var dec = E.DEC.love.make(l, r, { where: where }); dec.data.p.name = d.n; dec.data.p.sex = d.s; dec.data.p.age = d.age; H.adoptJob(l, dec.data.p, d.job ? { job: d.job } : null, r); dec.text = 'Bạn và ' + d.n + ' (' + (d.s === 'M' ? 'nam' : 'nữ') + ', ' + d.age + ' tuổi) quen nhau ' + where + '. Gặp ngoài đời còn dễ thương hơn trên mạng.'; l.pending.unshift(dec); }
   function meet(l, r, log, d) {
     var w = who(d.s);
     if (d.t === 'tot') { pay(l, 0.15, 'Cà phê hẹn hò'); love(l, r, d, 'qua ' + d.app); return; }

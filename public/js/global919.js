@@ -162,7 +162,7 @@
 
   // ================= D16.2: quy tắc quốc tịch theo nước (bổ sung cho ERA917) =================
   var CIT = {
-    SG: { descent: 'register', dual: 21, note: 'Con sinh ở nước ngoài: cha/mẹ là công dân Singapore nộp đăng ký quốc tịch theo huyết thống (ICA khuyến nghị trong vòng 1 năm sau sinh); cha/mẹ là công dân theo huyết thống cần đáp ứng điều kiện cư trú. Song tịch khi trưởng thành phải chọn (từ bỏ quốc tịch nước ngoài).', ver: 'nguồn cơ quan đại diện Singapore (đã đọc) + thứ cấp cho mốc 21 tuổi' },
+    SG: { descent: 'register', dual: 21, note: 'Con sinh ở nước ngoài: cha/mẹ là công dân Singapore nộp đăng ký quốc tịch theo huyết thống (ICA khuyến nghị trong vòng 1 năm sau sinh); cha/mẹ là công dân theo huyết thống cần đáp ứng điều kiện cư trú. Theo ICA, người giữ hai quốc tịch từ khi còn nhỏ có thể giữ đến 21 tuổi; muốn giữ quốc tịch Singapore phải từ bỏ quốc tịch nước ngoài và tuyên thệ (Oath of Renunciation, Allegiance and Loyalty) trước 22 tuổi, nếu không sẽ mất quốc tịch Singapore vào sinh nhật 22. Chỉ được thôi quốc tịch Singapore từ 21 tuổi. Có quốc tịch, tuyên thệ, hộ chiếu và quyền đi lại là các bước riêng.', ver: 'ICA (đọc qua kết quả tìm kiếm 03/11/2026) — quy định cho trẻ đăng ký quốc tịch; trường hợp có quốc tịch từ khi sinh chưa đọc nguyên văn Hiến pháp' },
     JP: { descent: 'reserve', dual: 20, note: 'Con sinh ở nước ngoài có quốc tịch nước khác do nơi sinh phải bảo lưu quốc tịch Nhật trong 3 tháng; người song tịch chọn quốc tịch trước 20 tuổi.', ver: 'nguồn thứ cấp' },
     CN: { descent: 'auto', dual: 0, note: 'Không công nhận song tịch; con sinh ở nước ngoài của cha/mẹ đã định cư nước ngoài và có quốc tịch nước khác từ khi sinh thì không có quốc tịch Trung Quốc.', ver: 'nguồn thứ cấp' },
     IN: { descent: 'register', dual: 0, note: 'Không công nhận song tịch; con sinh ở nước ngoài cần đăng ký khai sinh qua cơ quan đại diện; có diện OCI cho người gốc Ấn có quốc tịch khác.', ver: 'nguồn thứ cấp' },
@@ -247,18 +247,20 @@
     if (u(l, 'dec:' + f.dest + ':' + f.at + ':' + (f.tries || 0)) < x) {
       f.stage = 'approved'; f.decided = l.age;
       if (f.dir === 'in') { if (p) { p.res919 = f.dest; p.permit919 = { kind: 'vợ/chồng', at: l.age, work: true }; } log('Hồ sơ bảo lãnh được chấp thuận: ' + (p ? p.name : 'bạn đời') + ' có quyền cư trú theo diện vợ/chồng tại ' + cname(f.dest) + ' (chưa phải quốc tịch).', 'good'); }
-      else { s.res.ready = true; log('Hồ sơ cư trú diện vợ/chồng tại ' + cname(f.dest) + ' được chấp thuận. Bạn có thể chuyển sang sống khi đã thu xếp xong công việc, nhà ở.', 'good'); X.next(l, 'spouse919', function () { return 0.5; }, {}, { manual: false }); }
+      else { s.res.ready = true; log('Hồ sơ cư trú diện vợ/chồng tại ' + cname(f.dest) + ' được chấp thuận. Bạn có thể chuyển sang sống khi đã thu xếp xong công việc, nhà ở.', 'good'); if (married(l)) X.next(l, 'spouse919', function () { return 0.5; }, {}, { manual: false }); }
     } else { f.stage = 'refused'; f.why = 'chưa đủ bằng chứng quan hệ hoặc điều kiện bảo lãnh'; log('Hồ sơ đoàn tụ tại ' + cname(f.dest) + ' bị từ chối. Có thể nộp lại hoặc khiếu nại một lần.', 'bad'); }
   }
   function submit(l, dir, dest, log) { var s = st(l); s.res = s.res || {}; var t = PROC[dest] || [1, 2], due = l.age + t[0] + (u(l, 'proc:' + dest + ':' + l.age) < 0.5 ? 0 : t[1] - t[0]); s.res.file = { dir: dir, dest: dest, at: l.age, due: due, stage: 'submitted', tries: (s.res.file && s.res.file.tries || 0) + 1 }; H.cash(l, -l.base * 0.05, 'Lệ phí, giấy tờ hồ sơ đoàn tụ'); log('Nộp hồ sơ ' + (dir === 'in' ? 'bảo lãnh bạn đời sang ' : 'cư trú diện vợ/chồng tại ') + cname(dest) + '; dự kiến có kết quả khi bạn ' + due + ' tuổi (có thể thay đổi).', 'neutral'); }
   X.menu('spouse919', 'Nơi sống sau kết hôn và hồ sơ đoàn tụ', function (l) { var r = X.reason(l, 18); if (r !== true) return r; return married(l) && partnerHome(l) && (partnerHome(l) !== res(l) || st(l).res) ? true : 'Cần kết hôn với người có quê nhà ở nước khác nơi bạn sống'; }, function (l) {
     var s = st(l), p = married(l), q = s.res || {}, f = q.file, pref = partnerPref(l);
+    if (!p) return 'Hoàn cảnh hôn nhân đã thay đổi; hồ sơ đoàn tụ không còn áp dụng.';
     return p.name + ' (quê ' + cname(p.homeCountry) + ', đang sống ở ' + cname(p.res919 || res(l)) + '). Bạn đang sống ở ' + cname(res(l)) + '. Kết hôn chỉ mở quyền nộp hồ sơ, không tự cấp cư trú, việc làm hay quốc tịch; Canada cũng yêu cầu hồ sơ bảo lãnh và thường trú riêng. Không ai phải sinh con để hồ sơ được duyệt.' +
       '\nMong muốn của ' + p.name + ': ' + (pref === 'home' ? 'muốn về sống gần gia đình ở ' + cname(p.homeCountry) : pref === 'here' ? 'muốn ở lại nơi hiện tại' : 'linh hoạt, cùng bàn') + '.' +
       (q.plan ? '\nKế hoạch: ' + { stay: 'sống tại ' + cname(res(l)), move: 'chuyển sang ' + cname(p.homeCountry), apart: 'tạm sống xa nhau', third: 'sống ở nước thứ ba', talk: 'đang bàn tiếp' }[q.plan] + '.' : '') +
       (f ? '\nHồ sơ: ' + (f.dir === 'in' ? 'bảo lãnh bạn đời sang ' : 'cư trú tại ') + cname(f.dest) + ' — ' + { submitted: 'đang xét', rfe: 'cần bổ sung giấy tờ', approved: 'đã chấp thuận', refused: 'bị từ chối (' + (f.why || '') + ')' }[f.stage] + '.' : '');
   }, function (l) {
     var s = st(l), p = married(l), q = s.res || (s.res = {}), f = q.file, here = res(l), pref = partnerPref(l), out = [];
+    if (!p) return [];
     function agree(plan) { var want = { home: 'move', here: 'stay', flex: plan }[pref]; return want === plan || u(l, 'agree:' + plan + ':' + l.age) < 0.55; }
     var busy = f && (f.stage === 'submitted' || f.stage === 'rfe') ? 'Đang có hồ sơ chờ xét' : true;
     if (f && f.stage === 'rfe' && !f.rfeDone) out.push({ k: 'rfe', l: 'Bổ sung bằng chứng quan hệ', h: mo(l, l.base * 0.01), run: function (l, r, log) { f.rfeDone = true; f.stage = 'submitted'; H.cash(l, -l.base * 0.01, 'Bổ sung hồ sơ đoàn tụ'); log('Đã bổ sung giấy tờ; hồ sơ tiếp tục được xét.', 'neutral'); } });
