@@ -262,8 +262,10 @@ function developPath(l,k,p,r,log) {
 }
 
 function pathDescription(p){
- var s=p&&p.path834, def=s&&PATHS[s.kind];
- return def?def[0]+'. '+def[1]+(s.lastText?' Gần đây: '+s.lastText:'')+(s.legal?' Hồ sơ vụ việc: '+({investigating:'đang xác minh',reviewed:'đang xem xét',liable:'đã có phán quyết',closed:'đã khép lại'}[s.legal.status]||'đang theo dõi')+'.':''):'';
+ var s=p&&p.path834, parts=[];
+ if(s&&s.lastText)parts.push('Con '+s.lastText);
+ if(s&&s.legal)parts.push('Hồ sơ vụ việc: '+({investigating:'đang xác minh',reviewed:'đang xem xét',liable:'đã có phán quyết',closed:'đã khép lại'}[s.legal.status]||'đang theo dõi')+'.');
+ return parts.join(' ');
 }
 function pathResponse(l,k,p,choice,log){
  var s=p.path834;
@@ -298,7 +300,7 @@ function requests(l,k){var a=age(l,k),b=l.base||1,p=init(l,k),fav=p.interests[0]
  {k:'support',min:19,max:200,l:'Hỗ trợ con một khoản tài chính · '+H.money(l,b*.2),cost:b*.2,run:function(l,k,p,r,log){var take=r()<.5+(100-p.traits.selfReliance)/200;if(!take){log(k.name+' cảm ơn nhưng muốn tự lo; bạn giữ lại khoản tiền.','neutral');rel(k,p,2,1,0);return false;}rel(k,p,1,2,0);log(k.name+' nhận khoản hỗ trợ của bố mẹ.','good');}},
  {k:'repair',min:6,max:200,l:'Xin lỗi và nói chuyện về chuyện cũ',show:function(l,k,p){return p.trust<50||p.memories.some(function(m){return m.tone==='bad'&&!m.healed;});},run:function(l,k,p,r,log){var m=p.memories.filter(function(x){return x.tone==='bad'&&!x.healed;}).pop(),ok=r()<.45+p.attach/200+p.traits.empathy/300;if(ok&&m)m.healed=true;rel(k,p,ok?6:2,ok?4:1,-3);log(ok?'Bạn xin lỗi '+k.name+(m?' về chuyện "'+m.text+'"':'')+'. Con im lặng một lúc rồi ôm bạn.':'Bạn mở lời xin lỗi; '+k.name+' cần thêm thời gian, nhưng cánh cửa đã hé mở.','good');}}];
  if(p.path834 && p.path834.step<3 && !p.path834.response){
-   all.unshift({k:'pathListen',min:10,max:200,l:'Trao đổi riêng: '+PATHS[p.path834.kind][1],run:function(l,k,p,r,log){pathResponse(l,k,p,'listen',log);}},
+   all.unshift({k:'pathListen',min:10,max:200,l:'Dành thời gian nói chuyện riêng với con',run:function(l,k,p,r,log){pathResponse(l,k,p,'listen',log);}},
      {k:'pathPress',min:10,max:200,l:'Yêu cầu con làm theo kỳ vọng của gia đình',run:function(l,k,p,r,log){pathResponse(l,k,p,'press',log);}});
  }
  return all.filter(function(o){return a>=o.min&&a<=o.max&&(!o.show||o.show(l,k,p));});}

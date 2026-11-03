@@ -143,7 +143,8 @@
   // Dòng hiển thị cho trang hồ sơ (ứng dụng chỉ cần ghép vào danh sách)
   function facts(l, k) {
     var p = profile(l, k), out = [], a = age(l, k);
-    if (k.persona141 && k.persona141.path834) out.push(['Hướng phát triển và động cơ', E.CHILD141.pathDescription(k.persona141)]);
+    var recent = E.CHILD141.pathDescription(k.persona141);
+    if (recent) out.push(['Chuyện gần đây', recent]);
     if (p.career.main && a >= 15) { out.push(['Công việc chính', p.career.main]); if (p.career.place) out.push(['Nơi làm việc', p.career.place]); out.push(['Thu nhập', p.career.monthly ? H.money(l, p.career.monthly) + '/tháng' : '—']); if (p.career.kind === 'role' && p.career.previous) out.push(['Nghề trước khi nhận chức', p.career.previous]); }
     out.push(['Sức khỏe', p.health.status + (p.health.issues.length ? ' · ' + p.health.issues.join(', ') : '')]);
     out.push(['Dị ứng', p.health.allergy || 'Chưa ghi nhận']);

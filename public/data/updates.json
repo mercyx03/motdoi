@@ -2,6 +2,23 @@
   "generatedAt": "2026-11-03T06:39:05.217Z",
   "entries": [
     {
+      "id": "child-observations-835",
+      "version": "8.10.35",
+      "publishedAt": "2026-11-04T06:26:05+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T23:26:05.000Z",
+      "title": "Khám phá tính cách của con qua từng chuyện nhỏ",
+      "summary": "Hồ sơ và lựa chọn trò chuyện để bạn tự hiểu con qua lời nói và hành vi.",
+      "tags": [
+        "Gia đình",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục Chuyện gần đây ghi lại điều con vừa làm. Tên kiểu phát triển và động cơ riêng của con được giữ kín, kể cả khi bạn mở lại cuộc đời đang chơi."
+      ],
+      "correctedAt": "2026-11-03T23:26:05.763Z"
+    },
+    {
       "id": "children-paths-834",
       "version": "8.10.34",
       "publishedAt": "2026-11-04T06:11:32+07:00",
@@ -24,8 +41,8 @@
       "id": "family-jobs-833",
       "version": "8.10.33",
       "publishedAt": "2026-11-04T04:49:14+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T23:26:05.000Z",
       "title": "Gia đình đa dạng hơn và tên Việt cho hồ sơ mới",
       "summary": "Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.",
       "tags": [
@@ -37,7 +54,8 @@
         "Màn hình đầu có thêm hồ sơ mẫu. Bạn có thể quay lại hồ sơ xuất phát để gặp một gia đình khác.",
         "Hồ sơ người Kinh có thêm các cặp tên đệm và tên gọi như Minh Triết, Trọng Nhân, Ngân Hà và Trúc Giang.",
         "Dịch vụ thuê sát thủ chỉ xuất hiện trong sáu bối cảnh của trò chơi: Ý, Mexico, Colombia, Nhật Bản, Nga và Mỹ. Khi nhân vật ở Việt Nam, các lựa chọn này không xuất hiện."
-      ]
+      ],
+      "correctedAt": "2026-11-03T23:26:05.667Z"
     },
     {
       "id": "world-country-jobs-832",

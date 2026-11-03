@@ -1,3 +1,7 @@
+## 8.10.35 — Để người chơi tự khám phá động cơ của con
+
+Hồ sơ và lựa chọn trò chuyện để bạn tự hiểu con qua lời nói và hành vi.
+
 ## 8.10.34 — Mỗi người con một hướng đi
 
 Con ở Việt Nam và nước ngoài có thể bộc lộ một trong 12 hướng phát triển, từ say mê học thuật, nhân hậu đến nổi loạn hay tiêu tiền bí mật.

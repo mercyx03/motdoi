@@ -23,6 +23,8 @@ for (const cc of ['VN','JP']) {
     assert.equal(k.persona141.path834.step,1,cc+kind);
     const id=E.UPDATE110.uid(l,k), d=E.DEC.child141.make(l,()=>.5,{id});
     const button=d.data.keys.indexOf('pathListen');
+    const visible = [d.text, ...d.opts.map(o=>o.l), ...E.CHILD147.facts(l,k).flat()].join(' ');
+    for (const spoiler of C.paths[kind].slice(0,2)) assert(!visible.includes(spoiler),kind);
     assert(button>=0);E.DEC.child141.apply(l,d,String(button),()=>.5,quiet);
     assert.equal(k.persona141.path834.response,'listen');
     assert.notEqual(l.kids[1].persona141.path834?.response,'listen');
@@ -30,7 +32,8 @@ for (const cc of ['VN','JP']) {
     assert.equal(k.persona141.path834.response,'listen');
     for(let i=0;i<9;i++){l.age++;step(l);}
     assert.equal(k.persona141.path834.step,3);
-    assert(E.CHILD147.facts(l,k).some(x=>x[1].includes(C.paths[kind][0])));
+    assert.equal(k.persona141.path834.kind,kind);
+    assert(E.CHILD147.facts(l,k).some(x=>x[0]==='Chuyện gần đây' && x[1].includes(k.persona141.path834.lastText)));
     const mem=k.persona141.memories.length;step(l);assert.equal(k.persona141.memories.length,mem);
   }
 }
