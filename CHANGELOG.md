@@ -1,3 +1,7 @@
+## 8.10.31 — Tuổi thơ và gia đình (đã đóng gói)
+
+Trẻ nhỏ được chăm tóc theo tuổi. Bạn tự chọn lúc khám phá món địa phương. Đã sửa cảnh báo nhà cửa và cách gọi mẹ kế, bố dượng.
+
 ## 8.10.30 — Hòa nhập, đức tin gia đình và lễ mừng bé (ghi phát hành theo yêu cầu chủ dự án)
 
 - Mở rộng hồ sơ khuyết tật theo nơi sống, thỏa thuận nuôi con, nghi lễ, tên thánh và kê khai lý lịch.

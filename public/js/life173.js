@@ -544,7 +544,6 @@
       { k: 'talk', l: 'Trò chuyện về nguyên liệu, không mua thêm', h: 'Không tốn tiền · quan hệ +1', run: function (l, r, log) { kitchen(l).lastAt = l.age; H.fx(l, { soc: 1 }); log('Bạn lắng nghe câu chuyện món ăn và tôn trọng khác biệt khẩu vị; không bắt buộc phải ăn thử.', 'neutral'); } }
     ];
   });
-  E.HOOKS.year.push(function (l, r) { if (foodWhy(l) === true && roll(l, 'cuisine') < .24) queue(l, 'world_cuisine173', r); });
 
   // Hồ sơ theo tiêu chí 3/3/3/5/5/5, mở rộng chính resolver và state văn hóa này.
   var DEPTH = E.COUNTRY_DEPTH_DATA || { sources: {}, profiles: {} }, CASES = {};

@@ -276,7 +276,7 @@
   }
 
   // v3.1: bố hoặc mẹ đã mất (hoặc gia đình không có bố) thì lời kể không còn nhắc "bố mẹ" như cả hai còn sống
-  var FAM_KEEP = /mất|qua đời|giỗ|bàn thờ|thắp hương|nén hương|(^|[^\p{L}])mộ(?![\p{L}])|nhớ|ngày xưa|thuở|hoa hồng|di ảnh|mẹ chồng|mẹ vợ|bố chồng|bố vợ|làm mẹ|làm bố|người mẹ|bà mẹ|ông bố|Đức Mẹ|mẹ đơn thân|mẹ bỉm|bố mẹ đẻ|để lại|hai bên|mẹ con|bố con|cha mẹ|(^|[^\p{L}])[Cc]on [A-ZĐ]|con trai|con gái|các con|cháu|làm cha|nuôi dạy con/u;
+  var FAM_KEEP = /[Mm]ẹ kế|[Bb]ố kế|[Bb]ố dượng|mất|qua đời|giỗ|bàn thờ|thắp hương|nén hương|(^|[^\p{L}])mộ(?![\p{L}])|nhớ|ngày xưa|thuở|hoa hồng|di ảnh|mẹ chồng|mẹ vợ|bố chồng|bố vợ|làm mẹ|làm bố|người mẹ|bà mẹ|ông bố|Đức Mẹ|mẹ đơn thân|mẹ bỉm|bố mẹ đẻ|để lại|hai bên|mẹ con|bố con|cha mẹ|(^|[^\p{L}])[Cc]on [A-ZĐ]|con trai|con gái|các con|cháu|làm cha|nuôi dạy con/u;
   function famFix(l, t) {
     if (!t || typeof t !== 'string' || !l || !l.fam) return t;
     if (E.famLogic) { var t2 = E.famLogic(l, t, false); if (t2 != null) t = t2; }

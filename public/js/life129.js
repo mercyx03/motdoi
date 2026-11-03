@@ -56,6 +56,18 @@ var step=E.DEC.di_buoc_nua,stepApply=step.apply;
 step.apply=function(l,d,key,r,log){if(state(l).stepParent||!step.valid(l,d.data))return;stepApply.apply(this,arguments);if(key==='ung_ho'){
  var side=l.fam.fAlive?'f':'m',sex=side==='f'?'F':'M';state(l).stepParent={name:H.stranger(l,r,sex),sex:sex,born:l.age-Math.max(30,l.fam[side+'Age']+l.age+U.randint(r,-5,5)),alive:true,side:side};log((sex==='M'?'Bố dượng ':'Mẹ kế ')+state(l).stepParent.name+' trở thành một thành viên trong gia đình.','good');
 }};
+// Repair only the generated journal entry whose person is known from the save.
+var migrateFamily=E.migrateExt;
+E.migrateExt=function(l){
+ if(migrateFamily)migrateFamily(l);
+ var sp=l.flags.family129&&l.flags.family129.stepParent;
+ if(!sp)return;
+ var tail=' '+sp.name+' trở thành một thành viên trong gia đình.';
+ (l.log||[]).forEach(function(entry){
+  if(sp.sex==='F'&&entry.t==='Bố kế'+tail)entry.t='Mẹ kế'+tail;
+  if(sp.sex==='M'&&entry.t==='Mẹ dượng'+tail)entry.t='Bố dượng'+tail;
+ });
+};
 var elite=E.DEC.elite_hon_nhan,em=elite.make,ea=elite.apply;
 elite.make=function(l,r){var d=em.apply(this,arguments);d.data.salary129=l.cur==='vnd'?U.randint(r,120,300):l.base*(1.5+r()*2);d.text+=' Người được giới thiệu đang quản lý doanh nghiệp gia đình, thu nhập '+H.money(l,d.data.salary129)+'/tháng.';return d;};
 elite.apply=function(l,d,key,r,log){if(l.age<18)return;ea.apply(this,arguments);if(key==='yes'&&l.partner&&l.partner.name===d.data.n){var p=l.partner;p.age=Math.max(18,p.age);p.jobId='tai_phiet';p.job=E.CAR.tai_phiet.t[0];p.inc=d.data.salary129|| (l.cur==='vnd'?200:l.base*2);p.incKnown=true;p.familyBackground129=d.data.who;p.rankSince=l.age;}};

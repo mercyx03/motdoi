@@ -242,3 +242,5 @@ Cập nhật 8.10.15: §11.1–11.3 (di truyền theo cha mẹ, sàng lọc đ�
 Cập nhật 8.10.16: §11.4–11.5 (ung thư theo giai đoạn, bệnh mạn, phát triển trẻ) — kiểm thử trọng điểm đạt. Còn §13, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ. Thêm vào danh sách hỏng sẵn: blood910-browser (assertion nhật ký mới nhất).
 
 GĐ6 — Bản 8.10.26-salon còn chờ regression toàn bộ trên mã cuối và đối chiếu bản lưu thực tế của người báo lỗi.
+
+GĐ6 — Bản 8.10.31 còn chờ regression toàn bộ, đối chiếu bản lưu thực tế của người báo lỗi và xác minh cấu hình Pages.
