@@ -415,17 +415,17 @@
   // 9. ĐỔI TÔN GIÁO
   // ===================================================================
   var REL_VN = ['Phật giáo', 'Công giáo', 'Tin Lành', 'Cao Đài', 'Phật giáo Hòa Hảo', 'Hồi giáo (Islam)', 'Không theo tôn giáo (thờ cúng tổ tiên)'];
-  var REL_W = ['Kitô giáo', 'Hồi giáo', 'Phật giáo', 'Hindu giáo', 'Do Thái giáo', 'Không tôn giáo'];
-  function relKey(s) { s = s || ''; return /Công giáo|Kitô|Chính Thống|Anh giáo/.test(s) ? 'cg' : /Tin Lành/.test(s) ? 'tl' : /Hòa Hảo/.test(s) ? 'hh' : /Phật/.test(s) ? 'pg' : /Cao Đài/.test(s) ? 'cd' : /Hồi/.test(s) ? 'hoi' : /Hindu/.test(s) ? 'hin' : /Do Thái/.test(s) ? 'dt' : /Bà La Môn/.test(s) ? 'blm' : 'none'; }
+  var REL_W = ['Công giáo','Tin Lành','Chính thống giáo Đông phương','Anh giáo', 'Hồi giáo', 'Phật giáo', 'Hindu giáo', 'Do Thái giáo', 'Không tôn giáo'];
+  function relKey(s) { s = s || ''; return /Chính thống/i.test(s)?'orth':/Anh giáo/.test(s)?'ang':/Công giáo|Kitô/.test(s) ? 'cg' : /Tin Lành/.test(s) ? 'tl' : /Hòa Hảo/.test(s) ? 'hh' : /Phật/.test(s) ? 'pg' : /Cao Đài/.test(s) ? 'cd' : /Hồi/.test(s) ? 'hoi' : /Hindu/.test(s) ? 'hin' : /Do Thái/.test(s) ? 'dt' : /Bà La Môn/.test(s) ? 'blm' : 'none'; }
   SC('doi_ton_giao', {
     title: 'Tìm hiểu một tôn giáo khác',
-    prep: function (l) { var me = relKey(l.religion), L = (isVN(l) && !(l.abroad && l.abroad.perm) ? REL_VN : REL_W).filter(function (x) { return relKey(x) !== me; }); return { cs: L.slice(0, 6) }; },
+    prep: function (l) { var me = relKey(l.religion), L = (isVN(l) && !(l.abroad && l.abroad.perm) ? REL_VN : REL_W).filter(function (x) { return relKey(x) !== me; }); return { cs: L }; },
     text: function (l) { return 'Bạn đang ' + (/Không|Tín ngưỡng/.test(l.religion || '') ? 'không theo tôn giáo nào (' + l.religion + ')' : 'theo ' + l.religion) + '. Gần đây bạn tìm hiểu một con đường tâm linh khác. Đổi tôn giáo là chuyện lớn: thay đổi nơi sinh hoạt, ngày lễ, nếp sống, và gia đình chưa chắc đã đồng ý.'; },
-    opts: [0, 1, 2, 3, 4, 5].map(function (i) {
+    opts: Array.from({length:Math.max(REL_W.length,REL_VN.length)},(_,i)=>i).map(function (i) {
       return { k: 'r' + i, l: function (l, d) { var x = d.cs[i]; return x ? (/Không/.test(x) ? 'Thôi theo đạo, ' + x.toLowerCase() : 'Theo ' + x) : ''; }, req: function (l, d) { return !!d.cs[i]; },
         run: function (l, r, log, d) {
           var old = l.religion, x = d.cs[i]; l.religion = x; l.flags.relChanged = (l.flags.relChanged || 0) + 1;
-          var how = { cg: 'Học giáo lý ở nhà thờ giáo xứ rồi chịu phép Rửa tội, nhận tên thánh.', tl: 'Tin nhận Chúa, chịu phép Báp-têm ở hội thánh.', pg: 'Làm lễ quy y Tam Bảo ở chùa, nhận pháp danh.', hh: 'Thờ đức Huỳnh Giáo chủ, tu tại gia theo đạo Hòa Hảo.', cd: 'Nhập môn đạo Cao Đài, mặc áo dài trắng đi cúng ở thánh thất.', hoi: 'Đọc lời tuyên xưng đức tin, theo đạo Hồi, học cầu nguyện mỗi ngày.', hin: 'Theo Hindu giáo, đến đền thờ mỗi tuần.', dt: 'Học giáo luật, theo Do Thái giáo.', none: 'Thôi sinh hoạt tôn giáo, chỉ giữ việc thờ cúng ông bà tổ tiên.' }[relKey(x)];
+          var how = { orth: 'Trao đổi với linh mục Chính thống giáo về việc gia nhập giáo xứ.', ang: 'Tìm hiểu đức tin và gia nhập cộng đoàn Anh giáo địa phương.', cg: 'Học giáo lý ở nhà thờ giáo xứ rồi chịu phép Rửa tội, nhận tên thánh.', tl: 'Tin nhận Chúa, chịu phép Báp-têm ở hội thánh.', pg: 'Làm lễ quy y Tam Bảo ở chùa, nhận pháp danh.', hh: 'Thờ đức Huỳnh Giáo chủ, tu tại gia theo đạo Hòa Hảo.', cd: 'Nhập môn đạo Cao Đài, mặc áo dài trắng đi cúng ở thánh thất.', hoi: 'Đọc lời tuyên xưng đức tin, theo đạo Hồi, học cầu nguyện mỗi ngày.', hin: 'Theo Hindu giáo, đến đền thờ mỗi tuần.', dt: 'Học giáo luật, theo Do Thái giáo.', none: 'Thôi sinh hoạt tôn giáo, chỉ giữ việc thờ cúng ông bà tổ tiên.' }[relKey(x)];
           log('Từ ' + old + ' chuyển sang ' + x + '. ' + how, 'big'); H.mem(l, 'Ngày bắt đầu theo ' + x + '.', 4);
           if (parent(l) && relKey(old) !== 'none' && ch(r, 0.5)) { log(U.cap(parent(l)) + ' buồn mất mấy tháng, rồi cũng bảo: "Con sống tốt là được."', 'neutral'); fx(l, { hap: -3 }); } else fx(l, { hap: 3 });
         } };

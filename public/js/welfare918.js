@@ -138,12 +138,25 @@
 
   // ================= C5: người khuyết tật =================
   var SEVERE = { id: 'severe', autism: 'severe', motor: 'severe' };
-  function disOf(l, who) { var d = who && who.dev915; if (!d || !d.c) return null; var ks = Object.keys(d.c).filter(function (k) { return SEVERE[k] && d.c[k].known; }); return ks.length ? ks : null; }
-  function disPeople(l) { var out = []; if (disOf(l, l)) out.push({ who: l, name: 'Bạn', key: 'self' }); (l.kids || []).forEach(function (k) { if (k.alive !== false && disOf(l, k) && (l.age - k.born < 18 || !k.indep)) out.push({ who: k, name: k.name, key: 'kid:' + k.name }); }); return out; }
-  function disYear(l, log) {
-    var s = st(l), d = s.dis || {}; if (!vn(l)) return;
-    Object.keys(d).forEach(function (k) { var e = d[k]; if (e.status === 'pending' && l.age > e.at) { e.status = 'approved'; e.level = u(l, 'dis' + k) < 0.4 ? 'extreme' : 'severe'; log && log('Hội đồng xác định mức độ khuyết tật ' + (e.level === 'extreme' ? 'đặc biệt nặng' : 'nặng') + ' cho ' + e.name + '; được hưởng trợ cấp xã hội hằng tháng.', 'neutral'); }
-      if (e.status === 'approved' && e.paidAt !== l.age) { e.paidAt = l.age; var v = ledger(l, BAL.disAllow[e.level] * 12); H.cash(l, v, 'Trợ cấp xã hội người khuyết tật'); } });
+  function disOf(l, who) { var d = who && who.dev915; if (!d || !d.c) return null; var ks = Object.keys(d.c).filter(function (k) { return (SEVERE[k] || k === 'adhd' || k === 'lang') && d.c[k].known && !d.c[k].resolved; }); return ks.length ? ks : null; }
+  function disPeople(l) { var out = []; if (disOf(l, l)) out.push({ who: l, name: 'Bạn', key: 'self' }); (l.kids || []).forEach(function (k) { if (k.alive !== false && disOf(l, k) && (l.age - k.born < 18 || !k.indep)) out.push({ who: k, name: k.name, key: 'kid:' + X.uid(l,k) }); }); return out; }
+  function disCountry(l){return H.resCode(l);}
+  function disResident(l){var c=disCountry(l);return E.isCitizenOf(l,c)||!!(l.abroad && l.abroad.perm && l.abroad.code===c);}
+  var disLevel={mild:'nhẹ',severe:'nặng',extreme:'đặc biệt nặng'};
+  function allowance(l,level){
+    if(disCountry(l)==='VN')return level==='mild'?0:ledger(l,BAL.disAllow[level]*12);
+    var factor={GB:.23,US:.19,AU:.25,DE:.22,JP:.18}[disCountry(l)]||.12;
+    return l.base*factor*({mild:.25,severe:1,extreme:1.4}[level]||0);
+  }
+  function disYear(l,log){
+    var d=st(l).dis;if(!d||!disResident(l))return;
+    disPeople(l).forEach(function(p){var old='kid:'+p.name;if(p.key!=='self' && !d[p.key] && d[old] && l.kids.filter(k=>k.name===p.name).length===1){d[p.key]=d[old];delete d[old];}});
+    disPeople(l).forEach(function(p){var e=d[p.key];if(!e||(e.country||'VN')!==disCountry(l))return;
+      if(e.status==='pending' && l.age>e.at){e.status='approved';var roll=u(l,'dis'+p.key);
+        e.level=disOf(l,p.who).every(k=>!SEVERE[k])?'mild':roll<.4?'extreme':roll<.85?'severe':'mild';
+        log && log('Đã xét nhu cầu hỗ trợ của '+e.name+' ở mức '+disLevel[e.level]+'.','neutral');}
+      if(e.status==='approved'&&e.paidAt!==l.age){e.paidAt=l.age;var v=allowance(l,e.level);if(v>0)H.cash(l,v,'Trợ cấp khuyết tật cho '+e.name);}
+    });
   }
 
   // ================= C6: vay sinh viên =================
@@ -263,12 +276,18 @@
     return [{ k: 'paid', l: 'Thực tập có phụ cấp', h: 'Phụ cấp ~' + mo(l, l.base * 0.03) + '; cạnh tranh hơn', why: busy, run: function (l, r, log) { var q = st(l); q.intern = { at: l.age, major: l.major, paid: true, done: false }; H.cash(l, l.base * 0.03, 'Phụ cấp thực tập'); if (l.mind) l.mind.stress = U.clamp(l.mind.stress + 3, 0, 100); log('Bạn bắt đầu kỳ thực tập có phụ cấp.', 'neutral'); } },
       { k: 'unpaid', l: 'Thực tập theo chương trình của trường (không phụ cấp)', why: busy, run: function (l, r, log) { var q = st(l); q.intern = { at: l.age, major: l.major, paid: false, done: false }; if (l.mind) l.mind.stress = U.clamp(l.mind.stress + 2, 0, 100); log('Bạn bắt đầu kỳ thực tập theo chương trình học.', 'neutral'); } }];
   }, 18, 'Học tập');
-  X.menu('disability918', 'Hỗ trợ người khuyết tật', function (l) { var r = X.reason(l, 16); return r !== true ? r : disPeople(l).length ? true : 'Chưa có người trong gia đình được xác định cần hỗ trợ'; }, function (l) {
-    var d = st(l).dis || {};
-    return 'Người khuyết tật có quyền học tập, làm việc bình đẳng và được điều chỉnh hợp lý; khuyết tật không làm giảm năng lực toàn diện. Người khuyết tật nặng hoặc đặc biệt nặng được hưởng trợ cấp xã hội hằng tháng sau khi hội đồng xã xác định mức độ.\n' + disPeople(l).map(function (p) { var e = d[p.key]; return '• ' + p.name + ': ' + (e ? (e.status === 'pending' ? 'đang chờ xác định mức độ' : 'khuyết tật ' + (e.level === 'extreme' ? 'đặc biệt nặng' : 'nặng') + ', hưởng ' + mo(l, ledger(l, BAL.disAllow[e.level])) + '/tháng') : 'chưa làm hồ sơ'); }).join('\n');
-  }, function (l) {
-    var d = st(l).dis || {}, out = [];
-    disPeople(l).forEach(function (p) { if (!d[p.key] && vn(l)) out.push({ k: 'reg:' + p.key, l: 'Làm hồ sơ xác định mức độ khuyết tật cho ' + p.name, h: 'Không mất phí; có kết quả năm sau', run: function (l, r, log) { var q = st(l); q.dis = q.dis || {}; if (q.dis[p.key]) return; q.dis[p.key] = { status: 'pending', at: l.age, name: p.name }; log('Nộp hồ sơ xác định mức độ khuyết tật cho ' + p.name + '.', 'neutral'); } }); });
+  X.menu('disability918','Hỗ trợ người khuyết tật',function(l){return l.alive && disPeople(l).length?true:'Chưa có nhu cầu hỗ trợ được ghi nhận';},function(l){
+    var d=st(l).dis||{};
+    return 'Quyền lợi mô phỏng theo nơi sống và nhu cầu cá nhân. '+disPeople(l).map(function(p){var e=d[p.key];return p.name+': '+(!e||(e.country||'VN')!==disCountry(l)?'chưa xét tại nơi ở hiện tại':e.status==='pending'?'đang xét':disLevel[e.level]+' · '+mo(l,allowance(l,e.level))+'/năm');}).join(' · ');
+  },function(l){var d=st(l).dis||{},out=[];
+    disPeople(l).forEach(function(p){var e=d[p.key],cc=disCountry(l);
+      if(disResident(l)&&(!e||(e.country||'VN')!==cc))out.push({k:'reg:'+p.key,l:'Nộp hồ sơ hỗ trợ cho '+p.name,run:function(l,r,log){var s=st(l);s.dis=s.dis||{};s.dis[p.key]={status:'pending',at:l.age,country:cc,name:p.name};log('Đã nộp hồ sơ, năm sau xét kết quả.','neutral');}});
+      if(!e||e.status!=='approved'||(e.country||'VN')!==cc||!disResident(l))return;
+      var school=p.who===l?l.school:l.age-p.who.born>=5&&l.age-p.who.born<=22;
+      if(school && !e.education) ['Thêm thời gian và phòng yên tĩnh khi thi','Chọn lớp hoặc cơ sở học có hỗ trợ tiếp cận'].forEach(function(label,i){out.push({k:'edu'+i+p.key,l:label+' · '+p.name,run:function(l,r,log){e.education=label;if(p.who===l)H.fx(l,{hap:2});else Object.values(p.who.dev915.c).forEach(x=>{if(x.known)x.skill=Math.min(100,(x.skill||0)+2);});log(p.name+' được bố trí '+label.toLowerCase()+'.','good');}});});
+      if(e.rideAt!==l.age){var fare=l.base*.003,price=e.level==='extreme'?0:e.level==='severe'?fare*.25:fare*(cc==='VN'?1:.75);
+        out.push({k:'ride:'+p.key,l:'Đi phương tiện công cộng · '+p.name+' · '+mo(l,price),why:l.money>=price?true:'Chưa đủ tiền vé',run:function(l,r,log){e.rideAt=l.age;if(price)H.cash(l,-price,'Vé công cộng');log('Đã dùng vé cho chuyến đi của '+p.name+' với giá '+mo(l,price)+'.','neutral');}});}
+    });
     if (disOf(l, l) && l.job) out.push({ k: 'adjust', l: 'Đề nghị điều chỉnh hợp lý nơi làm việc', h: 'Thiết bị hỗ trợ ' + mo(l, l.base * 0.03) + '; giảm căng thẳng', why: st(l).adjAt === l.age ? 'Đã đề nghị năm nay' : l.money >= l.base * 0.03 ? true : 'Chưa đủ tiền', run: function (l, r, log) { var q = st(l); if (q.adjAt === l.age) return; q.adjAt = l.age; H.cash(l, -l.base * 0.03, 'Thiết bị hỗ trợ tiếp cận'); if (l.mind) l.mind.stress = U.clamp(l.mind.stress - 6, 0, 100); log('Nơi làm việc điều chỉnh giờ giấc và trang bị hỗ trợ; công việc thuận lợi hơn.', 'good'); } });
     return out;
   }, 16, 'Sức khỏe');

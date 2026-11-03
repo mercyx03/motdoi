@@ -121,4 +121,6 @@ add('royalCircle920,royalPerson920,royalRole920,royalDuty920,royalRumor920',l=>{
 if(out.royalPerson920){const L=out.royalPerson920.life;out.royalPerson920.arg={id:Object.keys(E.ROYAL920.st(L).rel||{})[0]};}
 add('sixth829,schoolEngland829',l=>{Object.assign(l,{age:16,mode:'world',country:'GB',city:'London',abroad:null,birthYear:2003,school:'lower',alive:true});});
 add('exchange829,aid829',l=>{Object.assign(l,{age:20,mode:'world',country:'US',abroad:null,school:'uni',alive:true});});
+add('babyFaith830',l=>{l.kids=[{name:'An',born:l.age,sex:'F',alive:true}];l.religion='Công giáo';});
+add('dossier830,faithHome830',l=>{l.country='VN';l.abroad=null;l.age=30;wed(l);});
 return out;};

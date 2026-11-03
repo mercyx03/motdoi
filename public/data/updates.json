@@ -2,6 +2,32 @@
   "generatedAt": "2026-11-03T06:39:05.217Z",
   "entries": [
     {
+      "id": "family-faith-support-830",
+      "version": "8.10.30",
+      "publishedAt": "2026-11-03T07:53:52.528Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T07:53:52.571Z",
+      "title": "Hỗ trợ hòa nhập, đức tin gia đình và lễ mừng em bé",
+      "summary": "Làm hồ sơ hỗ trợ cho bản thân hoặc con, bàn chuyện tín ngưỡng với bạn đời và tự chọn cách đón bé trong năm sinh.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Có thể nộp hồ sơ khuyết tật cho người đang có nhu cầu được ghi nhận. Hồ sơ được xét sang năm, lưu riêng theo người và nơi cư trú. Số tiền mô phỏng thay đổi theo nước, mức nhẹ, nặng hoặc đặc biệt nặng và tình trạng công dân hoặc thường trú.",
+        "Ở trường và đại học, gia đình có thể đề nghị thêm thời gian làm bài, phòng thi yên tĩnh hoặc lớp học có hỗ trợ tiếp cận. Người đi làm có thể đề nghị đổi giờ làm, trang bị thiết bị. Chuyến đi bằng vé công cộng hiển thị giá sau ưu đãi trước khi chọn.",
+        "Hồ sơ gia đình ghi riêng tín ngưỡng của cha, mẹ và nhân vật. Cha mẹ có thể cùng đạo hoặc khác đạo. Với gia đình Kitô giáo, bạn gặp các nhánh Công giáo, Tin Lành, Chính thống giáo Đông phương và Anh giáo.",
+        "Hai người có thể bàn việc nuôi con theo một bên hoặc để con tự quyết. Mức gắn bó của từng người và kỳ vọng gia đình ảnh hưởng cuộc trò chuyện. Bất đồng có thể làm giảm độ thân, sang năm hai bên có thể bàn lại.",
+        "Khi bàn chuyện cưới, người Công giáo có thể tìm hiểu việc xin phép hoặc chuẩn khác đạo và lời hứa về nuôi con. Hai người có thể gặp cộng đoàn rồi trở lại năm sau, thống nhất cưới dân sự hoặc hoãn cưới trong năm để giải quyết bất đồng.",
+        "Trong năm bé chào đời tại Việt Nam, gia đình có thể chọn đầy tháng cúng 12 Bà Mụ, Đức Ông và gia tiên, khai hoa bắt miếng, chè trôi nước cho bé gái hoặc chè đậu cho bé trai. Cũng có lựa chọn chỉ tổ chức tiệc gia đình.",
+        "Gia đình Phật giáo có thể kết hợp cúng Mụ với cầu an tại gia hoặc tại chùa, làm việc thiện hay phóng sinh. Gia đình Cao Đài có thể chọn Tắm Thánh tại Thánh thất hoặc lễ tạ ơn và mừng đầy tháng.",
+        "Gia đình Công giáo có thể đưa bé đi rửa tội và chọn tên thánh. Gia đình Tin Lành có thể làm lễ Dâng Con hoặc tiệc mừng, không có bước chọn tên thánh. Anh giáo có lựa chọn rửa tội theo truyền thống giáo xứ hoặc chúc phúc cho bé.",
+        "Có danh sách tên như Joseph, Maria, Cecilia, Nikolai, Anastasia, Arthur và Elizabeth. Gia đình có thể chọn tên đang dùng hoặc tự nhập tên nghi lễ trong hồ sơ con sau lễ. Tên nghi lễ được lưu riêng với họ tên thường dùng; tín ngưỡng của bé được giữ khi chơi tiếp đời con.",
+        "Hồ sơ công tác có mục kê khai bản thân, cha mẹ, ông bà và tín ngưỡng theo thông tin gia đình. Khi đã kê khai, hồ sơ xuất hiện trong bảng xét bổ nhiệm. Nhân vật không theo đạo ghi “Không”."
+      ],
+      "correctedAt": "2026-11-03T07:53:52.672Z"
+    },
+    {
       "id": "education-exchange-829",
       "version": "8.10.29",
       "publishedAt": "2026-11-03T07:40:35.010Z",

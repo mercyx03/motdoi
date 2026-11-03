@@ -1,3 +1,7 @@
+## 8.10.30 — Hòa nhập, đức tin gia đình và lễ mừng bé (ghi phát hành theo yêu cầu chủ dự án)
+
+- Mở rộng hồ sơ khuyết tật theo nơi sống, thỏa thuận nuôi con, nghi lễ, tên thánh và kê khai lý lịch.
+
 ## 8.10.29 — Giáo dục England, trao đổi và tài trợ sinh viên (packaged)
 
 - Thêm GCSE/Sixth Form, Degree Apprenticeship, trao đổi với danh sách điểm đến quốc tế và tài trợ theo nước.
