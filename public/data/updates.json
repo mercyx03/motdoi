@@ -2,6 +2,25 @@
   "generatedAt": "2026-11-03T06:39:05.217Z",
   "entries": [
     {
+      "id": "children-paths-834",
+      "version": "8.10.34",
+      "publishedAt": "2026-11-04T06:11:32+07:00",
+      "releasedAt": "2026-11-03T23:11:32.000Z",
+      "releaseStatus": "released",
+      "title": "Mỗi người con một hướng đi",
+      "summary": "Con ở Việt Nam và nước ngoài có thể bộc lộ một trong 12 hướng phát triển, từ say mê học thuật, nhân hậu đến nổi loạn hay tiêu tiền bí mật.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Từ tuổi phù hợp, con có thể bộc lộ động cơ riêng trong hồ sơ. Những việc xảy ra sau đó cách nhau vài năm. Trong mục Tính cách và chuyện của các con, bạn có thể lắng nghe, đặt giới hạn hoặc gây áp lực; con vẫn có thể tự quyết.",
+        "Việc học, quỹ tiền riêng, nợ, quan hệ anh chị em, cơ hội kế nghiệp và uy tín gia đình thay đổi theo những gì thực sự xảy ra.",
+        "Một số tranh chấp nghiêm trọng của con đã trưởng thành có thể dẫn tới điều tra và xem xét trách nhiệm qua nhiều năm."
+      ],
+      "correctedAt": "2026-11-03T23:11:32.914Z"
+    },
+    {
       "id": "family-jobs-833",
       "version": "8.10.33",
       "publishedAt": "2026-11-04T04:49:14+07:00",

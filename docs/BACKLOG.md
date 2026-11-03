@@ -246,3 +246,5 @@ GĐ6 — Bản 8.10.26-salon còn chờ regression toàn bộ trên mã cuối v
 GĐ6 — Bản 8.10.31 còn chờ regression toàn bộ, đối chiếu bản lưu thực tế của người báo lỗi và xác minh cấu hình Pages.
 
 GĐ6 — Bản 8.10.33 về hồ sơ gia đình và dịch vụ ngầm còn chờ regression toàn bộ, kiểm tra thiết bị thật và xác minh binding Pages.
+
+GĐ6 — Bản 8.10.34 còn chờ regression toàn bộ, thiết bị thật và xác minh binding Pages.

@@ -1,3 +1,7 @@
+## 8.10.34 — Mỗi người con một hướng đi
+
+Con ở Việt Nam và nước ngoài có thể bộc lộ một trong 12 hướng phát triển, từ say mê học thuật, nhân hậu đến nổi loạn hay tiêu tiền bí mật.
+
 ## 8.10.33 — Nghề bố mẹ, tên Việt và điều kiện nơi ở cho dịch vụ ngầm
 
 Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.
