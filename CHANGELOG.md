@@ -1,3 +1,7 @@
+## 8.10.32 — Chọn quốc gia chào đời và tra cứu nghề
+
+Ở chế độ Toàn thế giới, bạn có thể chọn nơi sinh cho hồ sơ mới. Sổ tay Nghề & lương đã bổ sung các mục còn thiếu.
+
 ## 8.10.31 — Tuổi thơ và gia đình (đã đóng gói)
 
 Trẻ nhỏ được chăm tóc theo tuổi. Bạn tự chọn lúc khám phá món địa phương. Đã sửa cảnh báo nhà cửa và cách gọi mẹ kế, bố dượng.

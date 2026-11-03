@@ -1,5 +1,23 @@
 [
   {
+    "id": "world-country-jobs-832",
+    "version": "8.10.32",
+    "publishedAt": "2026-11-03T19:59:01+07:00",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-03T12:59:01.000Z",
+    "title": "Chọn quốc gia chào đời và tra cứu nghề",
+    "summary": "Ở chế độ Toàn thế giới, bạn có thể chọn nơi sinh cho hồ sơ mới. Sổ tay Nghề & lương đã bổ sung các mục còn thiếu.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Chọn quốc gia sinh ra hoặc để ngẫu nhiên. Khi đổi hồ sơ xuất phát, quốc gia đã chọn được giữ lại, còn nhân vật và gia đình được tạo lại.",
+      "Tra cứu thêm thu nhập tham chiếu khi phụ giúp gia đình. Sổ tay cũng ghi rõ trường hợp nhân vật bị ép làm việc trong trại lừa đảo và không được trả lương."
+    ],
+    "correctedAt": "2026-11-03T12:59:01.292Z"
+  },
+  {
     "id": "childhood-family-fixes-831",
     "version": "8.10.31",
     "publishedAt": "2026-11-03T19:44:08+07:00",

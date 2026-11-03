@@ -122,8 +122,13 @@
   function syncSetupUI() {
     var vn = S.set.mode === 'vn';
     var country = $('#countrySel');
-    country.innerHTML = '<option value="">🎲 Ngẫu nhiên theo nơi sinh trên toàn thế giới</option>';
-    country.value = ''; country.disabled = true; S.set.country = '';
+    if (country.options.length === 1) {
+      W.C.filter(function (c) { return c.births > 0; })
+        .sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); })
+        .forEach(function (c) { country.add(new Option(c.name, c.code)); });
+    }
+    country.value = S.set.country || '';
+    if (!country.value) { S.set.country = ''; country.value = ''; }
     $$('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.mode === S.set.mode); });
     $('#vnOpts').classList.toggle('hidden', !vn);
     $('#worldOpts').classList.toggle('hidden', vn);
@@ -194,7 +199,7 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { country: '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
+  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var where = E.isVN(l) ? l.provLabel + ' · Việt Nam' : l.city + ' · ' + l.countryName;
@@ -220,19 +225,20 @@
 
   // ---------- Sổ tay nghề nghiệp & mức lương tham chiếu ----------
   var CAT_ORDER = ['state', 'law', 'uniform', 'edu', 'med', 'office', 'sale', 'biz', 'service', 'free', 'show', 'creator', 'media', 'beauty', 'worker', 'poor', 'farm', 'sport', 'esport', 'chess', 'other', 'crime'];
-  function jobCount() { return Object.keys(E.CAR).filter(function (k) { return k !== 'scam_kh' && k !== 'phu_giup'; }).length; }
+  function jobCount() { return Object.keys(E.CAR).length; }
   function fmtTr(x) { return x >= 1000 ? U.fmtNum(x / 1000, 1) + ' tỷ' : U.fmtNum(x, x < 10 && x % 1 ? 1 : 0); }
   function openJobs() {
     var by = {};
-    Object.keys(E.CAR).forEach(function (k) { var c = E.CAR[k]; if (k === 'scam_kh' || k === 'phu_giup') return; (by[c.cat] = by[c.cat] || []).push(c); });
+    Object.keys(E.CAR).forEach(function (k) { var c = E.CAR[k]; (by[c.cat] = by[c.cat] || []).push(c); });
     var html = '<div class="agep">Sổ tay nghề nghiệp</div><h2>' + jobCount() + ' nghề & mức lương tham chiếu</h2>' +
       '<p class="small muted">Thu nhập tham chiếu ở Việt Nam (triệu đồng/tháng) theo từng bậc. Trong game, thu nhập thật còn dao động theo học vấn, nơi sống, năng lực, chăm chỉ và may rủi; ở nước khác được quy đổi theo mức sống. ' +
       'Mốc so sánh: thu nhập bình quân người lao động năm 2025 khoảng 8,4 triệu/tháng (thành thị ~10, nông thôn ~7,3); lương công chức = hệ số × lương cơ sở 2,34 triệu + phụ cấp.</p>' +
-      '<div class="jobcat">' + CAT_ORDER.filter(function (c) { return by[c]; }).map(function (cat) {
+      '<div class="jobcat">' + CAT_ORDER.concat(Object.keys(by).filter(function (c) { return CAT_ORDER.indexOf(c) < 0; })).filter(function (c) { return by[c]; }).map(function (cat) {
         return '<details' + (cat === 'state' ? ' open' : '') + '><summary>' + esc(E.CAT[cat] || cat) + ' <span class="muted small">· ' + by[cat].length + ' nghề</span></summary><ul class="joblist">' + by[cat].map(function (c) {
           var pay = c.fame ? 'theo danh tiếng: từ ~' + fmtTr(Math.max(c.vn[0], 1.5)) + ' đến hàng trăm triệu' :
             c.vn.length > 1 ? fmtTr(c.vn[0]) + ' → ' + fmtTr(c.vn[c.vn.length - 1]) : '~' + fmtTr(c.vn[0]);
           var tags = [];
+          if (c.id === 'scam_kh') tags.push('bị cưỡng ép, không nhận lương');
           if (c.sigma >= 0.5) tags.push('bấp bênh'); if (c.haz) tags.push('nguy hiểm'); if (c.sec === 'crime') tags.push('phạm pháp'); if (c.hidden) tags.push('qua sự kiện');
           if (c.edu > 0 && c.edu < 99) tags.push('cần ' + E.EDU[Math.min(c.edu, E.EDU.length - 1)]); if (c.edu === 99) tags.push('qua trường công an / quân đội');
           var li = '<li><div class="jt">' + esc(c.t.map(U.cap).join(' → ')) + '</div><div class="jp"><b>' + esc(pay) + '</b>' + (c.fame ? '' : ' triệu/tháng') + (tags.length ? ' <span class="muted small">· ' + esc(tags.join(' · ')) + '</span>' : '') + '</div></li>';
@@ -300,7 +306,7 @@
   });
 
   $('#bornBtn').onclick = function () {
-    var opts = { country: '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
+    var opts = { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
     bornWith(opts);
   };
