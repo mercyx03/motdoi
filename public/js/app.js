@@ -659,6 +659,16 @@
     if (S.phase === 'decision' || (S.phase === 'decmin' && (S.auto || (S.minorOnly && !E.isMajor(d))))) showDecision();
   }
   $('#storageTools896').onclick=showStorage896;
+  // 8.10.24 (MD5 FIN-05): tùy chọn nội dung nhạy cảm — lưu trong cài đặt máy và trong bản lưu đời đang chơi
+  G.sens920 = S.set.sens920 || 'full';
+  function showContent920(){
+    var cur=(S.life&&E.SENS920?E.SENS920.mode(S.life):G.sens920)||'full',M=E.SENS920?E.SENS920.MODES:{full:'Mô tả đầy đủ'},wasPaused=S.paused;if(S.phase==='decision')minimizeDecision();S.paused=true;renderTopbar();
+    modal('<h2 id="contentTitle920">Tùy chọn nội dung</h2><p>Áp dụng cho sự kiện trẻ nhỏ qua đời (mất con dưới 5 tuổi). "Nhẹ nhàng" chỉ đổi lời kể, sự kiện vẫn có thể xảy ra. "Tắt" không tạo mới các sự kiện này; những gì đã xảy ra trong đời này được giữ nguyên.</p><div class="opts" role="radiogroup" aria-labelledby="contentTitle920">'+Object.keys(M).map(function(k){return '<button class="opt" role="radio" aria-checked="'+(k===cur)+'" data-sens="'+k+'"><b>'+(k===cur?'✓ ':'')+esc(M[k])+'</b></button>';}).join('')+'</div><p class="muted small" id="contentStatus920" role="status" aria-live="polite"></p><button class="btn sm" data-modal-close id="contentClose920">Đóng</button>',function(box){
+      $$('[data-sens]',box).forEach(function(b){b.onclick=function(){var m=b.dataset.sens;S.set.sens920=m;saveSettings();G.sens920=m;if(S.life&&E.SENS920){E.SENS920.set(S.life,m);persist();}$$('[data-sens]',box).forEach(function(x){var on=x.dataset.sens===m;x.setAttribute('aria-checked',String(on));x.querySelector('b').textContent=(on?'✓ ':'')+M[x.dataset.sens];});$('#contentStatus920',box).textContent='Đã lưu: '+M[m]+'.';};});
+      $('#contentClose920',box).onclick=function(){closeModal();S.paused=wasPaused;renderTopbar();if(S.life&&S.life.pending.length&&S.phase==='decmin'){showDecision();}};
+    });
+  }
+  $('#contentBtn920').onclick=showContent920;
   $('#exitBtn').onclick = function () {
     var was = S.paused; S.paused = true; renderTopbar();
     modal('<div class="agep">Rời đi</div><h2>Rời khỏi cuộc đời này?</h2><p>' + (S.saveFail ? 'Lần lưu gần nhất chưa thành công. Chọn “Lưu &amp; về trang chủ” để thử lưu lại; nếu vẫn lỗi, bạn sẽ ở lại để tải bản lưu về máy.' : 'Tiến trình được lưu trên trình duyệt. Bạn có thể quay lại sống tiếp bất cứ lúc nào.') + '</p>' +
@@ -722,7 +732,7 @@
     } else if(view==='staff'){
       Object.keys(F.roles).forEach(function(key){var role=F.roles[key],w=F.workers(l)[key],p=w&&E.ELITE148.find(l,w.pid);if(w&&w.contract171){body+=row('<b>'+esc(role.name)+' · '+esc(p?p.name:'không còn')+'</b><br>'+esc(money(l,w.salary)+'/năm · hợp đồng đến tuổi '+w.until+(w.notice?' · đã báo nghỉ':'')),b('Gia hạn 3 năm','renew',key)+b('Thưởng 20% lương','bonus',key)+b('Chấm dứt','end',key));}else{var cost=F.salary(l,key),ok=E.WORLD120.adult(l)===true&&l.indep&&(!role.mansion||F.mansion(l))&&l.money>=cost*2+l.base;body+=row('<b>'+esc(role.name)+'</b><br>'+esc(money(l,cost)+'/năm · cần dự phòng hai năm lương'+(role.mansion?' và sở hữu dinh thự':'')),b('Tuyển '+role.name,'hire',key,!ok));}});
     } else if(view==='party'){
-      body+='<p>Chọn quy mô. Nhân sự sẽ chọn địa điểm phù hợp, ẩm thực, phục vụ, trang trí và an ninh rồi gửi dự toán đầy đủ. Chưa duyệt thì chưa đặt hay thanh toán.</p><div class="office-buttons">'+b('Tiệc gia đình · 15 khách','prepare','family')+b('Tiệc riêng · 60 khách','prepare','private')+b('Gala · 200 khách','prepare','gala')+'</div>';
+      body+='<p>Chọn quy mô. Nhân sự sẽ chọn địa điểm phù hợp, ẩm thực, phục vụ, trang trí và an ninh rồi gửi dự toán đầy đủ. Chưa duyệt thì chưa đặt hay thanh toán.</p><div class="office-buttons">'+[['family','15 khách'],['private','60 khách'],['gala','200 khách'],['grand','500 khách'],['huge','1.000 khách']].map(function(x){var names={birthday:'Sinh nhật',tet:'Gặp mặt gia đình / Tết',anniversary:'Kỷ niệm ngày cưới',business:'Gặp gỡ đối tác',gala:'Gala gây quỹ'};return D.pickTypes(l,x[0]).map(function(t){return b(names[t]+' · '+x[1],'prepare',x[0]+':'+t);}).join('');}).join('')+'</div>';
       var plan=s.plans896.filter(function(p){return p.status==='pending';}).slice(-1)[0];
       if(plan){var who=E.ELITE148.find(l,plan.pid),a=plan.config;body+=row('<b>Dự toán của '+esc(who?who.name:'nhân sự đã nghỉ')+'</b><br>'+esc(E.PARTY172.tiers[a.tier].n)+' · '+esc(({home:'Nhà riêng',restaurant:'Nhà hàng',hotel:'Khách sạn'})[a.venue]||a.venue)+'<br>'+esc('Ẩm thực: '+E.PARTY172.options.cuisine[a.cuisine]+' · '+E.PARTY172.options.service[a.service])+'<ul>'+plan.lines.map(function(x){return '<li>'+esc(x.label)+': <b>'+esc(money(l,x.cost))+'</b></li>';}).join('')+'</ul><strong>Tối đa '+esc(money(l,plan.max))+'</strong><p class="muted small">Bao gồm dự phòng; thực chi và khách nhận lời được ghi sau tiệc. Thiếu tiền, đổi địa điểm hoặc nhân sự nghỉ sẽ chặn thực hiện.</p>',b('Duyệt tổ chức · tối đa '+money(l,plan.max),'approvePlan',plan.id)+b('Không tổ chức, bỏ dự toán','cancelPlan',plan.id));}
     } else {
@@ -747,7 +757,7 @@
         if(op==='autoRenew'){s.autoRenew896=!s.autoRenew896;msg='Đã cập nhật quyền gia hạn hợp đồng.';}
         if(op==='hire'){var hired=F.hire(l,v,rng);if(hired)l.acts=(l.acts||0)+1;msg=hired?'Đã tuyển và trả lương năm đầu. Hãy duyệt gói công việc thường lệ để bắt đầu.':'Điều kiện tuyển hoặc ngân sách đã thay đổi.';}
         if(['renew','bonus','end'].includes(op))msg=D.manage(l,v,op,rng);
-        if(op==='prepare'){var made=D.prepare(l,v);msg=made.message;}
+        if(op==='prepare'){var pv=String(v).split(':'),made=D.prepare(l,pv[0],pv[1]);msg=made.message;}
         if(op==='approvePlan'){var made2=D.approve(l,v,rng,function(t,k){E.UPDATE110.log(l,t,k);});msg=made2.message;S.officeReport896=made2.ok&&made2.report&&made2.report.length?made2.report.slice():null;if(made2.ok){persist();renderAll();openOffice896('inbox',msg);return;}}
         if(op==='cancelPlan'){S.officeReport896=null;D.dismiss(l,v);msg='Đã bỏ dự toán, chưa thanh toán.';}
         if(op==='successor')msg=F.approve(l,Number(v),rng)?'Đã duyệt đúng người kế nhiệm và ký hợp đồng riêng.':'Ứng viên, vị trí hoặc dự phòng chưa đủ điều kiện.';
@@ -1119,7 +1129,7 @@
     var l = S.life;
     if (!l || !l.alive || S.phase === 'decision' || S.phase === 'reflect' || S.phase === 'dead') return;
     if(id==='office171'){openOffice896('inbox');return;}
-    if((id==='party148'||id==='luxuryParty172')&&E.OFFICE171.desk.person(l,'events')){openOffice896('party');return;}
+    // 8.10.24 (MD5 PARTY-01): không chuyển hướng menu tiệc sang bàn làm việc nữa — hai lối vào giữ đủ lựa chọn và dùng chung party148
     var waiting = S.phase === 'decmin';
     var d = E.act(l, id);
     if (!d) { var why=E.actions(l).find(function(x){return x.id===id;});toast(why&&why.ok!==true?why.ok:'Điều kiện đã thay đổi; hãy mở lại danh sách để kiểm tra');renderActions();return; }
@@ -1249,10 +1259,21 @@
   if ($('#logToggle')) $('#logToggle').onclick = function () { var c = !$('#logCard').classList.contains('collapsed'); LS.set('mkn.logc', c); setLogCollapsed(c); };
 
   // ---------- hộp thoại ----------
+  // 8.10.24 (MD5 tiếp cận): hộp thoại có nhãn từ tiêu đề, giữ focus bên trong khi bấm Tab, Esc bấm nút đóng/huỷ nếu có, đóng thì trả focus về chỗ cũ
   function modal(html, bind, cls) {
     var root = $('#modalRoot');
+    if (!root.firstChild && document.activeElement && document.activeElement !== document.body) S.modalReturn = document.activeElement;
     root.innerHTML = '<div class="overlay"><div class="card modal ' + (cls || '') + '" role="dialog" aria-modal="true">' + html + '</div></div>';
-    if (bind) bind($('.modal', root));
+    var box = $('.modal', root), h = box && $('h2, h3', box);
+    if (h) { if (!h.id) h.id = 'modalTitle' + Date.now(); box.setAttribute('aria-labelledby', h.id); }
+    if (bind) bind(box);
+    if (box) box.onkeydown = function (ev) {
+      if (ev.key === 'Escape') { var c = $('[data-modal-close], [data-office="close"], [data-ask="n"]', box); if (c) { ev.preventDefault(); c.click(); } return; }
+      if (ev.key !== 'Tab') return;
+      var f = $$('button:not([disabled]), [href], input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])', box).filter(function (x) { return x.offsetParent !== null || x === document.activeElement; });
+      if (!f.length) return; var a = f[0], z = f[f.length - 1];
+      if (ev.shiftKey && document.activeElement === a) { ev.preventDefault(); z.focus(); } else if (!ev.shiftKey && document.activeElement === z) { ev.preventDefault(); a.focus(); }
+    };
     var f = $('.modal button, .modal textarea', root); if (f) f.focus();
   }
   // v6.3.0: hộp xác nhận riêng của game thay cho confirm() — confirm() bị chặn trong trình duyệt tích hợp (Facebook, Zalo, Messenger…) khiến bấm nút không có tác dụng
@@ -1261,7 +1282,7 @@
       $$('[data-ask]', box).forEach(function (b) { b.onclick = function () { closeModal(); if (b.dataset.ask === 'y') onYes(); else if(onNo) onNo(); }; });
     });
   }
-  function closeModal() { $('#modalRoot').innerHTML = ''; if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; } }
+  function closeModal() { $('#modalRoot').innerHTML = ''; if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; } var back = S.modalReturn; S.modalReturn = null; if (back && document.contains(back) && !back.disabled) { try { back.focus(); } catch (e) { } } }
 
   // v2.5: thu nhỏ hộp lựa chọn để xem các bảng, đổi trọng tâm năm nay… rồi mở lại để chọn (đời tạm dừng trong lúc đó)
   function minimizeDecision() {

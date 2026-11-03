@@ -42,7 +42,7 @@
   T('cs_cuop_cong', function (l, a) { return office(l) && a >= 22 && a <= 55; }, 0.025, 6, 1);
   SC('cs_do_loi', {
     title: 'Sếp đổ lỗi',
-    valid: office,
+    valid: function (l) { return office(l) && (!E.hasBoss || E.hasBoss(l)); }, // 8.10.20: người đứng đầu (không có cấp trên trực tiếp) không bị "sếp" đổ lỗi
     prep: function (l, r) { return { why: pick(r, ['một hợp đồng bị hủy', 'khách hàng lớn khiếu nại', 'số liệu báo cáo lên trên bị sai', 'dự án trễ hạn hai tháng']) }; },
     text: function (l, d) { return 'Ban giám đốc truy trách nhiệm vì ' + d.why + '. Sếp trực tiếp của bạn, người ký duyệt mọi thứ, quay sang bảo: "Phần này em phụ trách mà."'; },
     opts: [
@@ -51,7 +51,7 @@
       { k: 'nghi', l: 'Nộp đơn nghỉ việc', ai: { w: 0.3, risk: 1 }, run: function (l, r, log) { log('Bạn đặt đơn nghỉ việc lên bàn. "Em không làm ở nơi mình phải gánh lỗi cho người khác."', 'neutral'); l.flags.needJob = true; if (E.quitJob) E.quitJob(l, log); else { l.lastJob = l.job; l.job = null; } fx(l, { hap: 2 }); stress(l, -4); } }
     ]
   });
-  T('cs_do_loi', function (l, a) { return office(l) && a >= 23 && a <= 58; }, 0.02, 6, 1);
+  T('cs_do_loi', function (l, a) { return office(l) && (!E.hasBoss || E.hasBoss(l)) && a >= 23 && a <= 58; }, 0.02, 6, 1);
   SC('cs_tin_don', {
     title: 'Tin đồn ở công ty',
     prep: function (l, r) { var sx = H.partnerSex ? H.partnerSex(l, r) : (l.sex === 'M' ? 'F' : 'M'); return { n: name(l, r, sx) }; },

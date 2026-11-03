@@ -132,7 +132,7 @@
   X.menu('hair915', 'Tóc và hiến tóc', function (l) { return X.reason(l, 12); }, function (l) { var h = hair(l); return 'Tóc hiện dài khoảng ' + h.len + ' cm' + (h.dyed ? ', đã nhuộm' : '') + (h.bleached ? ', đã tẩy' : '') + '. Mỗi chương trình có điều kiện riêng; cắt hiến sẽ trừ đúng phần tóc đã cắt và tóc cần thời gian mọc lại.'; },
     function (l) { var h = hair(l), out = HAIR.map(function (P) { var ok = h.len - 5 >= P.min && (!h.bleached || P.bleached) && (!h.dyed || P.dyed); return { k: P.k, l: 'Hiến cho ' + P.n, h: 'Cần tối thiểu ' + P.min + ' cm' + (P.bleached ? '' : ', không nhận tóc đã tẩy'), why: ok ? true : h.bleached && !P.bleached ? 'Chương trình này không nhận tóc đã tẩy' : 'Tóc chưa đủ dài (cần giữ lại khoảng 5 cm)',
       run: function (l, r, log) { var x = hair(l); if (!(x.len - 5 >= P.min) || x.bleached && !P.bleached) return; var cut = x.len - 5; x.len = 5; x.donated = (x.donated || 0) + 1; H.fx(l, { hap: 4, karma: 2 }); log('Bạn cắt ' + cut + ' cm tóc gửi ' + P.n + '. Tóc còn khoảng 5 cm, sẽ mọc lại dần.', 'good'); } }; });
-      out.push({ k: 'dye', l: h.dyed ? 'Tẩy tóc để đổi màu sáng' : 'Nhuộm tóc', run: function (l, r, log) { var x = hair(l); if (x.dyed) x.bleached = true; else x.dyed = true; log(x.bleached ? 'Bạn tẩy tóc để lên màu sáng.' : 'Bạn nhuộm tóc màu mới.', 'neutral'); } });
+      out.push({ k: 'beauty', l: 'Nhuộm, tẩy, tạo kiểu tóc (mục Làm đẹp)', run: function (l, r) { X.next(l, 'beauty919', r, {}); } }); // 8.10.23: dùng chung hồ sơ tóc với mục Làm đẹp
       return out; }, 12, 'Sức khỏe');
 
   // ===================== Hiến máu: tạm hoãn theo chính sách game =====================

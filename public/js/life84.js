@@ -80,7 +80,7 @@
     if (x.quit || a < 18) return;
     // ngân sách hoàng gia / quỹ gia tộc cho thành viên còn giữ tước hiệu
     var amt = l.base * (x.reign ? 12 : x.tier === 'direct' ? 5 : 1.2);
-    H.cash(l, amt, x.reign ? 'Ngân sách hoàng gia' : 'Trợ cấp từ quỹ hoàng tộc');
+    if (E.ROYAL920) E.ROYAL920.stipend(l, x, amt, log); else H.cash(l, amt, x.reign ? 'Ngân sách hoàng gia' : 'Trợ cấp từ quỹ hoàng tộc'); // 8.10.24: tách tiền riêng/ngân sách công vụ (royal920)
     // kế vị: người trị vì qua đời, bạn là con trưởng trong nhánh chính
     var f = l.fam, ruler = /quốc vương|thiên hoàng|thân vương|đại công tước|nữ hoàng|thái tử/.test((f.fJob || '') + ' ' + (f.mJob || ''));
     if (x.tier === 'direct' && !x.reign && !x.passed && ruler && !f.fAlive && a >= 18) {

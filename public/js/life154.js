@@ -141,7 +141,7 @@
   function awards(l, r, log) {
     var s = S(l), list = s.noms.filter(function (n) { return n.year === yr(l) - 1 && !n.done; }); if (!list.length) return;
     list.forEach(function (n) {
-      n.done = true; var rr = seeded(n.token + ':aw'), name = pick(rr, vn(l) ? AWARDS_VN : AWARDS_W) + ' — ' + (n.role === 'chính' ? 'Nam/Nữ diễn viên chính xuất sắc' : 'Nam/Nữ diễn viên phụ xuất sắc');
+      n.done = true; var rr = seeded(n.token + ':aw'), name = pick(rr, E.STAR919 ? E.STAR919.domestic(l) : vn(l) ? AWARDS_VN : AWARDS_W) + ' — ' + (n.role === 'chính' ? 'Nam/Nữ diễn viên chính xuất sắc' : 'Nam/Nữ diễn viên phụ xuất sắc');
       if (rr() > U.clamp((n.q - 0.5) * 1.6, 0, 0.85)) return;
       var rivals = [0, 1, 2, 3].map(function () { return 0.55 + rr() * 0.4; }), win = n.q + (rr() - 0.5) * 0.1 > Math.max.apply(null, rivals);
       s.awards.push({ name: name, title: n.title, year: yr(l), won: win });

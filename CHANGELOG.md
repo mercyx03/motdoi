@@ -1,3 +1,50 @@
+## 8.10.25-fix — 03/11/2026 09:01 (UTC+7) — packaged, chưa phát hành
+
+- Bản vá sau bản 8.10.24 đã upload (không thay nội dung 8.10.24). Phát hiện khi so regression đầy đủ trên mã cuối (88 lỗi/101 loại) với baseline 8.10.23 (78/89):
+  - Dòng thuế tiền lương (tax-resident) được ghi sau khi nhân vật qua đời. Nay chỉ ghi khi còn sống.
+  - 19 tình huống mới của MD5 chưa có bối cảnh kiểm thử nên rơi vào loại lỗi "kiểm tra được trên ít nhất một khuôn". Đã thêm bối cảnh dựng vào `tests/regression-contexts.js`, không đổi assertion. Mô phỏng mục 9 cho 19 id: 194 lượt, 0 lỗi.
+
+## 8.10.24-md5 — 03/11/2026 03:07 (UTC+7) — đã ghi phát hành 06:21 theo yêu cầu của chủ dự án (giờ dự kiến upload); chưa nghiệm thu đầy đủ
+
+- MD5 (PROMPT_MOT_DOI_MD5_HOAN_THIEN_VA_MO_RONG.md). Module mới: `fix920` (FIN + CHILD + hồ sơ nghề), `kin920` (gia đình hai bên, nơi ở, nội trợ, nuôi dạy con, chuỗi phản bội chung), `party920` (dịch vụ tiệc chung, cohort 1.000 khách), `school920` (trường, prom 24 nước, lễ trưởng thành), `royal920` (hoàng gia hư cấu, tước vị, công vụ, ngân sách, kế vị), `guard920` (menu MD4/MD5 dựng lỗi thì tự loại khỏi hàng chờ).
+- Lỗi tái hiện đã sửa:
+  - global919 làm dừng regression ở mục 5 trên 8.10.23 (hồ sơ đoàn tụ được duyệt sau khi hôn nhân kết thúc).
+  - Người được giới thiệu qua app hẹn hò (life79 → life34) và show hẹn hò (life153) bị sinh lại nghề.
+  - Có nhân sự sự kiện thì menu "Tổ chức tiệc" bị chuyển sang bàn làm việc, mất chọn loại tiệc (app.js).
+  - Con ngoài hôn nhân của người chơi nam mặc định ở chung nhà, nên vào chuyến du lịch cùng vợ/chồng.
+  - Chu cấp có 5%/năm "ngoại tình" (life80) và chia tay ngay cả khi đã cưới, không qua ly hôn.
+- Sửa có chủ đích:
+  - Quốc tịch con nuôi quốc tế theo luật từng nước (origin919 → fix920).
+  - Học tiếng xong được đổi diện tại chỗ ở nước cho phép (md4b919).
+  - Hai lối hồ sơ định cư dùng chung kiểm tra trùng (life114, md4b919).
+  - Hỗ trợ tiêu hủy có mã hồ sơ, chỉ trả một lần.
+  - Tùy chọn nội dung nhạy cảm (engine, care919, scenarios, genetics912).
+  - Ngân sách hoàng gia tách tiền riêng và sổ công vụ (life84).
+  - Ghi chú quốc tịch Singapore theo ICA (global919).
+  - Hộp thoại: nhãn, giữ focus, Esc, trả focus (app.js).
+- Test: `tests/md5-920.js` (116), `tests/md5-browser.js` (35/44 menu MD4–MD5 tương tác thật ở 390 + 1280px), `md4b-919` cập nhật theo luật quốc tịch từng nước (133). Nguồn: docs/MD5-SOURCES.md. Bảng đối chiếu: docs/UPGRADE-912-PROGRESS.md "Đợt 14".
+
+## 8.10.23-md4b — 02/11/2026 (UTC+7) — đã ghi phát hành 03/11/2026 06:21 cùng gói 8.10.24
+
+- Hoàn thiện phần còn giản lược của MD4 (`md4b919.js` + vá origin919, global919, identity919, bonds919, pets919, healthsys919, followers919, life107): D17 nhận nuôi quốc tế có chuyển nước và quốc tịch ghi nhận sau 1 năm, khởi đầu chăm sóc tạm thời, test thừa kế con nuôi; D10 chuỗi ở tù/bệnh dài hạn/anh chị em chia trách nhiệm chăm cha mẹ (tiếp nối fd_nuoi_bo_me); D09 hồ sơ phản ánh có cơ quan theo nước, xử lý năm sau; D11 khóa tiếng 1 năm, bảo lưu/chuyển trường/dừng học, học nghề kép Đức, lương nghiên cứu sinh; D12 công nhận bằng nghề được quản lý, lộ trình thường trú theo nước/ngành/vùng; D13/D16 đặt tên mọi ca sinh, họ ghép Đức tối đa hai phần, kiểm tra tên theo nước, đổi tên làm hộ chiếu mất hiệu lực, hộ chiếu bạn đời có hạn; D14 Canada theo tỉnh, Anh theo vùng, số tiền theo năm (dự báo từ 2026); D15 nền tảng/thị trường, hợp đồng tài trợ có đầu việc, chi phí cất quà; D07 chăn nuôi và bệnh gia súc, nhóm nguy cơ mang thai/suy giảm miễn dịch.
+- Mới theo góp ý: `beauty919.js` (gộp tẩy/nhuộm tóc về một hồ sơ hair915 — sửa lỗi hai mục không khớp; tẩy theo level, màu cần nền, tạo kiểu, khuyên, trang sức), `star919.js` (giải trong nước theo nơi sống, liên hoan phim quốc tế, lời mời trực tiếp từ đạo diễn hư cấu, danh tiếng quốc tế), `social919.js` (bộ lọc thu nhập cao gặp được người phù hợp — lỗi cũ: người gặp chỉ có nghề phổ thông rồi mới bị lọc; yến tiệc/từ thiện/diễn đàn/đấu giá với người quen thượng lưu; cha/mẹ là ca sĩ/diễn viên nổi tiếng).
+- Lỗi tìm thấy khi viết test: tình huống phân biệt đối xử (bias919, 8.10.22) không bao giờ chạy được vì bước chuẩn bị đặt cờ làm điều kiện hợp lệ sai — đã sửa.
+- Test: md4b-919 (133), social919 (93), md4-919 (456).
+
+## 8.10.22-md4 — 02/11/2026 (UTC+7) — đã phát hành 18:06 theo xác nhận upload của chủ dự án
+
+- MD4 D01–D17 (PROMPT_MOT_DOI_MD4_CAP_NHAT.md): 9 module mới `identity919, global919, followers919, care919, pets919, arts919, healthsys919, origin919, bonds919`; sửa `travel-context` (về thăm theo quê nhà/quốc tịch), `careers` (người theo dõi theo sổ, cùng số lần rút RNG), `life107` (22 điểm đến, xét tuyển ≠ học bổng), `abroad-depth` (ngôn ngữ giảng dạy khi xin visa).
+- Lỗi tái hiện đã sửa: điểm về thăm cứng Việt Nam; người gặp ở nước ngoài mang tên quê nhà khi chưa định cư; follower nghề nổi tiếng giảm ~60%/năm ở mức 10 triệu do hệ số phạt quy mô.
+- Test: `tests/md4-919.js` (456 kiểm tra). Nguồn/tham số: docs/MD4-SOURCES.md. Bảng đối chiếu: docs/UPGRADE-912-PROGRESS.md "Đợt 12".
+- Cân bằng (600 đời VN + thế giới, cùng seed): tuổi thọ 68,59 so với 68,66 (HEAD); chết với tài sản âm 14,2% so với 17,3%; 0 lần tụt nửa follower không có nguyên nhân.
+
+## 8.10.21-fix — 02/11/2026 (UTC+7)
+
+- Nhà ở xã hội: chặn "Đổi nhà" và "Tặng nhà cho con" khi căn hộ chưa đủ 5 năm (welfare918, có lý do, không thu tiền).
+- "Sếp đổ lỗi" không còn đến với người đứng đầu không có cấp trên (life91, dùng E.hasBoss).
+- Test: blood910-updates kiểm nội dung thay vì vị trí/số lượng mục; chains-gd4 loại drama917 khỏi phép so sánh GĐ4. Cả hai đạt.
+- Nhật ký fixes-821 ghi đã phát hành theo yêu cầu của chủ dự án (02/11/2026 16:29 +07:00).
+
 ## 8.10.20-c918 — 02/11/2026 (UTC+7) — đã ghi phát hành 13:04 theo yêu cầu của chủ dự án
 
 - Phần C tiếp: `econ918.js` — phiếu lương (gộp → BHXH/BHYT/BHTN → giảm trừ → thuế → điều chỉnh thu nhập bền vững của game → thực nhận, khớp tiền vào sổ), trần căn cứ đóng 20 × mức tham chiếu theo năm (life3); ngân sách hộ qua E.budget114 + quỹ khẩn cấp + tự cắt chi (E.lifestyleFactor); áp lực giá theo năm lạm phát (E.ERA917.macro, chung theo nước/năm); nghỉ ốm BHXH; đào tạo lại (mở việc qua E.offers); nhà ở xã hội (chờ, xét lại, vay NHCSXH 5,4%, thuê nửa giá); vùng phát thải thấp Hà Nội và vé xe buýt giả định (E.vehicleAnnual/E.travelCost); bảng thuế TNDN ước tính; 3 chuỗi C11 trên CHAIN144 (chăm cha mẹ nối tiếp tình huống gốc `care`, không khởi phát riêng).

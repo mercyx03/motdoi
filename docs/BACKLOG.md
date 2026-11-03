@@ -14,6 +14,32 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+### Phần tồn sau MD5 (8.10.24) — 03/11/2026
+
+- **life138 (chặn nghiệm thu tổng thể):** lỗi cũ, lặp lại đúng assertion trên `c2a21cb` và `30152fc`. Chọn "Xem xét" ở `succession139` không chọn ngay người kế nghiệp vì family-dynasty 8.10.8 chuyển sang đề cử/bầu. Cần chủ dự án quyết định hành vi đúng; chưa sửa test, chưa nới assertion.
+- **Browser (FIN-01):** 35/44 menu MD4–MD5 đã mở, bấm, lưu/tải ở 390px và 1280px. 9 menu chỉ kiểm được lý do khóa vì cần chuỗi sự kiện mới mở: bonds919, palliative919, function919, tempCare919, illCare919, sibCare919, adopt919, petHome919, directorOffers919. Chưa có kịch bản browser cho: chuỗi nhiều bước của prom (trang phục → bạn đi cùng → dự), hoàng gia tới đám cưới, `doubt920`/`truth920`, `goalAsk920`/`shopAsk920`. Chưa đo zoom 200%; mới đo tương phản chữ phụ (.muted) ở giao diện sáng.
+- **Nguồn (FIN-02):** phần lớn bảng prom, lễ trưởng thành, quy tắc kế vị/chấp thuận hôn nhân, đổi diện tại chỗ (trừ Anh), quốc tịch con nuôi (trừ Đức) mới ở mức thứ cấp. Chưa rà lại học phí 22 nước, mức chi trả y tế, bảng miễn thị thực. Singapore: đã ghi theo ICA cho trẻ đăng ký quốc tịch; trẻ có quốc tịch từ khi sinh chưa đọc nguyên văn Hiến pháp. Mức hỗ trợ tiêu hủy là tham số.
+- **Giản lược còn lại:**
+  - Đổi diện tại chỗ khôi phục trạng thái "ở nước nhà" trong lúc xét visa đại học (không thu vé máy bay); bị từ chối thì ở lại trong nước.
+  - Ly hôn khi thụ án dùng một quy trình chung cho mọi nước.
+  - Nhà hoàng gia là hư cấu, chỉ Anh có danh mục tước chi tiết; các nước khác mới có kiểu kế vị và cơ quan chấp thuận ở mức tóm tắt.
+  - Con của người chơi với thành viên hoàng gia được xếp vào cây kế vị; chưa có chuỗi tranh chấp kế vị nhiều năm.
+  - Prom/kỷ yếu chưa có ảnh asset riêng.
+  - Ngoại tình phía người chơi vẫn dùng các hệ cũ (life107/108).
+  - Mục tiêu riêng "mở cửa hàng" của bạn đời là hồ sơ giản lược, chưa đi qua hệ doanh nghiệp BUSINESS123.
+- Lịch sử MD4: xem các mục dưới.
+
+### (Lịch sử) Phần tồn MD4 sau 8.10.23 — 02/11/2026
+
+- Đã làm ở 8.10.23 các mục giản lược liệt kê ngay dưới (xem docs/UPGRADE-912-PROGRESS.md Đợt 13). Còn: ly thân khi ở tù không tự thành ly hôn pháp lý; khóa tiếng 1 năm không đổi diện tại chỗ; mức tiền y tế/hỗ trợ tiêu hủy/quy tắc quốc tịch con nuôi là tham số; regression đầy đủ 0–99 và test trình duyệt tự động vẫn chưa chạy.
+
+### (Lịch sử) Phần tồn MD4 8.10.22-md4 — 02/11/2026
+
+- Chưa làm/giản lược: nhận nuôi quốc tế có chuyển nước (chưa có luồng di cư cho trẻ vị thành niên); học tiếng 1 năm ở nước ngoài rồi chuyển diện; đặt họ con theo luật Đức mới chỉ ở mức lựa chọn; gia súc và bệnh gia súc (game chưa có chăn nuôi); cơ sở bảo trợ "chăm sóc tạm thời" khi cha mẹ còn quyền nuôi chưa là khởi đầu riêng; D10 mới có chuỗi người thân hỗ trợ/xa cách chung, chưa có chuỗi riêng cho người trong tù/bệnh dài hạn.
+- Nguồn ở mức thứ cấp (docs/MD4-SOURCES.md): mốc 21 tuổi chọn quốc tịch Singapore, mức tiền y tế 2025 các nước, học phí 22 điểm đến, bảng miễn thị thực theo cặp hộ chiếu. Cần đọc nguyên văn trước khi nâng mức kiểm chứng.
+- Cân bằng cần theo dõi: số người nổi tiếng ≥100 nghìn follower tăng (62 so với 38 trên 600 đời) vì bỏ hệ số phạt quy mô; tỷ lệ tình trạng bẩm sinh/sa sút trí tuệ/đột tử trẻ là tham số trò chơi.
+- Chưa chạy: regression đầy đủ mục 0–99 trên mã 8.10.22; kiểm thử trình duyệt các menu mới trên điện thoại/máy tính (mới kiểm bằng engine headless).
+
 ### Phần tồn MD1 8.10.17-md1 — 01/11/2026
 
 - §13: 187 hồ sơ quốc gia `compiled-912` mới chỉ kiểm URL nguồn tồn tại/đúng nước (561/748); cần đối chiếu từng câu (luật lao động, độ tuổi kết hôn, ngày lễ) với trang nguồn và nâng `confidence` khi đã xác minh. 187 URL trang quốc gia UNESCO chưa kiểm được vì máy chủ ngắt kết nối — chạy lại `node tools/country-sources-912.js --check --retry --only=culture` vào lúc khác (tuần tự, có nghỉ, không đổi User-Agent). Câu chuyện nhiều năm của 187 nước dựng theo mẫu; có thể viết tay dần theo nước có nhiều người chơi.
@@ -23,10 +49,10 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 - §12/§11 mới là tham số gameplay; chưa có Monte Carlo toàn đời cho tỷ lệ khủng hoảng lãnh đạo theo nghề và tuổi thọ người bệnh thận/gan theo quốc gia.
 - Phần B/C (8.10.20): B1–B8 và C1–C11 đã có cơ chế (bảng đối chiếu ở docs/UPGRADE-912-PROGRESS.md Đợt 11). Còn giản lược: lãi suất/tỷ giá mới hiển thị (không đổi khoản vay cũ theo nguyên tắc giữ hợp đồng danh nghĩa); thí điểm chính sách tỉnh chỉ tác động người sống trong tỉnh; khóa bán nhà ở xã hội xử lý sau giao dịch; doanh thu kinh doanh ước tính = 4 × lợi nhuận; lệ phí trước bạ ô tô điện sau 2027 là giả định; Monte Carlo theo kịch bản chưa làm riêng. Cần đọc nguyên văn các văn bản đang ở mức nguồn thứ cấp.
 - **Đã sửa (8.10.20, theo quyết định của chủ dự án):** thứ tự thuế — trước đây life115 nén thu nhập sau khi đã tính thuế TNCN trên lương chưa nén. Nay tax-resident (và thuế kinh doanh ở welfare918) điều chỉnh thu nhập bền vững trước rồi mới tính thuế; engine không điều chỉnh lần hai; bảng Tài chính năm có dòng "Điều chỉnh thu nhập bền vững (cân bằng game)" và thực nhận đặt sau thuế. Người thu nhập cao nộp thuế ít hơn trước (ca thử: 5,65 → 1,73 triệu/tháng).
-- Nhà ở xã hội: bán/chuyển trước 5 năm nay bị xử lý (khoản vay ưu đãi đến hạn ngay) nhưng sau khi giao dịch đã diễn ra; các mục bán/tặng/đổi nhà sẵn có (asset-picker, emigrate, life146, giftAsset112) chưa cảnh báo trước.
-- `tests/chains-gd4.js`: lỗi cả ở baseline c69d094 (assertion khác) vì chuỗi drama 8.10.19 làm gần như mọi đời "chạm chuỗi", trái giả định của test; cần chủ dự án quyết định cách kiểm mới.
-- Tình huống "Sếp đổ lỗi" vẫn đến với Phó Thủ tướng (thấy khi thử giao diện) — chưa sửa, cần lọc theo cấp.
-- `tests/blood910-updates.js`: test chụp trạng thái nhật ký 8.10.10 (đòi mục mới nhất là blood-genetics-followup-910 và tổng mục = mốc cũ + 1); lỗi có sẵn từ 8.10.11, không phải do 8.10.20; giữ nguyên assertion, cần chủ dự án quyết định cách kiểm mới.
+- **Đã sửa (8.10.21):** nhà ở xã hội — "Đổi nhà" và "Tặng nhà cho con" bị chặn trước khi đủ 5 năm (có lý do, không thu tiền); bán bắt buộc khi định cư nước ngoài vẫn xử lý sau giao dịch (khoản vay ưu đãi đến hạn ngay).
+- **Đã sửa (8.10.21):** `tests/chains-gd4.js` — so sánh GĐ4 nay loại drama917 khỏi cả hai ngữ cảnh (drama917 có test riêng); 190 kiểm tra đạt.
+- **Đã sửa (8.10.21):** "Sếp đổ lỗi" (cs_do_loi) chỉ xảy ra khi có cấp trên trực tiếp (E.hasBoss), kể cả tình huống đang chờ trong bản lưu.
+- **Đã sửa (8.10.21):** `tests/blood910-updates.js` — bỏ giả định "mục 8.10.10 là mục mới nhất / tổng số mục = mốc cũ + 1"; vẫn kiểm mục 910 còn nguyên, đã phát hành, đồng bộ, và nội dung mọi mục cũ không đổi (chỉ cho phép sửa siêu dữ liệu phát hành).
 - Bằng chứng phát hành 8.10.19: nhật ký ghi released theo yêu cầu trong chat trước khi upload; chưa có xác nhận upload thực tế trong repository.
 - Regression mục 0–8 chạy lại trên mã 8.10.18 (01/11/2026): 272.734 đạt / 5 lỗi (cùng 5 loại đã phân loại). Chênh tuổi thọ/nợ so với HEAD trong regression (71,4/19,9% so với 72,3/16,8%) đã đo lại có kiểm soát bằng cùng script (3.000 đời VN seed 100000+i·7919, nợ trên 600 đời seed 88000+i): HEAD 71,89/17,7%, 8.10.18 trước sửa 71,69/17,6%, sau sửa 71,67/17,6% → nợ không tăng, tuổi thọ −0,2 năm do bệnh thận/gan; phần chênh còn lại là dao động giữa các lượt regression (ID đời theo giờ thật). Đã sửa thêm: chi phí theo dõi cơ bản không thu trùng với ngân sách y tế của engine; chi phí chuyên khoa giữ dự phòng 0,5 lần thu nhập cơ sở.
 - Người chơi báo "chọn cuộc đời rồi không bấm được nút nào": chưa tái hiện trên mã nguồn và dist 8.10.17 (VN/thế giới, 1280/375 px, không lỗi JS). Cần trình duyệt/thiết bị, bản đang dùng, có tiếp tục bản lưu cũ không, ảnh màn hình.

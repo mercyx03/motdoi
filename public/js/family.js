@@ -22,6 +22,15 @@
   }
   function incKnown(l, p) { return !!(p && (p.incKnown || p.status === 'married' || p.status === 'cohabit')); }
   H.partnerJob = partnerJob; H.partnerIncKnown = incKnown;
+  // 8.10.24 (MD5 FAMILY-01): người được giới thiệu qua hồ sơ (ứng dụng hẹn hò, show) giữ đúng nghề đã thấy; trước đây love.make sinh
+  // nghề ngẫu nhiên rồi chỉ chép tên/tuổi nên mở hồ sơ ra thành nghề khác. Chỉ sinh lại khi hồ sơ không ghi nghề hoặc nghề không hợp tuổi.
+  function titleId(job) { var ids = Object.keys(E.CAR); for (var i = 0; i < ids.length; i++) if (E.CAR[ids[i]].t.indexOf(job) >= 0) return ids[i]; return null; }
+  function adoptJob(l, p, src, r) {
+    if (src && src.job) { var id = src.jobId && E.CAR[src.jobId] && E.CAR[src.jobId].t.indexOf(src.job) >= 0 ? src.jobId : titleId(src.job), rk = id ? E.CAR[id].t.indexOf(src.job) : -1; p.job = src.job; p.jobId = id; p.inc = src.inc != null ? src.inc : id ? E.monthlyEst(l, id, rk) : /sinh viên|học sinh/.test(src.job) ? 0 : l.base / 12 * 0.8; if (id) p.rankSince = l.age; return p; }
+    var c = p.jobId && E.CAR[p.jobId], bad = p.age < 18 ? !/^học sinh/.test(p.job || '') : /^học sinh/.test(p.job || '') || p.job === 'sinh viên' && p.age >= 22 || p.job === 'đã nghỉ hưu' && p.age < 55 || !!c && ((c.minAge || 0) > p.age || c.cat === 'med' && p.age < 24 || (c.edu || 0) >= 5 && p.age < 22);
+    if (bad || p.job == null) partnerJob(l, p, r); return p;
+  }
+  H.adoptJob = adoptJob;
 
   // người mới quen: hiện cả nghề nghiệp
   var love = E.DEC.love, mk = love.make, ap = love.apply;

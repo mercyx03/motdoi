@@ -150,6 +150,13 @@ ok(W, 'module loaded');
   ok(l.flags.econ918.housing.status === 'sold_early' && !l.loans.some(x => x.social918) && near(l.money, 300, 1e-6), 'early transfer: social loan due immediately');
   const ok2 = life(141, { age: 45 }); ok2.flags.econ918 = { housing: { status: 'owner', since: 38, noSaleUntil: 43 } }; ok2.ownHouse = false; hooks(ok2); ok(ok2.flags.econ918.housing.status === 'owner', 'after 5 years: no penalty');
 }
+// Khóa 5 năm chặn trước ở các lối chủ động: đổi nhà, tặng nhà cho con.
+{
+  const l = life(145, { age: 40, money: 0, yr: { items: [] } }); l.money = l.base * 200; l.ownHouse = true; l.houseVal = 750; l.flags.econ918 = { housing: { status: 'owner', since: 38, noSaleUntil: 43 } }; l.kids = [{ name: 'K', sex: 'M', born: 10, alive: true, close: 90 }];
+  ok(/chưa đủ 5 năm/.test(E.actions(l).find(x => x.id === 'doi_nha').ok), 'upgrade house blocked with a reason');
+  if (E.DEC.giftAsset112) { const m0 = l.money, d = E.DEC.giftAsset112.make(l, () => .5, { kid: E.UPDATE110.uid(l, l.kids[0]) }); d.manual = true; l.pending = [d]; E.resolve(l, String(d.data.keys.findIndex(k => /home$/.test(k)))); ok(l.ownHouse && l.money === m0, 'gift of the flat blocked, no fee'); }
+  l.age = 44; ok(!E.socialLock918(l), 'lock lifts after 5 years');
+}
 // Lưu/tải và đời đầy đủ.
 {
   const l = life(150); W.volState(l).m = 1; W.state(l).loan = { bal: 10, at: 34 }; const c = JSON.parse(JSON.stringify(l)); E.migrateExt(c); ok(JSON.stringify(c.flags.welfare918) === JSON.stringify(l.flags.welfare918), 'save/load keeps welfare918 state');

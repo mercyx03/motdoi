@@ -154,7 +154,8 @@ const cases = [
   } },
   { name: '5-failed-save-keeps-old', run(t, G) {
     const E = G.E, S = G.SaveStore;
-    const l = freshLife(G, 41041, 'vn', 30), st = storage();
+    let l = freshLife(G, 41041, 'vn', 30); for (let sd = 41043; !l.alive && sd < 41100; sd += 2) l = freshLife(G, sd, 'vn', 30); // 8.10.23: cần một đời còn sống; seed cũ có thể mất vì RNG dịch chuyển khi thêm tình huống
+    const st = storage();
     t.ok(S.write(KEY, wrap(l), null, st).ok, 'lần lưu đầu thành công');
     const before = st.getItem(KEY), age0 = l.age;
     for (let y = 0; y < 5 && l.alive; y++) year(E, l);

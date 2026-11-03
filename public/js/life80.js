@@ -86,11 +86,12 @@
     var g = giving(l); if (!g) { if (l.flags.giveSup && !(l.partner && l.partner.name === l.flags.giveSup.name)) l.flags.giveSup = null; return; }
     if (g.paidAt === a || !free(l)) return; g.paidAt = a;
     var y = g.monthly * 12;
-    if (!rich(l) || l.money < y) { l.flags.giveSup = null; log('Tài chính không còn dư dả như trước, bạn nói thật với ' + g.name + ' và dừng khoản chu cấp.', 'neutral'); if (r() < 0.4 && l.partner) { var nn = l.partner.name; l.partner = null; l.exes = (l.exes || 0) + 1; log(nn + ' không chấp nhận, hai người chia tay.', 'bad'); } return; }
+    if (!rich(l) || l.money < y) { l.flags.giveSup = null; log('Tài chính không còn dư dả như trước, bạn nói thật với ' + g.name + ' và dừng khoản chu cấp.', 'neutral'); var q0 = l.partner; if (q0 && q0.status === 'dating' && r() < U.clamp(0.45 - (q0.close || 50) / 250, 0.05, 0.4)) { var nn = q0.name; l.partner = null; l.exes = (l.exes || 0) + 1; log(nn + ' không chấp nhận, hai người chia tay.', 'bad'); } else if (q0) { q0.close = U.clamp((q0.close || 60) - 5, 0, 100); log('Hai người phải bàn lại cách chi tiêu chung; ' + q0.name + ' buồn nhưng vẫn ở bên bạn.', 'neutral'); } return; }
     H.cash(l, -y, 'Chu cấp cho ' + g.name); g.base0 = g.base0 || g.monthly;
     var x = r();
     if (x < 0.1 && g.monthly < g.base0 * 2) { g.monthly = Math.min(g.base0 * 2, g.monthly * 1.4); stress(l, 4); log(g.name + ' bắt đầu đòi hỏi nhiều hơn: túi hiệu, chuyến du lịch, căn hộ riêng. Khoản chu cấp tăng lên ' + mo(l, g.monthly) + '/tháng.', 'neutral'); }
-    else if (x < 0.15 && l.partner) { var n = l.partner.name; l.partner = null; l.flags.giveSup = null; l.exes = (l.exes || 0) + 1; fx(l, { hap: -8 }); log('Bạn phát hiện ' + n + ' vừa nhận tiền của bạn vừa qua lại với người khác. Hai người chia tay.', 'bad'); H.mem(l, 'Ngày nhận ra ' + n + ' chỉ yêu tiền của mình.', 3); }
+    // 8.10.24 (MD5 FAMILY-SUPPORT): bỏ khả năng ngoại tình 5%/năm chỉ vì đang được chu cấp (và chia tay ngay, kể cả khi đã cưới, không qua ly hôn).
+    // Phản bội nay là chuỗi chung cho mọi cặp đôi (kin920) theo cam kết, chất lượng quan hệ và hoàn cảnh; chu cấp không phải yếu tố.
     else if (a - g.since === 1) log('Một năm lo cho ' + g.name + ' (' + mo(l, y) + '). Người ấy chăm sóc bạn chu đáo, nhưng đôi lúc bạn tự hỏi đâu là tình cảm thật.', 'neutral');
   });
 

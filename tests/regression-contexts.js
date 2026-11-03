@@ -106,4 +106,17 @@ add('insurance918,work918',l=>{E.startJob(l,'ke_toan',()=>0,()=>{},true);l.flags
 add('intern918,studentLoan918',l=>{l.age=20;l.school='uni';l.major='eco';l.indep=false;l.fam.q=2;l.money=0;});
 add('disability918',l=>{l.kids=[{name:'Na',sex:'F',born:35,alive:true,dev915:{v:1,c:{id:{known:true,at:38}}}}];});
 add('policy918',l=>{E.startJob(l,'trung_uong',()=>0,()=>{},true);l.job.rank=6;l.job.rankSince=l.age;E.STATE174.syncState(l);E.STATE917.syncPost(l);});
+// 8.10.24 (MD5): bối cảnh cho các menu/tình huống mới (chỉ là dữ liệu dựng, không đổi assertion)
+function wed(l,extra){l.partner=Object.assign({name:'Hà',sex:'F',age:43,status:'married',since:30,alive:true,close:70,job:'giáo viên',inc:5},extra||{});}
+add('divorceCase920',l=>{wed(l,{separated919:44,close:25});l.jailUntil=48;});
+add('residence920',l=>{l.flags.life114={migration:{country:'DE',due:46}};});
+add('kin920,home920,household920,kinPrep920',l=>{wed(l);l.fam.mAlive=true;l.ownHouse=false;l.urban=true;l.kids=[{name:'Bé',sex:'F',born:42,alive:true}];},{mode:'meal'});
+add('goalAsk920',l=>{wed(l);l.partner.goal920={k:'cook',at:45,prog:0};},{k:'cook'});
+add('shopAsk920',l=>{wed(l);l.money=l.base*100;});
+add('parenting920,anger920',l=>{l.kids=[{name:'Minh',sex:'M',born:33,alive:true,study:50,close:60,uid110:'ctx-kid'}];},{id:'ctx-kid'});
+add('doubt920,truth920',l=>{wed(l);l.partner.pid920='ctx-p';l.flags.kin920={cheat:{who:'ctx-p',real:true,at:45,done:false}};});
+add('school920',l=>{Object.assign(l,{age:16,indep:false,school:'upper',schoolEnd:18});E.SCHOOL920.plan(l,()=>{});});
+add('rite920',l=>{Object.assign(l,{age:13});l.religion='Do Thái giáo';});
+add('royalCircle920,royalPerson920,royalRole920,royalDuty920,royalRumor920',l=>{l.country='GB';l.flags.royal={tier:'direct',c:'GB',house:'Hoàng gia Anh',role920:'working'};l.fame=2e6;const h=E.ROYAL920.house(l,'GB'),m=E.ROYAL920.eligible(l,h)[0];if(m)E.ROYAL920.st(l).rel={[m.id]:{cc:'GB',stage:'trust',trust:40,at:2000}};});
+if(out.royalPerson920){const L=out.royalPerson920.life;out.royalPerson920.arg={id:Object.keys(E.ROYAL920.st(L).rel||{})[0]};}
 return out;};

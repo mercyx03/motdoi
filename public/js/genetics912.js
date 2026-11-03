@@ -159,7 +159,7 @@
     if (x.id === 'pku' && C.study && !x.studyHit && !(x.known && x.dx <= x.since + 1)) { x.studyHit = true; if (who !== 'self') who.study = U.clamp((who.study || 50) + C.study, 0, 100); else H.fx(l, { kno: C.study / 2 }); }
     if (x.id === 't21' && who !== 'self' && !x.studyHit) { x.studyHit = true; who.study = U.clamp((who.study || 50) + C.study * (treated ? 0.6 : 1), 0, 100); }
     if (who === 'self') { if (dh) H.fx(l, { hea: dh }); if (mort && r() < mort * 0.5) H.kill(l, C.n.toLowerCase(), log); return; }
-    if (mort && r() < mort) { who.alive = false; who.died = now; if (log) log('Con ' + name + ' qua đời vì biến chứng của ' + C.n.toLowerCase() + ' khi ' + age + ' tuổi.', 'bad'); H.mem(l, 'Nỗi đau mất con — ' + name + '.', 8); l.st.hap -= 22; }
+    if (mort && r() < mort && !(age < 5 && E.SENS920 && E.SENS920.blocks(l))) { who.alive = false; who.died = now; if (log) log('Con ' + name + ' qua đời vì biến chứng của ' + C.n.toLowerCase() + ' khi ' + age + ' tuổi.', 'bad'); H.mem(l, 'Nỗi đau mất con — ' + name + '.', 8); l.st.hap -= 22; }
   }
   E.HOOKS.year.push(function (l, r, log) {
     if (!l.alive) return; onBirths(l, log);

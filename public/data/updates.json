@@ -1,6 +1,138 @@
 {
-  "generatedAt": "2026-11-02T12:00:00.000+07:00",
+  "generatedAt": "2026-11-03T09:01:00.000+07:00",
   "entries": [
+    {
+      "id": "fix-after-death-tax-825",
+      "version": "8.10.25-fix",
+      "releaseStatus": "packaged",
+      "publishedAt": "2026-11-03T09:01:00.000+07:00",
+      "title": "Một Đời — Sửa nhật ký cuối đời",
+      "summary": "Nhật ký không còn ghi dòng thuế tiền lương sau khi nhân vật đã qua đời.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Trong năm nhân vật qua đời, dòng thuế tiền lương sau bảo hiểm và giảm trừ không còn xuất hiện sau dòng qua đời trong nhật ký."
+      ],
+      "releasedAt": null
+    },
+    {
+      "id": "md5-family-school-royal-824",
+      "version": "8.10.24-md5",
+      "releaseStatus": "released",
+      "publishedAt": "2026-11-03T03:07:00.000+07:00",
+      "title": "Một Đời — Gia đình hai bên, tuổi học trò, nuôi dạy con và hoàng gia",
+      "summary": "Ra mắt gia đình người ấy, chọn nơi ở sau cưới, thỏa thuận việc nhà và nuôi dạy con; prom, kỷ yếu, ngoại khóa và lễ trưởng thành theo từng nước; giới hoàng gia hư cấu có tước vị, công vụ và kế vị; tiệc tới 1.000 khách; sửa nhiều lỗi gia đình và cư trú.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi",
+        "Cân bằng"
+      ],
+      "details": [
+        "Người được giới thiệu qua ứng dụng hẹn hò hoặc chương trình hẹn hò giữ đúng nghề đã thấy trên hồ sơ. Khi người ấy đổi việc thật, nhật ký ghi lại và hồ sơ cho thấy thông tin lúc giới thiệu so với hiện tại.",
+        "Con ngoài hôn nhân đang sống với người trực tiếp chăm sóc không còn tự xuất hiện trong chuyến du lịch hay sự kiện cùng vợ/chồng hiện tại; bạn vẫn là cha/mẹ, vẫn cấp dưỡng và con vẫn có quyền thừa kế.",
+        "Chu cấp cho người yêu/bạn đời không còn tự dẫn tới chuyện người ấy ngoại tình. Phản bội giờ hiếm, tùy mức gắn bó của hai người, có giai đoạn nghi ngờ (có thể chỉ là hiểu lầm), nói chuyện, tư vấn, ly thân hoặc ly hôn đúng thủ tục.",
+        "Gia đình bên người ấy: hồ sơ cha mẹ, anh chị em, quê, gia cảnh (biết sau khi gặp). Ra mắt cần người ấy đồng ý; ăn cơm, thăm nhà hoặc gọi video; quà có giới hạn tác dụng; xin phép gia đình không phải điều kiện bắt buộc để cưới.",
+        "Nơi ở sau cưới: ở riêng, ở cùng bố mẹ một bên (cần chủ nhà đồng ý, đủ chỗ cho con và thú cưng, không mất tiền thuê nhà), hoặc tạm ở hai nơi vì công việc/visa. Có thể bàn lại mỗi năm.",
+        "Thỏa thuận cả hai đi làm, bán thời gian, tạm nghỉ hoặc một người quản lý gia đình — áp dụng cho mọi giới và cần người ấy đồng ý; quay lại làm có lộ trình. Thuê giúp việc/bảo mẫu, ngân sách cá nhân, dự định riêng của bạn đời (học nấu ăn, nhạc cụ, ngoại ngữ, mở cửa hàng…).",
+        "Nuôi dạy con: đọc sách, chơi, nói chuyện cảm xúc, lập kế hoạch học, gia sư, năng khiếu, hướng nghiệp; ép học gây căng thẳng chứ không tự tăng điểm. Mua điện thoại kèm thỏa thuận, tạm giữ có lý do và thời hạn. Trò chơi không có hành động đánh con; khi nóng giận có cách dừng lại, xin lỗi và học kiểm soát cảm xúc.",
+        "Tổ chức tiệc: khi có nhân sự sự kiện, mục Tổ chức tiệc không còn bị chuyển sang bàn làm việc và giữ đủ loại tiệc; bàn làm việc cũng chọn được loại tiệc. Thêm quy mô 1.000 khách ở địa điểm lớn; khách mời, xác nhận và thực đến tính riêng; cùng một người chỉ thân thiết thêm nhờ tiệc một lần mỗi năm.",
+        "Trường học: ngoại khóa hằng năm, kỷ yếu, lễ tốt nghiệp/tri ân, chuyến đi cuối cấp, lửa trại và prom/tiệc cuối cấp tùy truyền thống từng trường và từng nước (Senior prom, Studniówka, Abiball, Vanhojen tanssit, Matric dance…). Không bắt buộc tham gia; trang phục mượn, thuê hoặc mua để dùng lại; đi một mình, với nhóm bạn, bạn đi cùng hoặc người yêu; thiếu tiền không phát sinh nợ.",
+        "Lễ trưởng thành theo gia đình, tôn giáo, nơi sống: Quinceañera, Lễ Thành nhân ở Nhật (tuổi 20, tách với tuổi trưởng thành 18), Bar/Bat Mitzvah, Quán lễ/Kê lễ, tìm hiểu nghi lễ cộng đồng Maasai. Lễ không thay đổi quyền pháp lý; từ chối không bị phạt.",
+        "Giới hoàng gia (nhân vật hư cấu): dạ tiệc ngoại giao, gala, đua ngựa, triển lãm; quen biết, hẹn hò, ra mắt, đính hôn, chờ chấp thuận theo quy định từng nước; tước vị kiểu Anh được giải thích đúng (người trị vì khác phối ngẫu, Princess Royal là danh hiệu riêng); vai trò công vụ hoặc không; ngân sách công vụ tách khỏi tiền riêng; con và thứ tự kế vị theo quy định.",
+        "Thành viên hoàng tộc từ khi sinh: tiền riêng từ quỹ gia tộc thấp hơn trước; ngân sách công vụ chỉ dùng cho nhiệm vụ và hoàn lại phần chưa chi.",
+        "Khi đang chấp hành án vẫn có thể làm thủ tục ly hôn (thuận tình hoặc đơn phương, có hòa giải, hoãn, chờ thông báo); ly thân không còn bị kẹt mãi.",
+        "Học tiếng một năm ở nước ngoài: ở các nước cho phép, có thể nộp hồ sơ đại học và đổi diện ngay tại chỗ; ở Anh phải về nộp từ trong nước. Màn hình mới tổng hợp tình trạng cư trú, quốc tịch và các hồ sơ đang mở, không cho nộp trùng hai hồ sơ cho cùng một nước.",
+        "Trẻ được nhận nuôi quốc tế: quốc tịch theo luật từng nước (có nước tự có, có nước phải nộp hồ sơ). Hỗ trợ tiêu hủy gia súc có mã hồ sơ, chỉ chi một lần.",
+        "Tùy chọn nội dung: chọn mô tả đầy đủ, nhẹ nhàng, hoặc tắt các sự kiện trẻ nhỏ qua đời. Hộp thoại dùng tốt hơn bằng bàn phím: phím Tab ở trong hộp, Esc để đóng, đóng xong quay về đúng nút đã bấm.",
+        "Sửa lỗi có thể làm dừng trò chơi khi hồ sơ đoàn tụ vợ/chồng được duyệt sau khi hôn nhân đã kết thúc."
+      ],
+      "releasedAt": "2026-11-02T23:21:25.000Z",
+      "correctedAt": "2026-11-02T23:21:26.062Z"
+    },
+    {
+      "id": "md4b-beauty-star-823",
+      "version": "8.10.23-md4b",
+      "releaseStatus": "released",
+      "publishedAt": "2026-11-02T21:38:00.000+07:00",
+      "title": "Một Đời — Làm đẹp, diễn viên quốc tế, quan hệ thượng lưu và hoàn thiện đời sống đa quốc gia",
+      "summary": "Gộp tẩy/nhuộm tóc vào mục Làm đẹp, thêm bấm khuyên và trang sức; diễn viên có giải thưởng, liên hoan phim, lời mời từ đạo diễn và danh tiếng quốc tế; hẹn hò tìm được người thu nhập cao; nhiều hệ du học, lao động, nhận nuôi, y tế, chăn nuôi được hoàn thiện.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi",
+        "Cân bằng"
+      ],
+      "details": [
+        "Làm đẹp: tẩy tóc theo level, nhuộm nhiều màu (màu nổi, pastel cần tẩy đủ sáng), uốn, duỗi, tết, highlight, phục hồi tóc hư; bấm khuyên nhiều vị trí và mua, đeo, bán lại trang sức. Sửa lỗi nhuộm tóc và tẩy tóc ở hai mục không khớp nhau.",
+        "Diễn viên: giải thưởng trong nước theo nơi đang sống, được chọn chiếu ở liên hoan phim quốc tế, lời mời đóng phim trực tiếp từ đạo diễn nổi tiếng trong và ngoài nước (nhân vật hư cấu), danh tiếng quốc tế mở rộng khán giả.",
+        "Hẹn hò: đặt bộ lọc thu nhập cao nay có thể gặp người phù hợp, khả năng tùy nơi sống, tài sản và vòng quan hệ của bạn.",
+        "Giới doanh nhân và người nổi tiếng: cùng dự yến tiệc, làm từ thiện, diễn đàn kinh doanh/golf, đấu giá nghệ thuật để xây dựng quan hệ.",
+        "Có thể sinh ra trong gia đình có cha hoặc mẹ là ca sĩ, diễn viên nổi tiếng: bị trêu ở trường, phóng viên chờ trước cổng, người lạ bám theo, nhưng cũng có những cơ hội riêng.",
+        "Nhận nuôi quốc tế có chuyển sang nước của gia đình mới; khởi đầu chăm sóc tạm thời khi cha mẹ vẫn giữ quyền nuôi con.",
+        "Khi ở tù, bệnh lâu ngày hay chăm cha mẹ già: người thân thăm nuôi, bạn đời chờ hoặc xa cách, anh chị em bàn chia trách nhiệm.",
+        "Phân biệt đối xử: phản ánh chính thức qua cơ quan phù hợp từng nước, có kết quả xử lý năm sau.",
+        "Du học: khóa tiếng một năm ở nước ngoài, bảo lưu, chuyển trường, dừng học; học nghề kép ở Đức; nghiên cứu sinh có lương.",
+        "Lao động: công nhận bằng nghề điều dưỡng, giáo viên; lộ trình thường trú theo từng nước, ngành thiếu nhân lực và vùng ưu tiên.",
+        "Đặt tên cho mọi em bé mới sinh, họ ghép kiểu Đức tối đa hai phần, kiểm tra tên theo quy định từng nước; đổi tên pháp lý phải làm lại hộ chiếu; hộ chiếu của bạn đời có hạn.",
+        "Bảo hiểm y tế ở Canada theo tỉnh bang, ở Anh theo vùng (phí thuốc kê đơn); số tiền thay đổi theo năm.",
+        "Người theo dõi chia theo nền tảng và thị trường; hợp đồng tài trợ có số nội dung phải giao; quà giá trị cần chi phí cất giữ.",
+        "Chăn nuôi gia súc, gia cầm với dịch bệnh theo loài và khai báo thú y; quy tắc trong nhà bảo vệ người mang thai hoặc suy giảm miễn dịch khi nuôi thú cưng."
+      ],
+      "releasedAt": "2026-11-02T23:21:25.000Z",
+      "correctedAt": "2026-11-02T23:21:26.076Z"
+    },
+    {
+      "id": "md4-multinational-822",
+      "version": "8.10.22-md4",
+      "releaseStatus": "released",
+      "publishedAt": "2026-11-02T17:21:00.000+07:00",
+      "title": "Một Đời — Cuộc sống đa quốc gia, gia đình, nghệ thuật, thú cưng và người theo dõi",
+      "summary": "Về thăm đúng quê nhà, gặp gỡ người bản xứ khi ở nước ngoài, người theo dõi tăng giảm có lý do, cùng nhiều hệ mới về chăm sóc, nhận nuôi, thú cưng và nghệ thuật.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi",
+        "Cân bằng"
+      ],
+      "details": [
+        "Về thăm nhà khi đang du học/làm việc ở nước ngoài nay bay về đúng quê nhà, quốc tịch hoặc nơi gia đình đang sống (không còn luôn là Việt Nam); có thể chọn khi có nhiều nơi.",
+        "Ở nước ngoài, người mới quen gồm người bản xứ, sinh viên quốc tế và đồng hương theo nơi bạn đang học, làm, sống; có bộ lọc ưu tiên. Quê quán của người ấy được ghi nhớ khi thành người yêu, bạn đời.",
+        "Người theo dõi không còn tụt mạnh vô cớ mỗi năm: có bảng đầu kỳ + người mới − người rời = cuối kỳ, lý do biến động lớn, khán giả hoạt động và mức tương tác ảnh hưởng thu nhập. Có donate/quà ảo (trừ phí nền tảng, thuế) và quà của fan để giữ, chuyển tặng hoặc từ chối.",
+        "Du học 22 nước với ngôn ngữ giảng dạy, học phí, quyền làm thêm, ở lại sau tốt nghiệp; đậu trường, học bổng (% học phí hoặc toàn phần) và visa là ba bước riêng.",
+        "Tự học ngoại ngữ (sách, ứng dụng, trung tâm, gia sư, bạn quốc tế) với kỹ năng nghe–nói–đọc–viết tăng dần; chứng chỉ hết hạn không làm mất kỹ năng; trẻ học ngôn ngữ theo môi trường sống. Có ngôn ngữ ký hiệu từng nước.",
+        "Lao động quốc tế theo hợp đồng (Đài Loan, Nhật, Hàn, Romania, Ba Lan, Hungary, Đức) cần hộ chiếu, tiếng, giấy phép. Kết hôn với người nước khác: bàn nơi sống, nộp hồ sơ đoàn tụ có thể bị yêu cầu bổ sung hoặc từ chối.",
+        "Giấy tờ đi lại của từng thành viên gia đình theo hộ chiếu của mỗi người; quy tắc quốc tịch con theo từng nước; đặt tên con theo văn hóa một hoặc hai bên.",
+        "Họ tên: tên pháp lý, tên thường dùng, biệt danh, lịch sử đổi tên; đổi họ khi kết hôn theo quy định từng nước.",
+        "Ngoại hình tự nhiên (màu tóc, mắt, da) thừa hưởng đa dạng từ cha mẹ, không đổi khi chuyển nước; tóc nhuộm không di truyền.",
+        "Khuyết tật và hỗ trợ tiếp cận: đánh giá, thiết bị (máy trợ thính, gậy, khung tập đi, xe lăn, giao tiếp hỗ trợ), chó hỗ trợ, điều chỉnh ở trường và nơi làm.",
+        "Tuổi già: phân biệt quên thông thường với suy giảm nhận thức và các loại sa sút trí tuệ; chọn người đại diện, phương án chăm sóc; ông bà có thể trông cháu nếu phù hợp, hoặc gửi trẻ, thuê bảo mẫu.",
+        "Chăm sóc giảm nhẹ song song điều trị và danh sách mong ước trong đời với điều kiện thật.",
+        "Chăm sóc trẻ sơ sinh: giấc ngủ an toàn, khóa sơ cứu, máy theo dõi (không thay người trông và không ngăn đột tử).",
+        "Thú cưng có hồ sơ riêng, tiêm phòng, triệt sản, phối giống có phả hệ, bệnh theo từng loài và nguy cơ lây sang người; có thể nuôi ngựa và học cưỡi, dự giải.",
+        "Trò chơi tuổi thơ các nước (trốn tìm, oẳn tù tì, ô ăn quan, tạt lon, ayatori, gonggi, nhảy dây thun…) cùng bạn bè; nghệ thuật: piano, violin, sáo, kèn, guitar, ba lê, nhảy, patin, trượt băng, thi chứng chỉ, biểu diễn, lưu diễn.",
+        "Bảo hiểm y tế khi sống ở nước ngoài tính theo quy định nơi ở (khấu trừ, đồng chi trả, trần chi trả), khách ngắn hạn không có quyền lợi như người cư trú.",
+        "Nhận nuôi trẻ từ mái ấm qua nhiều bước (thẩm định, làm quen, ý kiến của trẻ, quyết định); người tự nhận là thân nhân phải được đối chiếu và có thể không đúng.",
+        "Lúc khó khăn (thất nghiệp, bệnh, ở tù, sống xa), người thân có thể giúp, giúp một phần hoặc xa dần; có thể chủ động làm hòa."
+      ],
+      "releasedAt": "2026-11-02T11:06:00.000Z",
+      "correctedAt": "2026-11-02T11:06:33.791Z"
+    },
+    {
+      "id": "fixes-821",
+      "version": "8.10.21-fix",
+      "releaseStatus": "released",
+      "publishedAt": "2026-11-02T14:00:00.000+07:00",
+      "title": "Một Đời — Sửa lỗi nhỏ sau bản chính sách theo thời đại",
+      "summary": "Căn hộ nhà ở xã hội chưa đủ 5 năm không đổi hay tặng được; người đứng đầu không còn gặp tình huống bị sếp đổ lỗi.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Căn hộ nhà ở xã hội mua chưa đủ 5 năm: mục \"Đổi nhà\" và \"Tặng nhà cho con\" báo rõ lý do và không thu tiền.",
+        "Bộ trưởng, chủ tịch tỉnh, phó thủ tướng… (không có cấp trên trực tiếp) không còn gặp tình huống \"Sếp đổ lỗi\"."
+      ],
+      "releasedAt": "2026-11-02T09:29:00.000Z",
+      "correctedAt": "2026-11-02T09:29:39.686Z"
+    },
     {
       "id": "household-policy-820",
       "version": "8.10.20-c918",
