@@ -232,3 +232,5 @@ Cập nhật 8.10.14: phần lớn §12 đường tối (đàn em NPC, địa b�
 Cập nhật 8.10.15: §11.1–11.3 (di truyền theo cha mẹ, sàng lọc đồng thuận, đa thai) — kiểm thử trọng điểm đạt. Còn §11.4 bệnh mắc phải/ung thư, §11.5 phát triển trẻ, §13 quốc gia, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ.
 
 Cập nhật 8.10.16: §11.4–11.5 (ung thư theo giai đoạn, bệnh mạn, phát triển trẻ) — kiểm thử trọng điểm đạt. Còn §13, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ. Thêm vào danh sách hỏng sẵn: blood910-browser (assertion nhật ký mới nhất).
+
+GĐ6 — Bản 8.10.26-salon còn chờ regression toàn bộ trên mã cuối và đối chiếu bản lưu thực tế của người báo lỗi.

@@ -229,13 +229,14 @@
     SC(id, { title: title, text: text, opts: opts.map(function (o) { return { k: o[0], l: o[1], ai: o[2] || { w: 1 }, run: function (l, r, log) { var t = typeof o[3] === 'function' ? o[3](l, r) : o[3]; log(t, o[5] || 'neutral'); if (o[4]) fx(l, o[4]); } }; }) });
     E.TRIG.push({ id: id, when: function (l, a) { return a >= a0 && a <= a1 && free(l) && (!when || when(l, a)); }, p: 0.08, cd: 99, child: true, cw: cw || 1, max: 1 });
   }
-  function m(l) { return l.fam.mAlive ? 'mẹ' : l.fam.fAlive && !l.fam.noDad ? 'bố' : 'bà'; }
-  function b(l) { return l.fam.fAlive && !l.fam.noDad ? 'bố' : l.fam.mAlive ? 'mẹ' : 'ông'; }
+  function carer(l) { return E.orphanCarer && E.orphanCarer(l); }
+  function m(l) { if (carer(l)) return carer(l); return l.fam.mAlive ? 'mẹ' : l.fam.fAlive && !l.fam.noDad ? 'bố' : 'bà'; }
+  function b(l) { if (carer(l)) return carer(l); return l.fam.fAlive && !l.fam.noDad ? 'bố' : l.fam.mAlive ? 'mẹ' : 'ông'; }
   var school = function (l) { return !!l.school; };
   KID('k_mat_dien', 5, 13, 'Cả xóm mất điện', 'Tối mùa hè, cả xóm mất điện. Trong nhà nóng như lò, ngoài ngõ lũ trẻ í ới gọi nhau.', [
     ['ma', 'Ngồi nghe anh chị kể chuyện ma', { w: 1 }, 'Nghe chuyện ma dưới ánh nến, đêm đó không dám đi vệ sinh một mình.', { hap: 2 }, 'good'],
     ['ngo', 'Chạy ra ngõ chơi trốn tìm', { soc: 1 }, 'Chơi trốn tìm trong bóng tối, vui đến mức mong ngày nào cũng mất điện.', { hap: 4, soc: 2 }, 'good'],
-    ['quat', 'Ngồi quạt nan cho ông bà', { w: 0.8 }, function (l) { return 'Ngồi quạt cho ' + (l.fam.sibs ? 'cả nhà' : m(l)) + ', được khen ngoan, được thưởng cốc chè đỗ đen.'; }, { karma: 2 }, 'good']]);
+    ['quat', 'Ngồi quạt nan cho cả nhà', { w: 0.8 }, function (l) { return 'Ngồi quạt cho ' + (l.fam.sibs ? 'cả nhà' : m(l)) + ', được khen ngoan, được thưởng cốc chè đỗ đen.'; }, { karma: 2 }, 'good']]);
   KID('k_sau_rang', 5, 10, 'Chiếc răng sâu', 'Ăn kẹo nhiều quá, một chiếc răng sâu đau nhức cả đêm.', [
     ['nha_si', 'Đi nha sĩ', { w: 1.2 }, 'Ngồi trên ghế nha sĩ khóc như mưa, nhổ xong được thưởng que kem.', { hea: 2 }, 'neutral'],
     ['tron', 'Trốn, nói dối là hết đau', { w: 0.6 }, 'Giấu được ba ngày thì má sưng vù, bị lôi đi nha sĩ kèm một trận mắng.', { hea: -2, hap: -2 }, 'bad']]);
@@ -246,14 +247,14 @@
     ['nhan', 'Nhận lỗi, xin tiền tiết kiệm đền', { w: 1.2 }, 'Nhận lỗi và lấy tiền heo đất đền bạn. Hai đứa vẫn chơi thân.', { karma: 3 }, 'good'],
     ['giau', 'Giấu nhẹm, giả vờ không biết', { bad: 1 }, 'Giả vờ không biết. Mấy tuần sau bạn biết chuyện, giận cả học kỳ.', { karma: -3, soc: -3 }, 'bad']], school);
   KID('k_tiem_phong', 3, 6, 'Đi tiêm phòng', 'Đến lịch tiêm phòng, nhìn thấy kim tiêm là bạn muốn bỏ chạy.', [
-    ['dung_cam', 'Nhắm mắt, nắm tay mẹ thật chặt', { w: 1 }, function (l) { return 'Nắm chặt tay ' + m(l) + ', tiêm xong mới khóc — được thưởng hộp sữa.'; }, { hea: 1 }, 'good'],
+    ['dung_cam', 'Nhắm mắt, nắm chặt tay người đi cùng', { w: 1 }, function (l) { return 'Nắm chặt tay ' + m(l) + ', tiêm xong mới khóc — được thưởng hộp sữa.'; }, { hea: 1 }, 'good'],
     ['khoc', 'Khóc ầm cả phòng tiêm', { w: 1 }, 'Khóc ầm lên, cô y tá phải dỗ mãi. Ra về được cho kẹo.', null, 'neutral']]);
   KID('k_ve_que_ngoai', 6, 12, 'Mùa hè về quê', 'Hè này được gửi về quê chơi với ông bà cả tháng.', [
     ['bat_ca', 'Theo anh em họ đi bắt cá, trèo cây', { soc: 1 }, 'Một tháng đen nhẻm vì nắng, biết bắt cá, bắt cào cào, leo cây ổi nhà hàng xóm.', { hap: 6, hea: 2 }, 'good'],
-    ['nho_nha', 'Nhớ nhà, đòi về sớm', { w: 0.5 }, 'Nhớ nhà quá, khóc đòi về sớm. Về đến nhà lại thấy nhớ những buổi chiều ở quê.', { hap: -1 }, 'neutral']], function (l) { return l.urban; });
+    ['nho_nha', 'Nhớ nhà, đòi về sớm', { w: 0.5 }, 'Nhớ nhà quá, khóc đòi về sớm. Về đến nhà lại thấy nhớ những buổi chiều ở quê.', { hap: -1 }, 'neutral']], function (l) { return l.urban && (!carer(l) || carer(l) === 'ông bà'); });
   KID('k_ban_hang', 4, 8, 'Chơi bán hàng', 'Bạn bày một "cửa hàng" bằng lá cây, sỏi đá và đồ chơi cũ trước cửa.', [
     ['ban', 'Gọi các bạn trong xóm đến mua', { soc: 1 }, 'Cả buổi chiều mua bán bằng tiền lá cây, bạn "giàu" nhất xóm.', { hap: 4, soc: 2 }, 'good'],
-    ['ba', 'Mời ông bà, bố mẹ đến mua', { w: 1 }, 'Cả nhà đóng vai khách, trả tiền bằng kẹo thật.', { hap: 4 }, 'good']]);
+    ['ba', 'Mời người nhà đến mua', { w: 1 }, 'Cả nhà đóng vai khách, trả tiền bằng kẹo thật.', { hap: 4 }, 'good']]);
   KID('k_xe_dap', 6, 9, 'Tập đi xe đạp', function (l) { return b(l).charAt(0).toUpperCase() + b(l).slice(1) + ' tháo bánh phụ chiếc xe đạp, bảo bạn tập đi hai bánh.'; }, [
     ['tap', 'Tập đến khi đi được', { amb: 1 }, function (l) { return 'Ngã trầy cả hai đầu gối, đến khi quay lại thì ' + b(l) + ' đã buông tay từ lúc nào. Bạn tự đi được rồi!'; }, { hap: 5, hea: 1 }, 'good'],
     ['so', 'Sợ ngã, chưa dám', { w: 0.6 }, 'Sợ ngã, đòi lắp lại bánh phụ thêm một năm.', null, 'neutral']]);
@@ -302,7 +303,7 @@
     ['thuong', 'Học bình thường', { w: 0.8 }, 'Học bình thường, nhưng nhớ mãi những câu chuyện thầy cô kể.', { kno: 1 }, 'neutral']], school);
   KID('k_ong_ba_ke', 5, 10, 'Ông bà kể chuyện ngày xưa', 'Tối nào ông bà cũng kể chuyện ngày xưa: chiến tranh, đói kém, những ngày đi sơ tán.', [
     ['nghe', 'Ngồi nghe say sưa', { w: 1.2 }, 'Nghe ông bà kể chuyện đến khuya, thương ông bà hơn.', { kno: 2, soc: 2 }, 'good'],
-    ['ngu', 'Nghe được một lúc thì ngủ', { w: 0.8 }, 'Lần nào cũng ngủ ở đoạn hay nhất.', null, 'neutral']], function (l) { return isVN(l); });
+    ['ngu', 'Nghe được một lúc thì ngủ', { w: 0.8 }, 'Lần nào cũng ngủ ở đoạn hay nhất.', null, 'neutral']], function (l) { return isVN(l) && (!carer(l) || carer(l) === 'ông bà'); });
   KID('k_om_chao', 4, 10, 'Ốm được nằm nhà', 'Bị sốt phải nghỉ học, được nằm nhà.', [
     ['chao', 'Được nấu cháo hành, đắp chăn', { w: 1 }, function (l) { return m(l).charAt(0).toUpperCase() + m(l).slice(1) + ' nấu bát cháo hành nóng hổi, ngồi bên cạnh cả buổi. Vị cháo ấy bạn nhớ mãi.'; }, { hea: 1, hap: 2 }, 'good']]);
   KID('k_nhom_hoc', 11, 14, 'Nhóm học tập', 'Mấy bạn rủ lập nhóm học cuối tuần ở nhà một bạn.', [
@@ -337,8 +338,8 @@
   KID('k_nhat_ky', 10, 14, 'Cuốn nhật ký có khóa', 'Bạn bắt đầu viết nhật ký vào một cuốn sổ có ổ khóa nhỏ.', [
     ['viet', 'Viết đều mỗi tối', { w: 1 }, 'Viết nhật ký mỗi tối, kể đủ chuyện trường lớp, bạn bè, cả những điều chưa dám nói với ai.', { hap: 2, kno: 1 }, 'good'],
     ['bi_doc', 'Giấu dưới gối', { w: 0.8 }, function (l) { return 'Một hôm thấy ổ khóa bị cạy — hóa ra ' + ((l.sibList || []).some(function (s) { return s.alive; }) ? 'anh chị em' : m(l)) + ' đọc trộm. Giận cả tuần.'; }, { hap: -2 }, 'neutral']]);
-  KID('k_ga_con', 5, 10, 'Đàn gà con', 'Ông bà mua cho đàn gà con lông vàng.', [
-    ['cham', 'Ngày nào cũng cho gà ăn', { w: 1 }, 'Chăm đàn gà lớn phổng phao, Tết đến được ông bà cho một con mang ra chợ bán lấy tiền mua truyện.', { karma: 1, hap: 3 }, 'good'],
+  KID('k_ga_con', 5, 10, 'Đàn gà con', function (l) { return U.cap(carer(l) || 'ông bà') + ' mua cho bạn đàn gà con lông vàng.'; }, [
+    ['cham', 'Ngày nào cũng cho gà ăn', { w: 1 }, function (l) { return 'Bạn chăm đàn gà lớn phổng phao. Tết đến, ' + (carer(l) || 'ông bà') + ' cho bạn mang một con ra chợ bán lấy tiền mua truyện.'; }, { karma: 1, hap: 3 }, 'good'],
     ['nhot', 'Nhốt gà vào hộp mang đi chơi', { risk: 0.8 }, 'Mang gà con đi khoe cả xóm, về thì mất một con. Khóc cả chiều.', { hap: -2 }, 'neutral']], function (l) { return !l.urban; });
 
   // giảm tần suất những chuyện tuổi thơ quen thuộc nhất để mỗi đời mỗi khác
