@@ -2,6 +2,25 @@
   "generatedAt": "2026-11-03T06:39:05.217Z",
   "entries": [
     {
+      "id": "family-jobs-833",
+      "version": "8.10.33",
+      "publishedAt": "2026-11-04T04:49:14+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Gia đình đa dạng hơn và tên Việt cho hồ sơ mới",
+      "summary": "Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Nghề của bố mẹ được bốc theo nơi sống và hoàn cảnh gia đình. Mẹ vẫn có thể là thợ sửa xe, thợ xây hay tài xế, với tần suất thấp hơn trước.",
+        "Màn hình đầu có thêm hồ sơ mẫu. Bạn có thể quay lại hồ sơ xuất phát để gặp một gia đình khác.",
+        "Hồ sơ người Kinh có thêm các cặp tên đệm và tên gọi như Minh Triết, Trọng Nhân, Ngân Hà và Trúc Giang.",
+        "Dịch vụ thuê sát thủ chỉ xuất hiện trong sáu bối cảnh của trò chơi: Ý, Mexico, Colombia, Nhật Bản, Nga và Mỹ. Khi nhân vật ở Việt Nam, các lựa chọn này không xuất hiện."
+      ]
+    },
+    {
       "id": "world-country-jobs-832",
       "version": "8.10.32",
       "publishedAt": "2026-11-03T19:59:01+07:00",

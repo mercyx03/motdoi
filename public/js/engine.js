@@ -469,24 +469,36 @@
   }
 
   var VICE = { gamble: 'mê cờ bạc', alcohol: 'nghiện rượu', gang: 'dính vào giang hồ', drugs: 'nghiện ma túy' };
-  function parentJob(life, r, who) {
+  // Relative simulation weights within the local job pool, not workforce percentages.
+  var MOTHER_JOB_WEIGHT = {
+    'thợ sửa xe': 0.2, 'chạy xe ôm': 0.25, 'tài xế công nghệ': 0.4,
+    'lái xe thuê': 0.5, 'lái xe': 0.5, 'phụ hồ': 0.3, 'thợ xây': 0.3,
+    'thợ mộc': 0.5, 'thợ điện': 0.45, 'shipper': 0.65
+  };
+  function parentJob(life, r, side) {
     var q = life.fam.q, vn = isVN(life), v = life.fam.vice;
-    if (who === 'F' && v === 'gang') return vn ? 'giang hồ, đâm thuê chém mướn' : 'làm tay chân cho băng nhóm';
-    if (who === 'F' && v === 'gamble') return 'cờ bạc, làm thuê lặt vặt';
-    if (who === 'M' && r() < (life.gdp < 5 ? 0.35 : 0.12)) return 'nội trợ';
-    if (q <= 2 && r() < 0.07) return 'thất nghiệp';
-    if (r() < 0.06) return U.pick(r, q <= 2 ? ['nghệ nhân truyền thống', 'nghệ sĩ sân khấu', 'vũ công'] : q <= 4 ? ['giáo viên thanh nhạc', 'giáo viên múa', 'nhạc sĩ', 'họa sĩ', 'nhiếp ảnh gia', 'biên kịch', 'người làm truyền hình'] : ['ca sĩ', 'diễn viên', 'đạo diễn', 'nhà sản xuất âm nhạc']);
-    if (!life.urban) {
-      if (q <= 2) return U.pick(r, vn && life.region === 'MNPB' ? ['làm nương rẫy', 'làm ruộng bậc thang', 'chăn nuôi', 'làm thuê'] :
-        life.coast ? ['đánh cá', 'nuôi trồng thủy sản', 'làm ruộng', 'làm thuê'] : ['làm ruộng', 'làm thuê theo mùa vụ', 'chăn nuôi', 'trồng rẫy', vn ? 'bán vé số' : 'bán hàng rong']);
-      if (q === 3) return U.pick(r, ['làm ruộng', 'buôn bán nhỏ', 'thợ xây', 'công nhân', 'trồng cây ăn trái', 'thợ mộc', 'chạy xe ôm']);
-      return U.pick(r, ['chủ trang trại', 'buôn bán', 'giáo viên', vn ? 'cán bộ xã' : 'viên chức địa phương', 'chủ xưởng nhỏ', 'chủ đại lý vật tư nông nghiệp']);
+    function pick(pool) {
+      return U.wpick(r, pool, function (job) {
+        if (job === 'tài xế công nghệ' && life.birthYear < 2010) return 0;
+        return side === 'm' ? (MOTHER_JOB_WEIGHT[job] || 1) : 1;
+      });
     }
-    if (q <= 1) return U.pick(r, ['nhặt ve chai', 'bán vé số dạo', 'phụ hồ', 'giúp việc', 'bán hàng rong', vn ? 'chạy xe ôm' : 'lái xe thuê']);
-    if (q === 2) return U.pick(r, ['công nhân', 'bán hàng rong', vn ? 'chạy xe ôm' : 'lái xe', 'phụ hồ', 'giúp việc', 'bảo vệ', 'shipper']);
-    if (q === 3) return U.pick(r, ['công nhân', 'nhân viên văn phòng', 'buôn bán', 'thợ may', 'tài xế công nghệ', 'giáo viên', 'y tá', 'thợ sửa xe']);
-    if (q === 4) return U.pick(r, ['nhân viên văn phòng', 'kỹ sư', 'giáo viên', 'kế toán', 'công chức', 'chủ cửa hàng', 'công an', 'bác sĩ']);
-    return U.pick(r, ['giám đốc công ty', 'bác sĩ', 'doanh nhân', 'kỹ sư phần mềm', 'luật sư', 'trưởng phòng ngân hàng', 'chủ chuỗi nhà hàng', 'giám đốc kinh doanh']);
+    if (side === 'f' && v === 'gang') return 'làm tay chân cho băng nhóm';
+    if (side === 'f' && v === 'gamble') return 'cờ bạc, làm thuê lặt vặt';
+    if (side === 'm' && r() < (life.gdp < 5 ? 0.35 : 0.12)) return 'nội trợ';
+    if (q <= 2 && r() < 0.07) return 'thất nghiệp';
+    if (r() < 0.06) return pick(q <= 2 ? ['nghệ nhân truyền thống', 'nghệ sĩ sân khấu', 'vũ công'] : q <= 4 ? ['giáo viên thanh nhạc', 'giáo viên múa', 'nhạc sĩ', 'họa sĩ', 'nhiếp ảnh gia', 'biên kịch', 'người làm truyền hình'] : ['ca sĩ', 'diễn viên', 'đạo diễn', 'nhà sản xuất âm nhạc']);
+    if (!life.urban) {
+      if (q <= 2) return pick(vn && life.region === 'MNPB' ? ['làm nương rẫy', 'làm ruộng bậc thang', 'chăn nuôi', 'làm thuê', 'trồng rau', 'đan lát'] :
+        life.coast ? ['đánh cá', 'nuôi trồng thủy sản', 'làm ruộng', 'làm thuê', 'sơ chế thủy sản'] : ['làm ruộng', 'làm thuê theo mùa vụ', 'chăn nuôi', 'trồng rẫy', 'trồng rau', vn ? 'bán vé số' : 'bán hàng rong']);
+      if (q === 3) return pick(['làm ruộng', 'buôn bán nhỏ', 'thợ xây', 'công nhân', 'trồng cây ăn trái', 'thợ mộc', 'thợ điện', 'bán tạp hóa', vn ? 'chạy xe ôm' : 'lái xe']);
+      return pick(['chủ trang trại', 'buôn bán', 'giáo viên', vn ? 'cán bộ xã' : 'viên chức địa phương', 'chủ xưởng nhỏ', 'chủ đại lý vật tư nông nghiệp', 'bác sĩ thú y', 'kỹ sư nông nghiệp']);
+    }
+    if (q <= 1) return pick(['nhặt ve chai', vn ? 'bán vé số dạo' : 'làm thuê', 'phụ hồ', 'phụ bếp', 'dọn phòng', 'giúp việc', 'bán hàng rong', vn ? 'chạy xe ôm' : 'lái xe thuê']);
+    if (q === 2) return pick(['công nhân', 'bán hàng rong', vn ? 'chạy xe ôm' : 'lái xe', 'phụ hồ', 'giúp việc', 'bảo vệ', 'shipper', 'thu ngân', 'phục vụ quán ăn', 'thợ may']);
+    if (q === 3) return pick(['công nhân', 'nhân viên văn phòng', 'buôn bán', 'thợ may', 'tài xế công nghệ', 'giáo viên', 'y tá', 'thợ sửa xe', 'đầu bếp', 'thợ điện', 'lễ tân', 'giáo viên mầm non']);
+    if (q === 4) return pick(['nhân viên văn phòng', 'kỹ sư', 'giáo viên', 'kế toán', 'công chức', 'chủ cửa hàng', 'công an', 'bác sĩ', 'dược sĩ', 'kỹ thuật viên xét nghiệm', 'kiến trúc sư']);
+    return pick(['giám đốc công ty', 'bác sĩ', 'doanh nhân', 'kỹ sư phần mềm', 'luật sư', 'trưởng phòng ngân hàng', 'chủ chuỗi nhà hàng', 'giám đốc kinh doanh', 'chủ khách sạn', 'chủ phòng khám']);
   }
 
   // thu nhập tham chiếu (triệu đồng/tháng ở VN) theo nghề của bố mẹ
@@ -501,9 +513,12 @@
     'chủ cửa hàng': 20, 'công an': 14, 'bác sĩ': 22, 'giám đốc công ty': 40, 'doanh nhân': 50, 'kỹ sư phần mềm': 28, 'luật sư': 28, 'trưởng phòng ngân hàng': 30,
     'chủ chuỗi nhà hàng': 45, 'giám đốc kinh doanh': 40, 'cờ bạc, làm thuê lặt vặt': 3, 'giang hồ, đâm thuê chém mướn': 12, 'làm tay chân cho băng nhóm': 10,
     'nghệ nhân truyền thống': 4, 'nghệ sĩ sân khấu': 5, 'vũ công': 6, 'giáo viên thanh nhạc': 10, 'giáo viên múa': 9, 'nhạc sĩ': 12, 'họa sĩ': 8, 'nhiếp ảnh gia': 10, 'biên kịch': 11, 'người làm truyền hình': 12, 'ca sĩ': 35, 'diễn viên': 40, 'đạo diễn': 45, 'nhà sản xuất âm nhạc': 50,
-    'bán hàng online': 8, 'bán tạp hóa': 9
+    'bán hàng online': 8, 'bán tạp hóa': 9,
+    'trồng rau': 5, 'đan lát': 4, 'sơ chế thủy sản': 6, 'thợ điện': 11, 'bác sĩ thú y': 15, 'kỹ sư nông nghiệp': 16,
+    'phụ bếp': 6, 'dọn phòng': 6, 'thu ngân': 7, 'phục vụ quán ăn': 6, 'đầu bếp': 12, 'lễ tân': 9,
+    'giáo viên mầm non': 8, 'dược sĩ': 13, 'kỹ thuật viên xét nghiệm': 12, 'kiến trúc sư': 18, 'chủ khách sạn': 40, 'chủ phòng khám': 45
   };
-  var PARENT_FORMAL = /công nhân|giáo viên|cán bộ xã|viên chức|văn phòng|y tá|kỹ sư|kế toán|công chức|công an|bác sĩ|ngân hàng|bảo vệ|giám đốc kinh doanh|bí thư|tỉnh ủy|UBND tỉnh|bộ trưởng|nghị sĩ/;
+  var PARENT_FORMAL = /dược sĩ|kỹ thuật viên xét nghiệm|kiến trúc sư|lễ tân|công nhân|giáo viên|cán bộ xã|viên chức|văn phòng|y tá|kỹ sư|kế toán|công chức|công an|bác sĩ|ngân hàng|bảo vệ|giám đốc kinh doanh|bí thư|tỉnh ủy|UBND tỉnh|bộ trưởng|nghị sĩ/;
   var PARENT_BIZ = /^chủ |doanh nhân|giám đốc công ty|^buôn bán$/;
   // v6.1.0: lý do mất việc của bố / mẹ theo đúng nghề; k = hệ số rủi ro (1 = bình thường), crop = không "thất nghiệp" mà mất mùa / ế ẩm
   var PARENT_LOSS = [
@@ -635,7 +650,7 @@
     f.fAge = U.clamp(f.mAge + Math.round(3 + U.normal(r) * 3), 17, 62);
     f.sibs = Math.min(9, U.poisson(r, Math.max(0, (tfr - 1) * 0.55 + (f.mAge - 25) * 0.06)));
     f.noDad = r() < 0.03;
-    f.mJob = parentJob(life, r, 'M'); f.fJob = parentJob(life, r, 'F');
+    f.mJob = parentJob(life, r, 'm'); f.fJob = parentJob(life, r, 'f');
     f.mName = makeName(life, r, 'F').full;
     f.fName = makeName(life, r, 'M', life.sur).full;
     f.mAlive = true; f.fAlive = !f.noDad;

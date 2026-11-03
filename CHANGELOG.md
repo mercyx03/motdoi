@@ -1,3 +1,7 @@
+## 8.10.33 — Nghề bố mẹ, tên Việt và điều kiện nơi ở cho dịch vụ ngầm
+
+Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.
+
 ## 8.10.32 — Chọn quốc gia chào đời và tra cứu nghề
 
 Ở chế độ Toàn thế giới, bạn có thể chọn nơi sinh cho hồ sơ mới. Sổ tay Nghề & lương đã bổ sung các mục còn thiếu.

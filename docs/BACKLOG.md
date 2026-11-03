@@ -244,3 +244,5 @@ Cập nhật 8.10.16: §11.4–11.5 (ung thư theo giai đoạn, bệnh mạn, p
 GĐ6 — Bản 8.10.26-salon còn chờ regression toàn bộ trên mã cuối và đối chiếu bản lưu thực tế của người báo lỗi.
 
 GĐ6 — Bản 8.10.31 còn chờ regression toàn bộ, đối chiếu bản lưu thực tế của người báo lỗi và xác minh cấu hình Pages.
+
+GĐ6 — Bản 8.10.33 về hồ sơ gia đình và dịch vụ ngầm còn chờ regression toàn bộ, kiểm tra thiết bị thật và xác minh binding Pages.
