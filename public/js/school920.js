@@ -48,6 +48,28 @@
     RS: { n: 'Maturska večer (dạ tiệc tốt nghiệp)', g: 'final', p: 0.85, when: 'cuối năm học', note: 'Lễ riêng của Serbia, không phải Norijada.', guests: 'school', ok: 'secondary' },
     HU: { n: 'Szalagavató (lễ gắn ruy băng)', g: 'final', p: 0.9, when: 'mùa thu/đông năm cuối', note: 'Gắn ruy băng, biểu diễn valse cùng gia đình, theo lịch trường.', guests: 'family', dance: 'valse', ok: 'secondary' }
   };
+  // Các chương trình bên dưới là phương án trường/gia đình có thể chọn trong mô phỏng.
+  [
+    ['IT','I cento giorni','Gặp lớp trước kỳ thi cuối cấp, viết lời nhắn gửi tương lai.'],
+    ['BE','Ngày hội 100 ngày','Lớp chuẩn bị tiết mục chia tay cùng thầy cô.'],
+    ['CN KR','Ngày đếm ngược đến kỳ thi','Chụp ảnh kỷ yếu, ký áo và gửi lời động viên trước kỳ thi.'],
+    ['NG','SS3 Graduation Dinner','Chọn trang phục ren hoặc Ankara, chụp ảnh và tặng hoa trên thảm đỏ.'],
+    ['KE TZ','Tiệc tốt nghiệp đại gia đình','Cùng họ hàng chuẩn bị mâm cơm, thịt nướng và chuối, mời hàng xóm đến chung vui.'],
+    ['LB','Dạ hội cuối cấp','Ban nhạc của trường mở màn; cả lớp có thể hòa vào hàng nhảy dabke.'],
+    ['EG','Graduation Gala','Sân khấu phối tiếng trống tabla cùng nhạc pop và tiết mục của lớp.'],
+    ['AE','Prom Night','Ban tổ chức chọn thảm đỏ, chụp ảnh và bình chọn tại hội trường hoặc khách sạn.'],
+    ['SA QA','Hafla tốt nghiệp','Gia đình đón khách với qahwa và chà là; trang phục, chỗ ngồi và tiết mục theo ý chủ tiệc.'],
+    ['IN BD','Farewell Party','Khóa dưới chuẩn bị video, trao giải vui; khách có thể chọn saree hoặc suit.'],
+    ['PK','Farewell cuối khóa','Cùng bạn đọc thơ shayari, tặng quà lưu niệm trong trang phục shalwar kameez hoặc lễ phục.'],
+    ['ID','Đêm chia tay cuối cấp','Chọn batik, kebaya hoặc trang phục dạ hội; nghe angklung và ban nhạc của trường.'],
+    ['CD','Fête de collation','Mặc bộ vest yêu thích, nghe rumba và nhảy ndombolo cùng người thân.'],
+    ['ET','Tiệc injera mừng tốt nghiệp','Cùng gia đình chia bánh injera và mời khách cà phê pha bằng jebena.'],
+    ['BR MX','Dạ tiệc cuối cấp','Có thể mời cha, mẹ hoặc người thân mở điệu nhảy đầu tiên.']
+  ].forEach(function(row){row[0].split(' ').forEach(function(code){
+    var prior=PROM[code]; PROM[code]=Object.assign({g:'final',p:0.55,when:'theo lịch của trường',guests:'school',ok:'simulation'},prior||{}, {n:row[1],note:row[2],p:prior && prior.p>0 ? prior.p : 0.55});
+  });});
+  var activities={PL:'Tập polonaise cho Studniówka',IT:'Ghi lời nhắn 100 ngày trước kỳ thi',BE:'Dựng tiết mục 100 ngày',KR:'Chụp ảnh và viết lời chúc cho lớp',CN:'Làm sổ lưu niệm Bách Nhật',NG:'Thiết kế trang phục Ankara cho thảm đỏ',KE:'Chuẩn bị mâm ăn chung với họ hàng',TZ:'Mời hàng xóm tới bữa cơm mừng tốt nghiệp',LB:'Tập dabke cùng nhóm bạn',EG:'Chơi tabla trong ban nhạc lớp',AE:'Phụ trách thảm đỏ và gian chụp ảnh',SA:'Đón khách với qahwa, chà là và bukhoor',QA:'Chuẩn bị bàn cà phê và chà là',IN:'Dựng tiết mục Bollywood với khóa dưới',BD:'Chuẩn bị video chia tay và lời chúc',PK:'Đọc thơ shayari tặng lớp',ID:'Tập angklung với ban nhạc trường',CD:'Tập nhảy ndombolo cùng bạn bè',ET:'Mời khách dùng injera và cà phê',BR:'Mời cha, mẹ hoặc người thân mở điệu nhảy',MX:'Tập khiêu vũ với người thân'};
+  Object.keys(activities).forEach(function(code){if(PROM[code])PROM[code].activity=activities[code];});
   var DEF = { n: 'Buổi chia tay cuối cấp', g: 'final', p: 0.35, when: 'cuối năm học', note: 'Truyền thống của nước này chưa có dữ liệu riêng; dùng mô tả chung.', guests: 'school', ok: 'generic' };
   function rec(c) { return PROM[c] || DEF; }
 
@@ -144,6 +166,10 @@
     var formal = e.kind === 'prom' || e.kind === 'prom2' || e.kind === 'grad';
     if (formal && !e.outfit) return outfitRows(l, e);
     if ((e.kind === 'prom' || e.kind === 'prom2') && !e.who) return companionRows(l, e);
+    if ((e.kind === 'prom' || e.kind === 'prom2') && !e.prep && rec(cc(l)).activity) {
+      var activity=rec(cc(l)).activity;
+      out.push({k:'prep:local',l:activity,run:function(l,r,log){e.prep='local';e.activity=activity;H.fx(l,{soc:1});log('Bạn cùng lớp chuẩn bị: '+activity+'.','good');H.mem(l,activity,2);}});
+    }
     if ((e.kind === 'prom' || e.kind === 'prom2') && !e.prep) [['dance', 'Tập nhảy cùng lớp'], ['help', 'Tham gia ban tổ chức (chọn nhạc, trang trí)'], ['skip', 'Không cần chuẩn bị thêm']].forEach(function (x) { out.push({ k: 'prep:' + x[0], l: x[1], run: function (l, r, log) { e.prep = x[0]; if (x[0] !== 'skip') H.fx(l, { soc: 1 }); log(x[0] === 'dance' ? 'Mấy tuần tập nhảy sau giờ học.' : x[0] === 'help' ? 'Bạn cùng ban tổ chức lo nhạc và trang trí.' : 'Bạn để dành sức cho buổi tối.', 'neutral'); } }); });
     else if (e.kind === 'senior' && !e.dest) tripChoices(l).forEach(function (t) { out.push({ k: 'dest:' + t[0], l: 'Bình chọn đi ' + t[0], h: '~' + mo(l, l.base * t[1]), run: function (l, r, log) { e.dest = t[0]; e.cost = t[1]; log('Lớp chọn đi ' + t[0] + '.', 'neutral'); } }); });
     else if (e.kind === 'yearbook' && !e.photo) [['group', 'Chỉ ảnh tập thể', 0], ['solo', 'Chụp thêm ảnh cá nhân', 0.01]].forEach(function (x) { out.push({ k: 'photo:' + x[0], l: x[1], h: x[2] ? '~' + mo(l, l.base * x[2]) : '', why: afford(l, l.base * x[2]) ? true : 'Chưa đủ tiền', run: function (l, r, log) { e.photo = x[0]; if (x[2]) H.cash(l, -l.base * x[2], payer(l) + ': ảnh kỷ yếu'); attend(l, e, r, log); } }); });
@@ -175,22 +201,42 @@
     naghol: 'Naghol (đảo Pentecost, Vanuatu): nghi lễ địa phương theo mùa; trò chơi chỉ ghi thông tin, không mô phỏng việc nhảy, không có kỹ thuật/độ cao — trạng thái nghiên cứu.',
     satere: 'Sateré-Mawé (Brazil): nghi lễ của một dân tộc bản địa; chưa có nguồn chính thức đã đọc — trạng thái nghiên cứu, không có minigame chịu đau.'
   };
+  RITES.seijin.note += ' Từ năm 2000, ngày lễ quốc gia rơi vào thứ Hai thứ hai của tháng Một; lịch buổi lễ địa phương có thể khác.';
+  RITES.guanli.opts = ['mặc Hán phục và đội mũ trong Quán lễ','cài trâm trong Kê lễ','đọc lời hứa trước gia đình'];
+  [
+    ['sweet','Sweet 16',16,'US CA','lời chúc về tính tự lập|điệu nhảy cùng người thân'],
+    ['debut','Debut tuổi 18',18,'PH','18 đóa hồng|18 ngọn nến và lời chúc'],
+    ['ball','Dạ vũ ra mắt theo lời mời',18,'FR AT GB AU US','điệu valse mở màn|tập khiêu vũ với bạn đồng hành'],
+    ['reels','Dạ vũ Scotland theo lời mời',18,'GB','học điệu reel|chọn kilt hoặc váy dạ hội'],
+    ['confirmation','Konfirmation',15,'DK NO SE','nghi lễ đức tin|lễ trưởng thành thế tục và bài phát biểu'],
+    ['amish','Tìm hiểu Rumspringa cùng cộng đồng Amish',16,'US','nghe những người trẻ kể về thời gian cân nhắc việc gia nhập giáo hội; trải nghiệm khác nhau giữa các gia đình'],
+    ['pentecost','Naghol ở Pentecost',16,'VU','lắng nghe người địa phương giới thiệu nghi lễ'],
+    ['amazon','Nghi lễ găng tay kiến của Sateré-Mawé',13,'BR','tìm hiểu qua lời kể của cộng đồng'],
+    ['mentawai','Truyền thống Mentawai',15,'ID','nghe nghệ nhân kể về hình xăm và tục mài răng'],
+    ['bali','Metatah của người Hindu ở Bali',16,'ID','tìm hiểu ý nghĩa tự chủ trong nghi lễ'],
+    ...[5,10,15,20,25].map(function(age){return ['crown'+age,'Sinh nhật năm vương miện',age,'NL','trang trí ghế sinh nhật|nhận lời chúc từ gia đình'];})
+  ].forEach(function(row){RITES[row[0]]={n:row[1],age:row[2],legal:'Cột mốc văn hóa',when:function(l){return row[3].split(' ').includes(cc(l));},who:function(){return true;},observe:['amish','pentecost','amazon','mentawai','bali'].includes(row[0]),opts:row[4].split('|'),note:row[4].split('|').join(' hoặc ')+'. Tùy gia đình, cộng đồng và lời mời.',cost:[0,0.015,0.05]};});
+  RITES.bat = Object.assign({},RITES.mitzvah,{n:'Bat Mitzvah',age:12,prepAge:11,who:function(l){return l.sex==='F';}});
+  RITES.mitzvah.who=function(l){return l.sex!=='F';};
   function riteState(l) { var s = st(l); return s.rite || (s.rite = {}); }
   function rites(l) { return Object.keys(RITES).filter(function (k) { var R = RITES[k], d = riteState(l)[k]; return R.when(l) && R.who(l) && (!d || d.stage !== 'done' && d.stage !== 'declined') && (l.age === R.age || R.prepAge != null && l.age === R.prepAge || d && d.stage === 'prep' && l.age <= R.age + 1); }); }
   function riteWhy(l) { if (!l.alive || jailed(l)) return 'Cần được tự do đi lại'; var done173 = l.flags.culture173 && l.flags.culture173.coming; return rites(l).length ? true : done173 ? 'Đã đánh dấu cột mốc trưởng thành' : 'Chưa có nghi lễ phù hợp với gia đình, niềm tin hoặc nơi sống của bạn'; }
   X.menu('rite920', 'Lễ trưởng thành của gia đình / cộng đồng', riteWhy, function (l) {
-    return 'Lễ văn hóa hoặc tôn giáo không thay đổi tuổi pháp lý và không cấp quyền kết hôn, lao động hay uống rượu. Tham gia theo mong muốn của bạn và gia đình; từ chối không làm bạn kém đi. ' + rites(l).map(function (k) { var R = RITES[k]; return '\n• ' + R.n + ' — ' + R.legal + '. ' + R.note; }).join('') + '\nCòn đang nghiên cứu: ' + Object.keys(RESEARCH).map(function (k) { return RESEARCH[k]; }).join(' ');
+    return 'Lễ văn hóa hoặc tôn giáo không thay đổi tuổi pháp lý và không cấp quyền kết hôn, lao động hay uống rượu. Tham gia theo mong muốn của bạn và gia đình; từ chối không làm bạn kém đi. ' + rites(l).map(function (k) { var R = RITES[k]; return '\n• ' + R.n + ' — ' + R.legal + '. ' + R.note; }).join('');
   }, function (l) {
     var out = [];
     rites(l).forEach(function (k) {
       var R = RITES[k], d = riteState(l)[k];
       if (R.prepAge != null && l.age === R.prepAge && !d) { out.push({ k: k + ':prep', l: 'Bắt đầu một năm chuẩn bị cho ' + R.n, h: 'Học cùng thầy/giáo đoàn', run: function (l, r, log) { riteState(l)[k] = { stage: 'prep', at: l.age }; log('Bạn bắt đầu chuẩn bị cho ' + R.n + '.', 'neutral'); } }); return; }
-      if (R.observe) { out.push({ k: k + ':obs', l: 'Tìm hiểu qua bảo tàng/trung tâm văn hóa, hoặc dự với tư cách khách khi được mời', h: 'Tôn trọng quy định của cộng đồng', run: function (l, r, log) { riteState(l)[k] = { stage: 'done', at: l.age, how: 'observe' }; H.fx(l, { kno: 2 }); log('Bạn tìm hiểu về các nghi lễ của cộng đồng Maasai qua người hướng dẫn địa phương; bạn ghi nhận đây là di sản đang cần bảo vệ.', 'good'); } }); return; }
-      ['small', 'mid', 'big'].forEach(function (sz, i) { var c = l.base * R.cost[i]; out.push({ k: k + ':' + sz, l: R.n + ': ' + ['bữa cơm/lễ nhỏ với người thân', 'buổi lễ vừa phải', 'buổi lễ lớn'][i], h: c ? (l.indep ? 'Bạn chi' : 'Gia đình chi') + ' ~' + mo(l, c) : 'Không tốn thêm', why: l.money >= c ? true : 'Chưa đủ tiền — chọn quy mô nhỏ hơn', run: function (l, r, log) { if (l.money < c) return; if (c) H.cash(l, -c, R.n); var opt = R.opts && R.opts[Math.floor(u(l.id + ':' + k + ':o') * R.opts.length)]; riteState(l)[k] = { stage: 'done', at: l.age, size: sz }; H.fx(l, { hap: 3 + i, soc: 1 + i }); var t = R.n + (opt ? ' (' + opt + ')' : '') + ': một ngày đáng nhớ cùng gia đình và bạn bè.'; log(t, 'big'); H.mem(l, t, 4); st(l).mem.push({ id: 'rite:' + k, kind: 'rite', cc: cc(l), age: l.age, t: t }); } }); });
+      if (R.observe) { out.push({ k: k + ':obs', l: 'Tìm hiểu qua bảo tàng/trung tâm văn hóa, hoặc dự với tư cách khách khi được mời', h: 'Tôn trọng quy định của cộng đồng', run: function (l, r, log) { riteState(l)[k] = { stage: 'done', at: l.age, how: 'observe' }; H.fx(l, { kno: 2 }); var memory=R.n+' — '+R.note; log(memory,'good'); H.mem(l,memory,3); } }); return; }
+      if(R.opts && R.opts.length>1 && !(d && d.choice)) R.opts.forEach(function(option,index){
+        out.push({k:k+':choose:'+index,l:'Chọn cho '+R.n+' — '+option,run:function(l,r,log){var record=riteState(l)[k] || (riteState(l)[k]={});record.choice=option;log('Bạn chọn '+option+' cho buổi lễ.','neutral');X.next(l,'rite920',r);}});
+      });
+      ['small', 'mid', 'big'].forEach(function (sz, i) { var c = l.base * R.cost[i]; out.push({ k: k + ':' + sz, l: R.n + ': ' + ['bữa cơm/lễ nhỏ với người thân', 'buổi lễ vừa phải', 'buổi lễ lớn'][i], h: c ? (l.indep ? 'Bạn chi' : 'Gia đình chi') + ' ~' + mo(l, c) : 'Không tốn thêm', why: l.money >= c ? true : 'Chưa đủ tiền — chọn quy mô nhỏ hơn', run: function (l, r, log) { if (l.money < c) return; if (c) H.cash(l, -c, R.n); var opt = d && d.choice || R.opts && R.opts[Math.floor(u(l.id + ':' + k + ':o') * R.opts.length)]; riteState(l)[k] = { stage: 'done', at: l.age, size: sz, choice: opt || null }; H.fx(l, { hap: 3 + i, soc: 1 + i }); var t = R.n + (opt ? ' (' + opt + ')' : '') + ': một ngày đáng nhớ cùng gia đình và bạn bè.'; log(t, 'big'); H.mem(l, t, 4); st(l).mem.push({ id: 'rite:' + k, kind: 'rite', cc: cc(l), age: l.age, t: t }); } }); });
       out.push({ k: k + ':no', l: 'Không tổ chức ' + R.n, run: function (l, r, log) { riteState(l)[k] = { stage: 'declined', at: l.age }; log('Bạn và gia đình quyết định không tổ chức ' + R.n + '. Trưởng thành không phụ thuộc vào một buổi lễ.', 'neutral'); } });
     });
     return out;
-  }, 10, 'Đời sống');
+  }, 5, 'Đời sống');
   // không trùng với cột mốc chung của life173 ở các lễ đã có dữ liệu riêng
   var wc = E.DEC.world_coming173;
   if (wc) { var wv = wc.valid; wc.valid = function (l, d) { var c = E.comingOfAge173 && E.comingOfAge173(l); if (c && RITES[c.key] && RITES[c.key].when(l)) return false; return wv.apply(this, arguments); }; }

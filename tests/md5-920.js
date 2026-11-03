@@ -176,10 +176,11 @@ ok(F && K && P && S && R && E.SENS920, 'MD5 modules loaded');
 {
   const jp = life(27, { age: 18 }, 'world', { country: 'JP' }); ok(!S.rites(jp).includes('seijin'), 'Japan: no Seijin ceremony at legal age 18');
   jp.age = 20; ok(S.rites(jp).includes('seijin'), 'Japan: ceremony at 20');
-  const vn = life(28, { age: 13 }); vn.religion = 'Do Thái giáo'; ok(S.rites(vn).includes('mitzvah'), 'Bar/Bat Mitzvah follows religion, not passport');
+  const vn = life(28, { age: 13 }); vn.sex='M'; vn.religion = 'Do Thái giáo'; ok(S.rites(vn).includes('mitzvah'), 'Bar/Bat Mitzvah follows religion, not passport');
+  vn.sex='F';vn.age=12;ok(S.rites(vn).includes('bat'),'Bat Mitzvah at 12');
   const vn2 = life(29, { age: 13 }); vn2.religion = 'Phật giáo'; ok(!S.rites(vn2).includes('mitzvah'), 'no mitzvah without the faith');
   const ke = life(30, { age: 18 }, 'world', { country: 'KE' }); ok(S.RITES.maasai.observe && S.rites(ke).includes('maasai'), 'Maasai rites: observation only');
-  ok(Object.keys(S.RESEARCH).length === 3 && !S.RITES.naghol && !S.RITES.satere, 'Naghol/Sateré-Mawé/Rumspringa research only, no gameplay');
+  ok(['pentecost','amazon','amish','mentawai','bali'].every(k=>S.RITES[k].observe),'local traditions have observation paths');
   pick(jp, 'rite920', 'seijin:no'); ok(jp.flags.school920.rite.seijin.stage === 'declined' && !S.rites(jp).includes('seijin'), 'declining is final and penalty-free');
   if (E.DEC.world_coming173) { const j2 = life(31, { age: 20 }, 'world', { country: 'JP' }); ok(!E.DEC.world_coming173.valid(j2), 'generic coming-of-age incident not duplicated for Seijin'); }
 }

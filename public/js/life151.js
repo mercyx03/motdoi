@@ -401,6 +401,25 @@
   // ---------- Đường Lên Đỉnh Olympia: 4 thí sinh, 4 phần thi, tuần → tháng → quý → năm ----------
   var STAGES = ['Cuộc thi tuần', 'Cuộc thi tháng', 'Cuộc thi quý', 'Chung kết năm'];
   var KEYWORDS = [['ĐIỆN BIÊN PHỦ', 'history'], ['THĂNG LONG', 'history'], ['BẠCH ĐẰNG', 'history'], ['FANSIPAN', 'geo'], ['THÁI BÌNH DƯƠNG', 'geo'], ['QUANG HỢP', 'science'], ['TRUYỆN KIỀU', 'culture'], ['HẠ LONG', 'geo']];
+  // Bài riêng của Olympia: mỗi đề có dữ kiện sinh từ hạt giống và một lời giải.
+  GEN.olympiaProbability = {cat:'logic',make:function(r){
+    var n=ri(r,5,35), k=ri(r,2,n-1), denom=n*(n-1), num=k*(k-1);
+    var correct=num+'/'+denom;
+    return {sig:'olprob:'+n+':'+k,text:'Hộp có '+n+' thẻ, trong đó '+k+' thẻ đỏ. Rút hai thẻ liên tiếp không hoàn lại. Xác suất cả hai đều đỏ bằng phân số nào?',correct:correct,wrong:[num+k,num-1,num+1].map(function(x){return x+'/'+denom;}),explain:'Lần đầu có '+k+'/'+n+' cơ hội; còn '+(k-1)+' thẻ đỏ trong '+(n-1)+' thẻ. Nhân hai phân số được '+correct+'.',verify:function(){return correct;}};
+  }};
+  function olympiaQ(l,a,d) {
+    return d<3 ? newQ(l,a,d) : newQ(l,a,3,{kinds:['paths','remainders','inclusion','wordorder','olympiaProbability']});
+  }
+  var OLY_CLUES = {
+    'ĐIỆN BIÊN PHỦ':['Một địa danh ở Tây Bắc','Gắn với chiến dịch năm 1954'],
+    'THĂNG LONG':['Một tên gọi lịch sử','Gắn với việc dời đô năm 1010'],
+    'BẠCH ĐẰNG':['Một dòng sông ở miền Bắc','Gắn với trận thủy chiến năm 938'],
+    'FANSIPAN':['Một địa danh trên dãy Hoàng Liên Sơn','Là đỉnh núi cao nhất Việt Nam'],
+    'THÁI BÌNH DƯƠNG':['Một đại dương','Nằm giữa châu Á và châu Mỹ'],
+    'QUANG HỢP':['Một quá trình chuyển hóa năng lượng','Sử dụng năng lượng ánh sáng'],
+    'TRUYỆN KIỀU':['Một tác phẩm thơ lục bát','Tác giả là Nguyễn Du'],
+    'HẠ LONG':['Một vịnh ở miền Bắc Việt Nam','Gắn với tỉnh Quảng Ninh']
+  };
   function rivals(l, a, n) { var rr = seeded(a.token + ':npc'); return Array.from({ length: n }, function () { var sex = rr() < 0.5 ? 'M' : 'F'; return { name: H.stranger(l, rr, sex), skill: 0.45 + rr() * 0.4, speed: 0.4 + rr() * 0.5, pts: 0 }; }); }
   HANDLERS.olympia = {
     start: function (l, r, a) { a.stage = a.stage || 0; this.episode(l, a); },
@@ -410,11 +429,12 @@
     text: function (l, a) {
       var intro = { kd: 'Khởi động: bấm chuông giành quyền trả lời, đúng +10, sai −5. Có thể không bấm chuông.', cnv: 'Chướng ngại vật có ' + a.kw.replace(/ /g, '').length + ' chữ cái. Mỗi câu hỏi hàng ngang trả lời đúng mở thêm một gợi ý. Đoán đúng từ khóa càng sớm càng nhiều điểm; đoán sai thì dừng phần thi này.', tt: 'Tăng tốc: ai trả lời đúng nhanh hơn được nhiều điểm hơn (40 · 30 · 20 · 10).', vd: 'Về đích: chọn giá trị câu hỏi 10, 20 hoặc 30 điểm; trả lời sai bị trừ một nửa.' }[a.part];
       var clue = a.part === 'cnv' ? '\nGợi ý đã mở: ' + (a.opened ? a.kw.split('').map(function (c, i) { return c === ' ' ? ' ' : i < a.opened * 2 ? c : '_'; }).join('') : 'chưa có') : '';
+      if(a.part==='cnv' && a.opened && OLY_CLUES[a.kw]) clue+=' · '+OLY_CLUES[a.kw].slice(0,a.opened).join(' · ');
       return recap(a) + this.board(a) + '\n' + intro + clue + (a.q ? '\n\n' + a.q.text : '');
     },
     rows: function (l, a, sh) {
       var self = this;
-      if (a.part === 'vd' && a.vdPick == null) return [10, 20, 30].map(function (v) { return { k: 'v' + v, l: 'Chọn câu hỏi ' + v + ' điểm', run: function (l, r) { a.vdPick = v; a.step--; newQ(l, a, v / 10 + (a.stage >= 2 ? 0 : -0) > 3 ? 3 : v / 10); } }; });
+      if (a.part === 'vd' && a.vdPick == null) return [10, 20, 30].map(function (v) { return { k: 'v' + v, l: 'Chọn câu hỏi ' + v + ' điểm', run: function (l, r) { a.vdPick = v; a.step--; olympiaQ(l, a, Math.min(3,v / 10 + (a.stage >= 2 ? 1 : 0))); } }; });
       var rows = qRows(l, a, function (l, r, log, okAns, i) { self.answer(l, r, log, a, sh, okAns, i, false); });
       if (a.part === 'kd') rows.push({ k: 'pass', l: 'Không bấm chuông', run: function (l, r, log) { self.answer(l, r, log, a, sh, false, null, true); } });
       if (a.part === 'cnv' && !a.kwDone) {
@@ -440,7 +460,7 @@
       var limit = { kd: 6, cnv: 4, tt: 4, vd: 3 }[a.part];
       if (a.pi >= limit || a.part === 'cnv' && a.kwDone && a.pi >= 1) { var order = ['kd', 'cnv', 'tt', 'vd'], nx = order[order.indexOf(a.part) + 1]; if (!nx) return this.result(l, r, log, a, sh); a.part = nx; a.pi = 0; }
       if (a.part === 'vd') { a.q = null; return; }
-      newQ(l, a, a.part === 'tt' ? 2 + (a.stage >= 2 ? 1 : 0) : 1 + Math.min(2, a.stage));
+      olympiaQ(l, a, a.part === 'tt' ? 3 : Math.min(3,2+a.stage));
     },
     result: function (l, r, log, a, sh) {
       var all = [{ name: 'Bạn', pts: a.pts, me: true }].concat(a.npc).sort(function (x, y) { return y.pts - x.pts; }), rank = all.findIndex(function (x) { return x.me; }) + 1;

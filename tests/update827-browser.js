@@ -2,8 +2,9 @@
 const assert=require('assert'),path=require('path'),{launch,page,sleep}=require('./lib/cdp');
 const url=process.env.MOTDOI_URL||'http://127.0.0.1:8084/';
 (async()=>{const c=await launch();try{for(const width of [390,1280]){const p=await page(c,url+'updates.html',{width,height:950});await sleep(600);
-assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('8.10.27-showbiz')),'new note first');
+assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('8.10.28')),'new note first');
 assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('chưa phát hành')),'packaged label');
+assert(await p.eval(()=>[...document.querySelectorAll('#updateTimeline .update-entry')].some(e=>e.innerText.includes('8.10.27-showbiz') && e.innerText.includes('Đã phát hành'))),'prior upload released');
 await p.eval(()=>{const e=document.querySelector('#updateSearch');e.value='boi thuong';e.dispatchEvent(new Event('input',{bubbles:true}));});await sleep(100);
 assert((await p.eval(()=>document.querySelector('#updateTimeline').innerText)).includes('500%'),'unaccented search');
 await p.eval(()=>{[...document.querySelectorAll('#updateFilters button')].find(b=>b.innerText==='Tính năng').click();});assert((await p.eval(()=>document.querySelector('#updateTimeline').innerText)).includes('500%'),'feature filter includes new note');await p.eval(()=>{[...document.querySelectorAll('#updateFilters button')].find(b=>b.innerText==='Tất cả').click();});

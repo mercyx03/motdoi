@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.28: còn regression toàn bộ, đối chiếu văn hóa từng trường/cộng đồng và kiểm chứng binding Pages.
+
 - 8.10.27-showbiz: cần regression toàn bộ trên mã cuối, kiểm thử chiến dịch dài nhiều nhãn hàng/đổi nghề/qua đời và chuyển đời, các tình huống cực lớn hơn 50 hồ sơ; kiểm chứng binding REVIEWS_DB thực tế. Đã kiểm thử trọng điểm showbiz/câu hỏi/bồi thường, smoke và bản lưu; chỉ Preview, chưa nghiệm thu toàn diện.
 
 ### Phần tồn sau MD5 (8.10.24) — 03/11/2026
