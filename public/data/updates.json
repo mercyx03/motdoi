@@ -4,8 +4,8 @@
     {
       "id": "salon-caregiver-826",
       "version": "8.10.26-salon",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T04:47:09.000Z",
       "publishedAt": "2026-11-03T11:41:12+07:00",
       "title": "Một Đời — Kiểu tóc mới và chuyện tuổi thơ",
       "summary": "Chọn kiểu tóc theo độ dài, xem giá làm tóc và gặp đúng người chăm sóc trong chuyện đàn gà con.",
@@ -18,7 +18,8 @@
         "Thử low taper fade, textured crop, mullet, pixie, lob ngang vai hoặc butterfly layer. Uốn sóng lơi, uốn cụp, duỗi thẳng và duỗi phồng đều có giá riêng cho mỗi lần làm.",
         "Khi tóc thật dài ít nhất 8 cm, bạn có thể nối thêm 20 hoặc 40 cm rồi tháo khi muốn. Chỉ tóc thật được tính khi hiến.",
         "Trong chuyện đàn gà con, người mua gà và người cho bạn đem gà ra chợ là người đang nuôi dưỡng bạn nếu bạn mồ côi."
-      ]
+      ],
+      "correctedAt": "2026-11-03T04:47:09.932Z"
     },
     {
       "id": "fix-after-death-tax-825",
