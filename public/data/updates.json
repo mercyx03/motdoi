@@ -1,6 +1,30 @@
 {
-  "generatedAt": "2026-11-03T11:41:12+07:00",
+  "generatedAt": "2026-11-03T06:39:05.217Z",
   "entries": [
+    {
+      "id": "scandal-contract-quiz-827",
+      "version": "8.10.27-showbiz",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "publishedAt": "2026-11-03T06:39:05.217Z",
+      "title": "Một Đời — Scandal, bồi thường hợp đồng và thử thách trí tuệ",
+      "summary": "Giải quyết dư luận qua nhiều bước, theo dõi từng hợp đồng có thể bồi thường tới 500% cát-xê và thử sức với nhiều dạng câu hỏi mới.",
+      "tags": [
+        "Tính năng",
+        "Showbiz",
+        "Gameshow"
+      ],
+      "details": [
+        "Nghệ sĩ có thể thống nhất giữ kín chuyện hẹn hò, đặt ranh giới fanservice hoặc nhận quảng bá xào couple với bạn diễn có hồ sơ riêng. Người được đề nghị có thể từ chối tạo hiểu lầm tình cảm.",
+        "Scandal có hồ sơ kiểm chứng, chọn cách lên tiếng và theo dõi hậu quả sang năm. Phản ứng ảnh hưởng niềm tin khán giả, danh tiếng và đúng người liên quan; lời đồn và đời tư không tự bị coi là sai phạm.",
+        "Hợp đồng quảng cáo mới công bố trước mức bồi thường 200%, 300% hoặc 500% cát-xê đã nhận, hiệu lực hai năm. Có thể chọn nhận 75% cát-xê để giới hạn bồi thường ở 100%. Không hồi tố hợp đồng cũ chưa có điều khoản.",
+        "Mỗi nhãn hàng gửi yêu cầu riêng: đối chiếu chứng cứ, thương lượng giảm mức đòi hoặc chuyển giải quyết tranh chấp sang năm sau. Yêu cầu ban đầu chưa phải nợ; vụ không có căn cứ vi phạm có thể được rút hoặc bác bỏ. Bỏ mặc hai năm sẽ chuyển tranh chấp, không xóa nghĩa vụ.",
+        "Nghĩa vụ đã xác nhận được tính vào tài sản ròng. Có thể trả hết, trả một phần hoặc thỏa thuận trả dần dự kiến ba năm; thiếu tiền vẫn còn dư nợ. Chậm trả chịu phí mô phỏng 2% mỗi năm, tổng phí tối đa 20% nghĩa vụ gốc; quá hạn kéo dài có thể khiến nhãn hàng hoãn hợp đồng mới.",
+        "Kho câu hỏi tăng từ 17 lên 25 dạng, thêm suy luận số dư, đếm đường đi, mật mã chữ, biến đổi chuỗi chữ, bài toán tập hợp, năng suất, đếm cặp và mẹo khoảng cách giữa hồi chuông. Các bài thay đổi tham số và có lời giải.",
+        "Lưu 1.200 chữ ký câu hỏi gần nhất xuyên các chương trình và mùa chơi để hạn chế trùng; câu đang chơi giữ nguyên khi tải bản lưu. Kho hữu hạn vẫn có thể lặp khi chơi đủ lâu.",
+        "Câu khó dùng nhóm suy luận riêng. Siêu Trí Tuệ ghi nhớ dãy 18–34 chữ số và nhận diện một cụm sáu chữ số, chuỗi đồ vật dài hơn, giải mã và suy luận nhiều bước; chương trình thông thường vẫn có mức dễ và vừa."
+      ]
+    },
     {
       "id": "salon-caregiver-826",
       "version": "8.10.26-salon",

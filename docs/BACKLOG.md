@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.27-showbiz: cần regression toàn bộ trên mã cuối, kiểm thử chiến dịch dài nhiều nhãn hàng/đổi nghề/qua đời và chuyển đời, các tình huống cực lớn hơn 50 hồ sơ; kiểm chứng binding REVIEWS_DB thực tế. Đã kiểm thử trọng điểm showbiz/câu hỏi/bồi thường, smoke và bản lưu; chỉ Preview, chưa nghiệm thu toàn diện.
+
 ### Phần tồn sau MD5 (8.10.24) — 03/11/2026
 
 - **life138 (chặn nghiệm thu tổng thể):** lỗi cũ, lặp lại đúng assertion trên `c2a21cb` và `30152fc`. Chọn "Xem xét" ở `succession139` không chọn ngay người kế nghiệp vì family-dynasty 8.10.8 chuyển sang đề cử/bầu. Cần chủ dự án quyết định hành vi đúng; chưa sửa test, chưa nới assertion.

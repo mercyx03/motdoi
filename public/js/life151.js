@@ -165,13 +165,53 @@
     } }
   };
   var VN_ONLY = /Việt Nam|Hội An|Hạ Long|quan họ|Fansipan|Đàn bầu|Bà Đen|Ngọc Linh|Tây Côn Lĩnh|Quảng Ninh|Quảng Nam/;
+  // Các bài nhiều bước có không gian tham số lớn, đáp án tính lại được.
+  GEN.remainders = { cat: 'logic', n: function () { return 120000; }, make: function (r) {
+    var a = ri(r, 7, 19), b = a + 1, lo = ri(r, 1, 80) * a * b, ans = lo + ri(r, 1, a * b - 1);
+    return { sig: 'rem:' + a + ':' + ans, text: 'Tìm số nguyên N duy nhất: ' + lo + ' < N < ' + (lo + a * b) + ', chia ' + a + ' dư ' + ans % a + ', chia ' + b + ' dư ' + ans % b + '.', correct: String(ans), wrong: [ans + a, ans + b, ans - a].map(String), explain: 'Hai số chia liên tiếp nguyên tố cùng nhau. Trong khoảng dài ' + a * b + ' chỉ có một nghiệm: ' + ans + '.', verify: function () { for (var n = lo + 1; n < lo + a * b; n++) if (n % a === ans % a && n % b === ans % b) return String(n); } };
+  } };
+  GEN.paths = { cat: 'logic', n: function () { return 81; }, make: function (r, d) {
+    var a = ri(r, 2, d > 1 ? 10 : 4), b = ri(r, 2, d > 1 ? 10 : 4), ans = 1;
+    for (var i = 1; i <= b; i++) ans = ans * (a + i) / i;
+    ans = Math.round(ans);
+    return { sig: 'path:' + a + ':' + b, text: 'Đi trên lưới từ (0,0) đến (' + a + ',' + b + '), mỗi bước chỉ sang phải hoặc lên trên 1 ô. Có bao nhiêu đường đi?', correct: String(ans), wrong: [ans + 1, a * b, a + b].map(String), explain: 'Chọn ' + b + ' vị trí bước lên trong ' + (a + b) + ' bước: C(' + (a + b) + ',' + b + ') = ' + ans + '.', verify: function () { var row = Array(a + 1).fill(1); for (var y = 1; y <= b; y++) for (var x = 1; x <= a; x++) row[x] += row[x - 1]; return String(row[a]); } };
+  } };
+  GEN.wordcode = { cat: 'word', n: function () { return 26 * 26 * 26 * 26 * 25; }, make: function (r, d) {
+    var shift = ri(r, 1, 25), word = '';
+    for (var i = 0; i < (d >= 3 ? 6 : 4); i++) word += String.fromCharCode(65 + ri(r, 0, 25));
+    function code(k) { return word.split('').map(function (c) { return String.fromCharCode(65 + (c.charCodeAt(0) - 65 + k) % 26); }).join(''); }
+    var ans = code(shift);
+    return { sig: 'wc:' + word + ':' + shift, text: 'Mật mã chữ A–Z: dịch mỗi chữ tiến ' + shift + ' vị trí, qua Z quay về A. Chuỗi ' + word + ' thành gì?', correct: ans, wrong: [code((shift + 1) % 26), code((shift + 25) % 26), code((shift + 2) % 26)], explain: 'Dịch từng ký tự: ' + word + ' → ' + ans + '.', verify: function () { return code(shift); } };
+  } };
+  GEN.trick = { cat: 'riddle', n: function () { return 792; }, make: function (r) {
+    var n = ri(r, 12, 99), k = ri(r, 2, 10), ans = (n - 1) * k;
+    return { sig: 'bell:' + n + ':' + k, text: 'Có ' + n + ' hồi chuông, hai hồi liên tiếp cách nhau ' + k + ' giây. Từ hồi đầu đến hồi cuối mất bao nhiêu giây?', correct: String(ans), wrong: [n * k, (n + 1) * k, (n - 2) * k].map(String), explain: 'Có ' + (n - 1) + ' khoảng giữa ' + n + ' hồi: ' + (n - 1) + ' × ' + k + ' = ' + ans + ' giây.', verify: function () { return String((n - 1) * k); } };
+  } };
+  GEN.workrate = { cat: 'logic', n: function () { return 20631; }, make: function (r) {
+    var a = ri(r, 3, 25), b = ri(r, 3, 25), total = a * b * ri(r, 2, 40), ans = total / a + total / b;
+    return { sig: 'work:' + a + ':' + b + ':' + total, text: 'Hai máy mỗi phút làm lần lượt ' + a + ' và ' + b + ' sản phẩm. Mỗi máy phải làm riêng đủ ' + total + ' sản phẩm. Tổng thời gian chạy của hai máy là bao nhiêu phút?', correct: String(ans), wrong: [ans + 1, ans - 1, ans + a].map(String), explain: total + '/' + a + ' + ' + total + '/' + b + ' = ' + ans + ' phút; hỏi tổng thời gian máy, không hỏi lúc cả hai hoàn tất.', verify: function () { return String(total / a + total / b); } };
+  } };
+
+  GEN.inclusion = { cat: 'logic', n: function () { return 10000; }, make: function (r) {
+    var both = ri(r, 5, 25), onlyA = ri(r, 8, 40), onlyB = ri(r, 8, 40), neither = ri(r, 3, 30), total = both + onlyA + onlyB + neither, ans = onlyA + onlyB;
+    return { sig: 'inc:' + [both, onlyA, onlyB, neither].join(':'), text: 'Có ' + total + ' người. ' + (both + onlyA) + ' người biết mật mã A, ' + (both + onlyB) + ' người biết mật mã B, ' + neither + ' người không biết cả hai. Bao nhiêu người biết đúng một trong hai mật mã?', correct: String(ans), wrong: [ans + both, ans + both * 2, both].map(String), explain: 'Biết ít nhất một: ' + (total - neither) + '. Biết cả hai: ' + both + '. Biết đúng một: ' + ans + '.', verify: function () { return String(2 * (total - neither) - (both + onlyA) - (both + onlyB)); } };
+  } };
+  GEN.wordorder = { cat: 'word', n: function () { return 500000; }, make: function (r, d) {
+    var letters = shuffle(r, 'ABCDEFGHJKLMNPQRSTUVWXYZ'.split('')).slice(0, d >= 3 ? 7 : 5), x = ri(r, 1, letters.length - 2), word = letters.join(''), rotated = letters.slice(x).concat(letters.slice(0, x)), ans = rotated.slice().reverse().join('');
+    return { sig: 'wo:' + word + ':' + x, text: 'Chuỗi ' + word + ': chuyển ' + x + ' chữ đầu xuống cuối, giữ thứ tự, sau đó đảo ngược toàn bộ. Kết quả là gì?', correct: ans, wrong: [rotated.join(''), letters.slice().reverse().join(''), letters.slice().reverse().slice(x).concat(letters.slice().reverse().slice(0,x)).join('')], explain: word + ' → ' + rotated.join('') + ' → ' + ans + '.', verify: function () { var w = word; for(var i=0;i<x;i++) w=w.slice(1)+w[0]; return w.split('').reverse().join(''); } };
+  } };
+  GEN.meeting = { cat: 'riddle', n: function () { return 10000; }, make: function (r) {
+    var n = ri(r, 12, 75), skip = ri(r, 1, n - 2), ans = n * (n - 1) / 2 - skip;
+    return { sig: 'meet:' + n + ':' + skip, text: 'Có ' + n + ' người dự tiệc. Mỗi cặp bắt tay đúng một lần, trừ ' + skip + ' cặp không bắt tay. Có bao nhiêu cái bắt tay? (Mỗi cái bắt tay tính một lần.)', correct: String(ans), wrong: [ans * 2, n * (n - 1) / 2, ans + skip * 2].map(String), explain: 'Đếm cặp chứ không đếm từng bàn tay: ' + n + ' × ' + (n - 1) + ' / 2 − ' + skip + ' = ' + ans + '.', verify: function () { var count=0;for(var i=0;i<n;i++)for(var j=i+1;j<n;j++)count++;return String(count-skip); } };
+  } };
   var GEN_KEYS = Object.keys(GEN);
   function variants() { return GEN_KEYS.reduce(function (s, k) { return s + GEN[k].n(); }, 0); }
   // Sinh một câu hỏi trắc nghiệm, tránh lặp chữ ký gần đây và tránh cùng dạng liên tiếp.
   function generate(seed, o) {
     o = o || {}; var r = seeded(seed), d = o.diff || 1, recent = o.recent || [], lastKind = o.lastKind, q, kind, tries = 0;
     var kinds = o.kinds || (o.vn === false ? GEN_KEYS.filter(function (k) { return k !== 'change'; }) : GEN_KEYS); // tiền đồng chỉ hỏi ở bản Việt Nam
-    do { kind = pick(r, kinds.length > 1 ? kinds.filter(function (k) { return k !== lastKind; }) : kinds); q = GEN[kind].make(r, d, o); } while (recent.indexOf(q.sig) >= 0 && tries++ < 25);
+    if (!o.kinds) kinds = kinds.filter(function (k) { return d >= 3 ? ['remainders', 'paths', 'wordcode', 'inclusion', 'wordorder', 'meeting'].indexOf(k) >= 0 : d === 1 ? ['remainders', 'workrate'].indexOf(k) < 0 : true; });
+    do { kind = pick(r, kinds.length > 1 ? kinds.filter(function (k) { return k !== lastKind; }) : kinds); q = GEN[kind].make(r, d, o); } while (recent.indexOf(q.sig) >= 0 && tries++ < 300);
     var opts = shuffle(r, [q.correct].concat(q.wrong.filter(function (w, i, a) { return w !== q.correct && a.indexOf(w) === i; }).slice(0, o.choices ? o.choices - 1 : 3)));
     return { sig: q.sig, kind: kind, cat: q.cat || GEN[kind].cat, diff: d, text: q.text, options: opts, answer: opts.indexOf(q.correct), explain: q.explain, check: q.verify() };
   }
@@ -260,7 +300,7 @@
   function newQ(l, a, diff, o) {
     var s = S(l); a.qn = (a.qn || 0) + 1;
     var q = generate(a.token + ':' + a.qn, Object.assign({ diff: diff, recent: s.recent, lastKind: a.q && a.q.kind, vn: vn(l) }, o || {}));
-    s.recent.push(q.sig); if (s.recent.length > 80) s.recent.splice(0, s.recent.length - 80);
+    s.recent.push(q.sig); if (s.recent.length > 1200) s.recent.splice(0, s.recent.length - 1200);
     a.q = q; a.hide = null; return q;
   }
   function verdict(a, okAns, picked) { var q = a.q; return (okAns ? 'Đúng! ' : 'Chưa đúng' + (picked != null ? ' (bạn chọn ' + LETTER[picked] + ')' : '') + '. Đáp án: ' + LETTER[q.answer] + '. ' + q.options[q.answer] + '. ') + q.explain; }
@@ -419,9 +459,9 @@
     setup: function (l, a) {
       var rr = seeded(a.token + ':m' + a.round + a.ch), kind = ['digits', 'items', 'calc'][a.ch];
       a.kind = kind; a.shown = false;
-      if (kind === 'digits') { var n = 6 + a.round * 2, ds = Array.from({ length: n }, function () { return ri(rr, 0, 9); }), pos = ri(rr, 1, n); a.memo = ds.join(' '); var c = String(ds[pos - 1]), opts = shuffle(rr, [c].concat(shuffle(rr, '0123456789'.split('').filter(function (v) { return v !== c; })).slice(0, 3))); a.q = { text: 'Chữ số ở vị trí thứ ' + pos + ' trong dãy vừa xem là chữ số nào?', options: opts, answer: opts.indexOf(c), check: c, diff: 2 + a.round, explain: 'Dãy: ' + ds.join(' ') + '.' }; }
-      else if (kind === 'items') { var pool = shuffle(rr, ['quả táo', 'chiếc ô', 'con mèo', 'cây bút', 'đôi giày', 'cái đèn', 'quyển sách', 'con cá', 'chiếc lá', 'cái mũ', 'chiếc chìa khóa', 'bông hoa']), list = pool.slice(0, 5 + a.round), i = ri(rr, 1, list.length - 1); a.memo = list.join(' → '); var c2 = list[i]; a.q = { text: 'Trong chuỗi vừa xem, ngay sau "' + list[i - 1] + '" là gì?', options: shuffle(rr, [c2].concat(shuffle(rr, list.filter(function (x) { return x !== c2; })).slice(0, 3))), diff: 2 + a.round, explain: 'Chuỗi: ' + a.memo + '.' }; a.q.answer = a.q.options.indexOf(c2); a.q.check = c2; }
-      else { a.memo = null; a.q = generate(a.token + ':calc' + a.round, { diff: 3, kinds: ['arith', 'sequence'] }); }
+      if (kind === 'digits') { var n = 18 + a.round * 8, ds = Array.from({ length: n }, function () { return ri(rr, 0, 9); }), pos = ri(rr, 1, n); a.memo = ds.join(' '); pos = ri(rr, 1, n - 5); var c = ds.slice(pos - 1, pos + 5).join(''), opts = shuffle(rr, [c].concat([1, 2, 3].map(function (v) { var x = c.split(''), j = ri(rr, 0, 5); x[j] = String((Number(x[j]) + v) % 10); return x.join(''); }))); a.q = { text: 'Sáu chữ số liên tiếp từ vị trí thứ ' + pos + ' trong dãy vừa xem là chuỗi nào?', options: opts, answer: opts.indexOf(c), check: c, diff: 2 + a.round, explain: 'Dãy: ' + ds.join(' ') + '.' }; }
+      else if (kind === 'items') { var pool = shuffle(rr, ['quả táo', 'chiếc ô', 'con mèo', 'cây bút', 'đôi giày', 'cái đèn', 'quyển sách', 'con cá', 'chiếc lá', 'cái mũ', 'chiếc chìa khóa', 'bông hoa']), list = pool.slice(0, 10 + a.round), i = ri(rr, 1, list.length - 1); a.memo = list.join(' → '); var c2 = list[i]; a.q = { text: 'Trong chuỗi vừa xem, ngay sau "' + list[i - 1] + '" là gì?', options: shuffle(rr, [c2].concat(shuffle(rr, list.filter(function (x) { return x !== c2; })).slice(0, 3))), diff: 2 + a.round, explain: 'Chuỗi: ' + a.memo + '.' }; a.q.answer = a.q.options.indexOf(c2); a.q.check = c2; }
+      else { a.memo = null; newQ(l, a, 3, { kinds: ['remainders', 'paths', 'wordcode', 'inclusion', 'wordorder', 'meeting'] }); }
     },
     title: function (l, a) { return 'Vòng ' + (a.round + 1) + ' · thử thách ' + (a.ch + 1) + '/3'; },
     text: function (l, a) {
