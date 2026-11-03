@@ -1,3 +1,9 @@
+## 8.10.25-fix — 03/11/2026 09:01 (UTC+7) — packaged, chưa phát hành
+
+- Bản vá sau bản 8.10.24 đã upload (không thay nội dung 8.10.24). Phát hiện khi so regression đầy đủ trên mã cuối (88 lỗi/101 loại) với baseline 8.10.23 (78/89):
+  - Dòng thuế tiền lương (tax-resident) được ghi sau khi nhân vật qua đời. Nay chỉ ghi khi còn sống.
+  - 19 tình huống mới của MD5 chưa có bối cảnh kiểm thử nên rơi vào loại lỗi "kiểm tra được trên ít nhất một khuôn". Đã thêm bối cảnh dựng vào `tests/regression-contexts.js`, không đổi assertion. Mô phỏng mục 9 cho 19 id: 194 lượt, 0 lỗi.
+
 ## 8.10.24-md5 — 03/11/2026 03:07 (UTC+7) — đã ghi phát hành 06:21 theo yêu cầu của chủ dự án (giờ dự kiến upload); chưa nghiệm thu đầy đủ
 
 - MD5 (PROMPT_MOT_DOI_MD5_HOAN_THIEN_VA_MO_RONG.md). Module mới: `fix920` (FIN + CHILD + hồ sơ nghề), `kin920` (gia đình hai bên, nơi ở, nội trợ, nuôi dạy con, chuỗi phản bội chung), `party920` (dịch vụ tiệc chung, cohort 1.000 khách), `school920` (trường, prom 24 nước, lễ trưởng thành), `royal920` (hoàng gia hư cấu, tước vị, công vụ, ngân sách, kế vị), `guard920` (menu MD4/MD5 dựng lỗi thì tự loại khỏi hàng chờ).
