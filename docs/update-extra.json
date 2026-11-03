@@ -3,8 +3,8 @@
     "id": "childhood-family-fixes-831",
     "version": "8.10.31",
     "publishedAt": "2026-11-03T19:44:08+07:00",
-    "releasedAt": null,
-    "releaseStatus": "packaged",
+    "releasedAt": "2026-11-03T12:54:01.000Z",
+    "releaseStatus": "released",
     "title": "Tuổi thơ, mái tóc và cách gọi người thân",
     "summary": "Trẻ nhỏ được chăm tóc theo tuổi. Bạn tự chọn lúc khám phá món địa phương.",
     "tags": [
@@ -16,7 +16,8 @@
       "Tóc lúc mới sinh ngắn hơn, được cắt tỉa thường ngày khi còn nhỏ. Bạn có thể chọn nuôi tóc dài ở mục Làm tóc, tạo kiểu. Salon và mục hiến tóc dùng chung độ dài tóc thật.",
       "Mở sinh hoạt địa phương để học món mới hoặc thực hành công thức từ năm trước khi bạn muốn.",
       "Khi bố hoặc mẹ tái hôn, nhật ký giữ đúng cách gọi mẹ kế hoặc bố dượng."
-    ]
+    ],
+    "correctedAt": "2026-11-03T12:54:01.283Z"
   },
   {
     "id": "family-faith-support-830",
