@@ -1,5 +1,30 @@
 [
   {
+    "id": "education-exchange-829",
+    "version": "8.10.29",
+    "publishedAt": "2026-11-03T07:40:35.010Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Từ GCSE đến đại học, trao đổi sinh viên và vay học tập",
+    "summary": "Lên kế hoạch môn học tại England, chọn học nghề bậc đại học hoặc trải nghiệm một kỳ trao đổi ở trường đối tác.",
+    "tags": [
+      "Tính năng",
+      "Học tập"
+    ],
+    "details": [
+      "Ở England hiện đại, nhân vật bắt đầu tiểu học lúc 5 tuổi, lên trung học lúc 11 tuổi và hoàn thành Year 11 lúc 16 tuổi. Hồ sơ học tập cho biết Year, Key Stage, các môn theo giai đoạn và lớp Việt Nam tương đương theo tuổi.",
+      "Cuối Year 6 có mốc đánh giá SATs. Ở tuổi 14–15, có thể chọn nhóm môn GCSE hoặc thêm từng môn như lịch sử, nhiếp ảnh, kinh tế, khoa học máy tính và ngoại ngữ, tối đa bốn môn tự chọn.",
+      "Sau GCSE, chọn học nghề, IB hoặc A-Level hướng y sinh hay luật. Hai gói A-Level bắt đầu với ba môn và có thể chọn môn thứ tư. Kết quả cuối Sixth Form được quy đổi để xét tuyển.",
+      "Chương trình cử nhân thông thường ở Anh được mô phỏng trong ba năm hoặc bốn năm tại Scotland, ngành y có lịch riêng. Tuyến thạc sĩ toàn thời gian thông thường kéo dài một năm và tuyến tiến sĩ thông thường từ ba đến năm năm.",
+      "Tại England, từ 18 tuổi có thể ứng tuyển Degree Apprenticeship. Trúng tuyển thì học bốn năm, nhận lương và tích lũy kinh nghiệm làm việc, với học phí do doanh nghiệp tài trợ.",
+      "Sinh viên ở các quốc gia có thể chọn trường đối tác tại Anh, Mỹ, Úc, Việt Nam, Nhật, Pháp hoặc xem thêm các nước khác. Có ba thời lượng: một tuần, một học kỳ hoặc một năm. Chọn gia đình bản xứ hoặc ký túc xá, xem chi phí trước khi đăng ký và tham gia một hoạt động tại nơi ở.",
+      "Trường gốc giữ hồ sơ học và bằng cấp. Sau đợt trao đổi, kết quả và tín chỉ mô phỏng được lưu trong bảng điểm. Chi phí thay đổi theo nơi đến, thời lượng và chỗ ở.",
+      "Mỹ có khoản vay liên bang và vay tư nhân với điều kiện khác nhau. Trong mô phỏng, khoản liên bang hoãn trả khi chưa có thu nhập và có đường miễn phần dư sau thời gian phục vụ công đủ điều kiện.",
+      "Ở England, khoản vay học phí chuyển đến trường; khoản vay sinh hoạt xét hoàn cảnh gia đình. Các khoản theo thu nhập bắt đầu thu khi thu nhập vượt ngưỡng mô phỏng.",
+      "Úc có HECS-HELP cho đại học, OS-HELP khi trao đổi và VET Student Loans cho học nghề. Youth Allowance và Austudy là hỗ trợ sinh hoạt theo tuổi, không ghi nợ. Tại Việt Nam, sinh viên khó khăn tiếp tục dùng mục vay NHCSXH."
+    ]
+  },
+  {
     "id": "olympia-culture-828",
     "version": "8.10.28",
     "publishedAt": "2026-11-03T06:56:49.247Z",

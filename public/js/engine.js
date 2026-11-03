@@ -982,7 +982,7 @@
         });
       },
       apply: function (life, d, k, r, log) {
-        life.major = k; life.majorName = null; life.school = life.abroad && life.abroad.study ? 'abroad' : 'uni'; life.schoolEnd = life.age + (k === 'med' ? 6 : 4);
+        life.major = k; life.majorName = null; life.school = life.abroad && life.abroad.study ? 'abroad' : 'uni'; life.schoolEnd = life.age + (k === 'med' ? 6 : !life.abroad && life.country==='GB' && E.studyRegion829 && E.studyRegion829(life)!=='Scotland' ? 3 : 4);
         if (KHOI[life.khoi] && KHOI[life.khoi].m.indexOf(k) < 0) { life.st.kno -= 3; life.st.hap -= 2; log('Học trái khối — những năm đầu phải học bù vất vả.', 'neutral'); }
         if (life.abroad && life.abroad.study) life.abroad.until = life.schoolEnd;
         if (life.job) { life.job = null; }
@@ -993,7 +993,7 @@
       make: function () { return { id: 'post', title: 'Học tiếp sau đại học?', text: 'Thầy hướng dẫn khuyên bạn học thạc sĩ.', opts: [opt('yes', 'Học thạc sĩ', '2 năm nữa'), opt('no', 'Đi làm luôn', '')] }; },
       auto: function (life, d, r) { return r() < 0.35 ? 'yes' : 'no'; },
       apply: function (life, d, k, r, log) {
-        if (k === 'yes') { life.school = 'post'; life.schoolEnd = life.age + 2; log('Bắt đầu học thạc sĩ.', 'good'); }
+        if (k === 'yes') { life.school = 'post'; life.schoolEnd = life.age + (life.country==='GB' && !life.abroad ? 1 : 2); log('Bắt đầu học thạc sĩ.', 'good'); }
         else life.flags.needJob = true;
       }
     },
@@ -1410,7 +1410,8 @@
       }
     }
     // học hành
-    if (a === 15 && life.school === 'lower') { life.school = null; life.edu = Math.max(life.edu, 2); add('hs'); }
+    if (a === 16 && E.england829 && E.england829(life) && life.school === 'lower') { life.edu=Math.max(2,life.edu); add('sixth829'); }
+    if (a === 15 && !(E.england829 && E.england829(life)) && life.school === 'lower') { life.school = null; life.edu = Math.max(life.edu, 2); add('hs'); }
     if (life.flags.uniNext === a) { life.flags.uniNext = null; add('uni'); }
     if (life.flags.retryUni != null && life.flags.retryUni <= a) { life.flags.retryUni = null; if (life.flags.retryExamPending) { delete life.flags.retryExamPending; var previousExam = life.examScore; life.examScore = E.rollExamScore ? E.rollExamScore(life, r) : Math.min(30, (previousExam || 15) + 1 + r() * 2.5); if (previousExam != null) life.examScore = Math.min(30, Math.max(life.examScore, Math.round((previousExam + 1 + r() * 2.5) * 4) / 4)); life.log.push({a:a,y:life.birthYear+a,t:'Thi lại tốt nghiệp THPT: '+U.fmtNum(life.examScore,2)+' điểm.',k:'neutral'}); if (life.examScore >= 27) life.flags.scholar = true; } add('uni'); } // v3.8: không để cờ "ôn thi lại" treo mãi chặn việc tìm việc
     // việc làm
@@ -1799,14 +1800,14 @@
     }
 
     // ---- Học hành ----
-    if (a === 6) {
-      if (life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : 'Bắt đầu đi học tiểu học.', 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
+    if (a === (E.england829 && E.england829(life) ? 5 : 6)) {
+      if (E.england829 && E.england829(life) || life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : 'Bắt đầu đi học tiểu học.', 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
       else { life.school = null; log('Không được đến trường — nhà quá nghèo, trường lại xa.', 'bad'); st.hap -= 4; }
     }
     if (life.school) life.yearsInSchool++;
     if (a === 11 && life.school === 'primary') {
       life.edu = 1;
-      if (life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.', 'neutral'); }
+      if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.', 'neutral'); }
       else { life.school = null; log(f.q <= 2 ? 'Nhà nghèo, học hết tiểu học thì phải nghỉ ở nhà phụ giúp bố mẹ.' : life.urban ? 'Học lực yếu, thi không đỗ vào lớp 6 trường công, gia đình đành cho nghỉ học.' : 'Trường cấp hai ở xa, đường sá cách trở, học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
     if (life.school && life.schoolEnd != null && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường

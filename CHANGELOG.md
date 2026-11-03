@@ -1,3 +1,7 @@
+## 8.10.29 — Giáo dục England, trao đổi và tài trợ sinh viên (packaged)
+
+- Thêm GCSE/Sixth Form, Degree Apprenticeship, trao đổi với danh sách điểm đến quốc tế và tài trợ theo nước.
+
 ## 8.10.28 — Olympia, lễ trưởng thành và tiệc cuối cấp (đã phát hành)
 
 - Olympia bổ sung đề xác suất và manh mối từ khóa. Lễ gia đình và chương trình trường có thêm lựa chọn theo địa phương. Bản 8.10.27 đã ghi nhận phát hành lúc 13:55:34 ngày 03/11/2026 (UTC+7).
