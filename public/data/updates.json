@@ -4,7 +4,7 @@
     {
       "id": "fix-after-death-tax-825",
       "version": "8.10.25-fix",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "publishedAt": "2026-11-03T09:01:00.000+07:00",
       "title": "Một Đời — Sửa nhật ký cuối đời",
       "summary": "Nhật ký không còn ghi dòng thuế tiền lương sau khi nhân vật đã qua đời.",
@@ -14,7 +14,8 @@
       "details": [
         "Trong năm nhân vật qua đời, dòng thuế tiền lương sau bảo hiểm và giảm trừ không còn xuất hiện sau dòng qua đời trong nhật ký."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-03T04:34:34.000Z",
+      "correctedAt": "2026-11-03T04:34:34.546Z"
     },
     {
       "id": "md5-family-school-royal-824",

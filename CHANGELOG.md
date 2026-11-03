@@ -1,4 +1,4 @@
-## 8.10.25-fix — 03/11/2026 09:01 (UTC+7) — packaged, chưa phát hành
+## 8.10.25-fix — 03/11/2026 09:01 (UTC+7) — đã ghi phát hành 11:34 theo yêu cầu của chủ dự án; chưa nghiệm thu đầy đủ (dừng regression đầy đủ theo yêu cầu)
 
 - Bản vá sau bản 8.10.24 đã upload (không thay nội dung 8.10.24). Phát hiện khi so regression đầy đủ trên mã cuối (88 lỗi/101 loại) với baseline 8.10.23 (78/89):
   - Dòng thuế tiền lương (tax-resident) được ghi sau khi nhân vật qua đời. Nay chỉ ghi khi còn sống.
