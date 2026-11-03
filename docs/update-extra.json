@@ -3,18 +3,34 @@
     "id": "olympia-culture-828",
     "version": "8.10.28",
     "publishedAt": "2026-11-03T06:56:49.247Z",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-03T07:10:33.000Z",
     "title": "Olympia và những cột mốc trưởng thành",
     "summary": "Thử sức với đề Olympia khó hơn và khám phá các cách mừng trưởng thành, tốt nghiệp cùng gia đình và bạn học.",
     "tags": [
       "Tính năng"
     ],
     "details": [
-      "Tăng tốc dùng đề suy luận khó, có thêm xác suất rút thẻ không hoàn lại. Về đích ở vòng quý và năm nâng độ khó theo gói điểm, có giải thích sau mỗi câu.",
-      "Gặp thêm Sweet 16, Debut Philippines, Konfirmation, sinh nhật năm vương miện và dạ vũ. Có lựa chọn tìm hiểu nghi lễ cộng đồng với tư cách khách.",
-      "Các tiệc chia tay và tốt nghiệp có thêm chương trình theo nơi học, từ Farewell Nam Á đến hafla vùng Vịnh và tiệc gia đình Đông Phi."
-    ]
+      "Olympia có bốn phần thi từ Khởi động đến Về đích. Ở Vượt chướng ngại vật, giải đúng hàng ngang mở thêm chữ cái và manh mối về nghĩa của từ khóa. Đoán càng sớm, số điểm có thể giành càng cao.",
+      "Tăng tốc có đề suy luận số dư, đếm đường đi, tập hợp, biến đổi chuỗi chữ và xác suất rút hai thẻ không hoàn lại. Sau khi trả lời, bạn được xem cách tính.",
+      "Về đích cho chọn câu 10, 20 hoặc 30 điểm. Cùng một gói điểm, đề ở vòng quý và chung kết năm có thể khó hơn vòng tuần.",
+      "Nhật Bản có lễ Thành nhân ở tuổi 20 với lựa chọn furisode, hakama hoặc vest. Trong Quán lễ và Kê lễ, bạn có thể chọn mặc Hán phục, đội mũ, cài trâm hoặc đọc lời hứa trước gia đình.",
+      "Trong gia đình theo Do Thái giáo, nhân vật nam có thể dự Bar Mitzvah ở tuổi 13 và nhân vật nữ dự Bat Mitzvah ở tuổi 12. Có thể bắt đầu chuẩn bị từ năm trước.",
+      "Tại Mỹ, bạn có thể tìm hiểu Rumspringa qua lời kể về thời gian người trẻ Amish cân nhắc việc gia nhập giáo hội. Tại Kenya và Tanzania, bạn có thể nghe người hướng dẫn giới thiệu các nghi lễ trưởng thành Maasai.",
+      "Ở Vanuatu, bạn có thể tìm hiểu Naghol trên đảo Pentecost. Ở Brazil, có dịp nghe kể về nghi lễ găng tay kiến của người Sateré-Mawé. Bạn tham gia với tư cách khách tìm hiểu văn hóa.",
+      "Indonesia có hai dịp tìm hiểu riêng về truyền thống xăm mình, mài răng của người Mentawai và ý nghĩa của nghi lễ Metatah ở Bali.",
+      "Mỹ và Canada có Sweet 16 với lời chúc về tính tự lập hoặc điệu nhảy cùng người thân. Tại Philippines, tiệc Debut tuổi 18 cho chọn 18 đóa hồng hoặc 18 ngọn nến và lời chúc.",
+      "Ở Anh có dạ vũ Scotland với điệu reel. Tại Pháp, Áo, Anh, Úc và Mỹ, nhân vật có thể dự dạ vũ ra mắt theo lời mời, tập nhảy với bạn đồng hành hoặc chọn điệu valse mở màn.",
+      "Tại Đan Mạch, Na Uy và Thụy Điển, Konfirmation có lựa chọn nghi lễ đức tin hoặc lễ thế tục với bài phát biểu. Ở Hà Lan, sinh nhật năm vương miện có thể xuất hiện ở tuổi 5, 10, 15, 20 và 25.",
+      "Ba Lan có buổi tập polonaise cho Studniówka. Ở Ý, lớp có thể ghi lời nhắn trước kỳ thi 100 ngày. Ở Bỉ có tiết mục ngày hội 100 ngày. Tại Trung Quốc và Hàn Quốc, bạn có thể làm sổ lưu niệm, chụp ảnh hoặc viết lời chúc cho lớp.",
+      "Tại Nigeria, bạn có thể thiết kế trang phục Ankara cho thảm đỏ SS3 Graduation Dinner. Ở Kenya và Tanzania, ngày tốt nghiệp có thể là dịp chuẩn bị mâm cơm cùng họ hàng hoặc mời hàng xóm đến chung vui.",
+      "Tiệc cuối cấp ở Lebanon có buổi tập dabke theo nhóm. Tại Ai Cập, bạn có thể chơi trống tabla trong ban nhạc lớp. Ở UAE, bạn có thể phụ trách thảm đỏ và gian chụp ảnh.",
+      "Trong tiệc Hafla ở Ả Rập Xê Út hoặc Qatar, bạn có thể chuẩn bị bàn cà phê qahwa và chà là. Ở Ả Rập Xê Út còn có lựa chọn đón khách với hương bukhoor.",
+      "Farewell ở Ấn Độ có tiết mục Bollywood cùng khóa dưới. Ở Bangladesh, bạn có thể dựng video chia tay. Tại Pakistan, bạn có thể đọc thơ shayari tặng lớp.",
+      "Ở Indonesia, đêm chia tay có batik, kebaya và buổi tập angklung cùng ban nhạc trường. Tại CHDC Congo, bạn có thể tập nhảy ndombolo cùng bạn bè trong dịp Fête de collation.",
+      "Tại Ethiopia, gia đình có thể mời khách dùng injera và cà phê. Ở Brazil và Mexico, bạn có thể mời cha, mẹ hoặc một người thân cùng tập và mở điệu nhảy của dạ tiệc cuối cấp."
+    ],
+    "correctedAt": "2026-11-03T07:10:33.082Z"
   },
   {
     "id": "scandal-contract-quiz-827",
