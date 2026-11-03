@@ -34,6 +34,36 @@ ok(BT && ST && SO, 'modules loaded');
   ok(!enabled(c, 'beauty919', 'b1', { tab: 'bleach' }), 'no bleaching for young children');
   const nat = life(3); E.ID919.pheno(nat).hair = 0.25; nat.flags.id919.pheno.red = false; ok(BT.lift(nat) >= 3, 'naturally light hair counts as lifted base');
 }
+// Đi qua lựa chọn thật, kể cả khi menu đã được lưu giữa chừng.
+{
+  const l = life(81), h = BT.hair(l); h.len = 24;
+  pick(l, 'beauty919', 'style');
+  const menu = JSON.parse(JSON.stringify(l.pending[0]));
+  ok(menu.data.arg.tab === 'style' && !l.log.some(e => /bước tiếp theo: Làm đẹp/.test(e.t)), 'browsing salon is silent');
+  l.pending = [menu];
+  const cash = l.money;
+  E.resolve(l, String(menu.data.keys.indexOf('s:wave')));
+  ok(h.style === 'wave' && l.money < cash, 'saved wave selection charges');
+  const afterWave = l.money;
+  pick(l, 'beauty919', 's:straight', {tab:'style'});
+  ok(h.style === 'straight' && l.money < afterWave, 'straightening charges separately');
+  pick(l, 'beauty919', 'ext40', {tab:'style'});
+  ok(h.extraCm === 40 && h.len === 24 && !enabled(l,'hair915','p2'), 'extensions do not count toward donation');
+  pick(l, 'beauty919', 'removeExt', {tab:'style'});
+  ok(!h.extraCm && h.len === 24, 'removing extensions preserves real hair');
+  l.money = 0;
+  ok(!enabled(l, 'beauty919', 's:straight', {tab:'style'}), 'insufficient funds block straightening');
+  l.age = 10; l.indep = false;
+  ok(!enabled(l,'beauty919','bleach') && /14 tuổi/.test(E.DEC.beauty919.make(l,()=>.5,{}).text), 'no empty bleach menu at ten');
+  l.age = 5; l.fam.mAlive = l.fam.fAlive = false;
+  for (const [kind, carer] of [['chua','sư cô'],['mai_am','cô bảo mẫu'],['ong_ba','ông bà']]) {
+    l.fam.orphan = {kind, carer, one:carer};
+    const d = E.DEC.k_ga_con.make(l,()=>.5,{});
+    ok(d.text.toLowerCase().includes(carer), 'correct chick giver ' + kind);
+    l.pending = [d];
+    ok(E.resolve(l,'cham').some(e=>e.t.includes(carer)), 'correct chick outcome ' + kind);
+  }
+}
 // Diễn viên: giải trong nước theo nơi sống, liên hoan phim, lời mời đạo diễn, nổi tiếng quốc tế
 {
   const vn = life(10); ok(ST.domestic(vn).includes('Giải Cánh Diều'), 'Vietnam domestic awards'); const kr = life(11); kr.abroad = { code: 'KR', name: 'Hàn Quốc', perm: true }; ok(ST.domestic(kr).includes('Baeksang Arts Awards'), 'Korea domestic awards when living there');

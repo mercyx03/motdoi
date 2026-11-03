@@ -5,6 +5,10 @@ const assert = require('assert'), path = require('path'), { launch, page, sleep 
 const URL = process.env.MOTDOI_URL || 'http://localhost:8080/', out = path.join(__dirname, '../.cache');
 // Mỗi kịch bản: dựng đời, mở menu, bấm lần lượt (khớp đầu nhãn; '*' = phương án đầu tiên), số lần bấm tiếp '*', chữ phải thấy.
 const FLOWS = {
+  media: [
+    { name: 'contract', setup: 'claim', open: 'mediaClaim156', clicks: ['Đối chiếu điều khoản', 'Thương lượng giảm', 'Chấp nhận hòa giải', 'Thỏa thuận trả dần'], answers: 0, expect: 'Trả dần mỗi năm' },
+    { name: 'scandal', setup: 'scandal', open: 'media156', clicks: ['Đối chiếu clip gốc', 'Làm rõ bằng chứng'], answers: 0, expect: 'chờ sang năm' }
+  ],
   quiz: [
     { name: 'nnc', setup: 'adult', open: 'show151', clicks: ['Nhanh Như Chớp — thí sinh'], answers: 6, expect: 'Chuỗi đúng hiện tại' },
     { name: 'altp', setup: 'adult', open: 'show151', clicks: ['Ai Là Triệu Phú — người chơi', '50:50'], answers: 3, expect: 'Câu hỏi số' },
@@ -37,7 +41,10 @@ function seed(kind, id) {
   if (kind === 'actor') { l.talent = 'diễn xuất'; l.actSk = 70; l.age = 22; }
   if (kind === 'superstar') { E.startJob(l, 'dien_vien', () => 0, () => { }, true); l.fame = 3e6; l.age = 35; }
   if (kind === 'rapper') { E.startJob(l, 'rapper', () => 0, () => { }, true); l.skill = 70; }
-  const d = E.DEC[id].make(l, () => 0); d.manual = true; l.pending = [d];
+  if (kind === 'scandal') { l.fame = 200000; E.MEDIA156.open(l, 'service'); }
+  let arg;
+  if (kind === 'claim') { l.fame = 300000; E.DEC.quang_cao.def.opts.find(o=>o.k==='ok').run(l,()=>0,()=>{},{fee:100,brand:'Nhãn hàng Hư Cấu',mediaRate156:500}); const c=E.MEDIA156.open(l,'conduct'); c.evidence=true;c.response='repair';E.MEDIA156.demand(l,c,()=>{});arg={id:1}; }
+  const d = E.DEC[id].make(l, () => 0, arg); d.manual = true; l.pending = [d];
   localStorage.setItem('mkn.current', JSON.stringify({ life: l, cohort: [], auto: false, speed: 1 }));
   return true;
 }
@@ -54,8 +61,9 @@ function clickOpt(label) {
     for (const width of [390, 1280]) {
       const p = await page(chrome, URL, { width, height: 950 });
       for (const m of want) for (const f of FLOWS[m] || []) {
+        await p.eval(async () => { await MotDoiBoot.load(); });
         await p.eval(seed, f.setup, f.open); await p.reload();
-        await p.eval(() => { const b = document.querySelector('#resumeBtn'); if (b) b.click(); return !!b; }); await sleep(500);
+        await p.eval(async () => { await MotDoiBoot.load(); const b = document.querySelector('#resumeBtn'); if (b) b.click(); return !!b; }); await sleep(500);
         const confirm = () => p.eval(() => { const y = Array.from(document.querySelectorAll('button')).find(b => b.innerText.trim() === 'Chắc chắn, tiếp tục'); if (y) y.click(); return true; });
         for (const c of f.clicks) { const r = await p.eval(clickOpt, c); assert(r === true, f.name + ' ' + width + 'px: không thấy "' + c + '". Đang có: ' + r); await sleep(300); await confirm(); await sleep(200); }
         let body = await p.eval(() => document.body.innerText);

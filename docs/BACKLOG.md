@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.27-showbiz: cần regression toàn bộ trên mã cuối, kiểm thử chiến dịch dài nhiều nhãn hàng/đổi nghề/qua đời và chuyển đời, các tình huống cực lớn hơn 50 hồ sơ; kiểm chứng binding REVIEWS_DB thực tế. Đã kiểm thử trọng điểm showbiz/câu hỏi/bồi thường, smoke và bản lưu; chỉ Preview, chưa nghiệm thu toàn diện.
+
 ### Phần tồn sau MD5 (8.10.24) — 03/11/2026
 
 - **life138 (chặn nghiệm thu tổng thể):** lỗi cũ, lặp lại đúng assertion trên `c2a21cb` và `30152fc`. Chọn "Xem xét" ở `succession139` không chọn ngay người kế nghiệp vì family-dynasty 8.10.8 chuyển sang đề cử/bầu. Cần chủ dự án quyết định hành vi đúng; chưa sửa test, chưa nới assertion.
@@ -232,3 +234,5 @@ Cập nhật 8.10.14: phần lớn §12 đường tối (đàn em NPC, địa b�
 Cập nhật 8.10.15: §11.1–11.3 (di truyền theo cha mẹ, sàng lọc đồng thuận, đa thai) — kiểm thử trọng điểm đạt. Còn §11.4 bệnh mắc phải/ung thư, §11.5 phát triển trẻ, §13 quốc gia, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ.
 
 Cập nhật 8.10.16: §11.4–11.5 (ung thư theo giai đoạn, bệnh mạn, phát triển trẻ) — kiểm thử trọng điểm đạt. Còn §13, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ. Thêm vào danh sách hỏng sẵn: blood910-browser (assertion nhật ký mới nhất).
+
+GĐ6 — Bản 8.10.26-salon còn chờ regression toàn bộ trên mã cuối và đối chiếu bản lưu thực tế của người báo lỗi.

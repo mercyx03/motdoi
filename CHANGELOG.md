@@ -1,4 +1,9 @@
-## 8.10.25-fix — 03/11/2026 09:01 (UTC+7) — packaged, chưa phát hành
+## 8.10.27-showbiz — 2026-11-03T06:39:05.217Z — packaged, Preview
+
+- Hồ sơ scandal nhiều bước, quảng bá/đời tư và NPC nhất quán; hậu quả xuyên năm.
+- Ghi điều khoản hợp đồng quảng cáo 200/300/500%, gói an toàn 100%; yêu cầu → đối chiếu → hòa giải/tranh chấp → nghĩa vụ → trả dần/chậm trả/tất toán; tích hợp tài sản ròng và quy đổi tiền, không hồi tố pending cũ.
+- 25 dạng câu hỏi, lịch sử 1.200 câu, phân độ khó; nâng ghi nhớ và suy luận Siêu Trí Tuệ.
+## 8.10.25-fix — 03/11/2026 09:01 (UTC+7) — đã ghi phát hành 11:34 theo yêu cầu của chủ dự án; chưa nghiệm thu đầy đủ (dừng regression đầy đủ theo yêu cầu)
 
 - Bản vá sau bản 8.10.24 đã upload (không thay nội dung 8.10.24). Phát hiện khi so regression đầy đủ trên mã cuối (88 lỗi/101 loại) với baseline 8.10.23 (78/89):
   - Dòng thuế tiền lương (tax-resident) được ghi sau khi nhân vật qua đời. Nay chỉ ghi khi còn sống.
