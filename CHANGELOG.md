@@ -2,7 +2,7 @@
 
 - Mở rộng hồ sơ khuyết tật theo nơi sống, thỏa thuận nuôi con, nghi lễ, tên thánh và kê khai lý lịch.
 
-## 8.10.29 — Giáo dục England, trao đổi và tài trợ sinh viên (packaged)
+## 8.10.29 — Giáo dục England, trao đổi và tài trợ sinh viên (đã phát hành)
 
 - Thêm GCSE/Sixth Form, Degree Apprenticeship, trao đổi với danh sách điểm đến quốc tế và tài trợ theo nước.
 

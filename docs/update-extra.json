@@ -29,8 +29,8 @@
     "id": "education-exchange-829",
     "version": "8.10.29",
     "publishedAt": "2026-11-03T07:40:35.010Z",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-03T08:01:06.679Z",
     "title": "Từ GCSE đến đại học, trao đổi sinh viên và vay học tập",
     "summary": "Lên kế hoạch môn học tại England, chọn học nghề bậc đại học hoặc trải nghiệm một kỳ trao đổi ở trường đối tác.",
     "tags": [
@@ -48,7 +48,8 @@
       "Mỹ có khoản vay liên bang và vay tư nhân với điều kiện khác nhau. Trong mô phỏng, khoản liên bang hoãn trả khi chưa có thu nhập và có đường miễn phần dư sau thời gian phục vụ công đủ điều kiện.",
       "Ở England, khoản vay học phí chuyển đến trường; khoản vay sinh hoạt xét hoàn cảnh gia đình. Các khoản theo thu nhập bắt đầu thu khi thu nhập vượt ngưỡng mô phỏng.",
       "Úc có HECS-HELP cho đại học, OS-HELP khi trao đổi và VET Student Loans cho học nghề. Youth Allowance và Austudy là hỗ trợ sinh hoạt theo tuổi, không ghi nợ. Tại Việt Nam, sinh viên khó khăn tiếp tục dùng mục vay NHCSXH."
-    ]
+    ],
+    "correctedAt": "2026-11-03T08:01:06.742Z"
   },
   {
     "id": "olympia-culture-828",
