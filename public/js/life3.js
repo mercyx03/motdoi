@@ -577,7 +577,7 @@
   }
   E.homeTrip = trip;
   // v3.8.1: đang sống cùng nhà với bố mẹ (đã đón bố mẹ về ở cùng, hoặc chưa ra ở riêng, chưa lập gia đình)
-  function livesWith(l) { return !!(l.flags.caring || (!l.indep && !l.abroad && !l.cityStudent && !l.movedTo)); }
+  function livesWith(l) { return !!(l.flags.caring || (E.atFamilyHome121 && E.atFamilyHome121(l)) || (!l.indep && !l.abroad && !l.cityStudent && !l.movedTo)); }
   E.livesWithParents = livesWith;
   function pw(l) { return l.fam.mAlive && l.fam.fAlive && !l.fam.noDad ? 'bố mẹ' : l.fam.mAlive ? 'mẹ' : (l.fam.fAlive && !l.fam.noDad) ? 'bố' : ''; }
   if (E.DEC.tham_bo_me) {

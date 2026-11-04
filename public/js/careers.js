@@ -327,7 +327,7 @@
     if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) { if (l.talent !== 'game' && !l.gameType) l.gameType = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = E.gameFor(l, r); } // v2.8: game khớp thể loại sở trường
     if (c.skillRank != null) l.job.rank = c.id === 'tuyen_thu_es' ? 0 : rankBySkill(l, c);
     if (id === 'tuyen_thu_es' && E.ESPORTS) E.ESPORTS.init(l, r);
-    l.flags.needJob = false; l.indep = true;
+    l.flags.needJob = false; l.indep = !(E.atFamilyHome121 && E.atFamilyHome121(l)); if(!quiet&&E.familyHousing121)E.familyHousing121(l,r);
     l.jobsHist = l.jobsHist || [];
     l.jobsHist.push({ id: id, from: l.age });
     if (!quiet) { log('Bắt đầu công việc mới: ' + jobTitleOf(l) + '.', c.sec === 'crime' ? 'bad' : 'good'); H.fx(l, { hap: 3 }); }

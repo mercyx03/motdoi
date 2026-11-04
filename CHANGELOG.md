@@ -1,3 +1,7 @@
+## 8.10.38 — Trường THPT, nơi ở và công an
+
+Thêm lựa chọn trường và môn chuyên, sửa nguồn lực trường, nội trú và lựa chọn ở cùng gia đình. Điều chỉnh tuổi nhận xe đạp và kiểm tra thâm niên, chức vụ công an.
+
 ## 8.10.37 — Hoàng gia và hành trình đức tin (packaged)
 
 Mở rộng cây kế vị, điều kiện đức tin/chấp thuận hôn nhân theo quốc gia, vai trò và áp lực hoàng gia, học nhiều năm, nghi lễ, thai kỳ, thoái vị và lựa chọn đức tin tự nguyện. Đổi mục 8.10.36 thành released theo xác nhận chủ dự án lúc 10:43:30 UTC+7 ngày 04/11/2026. Nguồn, phạm vi và giới hạn: docs/ROYAL-837.md.

@@ -700,7 +700,7 @@
     life.yearsInSchool = 0;
     if (f.vice) { life.flags.famHardship = true; if (f.vice === 'gamble' || f.vice === 'drugs') life.flags.famDebt = true; }
     if (f.q <= 1) life.flags.famHardship = true;
-    life.birthPlace = placeText(life);
+    life.birthPlace = placeText(life); if(life.prov)life.flags.familyProvince121=life.prov.old;
     var r0 = birthSentence(life);
     life.log.push({ a: 0, y: life.birthYear, t: r0, k: 'big' });
     H.mem(life, 'Tiếng khóc chào đời ở ' + (life.urban ? life.place : life.place) + '.', 2, 0);
@@ -894,7 +894,7 @@
     hs: {
       make: function (life) {
         var vn = inVN(life);
-        var o = [opt('thpt', vn ? 'Thi vào lớp 10, học tiếp THPT' : 'Học tiếp trung học phổ thông', vn ? 'Kiến thức càng cao, càng dễ đỗ trường công lập' : ''),
+        var o = [opt('thpt', vn ? 'Chọn trường THPT: trường chuyên, công lập hoặc dân lập' : 'Học tiếp trung học phổ thông', vn ? 'Đăng ký trường theo tên hoặc chọn trường ở địa phương' : ''),
           opt('voc', 'Học trung cấp nghề', 'Ra trường sớm, có tay nghề'),
           opt('work', 'Nghỉ học, đi làm phụ giúp gia đình', 'Có thu nhập ngay')];
         return {
@@ -1890,8 +1890,8 @@
       income += kidIncome;
       if (income > 0) income *= difficulty(life).pension;
     }
-    if (!life.indep && a >= 18 && !life.school && !(life.job && life.job.id === 'phu_giup')) life.indep = true;
-    if (life.job && life.job.id === 'phu_giup' && a >= 20) life.indep = true;
+    if (!(E.atFamilyHome121 && E.atFamilyHome121(life)) && !life.indep && a >= 18 && !life.school && !(life.job && life.job.id === 'phu_giup')) life.indep = true;
+    if (life.job && life.job.id === 'phu_giup' && a >= 20 && !(E.atFamilyHome121 && E.atFamilyHome121(life))) life.indep = true;
     var F = finance(life, r, a, focus, income, log);
     if (life.indep && (income > 0 || F.spend > 0) && !inJail) {
       var mo = income / 12;

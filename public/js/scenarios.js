@@ -539,9 +539,9 @@
     if (v === 'ô tô') H.mem(l, 'Lần đầu lái chiếc ô tô của chính mình về quê, cả xóm ra xem.', 4);
     if ((v === 'xe máy' && !l.lic.A1) || (v === 'ô tô' && !l.lic.B)) log('Bạn chưa có bằng lái ' + (v === 'ô tô' ? 'ô tô' : 'xe máy') + ' — ra đường có nguy cơ bị phạt.', 'neutral');
   }
-  EV(function (l, a) { return a >= 15 && a <= 19 && !l.veh && (l.fam.mAlive || l.fam.fAlive) && l.fam.q >= 2 && (isVN(l) || l.gdp < 20); }, 0.3, function (l, a, r, log) {
-    l.veh = isVN(l) && a < 18 ? 'xe đạp' : 'xe máy'; l.vehVal = l.base * (l.veh === 'xe máy' ? 0.25 : 0.03);
-    log(l.veh === 'xe máy' ? 'Bố mẹ mua cho chiếc xe máy cũ để đi học, đi làm.' : 'Được bố mẹ mua cho chiếc xe đạp điện để đi học.', 'good'); fx(l, { hap: 4 });
+  EV(function (l, a) { return a >= (isVN(l)?10:15) && a <= 19 && !l.flags.parentVehicleGift && !l.veh && (l.fam.mAlive || l.fam.fAlive&&!l.fam.noDad) && l.fam.q >= 2 && (isVN(l) || l.gdp < 20); }, 0.3, function (l, a, r, log) {
+    l.flags.parentVehicleGift=true; l.veh = isVN(l) && a < 18 ? 'xe đạp' : 'xe máy'; l.vehVal = l.base * (l.veh === 'xe máy' ? 0.25 : 0.03);
+    log(l.veh === 'xe máy' ? 'Bố mẹ mua cho chiếc xe máy cũ để đi học, đi làm.' : 'Gia đình mua cho bạn chiếc xe đạp để đi học.', 'good'); fx(l, { hap: 4 });
   });
 
   // =====================================================================

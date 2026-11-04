@@ -77,14 +77,21 @@
   function inSchool(l) { return ['primary', 'lower', 'upper', 'priv', 'voc'].indexOf(l.school) >= 0 && !jailed(l); }
   function endAge(l) { return l.schoolEnd != null ? l.schoolEnd : l.school === 'primary' ? 11 : l.school === 'lower' ? 15 : 18; }
   function left(l) { return endAge(l) - l.age - 1; } // tuổi trong năm học đang diễn ra tăng trước khi trường cập nhật schoolEnd: năm cuối = 1
-  function key(l) { var sp = l.flags.study54 && l.flags.study54.special; return cc(l) + ':' + l.school + ':' + (sp && sp.name || l.uniName || 'local') + ':' + (l.birthYear + endAge(l)); }
+  function key(l) { var sp = l.flags.study54 && l.flags.study54.special; return cc(l) + ':' + l.school + ':' + (sp && !(l.school==='upper' && E.WORLD120.p(l).highSchool) && sp.name || l.uniName || 'local') + ':' + (l.birthYear + endAge(l)); }
   function profile(l) {
-    var s = st(l), k = key(l); if (s.prof[k]) return s.prof[k];
+    var s = st(l), k = key(l); var named = cc(l)==='VN' && l.school==='upper' && E.WORLD120.p(l).highSchool;
+    var selectedType = named && (named.type || (/chuyên/i.test(named.name) ? 'chuyên' : 'công lập'));
+    if (s.prof[k] && (named ? s.prof[k].schoolName===named.name : cc(l)!=='VN' || s.prof[k].type!=='chuyên' || s.prof[k].res>=0.82)) return s.prof[k];
     var sp = l.flags.study54 && l.flags.study54.special, type = sp ? 'chuyên' : l.school === 'priv' ? (u(l.id + k + ':intl') < 0.25 ? 'quốc tế' : 'tư thục') : l.school === 'voc' ? 'nghề' : 'công lập';
     var res = U.clamp({ 'chuyên': 0.6, 'quốc tế': 0.85, 'tư thục': 0.6, 'nghề': 0.35, 'công lập': 0.45 }[type] + (u(l.id + k + ':res') - 0.5) * 0.4 + (l.urban ? 0.05 : -0.05), 0.1, 0.95);
+    if (named || cc(l)==='VN' && type==='chuyên') {
+      type = selectedType || type;
+      var floor = type==='chuyên' ? 0.82 : type==='tư thục' ? 0.60 : 0.35;
+      res = floor + u((named ? named.name : sp.name) + k + ':resources') * 0.15;
+    }
     var R = rec(cc(l)), base = R.p != null ? R.p : { 'chuyên': 0.55, 'quốc tế': 0.9, 'tư thục': 0.6, 'nghề': 0.15, 'công lập': 0.25 }[type];
     var hold = u(l.id + k + ':prom') < U.clamp(base * (0.75 + res * 0.5), 0, 0.97);
-    s.prof[k] = { key: k, cc: cc(l), type: type, res: Math.round(res * 100) / 100, prom: hold, junior: R.also ? u(l.id + k + ':jr') < R.also.p : false, crown: R.crown ? u(l.id + k + ':crown') < R.crown : false, guests: R.guests, fund: res < 0.45 && u(l.id + k + ':fund') < 0.5, campfire: cc(l) === 'VN' ? u(l.id + k + ':camp') < 0.55 : u(l.id + k + ':camp') < 0.15, at: l.age };
+    s.prof[k] = { key: k, schoolName: named && named.name, cc: cc(l), type: type, res: Math.round(res * 100) / 100, prom: hold, junior: R.also ? u(l.id + k + ':jr') < R.also.p : false, crown: R.crown ? u(l.id + k + ':crown') < R.crown : false, guests: R.guests, fund: res < 0.45 && u(l.id + k + ':fund') < 0.5, campfire: cc(l) === 'VN' ? u(l.id + k + ':camp') < 0.55 : u(l.id + k + ':camp') < 0.15, at: l.age };
     return s.prof[k];
   }
 

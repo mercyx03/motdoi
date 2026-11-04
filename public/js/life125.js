@@ -1,8 +1,36 @@
 /* Named school entry, research disputes and life events. */
 (function(G){'use strict';var E=G.E,H=E.H,U=G.U,C=E.WORLD120,X=E.UPDATE110,S=C.s,P=C.p,M=X.menu;
-var high=[{name:'THPT chuyên Hà Nội – Amsterdam',city:'Hà Nội',address:'Số 1 Hoàng Minh Giám, Hà Nội',cut:38},{name:'THPT chuyên Lê Hồng Phong',city:'TP. Hồ Chí Minh',address:'235 Nguyễn Văn Cừ, TP. Hồ Chí Minh',cut:37},{name:'THPT công lập tại nơi đang ở',city:null,address:'Theo địa bàn cư trú trong game',cut:20}];
+var high=[{name:'THPT chuyên Hà Nội – Amsterdam',city:'Hà Nội',address:'Số 1 Hoàng Minh Giám, Hà Nội',cut:38},{name:'THPT chuyên Lê Hồng Phong',city:'TP. Hồ Chí Minh',address:'235 Nguyễn Văn Cừ, TP. Hồ Chí Minh',cut:37},{name:'THPT công lập tại nơi đang ở',city:null,address:'Theo địa bàn cư trú trong game',cut:20},
+{name:'THPT chuyên Khoa học Tự nhiên',city:'Hà Nội',address:'Hà Nội',cut:38,subjects:['math','physics','chem','bio','it']},
+{name:'THPT chuyên tại địa phương',address:'Tỉnh/thành nơi gia đình cư trú',cut:34},
+{name:'THPT dân lập tại địa phương',address:'Tỉnh/thành nơi gia đình cư trú',cut:18},
+{name:'THPT Nguyễn Khuyến',city:'TP. Hồ Chí Minh',address:'TP. Hồ Chí Minh',cut:30}];
+function schoolType(a){return a.name.includes('chuyên')?'chuyên':/dân lập|Nguyễn Khuyến/.test(a.name)?'tư thục':'công lập';}
+function enroll(l,a,r,log){
+ var q=S(l),type=schoolType(a);
+ l.school='upper';l.schoolEnd=l.age+3;
+ q.highSchool={name:a.name,address:a.address,type:type};delete q.hsFailed;
+ if(a.city&&a.city!==C.province(l)){
+   q.studentHome=q.studentHome||{place:C.province(l),city:l.city,urban:l.urban};
+   if(C.move(l,a.city,log,'Nhập học xa nhà')&&type==='chuyên'){
+     q.highSchool.boarding=true;l.cityStudent={city:a.city,since:l.age};
+     log('Bạn nhận phòng ký túc xá của '+a.name+'.','good');
+   }
+ }
+ log('Trúng tuyển '+a.name+'.','big');
+ if(type==='chuyên')C.queue(l,'highSubject125',r);
+}
+M('highSubject125','Chọn môn chuyên',function(l){var a=P(l).highSchool;return !!(l.school==='upper'&&a&&schoolType(a)==='chuyên'&&!a.subject);},
+'Chọn lớp chuyên để ghi vào hồ sơ học tập và tham gia đội tuyển theo sở trường.',function(l){
+ var a=P(l).highSchool,school=high.find(function(x){return x.name===a.name;}),subjects=E.EDUCATION54.subjects;
+ return (school&&school.subjects||Object.keys(subjects)).map(function(k){return {k:k,l:'Chuyên '+subjects[k],run:function(l,r,log){
+   a.subject=k;E.EDUCATION54.state(l).special={name:a.name,subject:k,since:l.age};
+   log('Bạn vào lớp chuyên '+subjects[k]+' tại '+a.name+'.','good');
+ }};});
+},15,'Học tập');
+
 function hs(l){return l.alive&&H.inVN(l)&&l.age>=15&&l.age<18&&l.edu===2&&(!l.school||l.school==='lower')&&P(l).hsExamAt!==l.age;}
-M('highSchool125','Nguyện vọng và thi tuyển lớp 10',hs,'Chọn nguyện vọng ưu tiên và phương án dự phòng. Điểm chuẩn, môn thi và điều kiện cư trú dưới đây được giản lược cho game, không phải quy chế tuyển sinh thật. Giải HSG ghi vào hồ sơ, không mặc định được cộng điểm thi ở mọi địa phương.',function(l){return high.map(function(a,i){return{k:String(i),l:a.name+' · '+a.address,h:'Điểm chuẩn mô phỏng '+a.cut+'/50',run:function(l,r,log){S(l).hsExamAt=l.age;var score=Math.round(U.clamp(l.st.kno*.35+r()*15,0,50)*10)/10;S(l).highExam={score:score,school:a.name,at:l.age};log('Kết quả thi lớp 10: '+score+'/50; nguyện vọng '+a.name+' cần '+a.cut+' điểm trong mô phỏng.','neutral');if(score>=a.cut){l.school='upper';l.schoolEnd=l.age+3;S(l).highSchool={name:a.name,address:a.address};if(a.city&&a.city!==C.province(l)){S(l).studentHome={place:C.province(l),city:l.city,urban:l.urban};C.move(l,a.city,log,'Gia đình thu xếp ở nội trú/ở cùng người thân để nhập học');}log('Trúng tuyển '+a.name+'. Gia đình thu xếp chỗ ở và việc học.','big');}else{S(l).hsFailed=true;C.queue(l,'highFallback125',r);}}};});},15,'Học tập');
+M('highSchool125','Nguyện vọng và thi tuyển lớp 10',hs,'Chọn nguyện vọng ưu tiên và phương án dự phòng. Điểm chuẩn, môn thi và điều kiện cư trú dưới đây được giản lược cho game, không phải quy chế tuyển sinh thật. Giải HSG ghi vào hồ sơ, không mặc định được cộng điểm thi ở mọi địa phương.',function(l){return high.map(function(a,i){return{k:String(i),l:a.name+' · '+a.address,h:'Điểm chuẩn mô phỏng '+a.cut+'/50',run:function(l,r,log){S(l).hsExamAt=l.age;var score=Math.round(U.clamp(l.st.kno*.35+r()*15,0,50)*10)/10;S(l).highExam={score:score,school:a.name,at:l.age};log('Kết quả thi lớp 10: '+score+'/50; nguyện vọng '+a.name+' cần '+a.cut+' điểm trong mô phỏng.','neutral');if(score>=a.cut){enroll(l,a,r,log);}else{S(l).hsFailed=true;C.queue(l,'highFallback125',r);}}};});},15,'Học tập');
 C.incident('highFallback125','Không đạt nguyện vọng lớp 10',function(l){return l.alive&&l.age>=15&&l.age<18&&!!P(l).hsFailed;},'Bạn chưa đạt điểm trường đã chọn. Nếu bỏ hết phương án dự phòng có thể bị lỡ đợt nhập học; kiến thức cao không bảo đảm đỗ nguyện vọng cao nhất.',function(l){var out=[{k:'voc',l:'Chọn trung cấp nghề phù hợp',run:function(l,r,log){l.school='voc';l.schoolEnd=l.age+3;delete S(l).hsFailed;log('Bạn vào học trung cấp nghề.','neutral');}},{k:'wait',l:'Chờ đợt sau, tự ôn và xin tư vấn',run:function(l,r,log){l.school=null;log('Bạn chưa nhập học đợt này, giữ kết quả THCS và chuẩn bị phương án tiếp theo.','neutral');}}];if(P(l).highExam&&P(l).highExam.score>=high[2].cut&&P(l).localFailAt!==l.age)out.unshift({k:'local',l:'Xét phương án công lập địa phương còn chỉ tiêu (mô phỏng)',run:function(l,r,log){if(r()<.65){l.school='upper';l.schoolEnd=l.age+3;S(l).highSchool={name:high[2].name,address:high[2].address};delete S(l).hsFailed;log('Được nhận ở phương án dự phòng theo chỉ tiêu còn lại trong game.','good');}else{S(l).localFailAt=l.age;log('Không còn chỉ tiêu đợt này; cần tiếp tục chọn phương án khác.','bad');C.queue(l,'highFallback125',r);/* GĐ2.5: mở lại lựa chọn ngay (không còn phương án vừa trượt), trước đây người chơi bị kẹt không đi học */}}});return out;});
 // GĐ2.5: "chờ đợt sau" có đợt sau thật — năm sau, nếu vẫn chưa đi học và còn dưới 18 tuổi, được xét lại phương án dự phòng
 E.HOOKS.year.push(function(l,r){var q=P(l);if(!l.alive||!q.hsFailed||l.school||l.age<15||l.age>=17||q.fallbackAt===l.age+1||(l.jailUntil!=null&&l.age<l.jailUntil))return;S(l).fallbackAt=l.age+1;H.sched(l,'highFallback125',1);});
@@ -26,6 +54,6 @@ E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;var q=S(l);if(weatherElig
 M('serviceExtension125','Đề nghị xem xét kéo dài thời gian công tác',function(l){return C.adult(l)!==true?C.adult(l):!l.job||l.retired||!E.isStableService(l)||l.age<55?'Cần đang công tác công vụ ở giai đoạn xét nghỉ hưu':C.once(l,'extensionAt');},'Cần nhu cầu tổ chức, hồ sơ, sức khỏe và quyết định; không tự kéo tuổi nghỉ hưu của mọi cán bộ lên 80. Vai trò lãnh đạo nhiệm kỳ đặc thù được xét riêng. Các mốc dưới đây là mô phỏng, không phải cách tính tuổi phục vụ theo luật.',function(l){return[{k:'request',l:'Nộp nguyện vọng, chờ đơn vị xét nhu cầu và điều kiện',run:function(l,r,log){S(l).extensionAt=l.age;var special=C.job(l)==='chinh_tri'&&l.job.rank>=8||E.LIFE114&&E.LIFE114.peek(l).office&&E.LIFE114.peek(l).office.until>l.age,cap=special?80:C.officer(l)?67:65;if(l.st.hea<65||l.flags.dirty||l.age>=cap||r()>.45){log('Chưa được chấp thuận kéo dài, áp dụng quy trình nghỉ hưu hiện tại.','neutral');return;}S(l).extensionUntil=Math.min(cap,l.age+3);log('Được xem xét tiếp tục công tác đến tuổi '+S(l).extensionUntil+' trong mô phỏng. Quyết định có thời hạn và vẫn xét sức khỏe, kỷ luật.','good');}}];},18,'Nhà nước & cộng đồng');
 E.retirementAge125=function(l,age){var q=P(l);return q.extensionUntil>l.age&&l.st.hea>=55&&!l.flags.dirty?Math.max(age,q.extensionUntil):age;};
 var graduate=E.gradFail;E.gradFail=function(l,r,log){if(P(l).academicCase&&P(l).academicCase.status==='pending'&&['uni','post','phd'].includes(l.school)){l.schoolEnd=l.age+2;if(l.flags.pg106&&!l.flags.pg106.done)l.flags.pg106.end=l.schoolEnd;log('Hội đồng tạm hoãn xét công trình cho đến khi làm rõ tác quyền; chưa kết luận bạn đạo nhái.','neutral');return true;}return graduate&&graduate.apply(this,arguments);};
-var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments),q=P(l);if(q.highSchool)p.jobInfo.push('THPT: '+q.highSchool.name+' · '+q.highSchool.address);if(q.unit&&C.officer(l))p.jobInfo.push('Đơn vị công tác: '+q.unit.name+' · '+q.unit.region+' · '+q.unit.place);if(q.specialty)p.jobInfo.push('Chuyên khoa: '+q.specialty);if(q.extensionUntil>l.age)p.jobInfo.push('Quyết định tiếp tục công tác đến tuổi '+q.extensionUntil);return p;};
+var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments),q=P(l);if(q.highSchool)p.jobInfo.push('THPT: '+q.highSchool.name+' · '+q.highSchool.address+(q.highSchool.subject?' · chuyên '+E.EDUCATION54.subjects[q.highSchool.subject]:'')+(q.highSchool.boarding&&l.school==='upper'?' · ở ký túc xá':''));if(q.unit&&C.officer(l))p.jobInfo.push('Đơn vị công tác: '+q.unit.name+' · '+q.unit.region+' · '+q.unit.place);if(q.specialty)p.jobInfo.push('Chuyên khoa: '+q.specialty);if(q.extensionUntil>l.age)p.jobInfo.push('Quyết định tiếp tục công tác đến tuổi '+q.extensionUntil);return p;};
 E.EVENTS125={hs:hs,high:high,risk:risk};
 })(globalThis.G);

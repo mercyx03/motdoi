@@ -75,8 +75,10 @@ E.canAdvance=function(l,c,end){
  if((c.id==='chinh_tri'&&l.job.rank>=6)||(c.id==='hanh_chinh_cong'&&l.job.rank>=8))return l.age>=50&&(l.karma||0)>=0&&!(l.flags.dirty>0);
  return true;
 };
-SC('bo_nhiem_chien_luoc',{title:'Đề xuất bổ nhiệm cấp chiến lược',valid:function(l){return free(l)&&uniform(l)&&l.job.rank>=8&&l.flags.topAcad>0&&l.age>=50&&l.flags.strategicPost!==jid(l);},text:function(l){return 'Sau thời gian công tác và học nâng cao, bạn được đề xuất vào '+(jid(l)==='cong_an'?'ban lãnh đạo cấp bộ':'bộ phận chỉ huy cấp chiến lược')+'. Có chức vụ phù hợp mới được xét những cấp hàm tiếp theo.';},opts:[
- {k:'yes',l:'Nhận nhiệm vụ',run:function(l,r,log){l.flags.strategicPost=jid(l);log('Bạn nhận nhiệm vụ ở cấp chiến lược. Quân hàm vẫn được xét riêng theo thâm niên và thành tích.','good');}},
+SC('bo_nhiem_chien_luoc',{title:'Đề xuất bổ nhiệm cấp chiến lược',valid:function(l){return free(l)&&uniform(l)&&l.job.rank>=8&&l.flags.topAcad>0&&l.age>=50&&(l.flags.strategicPost!==jid(l)||jid(l)==='cong_an'&&l.flags.service107&&l.flags.service107.post&&l.flags.service107.post.rank<8);},text:function(l){return 'Sau thời gian công tác và học nâng cao, bạn được đề xuất vào '+(jid(l)==='cong_an'?'ban lãnh đạo cấp bộ':'bộ phận chỉ huy cấp chiến lược')+'. Có chức vụ phù hợp mới được xét những cấp hàm tiếp theo.';},opts:[
+ {k:'yes',l:'Nhận nhiệm vụ',run:function(l,r,log){l.flags.strategicPost=jid(l);
+ if(jid(l)==='cong_an'){var s=l.flags.service107||(l.flags.service107={merit:0,used:{}});if(!s.post||s.post.rank<8){s.post={name:'Phó cục trưởng',rank:8,track:'cong_an',at:l.age};s.postAt=l.age;}}
+ log('Bạn nhận nhiệm vụ ở cấp chiến lược. Quân hàm vẫn được xét riêng theo thâm niên và thành tích.','good');}},
  {k:'no',l:'Xin tiếp tục công việc đang làm',run:function(l,r,log){log('Bạn xin tiếp tục công tác tại đơn vị hiện tại.','neutral');}}
 ]});
 trigger('bo_nhiem_chien_luoc',function(l){return E.DEC.bo_nhiem_chien_luoc.valid(l);},.2,4,2);
