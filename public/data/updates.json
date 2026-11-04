@@ -5,8 +5,8 @@
       "id": "royal-faith-837",
       "version": "8.10.37",
       "publishedAt": "2026-11-04T11:01:16.383+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-04T04:12:23.000Z",
       "title": "Hoàng gia, quyền kế vị và lựa chọn đức tin",
       "summary": "Mỗi vị trí trong hoàng gia có áp lực và trách nhiệm riêng; luật kế vị, hôn nhân và nghi lễ thay đổi theo quốc gia.",
       "tags": [
@@ -25,7 +25,8 @@
         "Tên nghi lễ nhiều thành phần có thể tưởng nhớ tổ tiên, được lưu riêng để giữ tên và danh tính cũ. Trẻ hoàng gia có nghi lễ phù hợp quốc gia; váy rửa tội trắng dành cho cả bé trai/bé gái, bánh tầng cưới là tập tục tùy gia đình Anh.",
         "Gia đình Tin Lành phân biệt truyền thống rửa tội trẻ nhỏ và lễ dâng con. Phép rửa được ghi riêng, không lặp lại; khi lớn lên, con có thể tìm hiểu rồi tự quyết việc xác nhận đức tin hoặc xin rửa tội lần đầu.",
         "Con có quyền hoãn hoặc từ chối. Lắng nghe, tôn trọng hoặc gây áp lực tạo ảnh hưởng khác nhau đến tin cậy, ký ức và bất đồng trong gia đình, có thể kéo dài nhiều năm."
-      ]
+      ],
+      "correctedAt": "2026-11-04T04:12:29.439Z"
     },
     {
       "id": "world-family-flight-836",
