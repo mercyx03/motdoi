@@ -1,5 +1,20 @@
 [
   {
+    "id": "game-load-81041",
+    "version": "8.10.41",
+    "publishedAt": "2026-11-04T22:36:44+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Sửa lỗi không tải được trò chơi",
+    "summary": "Khi máy chủ gửi nhầm trang chủ thay cho tệp trò chơi, game tự yêu cầu lại tệp bị lỗi để bạn có thể vào chơi.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Những phần đã tải thành công được giữ lại. Nếu vẫn không kết nối được, bạn có thể bấm thử tiếp hoặc tải lại trang."
+    ]
+  },
+  {
     "id": "plural-family-81040",
     "version": "8.10.40",
     "publishedAt": "2026-11-04T17:01:01+07:00",

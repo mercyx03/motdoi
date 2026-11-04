@@ -1,3 +1,7 @@
+## 8.10.41 — Sửa lỗi không tải được trò chơi
+
+Bộ nạp thử lại tệp lỗi qua URL mới khi CDN trả về trang chủ thay cho JavaScript.
+
 ## 8.10.40 — Danh tính hẹn hò và gia đình nhiều phối ngẫu
 
 Đồng bộ giới tính và tên người mới. Thêm hồ sơ hôn nhân theo nơi cư trú, đồng thuận, xét phép, lịch gia đình, ngân sách và quan hệ giữa từng cặp phối ngẫu.
