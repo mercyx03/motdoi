@@ -34,8 +34,19 @@
     s.final=points;l.examScore=points;log(s.track==='ib'?'Kết quả IB mô phỏng: '+Math.round(points*1.5)+'/45. Điểm quy đổi xét tuyển '+points+'/30.':'Thi cuối Sixth Form: điểm xét tuyển mô phỏng '+points+'/30.','neutral');
   });
   var uni=E.DEC.uni,make=uni.make,apply=uni.apply;
-  uni.make=function(l,r){var d=make.apply(this,arguments);if(england(l)&&l.age>=18&&l.birthYear+l.age>=2015)d.opts.push({k:'degree829',l:'Ứng tuyển Degree Apprenticeship',h:'Học và làm hưởng lương trong 4 năm, doanh nghiệp tài trợ học phí.'});return d;};
-  uni.apply=function(l,d,k,r,log){if(k!=='degree829')return apply.apply(this,arguments);
+  uni.make=function(l,r){var d=make.apply(this,arguments);if(country(l)==='US'&&!l.abroad){
+      d.opts.push({k:'private839',l:'Nộp hồ sơ đại học tư chọn lọc',h:'Học phí mô phỏng cao; trường xét hồ sơ học tập.'},{k:'community839',l:'Học cao đẳng cộng đồng hai năm',h:'Học phí thấp hơn, có thể đi làm hoặc học tiếp sau đó.'});
+    }if(england(l)&&l.age>=18&&l.birthYear+l.age>=2015)d.opts.push({k:'degree829',l:'Ứng tuyển Degree Apprenticeship',h:'Học và làm hưởng lương trong 4 năm, doanh nghiệp tài trợ học phí.'});return d;};
+  uni.apply=function(l,d,k,r,log){if(country(l)==='US'&&!l.abroad&&['private839','community839','uni_big','uni_local','voc'].includes(k)){
+      var custom=k==='private839'||k==='community839';
+      if(custom&&!d.opts.some(o=>o.k===k))return;
+      if(k==='private839'&&(l.st.kno<65||r()>.2+l.st.kno/150)){log('Trường tư chưa nhận hồ sơ. Bạn vẫn có thể chọn trường công, cao đẳng hoặc đi làm.','neutral');l.pending.unshift(make(l,r));return;}
+      state(l).institution=k==='private839'?'private':k==='community839'?'community':k==='voc'?'voc':'public';
+      if(k==='community839'){l.school='voc';l.schoolEnd=l.age+2;log('Bạn bắt đầu chương trình cao đẳng cộng đồng hai năm.','good');return;}
+      if(k==='private839'){l.pending.unshift(E.DEC.major.make(l,r));log('Được trường tư nhận, bạn chọn ngành học.','good');return;}
+      return apply.apply(this,arguments);
+    }
+    if(k!=='degree829')return apply.apply(this,arguments);
     if(!england(l)||l.age<18)return;
     if(r()>0.35+(l.st.kno||0)/200){log('Doanh nghiệp chưa nhận hồ sơ. Bạn có thể chọn hướng học khác.','neutral');var next=make(l,r);l.pending.unshift(next);return;}
     l.school='uni';l.major='it';l.schoolEnd=l.age+4;state(l).apprentice={end:l.schoolEnd};log('Trúng tuyển học nghề bậc đại học. Bạn làm việc có lương và dành thời gian mỗi tuần học tại trường.','good');
@@ -61,20 +72,71 @@
     return ['Gia đình bản xứ','Ký túc xá'].map(function(home,i){var ratio=(G.W.BY[arg.to].gdp||1)/(G.W.BY[country(l)]?.gdp||1);var fee=l.base*[.025,.16,.3][arg.index]*(1+i*.15)*Math.min(2,Math.max(.5,Math.sqrt(ratio)));
       return {k:String(i),l:home+' · '+H.money(l,fee),why:l.money>=fee?true:'Chưa đủ ngân sách',run:function(l,r,log){if(l.money<fee||s.exchange?.at===l.age)return;H.cash(l,-fee,'Chi phí trao đổi sinh viên');s.exchange={at:l.age,to:arg.to,term:arg.term,home:home,status:'đang trao đổi',credit:[1,15,30][arg.index]};log('Bạn tham gia trao đổi tại '+arg.to+', ở '+home.toLowerCase()+'.','good');}};});
   },16,'Học tập');
+  function educationBudget(l){
+    var s=state(l),type=s.institution||(l.school==='voc'?'voc':'public');
+    var tuition=l.base*({private:.95,public:.48,community:.22,voc:.15}[type]||.48);
+    var living=l.base*(E.atFamilyHome121(l)?.07:.25);
+    var scholarship=Math.min(1,Math.max(0,Math.floor((l.st.kno-55)/10)/4));
+    var fee=tuition*(1-scholarship),total=fee+living;
+    var income=(l.fam.fAlive&&!l.fam.noDad?l.fam.fInc||0:0)+(l.fam.mAlive&&!l.fam.noMom?l.fam.mInc||0:0);
+    var spent=(l.yr?.familyExpenses||[]).reduce((sum,x)=>sum+x.amount,0);
+    var share=Math.min(1,Math.max(0,Math.floor((income*1.2-spent)/total*4)/4));
+    if(l.flags.eliteCut)share=0;
+    var support=share*total,personal=Math.min(Math.max(0,l.money),total-support);
+    return {type,tuition,living,scholarship,share,support,personal,fee,gap:Math.max(0,total-support-personal)};
+  }
+  function budgetText(l){
+    var b=educationBudget(l);return 'Học phí '+H.money(l,b.tuition)+' · học bổng '+Math.round(b.scholarship*100)+'% học phí · sinh hoạt '+H.money(l,b.living)+'. Gia đình có thể góp '+Math.round(b.share*100)+'% số còn lại. Tiền riêng '+H.money(l,b.personal)+', còn thiếu '+H.money(l,b.gap)+'. Lãi suất là tham số mô phỏng, cố định cho khoản vay đã ký.';
+  }
+  function usBudget(l){return country(l)==='US'&&!l.abroad&&(degree(l)||l.school==='voc');}
+  function settle(l,a,log){
+    var s=state(l);if(s.budget839?.at===l.age)return;
+    var b=educationBudget(l);if(!a&&b.gap>.000001||a&&b.gap<=.000001)return;
+    if(b.support){var paid=E.childExpense(l,b.support,'Hỗ trợ học tập và sinh hoạt',false,true);if(!paid.ok)return;}
+    if(a){s.debts=s.debts||[];s.debts.push({name:a[0],bal:b.gap,rate:a[2],plan:a[1]});}
+    // Tuition goes to the school. The living allowance stays available for ordinary expenses.
+    H.cash(l,b.living-b.personal,'Học phí sau hỗ trợ và ngân sách sinh hoạt');
+    s.budget839=Object.assign({at:l.age,loan:a?b.gap:0},b);
+    log('Đã thanh toán học phí và dành '+H.money(l,b.living)+' cho sinh hoạt.'+(a?' Khoản vay chỉ bù phần thiếu '+H.money(l,b.gap)+'.':''),'good');
+  }
   function aidOptions(l){var c=country(l),cit=E.isCitizenOf(l,c),resident=l.abroad?.perm && l.abroad.code===c;
     if(c==='VN')return [];
     if(c==='US')return (cit||resident?[['Federal Student Aid — vay liên bang','fixed',.045]]:[]).concat([['Khoản vay tư nhân','private',.075]]);
     if(c==='GB'&&!state(l).apprentice&&region(l)==='England'&&(cit||resident))return [['Tuition Fee Loan','income',0],['Maintenance Loan theo hoàn cảnh gia đình','income',0]];
     if(c==='AU'&&cit){var a=l.school==='voc'?[['VET Student Loans','income',0]]:[['HECS-HELP','income',0]];if(state(l).exchange?.at===l.age)a.push(['OS-HELP cho kỳ trao đổi','income',0]);if(l.fam.q<=2)a.push([l.age<25?'Youth Allowance':'Austudy','grant',0]);return a;}return [];
   }
-  X.menu('aid829','Tài trợ và vay học tập',function(l){return eligible(l)&&(degree(l)||l.school==='voc')&&aidOptions(l).length?true:'Chưa đủ điều kiện trong mô phỏng';},function(l){return 'Khoản vay phải hoàn trả. Trợ cấp sinh hoạt xét hoàn cảnh gia đình. Số tiền, lãi và ngưỡng thu nhập là tham số trong game.';},function(l){var s=state(l);return aidOptions(l).map(function(a){var amount=l.base*(a[0].startsWith('Maintenance')?(l.fam.q<=2?.38:.18):.3);return {k:a[0],l:a[0]+' · '+H.money(l,amount),why:s.funding?.[a[0]]===l.age?'Đã nhận năm nay':true,run:function(l,r,log){s.funding=s.funding||{};if(s.funding[a[0]]===l.age)return;s.funding[a[0]]=l.age;if(['Tuition Fee Loan','HECS-HELP','VET Student Loans'].includes(a[0])){s.feesPaid=(s.feesPaid||0)+amount;log('Khoản học phí được chuyển thẳng cho trường.','neutral');}else H.cash(l,amount,a[0]);if(a[1]!=='grant'){s.debts=s.debts||[];s.debts.push({name:a[0],bal:amount,rate:a[2],plan:a[1]});}log('Nhận '+H.money(l,amount)+' từ '+a[0]+'.','good');}};});},16,'Tài chính');
-  E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;var s=l.flags.study829;
+  X.menu('aid829','Tài trợ và vay học tập',function(l){return eligible(l)&&(degree(l)||l.school==='voc')&&aidOptions(l).length?true:'Chưa đủ điều kiện trong mô phỏng';},function(l){if(usBudget(l))return budgetText(l);return 'Khoản vay phải hoàn trả. Trợ cấp sinh hoạt xét hoàn cảnh gia đình. Số tiền, lãi và ngưỡng thu nhập là tham số trong game.';},function(l){var s=state(l);
+    if(usBudget(l)){
+      var b=educationBudget(l),closed=s.budget839?.at===l.age;
+      var rows=aidOptions(l).map(a=>({k:a[0],l:a[0]+' · '+H.money(l,b.gap),why:closed?'Đã quyết toán năm nay':b.gap<=.000001?'Đã đủ ngân sách':true,run:(l,r,log)=>settle(l,a,log)}));
+      rows.unshift({k:'self',l:'Dùng hỗ trợ và tiền riêng',why:closed?'Đã quyết toán năm nay':b.gap>.000001?'Chưa đủ ngân sách':true,run:(l,r,log)=>settle(l,null,log)});
+      rows.push({k:'defer',l:'Tạm dừng học, giữ hồ sơ để chọn lại sau',why:closed?'Đã quyết toán năm nay':true,run:function(l,r,log){s.deferred={age:l.age,school:l.school};l.school=null;l.schoolEnd=null;l.cityStudent=null;l.flags.needJob=true;l.flags.uniNext=l.age+1;log('Bạn hoãn chương trình để thu xếp chi phí.','neutral');}});
+      return rows;
+    }
+    return aidOptions(l).map(function(a){var amount=l.base*(a[0].startsWith('Maintenance')?(l.fam.q<=2?.38:.18):.3);return {k:a[0],l:a[0]+' · '+H.money(l,amount),why:s.funding?.[a[0]]===l.age?'Đã nhận năm nay':true,run:function(l,r,log){s.funding=s.funding||{};if(s.funding[a[0]]===l.age)return;s.funding[a[0]]=l.age;if(['Tuition Fee Loan','HECS-HELP','VET Student Loans'].includes(a[0])){s.feesPaid=(s.feesPaid||0)+amount;log('Khoản học phí được chuyển thẳng cho trường.','neutral');}else H.cash(l,amount,a[0]);if(a[1]!=='grant'){s.debts=s.debts||[];s.debts.push({name:a[0],bal:amount,rate:a[2],plan:a[1]});}log('Nhận '+H.money(l,amount)+' từ '+a[0]+'.','good');}};});},16,'Tài chính');
+  E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;
+    var s=l.flags.study829;
     if(england(l)&&l.age>=5&&l.age<=17&&l.school){log(stage(l),'neutral');if(l.age===10 && !state(l).sats){state(l).sats=l.st.kno>=60?'đạt chuẩn mô phỏng':'cần hỗ trợ thêm';log('Đánh giá SATs cuối Year 6: '+state(l).sats+'. Bạn tiếp tục lên Year 7.','neutral');}}
     if(!s||s.at===l.age)return;s.at=l.age;
     if(s.exchange && s.exchange.at<l.age && s.exchange.status==='đang trao đổi'){var x=s.exchange;finishExchange(l,s,x,log);}
     if(s.apprentice){if((l.school==='uni'||l.edu>=5&&l.age===s.apprentice.end-1)&&l.age<s.apprentice.end){H.cash(l,l.base*.65,'Lương học nghề bậc đại học');l.workYrs=(l.workYrs||0)+1;}else delete s.apprentice;}
     (s.debts||[]).forEach(function(d){if(d.bal<=0)return;d.bal*=1+d.rate;if(degree(l)||l.school==='voc')return;var income=l.income||0;if(d.plan==='fixed' && income<=0)return;var due=d.plan==='income'?Math.max(0,income-l.base)*.09:d.bal*.15;var pay=Math.min(d.bal,Math.max(0,l.money),due);if(pay){H.cash(l,-pay,'Trả '+d.name);d.bal-=pay;if(d.plan==='fixed' && ['cong_chuc','giao_vien'].includes(l.job?.id)){d.service=(d.service||0)+1;if(d.service>=10){d.bal=0;log('Hồ sơ phục vụ công đủ thời gian trong mô phỏng, phần dư khoản vay liên bang được miễn.','good');}}}});
   });
+  E.finishStudyBudget839=function(l,log){
+    if(!usBudget(l)||state(l).budget839?.at===l.age)return;
+    if(educationBudget(l).gap<=.000001){settle(l,null,log);return;}
+    if(state(l).unpaidAt===l.age)return;
+    state(l).unpaidAt=l.age;if(l.schoolEnd!=null)l.schoolEnd++;
+    log('Chưa đủ kinh phí và chưa chọn vay. Năm học được bảo lưu, thời điểm tốt nghiệp lùi một năm.','neutral');
+  };
+  var begin=E.beginYear;
+  E.beginYear=function(l){
+    begin.apply(this,arguments);
+    if(l.alive&&usBudget(l)&&state(l).budget839?.at!==l.age&&state(l).budgetAsked!==l.age){
+      state(l).budgetAsked=l.age;E.WORLD120.queue(l,'aid829',H.rf(l));
+    }
+    return l.pending;
+  };
   var profile=E.profile;
   E.profile=function(l){var p=profile.apply(this,arguments),s=l.flags.study829;if(!s)return p;
     if(p.assets)(s.debts||[]).filter(d=>d.bal>0).forEach(d=>p.assets.push([d.name,-d.bal]));

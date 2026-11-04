@@ -246,26 +246,33 @@
   var ROUTINE = { none: { n: 'Không theo chế độ riêng', c: 0 }, basic: { n: 'Cơ bản: rửa mặt, dưỡng ẩm, chống nắng', c: 0.006 }, thorough: { n: 'Chuyên sâu: thêm serum/đặc trị', c: 0.03 } };
   var MAKEUP = { none: 'Không trang điểm', natural: 'Tự nhiên (no-makeup makeup)', clean: 'Clean girl', igari: 'Igari', douyin: 'Douyin', latina: 'Latina', strawberry: 'Strawberry', wasian: 'Wasian (theo cách người chơi gọi)' };
   function care(l) { var s = l.flags.care917; if (!s || typeof s !== 'object') { s = l.flags.care917 = { routine: 'none', makeup: 'none', acne: null }; } if (!ROUTINE[s.routine]) s.routine = 'none'; if (!MAKEUP[s.makeup]) s.makeup = 'none'; return s; }
+  function carePayment(l,cost,label){
+    if(l.age<16 && (l.fam.mAlive||l.fam.fAlive&&!l.fam.noDad)){
+      var family=E.childExpense(l,cost,label,false,true);if(family.ok)return true;
+    }
+    if(l.money>=cost){H.cash(l,-cost,label);return true;}
+    return l.age<18 && !!(l.fam.mAlive||l.fam.fAlive&&!l.fam.noDad) && E.childExpense(l,cost,label,false,true).ok;
+  }
   function careYear(l, log) {
     var s = care(l); if (s.at === l.age) return; s.at = l.age;
     if (l.age === 12 && s.acne == null) s.acne = u(l, 'acne') < 0.55 ? { sev: u(l, 'acneSev') < 0.75 ? 'nhẹ' : 'vừa', until: 15 + Math.floor(u(l, 'acneEnd') * 5), seen: false } : false;
     if (s.acne && l.age > s.acne.until) { s.acne = false; log('Mụn tuổi dậy thì của bạn đã dịu hẳn.', 'good'); }
     if (s.acne && s.acne.sev === 'vừa' && !s.acne.seen && l.mind) l.mind.stress = U.clamp(l.mind.stress + 1, 0, 100);
-    var R = ROUTINE[s.routine]; if (R.c && l.age >= 12) {
-      var cost = l.base * R.c; if (l.money >= cost || !l.indep) { if (l.indep) H.cash(l, -cost, 'Chăm sóc da'); if (E.LOOKS134 && E.LOOKS134.improve && u(l, 'care' + l.age) < (s.routine === 'thorough' ? 0.45 : 0.4)) E.LOOKS134.improve(l, l, 1, 6); if (s.routine === 'thorough' && u(l, 'irr' + l.age) < 0.08) log('Da bị kích ứng với sản phẩm đặc trị; bạn tạm ngưng vài tuần. Đắt hơn không có nghĩa là hợp da hơn.', 'neutral'); }
+    var R = ROUTINE[s.routine]; if (R.c && l.age >= 13) {
+      var cost = l.base * R.c; if (carePayment(l,cost,'Chăm sóc da')) { if (E.LOOKS134 && E.LOOKS134.improve && u(l, 'care' + l.age) < (s.routine === 'thorough' ? 0.45 : 0.4)) E.LOOKS134.improve(l, l, 1, 6); if (s.routine === 'thorough' && u(l, 'irr' + l.age) < 0.08) log('Da bị kích ứng với sản phẩm đặc trị; bạn tạm ngưng vài tuần. Đắt hơn không có nghĩa là hợp da hơn.', 'neutral'); }
       else { s.routine = 'none'; log('Không đủ tiền duy trì chế độ chăm sóc da; bạn tạm ngưng.', 'neutral'); }
     }
   }
-  X.menu('care917', 'Chăm sóc da và phong cách', function (l) { return X.reason(l, 12); }, function (l) {
+  X.menu('care917', 'Chăm sóc da và phong cách', function (l) { return X.reason(l, 13); }, function (l) {
     var s = care(l); return 'Chế độ chăm sóc: ' + ROUTINE[s.routine].n + '. Phong cách trang điểm: ' + MAKEUP[s.makeup] + '.' + (s.acne ? ' Đang có mụn tuổi dậy thì mức ' + s.acne.sev + (s.acne.seen ? ' (đã được bác sĩ da liễu tư vấn).' : '.') : '') +
       ' Chăm sóc giúp da ổn định hơn theo thời gian nhưng không ngăn lão hóa và không thay đổi ngoại hình nền; mức cộng ngoại hình có trần chung với các cách chăm sóc khác. Trang điểm là lựa chọn thẩm mỹ, không khóa theo giới tính hay sắc tộc, và không bắt buộc. Tóc và hiến tóc ở mục Tóc.';
   }, function (l) {
     var s = care(l), out = [];
     Object.keys(ROUTINE).forEach(function (k) { out.push({ k: 'r:' + k, l: (s.routine === k ? '✓ ' : '') + ROUTINE[k].n, h: ROUTINE[k].c ? '~' + H.money(l, l.base * ROUTINE[k].c) + '/năm, tự động mỗi năm đến khi đổi' : 'Không tốn tiền', why: s.routine === k ? 'Đang dùng' : true, run: function (l, r, log) { care(l).routine = k; log('Bạn chuyển sang chế độ chăm sóc: ' + ROUTINE[k].n + '.', 'neutral'); } }); });
     if (l.age >= 13) Object.keys(MAKEUP).forEach(function (k) { out.push({ k: 'm:' + k, l: (s.makeup === k ? '✓ ' : '') + 'Trang điểm: ' + MAKEUP[k], h: 'Chỉ đổi phong cách, không đổi chỉ số', why: s.makeup === k ? 'Đang dùng' : true, run: function (l, r, log) { care(l).makeup = k; log('Phong cách mới: ' + MAKEUP[k] + '.', 'neutral'); } }); });
-    if (s.acne && !s.acne.seen) out.push({ k: 'derm', l: 'Đi khám da liễu về mụn', h: '~' + H.money(l, l.base * 0.01) + ' · mụn thường dịu sớm hơn', why: l.money >= l.base * 0.01 || !l.indep ? true : 'Chưa đủ tiền', run: function (l, r, log) { var q = care(l); if (!q.acne || q.acne.seen) return; if (l.indep) H.cash(l, -l.base * 0.01, 'Khám da liễu'); q.acne.seen = true; q.acne.until = Math.max(l.age, q.acne.until - 2); log('Bác sĩ da liễu tư vấn cách chăm sóc phù hợp lứa tuổi; mụn sẽ dịu sớm hơn.', 'good'); } });
+    if (s.acne && !s.acne.seen) out.push({ k: 'derm', l: 'Đi khám da liễu về mụn', h: '~' + H.money(l, l.base * 0.01) + ' · mụn thường dịu sớm hơn', why: l.money >= l.base * 0.01 || !l.indep ? true : 'Chưa đủ tiền', run: function (l, r, log) { var q = care(l); if (!q.acne || q.acne.seen) return; if (!carePayment(l,l.base*.01,'Khám da liễu')) {log('Chưa đủ ngân sách khám da liễu.','neutral');return;} q.acne.seen = true; q.acne.until = Math.max(l.age, q.acne.until - 2); log('Bác sĩ da liễu tư vấn cách chăm sóc phù hợp lứa tuổi; mụn sẽ dịu sớm hơn.', 'good'); } });
     return out;
-  }, 12, 'Đời sống');
+  }, 13, 'Đời sống');
 
   // ---------- C2: màn hình chính sách theo thời đại, chọn kịch bản một lần ----------
   X.menu('era917', 'Chính sách theo thời đại', function (l) { return X.reason(l, 16); }, function (l) {

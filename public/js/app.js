@@ -1391,6 +1391,7 @@
     var capped894 = E.ACTIONS894 ? E.ACTIONS894.dropBlocked(l) : [];
     if (capped894.length) { toast('Đã hết lượt năm nay — “' + capped894[0].title + '” chưa được thực hiện.'); persist(); renderAll(); d = l.pending[0]; }
     if (!d) { afterDecisions(); return; }
+    if (E.infantAuto(l)) { choose(E.autoKey(l),false); return; }
     if(/^office(171|Delegation171|Contract171|Reports171)$/.test(d.id)&&d.manual){l.pending.shift();openOffice896(d.id==='officeDelegation171'?'delegation':d.id==='officeContract171'?'staff':'inbox');return;}
     if(!d.manual&&/^(companyLeadershipCase169|board123|crisis123)$/.test(d.id)&&E.OFFICE171.desk.person(l,'reports')&&E.OFFICE171.state(l).enabled.reports){if(d.officeInbox896){openOffice896('inbox');return;}d.officeInbox896=true;S.phase='decision';minimizeDecision();renderOfficeDesk();toast('Trợ lý có hồ sơ quan trọng cần bạn duyệt tại Văn phòng gia đình.');return;}
     if (E.refreshActingWarning) E.refreshActingWarning(l, d);

@@ -1,5 +1,27 @@
 [
   {
+    "id": "growing-up-839",
+    "version": "8.10.39",
+    "publishedAt": "2026-11-04T12:06:26+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Lớn lên cùng gia đình, học tập và kế hoạch có con",
+    "summary": "Từ tuổi thơ đến khi lập gia đình, bạn có thêm lựa chọn phù hợp với độ tuổi, nơi sống và số tiền thực sự có thể chi.",
+    "tags": [
+      "Tính năng",
+      "Gia đình",
+      "Học tập"
+    ],
+    "details": [
+      "Trước 4 tuổi, các tình huống của bé tự diễn ra theo tính cách và sự chăm sóc của người lớn. Từ 4 tuổi, bạn bắt đầu chọn các hoạt động phù hợp.",
+      "Từ 13 tuổi, bạn có thể nhận vẽ tranh, thử sáng tác, biểu diễn nhạc cụ đã học, bán đồ tự làm hoặc nhận việc nhẹ sau giờ học. Ca làm phụ thuộc nơi cư trú; cơ sở thuê không khai báo có thể bị phát hiện.",
+      "Chăm sóc da từ 13 tuổi dùng ngân sách gia đình hoặc tiền riêng. Trẻ có người lớn đi cùng có thể xin hộ chiếu, đi nghỉ ở nước ngoài khi đủ giấy tờ và đủ kinh phí.",
+      "Khi trưởng thành và ở cùng thành phố, bạn có thể ở với bố mẹ, góp hóa đơn theo thu nhập hoặc ra riêng. Gia đình có điều kiện có thể giúp một phần chi phí dọn nhà.",
+      "Ở Mỹ, trường tư, trường công, cao đẳng cộng đồng và học nghề có ngân sách khác nhau. Học bổng, tiền gia đình góp và tiền riêng được tính trước khi vay phần còn thiếu.",
+      "Kế hoạch có con xét tuổi của người mang thai. Hai người có thể điều trị hiếm muộn, thử IVF hoặc tìm hiểu mang thai hộ khi đủ điều kiện trong các tuyến Việt Nam và Anh."
+    ]
+  },
+  {
     "id": "school-home-police-838",
     "version": "8.10.38",
     "publishedAt": "2026-11-04T11:46:42+07:00",

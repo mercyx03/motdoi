@@ -40,7 +40,7 @@ for(const [key,type,min,max] of [['0','chuyên',82,97],['2','công lập',35,50]
 {
   const l=pupil();Object.assign(l,{age:19,school:'uni',uniCity:l.prov.old});
   E.familyHousing121(l,win);choose(l,'localHousing121','family');assert(E.livesWithParents(l));assert(!l.indep);
-  E.startJob(l,'cong_nhan',win,log);choose(l,'localHousing121','own');assert(l.indep&&!E.livesWithParents(l));
+  l.money=l.base;E.startJob(l,'cong_nhan',win,log);choose(l,'localHousing121','own');assert(l.indep&&!E.livesWithParents(l));
   E.familyHousing121(l,win);assert(!l.pending.some(x=>x.id==='localHousing121'));
   l.movedTo='Xa nhà';assert(!E.DEC.localHousing121.valid(l));
 }

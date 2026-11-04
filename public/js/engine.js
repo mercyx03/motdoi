@@ -1563,6 +1563,7 @@
   function actsLimit(l) { return l.age < 10 ? 3 : l.age < 18 ? 7 : Infinity; }
   function actAvail(l, a) {
     if (!l.alive) return 'Đã qua đời';
+    if (l.age < 4) return 'Dưới 4 tuổi, bé phản ứng tự nhiên với sự chăm sóc của người lớn';
     if (l.jailUntil != null && l.age < l.jailUntil && !a.jail) return 'Đang ở trong trại giam';
     if (l.abroad && l.abroad.trapped && !a.trap) return 'Không áp dụng — đang bị giam giữ trong trại lừa đảo'; // v3.8
     if (l.flags && l.flags.military && l.age < l.flags.military && !a.mil) return 'Đang đi nghĩa vụ quân sự, sống trong doanh trại';
@@ -1650,6 +1651,7 @@
     var F = { inc: income, partner: 0, other: 0, food: 0, rent: 0, travel: 0, kids: 0, parents: 0, health: 0, debt: 0, life: 0, interest: 0, items: (life.yr && life.yr.items) || [] };
     F.other = F.items.reduce(function (s, x) { return s + x.v; }, 0);
     if (!life.indep) {
+      if(E.atFamilyHome121&&E.atFamilyHome121(life)&&income>0){life.money+=income;F.save=income;}
       // Adult students also use the existing family debt-relief limit.
       // Otherwise a delayed graduation skips the cap for decades.
       if (life.age >= 18 && life.money < -life.base * 3) { var help = -life.base * 3 - life.money; life.money += help; F.other += help; F.items.push({v:help,t:'Hỗ trợ xử lý nợ sinh hoạt khi còn đi học'}); if(!life.flags.debtHelp){life.flags.debtHelp=true;log('Gia đình cùng bạn thu xếp trả bớt nợ sinh hoạt trong thời gian đi học.','neutral');} }
@@ -1819,6 +1821,7 @@
       if (E.england829 && E.england829(life) || life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : 'Bắt đầu đi học tiểu học.', 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
       else { life.school = null; log('Không được đến trường — nhà quá nghèo, trường lại xa.', 'bad'); st.hap -= 4; }
     }
+    if (life.school && E.finishStudyBudget839) E.finishStudyBudget839(life,log);
     if (life.school) life.yearsInSchool++;
     if (a === 11 && life.school === 'primary') {
       life.edu = 1;
@@ -2234,7 +2237,7 @@
   var E = G.E = {
     DIFFICULTIES: DIFFICULTIES, difficulty: difficulty,
     isStableService: stableService, isStableParent: stableParent, HOOKS: HOOKS, assetTotal: assetTotal, KHOI: KHOI,
-    createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
+    infantAuto: function(l){return l.age<4 && (l.mode==='vn'||l.mode==='world');}, createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
     runHeadless: runHeadless, makeCohort: makeCohort, netWorth: netWorth, obituary: obituary, statusLine: statusLine, fmtMoney: fmtMoney,
     jobTitle: jobTitle, orientLabel: orientLabel, placeText: placeText, buildMort: buildMort, qBase: qBase, migrate: migrate,
     SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave, registerSchemaStep: registerSchemaStep,

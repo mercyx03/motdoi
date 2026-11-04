@@ -1,3 +1,7 @@
+## 8.10.39 — Tuổi thơ, tự lập và hỗ trợ gia đình
+
+Điều chỉnh quyền chọn theo tuổi, việc làm nhẹ, chăm sóc ngoại hình, đi lại cùng người lớn, ở chung và hỗ trợ học phí. Cập nhật xác suất có con và hồ sơ hỗ trợ sinh sản theo nơi cư trú.
+
 ## 8.10.38 — Trường THPT, nơi ở và công an
 
 Thêm lựa chọn trường và môn chuyên, sửa nguồn lực trường, nội trú và lựa chọn ở cùng gia đình. Điều chỉnh tuổi nhận xe đạp và kiểm tra thâm niên, chức vụ công an.

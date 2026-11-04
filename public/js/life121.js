@@ -8,13 +8,40 @@ C.wrap('bo_tuc',function(old,l,d,k,r,log){if(l.edu>=3||l.school||l.flags.gdtx)re
 function repair(l){var degree=l.edu||0;(l.flags.postgradDegrees||[]).forEach(function(d){degree=Math.max(degree,d.level||0);});if(l.flags.pg106&&l.flags.pg106.done&&!l.flags.pg106.aborted)degree=Math.max(degree,l.flags.pg106.lv);if(degree>l.edu){l.edu=degree;if(l.flags.gdtx&&l.flags.gdtx.lvl<=degree)delete l.flags.gdtx;}if(l.age>=20)l.pending=(l.pending||[]).filter(function(d){return !['hs','school','primary'].includes(d.id)&&!(d.id==='bo_tuc'&&(l.edu>=3||!d.manual));});}
 var migrate=E.migrate;if(migrate)E.migrate=function(l){var x=migrate.apply(this,arguments);repair(x);return x;};
 function student(l){return ['uni','abroad','post','phd'].includes(l.school);}
+  function teenReady(l){return E.FAMILY53.free(l)&&l.alive&&l.age>=13&&l.age<18&&!l.job&&!l.flags.ptJob&&l.flags.teenWorkAt!==l.age;}
+
+    E.UPDATE110.menu('teenWork839','Việc nhẹ và sáng tạo sau giờ học',teenReady,
+      'Chọn một đợt ngắn ngoài giờ học. Người lớn hỗ trợ liên hệ khách quen; thù lao và tiền tip tùy kết quả.',
+      function(l){
+        var c=H.resCode(l),min=c==='US'||c==='GB'?14:c==='VN'?15:16,guardian=!!(l.fam.mAlive&&!l.fam.noMom||l.fam.fAlive&&!l.fam.noDad);
+        var arts=l.flags.arts919?.arts||{},musicSkill=Object.keys(arts).reduce(function(best,k){return E.ARTS919?.ART[k]?.cat==='music'?Math.max(best,arts[k].sk||0):best;},0);
+        var permit=c==='GB'&&l.age===13&&guardian&&l.flags.lightPermit839===l.city;
+        var options=[['art','Nhận vẽ tranh theo yêu cầu',.045],['music','Sáng tác nhạc cho người quen',.05],['street','Biểu diễn nhạc cụ ở địa điểm được phép',.03],
+          ['sale','Bán đồ tự làm cho hàng xóm quen',.025],['shift','Ca làm nhẹ có thỏa thuận ngoài giờ học',.07],['hidden','Nhận ca không khai báo tại cơ sở kinh doanh',.065]];
+        var rows=options.map(function(v){return {k:v[0],l:v[1],why:l.age<16&&!guardian?'Cần người lớn hỗ trợ':v[0]==='street'&&!musicSkill?'Cần biết chơi một nhạc cụ':v[0]==='shift'&&l.age<min&&!permit?'Chưa đủ tuổi nhận ca ở nơi cư trú trong mô phỏng':true,run:function(l,r,log){
+          l.flags.teenWorkAt=l.age;
+          var caught=v[0]==='hidden'&&r()<.42,paid=!caught&&(v[0]!=='music'||r()<Math.min(.48,.12+musicSkill/250));
+          var income=paid?l.base*v[2]*(.35+r()):0;
+          if(income)H.cash(l,income,v[1]);if(l.mind)l.mind.stress=U.clamp(l.mind.stress+(v[0]==='hidden'?5:1),0,100);
+          l.flags.teenWorkLast={age:l.age,kind:v[0],income:income,detected:caught};
+          log(caught?'Kiểm tra phát hiện ca làm không khai báo. Cơ sở bị xử phạt và dừng ca; bạn không phải trả tiền phạt.':income?'Bạn hoàn thành '+v[1].toLowerCase()+', nhận '+H.money(l,income)+' và tiếp tục đi học.':'Đợt này chưa có khách mua tác phẩm. Bạn giữ bản nhạc để thử lại.',income?'good':'neutral');
+        }};});
+        if(c==='GB'&&l.age===13&&guardian&&!permit)rows.push({k:'permit',l:'Cùng gia đình xin phép làm việc nhẹ tại địa phương',why:l.flags.permitAt839===l.age?'Đã xét hồ sơ':true,run:function(l,r,log){
+          l.flags.permitAt839=l.age;if(r()<.5){l.flags.lightPermit839=l.city;log('Địa phương trong mô phỏng chấp thuận một ca nhẹ ngoài giờ học.','good');}else log('Địa phương chưa cấp phép. Bạn có thể thử hoạt động sáng tạo cùng gia đình.','neutral');
+        }});
+        return rows;
+      },13,'Công việc');
 function localHousing(l){
  var q=P(l),home=l.flags.familyProvince121||q.studentHome&&q.studentHome.place||C.province(l);
- if(C.adult(l)!==true||!H.inVN(l)||l.abroad||l.married||l.flags.caring||!(l.fam.mAlive||l.fam.fAlive&&!l.fam.noDad)||(!student(l)&&!l.job))return false;
+ if(C.adult(l)!==true||l.abroad||l.flags.caring||l.partner&&l.partner.status==='married'||!(l.fam.mAlive&&!l.fam.noMom||l.fam.fAlive&&!l.fam.noDad))return false;
+ if(!H.inVN(l)){
+   var city=l.birthCity||l.city;
+   return !!city && city===(l.movedTo||l.city) && (!student(l)||!l.uniCity||l.uniCity===city);
+ }
  var place=l.movedTo||C.province(l);
  return !!home && home===place && (!student(l)||!l.uniCity||(/Hồ Chí Minh|Sài Gòn/.test(l.uniCity)?'TP. Hồ Chí Minh':l.uniCity)===home);
 }
-function housingStage(l){return student(l)?'study':'work';}
+function housingStage(l){return student(l)?'study':l.job?'work':'adult';}
 E.familyHousing121=function(l,r){
  if(!localHousing(l))return;
  var q=S(l),stage=housingStage(l);
@@ -22,10 +49,12 @@ E.familyHousing121=function(l,r){
    C.queue(l,'localHousing121',r);q.housingStage=stage;
  }
 };
-E.atFamilyHome121=function(l){return P(l).localHome==='family'&&localHousing(l);};
-M('localHousing121','Chọn nơi ở khi học hoặc làm cùng thành phố',localHousing,
+E.atFamilyHome121=function(l){var home=P(l).localHome;return (home==='family'||home==='share'||!home&&!l.indep)&&localHousing(l);};
+M('localHousing121','Bàn chuyện ở cùng gia đình hay ra riêng',localHousing,
  'Bạn có thể sống cùng gia đình hoặc ra riêng và tự lo sinh hoạt phí.',function(l){
- return [['family','Ở cùng bố mẹ'],['own','Ra riêng tự lập']].map(function(a){return {k:a[0],l:a[1],run:function(l,r,log){
+ var deposit=l.ownHouse?0:l.base*.12,hasHelp=l.fam.q>=4&&!l.flags.eliteCut,grant=hasHelp&&!P(l).moveHelpUsed?deposit*.5:0;
+ return [['family','Ở cùng bố mẹ'],['share','Ở cùng bố mẹ, góp tiền sinh hoạt'],['own','Ra riêng tự lập']].map(function(a){return {k:a[0],l:a[1],h:a[0]==='own'?'Chi phí dọn nhà '+H.money(l,deposit)+' · gia đình có thể hỗ trợ '+H.money(l,grant):a[0]==='share'?'Góp theo thu nhập và số dư mỗi năm':'Cùng gia đình lo việc nhà',why:a[0]==='own'&&P(l).localHome!=='own'&&l.money<deposit-grant?'Chưa đủ tiền dọn nhà':true,run:function(l,r,log){
+   if(a[0]==='own'&&P(l).localHome!=='own'&&deposit>0){H.cash(l,-(deposit-grant),'Chi phí dọn nhà sau hỗ trợ');if(grant)S(l).moveHelpUsed=true;}
    S(l).localHome=a[0];S(l).housingStage=housingStage(l);l.indep=a[0]==='own';l.cityStudent=null;l.fin=null;
    log(l.indep?'Bạn ra riêng và tự lo chi phí sinh hoạt.':'Bạn chọn ở cùng bố mẹ trong thời gian học hoặc đi làm.','good');
  }};});
@@ -44,6 +73,6 @@ M('returnStudy121','Chọn nơi ở sau khi học xong',function(l){return C.adu
 C.event('courseFail121',student,.12);C.incident('courseFail121','Kết quả học phần chưa đạt',student,'Một môn chưa đạt yêu cầu; kiến thức tổng quát không thay thế điểm chuyên cần và bài kiểm tra của học phần.',function(l){return[{k:'review',l:'Xin xem bài và chuẩn bị học lại',run:function(l,r,log){S(l).debtCredits=(P(l).debtCredits||0)+3;log('Cố vấn xác nhận còn 3 tín chỉ chưa đạt. Bạn có thể đăng ký học lại ở mục Tín chỉ.','bad');}}];});
 var infant=E.DEC.thoi_noi;if(infant){[['sach','Sách tranh','giáo dục',{kno:3}],['kinh','Kính lúp đồ chơi','nghiên cứu',{kno:3}],['nhac','Nhạc cụ đồ chơi','âm nhạc',{hap:2,soc:1}],['gach','Bộ xếp hình','kỹ thuật',{kno:2}],['cay','Chậu cây nhỏ','sinh học',{hap:2,kno:1}]].forEach(function(a){infant.def.opts.push({k:a[0],l:a[1],run:function(l,r,log){S(l).interest=a[2];S(l).childSupport=1;H.fx(l,a[3]);log('Bạn chọn '+a[1].toLowerCase()+'. Gia đình ghi nhận sự tò mò, dành thêm thời gian cùng con tìm hiểu '+a[2]+'. Đây là sở thích ban đầu, không định sẵn nghề nghiệp.','good');}});});C.wrap('thoi_noi',function(old,l,d,k,r,log){if(P(l).infantDone)return;S(l).infantDone=true;var out=old(l,d,k,r,log);if(k==='ong'){S(l).interest='y học';S(l).childSupport=1;}if(k==='but'){S(l).interest='giáo dục';S(l).childSupport=1;}return out;});}
 M('autoStyle121','Tự động sinh hoạt theo phong cách',function(l){return X.reason(l,8);},'Chọn thói quen tự làm mỗi năm. Tối đa ba hoạt động an toàn, không tự chi tiền, đổi nghề, kết hôn, bỏ phiếu hay quyết định điều trị; vẫn giới hạn lượt hành động năm.',function(l){return[['off','Tự chọn mọi việc'],['study','Ưu tiên học tập'],['balanced','Cân bằng'],['health','Ưu tiên sức khỏe']].map(function(a){return{k:a[0],l:a[1],run:function(l,r,log){S(l).autoStyle=a[0];log('Phong cách sinh hoạt: '+a[1]+'.','neutral');}};});},8,'Đời sống');
-E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;repair(l);relocate(l,log);E.familyHousing121(l,r);var q=S(l);if(l.age>=5&&l.age<=15&&q.childSupport&&r()<.45){H.fx(l,{kno:1});log('Người thân cùng bạn đọc, thực hành và tìm hiểu sở thích '+q.interest+'.','good');}if(q.autoStyle&&q.autoStyle!=='off'&&q.autoAt!==l.age&&X.free(l,8)){q.autoAt=l.age;var effects=q.autoStyle==='study'?[{kno:1},{kno:1},{hap:1}]:q.autoStyle==='health'?[{hea:1},{hea:1},{hap:1}]:U.shuffle?null:[{kno:1},{hea:1},{soc:1}];if(!effects)effects=[{kno:1},{hea:1},{soc:1}];var done=0;effects.forEach(function(f){if((l.acts||0)>=E.actsLimit(l))return;l.acts=(l.acts||0)+1;H.fx(l,f);done++;});if(done)log('Theo nếp sống đã chọn, bạn dành '+done+' lượt cho học tập, vận động hoặc kết nối; không phát sinh khoản chi tự động.','neutral');}});
+E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;repair(l);relocate(l,log);E.familyHousing121(l,r);var q=S(l);if(q.localHome==='share'&&localHousing(l)&&q.billAt!==l.age){q.billAt=l.age;var bill=Math.min(l.base*.08,Math.max(0,l.money)*.1,Math.max(0,l.income||0)*.1);if(bill)H.cash(l,-bill,'Góp hóa đơn sinh hoạt cùng bố mẹ');}if(l.age>=5&&l.age<=15&&q.childSupport&&r()<.45){H.fx(l,{kno:1});log('Người thân cùng bạn đọc, thực hành và tìm hiểu sở thích '+q.interest+'.','good');}if(q.autoStyle&&q.autoStyle!=='off'&&q.autoAt!==l.age&&X.free(l,8)){q.autoAt=l.age;var effects=q.autoStyle==='study'?[{kno:1},{kno:1},{hap:1}]:q.autoStyle==='health'?[{hea:1},{hea:1},{hap:1}]:U.shuffle?null:[{kno:1},{hea:1},{soc:1}];if(!effects)effects=[{kno:1},{hea:1},{soc:1}];var done=0;effects.forEach(function(f){if((l.acts||0)>=E.actsLimit(l))return;l.acts=(l.acts||0)+1;H.fx(l,f);done++;});if(done)log('Theo nếp sống đã chọn, bạn dành '+done+' lượt cho học tập, vận động hoặc kết nối; không phát sinh khoản chi tự động.','neutral');}});
 E.STUDY121={repair:repair,relocate:relocate};
 })(globalThis.G);

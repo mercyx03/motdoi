@@ -3,9 +3,9 @@
   'use strict';
   var E = G.E, H = E.H;
   function payer(l) { var f = l.fam || {}, m = f.mAlive, d = f.fAlive && !f.noDad; if (m || d) return m && d ? 'Bố mẹ' : m ? 'Mẹ' : 'Bố'; var c = E.orphanCarer && E.orphanCarer(l); return c ? c.charAt(0).toUpperCase() + c.slice(1) : null; } // v7.1: trẻ mồ côi — người nuôi dưỡng trả
-  E.childExpense = function (l, amount, reason, forced) {
+  E.childExpense = function (l, amount, reason, forced, familySupport) {
     if (!(amount > 0) || !isFinite(amount)) return { ok: false, note: 'Khoản chi không hợp lệ.' };
-    var who = payer(l), dependent = l.age < 18 && !l.indep;
+    var who = payer(l), dependent = l.age < 18 && !l.indep || familySupport;
     if (dependent && who) {
       var f = l.fam, yr = l.yr || (l.yr = { items: [] }), entries = yr.familyExpenses || (yr.familyExpenses = []);
       var income = (f.mAlive ? f.mInc || 0 : 0) + (f.fAlive && !f.noDad ? f.fInc || 0 : 0);
