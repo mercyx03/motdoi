@@ -251,3 +251,6 @@ GĐ6 — Bản 8.10.34 còn chờ regression toàn bộ, thiết bị thật và
 
 
 GĐ6 — 8.10.36: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật, hiệu chỉnh dữ liệu luật/rủi ro/chi phí và binding REVIEWS_DB thực tế. Phạm vi và giới hạn: docs/WORLD-836.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+
+GĐ6 — 8.10.37: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật, các ngoại lệ hiến định/giáo hội và binding Pages REVIEWS_DB. Chi tiết phạm vi và phần chưa mô phỏng: docs/ROYAL-837.md. Bản Preview, chưa nghiệm thu toàn diện.

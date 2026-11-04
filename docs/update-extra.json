@@ -1,10 +1,36 @@
 [
   {
+    "id": "royal-faith-837",
+    "version": "8.10.37",
+    "publishedAt": "2026-11-04T11:01:16.383+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Hoàng gia, quyền kế vị và lựa chọn đức tin",
+    "summary": "Mỗi vị trí trong hoàng gia có áp lực và trách nhiệm riêng; luật kế vị, hôn nhân và nghi lễ thay đổi theo quốc gia.",
+    "tags": [
+      "Tính năng",
+      "Gia đình",
+      "Thế giới"
+    ],
+    "details": [
+      "Hoàng gia Anh, Thụy Điển, Na Uy và Đan Mạch có điều kiện kế vị, đức tin và chấp thuận hôn nhân riêng. Kết hôn với người Công giáo không tự loại thành viên hoàng gia Anh; đức tin của người kế vị và bạn đời được xét riêng.",
+      "Thứ tự kế vị dùng cây gia đình xuyên nhiều lần chuyển ngôi, có xét các ngoại lệ theo năm sinh. Tây Ban Nha giữ ưu tiên nam và dùng Príncipe/Princesa de Asturias, Infante/Infanta, tách người trị vì khỏi phối ngẫu.",
+      "Người được giới thiệu hôn nhân cần tìm hiểu, không cưới ngay. Bạn có thể chuẩn bị lễ cưới, quy mô, quyền riêng tư và hai gia đình; xin chấp thuận qua thời gian, hoặc chấp nhận hệ quả kế vị khi cưới không có chấp thuận cần thiết.",
+      "Người kế vị và người dự phòng có áp lực, không gian riêng và khả năng hồi phục khác nhau. Có thể xin hỗ trợ, thăm gia đình, giữ sở thích và cùng hỗ trợ người kế vị; không mặc định anh chị em tranh ngôi.",
+      "Có thêm chương trình bổ trợ lễ nghi, lịch sử, hiến pháp và kế hoạch trường học phù hợp tuổi. Học quân sự cần nhiều năm, không tự nhận bằng hoặc coi đây là luật bắt buộc để lên ngôi.",
+      "Lên ngôi và đăng quang là hai việc khác nhau. Nghi thức Anh gồm đăng quang, khai mạc Quốc hội và Trooping the Colour; nước khác giữ truyền thống riêng. Cúi chào/curtsy là lựa chọn truyền thống, không ép công chúng hoặc đo sự tôn trọng bằng độ cúi thấp.",
+      "Rút công vụ không tự làm mất quyền kế vị; việc xin rời hàng kế vị hoặc thoái vị có quá trình riêng. Thai kỳ và hậu sản có thể điều chỉnh công vụ, ưu tiên sức khỏe.",
+      "Tên nghi lễ nhiều thành phần có thể tưởng nhớ tổ tiên, được lưu riêng để giữ tên và danh tính cũ. Trẻ hoàng gia có nghi lễ phù hợp quốc gia; váy rửa tội trắng dành cho cả bé trai/bé gái, bánh tầng cưới là tập tục tùy gia đình Anh.",
+      "Gia đình Tin Lành phân biệt truyền thống rửa tội trẻ nhỏ và lễ dâng con. Phép rửa được ghi riêng, không lặp lại; khi lớn lên, con có thể tìm hiểu rồi tự quyết việc xác nhận đức tin hoặc xin rửa tội lần đầu.",
+      "Con có quyền hoãn hoặc từ chối. Lắng nghe, tôn trọng hoặc gây áp lực tạo ảnh hưởng khác nhau đến tin cậy, ký ức và bất đồng trong gia đình, có thể kéo dài nhiều năm."
+    ]
+  },
+  {
     "id": "world-family-flight-836",
     "version": "8.10.36",
     "publishedAt": "2026-11-04T10:20:41.830+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-04T03:43:30.000Z",
     "title": "Có thêm em, học lái xe và theo đuổi bầu trời",
     "summary": "Con lớn có cảm xúc riêng khi nhà có em; cuộc sống tại Mỹ có thêm lộ trình tập lái, học bay và khác biệt nơi sống.",
     "tags": [
@@ -21,7 +47,8 @@
       "Sau CPL có thể nhận công việc bay phù hợp; có CFI có thể dạy bay để kiếm thu nhập và tích lũy giờ. Nhánh đại học hàng không phải học và trả phí qua bốn năm, chỉ chương trình phù hợp mới giảm yêu cầu giờ khi xét R-ATP. Chứng nhận y tế hết hạn cần khám lại.",
       "Ở Mỹ, hoạt động nhậu được giới hạn từ 21 tuổi. Thuế lương liên bang vẫn có ở bang không thu thuế tiền lương; nơi sống ảnh hưởng chi phí sinh hoạt, nhà ở, thuế bán hàng và chi phí nhà sở hữu. Các mức tiền là ước tính mô phỏng.",
       "Biến cố súng đạn có trọng số khác nhau giữa một số quốc gia và thành phố Mỹ; không tăng rủi ro mới tại Việt Nam. Biến cố tại trường chỉ xét khi đang đi học và vẫn hiếm với từng nhân vật; hỗ trợ tinh thần có thể tiếp diễn qua nhiều năm."
-    ]
+    ],
+    "correctedAt": "2026-11-04T03:43:41.198Z"
   },
   {
     "id": "child-observations-835",

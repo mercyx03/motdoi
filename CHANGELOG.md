@@ -1,3 +1,7 @@
+## 8.10.37 — Hoàng gia và hành trình đức tin (packaged)
+
+Mở rộng cây kế vị, điều kiện đức tin/chấp thuận hôn nhân theo quốc gia, vai trò và áp lực hoàng gia, học nhiều năm, nghi lễ, thai kỳ, thoái vị và lựa chọn đức tin tự nguyện. Đổi mục 8.10.36 thành released theo xác nhận chủ dự án lúc 10:43:30 UTC+7 ngày 04/11/2026. Nguồn, phạm vi và giới hạn: docs/ROYAL-837.md.
+
 ## 8.10.36 — Gia đình, nơi sống Mỹ và lộ trình học bay (packaged)
 
 Mở rộng phản ứng có em và giúp chăm em ngắn hạn qua persona141; lộ trình tập lái Mỹ có giám sát; học bay nhiều năm, giờ/chứng chỉ/y tế/tiếng Anh/CFI/ATP; thuế liên bang và hệ số nơi sống; rủi ro súng theo ngữ cảnh và hỗ trợ tinh thần tiếp diễn. Chi tiết giới hạn mô phỏng và nguồn: docs/WORLD-836.md. Chưa phát hành, chưa nghiệm thu toàn diện.

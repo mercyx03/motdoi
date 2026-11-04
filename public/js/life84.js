@@ -83,7 +83,7 @@
     if (E.ROYAL920) E.ROYAL920.stipend(l, x, amt, log); else H.cash(l, amt, x.reign ? 'Ngân sách hoàng gia' : 'Trợ cấp từ quỹ hoàng tộc'); // 8.10.24: tách tiền riêng/ngân sách công vụ (royal920)
     // kế vị: người trị vì qua đời, bạn là con trưởng trong nhánh chính
     var f = l.fam, ruler = /quốc vương|thiên hoàng|thân vương|đại công tước|nữ hoàng|thái tử/.test((f.fJob || '') + ' ' + (f.mJob || ''));
-    if (x.tier === 'direct' && !x.reign && !x.passed && ruler && !f.fAlive && a >= 18) {
+    if ((!E.ROYAL837||!E.ROYAL837.managed(l)) && x.tier === 'direct' && !x.reign && !x.passed && ruler && !f.fAlive && a >= 18) {
       var canF = MON[x.c] && MON[x.c][2];
       if ((E.hasOlderSib && E.hasOlderSib(l)) || (l.sex === 'F' && !canF)) { x.passed = true; log('Ngai vàng thuộc về ' + (l.sex === 'F' && !canF ? 'người anh em trai theo luật kế vị' : 'người anh chị trưởng') + '. Bạn đứng bên cạnh trong lễ đăng quang, giữ vai trò thành viên cao cấp của hoàng gia.', 'neutral'); }
       else { x.reign = true; x.reignAt = a; log('Lễ đăng quang. Bạn trở thành ' + royalTitle(l) + ' của ' + (MON[x.c] ? x.house.replace(/^Hoàng gia |^Vương thất |^Đại công quốc /, '') : 'đất nước') + '. Hàng vạn người đứng chật hai bên đường.', 'big'); H.mem(l, 'Ngày đăng quang, chiếc vương miện nặng hơn bạn tưởng.', 8); H.fx(l, { hap: 4 }); }

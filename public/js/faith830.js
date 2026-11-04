@@ -8,6 +8,7 @@
     if(!label||/^(khác|không rõ)$/i.test(label))return 'Chưa khai tín ngưỡng';
     if(/^không tôn giáo|vô thần/i.test(label))return none;
     if(/chính thống/i.test(label))return orthodox;
+    if(/^Tin Lành.*Luther/i.test(label))return 'Tin Lành Lutheran';
     if(/^Tin Lành/.test(label))return protestant;
     if(/^Công giáo/.test(label))return catholic;
     if(/^(kitô giáo|ki-tô giáo|cơ đốc giáo|thiên chúa giáo)$/i.test(label)){
@@ -15,7 +16,7 @@
       return choices[hash(l.id+key)%choices.length];
     }return label;
   }
-  function christian(f){return [catholic,orthodox,anglican,protestant].includes(f);}
+  function christian(f){return [catholic,orthodox,anglican,protestant].includes(f)||/^Tin Lành/.test(f||'');}
   function family(l){
     var f=l.flags.faith830;if(f)return f;
     var faith=specific(l.religion,l,'self');l.religion=faith;
@@ -79,6 +80,7 @@
     return k.faith830={faith:f,stage:'choose',fatherName:l.sex==='M'?l.name:p?.sex==='M'?p.name:null,parentFaith:l.religion,otherFaith:p?.religion130||null,tradition:f===anglican?(p?.faith830.tradition||(hash(l.id)%2?'High Church':'Low Church')):null};}
   function rites(l,f,k){if(f===catholic||f===orthodox)return ['Bí tích Rửa Tội tại nhà thờ','Tiệc mừng gia đình'];
     if(f===anglican)return ['Rửa tội theo truyền thống giáo xứ Anh giáo','Chúc phúc và tiệc gia đình'];
+    if(E.FAITH837&&/^Tin Lành/.test(f))return E.FAITH837.infantRites(l,k);
     if(f===protestant)return ['Lễ Dâng Con với mục sư và hội thánh','Tiệc mừng gia đình'];
     if(H.resCode(l)!=='VN'||!/Phật|Cao Đài|Không|Vô thần|dân gian|tổ tiên/i.test(f))return ['Tiệc mừng gia đình'];
     var sweets=k.sex==='F'?'chè trôi nước':'chè đậu trắng hoặc đậu đỏ';
@@ -90,7 +92,7 @@
     var babies=newborn(l),k=babies.find(k=>X.uid(l,k)===arg.id);
     if(!k)return babies.map(k=>({k:X.uid(l,k),l:k.name+' · '+infant(l,k).faith,run:(l,r)=>X.next(l,'babyFaith830',r,{id:X.uid(l,k)})}));
     var d=infant(l,k);if(d.stage==='done')return [];
-    if(d.stage==='choose')return rites(l,d.faith,k).map((label,i)=>({k:String(i),l:label,run:function(l,r,log){d.rite=label;k.religion=d.faith;d.stage=names[d.faith] && i===0?'name':'done';log(k.name+': '+label+'.','good');H.mem(l,k.name+' — '+label,3);if(d.stage==='name')X.next(l,'babyFaith830',r,arg);}}));
+    if(d.stage==='choose')return rites(l,d.faith,k).map((label,i)=>({k:String(i),l:label,run:function(l,r,log){d.rite=label;if(E.FAITH837)E.FAITH837.recordInfant(l,k,d,label);k.religion=d.faith;d.stage=names[d.faith] && i===0?'name':'done';log(k.name+': '+label+'.','good');H.mem(l,k.name+' — '+label,3);if(d.stage==='name')X.next(l,'babyFaith830',r,arg);}}));
     var pool=names[d.faith][k.sex==='F'?1:0].split(' ');if(d.faith===anglican&&d.tradition==='Low Church')pool=['Grace','Faith','Hope','Charity','Joy'].concat(pool);var list=Array.from(new Set(pool.concat([k.name,'Không chọn tên riêng'])));
     return list.map((name,i)=>({k:String(i),l:name,run:function(l,r,log){d.saint=name==='Không chọn tên riêng'?'':name;d.stage='done';d.display=displayName(l,k,d);log('Gia đình hoàn tất nghi lễ cho '+k.name+(d.saint?', tên nghi lễ '+d.saint:'')+'.','good');}}));
   },14,'Gia đình');
