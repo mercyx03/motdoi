@@ -3,8 +3,8 @@
     "id": "school-home-police-838",
     "version": "8.10.38",
     "publishedAt": "2026-11-04T11:46:42+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-04T04:55:32.000Z",
     "title": "Chọn trường THPT, chỗ ở và con đường công tác",
     "summary": "Bạn có thể chọn trường, môn chuyên và nơi sống khi học hoặc làm gần gia đình.",
     "tags": [
@@ -16,7 +16,8 @@
       "Chọn trường chuyên Khoa học Tự nhiên, Nguyễn Khuyến hoặc trường chuyên, công lập, dân lập tại địa phương. Nguồn lực trong game phản ánh loại trường đã chọn.",
       "Học chuyên xa tỉnh sẽ ở ký túc xá. Khi học đại học hoặc đi làm cùng thành phố với bố mẹ, bạn có thể ở nhà hoặc ra riêng.",
       "Gia đình có thể tặng xe đạp từ tuổi đi học. Trong ngành công an, xét thăng hàm có kiểm tra thâm niên và nhận nhiệm vụ cấp chiến lược sẽ ghi chức vụ mới vào hồ sơ."
-    ]
+    ],
+    "correctedAt": "2026-11-04T04:55:33.064Z"
   },
   {
     "id": "royal-faith-837",
