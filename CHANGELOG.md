@@ -1,3 +1,7 @@
+## 8.10.40 — Danh tính hẹn hò và gia đình nhiều phối ngẫu
+
+Đồng bộ giới tính và tên người mới. Thêm hồ sơ hôn nhân theo nơi cư trú, đồng thuận, xét phép, lịch gia đình, ngân sách và quan hệ giữa từng cặp phối ngẫu.
+
 ## 8.10.39 — Tuổi thơ, tự lập và hỗ trợ gia đình
 
 Điều chỉnh quyền chọn theo tuổi, việc làm nhẹ, chăm sóc ngoại hình, đi lại cùng người lớn, ở chung và hỗ trợ học phí. Cập nhật xác suất có con và hồ sơ hỗ trợ sinh sản theo nơi cư trú.

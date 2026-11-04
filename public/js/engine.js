@@ -173,7 +173,9 @@
       H.mem(l, 'Ngày nghe tòa tuyên án ' + years + ' năm tù vì ' + why + '.', 5);
       if (l.partner && l.partner.status !== 'dating' && U.rand(l) < 0.35) { log(l.partner.name + ' không chờ được, đã rời bỏ bạn.', 'bad'); l.partner = null; l.exes++; }
     },
-    partnerSex: function (l, r) { return l.orient === 'straight' ? (l.sex === 'M' ? 'F' : 'M') : l.orient === 'gay' ? l.sex : (r() < 0.5 ? 'M' : 'F'); },
+    partnerSex: function (l, r) { return l.orient === 'bi' ? (r() < 0.5 ? 'M' : 'F') : l.orient === 'gay' ? l.sex : l.sex === 'M' ? 'F' : 'M'; },
+    datingSex: function(l,r){var pref=l.flags.dating108&&l.flags.dating108.sex;
+      return pref==='M'||pref==='F'?pref:pref==='any'?(r()<.5?'M':'F'):H.partnerSex(l,r);},
     stranger: function (l, r, sex) { return strangerName(l, r, sex); },
     name: function (l, r, sex, sur) { return makeName(l, r, sex, sur); },
     canBankLoan: function (l) { var c = l.credit; return (!(c && c.bad) || (l.age - (c.last != null ? c.last : c.since) >= 5)) && l.age < 70; },

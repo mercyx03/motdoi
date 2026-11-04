@@ -149,7 +149,7 @@
         if (network(l).length >= 5 || left(l) <= 0) return;
         spend(l);
         // Người cũ có thể quay lại hợp lý sau ít nhất 2 năm; giữ nguyên danh tính, tuổi theo năm thực.
-        var s = nstate(l), old = s.ended.filter(function (p) { return p.alive !== false && l.age - (p.endedAt108 || 0) >= 2 && !p.secret108; });
+        var s = nstate(l), old = s.ended.filter(function (p) { var pref=l.flags.dating108?.sex;var match=pref==='M'||pref==='F'?p.sex===pref:pref==='any'||l.orient==='bi'||p.sex===(l.orient==='gay'?l.sex:l.sex==='M'?'F':'M');return match && p.alive !== false && l.age - (p.endedAt108 || 0) >= 2 && !p.secret108; });
         if (old.length && r() < BAL.reconnect) {
           var p = old[Math.floor(r() * old.length)]; s.ended = s.ended.filter(function (q) { return q !== p; });
           if (Number.isFinite(p.age) && Number.isFinite(p.endedAt108)) p.age += l.age - p.endedAt108;

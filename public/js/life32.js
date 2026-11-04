@@ -281,13 +281,13 @@
   // ===================================================================
   SC('nhan_tin', {
     title: 'Nhắn tin tán tỉnh', valid: function (l) { return !l.partner && l.age >= 15; },
-    prep: function (l, r) { var s = H.partnerSex(l, r); return { n: H.stranger(l, r, s), s: s, where: pick(r, l.school ? ['bạn học khác lớp', 'người quen trên mạng xã hội', 'bạn của bạn thân'] : ['đồng nghiệp ở công ty bên cạnh', 'người quen trên mạng xã hội', 'bạn của bạn thân', 'người gặp ở phòng gym']) }; },
+    prep: function (l, r) { var s = H.datingSex(l, r); return { n: H.stranger(l, r, s), s: s, where: pick(r, l.school ? ['bạn học khác lớp', 'người quen trên mạng xã hội', 'bạn của bạn thân'] : ['đồng nghiệp ở công ty bên cạnh', 'người quen trên mạng xã hội', 'bạn của bạn thân', 'người gặp ở phòng gym']) }; },
     text: function (l, d) { return 'Bạn để ý ' + d.n + ' (' + d.where + ') và bắt đầu nhắn tin làm quen. Tin nhắn nào cũng được trả lời bằng một biểu tượng cảm xúc.'; },
     opts: [
       { k: 'flirt', l: 'Nhắn tiếp, tán tỉnh ra mặt', ai: { w: 1, soc: 0.8 }, run: function (l, r, log, d) {
         var x = r();
         if (x < 0.3) { log('Nhắn tin cho ' + d.n + ' được hai tuần thì bị "ghost": tin nhắn hiện "đã xem" rồi im bặt.', 'bad'); fx(l, { hap: -4 }); }
-        else if (x < 0.6) { l.flags.mapMo = d.n; log('Với ' + d.n + ' cứ mập mờ: tối nào cũng nhắn, cuối tuần đi cà phê, nhưng chẳng ai nói ra là gì của nhau.', 'neutral'); fx(l, { hap: 2 }); }
+        else if (x < 0.6) { l.flags.mapMo = d.n; l.flags.ambiguous101={n:d.n,sex:d.s,age:l.age,at:l.age}; log('Với ' + d.n + ' cứ mập mờ: tối nào cũng nhắn, cuối tuần đi cà phê, nhưng chẳng ai nói ra là gì của nhau.', 'neutral'); fx(l, { hap: 2 }); }
         else l.pending.unshift(E.DEC.love.make(l, r, { where: 'qua những tin nhắn làm quen' }));
       } },
       { k: 'slow', l: 'Từ từ, để xem người ta có ý không', ai: { w: 0.8 }, run: function (l, r, log, d) { if (ch(r, 0.35)) l.pending.unshift(E.DEC.love.make(l, r, { where: 'sau mấy tháng nhắn tin qua lại' })); else log('Nhắn qua nhắn lại vài lần rồi cũng thưa dần.', 'neutral'); } },

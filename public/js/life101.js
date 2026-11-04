@@ -104,10 +104,10 @@ E.PUBLIC_SCANDAL_CASES101=cases;
 
 // Adult-only, non-graphic relationships with the same named person throughout.
 function single(l){return free(l)&&l.age>=18&&!l.partner;}
-function peer(l,r){var sex=H.partnerSex(l,r);return {n:H.stranger(l,r,sex),sex:sex,age:Math.max(18,l.age+U.randint(r,-3,3)),at:l.age};}
+function peer(l,r){var sex=H.datingSex(l,r);return {n:H.stranger(l,r,sex),sex:sex,age:Math.max(18,l.age+U.randint(r,-3,3)),at:l.age};}
 function datePeer(l,d,log){if(!single(l)||d.age<18)return;l.partner={name:d.n,sex:d.sex,age:d.age,status:'dating',since:l.age,alive:true};l.flags.everDated=true;H.fx(l,{hap:6});log('Bạn và '+d.n+' đồng ý tìm hiểu nghiêm túc, không còn để nhau phải đoán.','good');}
-SC('map_mo101',{title:'Mình là gì của nhau?',prep:function(l,r){var d=peer(l,r);if(l.flags.mapMo)d.n=l.flags.mapMo;return d;},valid:function(l,d){return single(l)&&(!d||d.at==null||d.at===l.age&&d.age>=18);},text:function(l,d){return 'Bạn và '+d.n+' nhắn mỗi tối, có lúc gần như người yêu, nhưng chưa ai nói rõ. Một lời hẹn lại bị bỏ lửng.';},opts:[
- {k:'ask',l:'Hỏi thẳng hai người đang mong điều gì',run:function(l,r,log,d){if(r()<.5)datePeer(l,d,log);else{delete l.flags.mapMo;H.fx(l,{hap:-3});log(d.n+' nói chưa muốn yêu nghiêm túc. Bạn biết câu trả lời để quyết định bước tiếp.','neutral');}}},
+SC('map_mo101',{title:'Mình là gì của nhau?',prep:function(l,r){var old=l.flags.ambiguous101;if(old&&old.n===l.flags.mapMo&&old.sex)return {n:old.n,sex:old.sex,age:Math.max(18,old.age+l.age-old.at),at:l.age};var d=peer(l,r);if(l.flags.mapMo)d.n=l.flags.mapMo;return d;},valid:function(l,d){return single(l)&&(!d||d.at==null||d.at===l.age&&d.age>=18);},text:function(l,d){return 'Bạn và '+d.n+' nhắn mỗi tối, có lúc gần như người yêu, nhưng chưa ai nói rõ. Một lời hẹn lại bị bỏ lửng.';},opts:[
+ {k:'ask',l:'Hỏi thẳng hai người đang mong điều gì',run:function(l,r,log,d){if(r()<.5){datePeer(l,d,log);delete l.flags.mapMo;delete l.flags.ambiguous101;}else{delete l.flags.mapMo;delete l.flags.ambiguous101;H.fx(l,{hap:-3});log(d.n+' nói chưa muốn yêu nghiêm túc. Bạn biết câu trả lời để quyết định bước tiếp.','neutral');}}},
  {k:'wait',l:'Tìm hiểu thêm, nhưng nói rõ giới hạn của mình',run:function(l,r,log,d){l.flags.mapMo=d.n;l.flags.ambiguous101=d;H.sched(l,'map_mo_tiep101',1,{n:d.n,sex:d.sex,age:d.age+1});log('Bạn nói rõ mình không muốn chờ vô thời hạn. Hai người thử cho nhau thêm thời gian.','neutral');}},
  {k:'stop',l:'Dừng lại để không tự làm mình mệt',run:function(l,r,log,d){delete l.flags.mapMo;delete l.flags.ambiguous101;log('Bạn ngừng chờ tin nhắn của '+d.n+', dành thời gian lại cho cuộc sống của mình.','neutral');}}
 ]});

@@ -697,7 +697,7 @@
     ]
   });
   SC('ngoai_tinh', {
-    title: 'Cám dỗ', prep: function (l, r) { return { n: H.stranger(l, r, H.partnerSex(l, r)) }; },
+    title: 'Cám dỗ', prep: function (l, r) { var sex=H.datingSex(l,r);return { sex:sex,n:H.stranger(l,r,sex) }; },
     text: function (l, d) { return d.n + ', một đồng nghiệp mới, liên tục nhắn tin tán tỉnh dù biết bạn đã có gia đình.'; },
     valid: function (l) { return l.partner && l.partner.status !== 'dating'; },
     opts: [
