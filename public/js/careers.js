@@ -259,6 +259,7 @@
     return w;
   }
   function eligible(l, c) {
+    if (c.id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     if (c.hidden) return false;
     if (c.minAge && l.age < c.minAge) return false;
     if (c.edu > l.edu) return false;
@@ -314,6 +315,7 @@
   function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
   function startJob(l, id, r, log, quiet) {
     id = resolveJob(id);
+    if (id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     var c = CAR[id];
     if (c.minAge && l.age < c.minAge) { if (!quiet) log('Công việc này chỉ nhận từ ' + c.minAge + ' tuổi.', 'neutral'); return false; }
     if (l.job && resolveJob(l.job.id) === id && l.job.yrs === 0 && l.jobsHist && l.jobsHist.length && l.jobsHist[l.jobsHist.length - 1].from === l.age) return; // v2.8: vừa nhận đúng việc này trong năm

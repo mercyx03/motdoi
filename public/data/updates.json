@@ -2,6 +2,30 @@
   "generatedAt": "2026-11-03T06:39:05.217Z",
   "entries": [
     {
+      "id": "world-family-flight-836",
+      "version": "8.10.36",
+      "publishedAt": "2026-11-04T10:20:41.830+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Có thêm em, học lái xe và theo đuổi bầu trời",
+      "summary": "Con lớn có cảm xúc riêng khi nhà có em; cuộc sống tại Mỹ có thêm lộ trình tập lái, học bay và khác biệt nơi sống.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Thế giới"
+      ],
+      "details": [
+        "Con lớn có thể vui, bình thường hoặc lo bố mẹ ít quan tâm khi có em. Có bé thích em cùng giới, có bé không quan trọng giới tính; suy nghĩ này được ghi nhớ và có thể dịu dần khi lớn. Bạn có thể hỏi và lắng nghe con trong mục Tính cách và chuyện của các con.",
+        "Trẻ đủ lớn có thể tự nguyện giúp chơi với em trong thời gian ngắn khi người lớn sẵn sàng hỗ trợ; trẻ nhỏ hơn cần bố mẹ ở ngay cạnh. Con được từ chối, không phải bỏ học hay thay ca chăm sóc của người lớn.",
+        "Tại 14 thành phố Mỹ trong game, học lái ô tô có bước học lý thuyết, xin giấy phép tập lái, tích lũy giờ có giám sát và thi thực hành theo mốc bang. Bằng tuổi teen còn giới hạn lái đêm và chở bạn; New York City không cho bằng junior tự lái. Bảo hiểm tài xế teen được tính riêng khi sử dụng ô tô.",
+        "Bạn có thể học bay cùng thầy từ sớm, ghi giờ bay từng năm, học tiếng Anh hàng không, khám y tế và thi PPL, IR, CPL, multi-engine, CFI rồi ATP. Solo máy bay từ 16 tuổi, PPL từ 17, CPL từ 18; đạt giờ chưa bảo đảm đỗ hay được hãng tuyển.",
+        "Sau CPL có thể nhận công việc bay phù hợp; có CFI có thể dạy bay để kiếm thu nhập và tích lũy giờ. Nhánh đại học hàng không phải học và trả phí qua bốn năm, chỉ chương trình phù hợp mới giảm yêu cầu giờ khi xét R-ATP. Chứng nhận y tế hết hạn cần khám lại.",
+        "Ở Mỹ, hoạt động nhậu được giới hạn từ 21 tuổi. Thuế lương liên bang vẫn có ở bang không thu thuế tiền lương; nơi sống ảnh hưởng chi phí sinh hoạt, nhà ở, thuế bán hàng và chi phí nhà sở hữu. Các mức tiền là ước tính mô phỏng.",
+        "Biến cố súng đạn có trọng số khác nhau giữa một số quốc gia và thành phố Mỹ; không tăng rủi ro mới tại Việt Nam. Biến cố tại trường chỉ xét khi đang đi học và vẫn hiếm với từng nhân vật; hỗ trợ tinh thần có thể tiếp diễn qua nhiều năm."
+      ]
+    },
+    {
       "id": "child-observations-835",
       "version": "8.10.35",
       "publishedAt": "2026-11-04T06:26:05+07:00",

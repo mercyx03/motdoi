@@ -248,3 +248,6 @@ GĐ6 — Bản 8.10.31 còn chờ regression toàn bộ, đối chiếu bản l�
 GĐ6 — Bản 8.10.33 về hồ sơ gia đình và dịch vụ ngầm còn chờ regression toàn bộ, kiểm tra thiết bị thật và xác minh binding Pages.
 
 GĐ6 — Bản 8.10.34 còn chờ regression toàn bộ, thiết bị thật và xác minh binding Pages.
+
+
+GĐ6 — 8.10.36: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật, hiệu chỉnh dữ liệu luật/rủi ro/chi phí và binding REVIEWS_DB thực tế. Phạm vi và giới hạn: docs/WORLD-836.md. Bản Preview, chưa nghiệm thu toàn diện.

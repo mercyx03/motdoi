@@ -1,3 +1,7 @@
+## 8.10.36 — Gia đình, nơi sống Mỹ và lộ trình học bay (packaged)
+
+Mở rộng phản ứng có em và giúp chăm em ngắn hạn qua persona141; lộ trình tập lái Mỹ có giám sát; học bay nhiều năm, giờ/chứng chỉ/y tế/tiếng Anh/CFI/ATP; thuế liên bang và hệ số nơi sống; rủi ro súng theo ngữ cảnh và hỗ trợ tinh thần tiếp diễn. Chi tiết giới hạn mô phỏng và nguồn: docs/WORLD-836.md. Chưa phát hành, chưa nghiệm thu toàn diện.
+
 ## 8.10.35 — Để người chơi tự khám phá động cơ của con
 
 Hồ sơ và lựa chọn trò chuyện để bạn tự hiểu con qua lời nói và hành vi.
