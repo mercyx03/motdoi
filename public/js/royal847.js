@@ -66,6 +66,36 @@
         acted: {}
       };
     }
+    var cNow = m.country837 || (A.context(l) && A.context(l).c) || 'GB';
+    if (cNow === 'NO' && !ps.upbringing847.norwayTrack) {
+      ps.upbringing847.norwayTrack = {
+        modelCitizen: true,
+        publicSchool: false,
+        walkToSchool: false,
+        milBranches: { navy: false, air: false, engineer12m: false },
+        uniEnvLaw: 0,
+        abroadStudy: null,
+        stortingOath: false,
+        nidarosBlessing: false,
+        crownOnAltarOnly: true,
+        syttendeMaiCount: 0,
+        publicTransitDrive: false,
+        sustainableBanquet: false
+      };
+    }
+    if (cNow === 'DK' && !ps.upbringing847.denmarkTrack) {
+      ps.upbringing847.denmarkTrack = {
+        publicSchoolTranegard: false,
+        aarhusPoliSci: 0,
+        harvardPseudonym: null,
+        frogmanCorps: false,
+        antvorskovOfficer: false,
+        christiansborgProclaimed: false,
+        noCrownMuseumOnly: true,
+        carriageProcession: false,
+        secularThanksgiving: false
+      };
+    }
     return ps.upbringing847;
   }
 
@@ -649,6 +679,8 @@
       d.opts.push({ k: idx, l: label, h: '' });
     }
     if (q.c === 'SE' && l.age >= 14) appendKey('swedenTrack847', 'Đào tạo Người kế vị Thụy Điển: Quân sự 3 quân chủng, Riksdag, Bộ Ngoại giao & UN');
+    if (q.c === 'NO' && l.age >= 5) appendKey('norwayTrack848', 'Đào tạo Người kế vị & Nghi lễ Hoàng gia Na Uy: Trường làng, Công binh/Hải quân, Lễ Ban Phước & 17/5');
+    if (q.c === 'DK' && l.age >= 5) appendKey('denmarkTrack848', 'Đào tạo Người kế vị & Nghi lễ Hoàng gia Đan Mạch: Trường công Tranegårdskolen, Người nhái & Ban công Christiansborg');
     if (l.age >= 4) appendKey('upbringing847', 'Bảo mẫu đa ngôn ngữ, trường nội trú quý tộc, nghệ thuật & quy tắc an ninh/MXH');
     if ((l.kids || []).some(function (k) { return k.alive !== false && k.royal920; })) appendKey('birthProtocol847', 'Nghi thức chào đón em bé Hoàng gia: đại bác, thắp đèn London, chụp ảnh & rửa tội');
     return d;
@@ -656,6 +688,8 @@
   E.DEC.royalLife837.apply = function (l, d, k, r, log) {
     var key = d && d.data && d.data.keys && d.data.keys[Number(k)];
     if (key === 'swedenTrack847') { X.next(l, 'royalSwedenTrack847', r); return; }
+    if (key === 'norwayTrack848') { X.next(l, 'royalNorwayTrack848', r); return; }
+    if (key === 'denmarkTrack848') { X.next(l, 'royalDenmarkTrack848', r); return; }
     if (key === 'upbringing847') { X.next(l, 'royalUpbringing847', r); return; }
     if (key === 'birthProtocol847') { X.next(l, 'royalBirthProtocol847', r); return; }
     return oldLifeApply.apply(this, arguments);
@@ -674,6 +708,432 @@
       }
     }
   });
+
+
+  // ================= 6. Đào tạo Người kế vị & Nghi lễ Hoàng gia Na Uy (NO - 8.10.48) =================
+  X.menu('royalNorwayTrack848', 'Đào tạo "Công dân kiểu mẫu" & Nghi lễ Hoàng gia Na Uy', function (l) {
+    var q = A.context(l);
+    if (X.reason(l, 5) !== true) return X.reason(l, 5);
+    return q && q.c === 'NO' && q.me ? true : 'Dành cho thành viên Hoàng gia Na Uy từ 5 tuổi';
+  }, function (l) {
+    var q = A.context(l), up = upState(l, q.me), no = up.norwayTrack;
+    return 'Chương trình của người thừa kế Na Uy tập trung rèn thành một "công dân kiểu mẫu" trước khi trở thành vị vua; nghi lễ thế tục đã bỏ đăng quang truyền thống từ năm 1908.\n' +
+      '• Giáo dục phổ thông công lập: ' + (no.publicSchool ? 'Đã học trường làng/phổ thông công lập địa phương, tự đi bộ đến trường cùng trẻ em thường dân ✓' : 'Chưa ghi nhận') + '.\n' +
+      '• Quân sự (bờ biển dài & chiến lược NATO): Hải quân/Không quân ' + (no.milBranches.navy ? '✓' : '○') + ' · 12 tháng Tiểu đoàn Công binh Quốc gia ' + (no.milBranches.engineer12m ? '✓' : '○') + '.\n' +
+      '• Đại học & Quốc tế: Môi trường/Phát triển bền vững & Luật Hiến pháp (' + no.uniEnvLaw + '/100)' + (no.abroadStudy ? ' · Đã du học nước ngoài' : ' · Được phép du học nước ngoài') + '.\n' +
+      '• Nghi lễ Na Uy (từ 1908 không đội vương miện): Tuyên thệ Storting ' + (no.stortingOath ? '✓' : '○') + ' · Lễ Ban Phước Nhà thờ Nidaros (vương miện đặt trên bàn thờ) ' + (no.nidarosBlessing ? '✓' : '○') + ' · Quốc khánh 17/5 mặc Bunad đón diễu hành thiếu nhi (' + no.syttendeMaiCount + ' lần).';
+  }, function (l) {
+    var q = A.context(l); if (!q || !q.me) return [];
+    var ps = A.personState(l, q.me), up = upState(l, q.me), no = up.norwayTrack, out = [];
+    function row(k, label, min, max, run, why) {
+      if (l.age < min || (max && l.age > max)) return;
+      out.push({ k: k, l: label, why: why || up.acted[k] === yr(l) ? why || 'Đã thực hiện năm nay' : true, run: function (l, r, log) { if (up.acted[k] === yr(l)) return; up.acted[k] = yr(l); run(r, log); } });
+    }
+    row('no_public_school', 'Học trường mẫu giáo & phổ thông công lập địa phương (trường làng): tự đi bộ đến trường cùng trẻ thường dân', 5, 18, function (r, log) {
+      no.publicSchool = true; no.walkToSchool = true;
+      up.autonomy = Math.min(100, up.autonomy + 14); ps.prepared = Math.min(100, ps.prepared + 6);
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100); H.fx(l, { soc: 3, hap: 2 });
+      log('Khác hoàn toàn với truyền thống trường tư quý tộc tại Anh, bạn học trường phổ thông công lập địa phương cùng trẻ em thường dân, tự đi bộ tới lớp và không nhận bất kỳ sự biệt đãi nào để thấu hiểu đời sống thực tế của người dân.', 'good');
+    }, no.publicSchool ? 'Đã theo học hệ thống trường công lập địa phương' : null);
+
+    row('no_mil_navy_air', 'Đào tạo Quân sự bắt buộc tại Học viện Hải quân & Không quân Hoàng gia Na Uy (chiến lược bờ biển & NATO)', 18, 45, function (r, log) {
+      no.milBranches.navy = true; no.milBranches.air = true;
+      ps.prepared = Math.min(100, ps.prepared + 10); H.fx(l, { hea: 3, kno: 2 });
+      if (no.milBranches.engineer12m && l.flags.royal) l.flags.royal.mil = true;
+      log('Vì Na Uy có đường bờ biển dài và là thành viên chiến lược của NATO, bạn hoàn thành khóa đào tạo sĩ quan tại Học viện Hải quân và Không quân Hoàng gia Na Uy.', 'good');
+    }, no.milBranches.navy && no.milBranches.air ? 'Đã hoàn thành đào tạo Hải quân & Không quân' : null);
+
+    row('no_mil_engineer12m', 'Hoàn thành 12 tháng huấn luyện thực chiến khốc liệt tại Tiểu đoàn Công binh Quốc gia (Ingeniørbataljonen)', 18, 35, function (r, log) {
+      no.milBranches.engineer12m = true;
+      ps.prepared = Math.min(100, ps.prepared + 10); H.fx(l, { hea: 4, kno: 2 });
+      if (no.milBranches.navy && l.flags.royal) l.flags.royal.mil = true;
+      log('Bạn trải qua 12 tháng huấn luyện thực chiến khắc nghiệt tại Tiểu đoàn Công binh Quốc gia ở miền Bắc Na Uy, rèn kỹ năng chiến trường và tinh thần đồng đội.', 'good');
+    }, no.milBranches.engineer12m ? 'Đã hoàn thành 12 tháng tại Tiểu đoàn Công binh' : null);
+
+    row('no_uni_env_law', 'Học Đại học: Khoa học Chính trị, Luật Hiến pháp & trọng tâm Phát triển Bền vững / Môi trường', 18, 40, function (r, log) {
+      no.uniEnvLaw = Math.min(100, no.uniEnvLaw + 25);
+      ps.constitution = Math.min(100, ps.constitution + 10); ps.prepared = Math.min(100, ps.prepared + 7); H.fx(l, { kno: 3 });
+      log('Bạn nghiên cứu sâu về Khoa học Chính trị, Luật Hiến pháp và đặc biệt là Phát triển Bền vững / Môi trường — lĩnh vực thế mạnh và mối quan tâm hàng đầu của Na Uy.', 'good');
+    });
+
+    row('no_study_abroad', 'Du học đại học nước ngoài để mở rộng tầm nhìn quốc tế (không bị cấm như Thụy Điển)', 18, 35, function (r, log) {
+      no.abroadStudy = { year: yr(l), status: 'completed' };
+      ps.prepared = Math.min(100, ps.prepared + 8); H.fx(l, { kno: 3, soc: 2 });
+      log('Không bị ràng buộc cấm học nước ngoài như Thụy Điển, bạn theo học chương trình đại học quốc tế ở nước ngoài trước khi trở về nước đảm nhận công vụ.', 'good');
+    }, no.abroadStudy ? 'Đã hoàn thành kỳ du học quốc tế' : null);
+
+    row('no_storting_oath', 'Tuyên thệ tuân thủ Hiến pháp trước Quốc hội Na Uy (Storting)', 18, 99, function (r, log) {
+      no.stortingOath = true;
+      if (q.h.accession837) q.h.accession837.stortingOath848 = true;
+      ps.constitution = Math.min(100, ps.constitution + 8); R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100);
+      log('Trước Quốc hội Na Uy (Storting), Đức Vua đọc lời tuyên thệ trang trọng tuân thủ Hiến pháp và pháp luật của vương quốc.', 'big');
+    }, q.h.seat !== q.me.id ? 'Chỉ thực hiện khi lên ngôi Quốc vương/Nữ hoàng Na Uy' : no.stortingOath ? 'Đã tuyên thệ trước Storting' : null);
+
+    row('no_nidaros_blessing', 'Lễ Ban Phước (Consecration/Blessing) tại Nhà thờ Nidaros ở Trondheim: Vương miện chỉ đặt trên bàn thờ, tuyệt đối không đội', 18, 99, function (r, log) {
+      no.nidarosBlessing = true; no.crownOnAltarOnly = true;
+      if (q.h.accession837) { q.h.accession837.ceremony = 'completed'; q.h.accession837.ceremonyAt = yr(l); q.h.accession837.crownOnAltarOnly848 = true; }
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 4, 0, 100);
+      log('Na Uy đã bỏ hoàn toàn lễ đăng quang truyền thống từ năm 1908. Không có xức dầu thánh bí ẩn hay đội vương miện: Nhà vua và Hoàng hậu đến Nhà thờ Nidaros tại Trondheim nhận lời cầu nguyện và ban phước lành từ các giám mục, trong khi Vương miện Hoàng gia chỉ được đặt trang trọng trên bàn thờ như một biểu tượng lịch sử.', 'big');
+    }, q.h.seat !== q.me.id ? 'Dành cho Quốc vương/Nữ hoàng mới lên ngôi' : no.nidarosBlessing ? 'Đã cử hành Lễ Ban Phước tại Nhà thờ Nidaros' : null);
+
+    row('no_syttende_mai', 'Lễ Quốc khánh Na Uy (17/5) "không duyệt binh": Mặc trang phục truyền thống Bunad đứng trên ban công Cung điện Oslo chào đoàn diễu hành thiếu nhi', 5, 99, function (r, log) {
+      no.syttendeMaiCount++;
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100); H.fx(l, { hap: 3, soc: 2 });
+      log('Ngày Quốc khánh 17/5 tại Na Uy không phô diễn vũ khí quân sự: cả gia đình Hoàng gia mặc trang phục truyền thống Bunad, đứng hàng giờ trên ban công Cung điện Hoàng gia ở Oslo vẫy chào hàng chục nghìn học sinh đi bộ diễu hành qua quảng trường.', 'big');
+    });
+
+    row('no_daily_simplicity', 'Nghi lễ đời thường giản dị: Đi phương tiện công cộng hoặc tự lái xe ngoài phố không đoàn hộ tống rầm rộ', 18, 99, function (r, log) {
+      no.publicTransitDrive = true;
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100); H.fx(l, { hap: 2 });
+      log('Giữ đúng phong cách gần gũi của Hoàng gia Na Uy, bạn tự lái xe hoặc đi tàu điện công cộng ngoài đường phố Oslo mà không có đoàn xe hộ tống phô trương.', 'good');
+    });
+
+    row('no_sustainable_banquet', 'Tổ chức Quốc yến chiêu đãi quốc khách: trang trọng nhưng ưu tiên sản vật địa phương, thân thiện môi trường & chống lãng phí', 18, 99, function (r, log) {
+      no.sustainableBanquet = true;
+      ps.protocol = Math.min(100, ps.protocol + 6); R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100);
+      log('Bữa tiệc chiêu đãi quốc khách tại Cung điện Oslo diễn ra vô cùng trang trọng nhưng thực đơn ưu tiên hải sản và nông sản địa phương theo mùa, thân thiện với môi trường và hạn chế tối đa sự lãng phí.', 'good');
+    });
+
+    return out;
+  }, 5, 'Học tập');
+
+  // ================= 7. Đào tạo Người kế vị & Nghi lễ Hoàng gia Đan Mạch (DK - 8.10.48) =================
+  X.menu('royalDenmarkTrack848', 'Hòa nhập Giáo dục Công lập, Quân sự Người nhái & Nghi lễ Đan Mạch', function (l) {
+    var q = A.context(l);
+    if (X.reason(l, 5) !== true) return X.reason(l, 5);
+    return q && q.c === 'DK' && q.me ? true : 'Dành cho thành viên Hoàng gia Đan Mạch từ 5 tuổi';
+  }, function (l) {
+    var q = A.context(l), up = upState(l, q.me), dk = up.denmarkTrack;
+    return 'Hoàng gia Đan Mạch phá vỡ truyền thống "gia sư hoàng gia" biệt lập để hòa nhập vào hệ thống giáo dục quốc gia; nghi lễ bỏ đăng quang tôn giáo từ năm 1849, tập trung vào ban công Christiansborg, tính pháp lý hiến pháp và sự ấm áp "Hygge".\n' +
+      '• Trường công lập chuẩn mực: ' + (dk.publicSchoolTranegard ? 'Trường tiểu học công lập Tranegårdskolen (xếp hàng, vui chơi bình đẳng cùng con em thợ điện, kỹ sư Copenhagen) ✓' : 'Chưa ghi nhận') + '.\n' +
+      '• Đại học & Quốc tế: Đại học Aarhus – Khoa học Chính trị (' + dk.aarhusPoliSci + '/100)' + (dk.harvardPseudonym ? ' · Du học Harvard dưới tên giả: ' + dk.harvardPseudonym : '') + '.\n' +
+      '• Quân sự chuyên sâu: Lực lượng Người nhái Hải quân (Frømandskorpset) ' + (dk.frogmanCorps ? '✓' : '○') + ' · Khóa Sĩ quan Doanh trại Antvorskov ' + (dk.antvorskovOfficer ? '✓' : '○') + '.\n' +
+      '• Nghi lễ Đan Mạch (từ 1849 không đội vương miện): Tuyên bố 3 lần từ ban công Cung điện Christiansborg ' + (dk.christiansborgProclaimed ? '✓' : '○') + ' · Diễu hành xe ngựa Hygge ' + (dk.carriageProcession ? '✓' : '○') + ' · Lễ tạ ơn dân sự tại nhà thờ ' + (dk.secularThanksgiving ? '✓' : '○') + '.';
+  }, function (l) {
+    var q = A.context(l); if (!q || !q.me) return [];
+    var ps = A.personState(l, q.me), up = upState(l, q.me), dk = up.denmarkTrack, out = [];
+    function row(k, label, min, max, run, why) {
+      if (l.age < min || (max && l.age > max)) return;
+      out.push({ k: k, l: label, why: why || up.acted[k] === yr(l) ? why || 'Đã thực hiện năm nay' : true, run: function (l, r, log) { if (up.acted[k] === yr(l)) return; up.acted[k] = yr(l); run(r, log); } });
+    }
+    row('dk_public_school', 'Theo học trường tiểu học công lập Tranegårdskolen: xếp hàng và vui chơi bình đẳng như mọi trẻ em Copenhagen', 5, 16, function (r, log) {
+      dk.publicSchoolTranegard = true;
+      up.autonomy = Math.min(100, up.autonomy + 14); ps.prepared = Math.min(100, ps.prepared + 6);
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100); H.fx(l, { soc: 3, hap: 2 });
+      log('Khép lại thời kỳ học gia sư riêng biệt tại cung điện Amalienborg, bạn đến học tại trường tiểu học công lập Tranegårdskolen: tự xếp hàng và chơi đùa bình đẳng với con của một thợ điện hay kỹ sư tại Copenhagen.', 'good');
+    }, dk.publicSchoolTranegard ? 'Đã hoàn thành bậc tiểu học công lập Tranegårdskolen' : null);
+
+    row('dk_aarhus_uni', 'Theo học Khoa học Chính trị tại Đại học Aarhus (lộ trình Thạc sĩ Khoa học Chính trị)', 18, 40, function (r, log) {
+      dk.aarhusPoliSci = Math.min(100, dk.aarhusPoliSci + 25);
+      ps.constitution = Math.min(100, ps.constitution + 10); ps.prepared = Math.min(100, ps.prepared + 8); H.fx(l, { kno: 3 });
+      log('Sau khi tốt nghiệp trung học trong nước, bạn theo học ngành Khoa học Chính trị tại Đại học Aarhus danh tiếng, nối tiếp truyền thống hoàn thành học vị Thạc sĩ của Vua Frederik X.', 'good');
+    });
+
+    row('dk_harvard_pseudonym', 'Du học tại Đại học Harvard (Mỹ) dưới một cái tên giả để tránh truyền thông săn đón', 19, 35, function (r, log) {
+      dk.harvardPseudonym = l.sex === 'F' ? 'Isabella Henriksen' : 'Frederik Henriksen';
+      ps.prepared = Math.min(100, ps.prepared + 9); H.fx(l, { kno: 3, soc: 2 });
+      log('Bạn lên đường du học tại Đại học Harvard (Mỹ) và đăng ký dưới cái tên giả "' + dk.harvardPseudonym + '" để tránh ống kính truyền thông, tự do tranh luận học thuật như một sinh viên quốc tế bình thường.', 'good');
+    }, dk.harvardPseudonym ? 'Đã hoàn thành kỳ học tại Harvard dưới tên giả' : null);
+
+    row('dk_antvorskov_officer', 'Gia nhập quân đội & theo học Khóa đào tạo Sĩ quan tại Doanh trại Antvorskov', 18, 35, function (r, log) {
+      dk.antvorskovOfficer = true;
+      ps.prepared = Math.min(100, ps.prepared + 9); H.fx(l, { hea: 3, kno: 2 });
+      if (dk.frogmanCorps && l.flags.royal) l.flags.royal.mil = true;
+      log('Bạn gia nhập quân đội Đan Mạch và theo học Khóa đào tạo Sĩ quan tại Doanh trại Antvorskov (Slagelse), xây dựng lý lịch quân sự vững chắc cho người kế vị.', 'good');
+    }, dk.antvorskovOfficer ? 'Đã hoàn thành khóa sĩ quan tại Doanh trại Antvorskov' : null);
+
+    row('dk_frogman_corps', 'Thử thách khắc nghiệt: Khóa huấn luyện Lực lượng Người nhái Tinh nhuệ thuộc Hải quân Đan Mạch (Frømandskorpset)', 19, 38, function (r, log) {
+      dk.frogmanCorps = true;
+      ps.prepared = Math.min(100, ps.prepared + 12); H.fx(l, { hea: 4, kno: 2 });
+      if (l.flags.royal) l.flags.royal.mil = true;
+      log('Bạn vượt qua các bài tập sinh tồn và tác chiến dưới nước khốc liệt bậc nhất thế giới của Lực lượng Người nhái Tinh nhuệ thuộc Hải quân Đan Mạch (Frømandskorpset), nối bước Vua Frederik X.', 'big');
+    }, dk.frogmanCorps ? 'Đã chinh phục khóa huấn luyện Người nhái Frømandskorpset' : null);
+
+    row('dk_christiansborg_proclamation', 'Bàn giao tại Hội đồng Nhà nước & Tuyên bố đăng quang tối giản từ ban công Cung điện Christiansborg (mặc quân phục, không đội vương miện)', 18, 99, function (r, log) {
+      dk.christiansborgProclaimed = true; dk.noCrownMuseumOnly = true;
+      if (q.h.accession837) { q.h.accession837.ceremony = 'completed'; q.h.accession837.ceremonyAt = yr(l); q.h.accession837.noCrownBalcony848 = true; }
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 5, 0, 100);
+      log('Đan Mạch đã bỏ lễ đăng quang tôn giáo từ năm 1849. Ngay khi ký tuyên bố bàn giao quyền lực tại Hội đồng Nhà nước, Thủ tướng Đan Mạch bước ra ban công Cung điện Christiansborg hô vang ba lần trước hàng vạn người dân: "Đức vua/Nữ hoàng đã chuyển giao ngôi vị, Tân Quốc vương/Nữ hoàng vạn tuế!". Bạn xuất hiện trên ban công trong bộ quân phục chỉnh tề, vẫy chào nhân dân mà không đội bất kỳ vương miện nào (các báu vật hoàng gia chỉ trưng bày trong bảo tàng lịch sử).', 'big');
+    }, q.h.seat !== q.me.id ? 'Chỉ thực hiện khi lên ngôi Quốc vương/Nữ hoàng Đan Mạch' : dk.christiansborgProclaimed ? 'Đã cử hành lễ tuyên bố trên ban công Cung điện Christiansborg' : null);
+
+    row('dk_carriage_procession', 'Diễu hành xe ngựa cùng kỵ binh Hoàng gia qua phố phường Copenhagen trong không khí ấm áp "Hygge"', 18, 99, function (r, log) {
+      dk.carriageProcession = true;
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 3, 0, 100); H.fx(l, { hap: 3 });
+      log('Ngay sau lễ tuyên bố trên ban công, Vua và Hoàng hậu ngồi trên cỗ xe ngựa có lực lượng kỵ binh Hoàng gia hộ tống đi qua các con phố Copenhagen, nhận lời chúc tụng ấm áp và gần gũi theo đúng tinh thần "Hygge" của người Đan Mạch.', 'good');
+    }, q.h.seat !== q.me.id ? 'Dành cho Quốc vương/Nữ hoàng và phối ngẫu sau lễ tuyên bố' : null);
+
+    row('dk_secular_thanksgiving', 'Dự buổi lễ tạ ơn ngắn tại nhà thờ: mang tính dân sự, văn hóa và gắn kết dân tộc thay vì thần quyền', 18, 99, function (r, log) {
+      dk.secularThanksgiving = true;
+      R.st(l).cred = U.clamp((R.st(l).cred == null ? 60 : R.st(l).cred) + 2, 0, 100);
+      log('Vài ngày sau lễ lên ngôi, gia đình Hoàng gia tham dự buổi lễ tạ ơn ngắn gọn tại nhà thờ, mang đậm tính dân sự và văn hóa dân tộc thay vì nghi thức thần quyền.', 'good');
+    }, q.h.seat !== q.me.id ? 'Dành cho Quốc vương/Nữ hoàng sau khi lên ngôi' : null);
+
+    return out;
+  }, 5, 'Học tập');
+
+  // Mở rộng royalCeremony837 cho Na Uy (NO) và Đan Mạch (DK)
+  if (E.DEC.royalCeremony837) {
+    var oldCerMake = E.DEC.royalCeremony837.make, oldCerApply = E.DEC.royalCeremony837.apply;
+    E.DEC.royalCeremony837.make = function (l, r, arg) {
+      var d = oldCerMake.apply(this, arguments), q = A.context(l);
+      if (!q || !q.me) return d;
+      d.data.keys = d.data.keys || [];
+      function appendCer(k, label) {
+        var idx = String(d.opts.length);
+        d.data.keys.push(k);
+        d.opts.push({ k: idx, l: label, h: '' });
+      }
+      if (q.c === 'NO') {
+        d.text = 'Na Uy đã bỏ hoàn toàn lễ đăng quang truyền thống từ năm 1908: tân vương tuyên thệ trước Quốc hội (Storting) và nhận Lễ Ban Phước tại Nhà thờ Nidaros (Trondheim) với Vương miện chỉ đặt trên bàn thờ, tuyệt đối không đội. Quốc khánh 17/5 mặc Bunad vẫy chào đoàn diễu hành thiếu nhi thay vì duyệt binh quân sự; quốc yến ưu tiên sản vật địa phương bền vững.';
+        appendCer('open_no848', 'Mở nghi lễ Na Uy: Tuyên thệ Storting, Lễ Ban Phước Nidaros, Quốc khánh 17/5 & Đời thường giản dị');
+      } else if (q.c === 'DK') {
+        d.text = 'Đan Mạch đã bỏ lễ đăng quang tôn giáo từ năm 1849: chuyển giao quyền lực tại Hội đồng Nhà nước, Thủ tướng tuyên bố 3 lần trên ban công Cung điện Christiansborg, nhà vua mới mặc quân phục không đội vương miện, sau đó diễu hành xe ngựa ấm áp kiểu "Hygge" và dự lễ tạ ơn dân sự.';
+        appendCer('open_dk848', 'Mở nghi lễ Đan Mạch: Tuyên bố ban công Christiansborg, Diễu hành xe ngựa Hygge & Lễ tạ ơn');
+      }
+      return d;
+    };
+    E.DEC.royalCeremony837.apply = function (l, d, k, r, log) {
+      var key = d && d.data && d.data.keys && d.data.keys[Number(k)];
+      if (key === 'open_no848') { X.next(l, 'royalNorwayTrack848', r); return; }
+      if (key === 'open_dk848') { X.next(l, 'royalDenmarkTrack848', r); return; }
+      return oldCerApply.apply(this, arguments);
+    };
+  }
+
+  // ================= 8. Ấn Độ (IN): Hệ thống Đẳng cấp, Tôn giáo, Cải đạo & Hạn ngạch Suất học (SC/ST/OBC - 8.10.48) =================
+  var INDIA_CATEGORIES = {
+    SC: {
+      code: 'SC',
+      name: 'SC (Scheduled Castes — Nhóm các đẳng cấp bị áp bức, chủ yếu là Dalit)',
+      quotaShare: 0.15,
+      quotaLabel: '15% chỉ tiêu quốc gia',
+      cutoffIIT: 48,
+      cutoffAIIMS: 50,
+      tuitionWaiver: 1.0,
+      freeHostel: true,
+      stipendFactor: 0.18,
+      varnaOrigin: 'Bị coi là nằm ngoài hệ thống 4 đẳng cấp Varna (Panchama/Dalit) và bị gán định kiến "không sạch sẽ" về tâm linh trong các văn bản cổ như Manusmriti.'
+    },
+    ST: {
+      code: 'ST',
+      name: 'ST (Scheduled Tribes — Các bộ tộc thiểu số vùng sâu vùng xa / Adivasi)',
+      quotaShare: 0.075,
+      quotaLabel: '7.5% chỉ tiêu quốc gia',
+      cutoffIIT: 46,
+      cutoffAIIMS: 48,
+      tuitionWaiver: 1.0,
+      freeHostel: true,
+      stipendFactor: 0.18,
+      varnaOrigin: 'Cộng đồng bản địa vùng sâu vùng xa chịu thiệt thòi lịch sử về hạ tầng và tiếp cận giáo dục.'
+    },
+    OBC: {
+      code: 'OBC',
+      name: 'OBC (Other Backward Classes — Các tầng lớp trung gian tụt hậu về kinh tế - xã hội)',
+      quotaShare: 0.27,
+      quotaLabel: '27% chỉ tiêu quốc gia',
+      cutoffIIT: 60,
+      cutoffAIIMS: 63,
+      tuitionWaiver: 0.5,
+      freeHostel: false,
+      stipendFactor: 0.08,
+      varnaOrigin: 'Tầng lớp lao động/thủ công truyền thống (như Shudra — theo cổ thư Manusmriti mô tả sinh ra từ bàn chân thần Brahma) chịu tụt hậu kinh tế - xã hội.'
+    },
+    GEN: {
+      code: 'GEN',
+      name: 'General / Unreserved (Tầng lớp phổ thông trung bình trở lên, không thuộc diện hạn ngạch)',
+      quotaShare: 0.505,
+      quotaLabel: 'Cạnh tranh tự do (điểm chuẩn rất cao)',
+      cutoffIIT: 78,
+      cutoffAIIMS: 82,
+      tuitionWaiver: 0,
+      freeHostel: false,
+      stipendFactor: 0,
+      varnaOrigin: 'Nhóm phổ thông cạnh tranh trực tiếp theo điểm số chuẩn chung; áp lực cực lớn do dân số đông và chỉ tiêu ngành đỉnh cao (như Y khoa AIIMS, Kỹ thuật IIT) rất hạn hẹp.'
+    }
+  };
+
+  var SC_ELIGIBLE_FAITHS = ['Ấn Độ giáo', 'Hindu', 'Phật giáo', 'Phật giáo Navayana', 'Sikh giáo'];
+
+  function inIndia848(l) {
+    return H.resCode(l) === 'IN' || l.country === 'IN';
+  }
+
+  function indiaState848(l) {
+    var w = E.WORLD120.s(l);
+    if (!w.india848) {
+      var qFam = (l.fam && l.fam.q) || 2;
+      var rr = rng(l.id + ':india848');
+      var orig = qFam <= 1 ? (rr() < 0.65 ? 'SC' : 'ST') : qFam === 2 ? (rr() < 0.45 ? 'SC' : 'OBC') : qFam === 3 ? (rr() < 0.55 ? 'OBC' : 'GEN') : 'GEN';
+      var curFaith = l.religion || 'Ấn Độ giáo';
+      var scLost = orig === 'SC' && !SC_ELIGIBLE_FAITHS.includes(curFaith);
+      w.india848 = {
+        origCategory: orig,
+        activeCategory: scLost ? 'GEN' : orig,
+        faith: curFaith,
+        scQuotaLostByConversion: scLost,
+        socialStigmaRemains: orig === 'SC' || orig === 'ST',
+        navayanaConverted: false,
+        admittedInst: null,
+        scholarshipClaimed: false,
+        socialMobilityCivil: false,
+        debatedQuota: false,
+        acted: {}
+      };
+    }
+    return w.india848;
+  }
+
+  function syncIndiaCategory848(l, st) {
+    st = st || indiaState848(l);
+    if (st.origCategory === 'SC') {
+      if (SC_ELIGIBLE_FAITHS.includes(st.faith)) {
+        st.activeCategory = 'SC';
+        st.scQuotaLostByConversion = false;
+      } else {
+        st.activeCategory = 'GEN';
+        st.scQuotaLostByConversion = true;
+        st.socialStigmaRemains = true;
+      }
+    } else {
+      st.activeCategory = st.origCategory;
+    }
+    return st;
+  }
+
+  X.menu('indiaQuotaFaith848', 'Hệ thống Đẳng cấp, Tôn giáo, Cải đạo & Hạn ngạch Suất học (Ấn Độ)', function (l) {
+    if (!l.alive || !inIndia848(l)) return 'Áp dụng khi sinh sống và học tập tại Ấn Độ';
+    return X.reason(l, 12);
+  }, function (l) {
+    var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, origCat = INDIA_CATEGORIES[st.origCategory] || cat;
+    var lossNote = st.scQuotaLostByConversion
+      ? '⚠ Giao thoa pháp lý – tôn giáo: Xuất thân là Dalit (SC), nhưng do cải đạo sang ' + st.faith + ' (ngoài Hindu giáo, Phật giáo và Sikh giáo), bạn bị mất tư cách pháp lý SC và mất suất học bổng/hạn ngạch 15% (với lý do pháp lý rằng Kitô giáo/Hồi giáo về giáo lý không công nhận đẳng cấp), dù định kiến xã hội thực tế vẫn chưa biến mất.\n'
+      : '';
+    return '• Nguồn gốc lịch sử & tôn giáo: ' + origCat.varnaOrigin + ' Học thuyết Nghiệp và Luân hồi từng bị dùng để thuyết phục tầng lớp thấp chấp nhận số phận.\n' +
+      '• Danh mục pháp lý Hiến pháp Ấn Độ hiện tại: ' + cat.name + ' (' + cat.quotaLabel + '). Tôn giáo hiện tại: ' + st.faith + '.\n' +
+      lossNote +
+      '• Ngưỡng điểm chuẩn mô phỏng: Kỹ thuật IIT (' + cat.cutoffIIT + '/100) · Y khoa AIIMS (' + cat.cutoffAIIMS + '/100, ngành cực kỳ đắt đỏ và giới hạn chỉ tiêu khắt khe).' +
+      (st.admittedInst ? '\n• Trường đã trúng tuyển: ' + st.admittedInst + (st.scholarshipClaimed ? ' (đã nhận miễn học phí, ký túc xá & trợ cấp)' : '') + '.' : '');
+  }, function (l) {
+    if (!inIndia848(l)) return [];
+    var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, out = [];
+    function row(k, label, min, run, why) {
+      if (l.age < min) return;
+      out.push({ k: k, l: label, why: why || st.acted[k] === yr(l) ? why || 'Đã thực hiện năm nay' : true, run: function (l, r, log) { if (st.acted[k] === yr(l)) return; st.acted[k] = yr(l); run(r, log); } });
+    }
+
+    // 1. Làn sóng cải đạo sang Phật giáo Tân xe (Navayana - B.R. Ambedkar 1956)
+    if (st.origCategory === 'SC' || st.origCategory === 'OBC' || st.origCategory === 'ST') {
+      row('convert_navayana', 'Cải đạo sang Phật giáo Tân xe (Navayana – truyền thống Tiến sĩ B.R. Ambedkar 1956): thoát kỳ thị đẳng cấp & vẫn giữ nguyên hạn ngạch SC', 14, function (r, log) {
+        st.faith = 'Phật giáo Navayana'; l.religion = 'Phật giáo';
+        st.navayanaConverted = true;
+        syncIndiaCategory848(l, st);
+        H.fx(l, { hap: 4, kno: 2 });
+        log('Noi gương phong trào năm 1956 của Tiến sĩ B.R. Ambedkar (cha đẻ Hiến pháp Ấn Độ, người dẫn dắt hơn 365.000 người Dalit cải đạo), bạn chuyển sang Phật giáo Tân xe (Navayana): bác bỏ thuyết định mệnh đẳng cấp của Manusmriti để tìm tự do tinh thần, đồng thời theo luật Ấn Độ vẫn giữ nguyên tư cách SC (15% chỉ tiêu) cùng toàn bộ học bổng.', 'big');
+      }, st.faith === 'Phật giáo Navayana' ? 'Đang theo Phật giáo Navayana' : null);
+
+      row('convert_christian_islam', 'Cải đạo sang Kitô giáo hoặc Hồi giáo để tìm bình đẳng giáo lý (Lưu ý pháp lý: sẽ bị tước tư cách hạn ngạch SC)', 14, function (r, log) {
+        var nextFaith = r() < 0.5 ? 'Kitô giáo' : 'Hồi giáo';
+        st.faith = nextFaith; l.religion = nextFaith === 'Kitô giáo' ? 'Công giáo' : 'Hồi giáo';
+        syncIndiaCategory848(l, st);
+        H.fx(l, { hap: 1 });
+        if (st.origCategory === 'SC') {
+          log('Bạn cải đạo sang ' + nextFaith + ' để thoát khỏi sự phân biệt tâm linh của hệ thống đẳng cấp cũ. Tuy nhiên, theo quy định pháp lý hiện hành tại Ấn Độ (chỉ công nhận SC cho người theo Hindu, Phật giáo và Sikh giáo vì coi Kitô giáo/Hồi giáo không có đẳng cấp), bạn bị mất tư cách pháp lý SC cùng các suất học bổng/điểm chuẩn ưu tiên, dù sự kỳ thị xã hội ngoài đời thực vẫn chưa giảm bớt.', 'bad');
+        } else {
+          log('Bạn cải đạo sang ' + nextFaith + ' theo lựa chọn niềm tin cá nhân.', 'neutral');
+        }
+      }, ['Kitô giáo', 'Hồi giáo'].includes(st.faith) ? 'Đã cải đạo sang ' + st.faith : null);
+    }
+
+    // 2. Thi tuyển vào IIT (Kỹ thuật) hoặc AIIMS (Y khoa) với cơ chế Hạn ngạch (SC 15%, ST 7.5%, OBC 27% vs General)
+    row('apply_iit', 'Ứng tuyển Học viện Công nghệ Ấn Độ (IIT) — Điểm chuẩn nhóm ' + st.activeCategory + ': ' + cat.cutoffIIT + '/100', 17, function (r, log) {
+      var score = Math.round(l.st.kno || 50);
+      if (score < cat.cutoffIIT) {
+        log('Điểm học lực hiện tại (' + score + '/100) chưa đạt ngưỡng trúng tuyển IIT của nhóm ' + st.activeCategory + ' (cần ' + cat.cutoffIIT + '/100).' + (st.scQuotaLostByConversion ? ' Do đã mất tư cách SC sau khi cải đạo sang ' + st.faith + ', bạn phải cạnh tranh ở ngưỡng điểm rất cao của nhóm General (78/100).' : ''), 'bad');
+        return;
+      }
+      st.admittedInst = 'IIT (Học viện Công nghệ Ấn Độ)';
+      l.school = 'uni'; l.major = 'it'; l.schoolEnd = Math.max(l.schoolEnd || 0, l.age + 4);
+      H.fx(l, { kno: 5, hap: 4 });
+      log('Trúng tuyển vào ' + st.admittedInst + ' theo diện ' + cat.name + '! ' + (st.activeCategory === 'GEN' ? 'Bạn vượt qua tỷ lệ chọi khốc liệt của nhóm phổ thông (General).' : 'Chính sách hạn ngạch Hiến pháp (' + cat.quotaLabel + ') với mức điểm chuẩn phù hợp đã mở cánh cửa đại học danh tiếng cho bạn.'), 'big');
+    }, st.admittedInst ? 'Đã trúng tuyển ' + st.admittedInst : null);
+
+    row('apply_aiims', 'Ứng tuyển Viện Khoa học Y khoa Toàn Ấn (AIIMS – Ngành Y) — Điểm chuẩn nhóm ' + st.activeCategory + ': ' + cat.cutoffAIIMS + '/100', 17, function (r, log) {
+      var score = Math.round(l.st.kno || 50);
+      var medCost = l.base * (1 - cat.tuitionWaiver) * 1.4;
+      if (score < cat.cutoffAIIMS) {
+        log('Ngành Y tại AIIMS là một trong những ngành có điểm chuẩn cao nhất và giới hạn chỉ tiêu khắt khe nhất: điểm của bạn (' + score + '/100) chưa đạt mức ' + cat.cutoffAIIMS + '/100 của diện ' + st.activeCategory + '.', 'bad');
+        return;
+      }
+      if (cat.tuitionWaiver < 1 && l.money < medCost && ((l.fam && l.fam.q) || 2) < 4) {
+        log('Dù đủ điểm, ngành Y đòi hỏi chi phí rất lớn (' + H.money(l, medCost) + ') trong khi bạn không thuộc diện miễn toàn bộ học phí SC/ST và gia đình chưa đủ điều kiện kinh tế.', 'bad');
+        return;
+      }
+      if (medCost > 0 && l.money >= medCost) H.cash(l, -medCost, 'Học phí ngành Y (AIIMS)');
+      st.admittedInst = 'AIIMS (Viện Khoa học Y khoa Toàn Ấn)';
+      l.school = 'uni'; l.major = 'med'; l.schoolEnd = Math.max(l.schoolEnd || 0, l.age + 5);
+      H.fx(l, { kno: 6, hap: 5 });
+      log('Bạn đỗ vào ngành Y danh giá tại ' + st.admittedInst + ' (diện ' + st.activeCategory + ')! ' + (cat.tuitionWaiver === 1 ? 'Nhờ chính sách hỗ trợ SC/ST tại trường công lập, bạn được miễn học phí để theo đuổi ngành Y đắt đỏ.' : 'Bạn vượt qua cả rào cản điểm số cực cao lẫn chi phí đắt đỏ của ngành Y.'), 'big');
+    }, st.admittedInst ? 'Đã trúng tuyển ' + st.admittedInst : null);
+
+    // 3. Nhận gói học bổng, miễn học phí, ký túc xá miễn phí & trợ cấp sinh hoạt cho SC/ST/OBC
+    if (['SC', 'ST', 'OBC'].includes(st.activeCategory)) {
+      row('claim_sc_st_support', 'Nhận gói hỗ trợ trường công lập (' + st.activeCategory + '): miễn/giảm học phí, ký túc xá miễn phí & trợ cấp sinh hoạt', 17, function (r, log) {
+        st.scholarshipClaimed = true;
+        var stipend = Math.round(l.base * cat.stipendFactor);
+        if (stipend > 0) H.cash(l, stipend, 'Trợ cấp sinh hoạt & học bổng diện ' + st.activeCategory);
+        H.fx(l, { hap: 3, kno: 2 });
+        log('Trường đại học công lập cấp cho bạn gói hỗ trợ diện ' + st.activeCategory + ': ' + (cat.freeHostel ? 'miễn 100% học phí, bố trí ký túc xá miễn phí và cấp trợ cấp sinh hoạt ' : 'hỗ trợ 50% học phí và phụ cấp học tập ') + H.money(l, stipend) + '.', 'good');
+      }, !st.admittedInst && l.school !== 'uni' ? 'Cần đang theo học đại học công lập (như IIT, AIIMS...)' : st.scholarshipClaimed ? 'Đã nhận gói học bổng & ký túc xá' : null);
+    }
+
+    // 4. Sự dịch chuyển xã hội: Trở thành trí thức, công chức, chính trị gia từ tầng lớp thấp
+    row('social_mobility_civil', 'Thi tuyển Công chức / Vị trí Lãnh đạo công (Hạn ngạch việc làm công): tạo bước dịch chuyển vị thế xã hội ngoạn mục', 21, function (r, log) {
+      st.socialMobilityCivil = true;
+      H.fx(l, { kno: 3, soc: 4, hap: 4 });
+      H.cash(l, Math.round(l.base * 0.45), 'Lương & phụ cấp công chức nhà nước Ấn Độ');
+      log('Nhờ hệ thống hạn ngạch trong giáo dục và tuyển dụng việc làm công của Hiến pháp Ấn Độ, bạn gia nhập đội ngũ trí thức và công chức nhà nước — hoàn thành cuộc dịch chuyển vị thế xã hội ngoạn mục so với xuất thân ban đầu.', 'big');
+    }, (l.st.kno || 50) < (['SC', 'ST'].includes(st.activeCategory) ? 50 : st.activeCategory === 'OBC' ? 58 : 72) ? 'Cần trau dồi thêm kiến thức để vượt qua kỳ thi tuyển công chức' : st.socialMobilityCivil ? 'Đã đạt bước tiến công chức / trí thức' : null);
+
+    // 5. Xung đột & tranh luận xã hội về hệ thống hạn ngạch
+    row('quota_social_debate', 'Tham gia diễn đàn xã hội về tranh cãi Hạn ngạch (SC/ST/OBC) vs. Cạnh tranh điểm số (General)', 16, function (r, log) {
+      st.debatedQuota = true;
+      H.fx(l, { kno: 2, soc: 2 });
+      log('Cuộc tranh luận tại Ấn Độ diễn ra gay gắt: nhiều học sinh nhóm phổ thông (General) biểu tình vì cho rằng hạn ngạch 49.5% (SC 15%, ST 7.5%, OBC 27%) làm nhiều thí sinh điểm cao bị trượt vì hết chỉ tiêu — nhất là ở những ngành cực kỳ đắt đỏ và khan hiếm chỗ như Y khoa giữa quy mô dân số khổng lồ; trong khi phía ủng hộ nhấn mạnh hạn ngạch là công cụ hiến định thiết yếu để bù đắp hàng thế kỷ bất công đẳng cấp và rào cản kinh tế.', 'neutral');
+    });
+
+    return out;
+  }, 12, 'Học tập');
+
+  // Tích hợp lối tắt vào quyết định đại học (E.DEC.uni) khi sống tại Ấn Độ (IN)
+  if (E.DEC.uni) {
+    var oldUniMake848 = E.DEC.uni.make, oldUniApply848 = E.DEC.uni.apply;
+    E.DEC.uni.make = function (l, r) {
+      var d = oldUniMake848.apply(this, arguments);
+      if (inIndia848(l) && !l.abroad) {
+        var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN;
+        d.opts.push({
+          k: 'india_quota848',
+          l: 'Xét tuyển Đại học Công lập Ấn Độ (IIT / AIIMS) theo diện ' + st.activeCategory + ' (' + cat.quotaLabel + ')',
+          h: 'Điểm chuẩn IIT ' + cat.cutoffIIT + ', AIIMS ' + cat.cutoffAIIMS + (cat.freeHostel ? ' · Miễn học phí & ký túc xá SC/ST' : '')
+        });
+      }
+      return d;
+    };
+    E.DEC.uni.apply = function (l, d, k, r, log) {
+      if (k === 'india_quota848' && inIndia848(l)) {
+        X.next(l, 'indiaQuotaFaith848', r);
+        return;
+      }
+      return oldUniApply848.apply(this, arguments);
+    };
+  }
+
+  E.ROYAL848 = {
+    INDIA_CATEGORIES: INDIA_CATEGORIES,
+    SC_ELIGIBLE_FAITHS: SC_ELIGIBLE_FAITHS,
+    indiaState848: indiaState848,
+    syncIndiaCategory848: syncIndiaCategory848
+  };
 
   E.ROYAL847 = {
     NANNY_LANG: NANNY_LANG,

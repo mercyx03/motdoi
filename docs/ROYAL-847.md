@@ -42,3 +42,25 @@
 - Các gia tộc hoàng gia trong game giữ tên nhà hư cấu để đảm bảo nguyên tắc mô phỏng an toàn; nghi thức, địa danh và quy tắc văn hóa – hiến định được mô hình hóa phục vụ trải nghiệm gameplay.
 - Chưa chạy toàn bộ `tests/regression.js` trên mã cuối (chuyển sang GĐ6 theo chiến lược kiểm thử hiện hành).
 - Không chạm các file bẩn có sẵn ngoài phạm vi (`public/js/healthsys919.js`, `tests/world-country-jobs832-browser.js`, `tests/healthsys-rx-cap.js`).
+
+
+## Bổ sung 8.10.48 — Hoàng gia Na Uy, Hoàng gia Đan Mạch & Hạn ngạch Suất học / Tôn giáo Ấn Độ
+
+5. **Đào tạo Người kế vị & Nghi lễ Hoàng gia Na Uy (`royalNorwayTrack848`)**
+   - Định hướng rèn thành "công dân kiểu mẫu" trước khi trở thành vị vua: học trường mẫu giáo và phổ thông công lập địa phương (trường làng), tự đi bộ đến trường cùng trẻ em thường dân.
+   - Quân sự bắt buộc (bờ biển dài & chiến lược NATO): Học viện Hải quân / Không quân Hoàng gia và 12 tháng thực chiến tại Tiểu đoàn Công binh Quốc gia (`Ingeniørbataljonen`).
+   - Đại học tập trung Khoa học Chính trị, Luật Hiến pháp và Phát triển Bền vững / Môi trường; được phép du học nước ngoài.
+   - Nghi lễ thế tục (bỏ đăng quang truyền thống từ năm 1908): tuyên thệ trước Quốc hội (`Storting`), Lễ Ban Phước (`Consecration/Blessing`) tại Nhà thờ Nidaros ở Trondheim với Vương miện chỉ đặt trên bàn thờ làm biểu tượng lịch sử (tuyệt đối không đội); Quốc khánh 17/5 "không duyệt binh" mặc trang phục `Bunad` trên ban công Cung điện Oslo vẫy chào đoàn diễu hành thiếu nhi; đời thường tự lái xe / đi phương tiện công cộng; quốc yến ưu tiên sản vật địa phương thân thiện môi trường.
+
+6. **Đào tạo Người kế vị & Nghi lễ Hoàng gia Đan Mạch (`royalDenmarkTrack848`)**
+   - Hòa nhập hệ thống trường công lập: học trường tiểu học công lập `Tranegårdskolen` bình đẳng cùng con em thợ điện, kỹ sư tại Copenhagen.
+   - Đại học & Quốc tế: học Khoa học Chính trị tại Đại học Aarhus, du học Đại học Harvard (Mỹ) dưới tên giả để tránh truyền thông.
+   - Quân sự chuyên sâu: khóa đào tạo Sĩ quan tại Doanh trại `Antvorskov` và khóa huấn luyện sinh tồn khắc nghiệt của Lực lượng Người nhái Tinh nhuệ thuộc Hải quân Đan Mạch (`Frømandskorpset`).
+   - Nghi lễ tối giản (bỏ đăng quang tôn giáo từ năm 1849): bàn giao quyền lực tại Hội đồng Nhà nước; Thủ tướng tuyên bố 3 lần trên ban công Cung điện `Christiansborg`; nhà vua mới xuất hiện trong bộ quân phục không đội vương miện (báu vật hoàng gia chỉ trưng bày trong bảo tàng); diễu hành xe ngựa ấm áp theo văn hóa `Hygge` và lễ tạ ơn dân sự tại nhà thờ.
+
+7. **Ấn Độ (`IN`): Hệ thống Đẳng cấp, Tôn giáo, Cải đạo & Hạn ngạch Suất học (`indiaQuotaFaith848`)**
+   - Nguồn gốc đẳng cấp trong cổ thư Hindu (`Manusmriti`, thuyết Nghiệp & Luân hồi) và làn sóng cải đạo sang Phật giáo Tân xe (`Navayana` năm 1956 do Tiến sĩ B.R. Ambedkar khởi xướng).
+   - Hệ thống hạn ngạch Hiến pháp Ấn Độ: `SC` (15% chỉ tiêu, chủ yếu là Dalit), `ST` (7.5% chỉ tiêu, bộ tộc thiểu số), `OBC` (27% chỉ tiêu, tầng lớp trung gian tụt hậu) so với `General` (cạnh tranh điểm chuẩn rất cao tại `IIT`, `AIIMS`). Sinh viên `SC`/`ST` được miễn học phí, ký túc xá miễn phí và trợ cấp sinh hoạt.
+   - Giao thoa pháp lý – tôn giáo: người Dalit cải đạo sang Phật giáo Navayana / Sikh giáo vẫn giữ tư cách pháp lý `SC`; nhưng nếu cải đạo sang Kitô giáo hoặc Hồi giáo thì bị mất tư cách pháp lý `SC` và mất suất học bổng/hạn ngạch ưu tiên dù định kiến xã hội thực tế chưa biến mất.
+   - Dịch chuyển xã hội vào hàng ngũ trí thức/công chức và tranh luận xã hội gay gắt giữa nhóm General và nhóm hạn ngạch.
+   - Đánh dấu phát hành (`released`) cho cả hai mục nhật ký `8.10.47` và `8.10.48` theo yêu cầu của chủ dự án.

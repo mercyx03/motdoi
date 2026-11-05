@@ -1,12 +1,35 @@
 {
-  "generatedAt": "2026-11-05T06:52:34.917Z",
+  "generatedAt": "2026-11-05T08:06:28.697Z",
   "entries": [
+    {
+      "id": "nordic-heirs-india-quota-81048",
+      "version": "8.10.48",
+      "publishedAt": "2026-11-05T14:57:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T07:57:23.000Z",
+      "title": "Đào tạo người kế vị Na Uy – Đan Mạch, nghi lễ không vương miện và hạn ngạch suất học Ấn Độ",
+      "summary": "Thêm lộ trình trường công lập và nghi lễ của Hoàng gia Na Uy, Đan Mạch cùng hệ thống đẳng cấp, cải đạo và hạn ngạch đại học tại Ấn Độ.",
+      "tags": [
+        "Tính năng",
+        "Học tập",
+        "Đời sống",
+        "Gia đình"
+      ],
+      "details": [
+        "Người thừa kế Hoàng gia Na Uy được rèn thành công dân kiểu mẫu trước khi lên ngôi: học trường mẫu giáo và phổ thông công lập địa phương (trường làng), tự đi bộ đến trường cùng trẻ thường dân; đào tạo quân sự tại Học viện Hải quân, Không quân và 12 tháng thực chiến tại Tiểu đoàn Công binh Quốc gia; học đại học về Khoa học Chính trị, Luật Hiến pháp, Phát triển Bền vững / Môi trường và được phép du học nước ngoài.",
+        "Nghi lễ Hoàng gia Na Uy (bỏ đăng quang truyền thống từ năm 1908): tân vương tuyên thệ trước Quốc hội Storting và nhận Lễ Ban Phước tại Nhà thờ Nidaros (Trondheim) với Vương miện chỉ đặt trên bàn thờ làm biểu tượng lịch sử, tuyệt đối không đội. Ngày Quốc khánh 17/5 không duyệt binh quân sự mà mặc trang phục truyền thống Bunad đứng trên ban công Cung điện Oslo vẫy chào đoàn diễu hành thiếu nhi; đời thường tự lái xe hoặc đi phương tiện công cộng, quốc yến ưu tiên sản vật địa phương thân thiện môi trường.",
+        "Người thừa kế Hoàng gia Đan Mạch phá vỡ truyền thống gia sư biệt lập: học trường tiểu học công lập Tranegårdskolen bình đẳng cùng con em thợ điện, kỹ sư Copenhagen; học Khoa học Chính trị tại Đại học Aarhus, du học Đại học Harvard dưới tên giả để tránh truyền thông; rèn quân sự tại khóa Sĩ quan Doanh trại Antvorskov và khóa huấn luyện sinh tồn khắc nghiệt của Lực lượng Người nhái Hải quân (Frømandskorpset).",
+        "Nghi lễ Hoàng gia Đan Mạch (bỏ đăng quang tôn giáo từ năm 1849): bàn giao quyền lực tại Hội đồng Nhà nước, Thủ tướng bước ra ban công Cung điện Christiansborg tuyên bố ba lần trước thần dân, nhà vua mới mặc quân phục xuất hiện trên ban công mà không đội vương miện, sau đó diễu hành xe ngựa ấm áp theo văn hóa Hygge và dự lễ tạ ơn dân sự tại nhà thờ.",
+        "Tại Ấn Độ, bổ sung chiều sâu về nguồn gốc đẳng cấp trong cổ thư Hindu, phong trào cải đạo sang Phật giáo Tân xe (Navayana năm 1956 của Tiến sĩ B.R. Ambedkar) và hệ thống hạn ngạch Hiến pháp SC (15%), ST (7.5%), OBC (27%) khi thi tuyển đại học danh tiếng (IIT, AIIMS ngành Y) và công chức: điểm chuẩn thấp hơn, miễn học phí, ký túc xá miễn phí và trợ cấp sinh hoạt cho SC/ST; mô phỏng nghịch lý pháp lý khi người Dalit cải đạo sang Kitô giáo hoặc Hồi giáo bị mất tư cách hạn ngạch SC dù định kiến xã hội chưa biến mất, cùng các cuộc tranh luận xã hội về chỉ tiêu đại học."
+      ],
+      "correctedAt": "2026-11-05T08:06:28.768Z"
+    },
     {
       "id": "royal-upbringing-births-81047",
       "version": "8.10.47",
       "publishedAt": "2026-11-05T06:52:32.809Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T07:57:23.000Z",
       "title": "Đào tạo người kế vị, tuổi thơ quý tộc và nghi thức đón em bé hoàng gia",
       "summary": "Bổ sung lộ trình đào tạo người kế vị Thụy Điển, bảo mẫu đa ngôn ngữ, trường nội trú, quy tắc an ninh và nghi thức chào mừng em bé theo từng hoàng gia châu Âu.",
       "tags": [
@@ -20,7 +43,8 @@
         "Các em bé hoàng gia có bảo mẫu châu Âu giúp học ngoại ngữ tự nhiên từ nhỏ và rèn tính tự lập theo độ tuổi; Hoàng gia Anh học thêm tiếng Wales, Hoàng gia Đan Mạch và Bắc Âu học thêm ngôn ngữ láng giềng Thụy Điển, Na Uy. Từ 5–6 tuổi bắt đầu theo cha mẹ dự sự kiện trang nghiêm; từ 7–8 tuổi tách máy bay và xe hộ tống riêng để bảo vệ danh sách kế vị.",
         "Tuổi thiếu niên có trường nội trú quý tộc chia khu nam nữ, rèn luyện cưỡi ngựa Polo, múa ba lê, bắn cung, thuyền buồm, khiêu vũ, thưởng trà, đánh cờ, đàn Harp, hội họa và thơ ca. Ra ngoài có vệ sĩ hộ tống giữ khoảng cách, kết bạn đa dạng và giữ lối sống giản dị kiểu Bắc Âu; tài khoản chính thức do đội ngũ truyền thông vận hành, hạn chế tự ý dùng mạng xã hội hoặc chỉ dùng tài khoản ẩn danh.",
         "Danh hiệu của người bạn đời tự động cập nhật khi kết hôn, khi trở thành người kế vị đứng đầu hoặc khi đăng quang. Nghi thức đón em bé hoàng gia phân biệt sinh đơn thuận lợi với sinh mổ và đa thai (sinh đôi, sinh ba, sinh tư cực hiếm có thứ tự kế vị theo phút chào đời), kèm bắn đại bác đúng giờ tại Anh, Na Uy, Thụy Điển, thắp đèn màu danh thắng London, chụp ảnh ra mắt theo truyền thống Anh, Na Uy, Bỉ, Thụy Điển, Tây Ban Nha, Đan Mạch, Monaco, xét duyệt tên 6 vị trí kế vị đầu và lễ rửa tội mặc váy thời Victoria có đủ hai bên nội ngoại."
-      ]
+      ],
+      "correctedAt": "2026-11-05T08:06:28.779Z"
     },
     {
       "id": "first-birthday-objects-81046",
