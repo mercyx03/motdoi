@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-05T01:03:05.585Z",
+  "generatedAt": "2026-11-05T06:52:34.917Z",
   "entries": [
+    {
+      "id": "royal-upbringing-births-81047",
+      "version": "8.10.47",
+      "publishedAt": "2026-11-05T06:52:32.809Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Đào tạo người kế vị, tuổi thơ quý tộc và nghi thức đón em bé hoàng gia",
+      "summary": "Bổ sung lộ trình đào tạo người kế vị Thụy Điển, bảo mẫu đa ngôn ngữ, trường nội trú, quy tắc an ninh và nghi thức chào mừng em bé theo từng hoàng gia châu Âu.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Người thừa kế Hoàng gia Thụy Điển có lộ trình học tập trong nước theo Hiến pháp: nghĩa vụ quân sự cơ bản, chiến thuật sinh tồn, khóa sĩ quan ba quân chủng (Lục quân, Hải quân, Không quân), học sâu về Quốc hội Riksdag, Bộ Ngoại giao, thực tập ngắn hạn tại Liên Hợp Quốc hoặc đại sứ quán và thông thạo tiếng Thụy Điển, Anh, Pháp, Đức; khi lên ngôi giữ cấp bậc tối cao của ba quân chủng.",
+        "Các em bé hoàng gia có bảo mẫu châu Âu giúp học ngoại ngữ tự nhiên từ nhỏ và rèn tính tự lập theo độ tuổi; Hoàng gia Anh học thêm tiếng Wales, Hoàng gia Đan Mạch và Bắc Âu học thêm ngôn ngữ láng giềng Thụy Điển, Na Uy. Từ 5–6 tuổi bắt đầu theo cha mẹ dự sự kiện trang nghiêm; từ 7–8 tuổi tách máy bay và xe hộ tống riêng để bảo vệ danh sách kế vị.",
+        "Tuổi thiếu niên có trường nội trú quý tộc chia khu nam nữ, rèn luyện cưỡi ngựa Polo, múa ba lê, bắn cung, thuyền buồm, khiêu vũ, thưởng trà, đánh cờ, đàn Harp, hội họa và thơ ca. Ra ngoài có vệ sĩ hộ tống giữ khoảng cách, kết bạn đa dạng và giữ lối sống giản dị kiểu Bắc Âu; tài khoản chính thức do đội ngũ truyền thông vận hành, hạn chế tự ý dùng mạng xã hội hoặc chỉ dùng tài khoản ẩn danh.",
+        "Danh hiệu của người bạn đời tự động cập nhật khi kết hôn, khi trở thành người kế vị đứng đầu hoặc khi đăng quang. Nghi thức đón em bé hoàng gia phân biệt sinh đơn thuận lợi với sinh mổ và đa thai (sinh đôi, sinh ba, sinh tư cực hiếm có thứ tự kế vị theo phút chào đời), kèm bắn đại bác đúng giờ tại Anh, Na Uy, Thụy Điển, thắp đèn màu danh thắng London, chụp ảnh ra mắt theo truyền thống Anh, Na Uy, Bỉ, Thụy Điển, Tây Ban Nha, Đan Mạch, Monaco, xét duyệt tên 6 vị trí kế vị đầu và lễ rửa tội mặc váy thời Victoria có đủ hai bên nội ngoại."
+      ]
+    },
     {
       "id": "first-birthday-objects-81046",
       "version": "8.10.46",

@@ -269,3 +269,5 @@ GĐ6 — 8.10.45: còn regression toàn bộ, thiết bị thật, bản lưu th
 
 
 GĐ6 — 8.10.46: còn regression toàn bộ, thiết bị thật, save người góp ý thật và binding Pages REVIEWS_DB. Giữ lọc ngân sách theo xác nhận lại của chủ dự án; nghề tương lai là hướng rèn luyện, không bổ nhiệm nghề lúc một tuổi. Chi tiết docs/OBJECTS-846.md.
+
+GĐ6 — 8.10.47: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu hoàng gia nhiều thế hệ thật của người chơi và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn mô phỏng: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.

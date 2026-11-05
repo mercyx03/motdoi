@@ -89,6 +89,7 @@
     h.seat = next.id; next.role = 'sovereign'; if(E.ROYAL837)E.ROYAL837.accession(l,h,next,sov,log); grant(next, 'sovereign', 'substantive', true, 'kế vị', yr(l));
     (next.titles || []).forEach(function (t) { if (t.key === 'wales') t.lost = 'trở thành người trị vì'; });
     var sp = next.spouse && byId(h, next.spouse); if (sp) grant(sp, 'consort', 'courtesy', false, 'phối ngẫu của người trị vì', yr(l));
+    if(E.ROYAL847&&E.ROYAL847.syncTitles)E.ROYAL847.syncTitles(l,h,next,sov,log);
     if (log && st(l).met[h.cc]) log(h.name + ' (' + cname(h.cc) + ', nhân vật hư cấu): ' + next.name + ' kế vị ngai theo thứ tự kế vị.', 'neutral');
   }
   function houseYear(l, h, log) {
