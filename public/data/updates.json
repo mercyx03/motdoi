@@ -2,6 +2,30 @@
   "generatedAt": "2026-11-05T01:03:05.585Z",
   "entries": [
     {
+      "id": "family-milestones-81044",
+      "version": "8.10.44",
+      "publishedAt": "2026-11-05T08:22:39.185+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Lớn lên cùng gia đình và lưu kỷ niệm đón bé",
+      "summary": "Lịch làm nhẹ, ngân sách học tập, lựa chọn ở chung và lễ đón em bé có thêm cách thu xếp phù hợp từng gia đình.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Trẻ dưới 4 tuổi tiếp tục tự phản ứng; lần bốc đồ chơi đầu đời nay giữ lựa chọn ổn định theo nhân vật và sở thích đã bộc lộ. Từ 4 tuổi mới mở hành động chủ động, giới hạn theo tuổi và người chăm sóc.",
+        "Từ 13 tuổi có thể bàn lịch làm nhẹ 6 hoặc 12 giờ mỗi tuần trong một đợt; từ 16 tuổi có thêm lịch 16 giờ. Thu nhập theo lịch đã chọn, vẫn giữ trường học. Ca làm chính thức còn phụ thuộc tuổi và giấy phép nơi cư trú; nhận việc không khai báo có thể bị phát hiện, dừng ca và cơ sở bị xử phạt.",
+        "Có thể tiếp tục ở cùng bố mẹ sau khi đi làm hoặc kết hôn, cùng góp hóa đơn hoặc thu xếp ra riêng. Tiền hỗ trợ dọn nhà được kiểm tra và ghi vào ngân sách gia đình; trưởng thành không tự đồng nghĩa ngừng được hỗ trợ học tập.",
+        "Sinh viên ở Hoa Kỳ có thể bàn mức gia đình hỗ trợ 25%, 50%, 75% hoặc toàn bộ phần còn lại, hoặc tự lo. Học bổng trừ trước học phí, cộng sinh hoạt rồi mới xét khả năng gia đình, tiền riêng và khoản thiếu cần vay; không tự tăng mức chi vượt ngân sách thực tế.",
+        "Điều chỉnh cơ hội có thai trong một đợt thử mỗi năm cho các nhóm dưới 35, dưới 40 và dưới 45 tuổi, vẫn giảm theo tuổi và không bảo đảm thành công. Có trạng thái mãn kinh được giữ trong bản lưu và chặn thụ thai tự nhiên; các lựa chọn điều trị, nhận nuôi hoặc mang thai hộ tiếp tục theo điều kiện hiện có.",
+        "Có mục Lễ đón bé, Baek-il và tiệc gia đình trong năm sinh. Gia đình Việt có thể chọn cúng Mụ theo nếp nhà hoặc tiệc không nghi lễ; gia đình Kitô giáo có tiệc mừng riêng với nghi lễ nhà thờ được ghi độc lập. Tại Hàn Quốc, có Baek-il chụp ảnh, Hanbok, tiệc nhỏ và cầu nguyện theo đức tin; lễ Samshin chỉ xuất hiện như lựa chọn tự nguyện phù hợp.",
+        "Mỗi bé có thể tổ chức tại nhà, chọn ảnh studio và tiệc vừa, hoặc sự kiện lớn khi đủ tiền dự phòng. Chi phí, ảnh, quy mô khách và quà dùng cho bé được lưu riêng; có thể hoãn mà không mất tình cảm. Tiệc không tự thực hiện phép rửa, không tổ chức lặp để kiếm lời từ quà."
+      ]
+    },
+    {
       "id": "royal-continuity-81043",
       "version": "8.10.43",
       "publishedAt": "2026-11-05T08:02:46.989+07:00",

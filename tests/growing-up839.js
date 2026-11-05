@@ -45,7 +45,7 @@ function offered(l,id,key){const d=E.DEC[id].make(l,()=>0),i=String(d.data.keys.
 }
 {
   const l=life('GB',29);l.sex='F';l.partner={name:'Alex',age:30,alive:true,sex:'M',status:'married'};
-  const prob=E.RELATIONS108.chance;assert(Math.abs(prob(l,l.partner)-(1-.77**4))<1e-8);
+  const prob=E.RELATIONS108.chance;assert(Math.abs(prob(l,l.partner)-(1-.77**6))<1e-8);
   const ages=[29,34,39,44,47].map(a=>{l.age=a;return prob(l,l.partner);});assert(ages.every((v,i)=>i===0||v<ages[i-1]));
   l.age=35;pick(l,'kid','ivf');assert.equal(l.flags.pregnancy108.source,'ivf');assert(!E.RELATIONS108.fertile(l,l.partner));
   l.age=37;delete l.flags.pregnancy108;pick(l,'kid','surrogate');assert.equal(l.flags.surrogate839.country,'GB');

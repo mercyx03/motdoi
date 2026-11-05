@@ -81,10 +81,11 @@
     var income=(l.fam.fAlive&&!l.fam.noDad?l.fam.fInc||0:0)+(l.fam.mAlive&&!l.fam.noMom?l.fam.mInc||0:0);
     var spent=(l.yr?.familyExpenses||[]).reduce((sum,x)=>sum+x.amount,0);
     var share=Math.min(1,Math.max(0,Math.floor((income*1.2-spent)/total*4)/4));
-    if(l.flags.eliteCut)share=0;
+    if(l.flags.eliteCut)share=0;var capacity=share;if(s.familyShare844!=null)share=Math.min(share,s.familyShare844);
     var support=share*total,personal=Math.min(Math.max(0,l.money),total-support);
-    return {type,tuition,living,scholarship,share,support,personal,fee,gap:Math.max(0,total-support-personal)};
+    return {capacity,type,tuition,living,scholarship,share,support,personal,fee,gap:Math.max(0,total-support-personal)};
   }
+  X.menu('studyPlan844','Bàn ngân sách học tập với gia đình',function(l){return eligible(l)&&usBudget(l)?true:'Cần đang học tại Hoa Kỳ trong mô phỏng';},function(l){var b=educationBudget(l);return 'Học bổng trừ học phí trước; cộng sinh hoạt rồi mới tính hỗ trợ, tiền riêng và phần vay. Khả năng gia đình tối đa khoảng '+Math.round(b.capacity*100)+'% số còn lại năm nay. Trưởng thành hoặc ra riêng không tự cắt hỗ trợ. Mức chọn là đề nghị, luôn bị giới hạn bởi ngân sách thực tế.';},function(l){return [0,.25,.5,.75,1].map(function(share){return{k:String(share),l:'Đề nghị gia đình hỗ trợ '+Math.round(share*100)+'% phần còn lại',why:state(l).budget839?.at===l.age?'Đã quyết toán năm nay':true,run:function(l,r,log){if(state(l).budget839?.at===l.age)return;state(l).familyShare844=share;log('Gia đình ghi nhận đề nghị '+Math.round(share*100)+'%. Khi thanh toán sẽ kiểm lại thu nhập và khoản đã chi; không vay thay cho phần đã đủ.','neutral');}};});},16,'Học tập');
   function budgetText(l){
     var b=educationBudget(l);return 'Học phí '+H.money(l,b.tuition)+' · học bổng '+Math.round(b.scholarship*100)+'% học phí · sinh hoạt '+H.money(l,b.living)+'. Gia đình có thể góp '+Math.round(b.share*100)+'% số còn lại. Tiền riêng '+H.money(l,b.personal)+', còn thiếu '+H.money(l,b.gap)+'. Lãi suất là tham số mô phỏng, cố định cho khoản vay đã ký.';
   }
@@ -108,7 +109,7 @@
   X.menu('aid829','Tài trợ và vay học tập',function(l){return eligible(l)&&(degree(l)||l.school==='voc')&&aidOptions(l).length?true:'Chưa đủ điều kiện trong mô phỏng';},function(l){if(usBudget(l))return budgetText(l);return 'Khoản vay phải hoàn trả. Trợ cấp sinh hoạt xét hoàn cảnh gia đình. Số tiền, lãi và ngưỡng thu nhập là tham số trong game.';},function(l){var s=state(l);
     if(usBudget(l)){
       var b=educationBudget(l),closed=s.budget839?.at===l.age;
-      var rows=aidOptions(l).map(a=>({k:a[0],l:a[0]+' · '+H.money(l,b.gap),why:closed?'Đã quyết toán năm nay':b.gap<=.000001?'Đã đủ ngân sách':true,run:(l,r,log)=>settle(l,a,log)}));
+      var rows=[{k:'familyPlan844',l:'Bàn lại phần hỗ trợ với gia đình',why:closed?'Đã quyết toán năm nay':true,run:(l,r)=>X.next(l,'studyPlan844',r)}].concat(aidOptions(l).map(a=>({k:a[0],l:a[0]+' · '+H.money(l,b.gap),why:closed?'Đã quyết toán năm nay':b.gap<=.000001?'Đã đủ ngân sách':true,run:(l,r,log)=>settle(l,a,log)})));
       rows.unshift({k:'self',l:'Dùng hỗ trợ và tiền riêng',why:closed?'Đã quyết toán năm nay':b.gap>.000001?'Chưa đủ ngân sách':true,run:(l,r,log)=>settle(l,null,log)});
       rows.push({k:'defer',l:'Tạm dừng học, giữ hồ sơ để chọn lại sau',why:closed?'Đã quyết toán năm nay':true,run:function(l,r,log){s.deferred={age:l.age,school:l.school};l.school=null;l.schoolEnd=null;l.cityStudent=null;l.flags.needJob=true;l.flags.uniNext=l.age+1;log('Bạn hoãn chương trình để thu xếp chi phí.','neutral');}});
       return rows;
@@ -150,5 +151,5 @@
     if((ss.track==='science'&&['it','med'].includes(l.major))||(ss.track==='human'&&l.major==='law')){H.fx(l,{kno:2});log('Các môn Sixth Form đã chọn giúp bạn bắt nhịp với ngành học.','good');}
   };
   if(E.DEC.phd){var phdApply=E.DEC.phd.apply;E.DEC.phd.apply=function(l,d,k,r,log){phdApply.apply(this,arguments);if(k==='yes'&&country(l)==='GB'&&l.school==='phd'&&!l.flags.pg106)l.schoolEnd=l.age+3+Math.floor(r()*3);};}
-  E.studyRegion829=region;
+  E.studyRegion829=region;E.educationBudget844=educationBudget;
 })(globalThis.G);

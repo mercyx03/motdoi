@@ -260,3 +260,6 @@ GĐ6 — 8.10.42: còn regression toàn bộ mã cuối, thiết bị thật, sa
 
 
 GĐ6 — 8.10.43: còn regression toàn bộ, thiết bị thật, bản lưu hoàng gia thật của người báo lỗi và cấu hình Pages REVIEWS_DB. Kế tục giữ cây gia đình hiện có; không tái tạo lịch sử từng tước nếu dữ liệu cũ đã mất. Chi tiết docs/ROYAL-843.md.
+
+
+GĐ6 — 8.10.44: còn regression toàn bộ mã cuối, thiết bị thật, save thật, các ngoại lệ lao động/giấy phép từng địa phương, luật hỗ trợ sinh sản đầy đủ và xác minh Pages REVIEWS_DB. Mốc tuổi, xác suất và giá là mô hình game, không phải đánh giá phát triển hoặc chẩn đoán cá nhân. Chi tiết docs/FAMILY-844.md.

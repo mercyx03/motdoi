@@ -1550,7 +1550,9 @@
       }
     });
   }
-  function autoKey(life) { var d = life.pending[0]; return d && DEC[d.id] ? DEC[d.id].auto(life, d, RF(life)) : null; }
+  function autoKey(life) { var d = life.pending[0];
+    if(d&&life.age<4&&d.id==='thoi_noi'&&['vn','world'].includes(life.mode)){var keys=d.opts.map(function(o){return o.k;}),saved=life.flags.infantChoice844,key=saved&&saved.key;if(!saved||saved.id!==d.id||!keys.includes(key)){var text=String(life.id)+':infant:'+d.id,n=0;for(var i=0;i<text.length;i++)n=(n*31+text.charCodeAt(i))>>>0;var preferred={'âm nhạc':'mic','thể thao':'bong','toán học':'but','kinh doanh':'tien'}[life.talent];key=keys.includes(preferred)?preferred:keys[n%keys.length];life.flags.infantChoice844={id:d.id,key:key};}return key;}
+    return d && DEC[d.id] ? DEC[d.id].auto(life, d, RF(life)) : null; }
 
   function clampSt(life) {
     var s = life.st;

@@ -1,3 +1,7 @@
+## 8.10.44 — Gia đình, tự lập và kỷ niệm đón bé (packaged)
+
+Lưu phản ứng bốc đồ chơi của em bé; thêm lịch việc nhẹ, thỏa thuận hỗ trợ học tập, ở chung sau kết hôn và ngân sách dọn nhà. Điều chỉnh đợt thử có con, giữ trạng thái mãn kinh. Thêm lựa chọn lễ đón bé / Baek-il theo nơi sống, đức tin, ngân sách, ảnh và quà riêng từng bé.
+
 ## 8.10.43 — Giữ hồ sơ hoàng gia khi kế tục (packaged)
 
 Truyền registry gia tộc, tước vị và cây kế vị sang đúng người con; bổ sung hồ sơ thiếu cho con của nữ quân vương và hiển thị tước/vị trí ở mục gia đình. Đánh dấu 8.10.42 đã phát hành theo giờ chủ dự án xác nhận; giữ mục 8.10.41 trong lịch sử nội bộ và ẩn khỏi dữ liệu người chơi.
