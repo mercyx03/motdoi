@@ -275,3 +275,5 @@ GĐ6 — 8.10.46: còn regression toàn bộ, thiết bị thật, save người
 GĐ6 — 8.10.47: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu hoàng gia nhiều thế hệ thật của người chơi và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn mô phỏng: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
 
 GĐ6 — 8.10.48: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+GĐ6 — 8.10.50: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.

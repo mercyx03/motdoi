@@ -82,3 +82,24 @@
 10. **Việt Nam (`VN`): Đời sống Tín ngưỡng – Tôn giáo theo Gia cảnh & Cách ly dữ liệu (`vnFaithContext849`)**
     - Mô phỏng tín ngưỡng – tôn giáo tự nhiên tại Việt Nam theo vùng miền, truyền thống gia đình và kinh tế (thờ cúng gia tiên, Phật giáo Bắc tông / Nam tông / Khất sĩ / Trúc Lâm, Công giáo, Tin Lành, thờ Mẫu Tam Tứ phủ, Cao Đài, Phật giáo Hòa Hảo, học bổng khuyến học và thiện nguyện).
     - Khoanh vùng chặt `inIndia848` và `catalogHidden` để nhân vật Việt Nam tuyệt đối không bao giờ thấy hệ thống đẳng cấp Varna, hạn ngạch Ấn Độ hay nghi thức hoàng gia châu Âu.
+
+
+## Bổ sung 8.10.50 — Lễ Baek-il 100 ngày Hàn Quốc, Kế vị Nhiều Thế hệ & Tây Ban Nha, A-Level vs. IB Anh Quốc, Đam mê – Sở đoản, 16 MBTI & Văn hóa Giờ sinh/Con giáp
+
+1. **Lễ Baek-il 100 ngày tại Hàn Quốc (`krBaekIl850`, `KR`)**:
+   - Cột mốc vượt qua 100 ngày đầu đời và biểu tượng số 100 (`百`) viên mãn, trường thọ theo phong cách tối giản (`Minimalism`) và ưu tiên sự riêng tư gia đình.
+   - Mâm cúng tạ ơn bà mụ `Samshin Halmoni` (`samshin_table`): đúng 3 bát cơm trắng, 3 bát canh rong biển (`Miyeok-guk`, không cắt bằng dao kéo) và bộ ba rau `Namul` (ẩn với gia đình theo Kitô giáo).
+   - Bộ 4 bánh gạo truyền thống (`tteok_100_share`): `Baekseolgi` trắng chia sẻ cho 100 người xung quanh, `Susupatteok` đậu đỏ xua vận xui, `Songpyeon` ngũ sắc cầu trí tuệ, `Injeolmi` cầu dẻo dai.
+   - Trang trí & `Hanbok` hiện đại theo giới tính (`M` vs `F`) và 3 phân khúc gia đình: `tier_saving` (*Self-Baek-il* thuê phụ kiện Coupang/Naver Shopping `20.000–40.000 Won` + bánh tiệm gần nhà `~30.000 Won`), `tier_affluent` (nhà hàng `Hanjeongsik`, bánh `Design Tteok` `100.000–200.000 Won`, thợ ảnh `Snapshot`, nhẫn vàng ròng `Baek-il banji` 1 chỉ `3.75g`), `tier_elite` (phòng VIP 6 sao `Shilla Hotel` / `Signiel Seoul`, `Art Director`, `Hanbok Haute Couture`, thỏi vàng, `Dior Baby` / `Gucci Kids`) và `tier_old_money_modest` (`Old money` chọn làm kiểu Khá giả ấm cúng).
+2. **Hoàng gia Tây Ban Nha (`ES`) & Quy tắc Sắc phong Kế vị Nhiều Thế hệ (`royalSpainSuccession850`, `syncTitles`)**:
+   - Tây Ban Nha gắn với truyền thống **Công giáo La Mã**; ưu tiên nam giới trong cùng hàng con (`Male-preference primogeniture`), nếu không có con trai thì Trưởng nữ mang tước `Princesa de Asturias`.
+   - Cháu nội/ngoại hoặc chắt của vị Vua đang trị vì (`m.parent !== h.seat`) **không tự động** là Thái tử/Thái nữ (`heirApparent847 === false`) vì cha/mẹ hoặc ông/bà đang giữ ngôi kế vị trước họ; chỉ được sắc phong chính thức khi cha hoặc mẹ lên ngai vàng.
+3. **Định hướng A-Level vs. IB Diploma theo Nhóm Ngành Đại học Anh Quốc (`ukAlevelIb850`, `GB`)**:
+   - Nhóm 1 ưu tiên tuyệt đối `A-Level` (Y – Nha – Thú y, Kỹ thuật chuyên sâu Russell Group / Imperial / Cambridge và Khoa học Máy tính với `Further Maths`).
+   - Nhóm 2 ưu tiên `IB Diploma` nhờ `EE 4.000 từ` và `TOK` (Luật, `PPE` Oxford/LSE, Quan hệ Quốc tế, Tâm lý học).
+   - Nhóm 3 cân bằng tùy phong cách học (Kinh tế – Tài chính – Kinh doanh cần `Maths HL` nếu học IB; Kiến trúc – Thiết kế cân đối giữa `Portfolio` ở A-Level và `Visual Arts HL + CAS/EE` ở IB).
+4. **Đam mê, Năng khiếu (Sở trường) & Sở đoản (`passionAptitude850`) và 16 Nhóm Tính cách MBTI (`mbtiProfile850`)**:
+   - Nhân vật có thể có ít hoặc nhiều đam mê, năng khiếu và sở đoản; **không tự động ghét** một lĩnh vực ngoài đam mê trừ khi đó là sở đoản (`evalDomainFit850`). Khi sở thích thay đổi tự nhiên theo thời gian (`natural_passion_shift`), toàn bộ kỹ năng đã rèn luyện từ trước (`retainedSkills`) vẫn được bảo toàn.
+   - Đủ 16 nhóm MBTI (`INTJ`..`ESFP`) ảnh hưởng vừa phải tới học tập, công việc và gia đình nhưng quyền quyết định luôn thuộc về người chơi.
+5. **Văn hóa Giờ sinh Can Chi & 12 Con Giáp (`E.astroText`)**:
+   - Chỉ các quốc gia Á Đông (`VN`, `CN`, `JP`, `KR`, `KP`...) mới hiển thị giờ sinh Can Chi và tuổi 12 con giáp (`Mẹo` ở Việt Nam, `Mão` ở các nước Á Đông khác); các nước phương Tây chỉ dùng giờ đồng hồ 24h và cung Hoàng đạo phương Tây.

@@ -158,8 +158,19 @@
   function syncTitles(l, h, newSov, oldSov, log) {
     if (!h || !A.COUNTRIES.includes(h.cc)) return;
     var line = R.order(l, h), heir = line[0], c = h.cc;
-    h.members.forEach(function (m) {
-      m.heirApparent847 = m === heir;
+    h.members.forEach(function (m, idx) {
+      var isChildOfReigningSov = !m.parent || m.parent === h.seat || Boolean(m.investedBySov850);
+      m.heirApparent847 = m === heir && isChildOfReigningSov;
+      m.waitingParentAccession850 = m === heir ? false : (line.indexOf(m) > 0 && m.parent && m.parent !== h.seat);
+      if (m.heirApparent847 && !m.investedHeirAt850) {
+        m.investedHeir850 = true;
+        m.investedHeirAt850 = yr(l);
+        m.investedHeirAge850 = yr(l) - (m.by || l.birthYear);
+      }
+      if (c === 'ES') {
+        m.asturias837 = m.heirApparent847;
+        m.infante837 = m.parent === h.seat || (!!heir && m.parent === heir.id);
+      }
       if (m.id === h.seat) {
         m.supremeCommander847 = SOVEREIGN_SUPREME_MIL[c] || 'Nguyên thủ Quốc gia';
         var up = upState(l, m);
@@ -1387,6 +1398,775 @@
       return oldUniApply848.apply(this, arguments);
     };
   }
+
+
+  // ================= 10. Hàn Quốc (KR): Lễ Baek-il 100 ngày cho bé (Ý nghĩa sinh tồn, Mâm cúng Samshin, 4 loại bánh Tteok, Hanbok/Decor nam-nữ & 3 phân khúc Tiết kiệm / Khá giả / Thượng lưu Chaebol - 8.10.50) =================
+  var KR_BAEKIL_CAKES850 = [
+    { k: "baekseolgi", name: "Bánh gạo trắng (Baekseolgi)", meaning: "Màu trắng tinh khiết tượng trưng cho sự trong sáng và lời cầu chúc em bé ít ốm đau; chia sẻ cho 100 người xung quanh để tích phúc đức và sự trường thọ cho bé." },
+    { k: "susupatteok", name: "Bánh gạo đậu đỏ (Susupatteok)", meaning: "Màu đỏ của đậu mang ý nghĩa xua đuổi ma quỷ và vận xui." },
+    { k: "songpyeon", name: "Bánh ngũ sắc (Songpyeon)", meaning: "Cầu chúc trí tuệ sáng suốt và tâm hồn phong phú." },
+    { k: "injeolmi", name: "Bánh nếp (Injeolmi)", meaning: "Cầu chúc sự dẻo dai, bền bỉ và sức khỏe vững vàng." }
+  ];
+
+  var KR_BAEKIL_GENDER_STYLE850 = {
+    M: {
+      hanjaColor: "Chữ Hán 'Bách' (百) trên bánh Baekseolgi in màu xanh dương hoặc xanh lá",
+      backdrop: "Phông nền và bóng bay tông xanh pastel, xám nhạt, beige tối giản (Minimalism)",
+      hanbok: "Áo Vest truyền thống kèm quần (Baji) tông xanh, tím nhã nhặn"
+    },
+    F: {
+      hanjaColor: "Chữ Hán 'Bách' (百) trên bánh Baekseolgi in màu hồng hoặc đỏ/vàng",
+      backdrop: "Phông nền và bóng bay tông hồng khói, cam đào, vàng nhạt tinh tế (Minimalism)",
+      hanbok: "Áo và váy xòe (Chima) tông hồng, đỏ rực rỡ kèm mũ dây ruy-băng (Ayam)"
+    }
+  };
+
+  var KR_BAEKIL_TIERS850 = {
+    saving: {
+      code: "saving",
+      name: "Nhóm Tiết kiệm — 'Self-Baek-il' (Tự làm tại nhà, tối ưu chi phí)",
+      wonRange: "50.000 – 70.000 Won (~900.000 – 1.250.000đ)",
+      costFactor: 0.012,
+      decor: "Thuê set phụ kiện decor 100 ngày trên Coupang / Naver Shopping (20.000 – 40.000 Won ~ 350.000–700.000đ: vải trải bàn, bình hoa giả, khay gỗ bày bánh, dây chữ 'Happy 100 Days' và 1 bộ Hanbok cho bé; chụp xong đóng gói ship trả lại cửa hàng)",
+      cakes: "Đặt set bánh gạo cơ bản (1 ổ Baekseolgi in chữ 百 nhỏ, 1 đĩa bánh đậu đỏ, 1 đĩa bánh ngũ sắc) tại tiệm bánh gần nhà (~30.000 Won ~ 550.000đ); mâm cúng thần Samshin nấu đơn giản gồm cơm trắng và canh rong biển Miyeok-guk",
+      guestsAndPhoto: "Chỉ có bố mẹ và em bé (hoặc thêm ông bà nội ngoại nếu ở gần); bố mẹ tự dùng điện thoại thông minh / máy ảnh cá nhân chụp tại phòng khách rồi cả nhà cùng ăn tối",
+      gifts: ["Set ảnh Self-Baek-il tại phòng khách", "Bữa tối gia đình ấm cúng"]
+    },
+    affluent: {
+      code: "affluent",
+      name: "Nhóm Khá giả (Trung lưu Seoul, Busan) — 'Chuyên nghiệp, nhanh gọn và đỡ tốn sức'",
+      wonRange: "100.000 – 200.000 Won bánh nghệ thuật + gói nhà hàng Hanjeongsik / Snapshot",
+      costFactor: 0.09,
+      decor: "Đặt dịch vụ trang trí tiệc tại nhà hoặc phòng riêng nhà hàng truyền thống Hàn Quốc cao cấp (Hanjeongsik) / nhà hàng buffet khách sạn theo phong cách truyền thống sang trọng hoặc hiện đại (Modern style)",
+      cakes: "Đặt set bánh gạo từ tiệm bánh nghệ thuật (Design Tteok), tạo hình hoa, đóng hộp gỗ sang trọng (~100.000 – 200.000 Won ~ 1.8–3.6 triệu VNĐ)",
+      guestsAndPhoto: "Thuê 1 thợ ảnh chuyên nghiệp (Snapshot) chụp cho bé và gia đình trong 1–2 tiếng; khách mời gồm ông bà, cô dì chú bác ruột thịt (10 – 15 người)",
+      gifts: ["Nhẫn vàng ròng 100 ngày (Baek-il banji — 1 chỉ 3.75g khắc chữ 百 hoặc hình vương miện cầu giàu sang, may mắn)"]
+    },
+    elite: {
+      code: "elite",
+      name: "Nhóm Thượng lưu (Tài phiệt Chaebol / Ngôi sao / Old money) — Đẳng cấp nghệ thuật tại khách sạn 6 sao",
+      wonRange: "Vài triệu đến hàng chục triệu Won (Phòng VIP Shilla Hotel / Signiel Seoul)",
+      costFactor: 0.75,
+      decor: "Tổ chức tại phòng VIP khách sạn 6 sao (Shilla Hotel, Signiel Seoul); Giám đốc Nghệ thuật (Art Director) thiết kế riêng với 100% hoa tươi nhập khẩu đắt đỏ kết hợp đồ gốm, đồ đồng truyền thống thủ công cao cấp",
+      cakes: "Bánh gạo nghệ thuật thượng hạng và ẩm thực hoàng gia riêng tư",
+      guestsAndPhoto: "Bé diện Hanbok may đo riêng độc bản (Haute Couture) từ nghệ nhân nổi tiếng; thuê ekip quay phim, chụp ảnh phóng sự hàng đầu; giữ tính riêng tư (chỉ gia đình và những người bạn cực kỳ quyền lực)",
+      gifts: ["Hàng loạt lắc tay vàng & thỏi vàng tài lộc", "Quần áo & phụ kiện xa xỉ (Dior Baby, Gucci Kids)", "Set quà cảm ơn khách (nước hoa, nến thơm, sâm quý)"]
+    }
+  };
+
+  function inKorea850(l) {
+    return Boolean(l && H.resCode(l) === "KR");
+  }
+
+  function krBaekIlRecord850(l, k) {
+    if (!k) return null;
+    if (!k.baekIl850) {
+      var stStyle = KR_BAEKIL_GENDER_STYLE850[k.sex === "F" ? "F" : "M"];
+      k.baekIl850 = {
+        babyName: k.name,
+        sex: k.sex,
+        hanjaColor: stStyle.hanjaColor,
+        backdrop: stStyle.backdrop,
+        hanbok: stStyle.hanbok,
+        samshinOffered: false,
+        shared100Neighbors: false,
+        tierChosen: null,
+        oldMoneyModest: false,
+        baekilBanjiGoldRing: false,
+        chaebolGoldBars: false,
+        done: false
+      };
+    }
+    return k.baekIl850;
+  }
+
+  X.menu("krBaekIl850", "Lễ Baek-il 100 Ngày Cho Bé (Truyền thống & Hiện đại Hàn Quốc)", function (l) {
+    if (!l.alive || !inKorea850(l)) return "Không áp dụng: chỉ dành cho gia đình đang sinh sống tại Hàn Quốc";
+    if (!l.kids || !l.kids.some(function (k) { return k.alive !== false; })) return "Cần có con để tổ chức hoặc xem lại kỷ niệm Lễ Baek-il 100 ngày";
+    return X.reason(l, 16);
+  }, function (l) {
+    var k = (l.kids || []).slice().reverse().find(function (x) { return x.alive !== false && x.born === l.age; }) || (l.kids || []).slice().reverse().find(function (x) { return x.alive !== false; });
+    if (!k) return "Chưa có hồ sơ bé.";
+    var rec = krBaekIlRecord850(l, k);
+    return "• Ý nghĩa Lễ Baek-il (100 ngày): đánh dấu cột mốc sinh tồn vượt qua 100 ngày đầu đời và biểu tượng số 100 (百) của sự trọn vẹn, viên mãn, cầu chúc bé sống lâu và khỏe mạnh. Người Hàn chuộng phong cách tối giản, tinh tế (Minimalism) và sự riêng tư gia đình.\n" +
+      "• Bé " + k.name + " (" + (k.sex === "F" ? "Bé gái" : "Bé trai") + "): " + rec.hanjaColor + " · " + rec.backdrop + " · Trang phục: " + rec.hanbok + ".\n" +
+      "• Trạng thái: " + (rec.done ? "Đã tổ chức (" + rec.tierName + ")" : "Đang chuẩn bị") +
+      (rec.samshinOffered ? " · Đã cúng tạ ơn bà mụ Samshin Halmoni (3 bát cơm trắng, 3 bát canh rong biển không cắt dao kéo, 3 rau Namul)" : "") +
+      (rec.shared100Neighbors ? " · Đã chia sẻ bánh Baekseolgi cho 100 người tích phúc" : "") +
+      (rec.baekilBanjiGoldRing ? " · Quà nhẫn vàng ròng Baek-il banji (1 chỉ 3.75g)" : "") +
+      (rec.chaebolGoldBars ? " · Quà lắc tay vàng, thỏi vàng & đồ hiệu Dior Baby / Gucci Kids" : "") + ".";
+  }, function (l) {
+    if (!inKorea850(l)) return [];
+    var k = (l.kids || []).slice().reverse().find(function (x) { return x.alive !== false && x.born === l.age; }) || (l.kids || []).slice().reverse().find(function (x) { return x.alive !== false; });
+    if (!k) return [];
+    var rec = krBaekIlRecord850(l, k), fFaith = String(l.religion || ""), isChristian = /Công giáo|Tin Lành|Kitô|Cơ Đốc|Catholic|Protestant/i.test(fFaith), out = [];
+
+    if (!isChristian) {
+      out.push({
+        k: "samshin_table",
+        l: "Sửa soạn mâm cúng tạ ơn bà mụ Samshin Halmoni: đúng 3 bát cơm trắng, 3 bát canh rong biển Miyeok-guk (không cắt bằng dao kéo) & bộ ba rau Namul",
+        why: rec.samshinOffered ? "Đã thực hiện lễ tạ ơn Samshin Halmoni" : true,
+        run: function (l, r, log) {
+          rec.samshinOffered = true;
+          H.fx(l, { hap: 2 });
+          log("Gia đình sửa soạn mâm cúng tạ ơn bà mụ Samshin Halmoni (vị thần bảo hộ sinh sản và trẻ nhỏ) đã che chở cho " + k.name + " vượt qua 100 ngày đầu đời: đúng 3 bát cơm trắng, 3 bát canh rong biển Miyeok-guk tuyệt đối không cắt bằng dao kéo (để cầu tuổi thọ dài lâu) và bộ ba rau Namul.", "good");
+        }
+      });
+    }
+
+    out.push({
+      k: "tteok_100_share",
+      l: "Chuẩn bị 4 loại bánh gạo (Baekseolgi in chữ 百, bánh đậu đỏ xua vận xui, Songpyeon cầu trí tuệ, Injeolmi cầu dẻo dai) & chia sẻ cho 100 người tích phúc",
+      why: rec.shared100Neighbors ? "Đã chuẩn bị và chia sẻ bánh gạo 100 ngày" : true,
+      run: function (l, r, log) {
+        rec.shared100Neighbors = true;
+        H.fx(l, { hap: 3, soc: 3 });
+        log("Bạn chuẩn bị trọn bộ bánh truyền thống cho " + k.name + ": bánh gạo trắng Baekseolgi (" + rec.hanjaColor + ") chia sẻ cho 100 người xung quanh để tích phúc đức và trường thọ, bánh gạo đậu đỏ xua đuổi vận xui, bánh ngũ sắc Songpyeon cầu trí tuệ và bánh nếp Injeolmi cầu sự dẻo dai.", "good");
+      }
+    });
+
+    out.push({
+      k: "tier_saving",
+      l: KR_BAEKIL_TIERS850.saving.name + " (" + KR_BAEKIL_TIERS850.saving.wonRange + ")",
+      why: rec.done ? "Đã tổ chức Lễ Baek-il cho bé" : true,
+      run: function (l, r, log) {
+        var t = KR_BAEKIL_TIERS850.saving, cost = l.base * t.costFactor;
+        if (l.money >= cost) H.cash(l, -cost, "Lễ Self-Baek-il 100 ngày tiết kiệm tại nhà");
+        rec.done = true; rec.tierChosen = "saving"; rec.tierName = t.name;
+        var p844 = E.BABY844 && E.BABY844.state ? E.BABY844.state(l, k) : null;
+        if (p844) { p844.stage = "done"; p844.format = "Self-Baek-il 100 ngày tại nhà"; p844.scale = t.name; p844.cost = cost; p844.photos = "điện thoại gia đình"; }
+        H.fx(l, { hap: 3 });
+        log("Gia đình tổ chức 'Self-Baek-il' ấm cúng tại phòng khách cho " + k.name + ": " + t.decor + ". " + t.cakes + ". Bé diện " + rec.hanbok + " trước phông nền (" + rec.backdrop + ") để bố mẹ tự chụp ảnh kỷ niệm.", "good");
+      }
+    });
+
+    out.push({
+      k: "tier_affluent",
+      l: KR_BAEKIL_TIERS850.affluent.name + " (Nhà hàng Hanjeongsik, bánh Design Tteok, thợ ảnh Snapshot & nhẫn vàng Baek-il banji 1 chỉ 3.75g)",
+      why: rec.done ? "Đã tổ chức Lễ Baek-il cho bé" : (l.money < l.base * KR_BAEKIL_TIERS850.affluent.costFactor ? "Chưa đủ ngân sách cho gói Khá giả" : true),
+      run: function (l, r, log) {
+        var t = KR_BAEKIL_TIERS850.affluent, cost = l.base * t.costFactor;
+        H.cash(l, -cost, "Lễ Baek-il 100 ngày tại nhà hàng Hanjeongsik & thợ ảnh Snapshot");
+        rec.done = true; rec.tierChosen = "affluent"; rec.tierName = t.name; rec.baekilBanjiGoldRing = true;
+        var p844 = E.BABY844 && E.BABY844.state ? E.BABY844.state(l, k) : null;
+        if (p844) { p844.stage = "done"; p844.format = "Baek-il 100 ngày chuyên nghiệp (Hanjeongsik)"; p844.scale = t.name; p844.cost = cost; p844.photos = "thợ ảnh chuyên nghiệp (Snapshot)"; }
+        H.fx(l, { hap: 5, soc: 3 });
+        log("Gia đình tổ chức Lễ Baek-il theo phong cách trung lưu khá giả tại Seoul/Busan cho " + k.name + ": " + t.decor + "; " + t.cakes + "; " + t.guestsAndPhoto + ". Ông bà và người thân trao tặng bé chiếc nhẫn vàng ròng 100 ngày (Baek-il banji — 1 chỉ 3.75g khắc chữ 百 / hình vương miện) cầu chúc giàu sang, may mắn.", "big");
+      }
+    });
+
+    out.push({
+      k: "tier_elite",
+      l: KR_BAEKIL_TIERS850.elite.name + " (Phòng VIP Shilla/Signiel 6 sao, Art Director, Hanbok Haute Couture, thỏi vàng & Dior Baby/Gucci Kids)",
+      why: rec.done ? "Đã tổ chức Lễ Baek-il cho bé" : (l.money < l.base * KR_BAEKIL_TIERS850.elite.costFactor ? "Cần nền tảng tài chính Thượng lưu / Chaebol" : true),
+      run: function (l, r, log) {
+        var t = KR_BAEKIL_TIERS850.elite, cost = l.base * t.costFactor;
+        H.cash(l, -cost, "Đại tiệc Baek-il 100 ngày phòng VIP khách sạn 6 sao Shilla / Signiel");
+        rec.done = true; rec.tierChosen = "elite"; rec.tierName = t.name; rec.baekilBanjiGoldRing = true; rec.chaebolGoldBars = true;
+        var p844 = E.BABY844 && E.BABY844.state ? E.BABY844.state(l, k) : null;
+        if (p844) { p844.stage = "done"; p844.format = "Baek-il Thượng lưu 6 sao (Shilla/Signiel)"; p844.scale = t.name; p844.cost = cost; p844.photos = "ekip phóng sự nghệ thuật"; }
+        H.fx(l, { hap: 6, soc: 5 });
+        log("Lễ Baek-il 100 ngày của " + k.name + " được tổ chức như một tác phẩm nghệ thuật tại phòng VIP khách sạn 6 sao (Shilla Hotel / Signiel Seoul): " + t.decor + ". " + t.guestsAndPhoto + ". Bé nhận hàng loạt lắc tay vàng, thỏi vàng tài lộc cùng đồ hiệu xa xỉ (Dior Baby, Gucci Kids), và bố mẹ gửi tặng khách những set quà cảm ơn gồm nước hoa, nến thơm và sâm quý.", "big");
+      }
+    });
+
+    if (((l.fam && l.fam.q) || 2) >= 4 || l.money >= l.base * KR_BAEKIL_TIERS850.elite.costFactor) {
+      out.push({
+        k: "tier_old_money_modest",
+        l: "Gia đình Thượng lưu (Old money) nhưng chủ động chọn tổ chức kiểu Khá giả ấm cúng (số hiếm — ưu tiên sự giản dị cho thế hệ mình)",
+        why: rec.done ? "Đã tổ chức Lễ Baek-il cho bé" : true,
+        run: function (l, r, log) {
+          var t = KR_BAEKIL_TIERS850.affluent, cost = l.base * t.costFactor;
+          if (l.money >= cost) H.cash(l, -cost, "Lễ Baek-il ấm cúng của gia đình Old money");
+          rec.done = true; rec.tierChosen = "affluent_old_money"; rec.tierName = "Thượng lưu (Old money) chọn phong cách Khá giả ấm cúng"; rec.oldMoneyModest = true; rec.baekilBanjiGoldRing = true;
+          H.fx(l, { hap: 5, soc: 2 });
+          log("Dù xuất thân gia đình Thượng lưu (Old money) với mạng lưới quan hệ rộng thường làm tiệc 6 sao, đến đời mình vợ chồng bạn chủ động chọn tổ chức Lễ Baek-il 100 ngày theo quy mô Khá giả ấm cúng tại phòng riêng Hanjeongsik cùng 10–15 người thân ruột thịt và nhận nhẫn vàng Baek-il banji truyền thống.", "good");
+        }
+      });
+    }
+
+    return out;
+  }, 16, "Gia đình");
+
+  // ================= 11. Hoàng gia Tây Ban Nha (ES) & Quy tắc Sắc phong Thái tử/Thái nữ, Kế vị nhiều thế hệ (8.10.50) =================
+  function spainSuccessionInfo850(l, h) {
+    if (!h) return null;
+    var line = R.order(l, h), sov = R.byId(h, h.seat), heir = line[0];
+    var sovAge = sov ? yr(l) - (sov.by || 1950) : 70;
+    return {
+      cc: h.cc,
+      isSpainCatholic: h.cc === "ES",
+      faith: h.cc === "ES" ? "Công giáo La Mã (Roman Catholicism — tôn giáo chiếm đa số tại Tây Ban Nha, ảnh hưởng sâu sắc tới nghi lễ và truyền thống vương triều)" : (A.CULTURE[h.cc] && A.CULTURE[h.cc].faith || ""),
+      ruleDesc: h.cc === "ES"
+        ? "Ưu tiên nam giới trong cùng hàng con (Male-preference primogeniture): nếu có Hoàng tử thì ưu tiên Hoàng tử lớn tuổi nhất lên kế vị dù trước đó đã có Công chúa; nếu không có con trai thì Trưởng nữ lên kế vị (Princesa de Asturias)."
+        : "Thái tử/Thái nữ luôn đứng đầu (#1) trong hàng kế vị, tiếp đến là con đầu của họ (#2) và cháu của con đầu họ (#3, nếu có).",
+      grandchildRule: "Cháu gái, cháu trai (hoặc chắt) của Quốc vương/Nữ hoàng đang trị vì KHÔNG tự động là Thái tử/Thái nữ (vì cha/mẹ hoặc ông/bà đang giữ ngôi Thái tử/Thái nữ); chỉ được sắc phong kỹ càng làm Thái tử/Thái nữ khi cha hoặc mẹ đã chính thức lên ngai vàng.",
+      longevityNote: "Khi vị vua đương nhiệm sống rất thọ (" + sovAge + " tuổi) và chưa thoái vị vì lý do sức khỏe hoặc qua đời, người kế vị có thể ở tuổi trung niên/cao niên mới làm Thái tử/Thái nữ hoặc lên ngôi Vua/Nữ hoàng.",
+      sovAge: sovAge,
+      heir: heir
+    };
+  }
+
+  X.menu("royalSpainSuccession850", "Quy tắc Sắc phong Thái tử/Thái nữ, Kế vị Nhiều Thế hệ & Đặc thù Tây Ban Nha", function (l) {
+    if (!l.alive) return "Không khả dụng";
+    var q = A.context(l);
+    if (!q || !q.h || !q.me) return "Không áp dụng: chỉ dành cho thành viên Hoàng gia";
+    return X.reason(l, 10);
+  }, function (l) {
+    var q = A.context(l);
+    if (!q || !q.h || !q.me) return "Chưa có hồ sơ Hoàng gia.";
+    var info = spainSuccessionInfo850(l, q.h), pos = R.lineOf(l, q.h, q.me);
+    return "• Tôn giáo & Hiến định: " + info.faith + ".\n" +
+      "• Thứ tự kế vị: " + info.ruleDesc + " Hiện tại bạn đứng thứ " + (pos || "—") + " trong danh sách kế vị.\n" +
+      "• Quy tắc sắc phong qua các thế hệ: " + info.grandchildRule + "\n" +
+      "• Tuổi thọ Quân vương & Thời điểm truyền ngôi: " + info.longevityNote;
+  }, function (l) {
+    var q = A.context(l);
+    if (!q || !q.h || !q.me) return [];
+    var h = q.h, me = q.me, up = upState(l, me), out = [];
+    function row(k, label, run, why) {
+      out.push({ k: k, l: label, why: why || up.acted[k] === yr(l) ? why || "Đã thực hiện năm nay" : true, run: function (l, r, log) { if (up.acted[k] === yr(l)) return; up.acted[k] = yr(l); run(r, log); } });
+    }
+
+    row("multigen_investiture_check", "Đối chiếu quy tắc sắc phong Thái tử/Thái nữ qua nhiều thế hệ (Cháu/chắt của Vua đang trị vì & người kế vị lớn tuổi)", function (r, log) {
+      syncTitles(l, h, R.byId(h, h.seat), null, log);
+      var line = R.order(l, h), pos = R.lineOf(l, h, me), sov = R.byId(h, h.seat);
+      up.checkedMultigen850 = true;
+      H.fx(l, { kno: 2 });
+      if (me.heirApparent847) {
+        log("Cha/mẹ của bạn đã truyền ngôi hoặc đang là Quân vương trên ngai vàng (" + (sov && sov.name || "Quốc vương") + "), nên bạn được sắc phong chính thức làm " + (HEIR_TITLES[h.cc] && HEIR_TITLES[h.cc][me.sex] || "Thái tử/Thái nữ") + " đứng đầu hàng kế vị (#1), tiếp theo là con trưởng và cháu trưởng của bạn.", "good");
+      } else if (me.parent && me.parent !== h.seat && me.id !== h.seat) {
+        log("Bạn đang là cháu/chắt của vị Vua đang trị vì (đứng thứ #" + (pos || "—") + " trong hàng kế vị sau cha/mẹ hoặc ông/bà của mình): theo quy tắc hoàng gia, cháu nội/ngoại của Vua đương nhiệm chưa tự động mang tước Thái tử/Thái nữ mà chỉ được sắc phong kỹ càng sau khi cha hoặc mẹ chính thức lên ngai vàng.", "neutral");
+      } else {
+        log("Đã đối chiếu thứ tự kế vị nhiều thế hệ: người Thái tử/Thái nữ đứng đầu (#1), tiếp đến là con trưởng của họ (#2) và cháu của con trưởng họ (#3, nếu có).", "neutral");
+      }
+    });
+
+    if (h.cc === "ES") {
+      row("es_catholic_primogeniture", "Thực hành truyền thống Công giáo La Mã & Quy tắc kế vị Tây Ban Nha (Príncipe / Princesa de Asturias & Infante / Infanta de España)", function (r, log) {
+        l.religion = "Công giáo";
+        me.religion837 = "Công giáo";
+        up.spainCatholic850 = true;
+        syncTitles(l, h, R.byId(h, h.seat), null, log);
+        H.fx(l, { kno: 2, hap: 2, soc: 2 });
+        log("Hoàng gia Tây Ban Nha gắn liền với truyền thống Công giáo La Mã (tôn giáo chiếm đa số tại Tây Ban Nha). Về luật kế vị hiện hành, Tây Ban Nha ưu tiên Hoàng tử (nam) hơn Công chúa (nữ) trong cùng hàng con (nếu có nhiều hoàng tử thì hoàng tử lớn tuổi nhất lên ngôi; nếu không có con trai thì Trưởng nữ được phong làm Nữ Thân vương xứ Asturias — Princesa de Asturias để kế vị).", "good");
+      });
+    }
+
+    var sov = R.byId(h, h.seat);
+    if (sov && sov.id !== me.id && (yr(l) - (sov.by || 1950)) >= 78) {
+      row("long_lived_monarch_abdication", "Quân vương tiền nhiệm tuổi cao sức yếu (" + (yr(l) - (sov.by || 1950)) + " tuổi) quyết định thoái vị vì lý do sức khỏe để truyền ngôi cho đời sau", function (r, log) {
+        sov.abdicated837 = true;
+        R.succeed(l, h, log);
+        syncTitles(l, h, R.byId(h, h.seat), sov, log);
+        H.fx(l, { kno: 2, soc: 2 });
+        log("Sau nhiều thập kỷ trị vì trường thọ, vị vua tiền nhiệm chính thức thoái vị vì lý do sức khỏe để truyền ngôi cho thế hệ kế tiếp; các tước vị Thái tử/Thái nữ của đời sau được sắc phong lại theo đúng thứ tự kế vị.", "big");
+      });
+    }
+
+    return out;
+  }, 10, "Đời sống");
+
+  // ================= 12. Anh Quốc (GB): Chọn A-Level vs. IB Diploma theo 3 Nhóm ngành Đại học (Bắt buộc A-Level / Chuộng IB / Cân bằng - 8.10.50) =================
+  var UK_ALEVEL_IB_GROUPS850 = {
+    alevel_mandatory: {
+      groupName: "Nhóm 1: Ngành BẮT BUỘC hoặc ƯU TIÊN TUYỆT ĐỐI A-Level (Chuyên sâu tối đa)",
+      majors: [
+        {
+          k: "med",
+          name: "Y khoa, Nha khoa & Thú y (Medicine, Dentistry & Veterinary)",
+          reqSubjects: "A-Level: Hóa học + Sinh học + Toán/Vật lý (đòi hỏi điểm A hoặc A*)",
+          whyTrack: "Đại học Anh yêu cầu điểm tối đa ở các môn khoa học cốt lõi; học 3–4 môn A-Level giúp giảm áp lực các môn xã hội (không bị quá tải như 6 môn của IB) để dồn 100% sức lực cho Hóa học và Sinh học cực khó."
+        },
+        {
+          k: "eng",
+          name: "Kỹ thuật chuyên sâu (Hàng không, Tự động hóa, Cơ khí, Dân dụng — Imperial College London, Cambridge / Russell Group)",
+          reqSubjects: "A-Level: Toán + Toán nâng cao (Further Maths) + Vật lý",
+          whyTrack: "Chương trình đại học Anh vào thẳng kiến thức kỹ thuật nặng ngay từ tuần đầu tiên; các trường Russell Group (Imperial, Cambridge...) yêu cầu hoặc cực kỳ ưu tiên môn Toán nâng cao (Further Maths) ở bậc A-Level — điều mà IB khó đáp ứng chuyên sâu bằng."
+        },
+        {
+          k: "it",
+          name: "Khoa học Máy tính (Computer Science)",
+          reqSubjects: "A-Level: Toán + Toán nâng cao (Further Maths) + Khoa học Máy tính",
+          whyTrack: "Ngành Khoa học Máy tính tại Anh thiên về toán học tư duy thuần túy hơn là chỉ gõ code; học sinh A-Level 3 môn (Toán, Toán nâng cao, Máy tính) có lợi thế vượt trội về tư duy toán học so với học sinh IB phải chia thời gian cho 6 nhóm môn."
+        }
+      ]
+    },
+    ib_preferred: {
+      groupName: "Nhóm 2: Ngành CỰC KỲ CHUỘNG hoặc ƯU TIÊN IB DIPLOMA (Tư duy phản biện, bài luận EE 4.000 từ & Lý thuyết nhận thức TOK)",
+      majors: [
+        {
+          k: "law",
+          name: "Ngành Luật (Law / LLB)",
+          reqSubjects: "IB Diploma: 6 nhóm môn + Tiểu luận EE (4.000 từ) + Lý thuyết nhận thức (TOK)",
+          whyTrack: "Ngành Luật tại Anh đòi hỏi đọc hiểu khối lượng văn bản khổng lồ và tư duy phản biện lật ngược vấn đề; học sinh IB có lợi thế tuyệt đối nhờ tư duy logic từ TOK và kỹ năng viết luận nhuần nhuyễn."
+        },
+        {
+          k: "ppe",
+          name: "Chính trị, Triết học & Kinh tế (Khối ngành tinh hoa PPE — Oxford, LSE)",
+          reqSubjects: "IB Diploma: Toán + Lịch sử/Kinh tế/Triết học (cả Tự nhiên lẫn Xã hội) + TOK & EE",
+          whyTrack: "Bản chất của PPE tại Oxford hay LSE là liên ngành; cấu trúc IB bắt buộc học cả tự nhiên lẫn xã hội bổ trợ hoàn hảo cho tư duy tổng hợp đa chiều của ngành này."
+        },
+        {
+          k: "ir",
+          name: "Quan hệ Quốc tế & Nghiên cứu Phát triển (International Relations & Development Studies)",
+          reqSubjects: "IB Diploma: Ngoại ngữ + Lịch sử/Địa lý toàn cầu + TOK & EE",
+          whyTrack: "Đúng như tên gọi 'Tú tài Quốc tế', IB giáo dục học sinh thành công dân toàn cầu, hiểu biết sâu sắc về văn hóa, lịch sử và các vấn đề toàn cầu."
+        },
+        {
+          k: "psy",
+          name: "Tâm lý học (Psychology)",
+          reqSubjects: "IB Diploma: Toán + Sinh học + các môn Nhân văn / Tâm lý học",
+          whyTrack: "Tâm lý học vừa cần khoa học (nghiên cứu não bộ, thống kê số liệu) vừa cần xã hội (thấu hiểu hành vi con người); học sinh IB học đều cả Toán/Sinh lẫn Nhân văn sẽ hòa nhập rất nhanh."
+        }
+      ]
+    },
+    balanced: {
+      groupName: "Nhóm 3: Ngành CÂN BẰNG (Chọn A-Level hay IB đều ổn — tùy phong cách học lệch sâu hay học đều rộng)",
+      majors: [
+        {
+          k: "biz_alevel",
+          majorCode: "biz",
+          track: "alevel",
+          name: "Kinh tế, Tài chính & Kinh doanh — Hướng A-Level (Học lệch sâu, đi thẳng trọng tâm)",
+          reqSubjects: "A-Level: Toán + Kinh tế + Kế toán / Kinh doanh",
+          whyTrack: "Tập trung học sâu vào Toán, Kinh tế và Kế toán/Kinh doanh, đi thẳng vào trọng tâm định lượng mà không tốn sức cho các môn ngoài ngành."
+        },
+        {
+          k: "biz_ib",
+          majorCode: "biz",
+          track: "ib",
+          name: "Kinh tế, Tài chính & Kinh doanh — Hướng IB Diploma (Học đều rộng, cạnh tranh trường top)",
+          reqSubjects: "IB Diploma: Bắt buộc Toán cấp độ cao (Maths Higher Level - HL) + Kinh tế học HL",
+          whyTrack: "Phù hợp người thích góc nhìn toàn cầu rộng mở, nhưng bắt buộc phải chọn Toán cấp độ cao (Maths HL) kết hợp Kinh tế học để cạnh tranh vào các trường top."
+        },
+        {
+          k: "arch_alevel",
+          majorCode: "art",
+          track: "alevel",
+          name: "Kiến trúc & Thiết kế — Hướng A-Level (Có nhiều thời gian đầu tư Hồ sơ nghệ thuật Portfolio)",
+          reqSubjects: "A-Level: Toán + Vật lý + Nghệ thuật (Art & Design)",
+          whyTrack: "Vừa rèn tư duy kỹ thuật kết cấu (Toán, Vật lý) vừa dành trọn thời gian rảnh để chăm chút Hồ sơ nghệ thuật (Portfolio)."
+        },
+        {
+          k: "arch_ib",
+          majorCode: "art",
+          track: "ib",
+          name: "Kiến trúc & Thiết kế — Hướng IB Diploma (Visual Arts HL + Toán/Lý + CAS & EE)",
+          reqSubjects: "IB Diploma: Toán/Lý + Nghệ thuật ở cấp độ HL + chứng chỉ cốt lõi CAS, EE",
+          whyTrack: "Cho nền tảng văn hóa – thẩm mỹ đa chiều, nhưng vất vả hơn vì phải hoàn thành các chứng chỉ cốt lõi (CAS, EE 4.000 từ) song song với việc làm hồ sơ nghệ thuật."
+        }
+      ]
+    }
+  };
+
+  function inUK850(l) {
+    return Boolean(l && H.resCode(l) === "GB");
+  }
+
+  function ukStudyState850(l) {
+    var s = l.flags.study829 || (l.flags.study829 = {});
+    if (!s.ukTrack850) {
+      s.ukTrack850 = {
+        mode: s.track === "ib" ? "ib" : "alevel",
+        targetGroup: null,
+        targetMajor: null,
+        furtherMaths: false,
+        tokEeCompleted: false,
+        mathsHL: false,
+        portfolioReady: false,
+        fitBonusApplied: false
+      };
+    }
+    return s.ukTrack850;
+  }
+
+  X.menu("ukAlevelIb850", "Định hướng Chuyên sâu A-Level vs. IB Diploma theo Nhóm Ngành Đại học (Anh Quốc)", function (l) {
+    if (!l.alive || !inUK850(l)) return "Không áp dụng: chỉ dành cho học sinh / sinh viên tại Vương quốc Anh (GB)";
+    return X.reason(l, 15);
+  }, function (l) {
+    var u = ukStudyState850(l), s829 = l.flags.study829 || {};
+    return "• Lộ trình Sixth Form hiện tại: " + (u.mode === "ib" ? "IB Diploma (6 nhóm môn + Tiểu luận EE 4.000 từ + Lý thuyết nhận thức TOK + CAS)" : "A-Level (Chuyên sâu 3–4 môn cốt lõi đạt điểm A/A*)") +
+      (s829.sixth ? " · " + s829.sixth : "") + ".\n" +
+      "• Định hướng nhóm ngành đại học Anh: " + (u.targetName || "Chưa chọn") +
+      (u.reqSubjects ? " (" + u.reqSubjects + ")" : "") +
+      (u.furtherMaths ? " · Đã có Toán nâng cao (Further Maths)" : "") +
+      (u.tokEeCompleted ? " · Đã hoàn thành EE (4.000 từ) & TOK" : "") + ".";
+  }, function (l) {
+    if (!inUK850(l)) return [];
+    var u = ukStudyState850(l), s829 = l.flags.study829 || (l.flags.study829 = {}), out = [];
+
+    // Nhóm 1: Bắt buộc / Ưu tiên tuyệt đối A-Level
+    UK_ALEVEL_IB_GROUPS850.alevel_mandatory.majors.forEach(function (m) {
+      out.push({
+        k: "al_" + m.k,
+        l: "[Ưu tiên tuyệt đối A-Level] " + m.name + " — " + m.reqSubjects,
+        why: u.targetMajor === m.k && u.mode === "alevel" ? "Đang theo lộ trình A-Level này" : true,
+        run: function (l, r, log) {
+          u.mode = "alevel";
+          u.targetGroup = "alevel_mandatory";
+          u.targetMajor = m.k;
+          u.targetName = m.name;
+          u.reqSubjects = m.reqSubjects;
+          u.furtherMaths = m.k === "eng" || m.k === "it";
+          s829.track = "science";
+          s829.sixth = m.reqSubjects;
+          H.fx(l, { kno: 3 });
+          log("Bạn chọn lộ trình A-Level chuyên sâu cho ngành " + m.name + " (" + m.reqSubjects + "). " + m.whyTrack, "good");
+        }
+      });
+    });
+
+    // Nhóm 2: Cực kỳ chuộng / Ưu tiên IB Diploma
+    UK_ALEVEL_IB_GROUPS850.ib_preferred.majors.forEach(function (m) {
+      out.push({
+        k: "ib_" + m.k,
+        l: "[Ưu tiên IB Diploma — TOK & EE 4.000 từ] " + m.name + " — " + m.reqSubjects,
+        why: u.targetMajor === m.k && u.mode === "ib" ? "Đang theo lộ trình IB Diploma này" : true,
+        run: function (l, r, log) {
+          u.mode = "ib";
+          u.targetGroup = "ib_preferred";
+          u.targetMajor = m.k;
+          u.targetName = m.name;
+          u.reqSubjects = m.reqSubjects;
+          u.tokEeCompleted = true;
+          s829.track = "ib";
+          s829.sixth = m.reqSubjects;
+          H.fx(l, { kno: 3, soc: 2 });
+          log("Bạn chọn lộ trình IB Diploma cho ngành " + m.name + " (" + m.reqSubjects + "). " + m.whyTrack, "good");
+        }
+      });
+    });
+
+    // Nhóm 3: Nhóm ngành Cân bằng (Chọn A-Level hay IB đều ổn tùy phong cách học)
+    UK_ALEVEL_IB_GROUPS850.balanced.majors.forEach(function (m) {
+      out.push({
+        k: "bal_" + m.k,
+        l: "[Nhóm Cân bằng] " + m.name + " — " + m.reqSubjects,
+        why: u.targetBalancedKey === m.k ? "Đang theo lộ trình này" : true,
+        run: function (l, r, log) {
+          u.mode = m.track;
+          u.targetGroup = "balanced";
+          u.targetBalancedKey = m.k;
+          u.targetMajor = m.majorCode;
+          u.targetName = m.name;
+          u.reqSubjects = m.reqSubjects;
+          if (m.k === "biz_ib") u.mathsHL = true;
+          if (m.k === "arch_alevel" || m.k === "arch_ib") u.portfolioReady = true;
+          s829.track = m.track === "ib" ? "ib" : "science";
+          s829.sixth = m.reqSubjects;
+          H.fx(l, { kno: 3, hap: m.k === "arch_ib" ? -1 : 1 });
+          log("Bạn chọn " + m.name + " (" + m.reqSubjects + "). " + m.whyTrack, "good");
+        }
+      });
+    });
+
+    return out;
+  }, 15, "Học tập");
+
+  // ================= 13. Hệ thống Đam mê (Passions), Sở trường / Năng khiếu (Aptitudes) & Sở đoản (Weaknesses) — Biến đổi tự nhiên & Bảo toàn kỹ năng (8.10.50) =================
+  var PASSION_DOMAINS850 = [
+    { k: "math_logic", name: "Toán học & Tư duy Logic", majors: ["it", "eng", "fin"], skills: ["toan_hoc", "lap_trinh"] },
+    { k: "bio_med", name: "Y sinh & Khoa học Sự sống", majors: ["med", "pharm"], skills: ["so_cuu", "y_hoc"] },
+    { k: "eng_tech", name: "Kỹ thuật, Cơ khí & Tự động hóa", majors: ["eng", "it"], skills: ["sua_chua", "co_khi"] },
+    { k: "law_lit", name: "Ngôn ngữ, Văn chương & Lý luận Pháp luật", majors: ["law", "lit", "jour"], skills: ["hung_bien", "viet_lach"] },
+    { k: "econ_biz", name: "Kinh tế, Tài chính & Thương mại", majors: ["biz", "fin", "mkt"], skills: ["kinh_doanh", "dau_tu"] },
+    { k: "art_design", name: "Hội họa, Kiến trúc & Thiết kế Thẩm mỹ", majors: ["art", "arch"], skills: ["hoi_hoa", "thiet_ke"] },
+    { k: "music_perf", name: "Âm nhạc & Nghệ thuật Biểu diễn", majors: ["music", "act"], skills: ["nhac_cu", "ca_hat"] },
+    { k: "sport_ath", name: "Thể thao & Vận động Thể chất", majors: ["sport"], skills: ["boi", "vo_thuat"] },
+    { k: "lang_ir", name: "Ngoại ngữ, Lịch sử & Quan hệ Quốc tế", majors: ["ir", "lang"], skills: ["ngoai_ngu", " giao_tiep"] },
+    { k: "psy_soc", name: "Tâm lý học & Thấu cảm Xã hội", majors: ["psy", "edu", "soc"], skills: ["lang_nghe", "thau_cam"] }
+  ];
+
+  function passionState850(l) {
+    var p = l.flags.passion850;
+    if (!p) {
+      var rr = rng(l.id + ":passion850");
+      var keys = PASSION_DOMAINS850.map(function (d) { return d.k; });
+      // Số lượng đam mê, năng khiếu (sở trường) và sở đoản tùy mỗi người ít hay nhiều (1–3 đam mê, 1–3 năng khiếu, 1–2 sở đoản)
+      var passionCount = 1 + (Math.floor(rr() * 3));
+      var aptitudeCount = 1 + (Math.floor(rr() * 3));
+      var weaknessCount = 1 + (Math.floor(rr() * 2));
+      var passions = [], aptitudes = [], weaknesses = [];
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[(i + Math.floor(rr() * keys.length)) % keys.length];
+        if (passions.length < passionCount && !passions.includes(k)) passions.push(k);
+      }
+      // Năng khiếu sẵn có không nhất thiết trùng với đam mê (có thể giỏi một lĩnh vực nhưng không đam mê nó)
+      for (var j = 0; j < keys.length; j++) {
+        var k2 = keys[(j * 3 + Math.floor(rr() * keys.length)) % keys.length];
+        if (aptitudes.length < aptitudeCount && !aptitudes.includes(k2)) aptitudes.push(k2);
+      }
+      for (var w = 0; w < keys.length; w++) {
+        var k3 = keys[(w * 5 + Math.floor(rr() * keys.length)) % keys.length];
+        if (weaknesses.length < weaknessCount && !aptitudes.includes(k3) && !passions.includes(k3) && !weaknesses.includes(k3)) {
+          weaknesses.push(k3);
+        }
+      }
+      var retainedSkills = {};
+      aptitudes.forEach(function (ak) { retainedSkills[ak] = 20; });
+      p = l.flags.passion850 = {
+        passions: passions,
+        aptitudes: aptitudes,
+        weaknesses: weaknesses,
+        retainedSkills: retainedSkills,
+        shiftsCount: 0,
+        lastShiftAge: 0,
+        history: [],
+        acted: {}
+      };
+    }
+    return p;
+  }
+
+  function domainName850(k) {
+    var d = PASSION_DOMAINS850.find(function (x) { return x.k === k; });
+    return d ? d.name : k;
+  }
+
+  function evalDomainFit850(l, domainKey) {
+    var p = passionState850(l);
+    var isPassion = p.passions.includes(domainKey);
+    var isAptitude = p.aptitudes.includes(domainKey);
+    var isWeakness = p.weaknesses.includes(domainKey);
+    // Không tự động ghét một ngành không thuộc đam mê của mình trừ khi đó là sở đoản!
+    // Năng khiếu sẵn có không có nghĩa là thích nó nhưng làm việc tốt hơn vì trơn tru.
+    return {
+      domainKey: domainKey,
+      isPassion: isPassion,
+      isAptitude: isAptitude,
+      isWeakness: isWeakness,
+      hatesIt: isWeakness && !isPassion,
+      smoothWorkBonus: isAptitude ? 4 : 0,
+      enthusiasmBonus: isPassion ? 4 : 0,
+      neutralOk: !isPassion && !isWeakness
+    };
+  }
+
+  X.menu("passionAptitude850", "Đam mê, Năng khiếu (Sở trường) & Sở đoản Cá nhân", function (l) {
+    if (!l.alive) return "Không khả dụng";
+    return X.reason(l, 6);
+  }, function (l) {
+    var p = passionState850(l);
+    var skList = Object.keys(p.retainedSkills || {}).map(function (k) { return domainName850(k) + " (Lv." + p.retainedSkills[k] + ")"; });
+    return "• Đam mê hiện tại (làm việc hăng say & năng suất hơn): " + (p.passions.map(domainName850).join(", ") || "Đang khám phá") + ".\n" +
+      "• Năng khiếu / Sở trường sẵn có (không đồng nghĩa với thích, nhưng học và làm trơn tru, hiệu quả hơn): " + (p.aptitudes.map(domainName850).join(", ") || "Chưa bộc lộ") + ".\n" +
+      "• Sở đoản / Lĩnh vực yếu (có quyền chọn né tránh hoặc chủ động rèn luyện cải thiện): " + (p.weaknesses.map(domainName850).join(", ") || "Đã khắc phục hết sở đoản") + ".\n" +
+      "• Nguyên tắc: Bạn KHÔNG tự động ghét một ngành không thuộc đam mê của mình (trừ khi đó là sở đoản). Khi hết đam mê cũ, các kỹ năng đã luyện từ trước vẫn được giữ nguyên: " + (skList.join(", ") || "Chưa tích lũy") + ".";
+  }, function (l) {
+    var p = passionState850(l), out = [];
+    function row(k, label, run, why) {
+      out.push({ k: k, l: label, why: why || p.acted[k] === yr(l) ? why || "Đã thực hiện năm nay" : true, run: function (l, r, log) { if (p.acted[k] === yr(l)) return; p.acted[k] = yr(l); run(r, log); } });
+    }
+
+    // 1. Học tập / làm việc theo Đam mê (hăng say & năng suất cao)
+    if (p.passions.length) {
+      var pk = p.passions[0];
+      row("pursue_passion", "Theo đuổi & đào sâu Đam mê (" + domainName850(pk) + "): học và làm với sự hăng say, năng suất vượt trội", function (r, log) {
+        p.retainedSkills[pk] = (p.retainedSkills[pk] || 10) + 12;
+        l.skill = Math.min(100, (l.skill || 20) + 4);
+        H.fx(l, { hap: 4, kno: 4 });
+        log("Khi được làm đúng đam mê (" + domainName850(pk) + "), bạn vô cùng hăng say và đạt năng suất cao; kỹ năng chuyên môn tích lũy lên mức Lv." + p.retainedSkills[pk] + ".", "good");
+      });
+    }
+
+    // 2. Phát huy Năng khiếu / Sở trường sẵn có (dù không nhất thiết đam mê nhưng làm việc cực kỳ trơn tru)
+    if (p.aptitudes.length) {
+      var ak = p.aptitudes.find(function (x) { return !p.passions.includes(x); }) || p.aptitudes[0];
+      row("leverage_aptitude", "Phát huy Năng khiếu sẵn có (" + domainName850(ak) + "): dù không phải sở thích cuồng nhiệt nhưng xử lý công việc cực kỳ trơn tru, hiệu quả", function (r, log) {
+        p.retainedSkills[ak] = (p.retainedSkills[ak] || 20) + 10;
+        l.skill = Math.min(100, (l.skill || 20) + 4);
+        H.fx(l, { kno: 4, hap: 1 });
+        log("Năng khiếu sẵn có ở lĩnh vực " + domainName850(ak) + " giúp bạn tiếp thu và giải quyết công việc trơn tru, chuẩn xác hơn hẳn dù bạn coi đây là thế mạnh thực tế chứ không nhất thiết là đam mê cháy bỏng.", "good");
+      });
+    }
+
+    // 3. Học/làm một lĩnh vực Trung lập (không thuộc đam mê nhưng không phải sở đoản -> không hề ghét)
+    var neutralDom = PASSION_DOMAINS850.find(function (d) { return !p.passions.includes(d.k) && !p.weaknesses.includes(d.k); });
+    if (neutralDom) {
+      row("study_neutral_domain", "Học & làm việc ở lĩnh vực trung lập (" + neutralDom.name + "): không thuộc đam mê nhưng không phải sở đoản nên vẫn giữ tâm thế thoải mái", function (r, log) {
+        p.retainedSkills[neutralDom.k] = (p.retainedSkills[neutralDom.k] || 5) + 6;
+        H.fx(l, { kno: 3, hap: 1 });
+        log("Bạn học và làm việc trong lĩnh vực " + neutralDom.name + ": dù không phải đam mê lớn nhất, vì đây không phải sở đoản nên bạn hoàn toàn không ghét bỏ mà vẫn hoàn thành tốt công việc.", "neutral");
+      });
+    }
+
+    // 4. Đối với Sở đoản: chọn Né tránh hoặc Chủ động rèn luyện cải thiện
+    if (p.weaknesses.length) {
+      var wk = p.weaknesses[0];
+      row("avoid_weakness", "Chủ động né tránh Sở đoản (" + domainName850(wk) + ") để dồn thời gian cho Sở trường & Đam mê", function (r, log) {
+        H.fx(l, { hap: 3 });
+        if (l.mind) l.mind.stress = Math.max(0, (l.mind.stress || 20) - 4);
+        log("Bạn tỉnh táo né tránh lĩnh vực sở đoản (" + domainName850(wk) + ") không phù hợp với mình để tập trung vào thế mạnh cốt lõi, giúp tinh thần nhẹ nhõm hơn.", "good");
+      });
+
+      row("improve_weakness", "Quyết tâm rèn luyện khắc phục Sở đoản (" + domainName850(wk) + "): vượt qua điểm yếu bằng sự kiên trì", function (r, log) {
+        p.weaknesses = p.weaknesses.filter(function (x) { return x !== wk; });
+        p.retainedSkills[wk] = (p.retainedSkills[wk] || 0) + 10;
+        p.history.push({ age: l.age, type: "overcome_weakness", domain: wk });
+        H.fx(l, { kno: 3, hap: 2 });
+        log("Nhờ kiên trì rèn luyện, bạn đã cải thiện được lĩnh vực từng là sở đoản (" + domainName850(wk) + ") và không còn cảm thấy e ngại hay ghét nó nữa!", "big");
+      });
+    }
+
+    // 5. Sự thay đổi tự nhiên của đam mê theo năm tháng (vừa phải, giữ nguyên kỹ năng đã luyện từ trước)
+    row("natural_passion_shift", "Trải nghiệm cột mốc thay đổi sở thích tự nhiên: có thể vơi một đam mê cũ hoặc mở lòng với một đam mê mới (vẫn giữ nguyên kỹ năng đã luyện)", function (r, log) {
+      var cand = PASSION_DOMAINS850.find(function (d) { return !p.passions.includes(d.k) && !p.weaknesses.includes(d.k); });
+      var faded = p.passions.length > 1 ? p.passions.pop() : null;
+      if (faded) {
+        p.retainedSkills[faded] = Math.max(p.retainedSkills[faded] || 15, 15);
+      }
+      if (cand && p.passions.length < 3) {
+        p.passions.push(cand.k);
+      }
+      p.shiftsCount = (p.shiftsCount || 0) + 1;
+      p.lastShiftAge = l.age;
+      H.fx(l, { hap: 2, kno: 2 });
+      log("Theo thời gian và trải nghiệm sống, tâm lý của bạn có sự chuyển dịch tự nhiên ở mức vừa phải: " +
+        (faded ? "bạn không còn quá say mê " + domainName850(faded) + " như trước (nhưng toàn bộ kỹ năng Lv." + p.retainedSkills[faded] + " đã luyện từ trước vẫn còn nguyên trong người), " : "") +
+        (cand ? "đồng thời bạn tìm thấy niềm hứng thú mới với " + cand.name + "." : "giữ nhịp cân bằng với các sở thích hiện tại."), "good");
+    });
+
+    return out;
+  }, 6, "Học tập");
+
+  // ================= 14. Hệ thống 16 Nhóm Tính cách MBTI (Ảnh hưởng vừa phải tới Công việc, Học tập, Gia đình & Quan hệ; quyền quyết định thuộc về bản thân - 8.10.50) =================
+  var MBTI_TYPES850 = {
+    INTJ: { code: "INTJ", name: "Nhà Chiến lược (Architect)", group: "Nhà Phân tích", workStyle: "Tư duy hệ thống dài hạn, độc lập và tối ưu hóa quy trình", relStyle: "Quan tâm bằng hành động thực tế, giải pháp sâu sắc và sự chung thủy bền bỉ", studyStyle: "Thích đào sâu bản chất lý thuyết và tự lập kế hoạch học tập" },
+    INTP: { code: "INTP", name: "Nhà Tư duy (Logician)", group: "Nhà Phân tích", workStyle: "Phân tích logic sắc bén, giải quyết bài toán phức tạp và sáng tạo khái niệm", relStyle: "Tôn trọng không gian riêng tư, chia sẻ tri thức và thẳng thắn chân thành", studyStyle: "Học cực nhanh khi hiểu nguyên lý gốc, thích khám phá tự do" },
+    ENTJ: { code: "ENTJ", name: "Nhà Điều hành (Commander)", group: "Nhà Phân tích", workStyle: "Quyết đoán, định hướng mục tiêu lớn và tổ chức đội ngũ hiệu quả", relStyle: "Chủ động bảo vệ gia đình, định hướng tương lai chung rõ ràng", studyStyle: "Có tính cạnh tranh cao, thích cấu trúc rõ ràng và hiệu quả thực chiến" },
+    ENTP: { code: "ENTP", name: "Người Tranh biện (Debater)", group: "Nhà Phân tích", workStyle: "Nhạy bén với ý tưởng mới, phản biện đa chiều và ứng biến linh hoạt", relStyle: "Hài hước, truyền cảm hứng và luôn làm mới bầu không khí gia đình", studyStyle: "Thích tranh luận mở, liên ngành và lật ngược vấn đề" },
+    INFJ: { code: "INFJ", name: "Người Che chở (Advocate)", group: "Nhà Ngoại giao", workStyle: "Làm việc có lý tưởng, chiều sâu nhân văn và trực giác nhạy bén", relStyle: "Thấu cảm sâu sắc, lắng nghe tâm tư người thân và gắn kết tinh thần", studyStyle: "Kết nối kiến thức với ý nghĩa nhân sinh và giá trị đạo đức" },
+    INFP: { code: "INFP", name: "Người Hòa giải (Mediator)", group: "Nhà Ngoại giao", workStyle: "Sáng tạo giàu cảm xúc, trung thành với giá trị cốt lõi cá nhân", relStyle: "Dịu dàng, bao dung, luôn nâng đỡ cảm xúc của bạn đời và con cái", studyStyle: "Học tốt nhất khi có cảm hứng nghệ thuật, văn chương và nhân văn" },
+    ENFJ: { code: "ENFJ", name: "Người Chỉ dẫn (Protagonist)", group: "Nhà Ngoại giao", workStyle: "Truyền lửa, kết nối tập thể và dẫn dắt bằng sự khích lệ", relStyle: "Ấm áp, chu đáo, luôn vun đắp sự hòa thuận giữa các thế hệ gia đình", studyStyle: "Học nhóm hiệu quả, giỏi thuyết trình và tổng hợp quan điểm" },
+    ENFP: { code: "ENFP", name: "Người Truyền cảm hứng (Campaigner)", group: "Nhà Ngoại giao", workStyle: "Nhiệt huyết, giàu trí tưởng tượng và giỏi mở rộng mạng lưới quan hệ", relStyle: "Tràn đầy năng lượng tích cực, lãng mạn và cởi mở chia sẻ", studyStyle: "Đa dạng sở thích, tiếp thu nhanh qua trải nghiệm và giao lưu" },
+    ISTJ: { code: "ISTJ", name: "Người Trách nhiệm (Logistician)", group: "Nhà Bảo hộ", workStyle: "Kỷ luật, tỉ mỉ, đáng tin cậy tuyệt đối và tôn trọng nguyên tắc", relStyle: "Bày tỏ tình yêu qua trách nhiệm chu toàn, giữ chữ tín với gia đình", studyStyle: "Ôn luyện có hệ thống, ghi chép cẩn thận và nắm chắc kiến thức nền" },
+    ISFJ: { code: "ISFJ", name: "Người Nuôi dưỡng (Defender)", group: "Nhà Bảo hộ", workStyle: "Tận tâm, kiên nhẫn, hỗ trợ hậu phương vững chắc và chu đáo từng chi tiết", relStyle: "Ghi nhớ từng thói quen nhỏ của người thân, chăm sóc gia đình ân cần", studyStyle: "Chăm chỉ, bền bỉ, phát huy tốt trong môi trường học tập ổn định" },
+    ESTJ: { code: "ESTJ", name: "Người Quản lý (Executive)", group: "Nhà Bảo hộ", workStyle: "Tổ chức thực tế, rõ ràng về trách nhiệm và điều phối nguồn lực giỏi", relStyle: "Chỗ dựa vững vàng về tài chính và nề nếp gia phong", studyStyle: "Thực tế, bám sát mục tiêu điểm số và lộ trình chuẩn mực" },
+    ESFJ: { code: "ESFJ", name: "Người Quan tâm (Consul)", group: "Nhà Bảo hộ", workStyle: "Hợp tác nhịp nhàng, xây dựng văn hóa tập thể gắn kết và hiếu khách", relStyle: "Giữ gìn truyền thống sum họp gia đình, quan tâm chu đáo tới hai bên nội ngoại", studyStyle: "Học tập tích cực khi có sự tương tác với thầy cô và bạn bè" },
+    ISTP: { code: "ISTP", name: "Nhà Kỹ thuật (Virtuoso)", group: "Nhà Thám hiểm", workStyle: "Bình tĩnh xử lý khủng hoảng, khéo tay thực hành và tư duy cơ học nhạy bén", relStyle: "Không nói hoa mỹ nhưng luôn sẵn sàng sửa chữa, giúp đỡ việc thực tế trong nhà", studyStyle: "Học qua thực hành, thí nghiệm và tháo lắp trực tiếp" },
+    ISFP: { code: "ISFP", name: "Người Nghệ sĩ (Adventurer)", group: "Nhà Thám hiểm", workStyle: "Gu thẩm mỹ tinh tế, linh hoạt và trân trọng tự do sáng tạo", relStyle: "Nhẹ nhàng, tinh tế, tôn trọng cá tính riêng của người thương và con cái", studyStyle: "Tiếp thu mạnh qua hình ảnh, âm thanh và trải nghiệm thẩm mỹ" },
+    ESTP: { code: "ESTP", name: "Người Thực thi (Entrepreneur)", group: "Nhà Thám hiểm", workStyle: "Nhanh nhạy nắm bắt cơ hội thị trường, dám hành động và thương lượng giỏi", relStyle: "Sôi nổi, hào sảng, thích đưa gia đình đi trải nghiệm thực tế", studyStyle: "Ưa ứng dụng thực tiễn nhanh hơn là lý thuyết dài dòng" },
+    ESFP: { code: "ESFP", name: "Người Trình diễn (Entertainer)", group: "Nhà Thám hiểm", workStyle: "Tỏa sáng trước đám đông, giao tiếp cuốn hút và lan tỏa niềm vui", relStyle: "Biến mỗi ngày bên gia đình thành niềm vui ấm áp, giàu tình cảm", studyStyle: "Hứng thú với các hoạt động ngoại khóa, nghệ thuật và tương tác trực tiếp" }
+  };
+
+  function mbtiState850(l) {
+    var m = l.flags.mbti850;
+    if (!m) {
+      var keys = Object.keys(MBTI_TYPES850);
+      var idx = hash(String(l.id || l.name) + ":mbti850") % keys.length;
+      var code = keys[idx];
+      m = l.flags.mbti850 = {
+        code: code,
+        selfSelected: false,
+        workApplied: 0,
+        relApplied: 0,
+        acted: {}
+      };
+    }
+    return m;
+  }
+
+  X.menu("mbtiProfile850", "Nhóm Tính cách MBTI (16 Nhóm — Xu hướng Học tập, Công việc & Cách Quan tâm Gia đình)", function (l) {
+    if (!l.alive) return "Không khả dụng";
+    return X.reason(l, 10);
+  }, function (l) {
+    var m = mbtiState850(l), info = MBTI_TYPES850[m.code] || MBTI_TYPES850.INFJ;
+    return "• Nhóm MBTI hiện tại của bạn: " + info.code + " — " + info.name + " (" + info.group + ").\n" +
+      "• Phong cách học tập: " + info.studyStyle + ".\n" +
+      "• Phong cách công việc: " + info.workStyle + ".\n" +
+      "• Cách tương tác & quan tâm gia đình / người thương: " + info.relStyle + ".\n" +
+      "• Lưu ý: MBTI chỉ phản ánh xu hướng tự nhiên và ảnh hưởng một phần vừa phải; mọi lựa chọn học tập, nghề nghiệp và cách ứng xử vẫn hoàn toàn do bản thân bạn quyết định.";
+  }, function (l) {
+    var m = mbtiState850(l), info = MBTI_TYPES850[m.code] || MBTI_TYPES850.INFJ, out = [];
+    function row(k, label, run, why) {
+      out.push({ k: k, l: label, why: why || m.acted[k] === yr(l) ? why || "Đã thực hiện năm nay" : true, run: function (l, r, log) { if (m.acted[k] === yr(l)) return; m.acted[k] = yr(l); run(r, log); } });
+    }
+
+    row("mbti_work_study", "Vận dụng thế mạnh " + info.code + " (" + info.name + ") vào học tập & công việc (vẫn giữ sự chủ động của bản thân)", function (r, log) {
+      m.workApplied = (m.workApplied || 0) + 1;
+      H.fx(l, { kno: 2, hap: 2 });
+      log("Bạn phát huy xu hướng tự nhiên của nhóm " + info.code + " (" + info.workStyle.toLowerCase() + " · " + info.studyStyle.toLowerCase() + ") giúp nhịp học tập và làm việc thuận lợi hơn, đồng thời chủ động điều chỉnh khi cần thiết.", "good");
+    });
+
+    row("mbti_family_care", "Thể hiện sự quan tâm tới gia đình, bạn đời & bạn bè theo cách riêng của " + info.code + " (" + info.relStyle + ")", function (r, log) {
+      m.relApplied = (m.relApplied || 0) + 1;
+      if (l.partner) l.partner.close = U.clamp((l.partner.close || 60) + 3, 0, 100);
+      H.fx(l, { soc: 3, hap: 2 });
+      log("Trong các mối quan hệ và gia đình, bạn thể hiện sự gắn kết theo phong cách " + info.code + " (" + info.relStyle.toLowerCase() + "), đồng thời lắng nghe để thấu hiểu sự khác biệt tính cách của người thân.", "good");
+    });
+
+    Object.keys(MBTI_TYPES850).forEach(function (code) {
+      var t = MBTI_TYPES850[code];
+      out.push({
+        k: "set_mbti_" + code,
+        l: "Định hình / tự chọn nhóm tính cách MBTI: " + t.code + " — " + t.name + " (" + t.group + ")",
+        why: m.code === code ? "Đang là nhóm MBTI hiện tại" : true,
+        run: function (l, r, log) {
+          m.code = code;
+          m.selfSelected = true;
+          log("Bạn xác định nhóm tính cách MBTI của mình là " + t.code + " — " + t.name + " (" + t.workStyle + "). Bạn làm chủ các quyết định của bản thân mà không bị đóng khung cứng nhắc bởi nhãn tính cách.", "neutral");
+        }
+      });
+    });
+
+    return out;
+  }, 10, "Đời sống");
+
+  // ================= 15. Văn hóa Giờ sinh Can Chi & Tuổi Con Giáp: Chỉ dùng ở Á Đông (VN, CN, JP, KR, KP...), Phương Tây KHÔNG dùng giờ/tuổi con giáp (8.10.50) =================
+  var EAST_ASIAN_ZODIAC_COUNTRIES850 = ["VN", "CN", "JP", "KR", "KP", "TW", "HK", "MO", "SG"];
+  var ZODIAC_ANIMALS_VN850 = ["Tý (Chuột)", "Sửu (Trâu)", "Dần (Hổ)", "Mẹo (Mèo)", "Thìn (Rồng)", "Tỵ (Rắn)", "Ngọ (Ngựa)", "Mùi (Dê)", "Thân (Khỉ)", "Dậu (Gà)", "Tuất (Chó)", "Hợi (Lợn)"];
+  var ZODIAC_ANIMALS_EA850 = ["Tý (Chuột)", "Sửu (Trâu)", "Dần (Hổ)", "Mão (Thỏ)", "Thìn (Rồng)", "Tỵ (Rắn)", "Ngọ (Ngựa)", "Mùi (Dê)", "Thân (Khỉ)", "Dậu (Gà)", "Tuất (Chó)", "Hợi (Lợn)"];
+
+  function usesEasternZodiac850(l) {
+    if (!l) return true;
+    var c = l.country || (l.mode === "vn" ? "VN" : H.resCode(l));
+    return EAST_ASIAN_ZODIAC_COUNTRIES850.includes(c);
+  }
+
+  function easternZodiacAnimal850(l) {
+    if (!usesEasternZodiac850(l)) return null;
+    var by = l.birthYear || 2000;
+    var idx = ((by - 4) % 12 + 12) % 12;
+    var c = l.country || (l.mode === "vn" ? "VN" : H.resCode(l));
+    return c === "VN" ? ZODIAC_ANIMALS_VN850[idx] : ZODIAC_ANIMALS_EA850[idx];
+  }
+
+  if (E.astroText) {
+    var oldAstroText850 = E.astroText;
+    E.astroText = function (l) {
+      var raw = oldAstroText850(l);
+      var mb = mbtiState850(l);
+      if (usesEasternZodiac850(l)) {
+        var animal = easternZodiacAnimal850(l);
+        return raw + (animal ? " · tuổi " + animal : "") + (mb && mb.code ? " · MBTI: " + mb.code : "");
+      }
+      // Ở phương Tây (Anh, Mỹ, Bắc Âu, Tây Ban Nha...): KHÔNG dùng giờ sinh Can Chi (giờ Tý, Sửu, Dần...) hay tuổi con giáp!
+      var a = l.astro51 || {};
+      var hr = l.birthHour != null ? l.birthHour : 8;
+      return (a.sign || "Bạch Dương") + " · sinh lúc " + hr + "h00 · " + (a.theme || "cởi mở") + (mb && mb.code ? " · MBTI: " + mb.code : "");
+    };
+  }
+
+  E.ROYAL850 = {
+    KR_BAEKIL_CAKES850: KR_BAEKIL_CAKES850,
+    KR_BAEKIL_GENDER_STYLE850: KR_BAEKIL_GENDER_STYLE850,
+    KR_BAEKIL_TIERS850: KR_BAEKIL_TIERS850,
+    UK_ALEVEL_IB_GROUPS850: UK_ALEVEL_IB_GROUPS850,
+    PASSION_DOMAINS850: PASSION_DOMAINS850,
+    MBTI_TYPES850: MBTI_TYPES850,
+    EAST_ASIAN_ZODIAC_COUNTRIES850: EAST_ASIAN_ZODIAC_COUNTRIES850,
+    inKorea850: inKorea850,
+    krBaekIlRecord850: krBaekIlRecord850,
+    spainSuccessionInfo850: spainSuccessionInfo850,
+    inUK850: inUK850,
+    ukStudyState850: ukStudyState850,
+    passionState850: passionState850,
+    evalDomainFit850: evalDomainFit850,
+    mbtiState850: mbtiState850,
+    usesEasternZodiac850: usesEasternZodiac850,
+    easternZodiacAnimal850: easternZodiacAnimal850
+  };
 
   E.ROYAL848 = {
     INDIA_VARNAS849: INDIA_VARNAS849,

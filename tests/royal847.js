@@ -342,4 +342,144 @@ function pick(l, id, key, arg, r = () => 0.2) {
   ok(!actsIN.includes('vnFaithContext849'), 'Indian character NEVER sees Vietnam-specific faith menu');
 }
 
+// 10. Hàn Quốc (KR 8.10.50): Lễ Baek-il 100 ngày (Mâm cúng Samshin, 4 bánh Tteok chia 100 người, Hanbok/Decor nam-nữ & 3 phân khúc Tiết kiệm / Khá giả / Thượng lưu Chaebol)
+{
+  const I0 = E.ROYAL850;
+  ok(I0.KR_BAEKIL_CAKES850.length === 4 && I0.KR_BAEKIL_TIERS850.saving && I0.KR_BAEKIL_TIERS850.affluent && I0.KR_BAEKIL_TIERS850.elite, 'KR Baek-il cakes & 3 socioeconomic tiers defined');
+
+  const lKr = E.createLife({ mode: 'world', country: 'KR', seed: 8501, gender: 'F' });
+  Object.assign(lKr, { age: 28, alive: true, indep: true, school: null, pending: [], sched: [], money: lKr.base * 5, religion: 'Phật giáo' });
+  lKr.fam.q = 4;
+  const boy = { name: 'Min-jun', sex: 'M', born: 28, alive: true };
+  const girl = { name: 'Seo-yeon', sex: 'F', born: 27, alive: true };
+  lKr.kids = [girl, boy];
+
+  const recBoy = I0.krBaekIlRecord850(lKr, boy);
+  const recGirl = I0.krBaekIlRecord850(lKr, girl);
+  ok(recBoy.hanjaColor.includes('xanh dương hoặc xanh lá') && recBoy.hanbok.includes('Baji'), 'KR boy Baek-il uses blue/green 百 character, pastel blue/beige backdrop & Baji Hanbok');
+  ok(recGirl.hanjaColor.includes('hồng hoặc đỏ/vàng') && recGirl.hanbok.includes('Chima') && recGirl.hanbok.includes('Ayam'), 'KR girl Baek-il uses pink/red/yellow 百 character, dusty pink/peach backdrop & Chima + Ayam Hanbok');
+
+  ok(pick(lKr, 'krBaekIl850', 'samshin_table') && recBoy.samshinOffered, 'KR Samshin Halmoni offering (3 white rice bowls, 3 uncut seaweed soup bowls, 3 Namul)');
+  ok(pick(lKr, 'krBaekIl850', 'tteok_100_share') && recBoy.shared100Neighbors, 'KR 4 traditional Tteok cakes & sharing Baekseolgi with 100 people');
+  ok(pick(lKr, 'krBaekIl850', 'tier_old_money_modest') && recBoy.oldMoneyModest && recBoy.baekilBanjiGoldRing, 'Old money KR family can choose modest affluent Hanjeongsik style with 1-don (3.75g) Baek-il banji gold ring');
+
+  recBoy.done = false;
+  ok(pick(lKr, 'krBaekIl850', 'tier_saving') && recBoy.tierChosen === 'saving', 'KR Saving tier (Self-Baek-il with Coupang/Naver rental & home photos)');
+  recBoy.done = false;
+  ok(pick(lKr, 'krBaekIl850', 'tier_affluent') && recBoy.tierChosen === 'affluent' && recBoy.baekilBanjiGoldRing, 'KR Affluent tier (Hanjeongsik, Design Tteok, Snapshot photographer & Baek-il banji ring)');
+  recBoy.done = false;
+  ok(pick(lKr, 'krBaekIl850', 'tier_elite') && recBoy.tierChosen === 'elite' && recBoy.chaebolGoldBars, 'KR Elite Chaebol tier (6-star Shilla/Signiel VIP, Art Director, Haute Couture Hanbok, gold bars & Dior Baby/Gucci Kids)');
+}
+
+// 11. Tây Ban Nha (ES) & Quy tắc Sắc phong Thái tử/Thái nữ, Kế vị nhiều thế hệ (Cháu/chắt không tự động lên Thái tử/Thái nữ khi cha/mẹ chưa lên ngôi - 8.10.50)
+{
+  const lEs = life('ES', 22, 'F'), hEs = house(lEs, 'ES');
+  // Trong house mặc định: root (Quốc vương), player (F, sinh 2004), younger (M, sinh 2006)
+  // Tại Tây Ban Nha (ES): ưu tiên nam giới -> em trai (younger, M) đứng trước chị gái (player, F)!
+  const lineEs = R.order(lEs, hEs);
+  ok(lineEs[0].id === 'younger' && lineEs[1].id === 'player', 'Spain male-preference primogeniture places younger Prince ahead of older Princess');
+
+  // Nếu không có con trai (chỉ có 2 công chúa): Trưởng nữ đứng đầu và được sắc phong Princesa de Asturias
+  hEs.members.find(m => m.id === 'younger').sex = 'F';
+  B.syncTitles(lEs, hEs, hEs.members[0], null, quiet);
+  ok(R.order(lEs, hEs)[0].id === 'player' && R.byId(hEs, 'player').heirApparent847 && R.byId(hEs, 'player').asturias837, 'Spain eldest daughter becomes Princesa de Asturias when there is no son');
+
+  // Thêm con đầu của Thái nữ (cháu ngoại của Vua đang trị vì) và cháu của con đầu (chắt của Vua đang trị vì)
+  hEs.members.push(
+    { id: 'grandchild1', name: 'Cháu Trưởng', sex: 'F', by: 2024, role: 'grandchild', parent: 'player', alive: true, titles: [{ key: 'prince' }], religion837: 'Công giáo', country837: 'ES' },
+    { id: 'greatgrand1', name: 'Chắt Trưởng', sex: 'M', by: 2025, role: 'greatgrandchild', parent: 'grandchild1', alive: true, titles: [{ key: 'prince' }], religion837: 'Công giáo', country837: 'ES' }
+  );
+  const orderMulti = R.order(lEs, hEs).map(m => m.id);
+  ok(orderMulti[0] === 'player' && orderMulti[1] === 'grandchild1' && orderMulti[2] === 'greatgrand1' && orderMulti[3] === 'younger', 'Line of succession: #1 Heir Apparent -> #2 first child of Heir -> #3 grandchild of Heir -> #4 younger sibling');
+
+  B.syncTitles(lEs, hEs, hEs.members[0], null, quiet);
+  const gc = R.byId(hEs, 'grandchild1');
+  ok(!gc.heirApparent847 && !gc.asturias837 && gc.waitingParentAccession850, 'Grandchild of reigning Sovereign is NOT automatically Crown Princess while parent is still Heir Apparent');
+
+  // Ngay cả khi cha/mẹ qua đời sớm mà Ông/Bà (Quốc vương root sống rất thọ) vẫn đang trị vì, người cháu cũng chưa tự động mang tước sắc phong của con vua cho tới khi được truyền ngôi/sắc phong
+  hEs.members[0].by = 1940; // Vua 86 tuổi sống rất thọ
+  ok(pick(lEs, 'royalSpainSuccession850', 'es_catholic_primogeniture') && lEs.religion === 'Công giáo', 'Spanish royal Catholic tradition & primogeniture verified');
+  ok(pick(lEs, 'royalSpainSuccession850', 'multigen_investiture_check'), 'Multi-generational investiture check executed');
+  ok(pick(lEs, 'royalSpainSuccession850', 'long_lived_monarch_abdication') && hEs.seat === 'player', 'Long-lived monarch (86yo) abdicates for health reasons; player ascends throne at mature age');
+  // Sau khi player lên làm Nữ hoàng (hEs.seat === 'player'), người con trưởng (grandchild1) mới chính thức được sắc phong làm Thái nữ (Princesa de Asturias)!
+  ok(gc.heirApparent847 === true && gc.asturias837 === true && gc.investedHeir850 === true, 'Grandchild is formally invested as Princesa de Asturias ONLY AFTER parent ascends the throne');
+}
+
+// 12. Anh Quốc (GB 8.10.50): Chọn A-Level vs. IB Diploma theo 3 Nhóm ngành Đại học
+{
+  const lUk = E.createLife({ mode: 'world', country: 'GB', seed: 8502, gender: 'M' });
+  Object.assign(lUk, { age: 16, alive: true, indep: false, school: 'upper', pending: [], sched: [], city: 'London' });
+  const u = E.ROYAL850.ukStudyState850(lUk);
+  ok(pick(lUk, 'ukAlevelIb850', 'al_med') && u.mode === 'alevel' && u.targetMajor === 'med', 'UK Medicine/Dentistry/Vet prioritizes A-Level Chemistry + Biology');
+  ok(pick(lUk, 'ukAlevelIb850', 'al_eng') && u.furtherMaths === true && u.targetMajor === 'eng', 'UK Russell Group Engineering prioritizes A-Level Maths + Further Maths + Physics');
+  ok(pick(lUk, 'ukAlevelIb850', 'al_it') && u.furtherMaths === true && u.targetMajor === 'it', 'UK Computer Science prioritizes A-Level Maths + Further Maths + CS');
+  ok(pick(lUk, 'ukAlevelIb850', 'ib_law') && u.mode === 'ib' && u.tokEeCompleted && u.targetMajor === 'law', 'UK Law favors IB Diploma (TOK & 4,000-word EE essay)');
+  ok(pick(lUk, 'ukAlevelIb850', 'ib_ppe') && u.mode === 'ib' && u.targetMajor === 'ppe', 'UK Oxford/LSE PPE favors interdisciplinary IB Diploma');
+  ok(pick(lUk, 'ukAlevelIb850', 'ib_ir') && u.mode === 'ib' && u.targetMajor === 'ir', 'UK International Relations favors IB Diploma');
+  ok(pick(lUk, 'ukAlevelIb850', 'ib_psy') && u.mode === 'ib' && u.targetMajor === 'psy', 'UK Psychology favors IB Diploma combining science & humanities');
+  ok(pick(lUk, 'ukAlevelIb850', 'bal_biz_ib') && u.mathsHL === true && u.targetMajor === 'biz', 'UK Balanced Economics/Finance with IB requires Maths Higher Level (HL)');
+  ok(pick(lUk, 'ukAlevelIb850', 'bal_arch_alevel') && u.portfolioReady === true && u.mode === 'alevel', 'UK Architecture/Design A-Level balances Maths/Physics with Art Portfolio');
+}
+
+// 13. Hệ thống Đam mê, Năng khiếu (Sở trường) & Sở đoản: Không tự động ghét ngành ngoài đam mê, cải thiện sở đoản & giữ kỹ năng khi đổi đam mê (8.10.50)
+{
+  const lPa = E.createLife({ mode: 'vn', country: 'VN', seed: 8503, gender: 'F' });
+  Object.assign(lPa, { age: 18, alive: true, pending: [], sched: [] });
+  const p = E.ROYAL850.passionState850(lPa);
+  p.passions = ['math_logic', 'music_perf'];
+  p.aptitudes = ['econ_biz']; // Có năng khiếu kinh doanh nhưng không nằm trong đam mê
+  p.weaknesses = ['art_design'];
+
+  const fitPassion = E.ROYAL850.evalDomainFit850(lPa, 'math_logic');
+  const fitAptitudeOnly = E.ROYAL850.evalDomainFit850(lPa, 'econ_biz');
+  const fitNeutral = E.ROYAL850.evalDomainFit850(lPa, 'law_lit');
+  const fitWeakness = E.ROYAL850.evalDomainFit850(lPa, 'art_design');
+
+  ok(fitPassion.isPassion && fitPassion.enthusiasmBonus > 0 && !fitPassion.hatesIt, 'Passion domain gives enthusiasm & productivity bonus');
+  ok(fitAptitudeOnly.isAptitude && !fitAptitudeOnly.isPassion && fitAptitudeOnly.smoothWorkBonus > 0 && !fitAptitudeOnly.hatesIt, 'Aptitude without passion still works smoothly without being hated');
+  ok(fitNeutral.neutralOk && !fitNeutral.hatesIt, 'Non-passion domain is NOT hated unless it is a weakness');
+  ok(fitWeakness.isWeakness && fitWeakness.hatesIt, 'Weakness domain is identified as a weakness');
+
+  ok(pick(lPa, 'passionAptitude850', 'pursue_passion') && p.retainedSkills.math_logic >= 22, 'Pursuing passion builds skill');
+  ok(pick(lPa, 'passionAptitude850', 'leverage_aptitude') && p.retainedSkills.econ_biz >= 30, 'Leveraging aptitude works smoothly');
+  ok(pick(lPa, 'passionAptitude850', 'study_neutral_domain'), 'Studying neutral non-passion domain works comfortably');
+  ok(pick(lPa, 'passionAptitude850', 'avoid_weakness'), 'Player can choose to avoid weakness');
+  ok(pick(lPa, 'passionAptitude850', 'improve_weakness') && !p.weaknesses.includes('art_design') && p.retainedSkills.art_design >= 10, 'Player can choose to practice and overcome weakness');
+  ok(pick(lPa, 'passionAptitude850', 'natural_passion_shift') && p.shiftsCount === 1 && p.retainedSkills.math_logic >= 22, 'Natural passion shift preserves previously trained skills');
+}
+
+// 14. Hệ thống 16 Nhóm Tính cách MBTI & Văn hóa Giờ sinh / Tuổi Con Giáp Á Đông vs. Phương Tây (8.10.50)
+{
+  const I0 = E.ROYAL850;
+  ok(Object.keys(I0.MBTI_TYPES850).length === 16, 'All 16 MBTI types defined');
+
+  const lVn = E.createLife({ mode: 'vn', country: 'VN', seed: 8504, year: 1999, gender: 'M' }); // 1999 = năm Kỷ Mão / Mẹo
+  lVn.birthYear = 1999;
+  Object.assign(lVn, { age: 20, alive: true, pending: [], sched: [] });
+  const m = I0.mbtiState850(lVn);
+  ok(m && I0.MBTI_TYPES850[m.code], 'Initial MBTI assigned');
+  ok(pick(lVn, 'mbtiProfile850', 'mbti_work_study') && m.workApplied === 1, 'MBTI work/study style applied moderately');
+  ok(pick(lVn, 'mbtiProfile850', 'mbti_family_care') && m.relApplied === 1, 'MBTI family/relationship care applied');
+  ok(pick(lVn, 'mbtiProfile850', 'set_mbti_INTJ') && m.code === 'INTJ' && m.selfSelected, 'Player retains full agency to choose/shape own MBTI');
+
+  // Kiểm tra văn hóa Giờ sinh Can Chi & Tuổi con giáp:
+  // Á Đông (VN, CN, JP, KR, KP) dùng giờ Can Chi và tuổi con giáp (VN năm 1999 là Mẹo (Mèo), KR/CN/JP năm 1999 là Mão (Thỏ))
+  const astroVn = E.astroText(lVn);
+  ok(astroVn.includes('giờ ') && astroVn.includes('tuổi Mẹo (Mèo)') && astroVn.includes('MBTI: INTJ'), 'Vietnam astroText includes Can Chi birth hour, Vietnamese zodiac Mẹo (Mèo), and MBTI');
+
+  const lKr = E.createLife({ mode: 'world', country: 'KR', seed: 8505, year: 1999, gender: 'F' });
+  lKr.birthYear = 1999;
+  const astroKr = E.astroText(lKr);
+  ok(astroKr.includes('giờ ') && astroKr.includes('tuổi Mão (Thỏ)'), 'Korea/China/Japan/North Korea astroText uses Can Chi birth hour and zodiac Mão (Thỏ)');
+
+  // Phương Tây (GB, US, SE, ES...) TUYỆT ĐỐI KHÔNG dùng giờ Can Chi (Tý, Sửu, Dần...) hay tuổi con giáp!
+  for (const wc of ['GB', 'US', 'SE', 'ES']) {
+    const lWest = E.createLife({ mode: 'world', country: wc, seed: 8506, year: 1999, gender: 'M' });
+    lWest.birthYear = 1999;
+    const astroWest = E.astroText(lWest);
+    ok(!I0.usesEasternZodiac850(lWest) && I0.easternZodiacAnimal850(lWest) === null, wc + ' does not use Eastern zodiac');
+    ok(astroWest.includes('sinh lúc ') && !/giờ (Tý|Sửu|Dần|Mão|Thìn|Tỵ|Ngọ|Mùi|Thân|Dậu|Tuất|Hợi)/.test(astroWest) && !astroWest.includes('tuổi '), wc + ' astroText uses 24h clock and Western zodiac without Can Chi hour or animal zodiac');
+  }
+}
+
 console.log('royal847: ' + count + ' checks passed');
