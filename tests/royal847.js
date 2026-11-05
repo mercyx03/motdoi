@@ -279,4 +279,67 @@ function pick(l, id, key, arg, r = () => 0.2) {
   ok(uniDec.opts.some(o => o.k === 'india_quota848'), 'Indian university decision includes IIT/AIIMS quota route');
 }
 
+// 8. Ấn Độ (IN 8.10.49): Bức tranh Tôn giáo - Nhánh nhỏ, Tháp Varna, Họ (Surname) như CMND xã hội & Hạn ngạch EWS 10%
+{
+  const I8 = E.ROYAL848;
+  ok(I8.INDIA_CATEGORIES.EWS && I8.INDIA_CATEGORIES.EWS.quotaShare === 0.10, 'EWS 10% constitutional quota exists for low-income Forward Castes');
+  ok(I8.INDIA_VARNAS849.Brahmin.surnames.includes('Sharma') && I8.INDIA_VARNAS849.Kshatriya.surnames.includes('Singh') && I8.INDIA_VARNAS849.Vaishya.surnames.includes('Gupta') && I8.INDIA_VARNAS849.Dalit.surnames.includes('Jatav'), 'Varna surnames mapped accurately');
+  ok(I8.INDIA_RELIGIONS849.Hindu.share.includes('~79.8%') && I8.INDIA_RELIGIONS849.Islam.share.includes('~14.2%') && I8.INDIA_RELIGIONS849.Christian.share.includes('~2.3%') && I8.INDIA_RELIGIONS849.Sikh.share.includes('~1.7%') && I8.INDIA_RELIGIONS849.Buddhist.share.includes('~0.7%') && I8.INDIA_RELIGIONS849.Jain.share.includes('~0.4%'), 'India religious shares match demographic data');
+
+  const l = E.createLife({ mode: 'world', country: 'IN', seed: 8491, gender: 'M' });
+  Object.assign(l, { age: 16, alive: true, indep: false, school: 'upper', pending: [], sched: [], money: l.base * 0.25, religion: 'Ấn Độ giáo' });
+  l.fam.q = 2;
+  const st = I8.indiaState848(l);
+  st.origCategory = 'GEN';
+  st.varna = 'Brahmin';
+  st.surname = 'Sharma';
+  st.ewsApproved = false;
+  I8.syncIndiaCategory848(l, st);
+  ok(st.activeCategory === 'GEN', 'Forward Caste student starts as General before claiming EWS');
+  ok(pick(l, 'indiaQuotaFaith848', 'apply_ews_10') && st.ewsApproved && st.activeCategory === 'EWS', 'Low-income Brahmin claims EWS 10% quota');
+  l.age = 17;
+  l.st.kno = 70;
+  ok(pick(l, 'indiaQuotaFaith848', 'apply_iit') && st.admittedInst && st.admittedInst.includes('IIT'), 'Score 70 passes EWS cutoff (68) for IIT whereas General requires 78');
+
+  ok(pick(l, 'indiaQuotaFaith848', 'surname_identity') && l.sur === 'Sharma', 'Surname identity check synchronizes Varna surname onto Indian character');
+  ok(pick(l, 'indiaQuotaFaith848', 'hindu_branches') && st.faith === 'Ấn Độ giáo' && st.faithBranch, 'Learned Hindu branches (Vaishnavism, Shaivism, Shaktism Durga Puja, Smartism Advaita Vedanta)');
+  ok(pick(l, 'indiaQuotaFaith848', 'christian_csi_cni_baptist') && st.faithBranch, 'Learned Indian Christian branches (CSI 1947, CNI 1970, CMC Vellore, Northeast Baptist Nagaland, Malankara Orthodox)');
+  ok(pick(l, 'indiaQuotaFaith848', 'sikh_khalsa_punjab') && st.sikhKhalsa && st.surname === 'Singh' && l.sur === 'Singh', 'Learned Sikh Khalsa 5Ks vs Sahajdhari & Punjab granary');
+  l.age = 18;
+  ok(pick(l, 'indiaQuotaFaith848', 'jain_parsi_economy') && st.faithBranch.includes('Jain (Svetambara) & công nghiệp Parsi'), 'Learned Jain Ahimsa (Svetambara Dilwara vs Digambara) & Parsi Tata industrial philanthropy');
+  ok(pick(l, 'indiaQuotaFaith848', 'quota_social_debate') && st.hindutvaObserved, 'Observed BJP / Ram Mandir Ayodhya & quota social debate');
+}
+
+// 9. Việt Nam (VN 8.10.49): Đời sống Tâm linh - Tôn giáo theo hoàn cảnh & Cách ly tuyệt đối không rò rỉ dữ liệu Ấn Độ / Hoàng gia Âu
+{
+  const lVN = E.createLife({ mode: 'vn', country: 'VN', seed: 8492, gender: 'F' });
+  Object.assign(lVN, { age: 16, alive: true, indep: false, school: 'upper', pending: [], sched: [], money: lVN.base * 0.2 });
+  lVN.fam.q = 1;
+  const actsVN = E.actions(lVN).filter(x => x.ok === true && !x.catalogHidden).map(x => x.id);
+  ok(actsVN.includes('vnFaithContext849'), 'VN character has access to Vietnamese spiritual/religious context menu');
+  ok(!actsVN.includes('indiaQuotaFaith848') && !actsVN.includes('royalSwedenTrack847') && !actsVN.includes('royalNorwayTrack848') && !actsVN.includes('royalDenmarkTrack848'), 'VN character NEVER sees India caste/quota or European royal menus');
+
+  // Ngay cả khi nhân vật VN đi du lịch/công tác sang Ấn Độ, cũng không bị gán đẳng cấp Varna hay hạn ngạch Ấn Độ
+  lVN.abroad = { c: 'IN', left: 1 };
+  const actsVNAbroad = E.actions(lVN).filter(x => x.ok === true && !x.catalogHidden).map(x => x.id);
+  ok(!actsVNAbroad.includes('indiaQuotaFaith848') && !(lVN.flags.world120 && lVN.flags.world120.india848), 'VN character visiting India abroad never gets Indian caste/quota state');
+  lVN.abroad = null;
+
+  const vst = E.ROYAL848.vnFaithState849(lVN);
+  ok(vst && vst.region && vst.familyClass, 'VN faith state initialized based on region, class, and family background');
+  ok(pick(lVN, 'vnFaithContext849', 'vn_ancestors_buddhism') && vst.tradition.includes('Phật giáo'), 'VN ancestor worship & Vietnamese Buddhism (Bắc tông, Nam tông, Khất sĩ, Trúc Lâm) practiced');
+  ok(pick(lVN, 'vnFaithContext849', 'vn_catholic_protestant') && (vst.tradition.includes('Công giáo') || vst.tradition.includes('Tin Lành')), 'VN Catholic/Protestant parish community & charity practiced');
+  ok(pick(lVN, 'vnFaithContext849', 'vn_caodai_hoahao_mau') && (vst.tradition.includes('Cao Đài') || vst.tradition.includes('Mẫu')), 'VN indigenous faiths (Thờ Mẫu Tam Tứ phủ, Cao Đài, Phật giáo Hòa Hảo) learned');
+  ok(pick(lVN, 'vnFaithContext849', 'vn_charity_scholarship') && vst.charityAid, 'Low-income VN student receives khuyến học scholarship from temple/parish');
+  lVN.age = 18;
+  lVN.money = lVN.base * 2;
+  ok(pick(lVN, 'vnFaithContext849', 'vn_merit_philanthropy') && vst.meritPatron, 'Well-off VN character performs thiện nguyện / khuyến học philanthropy');
+
+  // Ngược lại, nhân vật Ấn Độ không bao giờ thấy menu tâm linh nội địa Việt Nam
+  const lIN = E.createLife({ mode: 'world', country: 'IN', seed: 8493, gender: 'M' });
+  Object.assign(lIN, { age: 18, alive: true, pending: [], sched: [] });
+  const actsIN = E.actions(lIN).filter(x => x.ok === true && !x.catalogHidden).map(x => x.id);
+  ok(!actsIN.includes('vnFaithContext849'), 'Indian character NEVER sees Vietnam-specific faith menu');
+}
+
 console.log('royal847: ' + count + ' checks passed');

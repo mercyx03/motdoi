@@ -900,211 +900,471 @@
     };
   }
 
-  // ================= 8. Ấn Độ (IN): Hệ thống Đẳng cấp, Tôn giáo, Cải đạo & Hạn ngạch Suất học (SC/ST/OBC - 8.10.48) =================
+  // ================= 8. Ấn Độ (IN - Tách biệt tuyệt đối với VN): Đẳng cấp Varna, Họ (Surname), Tôn giáo chi tiết & Hạn ngạch SC/ST/OBC/EWS (8.10.49) =================
+  var INDIA_VARNAS849 = {
+    Brahmin: {
+      key: "Brahmin",
+      vnName: "Bà-la-môn (Brahmin — Tu sĩ, học giả, triết gia & lãnh đạo tôn giáo)",
+      popGroup: "Forward Castes / General (~20–25% dân số)",
+      defaultCat: "GEN",
+      surnames: ["Sharma", "Chaturvedi", "Trivedi", "Banerjee", "Mukherjee", "Iyer", "Iyengar"],
+      surnameMeaning: "Họ gắn với học thức, kinh điển Veda (Chaturvedi: thông suốt 4 bộ kinh Veda; Trivedi: 3 bộ kinh Veda; Sharma: sự bảo hộ; Banerjee/Mukherjee: học giả Bengal; Iyer/Iyengar: Brahmin miền Nam)."
+    },
+    Kshatriya: {
+      key: "Kshatriya",
+      vnName: "Sát-đế-lợi (Kshatriya — Vua chúa, quý tộc, chiến binh & lãnh đạo chính trị/quân sự)",
+      popGroup: "Forward Castes / General (~20–25% dân số)",
+      defaultCat: "GEN",
+      surnames: ["Singh", "Roy", "Rai", "Chauhan", "Rathore"],
+      surnameMeaning: "Họ gắn với quyền lực, đất đai và hoàng tộc (Singh: Sư tử của người Rajput vùng Rajasthan; Roy/Rai: Vua/Chúa đất; Chauhan, Rathore)."
+    },
+    Vaishya: {
+      key: "Vaishya",
+      vnName: "Phệ-xá (Vaishya — Thương nhân, tài chính, kế toán & chủ đất giàu có)",
+      popGroup: "Forward Castes / một số nhánh nhỏ thuộc OBC",
+      defaultCat: "GEN",
+      surnames: ["Gupta", "Agarwal", "Aggarwal", "Shah", "Mehta"],
+      surnameMeaning: "Họ gắn với giao thương, kế toán, tiền tệ (Gupta: người bảo vệ kho tàng; Agarwal: thương nhân vùng Agroha; Shah: thương gia; Mehta: kế toán/quản lý)."
+    },
+    Shudra: {
+      key: "Shudra",
+      vnName: "Thu-đà (Shudra — Tầng lớp lao động, nông dân nhỏ, thợ thủ công & phục vụ)",
+      popGroup: "OBC (Other Backward Classes — ~41–45% dân số, nhóm đông nhất Ấn Độ, có tiếng nói chính trị rất mạnh)",
+      defaultCat: "OBC",
+      surnames: ["Kumar", "Yadav", "Kurmi", "Patel"],
+      surnameMeaning: "Họ bắt nguồn từ nghề thủ công truyền thống (như Kumar: thợ gốm — nay phổ biến ở nhiều tầng lớp) hoặc cộng đồng nông nghiệp địa phương."
+    },
+    Dalit: {
+      key: "Dalit",
+      vnName: "Dalit (Ngoài hệ thống 4 đẳng cấp Varna / Tiện dân)",
+      popGroup: "SC (Scheduled Castes — ~16.6% dân số Ấn Độ)",
+      defaultCat: "SC",
+      surnames: ["Jatav", "Chamar", "Kumar", "Mahar", "Valmiki"],
+      surnameMeaning: "Họ từng gắn với công việc chân tay bị cổ thư coi là 'ô uế' (xử lý da thuộc, dọn dẹp, dệt vải như Jatav, Chamar) hoặc tên làng xã; nhiều người dùng họ Kumar để giảm kỳ thị khi giao tiếp."
+    },
+    Adivasi: {
+      key: "Adivasi",
+      vnName: "Bộ tộc bản địa (Adivasi / Scheduled Tribes)",
+      popGroup: "ST (Scheduled Tribes — ~8.6% dân số, sống ở vùng sâu vùng xa, miền núi và Đông Bắc Ấn Độ)",
+      defaultCat: "ST",
+      surnames: ["Murmu", "Soren", "Munda", "Oraon"],
+      surnameMeaning: "Họ trùng với tên bộ tộc bản địa hoặc vùng núi sinh sống."
+    }
+  };
+
   var INDIA_CATEGORIES = {
     SC: {
-      code: 'SC',
-      name: 'SC (Scheduled Castes — Nhóm các đẳng cấp bị áp bức, chủ yếu là Dalit)',
+      code: "SC",
+      name: "SC (Scheduled Castes — Đẳng cấp được xếp lịch / Dalit, ~16.6% dân số)",
       quotaShare: 0.15,
-      quotaLabel: '15% chỉ tiêu quốc gia',
+      quotaLabel: "15% hạn ngạch",
       cutoffIIT: 48,
       cutoffAIIMS: 50,
       tuitionWaiver: 1.0,
       freeHostel: true,
       stipendFactor: 0.18,
-      varnaOrigin: 'Bị coi là nằm ngoài hệ thống 4 đẳng cấp Varna (Panchama/Dalit) và bị gán định kiến "không sạch sẽ" về tâm linh trong các văn bản cổ như Manusmriti.'
+      varnaOrigin: "Nhóm Dalit nằm ngoài 4 đẳng cấp Varna truyền thống, từng chịu sự kỳ thị và cô lập nặng nề nhất trong lịch sử."
     },
     ST: {
-      code: 'ST',
-      name: 'ST (Scheduled Tribes — Các bộ tộc thiểu số vùng sâu vùng xa / Adivasi)',
+      code: "ST",
+      name: "ST (Scheduled Tribes — Bộ tộc được xếp lịch, ~8.6% dân số)",
       quotaShare: 0.075,
-      quotaLabel: '7.5% chỉ tiêu quốc gia',
+      quotaLabel: "7.5% hạn ngạch",
       cutoffIIT: 46,
       cutoffAIIMS: 48,
       tuitionWaiver: 1.0,
       freeHostel: true,
       stipendFactor: 0.18,
-      varnaOrigin: 'Cộng đồng bản địa vùng sâu vùng xa chịu thiệt thòi lịch sử về hạ tầng và tiếp cận giáo dục.'
+      varnaOrigin: "Các cộng đồng dân tộc thiểu số bản địa sống ở vùng sâu vùng xa, miền núi (như Đông Bắc Ấn Độ)."
     },
     OBC: {
-      code: 'OBC',
-      name: 'OBC (Other Backward Classes — Các tầng lớp trung gian tụt hậu về kinh tế - xã hội)',
+      code: "OBC",
+      name: "OBC (Other Backward Classes — Các tầng lớp kém phát triển khác, ~41–45% dân số)",
       quotaShare: 0.27,
-      quotaLabel: '27% chỉ tiêu quốc gia',
+      quotaLabel: "27% hạn ngạch",
       cutoffIIT: 60,
       cutoffAIIMS: 63,
       tuitionWaiver: 0.5,
       freeHostel: false,
       stipendFactor: 0.08,
-      varnaOrigin: 'Tầng lớp lao động/thủ công truyền thống (như Shudra — theo cổ thư Manusmriti mô tả sinh ra từ bàn chân thần Brahma) chịu tụt hậu kinh tế - xã hội.'
+      varnaOrigin: "Nhóm đông dân nhất Ấn Độ, chủ yếu gồm tầng lớp Thu-đà (Shudra) và một số nhánh nhỏ Phệ-xá (Vaishya), có tiếng nói chính trị rất mạnh do số lượng áp đảo."
+    },
+    EWS: {
+      code: "EWS",
+      name: "EWS (Economically Weaker Sections — Phân khúc kinh tế yếu thế thuộc đẳng cấp trên)",
+      quotaShare: 0.10,
+      quotaLabel: "10% hạn ngạch bổ sung",
+      cutoffIIT: 68,
+      cutoffAIIMS: 72,
+      tuitionWaiver: 0.5,
+      freeHostel: false,
+      stipendFactor: 0.06,
+      varnaOrigin: "Chính sách bổ sung 10% hạn ngạch dành cho những người thuộc đẳng cấp trên (Bà-la-môn Brahmin, Sát-đế-lợi Kshatriya, Phệ-xá Vaishya) nhưng có hoàn cảnh kinh tế khó khăn."
     },
     GEN: {
-      code: 'GEN',
-      name: 'General / Unreserved (Tầng lớp phổ thông trung bình trở lên, không thuộc diện hạn ngạch)',
-      quotaShare: 0.505,
-      quotaLabel: 'Cạnh tranh tự do (điểm chuẩn rất cao)',
+      code: "GEN",
+      name: "General / Forward Castes (Tầng lớp trên không thuộc diện ưu tiên, ~20–25% dân số)",
+      quotaShare: 0.405,
+      quotaLabel: "Cạnh tranh tự do (điểm chuẩn rất cao)",
       cutoffIIT: 78,
       cutoffAIIMS: 82,
       tuitionWaiver: 0,
       freeHostel: false,
       stipendFactor: 0,
-      varnaOrigin: 'Nhóm phổ thông cạnh tranh trực tiếp theo điểm số chuẩn chung; áp lực cực lớn do dân số đông và chỉ tiêu ngành đỉnh cao (như Y khoa AIIMS, Kỹ thuật IIT) rất hạn hẹp.'
+      varnaOrigin: "Gồm các đẳng cấp cao truyền thống (Brahmin, Kshatriya, Vaishya khá giả) nắm giữ phần lớn của cải và vị trí lãnh đạo, cạnh tranh điểm chuẩn rất cao."
     }
   };
 
-  var SC_ELIGIBLE_FAITHS = ['Ấn Độ giáo', 'Hindu', 'Phật giáo', 'Phật giáo Navayana', 'Sikh giáo'];
+  var INDIA_RELIGIONS849 = {
+    Hindu: {
+      share: "~79.8% dân số Ấn Độ",
+      branches: [
+        { k: "vaishnavism", name: "Vaishnavism (Thờ thần Vishnu, ~65–70%)", desc: "Chiếm đại đa số người Hindu; rất phổ biến ở miền Bắc, miền Tây và miền Trung Ấn Độ." },
+        { k: "shaivism", name: "Shaivism (Thờ thần Shiva, ~25%)", desc: "Phát triển mạnh ở miền Nam Ấn Độ (như bang Tamil Nadu), vùng Kashmir và dãy Himalaya." },
+        { k: "shaktism", name: "Shaktism (Thờ Nữ thần, ~3–5%)", desc: "Tập trung rất đông ở phía Đông Ấn Độ (bang Tây Bengal, Assam) với đại lễ hội Durga Puja." },
+        { k: "smartism", name: "Smartism & Triết học Advaita Vedanta (~2–3%)", desc: "Nhóm trí thức, triết học tự do và các phong trào cải cách hiện đại." }
+      ]
+    },
+    Islam: {
+      share: "~14.2% dân số Ấn Độ (một trong những cộng đồng Hồi giáo lớn nhất thế giới; chịu tỷ lệ nghèo và mù chữ cao hơn mặt bằng chung do rào cản lịch sử)",
+      branches: [
+        { k: "sunni_barelvi", name: "Dòng Sunni – Trường phái Barelvi (~85–90% Hồi giáo Ấn Độ)", desc: "Chiếm tuyệt đại đa số người Hồi giáo Ấn Độ, chịu ảnh hưởng đậm nét của truyền thống Sufi." },
+        { k: "sunni_deobandi", name: "Dòng Sunni – Trường phái Deobandi", desc: "Trường phái thần học cải cách khởi phát từ Bắc Ấn Độ." },
+        { k: "shia", name: "Dòng Shia (~10–15% — lớn thứ 3 thế giới)", desc: "Tập trung đông tại các thành phố Lucknow, Hyderabad và vùng Jammu & Kashmir." }
+      ]
+    },
+    Christian: {
+      share: "~2.3% dân số Ấn Độ",
+      branches: [
+        { k: "catholic_in", name: "Công giáo (~50–60% Kitô hữu Ấn Độ)", desc: "Bao gồm Công giáo La Mã (Goa, Mumbai) và các Giáo hội Công giáo Đông phương tại bang Kerala." },
+        { k: "csi_cni", name: "Tin Lành Hợp nhất: CSI (miền Nam, 1947) & CNI (miền Bắc, 1970) (~50% khối Tin Lành)", desc: "Mô hình Hợp nhất Giáo hội độc đáo sau khi Anh rút đi (hợp nhất Anh giáo, Giám lý, Trưởng lão, Congregational), giữ quản lý Giám mục (Episcopal) và sở hữu các trường đại học, bệnh viện danh tiếng như Đại học Y Christian Medical College (CMC) Vellore." },
+        { k: "baptist_ne", name: "Tin Lành Báp-tít vùng Đông Bắc (~25% khối Tin Lành — Nagaland >90% Báp-tít, Mizoram, Meghalaya)", desc: "Bắt nguồn từ các nhà truyền giáo Mỹ thế kỷ 19; tự trị từng nhà thờ địa phương, báp-tít người trưởng thành và gắn sâu với bản sắc tộc người vùng cao." },
+        { k: "pentecostal_in", name: "Phong trào Ngũ Tuần (Tin Lành)", desc: "Bùng nổ nhờ nguồn tài trợ quốc tế cho quỹ từ thiện, trường học miễn phí và bệnh viện, thu hút người nghèo và tầng lớp thấp tìm cơ hội thay đổi số phận." },
+        { k: "malankara_orthodox", name: "Chính Thống giáo Đông phương (~10–15% — Giáo hội Syria Malankara miền Nam)", desc: "Cộng đồng Kitô hữu cổ xưa và lâu đời nhất tại miền Nam Ấn Độ." }
+      ]
+    },
+    Sikh: {
+      share: "~1.7% dân số Ấn Độ (thịnh vượng nông nghiệp tại 'vựa lúa' Punjab & có tiếng nói quyền lực lớn trong quân đội, chính trị)",
+      branches: [
+        { k: "khalsa", name: "Khalsa Sikhs (Chính thống, ~70–80%)", desc: "Đã làm lễ rửa tội, tuân thủ nghiêm ngặt '5K', quấn khăn Turban che tóc dài, giữ dao găm nghi lễ và mang họ Singh (nam) hoặc Kaur (nữ)." },
+        { k: "sahajdhari", name: "Sahajdhari Sikhs (~20–30%)", desc: "Tin và tôn kính kinh sách đạo Sikh nhưng có thể cắt tóc hoặc không giữ trọn vẹn vẻ ngoài của Khalsa." }
+      ]
+    },
+    Buddhist: {
+      share: "~0.7% dân số Ấn Độ (gắn liền với phong trào giải phóng giai cấp Dalit)",
+      branches: [
+        { k: "navayana", name: "Navayana (Tân Phật giáo, ~85–90% — bang Maharashtra)", desc: "Do Tiến sĩ B.R. Ambedkar khởi xướng năm 1956 như một tuyên ngôn chính trị từ chối hệ thống đẳng cấp Hindu và đòi bình đẳng dân sự." },
+        { k: "vajrayana", name: "Kim Cương thừa (Tây Tạng, ~5–7%)", desc: "Gồm người dân vùng cao Himalaya (Ladakh, Arunachal Pradesh) và cộng đồng Tây Tạng tị nạn." },
+        { k: "theravada_mahayana", name: "Nguyên thủy & Đại thừa (~3–5%)", desc: "Các cộng đồng bản địa vùng biên giới phía Đông (gần Myanmar) và chư tăng tại các thánh tích." }
+      ]
+    },
+    Jain: {
+      share: "~0.4% dân số Ấn Độ (tỷ lệ biết chữ và thu nhập bình quân cao nhất Ấn Độ; thực hành Ahimsa – Bất hại, làm thương mại, ngân hàng, vàng & kim cương toàn cầu)",
+      branches: [
+        { k: "svetambara", name: "Svetambara (Bạch y phái / Áo trắng, ~65–70%)", desc: "Tu sĩ mặc đồ trắng, cởi mở với thương mại và đời sống thế tục, chấp nhận phụ nữ đạt giải thoát; có ngân sách khổng lồ xây đền đá cẩm thạch tráng lệ (như đền Dilwara) và vận động chính sách." },
+        { k: "digambara", name: "Digambara (Không y phái / Khỏa thân, ~30–35%)", desc: "Tu sĩ khỏa thân biểu thị sự từ bỏ tuyệt đối; khắt khe và bảo thủ hơn." }
+      ]
+    },
+    Parsi: {
+      share: "Hỏa giáo (Người Parsi — chưa đầy 60.000 người, quyền lực kinh tế công nghiệp & từ thiện)",
+      branches: [
+        { k: "parsi_zoroastrian", name: "Cộng đồng Parsi (Hỏa giáo — tiêu biểu như gia tộc Tata / Tata Group)", desc: "Quyền lực hàng đầu trong công nghiệp hóa Ấn Độ (sở hữu những thương hiệu lớn như Jaguar Land Rover, Air India) đi đôi với truyền thống từ thiện xây bệnh viện và viện nghiên cứu lớn nhất đất nước." }
+      ]
+    }
+  };
 
+  var SC_ELIGIBLE_FAITHS = ["Ấn Độ giáo", "Hindu", "Phật giáo", "Phật giáo Navayana", "Sikh giáo", "Đạo Sikh"];
+
+  // Chỉ áp dụng cho nhân vật Ấn Độ (mode world, country IN), tuyệt đối không áp dụng cho nhân vật Việt Nam
   function inIndia848(l) {
-    return H.resCode(l) === 'IN' || l.country === 'IN';
+    return Boolean(l && l.mode === "world" && l.country === "IN" && H.resCode(l) === "IN");
+  }
+
+  function inVN849(l) {
+    return Boolean(l && (l.mode === "vn" || l.country === "VN") && H.resCode(l) === "VN");
   }
 
   function indiaState848(l) {
     var w = E.WORLD120.s(l);
     if (!w.india848) {
       var qFam = (l.fam && l.fam.q) || 2;
-      var rr = rng(l.id + ':india848');
-      var orig = qFam <= 1 ? (rr() < 0.65 ? 'SC' : 'ST') : qFam === 2 ? (rr() < 0.45 ? 'SC' : 'OBC') : qFam === 3 ? (rr() < 0.55 ? 'OBC' : 'GEN') : 'GEN';
-      var curFaith = l.religion || 'Ấn Độ giáo';
-      var scLost = orig === 'SC' && !SC_ELIGIBLE_FAITHS.includes(curFaith);
+      var rr = rng(l.id + ":india848");
+      var orig = qFam <= 1 ? (rr() < 0.65 ? "SC" : "ST") : qFam === 2 ? (rr() < 0.45 ? "SC" : "OBC") : qFam === 3 ? (rr() < 0.55 ? "OBC" : "GEN") : "GEN";
+      var varna = orig === "SC" ? "Dalit" : orig === "ST" ? "Adivasi" : orig === "OBC" ? "Shudra" : (rr() < 0.35 ? "Brahmin" : rr() < 0.65 ? "Kshatriya" : "Vaishya");
+      var vInfo = INDIA_VARNAS849[varna] || INDIA_VARNAS849.Shudra;
+      var sur = vInfo.surnames[Math.floor(rr() * vInfo.surnames.length)];
+      var curFaith = l.religion || "Ấn Độ giáo";
+      var scLost = orig === "SC" && !SC_ELIGIBLE_FAITHS.includes(curFaith);
+      var ewsEligible = orig === "GEN" && qFam <= 2;
       w.india848 = {
+        varna: varna,
+        surname: sur,
         origCategory: orig,
-        activeCategory: scLost ? 'GEN' : orig,
+        activeCategory: scLost ? "GEN" : (ewsEligible ? "EWS" : orig),
         faith: curFaith,
+        faithBranch: "vaishnavism",
+        sikhKhalsa: false,
         scQuotaLostByConversion: scLost,
-        socialStigmaRemains: orig === 'SC' || orig === 'ST',
+        socialStigmaRemains: orig === "SC" || orig === "ST",
         navayanaConverted: false,
         admittedInst: null,
         scholarshipClaimed: false,
         socialMobilityCivil: false,
         debatedQuota: false,
+        hindutvaObserved: false,
         acted: {}
       };
+    }
+    if (!w.india848.varna) {
+      w.india848.varna = w.india848.origCategory === "SC" ? "Dalit" : w.india848.origCategory === "ST" ? "Adivasi" : w.india848.origCategory === "OBC" ? "Shudra" : "Brahmin";
+      w.india848.surname = INDIA_VARNAS849[w.india848.varna].surnames[0];
     }
     return w.india848;
   }
 
   function syncIndiaCategory848(l, st) {
     st = st || indiaState848(l);
-    if (st.origCategory === 'SC') {
+    var qFam = (l.fam && l.fam.q) || 2;
+    if (st.origCategory === "SC") {
       if (SC_ELIGIBLE_FAITHS.includes(st.faith)) {
-        st.activeCategory = 'SC';
+        st.activeCategory = "SC";
         st.scQuotaLostByConversion = false;
       } else {
-        st.activeCategory = 'GEN';
+        st.activeCategory = "GEN";
         st.scQuotaLostByConversion = true;
         st.socialStigmaRemains = true;
       }
+    } else if (st.origCategory === "GEN") {
+      st.activeCategory = (st.ewsApproved || qFam <= 1) ? "EWS" : "GEN";
     } else {
       st.activeCategory = st.origCategory;
     }
     return st;
   }
 
-  X.menu('indiaQuotaFaith848', 'Hệ thống Đẳng cấp, Tôn giáo, Cải đạo & Hạn ngạch Suất học (Ấn Độ)', function (l) {
-    if (!l.alive || !inIndia848(l)) return 'Áp dụng khi sinh sống và học tập tại Ấn Độ';
+  X.menu("indiaQuotaFaith848", "Hệ thống Đẳng cấp, Họ tên, Tôn giáo & Hạn ngạch Suất học (Ấn Độ)", function (l) {
+    if (!l.alive || !inIndia848(l)) return "Chỉ áp dụng cho công dân Ấn Độ đang sinh sống tại Ấn Độ";
     return X.reason(l, 12);
   }, function (l) {
-    var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, origCat = INDIA_CATEGORIES[st.origCategory] || cat;
+    var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, vInfo = INDIA_VARNAS849[st.varna] || INDIA_VARNAS849.Shudra;
     var lossNote = st.scQuotaLostByConversion
-      ? '⚠ Giao thoa pháp lý – tôn giáo: Xuất thân là Dalit (SC), nhưng do cải đạo sang ' + st.faith + ' (ngoài Hindu giáo, Phật giáo và Sikh giáo), bạn bị mất tư cách pháp lý SC và mất suất học bổng/hạn ngạch 15% (với lý do pháp lý rằng Kitô giáo/Hồi giáo về giáo lý không công nhận đẳng cấp), dù định kiến xã hội thực tế vẫn chưa biến mất.\n'
-      : '';
-    return '• Nguồn gốc lịch sử & tôn giáo: ' + origCat.varnaOrigin + ' Học thuyết Nghiệp và Luân hồi từng bị dùng để thuyết phục tầng lớp thấp chấp nhận số phận.\n' +
-      '• Danh mục pháp lý Hiến pháp Ấn Độ hiện tại: ' + cat.name + ' (' + cat.quotaLabel + '). Tôn giáo hiện tại: ' + st.faith + '.\n' +
+      ? "⚠ Giao thoa pháp lý – tôn giáo: Xuất thân là Dalit (SC), nhưng do cải đạo sang " + st.faith + " (ngoài Hindu giáo, Phật giáo và Sikh giáo), bạn bị mất tư cách pháp lý SC và mất suất học bổng/hạn ngạch 15% (với lý do pháp lý rằng Kitô giáo/Hồi giáo về giáo lý không công nhận đẳng cấp), dù định kiến xã hội thực tế vẫn chưa biến mất.\n"
+      : "";
+    return "• Tầng lớp & Họ (Surname như 'thẻ căn cước xã hội'): " + vInfo.vnName + " · Họ gia đình: " + st.surname + " (" + vInfo.popGroup + ").\n" +
+      "• Danh mục pháp lý Hiến pháp Ấn Độ: " + cat.name + " (" + cat.quotaLabel + "). Tôn giáo hiện tại: " + st.faith + (st.faithBranch ? " · Nhánh: " + st.faithBranch : "") + ".\n" +
       lossNote +
-      '• Ngưỡng điểm chuẩn mô phỏng: Kỹ thuật IIT (' + cat.cutoffIIT + '/100) · Y khoa AIIMS (' + cat.cutoffAIIMS + '/100, ngành cực kỳ đắt đỏ và giới hạn chỉ tiêu khắt khe).' +
-      (st.admittedInst ? '\n• Trường đã trúng tuyển: ' + st.admittedInst + (st.scholarshipClaimed ? ' (đã nhận miễn học phí, ký túc xá & trợ cấp)' : '') + '.' : '');
+      "• Ngưỡng điểm chuẩn mô phỏng: Kỹ thuật IIT (" + cat.cutoffIIT + "/100) · Y khoa AIIMS (" + cat.cutoffAIIMS + "/100, ngành cực kỳ đắt đỏ và giới hạn chỉ tiêu khắt khe)." +
+      (st.admittedInst ? "\n• Trường đã trúng tuyển: " + st.admittedInst + (st.scholarshipClaimed ? " (đã nhận miễn/giảm học phí, ký túc xá & trợ cấp)" : "") + "." : "");
   }, function (l) {
     if (!inIndia848(l)) return [];
-    var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, out = [];
+    var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, vInfo = INDIA_VARNAS849[st.varna] || INDIA_VARNAS849.Shudra, out = [];
     function row(k, label, min, run, why) {
       if (l.age < min) return;
-      out.push({ k: k, l: label, why: why || st.acted[k] === yr(l) ? why || 'Đã thực hiện năm nay' : true, run: function (l, r, log) { if (st.acted[k] === yr(l)) return; st.acted[k] = yr(l); run(r, log); } });
+      out.push({ k: k, l: label, why: why || st.acted[k] === yr(l) ? why || "Đã thực hiện năm nay" : true, run: function (l, r, log) { if (st.acted[k] === yr(l)) return; st.acted[k] = yr(l); run(r, log); } });
     }
 
-    // 1. Làn sóng cải đạo sang Phật giáo Tân xe (Navayana - B.R. Ambedkar 1956)
-    if (st.origCategory === 'SC' || st.origCategory === 'OBC' || st.origCategory === 'ST') {
-      row('convert_navayana', 'Cải đạo sang Phật giáo Tân xe (Navayana – truyền thống Tiến sĩ B.R. Ambedkar 1956): thoát kỳ thị đẳng cấp & vẫn giữ nguyên hạn ngạch SC', 14, function (r, log) {
-        st.faith = 'Phật giáo Navayana'; l.religion = 'Phật giáo';
+    // 1. Họ (Surname) phản ánh tầng lớp Varna, nghề nghiệp cổ xưa & quê quán
+    row("surname_identity", "Tìm hiểu Họ gia đình (" + st.surname + ") — 'thẻ căn cước' hiển thị đẳng cấp Varna, tôn giáo & quê quán", 12, function (r, log) {
+      l.sur = st.surname;
+      H.fx(l, { kno: 2 });
+      log("Tại Ấn Độ, Họ (Surname) chính là 'thẻ căn cước xã hội' ngay khi giới thiệu bản thân. Họ " + st.surname + " của bạn thuộc nhóm " + vInfo.vnName + ": " + vInfo.surnameMeaning, "neutral");
+    });
+
+    // 2. Phân khúc kinh tế yếu thế EWS (10% hạn ngạch cho người thuộc đẳng cấp Brahmin / Kshatriya / Vaishya có hoàn cảnh khó khăn)
+    if (st.origCategory === "GEN" && st.activeCategory !== "EWS") {
+      row("apply_ews_10", "Đăng ký hồ sơ EWS (Phân khúc kinh tế yếu thế — 10% hạn ngạch cho người thuộc đẳng cấp Brahmin/Kshatriya/Vaishya có hoàn cảnh khó khăn)", 15, function (r, log) {
+        st.ewsApproved = true;
+        syncIndiaCategory848(l, st);
+        log("Bạn thuộc tầng lớp trên (" + vInfo.vnName + ") nhưng gia đình có hoàn cảnh kinh tế khó khăn nên được chứng nhận diện EWS (Economically Weaker Sections — 10% hạn ngạch bổ sung), giúp giảm ngưỡng điểm chuẩn đại học và được hỗ trợ một phần học phí.", "good");
+      }, ((l.fam && l.fam.q) || 2) > 2 && l.money > l.base * 1.5 ? "Chỉ áp dụng cho hộ gia đình thuộc đẳng cấp trên có thu nhập/tài sản thấp" : null);
+    }
+
+    // 3. Các nhánh tôn giáo đặc thù tại Ấn Độ (Hindu, Hồi giáo Sunni/Shia, Kitô giáo CSI/CNI/Báp-tít/Malankara, Sikh Khalsa/Sahajdhari, Kỳ Na giáo Svetambara/Digambara, Hỏa giáo Parsi)
+    row("hindu_branches", "Thực hành truyền thống Hindu giáo (~79.8% dân số): Vaishnavism (Vishnu), Shaivism (Shiva), Shaktism (Durga Puja) & Smartism", 12, function (r, log) {
+      var b = INDIA_RELIGIONS849.Hindu.branches[hash(l.id + yr(l)) % INDIA_RELIGIONS849.Hindu.branches.length];
+      st.faith = "Ấn Độ giáo"; l.religion = "Ấn Độ giáo"; st.faithBranch = b.name;
+      syncIndiaCategory848(l, st); H.fx(l, { hap: 2, kno: 2 });
+      log("Bạn gắn bó với nhánh " + b.name + ": " + b.desc, "good");
+    });
+
+    row("christian_csi_cni_baptist", "Tìm hiểu mô hình Giáo hội Hợp nhất Ấn Độ (CSI miền Nam 1947 / CNI miền Bắc 1970, Đại học Y CMC Vellore), Báp-tít Đông Bắc (Nagaland) & Chính thống Syria Malankara", 14, function (r, log) {
+      var b = INDIA_RELIGIONS849.Christian.branches[hash(l.id + ":chr:" + yr(l)) % INDIA_RELIGIONS849.Christian.branches.length];
+      st.faithBranch = b.name; H.fx(l, { kno: 3, soc: 2 });
+      log("Khác với đa số quốc gia nơi các hệ phái Tin Lành hoạt động tách biệt, Ấn Độ có mô hình Hợp nhất Giáo hội độc đáo (CSI năm 1947 và CNI năm 1970 chiếm ~50% khối Tin Lành, sở hữu các trường đại học và bệnh viện danh tiếng như CMC Vellore), bên cạnh vùng Đông Bắc Nagaland (>90% Báp-tít), Công giáo Goa/Kerala và Giáo hội Chính thống Syria Malankara lâu đời nhất miền Nam. Ghi nhận tìm hiểu: " + b.name + ".", "good");
+    });
+
+    row("sikh_khalsa_punjab", "Thực hành Đạo Sikh (~1.7% dân số tại 'vựa lúa' Punjab): Lễ rửa tội Khalsa ('5K', khăn Turban, họ Singh/Kaur) vs. Sahajdhari", 14, function (r, log) {
+      st.faith = "Đạo Sikh"; l.religion = "Đạo Sikh";
+      st.sikhKhalsa = true;
+      st.surname = l.sex === "F" ? "Kaur" : "Singh";
+      l.sur = st.surname;
+      st.faithBranch = "Khalsa Sikhs (Chính thống ~70–80%, giữ 5K & họ " + st.surname + ")";
+      syncIndiaCategory848(l, st); H.fx(l, { hap: 3, hea: 2, soc: 2 });
+      log("Bạn thực hành truyền thống Khalsa Sikhs chính thống tại bang Punjab: tuân thủ nghiêm ngặt '5K', quấn khăn Turban, giữ dao găm nghi lễ và mang họ " + st.surname + " (" + (l.sex === "F" ? "Kaur cho nữ" : "Singh cho nam") + "). Cộng đồng người Sikh biến Punjab thành 'vựa lúa' trù phú của Ấn Độ và có tiếng nói quyền lực trong quân đội lẫn chính trị.", "big");
+    });
+
+    row("jain_parsi_economy", "Giao lưu mạng lưới kinh tế Kỳ Na giáo (Ahimsa – Bạch y phái Svetambara / Không y phái Digambara, kim cương & ngân hàng) và Hỏa giáo Parsi (tập đoàn công nghiệp & từ thiện)", 18, function (r, log) {
+      st.faithBranch = "Mạng lưới thương mại Jain (Svetambara) & công nghiệp Parsi";
+      H.fx(l, { kno: 3, soc: 3 });
+      H.cash(l, Math.round(l.base * 0.25), "Hợp tác thương mại & quỹ học thuật Jain / Parsi");
+      log("Tuy chỉ chiếm 0.4% dân số, người theo Kỳ Na giáo (Jain) có tỷ lệ biết chữ và thu nhập bình quân cao nhất Ấn Độ: vì giữ giới Ahimsa (Bất hại, không làm nông nghiệp sợ hại côn trùng/rễ cây), họ chuyển sang tài chính, ngân hàng, vàng và đá quý toàn cầu; nhánh Áo trắng (Svetambara ~65–70%) dùng tiềm lực kinh tế xây các đền đá cẩm thạch tráng lệ như đền Dilwara. Bên cạnh đó, cộng đồng Hỏa giáo Parsi (<60.000 người, như gia tộc Tata) nắm quyền lực công nghiệp hóa và xây dựng các bệnh viện, viện nghiên cứu hàng đầu đất nước.", "big");
+    });
+
+    // 4. Làn sóng cải đạo sang Phật giáo Tân xe (Navayana - B.R. Ambedkar 1956) hoặc Kitô giáo / Hồi giáo / Ngũ Tuần
+    if (st.origCategory === "SC" || st.origCategory === "OBC" || st.origCategory === "ST") {
+      row("convert_navayana", "Cải đạo sang Phật giáo Tân xe (Navayana – truyền thống Tiến sĩ B.R. Ambedkar 1956): tuyên ngôn chính trị đòi bình đẳng & giữ nguyên hạn ngạch SC", 14, function (r, log) {
+        st.faith = "Phật giáo Navayana"; l.religion = "Phật giáo";
+        st.faithBranch = "Navayana (Tân Phật giáo ~85–90% Phật tử Ấn Độ, bang Maharashtra)";
         st.navayanaConverted = true;
         syncIndiaCategory848(l, st);
         H.fx(l, { hap: 4, kno: 2 });
-        log('Noi gương phong trào năm 1956 của Tiến sĩ B.R. Ambedkar (cha đẻ Hiến pháp Ấn Độ, người dẫn dắt hơn 365.000 người Dalit cải đạo), bạn chuyển sang Phật giáo Tân xe (Navayana): bác bỏ thuyết định mệnh đẳng cấp của Manusmriti để tìm tự do tinh thần, đồng thời theo luật Ấn Độ vẫn giữ nguyên tư cách SC (15% chỉ tiêu) cùng toàn bộ học bổng.', 'big');
-      }, st.faith === 'Phật giáo Navayana' ? 'Đang theo Phật giáo Navayana' : null);
+        log("Noi gương phong trào năm 1956 của Tiến sĩ B.R. Ambedkar (cha đẻ Hiến pháp Ấn Độ, người dẫn dắt hơn 365.000 người Dalit cải đạo), bạn chuyển sang Phật giáo Tân xe (Navayana): đây không chỉ là thay đổi tâm linh mà còn là tuyên ngôn chính trị từ chối hệ thống đẳng cấp Hindu và đòi bình đẳng dân sự, đồng thời vẫn giữ nguyên tư cách pháp lý SC (15% chỉ tiêu).", "big");
+      }, st.faith === "Phật giáo Navayana" ? "Đang theo Phật giáo Navayana" : null);
 
-      row('convert_christian_islam', 'Cải đạo sang Kitô giáo hoặc Hồi giáo để tìm bình đẳng giáo lý (Lưu ý pháp lý: sẽ bị tước tư cách hạn ngạch SC)', 14, function (r, log) {
-        var nextFaith = r() < 0.5 ? 'Kitô giáo' : 'Hồi giáo';
-        st.faith = nextFaith; l.religion = nextFaith === 'Kitô giáo' ? 'Công giáo' : 'Hồi giáo';
+      row("convert_christian_islam", "Cải đạo sang Kitô giáo (hoặc phong trào Ngũ Tuần / Hồi giáo Sunni-Shia): nhận hỗ trợ giáo dục/từ thiện nhưng mất tư cách pháp lý SC", 14, function (r, log) {
+        var nextFaith = r() < 0.5 ? "Kitô giáo" : "Hồi giáo";
+        st.faith = nextFaith; l.religion = nextFaith === "Kitô giáo" ? "Tin Lành" : "Hồi giáo";
+        st.faithBranch = nextFaith === "Kitô giáo" ? "Tin Lành Ngũ Tuần / Giáo hội Hợp nhất (hỗ trợ trường học, bệnh viện miễn phí)" : "Hồi giáo Sunni (Barelvi/Deobandi) & Shia";
         syncIndiaCategory848(l, st);
-        H.fx(l, { hap: 1 });
-        if (st.origCategory === 'SC') {
-          log('Bạn cải đạo sang ' + nextFaith + ' để thoát khỏi sự phân biệt tâm linh của hệ thống đẳng cấp cũ. Tuy nhiên, theo quy định pháp lý hiện hành tại Ấn Độ (chỉ công nhận SC cho người theo Hindu, Phật giáo và Sikh giáo vì coi Kitô giáo/Hồi giáo không có đẳng cấp), bạn bị mất tư cách pháp lý SC cùng các suất học bổng/điểm chuẩn ưu tiên, dù sự kỳ thị xã hội ngoài đời thực vẫn chưa giảm bớt.', 'bad');
+        H.fx(l, { hap: 1, kno: 2 });
+        if (st.origCategory === "SC") {
+          log("Bạn cải đạo sang " + nextFaith + " để thoát khỏi định kiến đẳng cấp và tiếp cận các chương trình trường học, bệnh viện từ thiện. Tuy nhiên, theo luật Ấn Độ (chỉ công nhận SC cho người theo Hindu, Phật giáo và Sikh giáo), bạn bị tước tư cách pháp lý SC cùng suất học bổng/hạn ngạch 15%, dù sự kỳ thị xã hội ngoài đời thực vẫn không hề giảm bớt.", "bad");
         } else {
-          log('Bạn cải đạo sang ' + nextFaith + ' theo lựa chọn niềm tin cá nhân.', 'neutral');
+          log("Bạn cải đạo sang " + nextFaith + " (" + st.faithBranch + ").", "neutral");
         }
-      }, ['Kitô giáo', 'Hồi giáo'].includes(st.faith) ? 'Đã cải đạo sang ' + st.faith : null);
+      }, ["Kitô giáo", "Hồi giáo"].includes(st.faith) ? "Đã cải đạo sang " + st.faith : null);
     }
 
-    // 2. Thi tuyển vào IIT (Kỹ thuật) hoặc AIIMS (Y khoa) với cơ chế Hạn ngạch (SC 15%, ST 7.5%, OBC 27% vs General)
-    row('apply_iit', 'Ứng tuyển Học viện Công nghệ Ấn Độ (IIT) — Điểm chuẩn nhóm ' + st.activeCategory + ': ' + cat.cutoffIIT + '/100', 17, function (r, log) {
+    // 5. Thi tuyển vào IIT (Kỹ thuật) hoặc AIIMS (Y khoa) với cơ chế Hạn ngạch (SC 15%, ST 7.5%, OBC 27%, EWS 10% vs General)
+    row("apply_iit", "Ứng tuyển Học viện Công nghệ Ấn Độ (IIT) — Điểm chuẩn nhóm " + st.activeCategory + ": " + cat.cutoffIIT + "/100", 17, function (r, log) {
       var score = Math.round(l.st.kno || 50);
       if (score < cat.cutoffIIT) {
-        log('Điểm học lực hiện tại (' + score + '/100) chưa đạt ngưỡng trúng tuyển IIT của nhóm ' + st.activeCategory + ' (cần ' + cat.cutoffIIT + '/100).' + (st.scQuotaLostByConversion ? ' Do đã mất tư cách SC sau khi cải đạo sang ' + st.faith + ', bạn phải cạnh tranh ở ngưỡng điểm rất cao của nhóm General (78/100).' : ''), 'bad');
+        log("Điểm học lực hiện tại (" + score + "/100) chưa đạt ngưỡng trúng tuyển IIT của nhóm " + st.activeCategory + " (cần " + cat.cutoffIIT + "/100)." + (st.scQuotaLostByConversion ? " Do đã mất tư cách SC sau khi cải đạo sang " + st.faith + ", bạn phải cạnh tranh ở ngưỡng điểm rất cao của nhóm General (78/100)." : ""), "bad");
         return;
       }
-      st.admittedInst = 'IIT (Học viện Công nghệ Ấn Độ)';
-      l.school = 'uni'; l.major = 'it'; l.schoolEnd = Math.max(l.schoolEnd || 0, l.age + 4);
+      st.admittedInst = "IIT (Học viện Công nghệ Ấn Độ)";
+      l.school = "uni"; l.major = "it"; l.schoolEnd = Math.max(l.schoolEnd || 0, l.age + 4);
       H.fx(l, { kno: 5, hap: 4 });
-      log('Trúng tuyển vào ' + st.admittedInst + ' theo diện ' + cat.name + '! ' + (st.activeCategory === 'GEN' ? 'Bạn vượt qua tỷ lệ chọi khốc liệt của nhóm phổ thông (General).' : 'Chính sách hạn ngạch Hiến pháp (' + cat.quotaLabel + ') với mức điểm chuẩn phù hợp đã mở cánh cửa đại học danh tiếng cho bạn.'), 'big');
-    }, st.admittedInst ? 'Đã trúng tuyển ' + st.admittedInst : null);
+      log("Trúng tuyển vào " + st.admittedInst + " theo diện " + cat.name + "! " + (st.activeCategory === "GEN" ? "Bạn vượt qua tỷ lệ chọi khốc liệt của nhóm phổ thông (General)." : "Chính sách hạn ngạch Hiến pháp (" + cat.quotaLabel + ") đã mở cánh cửa đại học danh tiếng cho bạn."), "big");
+    }, st.admittedInst ? "Đã trúng tuyển " + st.admittedInst : null);
 
-    row('apply_aiims', 'Ứng tuyển Viện Khoa học Y khoa Toàn Ấn (AIIMS – Ngành Y) — Điểm chuẩn nhóm ' + st.activeCategory + ': ' + cat.cutoffAIIMS + '/100', 17, function (r, log) {
+    row("apply_aiims", "Ứng tuyển Viện Khoa học Y khoa Toàn Ấn (AIIMS – Ngành Y) — Điểm chuẩn nhóm " + st.activeCategory + ": " + cat.cutoffAIIMS + "/100", 17, function (r, log) {
       var score = Math.round(l.st.kno || 50);
       var medCost = l.base * (1 - cat.tuitionWaiver) * 1.4;
       if (score < cat.cutoffAIIMS) {
-        log('Ngành Y tại AIIMS là một trong những ngành có điểm chuẩn cao nhất và giới hạn chỉ tiêu khắt khe nhất: điểm của bạn (' + score + '/100) chưa đạt mức ' + cat.cutoffAIIMS + '/100 của diện ' + st.activeCategory + '.', 'bad');
+        log("Ngành Y tại AIIMS là một trong những ngành có điểm chuẩn cao nhất và giới hạn chỉ tiêu khắt khe nhất: điểm của bạn (" + score + "/100) chưa đạt mức " + cat.cutoffAIIMS + "/100 của diện " + st.activeCategory + ".", "bad");
         return;
       }
       if (cat.tuitionWaiver < 1 && l.money < medCost && ((l.fam && l.fam.q) || 2) < 4) {
-        log('Dù đủ điểm, ngành Y đòi hỏi chi phí rất lớn (' + H.money(l, medCost) + ') trong khi bạn không thuộc diện miễn toàn bộ học phí SC/ST và gia đình chưa đủ điều kiện kinh tế.', 'bad');
+        log("Dù đủ điểm, ngành Y đòi hỏi chi phí rất lớn (" + H.money(l, medCost) + ") trong khi bạn không thuộc diện miễn toàn bộ học phí SC/ST và gia đình chưa đủ điều kiện kinh tế.", "bad");
         return;
       }
-      if (medCost > 0 && l.money >= medCost) H.cash(l, -medCost, 'Học phí ngành Y (AIIMS)');
-      st.admittedInst = 'AIIMS (Viện Khoa học Y khoa Toàn Ấn)';
-      l.school = 'uni'; l.major = 'med'; l.schoolEnd = Math.max(l.schoolEnd || 0, l.age + 5);
+      if (medCost > 0 && l.money >= medCost) H.cash(l, -medCost, "Học phí ngành Y (AIIMS)");
+      st.admittedInst = "AIIMS (Viện Khoa học Y khoa Toàn Ấn)";
+      l.school = "uni"; l.major = "med"; l.schoolEnd = Math.max(l.schoolEnd || 0, l.age + 5);
       H.fx(l, { kno: 6, hap: 5 });
-      log('Bạn đỗ vào ngành Y danh giá tại ' + st.admittedInst + ' (diện ' + st.activeCategory + ')! ' + (cat.tuitionWaiver === 1 ? 'Nhờ chính sách hỗ trợ SC/ST tại trường công lập, bạn được miễn học phí để theo đuổi ngành Y đắt đỏ.' : 'Bạn vượt qua cả rào cản điểm số cực cao lẫn chi phí đắt đỏ của ngành Y.'), 'big');
-    }, st.admittedInst ? 'Đã trúng tuyển ' + st.admittedInst : null);
+      log("Bạn đỗ vào ngành Y danh giá tại " + st.admittedInst + " (diện " + st.activeCategory + ")! " + (cat.tuitionWaiver === 1 ? "Nhờ chính sách hỗ trợ SC/ST tại trường công lập, bạn được miễn 100% học phí để theo đuổi ngành Y đắt đỏ." : "Bạn vượt qua cả rào cản điểm số lẫn chi phí của ngành Y."), "big");
+    }, st.admittedInst ? "Đã trúng tuyển " + st.admittedInst : null);
 
-    // 3. Nhận gói học bổng, miễn học phí, ký túc xá miễn phí & trợ cấp sinh hoạt cho SC/ST/OBC
-    if (['SC', 'ST', 'OBC'].includes(st.activeCategory)) {
-      row('claim_sc_st_support', 'Nhận gói hỗ trợ trường công lập (' + st.activeCategory + '): miễn/giảm học phí, ký túc xá miễn phí & trợ cấp sinh hoạt', 17, function (r, log) {
+    // 6. Nhận gói học bổng, miễn học phí, ký túc xá miễn phí & trợ cấp sinh hoạt cho SC/ST/OBC/EWS
+    if (["SC", "ST", "OBC", "EWS"].includes(st.activeCategory)) {
+      row("claim_sc_st_support", "Nhận gói hỗ trợ trường công lập (" + st.activeCategory + "): miễn/giảm học phí, ký túc xá & trợ cấp sinh hoạt", 17, function (r, log) {
         st.scholarshipClaimed = true;
         var stipend = Math.round(l.base * cat.stipendFactor);
-        if (stipend > 0) H.cash(l, stipend, 'Trợ cấp sinh hoạt & học bổng diện ' + st.activeCategory);
+        if (stipend > 0) H.cash(l, stipend, "Trợ cấp sinh hoạt & học bổng diện " + st.activeCategory);
         H.fx(l, { hap: 3, kno: 2 });
-        log('Trường đại học công lập cấp cho bạn gói hỗ trợ diện ' + st.activeCategory + ': ' + (cat.freeHostel ? 'miễn 100% học phí, bố trí ký túc xá miễn phí và cấp trợ cấp sinh hoạt ' : 'hỗ trợ 50% học phí và phụ cấp học tập ') + H.money(l, stipend) + '.', 'good');
-      }, !st.admittedInst && l.school !== 'uni' ? 'Cần đang theo học đại học công lập (như IIT, AIIMS...)' : st.scholarshipClaimed ? 'Đã nhận gói học bổng & ký túc xá' : null);
+        log("Trường đại học công lập cấp cho bạn gói hỗ trợ diện " + st.activeCategory + ": " + (cat.freeHostel ? "miễn 100% học phí, bố trí ký túc xá miễn phí và cấp trợ cấp sinh hoạt " : "hỗ trợ 50% học phí và phụ cấp học tập ") + H.money(l, stipend) + ".", "good");
+      }, !st.admittedInst && l.school !== "uni" ? "Cần đang theo học đại học công lập (như IIT, AIIMS...)" : st.scholarshipClaimed ? "Đã nhận gói học bổng & ký túc xá" : null);
     }
 
-    // 4. Sự dịch chuyển xã hội: Trở thành trí thức, công chức, chính trị gia từ tầng lớp thấp
-    row('social_mobility_civil', 'Thi tuyển Công chức / Vị trí Lãnh đạo công (Hạn ngạch việc làm công): tạo bước dịch chuyển vị thế xã hội ngoạn mục', 21, function (r, log) {
+    // 7. Sự dịch chuyển xã hội & Quyền lực chính trị – tôn giáo (Chủ nghĩa dân tộc Hindu BJP / Ram Mandir Ayodhya vs. Hạn ngạch giai cấp)
+    row("social_mobility_civil", "Thi tuyển Công chức / Vị trí Lãnh đạo công (Hạn ngạch việc làm công): tạo bước dịch chuyển vị thế xã hội ngoạn mục", 21, function (r, log) {
       st.socialMobilityCivil = true;
       H.fx(l, { kno: 3, soc: 4, hap: 4 });
-      H.cash(l, Math.round(l.base * 0.45), 'Lương & phụ cấp công chức nhà nước Ấn Độ');
-      log('Nhờ hệ thống hạn ngạch trong giáo dục và tuyển dụng việc làm công của Hiến pháp Ấn Độ, bạn gia nhập đội ngũ trí thức và công chức nhà nước — hoàn thành cuộc dịch chuyển vị thế xã hội ngoạn mục so với xuất thân ban đầu.', 'big');
-    }, (l.st.kno || 50) < (['SC', 'ST'].includes(st.activeCategory) ? 50 : st.activeCategory === 'OBC' ? 58 : 72) ? 'Cần trau dồi thêm kiến thức để vượt qua kỳ thi tuyển công chức' : st.socialMobilityCivil ? 'Đã đạt bước tiến công chức / trí thức' : null);
+      H.cash(l, Math.round(l.base * 0.45), "Lương & phụ cấp công chức nhà nước Ấn Độ");
+      log("Nhờ hệ thống hạn ngạch trong giáo dục và tuyển dụng việc làm công của Hiến pháp Ấn Độ, bạn gia nhập đội ngũ trí thức và công chức nhà nước — hoàn thành cuộc dịch chuyển vị thế xã hội ngoạn mục.", "big");
+    }, (l.st.kno || 50) < (["SC", "ST"].includes(st.activeCategory) ? 50 : ["OBC", "EWS"].includes(st.activeCategory) ? 58 : 72) ? "Cần trau dồi thêm kiến thức để vượt qua kỳ thi tuyển công chức" : st.socialMobilityCivil ? "Đã đạt bước tiến công chức / trí thức" : null);
 
-    // 5. Xung đột & tranh luận xã hội về hệ thống hạn ngạch
-    row('quota_social_debate', 'Tham gia diễn đàn xã hội về tranh cãi Hạn ngạch (SC/ST/OBC) vs. Cạnh tranh điểm số (General)', 16, function (r, log) {
-      st.debatedQuota = true;
+    row("quota_social_debate", "Quan sát tranh luận Hạn ngạch (SC 15%, ST 7.5%, OBC 27%, EWS 10%) & sức ảnh hưởng chính trị – tôn giáo tại Ấn Độ (Ram Mandir Ayodhya / phong trào giai cấp)", 16, function (r, log) {
+      st.debatedQuota = true; st.hindutvaObserved = true;
       H.fx(l, { kno: 2, soc: 2 });
-      log('Cuộc tranh luận tại Ấn Độ diễn ra gay gắt: nhiều học sinh nhóm phổ thông (General) biểu tình vì cho rằng hạn ngạch 49.5% (SC 15%, ST 7.5%, OBC 27%) làm nhiều thí sinh điểm cao bị trượt vì hết chỉ tiêu — nhất là ở những ngành cực kỳ đắt đỏ và khan hiếm chỗ như Y khoa giữa quy mô dân số khổng lồ; trong khi phía ủng hộ nhấn mạnh hạn ngạch là công cụ hiến định thiết yếu để bù đắp hàng thế kỷ bất công đẳng cấp và rào cản kinh tế.', 'neutral');
+      log("Tại Ấn Độ hiện đại, tôn giáo và hạn ngạch gắn chặt với quyền lực chính trị: một mặt là chủ nghĩa dân tộc Hindu (đảng cầm quyền BJP thúc đẩy bản sắc Hindu, xây dựng lại đại đền Ram Mandir ở Ayodhya, điều chỉnh sách giáo khoa lịch sử); mặt khác là tiếng nói chính trị hùng hậu của khối OBC (~41–45% dân số), phong trào Tân Phật giáo Navayana của người Dalit và những cuộc biểu tình tranh cãi gay gắt về hạn ngạch đại học giữa áp lực dân số đông và chỉ tiêu ngành Y/Kỹ thuật khan hiếm.", "neutral");
     });
 
     return out;
-  }, 12, 'Học tập');
+  }, 12, "Học tập");
 
-  // Tích hợp lối tắt vào quyết định đại học (E.DEC.uni) khi sống tại Ấn Độ (IN)
+  // ================= 9. Việt Nam (VN - Tách biệt rõ với Ấn Độ & Bắc Âu): Bối cảnh Tín ngưỡng – Tôn giáo theo Hoàn cảnh, Gia thế & Vùng miền (8.10.49) =================
+  function vnFaithState849(l) {
+    var s = l.flags.vnFaith849;
+    if (!s) {
+      var qFam = (l.fam && l.fam.q) || 2;
+      var prov = String(l.province || l.city || "");
+      var region = /Hà Nội|Hải Phòng|Quảng Ninh|Bắc Ninh|Nam Định|Ninh Bình|Thái Bình|Phú Thọ|Lào Cai|Sơn La/.test(prov) ? "Miền Bắc" : /Huế|Đà Nẵng|Nghệ An|Hà Tĩnh|Quảng Bình|Quảng Nam|Khánh Hòa|Đắk Lắk|Gia Lai|Lâm Đồng/.test(prov) ? "Miền Trung – Tây Nguyên" : "Miền Nam";
+      s = l.flags.vnFaith849 = {
+        region: region,
+        familyClass: qFam <= 1 ? "hộ khó khăn" : qFam === 2 ? "hộ lao động bình dân" : qFam === 3 ? "hộ trung lưu" : "gia đình khá giả / có điều kiện",
+        tradition: null,
+        charityAid: false,
+        meritPatron: false,
+        acted: {}
+      };
+    }
+    return s;
+  }
+
+  X.menu("vnFaithContext849", "Đời sống Tín ngưỡng – Tôn giáo theo Gia cảnh & Vùng miền (Việt Nam)", function (l) {
+    if (!l.alive || !inVN849(l)) return "Chỉ áp dụng khi đang sinh sống tại Việt Nam";
+    return X.reason(l, 8);
+  }, function (l) {
+    var s = vnFaithState849(l);
+    return "Tại Việt Nam, đời sống tôn giáo và tín ngưỡng chịu ảnh hưởng tự nhiên bởi truyền thống gia đình, vùng miền (" + s.region + "), giới tính và hoàn cảnh kinh tế (" + s.familyClass + ") — hoàn toàn không có hệ thống đẳng cấp Varna/Dalit hay hạn ngạch tôn giáo kiểu Ấn Độ.\n" +
+      "• Tôn giáo / Tín ngưỡng hiện tại: " + (l.religion || "Thờ cúng tổ tiên") + (s.tradition ? " · Nếp sinh hoạt: " + s.tradition : "") + ".";
+  }, function (l) {
+    if (!inVN849(l)) return [];
+    var s = vnFaithState849(l), qFam = (l.fam && l.fam.q) || 2, out = [];
+    function row(k, label, min, run, why) {
+      if (l.age < min) return;
+      out.push({ k: k, l: label, why: why || s.acted[k] === yr(l) ? why || "Đã thực hiện năm nay" : true, run: function (l, r, log) { if (s.acted[k] === yr(l)) return; s.acted[k] = yr(l); run(r, log); } });
+    }
+    row("vn_ancestors_buddhism", "Giữ nếp Thờ cúng Gia tiên & Phật giáo Việt Nam (Bắc tông, Nam tông, Khất sĩ, Thiền phái Trúc Lâm): đi chùa lễ Phật, Vu Lan báo hiếu", 8, function (r, log) {
+      s.tradition = s.region === "Miền Nam" ? "Phật giáo Bắc tông / Nam tông / Khất sĩ & cúng giỗ gia tiên" : "Phật giáo Bắc tông / Thiền phái Trúc Lâm & thờ cúng tổ tiên";
+      H.fx(l, { hap: 2, soc: 2 });
+      log("Gia đình bạn giữ nếp " + s.tradition + " tại " + s.region + ": chăm lo bàn thờ gia tiên ngày giỗ Tết, đi lễ chùa đầu năm và mùa Vu Lan báo hiếu.", "good");
+    });
+    row("vn_catholic_protestant", "Sinh hoạt Giáo xứ Công giáo (Thiếu nhi Thánh Thể, ca đoàn, bác ái Caritas) hoặc Hội thánh Tin Lành Việt Nam", 8, function (r, log) {
+      s.tradition = /Tin Lành/.test(l.religion || "") ? "Hội thánh Tin Lành Việt Nam (Trường Chúa nhật & ban Thanh tráng)" : "Giáo xứ Công giáo Việt Nam (học giáo lý, ca đoàn & bác ái)";
+      H.fx(l, { hap: 2, soc: 2 });
+      log("Bạn gắn bó với sinh hoạt cộng đoàn tại địa phương (" + s.tradition + "), rèn lối sống kỷ luật, sẻ chia và gắn kết xóm đạo.", "good");
+    });
+    row("vn_caodai_hoahao_mau", "Tìm hiểu tín ngưỡng bản địa & tôn giáo nội sinh Việt Nam (Thờ Mẫu Tam Tứ phủ, Đạo Cao Đài, Phật giáo Hòa Hảo miền Tây)", 12, function (r, log) {
+      s.tradition = s.region === "Miền Nam" ? "Đạo Cao Đài / Phật giáo Hòa Hảo (tu nhân học Phật, bếp ăn và xe cấp cứu từ thiện)" : "Tín ngưỡng thờ Mẫu Tam Tứ phủ & lễ hội truyền thống Việt Nam";
+      H.fx(l, { kno: 2, hap: 2 });
+      log("Bạn tìm hiểu và trân trọng nét đẹp văn hóa tâm linh bản địa Việt Nam: " + s.tradition + ".", "good");
+    });
+    if (qFam <= 2) {
+      row("vn_charity_scholarship", "Nhận học bổng khuyến học & hỗ trợ từ thiện từ nhà chùa / giáo xứ / hội thánh địa phương khi gia cảnh khó khăn", 8, function (r, log) {
+        s.charityAid = true;
+        var aid = Math.round(l.base * 0.1);
+        H.cash(l, aid, "Học bổng khuyến học & hỗ trợ thiện nguyện tại địa phương");
+        H.fx(l, { hap: 3, kno: 2 });
+        log("Khi gia đình còn chật vật, quỹ khuyến học của nhà chùa / giáo xứ địa phương trao tặng bạn suất học bổng " + H.money(l, aid) + " cùng sách vở để tiếp sức đến trường.", "good");
+      }, s.charityAid ? "Đã nhận học bổng khuyến học" : null);
+    }
+    if (qFam >= 3 || l.money >= l.base * 2) {
+      row("vn_merit_philanthropy", "Đóng góp quỹ khuyến học, bếp ăn 0 đồng và tu bổ cơ sở tâm linh – văn hóa tại quê hương", 18, function (r, log) {
+        var gift = Math.round(l.base * 0.08);
+        if (l.money < gift) return;
+        s.meritPatron = true;
+        H.cash(l, -gift, "Đóng góp thiện nguyện & khuyến học tại địa phương");
+        H.fx(l, { hap: 3, soc: 3 });
+        log("Khi có điều kiện kinh tế, bạn đóng góp " + H.money(l, gift) + " cho bếp ăn từ thiện, quỹ khuyến học trẻ em nghèo và gìn giữ di sản tâm linh tại quê hương.", "good");
+      });
+    }
+    return out;
+  }, 8, "Đời sống");
+
+  // Tích hợp lối tắt vào quyết định đại học (E.DEC.uni) CHỈ KHI là công dân Ấn Độ sống tại Ấn Độ (IN)
   if (E.DEC.uni) {
     var oldUniMake848 = E.DEC.uni.make, oldUniApply848 = E.DEC.uni.apply;
     E.DEC.uni.make = function (l, r) {
@@ -1112,16 +1372,16 @@
       if (inIndia848(l) && !l.abroad) {
         var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN;
         d.opts.push({
-          k: 'india_quota848',
-          l: 'Xét tuyển Đại học Công lập Ấn Độ (IIT / AIIMS) theo diện ' + st.activeCategory + ' (' + cat.quotaLabel + ')',
-          h: 'Điểm chuẩn IIT ' + cat.cutoffIIT + ', AIIMS ' + cat.cutoffAIIMS + (cat.freeHostel ? ' · Miễn học phí & ký túc xá SC/ST' : '')
+          k: "india_quota848",
+          l: "Xét tuyển Đại học Công lập Ấn Độ (IIT / AIIMS) theo diện " + st.activeCategory + " (" + cat.quotaLabel + ")",
+          h: "Điểm chuẩn IIT " + cat.cutoffIIT + ", AIIMS " + cat.cutoffAIIMS + (cat.freeHostel ? " · Miễn học phí & ký túc xá SC/ST" : "")
         });
       }
       return d;
     };
     E.DEC.uni.apply = function (l, d, k, r, log) {
-      if (k === 'india_quota848' && inIndia848(l)) {
-        X.next(l, 'indiaQuotaFaith848', r);
+      if (k === "india_quota848" && inIndia848(l)) {
+        X.next(l, "indiaQuotaFaith848", r);
         return;
       }
       return oldUniApply848.apply(this, arguments);
@@ -1129,12 +1389,16 @@
   }
 
   E.ROYAL848 = {
+    INDIA_VARNAS849: INDIA_VARNAS849,
     INDIA_CATEGORIES: INDIA_CATEGORIES,
+    INDIA_RELIGIONS849: INDIA_RELIGIONS849,
     SC_ELIGIBLE_FAITHS: SC_ELIGIBLE_FAITHS,
+    inIndia848: inIndia848,
+    inVN849: inVN849,
     indiaState848: indiaState848,
-    syncIndiaCategory848: syncIndiaCategory848
+    syncIndiaCategory848: syncIndiaCategory848,
+    vnFaithState849: vnFaithState849
   };
-
   E.ROYAL847 = {
     NANNY_LANG: NANNY_LANG,
     ARTS_SPORTS: ARTS_SPORTS,

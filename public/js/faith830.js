@@ -12,7 +12,7 @@
     if(/^Tin Lành/.test(label))return protestant;
     if(/^Công giáo/.test(label))return catholic;
     if(/^(kitô giáo|ki-tô giáo|cơ đốc giáo|thiên chúa giáo)$/i.test(label)){
-      var choices=[catholic,protestant,orthodox,anglican];if(l.country==='GB')choices.push(anglican,anglican);if(['RU','GR'].includes(l.country))choices.push(orthodox,orthodox);
+      var choices=(l.mode==='vn'||l.country==='VN')?[catholic,protestant]:[catholic,protestant,orthodox,anglican];if(l.country==='GB')choices.push(anglican,anglican);if(['RU','GR'].includes(l.country))choices.push(orthodox,orthodox);
       return choices[hash(l.id+key)%choices.length];
     }return label;
   }
