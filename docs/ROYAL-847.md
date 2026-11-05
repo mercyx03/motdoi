@@ -65,21 +65,20 @@
    - Dịch chuyển xã hội vào hàng ngũ trí thức/công chức và tranh luận xã hội gay gắt giữa nhóm General và nhóm hạn ngạch.
    - Đánh dấu phát hành (`released`) cho cả hai mục nhật ký `8.10.47` và `8.10.48` theo yêu cầu của chủ dự án.
 
+## Bổ sung 8.10.49 — Cơ cấu Tôn giáo & Nhánh nhỏ Ấn Độ, Tháp Varna, Họ tên, Hạn ngạch EWS 10% & Tín ngưỡng Việt Nam
 
-## B? sung 8.10.49 ? C? c?u T?n gi?o & Nh?nh nh? ?n ??, Th?p Varna, H? t?n, H?n ng?ch EWS 10% & T?n ng??ng Vi?t Nam
+8. **Cơ cấu Tôn giáo & Nhánh nhỏ đặc thù tại Ấn Độ (`INDIA_RELIGIONS849`)**
+   - **Hindu giáo (~79.8%)**: `Vaishnavism` (~65–70%), `Shaivism` (~25%), `Shaktism` (~3–5%, đại lễ *Durga Puja*), `Smartism & Advaita Vedanta` (~2–3%).
+   - **Hồi giáo (~14.2%)**: dòng `Sunni` (~85–90%, trường phái `Barelvi` chịu ảnh hưởng Sufi & `Deobandi`) và dòng `Shia` (~10–15%, lớn thứ 3 thế giới tại Lucknow, Hyderabad, Jammu & Kashmir).
+   - **Kitô giáo (~2.3%)**: Công giáo (~50–60% tại Goa, Mumbai, Kerala); Tin Lành Hợp nhất độc đáo (`CSI` miền Nam 1947 và `CNI` miền Bắc 1970 chiếm ~50% khối Tin Lành, giữ quản trị Giám mục và sở hữu Đại học Y *CMC Vellore*); hệ phái Báp-tít vùng Đông Bắc (`Nagaland` >90% Báp-tít, `Mizoram`, `Meghalaya`); phong trào Ngũ Tuần hỗ trợ trường học/bệnh viện miễn phí; và Chính Thống giáo Đông phương (~10–15%, Giáo hội Chính thống Syria Malankara lâu đời nhất miền Nam).
+   - **Đạo Sikh (~1.7%, bang Punjab)**: phân biệt `Khalsa Sikhs` (~70–80%, lễ rửa tội, giữ nghiêm ngặt "5K", khăn Turban, dao găm nghi lễ, họ `Singh` cho nam / `Kaur` cho nữ) và `Sahajdhari Sikhs` (~20–30%); thịnh vượng tại "vựa lúa" Punjab và có tiếng nói mạnh trong quân đội, chính trị.
+   - **Phật giáo (~0.7%)**: `Navayana` (Tân Phật giáo ~85–90% tại Maharashtra do Tiến sĩ B.R. Ambedkar khởi xướng năm 1956), `Kim Cương thừa` (~5–7% tại Ladakh, Arunachal Pradesh) và `Nguyên thủy & Đại thừa` (~3–5%).
+   - **Kỳ Na giáo (~0.4%) & Hỏa giáo Parsi (<60.000 người)**: tín đồ Jain có tỷ lệ biết chữ và thu nhập bình quân cao nhất Ấn Độ nhờ giới luật `Ahimsa` (Bất hại -> làm thương mại, ngân hàng, vàng, kim cương toàn cầu), chia làm `Svetambara` (Bạch y phái ~65–70%, xây đền đá cẩm thạch *Dilwara*) và `Digambara` (Không y phái ~30–35%); người Parsi (như gia tộc *Tata*) nắm công nghiệp hóa và từ thiện bệnh viện, viện nghiên cứu lớn.
 
-8. **C? c?u T?n gi?o & Nh?nh nh? ??c th? t?i ?n ?? (`INDIA_RELIGIONS849`)**
-   - **Hindu gi?o (~79.8%)**: `Vaishnavism` (~65?70%), `Shaivism` (~25%), `Shaktism` (~3?5%, ??i l? *Durga Puja*), `Smartism & Advaita Vedanta` (~2?3%).
-   - **H?i gi?o (~14.2%)**: d?ng `Sunni` (~85?90%, tr??ng ph?i `Barelvi` ch?u ?nh h??ng Sufi & `Deobandi`) v? d?ng `Shia` (~10?15%, l?n th? 3 th? gi?i t?i Lucknow, Hyderabad, Jammu & Kashmir).
-   - **Kit? gi?o (~2.3%)**: C?ng gi?o (~50?60% t?i Goa, Mumbai, Kerala); Tin L?nh H?p nh?t ??c ??o (`CSI` mi?n Nam 1947 v? `CNI` mi?n B?c 1970 chi?m ~50% kh?i Tin L?nh, gi? qu?n tr? Gi?m m?c v? s? h?u ??i h?c Y *CMC Vellore*); h? ph?i B?p-t?t v?ng ??ng B?c (`Nagaland` >90% B?p-t?t, `Mizoram`, `Meghalaya`); phong tr?o Ng? Tu?n h? tr? tr??ng h?c/b?nh vi?n mi?n ph?; v? Ch?nh Th?ng gi?o ??ng ph??ng (~10?15%, Gi?o h?i Ch?nh th?ng Syria Malankara l?u ??i nh?t mi?n Nam).
-   - **??o Sikh (~1.7%, bang Punjab)**: ph?n bi?t `Khalsa Sikhs` (~70?80%, l? r?a t?i, gi? nghi?m ng?t "5K", kh?n Turban, dao g?m nghi l?, h? `Singh` cho nam / `Kaur` cho n?) v? `Sahajdhari Sikhs` (~20?30%); th?nh v??ng t?i "v?a l?a" Punjab v? c? ti?ng n?i m?nh trong qu?n ??i, ch?nh tr?.
-   - **Ph?t gi?o (~0.7%)**: `Navayana` (T?n Ph?t gi?o ~85?90% t?i Maharashtra do Ti?n s? B.R. Ambedkar kh?i x??ng n?m 1956), `Kim C??ng th?a` (~5?7% t?i Ladakh, Arunachal Pradesh) v? `Nguy?n th?y & ??i th?a` (~3?5%).
-   - **K? Na gi?o (~0.4%) & H?a gi?o Parsi (<60.000 ng??i)**: t?n ?? Jain c? t? l? bi?t ch? v? thu nh?p b?nh qu?n cao nh?t ?n ?? nh? gi?i lu?t `Ahimsa` (B?t h?i -> l?m th??ng m?i, ng?n h?ng, v?ng, kim c??ng to?n c?u), chia l?m `Svetambara` (B?ch y ph?i ~65?70%, x?y ??n ?? c?m th?ch *Dilwara*) v? `Digambara` (Kh?ng y ph?i ~30?35%); ng??i Parsi (nh? gia t?c *Tata*) n?m c?ng nghi?p h?a v? t? thi?n b?nh vi?n, vi?n nghi?n c?u l?n.
+9. **Tháp Varna, Họ (Surname) như "thẻ căn cước xã hội" & Hạn ngạch EWS 10% (`INDIA_VARNAS849`, `INDIA_CATEGORIES.EWS`)**
+   - Hệ thống Họ gắn với tầng lớp Varna: `Brahmin` (Sharma, Chaturvedi, Trivedi, Banerjee, Mukherjee, Iyer, Iyengar), `Kshatriya` (Singh, Roy, Rai, Chauhan, Rathore), `Vaishya` (Gupta, Agarwal, Aggarwal, Shah, Mehta), `Shudra / OBC ~41–45%` (Kumar, Yadav, Kurmi, Patel), `Dalit / SC ~16.6%` (Jatav, Chamar, Kumar, Mahar, Valmiki), `Adivasi / ST ~8.6%` (Murmu, Soren, Munda, Oraon).
+   - Bổ sung danh mục Hiến pháp `EWS` (Economically Weaker Sections — 10% hạn ngạch bổ sung) dành cho người thuộc đẳng cấp trên (Brahmin, Kshatriya, Vaishya) có hoàn cảnh kinh tế khó khăn.
 
-9. **Th?p Varna, H? (Surname) nh? "th? c?n c??c x? h?i" & H?n ng?ch EWS 10% (`INDIA_VARNAS849`, `INDIA_CATEGORIES.EWS`)**
-   - H? th?ng H? g?n v?i t?ng l?p Varna: `Brahmin` (Sharma, Chaturvedi, Trivedi, Banerjee, Mukherjee, Iyer, Iyengar), `Kshatriya` (Singh, Roy, Rai, Chauhan, Rathore), `Vaishya` (Gupta, Agarwal, Aggarwal, Shah, Mehta), `Shudra / OBC ~41?45%` (Kumar, Yadav, Kurmi, Patel), `Dalit / SC ~16.6%` (Jatav, Chamar, Kumar, Mahar, Valmiki), `Adivasi / ST ~8.6%` (Murmu, Soren, Munda, Oraon).
-   - B? sung danh m?c Hi?n ph?p `EWS` (Economically Weaker Sections ? 10% h?n ng?ch b? sung) d?nh cho ng??i thu?c ??ng c?p tr?n (Brahmin, Kshatriya, Vaishya) c? ho?n c?nh kinh t? kh? kh?n.
-
-10. **Vi?t Nam (`VN`): ??i s?ng T?n ng??ng ? T?n gi?o theo Gia c?nh & C?ch ly d? li?u (`vnFaithContext849`)**
-    - M? ph?ng t?n ng??ng ? t?n gi?o t? nhi?n t?i Vi?t Nam theo v?ng mi?n, truy?n th?ng gia ??nh v? kinh t? (th? c?ng gia ti?n, Ph?t gi?o B?c t?ng / Nam t?ng / Kh?t s? / Tr?c L?m, C?ng gi?o, Tin L?nh, th? M?u Tam T? ph?, Cao ??i, Ph?t gi?o H?a H?o, h?c b?ng khuy?n h?c v? thi?n nguy?n).
-    - Khoanh v?ng ch?t `inIndia848` v? `catalogHidden` ?? nh?n v?t Vi?t Nam tuy?t ??i kh?ng bao gi? th?y h? th?ng ??ng c?p Varna, h?n ng?ch ?n ?? hay nghi th?c ho?ng gia ch?u ?u.
+10. **Việt Nam (`VN`): Đời sống Tín ngưỡng – Tôn giáo theo Gia cảnh & Cách ly dữ liệu (`vnFaithContext849`)**
+    - Mô phỏng tín ngưỡng – tôn giáo tự nhiên tại Việt Nam theo vùng miền, truyền thống gia đình và kinh tế (thờ cúng gia tiên, Phật giáo Bắc tông / Nam tông / Khất sĩ / Trúc Lâm, Công giáo, Tin Lành, thờ Mẫu Tam Tứ phủ, Cao Đài, Phật giáo Hòa Hảo, học bổng khuyến học và thiện nguyện).
+    - Khoanh vùng chặt `inIndia848` và `catalogHidden` để nhân vật Việt Nam tuyệt đối không bao giờ thấy hệ thống đẳng cấp Varna, hạn ngạch Ấn Độ hay nghi thức hoàng gia châu Âu.

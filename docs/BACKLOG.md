@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.49: regression toàn bộ trên mã cuối cho hệ thống tôn giáo – đẳng cấp Varna – họ tên – hạn ngạch EWS 10% tại Ấn Độ và đời sống tín ngưỡng theo gia cảnh tại Việt Nam (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
 - 8.10.30: regression tổng thể, kiểm chứng chính sách trợ cấp từng địa phương, đối chiếu thực hành mỗi giáo xứ và binding Pages.
 
 - 8.10.29: regression toàn bộ, lịch trình từng vùng UK và các trường chuyên biệt, đối soát chuẩn xét hỗ trợ/vay thực tế, học sinh trao đổi trước đại học và nhiều điểm đến hơn.

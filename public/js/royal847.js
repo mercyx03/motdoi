@@ -1143,7 +1143,7 @@
   }
 
   X.menu("indiaQuotaFaith848", "Hệ thống Đẳng cấp, Họ tên, Tôn giáo & Hạn ngạch Suất học (Ấn Độ)", function (l) {
-    if (!l.alive || !inIndia848(l)) return "Chỉ áp dụng cho công dân Ấn Độ đang sinh sống tại Ấn Độ";
+    if (!l.alive || !inIndia848(l)) return "Không áp dụng: chỉ dành cho công dân Ấn Độ đang sinh sống tại Ấn Độ";
     return X.reason(l, 12);
   }, function (l) {
     var st = syncIndiaCategory848(l), cat = INDIA_CATEGORIES[st.activeCategory] || INDIA_CATEGORIES.GEN, vInfo = INDIA_VARNAS849[st.varna] || INDIA_VARNAS849.Shudra;
@@ -1314,7 +1314,7 @@
   }
 
   X.menu("vnFaithContext849", "Đời sống Tín ngưỡng – Tôn giáo theo Gia cảnh & Vùng miền (Việt Nam)", function (l) {
-    if (!l.alive || !inVN849(l)) return "Chỉ áp dụng khi đang sinh sống tại Việt Nam";
+    if (!l.alive || !inVN849(l)) return "Không áp dụng: chỉ dành cho nhân vật đang sinh sống tại Việt Nam";
     return X.reason(l, 8);
   }, function (l) {
     var s = vnFaithState849(l);

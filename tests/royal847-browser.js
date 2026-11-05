@@ -77,7 +77,7 @@ const assert = require('node:assert/strict'), fs = require('fs'), http = require
         overflow: document.documentElement.scrollWidth > innerWidth + 1
       }));
       assert(!notesAudit.overflow, 'updates.html no horizontal overflow at ' + width);
-      assert(notesAudit.first.includes('8.10.49') && notesAudit.first.includes('Đã phát hành'), '8.10.49 update note is first and marked released');
+      assert(notesAudit.first.includes('8.10.49') && notesAudit.first.includes('Đã phát hành') && notesAudit.first.includes('Bức tranh tôn giáo – đẳng cấp Ấn Độ') && !/\b\w*\?\w*\b/.test(notesAudit.first), '8.10.49 update note is first, marked released, and has clean Vietnamese UTF-8');
       await p.screenshot(path.resolve('.cache/royal847-browser/updates-' + width + '.png'));
       assert.deepEqual(p.errors, []);
       p.close();
