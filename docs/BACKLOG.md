@@ -254,3 +254,6 @@ GĐ6 — 8.10.36: còn regression toàn bộ mã cuối, thiết bị thật, b�
 
 
 GĐ6 — 8.10.37: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật, các ngoại lệ hiến định/giáo hội và binding Pages REVIEWS_DB. Chi tiết phạm vi và phần chưa mô phỏng: docs/ROYAL-837.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+
+GĐ6 — 8.10.42: còn regression toàn bộ mã cuối, thiết bị thật, save thật và xác minh binding REVIEWS_DB Pages. Cần đối chiếu migration tên bình luận trên bản sao dữ liệu thực tế; không thể phục hồi tên tài khoản đã xóa nếu dữ liệu không còn tên. Chi tiết docs/FEEDBACK-842.md. Artifact chỉ Preview.

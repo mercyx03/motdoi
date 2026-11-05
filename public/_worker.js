@@ -110,7 +110,7 @@ function sameHex(a, b) { if (typeof a !== 'string' || typeof b !== 'string' || a
 async function initAccounts(db) {
   if (!accountSchemas.has(db)) accountSchemas.set(db, (async () => {
     // A persistent migration marker avoids DDL and PRAGMA on every cold isolate.
-    try { const ready = await db.prepare('SELECT version FROM game_account_schema WHERE version = 2').first(); if (ready) return; }
+    try { const ready = await db.prepare('SELECT version FROM game_account_schema WHERE version = 3').first(); if (ready) return; }
     catch (e) { if (!/no such table/i.test(String(e.message))) throw e; }
     await db.batch([
       db.prepare("CREATE TABLE IF NOT EXISTS game_accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pass_hash TEXT NOT NULL, salt TEXT NOT NULL, created_at INTEGER NOT NULL, fail_count INTEGER NOT NULL DEFAULT 0, lock_until INTEGER NOT NULL DEFAULT 0, display_name TEXT NOT NULL DEFAULT '')"),
@@ -123,14 +123,15 @@ async function initAccounts(db) {
       db.prepare('CREATE TABLE IF NOT EXISTS game_account_schema (version INTEGER PRIMARY KEY)')
     ]);
     const columns = await db.batch([db.prepare('PRAGMA table_info(game_accounts)'),db.prepare('PRAGMA table_info(game_update_comments)')]);
-    for (const [i, column, sql] of [[0,'display_name',"ALTER TABLE game_accounts ADD COLUMN display_name TEXT NOT NULL DEFAULT ''"],[1,'reply_to_id','ALTER TABLE game_update_comments ADD COLUMN reply_to_id INTEGER']]) {
+    for (const [i, column, sql] of [[0,'display_name',"ALTER TABLE game_accounts ADD COLUMN display_name TEXT NOT NULL DEFAULT ''"],[1,'reply_to_id','ALTER TABLE game_update_comments ADD COLUMN reply_to_id INTEGER'],[1,'author_name',"ALTER TABLE game_update_comments ADD COLUMN author_name TEXT NOT NULL DEFAULT ''"]]) {
       if (!columns[i].results.some(x=>x.name===column)) { try { await db.prepare(sql).run(); } catch(e) { if(!/duplicate column/i.test(String(e.message)))throw e; } }
     }
     await db.batch([
+      db.prepare("UPDATE game_update_comments SET author_name = COALESCE((SELECT NULLIF(display_name,'') FROM game_accounts WHERE id = account_id), author_name) WHERE author_name = ''"),
       db.prepare('CREATE INDEX IF NOT EXISTS game_comments_parent ON game_update_comments(parent_id, id DESC)'),
       db.prepare('CREATE INDEX IF NOT EXISTS game_comments_author ON game_update_comments(account_id, created_at DESC)'),
       db.prepare('CREATE INDEX IF NOT EXISTS game_comments_recipient ON game_update_comments(reply_to_id, id)'),
-      db.prepare('INSERT OR IGNORE INTO game_account_schema(version) VALUES (2)')
+      db.prepare('INSERT OR IGNORE INTO game_account_schema(version) VALUES (3)')
     ]);
   })().catch(e => { accountSchemas.delete(db); throw e; }));
   await accountSchemas.get(db);
@@ -208,7 +209,7 @@ async function account(request, env, url) {
     }
     const result = await db.batch([
       db.prepare(cte+'SELECT COALESCE(MAX(id),0) AS lastId, COUNT(CASE WHEN id > COALESCE((SELECT last_id FROM game_notification_reads WHERE account_id = ?),0) THEN 1 END) AS count FROM visible').bind(...args,me.id),
-      db.prepare(cte+"SELECT c.id, COALESCE(c.parent_id,c.id) AS threadId, SUBSTR(c.body,1,140) AS body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name,''),'Người chơi') AS displayName FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id WHERE c.id IN (SELECT id FROM visible ORDER BY id DESC LIMIT 30) ORDER BY c.id DESC").bind(...args)
+      db.prepare(cte+"SELECT c.id, COALESCE(c.parent_id,c.id) AS threadId, SUBSTR(c.body,1,140) AS body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name,''),NULLIF(c.author_name,''),'Người chơi') AS displayName FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id WHERE c.id IN (SELECT id FROM visible ORDER BY id DESC LIMIT 30) ORDER BY c.id DESC").bind(...args)
     ]);
     return accJson(200,{ok:true,...result[0].results[0],items:result[1].results});
   }
@@ -233,7 +234,7 @@ async function account(request, env, url) {
     const acc = await db.prepare('SELECT pass_hash, salt FROM game_accounts WHERE id = ?').bind(me.id).first();
     const password = typeof body.password === 'string' ? body.password : '';
     if (!acc || !sameHex(await pbkdf2(password, acc.salt), acc.pass_hash)) return accJson(401, { ok: false, code: 'WRONG_LOGIN' });
-    await db.batch([db.prepare('DELETE FROM game_saves WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_sessions WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_account_roles WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_accounts WHERE id = ?').bind(me.id)]);
+    await db.batch([db.prepare('UPDATE game_update_comments SET author_name = ? WHERE account_id = ?').bind(me.displayName || 'Người chơi', me.id), db.prepare('DELETE FROM game_saves WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_sessions WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_account_roles WHERE account_id = ?').bind(me.id), db.prepare('DELETE FROM game_accounts WHERE id = ?').bind(me.id)]);
     return accJson(200, { ok: true });
   }
   return accJson(400, { ok: false, code: 'INVALID_ACTION' });
@@ -248,7 +249,7 @@ function cleanDisplayName(value) {
 }
 async function accountRole(db, id) { const row = await db.prepare("SELECT role FROM game_account_roles WHERE account_id = ?").bind(id).first(); return row && row.role === 'admin' ? 'admin' : 'member'; }
 const PINNED_COMMENT_ID = "(SELECT MIN(pc.id) FROM game_update_comments pc JOIN game_account_roles pr ON pr.account_id = pc.account_id AND pr.role = 'admin' WHERE pc.parent_id IS NULL)";
-const COMMENT_SELECT = "SELECT CASE WHEN c.id = "+PINNED_COMMENT_ID+" THEN 1 ELSE 0 END AS pinned, c.id, c.parent_id AS parentId, c.body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name, ''), 'Người chơi đã rời đi') AS displayName, CASE WHEN a.id IS NOT NULL AND r.role = 'admin' THEN 'admin' ELSE 'member' END AS role FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id LEFT JOIN game_account_roles r ON r.account_id = a.id";
+const COMMENT_SELECT = "SELECT CASE WHEN c.id = "+PINNED_COMMENT_ID+" THEN 1 ELSE 0 END AS pinned, c.id, c.parent_id AS parentId, c.body, c.created_at AS createdAt, COALESCE(NULLIF(a.display_name, ''), NULLIF(c.author_name, ''), 'Người chơi đã rời đi') AS displayName, CASE WHEN a.id IS NOT NULL AND r.role = 'admin' THEN 'admin' ELSE 'member' END AS role FROM game_update_comments c LEFT JOIN game_accounts a ON a.id = c.account_id LEFT JOIN game_account_roles r ON r.account_id = a.id";
 async function comments(request, env, url) {
   if (!['GET','POST'].includes(request.method)) return accJson(405,{ok:false,code:'METHOD_NOT_ALLOWED'});
   const db=env.REVIEWS_DB;if(!db)return accJson(503,{ok:false,code:'COMMENTS_NOT_CONFIGURED'});
@@ -285,7 +286,7 @@ async function comments(request, env, url) {
   if(parent!==null&&!await db.prepare('SELECT id FROM game_update_comments WHERE id = ? AND parent_id IS NULL').bind(parent).first())return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
   const replyTo=body.replyToId==null?parent:Number(body.replyToId);
   if(replyTo!==null&&(!Number.isSafeInteger(replyTo)||!parent||!await db.prepare('SELECT id FROM game_update_comments WHERE id = ? AND (id = ? OR parent_id = ?)').bind(replyTo,parent,parent).first()))return accJson(400,{ok:false,code:'INVALID_REPLY_TARGET'});
-  const now=Date.now(),result=await db.prepare('INSERT INTO game_update_comments(account_id, parent_id, body, created_at, reply_to_id) SELECT ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM game_update_comments WHERE account_id = ? AND created_at > ?)').bind(me.id,parent,text,now,replyTo,me.id,now-15000).run();
+  const now=Date.now(),result=await db.prepare('INSERT INTO game_update_comments(account_id, parent_id, body, created_at, reply_to_id, author_name) SELECT ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM game_update_comments WHERE account_id = ? AND created_at > ?)').bind(me.id,parent,text,now,replyTo,me.displayName || 'Người chơi',me.id,now-15000).run();
   if(!result.meta.changes)return accJson(429,{ok:false,code:'RATE_LIMIT'});
   return accJson(201,{ok:true});
 }

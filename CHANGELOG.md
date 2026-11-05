@@ -1,3 +1,7 @@
+## 8.10.42 — Học thuật, yêu xa, tín ngưỡng và tên người góp ý (packaged)
+
+Tách ngân sách lượt học thuật, thêm chỉnh sửa và nhiều hướng công bố, chuẩn bị bảo vệ. Hẹn yêu xa có lịch, chi phí và kế hoạch sống gần. Mở rộng thực hành tín ngưỡng, lịch cúng, suy ngẫm và hệ quả hành vi ép tiền; lưu truyền thống qua thế hệ. Bình luận có tên dự phòng trước khi xóa tài khoản. Phạm vi và giới hạn: docs/FEEDBACK-842.md.
+
 ## 8.10.41 — Sửa lỗi không tải được trò chơi
 
 Bộ nạp thử lại tệp lỗi qua URL mới khi CDN trả về trang chủ thay cho JavaScript.
