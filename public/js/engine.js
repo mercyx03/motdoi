@@ -1374,6 +1374,7 @@
     life.prevActs = life.acts || 0; life.acts = 0; life.yr = { items: [] };
     var cap = difficulty(life).cap;
     function add(id, arg, src) {
+      if(id==='thoi_noi'&&life.flags.world120&&life.flags.world120.infantDone)return;
       if (q.length >= cap || !DEC[id] || q.some(function (d) { return d.id === id; })) return;
       if (DEC[id].valid && !DEC[id].valid(life, arg || {})) return; // tình huống hẹn trước không còn phù hợp
       var dm = DEC[id].make(life, r, arg);
@@ -1398,6 +1399,8 @@
       life.pending = q; prune(life); return life.pending;
     }
 
+    // The first birthday is an interactive family ritual, distinct from self-directed infant actions.
+    if(a===1&&['vn','world'].includes(life.mode)&&!(life.flags.world120&&life.flags.world120.infantDone))add('thoi_noi');
     // Chọn khối THPT là quyết định bắt buộc của giai đoạn học: hỏi trước các tình huống khác cho tới khi có câu trả lời (khoi-track.js).
     if (E.KHOI912 && E.KHOI912.due(life)) add('chon_khoi');
     // tình huống đã hẹn trước (chuỗi sự kiện)
@@ -2241,7 +2244,7 @@
   var E = G.E = {
     DIFFICULTIES: DIFFICULTIES, difficulty: difficulty,
     isStableService: stableService, isStableParent: stableParent, HOOKS: HOOKS, assetTotal: assetTotal, KHOI: KHOI,
-    infantAuto: function(l){return l.age<4 && (l.mode==='vn'||l.mode==='world');}, createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
+    infantAuto: function(l){var d=l.pending&&l.pending[0];return l.age<4 && (l.mode==='vn'||l.mode==='world') && !(l.age===1&&d&&d.id==='thoi_noi');}, createLife: createLife, beginYear: beginYear, resolve: resolve, autoKey: autoKey, finishYear: finishYear, endYear: endYear,
     runHeadless: runHeadless, makeCohort: makeCohort, netWorth: netWorth, obituary: obituary, statusLine: statusLine, fmtMoney: fmtMoney,
     jobTitle: jobTitle, orientLabel: orientLabel, placeText: placeText, buildMort: buildMort, qBase: qBase, migrate: migrate,
     SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave, registerSchemaStep: registerSchemaStep,

@@ -1397,7 +1397,8 @@
     if (E.refreshActingWarning) E.refreshActingWarning(l, d);
     S.phase = 'decision';
     var major = E.isMajor(d);
-    var aiPick = !d.manual && (S.auto || (S.minorOnly && !major));
+    var firstBirthday=l.age===1&&d.id==='thoi_noi';
+    var aiPick = !d.manual && (S.auto || (S.minorOnly && !major&&!firstBirthday));
     // v3.1: lựa chọn nào tốn tiền mà chưa ghi giá thì ghi luôn chi phí ước tính
     var costs = !aiPick && E.optCosts && d.id !== 'market_trade' ? E.optCosts(l, d) : {};
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +

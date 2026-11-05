@@ -1,3 +1,7 @@
+## 8.10.45 — Chọn đồ thôi nôi (packaged)
+
+Tách lễ bốc đồ chơi tuổi1 khỏi tự động dưới4; bảo đảm có lễ trong năm đầu, giữ bảng chọn cả khi chỉ dừng ở ngã rẽ lớn. Chặn đưa lại lễ đã hoàn tất; giữ tự động hoàn toàn và giới hạn hành động theo tuổi.
+
 ## 8.10.44 — Gia đình, tự lập và kỷ niệm đón bé (packaged)
 
 Lưu phản ứng bốc đồ chơi của em bé; thêm lịch việc nhẹ, thỏa thuận hỗ trợ học tập, ở chung sau kết hôn và ngân sách dọn nhà. Điều chỉnh đợt thử có con, giữ trạng thái mãn kinh. Thêm lựa chọn lễ đón bé / Baek-il theo nơi sống, đức tin, ngân sách, ảnh và quà riêng từng bé.

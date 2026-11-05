@@ -263,3 +263,6 @@ GĐ6 — 8.10.43: còn regression toàn bộ, thiết bị thật, bản lưu ho
 
 
 GĐ6 — 8.10.44: còn regression toàn bộ mã cuối, thiết bị thật, save thật, các ngoại lệ lao động/giấy phép từng địa phương, luật hỗ trợ sinh sản đầy đủ và xác minh Pages REVIEWS_DB. Mốc tuổi, xác suất và giá là mô hình game, không phải đánh giá phát triển hoặc chẩn đoán cá nhân. Chi tiết docs/FAMILY-844.md.
+
+
+GĐ6 — 8.10.45: còn regression toàn bộ, thiết bị thật, bản lưu thật và binding Pages REVIEWS_DB. Bản lưu đã bốc xong trước sửa giữ kết quả, không tự xóa tiến độ để bốc lại. Chi tiết docs/BIRTHDAY-845.md.
