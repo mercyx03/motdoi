@@ -1,3 +1,7 @@
+## 8.10.46 — Thêm đồ thôi nôi và hướng sở thích
+
+Danh mục 28 món, giữ bộ lọc tài chính, thêm lựa chọn giá thấp. Micro gợi ca sĩ và đánh dấu sở thích hát; lưu món/hướng phát triển vào hồ sơ, nối rèn luyện hiện có. Bổ sung lựa chọn phù hợp cho bản lưu đang chờ, không thưởng lặp. Trạng thái phát hành theo xác nhận của chủ dự án.
+
 ## 8.10.45 — Chọn đồ thôi nôi (packaged)
 
 Tách lễ bốc đồ chơi tuổi1 khỏi tự động dưới4; bảo đảm có lễ trong năm đầu, giữ bảng chọn cả khi chỉ dừng ở ngã rẽ lớn. Chặn đưa lại lễ đã hoàn tất; giữ tự động hoàn toàn và giới hạn hành động theo tuổi.

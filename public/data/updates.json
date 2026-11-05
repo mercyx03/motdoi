@@ -2,11 +2,30 @@
   "generatedAt": "2026-11-05T01:03:05.585Z",
   "entries": [
     {
+      "id": "first-birthday-objects-81046",
+      "version": "8.10.46",
+      "publishedAt": "2026-11-05T09:07:13.173+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T02:07:58.000Z",
+      "title": "Thêm đồ bốc thôi nôi và hướng phát triển khi lớn",
+      "summary": "Danh mục thôi nôi có 28 món tượng trưng, vẫn lọc theo ngân sách gia đình; mỗi món gợi một hướng sở thích.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Thêm cọ vẽ, máy ảnh, bộ bếp, máy tính, địa cầu, búa thẩm phán, máy bay, đồ thể thao, thú bông, thẻ sân khấu và các món khác. Những món hiện ra vẫn phụ thuộc khả năng gia đình như trước; nhóm ít tốn kém cũng có thêm lựa chọn.",
+        "Micro được ghi rõ hướng ca sĩ và đưa lên đầu khi gia đình đủ điều kiện. Chọn micro lưu sở thích ca hát, đánh dấu Hát là môn yêu thích để tiếp tục rèn luyện khi lớn; các đồ khác nối với hướng phát triển tương ứng.",
+        "Hồ sơ giữ món đã bốc và hướng quan tâm. Khi lớn vẫn có thể đổi sở thích; không tự cấp nghề hoặc bằng cấp ở tuổi một. Nếu bản lưu đang chờ bốc đồ, danh sách được bổ sung các món mới phù hợp ngân sách. Lễ đã hoàn tất giữ kết quả cũ, không bốc lại để nhận thưởng lặp."
+      ],
+      "correctedAt": "2026-11-05T02:08:10.699Z"
+    },
+    {
       "id": "first-birthday-choice-81045",
       "version": "8.10.45",
       "publishedAt": "2026-11-05T08:56:25.109+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T02:07:58.000Z",
       "title": "Chọn đồ thôi nôi trong sinh nhật đầu tiên",
       "summary": "Bảng bốc đồ chơi ở tuổi một trở lại để bạn cùng gia đình chọn vật kỷ niệm.",
       "tags": [
@@ -16,7 +35,8 @@
       "details": [
         "Khi nhân vật tròn một tuổi, lễ thôi nôi hoặc sinh nhật đầu tiên có bảng chọn đồ chơi, không bị bỏ qua cùng những phản ứng tự động của em bé. Chế độ chỉ dừng ở ngã rẽ lớn cũng giữ bảng chọn này; tự động hoàn toàn vẫn có thể tự bốc.",
         "Các hành động chủ động khác vẫn mở từ bốn tuổi. Lễ chỉ thực hiện một lần, giữ kết quả trong bản lưu và không cộng thưởng lặp khi tải lại."
-      ]
+      ],
+      "correctedAt": "2026-11-05T02:08:10.686Z"
     },
     {
       "id": "family-milestones-81044",

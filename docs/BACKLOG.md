@@ -266,3 +266,6 @@ GĐ6 — 8.10.44: còn regression toàn bộ mã cuối, thiết bị thật, sa
 
 
 GĐ6 — 8.10.45: còn regression toàn bộ, thiết bị thật, bản lưu thật và binding Pages REVIEWS_DB. Bản lưu đã bốc xong trước sửa giữ kết quả, không tự xóa tiến độ để bốc lại. Chi tiết docs/BIRTHDAY-845.md.
+
+
+GĐ6 — 8.10.46: còn regression toàn bộ, thiết bị thật, save người góp ý thật và binding Pages REVIEWS_DB. Giữ lọc ngân sách theo xác nhận lại của chủ dự án; nghề tương lai là hướng rèn luyện, không bổ nhiệm nghề lúc một tuổi. Chi tiết docs/OBJECTS-846.md.
