@@ -1,10 +1,29 @@
 [
   {
+    "id": "royal-continuity-81043",
+    "version": "8.10.43",
+    "publishedAt": "2026-11-05T08:02:46.989+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Giữ tước vị và gia tộc khi sống tiếp đời con",
+    "summary": "Tước vị, gia tộc và các nhánh kế vị được giữ khi chuyển sang một người con trong hoàng gia.",
+    "tags": [
+      "Sửa lỗi",
+      "Gia đình",
+      "Đời sống"
+    ],
+    "details": [
+      "Khi sống tiếp ở tuổi hiện tại của con, giữ nguyên gia tộc, người đang trị vì, các nhánh họ hàng, tước đã được trao và vị trí trong cây kế vị. Không tạo một hoàng gia mới chỉ vì đổi nhân vật đang chơi.",
+      "Con của nữ quân vương được đối chiếu quyền mang tước như con của người trị vì. Hồ sơ con trong bản lưu cũ được bổ sung phần còn thiếu khi đủ căn cứ; quyết định thu hồi tước đã ghi vẫn được giữ. Đứng gần ngai vàng không tự đồng nghĩa được phong mọi tước.",
+      "Mục Vai trò trong hoàng gia và danh sách trẻ hoàng gia hiển thị tước cùng thứ tự kế vị của từng con. Công vụ, tước vị và quyền kế vị tiếp tục được phân biệt. Ngân sách công vụ của bố mẹ không chuyển thành tiền riêng cho đời con."
+    ]
+  },
+  {
     "id": "feedback-academic-spiritual-81042",
     "version": "8.10.42",
     "publishedAt": "2026-11-05T07:43:00.438+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-05T00:57:36.000Z",
     "title": "Nghiên cứu, hẹn hò yêu xa và đời sống tín ngưỡng",
     "summary": "Có thêm cách hoàn thiện công trình, công bố nhiều bài trong năm, giữ kết nối khi yêu xa và tìm hiểu các thực hành tâm linh.",
     "tags": [
@@ -23,7 +42,8 @@
       "Tìm hiểu thờ cúng tổ tiên, thờ Mẫu, Thành hoàng, Thần Tài và Thổ Địa, Đức Thánh Trần, Phật giáo và tín ngưỡng dân gian. Nhân vật có thể tự diễn giải linh cảm hoặc truyền thống căn số; con có lịch sử riêng, không mặc định giống bố mẹ. Sau thời gian tìm hiểu, người lớn có thể tự nguyện tham dự hầu đồng có hướng dẫn, vẫn kết hôn và sinh con bình thường.",
       "Các lời luận và trải nghiệm căn số được thể hiện như niềm tin của nhân vật, không quyết định bệnh tật, vận may hoặc ép phải làm lễ. Chia sẻ có đạo đức được ghi nhận; bịa tai họa, đe dọa ép tiền có thể dẫn đến phản ánh, xác minh và hậu quả trong những năm sau.",
       "Bình luận giữ tên hiển thị cuối cùng khi tài khoản bị xóa kể từ bản cập nhật này. Những bình luận cũ có tài khoản còn tồn tại được bổ sung tên dự phòng. Tên của tài khoản đã xóa từ trước chỉ giữ được nếu dữ liệu vẫn còn lưu."
-    ]
+    ],
+    "correctedAt": "2026-11-05T00:57:42.319Z"
   },
   {
     "id": "game-load-81041",
@@ -38,7 +58,9 @@
     ],
     "details": [
       "Những phần đã tải thành công được giữ lại. Nếu vẫn không kết nối được, bạn có thể bấm thử tiếp hoặc tải lại trang."
-    ]
+    ],
+    "private": true,
+    "correctedAt": "2026-11-05T00:59:47.797Z"
   },
   {
     "id": "plural-family-81040",

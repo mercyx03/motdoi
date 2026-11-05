@@ -1,3 +1,7 @@
+## 8.10.43 — Giữ hồ sơ hoàng gia khi kế tục (packaged)
+
+Truyền registry gia tộc, tước vị và cây kế vị sang đúng người con; bổ sung hồ sơ thiếu cho con của nữ quân vương và hiển thị tước/vị trí ở mục gia đình. Đánh dấu 8.10.42 đã phát hành theo giờ chủ dự án xác nhận; giữ mục 8.10.41 trong lịch sử nội bộ và ẩn khỏi dữ liệu người chơi.
+
 ## 8.10.42 — Học thuật, yêu xa, tín ngưỡng và tên người góp ý (packaged)
 
 Tách ngân sách lượt học thuật, thêm chỉnh sửa và nhiều hướng công bố, chuẩn bị bảo vệ. Hẹn yêu xa có lịch, chi phí và kế hoạch sống gần. Mở rộng thực hành tín ngưỡng, lịch cúng, suy ngẫm và hệ quả hành vi ép tiền; lưu truyền thống qua thế hệ. Bình luận có tên dự phòng trước khi xóa tài khoản. Phạm vi và giới hạn: docs/FEEDBACK-842.md.

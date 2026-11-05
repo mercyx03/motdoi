@@ -257,3 +257,6 @@ GĐ6 — 8.10.37: còn regression toàn bộ mã cuối, thiết bị thật, b�
 
 
 GĐ6 — 8.10.42: còn regression toàn bộ mã cuối, thiết bị thật, save thật và xác minh binding REVIEWS_DB Pages. Cần đối chiếu migration tên bình luận trên bản sao dữ liệu thực tế; không thể phục hồi tên tài khoản đã xóa nếu dữ liệu không còn tên. Chi tiết docs/FEEDBACK-842.md. Artifact chỉ Preview.
+
+
+GĐ6 — 8.10.43: còn regression toàn bộ, thiết bị thật, bản lưu hoàng gia thật của người báo lỗi và cấu hình Pages REVIEWS_DB. Kế tục giữ cây gia đình hiện có; không tái tạo lịch sử từng tước nếu dữ liệu cũ đã mất. Chi tiết docs/ROYAL-843.md.
