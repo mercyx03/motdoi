@@ -1,5 +1,5 @@
 'use strict';
-// v8.4.0 — khối năng khiếu có trường nghệ thuật thật trong nguyện vọng; học bổ túc văn hóa cho người nghỉ học sớm
+// Khối năng khiếu có nhóm trường nghệ thuật mô phỏng trong nguyện vọng; học bổ túc văn hóa cho người nghỉ học sớm
 const assert = require('assert'), { gameContext } = require('./hardcore-isolation'), G = gameContext(), E = G.E, H = E.H;
 let checks = 0;
 function ok(x, m) { checks++; assert(x, m); }
@@ -26,14 +26,14 @@ function choose(l, k) { ok(l.pending[0] && l.pending[0].opts.some(o => o.k === k
 // 2. Nguyện vọng: khối H00 thấy trường nghệ thuật, trường hợp khối đứng đầu
 const EDU = E.EDUCATION54, A = E.ARTS84;
 ['mtvn', 'mtcn', 'hau', 'skda', 'hvan', 'hufa', 'dau', 'hcmufa', 'uah', 'skdahcm', 'nvhcm', 'spnttw'].forEach(id => ok(A.school(id) && A.school(id).nk, 'có trường nghệ thuật ' + id));
-for (const [khoi, region, expectTop] of [['H00', 'Bắc', /Mỹ thuật|Kiến trúc|Sư phạm Nghệ thuật/], ['V00', 'Nam', /Kiến trúc/], ['S00', 'Bắc', /Sân khấu/], ['N00', 'Nam', /Nhạc viện/], ['A00', 'Bắc', /Bách khoa|Công nghệ|Kinh tế|Ngoại thương|Sư phạm|Luật|Khoa học|Công nghiệp/]]) {
+for (const [khoi, region] of [['H00', 'Bắc'], ['V00', 'Nam'], ['S00', 'Bắc'], ['N00', 'Nam'], ['A00', 'Bắc']]) {
   const l = grad(840100 + region.length, khoi);
   EDU.open(l, H.rf(l));
   ok(l.pending[0].id === 'study_wishes54', 'mở được danh sách nguyện vọng');
   ok(new RegExp(khoi).test(l.pending[0].text), 'nguyện vọng nhắc khối thi của bạn ' + khoi);
   choose(l, 'region_' + region);
   const schools = l.pending[0].opts.filter(o => o.k.indexOf('school_') === 0);
-  ok(expectTop.test(schools[0].l), khoi + ': trường hợp khối lên đầu (' + schools[0].l + ')');
+  ok(A.fits(l,A.school(schools[0].k.slice(7))), khoi + ': trường hợp khối lên đầu (' + schools[0].l + ')');
   ok(schools.every(o => /xét khối/.test(o.h) && !bad(o.h)), 'mỗi trường ghi khối xét tuyển');
   if (khoi !== 'A00') ok(schools.filter(o => /✓ hợp khối/.test(o.h)).length >= 1, khoi + ' có trường hợp khối ở miền ' + region);
 }
@@ -54,7 +54,7 @@ for (let i = 0; i < 160; i++) {
   if (lines.some(t => /không xét khối/.test(t))) refused++;
   if (l.school === 'uni' && l.major === 'art') {
     artIn++;
-    ok(l.flags.tSchool && l.flags.tSchool.jobs.length && /Mỹ thuật|Sân khấu/.test(l.uniName), 'đỗ trường nghệ thuật: đúng tên trường, có nghề gợi ý khi ra trường');
+    ok(l.flags.tSchool && l.flags.tSchool.jobs.length && l.uniName === A.school(l.flags.tSchool.id).name, 'đỗ trường nghệ thuật: đúng tên trường, có nghề gợi ý khi ra trường');
     ok(l.majorName && !/Nghệ thuật – Thiết kế/.test(l.majorName), 'tên ngành cụ thể: ' + l.majorName);
   }
   ok(!(l.school === 'uni' && l.major !== 'art'), 'không đỗ trường khối A/D khi thi khối năng khiếu');

@@ -77,6 +77,7 @@
   function ct(x) { var u = school(x.school); return u ? u.name + ' · ' + (u.mn || E.MAJORS[x.major]) : ''; }
   // điểm thi năng khiếu (thang 10): ôn khối năng khiếu, luyện thi và năng khiếu thật quyết định
   function nkScore(l, u, r) {
+    if (E.nkExam853) return E.nkExam853(l, u);
     var match = u.talent ? l.talent === u.talent : /hội họa|âm nhạc/.test(l.talent || '');
     var s = (/S00|N00/.test(u.blocks.join()) ? 2.8 : 3.4) + (l.khoi && u.blocks.indexOf(l.khoi) >= 0 ? 0.8 : 0) + (l.flags.nkPrep ? 0.8 : 0) +
       (l.flags.tPrep || 0) * 0.8 + Math.max(0, l.flags.luyenThi || 0) * 0.3 + (match ? U.clamp(((l.skill || 20) - 30) / 18, 0, 3.5) : 0) + U.normal(r) * 0.9;

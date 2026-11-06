@@ -14,6 +14,13 @@ add('publicReview116',l=>{E.startJob(l,'cong_chuc',()=>0,()=>{},true);l.job.rank
 add('civicWork118',l=>{l.flags.civic106={front:true};});
 add('borderReview122',l=>{E.WORLD120.s(l).exitOrder={until:47,reason:'Nghĩa vụ tài sản đang được xem xét'};});
 add('anniversary122',l=>{E.startJob(l,'quan_doi',()=>0,()=>{},true);l.birthYear=2030-l.age;});
+add('mockHighSchool853',l=>{l.age=14;l.edu=1;l.school='lower';});
+add('study_special54,chuyen_on',l=>{l.age=15;l.edu=2;l.school='lower';const d=E.DEC.hs.make(l,()=>.5);E.DEC.hs.apply(l,d,'special54',()=>.5,()=>{});l.pending=[];});
+{const l=out.chuyen_on.life,d=E.DEC.study_special54.make(l,()=>.5);E.DEC.study_special54.apply(l,d,'english',()=>.5,()=>{});l.pending=[];}
+add('khoi912,luyen_thi',l=>{l.age=17;l.edu=2;l.school='upper';l.khoi='A00';});
+add('study_wishes54',l=>{l.age=18;l.edu=3;l.school=null;l.khoi='A00';E.EDUCATION54.open(l,()=>.5);l.pending=[];});
+add('thi_lai_tn',l=>{l.age=18;l.edu=2;l.school=null;l.flags.hsFail=1;});
+add('mockUniExam853',l=>{l.age=17;l.edu=2;l.school='upper';l.khoi='A00';});
 add('highSchool125',l=>{l.age=15;l.edu=2;});
 add('highFallback125',l=>{l.age=15;l.edu=2;let d=E.DEC.highSchool125.make(l,()=>0);E.DEC.highSchool125.apply(l,d,'0',()=>0,()=>{});l.pending=[];});
 add('academicReview125',l=>{E.WORLD120.s(l).academicCase={at:44,status:'pending',evidence:1};});

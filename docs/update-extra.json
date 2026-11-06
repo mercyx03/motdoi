@@ -1,5 +1,27 @@
 [
   {
+    "id": "exam-model-review-81054",
+    "version": "8.10.54",
+    "publishedAt": "2026-11-06T15:19:24.681+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Thi thử và thi thật thống nhất, kỹ năng luyện đề có giới hạn",
+    "summary": "Thi thử lớp 10 và Đại học dùng cùng cách chấm từng môn với kỳ thi thật. Báo cáo giải thích rõ kiến thức, trạng thái và biến động phòng thi; các mốc xét tuyển dùng nhóm trường mô phỏng.",
+    "tags": [
+      "Học tập",
+      "Cân bằng",
+      "Bản lưu"
+    ],
+    "details": [
+      "Bỏ cộng thẳng điểm thi thử và điểm gỡ tâm lý vào tổng bài thi. Luyện dạng đề, quản lý thời gian, xử lý câu khó, kỹ năng chuyên hoặc năng khiếu và độ ổn định tiến bộ giảm dần, tối đa hai đợt nhiều tuần trong một năm; luyện dồn gây mệt mỏi.",
+      "Kiến thức cao tạo lợi thế rõ rệt. Không còn điểm trừ lớn từ tâm lý ẩn. Báo cáo ghi điểm từng môn, khoảng thấp – kỳ vọng – cao, mức căng thẳng và cách cải thiện; khoảng dự kiến không cam kết đỗ.",
+      "Kết quả mỗi kỳ thi được lưu cố định. Mở lại báo cáo, đổi menu hoặc tải lại không chấm lại vận may. Thi thử không sửa điểm thi thật đã có; thi lại chấm theo cùng mô hình, có thể tốt hơn hoặc kém hơn.",
+      "Tiến độ luyện ở bản lưu cũ được chuyển một lần sang kỹ năng có giới hạn. Giữ điểm và lịch sử những kỳ thi đã hoàn tất; điểm luyện môn chuyên cũ không biến thành cộng thêm 8/10.",
+      "Thay tên trường chưa có dữ liệu tuyển sinh kiểm chứng bằng nhóm trường mô phỏng. Mỗi nguyện vọng ghi ngưỡng trong game và điều kiện tổ hợp, thành tích hoặc năng khiếu; không coi đó là điểm chuẩn thật hay đưa ra phần trăm đỗ thiếu căn cứ.",
+      "Môn chuyên được xét riêng ở lộ trình chuyên; năng khiếu dùng kỹ năng vẽ hoặc biểu diễn và điều kiện riêng của nhóm nghệ thuật, không cộng thêm vào tổng văn hóa. Báo cáo ghi thời điểm và nhắc xem lại khi trạng thái hoặc nguyện vọng thay đổi."
+    ]
+  },
+  {
     "id": "mock-exam-highschool-uni-81053",
     "version": "8.10.53",
     "publishedAt": "2026-11-06T14:30:00+07:00",

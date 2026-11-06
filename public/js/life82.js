@@ -75,7 +75,7 @@
           if (i === 3) { if (!l.indep && E.childExpense) { var b = E.childExpense(l, V(l, 4), 'Lò luyện thi chuyên ' + NAME[c.k], false); log(b.note, 'neutral'); if (!b.ok) v = PREP[0]; } else H.cash(l, -V(l, 4), 'Lò luyện thi chuyên ' + NAME[c.k]); }
           H.fx(l, { kno: v[1] }); if (l.mind) l.mind.stress = U.clamp(l.mind.stress + v[2], 0, 100);
           log('Ôn thi chuyên ' + NAME[c.k] + ': ' + SUB[c.k].prep[i].charAt(0).toLowerCase() + SUB[c.k].prep[i].slice(1) + '.', 'neutral');
-          c.done = true; var bonus = v[0] - 6; l.st.kno += bonus; try { E.DEC.study_special54.apply(l, c.d, c.k, r, log); } finally { l.st.kno -= bonus; l.flags.chuyenOn = null; }
+          c.done = true; if (E.MOCK_EXAM853) E.MOCK_EXAM853.train(l, 'hs', i === 1 || i === 3 ? 'intensive' : i === 2 ? 'review' : 'standard', log); try { E.DEC.study_special54.apply(l, c.d, c.k, r, log); } finally { l.flags.chuyenOn = null; }
         } };
     })
   });

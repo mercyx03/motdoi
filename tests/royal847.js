@@ -657,64 +657,17 @@ function pick(l, id, key, arg, r = () => 0.2) {
   }
 }
 
-// 18. Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Thi thử Đại học — Ước lượng điểm chuẩn và cải thiện điểm thi thật (8.10.53)
+// 18. Shared exam model replaces the obsolete direct-bonus assertions.
 {
-  const M853 = E.MOCK_EXAM853;
-  ok(M853 && typeof M853.estimateHighSchool853 === 'function' && typeof M853.estimateUniExam853 === 'function', 'MOCK_EXAM853 API exposed');
-
-  // 18a. Thi thử Cấp 2 vào Cấp 3 (Lớp 10): ước lượng không làm bẩn save, thi thử nâng điểm thi thật vượt mốc Chuyên Amsterdam (38/50)
-  const hsLife = E.createLife({ mode: 'vn', seed: 85301 });
-  Object.assign(hsLife, { age: 14, edu: 1, school: 'lower', pending: [], sched: [] });
-  hsLife.st.kno = 96;
-  const snapBeforeHs = JSON.stringify(hsLife);
-  const estHs0 = M853.estimateHighSchool853(hsLife);
-  ok(JSON.stringify(hsLife) === snapBeforeHs, 'estimateHighSchool853 is pure and never mutates save');
-  ok(estHs0.knoBase === 33.6 && estHs0.min50 === 33.6 && estHs0.max50 === 48.6 && estHs0.schools.length === 7, 'Grade 10 estimate shows 33.6-48.6/50 and 7 schools');
-  const ams0 = estHs0.schools.find(s => s.name.includes('Amsterdam'));
-  ok(ams0 && ams0.cut === 38 && ams0.prob < 80, 'Even with kno=96, Amsterdam (38/50) has <80% pass chance without mock practice');
-
-  pick(hsLife, 'mockHighSchool853', 'hs_mock_standard');
-  pick(hsLife, 'mockHighSchool853', 'hs_mock_specialized');
-  hsLife.age = 15; hsLife.edu = 2;
-  pick(hsLife, 'mockHighSchool853', 'hs_mock_review');
-  const estHs1 = M853.estimateHighSchool853(hsLife);
-  ok(estHs1.hsCount === 2 && estHs1.hsBonus >= 4.0 && estHs1.hsFloorBonus >= 3.0 && estHs1.hsSpecialBonus >= 5.0, 'Grade 10 mock exams accumulate bonus, floor & special bonus');
-  ok(estHs1.last && estHs1.last.total50 > 0 && estHs1.min50 >= 38, 'Minimum Grade 10 score reaches >=38/50 after mock training');
-
-  const hsDec = E.DEC.highSchool125.make(hsLife, () => 0);
-  ok(hsDec.text.includes('Ước lượng điểm thi lớp 10') && hsDec.opts[0].h.includes('Ước lượng đỗ'), 'highSchool125 displays score estimate and pass probability');
-  E.DEC.highSchool125.apply(hsLife, hsDec, '0', () => 0, quiet);
-  ok(hsLife.school === 'upper' && E.WORLD120.p(hsLife).highExam.score >= 38, 'Mock exam bonus enables passing Amsterdam (38/50) even on worst RNG day (r=0)');
-
-  // 18b. Thi thử Đại học: chẩn đoán tâm lý phòng thi (examApt âm) và nâng điểm thi thật vượt mốc trường Top
-  const uniLife = E.createLife({ mode: 'vn', seed: 85302 });
-  Object.assign(uniLife, { age: 16, edu: 2, school: 'upper', schoolEnd: 18, khoi: 'A00', pending: [], sched: [] });
-  uniLife.st.kno = 95;
-  uniLife.flags.examApt = -1.5;
-  const snapBeforeUni = JSON.stringify(uniLife);
-  const estUni0 = M853.estimateUniExam853(uniLife);
-  ok(JSON.stringify(uniLife) === snapBeforeUni, 'estimateUniExam853 is pure and never mutates save');
-  ok(estUni0.expected30 <= 20.5 && estUni0.aptShort.includes('cuống'), 'Diagnoses why kno=95 with examApt=-1.5 only scores ~20/30 without mock practice');
-
-  pick(uniLife, 'mockUniExam853', 'uni_mock_standard');
-  pick(uniLife, 'mockUniExam853', 'uni_mock_intensive');
-  uniLife.age = 17;
-  pick(uniLife, 'mockUniExam853', 'uni_mock_intensive');
-  pick(uniLife, 'mockUniExam853', 'uni_mock_aptitude');
-  const estUni1 = M853.estimateUniExam853(uniLife);
-  ok(estUni1.uniCount === 4 && estUni1.uniBonus === 3.5 && estUni1.aptRecovery === 2.5 && estUni1.expected30 >= 25.5, 'University mock training recovers examApt penalty and boosts expected score to >=25.5/30');
-  const finalScore = E.rollExamScore(uniLife, () => 0.5);
-  ok(finalScore >= 25.25 && uniLife.flags.exam127 && uniLife.flags.exam127.scores.length === 3, 'rollExamScore includes mock exam bonus and updates EXAM127 subject breakdown');
-
-  // Hiển thị ước lượng trên khoi912, luyen_thi và study_wishes54
-  uniLife.examScore = null;
-  const khoiDec = E.DEC.khoi912.make(uniLife, () => 0.5);
-  const ltDec = E.DEC.luyen_thi.make(uniLife, () => 0.5);
-  ok(khoiDec.text.includes('Ước lượng điểm thi Đại học') && ltDec.text.includes('Ước lượng điểm thi hiện tại'), 'khoi912 and luyen_thi display live university score estimate');
-  uniLife.age = 18; uniLife.edu = 3; uniLife.school = null; uniLife.examScore = finalScore;
-  E.EDUCATION54.open(uniLife, () => 0.5);
-  const wishDec = E.DEC.study_wishes54.make(uniLife, () => 0.5);
-  ok(wishDec.text.includes('Điểm thi THPT hiện có'), 'study_wishes54 displays current examScore');
+ const M=E.MOCK_EXAM853,l=E.createLife({mode:'vn',seed:85301});
+ Object.assign(l,{age:16,edu:2,school:'upper',khoi:'A00'});l.st.kno=95;l.flags.examApt=-2.6;
+ const before=JSON.stringify(l),f=M.estimateUniExam853(l);
+ ok(JSON.stringify(l)===before,'forecast is pure');
+ ok(f.expected30>25,'strong knowledge is not suppressed by legacy hidden aptitude');
+ pick(l,'mockUniExam853','uni_mock_standard');pick(l,'mockUniExam853','uni_mock_intensive');
+ ok(l.flags.mockExam853.uniCount===2,'bounded training blocks');
+ const a=E.rollExamScore(l,()=>0),b=E.rollExamScore(l,()=>1);
+ ok(a===b&&l.flags.exam127.scores.length===3,'official result is stored and reproducible');
+ ok(!/Amsterdam|Ngoại thương/.test(M.report(l,'uni')),'forecast uses simulated school groups');
 }
-
 console.log('royal847: ' + count + ' checks passed');

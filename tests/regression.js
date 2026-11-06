@@ -1861,7 +1861,7 @@ section('36. Bản 3.8: thi lại đại học không kẹt, người già khôn
   { const l = mk(36100, 18, x => { x.edu = 3; x.school = null; x.examScore = 15; x.st.kno = 40; x.fam.q = 3; });
     let stuck = 0, tries = 0; for (let y = 0; y < 6; y++) { const d = E.DEC.uniFail.make(l); if (!d.opts.some(o => o.k === 'retry')) break; tries++; l.pending = [d]; E.resolve(l, 'retry'); }
     ok(tries === 2 && !E.DEC.uniFail.make(l).opts.some(o => o.k === 'retry'), 'ôn thi lại đại học tối đa 2 lần (thi 3 lần), không kẹt mãi ở ngã rẽ này');
-    ok(l.examScore === 15, 'chưa đến năm thi thì giữ điểm cũ'); l.age++; l.pending=[]; E.beginYear(l,{}); ok(l.examScore > 15, 'đến năm thi lại mới công bố điểm mới');
+    ok(l.examScore === 15, 'chưa đến năm thi thì giữ điểm cũ'); l.age++; l.pending=[]; E.beginYear(l,{}); ok(l.flags.exam127 && l.examScore === l.flags.exam127.total, 'đến năm thi lại công bố điểm theo cùng mô hình, không tự cộng điểm');
     l.age = 20; const u = E.DEC.uni.make(l, R(1)); ok(/Thi lại đại học — lần thứ 3/.test(u.title) && !/Mười tám tuổi/.test(u.title), 'thi lại thì tiêu đề ghi đúng lần thi, không còn "Mười tám tuổi" khi đã 20 tuổi: ' + u.title); }
   { let n = 0; for (let i = 0; i < 60; i++) { const l = E.createLife({ mode: 'vn', seed: 36200 + i }); E.runHeadless(l); if (l.log.filter(e => /^(Mười tám tuổi|Thi lại đại học)/.test(e.t)).length > 3) n++; const fails = l.log.filter(e => /^Trượt đại học/.test(e.t)).length; if (fails > 3) n++; } ok(n === 0, 'không ai thi trượt đại học quá 3 lần'); }
   // tuổi già
@@ -2273,11 +2273,11 @@ section('46. Bản 5.6.1: điểm thi sát thực tế (siêu giỏi vẫn đạ
 {
   const R = s => { const h = { rs: s }; return () => U.rand(h); };
   const mk = (seed, age, setup) => { const l = E.createLife({ mode: 'vn', seed, gender: 'M' }); l.age = age; l.pending = []; if (setup) setup(l); return l; };
-  { const top = mk(46100, 17, x => { x.st.kno = 99; x.flags.examApt = 2.6; x.khoi = 'A00'; }); let s30 = 0; for (let i = 0; i < 50; i++) if (E.rollExamScore(top, R(i)) >= 30) s30++;
+  { const top = mk(46100, 17, x => { x.st.kno = 99; x.flags.examApt = 2.6; x.khoi = 'A00'; x.flags.study54={records:{math:5,physics:5,chem:5}}; }); let s30 = 0; for (let i = 0; i < 50; i++) if (E.rollExamScore(top, R(i)) >= 30) s30++;
     ok(s30 > 30, 'học siêu giỏi vẫn có thể đạt 30 điểm (' + s30 + '/50 lượt)');
-    const mid = mk(46101, 17, x => { x.st.kno = 99; x.flags.examApt = 0; }); let sum = 0; for (let i = 0; i < 50; i++) sum += E.rollExamScore(mid, R(i)); ok(sum / 50 > 22 && sum / 50 < 26, 'học sinh bình thường điểm quanh mức trung bình (' + (sum / 50).toFixed(2) + ')');
-    const weak = mk(46102, 17, x => { x.st.kno = 60; x.flags.examApt = -2.6; x.flags.luyenThi = -1; }); let low = 0; for (let i = 0; i < 50; i++) if (E.rollExamScore(weak, R(i)) < 15) low++; ok(low > 25, 'học rất kém có thể dưới 15 điểm (' + low + '/50)'); }
-  { const l = mk(46103, 17, x => { x.st.kno = 55; x.flags.examApt = -2.6; x.flags.luyenThi = -1; x.school = 'upper'; x.schoolEnd = 18; x.edu = 2; });
+    const mid = mk(46101, 17, x => { x.st.kno = 80; x.flags.examApt = 0; }); let sum = 0; for (let i = 0; i < 50; i++) sum += E.rollExamScore(mid, R(i)); ok(sum / 50 >= 20 && sum / 50 <= 25, 'kiến thức 80 có điểm trong khoảng mô hình mới 20–25/30 (' + (sum / 50).toFixed(2) + ')');
+    const weak = mk(46102, 17, x => { x.st.kno = 35; x.flags.examApt = -2.6; x.flags.luyenThi = -1; }); let low = 0; for (let i = 0; i < 50; i++) if (E.rollExamScore(weak, R(i)) < 15) low++; ok(low > 25, 'học rất kém có thể dưới 15 điểm (' + low + '/50)'); }
+  { const l = mk(46103, 17, x => { x.st.kno = 35; x.flags.examApt = -2.6; x.flags.luyenThi = -1; x.school = 'upper'; x.schoolEnd = 18; x.edu = 2; });
     const hook = E.HOOKS.gradUpper.find(h => /failHS|rollExamScore/.test(h.toString())); const logs = []; l.edu = 3; l.flags.uniNext = 18; hook(l, R(1), t => logs.push(t));
     if (l.examScore < 15) { ok(l.edu < 3 && l.flags.uniNext == null && logs.some(t => /Trượt tốt nghiệp THPT/.test(t)), 'dưới 15 điểm: trượt tốt nghiệp, chưa có bằng, chưa xét đại học');
       ok((l.sched || []).some(s => s.id === 'thi_lai_tn'), 'năm sau được thi lại tốt nghiệp');
