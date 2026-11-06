@@ -109,37 +109,37 @@
   var CONSORT_TITLES = {
     GB: {
       sovereign: { F: 'Hoàng hậu (Queen Consort) · Bệ hạ', M: 'Hoàng thân Phối ngẫu (Prince Consort) · Điện hạ' },
-      heir: { F: 'Vương phi xứ Wales (Princess of Wales) · Điện hạ', M: 'Phối ngẫu Vương nữ Kế vị · Điện hạ' },
+      heir: { F: 'Vương phi xứ Wales (Princess of Wales), Nữ Công tước xứ Cornwall & Rothesay (theo chồng) · Điện hạ', M: 'Vương thân phối ngẫu Anh Quốc (Prince Consort) — không sở hữu tước xứ Wales của vợ · Điện hạ' },
       direct: { F: 'Nữ Công tước / Vương phi Hoàng gia · Điện hạ', M: 'Phối ngẫu Công chúa Hoàng gia' }
     },
     SE: {
       sovereign: { F: 'Hoàng hậu Thụy Điển (Drottning) · Bệ hạ', M: 'Hoàng thân Phối ngẫu Thụy Điển · Điện hạ' },
-      heir: { F: 'Thái tử phi Thụy Điển (Kronprinsessa) · Điện hạ', M: 'Hoàng thân Thụy Điển, Công tước xứ Västergötland · Điện hạ' },
+      heir: { F: 'Thái tử phi Thụy Điển (Kronprinsessa), Nữ Công tước xứ Västergötland (theo chồng) · Điện hạ', M: 'Hoàng tử Thụy Điển, Công tước danh dự xứ Västergötland (mượn danh theo vợ, không sở hữu xứ) · Điện hạ' },
       direct: { F: 'Công nương Thụy Điển · Điện hạ', M: 'Hoàng thân / Phối ngẫu Hoàng gia Thụy Điển' }
     },
     NO: {
       sovereign: { F: 'Hoàng hậu Na Uy (Dronning) · Bệ hạ', M: 'Hoàng thân Phối ngẫu Na Uy · Điện hạ' },
-      heir: { F: 'Thái tử phi Na Uy (Kronprinsesse) · Điện hạ', M: 'Phối ngẫu Thái nữ Na Uy · Điện hạ' },
+      heir: { F: 'Thái tử phi Na Uy (Kronprinsesse) · Điện hạ', M: 'Hoàng tử, Vương thân Na Uy (Prince Consort) · Điện hạ' },
       direct: { F: 'Công nương Na Uy', M: 'Phối ngẫu Công chúa Na Uy' }
     },
     DK: {
       sovereign: { F: 'Hoàng hậu Đan Mạch (Dronning) · Bệ hạ', M: 'Hoàng thân Phối ngẫu Đan Mạch (Prinsgemål) · Điện hạ' },
-      heir: { F: 'Thái tử phi Đan Mạch (Kronprinsesse) · Điện hạ', M: 'Hoàng thân Đan Mạch (Prins) · Điện hạ' },
+      heir: { F: 'Thái tử phi Đan Mạch (Kronprinsesse) · Điện hạ', M: 'Hoàng tử Đan Mạch / Vương thân (Prince Consort) theo sắc lệnh riêng · Điện hạ' },
       direct: { F: 'Công nương Đan Mạch · Điện hạ', M: 'Bá tước / Phối ngẫu Hoàng gia Đan Mạch' }
     },
     BE: {
       sovereign: { F: 'Hoàng hậu Bỉ (Koningin / Reine / Königin) · Bệ hạ', M: 'Hoàng thân Phối ngẫu Bỉ · Điện hạ' },
-      heir: { F: 'Nữ Công tước xứ Brabant (Phối ngẫu) · Điện hạ', M: 'Hoàng thân Bỉ, Công tước xứ Brabant (Phối ngẫu) · Điện hạ' },
+      heir: { F: 'Nữ Công tước xứ Brabant (danh dự theo chồng) · Điện hạ', M: 'Hoàng tử Bỉ (Sắc lệnh Hoàng gia ngày cưới) — không mang tước xứ Brabant của vợ · Điện hạ' },
       direct: { F: 'Công nương Bỉ · Điện hạ', M: 'Hoàng thân / Phối ngẫu Hoàng gia Bỉ' }
     },
     ES: {
       sovereign: { F: 'Reina consorte · Bệ hạ', M: 'Príncipe consorte · Điện hạ' },
-      heir: { F: 'Princesa de Asturias (consorte) · Điện hạ', M: 'Consorte de la Princesa de Asturias · Điện hạ' },
+      heir: { F: 'Vương phi xứ Asturias (Princesa de Asturias consorte, theo chồng) · Điện hạ', M: 'Vương thân Tây Ban Nha — không đứng tên xứ Asturias của vợ · Điện hạ' },
       direct: { F: 'Phối ngẫu Infante de España', M: 'Phối ngẫu Infanta de España' }
     },
     MC: {
       sovereign: { F: 'Thân vương phi Monaco (Princesse de Monaco) · Điện hạ', M: 'Phối ngẫu Nữ Thân vương Monaco · Điện hạ' },
-      heir: { F: 'Hầu tước phu nhân xứ Baux · Điện hạ', M: 'Phối ngẫu Hầu tước xứ Baux' },
+      heir: { F: 'Nữ Hầu tước xứ Baux (danh dự theo chồng) · Điện hạ', M: 'Hoàng thân Monaco (Prince of Monaco) — tách biệt, không sở hữu tước xứ Baux của vợ · Điện hạ' },
       direct: { F: 'Phối ngẫu Vương thất Monaco', M: 'Phối ngẫu Vương thất Monaco' }
     },
     NL: {
@@ -149,26 +149,40 @@
     },
     LU: {
       sovereign: { F: 'Đại Công tước phu nhân Luxembourg (Grande-Duchesse) · Điện hạ', M: 'Phối ngẫu Nữ Đại Công tước Luxembourg · Điện hạ' },
-      heir: { F: 'Đại Công thế tử phi Luxembourg · Điện hạ', M: 'Phối ngẫu Nữ Đại Công thế tử Luxembourg · Điện hạ' },
+      heir: { F: 'Đại Công tước Phi Kế vị Luxembourg · Điện hạ', M: 'Hoàng tử xứ Luxembourg (Hoàng thân phối ngẫu tháp tùng) — không mang tước kế vị của vợ · Điện hạ' },
       direct: { F: 'Công nương Luxembourg · Điện hạ', M: 'Phối ngẫu Đại Công thất Luxembourg' }
     },
     LI: {
       sovereign: { F: 'Thân vương phi Liechtenstein (Fürstin von und zu Liechtenstein) · Điện hạ', M: 'Phối ngẫu Nữ Thân vương Liechtenstein · Điện hạ' },
-      heir: { F: 'Thế tử phi / Nhiếp chính vương phi Liechtenstein (Erbprinzessin) · Điện hạ', M: 'Phối ngẫu Thế nữ Liechtenstein · Điện hạ' },
+      heir: { F: 'Thân vương Phi Kế vị Liechtenstein (Hereditary Princess) · Điện hạ', M: 'Hoàng tử xứ Liechtenstein (dạng phối ngẫu, giữ họ và tước cũ) — không là Thân vương xứ Liechtenstein · Điện hạ' },
       direct: { F: 'Công nương Liechtenstein · Điện hạ', M: 'Phối ngẫu Vương thất Liechtenstein' }
     }
   };
   var HEIR_TITLES = {
-    GB: { M: 'Thân vương xứ Wales (Prince of Wales) · Điện hạ', F: 'Vương nữ Kế vị (Princess of Wales / Heir Apparent) · Điện hạ' },
-    SE: { M: 'Thái tử Thụy Điển (Kronprins) · Điện hạ', F: 'Thái nữ Thụy Điển (Kronprinsessa) · Điện hạ' },
-    NO: { M: 'Thái tử Na Uy (Kronprins) · Điện hạ', F: 'Thái nữ Na Uy (Kronprinsesse) · Điện hạ' },
-    DK: { M: 'Thái tử Đan Mạch (Kronprins) · Điện hạ', F: 'Thái nữ Đan Mạch (Kronprinsesse) · Điện hạ' },
-    BE: { M: 'Hoàng tử Bỉ, Công tước xứ Brabant · Điện hạ', F: 'Công chúa Bỉ, Nữ Công tước xứ Brabant · Điện hạ' },
-    ES: { M: 'Príncipe de Asturias · Điện hạ', F: 'Princesa de Asturias · Điện hạ' },
-    MC: { M: 'Thế tử Monaco, Hầu tước xứ Baux · Điện hạ', F: 'Thế nữ Monaco, Nữ Hầu tước xứ Baux · Điện hạ' },
+    GB: { M: 'Thái tử Anh — Thân vương xứ Wales (Prince of Wales), Công tước xứ Cornwall & Công tước xứ Rothesay (Scotland) · Điện hạ', F: 'Thái nữ Anh — Thân vương nữ xứ Wales (Princess of Wales), Nữ Công tước xứ Cornwall & Nữ Công tước xứ Rothesay (Scotland) · Điện hạ' },
+    SE: { M: 'Thái tử Thụy Điển (Kronprins), Công tước xứ Västergötland (xứ do Quốc vương phong) · Điện hạ', F: 'Thái nữ Thụy Điển (Kronprinsessa), Nữ Công tước xứ Västergötland (xứ do Quốc vương phong) · Điện hạ' },
+    NO: { M: 'Thái tử Na Uy (Kronprins — không phong xứ riêng) · Điện hạ', F: 'Thái nữ Na Uy (Kronprinsesse — không phong xứ riêng) · Điện hạ' },
+    DK: { M: 'Thái tử Đan Mạch (Kronprins), Bá tước xứ Monpezat (tước gia tộc, không có xứ địa phương) · Điện hạ', F: 'Thái nữ Đan Mạch (Kronprinsesse), Nữ Bá tước xứ Monpezat (tước gia tộc, không có xứ địa phương) · Điện hạ' },
+    BE: { M: 'Thái tử Bỉ, Công tước xứ Brabant · Điện hạ', F: 'Thái nữ Bỉ, Nữ Công tước xứ Brabant · Điện hạ' },
+    ES: { M: 'Thái tử Tây Ban Nha — Thân vương xứ Asturias (Príncipe de Asturias) · Điện hạ', F: 'Thái nữ Tây Ban Nha — Thân vương nữ xứ Asturias (Princesa de Asturias) · Điện hạ' },
+    MC: { M: 'Thái tử Monaco (Thế tử), Hầu tước xứ Baux (Marquis des Baux) · Điện hạ', F: 'Thái nữ Monaco (Thế nữ), Nữ Hầu tước xứ Baux (Marquise des Baux) · Điện hạ' },
     NL: { M: 'Thân vương xứ Orange (Prins van Oranje) · Điện hạ', F: 'Nữ Thân vương xứ Orange (Prinses van Oranje) · Điện hạ' },
-    LU: { M: 'Đại Công thế tử Luxembourg (Grand-Duc Héritier) · Điện hạ', F: 'Nữ Đại Công thế tử Luxembourg (Grande-Duchesse Héritière) · Điện hạ' },
-    LI: { M: 'Thế tử / Nhiếp chính vương Liechtenstein (Erbprinz) · Điện hạ', F: 'Thế nữ Liechtenstein (Erbprinzessin) · Điện hạ' }
+    LU: { M: 'Đại Công tước Kế vị Luxembourg (Grand-Duc Héritier), Thân vương xứ Bourbon-Parma · Điện hạ', F: 'Nữ Đại Công tước Kế vị Luxembourg (Grande-Duchesse Héritière), Thân vương nữ xứ Bourbon-Parma · Điện hạ' },
+    LI: { M: 'Thân vương Kế vị Liechtenstein (Erbprinz) · Điện hạ', F: 'Thân vương nữ Kế vị Liechtenstein (Erbprinzessin) · Điện hạ' }
+  };
+  // 8.10.52: Vợ của Thái tử hưởng phiên bản nữ của tước xứ theo chồng; chồng của Thái nữ chỉ nhận tước Hoàng tử/Hoàng thân danh dự,
+  // không sở hữu tước xứ gốc của vợ (riêng Thụy Điển cho "mượn danh" công tước ở thế hạ vị, không sở hữu pháp lý).
+  var HEIR_SPOUSE_RULE852 = {
+    GB: 'Vợ của Thái tử hưởng phiên bản nữ: Vương phi xứ Wales, Nữ Công tước xứ Cornwall & Rothesay. Chồng của Thái nữ là Vương thân phối ngẫu, không sở hữu tước xứ Wales của vợ.',
+    SE: 'Nhóm chia sẻ danh dự: chồng của Thái nữ được phong Hoàng tử + Công tước danh dự cùng xứ với vợ (như Hoàng tử Daniel, Công tước xứ Västergötland) để đồng bộ khi ra công chúng, không sở hữu xứ về pháp lý.',
+    NO: 'Không có xứ sở riêng: vợ của Thái tử là Thái tử phi Na Uy; chồng của Thái nữ là Hoàng tử, Vương thân Na Uy (Prince Consort).',
+    DK: 'Không có xứ sở riêng: chồng của Thái nữ là Hoàng tử Đan Mạch hoặc Vương thân theo sắc lệnh riêng, luôn đi sau vợ một bước trong nghi lễ (như Hoàng thân Henrik).',
+    BE: 'Nhóm Hoàng tử danh dự: vợ của Thái tử là Nữ Công tước xứ Brabant theo chồng; chồng của Thái nữ được phong Hoàng tử Bỉ bằng Sắc lệnh Hoàng gia ngày cưới, không được gọi là Công tước xứ Brabant.',
+    ES: 'Nhóm Hoàng tử danh dự: vợ của Thái tử là Vương phi xứ Asturias (như Hoàng hậu Letizia trước đây); chồng của Thái nữ chỉ là Vương thân Tây Ban Nha, không bao giờ đứng tên xứ Asturias.',
+    MC: 'Vợ của Thái tử là Nữ Hầu tước xứ Baux theo chồng; chồng của Thái nữ chỉ là Hoàng thân Monaco, đứng tách biệt khỏi tước xứ Baux để bảo đảm chủ quyền gia tộc.',
+    NL: 'Vợ của Thái tử hưởng tước theo chồng; chồng của Thái nữ là Hoàng thân phối ngẫu, không sở hữu tước xứ Orange.',
+    LU: 'Nhóm Hoàng tử danh dự: vợ của Thái tử là Đại Công tước Phi Kế vị; chồng của Thái nữ là Hoàng tử xứ Luxembourg để có danh phận ngoại giao tháp tùng vợ.',
+    LI: 'Vợ của Thái tử là Thân vương Phi Kế vị (Hereditary Princess); chồng của Thái nữ là Hoàng tử xứ Liechtenstein dạng phối ngẫu, giữ họ và tước cũ, không là Thân vương xứ Liechtenstein.'
   };
   var SOVEREIGN_SUPREME_MIL = {
     SE: 'Đại tướng / Đô đốc Tối cao Ba Quân chủng (Lục quân, Hải quân, Không quân Thụy Điển)',
@@ -2413,7 +2427,11 @@
       "• Quy tắc kế vị giới tính: " + primoText + ".\n" +
       "• Tôn giáo & Quyền lực Hiến định: " + cfg.faithBranch + ". " + cfg.monarchReligiousRole + ".\n" +
       "• Quy định Tôn giáo đối với Con cái (" + (cfg.childFaithGroup === "mandatory" ? "Nhóm Bắt buộc 100%" : "Nhóm Tách biệt pháp lý / Giao thoa tự do") + "): " + cfg.childFaithRule + "\n" +
-      "• Quy định Con ngoài giá thú: " + cfg.outOfWedlockNote;
+      "• Quy định Con ngoài giá thú: " + cfg.outOfWedlockNote + "\n" +
+      "• Tước hiệu người kế vị số 1: " + (HEIR_TITLES[q.c] ? HEIR_TITLES[q.c].M + " / " + HEIR_TITLES[q.c].F : "—") + ".\n" +
+      "• Tước hiệu bạn đời của người kế vị: " + (HEIR_SPOUSE_RULE852[q.c] || "—") + "\n" +
+      "• Thứ tự kế vị theo nhánh: Thái tử/Thái nữ #1 → con thứ nhất #2 → con thứ hai #3…; khi con trưởng của Thái tử/Thái nữ có con đầu lòng (cháu đích tôn/đích nữ), người cháu đó đứng ngay sau cha/mẹ mình và đẩy các con còn lại cùng các chú/dì xuống thấp hơn." + (cfg.primogeniture === "male_preference" ? " Tại " + q.c + ", con trai được xếp trước chị gái trong cùng hàng con; con của người con trai đứng ngay sau cha mình." : "") +
+      "\n• Hàng kế vị hiện tại: " + R.order(l, q.h).slice(0, 8).map(function (m, i) { return "#" + (i + 1) + " " + (m.player ? "Bạn" : m.name); }).join(" · ");
   }, function (l) {
     var q = A.context(l);
     if (!q || !q.h || !q.me) return [];
@@ -2569,6 +2587,7 @@
     BOARDING: BOARDING,
     CONSORT_TITLES: CONSORT_TITLES,
     HEIR_TITLES: HEIR_TITLES,
+    HEIR_SPOUSE_RULE852: HEIR_SPOUSE_RULE852,
     SALUTE_RULES: SALUTE_RULES,
     LONDON_LANDMARKS: LONDON_LANDMARKS,
     upState: upState,

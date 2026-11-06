@@ -599,4 +599,62 @@ function pick(l, id, key, arg, r = () => 0.2) {
   ok(beOutWedlock.permanentIllegitimacyBan851 === true && beOutWedlock.illegitimate837 === true && !R.order(lBe, hBe).some(m => m.id === 'be_out'), 'Other 9 European monarchies permanently bar children born before parents legal marriage even if parents marry later');
 }
 
+// 17. Thứ tự kế vị theo nhánh (cháu đích tôn đẩy chú/dì xuống) & tước hiệu xứ sở của người kế vị và bạn đời (8.10.52)
+{
+  function lineHouse(c) {
+    const l = life(c, 30, 'M');
+    const h = {
+      cc: c, name: A.CULTURE[c].house, seat: 'root', founder837: 'root',
+      members: [
+        { id: 'root', name: 'Sov', sex: 'M', by: 1940, role: 'sovereign', alive: true, titles: [{ key: 'sovereign' }], religion837: A.CULTURE[c].faith },
+        { id: 'heirD', name: 'HeirDaughter', sex: 'F', by: 1966, parent: 'root', alive: true, titles: [{ key: 'prince' }], religion837: A.CULTURE[c].faith },
+        { id: 'sib', name: 'Uncle', sex: 'M', by: 1968, parent: 'root', alive: true, titles: [{ key: 'prince' }], religion837: A.CULTURE[c].faith },
+        { id: 'k1', name: 'Child1', sex: 'F', by: 1990, parent: 'heirD', alive: true, titles: [], religion837: A.CULTURE[c].faith },
+        { id: 'k2', name: 'Child2', sex: 'M', by: 1992, parent: 'heirD', alive: true, titles: [], religion837: A.CULTURE[c].faith },
+        { id: 'k3', name: 'Child3', sex: 'F', by: 1994, parent: 'heirD', alive: true, titles: [], religion837: A.CULTURE[c].faith }
+      ]
+    };
+    R.st(l).houses[c] = h; A.prepare(l, h, false);
+    return { l, h };
+  }
+  // Bình đẳng tuyệt đối (SE): #1 Thái nữ, #2 con 1, #3 con 2, #4 con 3, rồi mới tới chú
+  {
+    const { l, h } = lineHouse('SE');
+    ok(R.order(l, h).map(m => m.id).join(',') === 'heirD,k1,k2,k3,sib', 'Absolute: heir #1, children #2-#4 by birth, uncle after');
+    h.members.push({ id: 'gk1', name: 'Grandchild', sex: 'M', by: 2015, parent: 'k1', alive: true, titles: [], religion837: A.CULTURE.SE.faith });
+    ok(R.order(l, h).map(m => m.id).join(',') === 'heirD,k1,gk1,k2,k3,sib', 'First grandchild of heir becomes #3 and pushes younger children & uncle down');
+    h.members.push({ id: 'gk2', name: 'Grandchild2', sex: 'F', by: 2017, parent: 'k1', alive: true, titles: [], religion837: A.CULTURE.SE.faith });
+    ok(R.order(l, h).map(m => m.id).join(',') === 'heirD,k1,gk1,gk2,k2,k3,sib', 'Second grandchild pushes the rest further down');
+  }
+  // Ưu tiên nam (ES): con trai đứng trước chị gái; con của con trai đứng ngay sau cha mình
+  {
+    const { l, h } = lineHouse('ES');
+    h.members.find(m => m.id === 'heirD').sex = 'M';
+    h.members.find(m => m.id === 'sib').sex = 'F';
+    ok(R.order(l, h).map(m => m.id).join(',') === 'heirD,k2,k1,k3,sib', 'Male preference: younger son k2 precedes elder sister k1');
+    h.members.push({ id: 'gk', name: 'SonOfK2', sex: 'M', by: 2018, parent: 'k2', alive: true, titles: [], religion837: A.CULTURE.ES.faith });
+    ok(R.order(l, h).map(m => m.id).join(',') === 'heirD,k2,gk,k1,k3,sib', 'Male preference: child of the son stands right after his father');
+  }
+  // Tước hiệu xứ sở của người kế vị số 1
+  ok(B.HEIR_TITLES.GB.M.includes('Thân vương xứ Wales') && B.HEIR_TITLES.GB.M.includes('Cornwall') && B.HEIR_TITLES.GB.M.includes('Rothesay'), 'GB heir: Prince of Wales, Duke of Cornwall & Rothesay');
+  ok(B.HEIR_TITLES.GB.F.includes('Thân vương nữ xứ Wales'), 'GB female heir: Princess of Wales in own right');
+  ok(B.HEIR_TITLES.BE.F.includes('Nữ Công tước xứ Brabant') && B.HEIR_TITLES.ES.F.includes('Thân vương nữ xứ Asturias'), 'BE Brabant / ES Asturias heir titles');
+  ok(B.HEIR_TITLES.SE.F.includes('Västergötland') && !/xứ/.test(B.HEIR_TITLES.NO.M.replace('không phong xứ riêng', '')), 'SE duchy granted by King; NO has no territorial title');
+  ok(B.HEIR_TITLES.DK.M.includes('Monpezat') && B.HEIR_TITLES.MC.F.includes('Nữ Hầu tước xứ Baux'), 'DK Monpezat family title; MC Marquise des Baux');
+  ok(B.HEIR_TITLES.LU.M.includes('Đại Công tước Kế vị') && B.HEIR_TITLES.LU.M.includes('Bourbon-Parma') && B.HEIR_TITLES.LI.F.includes('Thân vương nữ Kế vị'), 'LU Hereditary Grand Duke + Bourbon-Parma; LI Hereditary Princess');
+  // Vợ của Thái tử hưởng phiên bản nữ; chồng của Thái nữ không chạm tước xứ của vợ (trừ Thụy Điển mượn danh hạ vị)
+  const CT = B.CONSORT_TITLES;
+  ok(CT.GB.heir.F.includes('Vương phi xứ Wales') && CT.ES.heir.F.includes('Vương phi xứ Asturias') && CT.BE.heir.F.includes('Brabant') && CT.MC.heir.F.includes('Baux'), 'Wife of male heir shares female version of territorial title');
+  ok(CT.BE.heir.M.startsWith('Hoàng tử Bỉ') && CT.ES.heir.M.startsWith('Vương thân Tây Ban Nha') && CT.LU.heir.M.startsWith('Hoàng tử xứ Luxembourg') && CT.MC.heir.M.startsWith('Hoàng thân Monaco'), 'Husband of female heir gets only honorary prince title (BE/ES/LU/MC)');
+  ok(CT.LI.heir.M.includes('không là Thân vương xứ Liechtenstein') && CT.NO.heir.M.includes('Vương thân Na Uy') && CT.DK.heir.M.includes('Vương thân'), 'LI/NO/DK husband consort titles');
+  ok(CT.SE.heir.M.includes('Công tước danh dự xứ Västergötland') && CT.SE.heir.M.includes('không sở hữu'), 'SE husband borrows duchy name in subordinate honorary form');
+  {
+    const lW = life('ES', 30, 'F'), hW = house(lW, 'ES'), meW = R.byId(hW, 'player');
+    hW.members.find(m => m.id === 'younger').alive = false;
+    lW.partner = { name: 'Husband', sex: 'M', status: 'married', since: 28, alive: true };
+    B.syncTitles(lW, hW, hW.members[0], null, quiet);
+    ok(meW.heirApparent847 && R.mainTitle(meW).includes('Thân vương nữ xứ Asturias') && lW.partner.royalConsortTitle847.includes('Vương thân Tây Ban Nha') && !lW.partner.royalConsortTitle847.startsWith('Vương phi'), 'Spanish female heir title and husband never holds Asturias');
+  }
+}
+
 console.log('royal847: ' + count + ' checks passed');

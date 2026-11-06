@@ -1,6 +1,26 @@
 {
-  "generatedAt": "2026-11-06T00:56:31.000Z",
+  "generatedAt": "2026-11-06T06:34:01.097Z",
   "entries": [
+    {
+      "id": "royal-line-heir-titles-81052",
+      "version": "8.10.52",
+      "publishedAt": "2026-11-06T13:34:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-06T06:34:00.000Z",
+      "title": "Thứ tự kế vị theo nhánh và tước hiệu xứ sở của Thái tử/Thái nữ cùng bạn đời tại các hoàng gia châu Âu",
+      "summary": "Làm rõ thứ tự kế vị theo nhánh của người kế vị (cháu đích tôn đứng ngay sau cha/mẹ và đẩy chú/dì xuống), và cập nhật tước hiệu xứ sở của Thái tử/Thái nữ cùng tước hiệu bạn đời theo từng quốc gia.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Đời sống"
+      ],
+      "details": [
+        "Thứ tự kế vị theo nhánh: Thái tử/Thái nữ đứng #1, con thứ nhất #2, con thứ hai #3, con thứ ba #4. Khi con trưởng của Thái tử/Thái nữ có con đầu lòng (cháu đích tôn/đích nữ), người cháu đó lên #3 và đẩy các em của cha/mẹ mình cùng các chú/dì xuống thấp hơn; có thêm con thì tiếp tục đẩy xuống. Ở Tây Ban Nha và Monaco (ưu tiên nam giới), con trai được xếp trước chị gái và con của người con trai đứng ngay sau cha mình. Menu tôn giáo – kế vị hoàng gia châu Âu nay hiển thị hàng kế vị hiện tại.",
+        "Tước hiệu xứ sở của người kế vị số 1: Anh — Thân vương/Thân vương nữ xứ Wales kèm Công tước xứ Cornwall và Công tước xứ Rothesay (Scotland); Bỉ — Công tước/Nữ Công tước xứ Brabant; Tây Ban Nha — Thân vương/Thân vương nữ xứ Asturias; Thụy Điển — Công tước/Nữ Công tước của xứ do Quốc vương phong (như xứ Västergötland); Na Uy — Thái tử/Thái nữ Na Uy, không phong xứ; Đan Mạch — Thái tử/Thái nữ Đan Mạch kèm tước gia tộc Monpezat; Monaco — Hầu tước/Nữ Hầu tước xứ Baux; Luxembourg — Đại Công tước Kế vị, có thể kèm Thân vương xứ Bourbon-Parma; Liechtenstein — Thân vương/Thân vương nữ Kế vị.",
+        "Tước hiệu bạn đời: vợ của Thái tử hưởng phiên bản nữ của tước xứ theo chồng (Vương phi xứ Wales, Nữ Công tước xứ Brabant, Vương phi xứ Asturias, Nữ Hầu tước xứ Baux, Đại Công tước Phi Kế vị, Thân vương Phi Kế vị...). Chồng của Thái nữ không được nắm tước xứ gốc của vợ: Bỉ phong Hoàng tử Bỉ, Tây Ban Nha phong Vương thân Tây Ban Nha, Luxembourg phong Hoàng tử xứ Luxembourg, Monaco phong Hoàng thân Monaco, Liechtenstein là Hoàng tử xứ Liechtenstein dạng phối ngẫu, Na Uy và Đan Mạch là Hoàng tử, Vương thân (như Hoàng thân Henrik luôn đi sau vợ một bước); riêng Thụy Điển cho chồng mượn danh Công tước cùng xứ ở thế hạ vị (như Hoàng tử Daniel, Công tước xứ Västergötland) nhưng không sở hữu xứ về pháp lý."
+      ],
+      "correctedAt": "2026-11-06T06:34:01.180Z"
+    },
     {
       "id": "uk-school-fix-euro-royals-81051",
       "version": "8.10.51",
