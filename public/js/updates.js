@@ -13,7 +13,7 @@ function authControls(){var revision=++authRevision;var A=window.G&&window.G.Acc
 var replyTarget=null;
 function reply(rootId,name){if(!canComment){window.G.Account.open();return;}replyTo=rootId;$('replyTarget').hidden=false;$('replyTarget').textContent='Đang phản hồi '+name;$('cancelReply').hidden=false;$('commentLabel').textContent='Viết phản hồi';$('commentForm').scrollIntoView({behavior:'smooth',block:'center'});$('commentBody').focus();}
 function cancelReply(){replyTo=null;$('replyTarget').hidden=true;$('cancelReply').hidden=true;$('commentLabel').textContent='Viết bình luận';}
-function commentActions(article,item,isReply){
+function commentActions(actions,item,isReply,replyButton){
   var like=node('button','comment-reply-button');
   function showLike(){
     like.textContent=(item.liked?'Đã thích':'Thích')+' ('+(item.likeCount||0)+')';
@@ -28,7 +28,7 @@ function commentActions(article,item,isReply){
       item.liked=result.liked;item.likeCount=result.likeCount;showLike();
     }catch(e){$('commentsStatus').textContent=e.message;}finally{like.disabled=false;}
   };
-  article.append(like);
+  actions.append(like,replyButton);
   if(!item.canDelete)return;
   var remove=node('button','comment-reply-button','Xóa');remove.type='button';
   remove.onclick=async function(){
@@ -40,9 +40,9 @@ function commentActions(article,item,isReply){
       await loadComments(true);
     }catch(e){$('commentsStatus').textContent=e.message;}finally{remove.disabled=false;}
   };
-  article.append(remove);
+  actions.append(remove);
 }
-function message(item,rootId,isReply){var article=node('article',isReply?'comment-reply':'comment-thread');article.id='comment-'+item.id;var meta=node('div','comment-meta');meta.append(node('strong','',item.displayName));if(item.role==='admin')meta.append(node('span','admin-badge','Admin'));if(item.pinned&&!isReply){article.classList.add('comment-pinned');meta.append(node('span','admin-badge','📌 Đã ghim'));}var time=node('time','',date(item.createdAt));time.dateTime=new Date(item.createdAt).toISOString();meta.append(time);var button=node('button','comment-reply-button','Phản hồi');button.type='button';button.onclick=function(){replyTarget=item.id;reply(rootId||item.id,item.displayName);};article.append(meta,node('p','comment-message',item.body),button);commentActions(article,item,isReply);return article;}
+function message(item,rootId,isReply){var article=node('article',isReply?'comment-reply':'comment-thread');article.id='comment-'+item.id;var meta=node('div','comment-meta');meta.append(node('strong','',item.displayName));if(item.role==='admin')meta.append(node('span','admin-badge','Admin'));if(item.pinned&&!isReply){article.classList.add('comment-pinned');meta.append(node('span','admin-badge','📌 Đã ghim'));}var time=node('time','',date(item.createdAt));time.dateTime=new Date(item.createdAt).toISOString();meta.append(time);var button=node('button','comment-reply-button','Phản hồi');button.type='button';button.onclick=function(){replyTarget=item.id;reply(rootId||item.id,item.displayName);};var actions=node('div','comment-actions');commentActions(actions,item,isReply,button);article.append(meta,node('p','comment-message',item.body),actions);return article;}
 async function loadReplies(rootId,container,button,at){button.disabled=true;try{var v=await api('GET',null,'?thread='+rootId+'&offset='+at);v.replies.forEach(function(item){container.append(message(item,rootId,true));});var next=at+v.replies.length;button.hidden=next>=v.total;button.onclick=function(){loadReplies(rootId,container,button,next);};}catch(e){$('commentsStatus').textContent=e.message;}finally{button.disabled=false;}}
 function thread(item){var article=message(item,null,false),container=node('div','comment-replies');container.id='replies-'+item.id;(item.replies||[]).forEach(function(x){container.append(message(x,item.id,true));});var more=node('button','comment-reply-button','Xem thêm phản hồi');more.type='button';more.hidden=(item.replies||[]).length>=item.replyCount;more.onclick=function(){loadReplies(item.id,container,more,(item.replies||[]).length);};article.append(container,more);return article;}
 async function loadComments(reset){if(loadingComments)return;loadingComments=true;$('moreComments').disabled=true;$('refreshComments').disabled=true;$('commentsStatus').textContent='Đang tải trò chuyện…';try{var at=reset?0:offset,v=await api('GET',null,'?offset='+at+'&preview=1');if(reset){$('commentsList').replaceChildren();offset=0;}v.comments.forEach(function(item){$('commentsList').append(thread(item));});offset=at+v.comments.length;$('moreComments').hidden=offset>=v.total;$('commentsStatus').textContent=v.total?v.total+' cuộc trò chuyện.':'Chưa có bình luận. Hãy mở đầu một cuộc trò chuyện!';}catch(e){$('commentsStatus').textContent=e.message;}finally{loadingComments=false;$('moreComments').disabled=false;$('refreshComments').disabled=false;}}
