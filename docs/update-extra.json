@@ -1,5 +1,21 @@
 [
   {
+    "id": "comment-likes-delete",
+    "version": "8.10.54",
+    "publishedAt": "2026-11-06T17:29:09+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Thích bình luận và xóa góp ý",
+    "summary": "Thích hoặc bỏ thích từng góp ý và phản hồi.",
+    "tags": [
+      "Cộng đồng"
+    ],
+    "details": [
+      "Đăng nhập để thích bình luận hoặc phản hồi. Bấm lần nữa để bỏ thích.",
+      "Bạn có thể xóa góp ý và phản hồi của mình. Quản trị viên có thể xóa để điều hành thảo luận. Xóa góp ý gốc sẽ xóa cả các phản hồi bên dưới."
+    ]
+  },
+  {
     "id": "exam-model-review-81054",
     "version": "8.10.54",
     "publishedAt": "2026-11-06T15:19:24.681+07:00",

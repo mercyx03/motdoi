@@ -110,7 +110,7 @@ function sameHex(a, b) { if (typeof a !== 'string' || typeof b !== 'string' || a
 async function initAccounts(db) {
   if (!accountSchemas.has(db)) accountSchemas.set(db, (async () => {
     // A persistent migration marker avoids DDL and PRAGMA on every cold isolate.
-    try { const ready = await db.prepare('SELECT version FROM game_account_schema WHERE version = 3').first(); if (ready) return; }
+    try { const ready = await db.prepare('SELECT version FROM game_account_schema WHERE version = 3 AND EXISTS (SELECT 1 FROM game_account_schema WHERE version = 4)').first(); if (ready) return; }
     catch (e) { if (!/no such table/i.test(String(e.message))) throw e; }
     await db.batch([
       db.prepare("CREATE TABLE IF NOT EXISTS game_accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pass_hash TEXT NOT NULL, salt TEXT NOT NULL, created_at INTEGER NOT NULL, fail_count INTEGER NOT NULL DEFAULT 0, lock_until INTEGER NOT NULL DEFAULT 0, display_name TEXT NOT NULL DEFAULT '')"),
@@ -131,7 +131,10 @@ async function initAccounts(db) {
       db.prepare('CREATE INDEX IF NOT EXISTS game_comments_parent ON game_update_comments(parent_id, id DESC)'),
       db.prepare('CREATE INDEX IF NOT EXISTS game_comments_author ON game_update_comments(account_id, created_at DESC)'),
       db.prepare('CREATE INDEX IF NOT EXISTS game_comments_recipient ON game_update_comments(reply_to_id, id)'),
-      db.prepare('INSERT OR IGNORE INTO game_account_schema(version) VALUES (3)')
+      db.prepare('CREATE TABLE IF NOT EXISTS game_comment_likes (comment_id INTEGER NOT NULL, account_id INTEGER NOT NULL, PRIMARY KEY(comment_id, account_id))'),
+      db.prepare('CREATE TRIGGER IF NOT EXISTS remove_comment_likes AFTER DELETE ON game_update_comments BEGIN DELETE FROM game_comment_likes WHERE comment_id = OLD.id; END'),
+      db.prepare('CREATE TRIGGER IF NOT EXISTS remove_account_likes AFTER DELETE ON game_accounts BEGIN DELETE FROM game_comment_likes WHERE account_id = OLD.id; END'),
+      db.prepare('INSERT OR IGNORE INTO game_account_schema(version) VALUES (3),(4)')
     ]);
   })().catch(e => { accountSchemas.delete(db); throw e; }));
   await accountSchemas.get(db);
@@ -255,12 +258,18 @@ async function comments(request, env, url) {
   const db=env.REVIEWS_DB;if(!db)return accJson(503,{ok:false,code:'COMMENTS_NOT_CONFIGURED'});
   await initAccounts(db);
   if(request.method==='GET') {
+    const viewer = await sessionAccount(db, request, Date.now());
+    const viewerId = viewer ? Number(viewer.id) : 0;
+    const select = COMMENT_SELECT.replace('c.body,', `c.body,
+      (SELECT COUNT(*) FROM game_comment_likes WHERE comment_id=c.id) AS likeCount,
+      EXISTS(SELECT 1 FROM game_comment_likes WHERE comment_id=c.id AND account_id=${viewerId}) AS liked,
+      (c.account_id=${viewerId} OR ${viewer?.role === 'admin' ? 1 : 0}) AS canDelete,`);
     const raw=url.searchParams.get('offset')||'0',thread=url.searchParams.get('thread')||'';
     if(!/^\d{1,7}$/.test(raw)||thread&&!/^[1-9]\d{0,12}$/.test(thread))return accJson(400,{ok:false,code:'INVALID_PAGE'});
     if(thread) {
       const result=await db.batch([
-        db.prepare(COMMENT_SELECT+' WHERE c.id = ? AND c.parent_id IS NULL').bind(Number(thread)),
-        db.prepare(COMMENT_SELECT+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20 OFFSET ?').bind(Number(thread),Number(raw)),
+        db.prepare(select+' WHERE c.id = ? AND c.parent_id IS NULL').bind(Number(thread)),
+        db.prepare(select+' WHERE c.parent_id = ? ORDER BY c.id ASC LIMIT 20 OFFSET ?').bind(Number(thread),Number(raw)),
         db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id = ?').bind(Number(thread))
       ]);
       if(!result[0].results.length)return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
@@ -268,9 +277,9 @@ async function comments(request, env, url) {
     }
     const page = 'SELECT id FROM game_update_comments WHERE parent_id IS NULL ORDER BY (id = '+PINNED_COMMENT_ID+') DESC, id DESC LIMIT 10 OFFSET ?';
     const result=await db.batch([
-      db.prepare(COMMENT_SELECT.replace('SELECT CASE','SELECT (SELECT COUNT(*) FROM game_update_comments replies WHERE replies.parent_id = c.id) AS replyCount, CASE')+' WHERE c.id IN ('+page+') ORDER BY pinned DESC, c.id DESC').bind(Number(raw)),
+      db.prepare(select.replace('SELECT CASE','SELECT (SELECT COUNT(*) FROM game_update_comments replies WHERE replies.parent_id = c.id) AS replyCount, CASE')+' WHERE c.id IN ('+page+') ORDER BY pinned DESC, c.id DESC').bind(Number(raw)),
       db.prepare('SELECT COUNT(*) AS count FROM game_update_comments WHERE parent_id IS NULL'),
-      db.prepare(COMMENT_SELECT+' WHERE c.id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY parent_id ORDER BY id ASC) AS pos FROM game_update_comments WHERE parent_id IN ('+page+')) WHERE pos <= '+(url.searchParams.get('preview')==='1'?3:20)+') ORDER BY c.id ASC').bind(Number(raw))
+      db.prepare(select+' WHERE c.id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY parent_id ORDER BY id ASC) AS pos FROM game_update_comments WHERE parent_id IN ('+page+')) WHERE pos <= '+(url.searchParams.get('preview')==='1'?3:20)+') ORDER BY c.id ASC').bind(Number(raw))
     ]);
     const grouped=new Map();for(const reply of result[2].results){if(!grouped.has(reply.parentId))grouped.set(reply.parentId,[]);grouped.get(reply.parentId).push(reply);}
     return accJson(200,{ok:true,total:result[1].results[0].count,comments:result[0].results.map(root=>({...root,replies:grouped.get(root.id)||[]}))});
@@ -280,13 +289,33 @@ async function comments(request, env, url) {
   const me=await sessionAccount(db,request,Date.now());if(!me)return accJson(401,{ok:false,code:'NOT_LOGGED_IN'});
   if(!cleanDisplayName(me.displayName))return accJson(403,{ok:false,code:'DISPLAY_NAME_REQUIRED'});
   let body;try{body=await readJsonBody(request,8192);}catch(e){return accJson(e.large?413:400,{ok:false,code:e.large?'BODY_TOO_LARGE':'INVALID_JSON'});}
+  if(body && (body.action==='like' || body.action==='delete')) {
+    const id=body.id;
+    if(!Number.isSafeInteger(id)||id<1)return accJson(400,{ok:false,code:'INVALID_COMMENT'});
+    const target=await db.prepare('SELECT account_id FROM game_update_comments WHERE id=?').bind(id).first();
+    if(!target)return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
+    if(body.action==='delete'){
+      if(target.account_id!==me.id && me.role!=='admin')return accJson(403,{ok:false,code:'FORBIDDEN'});
+      await db.batch([
+        db.prepare('UPDATE game_update_comments SET reply_to_id=parent_id WHERE reply_to_id=?').bind(id),
+        db.prepare('DELETE FROM game_update_comments WHERE id=? OR parent_id=?').bind(id,id)
+      ]);
+      return accJson(200,{ok:true});
+    }
+    if(typeof body.liked!=='boolean')return accJson(400,{ok:false,code:'INVALID_LIKE'});
+    const change=body.liked
+      ? db.prepare('INSERT OR IGNORE INTO game_comment_likes SELECT id,? FROM game_update_comments WHERE id=?').bind(me.id,id)
+      : db.prepare('DELETE FROM game_comment_likes WHERE account_id=? AND comment_id=?').bind(me.id,id);
+    const result=await db.batch([change,db.prepare('SELECT COUNT(*) AS count FROM game_comment_likes WHERE comment_id=?').bind(id)]);
+    return accJson(200,{ok:true,liked:body.liked,likeCount:result[1].results[0].count});
+  }
   if(!body||typeof body.body!=='string')return accJson(400,{ok:false,code:'INVALID_COMMENT'});
   const text=body.body.normalize('NFC').trim();if(!text||text.length>1500||/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(text))return accJson(400,{ok:false,code:'INVALID_COMMENT'});
   const parent=body.parentId==null?null:body.parentId;if(parent!==null&&(!Number.isSafeInteger(parent)||parent<1))return accJson(400,{ok:false,code:'INVALID_PARENT'});
   if(parent!==null&&!await db.prepare('SELECT id FROM game_update_comments WHERE id = ? AND parent_id IS NULL').bind(parent).first())return accJson(404,{ok:false,code:'THREAD_NOT_FOUND'});
   const replyTo=body.replyToId==null?parent:Number(body.replyToId);
   if(replyTo!==null&&(!Number.isSafeInteger(replyTo)||!parent||!await db.prepare('SELECT id FROM game_update_comments WHERE id = ? AND (id = ? OR parent_id = ?)').bind(replyTo,parent,parent).first()))return accJson(400,{ok:false,code:'INVALID_REPLY_TARGET'});
-  const now=Date.now(),result=await db.prepare('INSERT INTO game_update_comments(account_id, parent_id, body, created_at, reply_to_id, author_name) SELECT ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM game_update_comments WHERE account_id = ? AND created_at > ?)').bind(me.id,parent,text,now,replyTo,me.displayName || 'Người chơi',me.id,now-15000).run();
+  const now=Date.now(),result=await db.prepare('INSERT INTO game_update_comments(account_id, parent_id, body, created_at, reply_to_id, author_name) SELECT ?, ?, ?, ?, ?, ? WHERE (? IS NULL OR EXISTS (SELECT 1 FROM game_update_comments WHERE id=? AND parent_id IS NULL)) AND (? IS NULL OR EXISTS (SELECT 1 FROM game_update_comments WHERE id=? AND (parent_id=? OR id=?))) AND NOT EXISTS (SELECT 1 FROM game_update_comments WHERE account_id = ? AND created_at > ?)').bind(me.id,parent,text,now,replyTo,me.displayName || 'Người chơi',parent,parent,replyTo,replyTo,parent,parent,me.id,now-15000).run();
   if(!result.meta.changes)return accJson(429,{ok:false,code:'RATE_LIMIT'});
   return accJson(201,{ok:true});
 }
