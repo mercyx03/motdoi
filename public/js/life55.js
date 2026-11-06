@@ -7,7 +7,7 @@
     if(!p)return;
     var c=p.jobId&&E.CAR[p.jobId];
     if(!c&&p.job)c=Object.keys(E.CAR).map(function(id){return E.CAR[id];}).filter(function(j){return j.t.indexOf(p.job)>=0;})[0];
-    if(p.age<18){p.job=p.age<15?'học sinh THCS':'học sinh THPT';p.jobId=null;p.inc=0;}
+    if(p.age<18){p.job=H.inVN(l)?(p.age<15?'học sinh THCS':'học sinh THPT'):(H.resCode&&H.resCode(l)==='GB'?(p.age<16?'học sinh Secondary School':'học sinh Sixth Form'):'học sinh trung học');p.jobId=null;p.inc=0;}
     else if(/^học sinh/.test(p.job||'')||(p.job==='sinh viên'&&p.age>=22)||(c&&((c.minAge||0)>p.age||(c.cat==='med'&&p.age<24)||((c.edu||0)>=5&&p.age<22))))H.partnerJob(l,p,r);
   }
   E.normalizePartnerAge=normalize;

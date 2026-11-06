@@ -10,7 +10,7 @@
   // 1. NGHỀ NGHIỆP & THU NHẬP CỦA NGƯỜI YÊU / BẠN ĐỜI
   // ===================================================================
   function partnerJob(l, p, r) {
-    if (p.age < 18) { p.job = p.age < 15 ? 'học sinh THCS' : 'học sinh THPT'; p.jobId = null; p.inc = 0; return p; }
+    if (p.age < 18) { p.job = H.inVN(l) ? (p.age < 15 ? 'học sinh THCS' : 'học sinh THPT') : (H.resCode && H.resCode(l) === 'GB' ? (p.age < 16 ? 'học sinh Secondary School' : 'học sinh Sixth Form') : 'học sinh trung học'); p.jobId = null; p.inc = 0; return p; }
     if (p.age < 22 && r() < 0.65) { p.job = 'sinh viên'; p.jobId = null; p.inc = 0; return p; }
     if (p.age >= 62) { p.job = 'đã nghỉ hưu'; p.jobId = null; p.inc = l.base / 12 * (0.2 + r() * 0.3); return p; }
     var cands = Object.keys(E.CAR).map(function (k) { return E.CAR[k]; }).filter(function (c) { return !c.hidden && !c.fame && c.sec !== 'crime' && c.skillRank == null && (c.minAge == null || p.age >= c.minAge) && (p.age >= 24 || c.cat !== 'med') && (p.age >= 22 || (c.edu || 0) <= (p.age >= 20 ? 4 : 3)) && !(c.vnOnly && !H.isVN(l)); });

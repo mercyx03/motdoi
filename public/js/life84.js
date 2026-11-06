@@ -28,7 +28,7 @@
     MA: ['Quốc vương', 'Hoàng gia Morocco', 0], JO: ['Quốc vương', 'Hoàng gia Jordan', 0], KW: ['Quốc vương', 'Hoàng gia Kuwait', 0], QA: ['Quốc vương', 'Hoàng gia Qatar', 0],
     AE: ['Quốc vương', 'Hoàng gia UAE', 0], OM: ['Quốc vương', 'Hoàng gia Oman', 0], BH: ['Quốc vương', 'Hoàng gia Bahrain', 0], BT: ['Quốc vương', 'Hoàng gia Bhutan', 0],
     KH: ['Quốc vương', 'Hoàng gia Campuchia', 0], LS: ['Quốc vương', 'Hoàng gia Lesotho', 0], SZ: ['Quốc vương', 'Hoàng gia Eswatini', 0], TO: ['Quốc vương', 'Hoàng gia Tonga', 0],
-    MC: ['Thân vương', 'Vương thất Monaco', 0], LI: ['Thân vương', 'Vương thất Liechtenstein', 0], LU: ['Đại công tước', 'Đại công quốc Luxembourg', 1]
+    MC: ['Thân vương', 'Vương thất Monaco', 1], LI: ['Thân vương', 'Vương thất Liechtenstein', 1], LU: ['Đại công tước', 'Đại công quốc Luxembourg', 1]
   }; // [tước hiệu người trị vì, tên hoàng tộc, phụ nữ được kế vị]
   E.MONARCHIES = MON;
   E.PARENT_PAY = E.PARENT_PAY || {};

@@ -482,4 +482,121 @@ function pick(l, id, key, arg, r = () => 0.2) {
   }
 }
 
+// 15. Fix học tập Vương quốc Anh (GB) không lẫn chương trình/sự kiện Việt Nam & tích hợp lựa chọn A-Level/IB ở tuổi 16 (8.10.51)
+{
+  for (const city of ['London', 'Manchester', 'Edinburgh', 'Cardiff', 'Belfast']) {
+    const lGb = E.createLife({ mode: 'world', country: 'GB', seed: 901 });
+    lGb.city = city;
+    lGb.fam.q = 4;
+    lGb.st.hea = 90;
+    for (let a = 0; a < 18; a++) {
+      E.beginYear(lGb);
+      let g = 0;
+      while (lGb.pending && lGb.pending.length && g++ < 20) {
+        const p = lGb.pending[0];
+        const sub = p.opts.find(o => o.k === 'submit');
+        const alMed = p.id === 'sixth829' ? p.opts.find(o => o.k === 'al_eng') : null;
+        E.resolve(lGb, sub ? sub.k : alMed ? alMed.k : p.opts[0].k);
+      }
+      E.finishYear(lGb);
+      g = 0;
+      while (lGb.pending && lGb.pending.length && g++ < 20) {
+        const p = lGb.pending[0];
+        const sub = p.opts.find(o => o.k === 'submit');
+        E.resolve(lGb, sub ? sub.k : p.opts[0].k);
+      }
+      E.endYear(lGb);
+    }
+    const vnLeak = lGb.log.filter(x => /lớp [0-9]|THCS|THPT|báo tường|vào Nam \/ ra Bắc|tiền tiểu học/i.test(x.t));
+    ok(vnLeak.length === 0, 'UK city ' + city + ' has zero Vietnamese school stage or event leakage');
+    ok(lGb.flags.study829 && lGb.flags.study829.ukTrack850 && lGb.flags.study829.ukTrack850.furtherMaths === true, 'UK age-16 sixth829 popup directly supports A-Level/IB major groups across all UK regions (' + city + ')');
+  }
+}
+
+// 16. 10 Hoàng gia Châu Âu: Tôn giáo, Quyền Kế vị (8 Bình đẳng tuyệt đối vs 2 Ưu tiên nam giới ES & MC), Phủ quyết Hiến định, Đặc quyền Trắng Vatican, Tôn giáo Con cái & Hợp pháp hóa Con ngoài giá thú Monaco (8.10.51)
+{
+  const R1 = E.ROYAL851;
+  const all10 = ['GB', 'SE', 'NO', 'DK', 'NL', 'BE', 'LU', 'ES', 'MC', 'LI'];
+  ok(all10.every(c => A.COUNTRIES.includes(c) && R1.EURO_ROYAL_MATRIX851[c]), 'All 10 European monarchies registered in ROYAL837 and EURO_ROYAL_MATRIX851');
+
+  // 8 nước Tuyệt đối bình đẳng (SE 1980, NL 1983, NO 1990, BE 1991, DK 2009, LU 2011, GB 2013, LI cải cách Luật Salic): Trưởng nữ đứng trước em trai
+  for (const c of ['SE', 'NL', 'NO', 'BE', 'DK', 'LU', 'GB', 'LI']) {
+    const lEq = life(c, 14, 'F'), hEq = house(lEq, c);
+    const order = R.order(lEq, hEq);
+    ok(order[0].id === 'player' && order[1].id === 'younger', c + ' uses Absolute Primogeniture: eldest daughter (#1) precedes younger brother (#2)');
+    ok(R1.euroRoyalConfig851(c).primogeniture === 'absolute_primogeniture', c + ' marked absolute_primogeniture');
+  }
+
+  // Chỉ có Tây Ban Nha (ES) và Monaco (MC) ưu tiên nam giới: Em trai đứng trước chị gái trong cùng hàng con
+  for (const c of ['ES', 'MC']) {
+    const lMp = life(c, 22, 'F'), hMp = house(lMp, c);
+    const order = R.order(lMp, hMp);
+    ok(order[0].id === 'younger' && order[1].id === 'player', c + ' uses Male-Preference Primogeniture: younger brother (#1) precedes elder sister (#2)');
+    ok(R1.euroRoyalConfig851(c).primogeniture === 'male_preference', c + ' marked male_preference');
+  }
+
+  // Tây Ban Nha (ES) vs Monaco (MC): Quân chủ biểu tượng không được phủ quyết luật vì tôn giáo vs Thân vương Monaco có quyền phủ quyết dự luật trái giáo lý Công giáo
+  const lEs = life('ES', 28, 'M'), hEs = house(lEs, 'ES'), meEs = R.byId(hEs, 'player'), upEs = B.upState(lEs, meEs);
+  ok(!R1.euroRoyalConfig851('ES').stateReligion && !R1.euroRoyalConfig851('ES').canVetoReligious851, 'Spain has no state religion and King cannot veto laws on religious grounds');
+  ok(pick(lEs, 'royalEuroSuccessionFaith851', 'compare_10_euro_monarchies') && upEs.comparedEuro10_851, 'Compared 10 European monarchies');
+  ok(pick(lEs, 'royalEuroSuccessionFaith851', 'es_constitutional_no_religious_veto') && upEs.esNoReligiousVeto851, 'Spain symbolic constitutional monarch action');
+  ok(pick(lEs, 'royalEuroSuccessionFaith851', 'vatican_privilege_du_blanc') && upEs.vaticanPrivilegeDuBlanc851, 'Queen of Spain holds Vatican Privilège du blanc');
+
+  const lMc = life('MC', 30, 'M'), hMc = house(lMc, 'MC'), meMc = R.byId(hMc, 'player'), upMc = B.upState(lMc, meMc);
+  lMc.partner = { name: 'Charlene', sex: 'F', status: 'married', since: 28, alive: true, religion130: 'Tin Lành' };
+  ok(R1.euroRoyalConfig851('MC').stateReligion && R1.euroRoyalConfig851('MC').canVetoReligious851, 'Monaco has Catholic State Religion and Sovereign Prince can veto bills violating Catholic doctrine');
+  ok(pick(lMc, 'royalEuroSuccessionFaith851', 'mc_prince_catholic_veto') && upMc.mcPrinceCatholicVeto851, 'Monaco Prince legislative veto over bill contradicting Catholic doctrine');
+  ok(pick(lMc, 'royalEuroSuccessionFaith851', 'mc_spouse_voluntary_catholic_conversion') && lMc.partner.religion130 === 'Công giáo', 'Monaco spouse proactively converts to Catholicism before marriage');
+  ok(pick(lMc, 'royalEuroSuccessionFaith851', 'vatican_privilege_du_blanc') && upMc.vaticanPrivilegeDuBlanc851, 'Princess of Monaco holds Vatican Privilège du blanc');
+
+  // Bỉ (BE): Hiến pháp thế tục tách biệt nhà thờ – nhà nước + truyền thống Công giáo sùng đạo + Đặc quyền màu trắng Vatican (Hoàng hậu Mathilde)
+  const lBe = life('BE', 26, 'F'), hBe = house(lBe, 'BE'), meBe = R.byId(hBe, 'player'), upBe = B.upState(lBe, meBe);
+  ok(!R1.euroRoyalConfig851('BE').stateReligion && R1.euroRoyalConfig851('BE').vaticanPrivilegeDuBlanc, 'Belgium has secular constitution and Queen Mathilde holds Vatican Privilège du blanc');
+  ok(pick(lBe, 'royalEuroSuccessionFaith851', 'be_secular_constitution_devout_catholic') && upBe.beSecularDevout851, 'Belgium secular constitution + devout Catholic practice');
+  ok(pick(lBe, 'royalEuroSuccessionFaith851', 'vatican_privilege_du_blanc') && upBe.vaticanPrivilegeDuBlanc851, 'Queen of Belgium exercises Vatican Privilège du blanc');
+
+  // Liechtenstein (LI): Quốc giáo Công giáo, Luật Hôn nhân gia tộc (House Law) cần văn bản đồng ý của Thân vương & Cải cách từ Luật Salic cổ sang Bình đẳng giới
+  const lLi = life('LI', 25, 'F'), hLi = house(lLi, 'LI'), meLi = R.byId(hLi, 'player'), upLi = B.upState(lLi, meLi);
+  ok(R1.euroRoyalConfig851('LI').reformedFromSalicLaw && R1.euroRoyalConfig851('LI').stateReligion, 'Liechtenstein reformed from Salic Law and protects Catholic State Religion');
+  ok(pick(lLi, 'royalEuroSuccessionFaith851', 'li_salic_to_equal_and_house_law') && upLi.liHouseLawAndEqualReform851, 'Liechtenstein House Law written consent & Salic Law reform action');
+
+  // Hà Lan (NL): Giao thoa gia đình (Rửa tội Tin Lành Orange-Nassau + dự lễ Công giáo cùng mẹ & Tin Lành cùng cha)
+  const lNl = life('NL', 28, 'F'), hNl = house(lNl, 'NL'), meNl = R.byId(hNl, 'player'), upNl = B.upState(lNl, meNl);
+  lNl.partner = { name: 'Partner', sex: 'M', status: 'married', since: 25, alive: true };
+  lNl.kids = [{ name: 'Amalia', sex: 'F', born: lNl.age, alive: true }];
+  R.kidsYear(lNl, quiet);
+  ok(pick(lNl, 'royalEuroSuccessionFaith851', 'nl_protestant_catholic_family_blend') && upNl.nlBlendedFaith851, 'Netherlands blended Protestant/Catholic family upbringing');
+
+  // Kiểm tra 2 nhóm quy định tôn giáo đối với Con cái:
+  // Nhóm 1 (Bắt buộc 100%: GB, SE, NO, DK, MC, LI) -> nếu cải đạo khác đạo Hoàng gia sẽ mất quyền kế vị
+  const kidMc = { id: 'mc_kid', name: 'Jacques', sex: 'M', by: 2020, parent: 'player', alive: true, titles: [{ key: 'prince' }], country837: 'MC' };
+  hMc.members.push(kidMc);
+  const resMcWrong = R1.evaluateChildFaithEligibility851(lMc, hMc, kidMc, 'Không tôn giáo');
+  ok(!resMcWrong.eligible && kidMc.disinheritedForFaith851 && !R.order(lMc, hMc).some(m => m.id === 'mc_kid'), 'Mandatory group (MC/LI/GB/SE/NO/DK): child not raised in royal faith loses succession right');
+  const resMcRight = R1.evaluateChildFaithEligibility851(lMc, hMc, kidMc, 'Công giáo');
+  ok(resMcRight.eligible && !kidMc.disinheritedForFaith851 && R.order(lMc, hMc).some(m => m.id === 'mc_kid'), 'Mandatory group (MC): child baptized & raised Roman Catholic retains succession right');
+
+  // Nhóm 2 (Tự do pháp lý / Giao thoa: NL, BE, ES, LU) -> dù con cái theo đạo khác cũng giữ nguyên 100% quyền kế vị
+  const kidBe = { id: 'be_kid', name: 'Gabriel', sex: 'M', by: 2020, parent: 'player', alive: true, titles: [{ key: 'prince' }], country837: 'BE' };
+  hBe.members.push(kidBe);
+  const resBeOther = R1.evaluateChildFaithEligibility851(lBe, hBe, kidBe, 'Không tôn giáo');
+  ok(resBeOther.eligible && !kidBe.disinheritedForFaith851 && R.order(lBe, hBe).some(m => m.id === 'be_kid'), 'Voluntary/Secular group (BE/ES/LU/NL): child retains 100% succession right regardless of religion');
+
+  // Kiểm tra Con ngoài giá thú: Monaco (MC) Hợp pháp hóa sau sinh khi cha mẹ kết hôn hợp pháp vs 9 nước còn lại cấm vĩnh viễn
+  lMc.partner.status = 'dating';
+  const mcOutWedlock = { id: 'mc_casiraghi', name: 'Andrea', sex: 'M', by: 2022, parent: 'player', alive: true, titles: [], country837: 'MC', religion837: 'Công giáo', bornOutOfWedlock851: true, illegitimate837: true };
+  hMc.members.push(mcOutWedlock);
+  R1.syncLegitimacy851(lMc, hMc);
+  ok(!R.order(lMc, hMc).some(m => m.id === 'mc_casiraghi'), 'Monaco child born out of wedlock is excluded before parents marry');
+  ok(pick(lMc, 'royalEuroSuccessionFaith851', 'resolve_out_of_wedlock_legitimation'), 'Monaco post-birth legitimation action executed');
+  ok(mcOutWedlock.legitimatedByMarriage851 === true && !mcOutWedlock.illegitimate837 && R.order(lMc, hMc).some(m => m.id === 'mc_casiraghi'), 'Monaco child born out of wedlock is immediately placed into line of succession after parents legally marry');
+
+  // Ngược lại tại Bỉ (BE) và 8 nước còn lại: Cấm vĩnh viễn dù cha mẹ kết hôn hợp pháp sau đó
+  lBe.partner = { name: 'Spouse', sex: 'M', status: 'married', since: 26, alive: true };
+  const beOutWedlock = { id: 'be_out', name: 'ChildOut', sex: 'M', by: 2021, parent: 'player', alive: true, titles: [], country837: 'BE', religion837: 'Công giáo', bornOutOfWedlock851: true, illegitimate837: true };
+  hBe.members.push(beOutWedlock);
+  ok(pick(lBe, 'royalEuroSuccessionFaith851', 'resolve_out_of_wedlock_legitimation'), 'Belgium out-of-wedlock check executed');
+  ok(beOutWedlock.permanentIllegitimacyBan851 === true && beOutWedlock.illegitimate837 === true && !R.order(lBe, hBe).some(m => m.id === 'be_out'), 'Other 9 European monarchies permanently bar children born before parents legal marriage even if parents marry later');
+}
+
 console.log('royal847: ' + count + ' checks passed');

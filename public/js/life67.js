@@ -35,6 +35,8 @@
     ['dthu','Trường Đại học Đồng Tháp','Nam','Đồng Tháp',19,['edu','eco']]
   ].map(function(x){return{id:x[0],name:x[1],region:x[2],city:x[3],score:x[4],majors:x[5]};});
   var WORLD_SCHOOLS={
+    GB:[['oxford','University of Oxford','London',28,['it','eco','med','edu','law']],['cambridge','University of Cambridge','London',28,['it','eco','med','edu','law']],['imperial','Imperial College London','London',27,['it','med','eco']],['lse','London School of Economics (LSE)','London',27,['eco','law']],['ucl','University College London (UCL)','London',26,['it','eco','med','edu','law','art']],['edinburgh','University of Edinburgh','Edinburgh',26,['it','eco','med','edu','law','art']],['manchester','University of Manchester','Manchester',25,['it','eco','med','edu','law']]],
+    US:[['harvard','Harvard University','New York',28,['it','eco','med','edu','law']],['mit','Massachusetts Institute of Technology (MIT)','New York',28,['it','eco']],['stanford','Stanford University','Los Angeles',28,['it','eco','med','law']],['ucla','University of California (UCLA / UC Berkeley)','Los Angeles',26,['it','eco','med','edu','law','art']]],
     JP:[['utokyo','University of Tokyo','Tokyo',27,['it','eco','med','edu','law']],['kyoto','Kyoto University','Kyoto',26,['it','eco','med','edu','law']]],
     KR:[['snu','Seoul National University','Seoul',27,['it','eco','med','edu']],['yonsei','Yonsei University','Seoul',26,['it','eco','med','edu']]],
     TH:[['chula','Chulalongkorn University','Bangkok',25,['it','eco','med','edu','law']]],

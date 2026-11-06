@@ -20,7 +20,10 @@
     NO: { native: 'Tiếng Na Uy', regional: 'Tiếng Thụy Điển & Đan Mạch (Bắc Âu)', foreign: ['Tiếng Anh', 'Tiếng Pháp', 'Tiếng Đức'] },
     BE: { native: 'Tiếng Hà Lan / Pháp / Đức', regional: 'Ba ngôn ngữ quốc gia Bỉ (Hà Lan, Pháp, Đức)', foreign: ['Tiếng Anh', 'Tiếng Tây Ban Nha'] },
     ES: { native: 'Tiếng Tây Ban Nha', regional: 'Ngôn ngữ vùng Tây Ban Nha', foreign: ['Tiếng Anh', 'Tiếng Pháp', 'Tiếng Đức'] },
-    MC: { native: 'Tiếng Pháp', regional: 'Tiếng Monégasque', foreign: ['Tiếng Anh', 'Tiếng Ý', 'Tiếng Đức'] }
+    MC: { native: 'Tiếng Pháp', regional: 'Tiếng Monégasque', foreign: ['Tiếng Anh', 'Tiếng Ý', 'Tiếng Đức'] },
+    NL: { native: 'Tiếng Hà Lan', regional: 'Tiếng Frisian / Tây Ban Nha (giao thoa gia đình)', foreign: ['Tiếng Anh', 'Tiếng Tây Ban Nha', 'Tiếng Pháp', 'Tiếng Đức'] },
+    LU: { native: 'Tiếng Luxembourg / Pháp / Đức', regional: 'Ba ngôn ngữ quốc gia Luxembourg', foreign: ['Tiếng Anh', 'Tiếng Pháp', 'Tiếng Đức'] },
+    LI: { native: 'Tiếng Đức', regional: 'Phương ngữ Alemannic Liechtenstein', foreign: ['Tiếng Anh', 'Tiếng Pháp', 'Tiếng Ý'] }
   };
   var ARTS_SPORTS = [
     ['polo', 'Cưỡi ngựa & chơi Polo', 'sport', 'Rèn kỹ năng cưỡi ngựa và phối hợp đồng đội trên sân cỏ.'],
@@ -41,7 +44,10 @@
     NO: { M: ['Kongshavn / trường nội trú Bắc Âu', 'UWC Red Cross Nordic'], F: ['Kongshavn / trường nội trú Bắc Âu', 'UWC Red Cross Nordic'] },
     ES: { M: ['Colegio Santa María de los Rosales / nội trú quý tộc', 'UWC Atlantic'], F: ['Colegio Santa María de los Rosales / nội trú quý tộc', 'UWC Atlantic'] },
     BE: { M: ['Sint-Jan Berchmanscollege (Brussels)', 'Collège Cardinal Mercier'], F: ['Sint-Jan Berchmanscollege (Brussels)', 'Institut Vierge Fidèle'] },
-    MC: { M: ['Institution François d’Assise – Nicolas Barré', 'Institut Le Rosey (Thụy Sĩ)'], F: ['Institution François d’Assise – Nicolas Barré', 'Institut Le Rosey (Thụy Sĩ)'] }
+    MC: { M: ['Institution François d’Assise – Nicolas Barré', 'Institut Le Rosey (Thụy Sĩ)'], F: ['Institution François d’Assise – Nicolas Barré', 'Institut Le Rosey (Thụy Sĩ)'] },
+    NL: { M: ['Christelijk Gymnasium Sorghvliet (The Hague)', 'UWC Atlantic'], F: ['Christelijk Gymnasium Sorghvliet (The Hague)', 'UWC Atlantic'] },
+    LU: { M: ['Lycée Robert-Schuman', 'Collège Alpin International Beau Soleil'], F: ['Lycée Robert-Schuman', 'Collège Alpin International Beau Soleil'] },
+    LI: { M: ['Liechtensteinisches Gymnasium (Vaduz)', 'Institut Le Rosey (Thụy Sĩ)'], F: ['Liechtensteinisches Gymnasium (Vaduz)', 'Institut Le Rosey (Thụy Sĩ)'] }
   };
 
   function upState(l, m) {
@@ -135,6 +141,21 @@
       sovereign: { F: 'Thân vương phi Monaco (Princesse de Monaco) · Điện hạ', M: 'Phối ngẫu Nữ Thân vương Monaco · Điện hạ' },
       heir: { F: 'Hầu tước phu nhân xứ Baux · Điện hạ', M: 'Phối ngẫu Hầu tước xứ Baux' },
       direct: { F: 'Phối ngẫu Vương thất Monaco', M: 'Phối ngẫu Vương thất Monaco' }
+    },
+    NL: {
+      sovereign: { F: 'Hoàng hậu Hà Lan (Koningin) · Bệ hạ', M: 'Hoàng thân Phối ngẫu Hà Lan (Prins-gemaal) · Điện hạ' },
+      heir: { F: 'Vương phi xứ Orange (Prinses van Oranje) · Điện hạ', M: 'Phối ngẫu Nữ Thân vương xứ Orange · Điện hạ' },
+      direct: { F: 'Công nương Hà Lan · Điện hạ', M: 'Phối ngẫu Hoàng gia Hà Lan' }
+    },
+    LU: {
+      sovereign: { F: 'Đại Công tước phu nhân Luxembourg (Grande-Duchesse) · Điện hạ', M: 'Phối ngẫu Nữ Đại Công tước Luxembourg · Điện hạ' },
+      heir: { F: 'Đại Công thế tử phi Luxembourg · Điện hạ', M: 'Phối ngẫu Nữ Đại Công thế tử Luxembourg · Điện hạ' },
+      direct: { F: 'Công nương Luxembourg · Điện hạ', M: 'Phối ngẫu Đại Công thất Luxembourg' }
+    },
+    LI: {
+      sovereign: { F: 'Thân vương phi Liechtenstein (Fürstin von und zu Liechtenstein) · Điện hạ', M: 'Phối ngẫu Nữ Thân vương Liechtenstein · Điện hạ' },
+      heir: { F: 'Thế tử phi / Nhiếp chính vương phi Liechtenstein (Erbprinzessin) · Điện hạ', M: 'Phối ngẫu Thế nữ Liechtenstein · Điện hạ' },
+      direct: { F: 'Công nương Liechtenstein · Điện hạ', M: 'Phối ngẫu Vương thất Liechtenstein' }
     }
   };
   var HEIR_TITLES = {
@@ -144,7 +165,10 @@
     DK: { M: 'Thái tử Đan Mạch (Kronprins) · Điện hạ', F: 'Thái nữ Đan Mạch (Kronprinsesse) · Điện hạ' },
     BE: { M: 'Hoàng tử Bỉ, Công tước xứ Brabant · Điện hạ', F: 'Công chúa Bỉ, Nữ Công tước xứ Brabant · Điện hạ' },
     ES: { M: 'Príncipe de Asturias · Điện hạ', F: 'Princesa de Asturias · Điện hạ' },
-    MC: { M: 'Thế tử Monaco, Hầu tước xứ Baux · Điện hạ', F: 'Thế nữ Monaco, Nữ Hầu tước xứ Baux · Điện hạ' }
+    MC: { M: 'Thế tử Monaco, Hầu tước xứ Baux · Điện hạ', F: 'Thế nữ Monaco, Nữ Hầu tước xứ Baux · Điện hạ' },
+    NL: { M: 'Thân vương xứ Orange (Prins van Oranje) · Điện hạ', F: 'Nữ Thân vương xứ Orange (Prinses van Oranje) · Điện hạ' },
+    LU: { M: 'Đại Công thế tử Luxembourg (Grand-Duc Héritier) · Điện hạ', F: 'Nữ Đại Công thế tử Luxembourg (Grande-Duchesse Héritière) · Điện hạ' },
+    LI: { M: 'Thế tử / Nhiếp chính vương Liechtenstein (Erbprinz) · Điện hạ', F: 'Thế nữ Liechtenstein (Erbprinzessin) · Điện hạ' }
   };
   var SOVEREIGN_SUPREME_MIL = {
     SE: 'Đại tướng / Đô đốc Tối cao Ba Quân chủng (Lục quân, Hải quân, Không quân Thụy Điển)',
@@ -152,11 +176,16 @@
     NO: 'Tổng Tư lệnh Tối cao Quân đội Na Uy',
     DK: 'Tổng Tư lệnh Tối cao Lực lượng Vũ trang Đan Mạch',
     BE: 'Tổng Tư lệnh Các Lực lượng Vũ trang Bỉ',
-    ES: 'Tổng Tư lệnh Tối cao (Capitán General) Lực lượng Vũ trang Tây Ban Nha'
+    ES: 'Tổng Tư lệnh Tối cao (Capitán General) Lực lượng Vũ trang Tây Ban Nha',
+    MC: 'Nguyên thủ Tối cao & Người Bảo hộ Hiến pháp Thân vương quốc Monaco',
+    NL: 'Nguyên thủ Quốc gia Vương quốc Hà Lan',
+    LU: 'Tổng Tư lệnh Lực lượng Vũ trang Đại Công quốc Luxembourg',
+    LI: 'Nguyên thủ Tối cao Thân vương quốc Liechtenstein'
   };
 
   function syncTitles(l, h, newSov, oldSov, log) {
     if (!h || !A.COUNTRIES.includes(h.cc)) return;
+    if (typeof syncLegitimacy851 === 'function') syncLegitimacy851(l, h);
     var line = R.order(l, h), heir = line[0], c = h.cc;
     h.members.forEach(function (m, idx) {
       var isChildOfReigningSov = !m.parent || m.parent === h.seat || Boolean(m.investedBySov850);
@@ -228,6 +257,9 @@
       if (c === 'DK') return (m.sex === 'F' ? 'Nữ hoàng Đan Mạch' : 'Quốc vương Đan Mạch') + ' · Bệ hạ';
       if (c === 'BE') return (m.sex === 'F' ? 'Nữ hoàng của người Bỉ' : 'Quốc vương của người Bỉ') + ' · Bệ hạ';
       if (c === 'MC') return (m.sex === 'F' ? 'Nữ Thân vương Monaco' : 'Thân vương Monaco') + ' · Điện hạ';
+      if (c === 'NL') return (m.sex === 'F' ? 'Nữ hoàng Hà Lan (Koningin)' : 'Quốc vương Hà Lan (Koning)') + ' · Bệ hạ';
+      if (c === 'LU') return (m.sex === 'F' ? 'Nữ Đại Công tước Luxembourg' : 'Đại Công tước Luxembourg') + ' · Điện hạ';
+      if (c === 'LI') return (m.sex === 'F' ? 'Nữ Thân vương Liechtenstein' : 'Thân vương Liechtenstein (Fürst)') + ' · Điện hạ';
     }
     if (m.heirApparent847 && HEIR_TITLES[c] && !active.some(function (t) { return t.key === 'sovereign'; })) {
       return HEIR_TITLES[c][m.sex];
@@ -2147,6 +2179,358 @@
       return (a.sign || "Bạch Dương") + " · sinh lúc " + hr + "h00 · " + (a.theme || "cởi mở") + (mb && mb.code ? " · MBTI: " + mb.code : "");
     };
   }
+
+  // ================= 16. 10 Hoàng gia Châu Âu: Tôn giáo, Quyền Kế vị (Tuyệt đối Bình đẳng vs. Ưu tiên Nam giới), Quyền Phủ quyết Hiến định, Đặc quyền Màu Trắng Vatican & Quy định Con cái / Con ngoài giá thú (8.10.51) =================
+  var EURO_ROYAL_MATRIX851 = {
+    GB: {
+      cc: "GB",
+      name: "Vương quốc Anh (Nhà Windsor / Alderwick)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 2013,
+      stateReligion: true,
+      officialFaith: "Anh giáo",
+      faithBranch: "Giáo hội Anh (Church of England — Tin Lành Anh giáo)",
+      monarchReligiousRole: "Người đứng đầu tối cao (Supreme Governor) của Giáo hội Anh",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: false,
+      childFaithGroup: "mandatory",
+      childFaithRule: "BẮT BUỘC 100% con cái trong hàng kế vị phải rửa tội và nuôi dạy trong Giáo hội Anh (Church of England) dù bố/mẹ có người theo Công giáo; nếu nuôi dạy theo Công giáo sẽ mất quyền kế vị.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã có hôn thú hợp pháp; kết hôn sau sinh không hợp pháp hóa quyền kế vị."
+    },
+    SE: {
+      cc: "SE",
+      name: "Thụy Điển (Nhà Bernadotte / Lindenvik)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 1980,
+      stateReligion: false,
+      officialFaith: "Tin Lành Lutheran",
+      faithBranch: "Tin Lành nhánh Lutheran (Evangelical Lutheran — Đạo luật Kế vị Thụy Điển)",
+      monarchReligiousRole: "Quốc vương/Nữ hoàng và thành viên trong hàng kế vị phải theo đức tin Tin Lành thuần túy (Evangelical Lutheran)",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: false,
+      childFaithGroup: "mandatory",
+      childFaithRule: "BẮT BUỘC 100% các hoàng tử, công chúa trong hàng kế vị phải được rửa tội và nuôi dạy theo đức tin Tin Lành Lutheran của Hoàng gia, nếu không sẽ mất quyền kế vị.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã kết hôn hợp pháp có sự chấp thuận của Chính phủ theo đề nghị Quốc vương."
+    },
+    NO: {
+      cc: "NO",
+      name: "Na Uy (Nhà Glücksburg / Fjordheim)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 1990,
+      stateReligion: false,
+      officialFaith: "Tin Lành Lutheran",
+      faithBranch: "Tin Lành nhánh Lutheran (Giáo hội Quốc gia Na Uy — Evangelical Lutheran)",
+      monarchReligiousRole: "Quốc vương Na Uy bắt buộc theo Tin Lành Evangelical Lutheran theo Hiến pháp",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: false,
+      childFaithGroup: "mandatory",
+      childFaithRule: "BẮT BUỘC 100% con cái trong hàng kế vị được làm lễ rửa tội tại nhà thờ quốc gia theo nghi thức Tin Lành Lutheran từ nhỏ.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã có hôn thú hợp pháp."
+    },
+    DK: {
+      cc: "DK",
+      name: "Đan Mạch (Nhà Glücksburg–Monpezat / Lindenborg)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 2009,
+      stateReligion: true,
+      officialFaith: "Tin Lành Lutheran",
+      faithBranch: "Tin Lành nhánh Lutheran (Folkekirken — Giáo hội Quốc gia Đan Mạch)",
+      monarchReligiousRole: "Quốc vương/Nữ hoàng bắt buộc thuộc Giáo hội Tin Lành Lutheran Đan Mạch",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: false,
+      childFaithGroup: "mandatory",
+      childFaithRule: "BẮT BUỘC 100% các em bé hoàng gia (như con của Vua Frederik X và Hoàng hậu Mary người Úc) đều phải làm lễ rửa tội tại nhà thờ quốc gia theo nghi thức Lutheran từ nhỏ.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã kết hôn hợp pháp."
+    },
+    NL: {
+      cc: "NL",
+      name: "Hà Lan (Vương tộc Orange-Nassau / Oranjeval)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 1983,
+      stateReligion: false,
+      officialFaith: "Tin Lành",
+      faithBranch: "Truyền thống Tin Lành Cải cách (Vương tộc Orange-Nassau) kết hợp tự do tôn giáo thế tục",
+      monarchReligiousRole: "Hiến pháp thế tục không ép buộc tôn giáo; gia đình có sự giao thoa Tin Lành (Vua Willem-Alexander) và Công giáo (Hoàng hậu Máxima)",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: false,
+      childFaithGroup: "voluntary_or_blended",
+      childFaithRule: "Con cái theo truyền thống nhưng có sự giao thoa gia đình: luật thế tục không ép buộc theo đạo Tin Lành mới được kế vị. Thái nữ Catharina-Amalia và hai em gái vẫn rửa tội Tin Lành để tôn trọng truyền thống Vương tộc Orange-Nassau, nhưng lớn lên vừa đi lễ nhà thờ Công giáo cùng mẹ (Hoàng hậu Máxima), vừa dự lễ Tin Lành cùng cha (Vua Willem-Alexander) mà không gặp rào cản pháp lý nào.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ kết hôn hợp pháp có Quốc hội chấp thuận."
+    },
+    BE: {
+      cc: "BE",
+      name: "Vương quốc Bỉ (Nhà Saxe-Coburg / Brabantval)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 1991,
+      stateReligion: false,
+      officialFaith: "Công giáo",
+      faithBranch: "Công giáo La Mã truyền thống sùng đạo trên nền Hiến pháp thế tục tách biệt nhà thờ và nhà nước",
+      monarchReligiousRole: "Vua Philippe giữ sự trung lập chính trị và tôn giáo trước công chúng để đại diện cho mọi người dân Bỉ, nhưng có đời sống đức tin Công giáo cá nhân rất sâu sắc",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: true,
+      childFaithGroup: "voluntary_or_blended",
+      childFaithRule: "Tự do hoàn toàn trên giấy tờ hiến pháp (nếu Thái nữ Elisabeth kết hôn với người khác đạo, con cái vẫn giữ nguyên 100% quyền kế vị dù theo tôn giáo nào), nhưng thực tế 100% các con đều được tự nguyện rửa tội và nuôi dạy theo Công giáo La Mã vì truyền thống văn hóa – lịch sử sâu sắc.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: Luật kế vị Bỉ chỉ dựa trên dòng dõi hợp pháp từ Vua Albert II và sự chấp thuận hôn nhân của Vua/Quốc hội; con ngoài giá thú bị loại vĩnh viễn."
+    },
+    LU: {
+      cc: "LU",
+      name: "Đại Công quốc Luxembourg (Nhà Luxembourg-Nassau / Nassauval)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 2011,
+      stateReligion: false,
+      officialFaith: "Công giáo",
+      faithBranch: "Công giáo La Mã truyền thống lâu đời trên nền Hiến pháp thế tục",
+      monarchReligiousRole: "Đại Công tước giữ vai trò lập hiến; Đại Công tước phu nhân có Đặc quyền màu trắng (Privilège du blanc) tại Vatican",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: true,
+      childFaithGroup: "voluntary_or_blended",
+      childFaithRule: "Tự do hoàn toàn trên giấy tờ pháp lý, nhưng 100% con cái được tự nguyện rửa tội và nuôi dạy theo Công giáo La Mã vì truyền thống lịch sử sâu sắc.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã có hôn thú hợp pháp được Đại Công tước chấp thuận."
+    },
+    ES: {
+      cc: "ES",
+      name: "Tây Ban Nha (Vương triều Borbón / Valdeoliva)",
+      primogeniture: "male_preference",
+      equalReformYear: null,
+      stateReligion: false,
+      officialFaith: "Công giáo",
+      faithBranch: "Công giáo La Mã theo truyền thống lịch sử (Hiến pháp Tây Ban Nha không quy định quốc giáo)",
+      monarchReligiousRole: "Vai trò của Nhà vua mang tính biểu tượng và lập hiến: Nhà vua KHÔNG THỂ dùng lý do tôn giáo để từ chối ký ban hành một đạo luật đã được Quốc hội (Cortes Generales) thông qua; Hoàng hậu Tây Ban Nha có Đặc quyền màu trắng (Privilège du blanc) tại Vatican",
+      canVetoReligious851: false,
+      vaticanPrivilegeDuBlanc: true,
+      childFaithGroup: "voluntary_or_blended",
+      childFaithRule: "Tự do hoàn toàn trên giấy tờ (tự nguyện hơn là ép buộc), dù trong thực tế các con vẫn làm lễ rửa tội và đám cưới theo nghi thức Công giáo La Mã truyền thống.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã kết hôn hợp pháp."
+    },
+    MC: {
+      cc: "MC",
+      name: "Thân vương quốc Monaco (Hoàng tộc Grimaldi / Rocheval)",
+      primogeniture: "male_preference",
+      equalReformYear: null,
+      stateReligion: true,
+      officialFaith: "Công giáo",
+      faithBranch: "Công giáo La Mã là Quốc giáo (State Religion) trong Hiến pháp Monaco (luật kế vị bằng văn bản chỉ bắt buộc có quốc tịch Monaco, nhưng thực tế gia tộc Grimaldi luôn giữ vững đức tin Công giáo)",
+      monarchReligiousRole: "Thân vương Monaco nắm quyền lực chính trị, lập pháp thực tế rất lớn: với tư cách người bảo hộ Hiến pháp và Quốc giáo, Thân vương CÓ QUYỀN PHỦ QUYẾT các dự luật đi ngược lại giáo lý Công giáo (ví dụ thực tế: Thân vương Albert II từ chối ký các dự luật mở rộng quyền phá thai); Thân vương phi Monaco (như Vương phi Charlene chủ động cải đạo năm 2011) có Đặc quyền màu trắng (Privilège du blanc) tại Vatican",
+      canVetoReligious851: true,
+      vaticanPrivilegeDuBlanc: true,
+      childFaithGroup: "mandatory",
+      childFaithRule: "BẮT BUỘC 100% con cái của Hoàng tộc Grimaldi (như cặp song sinh Thế tử Jacques & Công chúa Gabriella) phải được rửa tội và nuôi dạy theo nghi thức Công giáo La Mã.",
+      outOfWedlockRule: "monaco_post_birth_legitimation",
+      outOfWedlockNote: "Ngoại lệ duy nhất tại châu Âu — Cơ chế 'Hợp pháp hóa sau sinh': theo Hiến pháp và Bộ luật Dân sự Monaco, một đứa trẻ sinh ra ngoài giá thú sẽ NGAY LẬP TỨC được đưa vào danh sách kế vị nếu sau đó cha mẹ ruột kết hôn hợp pháp với nhau (có sự chấp thuận của Thân vương, như thực tế các con của Công chúa Caroline là Andrea và Charlotte Casiraghi)."
+    },
+    LI: {
+      cc: "LI",
+      name: "Thân vương quốc Liechtenstein (Vương tộc Liechtenstein / Vaduzstein)",
+      primogeniture: "absolute_primogeniture",
+      equalReformYear: 2024,
+      reformedFromSalicLaw: true,
+      stateReligion: true,
+      officialFaith: "Công giáo",
+      faithBranch: "Công giáo La Mã là Quốc giáo (State Religion) được bảo vệ trong Hiến pháp Liechtenstein",
+      monarchReligiousRole: "Đứng đầu bởi Thân vương trị vì (như Thân vương Hans-Adam II và Nhiếp chính vương Alois) có quyền lực hiến định rất lớn; Luật Hôn nhân gia tộc (House Law) khắt khe đòi hỏi môn đăng hộ đối và sự đồng ý bằng văn bản của Thân vương trị vì",
+      canVetoReligious851: true,
+      vaticanPrivilegeDuBlanc: false,
+      childFaithGroup: "mandatory",
+      childFaithRule: "BẮT BUỘC 100% con cái sinh ra trong gia tộc phải được rửa tội và nuôi dạy trong đức tin Công giáo La Mã để duy trì tính hợp pháp và bảo vệ quốc giáo.",
+      outOfWedlockRule: "permanent_ban",
+      outOfWedlockNote: "Cấm vĩnh viễn: bắt buộc sinh ra SAU KHI cha mẹ đã có hôn thú hợp pháp được Thân vương trị vì đồng ý bằng văn bản."
+    }
+  };
+
+  function euroRoyalConfig851(cc) {
+    return EURO_ROYAL_MATRIX851[cc] || EURO_ROYAL_MATRIX851.GB;
+  }
+
+  function syncLegitimacy851(l, h) {
+    if (!h || !EURO_ROYAL_MATRIX851[h.cc]) return;
+    var cfg = EURO_ROYAL_MATRIX851[h.cc];
+    var parentsMarried = Boolean(l.partner && l.partner.status === "married");
+    h.members.forEach(function (m) {
+      if (!m.bornOutOfWedlock851) return;
+      if (cfg.outOfWedlockRule === "monaco_post_birth_legitimation") {
+        if (parentsMarried && !m.unapprovedMarriage851 && !m.barredLine837) {
+          m.legitimatedByMarriage851 = true;
+          m.illegitimate837 = false;
+        } else if (!m.legitimatedByMarriage851) {
+          m.illegitimate837 = true;
+        }
+      } else {
+        m.permanentIllegitimacyBan851 = true;
+        m.illegitimate837 = true;
+        m.legitimatedByMarriage851 = false;
+      }
+    });
+  }
+
+  function evaluateChildFaithEligibility851(l, h, childMember, chosenFaith) {
+    if (!h || !childMember) return { eligible: true };
+    var cfg = euroRoyalConfig851(h.cc);
+    childMember.religion837 = chosenFaith;
+    if (cfg.childFaithGroup === "mandatory") {
+      var fk = A.faithKey(chosenFaith);
+      var okFaith = h.cc === "GB" ? fk === "anglican" : ["SE", "NO", "DK"].includes(h.cc) ? fk === "lutheran" : ["MC", "LI"].includes(h.cc) ? fk === "catholic" : true;
+      childMember.disinheritedForFaith851 = !okFaith;
+      return {
+        eligible: okFaith,
+        group: "mandatory",
+        requiredFaith: cfg.officialFaith,
+        disinherited: !okFaith
+      };
+    }
+    childMember.disinheritedForFaith851 = false;
+    if (h.cc === "NL") {
+      childMember.dutchBlendedFaith851 = true;
+    }
+    return {
+      eligible: true,
+      group: "voluntary_or_blended",
+      requiredFaith: cfg.officialFaith,
+      disinherited: false
+    };
+  }
+
+  X.menu("royalEuroSuccessionFaith851", "Tôn giáo, Quyền Kế vị 10 Hoàng gia Châu Âu, Phủ quyết Hiến định, Đặc quyền Trắng Vatican & Con ngoài giá thú", function (l) {
+    if (!l.alive) return "Không khả dụng";
+    var q = A.context(l);
+    if (!q || !q.h || !q.me || !EURO_ROYAL_MATRIX851[q.c]) return "Không áp dụng: chỉ dành cho 10 Hoàng gia Châu Âu (GB, SE, NO, DK, NL, BE, LU, ES, MC, LI)";
+    return X.reason(l, 10);
+  }, function (l) {
+    var q = A.context(l);
+    if (!q || !q.h || !q.me) return "Chưa có hồ sơ Hoàng gia.";
+    var cfg = euroRoyalConfig851(q.c), pos = R.lineOf(l, q.h, q.me);
+    var primoText = cfg.primogeniture === "male_preference"
+      ? "Ưu tiên nam giới (Male-preference primogeniture — chỉ còn Tây Ban Nha và Monaco áp dụng tại châu Âu: nam giới được ưu tiên trước rồi mới tới nữ giới)"
+      : "Tuyệt đối bình đẳng (Absolute primogeniture" + (cfg.reformedFromSalicLaw ? " — cải cách từ Luật Salic cổ bảo thủ nhất châu Âu sang cho phép phụ nữ kế vị ngang bằng nam giới" : cfg.equalReformYear ? " — áp dụng từ năm " + cfg.equalReformYear : "") + ": người con đầu lòng bất kể Hoàng tử hay Công chúa đều là người kế vị số 1)";
+    return "• Quốc gia & Vương tộc: " + cfg.name + " (Vị trí của bạn: " + (q.h.seat === q.me.id ? "Quân vương đương nhiệm" : pos ? "Thứ #" + pos + " trong hàng kế vị" : "Ngoài hàng kế vị") + ").\n" +
+      "• Quy tắc kế vị giới tính: " + primoText + ".\n" +
+      "• Tôn giáo & Quyền lực Hiến định: " + cfg.faithBranch + ". " + cfg.monarchReligiousRole + ".\n" +
+      "• Quy định Tôn giáo đối với Con cái (" + (cfg.childFaithGroup === "mandatory" ? "Nhóm Bắt buộc 100%" : "Nhóm Tách biệt pháp lý / Giao thoa tự do") + "): " + cfg.childFaithRule + "\n" +
+      "• Quy định Con ngoài giá thú: " + cfg.outOfWedlockNote;
+  }, function (l) {
+    var q = A.context(l);
+    if (!q || !q.h || !q.me) return [];
+    var h = q.h, me = q.me, c = q.c, cfg = euroRoyalConfig851(c), up = upState(l, me), out = [];
+    function row(k, label, run, why) {
+      out.push({ k: k, l: label, why: why || up.acted[k] === yr(l) ? why || "Đã thực hiện năm nay" : true, run: function (l, r, log) { if (up.acted[k] === yr(l)) return; up.acted[k] = yr(l); run(r, log); } });
+    }
+
+    row("compare_10_euro_monarchies", "Đối chiếu 10 Hoàng gia Châu Âu: 8 nước Tuyệt đối bình đẳng (SE 1980, NL 1983, NO 1990, BE 1991, DK 2009, LU 2011, GB 2013, LI cải cách Luật Salic) vs. 2 nước Ưu tiên nam giới (ES, MC)", function (r, log) {
+      syncLegitimacy851(l, h);
+      syncTitles(l, h, R.byId(h, h.seat), null, log);
+      up.comparedEuro10_851 = true;
+      H.fx(l, { kno: 3 });
+      log("Tại châu Âu hiện nay chỉ còn đúng 2 hoàng gia ưu tiên nam giới là Tây Ban Nha (ES) và Monaco (MC). Cả 8 hoàng gia còn lại gồm Thụy Điển (tiên phong 1980), Hà Lan (1983), Na Uy (1990), Bỉ (1991), Đan Mạch (2009), Luxembourg (2011), Vương quốc Anh (2013) và Liechtenstein (đã cải cách Luật Gia tộc từ Luật Salic cổ sang bình đẳng giới) đều áp dụng quyền kế vị tuyệt đối cho người con đầu lòng bất kể Hoàng tử hay Công chúa.", "good");
+    });
+
+    if (c === "ES") {
+      row("es_constitutional_no_religious_veto", "Tây Ban Nha: Giữ truyền thống Công giáo tự nguyện & tôn trọng vai trò Quân chủ lập hiến biểu tượng (không dùng lý do tôn giáo để từ chối ký luật của Quốc hội)", function (r, log) {
+        up.esNoReligiousVeto851 = true;
+        H.fx(l, { kno: 3, soc: 2 });
+        log("Tại Tây Ban Nha, Công giáo La Mã là truyền thống lịch sử tự nguyện (vẫn tổ chức lễ rửa tội, đám cưới Công giáo nhưng luật không ép buộc). Vai trò của Nhà vua mang tính biểu tượng và lập hiến: Nhà vua KHÔNG THỂ dùng lý do tôn giáo để từ chối ký ban hành một đạo luật đã được Quốc hội (Cortes Generales) thông qua.", "good");
+      });
+    }
+
+    if (c === "MC") {
+      row("mc_prince_catholic_veto", "Monaco: Thực thi quyền lực lập pháp của Thân vương bảo hộ Hiến pháp — Phủ quyết dự luật đi ngược lại giáo lý Công giáo (Quốc giáo)", function (r, log) {
+        up.mcPrinceCatholicVeto851 = true;
+        H.fx(l, { kno: 3, soc: 2 });
+        log("Khác với vai trò biểu tượng ở Tây Ban Nha, tại Monaco Công giáo La Mã là Quốc giáo và Thân vương Monaco nắm quyền lực chính trị – lập pháp thực tế rất lớn. Với tư cách người bảo hộ Hiến pháp, bạn sử dụng quyền phủ quyết để từ chối ký ban hành dự luật đi ngược lại giáo lý Công giáo của quốc gia (như tiền lệ Thân vương Albert II từ chối các dự luật mở rộng quyền phá thai).", "big");
+      });
+      row("mc_spouse_voluntary_catholic_conversion", "Monaco: Bạn đời chủ động cải đạo sang Công giáo La Mã trước lễ cưới để hòa nhập đời sống Hoàng tộc Grimaldi (như Vương phi Charlene năm 2011)", function (r, log) {
+        up.mcSpouseConverted851 = true;
+        if (l.partner) l.partner.religion130 = "Công giáo";
+        H.fx(l, { hap: 3, soc: 3 });
+        log("Dù luật kế vị thành văn của Monaco chỉ bắt buộc quốc tịch Monaco chứ không ép bạn đời phải theo đạo, người kết hôn với thành viên Hoàng tộc Grimaldi (như Vương phi Charlene năm 2011) đã chủ động cải đạo sang Công giáo La Mã trước khi cưới để hòa nhập trọn vẹn vào đời sống hoàng gia và quốc gia.", "good");
+      });
+    }
+
+    if (c === "BE") {
+      row("be_secular_constitution_devout_catholic", "Bỉ: Kết hợp Hiến pháp thế tục (kế vị theo dòng dõi hợp pháp Vua Albert II, không bắt buộc tôn giáo) với đời sống Công giáo sùng đạo và trung lập trước công chúng", function (r, log) {
+        up.beSecularDevout851 = true;
+        H.fx(l, { kno: 3, soc: 3 });
+        log("Giống Tây Ban Nha, Bỉ không có quốc giáo và Hiến pháp bảo đảm tách biệt nhà thờ – nhà nước: quyền kế vị chỉ dựa trên dòng dõi hợp pháp từ Vua Albert II và sự chấp thuận hôn nhân của Vua/Quốc hội (dù kết hôn khác đạo, con cái vẫn giữ nguyên 100% quyền kế vị). Trên thực tế, Hoàng gia Bỉ (như Vua Philippe, Hoàng hậu Mathilde, Thái nữ Elisabeth) vẫn tự nguyện nuôi dạy tất cả các con theo Công giáo La Mã sùng đạo, đồng thời giữ sự trung lập chính trị – tôn giáo trước công chúng.", "good");
+      });
+    }
+
+    if (["BE", "ES", "LU", "MC"].includes(c)) {
+      row("vatican_privilege_du_blanc", "Tòa thánh Vatican: Thực hiện 'Đặc quyền màu trắng' (Privilège du blanc) — Mặc trang phục trắng diện kiến Giáo hoàng tại Vatican", function (r, log) {
+        up.vaticanPrivilegeDuBlanc851 = true;
+        H.fx(l, { hap: 4, soc: 4 });
+        var queenTitle = c === "BE" ? "Hoàng hậu Bỉ (như Hoàng hậu Mathilde)" : c === "ES" ? "Hoàng hậu Tây Ban Nha" : c === "LU" ? "Đại Công tước phu nhân Luxembourg" : "Thân vương phi Monaco";
+        log("Nhờ truyền thống Công giáo lâu đời và bền chặt, " + queenTitle + " là một trong số cực ít phụ nữ trên thế giới được Tòa thánh Vatican trao 'Đặc quyền màu trắng' (Privilège du blanc) — được phép mặc trang phục màu trắng và mạng che mặt trắng khi diện kiến Giáo hoàng thay vì trang phục màu đen bắt buộc như các nguyên thủ hay phu nhân khác.", "big");
+      });
+    }
+
+    if (c === "LI") {
+      row("li_salic_to_equal_and_house_law", "Liechtenstein: Bảo vệ Quốc giáo Công giáo, tuân thủ Luật Hôn nhân gia tộc (House Law) bằng văn bản của Thân vương & Cải cách từ Luật Salic cổ sang Bình đẳng giới", function (r, log) {
+        up.liHouseLawAndEqualReform851 = true;
+        if (R.st(l).ownConsent837) R.st(l).ownConsent837.writtenPrincelyConsent851 = true;
+        H.fx(l, { kno: 3, soc: 3 });
+        log("Tại Liechtenstein, Công giáo La Mã là Quốc giáo trong Hiến pháp; các thành viên muốn kết hôn và giữ quyền kế vị cho mình cùng con cái bắt buộc phải có sự đồng ý bằng văn bản của Thân vương trị vì theo Luật Hôn nhân gia tộc (House Law) khắt khe (môn đăng hộ đối, bạn đời thường theo Công giáo như Công tước phu nhân Sophie xứ Bavaria). Đồng thời, từ truyền thống bảo thủ nhất châu Âu (Luật Salic cổ cấm hoàn toàn phụ nữ kế vị), Liechtenstein đã cải cách cho phép người con đầu lòng bất kể Hoàng tử hay Công chúa đều là người kế vị số 1.", "big");
+      });
+    }
+
+    if (c === "NL") {
+      row("nl_protestant_catholic_family_blend", "Hà Lan: Rửa tội Tin Lành theo truyền thống Vương tộc Orange-Nassau nhưng giao thoa tự do (dự lễ nhà thờ Công giáo cùng mẹ & lễ Tin Lành cùng cha)", function (r, log) {
+        up.nlBlendedFaith851 = true;
+        (l.kids || []).forEach(function (k) {
+          if (k.royal920) {
+            var km = R.byId(h, k.royal920.id);
+            if (km) km.dutchBlendedFaith851 = true;
+          }
+        });
+        H.fx(l, { hap: 4, soc: 3, kno: 2 });
+        log("Tại Hà Lan, luật pháp thế tục không ép buộc con cái phải theo đạo Tin Lành mới được kế vị. Như gia đình Vua Willem-Alexander (Tin Lành) và Hoàng hậu Máxima (Công giáo sùng đạo), Thái nữ Catharina-Amalia và các em vẫn làm lễ rửa tội Tin Lành để tôn trọng truyền thống Vương tộc Orange-Nassau, nhưng lớn lên vừa đi lễ nhà thờ Công giáo cùng mẹ, vừa dự lễ Tin Lành cùng cha một cách tự do.", "good");
+      });
+    }
+
+    row("child_faith_upbringing_check", "Áp dụng quy chuẩn rửa tội & nuôi dạy đức tin cho con cái trong hàng kế vị (" + (cfg.childFaithGroup === "mandatory" ? "Nhóm Bắt buộc 100%: " + cfg.officialFaith : "Nhóm Tách biệt pháp lý / Tự nguyện: " + cfg.officialFaith) + ")", function (r, log) {
+      up.childFaithChecked851 = true;
+      (l.kids || []).forEach(function (k) {
+        if (k.royal920) {
+          var km = R.byId(h, k.royal920.id);
+          if (km) evaluateChildFaithEligibility851(l, h, km, cfg.officialFaith);
+        }
+      });
+      H.fx(l, { kno: 2, hap: 2 });
+      log("Quy chuẩn nuôi dạy con cái tại " + cfg.name + ": " + cfg.childFaithRule, "good");
+    });
+
+    var hasOutOfWedlock = h.members.some(function (m) { return m.bornOutOfWedlock851; });
+    if (hasOutOfWedlock) {
+      row("resolve_out_of_wedlock_legitimation", c === "MC"
+        ? "Monaco: Hợp pháp hóa sau sinh cho con sinh ngoài giá thú khi cha mẹ kết hôn hợp pháp (đưa ngay vào danh sách kế vị như Andrea & Charlotte Casiraghi)"
+        : "Đối chiếu quy định con sinh trước hôn nhân tại " + cfg.name + " (Cấm vĩnh viễn vào hàng kế vị dù cha mẹ kết hôn sau đó)", function (r, log) {
+        if (c === "MC" && l.partner) {
+          l.partner.status = "married";
+        }
+        syncLegitimacy851(l, h);
+        syncTitles(l, h, R.byId(h, h.seat), null, log);
+        if (c === "MC") {
+          log("Theo Hiến pháp và Bộ luật Dân sự Monaco, ngay khi cha mẹ ruột kết hôn hợp pháp với nhau (được Thân vương chấp thuận), người con sinh ra trước đám cưới được HỢP PHÁP HÓA SAU SINH và lập tức được đưa vào danh sách kế vị hợp pháp (như tiền lệ các con của Công chúa Caroline là Andrea và Charlotte Casiraghi).", "big");
+        } else {
+          log("Theo luật kế vị của " + cfg.name + " (cùng 8 hoàng gia châu Âu khác ngoài Monaco), một đứa trẻ bắt buộc phải được sinh ra SAU KHI cha mẹ đã có hôn thú hợp pháp; dù sau này cha mẹ có kết hôn hợp pháp, người con sinh trước hôn nhân vẫn vĩnh viễn không được vào danh sách kế vị.", "neutral");
+        }
+      });
+    }
+
+    return out;
+  }, 10, "Đời sống");
+
+  E.ROYAL851 = {
+    EURO_ROYAL_MATRIX851: EURO_ROYAL_MATRIX851,
+    euroRoyalConfig851: euroRoyalConfig851,
+    syncLegitimacy851: syncLegitimacy851,
+    evaluateChildFaithEligibility851: evaluateChildFaithEligibility851
+  };
 
   E.ROYAL850 = {
     KR_BAEKIL_CAKES850: KR_BAEKIL_CAKES850,

@@ -9,18 +9,33 @@
     if(/Belfast|Northern Ireland/i.test(place))return 'Northern Ireland';
     return 'England';
   }
-  function england(l){return country(l)==='GB' && region(l)==='England' && l.birthYear+l.age>=1988;}
+  function england(l){return country(l)==='GB';}
   function state(l){return l.flags.study829||(l.flags.study829={});}
   function degree(l){return ['uni','abroad','post','phd'].includes(l.school);}
   function eligible(l){return l.alive && !(l.jailUntil>l.age);}
   function stage(l){var y=l.age-4;
     var ks=y<=2?1:y<=6?2:y<=9?3:y<=11?4:5;
-    return 'Year '+y+' · Key Stage '+ks+' · '+(ks<=2?'Tiếng Anh, Toán, Khoa học, nghệ thuật, máy tính, thiết kế, địa lý, lịch sử, âm nhạc và thể chất.'+(ks===2?' Thêm ngoại ngữ.':''):ks===3?'Khoa học, nhân văn, công nghệ, ngoại ngữ và giáo dục công dân.':ks===4?'GCSE: tiếng Anh, toán, khoa học kép hoặc riêng Lý–Hóa–Sinh và môn tự chọn.':'Sixth Form: A-Level hoặc IB.')+(y>=2?' Theo tuổi, tương ứng khoảng lớp '+(y-1)+' ở Việt Nam.':'');
+    return 'Year '+y+' · Key Stage '+ks+' · '+(ks<=2?'Tiếng Anh, Toán, Khoa học, nghệ thuật, máy tính, thiết kế, địa lý, lịch sử, âm nhạc và thể chất.'+(ks===2?' Thêm ngoại ngữ.':''):ks===3?'Khoa học, nhân văn, công nghệ, ngoại ngữ và giáo dục công dân.':ks===4?'GCSE: tiếng Anh, toán, khoa học kép hoặc riêng Lý–Hóa–Sinh và môn tự chọn.':'Sixth Form: A-Level hoặc IB.');
   }
   E.england829=england;
-  E.SC('sixth829',{valid:function(l){return eligible(l)&&england(l)&&l.age===16&&l.school==='lower';},title:'Kết quả GCSE và lựa chọn sau Year 11',prep:function(l,r){return {grade:Math.max(1,Math.min(9,Math.round((l.st.kno||50)/15+r()*2)))};},text:function(l,d){return 'Đã hoàn thành GCSE. Kết quả mô phỏng: '+d.grade+'/9. '+(state(l).subjects||'Các môn học của bạn')+'. Tiếp tục giáo dục hoặc đào tạo đến 18 tuổi. Chọn lộ trình hai năm.';},opts:[
-    ['science','A-Level: Hóa, Sinh, Toán — hướng y sinh'],['human','A-Level: Văn học Anh, Lịch sử, Chính trị — hướng luật'],['ib','IB Diploma: sáu nhóm môn và phần cốt lõi'],['voc','Học nghề và thực hành tại cơ sở đào tạo']
-  ].map(function(option){return {k:option[0],l:option[1],run:function(l,r,log,d){state(l).gcse=d.grade;state(l).sixth=option[1];state(l).track=option[0];l.school=option[0]==='voc'?'voc':'upper';l.schoolEnd=18;log('Sau GCSE, bạn chọn '+option[1]+'.','good');}};})});
+  var SIXTH_OPTS829=[
+    ['science','A-Level: Hóa, Sinh, Toán — hướng y sinh','science','alevel',null,'med'],
+    ['human','A-Level: Văn học Anh, Lịch sử, Chính trị — hướng luật','human','alevel',null,'law'],
+    ['ib','IB Diploma: sáu nhóm môn và phần cốt lõi (TOK, EE 4.000 từ, CAS)','ib','ib',null,null],
+    ['voc','Học nghề và thực hành tại cơ sở đào tạo (Further Education / BTEC)','voc','voc',null,null],
+    ['al_med','[Nhóm 1 · Ưu tiên tuyệt đối A-Level] Y khoa, Nha khoa & Thú y (Hóa + Sinh + Toán/Lý đạt A/A*)','science','alevel','alevel_mandatory','med'],
+    ['al_eng','[Nhóm 1 · Ưu tiên tuyệt đối A-Level] Kỹ thuật chuyên sâu Imperial/Cambridge (Toán + Further Maths + Lý)','science','alevel','alevel_mandatory','eng'],
+    ['al_it','[Nhóm 1 · Ưu tiên tuyệt đối A-Level] Khoa học Máy tính (Toán + Further Maths + Khoa học Máy tính)','science','alevel','alevel_mandatory','it'],
+    ['ib_law','[Nhóm 2 · Chuộng IB Diploma] Ngành Luật LLB (6 nhóm môn + Tiểu luận EE 4.000 từ & Lý thuyết nhận thức TOK)','ib','ib','ib_preferred','law'],
+    ['ib_ppe','[Nhóm 2 · Chuộng IB Diploma] Chính trị, Triết học & Kinh tế PPE — Oxford/LSE (Toán + Xã hội + TOK & EE)','ib','ib','ib_preferred','ppe'],
+    ['ib_ir','[Nhóm 2 · Chuộng IB Diploma] Quan hệ Quốc tế & Phát triển (Ngoại ngữ + Lịch sử/Địa lý toàn cầu + TOK & EE)','ib','ib','ib_preferred','ir'],
+    ['ib_psy','[Nhóm 2 · Chuộng IB Diploma] Tâm lý học (Toán + Sinh học + Nhân văn/Tâm lý học)','ib','ib','ib_preferred','psy'],
+    ['bal_biz_alevel','[Nhóm 3 · Cân bằng — A-Level] Kinh tế, Tài chính & Kinh doanh (Toán + Kinh tế + Kế toán/Kinh doanh)','science','alevel','balanced','biz'],
+    ['bal_biz_ib','[Nhóm 3 · Cân bằng — IB Diploma] Kinh tế, Tài chính & Kinh doanh (Bắt buộc Toán cấp độ cao Maths HL + Kinh tế HL)','ib','ib','balanced','biz'],
+    ['bal_arch_alevel','[Nhóm 3 · Cân bằng — A-Level] Kiến trúc & Thiết kế (Toán + Lý + Nghệ thuật, dành thời gian làm Portfolio)','science','alevel','balanced','art'],
+    ['bal_arch_ib','[Nhóm 3 · Cân bằng — IB Diploma] Kiến trúc & Thiết kế (Visual Arts HL + Toán/Lý + CAS & EE 4.000 từ)','ib','ib','balanced','art']
+  ];
+  E.SC('sixth829',{valid:function(l){return eligible(l)&&england(l)&&l.age===16&&l.school==='lower';},title:'Kết quả GCSE và lựa chọn sau Year 11 (Sixth Form: A-Level / IB Diploma)',prep:function(l,r){return {grade:Math.max(1,Math.min(9,Math.round((l.st.kno||50)/15+r()*2)))};},text:function(l,d){return 'Đã hoàn thành kỳ thi GCSE cuối Year 11 tại Vương quốc Anh. Kết quả mô phỏng: '+d.grade+'/9. '+(state(l).subjects||'Các môn học của bạn')+'. Tiếp tục giáo dục hoặc đào tạo bậc Sixth Form (Year 12–13) đến 18 tuổi theo định hướng nhóm ngành đại học Anh.';},opts:SIXTH_OPTS829.map(function(option){return {k:option[0],l:option[1],run:function(l,r,log,d){var s=state(l);s.gcse=d.grade;s.sixth=option[1];s.track=option[2];if(option[4]){s.ukTrack850={mode:option[3],targetGroup:option[4],targetMajor:option[5],targetName:option[1],reqSubjects:option[1],furtherMaths:option[0]==='al_eng'||option[0]==='al_it',tokEeCompleted:option[3]==='ib',mathsHL:option[0]==='bal_biz_ib',portfolioReady:option[0]==='bal_arch_alevel'||option[0]==='bal_arch_ib'};}l.school=option[2]==='voc'?'voc':'upper';l.schoolEnd=18;log('Sau GCSE, bạn chọn '+option[1]+'.','good');}};})});
   X.menu('schoolEngland829','Hồ sơ học tập England',function(l){return eligible(l)&&england(l)&&l.age>=5&&l.age<18&&l.school?true:'Dành cho học sinh tại England';},function(l){return stage(l)+' '+(state(l).subjects||'')+' '+(state(l).sixth||'');},function(l){
     if(l.age>=16 && ['science','human'].includes(state(l).track) && !state(l).fourth)return ['Vật lý','Tâm lý học','Kinh tế','Ngoại ngữ'].map(function(subject){return {k:subject,l:'Học môn A-Level thứ tư: '+subject,run:function(l,r,log){state(l).fourth=subject;state(l).sixth+=' và '+subject;log('Đăng ký môn thứ tư: '+subject+'.','good');}};});
     if(l.age<14||l.age>=16)return [];
@@ -103,7 +118,7 @@
   function aidOptions(l){var c=country(l),cit=E.isCitizenOf(l,c),resident=l.abroad?.perm && l.abroad.code===c;
     if(c==='VN')return [];
     if(c==='US')return (cit||resident?[['Federal Student Aid — vay liên bang','fixed',.045]]:[]).concat([['Khoản vay tư nhân','private',.075]]);
-    if(c==='GB'&&!state(l).apprentice&&region(l)==='England'&&(cit||resident))return [['Tuition Fee Loan','income',0],['Maintenance Loan theo hoàn cảnh gia đình','income',0]];
+    if(c==='GB'&&!state(l).apprentice&&(cit||resident))return [['Tuition Fee Loan','income',0],['Maintenance Loan theo hoàn cảnh gia đình','income',0]];
     if(c==='AU'&&cit){var a=l.school==='voc'?[['VET Student Loans','income',0]]:[['HECS-HELP','income',0]];if(state(l).exchange?.at===l.age)a.push(['OS-HELP cho kỳ trao đổi','income',0]);if(l.fam.q<=2)a.push([l.age<25?'Youth Allowance':'Austudy','grant',0]);return a;}return [];
   }
   X.menu('aid829','Tài trợ và vay học tập',function(l){return eligible(l)&&(degree(l)||l.school==='voc')&&aidOptions(l).length?true:'Chưa đủ điều kiện trong mô phỏng';},function(l){if(usBudget(l))return budgetText(l);return 'Khoản vay phải hoàn trả. Trợ cấp sinh hoạt xét hoàn cảnh gia đình. Số tiền, lãi và ngưỡng thu nhập là tham số trong game.';},function(l){var s=state(l);

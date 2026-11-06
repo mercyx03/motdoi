@@ -792,7 +792,7 @@
     if (life.jailUntil && a < life.jailUntil) parts.push('đang ngồi tù');
     else if (a < 3) parts.push('em bé');
     else if (a < 6) parts.push('tuổi mẫu giáo');
-    else if (life.school) parts.push('đang học ' + schoolName(life.school));
+    else if (life.school) parts.push('đang học ' + schoolName(life.school, life));
     else if (life.retired) parts.push('đã nghỉ hưu');
     else if (life.job) parts.push(jobTitle(life));
     else if (life.flags.military) parts.push('đang tại ngũ');
@@ -804,7 +804,9 @@
     if (life.kids.length) parts.push(life.kids.length + ' con');
     return parts.join(' · ');
   }
-  function schoolName(s) {
+  function schoolName(s, life) {
+    if (life && E.england829 && E.england829(life)) { var gbM = { primary: 'Primary School (Year ' + Math.max(1, life.age - 4) + ')', lower: 'Secondary School (Year ' + Math.max(7, life.age - 4) + ' / GCSE)', upper: 'Sixth Form (Year ' + Math.max(12, life.age - 4) + ' — A-Level / IB)', priv: 'Sixth Form tư thục' }; if (gbM[s]) return gbM[s]; }
+    if (life && !isVN(life)) { var wM = { primary: 'tiểu học', lower: 'trung học cơ sở', upper: 'trung học phổ thông', priv: 'trung học tư thục' }; if (wM[s]) return wM[s]; }
     return { primary: 'tiểu học', lower: 'THCS', upper: 'THPT', voc: 'trường nghề', uni: 'đại học', post: 'cao học (thạc sĩ)', phd: 'nghiên cứu sinh (tiến sĩ)', priv: 'THPT tư thục', police: 'trường công an / quân đội', abroad: 'du học' }[s] || s;
   }
 
@@ -1825,21 +1827,21 @@
 
     // ---- Học hành ----
     if (a === (E.england829 && E.england829(life) ? 5 : 6)) {
-      if (E.england829 && E.england829(life) || life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : 'Bắt đầu đi học tiểu học.', 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
+      if (E.england829 && E.england829(life) || life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : (E.england829 && E.england829(life) ? 'Bắt đầu vào học Year 1 (Primary School).' : 'Bắt đầu đi học tiểu học.'), 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
       else { life.school = null; log('Không được đến trường — nhà quá nghèo, trường lại xa.', 'bad'); st.hap -= 4; }
     }
     if (life.school && E.finishStudyBudget839) E.finishStudyBudget839(life,log);
     if (life.school) life.yearsInSchool++;
     if (a === 11 && life.school === 'primary') {
       life.edu = 1;
-      if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.', 'neutral'); }
+      if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log(E.england829 && E.england829(life) ? 'Hoàn thành Primary School (Year 6), chuyển lên Secondary School (Year 7).' : ('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.'), 'neutral'); }
       else { life.school = null; log(f.q <= 2 ? 'Nhà nghèo, học hết tiểu học thì phải nghỉ ở nhà phụ giúp bố mẹ.' : life.urban ? 'Học lực yếu, thi không đỗ vào lớp 6 trường công, gia đình đành cho nghỉ học.' : 'Trường cấp hai ở xa, đường sá cách trở, học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
     if (life.school && life.schoolEnd != null && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
       var sc = life.school; life.school = null; life.schoolEnd = null;
       if (sc === 'upper' || sc === 'priv') {
         life.edu = Math.max(life.edu, 3);
-        log(isVN(life) ? 'Tốt nghiệp THPT.' : 'Tốt nghiệp trung học phổ thông.', 'good'); life.flags.uniNext = a + 1;
+        log(isVN(life) ? 'Tốt nghiệp THPT.' : (E.england829 && E.england829(life) ? 'Hoàn thành chương trình Sixth Form (Year 13 — A-Level / IB Diploma).' : 'Tốt nghiệp trung học phổ thông.'), 'good'); life.flags.uniNext = a + 1;
         runHooks('gradUpper', [life, r, log]);
       } else if (sc === 'voc') { life.edu = Math.max(life.edu, 4); log('Hoàn thành chương trình học nghề.', 'good'); life.flags.needJob = true; }
       else if (sc === 'uni' || sc === 'abroad') {

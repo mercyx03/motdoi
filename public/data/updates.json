@@ -1,6 +1,30 @@
 {
-  "generatedAt": "2026-11-05T09:03:27.454Z",
+  "generatedAt": "2026-11-06T00:56:31.000Z",
   "entries": [
+    {
+      "id": "uk-school-fix-euro-royals-81051",
+      "version": "8.10.51",
+      "publishedAt": "2026-11-06T07:54:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-06T00:55:00.000Z",
+      "title": "Chuẩn hóa chương trình học Vương quốc Anh & Quy tắc kế vị, tôn giáo, đặc quyền trắng Vatican và con ngoài giá thú tại 10 Hoàng gia Châu Âu",
+      "summary": "Khắc phục triệt để lỗi chương trình học và sự kiện học đường Việt Nam xuất hiện tại Vương quốc Anh và nước ngoài; mở rộng toàn diện 10 Hoàng gia Châu Âu về quyền kế vị (8 nước bình đẳng tuyệt đối vs. 2 nước ưu tiên nam giới Tây Ban Nha & Monaco), quyền phủ quyết dự luật Công giáo của Thân vương Monaco, Đặc quyền màu trắng Vatican, Luật Gia tộc Liechtenstein, quy định tôn giáo con cái và cơ chế hợp pháp hóa con ngoài giá thú sau sinh tại Monaco.",
+      "tags": [
+        "Sửa lỗi",
+        "Học tập",
+        "Tính năng",
+        "Gia đình",
+        "Đời sống"
+      ],
+      "details": [
+        "Khắc phục triệt để lỗi học tập tại Vương quốc Anh (GB) bị giống chương trình Việt Nam: áp dụng thống nhất lộ trình Year 1–13 (Primary School từ 5 tuổi -> Secondary School Year 7 -> thi GCSE cuối Year 11 ở tuổi 16 -> Sixth Form Year 12–13 học A-Level hoặc IB Diploma đến 18 tuổi) cho mọi thành phố và vùng lãnh thổ thuộc Vương quốc Anh (England, Scotland, Wales, Northern Ireland) ở mọi năm sinh; gỡ bỏ dòng so sánh lớp Việt Nam trong nhật ký Year 1–13, tích hợp trực tiếp 3 nhóm ngành A-Level vs. IB Diploma vào quyết định tuổi 16 sau GCSE, bổ sung danh sách đại học danh tiếng Anh/Mỹ (Oxford, Cambridge, Imperial, LSE, UCL, Edinburgh, Manchester...) với thời lượng chuẩn 3 năm tại England/Wales/NI (4 năm tại Scotland) và chặn hoàn toàn các sự kiện học đường đặc thù Việt Nam (tiền tiểu học lớp 1, báo tường 20/11, chuyển trường vào Nam ra Bắc, cấp hai/cấp ba) không ảnh hưởng sang nước khác.",
+        "Phân loại chuẩn xác 10 Hoàng gia Châu Âu theo quy tắc kế vị giới tính: chỉ còn đúng 2 hoàng gia giữ quy tắc ưu tiên nam giới (Male-preference primogeniture) là Tây Ban Nha (ES) và Monaco (MC); cả 8 hoàng gia còn lại gồm Thụy Điển (tiên phong 1980), Hà Lan (1983), Na Uy (1990), Bỉ (1991), Đan Mạch (2009), Luxembourg (2011), Vương quốc Anh (2013) và Liechtenstein (LI — cải cách từ Luật Salic cổ bảo thủ nhất châu Âu sang bình đẳng giới) đều áp dụng quyền kế vị tuyệt đối cho người con đầu lòng bất kể Hoàng tử hay Công chúa.",
+        "Khắc họa sự khác biệt hiến định và tôn giáo giữa Tây Ban Nha (ES) và Monaco (MC): dù cùng gắn bó với Công giáo La Mã và ưu tiên nam giới, Tây Ban Nha không có quốc giáo (thành viên hoàng gia theo đạo tự nguyện hơn là ép buộc) và Nhà vua giữ vai trò biểu tượng lập hiến, không thể dùng lý do tôn giáo để từ chối ký ban hành đạo luật đã được Quốc hội thông qua; ngược lại ở Monaco, Công giáo La Mã là Quốc giáo, con cái Hoàng tộc Grimaldi bắt buộc rửa tội và nuôi dạy theo Công giáo, bạn đời kết hôn (như Vương phi Charlene năm 2011) thường chủ động cải đạo trước lễ cưới, và Thân vương Monaco nắm quyền lực lập pháp thực tế rất lớn với quyền phủ quyết các dự luật đi ngược giáo lý Công giáo (như tiền lệ Thân vương Albert II từ chối dự luật mở rộng quyền phá thai).",
+        "Mở rộng chiều sâu Hoàng gia Bỉ (BE) và Liechtenstein (LI): tại Bỉ, Hiến pháp thế tục tách biệt nhà thờ – nhà nước (luật kế vị chỉ xét dòng dõi hợp pháp từ Vua Albert II và chấp thuận hôn nhân của Vua/Quốc hội, không bắt buộc tôn giáo dù kết hôn khác đạo), song thực tế gia đình Vua Philippe, Hoàng hậu Mathilde và Thái nữ Elisabeth rất sùng đạo Công giáo và Hoàng hậu Mathilde (cùng Hoàng hậu Tây Ban Nha, Đại Công tước phu nhân Luxembourg, Thân vương phi Monaco) được Tòa thánh Vatican trao \"Đặc quyền màu trắng\" (Privilège du blanc — mặc trang phục trắng khi diện kiến Giáo hoàng); tại Liechtenstein, Công giáo là Quốc giáo, Luật Hôn nhân gia tộc (House Law) đòi hỏi môn đăng hộ đối và văn bản đồng ý của Thân vương trị vì để giữ quyền kế vị.",
+        "Chuẩn hóa 2 nhóm quy định tôn giáo đối với con cái và luật về con ngoài giá thú tại 10 Hoàng gia Châu Âu: Nhóm bắt buộc 100% con cái phải rửa tội và nuôi dạy theo đạo Hoàng gia nếu không sẽ mất quyền kế vị (Anh Quốc theo Anh giáo Church of England; Thụy Điển, Na Uy, Đan Mạch theo Tin Lành Lutheran; Monaco, Liechtenstein theo Công giáo La Mã) đối lập với Nhóm tự do pháp lý / giao thoa gia đình (Hà Lan rửa tội Tin Lành Orange-Nassau nhưng Thái nữ Catharina-Amalia và các em vừa đi lễ Công giáo cùng mẹ là Hoàng hậu Máxima vừa dự lễ Tin Lành cùng cha là Vua Willem-Alexander; Bỉ, Tây Ban Nha, Luxembourg tự do trên giấy tờ nhưng tự nguyện nuôi dạy Công giáo). Đặc biệt, mô phỏng cơ chế \"Hợp pháp hóa sau sinh\" độc nhất tại Monaco (con sinh ngoài giá thú lập tức được đưa vào hàng kế vị ngay khi cha mẹ ruột kết hôn hợp pháp như các con của Công chúa Caroline) so với lệnh cấm vĩnh viễn ở 9 hoàng gia châu Âu còn lại."
+      ],
+      "correctedAt": "2026-11-06T00:56:31.069Z"
+    },
     {
       "id": "kr-baekil-es-royal-uk-ib-mbti-81050",
       "version": "8.10.50",

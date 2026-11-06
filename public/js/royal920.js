@@ -30,7 +30,7 @@
     BE: { kind: 'lập hiến', succ: 'abs', consent: 'Nhà vua chấp thuận', consentN: 99, ok: 'secondary' }, LU: { kind: 'lập hiến', succ: 'abs', consent: 'Đại công tước chấp thuận', consentN: 99, ok: 'secondary' },
     ES: { kind: 'lập hiến', succ: 'male', consent: 'Không kết hôn trái lệnh cấm rõ ràng của người trị vì và Cortes Generales', consentN: 99, ok: 'secondary' }, MC: { kind: 'lập hiến', succ: 'male', consent: 'Thân vương chấp thuận', consentN: 99, ok: 'secondary' },
     JP: { kind: 'lập hiến (biểu tượng)', succ: 'agnatic', consent: 'Hội đồng Hoàng thất (thành viên nam); nữ thành viên kết hôn với thường dân thì rời hoàng tộc', consentN: 99, ok: 'secondary', femaleLeaves: true },
-    TH: { kind: 'lập hiến', succ: 'male', consent: 'Theo Luật Hoàng cung (chưa xác minh)', consentN: 99, ok: 'unverified' }, LI: { kind: 'lập hiến (thân vương có quyền lớn)', succ: 'agnatic', consent: 'Luật gia tộc (chưa xác minh)', consentN: 99, ok: 'unverified' },
+    TH: { kind: 'lập hiến', succ: 'male', consent: 'Theo Luật Hoàng cung (chưa xác minh)', consentN: 99, ok: 'unverified' }, LI: { kind: 'lập hiến (thân vương có quyền lớn)', succ: 'abs', consent: 'Sự đồng ý bằng văn bản của Thân vương trị vì theo Luật Hôn nhân gia tộc (House Law)', consentN: 99, ok: 'secondary' },
     SA: { kind: 'tuyệt đối', succ: 'appoint', consent: 'Quyết định của nhà vua/hội đồng gia tộc (chưa xác minh)', consentN: 99, ok: 'unverified' }, BN: { kind: 'tuyệt đối', succ: 'male', consent: 'Chưa xác minh', consentN: 99, ok: 'unverified' },
     OM: { kind: 'tuyệt đối', succ: 'appoint', consent: 'Chưa xác minh', consentN: 99, ok: 'unverified' }, SZ: { kind: 'tuyệt đối', succ: 'appoint', consent: 'Chưa xác minh', consentN: 99, ok: 'unverified' }
   };

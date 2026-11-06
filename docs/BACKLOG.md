@@ -14,6 +14,10 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.51: regression toàn bộ trên mã cuối cho chương trình học Vương quốc Anh (GB) toàn vùng (England, Scotland, Wales, Northern Ireland) và hệ thống 10 Hoàng gia Châu Âu (tôn giáo, quyền kế vị, phủ quyết dự luật Công giáo của Thân vương Monaco, Đặc quyền màu trắng Vatican, Luật Gia tộc Liechtenstein, quy định tôn giáo con cái và hợp pháp hóa con ngoài giá thú sau sinh tại Monaco) (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
+- 8.10.50: regression toàn bộ trên mã cuối cho Lễ Baek-il 100 ngày Hàn Quốc, kế vị nhiều thế hệ Tây Ban Nha, A-Level/IB Anh Quốc, hệ thống đam mê – năng khiếu – sở đoản và 16 nhóm MBTI (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
 - 8.10.49: regression toàn bộ trên mã cuối cho hệ thống tôn giáo – đẳng cấp Varna – họ tên – hạn ngạch EWS 10% tại Ấn Độ và đời sống tín ngưỡng theo gia cảnh tại Việt Nam (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
 
 - 8.10.30: regression tổng thể, kiểm chứng chính sách trợ cấp từng địa phương, đối chiếu thực hành mỗi giáo xứ và binding Pages.

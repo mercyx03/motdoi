@@ -52,7 +52,8 @@
     var x = ma0.apply(this, arguments);
     l.uniName = uniFor(l, k, r); l.flags.gradTries = 0; l.flags.gradOK = false;
     if (k === 'med') { l.schoolEnd = l.age + 6; l.pending.unshift(E.DEC.nganh_y.make(l, r)); return x; }
-    var yrs = (k === 'it' && isBK(l)) || (k === 'art' && /Kiến trúc/.test(l.uniName || '')) ? 5 : 4;
+    var isGB = !l.abroad && H.resCode && H.resCode(l) === 'GB';
+    var yrs = isGB ? (E.studyRegion829 && E.studyRegion829(l) === 'Scotland' ? 4 : 3) : ((k === 'it' && isBK(l)) || (k === 'art' && /Kiến trúc/.test(l.uniName || '')) ? 5 : 4);
     l.schoolEnd = l.age + yrs; if (l.abroad && l.abroad.study) l.abroad.until = l.schoolEnd;
     if (l.uniName) log('Trường: ' + l.uniName + ' — chương trình ' + yrs + ' năm' + (yrs === 5 ? (k === 'it' ? ' (kỹ sư)' : ' (kiến trúc sư)') : '') + '.', 'neutral');
     return x;
