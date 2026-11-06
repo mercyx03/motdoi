@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.53: regression toàn bộ trên mã cuối cho hệ thống Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Thi thử Đại học (ước lượng khoảng điểm thi, tỷ lệ đỗ từng trường/nguyện vọng, chẩn đoán tâm lý phòng thi `examApt` và cộng điểm thực chiến vào kỳ thi chính thức) (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
 - 8.10.52: regression toàn bộ trên mã cuối cho thứ tự kế vị theo nhánh (cháu đích tôn/nữ đẩy chú/dì xuống ở cả chế độ bình đẳng giới lẫn ưu tiên nam giới) và hệ thống tước hiệu xứ sở của Thái tử/Thái nữ cùng bạn đời tại các hoàng gia châu Âu (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
 
 - 8.10.51: regression toàn bộ trên mã cuối cho chương trình học Vương quốc Anh (GB) toàn vùng (England, Scotland, Wales, Northern Ireland) và hệ thống 10 Hoàng gia Châu Âu (tôn giáo, quyền kế vị, phủ quyết dự luật Công giáo của Thân vương Monaco, Đặc quyền màu trắng Vatican, Luật Gia tộc Liechtenstein, quy định tôn giáo con cái và hợp pháp hóa con ngoài giá thú sau sinh tại Monaco) (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).

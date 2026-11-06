@@ -1,6 +1,26 @@
 {
-  "generatedAt": "2026-11-06T06:34:01.097Z",
+  "generatedAt": "2026-11-06T07:32:09.809Z",
   "entries": [
+    {
+      "id": "mock-exam-highschool-uni-81053",
+      "version": "8.10.53",
+      "publishedAt": "2026-11-06T14:30:00+07:00",
+      "releaseStatus": "released",
+      "title": "Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Thi thử Đại học: Ước lượng điểm chuẩn, chẩn đoán năng lực phòng thi và cải thiện điểm thi thật",
+      "summary": "Theo góp ý của người chơi, bổ sung tính năng Thi thử Cấp 2 vào Cấp 3 (Lớp 10) và Thi thử Đại học ngay trong mục Học tập, giúp ước lượng chính xác khoảng điểm thi thật, xác suất đỗ từng trường/nguyện vọng, giải thích vì sao chỉ số Kiến thức cao vẫn có thể thiếu điểm vào trường Top và tích lũy điểm cộng thực chiến cho kỳ thi chính thức.",
+      "tags": [
+        "Tính năng",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Ước lượng điểm chuẩn (mở ở mục Học tập cho học sinh THCS từ 11–17 tuổi): chấm điểm chi tiết 3 môn Toán (nhân 2) + Ngữ văn (nhân 2) + Tiếng Anh (hệ số 1) trên thang 50 điểm kèm điểm môn chuyên (thang 10), hiển thị rõ công thức nền Kiến thức (tối đa 35/50 điểm) và biên độ 15/50 điểm phân hóa phòng thi để người chơi hiểu vì sao học sinh giỏi (Kiến thức 90–100) vẫn có thể trượt các trường chuyên lấy 37–38/50 điểm nếu không luyện đề. Bảng ước lượng đối chiếu trực tiếp tỷ lệ đỗ (%) với cả 7 trường THPT (THPT chuyên Hà Nội – Amsterdam 38/50, THPT chuyên KHTN 38/50, THPT chuyên Lê Hồng Phong 37/50, THPT chuyên địa phương 34/50, THPT Nguyễn Khuyến 30/50, THPT công lập 20/50 và THPT dân lập 18/50). Mỗi đợt thi thử giúp tăng Kiến thức và tích lũy điểm cộng thực chiến (+0.9 đến +4.5 điểm), nâng sàn đề khó (+3.0 điểm) và điểm cộng môn chuyên (+8.0 điểm) tính thẳng vào kỳ thi tuyển sinh lớp 10 chính thức.",
+        "Thi thử Đại học & Ước lượng điểm xét tuyển (mở ở mục Học tập cho học sinh THPT và thí sinh tự do): phân tích đầy đủ điểm nền từ Kiến thức (tối đa 23/30 điểm), điểm cộng Luyện thi đại học, mức Tập trung, Căng thẳng, thành tích Học sinh giỏi các môn trong tổ hợp và đặc biệt là \"Tâm lý & bản lĩnh phòng thi\" (yếu tố ẩn từng khiến nhiều nhân vật Kiến thức 95–100 bị tụt 3–5 điểm xuống mức 19–21/30 khi vào phòng thi thật). Bảng báo cáo hiển thị khoảng điểm dự kiến (Tối thiểu – Kỳ vọng – Tối đa trên thang 30), điểm dự kiến từng môn trong tổ hợp, điểm năng khiếu dự kiến (thang 10 cho khối H/M/N/S/T/V), đánh giá xác suất đỗ từng Nguyện vọng 1–3 đã đăng ký và so sánh với 4 phân khúc trường Đại học (Top đầu Y Dược/Bách Khoa/Ngoại Thương 27–28.5đ, trường trọng điểm 25–26.5đ, công lập khá 21–24.5đ, vừa sức 15–20.5đ). Ba chế độ thi thử (Đề chuẩn Bộ GD&ĐT, Đề phân hóa 8+ 9+ trường Top, Rèn tâm lý phòng thi & Khối năng khiếu) giúp gỡ điểm trừ tâm lý phòng thi (tối đa +2.5đ) và cộng tối đa +3.5 điểm thực chiến vào kỳ thi tốt nghiệp THPT & Đại học.",
+        "Hiển thị trực tiếp ước lượng điểm và tỷ lệ đỗ ngay trên các màn hình quyết định: khi bước vào kỳ thi lớp 10 (Chọn trường cấp ba), Chọn trường cấp 3 / chuyên, Chọn tổ hợp khối thi THPT, Luyện thi đại học và Đăng ký nguyện vọng Đại học – Cao đẳng, hệ thống tự động hiển thị khoảng điểm thi dự kiến (hoặc điểm thi thật đã có) cùng xác suất đỗ và chênh lệch điểm chuẩn của từng trường để người chơi chủ động điều chỉnh mục tiêu."
+      ],
+      "releasedAt": "2026-11-06T07:30:30.000Z",
+      "correctedAt": "2026-11-06T07:32:09.864Z"
+    },
     {
       "id": "royal-line-heir-titles-81052",
       "version": "8.10.52",

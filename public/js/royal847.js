@@ -2543,6 +2543,668 @@
     return out;
   }, 10, "Đời sống");
 
+  // ================= 12. Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Thi thử Đại học — Ước lượng điểm thi và Chẩn đoán phòng thi (8.10.53) =================
+  var KHOI_TALENT853 = { "toán học": "A00", "ngoại ngữ": "D01", "hội họa": "H00", "ăn nói": "C00", "kinh doanh": "A01", "khéo tay": "A00", "diễn xuất": "S00", "âm nhạc": "N00" };
+  var EXTRA_SUBJ853 = { drawing: "Hình họa", composition: "Bố cục màu", acting: "Năng khiếu diễn xuất", performance: "Biểu diễn", music: "Năng khiếu âm nhạc" };
+
+  function peekMockState853(l) {
+    var s = l && l.flags && l.flags.mockExam853;
+    return s && typeof s === "object" ? s : {
+      hsCount: 0,
+      hsBonus: 0,
+      hsFloorBonus: 0,
+      hsSpecialBonus: 0,
+      hsLast: null,
+      hsYearAt: null,
+      hsYearCount: 0,
+      uniCount: 0,
+      uniBonus: 0,
+      aptRecovery: 0,
+      nkBonus: 0,
+      uniLast: null,
+      uniYearAt: null,
+      uniYearCount: 0
+    };
+  }
+
+  function mockExamState853(l) {
+    if (!l || !l.flags) return peekMockState853(l);
+    if (!l.flags.mockExam853 || typeof l.flags.mockExam853 !== "object") {
+      l.flags.mockExam853 = {
+        hsCount: 0,
+        hsBonus: 0,
+        hsFloorBonus: 0,
+        hsSpecialBonus: 0,
+        hsLast: null,
+        hsYearAt: null,
+        hsYearCount: 0,
+        uniCount: 0,
+        uniBonus: 0,
+        aptRecovery: 0,
+        nkBonus: 0,
+        uniLast: null,
+        uniYearAt: null,
+        uniYearCount: 0
+      };
+    }
+    var s = l.flags.mockExam853;
+    if (!Number.isFinite(s.hsCount)) s.hsCount = 0;
+    if (!Number.isFinite(s.hsBonus)) s.hsBonus = 0;
+    if (!Number.isFinite(s.hsFloorBonus)) s.hsFloorBonus = 0;
+    if (!Number.isFinite(s.hsSpecialBonus)) s.hsSpecialBonus = 0;
+    if (!Number.isFinite(s.uniCount)) s.uniCount = 0;
+    if (!Number.isFinite(s.uniBonus)) s.uniBonus = 0;
+    if (!Number.isFinite(s.aptRecovery)) s.aptRecovery = 0;
+    if (!Number.isFinite(s.nkBonus)) s.nkBonus = 0;
+    return s;
+  }
+
+  function peekExamApt853(l) {
+    if (l && l.flags && Number.isFinite(l.flags.examApt)) return l.flags.examApt;
+    var ah = { rs: (((l && l.rs) || 1) ^ 0x3e1a7) | 0 };
+    return U.clamp(U.normal(function () { return U.rand(ah); }), -2.6, 2.6);
+  }
+
+  E.hsExamScore853 = function (l, r) {
+    var st = l && l.flags && l.flags.mockExam853;
+    var rawVar = r() * 15;
+    if (!st || (!st.hsBonus && !st.hsFloorBonus)) {
+      return Math.round(U.clamp((l.st.kno || 0) * 0.35 + rawVar, 0, 50) * 10) / 10;
+    }
+    var effVar = Math.max(rawVar, Number(st.hsFloorBonus) || 0);
+    return Math.round(U.clamp((l.st.kno || 0) * 0.35 + effVar + (Number(st.hsBonus) || 0), 0, 50) * 10) / 10;
+  };
+
+  function estimateHighSchool853(l) {
+    var kno = U.clamp(l && l.st ? l.st.kno || 0 : 0, 0, 100);
+    var st = peekMockState853(l);
+    var hsBonus = Math.round((Number(st.hsBonus) || 0) * 10) / 10;
+    var hsFloorBonus = Math.round((Number(st.hsFloorBonus) || 0) * 10) / 10;
+    var hsSpecialBonus = Math.round((Number(st.hsSpecialBonus) || 0) * 10) / 10;
+    var knoBase = Math.round(kno * 0.35 * 10) / 10;
+    var min50 = Math.round(U.clamp(kno * 0.35 + hsBonus + hsFloorBonus, 0, 50) * 10) / 10;
+    var expected50 = Math.round(U.clamp(kno * 0.35 + hsBonus + Math.max(7.5, hsFloorBonus + 5.5), 0, 50) * 10) / 10;
+    var max50 = Math.round(U.clamp(kno * 0.35 + hsBonus + 15, 0, 50) * 10) / 10;
+    var highList = (E.EVENTS125 && E.EVENTS125.high) || [
+      { name: "THPT chuyên Hà Nội – Amsterdam", cut: 38 },
+      { name: "THPT chuyên Lê Hồng Phong", cut: 37 },
+      { name: "THPT công lập tại nơi đang ở", cut: 20 },
+      { name: "THPT chuyên Khoa học Tự nhiên", cut: 38 },
+      { name: "THPT chuyên tại địa phương", cut: 34 },
+      { name: "THPT dân lập tại địa phương", cut: 18 },
+      { name: "THPT Nguyễn Khuyến", cut: 30 }
+    ];
+    var schools = highList.map(function (a) {
+      var needVar = a.cut - (kno * 0.35 + hsBonus);
+      var prob = needVar <= hsFloorBonus ? 99 : needVar >= 15 ? 0 : Math.round(U.clamp((1 - needVar / 15) * 100, 1, 99));
+      var status = prob >= 85 ? "✓ An toàn" : prob >= 60 ? "◕ Khả quan" : prob >= 35 ? "⚠ Cân sức (dễ trượt nếu đề khó)" : prob > 0 ? "✗ Mạo hiểm (nguy cơ trượt cao)" : "✗ Chưa đủ điểm nền";
+      return { name: a.name, cut: a.cut, prob: prob, status: status, margin: Math.round((expected50 - a.cut) * 10) / 10 };
+    });
+    var records = (l && l.flags && l.flags.study54 && l.flags.study54.records) || {};
+    var subjMap = (E.EDUCATION54 && E.EDUCATION54.subjects) || { math: "Toán", physics: "Vật lý", chem: "Hóa học", bio: "Sinh học", it: "Tin học", lit: "Ngữ văn", english: "Tiếng Anh", history: "Lịch sử", geo: "Địa lý" };
+    var bestSubj = "math", bestRank = 0;
+    Object.keys(subjMap).forEach(function (k) {
+      var rk = Number(records[k]) || 0;
+      if (rk > bestRank) { bestRank = rk; bestSubj = k; }
+    });
+    var specialBase = Math.round((kno + bestRank * 3 + hsSpecialBonus) * 10) / 10;
+    var specialProb = specialBase - 5 >= 78 ? 99 : specialBase + 5 < 78 ? 0 : Math.round(U.clamp(((specialBase + 5 - 78) / 10) * 100, 1, 99));
+    return {
+      kno: Math.round(kno),
+      knoBase: knoBase,
+      hsCount: st.hsCount || 0,
+      hsBonus: hsBonus,
+      hsFloorBonus: hsFloorBonus,
+      hsSpecialBonus: hsSpecialBonus,
+      min50: min50,
+      expected50: expected50,
+      max50: max50,
+      schools: schools,
+      bestSubj: bestSubj,
+      bestSubjName: subjMap[bestSubj] || "Toán",
+      bestRank: bestRank,
+      specialBase: specialBase,
+      specialProb: specialProb,
+      last: st.hsLast || null
+    };
+  }
+
+  function estimateUniExam853(l, blockOverride) {
+    var kno = U.clamp(l && l.st ? l.st.kno || 0 : 0, 0, 100);
+    var apt = peekExamApt853(l);
+    var lt = (l && l.flags && l.flags.luyenThi) || 0;
+    var stress = (l && l.mind && l.mind.stress) || 0;
+    var focus = !!(l && l.focus === "study");
+    var block = blockOverride || (l && l.khoi) || KHOI_TALENT853[l && l.talent] || "A00";
+    var st = peekMockState853(l);
+    var knoPart = 16 + (kno - 50) * 0.14;
+    var aptPart = apt * 2;
+    var tailPart = (apt > 1.8 && kno >= 95 ? (apt - 1.8) * 4.5 : 0) - (apt < -1.7 && kno < 85 ? (-1.7 - apt) * 4 : 0);
+    var talentBonus = KHOI_TALENT853[l && l.talent] === block ? 0.4 : 0;
+    var focusBonus = focus ? 0.6 : 0;
+    var ltBonus = lt * 0.45;
+    var stressPen = stress > 80 ? -1.0 : 0;
+    var uniBonus = Number(st.uniBonus) || 0;
+    var aptRecovery = Number(st.aptRecovery) || 0;
+    var effAptRecovery = apt < 0 ? Math.min(-apt * 2, aptRecovery) : aptRecovery * 0.35;
+    var mockTotalBonus = Math.round((uniBonus + effAptRecovery) * 100) / 100;
+    var rawCenter = knoPart + aptPart + tailPart + focusBonus + ltBonus + talentBonus + stressPen + mockTotalBonus;
+
+    function calc30(raw) {
+      var s = raw;
+      if (kno >= 95) s = Math.max(20, s);
+      s = Math.round(U.clamp(s, 5, 30) * 4) / 4;
+      if (E.EXAM127 && E.EXAM127.detail && H.inVN(l)) {
+        var det = E.EXAM127.detail({ khoi: block, flags: (l && l.flags) || {} }, s);
+        if (det) return { total: Math.round(U.clamp(det.total, 5, 30) * 4) / 4, scores: det.scores };
+      }
+      return { total: s, scores: [] };
+    }
+
+    var lowObj = calc30(rawCenter - 0.96);
+    var expObj = calc30(rawCenter);
+    var highObj = calc30(rawCenter + 0.96);
+
+    var subjMap = (E.EDUCATION54 && E.EDUCATION54.subjects) || {};
+    var subjectScores = (expObj.scores || []).map(function (item) {
+      return {
+        key: item.subject,
+        name: subjMap[item.subject] || EXTRA_SUBJ853[item.subject] || item.subject,
+        score: item.score,
+        achievement: item.achievement
+      };
+    });
+
+    var aptNet = Math.round((aptPart + tailPart + effAptRecovery) * 100) / 100;
+    var aptShort = apt >= 1.2
+      ? "Nhạy bén đề thi (+" + U.fmtNum( Math.max(0, aptNet), 2 ) + "đ)"
+      : apt >= 0.3
+      ? "Tâm lý phòng thi vững (+" + U.fmtNum( Math.max(0, aptNet), 2 ) + "đ)"
+      : apt >= -0.3
+      ? "Tâm lý phòng thi ổn định (" + (aptNet >= 0 ? "+" : "") + U.fmtNum(aptNet, 2) + "đ)"
+      : apt >= -1.2
+      ? "Dễ mất điểm câu bẫy / tâm lý phòng thi (" + (aptNet >= 0 ? "+" : "") + U.fmtNum(aptNet, 2) + "đ)"
+      : "Rất dễ cuống khi vào phòng thi (" + (aptNet >= 0 ? "+" : "") + U.fmtNum(aptNet, 2) + "đ — nguyên nhân học giỏi vẫn dễ trượt nếu thiếu luyện đề)";
+
+    var isNk = /^(H00|V00|S00|N00)$/.test(block);
+    var nkBase = (/^(S00|N00)$/.test(block) ? 2.8 : 3.4) + 0.8 + (l && l.flags && l.flags.nkPrep ? 0.8 : 0) + ((l && l.flags && l.flags.tPrep) || 0) * 0.8 + Math.max(0, lt) * 0.3 + U.clamp((((l && l.skill) || 20) - 30) / 18, 0, 3.5) + (Number(st.nkBonus) || 0);
+    var nkExpected10 = Math.round(U.clamp(nkBase, 0, 10) * 4) / 4;
+    var nkMin10 = Math.round(U.clamp(nkBase - 0.9, 0, 10) * 4) / 4;
+    var nkMax10 = Math.round(U.clamp(nkBase + 0.9, 0, 10) * 4) / 4;
+
+    var scoreRef = l && Number.isFinite(l.examScore) ? l.examScore : expObj.total;
+    var wishes = (l && l.flags && l.flags.study54 && l.flags.study54.wishes) || [];
+    var wishesEval = wishes.map(function (w, idx) {
+      var u = E.EDUCATION54 && E.EDUCATION54.schools.find(function (s) { return s.id === w.school; });
+      if (!u) return null;
+      var cut = E.EDUCATION54 && E.EDUCATION54.threshold ? E.EDUCATION54.threshold(u, w.major) : u.score;
+      var fitBlock = !E.ARTS84 || !l.khoi || E.ARTS84.fits(l, u, w.major);
+      var langReason = E.EDUCATION54 && E.EDUCATION54.entryReason ? E.EDUCATION54.entryReason(l, u) : null;
+      var directOk = E.EDUCATION54 && E.EDUCATION54.direct ? E.EDUCATION54.direct(l, w.major) : false;
+      var diff = Math.round((scoreRef - cut) * 100) / 100;
+      var status = !fitBlock
+        ? "✗ Lệch khối (" + l.khoi + ")"
+        : langReason
+        ? "✗ Thiếu " + langReason
+        : directOk
+        ? "✓ Đủ chuẩn tuyển thẳng HSG"
+        : diff >= 0.75
+        ? "✓ An toàn (dư +" + U.fmtNum(diff, 2) + "đ)"
+        : diff >= 0
+        ? "◕ Cân sức (hơn +" + U.fmtNum(diff, 2) + "đ)"
+        : diff >= -0.75
+        ? "⚠ Mạo hiểm (thiếu " + U.fmtNum(-diff, 2) + "đ)"
+        : "✗ Nguy cơ trượt cao (thiếu " + U.fmtNum(-diff, 2) + "đ)";
+      return { index: idx + 1, schoolName: u.name, program: w.program || (E.MAJORS && E.MAJORS[w.major]) || w.major, cut: cut, status: status, diff: diff };
+    }).filter(Boolean);
+
+    return {
+      block: block,
+      kno: Math.round(kno),
+      knoPart: Math.round(knoPart * 100) / 100,
+      apt: Math.round(apt * 100) / 100,
+      aptRawPenalty: Math.round((aptPart + tailPart) * 100) / 100,
+      aptNet: aptNet,
+      aptShort: aptShort,
+      lt: lt,
+      focus: focus,
+      stress: Math.round(stress),
+      uniCount: st.uniCount || 0,
+      uniBonus: Math.round(uniBonus * 100) / 100,
+      aptRecovery: Math.round(aptRecovery * 100) / 100,
+      mockTotalBonus: mockTotalBonus,
+      min30: lowObj.total,
+      expected30: expObj.total,
+      max30: highObj.total,
+      scoreRef: scoreRef,
+      subjects: subjectScores,
+      isNk: isNk,
+      nkExpected10: nkExpected10,
+      nkMin10: nkMin10,
+      nkMax10: nkMax10,
+      wishesEval: wishesEval,
+      last: st.uniLast || null
+    };
+  }
+
+  // Gắn điểm cộng Thi thử Đại học vào E.rollExamScore (nếu người chơi đã tham gia thi thử)
+  if (typeof E.rollExamScore === "function") {
+    var oldRollExamScore853 = E.rollExamScore;
+    E.rollExamScore = function (l, r) {
+      var baseTotal = oldRollExamScore853.apply(this, arguments);
+      var st = l && l.flags && l.flags.mockExam853;
+      if (!st || (!st.uniBonus && !st.aptRecovery)) return baseTotal;
+      var apt = Number.isFinite(l.flags.examApt) ? l.flags.examApt : 0;
+      var effAptRecovery = apt < 0 ? Math.min(-apt * 2, Number(st.aptRecovery) || 0) : (Number(st.aptRecovery) || 0) * 0.35;
+      var boost = (Number(st.uniBonus) || 0) + effAptRecovery;
+      if (boost <= 0) return baseTotal;
+      var boosted = Math.round(U.clamp(baseTotal + boost, 5, 30) * 4) / 4;
+      if (H.isVN(l) && E.EXAM127 && E.EXAM127.detail) {
+        var det = E.EXAM127.detail(l, boosted);
+        if (det) {
+          l.flags.exam127 = det;
+          boosted = det.total;
+        }
+      }
+      return boosted;
+    };
+  }
+
+  // Gắn điểm cộng Thi thử Năng khiếu vào E.ARTS84.nkScore (nếu người chơi đã luyện thi thử năng khiếu)
+  if (E.ARTS84 && typeof E.ARTS84.nkScore === "function") {
+    var oldNkScore853 = E.ARTS84.nkScore;
+    E.ARTS84.nkScore = function (l, u, r) {
+      var baseNk = oldNkScore853.apply(this, arguments);
+      var st = l && l.flags && l.flags.mockExam853;
+      if (!st || !st.nkBonus) return baseNk;
+      return Math.round(U.clamp(baseNk + (Number(st.nkBonus) || 0), 0, 10) * 4) / 4;
+    };
+  }
+
+  // Hiển thị Ước lượng điểm và tỷ lệ đỗ ngay trên bảng Nguyện vọng lớp 10 (highSchool125) và Thi chuyên (study_special54)
+  if (E.DEC.highSchool125) {
+    var oldHs125Make = E.DEC.highSchool125.make;
+    E.DEC.highSchool125.make = function (l, r, arg) {
+      var d = oldHs125Make.apply(this, arguments);
+      if (!d || !l) return d;
+      var est = estimateHighSchool853(l);
+      d.text += " [Ước lượng điểm thi lớp 10 hiện tại: " + est.min50 + "–" + est.max50 + "/50 · trung bình ~" + est.expected50 + "/50 (nền Kiến thức " + est.knoBase + "/35" + (est.hsBonus > 0 ? " + tích lũy thi thử +" + est.hsBonus : "") + "). Bạn có thể vào mục Học tập → 'Thi thử Cấp 2 vào Cấp 3 (Lớp 10)' trước khi thi để kiểm tra điểm từng môn và nâng tỷ lệ đỗ.]";
+      (d.opts || []).forEach(function (o, idx) {
+        if (o.k === "cancel") return;
+        var sc = est.schools[idx];
+        if (sc) o.h = (o.h ? o.h + " · " : "") + "Ước lượng đỗ ~" + sc.prob + "% (" + sc.status + ")";
+      });
+      return d;
+    };
+  }
+
+  if (E.DEC.study_special54) {
+    var oldSpec54Make = E.DEC.study_special54.make;
+    E.DEC.study_special54.make = function (l, r, arg) {
+      var d = oldSpec54Make.apply(this, arguments);
+      if (!d || !l) return d;
+      var est = estimateHighSchool853(l);
+      var records = (l.flags && l.flags.study54 && l.flags.study54.records) || {};
+      d.text += " [Mốc đỗ lớp chuyên mô phỏng: 78 điểm. Điểm nền Kiến thức của bạn: " + est.kno + (est.hsSpecialBonus > 0 ? " + tích lũy thi thử chuyên +" + est.hsSpecialBonus : "") + ".]";
+      (d.opts || []).forEach(function (o) {
+        if (!o || o.k === "regular") return;
+        var rk = Number(records[o.k]) || 0;
+        var base = est.kno + rk * 3 + est.hsSpecialBonus;
+        var prob = base - 5 >= 78 ? 99 : base + 5 < 78 ? 0 : Math.round(U.clamp(((base + 5 - 78) / 10) * 100, 1, 99));
+        o.h = (o.h ? o.h + " · " : "") + "Dự kiến " + (base - 5) + "–" + (base + 5) + " điểm (cần ≥78 · ~" + prob + "% đỗ)";
+      });
+      return d;
+    };
+  }
+
+  // Hiển thị Ước lượng điểm thi Đại học ngay trên màn hình Chọn/Đổi khối (khoi912), Luyện thi (luyen_thi) và Nguyện vọng Đại học (study_wishes54)
+  if (E.DEC.khoi912) {
+    var oldKhoi912Make = E.DEC.khoi912.make;
+    E.DEC.khoi912.make = function (l, r, arg) {
+      var d = oldKhoi912Make.apply(this, arguments);
+      if (!d || !l) return d;
+      var est = estimateUniExam853(l);
+      d.text += " [Ước lượng điểm thi Đại học (" + est.block + "): " + U.fmtNum(est.min30, 2) + "–" + U.fmtNum(est.max30, 2) + "/30 (kỳ vọng ~" + U.fmtNum(est.expected30, 2) + "/30 · " + est.aptShort + "). Vào mục Học tập → 'Thi thử Đại học & Ước lượng điểm xét tuyển' để thi thử 3 môn và cải thiện điểm.]";
+      return d;
+    };
+  }
+
+  if (E.DEC.luyen_thi) {
+    var oldLuyenThiMake = E.DEC.luyen_thi.make;
+    E.DEC.luyen_thi.make = function (l, r, arg) {
+      var d = oldLuyenThiMake.apply(this, arguments);
+      if (!d || !l) return d;
+      var est = estimateUniExam853(l);
+      d.text += " [Ước lượng điểm thi hiện tại (" + est.block + "): " + U.fmtNum(est.min30, 2) + "–" + U.fmtNum(est.max30, 2) + "/30 (kỳ vọng ~" + U.fmtNum(est.expected30, 2) + "/30 · " + est.aptShort + "). Bạn có thể thi thử thêm trong mục Học tập để nâng điểm trước kỳ thi.]";
+      return d;
+    };
+  }
+
+  if (E.DEC.study_wishes54) {
+    var oldWishes54Make = E.DEC.study_wishes54.make;
+    E.DEC.study_wishes54.make = function (l, r, arg) {
+      var d = oldWishes54Make.apply(this, arguments);
+      if (!d || !l) return d;
+      var est = estimateUniExam853(l);
+      var scoreTxt = Number.isFinite(l.examScore)
+        ? "Điểm thi THPT hiện có: " + U.fmtNum(l.examScore, 2) + "/30"
+        : "Điểm xét tuyển ước lượng (" + est.block + "): " + U.fmtNum(est.min30, 2) + "–" + U.fmtNum(est.max30, 2) + "/30 (kỳ vọng ~" + U.fmtNum(est.expected30, 2) + "/30)";
+      d.text += " [" + scoreTxt + ".]";
+      var s54 = E.EDUCATION54 && E.EDUCATION54.state(l);
+      if (s54 && s54.selected) {
+        var u = E.EDUCATION54.schools.find(function (sch) { return sch.id === s54.selected; });
+        if (u) {
+          (d.opts || []).forEach(function (o) {
+            if (!o || (!o.k.startsWith("major_") && !o.k.startsWith("program_"))) return;
+            var m = o.k.startsWith("major_") ? o.k.slice(6) : o.k.split("_")[1];
+            var cut = E.EDUCATION54.threshold ? E.EDUCATION54.threshold(u, m) : u.score;
+            var diff = Math.round((est.scoreRef - cut) * 100) / 100;
+            o.h = (o.h ? o.h + " · " : "") + (diff >= 0 ? "✓ Đủ điểm chuẩn (" + U.fmtNum(est.scoreRef, 2) + "/" + cut + ")" : "⚠ Thiếu " + U.fmtNum(-diff, 2) + "đ (" + U.fmtNum(est.scoreRef, 2) + "/" + cut + ")");
+          });
+        }
+      }
+      return d;
+    };
+  }
+
+  // Menu 1: Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Ước lượng điểm chuẩn
+  function canMockHighSchool853(l) {
+    if (X.reason(l, 11) !== true) return X.reason(l, 11);
+    var inLower = l.school === "lower" || (l.edu <= 2 && (!l.school || l.school === "lower")) || !!(l.flags && l.flags.gdtx && l.flags.gdtx.lvl === 2);
+    if (l.age >= 11 && l.age <= 17 && inLower) return true;
+    return "Dành cho học sinh Cấp 2 (THCS, 11–17 tuổi) đang chuẩn bị thi vào Cấp 3 (Lớp 10)";
+  }
+
+  X.menu("mockHighSchool853", "Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Ước lượng điểm chuẩn", canMockHighSchool853, function (l) {
+    var est = estimateHighSchool853(l);
+    var lastTxt = est.last
+      ? "Lần thi thử lớp 10 gần nhất (tuổi " + est.last.age + " · " + est.last.kind + "): Toán " + est.last.math + "/10 (×2) + Ngữ văn " + est.last.lit + "/10 (×2) + Tiếng Anh " + est.last.eng + "/10 = " + est.last.total50 + "/50 điểm" + (est.last.specialScore != null ? " · Môn chuyên (" + est.last.specialSubj + "): " + est.last.specialScore + "/10" : "") + " — " + est.last.note
+      : "Chưa thi thử lần nào (nên thi thử ít nhất 1–2 lần trước tuổi 15 để tránh trượt oan trường chuyên/công lập).";
+    var schoolLines = est.schools.map(function (s) {
+      return "• " + s.name + " (điểm chuẩn " + s.cut + "/50): Ước lượng đỗ ~" + s.prob + "% — " + s.status;
+    }).join("\n");
+    return "BẢNG ƯỚC LƯỢNG ĐIỂM THI VÀO CẤP 3 (LỚP 10 — THANG 50 ĐIỂM):\n" +
+      "• Học lực hiện tại: Kiến thức " + est.kno + "/100 (đóng góp " + est.knoBase + "/35 điểm nền) · Đã thi thử: " + est.hsCount + " lần (tích lũy kỹ năng phòng thi +" + est.hsBonus + "đ, nâng sàn đề khó +" + est.hsFloorBonus + "đ" + (est.hsSpecialBonus > 0 ? ", chuyên +" + est.hsSpecialBonus + "đ" : "") + ").\n" +
+      "• Lý giải vì sao học giỏi vẫn có thể trượt: Điểm Kiến thức trên thanh chỉ số chỉ quyết định tối đa 35/50 điểm; 15/50 điểm còn lại phụ thuộc vào câu hỏi phân hóa và tâm lý phòng thi. Nhờ thi thử và chữa đề, bạn được cộng thêm điểm kỹ năng và nâng sàn điểm tối thiểu ngày thi thật.\n" +
+      "• Khoảng điểm dự kiến khi thi thật: " + est.min50 + " – " + est.max50 + " / 50 điểm (Kỳ vọng trung bình: ~" + est.expected50 + "/50) · Thi lớp Chuyên địa phương (mốc 78): dự kiến ~" + est.specialBase + " điểm (~" + est.specialProb + "% đỗ).\n" +
+      "• " + lastTxt + "\n" +
+      "• Đối chiếu điểm chuẩn các trường THPT:\n" + schoolLines;
+  }, function (l) {
+    var st = peekMockState853(l);
+    var usedThisYear = st.hsYearAt === l.age ? (st.hsYearCount || 0) : 0;
+    var limitWhy = usedThisYear >= 2 ? "Đã hoàn thành 2 đợt thi thử lớp 10 trong năm nay" : true;
+    var out = [];
+
+    out.push({
+      k: "hs_mock_standard",
+      l: "Thi thử vào lớp 10 đề chuẩn Sở GD&ĐT (Toán ×2 + Ngữ văn ×2 + Tiếng Anh ×1 — thang 50 điểm)",
+      h: "Biết ngay điểm từng môn · Kiến thức +2 · Cộng +1,5đ kỹ năng làm bài & +1,0đ nâng sàn thi lớp 10",
+      why: limitWhy,
+      run: function (l, r, log) {
+        var s = mockExamState853(l);
+        if (s.hsYearAt !== l.age) { s.hsYearAt = l.age; s.hsYearCount = 0; }
+        if (s.hsYearCount >= 2) return;
+        s.hsYearCount++;
+        s.hsCount++;
+        H.fx(l, { kno: 2 });
+        s.hsBonus = Math.round(Math.min(4.5, (s.hsBonus || 0) + 1.5) * 10) / 10;
+        s.hsFloorBonus = Math.round(Math.min(3.0, (s.hsFloorBonus || 0) + 1.0) * 10) / 10;
+        var base10 = U.clamp((l.st.kno || 50) * 0.07 + (s.hsBonus || 0) * 0.22, 2.5, 8.2);
+        var math = Math.round(U.clamp(base10 + 0.6 + r() * 2.2, 2, 10) * 4) / 4;
+        var lit = Math.round(U.clamp(base10 + 0.4 + r() * 2.0, 2, 9.75) * 4) / 4;
+        var eng = Math.round(U.clamp(base10 + 0.5 + ((l.lang && l.lang.en) || 0) * 0.35 + r() * 2.4, 2, 10) * 4) / 4;
+        var total50 = Math.round(U.clamp(math * 2 + lit * 2 + eng, 0, 50) * 10) / 10;
+        var note = total50 >= 38 ? "Đủ điểm đỗ nhóm THPT Chuyên top đầu (Amsterdam / KHTN / Lê Hồng Phong)!" : total50 >= 34 ? "Đủ điểm vào THPT Chuyên địa phương / Nguyễn Khuyến; cần luyện thêm câu phân hóa nếu nhắm trường Chuyên 37–38đ." : total50 >= 20 ? "Đủ điểm đỗ THPT Công lập tại nơi ở; cần ôn thêm nếu muốn thi trường Chuyên." : "Nguy cơ trượt công lập — cần tăng tốc học tập và chữa đề ngay!";
+        s.hsLast = { age: l.age, kind: "Đề chuẩn 3 môn", math: math, lit: lit, eng: eng, specialSubj: null, specialScore: null, total50: total50, note: note };
+        var est = estimateHighSchool853(l);
+        log("Kết quả Thi thử vào lớp 10 (Đề chuẩn): Toán " + math + " (×2) + Ngữ văn " + lit + " (×2) + Tiếng Anh " + eng + " = " + total50 + "/50 điểm. " + note + " Khoảng điểm thi thật ước lượng hiện tại: " + est.min50 + "–" + est.max50 + "/50 (kỳ vọng ~" + est.expected50 + "/50).", total50 >= 34 ? "good" : "neutral");
+      }
+    });
+
+    out.push({
+      k: "hs_mock_specialized",
+      l: "Thi thử đề Chuyên vào lớp 10 (Toán – Văn – Anh + Môn chuyên nâng cao vào THPT Chuyên)",
+      h: "Thử sức đề chuyên phân hóa cao · Kiến thức +3 · Cộng +1,8đ thi lớp 10 & +3,5đ chuẩn bị thi lớp Chuyên",
+      why: limitWhy,
+      run: function (l, r, log) {
+        var s = mockExamState853(l);
+        if (s.hsYearAt !== l.age) { s.hsYearAt = l.age; s.hsYearCount = 0; }
+        if (s.hsYearCount >= 2) return;
+        s.hsYearCount++;
+        s.hsCount++;
+        H.fx(l, { kno: 3 });
+        if (l.mind) l.mind.stress = U.clamp((l.mind.stress || 0) + 3, 0, 100);
+        s.hsBonus = Math.round(Math.min(4.5, (s.hsBonus || 0) + 1.8) * 10) / 10;
+        s.hsFloorBonus = Math.round(Math.min(3.0, (s.hsFloorBonus || 0) + 1.2) * 10) / 10;
+        s.hsSpecialBonus = Math.round(Math.min(8.0, (s.hsSpecialBonus || 0) + 3.5) * 10) / 10;
+        var est0 = estimateHighSchool853(l);
+        var base10 = U.clamp((l.st.kno || 50) * 0.072 + (s.hsBonus || 0) * 0.24, 3.0, 8.5);
+        var math = Math.round(U.clamp(base10 + 0.7 + r() * 2.0, 2.5, 10) * 4) / 4;
+        var lit = Math.round(U.clamp(base10 + 0.5 + r() * 1.9, 2.5, 9.75) * 4) / 4;
+        var eng = Math.round(U.clamp(base10 + 0.6 + ((l.lang && l.lang.en) || 0) * 0.35 + r() * 2.1, 2.5, 10) * 4) / 4;
+        var specScore = Math.round(U.clamp((l.st.kno || 50) * 0.075 + est0.bestRank * 0.5 + (s.hsSpecialBonus || 0) * 0.15 + r() * 2.0, 2.0, 10) * 4) / 4;
+        var total50 = Math.round(U.clamp(math * 2 + lit * 2 + eng, 0, 50) * 10) / 10;
+        var note = total50 >= 38 && specScore >= 7.5 ? "Đạt chuẩn trúng tuyển thẳng vào nhóm THPT Chuyên hàng đầu (38/50)!" : total50 >= 34 ? "Đạt ngưỡng THPT Chuyên địa phương (34/50), tỷ lệ đỗ chuyên tăng mạnh." : "Đã làm quen cấu trúc đề chuyên, cần rèn thêm để vượt mốc 34–38/50.";
+        s.hsLast = { age: l.age, kind: "Đề Chuyên nâng cao", math: math, lit: lit, eng: eng, specialSubj: est0.bestSubjName, specialScore: specScore, total50: total50, note: note };
+        var est = estimateHighSchool853(l);
+        log("Kết quả Thi thử vào lớp 10 (Đề Chuyên " + est0.bestSubjName + "): Toán " + math + " (×2) + Văn " + lit + " (×2) + Anh " + eng + " = " + total50 + "/50 · Môn chuyên " + est0.bestSubjName + ": " + specScore + "/10. " + note + " Điểm dự kiến khi thi thật: " + est.min50 + "–" + est.max50 + "/50 (kỳ vọng ~" + est.expected50 + "/50).", total50 >= 37 ? "big" : "good");
+      }
+    });
+
+    out.push({
+      k: "hs_mock_review",
+      l: "Chữa đề thi thử, rà soát lỗi mất điểm oan & rèn tâm lý phòng thi lớp 10",
+      h: "Khắc phục lỗi trình bày · Căng thẳng -6, Kiến thức +2 · Nâng sàn điểm tối thiểu ngày thi thật (+1,5đ)",
+      why: limitWhy,
+      run: function (l, r, log) {
+        var s = mockExamState853(l);
+        if (s.hsYearAt !== l.age) { s.hsYearAt = l.age; s.hsYearCount = 0; }
+        if (s.hsYearCount >= 2) return;
+        s.hsYearCount++;
+        H.fx(l, { kno: 2, hap: 1 });
+        if (l.mind) l.mind.stress = U.clamp((l.mind.stress || 0) - 6, 0, 100);
+        s.hsBonus = Math.round(Math.min(4.5, (s.hsBonus || 0) + 1.0) * 10) / 10;
+        s.hsFloorBonus = Math.round(Math.min(3.0, (s.hsFloorBonus || 0) + 1.5) * 10) / 10;
+        s.hsSpecialBonus = Math.round(Math.min(8.0, (s.hsSpecialBonus || 0) + 2.0) * 10) / 10;
+        var est = estimateHighSchool853(l);
+        log("Bạn ngồi chữa kỹ từng câu sai trong đề thi thử lớp 10, ghi sổ tay các lỗi mất điểm oan và rèn phân bổ thời gian làm bài. Sàn điểm dự kiến khi vào phòng thi thật nâng lên " + est.min50 + "–" + est.max50 + "/50 (kỳ vọng ~" + est.expected50 + "/50).", "good");
+      }
+    });
+
+    if (E.EVENTS125 && typeof E.EVENTS125.hs === "function" && E.EVENTS125.hs(l)) {
+      out.push({
+        k: "hs_open_official",
+        l: "Mở bảng đăng ký Nguyện vọng & Thi tuyển lớp 10 chính thức",
+        h: "Chuyển sang chọn trường THPT và thi chính thức",
+        why: true,
+        run: function (l, r) {
+          X.next(l, "highSchool125", r);
+        }
+      });
+    }
+
+    return out;
+  }, 11, "Học tập");
+
+  // Menu 2: Thi thử Đại học & Ước lượng điểm xét tuyển
+  function canMockUniExam853(l) {
+    if (X.reason(l, 15) !== true) return X.reason(l, 15);
+    var inHighOrApplicant = l.school === "upper" || l.school === "priv" || !!(l.flags && l.flags.gdtx && l.flags.gdtx.lvl === 3) || (l.edu >= 2 && l.edu < 5 && !["uni", "post", "phd", "abroad", "police"].includes(l.school));
+    if (l.age >= 15 && l.age <= 26 && inHighOrApplicant) return true;
+    return "Dành cho học sinh THPT / Bổ túc hoặc thí sinh chuẩn bị thi tốt nghiệp & xét tuyển Đại học (15–26 tuổi)";
+  }
+
+  X.menu("mockUniExam853", "Thi thử Đại học & Ước lượng điểm xét tuyển", canMockUniExam853, function (l) {
+    var est = estimateUniExam853(l);
+    var K = E.KHOI && E.KHOI[est.block];
+    var subjTxt = est.subjects.length
+      ? est.subjects.map(function (s) { return s.name + " ~" + U.fmtNum(s.score, 2) + "/10" + (s.achievement > 0 ? " (sàn HSG)" : ""); }).join(" · ")
+      : "3 môn theo khối " + est.block;
+    var lastTxt = est.last
+      ? "Lần thi thử Đại học gần nhất (tuổi " + est.last.age + " · khối " + est.last.block + " · " + est.last.kind + "): " + U.fmtNum(est.last.total30, 2) + "/30 điểm (" + est.last.detailTxt + ")" + (est.last.nkScore != null ? " · Năng khiếu: " + U.fmtNum(est.last.nkScore, 2) + "/10" : "") + " — " + est.last.note
+      : "Chưa thi thử Đại học lần nào (hãy thi thử để phát hiện sớm nếu nhân vật bị điểm trừ tâm lý phòng thi!).";
+    var wishesTxt = est.wishesEval.length
+      ? "Đánh giá các Nguyện vọng Đại học đã chọn:\n" + est.wishesEval.map(function (w) { return "  • NV" + w.index + " (" + w.schoolName + " — " + w.program + ", chuẩn " + w.cut + "/30): " + w.status; }).join("\n") + "\n"
+      : "";
+    var refScore = est.scoreRef;
+    var tierLines = [
+      "• Nhóm trường Top đầu (27,0–28,5đ: ĐH Y Hà Nội 28, Y Dược TP.HCM 28, Ngoại thương 27, ĐH Công nghệ ĐHQGHN 27–27,5): " + (refScore >= 28 ? "✓ Đủ sức đỗ cả Y Hà Nội / Y Dược TP.HCM" : refScore >= 27 ? "◕ Đủ đỗ Ngoại thương / Công nghệ, thiếu ~" + U.fmtNum(28 - refScore, 2) + "đ cho Y khoa 28đ" : "✗ Còn thiếu ~" + U.fmtNum(27 - refScore, 2) + "đ để chạm ngưỡng 27đ"),
+      "• Nhóm trường Trọng điểm (25,0–26,5đ: Bách khoa HN/TP.HCM 26,5, Kinh tế Quốc dân 26, CNTT UIT 26,5, Y Dược Huế 26, Kinh tế TP.HCM / Sư phạm / Luật 25): " + (refScore >= 26.5 ? "✓ An toàn toàn bộ nhóm 25–26,5đ" : refScore >= 25 ? "◕ Đủ đỗ nhóm 25đ (Sư phạm, Luật, UEH), cần +" + U.fmtNum(26.5 - refScore, 2) + "đ cho Bách khoa 26,5đ" : "✗ Còn thiếu ~" + U.fmtNum(25 - refScore, 2) + "đ để vào nhóm 25đ"),
+      "• Nhóm trường Khá & Khu vực (21,0–24,5đ: KHTN 24–25, Bách khoa Đà Nẵng 24,5, Kinh tế/Sư phạm Đà Nẵng 23, Công nghiệp HN / Cần Thơ 22–22,5, Luật Huế 21): " + (refScore >= 24.5 ? "✓ Rất an toàn" : refScore >= 21 ? "◕ Đủ điểm các trường chuẩn ≤" + U.fmtNum(refScore, 2) + "đ" : "⚠ Còn thiếu ~" + U.fmtNum(21 - refScore, 2) + "đ"),
+      "• Nhóm trường Địa phương & Nghệ thuật (15,0–20,5đ: ĐH Vinh 20, Quy Nhơn / An Giang / Đồng Tháp 19, Mỹ thuật / Kiến trúc / Sân khấu Điện ảnh / Nhạc viện 15–21 + năng khiếu): " + (refScore >= 20 ? "✓ Rất an toàn" : refScore >= 15 ? "◕ Đủ điểm tốt nghiệp (≥15đ) & xét các trường 15–" + U.fmtNum(refScore, 2) + "đ" : "✗ NGUY CƠ TRƯỢT TỐT NGHIỆP THPT (<15đ) — cần luyện đề khẩn cấp!")
+    ].join("\n");
+
+    return "BẢNG ƯỚC LƯỢNG ĐIỂM THI ĐẠI HỌC & CHẨN ĐOÁN PHÒNG THI (THANG 30 ĐIỂM):\n" +
+      "• Khối xét tuyển: " + est.block + (K ? " (" + K.n + ")" : "") + (l.khoi ? "" : " (dự kiến — bạn có thể chọn/đổi khối trong mục Học tập)") + (Number.isFinite(l.examScore) ? " · Điểm thi THPT đã có: " + U.fmtNum(l.examScore, 2) + "/30" : "") + ".\n" +
+      "• Chẩn đoán cấu thành điểm số (Vì sao Kiến thức cao vẫn có thể điểm thấp?):\n" +
+      "  1. Điểm nền từ Kiến thức (" + est.kno + "/100): " + U.fmtNum(est.knoPart, 2) + "/23,0 điểm (Kiến thức 100/100 tối đa mới tạo ra 23,0 điểm gốc).\n" +
+      "  2. Tư chất & tâm lý phòng thi của nhân vật: " + est.aptShort + ".\n" +
+      "  3. Luyện thi & trạng thái: Luyện thi " + (est.lt > 0 ? "+" + U.fmtNum(est.lt * 0.45, 2) + "đ" : est.lt < 0 ? "-0,45đ (mải chơi)" : "0đ") + (est.focus ? " · Tập trung học +0,6đ" : "") + (est.stress > 80 ? " · Căng thẳng >80 bị trừ -1,0đ!" : "") + " · Đã thi thử Đại học: " + est.uniCount + " lần (tích lũy +" + U.fmtNum(est.mockTotalBonus, 2) + "đ).\n" +
+      "• Khoảng điểm dự kiến khi thi thật: " + U.fmtNum(est.min30, 2) + " – " + U.fmtNum(est.max30, 2) + " / 30 điểm (Kỳ vọng trung bình: ~" + U.fmtNum(est.expected30, 2) + "/30) · Dự kiến từng môn: " + subjTxt + (est.isNk ? " · Điểm thi năng khiếu dự kiến: " + U.fmtNum(est.nkMin10, 2) + "–" + U.fmtNum(est.nkMax10, 2) + "/10 (kỳ vọng ~" + U.fmtNum(est.nkExpected10, 2) + "/10)" : "") + ".\n" +
+      "• " + lastTxt + "\n" +
+      wishesTxt +
+      "• Đối chiếu điểm chuẩn các nhóm trường Đại học:\n" + tierLines;
+  }, function (l) {
+    var st = peekMockState853(l);
+    var usedThisYear = st.uniYearAt === l.age ? (st.uniYearCount || 0) : 0;
+    var limitWhy = usedThisYear >= 2 ? "Đã hoàn thành 2 đợt thi thử Đại học trong năm nay" : true;
+    var est = estimateUniExam853(l);
+    var out = [];
+
+    out.push({
+      k: "uni_mock_standard",
+      l: "Thi thử Tốt nghiệp THPT & Đại học đề chuẩn 3 môn (Khối " + est.block + ")",
+      h: "Chấm điểm chi tiết 3 môn · Kiến thức +2 · Cộng +0,85đ kỹ năng làm đề & +0,5đ ổn định tâm lý phòng thi",
+      why: limitWhy,
+      run: function (l, r, log) {
+        var s = mockExamState853(l);
+        if (s.uniYearAt !== l.age) { s.uniYearAt = l.age; s.uniYearCount = 0; }
+        if (s.uniYearCount >= 2) return;
+        s.uniYearCount++;
+        s.uniCount++;
+        H.fx(l, { kno: 2 });
+        s.uniBonus = Math.round(Math.min(3.5, (s.uniBonus || 0) + 0.85) * 100) / 100;
+        s.aptRecovery = Math.round(Math.min(2.5, (s.aptRecovery || 0) + 0.5) * 100) / 100;
+        var afterEst = estimateUniExam853(l);
+        var jitter = Math.round(((r() - 0.45) * 1.2) * 4) / 4;
+        var mockTotal = Math.round(U.clamp(afterEst.expected30 + jitter, 5, 30) * 4) / 4;
+        var det = E.EXAM127 && E.EXAM127.detail ? E.EXAM127.detail({ khoi: afterEst.block, flags: l.flags || {} }, mockTotal) : null;
+        if (det) mockTotal = det.total;
+        var subjMap = (E.EDUCATION54 && E.EDUCATION54.subjects) || {};
+        var detailTxt = det && det.scores
+          ? det.scores.map(function (x) { return (subjMap[x.subject] || EXTRA_SUBJ853[x.subject] || x.subject) + " " + U.fmtNum(x.score, 2); }).join(" + ")
+          : "3 môn khối " + afterEst.block;
+        if (l.age >= 18 && Number.isFinite(l.examScore) && !l.school) {
+          l.examScore = Math.max(l.examScore, afterEst.expected30);
+          if (l.examScore >= 27) l.flags.scholar = true;
+        }
+        var note = mockTotal >= 27 ? "Đủ chuẩn cạnh tranh nhóm trường Top đầu (Y Hà Nội, Y Dược TP.HCM, Ngoại thương, Công nghệ UET)!" : mockTotal >= 25 ? "Đạt ngưỡng nhóm trường Trọng điểm (Bách khoa, Kinh tế Quốc dân, Sư phạm, Luật, UEH)." : mockTotal >= 21 ? "Đủ điểm vào các trường Đại học công lập khu vực (21–24,5đ); cần luyện thêm đề phân hóa nếu nhắm trường Top 25–28đ." : "Điểm còn thấp so với mặt bằng đại học tốp trên — hãy luyện thêm bộ đề phân hóa cao!";
+        s.uniLast = { age: l.age, block: afterEst.block, kind: "Đề chuẩn THPT Quốc gia", total30: mockTotal, detailTxt: detailTxt, nkScore: null, note: note };
+        log("Kết quả Thi thử Đại học khối " + afterEst.block + " (Đề chuẩn): " + U.fmtNum(mockTotal, 2) + "/30 điểm (" + detailTxt + "). " + note + " Khoảng điểm dự kiến khi thi thật hiện nâng lên: " + U.fmtNum(afterEst.min30, 2) + "–" + U.fmtNum(afterEst.max30, 2) + "/30 (kỳ vọng ~" + U.fmtNum(afterEst.expected30, 2) + "/30).", mockTotal >= 25 ? "good" : "neutral");
+      }
+    });
+
+    out.push({
+      k: "uni_mock_intensive",
+      l: "Luyện bộ đề thi thử phân hóa cao (chinh phục câu Vận dụng cao 8+ / 9+ & Khắc phục tâm lý phòng thi)",
+      h: "Bứt phá điểm 25–30 & trị chứng mất điểm oan phòng thi · Kiến thức +3 · Cộng +1,25đ đề thi & +1,1đ bản lĩnh phòng thi",
+      why: limitWhy,
+      run: function (l, r, log) {
+        var s = mockExamState853(l);
+        if (s.uniYearAt !== l.age) { s.uniYearAt = l.age; s.uniYearCount = 0; }
+        if (s.uniYearCount >= 2) return;
+        s.uniYearCount++;
+        s.uniCount++;
+        H.fx(l, { kno: 3 });
+        if (l.mind) l.mind.stress = U.clamp((l.mind.stress || 0) + 3, 0, 100);
+        s.uniBonus = Math.round(Math.min(3.5, (s.uniBonus || 0) + 1.25) * 100) / 100;
+        s.aptRecovery = Math.round(Math.min(2.5, (s.aptRecovery || 0) + 1.1) * 100) / 100;
+        var afterEst = estimateUniExam853(l);
+        var jitter = Math.round(((r() - 0.35) * 1.0) * 4) / 4;
+        var mockTotal = Math.round(U.clamp(afterEst.expected30 + jitter, 5, 30) * 4) / 4;
+        var det = E.EXAM127 && E.EXAM127.detail ? E.EXAM127.detail({ khoi: afterEst.block, flags: l.flags || {} }, mockTotal) : null;
+        if (det) mockTotal = det.total;
+        var subjMap = (E.EDUCATION54 && E.EDUCATION54.subjects) || {};
+        var detailTxt = det && det.scores
+          ? det.scores.map(function (x) { return (subjMap[x.subject] || EXTRA_SUBJ853[x.subject] || x.subject) + " " + U.fmtNum(x.score, 2); }).join(" + ")
+          : "3 môn khối " + afterEst.block;
+        if (l.age >= 18 && Number.isFinite(l.examScore) && !l.school) {
+          l.examScore = Math.max(l.examScore, afterEst.expected30);
+          if (l.examScore >= 27) l.flags.scholar = true;
+        }
+        var note = "Hoàn thành chuyên đề câu hỏi phân hóa 8+ / 9+ và khắc phục điểm yếu tâm lý phòng thi.";
+        s.uniLast = { age: l.age, block: afterEst.block, kind: "Đề phân hóa cao 8+/9+", total30: mockTotal, detailTxt: detailTxt, nkScore: null, note: note };
+        log("Kết quả Thi thử Đại học chuyên sâu khối " + afterEst.block + ": " + U.fmtNum(mockTotal, 2) + "/30 điểm (" + detailTxt + "). " + note + " Điểm dự kiến khi thi thật hiện nâng lên: " + U.fmtNum(afterEst.min30, 2) + "–" + U.fmtNum(afterEst.max30, 2) + "/30 (kỳ vọng ~" + U.fmtNum(afterEst.expected30, 2) + "/30).", mockTotal >= 26 ? "big" : "good");
+      }
+    });
+
+    out.push({
+      k: "uni_mock_aptitude",
+      l: "Thi thử Năng khiếu / Đánh giá tư duy & Rèn tâm lý vững vàng trước kỳ thi",
+      h: "Căng thẳng -8, Kỹ năng +3, Kiến thức +1 · Cộng +0,75đ văn hóa, +0,75đ tâm lý & +0,85đ thi Năng khiếu (thang 10)",
+      why: limitWhy,
+      run: function (l, r, log) {
+        var s = mockExamState853(l);
+        if (s.uniYearAt !== l.age) { s.uniYearAt = l.age; s.uniYearCount = 0; }
+        if (s.uniYearCount >= 2) return;
+        s.uniYearCount++;
+        s.uniCount++;
+        H.fx(l, { kno: 1, hap: 2 });
+        l.skill = Math.min(100, (l.skill || 20) + 3);
+        l.flags.nkPrep = 1;
+        if (l.mind) l.mind.stress = U.clamp((l.mind.stress || 0) - 8, 0, 100);
+        s.uniBonus = Math.round(Math.min(3.5, (s.uniBonus || 0) + 0.75) * 100) / 100;
+        s.aptRecovery = Math.round(Math.min(2.5, (s.aptRecovery || 0) + 0.75) * 100) / 100;
+        s.nkBonus = Math.round(Math.min(2.0, (s.nkBonus || 0) + 0.85) * 100) / 100;
+        var afterEst = estimateUniExam853(l);
+        var nkMock = Math.round(U.clamp(afterEst.nkExpected10 + (r() - 0.4) * 0.8, 0, 10) * 4) / 4;
+        if (l.age >= 18 && Number.isFinite(l.examScore) && !l.school) {
+          l.examScore = Math.max(l.examScore, afterEst.expected30);
+          if (l.examScore >= 27) l.flags.scholar = true;
+        }
+        var note = "Tâm lý phòng thi nhẹ nhõm, điểm văn hóa dự kiến ~" + U.fmtNum(afterEst.expected30, 2) + "/30 và điểm năng khiếu dự kiến ~" + U.fmtNum(afterEst.nkExpected10, 2) + "/10.";
+        s.uniLast = { age: l.age, block: afterEst.block, kind: "Đánh giá tư duy & Năng khiếu", total30: afterEst.expected30, detailTxt: "3 môn khối " + afterEst.block, nkScore: nkMock, note: note };
+        log("Hoàn thành đợt Thi thử Đánh giá tư duy & Năng khiếu: Điểm văn hóa ước lượng " + U.fmtNum(afterEst.min30, 2) + "–" + U.fmtNum(afterEst.max30, 2) + "/30 (kỳ vọng ~" + U.fmtNum(afterEst.expected30, 2) + "/30) · Bài thi thử năng khiếu đạt " + U.fmtNum(nkMock, 2) + "/10.", "good");
+      }
+    });
+
+    if (E.KHOI912 && E.KHOI912.canChange(l) === true) {
+      out.push({
+        k: "uni_open_khoi",
+        l: l.khoi ? "Xem / đổi khối thi THPT hiện tại (" + l.khoi + ")" : "Chọn khối thi THPT ngay",
+        h: "Mở bảng chọn 9 khối thi A00, A01, B00, C00, D01, H00, V00, S00, N00",
+        why: true,
+        run: function (l, r) {
+          X.next(l, "khoi912", r);
+        }
+      });
+    }
+
+    if (E.EDUCATION54 && typeof E.EDUCATION54.applicant === "function" && E.EDUCATION54.applicant(l)) {
+      out.push({
+        k: "uni_open_wishes",
+        l: "Mở bảng đăng ký Nguyện vọng Đại học chính thức",
+        h: "Chọn tối đa 5 trường/ngành theo điểm ước lượng và nộp hồ sơ",
+        why: true,
+        run: function (l, r) {
+          E.EDUCATION54.open(l, r);
+        }
+      });
+    }
+
+    return out;
+  }, 15, "Học tập");
+
+  E.MOCK_EXAM853 = {
+    peekMockState853: peekMockState853,
+    mockExamState853: mockExamState853,
+    peekExamApt853: peekExamApt853,
+    estimateHighSchool853: estimateHighSchool853,
+    estimateUniExam853: estimateUniExam853,
+    canMockHighSchool853: canMockHighSchool853,
+    canMockUniExam853: canMockUniExam853
+  };
+
   E.ROYAL851 = {
     EURO_ROYAL_MATRIX851: EURO_ROYAL_MATRIX851,
     euroRoyalConfig851: euroRoyalConfig851,
