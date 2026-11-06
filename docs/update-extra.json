@@ -1,6 +1,7 @@
 [
   {
     "id": "comment-likes-delete",
+    "private": true,
     "version": "8.10.54",
     "publishedAt": "2026-11-06T17:29:09+07:00",
     "releaseStatus": "packaged",
