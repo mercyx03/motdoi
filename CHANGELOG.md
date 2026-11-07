@@ -1,3 +1,8 @@
+## v8.10.55 — Đại học trong nước và tiến độ tốt nghiệp (packaged)
+
+- Thêm đường chuyển hướng từ hồ sơ du học chưa nhập học sang nguyện vọng trong nước, hoàn đúng học phí dự trù và giữ xét tuyển theo điều kiện hiện hành.
+- Hiện rõ từng điều kiện tốt nghiệp và nối đến các thao tác học lại, ngoại ngữ, chứng chỉ, hồ sơ học thuật, bảo vệ.
+
 ## 8.10.54 — Rà soát thi thử, thi thật và dự báo tuyển sinh
 
 Thống nhất công thức từng môn; bỏ điểm cộng luyện đề và tâm lý ẩn, chuyển tiến độ cũ một lần sang kỹ năng có trần. Lưu kết quả cố định theo kỳ; thi thử không sửa điểm thi thật; thi lại không tự được cộng điểm. Dùng nhóm trường và ngưỡng mô phỏng, báo điều kiện nguyện vọng, môn chuyên/năng khiếu riêng. Kiểm chứng và giới hạn tại docs/EXAM-REVIEW-PROGRESS.md.

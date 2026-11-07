@@ -287,3 +287,5 @@ GĐ6 — 8.10.47: còn regression toàn bộ mã cuối, thiết bị thật, b�
 GĐ6 — 8.10.48: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
 
 GĐ6 — 8.10.50: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+GĐ6 — 8.10.55: còn regression toàn bộ, thiết bị thật và bản lưu của người góp ý về tốt nghiệp. tests/player107.js hiện thất bại ở bước xét du học cả trên mã trước thay đổi; cần cập nhật dữ liệu kiểm thử theo điều kiện ngôn ngữ hiện hành. Chưa kiểm chứng binding Pages REVIEWS_DB.

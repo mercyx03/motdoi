@@ -26,6 +26,31 @@ var destinations=[
 // MD4 D11: thêm điểm đến; học phí, ngôn ngữ giảng dạy và học bổng đọc từ E.GLOBAL919 lúc chạy (giá theo năm/nước của game).
 [['BE',['KU Leuven','Université libre de Bruxelles']],['CH',['ETH Zürich','Université de Genève']],['ES',['Universidad de Barcelona','Universidad Complutense de Madrid']],['PL',['University of Warsaw','Jagiellonian University']],['CZ',['Charles University','Czech Technical University in Prague']],['AT',['University of Vienna','TU Wien']],['SE',['Lund University','KTH Royal Institute of Technology']],['FI',['University of Helsinki','Aalto University']],['NL',['University of Amsterdam','Delft University of Technology']],['IT',['Università di Bologna','Politecnico di Milano']],['SG',['National University of Singapore','Nanyang Technological University']],['CN',['Fudan University','Zhejiang University']],['TW',['National Taiwan University','National Cheng Kung University']],['HK',['The University of Hong Kong','The Chinese University of Hong Kong']],['MY',['Universiti Malaya','Universiti Putra Malaysia']]].forEach(function(x){var b=G.W.BY[x[0]];if(b)destinations.push([x[0],b.name,String(b.pool).split(',')[0].split(':')[0],x[1]]);});
 function abroadReady(l){return free(l)&&!l.flags.studyVisa900&&!l.school&&!l.abroad&&!l.flags.researchStudy&&!l.retired&&l.edu>=3&&l.edu<7;}
+function domesticReady(l){
+  var st=l.flags.study54;
+  return free(l)&&!l.school&&!l.abroad&&!l.retired&&l.edu>=3&&l.edu<5&&
+    E.EDUCATION54.applicant(l)&&!(st&&st.submitted&&st.wishAge===l.age);
+}
+function domesticPrompt(l,r){
+  if(!domesticReady(l)||l.pending.some(function(d){return d.id==='domestic107'||d.id==='study_wishes54';}))return;
+  push(l,'domestic107',r);
+}
+function domesticEnroll(l,r,log){
+  if(!domesticReady(l))return;
+  var offer=l.flags.studyVisa900;
+  if(offer&&offer.lv!==5)return;
+  if(offer&&offer.deposit>0)H.cash(l,offer.deposit,'Hoàn học phí du học chưa nhập học');
+  delete l.flags.studyVisa900;
+  l.pending=l.pending.filter(function(d){return !/^(du_hoc|abroad107(?:_country|_school|_field|_apply)?|studyVisa900|domestic107)$/.test(d.id);});
+  E.EDUCATION54.open(l,r);
+  log('Bạn chuyển sang đăng ký nguyện vọng đại học trong nước. Xét tuyển theo điểm và điều kiện của từng trường; phí hồ sơ và visa đã chi không được hoàn.','neutral');
+}
+E.SC('domestic107',{title:'Chọn hướng học trong nước',prep:stamp,valid:domesticReady,
+  text:'Bạn có thể đăng ký đại học trong nước khi chưa nhập học ở nước ngoài. Nếu đang giữ thư nhận học du học, chọn chuyển hướng sẽ rút hồ sơ và hoàn phần học phí đã dự trù. Điểm thi, nguyện vọng và điều kiện tuyển sinh vẫn được xét như bình thường.',
+  opts:[{k:'apply',l:'Đăng ký nguyện vọng đại học trong nước',run:domesticEnroll},
+    {k:'cancel',l:'Để tôi cân nhắc thêm',run:function(l,r,log,d){if(d)d.done=true;}}]});
+action('domestic107','Học tập','Đăng ký đại học trong nước',domesticReady);
+E.DOMESTIC107={ready:domesticReady,prompt:domesticPrompt,open:domesticEnroll};
 function lvReady(l,lv){return abroadReady(l)&&(lv===5?l.edu>=3&&l.edu<5:l.edu===lv-1);}
 function dest(code){return destinations.filter(function(c){return c[0]===code;})[0];}
 E.SC('abroad107',{title:'Tự chọn hành trình du học',prep:stamp,valid:abroadReady,text:'Bạn chọn bậc học, quốc gia, trường rồi ngành. Sau đó mới nộp hồ sơ học bổng hoặc tự túc. Nếu nhập học, công việc hiện tại kết thúc và nơi ở chuyển sang nước đến.',opts:[5,6,7].map(function(lv){return {k:String(lv),l:lv===5?'Đại học':lv===6?'Thạc sĩ':'Tiến sĩ',req:function(l){return lvReady(l,lv);},run:function(l,r,log,d){if(!live(l,d)||!lvReady(l,lv))return;d.done=true;push(l,'abroad107_country',r,{at:l.age,lv:lv,done:false});}};}).concat([{k:'cancel',l:'Chưa đi du học',run:function(l,r,log,d){if(d)d.done=true;}}])});
@@ -34,11 +59,11 @@ E.SC('abroad107_school',{title:'Chọn trường du học',valid:function(l,d){r
 E.SC('abroad107_field',{title:'Chọn ngành du học',valid:function(l,d){return live(l,d)&&lvReady(l,d.lv)&&!!dest(d.country)&&[0,1].includes(d.school);},text:'Bạn chọn hướng học và viết kế hoạch phù hợp với hồ sơ của mình.',opts:Object.keys(fields).filter(function(k){return k!=='med';}).map(function(k){return {k:k,l:fields[k],run:function(l,r,log,d){if(!E.DEC.abroad107_field.valid(l,d))return;d.done=true;push(l,'abroad107_apply',r,{at:l.age,lv:d.lv,country:d.country,school:d.school,field:k,done:false});}};}).concat([{k:'cancel',l:'Dừng hồ sơ',run:function(l,r,log,d){if(d)d.done=true;}}])});
 function application(l,d){return live(l,d)&&lvReady(l,d.lv)&&!!dest(d.country)&&[0,1].includes(d.school)&&!!fields[d.field]&&d.field!=='med';}
 function tuition(l,d){return E.GLOBAL919?E.GLOBAL919.tuitionTotal(l,d):l.base*(d.lv===6?2:4);}
-function admission(l,r,log,d,scholar){if(E.GLOBAL919)return admission919(l,r,log,d,scholar);if(!application(l,d)||l.money<(scholar?l.base*.02:tuition(l,d)))return;d.done=true;H.cash(l,-(scholar?l.base*.02:tuition(l,d)),scholar?'Chuẩn bị hồ sơ học bổng':'Dự trù học phí du học toàn khóa');if(r()>U.clamp((scholar?.12:.5)+l.st.kno/250,.15,scholar?.65:.9)){log('Hồ sơ vào '+dest(d.country)[3][d.school]+' chưa được chấp nhận. Bạn giữ công việc và nơi ở hiện tại. '+(scholar?'Chi phí chuẩn bị hồ sơ không được hoàn.':'Khoản học phí dự trù được trả lại.'),'neutral');if(!scholar)H.cash(l,tuition(l,d),'Hoàn học phí chưa nhập học');return;}
+function admission(l,r,log,d,scholar){if(E.GLOBAL919)return admission919(l,r,log,d,scholar);if(!application(l,d)||l.money<(scholar?l.base*.02:tuition(l,d)))return;d.done=true;H.cash(l,-(scholar?l.base*.02:tuition(l,d)),scholar?'Chuẩn bị hồ sơ học bổng':'Dự trù học phí du học toàn khóa');if(r()>U.clamp((scholar?.12:.5)+l.st.kno/250,.15,scholar?.65:.9)){log('Hồ sơ vào '+dest(d.country)[3][d.school]+' chưa được chấp nhận. Bạn giữ công việc và nơi ở hiện tại. '+(scholar?'Chi phí chuẩn bị hồ sơ không được hoàn.':'Khoản học phí dự trù được trả lại.'),'neutral');if(!scholar)H.cash(l,tuition(l,d),'Hoàn học phí chưa nhập học');domesticPrompt(l,r);return;}
  if(E.ABROAD_DEPTH900){l.flags.studyVisa900={country:d.country,lv:d.lv,school:d.school,field:d.field,scholar:scholar,until:l.age+1,deposit:scholar?0:tuition(l,d)};log('Trường đã nhận hồ sơ'+(scholar?' kèm học bổng học phí':' tự túc')+'. Cần chuẩn bị giấy tờ, kế hoạch học rồi xin visa du học trước khi nghỉ việc và nhập học.','good');E.ABROAD_DEPTH900.prompt(l,r);return;}
  enroll900(l,r,log,d,scholar);}
 // MD4 D11: xét tuyển (ngôn ngữ giảng dạy, hồ sơ) và xét học bổng (% học phí hoặc toàn phần) là hai kết quả riêng; phí hồ sơ không hoàn.
-function admission919(l,r,log,d,scholar){var G9=E.GLOBAL919,fee=l.base*.02,full=tuition(l,d),uni=dest(d.country)[3][d.school];if(!application(l,d)||l.money<(scholar?fee:full+fee))return;d.done=true;H.cash(l,-fee,'Phí nộp hồ sơ du học');var a=G9.admit(l,d,r);if(!a.ok){log('Hồ sơ vào '+uni+' chưa được chấp nhận. '+(a.why||'Năm nay cạnh tranh cao; có thể nộp lại khi hồ sơ tốt hơn.')+' Bạn giữ công việc và nơi ở hiện tại.','neutral');return;}
+function admission919(l,r,log,d,scholar){var G9=E.GLOBAL919,fee=l.base*.02,full=tuition(l,d),uni=dest(d.country)[3][d.school];if(!application(l,d)||l.money<(scholar?fee:full+fee))return;d.done=true;H.cash(l,-fee,'Phí nộp hồ sơ du học');var a=G9.admit(l,d,r);if(!a.ok){log('Hồ sơ vào '+uni+' chưa được chấp nhận. '+(a.why||'Năm nay cạnh tranh cao; có thể nộp lại khi hồ sơ tốt hơn.')+' Bạn giữ công việc và nơi ở hiện tại.','neutral');domesticPrompt(l,r);return;}
  var sc=scholar?G9.scholarship(l,d,r):{pct:0},pay=sc.cover==='full'?0:full*(1-sc.pct),o={country:d.country,lv:d.lv,school:d.school,field:d.field,scholar:sc.pct>=1,scholarPct919:sc.pct,scholarCover919:sc.cover||null,track919:a.track,until:l.age+1,deposit:0};
  if(d.lv===7){var fund=U.clamp(.2+(l.st.kno-60)/80+(l.edu>=6?.1:0),.05,.75);if(r()<fund){o.phd919='funded';pay=0;o.scholar=true;log('Bạn được nhận vào vị trí nghiên cứu sinh có hợp đồng lương; không phải đóng học phí.','good');}else o.phd919='self';l.flags.phd919={funded:o.phd919==='funded',country:d.country,at:l.age};}
  if(pay>0){if(l.money>=pay){H.cash(l,-pay,'Dự trù học phí du học (phần không có học bổng)');o.deposit=pay;}else o.unpaid919=pay;}
@@ -52,7 +77,7 @@ function enroll900(l,r,log,d,scholar){var of919=l.flags.studyVisa900;if(d.lv===7
  if(d.lv===5){l.major=d.field;l.majorName=fields[d.field];l.school='abroad';}else{l.school=d.lv===6?'post':'phd';l.flags.pg106={lv:d.lv,field:d.field,name:c[3][d.school],started:l.age,end:l.age+duration,residence:c[0],abroad:true,done:false};}l.schoolEnd=l.age+duration;
  log('Bạn nhập học '+c[3][d.school]+' ngành '+fields[d.field]+' tại '+c[1]+'. Công việc cũ kết thúc; từ nay nơi ở, chi phí và tiền tệ tính theo nước du học.','big');}
 E.STUDY_ENTRY900=enroll900;
-E.SC('abroad107_apply',{title:'Nộp hồ sơ du học',valid:application,text:function(l,d){return dest(d.country)[3][d.school]+' · '+fields[d.field]+' · '+(d.lv===6?2:4)+' năm. Tự túc dự trù học phí toàn khóa '+H.money(l,tuition(l,d))+'; chi phí sinh hoạt trả hằng năm tại nước đến. Hồ sơ học bổng tốn '+H.money(l,l.base*.02)+', không bảo đảm được chọn. Nhập học đồng nghĩa rời công việc hiện tại.';},opts:[{k:'scholar',l:'Nộp hồ sơ học bổng',req:function(l){return l.money>=l.base*.02;},run:function(l,r,log,d){admission(l,r,log,d,true);}},{k:'self',l:'Nộp hồ sơ tự túc',req:function(l,d){return l.money>=tuition(l,d);},run:function(l,r,log,d){admission(l,r,log,d,false);}},{k:'cancel',l:'Chưa nộp hồ sơ',run:function(l,r,log,d){if(d)d.done=true;}}]});
+E.SC('abroad107_apply',{title:'Nộp hồ sơ du học',valid:application,text:function(l,d){return dest(d.country)[3][d.school]+' · '+fields[d.field]+' · '+(d.lv===6?2:4)+' năm. Tự túc dự trù học phí toàn khóa '+H.money(l,tuition(l,d))+'; chi phí sinh hoạt trả hằng năm tại nước đến. Hồ sơ học bổng tốn '+H.money(l,l.base*.02)+', không bảo đảm được chọn. Nhập học đồng nghĩa rời công việc hiện tại.';},opts:[{k:'domestic',l:'Chuyển sang đăng ký đại học trong nước',req:domesticReady,run:domesticEnroll},{k:'scholar',l:'Nộp hồ sơ học bổng',req:function(l){return l.money>=l.base*.02;},run:function(l,r,log,d){admission(l,r,log,d,true);}},{k:'self',l:'Nộp hồ sơ tự túc',req:function(l,d){return l.money>=tuition(l,d);},run:function(l,r,log,d){admission(l,r,log,d,false);}},{k:'cancel',l:'Chưa nộp hồ sơ',run:function(l,r,log,d){if(d)d.done=true;}}]});
 action('abroad107','Học tập','Tự chọn quốc gia, trường và ngành du học',abroadReady);
 // The original school-leaving choice now also opens the country picker.
 var oldStudy=E.DEC.du_hoc.make;E.DEC.du_hoc.make=function(l,r){if(!abroadReady(l))return oldStudy.apply(this,arguments);var d=E.DEC.abroad107.make(l,r);d.id='du_hoc';d.data.picker107=true;return d;};
