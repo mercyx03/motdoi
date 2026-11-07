@@ -3,8 +3,8 @@
     "id": "royal-birth-display-81056",
     "version": "8.10.56",
     "publishedAt": "2026-11-07T18:20:07+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-07T11:24:26.000Z",
     "title": "Nhận biết rõ xuất thân hoàng gia khi bắt đầu cuộc đời",
     "summary": "Hiển thị nhánh hoàng gia và sửa lời kể gia cảnh lúc chào đời.",
     "tags": [
@@ -15,7 +15,8 @@
       "Khi random được hoàng gia, ô quay số và hồ sơ xuất phát ghi rõ nhánh chính hoặc nhánh phụ. Giấy khai sinh có mục xuất thân hoàng gia bên cạnh thông tin thu nhập gia đình.",
       "Sửa câu nhật ký chào đời còn giữ gia cảnh bốc trước khi xác định xuất thân hoàng gia. Bản lưu cũ được đối chiếu lại câu này theo xuất thân đã có.",
       "Trong chế độ Thế giới, sinh tại một nước quân chủ được hỗ trợ có 3% cơ hội xuất thân hoàng gia. Random quốc gia toàn thế giới còn phụ thuộc xác suất chọn được nước đó."
-    ]
+    ],
+    "correctedAt": "2026-11-07T11:24:27.047Z"
   },
   {
     "id": "education-fallback-graduation-81055",

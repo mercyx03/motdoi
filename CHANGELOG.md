@@ -1,4 +1,4 @@
-## v8.10.56 — Xuất thân hoàng gia (packaged)
+## v8.10.56 — Xuất thân hoàng gia (đã phát hành)
 
 - Hiện nhánh hoàng gia ở ô quay số, hồ sơ và giấy khai sinh; đồng bộ câu nhật ký chào đời cho nhân vật mới và bản lưu cũ.
 - Kiểm tra xác suất sinh hoàng gia ở các nước được hỗ trợ và chặn xuất thân này tại Việt Nam.
