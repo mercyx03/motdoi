@@ -209,6 +209,7 @@
     var teaser = eventTeaser(l);
     var talent = l.talent ? U.cap(E.talentText(l)) + (l.game && l.flags.gamePicked ? ' · ' + l.game : '') : 'Chưa bộc lộ';
     var tags = [E.QUINT[f.q].replace('một trong những ', '').replace('một ', '').replace('gia đình', 'Gia đình'), l.urban ? 'Thành thị' : 'Nông thôn'];
+    if (l.flags.royal) tags.unshift(E.royalBirthLabel(l));
     if (l.eth) tags.push(l.eth); if (l.chosenOrient || l.orient !== 'straight') tags.push('LGBTQ+');
     $('#heroProfile').innerHTML = '<div class="eyebrow">MỘT LƯỢT MÔ PHỎNG CÓ THỂ BẮT ĐẦU NHƯ SAU</div><h3>Hồ sơ xuất phát</h3>' +
       '<div class="idhead" style="margin:6px 0 10px">' + E.art.avatar(Object.assign({}, l, { age: 6, school: 'primary', job: null })) + '<div><b style="font-size:17px">' + esc(l.name) + '</b><div class="small muted">' + (l.sex === 'M' ? 'Bé trai' : 'Bé gái') + ' · ' + esc(where) + '</div></div></div>' +
@@ -336,7 +337,7 @@
       { lab: 'Quốc gia', pool: W.C.filter(function (c) { return c.births > 0; }).map(function (c) { return c.name; }), fin: l.countryName },
       { lab: 'Nơi sinh', pool: E.isVN(l) ? VN.P34.map(function (p) { return p.name; }) : W.BY[l.country].cities.concat(['nông thôn']), fin: E.isVN(l) ? l.provLabel : (l.urban ? l.city : 'Nông thôn') },
       { lab: 'Giới tính', pool: ['Bé trai', 'Bé gái'], fin: sexTxt },
-      { lab: 'Gia cảnh', pool: famNames, fin: famNames[l.fam.q - 1] }
+      { royal: !!l.flags.royal, lab: l.flags.royal ? 'Xuất thân' : 'Gia cảnh', pool: famNames, fin: l.flags.royal ? (l.flags.royal.tier === 'direct' ? 'Hoàng gia · nhánh chính' : 'Hoàng gia · nhánh phụ') : famNames[l.fam.q - 1] }
     ];
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var N = 28, H = 44, durs = reduce ? [300, 350, 400, 450] : [1700, 2300, 2800, 3300];
@@ -344,7 +345,7 @@
       '<div class="reels">' + reels.map(function (r, i) {
         var items = shuffled(r.pool, N).concat([r.fin]);
         return '<div class="reel" id="reel' + i + '"><div class="lab">' + esc(r.lab) + '</div><div class="win"><ul style="transform:translateY(' + H + 'px)">' +
-          items.map(function (x, j) { return '<li' + (j === N ? ' class="final"' : '') + '>' + esc(x) + '</li>'; }).join('') + '</ul></div></div>';
+          items.map(function (x, j) { return '<li' + (j === N ? ' class="final' + (r.royal ? ' royal' : '') + '"' : '') + '>' + esc(x) + '</li>'; }).join('') + '</ul></div></div>';
       }).join('') + '</div><div class="rollmsg" id="rollMsg"></div>' +
       '<div class="go-row" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="rollSkip">Bỏ qua hiệu ứng</button></div>',
       function (box) {
@@ -387,6 +388,7 @@
       (vn ? fact('Dân tộc', esc(l.eth)) : '') +
       fact('Tôn giáo', esc(l.religion)) +
       (E.astroText ? fact('Giờ sinh · cung hoàng đạo', esc(E.astroText(l))) : '') +
+      (l.flags.royal ? fact('Xuất thân hoàng gia', esc(E.royalBirthLabel(l))) : '') +
       fact('Thu nhập gia đình', qDots(f.q)) +
       (f.orphan && f.orphan.adopted == null ? fact('Bố mẹ', f.orphan.unknown ? 'Không rõ tung tích' : 'Đã mất khi bạn còn đỏ hỏn') + fact('Người nuôi dưỡng', esc(U.cap(f.orphan.carer))) : // v7.1: xuất thân mồ côi
       fact('Tuổi bố mẹ', 'Mẹ ' + f.mAge + (f.noDad ? '' : ' · Bố ' + f.fAge)) +

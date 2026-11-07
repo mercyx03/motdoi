@@ -672,3 +672,5 @@ footer .disclaimer b { color: var(--accent); }
 /* Menu nhieu lua chon giu khung co dinh, cuon ben trong, nut Quay lai luon hien o cuoi. */
 .opts.many { max-height: min(54vh, 480px); overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; }
 .opts.many .opt[data-k="cancel"] { position: sticky; bottom: 0; background: var(--surface); border-color: var(--accent); z-index: 1; }
+
+.reel li.final.royal { white-space: normal; text-align: center; font-size: 13px; line-height: 1.25; }

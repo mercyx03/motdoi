@@ -37,6 +37,27 @@
   function activeRoyal(l) { var x = royal(l); return x && !x.quit ? x : null; }
   function royalTitle(l) { var x = royal(l); if (!x) return ''; if (x.reign) return l.sex === 'F' ? 'Nữ hoàng' : (MON[x.c] ? MON[x.c][0] : 'Quốc vương'); if (x.quit) return 'cựu thành viên hoàng tộc'; return x.tier === 'direct' ? (l.sex === 'F' ? 'Công chúa' : 'Hoàng tử') : (l.sex === 'F' ? 'Quận chúa' : 'Thân vương'); }
   E.royalTitle = royalTitle;
+  E.royalBirthLabel = function (l) {
+    var x = royal(l);
+    return x ? x.house + (x.tier === 'direct' ? ' · nhánh chính' : ' · nhánh phụ') : '';
+  };
+  function syncRoyalBirth(l) {
+    if (!royal(l)) return;
+    var first = (l.log || []).find(function (entry) {
+      return entry.a === 0 && typeof entry.t === 'string' && entry.t.includes('bạn chào đời là');
+    });
+    if (!first) return;
+    E.QUINT.slice(1).forEach(function (label, i) {
+      var prefix = i === 0 || i === 4 ? 'thuộc ' : 'trong ';
+      first.t = first.t.replace(', ' + prefix + label + '.', ', trong ' + E.royalBirthLabel(l) + '.');
+    });
+  }
+  var migrateRoyalBirth = E.migrateExt;
+  E.migrateExt = function (l) {
+    if (migrateRoyalBirth) migrateRoyalBirth.apply(this, arguments);
+    syncRoyalBirth(l);
+  };
+
   function setupRoyal(life, tier, fromParent) {
     var f = life.fam, m = MON[life.country];
     life.flags.royal = { tier: tier, c: life.country, house: m[1] };
@@ -67,7 +88,7 @@
       var h = { rs: (life.rs ^ 0x51ab3e7) | 0 }, x = U.rand(h);
       if (x < 0.03) setupRoyal(life, U.rand(h) < 0.2 ? 'direct' : 'branch', false);
     }
-    if (royal(life)) { life.flags.birthQ = 5; life.birthPlace = life.birthPlace; }
+    if (royal(life)) { life.flags.birthQ = 5; syncRoyalBirth(life); }
     return life;
   };
   E.HOOKS.year.unshift(function (l, r, log, a) {

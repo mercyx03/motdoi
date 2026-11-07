@@ -1,3 +1,8 @@
+## v8.10.56 — Xuất thân hoàng gia (packaged)
+
+- Hiện nhánh hoàng gia ở ô quay số, hồ sơ và giấy khai sinh; đồng bộ câu nhật ký chào đời cho nhân vật mới và bản lưu cũ.
+- Kiểm tra xác suất sinh hoàng gia ở các nước được hỗ trợ và chặn xuất thân này tại Việt Nam.
+
 ## v8.10.55 — Đại học trong nước và tiến độ tốt nghiệp (đã phát hành)
 
 - Thêm đường chuyển hướng từ hồ sơ du học chưa nhập học sang nguyện vọng trong nước, hoàn đúng học phí dự trù và giữ xét tuyển theo điều kiện hiện hành.
