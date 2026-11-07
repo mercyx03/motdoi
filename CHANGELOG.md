@@ -1,4 +1,4 @@
-## v8.10.55 — Đại học trong nước và tiến độ tốt nghiệp (packaged)
+## v8.10.55 — Đại học trong nước và tiến độ tốt nghiệp (đã phát hành)
 
 - Thêm đường chuyển hướng từ hồ sơ du học chưa nhập học sang nguyện vọng trong nước, hoàn đúng học phí dự trù và giữ xét tuyển theo điều kiện hiện hành.
 - Hiện rõ từng điều kiện tốt nghiệp và nối đến các thao tác học lại, ngoại ngữ, chứng chỉ, hồ sơ học thuật, bảo vệ.

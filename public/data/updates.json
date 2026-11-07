@@ -5,8 +5,8 @@
       "id": "education-fallback-graduation-81055",
       "version": "8.10.55",
       "publishedAt": "2026-11-07T12:25:00+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-07T05:29:02.000Z",
       "title": "Chọn đại học trong nước và theo dõi điều kiện tốt nghiệp",
       "summary": "Có hướng học trong nước khi du học không thành và biết rõ điều kiện còn thiếu để tốt nghiệp.",
       "tags": [
@@ -18,7 +18,8 @@
         "Có thể chuyển hướng ngay khi chưa đủ học phí hoặc đang chờ visa. Khi rút hồ sơ, phần học phí du học đã dự trù được hoàn lại; phí hồ sơ và visa đã chi không được hoàn. Đại học trong nước vẫn xét điểm và điều kiện tuyển sinh.",
         "Tiến độ đại học hiển thị rõ tín chỉ, chuyên cần, ngoại ngữ đầu ra, hồ sơ học thuật và kết quả bảo vệ. Chứng chỉ hết hạn được chỉ rõ để người học biết cần thi lại.",
         "Từ màn hình tiến độ, có thể mở phần học lại, học ngoại ngữ, thi lại chứng chỉ, xử lý hồ sơ học thuật hoặc bảo vệ khi đến kỳ. Hoàn tất các điều kiện để được xét bằng vào cuối năm học."
-      ]
+      ],
+      "correctedAt": "2026-11-07T05:29:02.324Z"
     },
     {
       "id": "exam-model-review-81054",
