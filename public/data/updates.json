@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-06T08:20:55.761Z",
+  "generatedAt": "2026-11-09T07:01:54.266Z",
   "entries": [
+    {
+      "id": "homeschool-england-81057",
+      "version": "8.10.57",
+      "publishedAt": "2026-11-09T07:01:54.160Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Học tại nhà và chọn môn tại England",
+      "summary": "Chuẩn bị hồ sơ học tại nhà theo nơi cư trú, giữ học bạ khi đổi lộ trình và theo dõi ngoại ngữ, môn tự chọn, thi GCSE tại England.",
+      "tags": [
+        "Học tập",
+        "Tính năng"
+      ],
+      "details": [
+        "Trong Học tập, học sinh và giám hộ có thể xem quy định, trao đổi lý do, chọn hình thức, chuẩn bị giấy tờ và kế hoạch. Nơi cần duyệt trước vẫn giữ trường cũ trong khi chờ; khu vực chưa đủ dữ liệu sẽ báo rõ và chưa mở chuyển lộ trình.",
+        "Học tại nhà theo dõi tiến độ từng môn, thời gian, sức khỏe, chi phí và hoạt động cộng đồng. Tự học, gia sư và học xuyên hè có điều kiện khác nhau. Quay lại trường hoặc đổi nơi ở vẫn giữ hồ sơ; trường tiếp nhận xét công nhận riêng.",
+        "Tách hoàn thành chương trình, hết nghĩa vụ giáo dục, văn bằng và điều kiện nộp đại học. Diploma gia đình không tự biến thành bằng trường hoặc GED. Tài nguyên chương trình California và trợ cấp New Zealand chỉ mở theo điều kiện tương ứng.",
+        "Tại England, từng ngoại ngữ giữ kỹ năng khi đổi tiếng hoặc trường. Ở giai đoạn phù hợp, học sinh chọn ngoại ngữ hiện đại hoặc cổ ngữ; môn mở, lớp đầy và trùng giờ được kiểm tra trước khi đăng ký.",
+        "Môn tự chọn có nhóm rõ ràng, số suất theo trường và bước chốt nguyện vọng. Lớp học ngoại ngữ, văn bằng GCSE đã xác minh và môn trung tâm nhận thi được phân biệt. Những văn bằng chưa đủ dữ liệu chỉ hiện là lớp bổ trợ.",
+        "Thi thử GCSE và thi thật dùng cùng cách chấm từng môn trên thang 9–1/U. Đăng ký thi cần trung tâm nhận môn và hỗ trợ phần đánh giá; điểm đã chốt được giữ khi đổi môn hay tải lại. Có kết quả mới mở chuyển tiếp A-Level, IB hoặc học nghề. Trường và trung tâm trong mô phỏng không phải danh mục tuyển sinh thật."
+      ]
+    },
     {
       "id": "royal-birth-display-81056",
       "version": "8.10.56",

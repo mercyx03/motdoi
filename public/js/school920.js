@@ -74,7 +74,7 @@
   function rec(c) { return PROM[c] || DEF; }
 
   // ================= hồ sơ trường (ổn định theo khóa) =================
-  function inSchool(l) { return ['primary', 'lower', 'upper', 'priv', 'voc'].indexOf(l.school) >= 0 && !jailed(l); }
+  function inSchool(l) { if(E.STUDY857&&E.STUDY857.active(l)&&!E.STUDY857.home(l).schoolManaged)return false;return ['primary', 'lower', 'upper', 'priv', 'voc'].indexOf(l.school) >= 0 && !jailed(l); }
   function endAge(l) { return l.schoolEnd != null ? l.schoolEnd : l.school === 'primary' ? 11 : l.school === 'lower' ? 15 : 18; }
   function left(l) { return endAge(l) - l.age - 1; } // tuổi trong năm học đang diễn ra tăng trước khi trường cập nhật schoolEnd: năm cuối = 1
   function key(l) { var sp = l.flags.study54 && l.flags.study54.special; return cc(l) + ':' + l.school + ':' + (sp && !(l.school==='upper' && E.WORLD120.p(l).highSchool) && sp.name || l.uniName || 'local') + ':' + (l.birthYear + endAge(l)); }

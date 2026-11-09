@@ -1,3 +1,9 @@
+## v8.10.57 — Học tại nhà và giáo dục England (packaged)
+
+- Mở rộng hồ sơ học tập với thủ tục học tại nhà, tiến độ môn, nghĩa vụ và quay lại trường; thiếu dữ liệu vùng thì khóa lộ trình.
+- England có ngoại ngữ theo Key Stage, môn tự chọn theo lịch/suất trường và GCSE dùng công thức thi chung; giữ điểm đã chốt.
+- Độ phủ nguồn, giản lược và kiểm thử: docs/HOMESCHOOL-ENGLAND-PROGRESS.md. Chỉ Preview, chưa nghiệm thu toàn diện.
+
 ## v8.10.56 — Xuất thân hoàng gia (đã phát hành)
 
 - Hiện nhánh hoàng gia ở ô quay số, hồ sơ và giấy khai sinh; đồng bộ câu nhật ký chào đời cho nhân vật mới và bản lưu cũ.

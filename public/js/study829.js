@@ -132,7 +132,7 @@
     return aidOptions(l).map(function(a){var amount=l.base*(a[0].startsWith('Maintenance')?(l.fam.q<=2?.38:.18):.3);return {k:a[0],l:a[0]+' · '+H.money(l,amount),why:s.funding?.[a[0]]===l.age?'Đã nhận năm nay':true,run:function(l,r,log){s.funding=s.funding||{};if(s.funding[a[0]]===l.age)return;s.funding[a[0]]=l.age;if(['Tuition Fee Loan','HECS-HELP','VET Student Loans'].includes(a[0])){s.feesPaid=(s.feesPaid||0)+amount;log('Khoản học phí được chuyển thẳng cho trường.','neutral');}else H.cash(l,amount,a[0]);if(a[1]!=='grant'){s.debts=s.debts||[];s.debts.push({name:a[0],bal:amount,rate:a[2],plan:a[1]});}log('Nhận '+H.money(l,amount)+' từ '+a[0]+'.','good');}};});},16,'Tài chính');
   E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;
     var s=l.flags.study829;
-    if(england(l)&&l.age>=5&&l.age<=17&&l.school){log(stage(l),'neutral');if(l.age===10 && !state(l).sats){state(l).sats=l.st.kno>=60?'đạt chuẩn mô phỏng':'cần hỗ trợ thêm';log('Đánh giá SATs cuối Year 6: '+state(l).sats+'. Bạn tiếp tục lên Year 7.','neutral');}}
+    if(england(l)&&(!E.STUDY857||E.STUDY857.en(l))&&!(E.STUDY857&&E.STUDY857.active(l))&&l.age>=5&&l.age<=17&&l.school){log(stage(l),'neutral');if(l.age===10 && !state(l).sats){state(l).sats=l.st.kno>=60?'đạt chuẩn mô phỏng':'cần hỗ trợ thêm';log('Đánh giá SATs cuối Year 6: '+state(l).sats+'. Bạn tiếp tục lên Year 7.','neutral');}}
     if(!s||s.at===l.age)return;s.at=l.age;
     if(s.exchange && s.exchange.at<l.age && s.exchange.status==='đang trao đổi'){var x=s.exchange;finishExchange(l,s,x,log);}
     if(s.apprentice){if((l.school==='uni'||l.edu>=5&&l.age===s.apprentice.end-1)&&l.age<s.apprentice.end){H.cash(l,l.base*.65,'Lương học nghề bậc đại học');l.workYrs=(l.workYrs||0)+1;}else delete s.apprentice;}
