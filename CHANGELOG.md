@@ -1,3 +1,9 @@
+## v8.10.59 — Tuổi thơ theo nơi sống (packaged)
+
+- Chơi cùng bạn xét nơi cư trú và hoàn cảnh hoàng gia, ghi nhận bạn thật ở gần, không sinh tiền thật hoặc nhận thưởng lặp.
+- Điều chỉnh các sự kiện tuổi thơ liên quan và cập nhật sự kiện đang chờ; giữ lịch sử đã xảy ra.
+- Hai bản 8.10.57/58 ghi đã phát hành lúc 15:39:31 ngày 09/11/2026 UTC+7 theo xác nhận chủ dự án. Bản sửa 8.10.59 vẫn packaged.
+
 ## v8.10.58 — Tước hiệu, tên họ và nghi thức hoàng gia (packaged)
 
 - Tách căn cứ từng tước, HRH, kế vị, công vụ và quyền điền sản cho bảy vương thất; giữ dữ liệu lịch sử và mã gia phả.

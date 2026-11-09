@@ -295,3 +295,7 @@ GĐ6 — 8.10.55: còn regression toàn bộ, thiết bị thật và bản lưu
 GĐ6 — 8.10.56: còn regression tổng thể và bản lưu thật của người báo lỗi gia cảnh hoàng gia. Kiểm tra trọng điểm dùng cuộc đời tạo qua luồng game và bản lưu giả lập; chưa kiểm chứng Pages REVIEWS_DB.
 
 GĐ6 — 8.10.58: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu hoàng gia nhiều thế hệ thực tế, toàn bộ ngoại lệ lịch sử/sắc lệnh từng cá nhân và xác minh Pages REVIEWS_DB. Theo dõi từng nước tại docs/ROYAL-858-PROGRESS.md; khi làm tiếp bắt đầu từ mục còn thiếu. Không coi các mô hình quyết định hư cấu là quy định pháp lý thật.
+
+GĐ6 — 8.10.59: còn regression toàn bộ, thiết bị và save thật; tiếp tục rà nội dung quốc tế ngoài nhóm tuổi thơ đã sửa, không coi 195 nước là 195 bộ phong tục đã nghiên cứu riêng. Chi tiết docs/CHILDHOOD-859.md. Pages REVIEWS_DB chưa xác minh.
+
+GĐ6 — 8.10.59 bổ sung: tests/life138.js lỗi “sibling can succeed instead of player” cả trên hai module childhood trước sửa (HEADc1d2365) và mã mới; cần rà fixture/điều kiện kế nhiệm doanh nghiệp riêng. Không tính đạt nhóm này.

@@ -1,12 +1,32 @@
 {
-  "generatedAt": "2026-11-09T08:30:42.615Z",
+  "generatedAt": "2026-11-09T08:46:31.836Z",
   "entries": [
+    {
+      "id": "childhood-context-81059",
+      "version": "8.10.59",
+      "publishedAt": "2026-11-09T08:46:31.684Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Chuyện tuổi thơ theo nơi sống và gia đình",
+      "summary": "Buổi chơi cùng bạn và các chuyện tuổi nhỏ xét nơi đang sống, người chăm sóc và hoàn cảnh hoàng gia.",
+      "tags": [
+        "Sửa lỗi",
+        "Đời sống"
+      ],
+      "details": [
+        "Ngoài Việt Nam, chơi bán hàng dùng quầy đồ chơi, thẻ giấy hoặc đồng xu đồ chơi; không tự kể chuyện tiền lá cây hay “giàu nhất xóm”. Trẻ hoàng gia có buổi chơi được người chăm sóc thu xếp, không tự gọi cả xóm vào nhà. Trò đóng vai không tạo thu nhập thật.",
+        "Khi có người bạn cùng tuổi còn sống ở gần, buổi chơi ghi nhận đúng người và tăng gắn bó. Bạn ở xa hoặc đã mất không được tự đưa tới nhà. Đổi nơi sống trước khi chơi thì cần thu xếp lại; cùng một lựa chọn đã giải quyết không được nhận thưởng lần nữa.",
+        "Điều chỉnh các chuyện mất điện, nghỉ hè cùng người thân, giờ nghỉ, đọc truyện, chăm con vật, ốm ở nhà, quan sát sinh vật, trông em, chó chạy tới và tham quan cho bối cảnh ngoài Việt Nam. Không mặc định mọi nơi có chè đỗ đen, chấm điểm 10, bán gà dịp Tết hoặc ngủ trưa đi bắt ve.",
+        "Những hoạt động riêng của trường học và cộng đồng Việt Nam chỉ xuất hiện khi đang sống tại Việt Nam; không dựa riêng vào quốc tịch gốc. Những dòng kể tuổi thơ liên quan cũng tránh mặc định trẻ ở nước ngoài đi học thêm tiếng Anh hoặc có phong tục tiên răng giống nhau.",
+        "Sự kiện chơi đang chờ trong bản lưu cũ được cập nhật lời kể và lựa chọn theo hoàn cảnh hiện tại. Giữ mã nhân vật, tiền, lịch sử và các dòng nhật ký đã xảy ra."
+      ]
+    },
     {
       "id": "royal-titles-names-81058",
       "version": "8.10.58",
       "publishedAt": "2026-11-09T08:30:42.520Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-09T08:39:31.000Z",
       "title": "Tước hiệu, tên họ và lựa chọn hoàng gia",
       "summary": "Theo dõi từng tước theo gia phả, quốc gia và thời kỳ; chọn tên, đời tư và phong cách cá nhân với quyền lợi được phân biệt rõ.",
       "tags": [
@@ -23,14 +43,15 @@
         "Người trưởng thành có thể giảm công vụ hoặc dùng tên đời thường nơi công cộng. Tước, HRH, tư cách Vương thất, kế vị, tài sản riêng, quyền điền sản và ngân sách công vụ được kiểm tra riêng; tiền công vụ chưa chi được hoàn lại khi nghỉ nhiệm vụ.",
         "Làm đẹp có gợi ý theo tuổi và bối cảnh: tự nhiên, dewy, regal, bronzed, smoky; thêm tóc thẳng, gợn nhẹ, tóc tết và phụ kiện. Người trưởng thành có móng màu, son đậm và hình xăm mini. Phản ứng tại công vụ dựa vào sự kiện, mức chú ý và lịch sử; bình luận thẩm mỹ không tự làm mất tước hay quyền kế vị.",
         "Hồ sơ, gia phả và bảng kế vị dùng cùng nguồn dữ liệu. Bản lưu cũ giữ mã người, lịch sử tước và tài sản; phần thiếu căn cứ ghi Chưa xác định. Gia tộc trong game vẫn là mô phỏng hư cấu."
-      ]
+      ],
+      "correctedAt": "2026-11-09T08:40:41.785Z"
     },
     {
       "id": "homeschool-england-81057",
       "version": "8.10.57",
       "publishedAt": "2026-11-09T07:01:54.160Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-09T08:39:31.000Z",
       "title": "Học tại nhà và chọn môn tại England",
       "summary": "Chuẩn bị hồ sơ học tại nhà theo nơi cư trú, giữ học bạ khi đổi lộ trình và theo dõi ngoại ngữ, môn tự chọn, thi GCSE tại England.",
       "tags": [
@@ -44,7 +65,8 @@
         "Tại England, từng ngoại ngữ giữ kỹ năng khi đổi tiếng hoặc trường. Ở giai đoạn phù hợp, học sinh chọn ngoại ngữ hiện đại hoặc cổ ngữ; môn mở, lớp đầy và trùng giờ được kiểm tra trước khi đăng ký.",
         "Môn tự chọn có nhóm rõ ràng, số suất theo trường và bước chốt nguyện vọng. Lớp học ngoại ngữ, văn bằng GCSE đã xác minh và môn trung tâm nhận thi được phân biệt. Những văn bằng chưa đủ dữ liệu chỉ hiện là lớp bổ trợ.",
         "Thi thử GCSE và thi thật dùng cùng cách chấm từng môn trên thang 9–1/U. Đăng ký thi cần trung tâm nhận môn và hỗ trợ phần đánh giá; điểm đã chốt được giữ khi đổi môn hay tải lại. Có kết quả mới mở chuyển tiếp A-Level, IB hoặc học nghề. Trường và trung tâm trong mô phỏng không phải danh mục tuyển sinh thật."
-      ]
+      ],
+      "correctedAt": "2026-11-09T08:40:41.773Z"
     },
     {
       "id": "royal-birth-display-81056",
