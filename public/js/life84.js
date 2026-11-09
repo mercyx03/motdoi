@@ -35,7 +35,7 @@
   E.PARENT_PAY['quốc vương'] = 300; E.PARENT_PAY['thái tử'] = 150; E.PARENT_PAY['hoàng hậu'] = 150; E.PARENT_PAY['thái tử phi'] = 90; E.PARENT_PAY['hoàng thân'] = 70; E.PARENT_PAY['phu nhân hoàng thân'] = 40;
   function royal(l) { return l.flags && l.flags.royal || null; }
   function activeRoyal(l) { var x = royal(l); return x && !x.quit ? x : null; }
-  function royalTitle(l) { var x = royal(l); if (!x) return ''; if (x.reign) return l.sex === 'F' ? 'Nữ hoàng' : (MON[x.c] ? MON[x.c][0] : 'Quốc vương'); if (x.quit) return 'cựu thành viên hoàng tộc'; return x.tier === 'direct' ? (l.sex === 'F' ? 'Công chúa' : 'Hoàng tử') : (l.sex === 'F' ? 'Quận chúa' : 'Thân vương'); }
+  function royalTitle(l) { if(E.ROYAL858){var current=E.ROYAL858.lifeTitle(l);if(current!=null)return current;}var x = royal(l); if (!x) return ''; if (x.reign) return l.sex === 'F' ? 'Nữ hoàng' : (MON[x.c] ? MON[x.c][0] : 'Quốc vương'); if (x.quit) return 'cựu thành viên hoàng tộc'; return x.tier === 'direct' ? (l.sex === 'F' ? 'Công chúa' : 'Hoàng tử') : (l.sex === 'F' ? 'Quận chúa' : 'Thân vương'); }
   E.royalTitle = royalTitle;
   E.royalBirthLabel = function (l) {
     var x = royal(l);

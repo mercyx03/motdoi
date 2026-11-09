@@ -114,12 +114,14 @@ function pick(l, id, key, arg, r = () => 0.2) {
   h.members.splice(1, 0, { id: 'elder', name: 'Anh Cả', sex: 'M', by: l.birthYear - 3, role: 'child', parent: 'root', alive: true, titles: [{ key: 'prince' }], religion837: 'Anh giáo', country837: 'GB' });
   l.partner = { name: 'Catherine', sex: 'F', status: 'married', since: 25, alive: true };
   B.syncTitles(l, h, h.members[0], null, quiet);
-  ok(l.partner.royalConsortTitle847.includes('Nữ Công tước'), 'Spouse of #2 in line has Ducal/Royal Princess style initially');
+  ok(!l.partner.royalConsortTitle847.includes('Nữ Công tước'), 'Spouse of #2 has no dukedom before an actual grant');
 
   // Anh cả qua đời -> player thành người kế vị số 1 (Prince of Wales) -> vợ thành Vương phi xứ Wales (Princess of Wales)
   h.members.find(m => m.id === 'elder').alive = false;
   B.syncTitles(l, h, h.members[0], null, quiet);
-  ok(me.heirApparent847 && l.partner.royalConsortTitle847.includes('Vương phi xứ Wales'), 'Spouse title updates to Princess of Wales when partner becomes Heir Apparent');
+  ok(me.heirApparent847 && !l.partner.royalConsortTitle847.includes('Vương phi xứ Wales'), 'Heir and spouse wait for actual Wales grant');
+  ok(E.ROYAL858.issue(l,h,me,'wales',{issuerId:h.seat,confirmed:true}), 'Sovereign explicitly grants Wales');
+  ok(l.partner.royalConsortTitle847.includes('Vương phi xứ Wales'), 'Spouse style follows the actual Wales holder');
 
   // Quốc vương băng hà -> player đăng quang -> vợ thành Hoàng hậu (Queen Consort)
   h.members[0].alive = false;
@@ -144,8 +146,8 @@ function pick(l, id, key, arg, r = () => 0.2) {
   ok(pick(l, 'royalBirthProtocol847', 'gun_salute') && rec.saluteFired, 'GB 13:00 gun salute (62 Tower of London + 41 Green Park + 5 stations)');
 
   // Xét duyệt tên nghiêm ngặt cho 6 vị trí kế vị đầu tiên + lễ rửa tội váy Victoria có đủ nội ngoại 2 bên
-  ok(pick(l, 'royalBirthProtocol847', 'name_approval_strict') && rec.rejectedName847, 'Overly freestyle name rejected for baby in top 6 line of succession');
-  ok(pick(l, 'royalBirthProtocol847', 'name_approval_dynastic') && rec.nameAnnounced === 'completed' && l.kids[0].royalName837.includes(A.CULTURE.GB.house), 'Approved dynastic name announced');
+  ok(pick(l, 'royalBirthProtocol847', 'name_approval_strict') && rec.proposedName858 && !rec.rejectedName847, 'Modern name is discussed without a top-six legal veto');
+  ok(pick(l, 'royalBirthProtocol847', 'name_approval_dynastic') && rec.nameAnnounced === 'completed' && E.ROYAL858.namesOf(l,h,R.byId(h,l.kids[0].royal920.id)).house===h.name, 'Dynastic name announced with house kept separate');
   ok(pick(l, 'royalBirthProtocol847', 'royal_christening_full') && rec.christening.done && l.kids[0].faith830.royalRite837.bothFamilies && l.kids[0].faith830.royalRite837.gown.includes('Victoria'), 'Royal christening invites both paternal & maternal families and uses Victorian gown');
 
   // 4b. Ca sinh đôi (nam - nữ) / sinh mổ ở tuổi 30: không ra Lindo Wing, công bố tên ngay, đèn hồng + xanh, thứ tự kế vị theo phút chào đời
@@ -382,7 +384,7 @@ function pick(l, id, key, arg, r = () => 0.2) {
   // Nếu không có con trai (chỉ có 2 công chúa): Trưởng nữ đứng đầu và được sắc phong Princesa de Asturias
   hEs.members.find(m => m.id === 'younger').sex = 'F';
   B.syncTitles(lEs, hEs, hEs.members[0], null, quiet);
-  ok(R.order(lEs, hEs)[0].id === 'player' && R.byId(hEs, 'player').heirApparent847 && R.byId(hEs, 'player').asturias837, 'Spain eldest daughter becomes Princesa de Asturias when there is no son');
+  ok(R.order(lEs, hEs)[0].id === 'player' && E.ROYAL858.identity(lEs,hEs,R.byId(hEs,'player')).heirStatus==='presumptive' && R.byId(hEs, 'player').asturias837, 'Spain eldest daughter becomes Princesa de Asturias when there is no son');
 
   // Thêm con đầu của Thái nữ (cháu ngoại của Vua đang trị vì) và cháu của con đầu (chắt của Vua đang trị vì)
   hEs.members.push(
@@ -402,7 +404,7 @@ function pick(l, id, key, arg, r = () => 0.2) {
   ok(pick(lEs, 'royalSpainSuccession850', 'multigen_investiture_check'), 'Multi-generational investiture check executed');
   ok(pick(lEs, 'royalSpainSuccession850', 'long_lived_monarch_abdication') && hEs.seat === 'player', 'Long-lived monarch (86yo) abdicates for health reasons; player ascends throne at mature age');
   // Sau khi player lên làm Nữ hoàng (hEs.seat === 'player'), người con trưởng (grandchild1) mới chính thức được sắc phong làm Thái nữ (Princesa de Asturias)!
-  ok(gc.heirApparent847 === true && gc.asturias837 === true && gc.investedHeir850 === true, 'Grandchild is formally invested as Princesa de Asturias ONLY AFTER parent ascends the throne');
+  ok(gc.asturias837 === true && E.ROYAL858.identity(lEs,hEs,gc).titles.some(t=>t.key==='asturias'&&t.how==='automatic'), 'Grandchild is formally invested as Princesa de Asturias ONLY AFTER parent ascends the throne');
 }
 
 // 12. Anh Quốc (GB 8.10.50): Chọn A-Level vs. IB Diploma theo 3 Nhóm ngành Đại học
@@ -639,25 +641,22 @@ function pick(l, id, key, arg, r = () => 0.2) {
     h.members.push({ id: 'gk', name: 'SonOfK2', sex: 'M', by: 2018, parent: 'k2', alive: true, titles: [], religion837: A.CULTURE.ES.faith });
     ok(R.order(l, h).map(m => m.id).join(',') === 'heirD,k2,gk,k1,k3,sib', 'Male preference: child of the son stands right after his father');
   }
-  // Tước hiệu xứ sở của người kế vị số 1
-  ok(B.HEIR_TITLES.GB.M.includes('Thân vương xứ Wales') && B.HEIR_TITLES.GB.M.includes('Cornwall') && B.HEIR_TITLES.GB.M.includes('Rothesay'), 'GB heir: Prince of Wales, Duke of Cornwall & Rothesay');
-  ok(B.HEIR_TITLES.GB.F.includes('Thân vương nữ xứ Wales'), 'GB female heir: Princess of Wales in own right');
-  ok(B.HEIR_TITLES.BE.F.includes('Nữ Công tước xứ Brabant') && B.HEIR_TITLES.ES.F.includes('Thân vương nữ xứ Asturias'), 'BE Brabant / ES Asturias heir titles');
-  ok(B.HEIR_TITLES.SE.F.includes('Västergötland') && !/xứ/.test(B.HEIR_TITLES.NO.M.replace('không phong xứ riêng', '')), 'SE duchy granted by King; NO has no territorial title');
-  ok(B.HEIR_TITLES.DK.M.includes('Monpezat') && B.HEIR_TITLES.MC.F.includes('Nữ Hầu tước xứ Baux'), 'DK Monpezat family title; MC Marquise des Baux');
-  ok(B.HEIR_TITLES.LU.M.includes('Đại Công tước Kế vị') && B.HEIR_TITLES.LU.M.includes('Bourbon-Parma') && B.HEIR_TITLES.LI.F.includes('Thân vương nữ Kế vị'), 'LU Hereditary Grand Duke + Bourbon-Parma; LI Hereditary Princess');
-  // Vợ của Thái tử hưởng phiên bản nữ; chồng của Thái nữ không chạm tước xứ của vợ (trừ Thụy Điển mượn danh hạ vị)
-  const CT = B.CONSORT_TITLES;
-  ok(CT.GB.heir.F.includes('Vương phi xứ Wales') && CT.ES.heir.F.includes('Vương phi xứ Asturias') && CT.BE.heir.F.includes('Brabant') && CT.MC.heir.F.includes('Baux'), 'Wife of male heir shares female version of territorial title');
-  ok(CT.BE.heir.M.startsWith('Hoàng tử Bỉ') && CT.ES.heir.M.startsWith('Vương thân Tây Ban Nha') && CT.LU.heir.M.startsWith('Hoàng tử xứ Luxembourg') && CT.MC.heir.M.startsWith('Hoàng thân Monaco'), 'Husband of female heir gets only honorary prince title (BE/ES/LU/MC)');
-  ok(CT.LI.heir.M.includes('không là Thân vương xứ Liechtenstein') && CT.NO.heir.M.includes('Vương thân Na Uy') && CT.DK.heir.M.includes('Vương thân'), 'LI/NO/DK husband consort titles');
-  ok(CT.SE.heir.M.includes('Công tước danh dự xứ Västergötland') && CT.SE.heir.M.includes('không sở hữu'), 'SE husband borrows duchy name in subordinate honorary form');
+  // 8.10.58: bản đồ nhãn cũ không được tự gán các tước có điều kiện riêng.
+  const S=E.ROYAL858,D=S.DATA.rules;
+  ok(!B.HEIR_TITLES.GB.M.includes('Cornwall')&&!B.HEIR_TITLES.GB.F.includes('Wales'),'GB legacy lookup cannot grant bundled titles');
+  ok(D.uk1917&&D.uk2012&&D.cornwall&&D.rothesay,'UK titles have independent rules');
+  ok(D.brabant&&D.spain&&S.templates.spainDuchy.remainder==='life','BE/ES separate title mechanisms');
+  ok(!B.HEIR_TITLES.SE.F.includes('Västergötland')&&D.estelle.territory==='Östergötland','SE province requires personal grant');
+  ok(D.dk2023.from==='2023-01-01'&&B.HEIR_TITLES.MC.F.includes('Baux'),'DK dated branch rule; MC unchanged');
+  ok(!B.HEIR_TITLES.LU.M.includes('Bourbon-Parma')&&D.bourbon&&B.HEIR_TITLES.LI.F.includes('Thân vương nữ'),'LU Bourbon separate; LI unchanged');
+  ok(S.templates.sussex.remainder==='heirsMaleBody'&&S.templates.edinburgh.remainder==='life','Peerage remainders independent from crown equality');
+  ok(B.CONSORT_TITLES.GB.heir.F.includes('căn cứ riêng')&&B.CONSORT_TITLES.ES.heir.M.includes('căn cứ riêng'),'Consort catalogue refers to individual title proof');
   {
     const lW = life('ES', 30, 'F'), hW = house(lW, 'ES'), meW = R.byId(hW, 'player');
     hW.members.find(m => m.id === 'younger').alive = false;
     lW.partner = { name: 'Husband', sex: 'M', status: 'married', since: 28, alive: true };
     B.syncTitles(lW, hW, hW.members[0], null, quiet);
-    ok(meW.heirApparent847 && R.mainTitle(meW).includes('Thân vương nữ xứ Asturias') && lW.partner.royalConsortTitle847.includes('Vương thân Tây Ban Nha') && !lW.partner.royalConsortTitle847.startsWith('Vương phi'), 'Spanish female heir title and husband never holds Asturias');
+    ok(R.lineOf(lW,hW,meW)===1 && R.mainTitle(meW).includes('Thân vương nữ xứ Asturias') && lW.partner.royalConsortTitle847.includes('Príncipe de Asturias (phối ngẫu)'), 'Spain article 2 gives consort dignity; own holder remains the heir');
   }
 }
 

@@ -293,3 +293,5 @@ GĐ6 — 8.10.50: còn regression toàn bộ mã cuối, thiết bị thật, b�
 GĐ6 — 8.10.55: còn regression toàn bộ, thiết bị thật và bản lưu của người góp ý về tốt nghiệp. tests/player107.js hiện thất bại ở bước xét du học cả trên mã trước thay đổi; cần cập nhật dữ liệu kiểm thử theo điều kiện ngôn ngữ hiện hành. Chưa kiểm chứng binding Pages REVIEWS_DB.
 
 GĐ6 — 8.10.56: còn regression tổng thể và bản lưu thật của người báo lỗi gia cảnh hoàng gia. Kiểm tra trọng điểm dùng cuộc đời tạo qua luồng game và bản lưu giả lập; chưa kiểm chứng Pages REVIEWS_DB.
+
+GĐ6 — 8.10.58: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu hoàng gia nhiều thế hệ thực tế, toàn bộ ngoại lệ lịch sử/sắc lệnh từng cá nhân và xác minh Pages REVIEWS_DB. Theo dõi từng nước tại docs/ROYAL-858-PROGRESS.md; khi làm tiếp bắt đầu từ mục còn thiếu. Không coi các mô hình quyết định hư cấu là quy định pháp lý thật.

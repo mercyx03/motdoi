@@ -198,6 +198,7 @@
   };
 
   function syncTitles(l, h, newSov, oldSov, log) {
+    if(E.ROYAL858&&E.ROYAL858.supported(h)){var currentSov=R.byId(h,h.seat);if(currentSov){currentSov.supremeCommander847=SOVEREIGN_SUPREME_MIL[h.cc]||'Nguyên thủ Quốc gia';var currentUp=upState(l,currentSov);if(currentUp.swedenTrack)currentUp.swedenTrack.supremeRank=true;}return E.ROYAL858.sync(l,h,'cập nhật ngôi vị/hôn nhân');}
     if (!h || !A.COUNTRIES.includes(h.cc)) return;
     if (typeof syncLegitimacy851 === 'function') syncLegitimacy851(l, h);
     var line = R.order(l, h), heir = line[0], c = h.cc;
@@ -680,19 +681,12 @@
       });
     }
 
-    // 4. Đặt & xét duyệt tên Hoàng gia (bị từ chối nếu quá tự do ở 6 vị trí kế vị đầu)
-    row('name_approval_strict', 'Đề xuất tên phá cách tự do cho con (kiểm tra quy tắc 6 vị trí kế vị đầu tiên)', function (r, log) {
-      var firstKid = kids[0], m = firstKid && firstKid.royal920 && R.byId(q.h, firstKid.royal920.id);
-      var pos = m && R.lineOf(l, q.h, m) || 99;
-      var freeName = FREESTYLE_NAMES[hash(l.id + rec.age) % FREESTYLE_NAMES.length];
-      if (pos <= 6) {
-        rec.acted.name_approval_strict = false; // Cho phép chọn lại tên chuẩn
-        rec.rejectedName847 = freeName;
-        log('Bạn đề xuất tên "' + freeName + '", nhưng vì bé đứng thứ ' + pos + ' trong hàng kế vị (thuộc 6 vị trí kế vị đầu tiên), Quốc vương và Hội đồng/Văn phòng Hoàng gia từ chối tên quá tự do, yêu cầu chọn tên chuẩn mực mang tính lịch sử vương triều.', 'bad');
-      } else {
-        firstKid.royalNickname847 = freeName;
-        log('Vì bé ở xa ngai vàng (thứ ' + pos + '), gia đình được linh hoạt giữ tên gọi riêng "' + freeName + '" bên cạnh tên nghi lễ.', 'neutral');
-      }
+    // 8.10.58: kỳ vọng gia đình không là quyền phủ quyết tên theo sáu vị trí đầu.
+    row('name_approval_strict', 'Đề xuất tên theo sở thích, trao đổi kỳ vọng với gia đình', function (r, log) {
+      var k=kids[0],m=k&&k.royal920&&R.byId(q.h,k.royal920.id),freeName=FREESTYLE_NAMES[hash(l.id+rec.age)%FREESTYLE_NAMES.length];
+      if(!k||!m)return;rec.proposedName858=freeName;
+      if(E.ROYAL858&&E.ROYAL858.supported(q.h)){var n=E.ROYAL858.namesOf(l,q.h,m);E.ROYAL858.setNames(l,q.h,m,{given:n.given,daily:freeName,legalSurname:n.legalSurname});}
+      k.royalNickname847=freeName;log('Gia đình ghi tên gọi '+freeName+'. Gần ngai vàng có thể tăng sức ép truyền thông/cố vấn, không tự cấm tên hoặc làm mất danh tính.','neutral');
     });
 
     row('name_approval_dynastic', 'Công bố tên chuẩn mực truyền thống Hoàng gia (sau vài ngày – 1 tuần hoặc theo thông cáo)', function (r, log) {
@@ -702,7 +696,7 @@
         var chosen = pool[(hash(l.id + k.name) + idx) % pool.length];
         k.royalName837 = k.name + ' ' + chosen + ' ' + A.CULTURE[q.c].house;
         var m = k.royal920 && R.byId(q.h, k.royal920.id);
-        if (m) m.fullName837 = k.royalName837;
+        if (m) { m.fullName837 = k.royalName837;if(E.ROYAL858&&E.ROYAL858.supported(q.h))E.ROYAL858.setNames(l,q.h,m,{given:[k.name,chosen],daily:k.name,house:q.h.name}); }
       });
       rec.nameAnnounced = 'completed';
       log('Văn phòng Hoàng gia chính thức công bố tên đầy đủ theo truyền thống vương triều cho ' + kids.map(function (k) { return k.royalName837; }).join('; ') + '.', 'good');
@@ -1646,7 +1640,7 @@
       ruleDesc: h.cc === "ES"
         ? "Ưu tiên nam giới trong cùng hàng con (Male-preference primogeniture): nếu có Hoàng tử thì ưu tiên Hoàng tử lớn tuổi nhất lên kế vị dù trước đó đã có Công chúa; nếu không có con trai thì Trưởng nữ lên kế vị (Princesa de Asturias)."
         : "Thái tử/Thái nữ luôn đứng đầu (#1) trong hàng kế vị, tiếp đến là con đầu của họ (#2) và cháu của con đầu họ (#3, nếu có).",
-      grandchildRule: "Cháu gái, cháu trai (hoặc chắt) của Quốc vương/Nữ hoàng đang trị vì KHÔNG tự động là Thái tử/Thái nữ (vì cha/mẹ hoặc ông/bà đang giữ ngôi Thái tử/Thái nữ); chỉ được sắc phong kỹ càng làm Thái tử/Thái nữ khi cha hoặc mẹ đã chính thức lên ngai vàng.",
+      grandchildRule: "Cây gia đình xác định ai đang là người thừa kế trước, rồi mới xét từng tước. Asturias áp cho người được gọi kế vị theo quy định Tây Ban Nha; không bắt buộc cha/mẹ phải lên ngôi trước. Wales cần quyết định phong riêng. Trẻ được gọi of Wales theo cha/mẹ không tự nắm tước Wales.",
       longevityNote: "Khi vị vua đương nhiệm sống rất thọ (" + sovAge + " tuổi) và chưa thoái vị vì lý do sức khỏe hoặc qua đời, người kế vị có thể ở tuổi trung niên/cao niên mới làm Thái tử/Thái nữ hoặc lên ngôi Vua/Nữ hoàng.",
       sovAge: sovAge,
       heir: heir
@@ -1679,10 +1673,10 @@
       var line = R.order(l, h), pos = R.lineOf(l, h, me), sov = R.byId(h, h.seat);
       up.checkedMultigen850 = true;
       H.fx(l, { kno: 2 });
-      if (me.heirApparent847) {
-        log("Cha/mẹ của bạn đã truyền ngôi hoặc đang là Quân vương trên ngai vàng (" + (sov && sov.name || "Quốc vương") + "), nên bạn được sắc phong chính thức làm " + (HEIR_TITLES[h.cc] && HEIR_TITLES[h.cc][me.sex] || "Thái tử/Thái nữ") + " đứng đầu hàng kế vị (#1), tiếp theo là con trưởng và cháu trưởng của bạn.", "good");
+      if (pos === 1) {
+        log("Cha/mẹ của bạn đã truyền ngôi hoặc đang là Quân vương trên ngai vàng (" + (sov && sov.name || "Quốc vương") + "), nên bạn được sắc phong chính thức làm " + R.mainTitle(me) + " đứng đầu hàng kế vị (#1), tiếp theo là con trưởng và cháu trưởng của bạn.", "good");
       } else if (me.parent && me.parent !== h.seat && me.id !== h.seat) {
-        log("Bạn đang là cháu/chắt của vị Vua đang trị vì (đứng thứ #" + (pos || "—") + " trong hàng kế vị sau cha/mẹ hoặc ông/bà của mình): theo quy tắc hoàng gia, cháu nội/ngoại của Vua đương nhiệm chưa tự động mang tước Thái tử/Thái nữ mà chỉ được sắc phong kỹ càng sau khi cha hoặc mẹ chính thức lên ngai vàng.", "neutral");
+        log("Bạn đang là cháu/chắt của vị Vua đang trị vì (đứng thứ #" + (pos || "—") + " trong hàng kế vị sau cha/mẹ hoặc ông/bà của mình): chưa đứng đầu hàng kế vị nên chưa có tước gắn với người thừa kế hiện tại; điều kiện từng tước được kiểm riêng khi gia phả thay đổi.", "neutral");
       } else {
         log("Đã đối chiếu thứ tự kế vị nhiều thế hệ: người Thái tử/Thái nữ đứng đầu (#1), tiếp đến là con trưởng của họ (#2) và cháu của con trưởng họ (#3, nếu có).", "neutral");
       }

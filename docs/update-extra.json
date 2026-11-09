@@ -1,5 +1,29 @@
 [
   {
+    "id": "royal-titles-names-81058",
+    "version": "8.10.58",
+    "publishedAt": "2026-11-09T08:30:42.520Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Tước hiệu, tên họ và lựa chọn hoàng gia",
+    "summary": "Theo dõi từng tước theo gia phả, quốc gia và thời kỳ; chọn tên, đời tư và phong cách cá nhân với quyền lợi được phân biệt rõ.",
+    "tags": [
+      "Tính năng",
+      "Đời sống",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Tại Anh, đứng đầu hàng kế vị chưa tự có Wales. Cornwall và Rothesay xét điều kiện riêng; hồ sơ phân biệt người giữ tước với phối ngẫu và cách gọi “of Wales” của con. Nữ giữ Wales theo quyền riêng cần quyết định có nhãn kịch bản trong game.",
+      "Prince/Princess và HRH được xét lại khi đổi ngôi theo văn thư áp dụng. Lord/Lady cần căn cứ. Phong tước có bước xem xét và điều kiện truyền riêng: Sussex theo dòng nam hợp lệ, Edinburgh tham chiếu sáng lập năm 2023 chỉ suốt đời người nhận.",
+      "Tây Ban Nha phân biệt Asturias, Infante/Infanta và Grande; Bỉ xét Brabant riêng theo nhánh. Thụy Điển phong công tước theo tỉnh bằng quyết định riêng, có thể giữ Prince/Princess và tước tỉnh khi rời Royal House. Đan Mạch có thay đổi Monpezat đúng phạm vi và mốc hiệu lực.",
+      "Hà Lan phân biệt Orange, Netherlands, Orange-Nassau, Count và Jonkheer qua căn cứ riêng. Luxembourg xét tước Đại Công tước Kế vị từ tuổi và thời kỳ phù hợp; Bourbon-Parma cần căn cứ riêng.",
+      "Tên chính, nhiều tên đệm, tên nghi lễ, tên thường dùng, họ pháp lý và nhà/vương triều được lưu riêng. Hỗ trợ dấu bản địa, gạch nối, họ kép và gợi ý tri ân theo mã gia phả. Ở sáu vị trí đầu, tên hiện đại có thể gây trao đổi trong gia đình nhưng không tự bị phủ quyết.",
+      "Người trưởng thành có thể giảm công vụ hoặc dùng tên đời thường nơi công cộng. Tước, HRH, tư cách Vương thất, kế vị, tài sản riêng, quyền điền sản và ngân sách công vụ được kiểm tra riêng; tiền công vụ chưa chi được hoàn lại khi nghỉ nhiệm vụ.",
+      "Làm đẹp có gợi ý theo tuổi và bối cảnh: tự nhiên, dewy, regal, bronzed, smoky; thêm tóc thẳng, gợn nhẹ, tóc tết và phụ kiện. Người trưởng thành có móng màu, son đậm và hình xăm mini. Phản ứng tại công vụ dựa vào sự kiện, mức chú ý và lịch sử; bình luận thẩm mỹ không tự làm mất tước hay quyền kế vị.",
+      "Hồ sơ, gia phả và bảng kế vị dùng cùng nguồn dữ liệu. Bản lưu cũ giữ mã người, lịch sử tước và tài sản; phần thiếu căn cứ ghi Chưa xác định. Gia tộc trong game vẫn là mô phỏng hư cấu."
+    ]
+  },
+  {
     "id": "homeschool-england-81057",
     "version": "8.10.57",
     "publishedAt": "2026-11-09T07:01:54.160Z",

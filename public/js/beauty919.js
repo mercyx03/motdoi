@@ -62,6 +62,7 @@
   }, function (l, arg) {
     var h = hair(l), s = bs(l), out = [], tab = arg && arg.tab, back = { k: 'back', l: '← Làm đẹp', run: function (l, r) { X.next(l, 'beauty919', r, {}); } };
     if (!tab) {
+      if(E.ROYAL858)out.push({k:'presentation858',l:'Trang điểm, tóc và phụ kiện theo bối cảnh',run:function(l,r){X.next(l,'royalLook858',r);}});
       [['color', 'Nhuộm tóc'], ['bleach', 'Tẩy tóc (nâng level)'], ['style', 'Làm tóc, tạo kiểu'], ['pierce', 'Bấm khuyên'], ['jewel', 'Trang sức']].forEach(function (t) { if (t[0] === 'bleach' && l.age < 14 || t[0] === 'color' && l.age < 12) return; out.push({ k: t[0], l: t[1], run: function (l, r) { X.next(l, 'beauty919', r, { tab: t[0] }); } }); });
       out.push({ k: 'care', l: 'Phục hồi, dưỡng tóc tại salon', h: mo(l, cost(l, 0.004)), why: h.dmg <= 5 ? 'Tóc đang khỏe' : payWhy(l, cost(l, 0.004)), run: function (l, r, log) { pay(l, cost(l, 0.004), 'Phục hồi tóc'); h.dmg = Math.max(0, h.dmg - 30); log('Tóc được phục hồi, mềm mượt hơn.', 'good'); } });
       if (h.color || h.lift) out.push({ k: 'natural', l: 'Nhuộm phủ về màu gần tự nhiên', h: mo(l, cost(l, 0.004)), why: payWhy(l, cost(l, 0.004)), run: function (l, r, log) { pay(l, cost(l, 0.004), 'Nhuộm phủ tóc'); h.color = null; h.dyed = true; log('Tóc được nhuộm phủ về tông gần màu tự nhiên; phần tóc mới mọc là màu thật.', 'neutral'); } });

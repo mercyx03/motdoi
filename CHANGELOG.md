@@ -1,3 +1,9 @@
+## v8.10.58 — Tước hiệu, tên họ và nghi thức hoàng gia (packaged)
+
+- Tách căn cứ từng tước, HRH, kế vị, công vụ và quyền điền sản cho bảy vương thất; giữ dữ liệu lịch sử và mã gia phả.
+- Đặt nhiều tên Unicode, tên theo bối cảnh và lựa chọn đời tư; mở rộng Làm đẹp với phản ứng tại công vụ thực tế.
+- Nguồn, mốc hiệu lực, kiểm thử và giới hạn: docs/ROYAL-858-PROGRESS.md. Preview, chưa nghiệm thu toàn diện.
+
 ## v8.10.57 — Học tại nhà và giáo dục England (packaged)
 
 - Mở rộng hồ sơ học tập với thủ tục học tại nhà, tiến độ môn, nghĩa vụ và quay lại trường; thiếu dữ liệu vùng thì khóa lộ trình.

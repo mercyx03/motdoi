@@ -51,8 +51,8 @@
   };
   function tname(key, sex) { var T = TITLES[key]; return T ? T.n[sex === 'F' ? 1 : 0] : key; }
   // mỗi danh hiệu một bản ghi: substantive (tự thân) hay courtesy/style (do kết hôn, làm con), cha truyền hay chung thân
-  function grant(p, key, how, hered, why, at) { p.titles = p.titles || []; if (p.titles.some(function (t) { return t.key === key && !t.lost; })) return false; p.titles.push({ key: key, how: how, hered: !!hered, why: why, at: at }); return true; }
-  function mainTitle(p) { if(E.ROYAL837){var local=E.ROYAL837.title(p);if(local)return local;} var order = ['sovereign', 'consort', 'wales', 'royal', 'prince', 'duke', 'marquess', 'earl', 'viscount', 'baron'], t = (p.titles || []).filter(function (t) { return !t.lost; }).sort(function (a, b) { return order.indexOf(a.key) - order.indexOf(b.key); })[0]; return t ? tname(t.key, p.sex) + (t.how === 'courtesy' ? ' (danh xưng do kết hôn)' : '') : 'không có tước'; }
+  function grant(p, key, how, hered, why, at, detail) { p.titles = p.titles || []; if (p.titles.some(function (t) { return t.key === key && !t.lost && (!detail || t.territory === detail.territory); })) return false; p.titles.push(Object.assign({ key: key, how: how, hered: !!hered, why: why, at: at },detail||{})); return true; }
+  function mainTitle(p) { if(E.ROYAL858){var canonical=E.ROYAL858.title(p);if(canonical!=null)return canonical;}if(E.ROYAL837){var local=E.ROYAL837.title(p);if(local)return local;} var order = ['sovereign', 'consort', 'wales', 'royal', 'prince', 'duke', 'marquess', 'earl', 'viscount', 'baron'], t = (p.titles || []).filter(function (t) { return !t.lost; }).sort(function (a, b) { return order.indexOf(a.key) - order.indexOf(b.key); })[0]; return t ? tname(t.key, p.sex) + (t.how === 'courtesy' ? ' (danh xưng do kết hôn)' : '') : 'không có tước'; }
 
   // ================= registry nhà hoàng gia (hư cấu) =================
   var HOUSE = ['Ashbourne', 'Valmont', 'Rhenvald', 'Castelor', 'Eldmere', 'Norhaven', 'Sorvik', 'Montclair'];
@@ -183,7 +183,7 @@
   });
 
   // ================= vai trò, công vụ, ngân sách =================
-  function role(l) { var s = st(l); return s.spouse && s.spouse.role || (l.flags.royal && !l.flags.royal.quit ? (l.flags.royal.role920 || 'working') : null); }
+  function role(l) { if(E.ROYAL858){var override=E.ROYAL858.roleOverride(l);if(override)return override;}var s = st(l); return s.spouse && s.spouse.role || (l.flags.royal && !l.flags.royal.quit ? (l.flags.royal.role920 || 'working') : null); }
   function isRoyal(l) { return !!(st(l).spouse && l.partner && l.partner.royal920 || l.flags.royal && !l.flags.royal.quit); }
   X.menu('royalRole920', 'Vai trò trong hoàng gia', function (l) { var a = X.reason(l, 18); return a !== true ? a : isRoyal(l) ? true : 'Dành cho thành viên/phối ngẫu hoàng gia'; }, function(l){kidsYear(l,function(){});return 'Vai trò công vụ và tước vị là hai việc riêng. Working royal nhận nhiệm vụ công, có ngân sách công vụ; non-working giữ đời sống riêng, có thể thương lượng lại.'+(l.kids||[]).filter(function(k){return k.royal920;}).map(function(k){var h=house(l,k.royal920.cc),m=byId(h,k.royal920.id),pos=m&&lineOf(l,h,m);return m?'\n• '+k.name+': '+mainTitle(m)+(pos?' · thứ '+pos+' trong hàng kế vị':' · ngoài hàng kế vị'):'';}).join('');}, function (l) {
     return [['working', 'Nhận vai trò công vụ (working royal)'], ['nonworking', 'Không nhận công vụ, giữ nghề/đời sống riêng'], ['stepback', 'Rút khỏi nhiệm vụ hoàng gia']].map(function (x) { return { k: x[0], l: x[1], why: role(l) === x[0] ? 'Đang áp dụng' : true, run: function (l, r, log) { var s = st(l); if (s.spouse) s.spouse.role = x[0]; else if (l.flags.royal) l.flags.royal.role920 = x[0]; log({ working: 'Bạn nhận vai trò công vụ; lịch nhiệm vụ do văn phòng hoàng gia điều phối.', nonworking: 'Bạn không nhận công vụ; văn phòng ghi nhận, không cấp ngân sách công vụ cho bạn.', stepback: 'Bạn rút khỏi nhiệm vụ. Ngân sách công vụ dừng; tài sản riêng giữ nguyên. Việc dùng danh xưng/tước hiệu là quyết định riêng, không tự mất.' }[x[0]], 'neutral'); } }; });
@@ -209,12 +209,14 @@
       if(k.royal920&&k.royal920.titled&&!m.removed&&!me.adopted920)titled=true;
       if (titled) grant(me, 'prince', 'substantive', false, 'con của ' + m.name, me.by);
       if(E.ROYAL837)E.ROYAL837.child(l,h,m,me,k); h.members.push(me); k.royal920 = { cc: h.cc, id: id, titled: titled };
+      if(E.ROYAL858&&E.ROYAL858.supported(h)){E.ROYAL858.sync(l,h,'sinh con');titled=k.royal920.titled;}
       var ln = lineOf(l, h, me);
-      log(k.name + (titled ? ' mang tước ' + tname('prince', k.sex) : ' không tự có tước hiệu (theo quy định của ' + cname(h.cc) + ')') + (ln ? '; đứng thứ ' + ln + ' trong hàng kế vị.' : me.adopted920 ? '; con nuôi không vào hàng kế vị theo quy định hiện hành của nhà này.' : '.'), 'neutral');
+      log(k.name + (titled ? ' mang tước ' + mainTitle(me) : ' không tự có tước hiệu (theo quy định của ' + cname(h.cc) + ')') + (ln ? '; đứng thứ ' + ln + ' trong hàng kế vị.' : me.adopted920 ? '; con nuôi không vào hàng kế vị theo quy định hiện hành của nhà này.' : '.'), 'neutral');
     });
     (l.kids || []).forEach(function (k) { if (k.royal920 && k.alive === false) { var x = byId(h, k.royal920.id); if (x) x.alive = false; } });
   }
   function repairChildTitle(l,h,parent,m,k) {
+    if(E.ROYAL858&&E.ROYAL858.supported(h)){E.ROYAL858.bind(l,h);var entitlement=E.ROYAL858.identity(l,h,m).titles.find(function(t){return ['prince','infante','asturias'].includes(t.key);});if(entitlement&&entitlement.key==='prince'&&!(m.titles||[]).some(function(t){return t.key==='prince';}))grant(m,'prince','entitlement',false,'đối chiếu '+entitlement.ruleId,yr(l),{verified858:true,rule858:entitlement.ruleId,label858:entitlement.label,source858:entitlement.source,scenario858:entitlement.scenario});k.royal920.titled=!!entitlement;return;}
     // Preserve explicit losses; repair missing grants only when the existing family relation qualifies.
     var qualifies=!parent.removed&&!m.removed&&!m.adopted920&&(h.cc!=='GB'||parent.sex==='M'||h.seat===parent.id);
     if(qualifies&&!(m.titles||[]).some(function(t){return t.key==='prince';}))grant(m,'prince','substantive',false,'đối chiếu quan hệ cha mẹ trong gia tộc',m.by);
