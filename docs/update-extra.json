@@ -3,8 +3,8 @@
     "id": "childhood-context-81059",
     "version": "8.10.59",
     "publishedAt": "2026-11-09T08:46:31.684Z",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-09T08:54:57.000Z",
     "title": "Chuyện tuổi thơ theo nơi sống và gia đình",
     "summary": "Buổi chơi cùng bạn và các chuyện tuổi nhỏ xét nơi đang sống, người chăm sóc và hoàn cảnh hoàng gia.",
     "tags": [
@@ -17,7 +17,8 @@
       "Điều chỉnh các chuyện mất điện, nghỉ hè cùng người thân, giờ nghỉ, đọc truyện, chăm con vật, ốm ở nhà, quan sát sinh vật, trông em, chó chạy tới và tham quan cho bối cảnh ngoài Việt Nam. Không mặc định mọi nơi có chè đỗ đen, chấm điểm 10, bán gà dịp Tết hoặc ngủ trưa đi bắt ve.",
       "Những hoạt động riêng của trường học và cộng đồng Việt Nam chỉ xuất hiện khi đang sống tại Việt Nam; không dựa riêng vào quốc tịch gốc. Những dòng kể tuổi thơ liên quan cũng tránh mặc định trẻ ở nước ngoài đi học thêm tiếng Anh hoặc có phong tục tiên răng giống nhau.",
       "Sự kiện chơi đang chờ trong bản lưu cũ được cập nhật lời kể và lựa chọn theo hoàn cảnh hiện tại. Giữ mã nhân vật, tiền, lịch sử và các dòng nhật ký đã xảy ra."
-    ]
+    ],
+    "correctedAt": "2026-11-09T08:55:02.240Z"
   },
   {
     "id": "royal-titles-names-81058",
