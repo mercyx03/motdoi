@@ -103,3 +103,7 @@
    - Đủ 16 nhóm MBTI (`INTJ`..`ESFP`) ảnh hưởng vừa phải tới học tập, công việc và gia đình nhưng quyền quyết định luôn thuộc về người chơi.
 5. **Văn hóa Giờ sinh Can Chi & 12 Con Giáp (`E.astroText`)**:
    - Chỉ các quốc gia Á Đông (`VN`, `CN`, `JP`, `KR`, `KP`...) mới hiển thị giờ sinh Can Chi và tuổi 12 con giáp (`Mẹo` ở Việt Nam, `Mão` ở các nước Á Đông khác); các nước phương Tây chỉ dùng giờ đồng hồ 24h và cung Hoàng đạo phương Tây.
+
+## Đính chính Monaco8.10.61
+
+Bộ luậtMC hiện dùng nguồn Điều10/gia quy và hồ sơ hộ tịch riêng: không tự cấm kế vị vì cách nuôi dạy đức tin, không tự tạo hôn nhân hoặc hợp pháp hóa mọi trẻ vì người chơi đã cưới. Đối chiếu từng người/đúng cha mẹ, quốc tịch và tước riêng. Các mô tả cũ trái với phần này được thay bởi docs/MONACO-861-PROGRESS.md; các nước khác ngoài phạm vi giữ nguyên.

@@ -1,5 +1,30 @@
 [
   {
+    "id": "monaco-succession-names-81061",
+    "version": "8.10.61",
+    "publishedAt": "2026-11-10T01:00:37.119Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Monaco: kế vị, tước riêng và kho tên Grimaldi",
+    "summary": "Theo dõi nhánh kế vị Monaco, nhiếp chính, tước phối ngẫu và tên nhiều thành phần trên cùng gia phả.",
+    "tags": [
+      "Tính năng",
+      "Đời sống",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Kế vị Monaco được xét từ người đang trị vì: hậu duệ hợp pháp trước, rồi anh chị em và hậu duệ của họ; ưu tiên nam trong cùng hàng con, giữ quyền đại diện theo nhánh. Quốc tịch Monaco được kiểm tra riêng. Hồ sơ thiếu căn cứ chỉ có vị trí dự kiến, chưa tự được lên ngôi.",
+      "Khi hết nhánh thông thường, việc chọn một họ hàng bàng hệ cần hồ sơ chỉ định của Hội đồng Vương quyền và ý kiến đồng thuận của Hội đồng Nhiếp chính. Trong game, hồ sơ cần thời gian xem xét và đủ hai bước; không tự chọn một họ hàng bất kỳ.",
+      "Trẻ vị thành niên có thể tiếp nhận ngôi vị trong khi quyền lực được thực hiện theo cơ chế nhiếp chính phù hợp thời kỳ. Các mốc trước và sau cải cách năm 2022 được phân biệt; luật trước năm 2002 chưa đủ dữ liệu sẽ báo rõ và chờ đối chiếu.",
+      "Dùng riêng kính ngữ Monaco H.S.H., S.A.S. hoặc Điện hạ. Tước người thừa kế, Baux và Carladès là các mục riêng. Nữ đứng đầu có thể là hoàng trữ giả định và bị thay thế khi có em trai đủ điều kiện; Baux không tự được cấp chỉ vì đứng đầu danh sách.",
+      "Phối ngẫu, người tự giữ tước và người giữ ngôi được phân biệt. Chồng của nữ quân chủ hoặc công chúa không tự nhận tước Monaco; tước và kính ngữ có nguồn gốc nước khác vẫn giữ căn cứ riêng. Các quyết định phong tước chưa có quy tắc tổng quát được ghi rõ là kịch bản trong game.",
+      "Kho tên Monaco có gợi ý vương thất, truyền thống Công giáo/Pháp ngữ, hiện đại và bên ngoại. Tên có dấu, gạch nối và nhiều thành phần được giữ nguyên. Nhà Grimaldi, họ pháp lý, tên thường dùng và tên đi học không bị gộp với tước theo xứ.",
+      "Gia đình có thể chọn tên ngắn hoặc nhiều tên đệm, ghi lý do chọn tên và người tổ tiên được tri ân theo mã gia phả. Tên của phối ngẫu có thể vào kho riêng gia đình; tên được nhiều thế hệ dùng để tri ân có thể trở thành truyền thống, vẫn giữ dấu vết người mang tên đầu tiên trong hồ sơ.",
+      "Sửa việc tự tạo hôn nhân hoặc hợp pháp hóa mọi trẻ chỉ vì người chơi đang có bạn đời. Hồ sơ cần đúng cha mẹ, huyết thống đã xác lập và điều kiện hôn nhân/chấp thuận. Truyền thống đức tin không tự trở thành điều kiện loại khỏi kế vị khi chưa có căn cứ.",
+      "Bản lưu cũ giữ tên, mã người, tước lịch sử, tài sản và nhật ký. Dữ liệu Monaco mới vẫn dùng chung các luồng sinh con, kết hôn, đổi ngôi, chuyển thế hệ và đặt tên hiện có."
+    ]
+  },
+  {
     "id": "royal-lifetime-81060",
     "version": "8.10.60",
     "publishedAt": "2026-11-09T09:26:11.396Z",

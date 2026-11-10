@@ -2329,8 +2329,8 @@
       monarchReligiousRole: "Thân vương Monaco nắm quyền lực chính trị, lập pháp thực tế rất lớn: với tư cách người bảo hộ Hiến pháp và Quốc giáo, Thân vương CÓ QUYỀN PHỦ QUYẾT các dự luật đi ngược lại giáo lý Công giáo (ví dụ thực tế: Thân vương Albert II từ chối ký các dự luật mở rộng quyền phá thai); Thân vương phi Monaco (như Vương phi Charlene chủ động cải đạo năm 2011) có Đặc quyền màu trắng (Privilège du blanc) tại Vatican",
       canVetoReligious851: true,
       vaticanPrivilegeDuBlanc: true,
-      childFaithGroup: "mandatory",
-      childFaithRule: "BẮT BUỘC 100% con cái của Hoàng tộc Grimaldi (như cặp song sinh Thế tử Jacques & Công chúa Gabriella) phải được rửa tội và nuôi dạy theo nghi thức Công giáo La Mã.",
+      childFaithGroup: "voluntary_or_blended",
+      childFaithRule: "Công giáo là truyền thống và quốc giáo; chưa có căn cứ trong Điều 10/gia quy đã đối chiếu để tự loại người khỏi kế vị chỉ vì cách nuôi dạy đức tin. Điều kiện pháp lý được xét riêng.",
       outOfWedlockRule: "monaco_post_birth_legitimation",
       outOfWedlockNote: "Ngoại lệ duy nhất tại châu Âu — Cơ chế 'Hợp pháp hóa sau sinh': theo Hiến pháp và Bộ luật Dân sự Monaco, một đứa trẻ sinh ra ngoài giá thú sẽ NGAY LẬP TỨC được đưa vào danh sách kế vị nếu sau đó cha mẹ ruột kết hôn hợp pháp với nhau (có sự chấp thuận của Thân vương, như thực tế các con của Công chúa Caroline là Andrea và Charlotte Casiraghi)."
     },
@@ -2364,7 +2364,7 @@
     h.members.forEach(function (m) {
       if (!m.bornOutOfWedlock851) return;
       if (cfg.outOfWedlockRule === "monaco_post_birth_legitimation") {
-        if (parentsMarried && !m.unapprovedMarriage851 && !m.barredLine837) {
+        if ((E.MONACO861?E.MONACO861.legitimationProof(l,h,m):parentsMarried) && !m.unapprovedMarriage851 && !m.barredLine837) {
           m.legitimatedByMarriage851 = true;
           m.illegitimate837 = false;
         } else if (!m.legitimatedByMarriage851) {
@@ -2519,15 +2519,13 @@
     var hasOutOfWedlock = h.members.some(function (m) { return m.bornOutOfWedlock851; });
     if (hasOutOfWedlock) {
       row("resolve_out_of_wedlock_legitimation", c === "MC"
-        ? "Monaco: Hợp pháp hóa sau sinh cho con sinh ngoài giá thú khi cha mẹ kết hôn hợp pháp (đưa ngay vào danh sách kế vị như Andrea & Charlotte Casiraghi)"
+        ? "Monaco: đối chiếu đúng hồ sơ cha mẹ, hôn nhân và tình trạng hợp pháp của con"
         : "Đối chiếu quy định con sinh trước hôn nhân tại " + cfg.name + " (Cấm vĩnh viễn vào hàng kế vị dù cha mẹ kết hôn sau đó)", function (r, log) {
-        if (c === "MC" && l.partner) {
-          l.partner.status = "married";
-        }
+        if (c === "MC" && E.MONACO861) { log("Cần hồ sơ hộ tịch của đúng hai cha mẹ; thao tác này không tự tạo hôn nhân hoặc hợp pháp hóa mọi trẻ trong gia phả.", "neutral"); }
         syncLegitimacy851(l, h);
         syncTitles(l, h, R.byId(h, h.seat), null, log);
         if (c === "MC") {
-          log("Theo Hiến pháp và Bộ luật Dân sự Monaco, ngay khi cha mẹ ruột kết hôn hợp pháp với nhau (được Thân vương chấp thuận), người con sinh ra trước đám cưới được HỢP PHÁP HÓA SAU SINH và lập tức được đưa vào danh sách kế vị hợp pháp (như tiền lệ các con của Công chúa Caroline là Andrea và Charlotte Casiraghi).", "big");
+          log("Hồ sơ Monaco chỉ cập nhật khi đã xác lập huyết thống với đúng hai cha mẹ, hôn nhân hoặc phán quyết phù hợp và chấp thuận cần thiết; quyền kế vị còn xét quốc tịch và gia phả.", "big");
         } else {
           log("Theo luật kế vị của " + cfg.name + " (cùng 8 hoàng gia châu Âu khác ngoài Monaco), một đứa trẻ bắt buộc phải được sinh ra SAU KHI cha mẹ đã có hôn thú hợp pháp; dù sau này cha mẹ có kết hôn hợp pháp, người con sinh trước hôn nhân vẫn vĩnh viễn không được vào danh sách kế vị.", "neutral");
         }

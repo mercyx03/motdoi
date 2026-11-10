@@ -1,6 +1,6 @@
 /* Nguồn và mốc áp dụng của phần mở rộng ROYAL920; gia tộc trong game vẫn hư cấu. */
 (function(G){'use strict';
-  G.E.ROYAL858_DATA={checkedAt:'2026-11-09',countries:['GB','ES','BE','SE','DK','NL','LU'],rules:{
+  G.E.ROYAL858_DATA={checkedAt:'2026-11-09',countries:['GB','ES','BE','SE','DK','NL','LU','MC'],rules:{
     uk1917:{from:'1917-11-30',source:'https://www.college-of-arms.gov.uk/resources/styles-and-titles-of-the-royal-family',note:'Con của quân chủ, cháu qua con trai; ngoại lệ chắt trưởng nam và Lord/Lady theo văn thư.'},
     uk2012:{from:'2012-12-31',source:'https://www.thegazette.co.uk/notice/L-60384-1738680',note:'Tất cả con của con trai trưởng của Prince of Wales.'},
     uk1948:{from:'1948-10-22',source:'https://www.college-of-arms.gov.uk/resources/styles-and-titles-of-the-royal-family',note:'Ngoại lệ cho con Princess Elizabeth và Duke of Edinburgh; chỉ áp khi có phạm vi được ghi rõ.'},

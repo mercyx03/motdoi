@@ -1,3 +1,9 @@
+## v8.10.61 — Monaco: kế vị, tước và tên Grimaldi (packaged)
+
+- Mở rộng bộ giải danh tính Monaco với nhánh kế vị, quốc tịch, nhiếp chính và quy trình hai hội đồng khi hết nhánh thông thường.
+- Tách H.S.H./S.A.S., Prince Héréditaire, Baux/Carladès, phối ngẫu và tước nước ngoài; kho tên gia đình có nguồn gốc và lịch sử tri ân.
+- Giữ ID/save/lịch sử; các trường hợp chưa đủ căn cứ ghi chờ đối chiếu hoặc kịch bản. Chi tiết docs/MONACO-861-PROGRESS.md. Preview, chưa nghiệm thu toàn diện.
+
 ## v8.10.60 — Nguồn lực và đời sống hoàng tộc (packaged)
 
 - Ẩn thu nhập gia đình hoàng gia; thêm nguồn lực riêng có ledger/hạn mức, hỗ trợ học tập và kế hoạch cá nhân.

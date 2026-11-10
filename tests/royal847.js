@@ -578,9 +578,9 @@ function pick(l, id, key, arg, r = () => 0.2) {
   const kidMc = { id: 'mc_kid', name: 'Jacques', sex: 'M', by: 2020, parent: 'player', alive: true, titles: [{ key: 'prince' }], country837: 'MC' };
   hMc.members.push(kidMc);
   const resMcWrong = R1.evaluateChildFaithEligibility851(lMc, hMc, kidMc, 'Không tôn giáo');
-  ok(!resMcWrong.eligible && kidMc.disinheritedForFaith851 && !R.order(lMc, hMc).some(m => m.id === 'mc_kid'), 'Mandatory group (MC/LI/GB/SE/NO/DK): child not raised in royal faith loses succession right');
+  ok(resMcWrong.eligible && !kidMc.disinheritedForFaith851 && R.order(lMc, hMc).some(m => m.id === 'mc_kid'), 'Monaco Article10: upbringing faith does not create an unverified automatic succession ban');
   const resMcRight = R1.evaluateChildFaithEligibility851(lMc, hMc, kidMc, 'Công giáo');
-  ok(resMcRight.eligible && !kidMc.disinheritedForFaith851 && R.order(lMc, hMc).some(m => m.id === 'mc_kid'), 'Mandatory group (MC): child baptized & raised Roman Catholic retains succession right');
+  ok(resMcRight.eligible && !kidMc.disinheritedForFaith851 && R.order(lMc, hMc).some(m => m.id === 'mc_kid'), 'Monaco: baptism does not replace the separate legal and nationality checks');
 
   // Nhóm 2 (Tự do pháp lý / Giao thoa: NL, BE, ES, LU) -> dù con cái theo đạo khác cũng giữ nguyên 100% quyền kế vị
   const kidBe = { id: 'be_kid', name: 'Gabriel', sex: 'M', by: 2020, parent: 'player', alive: true, titles: [{ key: 'prince' }], country837: 'BE' };
@@ -595,7 +595,7 @@ function pick(l, id, key, arg, r = () => 0.2) {
   R1.syncLegitimacy851(lMc, hMc);
   ok(!R.order(lMc, hMc).some(m => m.id === 'mc_casiraghi'), 'Monaco child born out of wedlock is excluded before parents marry');
   ok(pick(lMc, 'royalEuroSuccessionFaith851', 'resolve_out_of_wedlock_legitimation'), 'Monaco post-birth legitimation action executed');
-  ok(mcOutWedlock.legitimatedByMarriage851 === true && !mcOutWedlock.illegitimate837 && R.order(lMc, hMc).some(m => m.id === 'mc_casiraghi'), 'Monaco child born out of wedlock is immediately placed into line of succession after parents legally marry');
+  ok(lMc.partner.status==='dating'&&mcOutWedlock.illegitimate837&&!R.order(lMc,hMc).some(m=>m.id==='mc_casiraghi'),'Monaco check does not fabricate a wedding or legitimate unknown parentage');
 
   // Ngược lại tại Bỉ (BE) và 8 nước còn lại: Cấm vĩnh viễn dù cha mẹ kết hôn hợp pháp sau đó
   lBe.partner = { name: 'Spouse', sex: 'M', status: 'married', since: 26, alive: true };
@@ -647,7 +647,7 @@ function pick(l, id, key, arg, r = () => 0.2) {
   ok(D.uk1917&&D.uk2012&&D.cornwall&&D.rothesay,'UK titles have independent rules');
   ok(D.brabant&&D.spain&&S.templates.spainDuchy.remainder==='life','BE/ES separate title mechanisms');
   ok(!B.HEIR_TITLES.SE.F.includes('Västergötland')&&D.estelle.territory==='Östergötland','SE province requires personal grant');
-  ok(D.dk2023.from==='2023-01-01'&&B.HEIR_TITLES.MC.F.includes('Baux'),'DK dated branch rule; MC unchanged');
+  ok(D.dk2023.from==='2023-01-01'&&!B.HEIR_TITLES.MC.F.includes('Baux')&&E.MONACO861.DATA.rules.statutes,'DK dated branch rule; MC no bundled automatic Baux');
   ok(!B.HEIR_TITLES.LU.M.includes('Bourbon-Parma')&&D.bourbon&&B.HEIR_TITLES.LI.F.includes('Thân vương nữ'),'LU Bourbon separate; LI unchanged');
   ok(S.templates.sussex.remainder==='heirsMaleBody'&&S.templates.edinburgh.remainder==='life','Peerage remainders independent from crown equality');
   ok(B.CONSORT_TITLES.GB.heir.F.includes('căn cứ riêng')&&B.CONSORT_TITLES.ES.heir.M.includes('căn cứ riêng'),'Consort catalogue refers to individual title proof');

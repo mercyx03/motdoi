@@ -81,3 +81,7 @@ Worker/API chỉ kiểm cục bộ; chưa xác minhPages REVIEWS_DB hayAPIProduc
 - Xác minh thêm rootindex.html,_worker.js,_routes.json,_headers,.well-known/ai-catalog.json; JSON/HTML trongZIP có royal-titles-names-81058, packaged/releasedAtnull đúng;180 mục cũ giữ nguyên.
 - GitHub origin mercyx03/motdoi: public, có quyềnpush/admin; API đọc0workflow,0hook,0deployment. Chỉ push nhánh hiện tại, không merge/deploy. Pages binding chưa xác minh.
 - Sẵn sàngProduction: CHƯA, còn nghiệm thu tổng thể và giới hạn dữ liệu nêu trên; artifact có thay đổi y tế ngoài commit.
+
+## Monaco — bản8.10.61
+
+Mở rộng nguồn danh tính chung sangMC, tách luật theo quân chủ, quốc tịch, nhiếp chính, HSH/SAS và tước/nhánh/tên. Sổ tiếp tục và nguồn: docs/MONACO-861-PROGRESS.md. Không áp lại bảng tước tự động cũ choMC.
