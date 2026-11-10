@@ -5,7 +5,7 @@
   if(!R||!A||!D)return;
   var contexts=new WeakMap(),UNKNOWN='Chưa xác định';
   function year(l){return l.birthYear+l.age;}
-  function date(l){return /^\d{4}-\d{2}-\d{2}$/.test(l.royalDate858||'')?l.royalDate858:year(l)+'-12-31';}
+  function date(l){var d=l.royalDate858||'';return /^\d{4}-\d{2}-\d{2}$/.test(d)&&+d.slice(0,4)===year(l)&&Number.isFinite(Date.parse(d+'T00:00:00Z'))&&new Date(d+'T00:00:00Z').toISOString().slice(0,10)===d?d:year(l)+'-12-31';}
   function supported(h){return !!h&&D.countries.includes(h.cc);}
   function copy(x){return JSON.parse(JSON.stringify(x));}
   function on(l,id){var r=D.rules[id];return !!r&&(!r.from||date(l)>=r.from);}
@@ -123,7 +123,7 @@
     var id=p.royal920&&p.royal920.cc===h.cc?p.royal920.id:h.cc+':spouse858:'+X.uid(l,p),m=person(h,id);
     if(!m){m={id:id,name:p.name,sex:p.sex,by:year(l)-(p.age||l.age),alive:true,spouse:me.id,role:'spouse',titles:[],country837:h.cc};h.members.push(m);}me.spouse=id;m.spouse=me.id;p.royal920={cc:h.cc,id:id};
   }
-  function roleOverride(l){if(E.MONACO861){var mcRole=E.MONACO861.roleOverride(l);if(mcRole)return mcRole;}var s=l.flags&&l.flags.royal920,c=l.flags&&l.flags.royal&&l.flags.royal.c||s?.spouse?.cc,h=s&&s.houses&&s.houses[c];if(!h)return null;return (h.titleOrders858||[]).some(function(o){return o.effectiveDate<=date(l)&&(o.memberIds.includes('player')||o.descendantRoot&&ancestry(h,person(h,'player')).some(function(a){return a.id===o.descendantRoot;}));})?'nonworking':null;}
+  function roleOverride(l){var c865=l.flags?.royal?.c,h865=l.flags?.royal920?.houses?.[c865];if(E.ROYAL865&&h865&&['MC','ES'].includes(c865)&&person(h865,'player')&&E.ROYAL865.ageOn(l,person(h865,'player'))<18)return 'nonworking';if(E.ROYAL865&&h865&&h865.seat==='player'&&['MC','ES'].includes(c865)&&!E.ROYAL865.canExercise(l,h865,person(h865,'player')))return 'nonworking';if(E.MONACO861){var mcRole=E.MONACO861.roleOverride(l);if(mcRole)return mcRole;}var s=l.flags&&l.flags.royal920,c=l.flags&&l.flags.royal&&l.flags.royal.c||s?.spouse?.cc,h=s&&s.houses&&s.houses[c];if(!h)return null;return (h.titleOrders858||[]).some(function(o){return o.effectiveDate<=date(l)&&(o.memberIds.includes('player')||o.descendantRoot&&ancestry(h,person(h,'player')).some(function(a){return a.id===o.descendantRoot;}));})?'nonworking':null;}
   function releaseBudget(l){var s=l.flags.royal920;if(s&&R.role(l)!=='working'&&s.budget&&s.budget.left>0){s.ledger.push({y:year(l),t:'hoàn ngân sách chưa chi khi dừng công vụ',v:-s.budget.left});s.budget.returned858=(s.budget.returned858||0)+s.budget.left;s.budget.left=0;}}
   function sync(l,h,reason){if(!supported(h))return;if(h.cc==='ES'&&E.SPAIN862)E.SPAIN862.reconcile(l,h);A.prepare(l,h,false);linkSpouse(l,h);bind(l,h);var line=R.order(l,h);
     h.members.forEach(function(m){var v=identity(l,h,m),s=state(m),finger=JSON.stringify([v.officialTitle,v.style,v.position,v.royalHouse,v.territorialSuffix,v.dutyRole,v.names]);
@@ -193,7 +193,7 @@
   },18);
 
   function canName(l,h,m){return !!m&&(m.player||(l.kids||[]).some(function(k){return k.alive!==false&&k.royal920&&k.royal920.cc===h.cc&&k.royal920.id===m.id&&l.age-k.born<18&&E.FAMILY53.care(l,k);}));}
-  function nameFormData(l,arg){var q=context(l),m=q&&person(q.h,arg&&arg.id||q.me.id);return m&&canName(l,q.h,m)?namesOf(l,q.h,m):null;}
+  function nameFormData(l,arg){var q=context(l),m=q&&person(q.h,arg&&arg.id||q.me.id);if(!m||!canName(l,q.h,m))return null;var n=namesOf(l,q.h,m);n.birthDate865=m.birthDate865||'';return n;}
   function validNameInput(input){return !!input&&Array.isArray(input.given)&&input.given.length>0&&input.given.every(function(v){return !!cleanName(v);})&&!!cleanName(input.daily||input.given[0])&&(input.legalSurname==null||cleanName(input.legalSurname)!==null)&&(input.service==null||cleanName(input.service)!==null);}
   X.menu('royalName858','Tên khai sinh, tên nghi lễ và tên thường dùng',menuWhy,function(l,d){var q=context(l),m=person(q.h,d.arg.id||q.me.id);return m?'Nhân vật ['+m.id+']. Tên chính và tên đệm là lựa chọn gia đình, không bị phủ quyết chỉ vì ở sáu vị trí đầu. Gợi ý số tên theo truyền thống gia đình là tùy chọn, không phải số bắt buộc.\nĐang có: '+namesOf(l,q.h,m).ceremonial+'\nTên dài được giữ ở gia phả; tên gọi hằng ngày có thể ngắn.':'';},function(l,arg){var q=context(l),m=person(q.h,arg.id||q.me.id);if(!m||!canName(l,q.h,m))return [];
     var out=[{k:'save',l:'Lưu lựa chọn tên đã nhập',run:function(l,r,log){if(!canName(l,q.h,m)||!validNameInput(arg.input))return;var result=setNames(l,q.h,m,Object.assign({},arg.input,{surnameBasis:'lựa chọn tên của gia đình trong game'}));log(result.message,result.ok?'good':'neutral');X.next(l,'royalIdentity858',r,{id:m.id});}}];

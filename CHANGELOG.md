@@ -1,3 +1,9 @@
+## 8.10.65 — Nhiếp chính và hộ tịch hoàng gia
+
+- Nối lịch sử Monaco1962/2002, các phiên bản nhiếp chính và quy trình phiên hội đồng.
+- Tách hồ sơ filiation, hôn nhân và phán quyết; thêm nhiếp chính/giám hộ Tây Ban Nha hiện đại và mốc họ2000, ngày sinh cùng năm.
+- Các ngoại lệ châu Âu, bộ luật Tây Ban Nha cũ và dữ liệu giáo dục còn tiếp tục; chưa hoàn tất toàn yêu cầu.
+
 ## 8.10.64 — Bối cảnh quốc tế và quan hệ hoàng gia
 
 - Mở rộng bối cảnh ngoài tuổi thơ: nghi lễ, tín ngưỡng, ngày lễ và vai trò đặc biệt.

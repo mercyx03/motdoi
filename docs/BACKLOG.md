@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 8.10.63–65: còn regression toàn bộ trên mã cuối, thiết bị/save thật và xác minh binding Pages REVIEWS_DB. Đã chạy trọng điểm giáo dục, bối cảnh quốc tế, chuỗi hoàng gia, nhiếp chính/hộ tịch, smoke, saves/save-safety/NPC và browser hẹp/rộng; không coi phần chưa chạy là PASS. Công việc chức năng còn mở ở docs/REMAINING-863-PROGRESS.md vẫn đang được triển khai theo yêu cầu hiện tại, không chuyển thành riêng việc nghiệm thu GĐ6.
+
 - 8.10.57: nghiệm thu toàn diện homeschool/England trên mã cuối; bổ sung luật còn unknown (38 bang/DC Mỹ, 11 tỉnh/lãnh thổ Canada, 6 vùng Australia, Northern Ireland), niên đại/ngoại lệ người dạy, văn bằng quốc tế và tuyển sinh từng cơ sở. Kiểm sự kiện trường học ở mọi module, NPC con và tổng giờ giám hộ qua nhiều con; trợ cấp theo tháng/ngày, hồ sơ credential thực tế và tín chỉ trường nhận. Nhóm regression 9,36,46,59 còn 98 lỗi/chưa phân loại hết (6.887.685 kiểm tra đạt); không coi nhóm này PASS. Rà lỗi cũ school-home-police838 (kỳ vọng chuyên nhưng công lập), tái hiện cả khi bỏ module mới. Chi tiết docs/HOMESCHOOL-ENGLAND-PROGRESS.md. Không tuyên bố khu vực chưa xác minh là đã nghiệm thu.
 
 - 8.10.54: hồi quy đầy đủ trên mã cuối cho mô hình thi thống nhất; mô phỏng thế giới/tài chính dài hạn sau cân bằng ngưỡng, kiểm tra mọi trạng thái hỗ trợ và mọi nguyện vọng quốc tế. Đã kiểm trọng điểm theo docs/EXAM-REVIEW-PROGRESS.md; chưa nghiệm thu toàn diện, chỉ Preview. Kiểm chứng binding REVIEWS_DB thực tế và cấu hình deployment tự động trước Production.

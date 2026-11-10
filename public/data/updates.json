@@ -1,6 +1,32 @@
 {
-  "generatedAt": "2026-11-10T02:43:23.303Z",
+  "generatedAt": "2026-11-10T06:59:18.881Z",
   "entries": [
+    {
+      "id": "royal-regency-civil-81065",
+      "version": "8.10.65",
+      "publishedAt": "2026-11-10T06:31:36.852Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Nhiếp chính, hộ tịch và các mốc luật hoàng gia",
+      "tags": [
+        "Đời sống",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Monaco trước sửa đổi năm 2002 xét hậu duệ trực hệ và hồ sơ nhận nuôi riêng khi không còn hậu duệ hợp pháp; không dùng nhánh anh chị em của luật mới để thay thế. Tuổi thực hiện quyền quân chủ là 21 trước mốc sửa đổi và 18 sau đó.",
+        "Phân biệt ủy quyền tạm thời với hồ sơ mất khả năng thực hiện nhiệm vụ. Cần thông tin đánh giá, bước trình và quyết định qua thời gian; người giữ ngôi vẫn giữ ngôi khi người khác thực hiện quyền nhân danh họ.",
+        "Monaco có thành phần Hội đồng Nhiếp chính theo các mốc 2002, 2015 và 2022. Phiên theo quy tắc 2022 kiểm tra số vị trí tham dự, ủy quyền, xung đột lợi ích, người chủ trì và phiếu trước khi ghi ý kiến cho đúng hồ sơ đề cử.",
+        "Hồ sơ hộ tịch Monaco phải xác lập đúng hai cha mẹ và đối chiếu hôn nhân đã xảy ra. Xác lập huyết thống sau hôn nhân hoặc thiếu thứ tự thời gian cần thêm hồ sơ nuôi dưỡng chung và phán quyết sau thời gian xét; không tự tạo đám cưới hoặc hợp pháp hóa mọi trẻ vì một người đang có bạn đời.",
+        "Tây Ban Nha phân biệt người nhiếp chính với người giám hộ, xét tuổi, quốc tịch, quan hệ cha mẹ và quyết định Cortes khi cần. Kiêm nhiệm giám hộ có điều kiện riêng; hồ sơ giám hộ kết thúc khi đổi tuổi hoặc không còn đủ điều kiện.",
+        "Quân chủ chưa đủ tuổi hoặc đang mất khả năng thực hiện nhiệm vụ không tự dùng quyền phong tước hay nhận lịch công vụ của chính mình. Tài sản và các quyết định đã có vẫn được giữ trong lịch sử.",
+        "Thứ tự hai họ Tây Ban Nha đã có lựa chọn theo thỏa thuận cha mẹ từ mốc tháng 2/2000; trước đó dùng thứ tự cha rồi mẹ trong đường đã cấu hình. Các anh chị em cùng hai cha mẹ giữ thứ tự đã đăng ký.",
+        "Hồ sơ tên Tây Ban Nha có thể lưu ngày sinh đã xác minh để đối chiếu khi việc sinh và mất vị trí Asturias xảy ra cùng năm. Chỉ biết năm thì không tự suy ra trẻ đã sinh trước mốc thay đổi; sửa ngày có kiểm tra và lưu lịch sử. Ngày sinh được đồng bộ với hồ sơ nhân vật và giữ khi chuyển đời; tuổi thực hiện quyền cũng đối chiếu sinh nhật đã biết.",
+        "Bổ sung các ca tham chiếu tước chuyển tiếp Tây Ban Nha 1987/2014 theo đúng mã người và căn cứ riêng; không suy ra tước danh dự của mọi cựu quân chủ hay truyền quyền cá nhân sang phối ngẫu, con cháu. Các thủ tục và quyết định thao tác trong game là mô phỏng."
+      ],
+      "summary": "Thêm hồ sơ nhiếp chính, xét hộ tịch và đối chiếu ngày luật; tách người giữ ngôi, người thực hiện quyền và người giám hộ.",
+      "correctedAt": "2026-11-10T06:59:18.806Z"
+    },
     {
       "id": "international-royal-arcs-81064",
       "version": "8.10.64",
