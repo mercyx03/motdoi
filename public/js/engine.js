@@ -568,6 +568,7 @@
     if (f.elite && age < 72) return; // v2.5: bố mẹ tài phiệt / chủ ngân hàng / chính khách không "bị cắt giảm nhân sự"
     var key = M ? 'mInc' : 'fInc', jobK = M ? 'mJob' : 'fJob', retK = M ? 'mRet' : 'fRet', lostK = M ? 'mLost' : 'fLost';
     var job = f[jobK], kind = parentKind(job), inc = f[key] || 0, sc = parentScale(life, PARENT_PAY[job] == null ? 7 : PARENT_PAY[job]);
+    if (E.ROYAL860 && E.ROYAL860.hidden(life) && /quốc vương|nữ hoàng|thiên hoàng|thái tử|hoàng thân|hoàng hậu|hoàng gia|công chúa|hoàng tử|thân vương|công tước|bá tước|vương phi|prince|princess|đại công tước/.test(job || '')) return; // Thu nhập riêng hoàng tộc không giả làm lương nghề phổ thông.
     var ref = PARENT_PAY[job] != null ? PARENT_PAY[job] * sc : ((M ? f.mInc0 : f.fInc0) || 7 * sc), show = function (v) { return fmtMoney(life, v); };
     if (f[retK]) {
       // đã nghỉ: lương hưu giữ nguyên; người không có lương hưu được trợ cấp hưu trí xã hội (Luật BHXH 2024: 500.000 đ/tháng, mức chung cả nước, từ 75 tuổi; hộ nghèo/cận nghèo từ 70 tuổi)

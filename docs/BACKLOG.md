@@ -299,3 +299,5 @@ GĐ6 — 8.10.58: còn regression toàn bộ mã cuối, thiết bị thật, b�
 GĐ6 — 8.10.59: còn regression toàn bộ, thiết bị và save thật; tiếp tục rà nội dung quốc tế ngoài nhóm tuổi thơ đã sửa, không coi 195 nước là 195 bộ phong tục đã nghiên cứu riêng. Chi tiết docs/CHILDHOOD-859.md. Pages REVIEWS_DB chưa xác minh.
 
 GĐ6 — 8.10.59 bổ sung: tests/life138.js lỗi “sibling can succeed instead of player” cả trên hai module childhood trước sửa (HEADc1d2365) và mã mới; cần rà fixture/điều kiện kế nhiệm doanh nghiệp riêng. Không tính đạt nhóm này.
+
+GĐ6 — 8.10.60: còn regression toàn bộ mã cuối, thiết bị và bản lưu hoàng gia thật, cân bằng dài hạn quỹ riêng/ảnh hưởng/chuỗi sự kiện, rà nguồn lực khi thay đổi tiền tệ và các tình huống chuyển thế hệ thực tế. Mô hình ưu đãi hoàng gia hư cấu, không phải dữ liệu tài chính hoặc ngoại hình thật. Pages REVIEWS_DB chưa kiểm chứng. Chi tiết docs/ROYAL-860.md.

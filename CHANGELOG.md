@@ -1,3 +1,9 @@
+## v8.10.60 — Nguồn lực và đời sống hoàng tộc (packaged)
+
+- Ẩn thu nhập gia đình hoàng gia; thêm nguồn lực riêng có ledger/hạn mức, hỗ trợ học tập và kế hoạch cá nhân.
+- Nhân vật hoàng gia mới có ngoại hình90–100;10nhóm chuyện theo tuổi qua CHAIN144, quan hệ và hậu quả nhiều năm.
+- Giữ bản lưu, luật kế vị/tước và ngân sách công vụ; chi tiết docs/ROYAL-860.md. Preview, chưa nghiệm thu toàn diện.
+
 ## v8.10.59 — Tuổi thơ theo nơi sống (packaged)
 
 - Chơi cùng bạn xét nơi cư trú và hoàn cảnh hoàng gia, ghi nhận bạn thật ở gần, không sinh tiền thật hoặc nhận thưởng lặp.

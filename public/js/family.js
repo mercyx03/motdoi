@@ -90,6 +90,7 @@
   // 3. BỐ MẸ KHÁ GIẢ CHU CẤP TIỀN SINH HOẠT
   // ===================================================================
   function allowanceYear(l, r, log, a) {
+    if(E.ROYAL860&&E.ROYAL860.active(l))return; // Quỹ riêng ROYAL920 ghi nhận khoản hỗ trợ, tránh trả trùng.
     var f = l.fam; if (!f || a < 15 || a > 26) return;
     if (f.elite && l.flags.eliteFollow && !l.flags.eliteCut) return; // đã có khoản chu cấp riêng của gia đình siêu giàu
     if (!(f.mAlive || f.fAlive) || l.jailUntil != null && a < l.jailUntil) return;

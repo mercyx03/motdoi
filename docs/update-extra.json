@@ -1,5 +1,27 @@
 [
   {
+    "id": "royal-lifetime-81060",
+    "version": "8.10.60",
+    "publishedAt": "2026-11-09T09:26:11.396Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Sinh ra trong hoàng tộc và chuyện gia tộc nhiều thế hệ",
+    "summary": "Thu nhập hoàng gia không công khai, nguồn lực gia tộc lớn và những lựa chọn về cơ hội, đời tư, ảnh hưởng từ nhỏ đến lớn.",
+    "tags": [
+      "Tính năng",
+      "Đời sống"
+    ],
+    "details": [
+      "Hồ sơ xuất phát, giấy khai sinh và bảng gia đình hiển thị thu nhập hoàng gia là “Không công khai”. Giá trị dùng cho tính toán vẫn được giữ bên trong; không hiện mức lương phổ thông như thu nhập thật của hoàng tộc.",
+      "Trong chế độ hoàng gia hư cấu, nhân vật mới có ngoại hình khởi sinh 90–100/100, từ mức Cực phẩm, cùng quà riêng của gia tộc. Ngoại hình vẫn chịu tác động của tuổi và sức khỏe; bản lưu cũ không bị tự đổi ngoại hình hoặc nhận lại quà chào đời.",
+      "Quỹ riêng gia tộc hỗ trợ phần lớn nhu cầu học tập, sở thích và sinh hoạt. Trẻ có tiền tiêu vặt; người trưởng thành nhận trợ cấp riêng và có thể xin hỗ trợ một kế hoạch lớn mỗi năm. Nguồn lực có sổ chi và hạn mức mô phỏng, được phân biệt với tiền cá nhân và ngân sách công vụ.",
+      "Cơ hội giáo viên riêng, sở thích, thăm cộng đồng, học tập và gặp người hướng dẫn xuất hiện theo tuổi. Gia đình hỗ trợ chi phí nhưng nhân vật vẫn cần luyện tập, đạt điều kiện tuyển sinh và tự xây dựng nghề nghiệp.",
+      "Có thêm chuyện ảnh riêng bị chia sẻ, tranh vai trò đại diện, tài liệu nội bộ bị tiết lộ, phân bổ quỹ gia đình và truyền kinh nghiệm cho thế hệ sau. Các câu chuyện đi qua bước mở đầu, chuẩn bị và kết quả ở những năm tiếp theo.",
+      "Thành viên gia tộc được nhận diện bằng mã trong gia phả, có tin cậy và căng thẳng được ghi nhớ. Hòa giải, chuẩn bị hoặc gây sức ép tạo kết quả khác nhau. Giành ảnh hưởng có thể làm tổn hại quan hệ và uy tín; tin đồn không tự thay luật kế vị hoặc thu tước.",
+      "Quỹ riêng và quan hệ gia tộc được giữ khi chuyển thế hệ. Chuyện đang diễn biến khép lại khi người liên quan không còn hoặc nhân vật rời sinh hoạt hoàng gia. Những lợi thế tài chính và ngoại hình là cách chơi hư cấu, không mô tả mọi gia đình hoàng gia ngoài đời."
+    ]
+  },
+  {
     "id": "childhood-context-81059",
     "version": "8.10.59",
     "publishedAt": "2026-11-09T08:46:31.684Z",

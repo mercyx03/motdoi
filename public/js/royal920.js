@@ -232,7 +232,7 @@
     if(E.ROYAL837&&l.flags.royal)E.ROYAL837.context(l);
     kidsYear(l,function(){});var ref=k.royal920,s=st(l),h=ref&&s.houses[ref.cc],m=h&&byId(h,ref.id);if(!m)return null;
     var old=byId(h,'player');if(old)old.alive=l.alive;
-    return JSON.parse(JSON.stringify({cc:ref.cc,id:ref.id,at:yr(l),parentId:l.id,houses:s.houses,people:s.people837||{},met:s.met||{},religion:k.religion||m.religion837}));
+    return JSON.parse(JSON.stringify({cc:ref.cc,id:ref.id,at:yr(l),parentId:l.id,houses:s.houses,people:s.people837||{},met:s.met||{},dynasty860:s.dynasty860?{v:1,reserve:s.dynasty860.reserve,ledger:s.dynasty860.ledger,seen:{},openness:65,pressure:15,influence:30}:null,religion:k.religion||m.religion837}));
   }
   function restore(l,data) {
     if(!data||!data.houses||!data.houses[data.cc])return false;
@@ -240,6 +240,7 @@
     Object.keys(houses).forEach(function(c){houses[c].members.forEach(function(m){m.player=m===me;m.playerKid=false;});});
     me.name=l.name;me.sex=l.sex;me.by=l.birthYear;me.alive=l.alive;
     l.flags.royal920={v:1,houses:houses,people837:remapTree(data.people||{},ids),met:JSON.parse(JSON.stringify(data.met||{})),ledger:[],rel:{},inheritedAt843:data.at};
+    if(data.dynasty860)l.flags.royal920.dynasty860=JSON.parse(JSON.stringify(data.dynasty860));
     l.flags.royal={c:data.cc,house:h.name,tier:(me.titles||[]).some(function(t){return t.key==='prince'&&!t.lost;})?'direct':'branch',reign:h.seat==='player',role920:me.working?'working':'nonworking'};
     if(me.removed)l.flags.royal.quit=true;
     if(data.religion)l.religion=data.religion;

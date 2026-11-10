@@ -215,7 +215,7 @@
       '<div class="idhead" style="margin:6px 0 10px">' + E.art.avatar(Object.assign({}, l, { age: 6, school: 'primary', job: null })) + '<div><b style="font-size:17px">' + esc(l.name) + '</b><div class="small muted">' + (l.sex === 'M' ? 'Bé trai' : 'Bé gái') + ' · ' + esc(where) + '</div></div></div>' +
       '<div class="prow"><span>Nơi sinh</span><span>' + esc(where) + '</span></div>' +
       '<div class="prow"><span>Gia đình</span><span>' + esc(U.cap(fam)) + '</span></div>' +
-      '<div class="prow"><span>Thu nhập nhà</span><span>' + (orph ? 'Không có bố mẹ chu cấp' : esc(money(l, inc, true)) + '/tháng') + (f.noDad || orph ? '' : '<br><small class="muted">bố ' + esc(money(l, f.fInc)) + ' · mẹ ' + esc(money(l, f.mInc)) + '</small>') + '</span></div>' +
+      '<div class="prow"><span>Thu nhập nhà</span><span>' + (E.ROYAL860&&E.ROYAL860.hidden(l)?'Không công khai · quỹ riêng gia tộc':orph ? 'Không có bố mẹ chu cấp' : esc(money(l, inc, true)) + '/tháng') + (f.noDad || orph || E.ROYAL860&&E.ROYAL860.hidden(l) ? '' : '<br><small class="muted">bố ' + esc(money(l, f.fInc)) + ' · mẹ ' + esc(money(l, f.mInc)) + '</small>') + '</span></div>' +
       '<div class="prow"><span>' + esc(E.birthContext ? E.birthContext(l).label : 'Bối cảnh gia đình') + '</span><span>' + esc(teaser) + '</span></div>' +
       '<div class="prow"><span>Năng khiếu</span><span>' + esc(talent) + '</span></div>' +
       '<div class="ptags">' + tags.map(function (t) { return '<span class="ptag">' + esc(U.cap(t)) + '</span>'; }).join('') + '</div>' +
@@ -389,14 +389,14 @@
       fact('Tôn giáo', esc(l.religion)) +
       (E.astroText ? fact('Giờ sinh · cung hoàng đạo', esc(E.astroText(l))) : '') +
       (l.flags.royal ? fact('Xuất thân hoàng gia', esc(E.royalBirthLabel(l))) : '') +
-      fact('Thu nhập gia đình', qDots(f.q)) +
+      fact('Điều kiện gia đình', E.ROYAL860&&E.ROYAL860.hidden(l)?'Hoàng tộc · tài chính không công khai':qDots(f.q)) +
       (f.orphan && f.orphan.adopted == null ? fact('Bố mẹ', f.orphan.unknown ? 'Không rõ tung tích' : 'Đã mất khi bạn còn đỏ hỏn') + fact('Người nuôi dưỡng', esc(U.cap(f.orphan.carer))) : // v7.1: xuất thân mồ côi
       fact('Tuổi bố mẹ', 'Mẹ ' + f.mAge + (f.noDad ? '' : ' · Bố ' + f.fAge)) +
       fact('Nghề của bố mẹ', 'Mẹ: ' + esc(f.mJob) + (f.noDad ? '' : '<br>Bố: ' + esc(f.fJob))) +
       (E.parentTraitText && f.mTrait ? fact('Tính cách bố mẹ', 'Mẹ: ' + esc(E.parentTraitText(l, 'm')) + (f.noDad ? '' : '<br>Bố: ' + esc(E.parentTraitText(l, 'f')))) : '') + // v7.2
-      fact('Thu nhập của mẹ', esc(money(l, f.mInc || 0)) + '/tháng') +
-      (f.noDad ? '' : fact('Thu nhập của bố', esc(money(l, f.fInc || 0)) + '/tháng')) +
-      fact('Thu nhập cả nhà', '<span style="color:var(--accent-2)">' + esc(money(l, (f.mInc || 0) + (f.fInc || 0), true)) + '/tháng</span>')) +
+      fact('Thu nhập của mẹ', E.ROYAL860&&E.ROYAL860.hidden(l)?'Không công khai':esc(money(l, f.mInc || 0)) + '/tháng') +
+      (f.noDad ? '' : fact('Thu nhập của bố', E.ROYAL860&&E.ROYAL860.hidden(l)?'Không công khai':esc(money(l, f.fInc || 0)) + '/tháng')) +
+      fact('Thu nhập cả nhà', E.ROYAL860&&E.ROYAL860.hidden(l)?'Không công khai · nguồn lực gia tộc': '<span style="color:var(--accent-2)">' + esc(money(l, (f.mInc || 0) + (f.fInc || 0), true)) + '/tháng</span>')) +
       fact('Nhà ở', esc((l.houseType ? l.houseType + ', ' : '') + f.home)) +
       fact('Tuổi thọ kỳ vọng', U.fmtNum(l.e0sex, 1) + ' năm') +
       fact('Nguy cơ mất trước 5 tuổi', pct(l.p5)) +
@@ -949,6 +949,7 @@
     };
     var pinc = function (v, v0, ret, alive) {
       if (!alive) return '';
+      if(E.ROYAL860&&E.ROYAL860.hidden(l))return ' · <b>thu nhập không công khai</b>';
       var s = ' · <b>' + esc(money(l, v || 0)) + '/tháng</b>' + (ret ? (v > 0 ? ' lương hưu / trợ cấp' : ' (không lương hưu)') : '');
       if (v0 > 0 && Math.abs(v - v0) / v0 > 0.15) s += ' <small class="muted">(lúc bạn chào đời: ' + esc(money(l, v0)) + ')</small>';
       return s;
