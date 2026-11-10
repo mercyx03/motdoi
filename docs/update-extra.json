@@ -1,10 +1,36 @@
 [
   {
+    "id": "spain-asturias-surnames-81062",
+    "version": "8.10.62",
+    "publishedAt": "2026-11-10T01:30:51.773Z",
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-10T01:31:03.021Z",
+    "title": "Tây Ban Nha: Asturias, tước phối ngẫu và hai họ Borbón",
+    "tags": [
+      "Tính năng",
+      "Đời sống",
+      "Sửa lỗi"
+    ],
+    "summary": "Gia phả quyết định hàng kế vị và danh xưng; tên, hai họ, quyền dùng tước theo hôn nhân và công vụ được xét riêng.",
+    "details": [
+      "Thứ tự kế vị Tây Ban Nha được tính lại theo nhánh, thế hệ, giới và tuổi. Nữ thừa kế giữ Asturias cho tới khi có người đủ điều kiện ưu tiên hơn hoặc đổi ngôi; các vị trí sau cũng cập nhật từ gia phả.",
+      "Vua, Nữ vương, Vương hậu và Vương phu dùng cách gọi riêng. Phối ngẫu của cả nam và nữ thừa kế được xét phẩm vị Asturias và kính ngữ theo hôn nhân; việc kết hôn không tạo quyền kế vị.",
+      "Con của quân chủ và con của người thừa kế được xét Infante/Infanta; con của Infante/Infanta được xét Grande và Excelencia, không tự có một tước gắn địa danh. Người thuộc nhánh xa có thể được xem xét đặc cách qua hồ sơ và quyết định riêng trong game.",
+      "Asturias hiển thị chính trong sinh hoạt; hồ sơ nghi lễ có thể xem thêm Girona, Viana, Montblanc, Cervera và Balaguer. Tên trị vì và số thứ tự được lưu riêng với tên pháp lý.",
+      "Quyền dùng tước của người được phong và của phối ngẫu có hồ sơ riêng. Ly hôn kết thúc quyền dùng theo hôn nhân; quyết định thu hồi tác động đúng tước, giữ các tước riêng còn hiệu lực và lịch sử trước đó. Lugo và Palma de Mallorca có dữ liệu tham chiếu riêng.",
+      "Phong tước địa danh kiểm tra cả cấp tước và tên vùng, người đang giữ và lịch sử đã có. Nếu không còn mục đủ căn cứ, giữ cách gọi hiện tại. Việc xem xét tái sử dụng tước lịch sử cần chờ rồi có quyết định ghi rõ Kịch bản trong game; không tự cấp đất, thu nhập hoặc ngân sách.",
+      "Kho tên có đủ nhóm nam/nữ kinh điển, lịch sử và tên đệm Tây Ban Nha; gợi ý 2–3 tên không lặp, giữ dấu và cho tự nhập. Predro được sửa thành Pedro; Ferdinand có thể giữ như biến thể riêng. Có thể gợi ý tên tổ tiên và phối ngẫu theo hồ sơ gia đình.",
+      "Tên chính, tên đệm, cụm de Todos los Santos, hai họ và tên nhà được lưu riêng. Có thể bật/tắt cụm truyền thống, chọn cách nối hai họ, xem trước thứ tự họ theo dữ liệu cha mẹ; anh chị em cùng cha mẹ giữ thứ tự đã đăng ký. Thứ tự họ không thay quyền kế vị.",
+      "Kết hôn giữ tên pháp lý của phối ngẫu. Hồ sơ, trường học, sinh hoạt và nghi lễ dùng cách hiển thị phù hợp; bản lưu cũ giữ mã người, tên, tước lịch sử, tài sản và nhật ký. Quy định chưa đủ dữ liệu ở các năm cũ được báo rõ."
+    ],
+    "correctedAt": "2026-11-10T01:31:03.081Z"
+  },
+  {
     "id": "monaco-succession-names-81061",
     "version": "8.10.61",
     "publishedAt": "2026-11-10T01:00:37.119Z",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-10T01:17:22.000Z",
     "title": "Monaco: kế vị, tước riêng và kho tên Grimaldi",
     "summary": "Theo dõi nhánh kế vị Monaco, nhiếp chính, tước phối ngẫu và tên nhiều thành phần trên cùng gia phả.",
     "tags": [
@@ -22,14 +48,15 @@
       "Gia đình có thể chọn tên ngắn hoặc nhiều tên đệm, ghi lý do chọn tên và người tổ tiên được tri ân theo mã gia phả. Tên của phối ngẫu có thể vào kho riêng gia đình; tên được nhiều thế hệ dùng để tri ân có thể trở thành truyền thống, vẫn giữ dấu vết người mang tên đầu tiên trong hồ sơ.",
       "Sửa việc tự tạo hôn nhân hoặc hợp pháp hóa mọi trẻ chỉ vì người chơi đang có bạn đời. Hồ sơ cần đúng cha mẹ, huyết thống đã xác lập và điều kiện hôn nhân/chấp thuận. Truyền thống đức tin không tự trở thành điều kiện loại khỏi kế vị khi chưa có căn cứ.",
       "Bản lưu cũ giữ tên, mã người, tước lịch sử, tài sản và nhật ký. Dữ liệu Monaco mới vẫn dùng chung các luồng sinh con, kết hôn, đổi ngôi, chuyển thế hệ và đặt tên hiện có."
-    ]
+    ],
+    "correctedAt": "2026-11-10T01:17:22.459Z"
   },
   {
     "id": "royal-lifetime-81060",
     "version": "8.10.60",
     "publishedAt": "2026-11-09T09:26:11.396Z",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-10T01:17:22.000Z",
     "title": "Sinh ra trong hoàng tộc và chuyện gia tộc nhiều thế hệ",
     "summary": "Thu nhập hoàng gia không công khai, nguồn lực gia tộc lớn và những lựa chọn về cơ hội, đời tư, ảnh hưởng từ nhỏ đến lớn.",
     "tags": [
@@ -44,7 +71,8 @@
       "Có thêm chuyện ảnh riêng bị chia sẻ, tranh vai trò đại diện, tài liệu nội bộ bị tiết lộ, phân bổ quỹ gia đình và truyền kinh nghiệm cho thế hệ sau. Các câu chuyện đi qua bước mở đầu, chuẩn bị và kết quả ở những năm tiếp theo.",
       "Thành viên gia tộc được nhận diện bằng mã trong gia phả, có tin cậy và căng thẳng được ghi nhớ. Hòa giải, chuẩn bị hoặc gây sức ép tạo kết quả khác nhau. Giành ảnh hưởng có thể làm tổn hại quan hệ và uy tín; tin đồn không tự thay luật kế vị hoặc thu tước.",
       "Quỹ riêng và quan hệ gia tộc được giữ khi chuyển thế hệ. Chuyện đang diễn biến khép lại khi người liên quan không còn hoặc nhân vật rời sinh hoạt hoàng gia. Những lợi thế tài chính và ngoại hình là cách chơi hư cấu, không mô tả mọi gia đình hoàng gia ngoài đời."
-    ]
+    ],
+    "correctedAt": "2026-11-10T01:17:22.471Z"
   },
   {
     "id": "childhood-context-81059",

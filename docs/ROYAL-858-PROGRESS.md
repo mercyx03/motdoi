@@ -85,3 +85,7 @@ Worker/API chỉ kiểm cục bộ; chưa xác minhPages REVIEWS_DB hayAPIProduc
 ## Monaco — bản8.10.61
 
 Mở rộng nguồn danh tính chung sangMC, tách luật theo quân chủ, quốc tịch, nhiếp chính, HSH/SAS và tước/nhánh/tên. Sổ tiếp tục và nguồn: docs/MONACO-861-PROGRESS.md. Không áp lại bảng tước tự động cũ choMC.
+
+## Tây Ban Nha8.10.62
+
+Asturias/Infante/Grande, quyền phối ngẫu và hai họ mở rộng từ registry chung; không cấpLugo mặc định nữa. Nguồn, ca nghiệm thu và giới hạn: docs/SPAIN-862-PROGRESS.md.

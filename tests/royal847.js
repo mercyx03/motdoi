@@ -656,7 +656,7 @@ function pick(l, id, key, arg, r = () => 0.2) {
     hW.members.find(m => m.id === 'younger').alive = false;
     lW.partner = { name: 'Husband', sex: 'M', status: 'married', since: 28, alive: true };
     B.syncTitles(lW, hW, hW.members[0], null, quiet);
-    ok(R.lineOf(lW,hW,meW)===1 && R.mainTitle(meW).includes('Thân vương nữ xứ Asturias') && lW.partner.royalConsortTitle847.includes('Príncipe de Asturias (phối ngẫu)'), 'Spain article 2 gives consort dignity; own holder remains the heir');
+    ok(R.lineOf(lW,hW,meW)===1 && R.mainTitle(meW).includes('Thân vương nữ xứ Asturias') && lW.partner.royalConsortTitle847.includes('Phu quân của Thân vương nữ xứ Asturias'), 'Spain article 2 gives consort dignity; own holder remains the heir');
   }
 }
 

@@ -303,3 +303,5 @@ GĐ6 — 8.10.59 bổ sung: tests/life138.js lỗi “sibling can succeed instea
 GĐ6 — 8.10.60: còn regression toàn bộ mã cuối, thiết bị và bản lưu hoàng gia thật, cân bằng dài hạn quỹ riêng/ảnh hưởng/chuỗi sự kiện, rà nguồn lực khi thay đổi tiền tệ và các tình huống chuyển thế hệ thực tế. Mô hình ưu đãi hoàng gia hư cấu, không phải dữ liệu tài chính hoặc ngoại hình thật. Pages REVIEWS_DB chưa kiểm chứng. Chi tiết docs/ROYAL-860.md.
 
 GĐ6 — 8.10.61 Monaco: còn regression toàn bộ mã cuối, thiết bị/save thật nhiều thế hệ, luật trước2002, toàn bộ sắc lệnh tước/phối ngẫu/remainder và hộ tịch từng thời kỳ; mở rộng dữ liệu cha mẹ thứ hai, quốc tịch và giấy tờ từ case thật. Khi làm tiếp bắt đầu mục còn thiếu tại docs/MONACO-861-PROGRESS.md. REVIEWS_DBProduction chưa xác minh; không coi nguồn chưa đủ làPASS.
+
+- GĐ6: Tây Ban Nha8.10.62 — regression toàn diện/thiết bị thật; luật trước1978/1987, họ trước2017, hộ tịch/phán quyết, organic/Cortes/nhiếp chính và dữ liệu tước lịch sử/ngoại lệ cá nhân chưa phủ đầy đủ. Xem docs/SPAIN-862-PROGRESS.md.

@@ -1,3 +1,9 @@
+## 8.10.62 — Tây Ban Nha: Asturias, tước phối ngẫu và hai họ
+
+- Mở rộng registry hiện có: thứ tự kế vị, các thế hệ, danh xưng phối ngẫu và quyền dùng tước địa danh riêng.
+- Bổ sung kho tên Borbón, cụm truyền thống, hai họ, quy tắc anh chị em và giao diện tên theo bối cảnh.
+- Đánh dấu phát hành 8.10.60/61 và 8.10.62 theo chỉ định chủ dự án; không tự deploy.
+
 ## v8.10.61 — Monaco: kế vị, tước và tên Grimaldi (packaged)
 
 - Mở rộng bộ giải danh tính Monaco với nhánh kế vị, quốc tịch, nhiếp chính và quy trình hai hội đồng khi hết nhánh thông thường.

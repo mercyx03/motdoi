@@ -77,6 +77,7 @@
   // thứ tự kế vị dựng lại từ cây (DFS từ người trị vì), không lưu cứng nên sinh/mất/rời hàng đều cập nhật nhất quán
   function order(l, h) {
     if(h.cc==='MC'&&E.MONACO861)return E.MONACO861.order(l,h);
+    if(h.cc==='ES'&&E.SPAIN862)return E.SPAIN862.order(l,h);
     var R = rule(h.cc), sov = byId(h, h.seat), out = [];
     function kids(p) { return h.members.filter(function (m) { return m.parent === p.id && m.by<=yr(l) && !m.removed && !m.adopted920 && !m.barredLine837; }).sort(function (a, b) { if ((R.succ === 'male'||E.ROYAL837&&E.ROYAL837.malePreference(h,a,b,l)) && a.sex !== b.sex) return a.sex === 'M' ? -1 : 1; return a.by - b.by || (a.birthOrder837||0)-(b.birthOrder837||0) || String(a.id).localeCompare(String(b.id)); }); }
     function walk(p) { kids(p).forEach(function (k) { if (R.succ === 'agnatic' && k.sex !== 'M') return; if (k.alive && k.id!==h.seat && (!E.ROYAL837||E.ROYAL837.eligible(l,h,k))) out.push(k); if (R.succ !== 'agnatic' || k.sex === 'M') walk(k); }); }
@@ -208,7 +209,7 @@
       if (k.adopted || k.adopt) { me.adopted920 = true; }
       var titled = !m.removed && (h.cc !== 'GB' || m.sex === 'M' || h.seat===m.id) && !me.adopted920;
       if(k.royal920&&k.royal920.titled&&!m.removed&&!me.adopted920)titled=true;
-      if(h.cc==='MC')titled=false;
+      if(h.cc==='MC'||h.cc==='ES')titled=false;
       if (titled) grant(me, 'prince', 'substantive', false, 'con của ' + m.name, me.by);
       if(E.ROYAL837)E.ROYAL837.child(l,h,m,me,k); h.members.push(me); k.royal920 = { cc: h.cc, id: id, titled: titled };
       if(E.ROYAL858&&E.ROYAL858.supported(h)){E.ROYAL858.sync(l,h,'sinh con');titled=k.royal920.titled;}
