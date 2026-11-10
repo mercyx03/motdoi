@@ -201,10 +201,11 @@
 
   // ================= con, kế vị, tin đồn =================
   function kidsYear(l, log) {
-    var s = st(l),born=l.flags.royal&&!l.flags.royal.quit?l.flags.royal:null;if (!s.spouse&&!born) return; var h = house(l, s.spouse?s.spouse.cc:born.c), m = h && byId(h, s.spouse?s.spouse.id:'player'); if (!m) return;
+    var s = st(l),born=l.flags.royal||null,legacy=(l.kids||[]).find(function(k){return k.royal920;})?.royal920;if (!s.spouse&&!born&&!legacy) return;var defaultH=house(l,s.spouse?s.spouse.cc:born?born.c:legacy.cc),defaultM=defaultH&&byId(defaultH,s.spouse?s.spouse.id:'player');
     (l.kids || []).forEach(function (k) {
-      if (k.royal920) { var existing=byId(h,k.royal920.id); if(existing){existing.alive=k.alive!==false;repairChildTitle(l,h,m,existing,k);return;} if(k.royal920.cc!==h.cc)return; }
-      if (s.spouse&&k.born < (l.partner && l.partner.since || 0)) return; var id = k.royal920&&k.royal920.id || h.cc + ':kid920:' + X.uid(l, k);
+      var c=E.ROYAL866?E.ROYAL866.childContext(l,k,defaultH,defaultM):{h:defaultH,parent:defaultM},h=c&&c.h,m=c&&c.parent;if(!h)return;
+      if (k.royal920) { var existing=byId(h,k.royal920.id); if(existing){existing.alive=k.alive!==false;if(m)repairChildTitle(l,h,m,existing,k);return;} if(k.royal920.cc!==h.cc)return; }
+      if(!m)return;if (!E.ROYAL866&&s.spouse&&k.born < (l.partner && l.partner.since || 0)) return; var id = k.royal920&&k.royal920.id || h.cc + ':kid920:' + X.uid(l, k);
       var me = { id: id, name: k.name, sex: k.sex, by: l.birthYear + k.born, alive: k.alive !== false, titles: [], parent: m.removed ? null : m.id, role: 'grandchild', working: false, playerKid: true };
       if (k.adopted || k.adopt) { me.adopted920 = true; }
       var titled = !m.removed && (h.cc !== 'GB' || m.sex === 'M' || h.seat===m.id) && !me.adopted920;
@@ -216,7 +217,7 @@
       var ln = lineOf(l, h, me);
       log(k.name + (titled ? ' mang tước ' + mainTitle(me) : ' không tự có tước hiệu (theo quy định của ' + cname(h.cc) + ')') + (ln ? '; đứng thứ ' + ln + ' trong hàng kế vị.' : me.adopted920 ? '; con nuôi không vào hàng kế vị theo quy định hiện hành của nhà này.' : '.'), 'neutral');
     });
-    (l.kids || []).forEach(function (k) { if (k.royal920 && k.alive === false) { var x = byId(h, k.royal920.id); if (x) x.alive = false; } });
+    (l.kids || []).forEach(function (k) { if (k.royal920 && k.alive === false) { var kh=s.houses[k.royal920.cc],x=kh&&byId(kh,k.royal920.id); if (x) x.alive = false; } });
   }
   function repairChildTitle(l,h,parent,m,k) {
     if(E.ROYAL858&&E.ROYAL858.supported(h)){E.ROYAL858.bind(l,h);var entitlement=E.ROYAL858.identity(l,h,m).titles.find(function(t){return ['prince','infante','asturias'].includes(t.key);});if(entitlement&&entitlement.key==='prince'&&!(m.titles||[]).some(function(t){return t.key==='prince';}))grant(m,'prince','entitlement',false,'đối chiếu '+entitlement.ruleId,yr(l),{verified858:true,rule858:entitlement.ruleId,label858:entitlement.label,source858:entitlement.source,scenario858:entitlement.scenario});k.royal920.titled=!!entitlement;return;}

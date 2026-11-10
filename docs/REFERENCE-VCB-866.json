@@ -1,0 +1,70 @@
+{
+  "source": "https://www.vietcombank.com.vn/vi-VN/KHCN/Cong-cu-Tien-ich/KHCN---Lai-suat",
+  "asOf": "2026-11-10T10:01:01+07:00",
+  "currency": "VND",
+  "data": [
+    {
+      "tenorType": "Savings",
+      "tenor": "Demand",
+      "currencyCode": "VND",
+      "tenorDisplay": "Kh&#244;ng kỳ hạn",
+      "rates": 0.001
+    },
+    {
+      "tenorType": "Savings",
+      "tenor": "12-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "12 th&#225;ng",
+      "rates": 0.054
+    },
+    {
+      "tenorType": "Savings",
+      "tenor": "24-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "24 th&#225;ng",
+      "rates": 0.055
+    },
+    {
+      "tenorType": "Savings",
+      "tenor": "36-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "36 th&#225;ng",
+      "rates": 0.048
+    },
+    {
+      "tenorType": "FixedDeposit",
+      "tenor": "12-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "12 th&#225;ng",
+      "rates": 0.054
+    },
+    {
+      "tenorType": "FixedDeposit",
+      "tenor": "24-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "24 th&#225;ng",
+      "rates": 0.055
+    },
+    {
+      "tenorType": "FixedDeposit",
+      "tenor": "36-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "36 th&#225;ng",
+      "rates": 0.048
+    },
+    {
+      "tenorType": "Online",
+      "tenor": "12-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "12 th&#225;ng",
+      "rates": 0.054
+    },
+    {
+      "tenorType": "Online",
+      "tenor": "24-months",
+      "currencyCode": "VND",
+      "tenorDisplay": "24 th&#225;ng",
+      "rates": 0.055
+    }
+  ]
+}

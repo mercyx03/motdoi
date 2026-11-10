@@ -24,13 +24,13 @@
     ja: { n: 'tiếng Nhật', cert: 'JLPT', lv: ['N5', 'N4', 'N3', 'N2', 'N1'], land: 'Nhật Bản' },
     ko: { n: 'tiếng Hàn', cert: 'TOPIK', lv: ['cấp 1', 'cấp 2', 'cấp 3', 'cấp 4', 'cấp 5', 'cấp 6'], land: 'Hàn Quốc' },
     zh: { n: 'tiếng Trung', cert: 'HSK', lv: ['1', '2', '3', '4', '5', '6'], land: 'Trung Quốc / Đài Loan' },
-    fr: { n: 'tiếng Pháp', cert: 'Chứng chỉ tiếng Pháp mô phỏng', lv: ['cấp 1', 'cấp 2', 'cấp 3', 'cấp 4', 'cấp 5'], land: 'Pháp' },
+    fr: { n: 'tiếng Pháp', cert: 'DELF / DALF', lv: ['A1', 'A2', 'B1', 'B2', 'C1'], land: 'Pháp' },
     de: { n: 'tiếng Đức', cert: 'Goethe', lv: ['A1', 'A2', 'B1', 'B2', 'C1'], land: 'Đức' }
   };
   var LANG_OF = { FR: 'fr', JP: 'ja', KR: 'ko', TW: 'zh', CN: 'zh', HK: 'zh', DE: 'de', AT: 'de', CH: 'de', US: 'en', GB: 'en', AU: 'en', CA: 'en', NZ: 'en', IE: 'en', SG: 'en' };
   var LANG_OF_NAME = { 'Pháp': 'fr', 'Nhật Bản': 'ja', 'Hàn Quốc': 'ko', 'Đài Loan': 'zh', 'Trung Quốc': 'zh', 'Đức': 'de', 'Hoa Kỳ': 'en', 'Úc': 'en', 'Anh': 'en', 'Canada': 'en', 'Singapore': 'en' };
   function langLv(l, k) { return (l.lang && l.lang[k]) || 0; }
-  function langCert(l, k) { var L = LANG[k], v = langLv(l, k); return v ? L.cert + ' ' + L.lv[v - 1] : ''; }
+  function langCert(l, k) { var L = LANG[k], v = langLv(l, k); return v ? (k === 'fr' ? (v <= 4 ? 'DELF' : 'DALF') : L.cert) + ' ' + L.lv[v - 1] : ''; }
   function langNext(l, k) { var v = langLv(l, k); return v < LANG[k].lv.length ? v + 1 : null; }
   // ngôn ngữ phù hợp hoàn cảnh: đang/định sang nước nào thì học tiếng nước đó
   function langCtx(l) {

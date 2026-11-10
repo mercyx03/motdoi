@@ -57,9 +57,9 @@ for(const block of Object.keys(E.EXAM127.blocks)){
 {
  const l=life();l.flags.study54={records:{},wishes:[{school:'hmu',major:'med'},{school:'mtvn',major:'art'}]};
  const f=M.estimateUniExam853(l);ok(f.wishesEval[0].status.includes('Tổ hợp'),'admission block requirement');ok(f.wishesEval[1].status.includes('Năng khiếu'),'aptitude requirement explicit');
- ok(E.EVENTS125.high.every(x=>! /Amsterdam|Khoa học Tự nhiên|Lê Hồng Phong|Nguyễn Khuyến/.test(x.name)),'no real HS cutoff claims');
+ ok(E.EVENTS125.high.every(x=>x.reference.type==='target'&&x.reference.year===null)&&E.DEC.mockHighSchool853.make(l,()=>.5).text.includes('Không phải điểm chuẩn tuyển sinh thật'),'identity names separated from unofficial HS target scores');
  const old=M.estimateUniExam853(l).forecast.fingerprint;l.flags.study54.wishes.reverse();ok(M.estimateUniExam853(l).forecast.fingerprint!==old,'wish change invalidates fingerprint');
- ok(E.EDUCATION54.schools.every(x=>x.reference.type==='simulation'&&x.name.includes('mô phỏng')),'no unverified university cutoff names');
+ ok(E.EDUCATION54.schools.every(x=>x.reference.type==='simulation'&&!x.name.includes('mô phỏng'))&&E.EDUCATION54.schools.find(x=>x.id==='hmu').name==='Trường Đại học Y Hà Nội','institution names retained; score reference remains separate');
 }
 {const a=life(),b=life();a.id='different-a';b.id='different-b';ok(E.rollExamScore(a)===E.rollExamScore(b),'same explicit seed and conditions ignore wall-clock identity');}
 {const l=life(14);l.school='lower';l.edu=1;l.flags.study54={records:{english:2},wishes:[]};M.train(l,'hs','intensive',()=>{});const s=l.flags.mockExam853.specificV2.hs;ok(s.english>0&&!s.math,'specialized training tied to chosen subject, no cross-subject injection');const input=M.inputs(l,'special',null,'english');ok(input.subjectSkills.english===s.english,'specific subject skills feed shared formula');}

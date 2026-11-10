@@ -1,3 +1,11 @@
+## 8.10.66 — Tên trường, biểu lãi suất và nguồn cha mẹ
+
+- Sửa NaN tỷ lệ biểu quyết doanh nghiệp bố mẹ; giữ tài sản.
+- Giữ tên đại học, sửa một số địa điểm, ưu tiên nhóm ngành theo sở thích; DELF/DALF.
+- Biểu VND Vietcombank10/11/2026 theo kỳ hạn/hình thức, giữ hợp đồng cũ.
+- Nối coParent108 với gia phả theo ID; giữ họ/nhánh lịch sử, chặn tự kế vị khi cần đối chiếu.
+- Gỡ một số nhãn thừa; dữ liệu thật toàn game còn đang rà, chưa nghiệm thu toàn diện.
+
 ## 8.10.65 — Nhiếp chính và hộ tịch hoàng gia
 
 - Nối lịch sử Monaco1962/2002, các phiên bản nhiếp chính và quy trình phiên hội đồng.

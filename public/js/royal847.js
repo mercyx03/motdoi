@@ -341,7 +341,7 @@
   X.menu('royalUpbringing847', 'Bảo mẫu đa ngôn ngữ, trường nội trú, nghệ thuật & đời sống kín đáo', function (l) {
     var q = A.context(l);
     if (X.reason(l, 4) !== true) return X.reason(l, 4);
-    return A.managed(l) && q && q.me ? true : 'Dành cho thành viên hoàng gia được mô phỏng';
+    return A.managed(l) && q && q.me ? true : 'Dành cho thành viên hoàng gia';
   }, function (l) {
     var q = A.context(l), up = upState(l, q.me), cfg = NANNY_LANG[q.c] || NANNY_LANG.GB;
     var pos = R.lineOf(l, q.h, q.me) || 99;
@@ -588,7 +588,7 @@
 
   X.menu('royalBirthProtocol847', 'Nghi thức đón em bé Hoàng gia, đại bác, thắp đèn & ra mắt công chúng', function (l) {
     var q = A.context(l);
-    if (!l.alive || !A.managed(l) || !q) return 'Dành cho gia đình hoàng gia được mô phỏng';
+    if (!l.alive || !A.managed(l) || !q) return 'Dành cho gia đình hoàng gia';
     var hasNewborn = birthGroupKids(l, l.age).length > 0;
     var anyRoyalKids = (l.kids || []).some(function (k) { return k.alive !== false && k.royal920; });
     return hasNewborn || anyRoyalKids ? true : 'Cần có em bé hoàng gia mới chào đời hoặc đang trong tuổi sơ sinh';
@@ -1204,7 +1204,7 @@
     return "• Tầng lớp & Họ (Surname như 'thẻ căn cước xã hội'): " + vInfo.vnName + " · Họ gia đình: " + st.surname + " (" + vInfo.popGroup + ").\n" +
       "• Danh mục pháp lý Hiến pháp Ấn Độ: " + cat.name + " (" + cat.quotaLabel + "). Tôn giáo hiện tại: " + st.faith + (st.faithBranch ? " · Nhánh: " + st.faithBranch : "") + ".\n" +
       lossNote +
-      "• Ngưỡng điểm chuẩn mô phỏng: Kỹ thuật IIT (" + cat.cutoffIIT + "/100) · Y khoa AIIMS (" + cat.cutoffAIIMS + "/100, ngành cực kỳ đắt đỏ và giới hạn chỉ tiêu khắt khe)." +
+      "• Điểm mục tiêu: Kỹ thuật IIT (" + cat.cutoffIIT + "/100) · Y khoa AIIMS (" + cat.cutoffAIIMS + "/100, ngành cực kỳ đắt đỏ và giới hạn chỉ tiêu khắt khe)." +
       (st.admittedInst ? "\n• Trường đã trúng tuyển: " + st.admittedInst + (st.scholarshipClaimed ? " (đã nhận miễn/giảm học phí, ký túc xá & trợ cấp)" : "") + "." : "");
   }, function (l) {
     if (!inIndia848(l)) return [];
@@ -2623,14 +2623,14 @@
       if(u.nk&&nk.low.total<u.nkPass)missing.push('Năng khiếu cần ≥'+u.nkPass+'/10; dự kiến '+nk.low.total+'–'+nk.high.total);
       var direct=!u.nk&&E.EDUCATION54.direct(l,w.major);
       return {index:index+1,schoolName:u.name,program:w.program||E.MAJORS[w.major]||w.major,cut:cut,missing:missing,
-        status:missing.length?missing.join('; '):direct?'Đủ điều kiện thành tích mô phỏng':Number.isFinite(l.examScore)?(score>=cut?'Đủ điểm đã thi':'Thiếu điểm đã thi'):status853(f.low.total,f.high.total,cut)};
+        status:missing.length?missing.join('; '):direct?'Đủ thành tích theo hồ sơ đang có':Number.isFinite(l.examScore)?(score>=cut?'Đủ điểm đã thi':'Thiếu điểm đã thi'):status853(f.low.total,f.high.total,cut)};
     });
     return {block:b,min30:f.low.total,expected30:f.expected,max30:f.high.total,subjects:f.center.scores,scoreRef:score,
       nkExpected10:nk.expected,nkMin10:nk.low.total,nkMax10:nk.high.total,isNk:/^[HVNS]/.test(b),wishesEval:wishes,last:peekMockState853(l).uniLast||null,forecast:f};
   }
   function report853(l,kind){
     var hs=kind==='hs',e=hs?estimateHighSchool853(l):estimateUniExam853(l),f=e.forecast,i=f.center.inputs,s=i.skills,last=e.last;
-    var text='Ngưỡng mô phỏng trong game · '+(hs?'Toán ×2 + Văn ×2 + Anh ×1 /50':'Ba môn tổ hợp '+e.block+' /30')+'. Không phải điểm chuẩn tuyển sinh thật.\n';
+    var text='Điểm mục tiêu tham khảo · '+(hs?'Toán ×2 + Văn ×2 + Anh ×1 /50':'Ba môn tổ hợp '+e.block+' /30')+'. Không phải điểm chuẩn tuyển sinh thật.\n';
     text+='Thời điểm xem '+new Date().toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',hour12:false})+' UTC+7 · Dự báo tại tuổi '+l.age+' · năm '+(l.birthYear+l.age)+': thấp '+f.low.total+' — kỳ vọng '+f.expected+' — cao '+f.high.total+'. Khoảng bao phủ biến động phòng thi của mô hình hiện tại, không cam kết trúng tuyển. Trạng thái/nguyện vọng đổi thì cần xem lại.\n';
     text+=f.center.scores.map(function(x){return label853(x.subject)+': '+x.score+'/10 (năng lực '+x.ability+', trạng thái '+x.state+')';}).join(' · ')+'\n';
     text+='Kiến thức '+i.knowledge+'/100; kỹ năng làm đề '+Math.round((s.format+s.time+s.hard)/3*100)+'/100; tập trung '+(i.focus?'đang ưu tiên học':'bình thường')+'; căng thẳng '+i.stress+'/100; ổn định '+Math.round(s.stable*100)+'/100. Luyện dạng đề, phân bổ thời gian và nghỉ ngơi giúp giảm sai sót; ôn dồn gây mệt. Không có điểm trừ tâm lý ẩn.\n';
@@ -2674,10 +2674,11 @@
   ['highSchool125','study_special54','khoi912','luyen_thi','study_wishes54'].forEach(function(id){if(!E.DEC[id])return;var old=E.DEC[id].make;
     E.DEC[id].make=function(l){var d=old.apply(this,arguments);d.text+='\n'+report853(l,/highSchool|special/.test(id)?'hs':'uni');return d;};});
   // Keep IDs and saved historical names; only new catalog choices use fictional groups.
-  E.EVENTS125.high.forEach(function(a,index){a.name=['THPT chuyên cạnh tranh cao phía Bắc','THPT chuyên cạnh tranh cao phía Nam','THPT công lập địa phương mô phỏng','THPT chuyên khoa học mô phỏng','THPT chuyên địa phương mô phỏng','THPT tư thục địa phương mô phỏng','THPT tư thục cạnh tranh mô phỏng'][index];a.address=a.city||'Địa phương trong game';a.cut=[46,45,25,46.5,41,22,37][index];});
-  E.EDUCATION54.schools.forEach(function(u,index){u.name='Đại học '+(u.nk?'nhóm năng khiếu':u.score>=26?'nhóm cạnh tranh cao':u.score>=23?'nhóm cạnh tranh khá':'nhóm vừa sức')+' mô phỏng · '+(u.city||u.country||'địa phương')+' '+(index+1);u.reference={type:'simulation',year:null,scale:30};});
+  E.EVENTS125.high.forEach(function(a,index){a.cut=[46,45,25,46.5,41,22,37][index];a.reference={type:'target',year:null,scale:50};});
+  // Preserve institution names from the shared catalogue; the exam target is separate reference data.
+  E.EDUCATION54.schools.forEach(function(u){u.reference={type:'simulation',year:null,scale:30};});
   var migrate853=E.migrateExt;E.migrateExt=function(l){if(migrate853)migrate853.apply(this,arguments);if(l.flags&&l.flags.mockExam853)mockExamState853(l);};
-  E.HOOKS.gradUpper.push(function(l,r,log){var d=l.flags.mockExam853&&l.flags.mockExam853.officialV2&&l.flags.exam127;if(!d||!d.inputs)return;log('Phân tích bài thi: '+d.scores.map(function(x){return label853(x.subject)+': năng lực '+x.ability+', trạng thái '+x.state+', phòng thi '+x.room+' → '+x.score+'/10';}).join(' · ')+'. Ngưỡng mô phỏng trong game.','neutral');});
+  E.HOOKS.gradUpper.push(function(l,r,log){var d=l.flags.mockExam853&&l.flags.mockExam853.officialV2&&l.flags.exam127;if(!d||!d.inputs)return;log('Phân tích bài thi: '+d.scores.map(function(x){return label853(x.subject)+': năng lực '+x.ability+', trạng thái '+x.state+', phòng thi '+x.room+' → '+x.score+'/10';}).join(' · ')+'. Điểm mục tiêu tham khảo.','neutral');});
   E.MOCK_EXAM853={peekMockState853:peekMockState853,mockExamState853:mockExamState853,peekExamApt853:peekExamApt853,
     estimateHighSchool853:estimateHighSchool853,estimateUniExam853:estimateUniExam853,canMockHighSchool853:canMockHighSchool853,canMockUniExam853:canMockUniExam853,
     inputs:inputs853,calculate:calculate853,forecast:forecast853,official:official853,skills:skills853,train:train853,report:report853};

@@ -94,7 +94,7 @@
       if (u) d.opts.forEach(function (o) {
         if (o.k.indexOf('major_') !== 0) return;
         var m = o.k.slice(6);
-        if (u.nk) { o.l = u.mn + (u.majors.length > 1 && m === 'edu' ? ' (hệ sư phạm)' : ''); o.h = 'Mốc văn hóa mô phỏng ' + u.score + '/30 · ' + nkLabel(u); }
+        if (u.nk) { o.l = u.mn + (u.majors.length > 1 && m === 'edu' ? ' (hệ sư phạm)' : ''); o.h = 'Điểm văn hóa mục tiêu ' + u.score + '/30 · ' + nkLabel(u); }
         o.h += ' · xét khối ' + blocksOf(u, m).join(', ') + (l.khoi ? fits(l, u, m) ? ' · ✓ hợp khối ' + l.khoi : ' · ✗ không xét khối ' + l.khoi + ' của bạn' : '');
       });
     } else if (s.region) {
@@ -113,7 +113,7 @@
     }
     var list2 = s.wishes.length ? s.wishes.map(function (x, i) { return 'NV' + (i + 1) + ': ' + ct(x); }).join('; ') : 'Chưa có nguyện vọng';
     d.text = list2 + '. ' + (K ? 'Bạn thi khối ' + l.khoi + ' (' + K.n + ') — chỉ trường xét khối này mới nhận hồ sơ' + (NK_BLOCKS[l.khoi] ? ', trường nghệ thuật có thêm vòng thi năng khiếu' : '') + '. ' : '') +
-      'Chọn tối đa 5 trường/ngành theo thứ tự yêu thích. Xét nguyện vọng đầu tiên đủ điểm; điểm trong game là mô phỏng.';
+      'Chọn tối đa 5 trường/ngành theo thứ tự yêu thích. Xét nguyện vọng đầu tiên đủ điểm; điểm mục tiêu cần đối chiếu theo ngành và kỳ tuyển sinh.';
     return d;
   };
   // máy tự chọn: chỉ chọn trường hợp khối

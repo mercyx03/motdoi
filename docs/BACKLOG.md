@@ -307,3 +307,11 @@ GĐ6 — 8.10.60: còn regression toàn bộ mã cuối, thiết bị và bản 
 GĐ6 — 8.10.61 Monaco: còn regression toàn bộ mã cuối, thiết bị/save thật nhiều thế hệ, luật trước2002, toàn bộ sắc lệnh tước/phối ngẫu/remainder và hộ tịch từng thời kỳ; mở rộng dữ liệu cha mẹ thứ hai, quốc tịch và giấy tờ từ case thật. Khi làm tiếp bắt đầu mục còn thiếu tại docs/MONACO-861-PROGRESS.md. REVIEWS_DBProduction chưa xác minh; không coi nguồn chưa đủ làPASS.
 
 - GĐ6: Tây Ban Nha8.10.62 — regression toàn diện/thiết bị thật; luật trước1978/1987, họ trước2017, hộ tịch/phán quyết, organic/Cortes/nhiếp chính và dữ liệu tước lịch sử/ngoại lệ cá nhân chưa phủ đầy đủ. Xem docs/SPAIN-862-PROGRESS.md.
+
+### Đợt66 — kiểm thử trọng điểm, không thay nghiệm thu GĐ6
+
+- royal866/reference866/dynasty908/expansion842 và các hệ hoàng gia/giáo dục liên quan đạt; giao diện6view390/1280 đạt ở nguồn. Cần nghiệm thu toàn diện sau khi chốt mã.
+- depth899, origins-clubs904, life138, continuity101 FAIL; đã tái hiện cùng assertion trên toàn bộ nguồn public của HEAD a5800ea qua git cat-file, không phải lỗi mới được chứng minh của66. Chưa xem là PASS, cần đối chiếu fixture và đường đi mới trước nghiệm thu.
+- Dữ liệu thật toàn game và các chức năng đang thiếu vẫn là công việc triển khai của yêu cầu hiện hành, xem REFERENCE-866-PROGRESS.md; không đẩy các phần này sang GĐ6 chỉ vì người dùng loại trừ nghiệm thu toàn diện.
+
+Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên nguồn HEAD a5800ea. exam-model được cập nhật theo yêu cầu giữ tên trường,565checks đạt; không còn dùng điều kiện bắt buộc tên giả để kiểm tính trung thực của điểm mục tiêu.

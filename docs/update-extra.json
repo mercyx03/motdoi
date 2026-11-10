@@ -1,5 +1,27 @@
 [
   {
+    "id": "reference-parentage-81066",
+    "version": "8.10.66",
+    "publishedAt": "2026-11-10T07:42:58.359Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Tên trường, sổ tiết kiệm và hồ sơ kế nghiệp",
+    "tags": [
+      "Học tập",
+      "Đời sống",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Sửa tỷ lệ phiếu bị NaN ở doanh nghiệp do bố mẹ nắm giữ. Hai phụ huynh còn sống chia đều quyền biểu quyết; còn một người thì người đó có đủ trọng số, không tự chuyển cổ phần hay tạo tiền.",
+      "Danh mục đại học giữ tên trường đã có thay vì đổi thành tên nhóm chung. Sửa vị trí một số trường Anh, Mỹ và tách tên UCLA khỏi UC Berkeley. Sở thích từ đồ vật sinh nhật đầu tiên giúp đưa trường có nhóm ngành liên quan lên trước; vẫn chọn được hướng khác và phải đáp ứng điều kiện học tập.",
+      "Chứng chỉ tiếng Pháp dùng các mức DELF A1–B2 và DALF C1 theo lộ trình đang hỗ trợ, giữ cấp độ đã lưu.",
+      "Mở sổ VND tại Vietcombank dùng biểu lãi suất có nguồn ngày 10/11/2026, theo đúng kỳ hạn và hình thức gửi. Không tự cộng thêm lãi trực tuyến hay kéo dài kỳ hạn không có trong biểu; mỗi sổ giữ nguồn và lãi đã ký. Nơi chưa có biểu được đối chiếu chưa mở sổ mới; sổ cũ vẫn giữ điều kiện và tất toán được.",
+      "Nguồn cha mẹ của trẻ hoàng gia được nối bằng mã người đã lưu lúc sinh hoặc nhận nuôi. Đổi bạn đời không tự đổi cha mẹ, nhánh gia phả hay họ pháp lý đã có. Hồ sơ mâu thuẫn cần đối chiếu trước khi tự chuyển ngôi.",
+      "Gỡ một số nhãn thừa trong hồ sơ hoàng gia, sở thích, công việc và đời sống. Chi phí chưa có báo giá chính thức vẫn ghi là ước tính; đợt này chưa xác minh xong dữ liệu tham chiếu toàn game."
+    ],
+    "summary": "Sửa tỷ lệ phiếu kế nghiệp, giữ tên trường và bổ sung biểu tiết kiệm có nguồn; nối hồ sơ cha mẹ theo đúng người đã lưu."
+  },
+  {
     "id": "royal-regency-civil-81065",
     "version": "8.10.65",
     "publishedAt": "2026-11-10T06:31:36.852Z",
