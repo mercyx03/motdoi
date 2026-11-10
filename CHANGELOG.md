@@ -1,3 +1,9 @@
+## 8.10.63 — Tiếp tục học tại nhà và văn bằng
+
+- Bổ sung đường hồ sơ cho đủ76 vùng trong danh mục hiện có; thêm quỹ giờ giám hộ, hoàn chi phí có chứng từ và trợ cấp theo phần kỳ.
+- Nối khoa học GCSE, văn bằng qua provider, học phần dual enrollment và công nhận hồ sơ vào hệ thống học tập/thi cử hiện có.
+- Đây là phần giáo dục của đợt hoàn thiện các yêu cầu còn thiếu; các phần nội dung quốc tế/hoàng gia tiếp tục sau.
+
 ## 8.10.62 — Tây Ban Nha: Asturias, tước phối ngẫu và hai họ
 
 - Mở rộng registry hiện có: thứ tự kế vị, các thế hệ, danh xưng phối ngẫu và quyền dùng tước địa danh riêng.

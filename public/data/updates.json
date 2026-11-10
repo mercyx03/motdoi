@@ -1,6 +1,32 @@
 {
-  "generatedAt": "2026-11-10T01:30:51.863Z",
+  "generatedAt": "2026-11-10T02:10:37.494Z",
   "entries": [
+    {
+      "id": "education-pathways-81063",
+      "version": "8.10.63",
+      "publishedAt": "2026-11-10T02:10:16.519Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Học tại nhà: thêm vùng, văn bằng và công nhận học bạ",
+      "tags": [
+        "Học tập",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Các bang và vùng còn thiếu của Mỹ, Canada, Úc và Northern Ireland có cấu hình đường lập hồ sơ theo nơi cư trú, hình thức, cơ quan tiếp nhận và nghĩa vụ riêng; không dùng luật của nơi khác để tự thay thế.",
+        "Người giám hộ có quỹ thời gian dạy dùng chung qua nhiều con. Tự học, gia sư và học xuyên hè vẫn dùng ngân sách, sức khỏe và tiến độ từng môn.",
+        "Có hồ sơ hoàn chi phí tài liệu ở chương trình Alberta được giám sát và đúng school division đã cấu hình tại Saskatchewan; cần tiếp nhận đúng hạn, chi thật và chứng từ. Không tự cấp tiền cho mọi gia đình học tại nhà.",
+        "Trợ cấp New Zealand xét phần kỳ từ ngày miễn học, khai báo từng kỳ và thời gian ở ngoài nước; giữ lịch sử để tránh nhận trùng.",
+        "GCSE có lựa chọn Combined Science với hai điểm hoặc Biology/Chemistry/Physics riêng. Trung tâm phải nhận phần thực hành; nhiều ngoại ngữ có thêm thông tin văn bằng và phần nói.",
+        "Thêm hồ sơ qua cơ sở tiếp nhận cho GED/HiSET, AP, SAT, IGCSE, A-Level, IB, Leaving Certificate và NSC theo nơi, tuổi và hình thức phù hợp. Thi có thời gian học, phần đánh giá cần thiết và kết quả khóa theo môn/kỳ; AP/SAT không tự thành bằng tốt nghiệp.",
+        "HSC và VCE đi qua chương trình trường hoặc provider tiếp nhận, giữ đánh giá học phần và điều kiện hoàn tất; không tự cấp bằng vì hoàn thành kế hoạch homeschool.",
+        "Dual enrollment lưu học phần riêng; trường nhận xét tín chỉ ở bước sau. Quay lại trường có đối chiếu học bạ và phần cần bổ sung.",
+        "Có đối chiếu môn/điểm với dữ liệu tuyển sinh tham chiếu; đạt phần học thuật không bảo đảm được nhận. Văn bằng, hoàn thành học phổ thông và hồ sơ vào cao đẳng/đại học là các bước riêng.",
+        "Bổ sung chặn các tình huống trường học không phù hợp với người học tại nhà độc lập; giữ lịch sử, kết quả và hồ sơ qua lưu/tải. Trung tâm, phí và quyết định nhận hồ sơ trong game là mô phỏng."
+      ],
+      "summary": "Mở rộng hồ sơ theo nơi cư trú, tiến độ học, văn bằng qua cơ sở tiếp nhận và các bước công nhận kết quả."
+    },
     {
       "id": "spain-asturias-surnames-81062",
       "version": "8.10.62",

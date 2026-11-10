@@ -494,6 +494,7 @@ function pick(l, id, key, arg, r = () => 0.2) {
     for (let a = 0; a < 18; a++) {
       if (lGb.age === 16 && E.STUDY857.en(lGb)) {
         ok(!E.DEC.sixth829.valid(lGb), 'England needs completed GCSE before Sixth Form');
+        E.EDUCATION863.chooseScience(lGb,'combined');
         ok(E.STUDY857.register(lGb) && E.STUDY857.gcseSit(lGb), 'England candidate registers and completes GCSE through shared exam model');
       }
       E.beginYear(lGb);

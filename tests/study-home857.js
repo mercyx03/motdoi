@@ -1,13 +1,14 @@
 'use strict';
 const assert=require('node:assert/strict'),{E}=require('./hardcore-isolation').gameContext(),S=E.STUDY857;
 let checks=0;const ok=(v,msg)=>{assert(v,msg);checks++;},copy=x=>JSON.parse(JSON.stringify(x)),noop=()=>{};
-function pupil(country='GB',region='England',age=14){const l=E.createLife({mode:'world',country,seed:857,year:2026-age});Object.assign(l,{country,age,educationRegion:region,school:age<11?'primary':age<16?'lower':'upper',schoolEnd:18,money:100000,pending:[],sched:[]});l.st.kno=80;l.st.hea=80;return l;}
+function pupil(country='GB',region='England',age=14){const l=E.createLife({mode:'world',country,seed:857,year:2026-age});Object.assign(l,{country,age,educationRegion:region,school:age<11?'primary':age<16?'lower':'upper',schoolEnd:18,money:100000,pending:[],sched:[]});// These fixtures exercise the pre863 saved GCSE registration contract.
+ delete l.flags.educationVersion863;l.st.kno=80;l.st.hea=80;return l;}
 function prepare(l,id='family'){ok(S.request(l,id,'nhịp học'),'request');let s=S.home(l);s.documents=s.plan=s.consulted=s.credential=true;ok(S.submit(l),'submit');return s;}
 function start(l,id='family'){const s=prepare(l,id);if(s.status==='pending'){l.age++;ok(S.review(l),'review next year');}ok(S.start(l),'start');return s;}
 function choose(l,id,key,arg){const d=E.DEC[id].make(l,()=>.5,arg),index=d.data.keys.indexOf(key);ok(index>=0,id+' offers '+key);ok(d.opts.some(x=>x.k===String(index)),id+' enabled '+key);E.DEC[id].apply(l,d,String(index),()=>.5,noop);return d;}
 ok(S.REGIONS.US.length===51,'50 states and DC');ok(S.REGIONS.CA.length===13,'13 Canada regions');ok(S.REGIONS.AU.length===8,'8 Australia regions');ok(S.REGIONS.GB.length===4,'4 UK nations');
 for(const r of S.REGIONS.US){const l=pupil('US',r.id);const q=S.rule(l);ok(q.key==='US:'+r.id,'jurisdiction '+r.id);if(!S.RULES[q.key])ok(q.mode==='unknown'&&q.routes.length===0,'unknown fails closed '+r.id);}
-for(const country of ['VN','DE','CA','AU']){const l=pupil(country,'unknown');ok(!S.request(l,'family'),'no route fabricated '+country);ok(S.report(l).includes(country==='VN'?'học chính quy':'Chưa có dữ liệu'),'honest fallback '+country);}
+for(const country of ['VN','DE','CA','AU']){const l=pupil(country,'unknown');l.city='Unknown town';ok(!S.request(l,'family'),'no route fabricated '+country);ok(S.report(l).includes(country==='VN'?'học chính quy':'Chưa có dữ liệu'),'honest fallback '+country);}
 {
  const l=pupil('US','MA'),old=copy({school:l.school,end:l.schoolEnd});let s=prepare(l);ok(s.status==='pending','prior approval pending');ok(!S.start(l)&&l.school===old.school&&l.schoolEnd===old.end,'pending keeps school');ok(!S.review(l),'no instant review');l.age++;ok(S.review(l)&&S.start(l),'approval then start');ok(l.schoolEnd===null,'no automatic diploma clock');ok(E.gradFail(l,()=>.5,noop),'guard automatic graduation');ok(!E.DEC.hs.valid(l),'no old school graduation bypass');
 }
