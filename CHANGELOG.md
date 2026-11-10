@@ -1,3 +1,9 @@
+## 8.10.64 — Bối cảnh quốc tế và quan hệ hoàng gia
+
+- Mở rộng bối cảnh ngoài tuổi thơ: nghi lễ, tín ngưỡng, ngày lễ và vai trò đặc biệt.
+- Thêm chủ đề27hoàng gia và hồ sơ phân vai qua CHAIN144, chứng cứ/quỹ riêng/quan hệ/hậu quả nhiều năm.
+- Mốc tiếp tục của yêu cầu làm hết phần còn thiếu; lịch sử pháp lý và dữ liệu giáo dục vẫn đang làm.
+
 ## 8.10.63 — Tiếp tục học tại nhà và văn bằng
 
 - Bổ sung đường hồ sơ cho đủ76 vùng trong danh mục hiện có; thêm quỹ giờ giám hộ, hoàn chi phí có chứng từ và trợ cấp theo phần kỳ.

@@ -1,6 +1,6 @@
 'use strict';
 const assert=require('node:assert/strict'),{gameContext}=require('./hardcore-isolation');const E=gameContext().E;let n=0;const ok=(v,m)=>{assert(v,m);n++;};
-function life(mode='vn'){const l=E.createLife({mode,country:mode==='vn'?'VN':'US',seed:84242,year:1990});Object.assign(l,{age:32,alive:true,indep:true,school:null,pending:[],sched:[],jailUntil:null,abroad:null,retired:false,money:l.base*50,edu:7,city:'A'});l.flags.military=0;return l;}
+function life(mode='vn'){const l=E.createLife({mode,country:mode==='vn'?'VN':'US',seed:84242,year:1990});Object.assign(l,{age:32,alive:true,indep:true,school:null,pending:[],sched:[],jailUntil:null,abroad:null,retired:false,money:l.base*50,edu:7,city:'A'});l.flags.military=0;if(mode==='world')l.flags.life138.ancestry=['US','VN'];return l;}
 function choose(l,id,key,arg,r=()=>.1){const D=E.DEC[id],d=D.make(l,r,arg);const o=d.opts.find(o=>d.data.keys?d.data.keys[+o.k]===key:o.k===key);ok(o,'available '+id+':'+key);D.apply(l,d,o.k,r,()=>{});return d;}
 function blocked(l,id,key,arg){const d=E.DEC[id].make(l,()=>.1,arg);return !d.opts.some(o=>d.data.keys?d.data.keys[+o.k]===key:o.k===key);}
 for(const mode of ['vn','world']){
