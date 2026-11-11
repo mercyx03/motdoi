@@ -536,7 +536,7 @@
     return rows.slice(0, 52);
   }
   X.menu('show151', 'Chương trình truyền hình', function (l) { return free(l) ? true : 'Hiện không thể tham gia'; },
-    function (l) { var h = S(l).history.slice(-4); return 'Đăng ký làm thí sinh, nhận lời làm khách mời, hoặc đảm nhận vai trò phù hợp khi đủ danh tiếng. Mỗi chương trình có thể lệ riêng; diễn biến, câu hỏi và người chơi khác là mô phỏng hư cấu.' + (h.length ? '\nĐã tham gia: ' + h.map(function (x) { return x.name + ' ' + x.year + ' (' + x.result + ')'; }).join('; ') : ''); },
+    function (l) { var h = S(l).history.slice(-4); return 'Đăng ký làm thí sinh, nhận lời làm khách mời, hoặc đảm nhận vai trò phù hợp khi đủ danh tiếng. Mỗi chương trình có thể lệ riêng; diễn biến và người chơi phụ thuộc cuộc đời đang chơi.' + (h.length ? '\nĐã tham gia: ' + h.map(function (x) { return x.name + ' ' + x.year + ' (' + x.result + ')'; }).join('; ') : ''); },
     listRows, 14, 'Giải trí & trải nghiệm');
   // Lời mời tự đến khi có danh tiếng / từng gây ấn tượng (dùng nhịp sự kiện GĐ5)
   X.menu('show151_invite', 'Lời mời từ nhà sản xuất', function (l) { return free(l) && !S(l).active ? true : 'Hiện không thể'; },

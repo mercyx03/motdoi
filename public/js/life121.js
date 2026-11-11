@@ -18,7 +18,7 @@ function student(l){return ['uni','abroad','post','phd'].includes(l.school);}
         var permit=c==='GB'&&l.age===13&&guardian&&l.flags.lightPermit839===l.city;
         var options=[['art','Nhận vẽ tranh theo yêu cầu',.045],['music','Sáng tác nhạc cho người quen',.05],['street','Biểu diễn nhạc cụ ở địa điểm được phép',.03],
           ['sale','Bán đồ tự làm cho hàng xóm quen',.025],['shift','Ca làm nhẹ có thỏa thuận ngoài giờ học',.07],['hidden','Nhận ca không khai báo tại cơ sở kinh doanh',.065]];
-        var hours=l.flags.teenHours844||6;var rows=options.map(function(v){return {k:v[0],l:v[1],h:'Lịch nhẹ khoảng '+hours+' giờ/tuần trong một đợt · giữ giờ học, không làm đêm hoặc việc nguy hiểm',why:l.age<16&&!guardian?'Cần người lớn hỗ trợ':v[0]==='street'&&!musicSkill?'Cần biết chơi một nhạc cụ':v[0]==='shift'&&l.age<min&&!permit?'Chưa đủ tuổi nhận ca ở nơi cư trú trong mô phỏng':true,run:function(l,r,log){
+        var hours=l.flags.teenHours844||6;var rows=options.map(function(v){return {k:v[0],l:v[1],h:'Lịch nhẹ khoảng '+hours+' giờ/tuần trong một đợt · giữ giờ học, không làm đêm hoặc việc nguy hiểm',why:l.age<16&&!guardian?'Cần người lớn hỗ trợ':v[0]==='street'&&!musicSkill?'Cần biết chơi một nhạc cụ':v[0]==='shift'&&l.age<min&&!permit?'Chưa đủ tuổi nhận ca ở nơi cư trú':true,run:function(l,r,log){
           l.flags.teenWorkAt=l.age;
           var caught=v[0]==='hidden'&&r()<.42,paid=!caught&&(v[0]!=='music'||r()<Math.min(.48,.12+musicSkill/250));
           var income=paid?l.base*v[2]*(.35+r())*(hours/6):0;
@@ -27,7 +27,7 @@ function student(l){return ['uni','abroad','post','phd'].includes(l.school);}
           log(caught?'Kiểm tra phát hiện ca làm không khai báo. Cơ sở bị xử phạt và dừng ca; bạn không phải trả tiền phạt.':income?'Bạn hoàn thành '+v[1].toLowerCase()+', nhận '+H.money(l,income)+' và tiếp tục đi học.':'Đợt này chưa có khách mua tác phẩm. Bạn giữ bản nhạc để thử lại.',income?'good':'neutral');
         }};});
         if(c==='GB'&&l.age===13&&guardian&&!permit)rows.push({k:'permit',l:'Cùng gia đình xin phép làm việc nhẹ tại địa phương',why:l.flags.permitAt839===l.age?'Đã xét hồ sơ':true,run:function(l,r,log){
-          l.flags.permitAt839=l.age;if(r()<.5){l.flags.lightPermit839=l.city;log('Địa phương trong mô phỏng chấp thuận một ca nhẹ ngoài giờ học.','good');}else log('Địa phương chưa cấp phép. Bạn có thể thử hoạt động sáng tạo cùng gia đình.','neutral');
+          l.flags.permitAt839=l.age;if(r()<.5){l.flags.lightPermit839=l.city;log('Hồ sơ địa phương chấp thuận một ca nhẹ ngoài giờ học.','good');}else log('Địa phương chưa cấp phép. Bạn có thể thử hoạt động sáng tạo cùng gia đình.','neutral');
         }});
         [6,12].concat(l.age>=16?[16]:[]).forEach(function(h){rows.push({k:'hours:'+h,l:'Bàn lịch làm nhẹ '+h+' giờ/tuần với người chăm sóc',why:hours===h?'Đang áp dụng':true,run:function(l,r,log){l.flags.teenHours844=h;log('Thống nhất lịch '+h+' giờ/tuần trong đợt ngắn, không bỏ học; từng nơi vẫn có giới hạn riêng.','neutral');}});});
         return rows;

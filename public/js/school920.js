@@ -205,7 +205,7 @@
   };
   var RESEARCH = {
     rumspringa: 'Rumspringa (một số cộng đồng Amish): giai đoạn thanh niên tìm hiểu trước khi chọn rửa tội; không phải một đêm bắt buộc rời nhà. Trò chơi chưa có cộng đồng Amish — trạng thái nghiên cứu.',
-    naghol: 'Naghol (đảo Pentecost, Vanuatu): nghi lễ địa phương theo mùa; trò chơi chỉ ghi thông tin, không mô phỏng việc nhảy, không có kỹ thuật/độ cao — trạng thái nghiên cứu.',
+    naghol: 'Naghol (đảo Pentecost, Vanuatu): nghi lễ địa phương theo mùa; trò chơi chỉ ghi thông tin, không tái hiện việc nhảy, không có kỹ thuật/độ cao — trạng thái nghiên cứu.',
     satere: 'Sateré-Mawé (Brazil): nghi lễ của một dân tộc bản địa; chưa có nguồn chính thức đã đọc — trạng thái nghiên cứu, không có minigame chịu đau.'
   };
   RITES.seijin.note += ' Từ năm 2000, ngày lễ quốc gia rơi vào thứ Hai thứ hai của tháng Một; lịch buổi lễ địa phương có thể khác.';

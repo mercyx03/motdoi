@@ -110,9 +110,13 @@
   uni.apply=function(l,d,k,r){if(k==='wishes54'){if(applicant(l)&&d.opts.some(function(o){return o.k===k;}))openWishes(l,r);return;}return ua.apply(this,arguments);};
   // Nguyện vọng Y khoa đã chọn rõ ngành, không đổi sang Quân y hoặc trường khác sau nhập học.
   var med=E.DEC.nganh_y,mm=med.make,ma=med.apply,mt=med.auto;
-  function namedMed(l){var a=state(l).admitted;return a&&a.age===l.age&&a.major==='med'&&l.school==='uni';}
-  med.make=function(l){var d=mm.apply(this,arguments);if(namedMed(l)){d.text='Xác nhận chương trình Y khoa tại '+l.uniName+'.';d.opts=d.opts.filter(function(o){return o.k==='dk';});}return d;};
-  med.auto=function(l){return namedMed(l)?'dk':mt.apply(this,arguments);};
-  med.apply=function(l,d,k,r,log){if(!namedMed(l))return ma.apply(this,arguments);if(k!=='dk'||!d.opts.some(function(o){return o.k===k;}))return;l.med={track:'dk',spec:null};l.majorName=E.MED_TRACK.dk.n;l.schoolEnd=l.age+6;log('Xác nhận học Y khoa tại '+l.uniName+' · 6 năm.','good');};
+  function namedMed(l){var a=state(l).admitted;return a&&a.age<=l.age&&a.major==='med'&&l.school==='uni';}
+  E.MED_TRACK.ydp={n:'Y học dự phòng',y:6,job:'bac_si',spec:'ydp',d:'6 năm · Y học dự phòng'};E.MED_SPEC.ydp=['Y học dự phòng',1,0];
+  function namedMedTrack(l){var a=state(l).admitted,p=a&&a.program||'';return /Điều dưỡng/i.test(p)?'dd':/Y học dự phòng/i.test(p)?'ydp':/Dược học/i.test(p)?'duoc':/Y học cổ truyền/i.test(p)?'yhct':/Răng.*Hàm.*Mặt/i.test(p)?'rhm':'dk';}
+  function namedMedYears(l,key){var a=state(l).admitted;return key==='dk'&&a&&a.school==='GB_manchester'?5:E.MED_TRACK[key].y;}
+  med.make=function(l){var d=mm.apply(this,arguments);if(namedMed(l)){var key=namedMedTrack(l),t=E.MED_TRACK[key],years=namedMedYears(l,key);d.data=d.data||{};d.data.namedProgramme867={at:l.age,school:state(l).admitted.school,program:state(l).admitted.program||''};d.text='Xác nhận chương trình '+t.n+' tại '+l.uniName+' · '+years+' năm.';d.opts=[{k:key,l:t.n,h:years+' năm · giữ đúng trường và chương trình đã chọn'}];}return d;};
+  med.auto=function(l){return namedMed(l)?namedMedTrack(l):mt.apply(this,arguments);};
+  med.apply=function(l,d,k,r,log){if(!this.valid(l,d.data))return;var stamp=d.data&&d.data.namedProgramme867;if(stamp&&(stamp.done||stamp.at!==l.age||!namedMed(l)||stamp.school!==state(l).admitted.school||stamp.program!==(state(l).admitted.program||'')))return;if(!namedMed(l))return ma.apply(this,arguments);var key=namedMedTrack(l),t=E.MED_TRACK[key],years=namedMedYears(l,key),a=state(l).admitted;if(k!==key||!d.opts.some(function(o){return o.k===k;})||l.med&&l.med.admission867===a.school+':'+(a.program||''))return;l.med={track:key,spec:t.spec||null,admission867:a.school+':'+(a.program||'')};l.majorName=t.n;l.schoolEnd=Math.max(a.age+years,l.age+1);if(stamp)stamp.done=true;if(l.abroad&&l.abroad.study)l.abroad.until=l.schoolEnd;log('Xác nhận học '+t.n+' tại '+l.uniName+' · '+years+' năm.','good');};
+  var migrateMed867=E.migrateExt;E.migrateExt=function(l){if(migrateMed867)migrateMed867.apply(this,arguments);if(!l||!l.flags||!namedMed(l))return;(l.pending||[]).forEach(function(d){if(d.id!=='nganh_y'||d.data&&d.data.namedProgramme867)return;var fresh=med.make(l,function(){return .5;});d.title=fresh.title;d.text=fresh.text;d.opts=fresh.opts;d.data=Object.assign({},d.data||{},fresh.data||{});});};
   E.EDUCATION54={state:state,schools:SCHOOLS,programs:programs,localSchools:localSchools,subjects:SUBJECTS,pupil:pupil,applicant:applicant,tier:tier,direct:direct,threshold:threshold,open:openWishes};
 })(G);

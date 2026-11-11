@@ -170,7 +170,7 @@
     var goals = 0, assists = 0;
     for (var i = 0; i < gf && minutes; i++) { if (s.position !== 'GK' && r() < (s.position === 'FW' ? .4 : .15) * minutes / 90) goals++; else if (r() < .25 * minutes / 90) assists++; }
     var card = minutes && r() < (100 - s.skills.discipline) / 400 ? (r() < .1 ? 'đỏ' : 'vàng') : null;
-    var m = { id: id, round: id.split(':').pop(), competition: id.startsWith('league:') ? (c ? c.league : 'Giải trẻ') : id.startsWith('national:') ? 'Giao hữu quốc tế' : id.split(':')[0], opponentName: 'Đối thủ mô phỏng (sức mạnh ' + Math.round(opponent) + ')', home: home, opponent: opponent, gf: gf, ga: ga, win: won, minutes: minutes, goals: goals, assists: assists,
+    var m = { id: id, round: id.split(':').pop(), competition: id.startsWith('league:') ? (c ? c.league : 'Giải trẻ') : id.startsWith('national:') ? 'Giao hữu quốc tế' : id.split(':')[0], opponentName: 'Đối thủ trong trận (sức mạnh ' + Math.round(opponent) + ')', home: home, opponent: opponent, gf: gf, ga: ga, win: won, minutes: minutes, goals: goals, assists: assists,
       clean: s.position === 'GK' && minutes >= 60 && !ga ? 1 : 0, card: card, substituted: minutes > 0 && minutes < 90,
       absence: minutes ? null : s.injury ? 'Chấn thương' : !available ? 'Quá tải' : 'Không được đăng ký / dự bị',
       rating: minutes ? U.clamp(5 + (won ? 1 : 0) + goals + assists * .5 + r(), 1, 10) : null, international: !!international };
@@ -261,7 +261,7 @@
     }
     national(l, z, r, log);
     var apps = z.matches.filter(function (m) { return !m.international && m.minutes > 0; }).length;
-    if (z.matches.reduce(function (n, m) { return n + m.goals; }, 0) >= 8) s.trophies.push({ year: y, club: c.id, name: 'Khen thưởng ghi bàn xuất sắc (mô phỏng)' });
+    if (z.matches.reduce(function (n, m) { return n + m.goals; }, 0) >= 8) s.trophies.push({ year: y, club: c.id, name: 'Khen thưởng ghi bàn xuất sắc' });
     s.estimatedValueUSD = Math.round(wage(l, c) * Math.max(.2, (s.contract ? s.contract.end - y : 0)) * (l.age < 25 ? 2 : 1));
     s.role = rating(l) > c.strength + 10 && apps >= 5 ? 'Ngôi sao' : apps >= 4 ? 'Đá chính' : 'Dự bị';
     if (s.role !== 'Dự bị' && s.skills.discipline >= 80 && s.coach.trust >= 70) s.role = 'Đội trưởng';
@@ -314,7 +314,7 @@
     var costs = (gross + sponsor) * .15;
     s.earnings = { year: year(l), salaryUSD: c.annualUSD, bonusUSD: c.bonusUSD * apps, signingUSD: signing, sponsorUSD: sponsor, taxAgentUSD: costs, netUSD: gross + sponsor - costs };
     l.yr = l.yr || { items: [] }; l.yr.gross = usd(l, gross + sponsor); l.yr.si = 0;
-    log('Bóng đá: lương ' + H.money(l, usd(l, c.annualUSD)) + '/năm; thưởng và phí ký ' + H.money(l, usd(l, c.bonusUSD * apps + signing)) + '. Khấu trừ thuế/đại diện mô phỏng 15%, sinh hoạt tính riêng.', 'money');
+    log('Bóng đá: lương ' + H.money(l, usd(l, c.annualUSD)) + '/năm; thưởng và phí ký ' + H.money(l, usd(l, c.bonusUSD * apps + signing)) + '. Quỹ dự phòng thuế/phí đại diện15%, sinh hoạt tính riêng.', 'money');
     l.job.yrs = (l.job.yrs || 0) + 1; l.workYrs = (l.workYrs || 0) + 1;
     return usd(l, s.earnings.netUSD);
   }
@@ -369,7 +369,7 @@
   },10);
   X.menu('footballApproach897','Làm việc với câu lạc bộ',function(l){return active(l)?true:'Cần đang theo đuổi bóng đá';},function(l,d){var c=club(d.arg.club);return c?c.name+' · năng lực vị trí '+Math.round(rating(l))+' · thể lực '+Math.round(peek(l).fitness)+'. Thử học viện không phải ký nghề chuyên nghiệp. '+D.model:'CLB không còn phù hợp.';},function(l,arg){var c=club(arg.club),s=peek(l);if(!c)return [];
     function result(l,r,log,data,kind){var messages=[],before=s.negotiations897&&s.negotiations897[c.id],paid=s.trials[c.id],answer=kind==='trial'?trial(l,c.id,r,function(t,k){messages.push(t);log(t,k);}):negotiate(l,c.id,r,function(t,k){messages.push(t);log(t,k);});data.actionCommitted897=kind==='trial'?s.trials[c.id]!==paid:s.negotiations897&&s.negotiations897[c.id]!==before;X.next(l,'footballOutcome897',r,{club:c.id,message:messages.join('\n')||'Chưa thực hiện: hoàn cảnh hoặc điều kiện CLB đã thay đổi; chưa trừ tiền.',result:answer});}
-    return [{k:'trial',l:'Đăng ký thử tuyển học viện / đội trẻ',h:'Chi phí '+H.money(l,trialCost(l,c))+' · tuổi '+c.minAge+'–'+c.maxAge+'; cần chưa có hợp đồng chuyên nghiệp, đủ tiền và đúng quốc gia khi chưa 18 tuổi.',run:function(l,r,log){result(l,r,log,l.pending897Data||{},'trial');}},{k:'negotiate',l:'Đàm phán hợp đồng chuyên nghiệp',h:negotiationWhy(l,c)===true?'Phù hợp bước đánh giá · khả năng nhận đề nghị mô phỏng '+Math.round(negotiationChance(l,c)*100)+'%; vẫn có thể bị từ chối.':negotiationWhy(l,c),run:function(l,r,log){result(l,r,log,l.pending897Data||{},'pro');}}];
+    return [{k:'trial',l:'Đăng ký thử tuyển học viện / đội trẻ',h:'Chi phí '+H.money(l,trialCost(l,c))+' · tuổi '+c.minAge+'–'+c.maxAge+'; cần chưa có hợp đồng chuyên nghiệp, đủ tiền và đúng quốc gia khi chưa 18 tuổi.',run:function(l,r,log){result(l,r,log,l.pending897Data||{},'trial');}},{k:'negotiate',l:'Đàm phán hợp đồng chuyên nghiệp',h:negotiationWhy(l,c)===true?'Phù hợp bước đánh giá · khả năng nhận đề nghị ước tính '+Math.round(negotiationChance(l,c)*100)+'%; vẫn có thể bị từ chối.':negotiationWhy(l,c),run:function(l,r,log){result(l,r,log,l.pending897Data||{},'pro');}}];
   },10);
   // UPDATE110 runs a selected row with its original argument. Pass the live
   // decision marker explicitly so a completed attempt costs a turn, previews don't.
@@ -449,7 +449,7 @@
     ['football_9000_minutes', '⏱️', 'Chín nghìn phút nỗ lực', 'Tích lũy 9.000 phút thi đấu câu lạc bộ.', totalAchievement('minutes', 9000)]
   ];
   [['caps', 1, 'Lần đầu khoác áo tuyển'], ['caps', 25, 'Hai mươi lăm lần phụng sự'], ['caps', 100, 'Trăm trận vì màu cờ'], ['goals', 1, 'Bàn thắng cho đội tuyển'], ['goals', 25, 'Niềm vui của cả đội'], ['assists', 25, 'Đồng đội trên tuyển']].forEach(function (a) {
-    footballAch.push(['football_national_' + a[0] + '_' + a[1], '🏳️', a[2], 'Đạt ' + a[1] + ' ' + ({ caps: 'lần ra sân', goals: 'bàn thắng', assists: 'kiến tạo' })[a[0]] + ' cho đội tuyển trong mô phỏng.', function (l) { var s = eligibleAchievement(l); return !!s && Number((s.national || {})[a[0]]) >= a[1]; }]);
+    footballAch.push(['football_national_' + a[0] + '_' + a[1], '🏳️', a[2], 'Đạt ' + a[1] + ' ' + ({ caps: 'lần ra sân', goals: 'bàn thắng', assists: 'kiến tạo' })[a[0]] + ' cho đội tuyển trong cuộc đời.', function (l) { var s = eligibleAchievement(l); return !!s && Number((s.national || {})[a[0]]) >= a[1]; }]);
   });
   Object.keys(D.markets).forEach(function (cc) {
     footballAch.push(['football_market_' + cc, '🌍', 'Dấu giày · ' + G.W.BY[cc].name, 'Thi đấu ít nhất 10 trận có phút ra sân tại các câu lạc bộ thuộc ' + G.W.BY[cc].name + '. Chỉ nhận hợp đồng hoặc chuyển nơi ở chưa đủ.', function (l) {
@@ -457,7 +457,7 @@
     }]);
   });
   [['FIFA World Cup', 'Cúp vàng thế giới'], ['FIFA Club World Cup', 'Đỉnh cao câu lạc bộ thế giới']].forEach(function (a) {
-    footballAch.push(['football_cup_' + a[0].replace(/ /g, '_'), '🏆', a[1], 'Có danh hiệu ' + a[0] + ' được ghi nhận sau khi thực sự ra sân trong giải mô phỏng.', function (l) { var s = eligibleAchievement(l); return !!s && (s.trophies || []).some(function (t) { return t.name === a[0] && (s.seasons || []).some(function (z) { return z.year === t.year && (z.matches || []).some(function (m) { return m.minutes > 0 && m.competition === a[0] && !!m.international === !!t.nation; }); }); }); }]);
+    footballAch.push(['football_cup_' + a[0].replace(/ /g, '_'), '🏆', a[1], 'Có danh hiệu ' + a[0] + ' được ghi nhận sau khi thực sự ra sân trong giải đã tham dự.', function (l) { var s = eligibleAchievement(l); return !!s && (s.trophies || []).some(function (t) { return t.name === a[0] && (s.seasons || []).some(function (z) { return z.year === t.year && (z.matches || []).some(function (m) { return m.minutes > 0 && m.competition === a[0] && !!m.international === !!t.nation; }); }); }); }]);
   });
   footballAch.push(['football_hat_trick', '🎩', 'Ba bàn một trận', 'Ghi ít nhất 3 bàn trong một trận có phút ra sân.', function (l) { var s = eligibleAchievement(l); return !!s && (s.seasons || []).some(function (z) { return (z.matches || []).some(function (m) { return m.minutes > 0 && m.goals >= 3; }); }); }]);
   footballAch.push(['football_three_countries', '🧳', 'Hành trình ba nền bóng đá', 'Có phút ra sân ở câu lạc bộ thuộc 3 quốc gia khác nhau.', function (l) { var s = eligibleAchievement(l); if (!s) return false; var codes = {}; (s.seasons || []).forEach(function (z) { var c = club(z.club); if (c && (z.matches || []).some(function (m) { return !m.international && m.minutes > 0; })) codes[c.country] = true; }); return Object.keys(codes).length >= 3; }]);

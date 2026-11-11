@@ -1,6 +1,29 @@
 {
-  "generatedAt": "2026-11-10T07:43:13.821Z",
+  "generatedAt": "2026-11-10T08:49:31.906Z",
   "entries": [
+    {
+      "id": "institutions-programmes-81067",
+      "version": "8.10.67",
+      "publishedAt": "2026-11-10T08:49:31.829Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Tra cơ sở giáo dục và giữ đúng ngành đã chọn",
+      "summary": "Thêm danh mục cơ sở có nguồn theo quốc gia, sửa hướng học Điều dưỡng và Y học dự phòng, gỡ nhãn thừa trong đời sống.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Trong Học tập, từ 13 tuổi có thể tra tên và địa điểm cơ sở giáo dục theo 195 quốc gia. Danh mục phân biệt trường, college và cơ sở khu vực; nơi tham chiếu ở nước lân cận được ghi rõ địa điểm thực tế.",
+        "Thông tin danh tính cơ sở đi kèm nguồn đối chiếu. Xem danh mục không tự đổi nơi sống, quốc tịch, trường đang học, tài sản hay cấp văn bằng. Trường đã có trong lộ trình tuyển sinh hiện hành có thể mở nguyện vọng; các chương trình chưa được đối chiếu không tự trở thành ngành được trường công bố.",
+        "Sửa lỗi xác nhận ngành sức khỏe tại trường đã chọn: Điều dưỡng đi đúng hướng bốn năm; Y học dự phòng giữ hướng sáu năm thay vì bị chuyển thành Y khoa. Dược học, Y học cổ truyền và Răng-Hàm-Mặt có hướng riêng khi hồ sơ đã ghi cụ thể.",
+        "Chương trình Medicine MBChB tiêu chuẩn tại Manchester dùng thời gian năm năm, không áp mặc định sáu năm. Xác nhận chương trình giữ trường đã chọn; thao tác lặp lại không kéo dài khóa học.",
+        "Thẻ xác nhận ngành đang chờ trong bản lưu cũ được làm mới từ nguyện vọng đã có. Giữ hồ sơ trường và bằng cấp đã ghi; việc làm mới thẻ không tự cấp bằng hay nhận việc.",
+        "Gỡ thêm nhiều nhãn thừa trong hồ sơ đời sống, học tập, việc làm, giải trí, đầu tư và sức khỏe. Giá và khoản chi chưa có báo giá được ghi là ước tính; không đổi tên khoản ước tính thành giá chính thức. Các tình huống chính trị vẫn được phân biệt khi cần.",
+        "Đây là một phần của đợt rà dữ liệu toàn game. Danh mục tên cơ sở không đồng nghĩa mọi ngành, học phí, điểm chuẩn, quy định cư trú hay quyền hành nghề đã được xác minh; các phần còn thiếu tiếp tục được đối chiếu."
+      ]
+    },
     {
       "id": "reference-parentage-81066",
       "version": "8.10.66",

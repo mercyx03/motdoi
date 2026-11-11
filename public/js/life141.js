@@ -242,7 +242,7 @@ function developPath(l,k,p,r,log) {
  if(s.legal && s.legal.status==='reviewed' && a>=s.legal.opened+4){
    var proven=r()<.65;
    s.legal.status=proven?'liable':'closed';s.legal.closedAt=a;
-   var decision=proven?'Vụ việc đã được xét xử. Con phải chịu trách nhiệm theo phán quyết trong mô phỏng.':'Vụ việc khép lại vì hồ sơ chưa đủ chứng cứ để kết luận.';
+   var decision=proven?'Vụ việc đã được xét xử. Con phải chịu trách nhiệm theo phán quyết trong hồ sơ.':'Vụ việc khép lại vì hồ sơ chưa đủ chứng cứ để kết luận.';
    if(proven)E.ELITE148.rep(l,-4);
    if(s.legal.pregnancy){
      s.legal.parentage=r()<.75?'confirmed':'unconfirmed';

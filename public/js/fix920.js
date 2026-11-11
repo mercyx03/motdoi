@@ -195,14 +195,14 @@
   }
 
   // Hỗ trợ tiêu hủy: một mã hồ sơ cho mỗi ổ dịch, trần mỗi năm, đàn vừa nhập trong năm cần xác minh nguồn gốc.
-  var CULL = { rate: 0.35, cap: 2, label: 'Tham số mô phỏng — mức hỗ trợ thật tùy quy định từng nước/thời kỳ, chưa đối chiếu văn bản' };
+  var CULL = { rate: 0.35, cap: 2, label: 'Mức ước tính; hỗ trợ theo nước và thời kỳ chưa được đối chiếu văn bản' };
   function cullClaim(l, f, d, n, amount, log) {
     var s = st(l), out = f.out || {}, id = (out.k || 'herd') + ':' + (d && d.id) + ':' + (out.at != null ? out.at : l.age);
     s.claims = s.claims || {}; if (s.claims[id]) { log('Hồ sơ hỗ trợ cho ổ dịch này đã được giải quyết trước đó; không chi lần hai.', 'neutral'); return 0; }
     var fresh = f.buy920 && f.buy920[out.k] === l.age, used = Object.keys(s.claims).filter(function (k) { return s.claims[k].age === l.age; }).reduce(function (t, k) { return t + s.claims[k].paid; }, 0);
     var pay = Math.max(0, Math.min(amount * (fresh ? 0.5 : 1), l.base * CULL.cap - used));
     s.claims[id] = { age: l.age, n: n, asked: amount, paid: pay, fresh: fresh };
-    if (pay > 0) H.cash(l, pay, 'Hỗ trợ tiêu hủy (hồ sơ ' + id + ', mô phỏng)');
+    if (pay > 0) H.cash(l, pay, 'Hỗ trợ tiêu hủy (hồ sơ ' + id + ')');
     log('Hồ sơ hỗ trợ tiêu hủy ' + n + ' con được duyệt: ' + mo(l, pay) + (fresh ? ' (đàn mới nhập trong năm, chỉ hỗ trợ một phần chờ xác minh nguồn gốc)' : '') + '. ' + CULL.label + '.', 'neutral');
     return pay;
   }

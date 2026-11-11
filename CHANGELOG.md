@@ -1,3 +1,9 @@
+## 8.10.67 — Nguồn cơ sở giáo dục và ngành học
+
+- Danh mục tra cứu195quốcgia bằng ROR CC0 và nguồn chính thức; tách danh tính khỏi điều kiện tuyển sinh.
+- Sửa Điều dưỡng/Y học dự phòng, hướng sức khỏe cụ thể và Medicine Manchester5năm; giữ trường, chống phát lại, làm mới thẻ cũ.
+- Gỡ thêm nhãn thừa; giá chưa xác minh tiếp tục ghi ước tính. Chưa hoàn tất rà dữ liệu thật toàn game.
+
 ## 8.10.66 — Tên trường, biểu lãi suất và nguồn cha mẹ
 
 - Sửa NaN tỷ lệ biểu quyết doanh nghiệp bố mẹ; giữ tài sản.

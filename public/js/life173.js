@@ -359,7 +359,7 @@
     st(l).exam = { name: name, year: year(l), result: res, country: code(l), prep: k };
     H.fx(l, fx); H.fx(l, { hap: res === 'chưa như kỳ vọng' ? -3 : res === 'xuất sắc' ? 4 : 1 });
     H.mem(l, name + ' tại ' + cname(code(l)) + ': kết quả ' + res + '.', 3); note(l, name + ': ' + res);
-    log(name + ': kết quả ' + res + ' (mô phỏng). Kết quả ghi vào hồ sơ, không thay thế điều kiện tốt nghiệp hay tuyển sinh của game; vẫn còn nhiều con đường sau phổ thông.', res === 'chưa như kỳ vọng' ? 'neutral' : 'good');
+    log(name + ': kết quả ' + res + '. Kết quả ghi vào hồ sơ, không thay thế điều kiện tốt nghiệp hay tuyển sinh của game; vẫn còn nhiều con đường sau phổ thông.', res === 'chưa như kỳ vọng' ? 'neutral' : 'good');
   }
   C.incident('world_exam173', 'Kỳ thi cuối cấp', examWhy, function (l) { return examName(l) + ' · ' + cname(code(l)) + '. Đây là giai đoạn ôn tập quan trọng của năm cuối trung học. Cách chuẩn bị ảnh hưởng đến kết quả và sức khỏe.'; }, function (l) {
     return [
@@ -405,7 +405,7 @@
   };
   function workKey(l) { return profileOf(code(l)).work || 'generic'; }
   function workWhy(l) { return ok(l) && l.job && !l.retired && l.age >= 20 && l.age <= 65 && !H.inVN(l) ? true : 'Chưa phù hợp'; }
-  C.incident('world_workplace173', 'Văn hóa nơi làm việc', workWhy, function (l) { var w = WORK[workKey(l)]; return w.title + ' · ' + cname(code(l)) + '. ' + w.text(year(l)) + ' Đây là tình huống mô phỏng, không mô tả mọi nơi làm việc của quốc gia này.'; }, function (l) {
+  C.incident('world_workplace173', 'Văn hóa nơi làm việc', workWhy, function (l) { var w = WORK[workKey(l)]; return w.title + ' · ' + cname(code(l)) + '. ' + w.text(year(l)) + ' Điều kiện cụ thể còn tùy nơi làm việc và hồ sơ hợp đồng.'; }, function (l) {
     var w = WORK[workKey(l)];
     return w.o.map(function (o) {
       return { k: o[0], l: o[1], run: function (l, r, log) {
@@ -488,7 +488,7 @@
     if (c.diaspora || c.residenceCountry !== 'VN') p.jobInfo.push('Bản sắc và cư trú: gốc ' + c.origins.map(cname).join(' – ') + ' · đang sống tại ' + cname(c.residenceCountry) + ' (' + TYPE_LABEL[c.residenceType] + ')' + (c.diaspora ? ' · gắn bó truyền thống ' + Math.round(c.tradition) + '/100 · hòa nhập ' + Math.round(c.integration) + '/100' : ''));
     if (fest.length) p.jobInfo.push('Lễ hội đã tham gia: ' + fest.join(', '));
     if (s.coming) p.jobInfo.push('Cột mốc trưởng thành: ' + s.coming.name + ' (' + s.coming.age + ' tuổi)');
-    if (s.exam) { p.edu = p.edu || []; p.edu.push(s.exam.name + ' · ' + cname(s.exam.country) + ' · ' + s.exam.result + ' (mô phỏng)'); }
+    if (s.exam) { p.edu = p.edu || []; p.edu.push(s.exam.name + ' · ' + cname(s.exam.country) + ' · ' + s.exam.result + ''); }
     return p;
   };
 
@@ -529,7 +529,7 @@
     IE: { dishes: ['Soda bread (bánh mì dùng muối nở)', 'Waterford Blaa (bánh mì mềm Waterford)', 'Seafood chowder (súp hải sản)', 'Smoked salmon (cá hồi hun khói)', 'Irish lamb (món thịt cừu Ireland)'], text: 'Bạn tìm hiểu bánh mì và món ăn từ nguyên liệu địa phương. Người bán giải thích món Blaa gắn với Waterford; thực đơn mỗi nhà tùy khẩu vị và điều kiện.', source: 'https://www.ireland.com/en/magazine/food-and-drink/traditional-irish-food/' }
   };
   Object.keys(FOOD).forEach(function (cc) { FOOD[cc].countryCode = cc; FOOD[cc].metadata = { sources: [FOOD[cc].source], verifiedAt: '2026-10-28', confidence: 'verified', scope: 'dish-names-only', effectiveFrom: null, effectiveTo: null }; P[cc] = P[cc] || {}; P[cc].cuisine = FOOD[cc]; });
-  HOL.matariki_nz = { id: 'matariki_nz', n: 'Matariki (năm mới Māori)', t: 'tưởng nhớ người đã khuất, chia sẻ bữa ăn và cùng nghĩ về năm tới; một số cộng đồng đánh dấu năm mới bằng Puanga', src: 'nz-mch', since: 2022, calendar: 'Lịch thay đổi theo năm; không mô phỏng ngày nghỉ trước 2022', menu: 'Cùng đón Matariki', party: 'Matariki' };
+  HOL.matariki_nz = { id: 'matariki_nz', n: 'Matariki (năm mới Māori)', t: 'tưởng nhớ người đã khuất, chia sẻ bữa ăn và cùng nghĩ về năm tới; một số cộng đồng đánh dấu năm mới bằng Puanga', src: 'nz-mch', since: 2022, calendar: 'Lịch thay đổi theo năm; không áp ngày nghỉ này trước2022', menu: 'Cùng đón Matariki', party: 'Matariki' };
   P.NZ.h.push('matariki_nz');
   function kitchen(l) { var s = st(l); return s.kitchen || (s.kitchen = { learned: {}, cooked: {}, lastAt: null }); }
   function foodWhy(l) { return ok(l) && l.age >= 12 && !!FOOD[code(l)] && (!peek(l).kitchen || peek(l).kitchen.lastAt !== l.age) ? true : 'Chưa phù hợp'; }
@@ -539,8 +539,8 @@
     var dish = f.dishes.filter(function (n) { return !learned[cc + ':' + n]; })[0] || f.dishes[0];
     var ready = f.dishes.filter(function (n) { var q = learned[cc + ':' + n]; return q && q.age < l.age && !cooked[cc + ':' + n]; })[0];
     return [
-      { k: 'learn', l: 'Học cách làm ' + dish, h: 'Ghi nhớ công thức; có thể thực hành từ năm sau · chi phí mô phỏng 1% mức sống năm nếu tự lập', run: function (l, r, log) { if (adult(l) && !pay(l, .01, 'Học món địa phương', r, log)) return; var q = kitchen(l); q.learned[cc + ':' + dish] = { countryCode: cc, age: l.age, year: year(l) }; q.lastAt = l.age; H.fx(l, { kno: 1 }); note(l, 'Học công thức ' + dish + ' tại ' + cname(cc)); log('Bạn ghi lại cách làm ' + dish + '. Cần dành thời gian luyện tập, chưa nấu thành thạo ngay.', 'good'); } },
-      { k: 'cook', l: ready ? 'Thực hành ' + ready + ' và chia sẻ bữa ăn' : 'Thực hành công thức đã học từ năm trước', why: !!ready && (!adult(l) || l.money >= l.base * .015), h: 'Chi phí mô phỏng 1,5% mức sống năm nếu tự lập · kết quả tùy kinh nghiệm', run: function (l, r, log) { if (!ready || adult(l) && !pay(l, .015, 'Nguyên liệu nấu ăn', r, log)) return; var q = kitchen(l), success = r() < Math.min(.9, .45 + (l.st.kno || 0) / 250 + Object.keys(q.cooked).length * .03); q.lastAt = l.age; if (success) { q.cooked[cc + ':' + ready] = { countryCode: cc, age: l.age, year: year(l) }; H.fx(l, { hap: 3, soc: 2 }); note(l, 'Tự làm thành công ' + ready); log('Món ' + ready + ' đã thành công. Bạn chia sẻ với người thân còn liên lạc được hoặc bạn bè quanh mình.', 'good'); } else { H.fx(l, { kno: 1 }); log('Món ăn chưa như ý. Bạn giữ công thức và kinh nghiệm để thử lại năm sau.', 'neutral'); } } },
+      { k: 'learn', l: 'Học cách làm ' + dish, h: 'Ghi nhớ công thức; có thể thực hành từ năm sau · chi phí ước tính 1% mức sống năm nếu tự lập', run: function (l, r, log) { if (adult(l) && !pay(l, .01, 'Học món địa phương', r, log)) return; var q = kitchen(l); q.learned[cc + ':' + dish] = { countryCode: cc, age: l.age, year: year(l) }; q.lastAt = l.age; H.fx(l, { kno: 1 }); note(l, 'Học công thức ' + dish + ' tại ' + cname(cc)); log('Bạn ghi lại cách làm ' + dish + '. Cần dành thời gian luyện tập, chưa nấu thành thạo ngay.', 'good'); } },
+      { k: 'cook', l: ready ? 'Thực hành ' + ready + ' và chia sẻ bữa ăn' : 'Thực hành công thức đã học từ năm trước', why: !!ready && (!adult(l) || l.money >= l.base * .015), h: 'Chi phí ước tính 1,5% mức sống năm nếu tự lập · kết quả tùy kinh nghiệm', run: function (l, r, log) { if (!ready || adult(l) && !pay(l, .015, 'Nguyên liệu nấu ăn', r, log)) return; var q = kitchen(l), success = r() < Math.min(.9, .45 + (l.st.kno || 0) / 250 + Object.keys(q.cooked).length * .03); q.lastAt = l.age; if (success) { q.cooked[cc + ':' + ready] = { countryCode: cc, age: l.age, year: year(l) }; H.fx(l, { hap: 3, soc: 2 }); note(l, 'Tự làm thành công ' + ready); log('Món ' + ready + ' đã thành công. Bạn chia sẻ với người thân còn liên lạc được hoặc bạn bè quanh mình.', 'good'); } else { H.fx(l, { kno: 1 }); log('Món ăn chưa như ý. Bạn giữ công thức và kinh nghiệm để thử lại năm sau.', 'neutral'); } } },
       { k: 'talk', l: 'Trò chuyện về nguyên liệu, không mua thêm', h: 'Không tốn tiền · quan hệ +1', run: function (l, r, log) { kitchen(l).lastAt = l.age; H.fx(l, { soc: 1 }); log('Bạn lắng nghe câu chuyện món ăn và tôn trọng khác biệt khẩu vị; không bắt buộc phải ăn thử.', 'neutral'); } }
     ];
   });
@@ -645,7 +645,7 @@
     if (e.kind === 'marriage') return depthAt(l).marriage.map(function (item, i) { return { k: item.id, l: 'Cùng tìm hiểu: ' + item.name, h: item.note, run: function (l, r, log) { startCase(l, e, item.id, 0, r, log); } }; });
     var labels = e.options || ['Cùng chuẩn bị và hẹn xem lại', 'Tham gia một phần vừa sức', 'Tạm hoãn'];
     return labels.map(function (label, i) { var rate = i === 0 && (e.kind === 'training' || e.kind === 'safety') ? .01 : 0;
-      return { k: ['plan', 'light', 'pause'][i], l: label, h: rate && adult(l) ? 'Chi phí chuẩn bị mô phỏng: ' + H.money(l, l.base * rate) : 'Không chi thêm tiền', why: !rate || !adult(l) || l.money >= l.base * rate, run: function (l, r, log) { startCase(l, e, ['plan', 'light', 'pause'][i], rate, r, log); } };
+      return { k: ['plan', 'light', 'pause'][i], l: label, h: rate && adult(l) ? 'Chi phí chuẩn bị ước tính: ' + H.money(l, l.base * rate) : 'Không chi thêm tiền', why: !rate || !adult(l) || l.money >= l.base * rate, run: function (l, r, log) { startCase(l, e, ['plan', 'light', 'pause'][i], rate, r, log); } };
     });
   }
   var depthIds = [];
@@ -654,7 +654,7 @@
     C.incident(id, e.title, function (l) { return caseWhy(l, e); }, function (l) {
       var q = casePeek(l, e), p = depthAt(l); if (!p || p.countryCode !== e.countryCode) return 'Câu chuyện không thuộc quốc gia đang cư trú.';
       var text = q && q.status === 'active' ? (e.followup || e.text) + ' Đang theo dõi bước ' + (q.progress + 1) + '/2; người cùng chuẩn bị: ' + (q.actor && E.LIFE138.state(l).people[q.actor] ? E.LIFE138.state(l).people[q.actor].name : l.partner ? l.partner.name : 'người liên quan') + '.' : e.text;
-      return text + ' Tình huống và kết quả là mô phỏng. Thông tin tham chiếu năm ' + p.metadata.referenceYear + '; tương lai trong game dùng giả định giữ mốc này.';
+      return text + ' Kết quả phụ thuộc cuộc đời đang chơi. Thông tin tham chiếu năm ' + p.metadata.referenceYear + '; tương lai trong game dùng giả định giữ mốc này.';
     }, function (l) { return caseRows(l, e); });
   });
   X.menu('countryStories173', 'Câu chuyện riêng ở nơi đang sống', function (l) { return ok(l) && l.age >= 12 && currentDepth(l) ? true : 'Chưa có đợt nội dung riêng phù hợp nơi cư trú hoặc năm này'; }, function (l) { var p = depthAt(l); return p ? 'Những lựa chọn tại ' + cname(code(l)) + '. Câu chuyện được nhớ qua các năm; chỉ một chuyện mới được hệ thống đưa tới mỗi năm. Dữ liệu có mốc tham chiếu ' + p.metadata.referenceYear + '.' : 'Chưa có đợt nội dung riêng ở đây.'; }, function (l) { var p = depthAt(l); return p ? p.lifeEvents.map(function (e) { return { k: e.id, l: e.title, why: caseWhy(l, e), run: function (l, r) { X.next(l, e.eventId, r, {}, { manual: true }); } }; }) : []; }, 12, 'Cuộc sống & quan hệ');
@@ -724,7 +724,7 @@
   Object.keys(P).forEach(function (cc) {
     var p = P[cc], first = p.h && p.h[0];
     if (first) newAch.push(['culture173_local_' + cc, '🌏', festivalTitles[cc] || 'Hẹn mùa lễ tại ' + cname(cc), 'Tham gia ' + HOL[first].n + ' tại ' + cname(cc) + ' trong ít nhất 3 năm. Lễ quê gốc ở nước khác không tính.', function (l) { return ((peek(l).localFestivals || {})[cc] || {})[first] >= 3; }]);
-    if (p.ex) newAch.push(['culture173_exam_' + cc, '🎓', 'Dấu mốc học đường · ' + cname(cc), 'Đạt kết quả xuất sắc trong sự kiện đánh giá cuối cấp tại ' + cname(cc) + ' (mô phỏng).', function (l) { var x = peek(l).exam; return !!x && x.country === cc && x.result === 'xuất sắc'; }]);
+    if (p.ex) newAch.push(['culture173_exam_' + cc, '🎓', 'Dấu mốc học đường · ' + cname(cc), 'Đạt kết quả xuất sắc trong sự kiện đánh giá cuối cấp tại ' + cname(cc) + '.', function (l) { var x = peek(l).exam; return !!x && x.country === cc && x.result === 'xuất sắc'; }]);
   });
   Object.keys(FOOD).forEach(function (cc) { newAch.push(['culture173_kitchen_' + cc, '🍲', 'Căn bếp · ' + cname(cc), 'Tự làm thành công 3 món khác nhau đã học tại ' + cname(cc) + ', qua nhiều năm thực hành.', function (l) { var q = peek(l).kitchen || {}; return FOOD[cc].dishes.filter(function (n) { return (q.cooked || {})[cc + ':' + n]; }).length >= 3; }]); });
   newAch.push(['culture173_matariki', '✨', 'Nhìn lên Matariki', 'Cùng đón Matariki tại New Zealand từ năm 2022 trở đi.', function (l) { return ((peek(l).localFestivals || {}).NZ || {}).matariki_nz >= 1; }]);

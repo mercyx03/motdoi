@@ -110,7 +110,7 @@
         var p = VN.P34[+S.set.prov];
         h = p.members.length > 1 ? 'Sáp nhập từ: ' + p.members.map(function (m) { return m.name; }).join(', ') + '.' : 'Giữ nguyên, không sáp nhập.';
         h = p.kind + (p.kind === 'Thành phố' ? ' trực thuộc trung ương' : '') + ' ' + p.name + '. ' + h;
-        h += ' Dân số ~' + U.fmtNum(p.pop / 1000, 1) + ' triệu (tổng số liệu 2023, dùng cho mô phỏng).';
+        h += ' Dân số ~' + U.fmtNum(p.pop / 1000, 1) + ' triệu · số liệu2023.';
       } else {
         var o = VN.P63[+S.set.prov];
         h = VN.REGIONS[o.region] + ' · dân số ~' + U.fmtNum(o.pop / 1000, 2) + ' triệu · từ 1/7/2025 thuộc ' + o.newName + '.';
@@ -1069,10 +1069,10 @@
   function openAbout() {
     var nAch = (E.ACHIEVEMENTS || []).length, nJobs = Object.keys(E.CAR || {}).filter(function (k) { return !E.CAR[k].hidden; }).length;
     modal('<button class="about-x" data-close aria-label="Đóng">✕</button><h2 class="about-title">Một Đời</h2>' +
-      '<p>Một Đời là trò chơi mô phỏng cuộc sống dành cho cộng đồng. Mỗi nhân vật bắt đầu với một hoàn cảnh khác nhau: quê quán, gia cảnh, tính cách bố mẹ, có khi mồ côi từ thuở lọt lòng. Từ đó bạn tự xây dựng hành trình qua học tập, nghề nghiệp, tình cảm, vận may và những biến cố đời thường.</p>' +
+      '<p>Một Đời là trò chơi cuộc sống dành cho cộng đồng. Mỗi nhân vật bắt đầu với một hoàn cảnh khác nhau: quê quán, gia cảnh, tính cách bố mẹ, có khi mồ côi từ thuở lọt lòng. Từ đó bạn tự xây dựng hành trình qua học tập, nghề nghiệp, tình cảm, vận may và những biến cố đời thường.</p>' +
       '<p>Phiên bản ' + esc(G.VERSION) + ' có 195 quốc gia, chế độ Việt Nam với 63 tỉnh/thành lịch sử hoặc 34 tỉnh/thành hiện hành, 54 dân tộc, ' + nJobs + ' nghề có thang bậc và mức lương riêng, cùng muôn vàn chuyện đời: drama gia đình, công sở, hàng xóm, mạng xã hội. Bạn có thể tự chọn hướng đi hoặc bật chế độ tự động; khi nhân vật qua đời, có thể sống tiếp đời con.</p>' +
       '<p>Cuộc đời đang chơi được lưu ngay trong trình duyệt. Tạo <b>tài khoản</b> (chỉ cần tên đăng nhập và mật khẩu, không cần email) để đồng bộ ' + nAch + ' thành tựu, gia phả, đài tưởng niệm và cuộc đời đang chơi giữa các thiết bị. Mật khẩu được mã hóa một chiều, không ai xem lại được, nên bạn nhớ ghi lại nhé.</p>' +
-      '<p>Đây là trò chơi mô phỏng hư cấu phục vụ giải trí. Các mức thu nhập, xác suất và kết quả sự kiện không phải dự báo hay dữ liệu thực tế của từng cá nhân. Một phần dữ liệu nhân vật tham khảo bộ Nemotron-Personas-Vietnam (CC BY 4.0, xem mục Nguồn dữ liệu). Một Đời sẽ tiếp tục được cập nhật để mở rộng nội dung và trải nghiệm người chơi.</p>',
+      '<p>Đây là trò chơi phục vụ giải trí. Các mức thu nhập, xác suất và kết quả sự kiện không phải dự báo hay dữ liệu thực tế của từng cá nhân. Một phần dữ liệu nhân vật tham khảo bộ Nemotron-Personas-Vietnam (CC BY 4.0, xem mục Nguồn dữ liệu). Một Đời sẽ tiếp tục được cập nhật để mở rộng nội dung và trải nghiệm người chơi.</p>',
       function (box) { $('[data-close]', box).onclick = closeModal; $('.overlay').onclick = function (e) { if (e.target === this) closeModal(); }; }, 'about-modal');
   }
   $$('a[href="#about"]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); openAbout(); }; });
@@ -1207,7 +1207,7 @@
     }
     var home=E.HOMETOWN&&E.HOMETOWN.own(l);
     if(home)html+='<h3 style="margin-top:14px">Dấu ấn quê hương · '+esc(home.name)+'</h3>'+dl([['Địa danh',home.places.join(' · ')],['Ẩm thực / sản vật',home.foods.join(' · ')]]);
-    html += '<p class="small muted" style="margin:10px 0 0">Số liệu làm tròn (GSO, UN WPP 2024, World Bank) — dùng để mô phỏng.</p>';
+    html += '<p class="small muted" style="margin:10px 0 0">Số liệu làm tròn (GSO, UN WPP 2024, World Bank); thời điểm nguồn được ghi theo từng bộ dữ liệu.</p>';
     $('#placePanel').innerHTML = html;
   }
 

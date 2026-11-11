@@ -38,7 +38,7 @@
         function draw(){
           var q=box.querySelector('#eventSearch').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),type=box.querySelector('#eventType').value;
           var filtered=rows.filter(function(x){return(!type||x.type===type)&&JSON.stringify(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);});
-          box.querySelector('#eventStatus').textContent=filtered.length+' / '+rows.length+' mục. Chỉ đọc, không thay đổi cuộc đời đang chơi. Bối cảnh và kết quả là ví dụ mô phỏng, có thể thay đổi theo nhân vật.';
+          box.querySelector('#eventStatus').textContent=filtered.length+' / '+rows.length+' mục. Chỉ đọc, không thay đổi cuộc đời đang chơi. Bối cảnh và kết quả thuộc cuộc đời nhân vật đang xem.';
           var host=box.querySelector('#eventRows');host.replaceChildren();
           filtered.slice(0,limit).forEach(function(x){
             var d=document.createElement('details'),s=document.createElement('summary'),body=document.createElement('div');

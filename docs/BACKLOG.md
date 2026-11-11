@@ -315,3 +315,9 @@ GĐ6 — 8.10.61 Monaco: còn regression toàn bộ mã cuối, thiết bị/sav
 - Dữ liệu thật toàn game và các chức năng đang thiếu vẫn là công việc triển khai của yêu cầu hiện hành, xem REFERENCE-866-PROGRESS.md; không đẩy các phần này sang GĐ6 chỉ vì người dùng loại trừ nghiệm thu toàn diện.
 
 Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên nguồn HEAD a5800ea. exam-model được cập nhật theo yêu cầu giữ tên trường,565checks đạt; không còn dùng điều kiện bắt buộc tên giả để kiểm tính trung thực của điểm mục tiêu.
+
+### GĐ6 — 8.10.67
+
+- Kiểm thử trọng điểm danh mục và luồng chọn ngành đạt. Còn nghiệm thu tổng thể, thiết bị và bản lưu thực tế, xác minh Pages REVIEWS_DB.
+- Dữ liệu triển khai còn thiếu: chương trình và tuyển sinh đã xác minh cho mọi cơ sở, danh mục bóng đá, định cư và phúc lợi theo từng nước, các ngoại lệ pháp lý và tước hiệu lịch sử.
+- football-payroll901 tái hiện cùng lỗi kiểm thử trên 8.10.66 và 8.10.67. Các lỗi nền khác theo mục 8.10.66 ở trên.

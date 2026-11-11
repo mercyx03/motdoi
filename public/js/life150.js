@@ -37,7 +37,7 @@
     var c = p && p.contract108; if (c && c.regime150) return c.regime150;
     return c && c.share === 0 ? 'separate' : c && c.share === 0.1 ? 'limited' : 'legal';
   }
-  function lawText(l) { return vn(l) ? 'Theo luật Việt Nam, vợ chồng có thể lập văn bản thỏa thuận chế độ tài sản trước khi kết hôn (công chứng); nếu không, áp dụng chế độ theo luật định.' : 'Quy định về thỏa thuận tài sản hôn nhân khác nhau giữa các quốc gia; game mô phỏng một cách chung.'; }
+  function lawText(l) { return vn(l) ? 'Theo luật Việt Nam, vợ chồng có thể lập văn bản thỏa thuận chế độ tài sản trước khi kết hôn (công chứng); nếu không, áp dụng chế độ theo luật định.' : 'Quy định về thỏa thuận tài sản hôn nhân khác nhau giữa các quốc gia; cần đối chiếu luật áp dụng khi đăng ký.'; }
   // Người kia chấp nhận điều khoản tùy độ công bằng với hoàn cảnh của họ
   function prenupChance(l, key) {
     var p = l.partner, mine = Math.max(0, l.income || 0), theirs = Math.max(0, (p.inc || 0) * 12), richer = mine >= theirs, bond = p.affection108 == null ? 70 : p.affection108;
@@ -49,7 +49,7 @@
     opts108.splice(cancel < 0 ? opts108.length : cancel, 0, { k: 'custom150', l: 'Lập thỏa thuận tài sản chi tiết (tùy chọn)', h: 'Thu nhập, nhà ở, doanh nghiệp, cách chia', run: function (l, r, log, d) { if (!E.DEC.contract108.valid(l, d)) return; d.done = true; X.next(l, 'prenup150', r, { at: d.at, who: d.who, style: d.style }); } });
   }
   X.menu('prenup150', 'Thỏa thuận tài sản trước hôn nhân', function (l) { return l.partner && l.partner.status === 'dating' ? true : 'Chỉ lập trước khi kết hôn'; },
-    function (l) { return lawText(l) + ' Thỏa thuận là tùy chọn và cần cả hai đồng ý; không ảnh hưởng nghĩa vụ nuôi con. Đây là mô phỏng, không phải tư vấn pháp lý.'; },
+    function (l) { return lawText(l) + ' Thỏa thuận là tùy chọn và cần cả hai đồng ý; không ảnh hưởng nghĩa vụ nuôi con. Điều kiện pháp lý cần đối chiếu theo nơi đăng ký.'; },
     function (l, arg) {
       if (!l.partner || arg.who !== l.partner.relation108) return [];
       return ['half', 'homeOnly', 'contribution', 'business'].map(function (k) { return { k: k, l: REGIME[k].n, h: REGIME[k].d, run: function (l, r, log) { prenup(l, r, log, k, arg); } }; })
