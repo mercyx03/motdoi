@@ -5,7 +5,7 @@ const E = gameContext().E, log = () => {}, win = () => .99;
 function pupil(){
   const l = E.createLife({mode:'vn',seed:838});
   Object.assign(l,{age:15,school:'lower',edu:2,pending:[],jailUntil:null});
-  l.st.kno=100;l.flags.military=0;l.fam.mAlive=true;
+  l.st.kno=100;E.EDUCATION54.state(l).records={math:5,lit:5,english:5};l.flags.military=0;l.fam.mAlive=true;
   return l;
 }
 function choose(l,id,key,r=win){

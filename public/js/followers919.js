@@ -55,7 +55,7 @@
   function audience(l) { var cs = channels(l).map(function (c) { return c.followers || 0; }), sum = cs.reduce(function (a, b) { return a + b; }, 0), mx = cs.length ? Math.max.apply(null, cs) : 0, s = st(l); return { total: Math.round(l.fame || 0), accounts: sum, unique: Math.round(mx + (sum - mx) * 0.65), active: Math.round((l.fame || 0) * s.active), eng: s.eng }; }
   // Hiệu quả nghề: cùng số người theo dõi nhưng khán giả hoạt động/tương tác khác nhau cho thu nhập khác nhau (có trần).
   function incomeFactor(l) { var s = st(l); return U.clamp(0.75 + s.active * 0.6 + (s.eng - 30) / 200, 0.6, 1.35); }
-  var cy0 = E.careerYear; E.careerYear = function (l, r, log) { var out = cy0.apply(this, arguments); if (out > 0 && l && l.flags && fameJob(l)) { var k = incomeFactor(l); st(l).incK = k; out *= k; } return out; };
+  var cy0 = E.careerYear; E.careerYear = function (l, r, log) { var out = cy0.apply(this, arguments); if (out > 0 && l && l.flags && fameJob(l) && !(E.FOOTBALL && E.FOOTBALL.employed(l))) { var k = incomeFactor(l); st(l).incK = k; out *= k; } return out; };
   // Phân bổ khán giả theo nền tảng và thị trường (tham số trò chơi theo nghề và ngôn ngữ nơi sống); không tạo người theo dõi mới.
   var PLAT = { video: 'Video dài', short: 'Video ngắn', live: 'Livestream', music: 'Nghe nhạc / podcast' };
   function platforms(l) { var c = fameJob(l), id = c ? c.id : ''; return id === 'streamer' || id === 'kol_live' ? { video: 0.2, short: 0.25, live: 0.5, music: 0.05 } : /ca_si|rapper|nhac/.test(id) ? { video: 0.3, short: 0.3, live: 0.05, music: 0.35 } : { video: 0.45, short: 0.4, live: 0.1, music: 0.05 }; }

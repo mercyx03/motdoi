@@ -321,3 +321,10 @@ Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên ng
 - Kiểm thử trọng điểm danh mục và luồng chọn ngành đạt. Còn nghiệm thu tổng thể, thiết bị và bản lưu thực tế, xác minh Pages REVIEWS_DB.
 - Dữ liệu triển khai còn thiếu: chương trình và tuyển sinh đã xác minh cho mọi cơ sở, danh mục bóng đá, định cư và phúc lợi theo từng nước, các ngoại lệ pháp lý và tước hiệu lịch sử.
 - football-payroll901 tái hiện cùng lỗi kiểm thử trên 8.10.66 và 8.10.67. Các lỗi nền khác theo mục 8.10.66 ở trên.
+
+### 8.10.68 — Dữ liệu còn cần bổ sung
+
+- Đã bổ sung lộ trình MD phổ biến tại Mỹ, sáu tên câu lạc bộ từ VPF/Premier League/LALIGA, tham chiếu Graduate và Universal Credit tại Anh, và hồ sơ thoái vị Tây Ban Nha năm 2014 từ BOE.
+- Còn danh mục ngành và quy chế từng trường, lịch sử giải đấu và câu lạc bộ ở các hạng còn thiếu, lộ trình cư trú và phúc lợi ngoài các mục đã xác minh, các sắc lệnh và ngoại lệ pháp lý lịch sử.
+- GĐ6 còn nghiệm thu toàn diện, thiết bị/bản lưu thật và xác minh binding Pages REVIEWS_DB.
+- 8.10.68: depth899, origins-clubs904, life138, continuity101, study829, school-home-police838 và football-payroll901 đều đạt khi chạy lại. depth900 xác minh đường thường trú cũ và hoàn phí.

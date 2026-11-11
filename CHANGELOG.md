@@ -1,3 +1,9 @@
+## 8.10.68 — Cư trú, dữ liệu tham chiếu và kiểm thử trọng điểm
+
+- Gộp đường xét thường trú vào hồ sơ theo nước, thêm mốc Graduate tại Anh và đối chiếu phúc lợi.
+- Bổ sung tên câu lạc bộ và nguồn chính thức, sửa khấu trừ lặp tiền lương hợp đồng bóng đá.
+- Bổ sung tham chiếu MD tại Mỹ, văn bản thoái vị Tây Ban Nha năm 2014 và tôn trọng quyết định từ chối điều hành.
+
 ## 8.10.67 — Nguồn cơ sở giáo dục và ngành học
 
 - Danh mục tra cứu195quốcgia bằng ROR CC0 và nguồn chính thức; tách danh tính khỏi điều kiện tuyển sinh.

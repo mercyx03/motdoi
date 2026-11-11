@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-10T08:49:31.906Z",
+  "generatedAt": "2026-11-11T00:55:05.567Z",
   "entries": [
+    {
+      "id": "reference-residence-payroll-81068",
+      "version": "8.10.68",
+      "publishedAt": "2026-11-11T00:55:05.473Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Lộ trình cư trú, câu lạc bộ và lương theo hợp đồng",
+      "summary": "Tra điều kiện cư trú theo nước, bổ sung câu lạc bộ thật và sửa cách tính lương cầu thủ.",
+      "tags": [
+        "Đời sống",
+        "Học tập",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục cư trú dẫn tới lộ trình thường trú theo nơi đang sống. Bốn năm làm việc không tự mở quyền xin thường trú. Hồ sơ đang chờ theo cách cũ được hoàn phí để xem lại theo nước.",
+        "Tại Anh, thời hạn tìm việc sau khi học được cập nhật theo mốc Graduate visa, có thời hạn riêng cho tiến sĩ. Hồ sơ giải thích quyền tiếp cận trợ cấp và dẫn nguồn điều kiện Universal Credit.",
+        "Bổ sung Công an Hà Nội, Thể Công Viettel, Manchester City, Chelsea, Atlético de Madrid và Athletic Club. Lương hợp đồng đã tính dự phòng thuế và phí đại diện, tránh khấu trừ lặp.",
+        "Danh mục học tập ở Mỹ giải thích lộ trình MD và điều kiện môn dự bị. Hồ sơ hoàng gia Tây Ban Nha có thêm trường hợp thoái vị năm 2014 và văn bản ban hành.",
+        "Ứng viên đã từ chối điều hành doanh nghiệp của bố mẹ được loại khỏi vòng chọn CEO của doanh nghiệp đó. Tỷ lệ cổ phần vẫn theo hồ sơ tài sản."
+      ]
+    },
     {
       "id": "institutions-programmes-81067",
       "version": "8.10.67",

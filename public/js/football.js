@@ -250,7 +250,7 @@
     z.competitions.push({ name: leagueName, stage: 'Hạng ' + z.place });
     if (z.place === 1 && z.matches.some(function (m) { return m.minutes > 0; })) s.trophies.push({ name: leagueName, year: y, club: c.id });
     if (!youth) {
-      tournament(l, z, c.cup, c.strength + 4, r, false, false);
+      if (c.cup) tournament(l, z, c.cup, c.strength + 4, r, false, false);
       var previous = s.seasons.find(function (x) { return x.year === y - 1 && x.club === c.id && x.stage === 'pro'; }), conf = D.confeds[c.confed];
       if (c.tier === 1 && previous && previous.place <= 2) {
         var name = previous.place === 2 && conf.second ? conf.second : conf.club;

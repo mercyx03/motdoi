@@ -1,7 +1,7 @@
 const assert=require('assert'),G=require('./hardcore-isolation').gameContext(),E=G.E;
 function life(country,age,school){const l=E.createLife({mode:'world',country,year:2000,seed:829});Object.assign(l,{age,school,pending:[],money:l.base*10,indep:age>=18});return l;}
 function choose(l,id,key,arg){const d=E.DEC[id].make(l,E.H.rf(l),arg);const k=d.data.keys?String(d.data.keys.indexOf(key)):key;assert(d.opts.some(o=>o.k===k),id+': '+key);l.pending=[d];E.resolve(l,k);}
-const pupil=life('GB',16,'lower');choose(pupil,'sixth829','science');assert.equal(pupil.schoolEnd,18);choose(pupil,'schoolEngland829','Vật lý');assert.equal(pupil.flags.study829.fourth,'Vật lý');
+const pupil=life('GB',16,'lower');pupil.educationRegion='England';pupil.flags.study829={gcse:7};choose(pupil,'sixth829','science');assert.equal(pupil.schoolEnd,18);assert.equal(pupil.flags.study829.track,'science');
 const student=life('US',19,'uni');const before=student.money;choose(student,'exchange829','0',{to:'JP',term:'1 học kỳ',index:1});assert(student.money<before);choose(student,'exchange829','meet');choose(student,'exchange829','return');assert.equal(student.flags.study829.transcript[0].credit,15);assert.equal(student.school,'uni');
 student.money=0;student.fam.mInc=student.fam.fInc=0;choose(student,'aid829','Federal Student Aid — vay liên bang');assert(student.flags.study829.debts[0].bal>0);assert.deepEqual(E.migrate(JSON.parse(JSON.stringify(student))).flags.study829,student.flags.study829);
 const gb=life('GB',19,'uni');const cash=gb.money;choose(gb,'aid829','Tuition Fee Loan');assert.equal(gb.money,cash);assert(gb.flags.study829.feesPaid>0);

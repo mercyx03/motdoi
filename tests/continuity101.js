@@ -6,7 +6,8 @@ function log(l){return(t,k)=>l.log.push({a:l.age,t,k});}
 for(const mode of ['vn','world'])for(const difficulty of ['normal','hardcore'])for(const dest of [['FR','Pháp','fr'],['JP','Nhật Bản','jp'],['DE','Đức','de'],['KR','Hàn Quốc','kr'],['AU','Úc','en'],['US','Mỹ','en']]){
  const l=life(mode,difficulty),original=JSON.parse(JSON.stringify(l)),note=log(l);E.startResearchStudy(l,dest,()=>.5,note);
  ok(l.abroad.code===dest[0]&&l.abroad.study&&!l.abroad.perm,'temporary study residence');ok(G.WEC.context(l).code===dest[0]&&l.cur==='usd','host earnings context');
- ok(E.jobTitle(l).includes(dest[1])&&E.careerYear(l,()=>.5,note,'study')===l.base*.7,'scholarship stipend replaces old salary');
+ const pay=E.careerYear(l,()=>.5,note,'study'),tax=dest[0]==='US'&&mode==='world'?E.WORLD836.state(l).tax:null;
+ ok(E.jobTitle(l).includes(dest[1])&&Math.abs(pay-(tax?l.base*.7*(1-(tax.federalUSD+tax.stateUSD)/tax.grossUSD):l.base*.7))<1e-7,'scholarship stipend replaces old salary');
  l.age+=4;const d=E.DEC.nc_bao_ve.make(l,()=>.5,l.sched[0].arg);ok(E.DEC.nc_bao_ve.valid(l,d.data),'defense has matching destination');
  E.DEC.nc_bao_ve.apply(l,d,'ky',()=>.1,note);ok(l.edu===7&&l.flags.researchStudy.finished&&l.abroad.code===dest[0],'degree and location retained');
  E.DEC.nc_sau_du_hoc.apply(l,E.DEC.nc_sau_du_hoc.make(l,()=>.5),'home',()=>.5,note);
