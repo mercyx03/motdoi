@@ -1,3 +1,7 @@
+## 8.10.69 — Dữ liệu giáo dục, thể thao và đời sống theo nước
+
+- Bổ sung tham chiếu Harvard J.D., V.League 2, CEC/CCB Canada, FDIC Mỹ và tước danh dự Tây Ban Nha.
+
 ## 8.10.68 — Cư trú, dữ liệu tham chiếu và kiểm thử trọng điểm
 
 - Gộp đường xét thường trú vào hồ sơ theo nước, thêm mốc Graduate tại Anh và đối chiếu phúc lợi.

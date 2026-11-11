@@ -328,3 +328,8 @@ Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên ng
 - Còn danh mục ngành và quy chế từng trường, lịch sử giải đấu và câu lạc bộ ở các hạng còn thiếu, lộ trình cư trú và phúc lợi ngoài các mục đã xác minh, các sắc lệnh và ngoại lệ pháp lý lịch sử.
 - GĐ6 còn nghiệm thu toàn diện, thiết bị/bản lưu thật và xác minh binding Pages REVIEWS_DB.
 - 8.10.68: depth899, origins-clubs904, life138, continuity101, study829, school-home-police838 và football-payroll901 đều đạt khi chạy lại. depth900 xác minh đường thường trú cũ và hoàn phí.
+
+### 8.10.69 — Phạm vi dữ liệu đã đối chiếu
+
+- Bổ sung Harvard J.D., bốn CLB V.League 2 theo VPF mùa 2026/27, tham chiếu CEC/CCB Canada, FDIC Mỹ và điều khoản chuyển tiếp về tước danh dự Tây Ban Nha.
+- Còn cần đối chiếu chương trình/điểm/học phí theo kỳ, các đội/giải và mùa khác, các diện cư trú/phúc lợi còn thiếu, các văn bản hoàng gia chưa phủ, ngân hàng và chi phí y tế từng nước, nghề và sự kiện theo địa phương.

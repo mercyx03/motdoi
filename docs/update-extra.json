@@ -1,5 +1,25 @@
 [
   {
+    "id": "reference-jd-vleague2-81069",
+    "version": "8.10.69",
+    "publishedAt": "2026-11-11T01:03:41.279Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Luật tại Harvard, Hạng Nhất Việt Nam và dữ liệu theo nước",
+    "summary": "Thêm thông tin tuyển sinh, đội bóng, cư trú, bảo hiểm tiền gửi và tước hiệu lịch sử có nguồn.",
+    "tags": [
+      "Học tập",
+      "Đời sống",
+      "Tính năng"
+    ],
+    "details": [
+      "Danh mục học tập Mỹ có lộ trình Juris Doctor ba năm tại Harvard Law School và điều kiện bằng cử nhân trước khi nhập học.",
+      "Hạng Nhất Việt Nam thêm Công an Nhân dân, Hưng Yên, Thái Nguyên và Thép Cần Thơ theo nguồn VPF mùa 2026/27. Các mã đội trong bản lưu được giữ.",
+      "Hồ sơ cư trú Canada có điều kiện kinh nghiệm làm việc của Canadian Experience Class và điều kiện Canada Child Benefit đối với người cư trú tạm.",
+      "Hồ sơ ngân hàng tại Mỹ có hạn mức bảo hiểm tiền gửi FDIC. Hồ sơ Tây Ban Nha có căn cứ riêng cho danh xưng danh dự của Juan Carlos I và Sofía."
+    ]
+  },
+  {
     "id": "reference-residence-payroll-81068",
     "version": "8.10.68",
     "publishedAt": "2026-11-11T00:55:05.473Z",
