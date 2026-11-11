@@ -5,8 +5,8 @@
       "id": "reference-residence-payroll-81068",
       "version": "8.10.68",
       "publishedAt": "2026-11-11T00:55:05.473Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-11T00:55:05.473Z",
       "title": "Lộ trình cư trú, câu lạc bộ và lương theo hợp đồng",
       "summary": "Tra điều kiện cư trú theo nước, bổ sung câu lạc bộ thật và sửa cách tính lương cầu thủ.",
       "tags": [
@@ -20,14 +20,15 @@
         "Bổ sung Công an Hà Nội, Thể Công Viettel, Manchester City, Chelsea, Atlético de Madrid và Athletic Club. Lương hợp đồng đã tính dự phòng thuế và phí đại diện, tránh khấu trừ lặp.",
         "Danh mục học tập ở Mỹ giải thích lộ trình MD và điều kiện môn dự bị. Hồ sơ hoàng gia Tây Ban Nha có thêm trường hợp thoái vị năm 2014 và văn bản ban hành.",
         "Ứng viên đã từ chối điều hành doanh nghiệp của bố mẹ được loại khỏi vòng chọn CEO của doanh nghiệp đó. Tỷ lệ cổ phần vẫn theo hồ sơ tài sản."
-      ]
+      ],
+      "correctedAt": "2026-11-11T01:00:28.934Z"
     },
     {
       "id": "institutions-programmes-81067",
       "version": "8.10.67",
       "publishedAt": "2026-11-10T08:49:31.829Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T08:49:31.829Z",
       "title": "Tra cơ sở giáo dục và giữ đúng ngành đã chọn",
       "summary": "Thêm danh mục cơ sở có nguồn theo quốc gia, sửa hướng học Điều dưỡng và Y học dự phòng, gỡ nhãn thừa trong đời sống.",
       "tags": [
@@ -43,14 +44,15 @@
         "Thẻ xác nhận ngành đang chờ trong bản lưu cũ được làm mới từ nguyện vọng đã có. Giữ hồ sơ trường và bằng cấp đã ghi; việc làm mới thẻ không tự cấp bằng hay nhận việc.",
         "Gỡ thêm nhiều nhãn thừa trong hồ sơ đời sống, học tập, việc làm, giải trí, đầu tư và sức khỏe. Giá và khoản chi chưa có báo giá được ghi là ước tính; không đổi tên khoản ước tính thành giá chính thức. Các tình huống chính trị vẫn được phân biệt khi cần.",
         "Đây là một phần của đợt rà dữ liệu toàn game. Danh mục tên cơ sở không đồng nghĩa mọi ngành, học phí, điểm chuẩn, quy định cư trú hay quyền hành nghề đã được xác minh; các phần còn thiếu tiếp tục được đối chiếu."
-      ]
+      ],
+      "correctedAt": "2026-11-11T01:00:29.010Z"
     },
     {
       "id": "reference-parentage-81066",
       "version": "8.10.66",
       "publishedAt": "2026-11-10T07:42:58.359Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T07:42:58.359Z",
       "title": "Tên trường, sổ tiết kiệm và hồ sơ kế nghiệp",
       "tags": [
         "Học tập",
@@ -65,14 +67,15 @@
         "Nguồn cha mẹ của trẻ hoàng gia được nối bằng mã người đã lưu lúc sinh hoặc nhận nuôi. Đổi bạn đời không tự đổi cha mẹ, nhánh gia phả hay họ pháp lý đã có. Hồ sơ mâu thuẫn cần đối chiếu trước khi tự chuyển ngôi.",
         "Gỡ một số nhãn thừa trong hồ sơ hoàng gia, sở thích, công việc và đời sống. Chi phí chưa có báo giá chính thức vẫn ghi là ước tính; đợt này chưa xác minh xong dữ liệu tham chiếu toàn game."
       ],
-      "summary": "Sửa tỷ lệ phiếu kế nghiệp, giữ tên trường và bổ sung biểu tiết kiệm có nguồn; nối hồ sơ cha mẹ theo đúng người đã lưu."
+      "summary": "Sửa tỷ lệ phiếu kế nghiệp, giữ tên trường và bổ sung biểu tiết kiệm có nguồn; nối hồ sơ cha mẹ theo đúng người đã lưu.",
+      "correctedAt": "2026-11-11T01:00:29.085Z"
     },
     {
       "id": "royal-regency-civil-81065",
       "version": "8.10.65",
       "publishedAt": "2026-11-10T06:31:36.852Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T06:31:36.852Z",
       "title": "Nhiếp chính, hộ tịch và các mốc luật hoàng gia",
       "tags": [
         "Đời sống",
@@ -91,14 +94,14 @@
         "Bổ sung các ca tham chiếu tước chuyển tiếp Tây Ban Nha 1987/2014 theo đúng mã người và căn cứ riêng; không suy ra tước danh dự của mọi cựu quân chủ hay truyền quyền cá nhân sang phối ngẫu, con cháu. Các thủ tục và quyết định thao tác trong game là mô phỏng."
       ],
       "summary": "Thêm hồ sơ nhiếp chính, xét hộ tịch và đối chiếu ngày luật; tách người giữ ngôi, người thực hiện quyền và người giám hộ.",
-      "correctedAt": "2026-11-10T06:59:18.806Z"
+      "correctedAt": "2026-11-11T01:00:29.159Z"
     },
     {
       "id": "international-royal-arcs-81064",
       "version": "8.10.64",
       "publishedAt": "2026-11-10T02:43:23.220Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T02:43:23.220Z",
       "title": "Sinh hoạt quốc tế và chuyện phân vai trong hoàng tộc",
       "tags": [
         "Đời sống",
@@ -114,14 +117,15 @@
         "Vai trò dự án, cam kết bị phá vỡ và quan hệ để lại lịch sử nhiều năm. Người liên quan qua đời hoặc đổi người trị vì khiến hồ sơ cần khép lại hoặc xét lại; chuyện phân vai không tự đổi luật kế vị hay phong tước.",
         "Bản lưu giữ mã người, quỹ, lịch sử và hồ sơ gia đình. Các tình huống đang chờ được làm mới khi nơi cư trú đổi, tránh dùng lựa chọn cũ để chi tiền sai bối cảnh."
       ],
-      "summary": "Ngày lễ và sinh hoạt theo nơi sống; thêm chuyện hoàng gia theo tuổi và hồ sơ tranh vai trò có chứng cứ, quan hệ và hậu quả nhiều năm."
+      "summary": "Ngày lễ và sinh hoạt theo nơi sống; thêm chuyện hoàng gia theo tuổi và hồ sơ tranh vai trò có chứng cứ, quan hệ và hậu quả nhiều năm.",
+      "correctedAt": "2026-11-11T01:00:29.233Z"
     },
     {
       "id": "education-pathways-81063",
       "version": "8.10.63",
       "publishedAt": "2026-11-10T02:10:16.519Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T02:10:16.519Z",
       "title": "Học tại nhà: thêm vùng, văn bằng và công nhận học bạ",
       "tags": [
         "Học tập",
@@ -140,7 +144,8 @@
         "Có đối chiếu môn/điểm với dữ liệu tuyển sinh tham chiếu; đạt phần học thuật không bảo đảm được nhận. Văn bằng, hoàn thành học phổ thông và hồ sơ vào cao đẳng/đại học là các bước riêng.",
         "Bổ sung chặn các tình huống trường học không phù hợp với người học tại nhà độc lập; giữ lịch sử, kết quả và hồ sơ qua lưu/tải. Trung tâm, phí và quyết định nhận hồ sơ trong game là mô phỏng."
       ],
-      "summary": "Mở rộng hồ sơ theo nơi cư trú, tiến độ học, văn bằng qua cơ sở tiếp nhận và các bước công nhận kết quả."
+      "summary": "Mở rộng hồ sơ theo nơi cư trú, tiến độ học, văn bằng qua cơ sở tiếp nhận và các bước công nhận kết quả.",
+      "correctedAt": "2026-11-11T01:00:29.308Z"
     },
     {
       "id": "spain-asturias-surnames-81062",
