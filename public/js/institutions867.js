@@ -4,6 +4,7 @@ function country(l,arg){var c=arg&&arg.country||H.resCode(l);return G.W.BY[c]?c:
 function normal(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/^the /,'').replace(/[^\p{L}\p{N}]/gu,'');}
 function programmeGuide(c){
   if(c==='US')return '\n\nY khoa (MD): lộ trình thông thường bắt đầu sau bằng đại học. Yêu cầu các môn dự bị và điều kiện xét tuyển do từng trường công bố. Nguồn: https://students-residents.aamc.org/medical-school-admission-requirements/admission-requirements\nHarvard Law School — Juris Doctor (J.D.) học toàn thời gian trong 3 năm, cần bằng cử nhân hoặc tương đương trước khi nhập học. Nguồn: https://hls.harvard.edu/jdadmissions/apply-to-harvard-law-school/jdapplicants/';
+  if(c==='GB')return '\n\nUCL Medicine MBBS BSc (A100), kỳ 2027: 6 năm theo lộ trình chuẩn, có UCAT. Biểu công bố cho năm 2027/28 là £10.050/năm (UK) và £59.600/năm (quốc tế). Nguồn: https://www.ucl.ac.uk/study/prospective-students/undergraduate/courses/medicine-mbbs-bsc';
   return '';
 }
 function records(c){return D.countries[c]?.institutions||[];}

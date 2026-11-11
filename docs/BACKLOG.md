@@ -333,3 +333,8 @@ Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên ng
 
 - Bổ sung Harvard J.D., bốn CLB V.League 2 theo VPF mùa 2026/27, tham chiếu CEC/CCB Canada, FDIC Mỹ và điều khoản chuyển tiếp về tước danh dự Tây Ban Nha.
 - Còn cần đối chiếu chương trình/điểm/học phí theo kỳ, các đội/giải và mùa khác, các diện cư trú/phúc lợi còn thiếu, các văn bản hoàng gia chưa phủ, ngân hàng và chi phí y tế từng nước, nghề và sự kiện theo địa phương.
+
+### 8.10.70 — Tiến độ dữ liệu
+
+- Bổ sung UCL A100 kỳ 2027, bốn đội Hạng Nhì Việt Nam 2026, diện 189 Úc và hạn mức FSCS Anh.
+- Các mục rộng ở 8.10.69 vẫn mở; chưa phủ ngành và tuyển sinh từng trường, mùa giải/thị trường còn thiếu, luật và phúc lợi theo thời kỳ, tài chính/y tế/nghề và sự kiện địa phương.

@@ -1,3 +1,7 @@
+## 8.10.70 — Chương trình UCL, Hạng Nhì Việt Nam và tham chiếu theo nước
+
+- Bổ sung dữ liệu UCL, VFF, visa 189 và FSCS từ nguồn chính thức.
+
 ## 8.10.69 — Dữ liệu giáo dục, thể thao và đời sống theo nước
 
 - Bổ sung tham chiếu Harvard J.D., V.League 2, CEC/CCB Canada, FDIC Mỹ và tước danh dự Tây Ban Nha.

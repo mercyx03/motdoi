@@ -2,7 +2,7 @@
 (function (G) {
   'use strict';
   var markets = {
-    VN: ['AFC', 'V.League', 'Cúp Quốc gia', 18000, 53, ['Hà Nội FC', 'Hoàng Anh Gia Lai', 'Công an Hà Nội', 'Thể Công Viettel', 'Công an Nhân dân', 'Hưng Yên', 'Thái Nguyên', 'Thép Cần Thơ']],
+    VN: ['AFC', 'V.League', 'Cúp Quốc gia', 18000, 53, ['Hà Nội FC', 'Hoàng Anh Gia Lai', 'Công an Hà Nội', 'Thể Công Viettel', 'Công an Nhân dân', 'Hưng Yên', 'Thái Nguyên', 'Thép Cần Thơ', 'Đắk Lắk', 'Vĩnh Long', 'Quảng Ngãi', 'Trường Giang Gia Định']],
     JP: ['AFC', 'J1 League', 'Emperor Cup', 180000, 70, ['Kashima Antlers', 'Urawa Reds']],
     KR: ['AFC', 'K League', 'Korea Cup', 140000, 68, ['Ulsan HD', 'Jeonbuk Hyundai']],
     TH: ['AFC', 'Thai League', 'Thai FA Cup', 45000, 58, ['Buriram United', 'BG Pathum']],
@@ -33,14 +33,16 @@
     ES: 'https://www.laliga.com/es-GB/laliga-easports/clubes'
   };
   var vnTier2Source = 'https://vpf.vn/tin-tuc/tin-hang-nhat/truoc-vong-1-hnqg-2026-27-dien-mao-moi-va-tham-vong-moi/';
+  var vnTier3Source = 'https://vff.org.vn/boc-tham-xep-lich-thi-dau-giai-hang-nhi-quoc-gia-2026-14-doi-tranh-3-suat-thang-hang/';
   var clubs = [];
   Object.keys(markets).forEach(function (code) {
     var m = markets[code];
     for (var i = 0; i < 12; i++) {
       var tier = i < 4 ? 1 : i < 8 ? 2 : 3;
+      var vnLeague = code === 'VN' && (tier === 2 ? { name: 'V.League 2', source: vnTier2Source } : tier === 3 ? { name: 'Hạng Nhì Quốc gia', source: vnTier3Source } : null);
       clubs.push({ id: code + '-' + i, name: m[5][i] || 'CLB mô phỏng ' + code + ' ' + (i + 1), country: code,
-        confed: m[0], league: tier === 1 ? m[1] : tier === 2 ? code === 'VN' ? 'V.League 2' : 'Hạng dưới · ' + code : 'Bán chuyên · ' + code,
-        cup: m[2], source: m[5][i] ? (code === 'VN' && tier === 2 ? vnTier2Source : sources[code] || null) : null, tier: tier, strength: Math.max(15, m[4] - i * 4), reputation: Math.max(10, m[4] - i * 3),
+        confed: m[0], league: vnLeague ? vnLeague.name : tier === 1 ? m[1] : tier === 2 ? 'Hạng dưới · ' + code : 'Bán chuyên · ' + code,
+        cup: code === 'VN' && tier === 3 ? null : m[2], source: m[5][i] ? (vnLeague ? vnLeague.source : sources[code] || null) : null, tier: tier, strength: Math.max(15, m[4] - i * 4), reputation: Math.max(10, m[4] - i * 3),
         financeUSD: m[3] * (i < 2 ? 5 : tier === 1 ? 1 : tier === 2 ? .12 : .025),
         academy: Math.max(30, m[4] - i * 3), promotion: Math.max(.12, .5 - i * .03), competition: m[4] - i * 2,
         minAge: 10, maxAge: 21, education: i !== 7, scholarship: i < 6, scout: Math.max(15, m[4] - i * 5),

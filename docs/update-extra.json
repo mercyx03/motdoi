@@ -1,5 +1,24 @@
 [
   {
+    "id": "reference-ucl-vff-fscs-81070",
+    "version": "8.10.70",
+    "publishedAt": "2026-11-11T01:08:15.989Z",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Y khoa UCL, Hạng Nhì Việt Nam và thông tin theo nước",
+    "summary": "Bổ sung học phí theo kỳ, bốn câu lạc bộ, diện tay nghề Úc và bảo hiểm tiền gửi Anh.",
+    "tags": [
+      "Học tập",
+      "Đời sống",
+      "Tính năng"
+    ],
+    "details": [
+      "Danh mục Anh có chương trình Medicine MBBS BSc tại UCL, yêu cầu UCAT và học phí công bố cho năm 2027/28.",
+      "Thêm Đắk Lắk, Vĩnh Long, Quảng Ngãi và Trường Giang Gia Định theo Hạng Nhì Quốc gia 2026. Giữ mã đội trong bản lưu.",
+      "Hồ sơ cư trú Úc có điều kiện được mời của diện tay nghề 189. Mục ngân hàng Anh thêm hạn mức bảo hiểm tiền gửi FSCS theo mốc hiệu lực."
+    ]
+  },
+  {
     "id": "reference-jd-vleague2-81069",
     "version": "8.10.69",
     "publishedAt": "2026-11-11T01:03:41.279Z",
