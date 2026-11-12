@@ -31,21 +31,21 @@
   // 1. NHỮNG DÒNG KỂ CHUYỆN NHỎ (không cần lựa chọn) — chia theo tuổi, giới tính, hoàn cảnh
   // ===================================================================
   function kidLines(l, a) {
-    var vn = H.inVN(l), m = mom(l), d = dad(l), L = [], y = l.birthYear + a;
+    var vn = H.inVN(l), royal = !!(l.flags.royal && !l.flags.royal.quit), m = mom(l), d = dad(l), L = [], y = l.birthYear + a;
     if (a <= 1) L.push('Lần đầu biết lẫy, cả nhà vỗ tay rần rần.', 'Mọc chiếc răng sữa đầu tiên, đêm nào cũng quấy khóc.', (l.fam.mAlive ? 'Bập bẹ tiếng đầu tiên — là "bà", không phải "mẹ".' : 'Bập bẹ tiếng đầu tiên — là "bà".'), 'Lần đầu ăn dặm, phun cháo đầy mặt ' + m + '.', 'Nắm chặt ngón tay ' + d + ' không chịu buông.');
     if (a >= 1 && a <= 3) L.push('Biết vẫy tay "bai bai" với khách đến nhà.', 'Ôm chặt chiếc chăn nhỏ đi khắp nhà, không cho ai giặt.', 'Bị ngã u đầu khi chạy theo con mèo.', 'Lần đầu được đi sở thú, sợ khóc thét khi thấy con voi.', 'Học được câu hát đầu tiên, hát đi hát lại cả ngày.', 'Lén bốc vụng đường trong hũ, bị bắt quả tang.');
     if (a >= 3 && a <= 6) {
-      L.push('Hỏi "tại sao?" đến cả trăm lần mỗi ngày.', 'Vẽ lên tường nhà một "bức tranh" to đùng, bị mắng một trận.', 'Có một người bạn tưởng tượng tên là "Bin".', 'Sợ ma, tối nào cũng đòi ngủ với ' + m + '.', 'Lần đầu tự buộc được dây giày.', 'Rụng chiếc răng sữa đầu tiên, ' + (vn ? 'ném lên mái nhà theo lời bà dặn.' : 'giấu dưới gối chờ "tiên răng".'));
+      L.push('Hỏi "tại sao?" đến cả trăm lần mỗi ngày.', 'Vẽ lên tường nhà một "bức tranh" to đùng, bị mắng một trận.', 'Có một người bạn tưởng tượng tên là "Bin".', 'Sợ ma, tối nào cũng đòi ngủ với ' + m + '.', 'Lần đầu tự buộc được dây giày.', 'Rụng chiếc răng sữa đầu tiên, ' + (vn ? 'ném lên mái nhà theo lời bà dặn.' : 'cùng người chăm sóc cất làm kỷ niệm.'));
       L.push(sexW(l, 'Mặc áo choàng siêu nhân, nhảy từ ghế xuống đất "bay".', 'Lấy khăn của mẹ quấn làm váy công chúa, đi diễn khắp nhà.'), sexW(l, 'Mê xe máy xúc, đứng xem công trình cả buổi.', 'Tết tóc cho búp bê, bắt cả nhà khen đẹp.'));
-      if (!l.urban) L.push('Theo ' + d + ' ra đồng bắt châu chấu, cào cào.', vn ? 'Lần đầu được cưỡi lên lưng trâu.' : 'Chạy nhảy trên đồng cỏ quê nhà.');
+      if (!l.urban) L.push(vn && !royal ? 'Theo ' + d + ' ra đồng bắt châu chấu, cào cào.' : 'Cùng người chăm sóc quan sát côn trùng trong khu vườn.', vn && !royal ? 'Lần đầu được cưỡi lên lưng trâu.' : 'Cùng người chăm sóc chơi vận động ở nơi được phép.');
       else L.push('Được ' + d + ' chở đi một vòng phố đêm, mắt tròn xoe nhìn đèn.', 'Lần đầu đi thang máy, nắm chặt tay ' + m + '.');
     }
     if (a >= 6 && a <= 10) {
-      L.push('Được cô khen chữ đẹp, về khoe cả nhà.', 'Lần đầu bị điểm kém, giấu sổ liên lạc dưới gầm giường.', 'Đổi được bộ sưu tập thẻ bài hiếm nhất lớp.', 'Bị cô phạt đứng góc lớp vì nói chuyện riêng.', 'Ốm sốt mấy ngày, được ' + m + ' nấu cháo hành.', 'Lần đầu ngủ lại nhà bạn, nửa đêm khóc đòi về.');
+      L.push('Được cô khen chữ đẹp, về khoe cả nhà.', 'Lần đầu bị điểm kém, giấu sổ liên lạc dưới gầm giường.', 'Đổi được bộ sưu tập thẻ bài hiếm nhất lớp.', 'Bị cô phạt đứng góc lớp vì nói chuyện riêng.', vn && !royal ? 'Ốm sốt mấy ngày, được ' + m + ' nấu cháo hành.' : 'Ốm sốt mấy ngày, được người chăm sóc chuẩn bị đồ ăn nhẹ và theo dõi.', royal ? 'Lần đầu dự buổi chơi với bạn do người chăm sóc thu xếp, lúc đầu còn rụt rè.' : 'Lần đầu ngủ lại nhà bạn, nửa đêm khóc đòi về.');
       if (boy(l)) L.push(vn ? 'Chơi bắn bi, đánh khăng với tụi con trai cả buổi chiều.' : 'Chơi bắn bi, đuổi bắt với tụi con trai cả buổi chiều.', 'Thả diều đến khi trời tối mịt.', 'Bị bạn gái cùng bàn kẻ "đường biên giới" giữa bàn.', 'Leo cây bị ngã, trầy hết đầu gối.', vn ? 'Đá bóng bằng quả bưởi trong sân.' : 'Đá bóng nhựa trong sân.');
-      else L.push(vn ? 'Nhảy dây, chơi ô ăn quan với đám bạn gái giờ ra chơi.' : 'Nhảy dây, chơi lò cò với đám bạn gái giờ ra chơi.', 'Sưu tầm cả hộp giấy viết thư thơm.', 'Học tết tóc cho em, cho bạn.', 'Chơi đồ hàng, nấu "cơm" bằng lá cây với hoa dại.', 'Được bà dạy thêu chiếc khăn tay đầu tiên.');
-      if (!l.urban) L.push(vn ? 'Đi bắt cá, mò cua ngoài ruộng về khoe ' + m + '.' : 'Ra suối bắt cá nhỏ về khoe ' + m + '.', vn ? 'Chăn trâu, thả diều trên bờ đê lộng gió.' : 'Thả diều trên cánh đồng lộng gió.', 'Mùa gặt theo ' + m + ' ra đồng, nằm trên đống rơm ngắm trời.');
-      else L.push('Đi học thêm tiếng Anh mỗi tối, ngồi sau xe ' + m + ' ngủ gật.', 'Được dẫn đi siêu thị, chọn được một món đồ ăn vặt.');
+      else L.push(vn ? 'Nhảy dây, chơi ô ăn quan với đám bạn gái giờ ra chơi.' : 'Nhảy dây, chơi lò cò với đám bạn gái giờ ra chơi.', 'Sưu tầm cả hộp giấy viết thư thơm.', 'Học tết tóc cho em, cho bạn.', vn && !royal ? 'Chơi đồ hàng, nấu "cơm" bằng lá cây với hoa dại.' : 'Chơi đóng vai với bộ đồ chơi và những hộp giấy tự trang trí.', 'Được bà dạy thêu chiếc khăn tay đầu tiên.');
+      if (!l.urban && !royal) L.push(vn ? 'Đi bắt cá, mò cua ngoài ruộng về khoe ' + m + '.' : 'Ra suối bắt cá nhỏ về khoe ' + m + '.', vn ? 'Chăn trâu, thả diều trên bờ đê lộng gió.' : 'Thả diều trên cánh đồng lộng gió.', vn && !royal ? 'Mùa gặt theo ' + m + ' ra đồng, nằm trên đống rơm ngắm trời.' : 'Cùng người chăm sóc dạo quanh nơi ở, dừng lại ngắm mây.');
+      else L.push(vn && !royal ? 'Đi học thêm tiếng Anh mỗi tối, ngồi sau xe ' + m + ' ngủ gật.' : 'Sau một buổi học sở thích, ngủ gật trên đường được người chăm sóc đưa về.', 'Được dẫn đi siêu thị, chọn được một món đồ ăn vặt.');
       if (poor(l)) L.push(E.hasOlderSib && !E.hasOlderSib(l) ? 'Mặc lại quần áo cũ người quen cho, ống quần xắn mấy vòng.' : 'Mặc lại quần áo cũ của anh chị, ống quần xắn mấy vòng.', 'Mơ ước có một đôi giày mới đi học.');
       if (rich(l)) L.push('Cùng người chăm sóc cân nhắc một kỳ nghỉ theo lịch của cả nhà.', 'Có góc học sở thích riêng, tự chọn bức vẽ hoặc bài nhạc muốn thử.');
     }
@@ -53,7 +53,7 @@
       L.push('Lần đầu được làm lớp trưởng, oai lắm.', 'Thức khuya đọc trộm truyện dưới chăn bằng đèn pin.', 'Viết nhật ký, khóa bằng ổ khóa nhỏ xíu.', 'Cãi nhau với bạn thân rồi làm lành sau ba ngày.', y >= 2000 ? 'Bị ' + m + ' tịch thu điện thoại vì thức khuya.' : 'Bị ' + m + ' tịch thu truyện tranh vì thức khuya.', 'Lần đầu đi chơi xa cùng lớp, cả đêm không ngủ.', 'Vỡ giọng, bị cả lớp trêu.');
       if (boy(l)) L.push('Lần đầu đạp xe thả dốc, tim muốn nhảy ra ngoài.', 'Tụ tập đá bóng sau giờ học đến tối mịt.', 'Lén tập hút thử điếu thuốc của ai đó rồi ho sặc sụa — và không bao giờ thử lại.', 'Cao vọt lên, quần áo năm ngoái đã ngắn cũn.');
       else L.push('Mê đọc truyện tình cảm, khóc sưng mắt.', 'Lần đầu được ' + m + ' dẫn đi mua áo ngực, ngại đỏ mặt.', y >= 2008 ? 'Cùng nhóm bạn gái chụp ảnh "sống ảo" ở quán trà sữa.' : 'Cùng nhóm bạn gái dạo phố ăn quà vặt sau giờ học.', y >= 2008 ? 'Tập trang điểm theo video trên mạng, bị ' + m + ' bắt rửa mặt.' : 'Lén tập trang điểm trước gương, bị ' + m + ' bắt rửa mặt.', 'Có ' + (l.orient === 'straight' ? 'cậu bạn' : 'người bạn') + ' lớp bên cạnh hay đứng đợi ở cổng trường.');
-      if (!l.urban && poor(l)) L.push('Sau giờ học phụ ' + m + ' cắt cỏ, nấu cám heo.', 'Đi bộ mấy cây số đến trường, chiều về chân rã rời.');
+      if (!l.urban && poor(l) && vn && !royal) L.push('Sau giờ học phụ ' + m + ' cắt cỏ, nấu cám heo.', 'Đi bộ mấy cây số đến trường, chiều về chân rã rời.');
     }
     return L;
   }

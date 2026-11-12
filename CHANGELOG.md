@@ -1,3 +1,204 @@
+## 8.10.73 — Hồ sơ học tập, khoản vay gia đình và đổi đội tuyển
+
+- Bổ sung hồ sơ MD/J.D., tên ngành, hạn báo cáo học tại nhà và căn cứ đổi đội tuyển.
+- Giữ quyền thu hồi vốn cửa hàng qua chia tay và thừa kế.
+- Bổ sung quy trình cư trú, ly hôn, tiết kiệm và nguồn địa phương. Gói Preview chờ xác nhận upload.
+
+## 8.10.72 — Tiến độ ngành Y, cổ phần gia đình và góp ý người chơi
+
+- Giữ chương trình/bằng cấp khi đóng menu, sửa hạn nội trú và hướng tìm việc ngành Y.
+- Thương lượng cổ phần người thân, nối danh tính qua di sản; tab phối ngẫu hoàng gia; nhiều phim chờ phát hành.
+- Thu gọn hồ sơ học ở Anh; giảm chuyện ngẫu nhiên, thêm tiếp diễn tin nhắn sau hai năm.
+- Lộ trình J.D./MD được tách đúng tên và niên hạn tuyển sinh mới. Trạng thái packaged, chưa xác nhận upload.
+
+## 8.10.70 — Chương trình UCL, Hạng Nhì Việt Nam và tham chiếu theo nước
+
+- Bổ sung dữ liệu UCL, VFF, visa 189 và FSCS từ nguồn chính thức.
+
+## 8.10.69 — Dữ liệu giáo dục, thể thao và đời sống theo nước
+
+- Bổ sung tham chiếu Harvard J.D., V.League 2, CEC/CCB Canada, FDIC Mỹ và tước danh dự Tây Ban Nha.
+
+## 8.10.68 — Cư trú, dữ liệu tham chiếu và kiểm thử trọng điểm
+
+- Gộp đường xét thường trú vào hồ sơ theo nước, thêm mốc Graduate tại Anh và đối chiếu phúc lợi.
+- Bổ sung tên câu lạc bộ và nguồn chính thức, sửa khấu trừ lặp tiền lương hợp đồng bóng đá.
+- Bổ sung tham chiếu MD tại Mỹ, văn bản thoái vị Tây Ban Nha năm 2014 và tôn trọng quyết định từ chối điều hành.
+
+## 8.10.67 — Nguồn cơ sở giáo dục và ngành học
+
+- Danh mục tra cứu195quốcgia bằng ROR CC0 và nguồn chính thức; tách danh tính khỏi điều kiện tuyển sinh.
+- Sửa Điều dưỡng/Y học dự phòng, hướng sức khỏe cụ thể và Medicine Manchester5năm; giữ trường, chống phát lại, làm mới thẻ cũ.
+- Gỡ thêm nhãn thừa; giá chưa xác minh tiếp tục ghi ước tính. Chưa hoàn tất rà dữ liệu thật toàn game.
+
+## 8.10.66 — Tên trường, biểu lãi suất và nguồn cha mẹ
+
+- Sửa NaN tỷ lệ biểu quyết doanh nghiệp bố mẹ; giữ tài sản.
+- Giữ tên đại học, sửa một số địa điểm, ưu tiên nhóm ngành theo sở thích; DELF/DALF.
+- Biểu VND Vietcombank10/11/2026 theo kỳ hạn/hình thức, giữ hợp đồng cũ.
+- Nối coParent108 với gia phả theo ID; giữ họ/nhánh lịch sử, chặn tự kế vị khi cần đối chiếu.
+- Gỡ một số nhãn thừa; dữ liệu thật toàn game còn đang rà, chưa nghiệm thu toàn diện.
+
+## 8.10.65 — Nhiếp chính và hộ tịch hoàng gia
+
+- Nối lịch sử Monaco1962/2002, các phiên bản nhiếp chính và quy trình phiên hội đồng.
+- Tách hồ sơ filiation, hôn nhân và phán quyết; thêm nhiếp chính/giám hộ Tây Ban Nha hiện đại và mốc họ2000, ngày sinh cùng năm.
+- Các ngoại lệ châu Âu, bộ luật Tây Ban Nha cũ và dữ liệu giáo dục còn tiếp tục; chưa hoàn tất toàn yêu cầu.
+
+## 8.10.64 — Bối cảnh quốc tế và quan hệ hoàng gia
+
+- Mở rộng bối cảnh ngoài tuổi thơ: nghi lễ, tín ngưỡng, ngày lễ và vai trò đặc biệt.
+- Thêm chủ đề27hoàng gia và hồ sơ phân vai qua CHAIN144, chứng cứ/quỹ riêng/quan hệ/hậu quả nhiều năm.
+- Mốc tiếp tục của yêu cầu làm hết phần còn thiếu; lịch sử pháp lý và dữ liệu giáo dục vẫn đang làm.
+
+## 8.10.63 — Tiếp tục học tại nhà và văn bằng
+
+- Bổ sung đường hồ sơ cho đủ76 vùng trong danh mục hiện có; thêm quỹ giờ giám hộ, hoàn chi phí có chứng từ và trợ cấp theo phần kỳ.
+- Nối khoa học GCSE, văn bằng qua provider, học phần dual enrollment và công nhận hồ sơ vào hệ thống học tập/thi cử hiện có.
+- Đây là phần giáo dục của đợt hoàn thiện các yêu cầu còn thiếu; các phần nội dung quốc tế/hoàng gia tiếp tục sau.
+
+## 8.10.62 — Tây Ban Nha: Asturias, tước phối ngẫu và hai họ
+
+- Mở rộng registry hiện có: thứ tự kế vị, các thế hệ, danh xưng phối ngẫu và quyền dùng tước địa danh riêng.
+- Bổ sung kho tên Borbón, cụm truyền thống, hai họ, quy tắc anh chị em và giao diện tên theo bối cảnh.
+- Đánh dấu phát hành 8.10.60/61 và 8.10.62 theo chỉ định chủ dự án; không tự deploy.
+
+## v8.10.61 — Monaco: kế vị, tước và tên Grimaldi (packaged)
+
+- Mở rộng bộ giải danh tính Monaco với nhánh kế vị, quốc tịch, nhiếp chính và quy trình hai hội đồng khi hết nhánh thông thường.
+- Tách H.S.H./S.A.S., Prince Héréditaire, Baux/Carladès, phối ngẫu và tước nước ngoài; kho tên gia đình có nguồn gốc và lịch sử tri ân.
+- Giữ ID/save/lịch sử; các trường hợp chưa đủ căn cứ ghi chờ đối chiếu hoặc kịch bản. Chi tiết docs/MONACO-861-PROGRESS.md. Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.60 — Nguồn lực và đời sống hoàng tộc (packaged)
+
+- Ẩn thu nhập gia đình hoàng gia; thêm nguồn lực riêng có ledger/hạn mức, hỗ trợ học tập và kế hoạch cá nhân.
+- Nhân vật hoàng gia mới có ngoại hình90–100;10nhóm chuyện theo tuổi qua CHAIN144, quan hệ và hậu quả nhiều năm.
+- Giữ bản lưu, luật kế vị/tước và ngân sách công vụ; chi tiết docs/ROYAL-860.md. Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.59 — Tuổi thơ theo nơi sống (packaged)
+
+- Chơi cùng bạn xét nơi cư trú và hoàn cảnh hoàng gia, ghi nhận bạn thật ở gần, không sinh tiền thật hoặc nhận thưởng lặp.
+- Điều chỉnh các sự kiện tuổi thơ liên quan và cập nhật sự kiện đang chờ; giữ lịch sử đã xảy ra.
+- Hai bản 8.10.57/58 ghi đã phát hành lúc 15:39:31 ngày 09/11/2026 UTC+7 theo xác nhận chủ dự án. Bản sửa 8.10.59 vẫn packaged.
+
+## v8.10.58 — Tước hiệu, tên họ và nghi thức hoàng gia (packaged)
+
+- Tách căn cứ từng tước, HRH, kế vị, công vụ và quyền điền sản cho bảy vương thất; giữ dữ liệu lịch sử và mã gia phả.
+- Đặt nhiều tên Unicode, tên theo bối cảnh và lựa chọn đời tư; mở rộng Làm đẹp với phản ứng tại công vụ thực tế.
+- Nguồn, mốc hiệu lực, kiểm thử và giới hạn: docs/ROYAL-858-PROGRESS.md. Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.57 — Học tại nhà và giáo dục England (packaged)
+
+- Mở rộng hồ sơ học tập với thủ tục học tại nhà, tiến độ môn, nghĩa vụ và quay lại trường; thiếu dữ liệu vùng thì khóa lộ trình.
+- England có ngoại ngữ theo Key Stage, môn tự chọn theo lịch/suất trường và GCSE dùng công thức thi chung; giữ điểm đã chốt.
+- Độ phủ nguồn, giản lược và kiểm thử: docs/HOMESCHOOL-ENGLAND-PROGRESS.md. Chỉ Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.56 — Xuất thân hoàng gia (đã phát hành)
+
+- Hiện nhánh hoàng gia ở ô quay số, hồ sơ và giấy khai sinh; đồng bộ câu nhật ký chào đời cho nhân vật mới và bản lưu cũ.
+- Kiểm tra xác suất sinh hoàng gia ở các nước được hỗ trợ và chặn xuất thân này tại Việt Nam.
+
+## v8.10.55 — Đại học trong nước và tiến độ tốt nghiệp (đã phát hành)
+
+- Thêm đường chuyển hướng từ hồ sơ du học chưa nhập học sang nguyện vọng trong nước, hoàn đúng học phí dự trù và giữ xét tuyển theo điều kiện hiện hành.
+- Hiện rõ từng điều kiện tốt nghiệp và nối đến các thao tác học lại, ngoại ngữ, chứng chỉ, hồ sơ học thuật, bảo vệ.
+
+## 8.10.54 — Rà soát thi thử, thi thật và dự báo tuyển sinh
+
+Thống nhất công thức từng môn; bỏ điểm cộng luyện đề và tâm lý ẩn, chuyển tiến độ cũ một lần sang kỹ năng có trần. Lưu kết quả cố định theo kỳ; thi thử không sửa điểm thi thật; thi lại không tự được cộng điểm. Dùng nhóm trường và ngưỡng mô phỏng, báo điều kiện nguyện vọng, môn chuyên/năng khiếu riêng. Kiểm chứng và giới hạn tại docs/EXAM-REVIEW-PROGRESS.md.
+
+## 8.10.50 — Lễ Baek-il 100 ngày Hàn Quốc, kế vị nhiều thế hệ Tây Ban Nha, A-Level/IB Anh Quốc, đam mê – sở đoản và 16 nhóm MBTI
+
+Tại Hàn Quốc (KR), bổ sung Lễ Baek-il 100 ngày cho các bé (ý nghĩa vượt qua 100 ngày đầu đời và số 100 — 百 viên mãn theo phong cách tối giản Minimalism & riêng tư gia đình): mâm cúng bà mụ Samshin Halmoni (3 bát cơm trắng, 3 bát canh rong biển Miyeok-guk không cắt bằng dao kéo, bộ ba rau Namul), 4 loại bánh gạo truyền thống (Baekseolgi trắng chia cho 100 người tích phúc, bánh đậu đỏ Susupatteok xua vận xui, Songpyeon ngũ sắc cầu trí tuệ, Injeolmi cầu dẻo dai), trang trí & Hanbok hiện đại theo giới tính (bé trai chữ 百 xanh dương/xanh lá, phông nền xanh pastel/xám/beige, Vest + quần Baji xanh/tím; bé gái chữ 百 hồng/đỏ/vàng, phông nền hồng khói/cam đào/vàng nhạt, váy Chima hồng/đỏ + mũ Ayam) và 3 phân khúc gia đình: Tiết kiệm ("Self-Baek-il" 50.000–70.000 Won thuê đồ Coupang/Naver Shopping chụp xong gửi trả), Khá giả trung lưu Seoul/Busan (nhà hàng Hanjeongsik/khách sạn, bánh Design Tteok 100.000–200.000 Won, thợ ảnh Snapshot, 10–15 người thân và nhẫn vàng ròng Baek-il banji 1 chỉ 3.75g), Thượng lưu Chaebol / Old money (phòng VIP 6 sao Shilla/Signiel do Art Director thiết kế hoa tươi nhập khẩu, Hanbok Haute Couture, lắc vàng/thỏi vàng, Dior Baby/Gucci Kids & quà cảm ơn sâm quý/nến thơm) cùng lựa chọn Old money tổ chức kiểu Khá giả ấm cúng. Mở rộng Hoàng gia Tây Ban Nha (Công giáo La Mã, ưu tiên nam giới trong cùng hàng con hoặc Trưởng nữ Princesa de Asturias) và quy tắc sắc phong kế vị nhiều thế hệ (#1 Thái tử/Thái nữ -> #2 con trưởng -> #3 cháu trưởng; cháu/chắt của Vua đang trị vì chưa tự động là Thái tử/Thái nữ cho tới khi cha/mẹ lên ngôi; phản ánh người kế vị lớn tuổi khi vua tiền nhiệm sống thọ). Tại Anh Quốc (GB), thêm định hướng A-Level vs. IB Diploma theo 3 nhóm ngành đại học (Nhóm 1 ưu tiên tuyệt đối A-Level cho Y/Nha/Thú y, Kỹ thuật Russell Group và Khoa học Máy tính với Further Maths; Nhóm 2 ưu tiên IB Diploma với EE 4.000 từ & TOK cho Luật, PPE Oxford/LSE, Quan hệ Quốc tế, Tâm lý học; Nhóm 3 cân bằng cho Kinh tế – Tài chính và Kiến trúc – Thiết kế). Thêm hệ thống Đam mê, Năng khiếu (Sở trường) & Sở đoản đa lĩnh vực (không tự động ghét ngành ngoài đam mê trừ khi là sở đoản; thay đổi tự nhiên vừa phải theo thời gian nhưng giữ nguyên kỹ năng đã luyện), 16 nhóm tính cách MBTI (INTJ..ESFP) và phân biệt văn hóa Giờ sinh Can Chi & 12 Con Giáp chỉ dùng ở Á Đông (VN, CN, JP, KR, KP...) còn phương Tây không dùng. Đánh dấu phát hành 8.10.50 theo yêu cầu chủ dự án.
+
+## 8.10.49 — Bức tranh tôn giáo – đẳng cấp Ấn Độ, hạn ngạch EWS 10% và đời sống tâm linh Việt Nam
+
+Mở rộng chi tiết cơ cấu tôn giáo và các nhánh đặc thù tại Ấn Độ: Hindu giáo (~79.8%: Vaishnavism thờ thần Vishnu, Shaivism thờ thần Shiva, Shaktism thờ Nữ thần / Durga Puja, Smartism & Advaita Vedanta), Hồi giáo (~14.2%: Sunni Barelvi chịu ảnh hưởng Sufi, Deobandi và Shia lớn thứ 3 thế giới tại Lucknow/Hyderabad/Jammu & Kashmir), Kitô giáo (~2.3%: Công giáo Goa/Mumbai/Kerala; Giáo hội Tin Lành Hợp nhất CSI miền Nam 1947 và CNI miền Bắc 1970 chiếm ~50% khối Tin Lành sở hữu Đại học Y CMC Vellore; Báp-tít Đông Bắc Nagaland/Mizoram/Meghalaya; phong trào Ngũ Tuần từ thiện giáo dục – y tế; Chính Thống giáo Syria Malankara miền Nam), Đạo Sikh (~1.7% tại vựa lúa Punjab: Khalsa Sikhs giữ 5K, Turban, họ Singh/Kaur vs. Sahajdhari), Phật giáo (~0.7%: Navayana bang Maharashtra, Kim Cương thừa Ladakh/Arunachal Pradesh, Nguyên thủy & Đại thừa), Kỳ Na giáo (~0.4% giàu và học thức cao nhất nhờ giới luật Ahimsa làm ngân hàng/vàng/kim cương: Bạch y phái Svetambara xây đền đá cẩm thạch Dilwara vs. Không y phái Digambara) và Hỏa giáo Parsi (<60.000 người, công nghiệp hóa Tata & từ thiện bệnh viện/viện nghiên cứu). Thêm tháp Varna, hệ thống Họ (Surname) như "thẻ căn cước xã hội" (Sharma/Chaturvedi/Iyer, Singh/Rathore, Gupta/Agarwal, Kumar/Yadav/Patel, Jatav/Mahar, Murmu/Soren) và hạn ngạch Hiến pháp EWS 10% cho người thuộc đẳng cấp trên có hoàn cảnh khó khăn bên cạnh SC (15%), ST (7.5%), OBC (27%) và bối cảnh chính trị – tôn giáo (BJP / Ram Mandir Ayodhya). Bổ sung đời sống tín ngưỡng – tôn giáo theo gia cảnh & vùng miền tại Việt Nam (thờ cúng gia tiên, Phật giáo Bắc tông/Nam tông/Khất sĩ/Trúc Lâm, Công giáo, Tin Lành, thờ Mẫu, Cao Đài, Phật giáo Hòa Hảo, khuyến học & thiện nguyện) và tách biệt tuyệt đối không để dữ liệu Ấn Độ hay Hoàng gia châu Âu rò rỉ sang Việt Nam. Đánh dấu phát hành 8.10.49 theo yêu cầu chủ dự án.
+
+## 8.10.48 — Người kế vị & nghi lễ Hoàng gia Na Uy – Đan Mạch, đẳng cấp/cải đạo và hạn ngạch suất học Ấn Độ
+
+Thêm lộ trình đào tạo người kế vị Na Uy (học trường làng/công lập tự đi bộ tới lớp, Học viện Hải quân/Không quân và 12 tháng Tiểu đoàn Công binh Quốc gia, đại học Môi trường/Phát triển bền vững & Luật Hiến pháp, được phép du học) cùng nghi lễ Na Uy (tuyên thệ Storting, Lễ Ban Phước tại Nhà thờ Nidaros với vương miện đặt trên bàn thờ không đội, Quốc khánh 17/5 mặc Bunad chào diễu hành thiếu nhi không duyệt binh, đi phương tiện công cộng/tự lái xe, quốc yến bền vững). Thêm lộ trình Đan Mạch (trường tiểu học công lập Tranegårdskolen, Đại học Aarhus, du học Harvard dưới tên giả, khóa sĩ quan Antvorskov và Người nhái Hải quân Frømandskorpset) cùng nghi lễ Đan Mạch (bàn giao tại Hội đồng Nhà nước, Thủ tướng tuyên bố 3 lần trên ban công Christiansborg, vua mới mặc quân phục không đội vương miện, diễu hành xe ngựa Hygge và lễ tạ ơn dân sự). Thêm hệ thống đẳng cấp, cải đạo (Phật giáo Navayana 1956 giữ hạn ngạch SC vs. Kitô giáo/Hồi giáo mất tư cách SC pháp lý dù định kiến xã hội còn) và hạn ngạch đại học IIT/AIIMS (SC 15%, ST 7.5%, OBC 27% vs. General), học bổng/ký túc xá, dịch chuyển xã hội và tranh luận hạn ngạch tại Ấn Độ. Đánh dấu phát hành 8.10.47 và 8.10.48 theo yêu cầu chủ dự án.
+
+## 8.10.47 — Đào tạo người kế vị, tuổi thơ quý tộc và nghi thức đón em bé hoàng gia
+
+Bổ sung chương trình đào tạo người kế vị Thụy Điển (học trong nước theo Hiến pháp, nghĩa vụ quân sự + sĩ quan 3 quân chủng, Riksdag, Bộ Ngoại giao UD, thực tập ngắn hạn tại UN/đại sứ quán, thông thạo Thụy Điển/Anh/Pháp/Đức và giữ cấp bậc tối cao 3 quân chủng khi lên ngôi). Thêm hệ thống bảo mẫu châu Âu đa ngôn ngữ và tăng tự lập theo tuổi, ngôn ngữ vùng (Welsh tại Anh, tiếng Bắc Âu tại Đan Mạch/Na Uy/Thụy Điển), đi sự kiện từ 5–6 tuổi, tách máy bay/xe hộ tống từ 7–8 tuổi, trường nội trú quý tộc chia khu nam nữ, 10 môn nghệ thuật/thể thao quý tộc, vệ sĩ hộ tống kín đáo và quản lý mạng xã hội/tài khoản clone ẩn danh. Tự động cập nhật danh hiệu bạn đời khi kết hôn, lên hàng kế vị số 1 hoặc đăng quang. Mở rộng nghi thức sinh con hoàng gia (GB, SE, NO, DK, BE, ES, MC): phân biệt sinh đơn thuận lợi (Lindo Wing St. Mary's) với sinh mổ/đa thai (sinh đôi, sinh ba, sinh tư cực hiếm xếp kế vị theo phút sinh, công bố tên ngay, gửi ảnh cùng anh chị lớn, diện kiến ban công sau hồi phục), thắp đèn màu danh thắng London, bắn đại bác đúng giờ (13h tại Anh, 12h trưa tại Na Uy 11 pháo đài và Thụy Điển 5 trạm), chụp ảnh Ba Thế Hệ Skaugum (NO), thông cáo 3 thứ tiếng + Photo Call & sổ chúc mừng Brussels (BE), xét duyệt tên 6 vị trí kế vị đầu và lễ rửa tội váy Victoria có đủ hai bên nội ngoại.
+
+## 8.10.46 — Thêm đồ thôi nôi và hướng sở thích
+
+Danh mục 28 món, giữ bộ lọc tài chính, thêm lựa chọn giá thấp. Micro gợi ca sĩ và đánh dấu sở thích hát; lưu món/hướng phát triển vào hồ sơ, nối rèn luyện hiện có. Bổ sung lựa chọn phù hợp cho bản lưu đang chờ, không thưởng lặp. Trạng thái phát hành theo xác nhận của chủ dự án.
+
+## 8.10.45 — Chọn đồ thôi nôi (packaged)
+
+Tách lễ bốc đồ chơi tuổi1 khỏi tự động dưới4; bảo đảm có lễ trong năm đầu, giữ bảng chọn cả khi chỉ dừng ở ngã rẽ lớn. Chặn đưa lại lễ đã hoàn tất; giữ tự động hoàn toàn và giới hạn hành động theo tuổi.
+
+## 8.10.44 — Gia đình, tự lập và kỷ niệm đón bé (packaged)
+
+Lưu phản ứng bốc đồ chơi của em bé; thêm lịch việc nhẹ, thỏa thuận hỗ trợ học tập, ở chung sau kết hôn và ngân sách dọn nhà. Điều chỉnh đợt thử có con, giữ trạng thái mãn kinh. Thêm lựa chọn lễ đón bé / Baek-il theo nơi sống, đức tin, ngân sách, ảnh và quà riêng từng bé.
+
+## 8.10.43 — Giữ hồ sơ hoàng gia khi kế tục (packaged)
+
+Truyền registry gia tộc, tước vị và cây kế vị sang đúng người con; bổ sung hồ sơ thiếu cho con của nữ quân vương và hiển thị tước/vị trí ở mục gia đình. Đánh dấu 8.10.42 đã phát hành theo giờ chủ dự án xác nhận; giữ mục 8.10.41 trong lịch sử nội bộ và ẩn khỏi dữ liệu người chơi.
+
+## 8.10.42 — Học thuật, yêu xa, tín ngưỡng và tên người góp ý (packaged)
+
+Tách ngân sách lượt học thuật, thêm chỉnh sửa và nhiều hướng công bố, chuẩn bị bảo vệ. Hẹn yêu xa có lịch, chi phí và kế hoạch sống gần. Mở rộng thực hành tín ngưỡng, lịch cúng, suy ngẫm và hệ quả hành vi ép tiền; lưu truyền thống qua thế hệ. Bình luận có tên dự phòng trước khi xóa tài khoản. Phạm vi và giới hạn: docs/FEEDBACK-842.md.
+
+## 8.10.41 — Sửa lỗi không tải được trò chơi
+
+Bộ nạp thử lại tệp lỗi qua URL mới khi CDN trả về trang chủ thay cho JavaScript.
+
+## 8.10.40 — Danh tính hẹn hò và gia đình nhiều phối ngẫu
+
+Đồng bộ giới tính và tên người mới. Thêm hồ sơ hôn nhân theo nơi cư trú, đồng thuận, xét phép, lịch gia đình, ngân sách và quan hệ giữa từng cặp phối ngẫu.
+
+## 8.10.39 — Tuổi thơ, tự lập và hỗ trợ gia đình
+
+Điều chỉnh quyền chọn theo tuổi, việc làm nhẹ, chăm sóc ngoại hình, đi lại cùng người lớn, ở chung và hỗ trợ học phí. Cập nhật xác suất có con và hồ sơ hỗ trợ sinh sản theo nơi cư trú.
+
+## 8.10.38 — Trường THPT, nơi ở và công an
+
+Thêm lựa chọn trường và môn chuyên, sửa nguồn lực trường, nội trú và lựa chọn ở cùng gia đình. Điều chỉnh tuổi nhận xe đạp và kiểm tra thâm niên, chức vụ công an.
+
+## 8.10.37 — Hoàng gia và hành trình đức tin (packaged)
+
+Mở rộng cây kế vị, điều kiện đức tin/chấp thuận hôn nhân theo quốc gia, vai trò và áp lực hoàng gia, học nhiều năm, nghi lễ, thai kỳ, thoái vị và lựa chọn đức tin tự nguyện. Đổi mục 8.10.36 thành released theo xác nhận chủ dự án lúc 10:43:30 UTC+7 ngày 04/11/2026. Nguồn, phạm vi và giới hạn: docs/ROYAL-837.md.
+
+## 8.10.36 — Gia đình, nơi sống Mỹ và lộ trình học bay (packaged)
+
+Mở rộng phản ứng có em và giúp chăm em ngắn hạn qua persona141; lộ trình tập lái Mỹ có giám sát; học bay nhiều năm, giờ/chứng chỉ/y tế/tiếng Anh/CFI/ATP; thuế liên bang và hệ số nơi sống; rủi ro súng theo ngữ cảnh và hỗ trợ tinh thần tiếp diễn. Chi tiết giới hạn mô phỏng và nguồn: docs/WORLD-836.md. Chưa phát hành, chưa nghiệm thu toàn diện.
+
+## 8.10.35 — Để người chơi tự khám phá động cơ của con
+
+Hồ sơ và lựa chọn trò chuyện để bạn tự hiểu con qua lời nói và hành vi.
+
+## 8.10.34 — Mỗi người con một hướng đi
+
+Con ở Việt Nam và nước ngoài có thể bộc lộ một trong 12 hướng phát triển, từ say mê học thuật, nhân hậu đến nổi loạn hay tiêu tiền bí mật.
+
+## 8.10.33 — Nghề bố mẹ, tên Việt và điều kiện nơi ở cho dịch vụ ngầm
+
+Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.
+
+## 8.10.32 — Chọn quốc gia chào đời và tra cứu nghề
+
+Ở chế độ Toàn thế giới, bạn có thể chọn nơi sinh cho hồ sơ mới. Sổ tay Nghề & lương đã bổ sung các mục còn thiếu.
+
+## 8.10.31 — Tuổi thơ và gia đình (đã đóng gói)
+
+Trẻ nhỏ được chăm tóc theo tuổi. Bạn tự chọn lúc khám phá món địa phương. Đã sửa cảnh báo nhà cửa và cách gọi mẹ kế, bố dượng.
+
+## 8.10.30 — Hòa nhập, đức tin gia đình và lễ mừng bé (ghi phát hành theo yêu cầu chủ dự án)
+
+- Mở rộng hồ sơ khuyết tật theo nơi sống, thỏa thuận nuôi con, nghi lễ, tên thánh và kê khai lý lịch.
+
+## 8.10.29 — Giáo dục England, trao đổi và tài trợ sinh viên (đã phát hành)
+
+- Thêm GCSE/Sixth Form, Degree Apprenticeship, trao đổi với danh sách điểm đến quốc tế và tài trợ theo nước.
+
+## 8.10.28 — Olympia, lễ trưởng thành và tiệc cuối cấp (đã phát hành)
+
+- Olympia bổ sung đề xác suất và manh mối từ khóa. Lễ gia đình và chương trình trường có thêm lựa chọn theo địa phương. Bản 8.10.27 đã ghi nhận phát hành lúc 13:55:34 ngày 03/11/2026 (UTC+7).
+
 ## 8.10.27-showbiz — 2026-11-03T06:39:05.217Z — packaged, Preview
 
 - Hồ sơ scandal nhiều bước, quảng bá/đời tư và NPC nhất quán; hậu quả xuyên năm.

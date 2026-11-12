@@ -28,15 +28,36 @@
     MA: ['Quốc vương', 'Hoàng gia Morocco', 0], JO: ['Quốc vương', 'Hoàng gia Jordan', 0], KW: ['Quốc vương', 'Hoàng gia Kuwait', 0], QA: ['Quốc vương', 'Hoàng gia Qatar', 0],
     AE: ['Quốc vương', 'Hoàng gia UAE', 0], OM: ['Quốc vương', 'Hoàng gia Oman', 0], BH: ['Quốc vương', 'Hoàng gia Bahrain', 0], BT: ['Quốc vương', 'Hoàng gia Bhutan', 0],
     KH: ['Quốc vương', 'Hoàng gia Campuchia', 0], LS: ['Quốc vương', 'Hoàng gia Lesotho', 0], SZ: ['Quốc vương', 'Hoàng gia Eswatini', 0], TO: ['Quốc vương', 'Hoàng gia Tonga', 0],
-    MC: ['Thân vương', 'Vương thất Monaco', 0], LI: ['Thân vương', 'Vương thất Liechtenstein', 0], LU: ['Đại công tước', 'Đại công quốc Luxembourg', 1]
+    MC: ['Thân vương', 'Vương thất Monaco', 1], LI: ['Thân vương', 'Vương thất Liechtenstein', 1], LU: ['Đại công tước', 'Đại công quốc Luxembourg', 1]
   }; // [tước hiệu người trị vì, tên hoàng tộc, phụ nữ được kế vị]
   E.MONARCHIES = MON;
   E.PARENT_PAY = E.PARENT_PAY || {};
   E.PARENT_PAY['quốc vương'] = 300; E.PARENT_PAY['thái tử'] = 150; E.PARENT_PAY['hoàng hậu'] = 150; E.PARENT_PAY['thái tử phi'] = 90; E.PARENT_PAY['hoàng thân'] = 70; E.PARENT_PAY['phu nhân hoàng thân'] = 40;
   function royal(l) { return l.flags && l.flags.royal || null; }
   function activeRoyal(l) { var x = royal(l); return x && !x.quit ? x : null; }
-  function royalTitle(l) { var x = royal(l); if (!x) return ''; if (x.reign) return l.sex === 'F' ? 'Nữ hoàng' : (MON[x.c] ? MON[x.c][0] : 'Quốc vương'); if (x.quit) return 'cựu thành viên hoàng tộc'; return x.tier === 'direct' ? (l.sex === 'F' ? 'Công chúa' : 'Hoàng tử') : (l.sex === 'F' ? 'Quận chúa' : 'Thân vương'); }
+  function royalTitle(l) { if(E.ROYAL858){var current=E.ROYAL858.lifeTitle(l);if(current!=null)return current;}var x = royal(l); if (!x) return ''; if (x.reign) return l.sex === 'F' ? 'Nữ hoàng' : (MON[x.c] ? MON[x.c][0] : 'Quốc vương'); if (x.quit) return 'cựu thành viên hoàng tộc'; return x.tier === 'direct' ? (l.sex === 'F' ? 'Công chúa' : 'Hoàng tử') : (l.sex === 'F' ? 'Quận chúa' : 'Thân vương'); }
   E.royalTitle = royalTitle;
+  E.royalBirthLabel = function (l) {
+    var x = royal(l);
+    return x ? x.house + (x.tier === 'direct' ? ' · nhánh chính' : ' · nhánh phụ') : '';
+  };
+  function syncRoyalBirth(l) {
+    if (!royal(l)) return;
+    var first = (l.log || []).find(function (entry) {
+      return entry.a === 0 && typeof entry.t === 'string' && entry.t.includes('bạn chào đời là');
+    });
+    if (!first) return;
+    E.QUINT.slice(1).forEach(function (label, i) {
+      var prefix = i === 0 || i === 4 ? 'thuộc ' : 'trong ';
+      first.t = first.t.replace(', ' + prefix + label + '.', ', trong ' + E.royalBirthLabel(l) + '.');
+    });
+  }
+  var migrateRoyalBirth = E.migrateExt;
+  E.migrateExt = function (l) {
+    if (migrateRoyalBirth) migrateRoyalBirth.apply(this, arguments);
+    syncRoyalBirth(l);
+  };
+
   function setupRoyal(life, tier, fromParent) {
     var f = life.fam, m = MON[life.country];
     life.flags.royal = { tier: tier, c: life.country, house: m[1] };
@@ -67,7 +88,7 @@
       var h = { rs: (life.rs ^ 0x51ab3e7) | 0 }, x = U.rand(h);
       if (x < 0.03) setupRoyal(life, U.rand(h) < 0.2 ? 'direct' : 'branch', false);
     }
-    if (royal(life)) { life.flags.birthQ = 5; life.birthPlace = life.birthPlace; }
+    if (royal(life)) { life.flags.birthQ = 5; syncRoyalBirth(life); }
     return life;
   };
   E.HOOKS.year.unshift(function (l, r, log, a) {
@@ -83,7 +104,7 @@
     if (E.ROYAL920) E.ROYAL920.stipend(l, x, amt, log); else H.cash(l, amt, x.reign ? 'Ngân sách hoàng gia' : 'Trợ cấp từ quỹ hoàng tộc'); // 8.10.24: tách tiền riêng/ngân sách công vụ (royal920)
     // kế vị: người trị vì qua đời, bạn là con trưởng trong nhánh chính
     var f = l.fam, ruler = /quốc vương|thiên hoàng|thân vương|đại công tước|nữ hoàng|thái tử/.test((f.fJob || '') + ' ' + (f.mJob || ''));
-    if (x.tier === 'direct' && !x.reign && !x.passed && ruler && !f.fAlive && a >= 18) {
+    if ((!E.ROYAL837||!E.ROYAL837.managed(l)) && x.tier === 'direct' && !x.reign && !x.passed && ruler && !f.fAlive && a >= 18) {
       var canF = MON[x.c] && MON[x.c][2];
       if ((E.hasOlderSib && E.hasOlderSib(l)) || (l.sex === 'F' && !canF)) { x.passed = true; log('Ngai vàng thuộc về ' + (l.sex === 'F' && !canF ? 'người anh em trai theo luật kế vị' : 'người anh chị trưởng') + '. Bạn đứng bên cạnh trong lễ đăng quang, giữ vai trò thành viên cao cấp của hoàng gia.', 'neutral'); }
       else { x.reign = true; x.reignAt = a; log('Lễ đăng quang. Bạn trở thành ' + royalTitle(l) + ' của ' + (MON[x.c] ? x.house.replace(/^Hoàng gia |^Vương thất |^Đại công quốc /, '') : 'đất nước') + '. Hàng vạn người đứng chật hai bên đường.', 'big'); H.mem(l, 'Ngày đăng quang, chiếc vương miện nặng hơn bạn tưởng.', 8); H.fx(l, { hap: 4 }); }

@@ -73,7 +73,7 @@ function startTreat(l, k) { const d = E.DEC.treat.make(l, () => .5); l.pending =
 }
 // 9. Tóc: mọc theo năm, hiến trừ đúng chiều dài, chương trình khác điều kiện, hóa trị gây rụng thì về 0.
 {
-  const l = person(918000, { age: 25 }); const h = HL.hair(l); h.len = 10; h.at = l.age; l.age += 2; HL.hairYear(l); ok(h.len === 36, 'hair grows ~13 cm/year');
+  const l = person(918000, { age: 25 }); const h = HL.hair(l); h.len = 10; h.growing = true; h.at = l.age; l.age += 2; HL.hairYear(l); ok(h.len === 36, 'hair grows ~13 cm/year');
   h.bleached = true; h.dyed = true; const d = E.DEC.hair915.make(l, () => 0, {}); const k1 = d.data.keys.indexOf('p1'), k2 = d.data.keys.indexOf('p2');
   ok(!d.opts.some(o => o.k === String(k1)) && d.opts.some(o => o.k === String(k2)), 'bleached hair: program 1 refuses, program 2 accepts');
   d.manual = true; d.data.requested = true; d.data.actionYear850 = l.age; l.pending = [d]; E.resolve(l, String(k2)); ok(h.len === 5 && h.donated === 1, 'donation cuts the real length');

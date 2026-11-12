@@ -1,0 +1,4 @@
+'use strict';
+const assert=require('assert'),{gameContext}=require('./hardcore-isolation'),E=gameContext().E,P=E.PACE145;let checks=0;const ok=(v,m)=>{assert(v,m);checks++;},daily={id:'incidental872',title:'Bữa cơm cuối tuần',text:'Gia đình cùng dùng bữa.'},src={when:()=>true},l=E.createLife({mode:'vn',seed:87280});l.age=30;let admitted=0,quiet=0;
+for(let i=0;i<300;i++){l.id='quiet-test:'+i;delete l.flags.pace145;const a=P.admit(l,daily,[],src);if(a)admitted++;else quiet++;ok(!P.admit(l,daily,[{id:'other872',title:'Chơi cờ',text:''}],src),'no second incidental story');ok(P.admit(l,{id:'job',title:'Tìm việc',text:''},[],src),'career decision unaffected');ok(P.admit(l,daily,[],{rep:true,when:()=>true}),'ongoing chain unaffected');}
+ok(admitted>70&&admitted<220&&quiet>0,'both quiet and incidental years exist');ok(P.admit(l,daily,[],{}),'mandatory/manual content is not randomized away');console.log('PASS pacing872: '+checks+' checks; '+quiet+'/300 quiet samples');

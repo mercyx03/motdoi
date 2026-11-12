@@ -16,7 +16,7 @@
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function yr(l) { return l.birthYear + l.age; }
   function jid(l) { return l.job ? E.resolveJob(l.job.id) : ''; }
-  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; return true; } return false; }
+  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1 && (!c.ladder || E.canAdvance(l,c,false))) { l.job.rank++; l.job.yrs = 0; if(c.ladder){l.job.rankSince=l.age;l.job.rankTracked=l.job.rank;} return true; } return false; }
   function shuffle(r, a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function given(l) { var w = String(l.name || '').split(' '); return w[w.length - 1] || 'bạn'; }
 

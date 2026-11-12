@@ -539,9 +539,9 @@
     if (v === 'ô tô') H.mem(l, 'Lần đầu lái chiếc ô tô của chính mình về quê, cả xóm ra xem.', 4);
     if ((v === 'xe máy' && !l.lic.A1) || (v === 'ô tô' && !l.lic.B)) log('Bạn chưa có bằng lái ' + (v === 'ô tô' ? 'ô tô' : 'xe máy') + ' — ra đường có nguy cơ bị phạt.', 'neutral');
   }
-  EV(function (l, a) { return a >= 15 && a <= 19 && !l.veh && (l.fam.mAlive || l.fam.fAlive) && l.fam.q >= 2 && (isVN(l) || l.gdp < 20); }, 0.3, function (l, a, r, log) {
-    l.veh = isVN(l) && a < 18 ? 'xe đạp' : 'xe máy'; l.vehVal = l.base * (l.veh === 'xe máy' ? 0.25 : 0.03);
-    log(l.veh === 'xe máy' ? 'Bố mẹ mua cho chiếc xe máy cũ để đi học, đi làm.' : 'Được bố mẹ mua cho chiếc xe đạp điện để đi học.', 'good'); fx(l, { hap: 4 });
+  EV(function (l, a) { return a >= (isVN(l)?10:15) && a <= 19 && !l.flags.parentVehicleGift && !l.veh && (l.fam.mAlive || l.fam.fAlive&&!l.fam.noDad) && l.fam.q >= 2 && (isVN(l) || l.gdp < 20); }, 0.3, function (l, a, r, log) {
+    l.flags.parentVehicleGift=true; l.veh = isVN(l) && a < 18 ? 'xe đạp' : 'xe máy'; l.vehVal = l.base * (l.veh === 'xe máy' ? 0.25 : 0.03);
+    log(l.veh === 'xe máy' ? 'Bố mẹ mua cho chiếc xe máy cũ để đi học, đi làm.' : 'Gia đình mua cho bạn chiếc xe đạp để đi học.', 'good'); fx(l, { hap: 4 });
   });
 
   // =====================================================================
@@ -697,7 +697,7 @@
     ]
   });
   SC('ngoai_tinh', {
-    title: 'Cám dỗ', prep: function (l, r) { return { n: H.stranger(l, r, H.partnerSex(l, r)) }; },
+    title: 'Cám dỗ', prep: function (l, r) { var sex=H.datingSex(l,r);return { sex:sex,n:H.stranger(l,r,sex) }; },
     text: function (l, d) { return d.n + ', một đồng nghiệp mới, liên tục nhắn tin tán tỉnh dù biết bạn đã có gia đình.'; },
     valid: function (l) { return l.partner && l.partner.status !== 'dating'; },
     opts: [
@@ -1176,13 +1176,13 @@
       { k: 'play', l: 'Chơi trọn mùa hè cuối cùng', run: function (l, r, log) { log('Một mùa hè rong chơi thả diều, bắt chuồn chuồn.', 'good'); fx(l, { hap: 4 }); H.mem(l, 'Mùa hè cuối cùng trước khi đi học, cánh diều trên đồng.', 2); } }
     ]
   });
-  CT('hoc_chu_som', function (l, a) { return a === 5; }, 99, 3);
+  CT('hoc_chu_som', function (l, a) { return a === 5 && H.inVN(l); }, 99, 3);
 
   SC('chon_truong', {
     title: 'Chọn trường tiểu học', text: 'Bố mẹ cân nhắc cho bạn học trường nào.',
     opts: [
       { k: 'public', l: 'Trường công gần nhà', run: function (l, r, log) { log('Học trường công gần nhà, đi bộ năm phút là tới.', 'neutral'); fx(l, { soc: 2 }); } },
-      { k: 'private', l: 'Trường tư thục song ngữ', run: function (l, r, log) { log('Vào trường song ngữ, học thêm tiếng Anh từ lớp Một.', 'good'); fx(l, { kno: 3 }); l.uniTier = (l.uniTier || 1) + 0.03; } },
+      { k: 'private', l: function (l) { return H.inVN(l) ? 'Trường tư thục song ngữ' : 'Trường tư thục chất lượng cao'; }, run: function (l, r, log) { log(H.inVN(l) ? 'Vào trường song ngữ, học thêm tiếng Anh từ lớp Một.' : 'Vào trường tư thục chất lượng cao từ bậc tiểu học.', 'good'); fx(l, { kno: 3 }); l.uniTier = (l.uniTier || 1) + 0.03; } },
       { k: 'intl', l: 'Trường quốc tế', req: function (l) { return l.fam.q >= 5; }, run: function (l, r, log) { log('Vào trường quốc tế, bạn bè toàn con nhà khá giả.', 'good'); fx(l, { kno: 5 }); l.uniTier = (l.uniTier || 1) + 0.06; } }
     ]
   });
@@ -1554,7 +1554,7 @@
     if (a === 0) return '';
     if (a === 2) return pick(r, ['Bập bẹ nói, suốt ngày lẽo đẽo theo mẹ.', 'Thích nhất là được bố công kênh trên vai.']);
     if (a === 4) return pick(r, ['Mê nghe bà kể chuyện cổ tích trước khi ngủ.', 'Lần đầu tự xúc cơm ăn, vương vãi khắp nhà.']);
-    if (a === 5) return pick(r, ['Chuẩn bị vào lớp Một, háo hức xếp sách vở mới.', 'Theo bố ra đồng thả diều mỗi chiều.']);
+    if (a === 5) return H.inVN(l) ? pick(r, ['Chuẩn bị vào lớp Một, háo hức xếp sách vở mới.', 'Theo bố ra đồng thả diều mỗi chiều.']) : pick(r, ['Háo hức làm quen với sách vở và bạn bè mới.', 'Chiều cuối tuần ra công viên chạy nhảy cùng bố mẹ.']);
     return '';
   });
   L(function (l, a, r) {

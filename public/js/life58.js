@@ -49,7 +49,7 @@
     return changed;
   }
   function stamp(q) {
-    return q.simYear != null ? 'Giá mô phỏng năm ' + q.simYear + ' (' + (q.change >= 0 ? '+' : '') + U.fmtNum(q.change * 100, 1) + '% trong năm); mốc ngoài đời: ' + time(q.asOf) : 'Mốc giá ngoài đời: ' + time(q.asOf);
+    return q.simYear != null ? 'Giá theo cuộc đời năm ' + q.simYear + ' (' + (q.change >= 0 ? '+' : '') + U.fmtNum(q.change * 100, 1) + '% trong năm); mốc ngoài đời: ' + time(q.asOf) : 'Mốc giá ngoài đời: ' + time(q.asOf);
   }
   function simulateYear(l, ignored, log) {
     var b = l.marketBook;
@@ -70,7 +70,7 @@
       if (b.positions[symbol] && b.positions[symbol].qty > 0) parts.push(symbol + ' ' + (q.change >= 0 ? '+' : '') + U.fmtNum(q.change * 100, 1) + '%');
     });
     b.marketRs = holder.rs; b.simAt = l.age; b.revision++;
-    if (parts.length && log) log('Giá đầu tư mô phỏng năm ' + (l.birthYear + l.age) + ': ' + parts.join(' · ') + '. Số lượng giữ nguyên; giá trị danh mục theo giá bán được: ' + H.money(l, value(l)) + '.', 'money');
+    if (parts.length && log) log('Giá đầu tư theo cuộc đời năm ' + (l.birthYear + l.age) + ': ' + parts.join(' · ') + '. Số lượng giữ nguyên; giá trị danh mục theo giá bán được: ' + H.money(l, value(l)) + '.', 'money');
   }
   E.HOOKS.year.push(simulateYear);
   function free(l) { return l.alive && l.age >= 18 && l.indep && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && l.abroad.trapped); }
@@ -188,7 +188,7 @@
       return 'Bạn mua: ' + fmt(q.ask, q.currency) + '/' + q.unit + ' · Bạn bán: ' + fmt(q.bid, q.currency) + '/' + q.unit + '.\nNguồn: ' + q.source + ' · ' + stamp(q) + ' (giờ Việt Nam cho mốc ngoài đời).\nĐang giữ: ' + max(l, d.symbol, 'sell') + ' ' + q.unit + '. Tiền mặt: ' + H.money(l, l.money) + '. Tỷ giá quy đổi: 1 USD = ' + fmt(fx(l).usdVnd, 'VND') + ' (' + time(fx(l).asOf) + ').\nNhập số lượng rồi xác nhận; giao dịch không tính phí môi giới / thuế thực tế.';
     }, opts: [{ k: 'confirm', l: 'Xác nhận số lượng đang nhập', run: function (l, r, log, d) { execute(l, d, log); } }, close]
   });
-  E.SC('market_menu', { title: 'Vàng và cổ phiếu · thị trường mô phỏng', valid: free,
+  E.SC('market_menu', { title: 'Vàng và cổ phiếu · thị trường', valid: free,
     text: function (l) { return 'Giá vàng và cổ phiếu sẽ tăng / giảm ngẫu nhiên sau mỗi năm trong game; vàng thường biến động nhẹ hơn cổ phiếu. Danh mục theo số lượng: ' + H.money(l, value(l)) + ' (định giá theo giá bán được, không tính hai lần vào tiền mặt). Chọn mua hoặc bán; mỗi mã ghi nguồn và thời điểm riêng. Khoản đầu tư của bản cũ vẫn giữ nguyên trong mục bán khoản cũ vì chưa từng lưu số lượng gốc.'; },
     opts: [{ k: 'gold', l: 'Mua vàng · nhập chỉ hoặc lượng', run: function (l, r) { queue(l, r, 'market_gold'); } }, { k: 'stock', l: 'Mua cổ phiếu / quỹ · nhập số lượng', run: function (l, r) { queue(l, r, 'co_phieu'); } },
       { k: 'sell_gold', l: 'Bán một phần hoặc toàn bộ vàng', req: function (l) { return GOLD.some(function (s) { return max(l, s, 'sell') > 0; }); }, run: function (l, r) { queue(l, r, 'market_sell_gold'); } },
@@ -200,7 +200,7 @@
     var D = E.DEC[id], before = D.valid;
     D.valid = function (l, d) { return before(l, d) || free(l) && value(l) > 0; };
     D.def.opts.unshift({ k: 'market', l: 'Vàng / cổ phiếu theo số lượng · chọn phần muốn bán', req: function (l) { return free(l) && value(l) > 0; }, run: function (l, r) { queue(l, r, 'market_menu'); } });
-    D.def.opts.forEach(function (o) { if (/^(gold|stock|port)$/.test(o.k)) { var label = o.l; o.l = function (l, d) { return (typeof label === 'function' ? label(l, d) : label) + ' (khoản mô phỏng cũ)'; }; } });
+    D.def.opts.forEach(function (o) { if (/^(gold|stock|port)$/.test(o.k)) { var label = o.l; o.l = function (l, d) { return (typeof label === 'function' ? label(l, d) : label) + ' · khoản từ bản lưu cũ'; }; } });
   });
   E.ACT.push({ id: 'market_menu', g: 'Tiền bạc', l: 'Vàng / cổ phiếu · bảng giá & số lượng', min: 18, sc: 'market_menu', avail: function (l) { return free(l) ? true : 'Cần đủ 18 tuổi, tự lập và được tự do giao dịch'; }, ai: { w: .1 } });
   var net = E.netWorth, total = E.assetTotal, profile = E.profile;
@@ -213,7 +213,7 @@
     var data = await response.json();
     if (!data.quotes || !Object.keys(data.quotes).some(function (s) { return goodQuote(data.quotes[s], s); })) throw Error('Nguồn chưa trả bảng giá hợp lệ.');
     if (current && !current()) return 'Đã đóng bảng giao dịch; chưa áp dụng giá mới.';
-    sync(l, data); if (l.marketBook.simAt != null) return 'Đã kiểm tra mốc ngoài đời để tham khảo; giá mô phỏng trong cuộc đời này được giữ, không đặt lại.'; return data.errors && data.errors.length ? 'Một số nguồn chưa cập nhật được; các mã đó giữ thời điểm cũ.' : 'Đã kiểm tra bảng giá mới nhất từ nguồn.';
+    sync(l, data); if (l.marketBook.simAt != null) return 'Đã kiểm tra mốc ngoài đời để tham khảo; giá trong cuộc đời này được giữ, không đặt lại.'; return data.errors && data.errors.length ? 'Một số nguồn chưa cập nhật được; các mã đó giữ thời điểm cũ.' : 'Đã kiểm tra bảng giá mới nhất từ nguồn.';
   }
   // Giá chạy mô phỏng riêng; số lượng / giá vốn không bị nhân lợi suất của danh mục cũ.
   E.MARKET = { book: book, quote: quote, value: value, sync: sync, refresh: refresh, qty: qty, max: max, valid: valid, evaluate: evaluate, execute: execute, summary: summary, free: free, convert: convert, native: native, fmt: fmt, symbols: GOLD.concat(VN, US), simulateYear: simulateYear, stamp: stamp, comparison: comparison };

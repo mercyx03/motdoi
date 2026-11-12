@@ -79,8 +79,8 @@ ok(W, 'module loaded');
 {
   const l = life(70, { age: 38 }); l.kids = [{ name: 'Na', sex: 'F', born: 30, alive: true, dev915: { v: 1, c: { id: { known: true, at: 33 } } } }];
   ok(W.disPeople(l).length === 1, 'child with known intellectual disability listed');
-  pick(l, 'disability918', 'reg:kid:Na'); hooks(l); ok(W.state(l).dis['kid:Na'].status === 'pending', 'pending in the same year');
-  l.age++; const m0 = l.money; hooks(l); const e = W.state(l).dis['kid:Na']; ok(e.status === 'approved' && near(l.money - m0, (e.level === 'extreme' ? 1.25 : 1) * 12, 1e-6), 'allowance paid after assessment');
+  const kidKey=W.disPeople(l)[0].key;pick(l, 'disability918', 'reg:'+kidKey); hooks(l); ok(W.state(l).dis[kidKey].status === 'pending', 'pending in the same year');
+  l.age++; const m0 = l.money; hooks(l); const e = W.state(l).dis[kidKey]; ok(e.status === 'approved' && near(l.money - m0, (e.level === 'extreme' ? 1.25 : e.level==='mild'?0:1) * 12, 1e-6), 'allowance paid after assessment');
   const m1 = l.money; hooks(l); ok(l.money === m1, 'allowance once per year');
 }
 // Vay sinh viên: giải ngân khi học, lãi trong lúc học, chuyển thành khoản vay khi ra trường.

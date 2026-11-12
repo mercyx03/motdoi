@@ -37,7 +37,7 @@
     var c = p && p.contract108; if (c && c.regime150) return c.regime150;
     return c && c.share === 0 ? 'separate' : c && c.share === 0.1 ? 'limited' : 'legal';
   }
-  function lawText(l) { return vn(l) ? 'Theo luật Việt Nam, vợ chồng có thể lập văn bản thỏa thuận chế độ tài sản trước khi kết hôn (công chứng); nếu không, áp dụng chế độ theo luật định.' : 'Quy định về thỏa thuận tài sản hôn nhân khác nhau giữa các quốc gia; game mô phỏng một cách chung.'; }
+  function lawText(l) { return vn(l) ? 'Theo luật Việt Nam, vợ chồng có thể lập văn bản thỏa thuận chế độ tài sản trước khi kết hôn (công chứng); nếu không, áp dụng chế độ theo luật định.' : 'Quy định về thỏa thuận tài sản hôn nhân khác nhau giữa các quốc gia; cần đối chiếu luật áp dụng khi đăng ký.'; }
   // Người kia chấp nhận điều khoản tùy độ công bằng với hoàn cảnh của họ
   function prenupChance(l, key) {
     var p = l.partner, mine = Math.max(0, l.income || 0), theirs = Math.max(0, (p.inc || 0) * 12), richer = mine >= theirs, bond = p.affection108 == null ? 70 : p.affection108;
@@ -49,7 +49,7 @@
     opts108.splice(cancel < 0 ? opts108.length : cancel, 0, { k: 'custom150', l: 'Lập thỏa thuận tài sản chi tiết (tùy chọn)', h: 'Thu nhập, nhà ở, doanh nghiệp, cách chia', run: function (l, r, log, d) { if (!E.DEC.contract108.valid(l, d)) return; d.done = true; X.next(l, 'prenup150', r, { at: d.at, who: d.who, style: d.style }); } });
   }
   X.menu('prenup150', 'Thỏa thuận tài sản trước hôn nhân', function (l) { return l.partner && l.partner.status === 'dating' ? true : 'Chỉ lập trước khi kết hôn'; },
-    function (l) { return lawText(l) + ' Thỏa thuận là tùy chọn và cần cả hai đồng ý; không ảnh hưởng nghĩa vụ nuôi con. Đây là mô phỏng, không phải tư vấn pháp lý.'; },
+    function (l) { return lawText(l) + ' Thỏa thuận là tùy chọn và cần cả hai đồng ý; không ảnh hưởng nghĩa vụ nuôi con. Điều kiện pháp lý cần đối chiếu theo nơi đăng ký.'; },
     function (l, arg) {
       if (!l.partner || arg.who !== l.partner.relation108) return [];
       return ['half', 'homeOnly', 'contribution', 'business'].map(function (k) { return { k: k, l: REGIME[k].n, h: REGIME[k].d, run: function (l, r, log) { prenup(l, r, log, k, arg); } }; })
@@ -115,7 +115,7 @@
     function took(label, v) { if (v > 1e-9) { left -= v; detail.push([label, v]); } }
     var c = Math.min(Math.max(0, l.money), left); l.money -= c; took('tiền mặt', c);
     if (left > 1e-9) {
-      var cats = [], books = X.peek(l).bankBooks || [], A = l.assets || {};
+      var cats = [], books = (X.peek(l).bankBooks || []).filter(function(b){return !b.locked873||l.age>=b.due;}), A = l.assets || {};
       var bookV = books.reduce(function (s, b) { return s + (b.principal || 0); }, 0); if (bookV > 0) cats.push({ n: 'sổ tiết kiệm', v: bookV, scale: function (k) { books.forEach(function (b) { b.principal *= k; }); } });
       ['save', 'gold', 'stock', 'land'].forEach(function (key) { if ((A[key] || 0) > 0) cats.push({ n: { save: 'tiền gửi', gold: 'vàng', stock: 'cổ phiếu', land: 'đất' }[key], v: A[key], scale: function (k) { A[key] *= k; if (l.basis && l.basis[key]) l.basis[key] *= k; } }); });
       var pos = l.marketBook && l.marketBook.positions || {}, posKeys = Object.keys(pos);
@@ -206,7 +206,7 @@
   }
   function nameOf(l, key) { var h = heirKeys(l).find(function (x) { return x.key === key; }); return h ? h.name : null; }
   function protectedHeir(l, h, atAge) { return h.spouse && vn(l) || h.kid != null && (atAge != null ? atAge : l.age) - l.kids[h.kid].born < 18; }
-  X.menu('will150', 'Di chúc chi tiết', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150', 'Di chúc chi tiết', E.WILL70.reason,
     function (l) {
       var w = W(l), base = l.flags.will70, debt = (l.loans || []).reduce(function (s, x) { return s + (x.bal || 0); }, 0) + (l.mortgage || 0);
       var lines = ['Tài sản vẫn thuộc về bạn khi còn sống; di chúc chỉ có hiệu lực khi bạn qua đời và có thể sửa bất cứ lúc nào.',
@@ -227,10 +227,11 @@
       rows.push({ k: 'clear', l: 'Xóa các điều khoản chi tiết', why: Object.keys(W(l).specific).length || W(l).exclude.length || W(l).executor || Object.keys(W(l).manage).length ? true : 'Chưa có điều khoản chi tiết', run: function (l, r, log) { delete l.flags.will150; log('Bạn xóa các điều khoản chi tiết trong di chúc; tỷ lệ chia giữ nguyên.', 'neutral'); } });
       return rows;
     }, 18, 'Tiền bạc');
-  X.menu('will150_asset', 'Giao tài sản cụ thể', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  E.ACT.find(function (a) { return a.id === 'will150'; }).jail = true;
+  X.menu('will150_asset', 'Giao tài sản cụ thể', E.WILL70.reason,
     'Món được giao cụ thể tính vào phần hưởng của người nhận; nếu giá trị vượt phần hưởng, người nhận bù chênh lệch cho những người khác. Nếu di sản không đủ trả nợ, tài sản có thể phải bán.',
     function (l) { var w = W(l); return assets(l).slice(0, 30).map(function (a) { return { k: a.key, l: a.n + ' · ' + mo(l, a.v) + (w.specific[a.key] ? ' → ' + (nameOf(l, w.specific[a.key]) || '?') : ''), run: function (l, r) { X.next(l, 'will150_to', r, { asset: a.key }); } }; }); });
-  X.menu('will150_to', 'Người nhận tài sản', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_to', 'Người nhận tài sản', E.WILL70.reason,
     function (l, d) { var a = assets(l).find(function (x) { return x.key === (d && d.arg && d.arg.asset); }); return a ? 'Giao ' + a.n + ' (' + mo(l, a.v) + ') cho:' : 'Tài sản không còn.'; },
     function (l, arg) {
       var a = assets(l).find(function (x) { return x.key === arg.asset; }); if (!a) return [];
@@ -238,13 +239,13 @@
       if (w.specific[a.key]) rows.push({ k: 'none', l: 'Bỏ chỉ định, chia theo tỷ lệ', run: function (l, r, log) { delete W(l).specific[a.key]; log('Di chúc: ' + a.n + ' chia theo tỷ lệ chung.', 'neutral'); } });
       return rows;
     });
-  X.menu('will150_exclude', 'Người không được hưởng thừa kế', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_exclude', 'Người không được hưởng thừa kế', E.WILL70.reason,
     function (l) { return 'Chỉ áp dụng với con đã trưởng thành.' + (vn(l) ? ' Theo luật Việt Nam, con chưa thành niên và vợ/chồng vẫn được ít nhất 2/3 một suất thừa kế; điều khoản trái luật sẽ không có hiệu lực.' : '') + ' Người bị loại thường dễ khởi kiện tranh chấp.'; },
     function (l) {
       var w = W(l);
       return heirKeys(l).filter(function (h) { return h.kid != null; }).map(function (h) { var on = w.exclude.indexOf(h.key) >= 0; return { k: h.key, l: (on ? 'Khôi phục quyền thừa kế cho ' : 'Không cho ') + h.name + (on ? '' : ' hưởng thừa kế'), why: on || h.adult ? true : 'Con chưa thành niên luôn được hưởng thừa kế', run: function (l, r, log) { var x = W(l); if (on) x.exclude.splice(x.exclude.indexOf(h.key), 1); else { x.exclude.push(h.key); Object.keys(x.specific).forEach(function (k) { if (x.specific[k] === h.key) delete x.specific[k]; }); } log('Di chúc: ' + h.name + (on ? ' được khôi phục quyền thừa kế.' : ' không được hưởng thừa kế.'), 'neutral'); } }; });
     });
-  X.menu('will150_executor', 'Người thi hành di chúc', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_executor', 'Người thi hành di chúc', E.WILL70.reason,
     'Người thi hành di chúc quản lý việc phân chia, không trở thành chủ sở hữu di sản. Văn phòng luật độc lập làm giảm nguy cơ tranh chấp, thu phí khoảng 1% di sản.',
     function (l) {
       var rows = heirKeys(l).filter(function (h) { return h.spouse || h.adult; }).map(function (h) { return { k: h.key, l: h.name, run: function (l, r, log) { W(l).executor = { key: h.key, name: h.name, kind: h.spouse ? 'spouse' : 'kid' }; log('Di chúc: ' + h.name + ' là người thi hành.', 'neutral'); } }; });
@@ -252,7 +253,7 @@
       rows.push({ k: 'lawyer', l: 'Văn phòng luật độc lập (phí khoảng 1% di sản)', run: function (l, r, log) { W(l).executor = { key: 'lawyer', name: 'Văn phòng luật độc lập', kind: 'lawyer' }; log('Di chúc: giao văn phòng luật độc lập thi hành.', 'neutral'); } });
       return rows;
     });
-  X.menu('will150_manage', 'Quyền điều hành doanh nghiệp', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_manage', 'Quyền điều hành doanh nghiệp', E.WILL70.reason,
     'Quyền điều hành là vị trí quản lý; cổ phần (quyền sở hữu) vẫn chia theo di chúc và pháp luật. Người được giao điều hành vẫn có thể từ chối.',
     function (l) {
       var rows = [];

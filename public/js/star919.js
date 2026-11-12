@@ -65,7 +65,7 @@
     });
   }
   function intlYear(l, log) {
-    var s = st(l); (s.pend || []).forEach(function (q) { if (q.done) return; var c = A.S(l).credits.find(function (c) { return c.title === q.title; }); if (!c || c.year > yr(l) - 1) return; q.done = true; if (q.intl) { s.intl = Math.min(100, s.intl + 12); s.markets[q.intl] = (s.markets[q.intl] || 0) + 1; log('Phim quốc tế "' + q.title + '" giúp bạn được khán giả ' + cname(q.intl) + ' biết đến.', 'good'); } else s.intl = Math.min(100, s.intl + 3); });
+    var s = st(l); (s.pend || []).forEach(function (q) { if (q.done) return; var c = A.S(l).credits.find(function (c) { return c.token ? c.token === q.token : c.title === q.title; }); if (!c || c.year > yr(l) - 1) return; q.done = true; if (q.intl) { s.intl = Math.min(100, s.intl + 12); s.markets[q.intl] = (s.markets[q.intl] || 0) + 1; log('Phim quốc tế "' + q.title + '" giúp bạn được khán giả ' + cname(q.intl) + ' biết đến.', 'good'); } else s.intl = Math.min(100, s.intl + 3); });
     if (s.decayAt !== l.age) { s.decayAt = l.age; var recent = (A.S(l).credits || []).some(function (c) { return c.year >= yr(l) - 2; }); if (!recent) s.intl = Math.max(0, s.intl - 3); }
   }
   // Danh tiếng quốc tế mở rộng phần khán giả quốc tế trong sổ người theo dõi (followers919).

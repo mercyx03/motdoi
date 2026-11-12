@@ -141,7 +141,7 @@ console.log('--- BẮT ĐẦU KIỂM THỬ 5 TÍNH NĂNG THEO GÓP Ý NGƯỜI C
 
 // 5. Kiểm thử Tính năng Thuê Sát Thủ (HITMAN176)
 (function testHitmanSystem() {
-  const l = E.createLife({ mode: 'vn', seed: 1010 });
+  const l = E.createLife({ mode: 'world', country: 'IT', seed: 1010 });
   Object.assign(l, {
     age: 38,
     indep: true,
@@ -157,6 +157,15 @@ console.log('--- BẮT ĐẦU KIỂM THỬ 5 TÍNH NĂNG THEO GÓP Ý NGƯỜI C
   const H176 = E.HITMAN176;
   assert(H176, 'HITMAN176 đã được đăng ký');
 
+  l.abroad = { code: 'VN' };
+  assert(!E.actions(l).some(a => a.id === 'hitman176'));
+  for (const id of ['hitman176','hitmanTask176','hitmanTier176']) assert(!E.DEC[id].valid(l));
+  const cash = l.money;
+  assert(!H176.executeContract(l, () => .1, () => {}, 'stranger_biz', 'kill', 'pro'));
+  assert.equal(l.money, cash);
+  l.pending = [{id:'hitmanTier176'}]; E.migrate(l);
+  assert(!l.pending.some(d => d.id === 'hitmanTier176'));
+  l.abroad = null;
   const targets = H176.targetList(l);
   assert(targets.length >= 3, 'Tìm thấy danh sách mục tiêu hợp lệ');
 

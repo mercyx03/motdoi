@@ -259,6 +259,7 @@
     return w;
   }
   function eligible(l, c) {
+    if (c.id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     if (c.hidden) return false;
     if (c.minAge && l.age < c.minAge) return false;
     if (c.edu > l.edu) return false;
@@ -314,6 +315,7 @@
   function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
   function startJob(l, id, r, log, quiet) {
     id = resolveJob(id);
+    if (id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     var c = CAR[id];
     if (c.minAge && l.age < c.minAge) { if (!quiet) log('Công việc này chỉ nhận từ ' + c.minAge + ' tuổi.', 'neutral'); return false; }
     if (l.job && resolveJob(l.job.id) === id && l.job.yrs === 0 && l.jobsHist && l.jobsHist.length && l.jobsHist[l.jobsHist.length - 1].from === l.age) return; // v2.8: vừa nhận đúng việc này trong năm
@@ -325,7 +327,7 @@
     if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) { if (l.talent !== 'game' && !l.gameType) l.gameType = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = E.gameFor(l, r); } // v2.8: game khớp thể loại sở trường
     if (c.skillRank != null) l.job.rank = c.id === 'tuyen_thu_es' ? 0 : rankBySkill(l, c);
     if (id === 'tuyen_thu_es' && E.ESPORTS) E.ESPORTS.init(l, r);
-    l.flags.needJob = false; l.indep = true;
+    l.flags.needJob = false; l.indep = !(E.atFamilyHome121 && E.atFamilyHome121(l)); if(!quiet&&E.familyHousing121)E.familyHousing121(l,r);
     l.jobsHist = l.jobsHist || [];
     l.jobsHist.push({ id: id, from: l.age });
     if (!quiet) { log('Bắt đầu công việc mới: ' + jobTitleOf(l) + '.', c.sec === 'crime' ? 'bad' : 'good'); H.fx(l, { hap: 3 }); }

@@ -115,6 +115,7 @@
   }
   // Phát hành (năm sau) — doanh thu / lượt xem mô phỏng, đánh giá, thưởng doanh thu cho vai chính
   function release(l, r, log, p) {
+    if(!p||p.stage==='done'||S(l).credits.some(function(c){return c.token&&c.token===p.token;}))return;
     var rr = seeded(p.token + ':rel'), sc = SCALES[p.scale], q = U.clamp(p.perf * 0.4 + p.dirSkill / 100 * 0.25 + p.script / 100 * 0.2 + p.chem * 0.15 + (rr() - 0.5) * 0.2, 0, 1.2);
     var review = Math.round(U.clamp(3 + q * 6.5 + (rr() - 0.5), 1, 10) * 10) / 10, f0 = l.fame || 0, reach = sc.reach * (p.role === 'chính' ? 1 : p.role === 'phụ' ? 0.4 : 0.08);
     var hit = q >= 0.72, flop = q < 0.42, txt;
@@ -155,17 +156,17 @@
   }
   // Thêm vào lời mời casting sẵn có: thử vai một dự án cụ thể
   CA.def.opts.splice(CA.def.opts.findIndex(function (o) { return o.k === 'train'; }), 0, { k: 'project154', l: 'Thử vai một dự án cụ thể (xem kịch bản, đạo diễn, bạn diễn)', h: 'Thử vai, đàm phán cát-xê, quay phim, phát hành năm sau', req: function (l) { return canSeek(l) === true; }, ai: function (l) { return isActor(l) ? 0.8 : 0.2; }, run: function (l, r, log) { startProject(l, r, log); } });
-  function startProject(l, r, log, kind) { if (canSeek(l) !== true) return null; var p = newProject(l, r, kind); S(l).project = p; queue(l, r); return p; }
+  function startProject(l, r, log, kind) { if (canSeek(l) !== true) return null; var old=P(l),s=S(l);if(old&&old.stage==='post'){s.postProjects872=s.postProjects872||[];if(!s.postProjects872.some(function(p){return p.token===old.token;}))s.postProjects872.push(old);}var p = newProject(l, r, kind); s.project = p; queue(l, r); return p; }
 
   // ===================================================================
   // Menu sự nghiệp diễn xuất: hồ sơ phim, tìm dự án, quần chúng, nhà sản xuất, chuyển đạo diễn
   // ===================================================================
   X.menu('actor154', 'Sự nghiệp diễn xuất', function (l) { return free(l) && l.age >= 14 ? (isActor(l) || l.talent === 'diễn xuất' || act(l) >= 30 ? true : 'Dành cho người theo nghề diễn') : 'Từ 14 tuổi'; },
     function (l) {
-      var s = S(l), c = s.credits.slice(-6), aw = s.awards.filter(function (a) { return a.won; });
+      var s = S(l), c = s.credits.slice(-6), aw = s.awards.filter(function (a) { return a.won; }), waiting=(s.postProjects872||[]).concat(P(l)?[P(l)]:[]).filter(function(p){return p.stage==='post';});
       return 'Nấc nghề: ' + TIER[tier(l)] + ' · khả năng diễn xuất ' + Math.round(act(l)) + '/100 · ' + U.fmtNum(l.fame || 0) + ' người biết đến.' +
         (c.length ? '\nPhim đã đóng: ' + c.map(function (x) { return '"' + x.title + '" (' + x.year + ', vai ' + x.role + (x.review ? ', ' + x.review + '/10' : '') + (x.hit ? ', thành công' : '') + ')'; }).join('; ') : '\nChưa có vai diễn nào.') +
-        (aw.length ? '\nGiải thưởng: ' + aw.map(function (a) { return a.name + ' (' + a.year + ')'; }).join('; ') : '') + (P(l) && P(l).stage === 'post' ? '\nĐang chờ phát hành: "' + P(l).title + '".' : '') + (s.produce && !s.produce.done ? '\nĐang đầu tư sản xuất: "' + s.produce.title + '".' : '');
+        (aw.length ? '\nGiải thưởng: ' + aw.map(function (a) { return a.name + ' (' + a.year + ')'; }).join('; ') : '') + (waiting.length ? '\nĐang chờ phát hành: '+waiting.map(function(p){return '"'+p.title+'" (năm '+(l.birthYear+p.releaseAt)+')';}).join('; ')+'.' : '') + (s.produce && !s.produce.done ? '\nĐang đầu tư sản xuất: "' + s.produce.title + '".' : '');
     },
     function (l) {
       var rows = [{ k: 'seek', l: 'Tìm dự án phim mới, đi thử vai', why: canSeek(l), run: function (l, r, log) { startProject(l, r, log); } }];
@@ -178,13 +179,15 @@
   // Vòng năm: phát hành phim, giải thưởng, kết quả đầu tư sản xuất
   E.HOOKS.year.push(function (l, r, log) {
     if (!l.alive || !l.flags.actor154) return; var s = S(l), p = s.project;
+    (s.postProjects872||[]).forEach(function(old){if(old.stage==='post'&&l.age>=old.releaseAt)release(l,r,log,old);});
+    s.postProjects872=(s.postProjects872||[]).filter(function(p){return p.stage==='post';});
     if (p && p.stage === 'post' && l.age >= p.releaseAt) release(l, r, log, p);
     if (p && p.stage !== 'post' && p.stage !== 'done' && !(l.pending || []).some(function (d) { return d.id === 'film154'; }) && p.year < yr(l)) { p.stage = 'done'; log('Dự án "' + p.title + '" bị bỏ dở.', 'neutral'); }
     awards(l, r, log);
     var pr = s.produce; if (pr && !pr.done && l.age > pr.at) { pr.done = true; var rr = seeded(l.id + ':prodres' + pr.at), mult = pr.q >= 0.8 ? 1.8 + rr() : pr.q >= 0.55 ? 0.8 + rr() * 0.6 : rr() * 0.5; pr.back = pr.amt * mult; H.cash(l, pr.back, 'Doanh thu chia lại phim "' + pr.title + '"'); log('Phim "' + pr.title + '" do bạn sản xuất ra rạp; phần chia lại cho nhà sản xuất là ' + mo(l, pr.back) + ' trên vốn ' + mo(l, pr.amt) + '.', mult >= 1 ? 'good' : 'bad'); }
   });
   if (E.profile) { var profile = E.profile; E.profile = function (l) { var p = profile.apply(this, arguments), s = l.flags && l.flags.actor154; if (s && p && p.jobInfo) { s.credits.slice(-3).forEach(function (c) { p.jobInfo.push('Phim "' + c.title + '" (' + c.year + ') — vai ' + c.role + (c.review ? ', ' + c.review + '/10' : '')); }); s.awards.filter(function (a) { return a.won; }).forEach(function (a) { p.jobInfo.push(a.name + ' (' + a.year + ')'); }); } return p; }; }
-  var convert = E.abroadConvert; E.abroadConvert = function (l, f) { var out = convert.apply(this, arguments), s = l.flags && l.flags.actor154; if (s) { s.credits.forEach(function (c) { c.fee *= f; }); if (s.project) { ['fee', 'budget'].forEach(function (k) { if (typeof s.project[k] === 'number') s.project[k] *= f; }); } if (s.produce) { s.produce.amt *= f; if (s.produce.back) s.produce.back *= f; } } return out; };
+  var convert = E.abroadConvert; E.abroadConvert = function (l, f) { var out = convert.apply(this, arguments), s = l.flags && l.flags.actor154; if (s) { s.credits.forEach(function (c) { c.fee *= f; }); if (s.project) { ['fee', 'budget'].forEach(function (k) { if (typeof s.project[k] === 'number') s.project[k] *= f; }); } (s.postProjects872||[]).forEach(function(p){['fee','budget'].forEach(function(k){if(typeof p[k]==='number')p[k]*=f;});}); if (s.produce) { s.produce.amt *= f; if (s.produce.back) s.produce.back *= f; } } return out; };
 
   // ===================================================================
   // Gương Mặt Thân Quen (VN, từ 2013): nghệ sĩ hóa thân thần tượng; ngôi sao làm giám khảo

@@ -181,6 +181,8 @@
   }, function (l) {
     var out = Object.keys(ARR).map(function (k) { return { k: 'arr:' + k, l: 'Đề nghị: ' + ARR[k], why: arrWhy(l, k), run: function (l, r, log) { if (arrWhy(l, k) !== true) return; setArr(l, k, log); } }; });
     var s = st(l), p = partner(l);
+    if(E.PLURAL840&&p.status==='married')out.push({k:'plural',l:'Hồ sơ hôn nhân và quyền của từng phối ngẫu',run:(l,r)=>X.next(l,'pluralUnion840',r)});
+    if(E.PLURAL840&&E.PLURAL840.people(l).length>=2)out.push({k:'schedule',l:'Lịch chung và quan hệ giữa các phối ngẫu',run:(l,r)=>X.next(l,'pluralHome840',r)});
     [['none', 'Không thuê người giúp', 0], ['maid', 'Thuê giúp việc theo giờ', 0.08], ['nanny', 'Thuê bảo mẫu', 0.18]].forEach(function (x) { out.push({ k: 'help:' + x[0], l: x[1], h: x[2] ? '~' + mo(l, l.base * x[2]) + '/năm' : '', why: (s.help || 'none') === x[0] ? 'Đang áp dụng' : x[2] && l.money < l.base * x[2] ? 'Chưa đủ tiền' : true, run: function (l, r, log) { var ok = x[0] === 'none' || u(l.id + ':help:' + l.age) < 0.85; if (!ok) { log(p.name + ' chưa muốn có người lạ trong nhà lúc này.', 'neutral'); return; } s.help = x[0]; log(x[0] === 'none' ? 'Hai người tự lo việc nhà.' : 'Đã thuê ' + x[1].replace('Thuê ', '') + '; chi phí trả hằng năm từ quỹ chung.', 'neutral'); } }); });
     [0, 0.04, 0.1].forEach(function (f) { var v = l.base * f / 12; out.push({ k: 'pb:' + f, l: f ? 'Thống nhất ngân sách cá nhân cho ' + p.name + ' ' + mo(l, v) + '/tháng' : 'Không đặt ngân sách cá nhân riêng', why: Math.abs((s.pbudget || 0) - v) < 1e-9 ? 'Đang áp dụng' : true, run: function (l, r, log) { s.pbudget = v; log(f ? 'Hai người thống nhất khoản chi cá nhân của ' + p.name + '; khoản lớn hơn vẫn bàn chung.' : 'Không đặt khoản riêng; chi tiêu lớn bàn chung.', 'neutral'); } }); });
     return out;
@@ -208,19 +210,38 @@
     opts: [{ k: 'yes', l: 'Ủng hộ, chi từ quỹ chung', run: function (l, r, log, d) { var p = partner(l); p.goal920.ok = 'fund'; H.cash(l, -l.base * GOALS[d.k][1], 'Hỗ trợ dự định của ' + p.name); p.close = clamp((p.close || 50) + 3); log('Bạn ủng hộ ' + p.name + ' theo đuổi ' + GOALS[d.k][0] + '.', 'good'); } },
       { k: 'cheap', l: 'Ủng hộ theo cách tiết kiệm (tự học, lớp cộng đồng)', run: function (l, r, log, d) { var p = partner(l); p.goal920.ok = 'cheap'; H.cash(l, -l.base * GOALS[d.k][1] * 0.3, 'Hỗ trợ dự định của ' + p.name); p.close = clamp((p.close || 50) + 1); log('Hai người chọn cách tiết kiệm; ' + p.name + ' vẫn bắt đầu dự định.', 'neutral'); } },
       { k: 'no', l: 'Nói thật năm nay tài chính chưa cho phép', run: function (l, r, log) { var p = partner(l); p.goal920.ok = 'no'; p.goal920.end = 'declined'; p.goal920.endAt = l.age; p.close = clamp((p.close || 50) - 2); log(p.name + ' hiểu, nhưng có chút buồn. Hai người hẹn xem lại sau.', 'neutral'); } }] });
-  E.SC('shopAsk920', { title: 'Vốn mở cửa hàng', prep: function (l) { return { at: l.age }; }, valid: function (l, d) { var p = partner(l); return !!(p && !p.shop920 && d && d.at === l.age); },
-    text: function (l) { var p = partner(l); return p.name + ' đã chuẩn bị kế hoạch mở một cửa hàng nhỏ và hỏi bạn về vốn (~' + mo(l, l.base * 1.5) + '). Kinh doanh có thể lãi hoặc lỗ; vốn là khoản góp, cho vay hoặc quà theo thỏa thuận, không tự sinh lời.'; },
-    opts: [{ k: 'stake', l: 'Góp vốn, cùng chia lãi/lỗ', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { var p = partner(l); H.cash(l, -l.base * 1.5, 'Góp vốn cửa hàng của ' + p.name); p.shop920 = { cap: l.base * 1.5, kind: 'stake', at: l.age, val: l.base * 1.5 }; log('Bạn góp vốn; cửa hàng của ' + p.name + ' khai trương.', 'good'); } },
-      { k: 'loan', l: 'Cho vay, hẹn trả dần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { var p = partner(l); H.cash(l, -l.base * 1.5, 'Cho ' + p.name + ' vay vốn'); p.shop920 = { cap: l.base * 1.5, kind: 'loan', at: l.age, val: l.base * 1.5, owed: l.base * 1.5 }; log('Bạn cho ' + p.name + ' vay vốn mở cửa hàng.', 'neutral'); } },
-      { k: 'no', l: 'Chưa đủ khả năng; cùng tìm nguồn khác (vay ưu đãi, làm nhỏ trước)', run: function (l, r, log) { log('Hai người thống nhất bắt đầu nhỏ hơn hoặc chờ thêm.', 'neutral'); } }] });
-  function shopYear(l, r, log) {
-    var p = partner(l), q = p && p.shop920; if (!q || q.closed || q.yr === l.age) return; q.yr = l.age;
-    var x = u(l.id + ':shop:' + l.age), prof = q.cap * (x < 0.25 ? -0.25 : x < 0.55 ? 0.02 : x < 0.9 ? 0.12 : 0.3);
-    q.val = Math.max(0, q.val + prof * 0.3); p.inc = Math.max(0, (p.inc || 0) * 0.5 + Math.max(0, prof) / 12);
-    if (q.kind === 'stake' && prof > 0) H.cash(l, prof * 0.5, 'Chia lãi cửa hàng của ' + p.name);
-    if (q.kind === 'loan' && q.owed > 0 && prof > 0) { var pay = Math.min(q.owed, prof * 0.5); q.owed -= pay; H.cash(l, pay, p.name + ' trả nợ vốn'); }
-    if (x < 0.06 && l.age - q.at >= 2) { q.closed = l.age; log('Cửa hàng của ' + p.name + ' làm ăn khó khăn và đóng cửa' + (q.kind === 'loan' && q.owed > 0 ? '; khoản vay còn ' + mo(l, q.owed) + ' hai người bàn cách trả' : '') + '.', 'bad'); }
+  function shopCompany(l, p, q) {
+    var all = E.BUSINESS123.companies(l), c = q.company871 && all.find(function (v) { return X.uid(l, v) === q.company871; });
+    if (q.company871) return c || null;
+    c = { name: 'Cửa hàng ' + p.name, sector: 'retail', value: Math.max(0, Number(q.val) || 0), share: q.kind === 'stake' ? 50 : 0, created: q.at, governance: 0,
+      holders137: [{ id: X.uid(l, p), name: p.name, kind: 'bạn đời', share: q.kind === 'stake' ? 50 : 100 }], partnerShop871: X.uid(l, p) };
+    E.BUSINESS133.ensure(c); all.push(c); q.company871 = X.uid(l, c); E.TREASURY165.ensure(l, c, q.at === l.age && !q.legacy871); return c;
   }
+  function openShop(l, kind, log) {
+    var p = partner(l); if (!p || p.shop920 || l.money < l.base * 1.6) return;
+    var cap = l.base * 1.5; H.cash(l, -cap, (kind === 'stake' ? 'Góp vốn cửa hàng của ' : 'Cho vay vốn cửa hàng của ') + p.name);
+    p.shop920 = { cap: cap, kind: kind, at: l.age, val: cap, owed: kind === 'loan' ? cap : 0 };
+    var c = shopCompany(l, p, p.shop920);if(kind==='loan')E.RELATIVE163.registerClaim(l,p);
+    log(c.name + ' được ghi vào danh mục doanh nghiệp, có sổ tiền mặt, báo cáo và cổ tức hằng năm. ' + (kind === 'stake' ? 'Theo thỏa thuận, bạn góp tiền và giữ 50%; người ấy góp công vận hành và giữ 50%.' : 'Người ấy sở hữu cửa hàng; khoản vay của bạn được trả từ tiền riêng thực có, không cho bạn cổ phần.'), 'good');
+  }
+  E.SC('shopAsk920', { title: 'Vốn mở cửa hàng', prep: function (l) { var p = partner(l); return { at: l.age, person871: p && X.uid(l, p) }; }, valid: function (l, d) { var p = partner(l); return !!(p && !p.shop920 && d && d.at === l.age && (!d.person871 || d.person871 === X.uid(l, p))); },
+    text: function (l) { var p = partner(l); return p.name + ' đã chuẩn bị kế hoạch mở một cửa hàng nhỏ và hỏi bạn về vốn (~' + mo(l, l.base * 1.5) + '). Góp vốn theo thỏa thuận 50/50, người ấy góp công vận hành; cho vay thì người ấy giữ toàn bộ cổ phần. Kinh doanh có thể lãi hoặc lỗ.'; },
+    opts: [{ k: 'stake', l: 'Góp vốn, nhận 50% cổ phần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { openShop(l, 'stake', log); } },
+      { k: 'loan', l: 'Cho vay, hẹn trả dần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { openShop(l, 'loan', log); } },
+      { k: 'no', l: 'Chưa đủ khả năng; cùng tìm nguồn khác', run: function (l, r, log) { log('Hai người thống nhất bắt đầu nhỏ hơn hoặc chờ thêm.', 'neutral'); } }] });
+  function shopYear(l, r, log) {
+    var p = partner(l), q = p && p.shop920; if (!q) {E.RELATIVE163.settleClaims(l,log);return;}
+    if (!q.closed) {
+      if (!q.company871) q.legacy871 = true;
+      var c = shopCompany(l, p, q);
+      if (!c || c.merged) { q.closed = l.age; log('Cửa hàng không còn hoạt động trong danh mục; khoản vay cá nhân còn lại vẫn được theo dõi.', 'neutral'); }
+      else q.val = c.value;
+    }
+    if (q.yr === l.age) return; q.yr = l.age;
+    // Corporate settlement pays dividends once. A personal loan is not company debt.
+    E.RELATIVE163.settleClaims(l,log);
+  }
+  var convertShop871 = E.abroadConvert; E.abroadConvert = function (l, f) { var out = convertShop871.apply(this, arguments), q = l.partner && l.partner.shop920; if (q) ['cap', 'val', 'owed'].forEach(function (k) { if (Number.isFinite(q[k])) q[k] *= f; });E.RELATIVE163.convertClaims(l,f); return out; };
   function helpYear(l) { var s = st(l), c = { maid: 0.08, nanny: 0.18 }[s.help]; if (c && s.helpPaid !== l.age) { s.helpPaid = l.age; if (l.money < l.base * c) { s.help = 'none'; return; } H.cash(l, -l.base * c, s.help === 'nanny' ? 'Lương bảo mẫu' : 'Giúp việc theo giờ'); }
     if (s.pbudget && s.pbPaid !== l.age && partner(l) && !(partner(l).inc > 0)) { s.pbPaid = l.age; H.cash(l, -s.pbudget * 12, 'Ngân sách cá nhân của ' + partner(l).name); } }
   function arrYear(l, r, log) {
@@ -278,6 +299,20 @@
     kids(l).forEach(function (k) { var q = k.par920; if (!q || q.yr === l.age) return; q.yr = l.age; q.stress = clamp(q.stress - 4); if (q.phone) { if (q.phone.limitTo != null && q.phone.limitTo < l.age) { q.phone.limitTo = null; q.phone.why = null; } if (q.phone.paid !== l.age) { q.phone.paid = l.age; H.cash(l, -l.base * 0.004, 'Data điện thoại của ' + k.name); } } if (q.stress > 70) k.study = Math.max(0, (k.study || 50) - 2); });
   }
 
+  // Public exposure increases opportunities for temptation, never the decision to cheat.
+  function temptation872(l){var wealth=l.base>0?Math.max(0,E.netWorth(l))/l.base:0,fame=Math.max(0,Number(l.fame)||0);return 1+Math.min(3,Math.log10(1+wealth/5))+Math.min(3,Math.log10(1+fame/10000));}
+  if(E.CONTEXT143){var probability872=E.CONTEXT143.probability;E.CONTEXT143.probability=function(t,l,base){var p=probability872.apply(this,arguments);return t&&t.id==='ngoai_tinh'?Math.min(.18,p*temptation872(l)):p;};}
+  var temptationTrigger872=E.TRIG.find(function(t){return t.id==='ngoai_tinh';});if(temptationTrigger872)temptationTrigger872.cd=Math.max(3,temptationTrigger872.cd||0);
+  if(E.DEC.ngoai_tinh&&E.DEC.ngoai_tinh.def)E.DEC.ngoai_tinh.def.text=function(l,d){return d.n+', '+(d.who872?'một người bạn đã quen':l.job?'một người quen qua công việc':'một người quen trong các buổi giao lưu')+', nhắn tin tán tỉnh dù biết bạn đã có gia đình. Bạn tự quyết định ranh giới của mối quan hệ.';};
+  function spouseKey872(l){return l.partner&&X.uid(l,l.partner);}
+  function knownTemptation872(l,id){return [l.bff].concat(l.friends||[],l.flags.network108||[]).find(function(p){return p&&p.alive!==false&&E.NPC.same(l,X.uid(l,p),id);});}
+  function queueAffair872(l,d,r){if(!E.DEC.affair107.valid(l)||d.who872&&!knownTemptation872(l,d.who872))return;var next=E.DEC.affair107.make(l,r);next.data.name=d.n;next.data.sex=d.sex;next.data.who872=d.who872||null;l.pending.push(next);}
+  var temptationDef872=E.DEC.ngoai_tinh.def,temptPrep872=temptationDef872.prep,temptApply872=E.DEC.ngoai_tinh.apply;
+  temptationDef872.prep=function(l,r){var d=temptPrep872(l,r),pool=[l.bff].concat(l.friends||[],l.flags.network108||[]).filter(function(p){return p&&p!==l.partner&&p.alive!==false&&(!p.boundary872||p.boundary872.until<l.age)&&!E.BUSINESS137.relatives(l).some(function(q){return E.NPC.same(l,q.id,X.uid(l,p));})&&p.sex===d.sex&&(Number.isFinite(p.age)?p.age:Number.isFinite(p.born)?l.age-p.born:0)>=18;});if(pool.length){var p=pool[Math.min(pool.length-1,Math.floor(r()*pool.length))];d.n=p.name||p.n;d.who872=X.uid(l,p);}d.spouse872=spouseKey872(l);return d;};
+  E.DEC.ngoai_tinh.apply=function(l,d,k,r,log){var data=d.data||{};if(data.done872||!l.partner||l.partner.alive===false||l.partner.status!=='married'||data.spouse872&&data.spouse872!==spouseKey872(l))return;if(k==='affair'||k==='flirt'){if(!d.opts.some(function(o){return o.k===k;}))return;data.done872=true;if(k==='affair'){queueAffair872(l,data,r);return;}H.fx(l,{karma:-3});H.mem(l,'Những tin nhắn mập mờ với '+data.n+'.',2);H.sched(l,'temptationRecall872',2,{n:data.n,sex:data.sex,who872:data.who872,spouse872:spouseKey872(l),at:l.age});log('Bạn tiếp tục nhắn tin với '+data.n+'. Chuyện chưa kết thúc chỉ vì năm nay chưa ai phát hiện.','neutral');return;}var out=temptApply872.apply(this,arguments);if(k==='no'){data.done872=true;var known=knownTemptation872(l,data.who872);if(known)known.boundary872={at:l.age,until:l.age+4};}return out;};
+  E.SC('temptationRecall872',{title:'Ranh giới từ những tin nhắn cũ',valid:function(l,d){return !!(d&&!d.done&&l.partner&&l.partner.alive!==false&&l.partner.status==='married'&&spouseKey872(l)===d.spouse872&&l.age>=d.at+2&&(!d.who872||knownTemptation872(l,d.who872)));},text:function(l,d){return 'Hai năm trước, ở tuổi '+d.at+', bạn đã nhắn tin mập mờ với '+d.n+'. Những lần trò chuyện tiếp tục khiến khoảng cách với '+l.partner.name+' lớn dần. Bạn muốn xử lý chuyện này thế nào?';},opts:[{k:'stop',l:'Dừng liên lạc mập mờ và nói rõ với người bạn đời',run:function(l,r,log,d){if(d.done)return;d.done=true;var known=knownTemptation872(l,d.who872);if(known)known.boundary872={at:l.age,until:l.age+4};H.fx(l,{hap:-2,karma:2});log('Bạn nói rõ chuyện tin nhắn cũ và dừng lại. Niềm tin cần thời gian để xây dựng lại.','neutral');}},{k:'hide',l:'Giữ bí mật và tiếp tục nhắn tin',run:function(l,r,log,d){if(d.done)return;d.done=true;H.fx(l,{hap:-5,karma:-3});log('Những tin nhắn từ '+d.n+' tiếp tục là điều bạn phải giấu; khoảng cách trong hôn nhân tăng lên.','bad');if(r()<.5)queueAffair872(l,d,r);}},{k:'affair',l:'Cân nhắc bước sang quan hệ ngoài hôn nhân',run:function(l,r,log,d){if(d.done)return;d.done=true;queueAffair872(l,d,r);}}]});
+  var knownAffair872=E.DEC.affair107.apply;
+  E.DEC.affair107.apply=function(l,d,k){var prior=l.flags.affair107,out=knownAffair872.apply(this,arguments),a=l.flags.affair107,p=d.data&&knownTemptation872(l,d.data.who872);if(k==='start'&&!prior&&a&&p&&a.person108!==p){var generated=a.person108;l.flags.network108=(l.flags.network108||[]).filter(function(x){return x!==generated;});if(!l.flags.network108.includes(p))l.flags.network108.push(p);E.RELATIONS108.person(l,p);a.person108=p;a.name=p.name||p.n;}return out;};
   // ================= FAMILY-SUPPORT: phản bội là chuỗi hiếm, không theo chu cấp =================
   function commit(l, p) { if (p.commit920 == null) p.commit920 = 35 + Math.round(u(l.id + ':commit:' + pid(l, p)) * 60); return p.commit920; }
   function cheatP(l, p) {
@@ -309,5 +344,5 @@
     if (!l.alive || !['vn', 'world'].includes(l.mode)) return;
     homeYear(l, r, log); helpYear(l); arrYear(l, r, log); goalYear(l, r, log); shopYear(l, r, log); parYear(l); cheatYear(l, r, log);
   });
-  E.KIN920 = { kin: kin, kinText: kinText, meet: meet, setHome: setHome, HOME: HOME, want: want, load: load, setArr: setArr, ARR: ARR, GOALS: GOALS, goalYear: goalYear, pr: pr, ACTS: ACTS, commit: commit, cheatP: cheatP, cheatYear: cheatYear };
+  E.KIN920 = { temptation872: temptation872, kin: kin, kinText: kinText, meet: meet, setHome: setHome, HOME: HOME, want: want, load: load, setArr: setArr, ARR: ARR, GOALS: GOALS, goalYear: goalYear, shopYear: shopYear, pr: pr, ACTS: ACTS, commit: commit, cheatP: cheatP, cheatYear: cheatYear };
 })(globalThis.G);

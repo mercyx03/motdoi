@@ -292,7 +292,7 @@
   KID('k_sach_cu', 6, 14, 'Sách cũ đầu năm học', 'Đầu năm học, nhà không đủ tiền mua sách mới.', [
     ['cu', 'Dùng sách cũ của anh chị, bọc lại thật đẹp', { w: 1 }, 'Bọc sách cũ bằng giấy báo, dán nhãn nắn nót, trông chẳng kém sách mới.', { karma: 1 }, 'neutral'],
     ['xin', 'Đăng ký mượn sách ở thư viện trường', { smart: 1 }, 'Mượn sách thư viện, từ đó mê luôn góc đọc sách của trường.', { kno: 2 }, 'good']], function (l) { return school(l) && l.fam.q <= 2; });
-  KID('k_ban_chuyen_truong', 8, 14, 'Bạn thân chuyển trường', 'Bạn thân nhất báo sắp theo bố mẹ chuyển vào Nam / ra Bắc.', [
+  KID('k_ban_chuyen_truong', 8, 14, 'Bạn thân chuyển trường', function (l) { return 'Bạn thân nhất báo sắp theo bố mẹ ' + (isVN(l) ? 'chuyển vào Nam / ra Bắc.' : 'chuyển sang thành phố khác.'); }, [
     ['thu', 'Hứa viết thư, nhắn tin mỗi tuần', { soc: 1 }, 'Hai đứa nhắn tin đều đặn, mấy năm sau vẫn giữ liên lạc.', { soc: 2 }, 'good'],
     ['khoc', 'Khóc cả buổi chia tay', { w: 1 }, 'Ôm nhau khóc ở cổng trường. Từ đó lớp học bỗng rộng thênh thang.', { hap: -4 }, 'neutral']], function (l) { return !!(l.bff && l.bff.alive) && school(l); });
   KID('k_trong_em', 8, 14, 'Trông em giúp mẹ', function (l) { return m(l).charAt(0).toUpperCase() + m(l).slice(1) + ' bận việc, nhờ bạn trông em cả buổi chiều.'; }, [
@@ -314,7 +314,7 @@
     ['vo', 'Học võ', { w: 1 }, 'Học võ, khỏe hẳn ra, không còn sợ bị bắt nạt.', { hea: 3 }, 'good'],
     ['co', 'Học cờ vua', { smart: 1 }, 'Học cờ vua, thắng được cả bố.', { kno: 3 }, 'good']], function (l) { return school(l) && l.fam.q >= 3; });
   KID('k_cam_trai', 12, 14, 'Cắm trại của trường', 'Trường tổ chức cắm trại ba ngày hai đêm.', [
-    ['di', 'Đi cắm trại', { soc: 1 }, 'Dựng lều, đốt lửa trại, hát đến khuya. Đêm cuối cả lớp ôm nhau khóc vì sắp lên cấp ba.', { hap: 6, soc: 4 }, 'good'],
+    ['di', 'Đi cắm trại', { soc: 1 }, function (l) { return 'Dựng lều, đốt lửa trại, hát đến khuya. Đêm cuối cả lớp ôm nhau lưu luyến vì ' + (isVN(l) ? 'sắp lên cấp ba.' : 'kết thúc chuyến dã ngoại.'); }, { hap: 6, soc: 4 }, 'good'],
     ['o_nha', 'Ở nhà vì sợ muỗi', { w: 0.5 }, 'Ở nhà, xem ảnh các bạn đăng mà tiếc hùi hụi.', { hap: -2 }, 'neutral']], school);
   KID('k_bong_da_dem', 6, 14, 'Xem bóng đá đêm khuya', 'Đội tuyển đá trận chung kết lúc nửa đêm.', [
     ['thuc', function (l) { return 'Thức xem cùng ' + b(l); }, { w: 1 }, function (l, r) { return r() < 0.5 ? 'Đội tuyển thắng! Cả xóm đổ ra đường đi bão, bạn ngồi sau xe ' + b(l) + ' cầm cờ đỏ sao vàng.' : 'Đội tuyển thua, ' + b(l) + ' thở dài, bạn ngủ gục trên ghế.'; }, { hap: 4 }, 'good'],

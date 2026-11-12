@@ -97,8 +97,189 @@ function afterFail(l,k,r,log,F){var p=init(l,k),c=failChoice(l,k,r,F),a=age(l,k)
  if(c==='retake'){k.edu=Math.max(k.edu||0,3);p.retakeAt=a+1;}else if(c==='vocational')k.edu=Math.max(k.edu||0,4);else if(c==='private'){k.edu=Math.max(k.edu||0,3);k.uniUntil=a+4;k.tuition=(l.base||1)*.25;}else{k.edu=Math.max(k.edu||0,3);if(c==='gap')p.gapUntil=a+1;}
  log(k.name+' trượt đại học. Sau vài ngày suy nghĩ, con tự quyết định '+FAIL[c]+'.','neutral');milestone(l,k,'Trượt đại học, chọn '+FAIL[c]);remember(l,k,'Mùa thi '+k.name+' trượt đại học.',3,p.attach>55?'good':'bad',false);return c;}
 function retake(l,k,p,r,log){var a=age(l,k);if(p.retakeAt!==a)return;p.retakeAt=null;var pass=r()<U.clamp(.1+(k.study||50)/140+p.traits.diligent/400,.05,.9);if(pass){k.uniUntil=a+4;k.tuition=(l.base||1)*.15;k.edu=Math.max(k.edu||0,3);if(k.job){k.job=null;k.inc=0;}log(k.name+' thi lại và đỗ đại học sau một năm ôn luyện.','good');milestone(l,k,'Đỗ đại học sau khi thi lại');remember(l,k,'Ngày '+k.name+' đỗ đại học lần thi thứ hai.',4,'good');}else{log(k.name+' thi lại vẫn chưa đỗ, chuyển sang học nghề và đi làm.','neutral');k.edu=Math.max(k.edu||0,4);}}
+/* A child can grow into one of these paths. Ages below are the child's ages.
+   Steps are separated by years. A parent's response can change the next outcome. */
+var PATHS = {
+ heir: ['Người thừa kế xuất sắc','Muốn được chọn vì năng lực quản lý của chính mình.','ambition',16],
+ scholar: ['Thiên tài học thuật','Muốn được công nhận bằng công sức học tập.','curious',12],
+ diplomat: ['Người giỏi ngoại giao','Muốn có tiếng nói và kết nối những người trong gia đình.','extro',14],
+ spender: ['Người thích ăn chơi','Muốn được bạn bè công nhận và tận hưởng cuộc sống.','impulse',18],
+ rebel: ['Người nổi loạn chống gia đình','Muốn tự quyết chuyện học, tình cảm và nơi ở.','indep',16],
+ entitled: ['Người kiêu ngạo, ỷ thế','Muốn được ưu tiên nhờ vị thế của gia đình.','ambition',16],
+ overlooked: ['Người con cảm thấy bị bỏ quên','Muốn được lắng nghe và dành thời gian riêng.','sensitive',10],
+ manipulator: ['Người có xu hướng thao túng','Muốn được ưu ái và có quyền quyết định.','ambition',14],
+ secret: ['Người tiêu tiền bí mật','Muốn hòa nhập với bạn bè nhưng ngại nói về tiền.','impulse',18],
+ thrill: ['Người thích cảm giác mạnh','Muốn thử giới hạn của mình và tự chọn cách sống.','curious',18],
+ kind: ['Người nhân hậu','Muốn giúp đỡ người khác và gắn kết gia đình.','empathy',10],
+ perfect: ['Người cầu toàn','Muốn làm thật tốt và được bố mẹ công nhận.','diligent',12]
+};
+function familyCompany(l) {
+ return E.BUSINESS123 && E.BUSINESS123.companies(l).some(function(c){return !c.merged && c.share > 0;});
+}
+function siblings(l,k) { return l.kids.filter(function(s){return s!==k && live(s) && age(l,s)>=10;}); }
+function pathSpend(l,k,amount,source) {
+ E.RELATIVE163.account(l,k);
+ var paid=Math.min(amount,Math.max(0,k.savings158));
+ if(paid>0) E.RELATIVE163.post(l,k,-paid,source,'path834:'+age(l,k));
+ return paid;
+}
+function pathSibling(l,k,s,delta) {
+ if(!s)return;
+ var a=X.uid(l,k), b=X.uid(l,s);
+ E.DYNASTY908.relation(l,a,b,delta);
+ // Both children's detail pages keep a directional closeness score.
+ [ [k,b],[s,a] ].forEach(function(pair){
+   E.CHILD147.once(l,pair[0]);
+   var record=pair[0].profile147;
+   if(record) record.sib[pair[1]]=cl((record.sib[pair[1]]==null?55:record.sib[pair[1]])+delta);
+ });
+}
+function pathStep(l,k,p,s,r) {
+ var n=s.step, a=age(l,k), responded=s.response==='listen', pressure=s.response==='press';
+ var sib=siblings(l,k)[0], cost=l.base*.06;
+ var constructive=r()<U.clamp(.28+p.trust/220+(responded ? .25 : 0)-(pressure ? .18 : 0),.12,.90);
+ function bond(v){rel(k,p,v,v,v<0?2:-1);}
+ function study(v){k.study=cl((k.study==null?50:k.study)+v);}
+ function prestige(v){E.ELITE148.rep(l,v);}
+ function debt(amount,reason){
+   var paid=pathSpend(l,k,amount,reason);
+   k.debt158+=amount-paid;
+   return paid<amount?' Phần còn thiếu được ghi vào nợ riêng của con.':' Con chi từ tiền tiết kiệm riêng.';
+ }
+ function successor(){return E.DYNASTY908.profile(l,{id:X.uid(l,k),person:k,age:a});}
+ switch(s.kind){
+ case 'heir':
+   if(!familyCompany(l)) {bond(1);return 'chuyển sang học cách quản lý tài sản cá nhân vì gia đình hiện không còn cổ phần doanh nghiệp.';}
+   var q=successor();
+   if(n===0){q.management=cl(q.management+5);return 'tự học quản trị tài sản, mang bản báo cáo công ty đã chú thích đến hỏi gia đình.';}
+   if(n===1){q.management=cl(q.management+3);return 'xin dự thính cuộc họp và hỏi cố vấn về dòng tiền; con chưa được giao quyền biểu quyết.';}
+   if(constructive){q.reputation=cl(q.reputation+6);return 'công khai đính chính sai sót trong bản trình bày và đề nghị được xét kế nghiệp qua kết quả công việc.';}
+   q.reputation=cl(q.reputation-5);pathSibling(l,k,sib,-5);return 'vận động riêng để được chọn kế nhiệm. Việc bị phát hiện làm giảm uy tín của con.';
+ case 'scholar':
+   if(n===0){study(7);return 'nhận ra số liệu sai trong bản trình bày ở nhà và giải thích cách kiểm tra lại.';}
+   if(n===1){study(4);return 'từ chối một buổi gặp mặt để hoàn thành đề tài nghiên cứu.';}
+   if((k.study||0)>=72 && (a<18||k.uniUntil>a)){E.RELATIVE163.post(l,k,l.base*.08,'Học bổng thành tích','scholar834');return 'nhận học bổng theo thành tích; khoản học bổng đã vào sổ tiền riêng.';}
+   bond(constructive?2:-2);return constructive?'tìm được nhóm học thuật đánh giá con qua bài nghiên cứu.':'xin gia đình ngừng so sánh kết quả của con với người khác.';
+ case 'diplomat':
+   if(n===0){bond(2);return 'nhớ tên, sở thích từng vị khách và giúp người mới hòa vào buổi gặp gia đình.';}
+   if(n===1 && sib){pathSibling(l,k,sib,6);return 'lắng nghe hai phía và giúp anh chị em làm hòa sau một bất đồng.';}
+   if(n===1){bond(2);return 'giúp người thân giải thích một hiểu lầm trong buổi gặp mặt.';}
+   if(constructive){var contact=E.ELITE148.meet(l,r,{kind:'business',where:'buổi giao lưu của gia đình'});if(contact){k.network163=k.network163||[];if(!k.network163.includes(contact.name))k.network163.push(contact.name);}return 'làm quen với một người có ảnh hưởng trong buổi giao lưu và giữ liên lạc.';}
+   bond(-4);return 'dùng lời hòa giải để giành lợi thế riêng. Người nhà bắt đầu dè dặt với con.';
+ case 'spender':
+   if(n===0)return (k.savings158>l.base*2?'thuê xe sang để đi tiệc và mua đồ hiệu.':'chi nhiều cho tiệc và đồ hiệu.')+debt(cost,'Chi tiêu tiệc và đồ hiệu');
+   if(n===1){bond(-4);return 'lỡ hẹn với gia đình vì đi chơi và gọi về nhờ giải quyết hóa đơn. Gia đình chưa nhận trả thay.';}
+   if(constructive){bond(2);return 'thừa nhận chuyện chi tiêu và lập giới hạn cho những lần đi chơi sau.';}
+   var allowance=k.dynasty908&&k.dynasty908.allowance;
+   var cut=allowance&&allowance.active&&allowance.tier!=='basic';
+   if(cut){allowance.active=false;allowance.stopped=l.age;}
+   return 'dùng danh tiếng gia đình để mua chịu một buổi tiệc.'+debt(cost*2,'Hóa đơn tiệc mua chịu')+(cut?' Gói trợ cấp thêm đã dừng.':'');
+ case 'rebel':
+   if(n===0){var pushed=p.plan.majorByParent;delete p.plan.majorByParent;bond(-1);return pushed?'công khai từ chối ngành học mà gia đình đã chọn.':'nói rõ muốn tự chọn ngành học và người mình sẽ kết hôn.';}
+   if(n===1){bond(-3);return 'đăng bài chỉ trích các quy tắc trong nhà và đưa người mình quý đến gặp gia đình.';}
+   if(a>=18&&!constructive){p.plan.home='thuê nhà riêng';return 'chọn ra ở riêng và tự thu xếp sinh hoạt để được sống theo quyết định của mình.';}
+   bond(4);return 'thống nhất ranh giới riêng với bố mẹ sau một cuộc nói chuyện thẳng thắn.';
+ case 'entitled':
+   if(n===0){bond(-4);return 'viện họ của gia đình để đòi ưu tiên và nói lời xúc phạm nhân viên phục vụ. Một số người tránh tiếp xúc với con.';}
+   if(n===1){pathSibling(l,k,sib,-8);prestige(-3);return sib?'xô xát với anh chị em khi ép nhường quyền lợi. Người nhà can thiệp để bảo đảm an toàn.':'gây gổ với người ngoài sau khi bị từ chối ưu tiên. Sự việc ảnh hưởng uy tín gia đình.';}
+   if(a>=18&&!constructive&&r()<.18){
+     s.legal={opened:a,status:'investigating',pregnancy:k.sex==='M'&&r()<.25};prestige(-8);bond(-6);
+     return 'bị một phụ nữ trưởng thành tố cáo cưỡng ép quan hệ tình dục. Cơ quan chức năng tiếp nhận vụ việc; người bị hại được hỗ trợ riêng.'+(s.legal.pregnancy?' Người phụ nữ cho biết mình mang thai; con từ chối nhận trách nhiệm. Quan hệ cha con chưa được xác minh.':'');
+   }
+   if(constructive){bond(2);return 'xin lỗi người bị xúc phạm và bắt đầu sửa cách ứng xử.';}
+   prestige(-3);return 'tiếp tục chế giễu người khác và bị loại khỏi một buổi gặp cộng đồng.';
+ case 'overlooked':
+   if(n===0){bond(-2);return 'tự giải quyết rắc rối ở trường rồi tâm sự với bạn trước khi nói với bố mẹ.';}
+   if(n===1){bond(-2);return 'thừa nhận cảm thấy cô đơn dù vẫn tự chăm lo được cho mình. Con thường tìm bạn tâm sự trước khi tìm đến bố mẹ.';}
+   bond(constructive?6:-5);return constructive?'hẹn một buổi riêng với bố mẹ và kể điều đã giữ kín lâu nay.':'cố tình bỏ một cuộc hẹn để xem người nhà có nhận ra sự vắng mặt của mình.';
+ case 'manipulator':
+   if(n===0){bond(-2);return 'kể hai phiên bản khác nhau của cùng một chuyện để được người nhà ưu ái.';}
+   if(n===1){pathSibling(l,k,sib,-6);return sib?'đổ lỗi cho anh chị em để giành phần lợi. Quan hệ giữa hai người xấu đi.':'bóp méo một lời hứa của gia đình để được ưu tiên.';}
+   if(constructive){pathSibling(l,k,sib,3);bond(3);return 'đồng ý đối chiếu lời kể và sửa lại thông tin sai.';}
+   bond(-5);return 'tiếp tục gây sức ép riêng. Gia đình yêu cầu có người chứng kiến khi bàn quyền lợi.';
+ case 'secret':
+   if(n===0)return 'giấu hóa đơn mua sắm hoặc khoản chuyển cho bạn bè.'+debt(cost,'Chi tiêu cá nhân chưa kể với gia đình');
+   if(n===1){bond(-3);return 'né tránh khi người nhà hỏi về một hóa đơn vừa được gửi tới.';}
+   if(constructive){bond(3);return 'chủ động cho người nhà xem sổ chi và lên kế hoạch trả nợ bằng tiền riêng.';}
+   return 'tiếp tục mua chịu để giữ vẻ ngoài dư dả.'+debt(cost*2,'Khoản mua chịu riêng');
+ case 'thrill':
+   if(n===0){p.traits.impulse=cl(p.traits.impulse+2);return 'đăng ký chuyến leo núi khó vì muốn thử giới hạn của bản thân.';}
+   if(n===1){bond(-2);if(r()<.35)return 'bốc đồng đặt cược vào kết quả một cuộc đua.'+debt(cost*.5,'Khoản thua cược cá nhân');return 'bỏ qua lời khuyên và tham gia một cuộc đua tự phát.';}
+   if(constructive){p.traits.regulation=cl(p.traits.regulation+5);return 'chuyển sang thử sức ở đường đua có giám sát và đồ bảo hộ.';}
+   prestige(-3);return 'gặp tai nạn trong cuộc đua và phải chi tiền khắc phục hậu quả.'+debt(cost,'Chi phí sau tai nạn');
+ case 'kind':
+   if(n===0){pathSibling(l,k,sib,4);bond(2);return sib?'dành thời gian giúp anh chị em vượt qua một tuần khó khăn.':'để ý thấy một người đang gặp khó khăn và ở lại giúp họ.';}
+   if(n===1 && sib && r()<.5 && k.savings158>0){
+     var shared=pathSpend(l,k,cost*.4,'Chia sẻ tiền riêng với anh chị em');
+     E.RELATIVE163.post(l,sib,shared,'Được '+k.name+' giúp đỡ','gift834:'+X.uid(l,k)+':'+a);
+     pathSibling(l,k,sib,4);return 'chia sẻ '+H.money(l,shared)+' tiền riêng với '+sib.name+'.';
+   }
+   if(n===1){var gift=pathSpend(l,k,cost*.4,'Đóng góp thiện nguyện');return gift?'trích '+H.money(l,gift)+' từ tiền riêng để giúp người gặp khó khăn.':'dành một ngày làm tình nguyện vì chưa có tiền riêng để quyên góp.';}
+   if(constructive){p.traits.regulation=cl(p.traits.regulation+3);return 'học cách hỏi rõ nhu cầu và đặt giới hạn khi giúp đỡ.';}
+   p.fear=cl(p.fear+4);return 'nhận quá nhiều lời nhờ vả và kiệt sức vì không biết từ chối.';
+ case 'perfect':
+   if(n===0){study(4);return 'lập lịch ôn tập và kiểm tra từng phần việc nhiều lần trước khi nộp.';}
+   if(n===1){p.fear=cl(p.fear+6);return 'tự trách mình vì một sai sót nhỏ dù kết quả chung vẫn tốt.';}
+   if(constructive){rel(k,p,3,2,-5);return 'kể thật về một thất bại và bắt đầu đặt mục tiêu vừa sức.';}
+   rel(k,p,-3,-1,3);return 'giấu một kết quả không như ý vì sợ làm bố mẹ thất vọng.';
+ }
+}
+function developPath(l,k,p,r,log) {
+ var a=age(l,k), s=p.path834;
+ if(a<10||(!s && !near(k))||(k.jail && (!Number.isFinite(k.jail)||a<k.jail)))return;
+ if(!s){
+   if(a>28||r()>=.07)return;
+   var pool=Object.keys(PATHS).filter(function(id){return a>=PATHS[id][3] && (id!=='heir'||familyCompany(l)) && (id!=='scholar'||a<18||k.uniUntil>a);});
+   if(!pool.length)return;
+   var kind=U.wpick(r,pool,function(id){var weight=.4+p.traits[PATHS[id][2]]/70;return id==='overlooked'&&p.attach<40?weight*2:weight;});
+   s=p.path834={kind:kind,step:0,next:a};
+ }
+ if(s.legal && s.legal.status==='investigating' && a>=s.legal.opened+2){
+   s.legal.status='reviewed';
+   var msg='Cơ quan chức năng hoàn tất bước xác minh ban đầu, chuyển hồ sơ để xem xét trách nhiệm. Chưa có phán quyết.'+(s.legal.pregnancy?' Việc xác định cha con và hỗ trợ cho em bé được xem xét riêng.':'');
+   remember(l,k,msg,4,'bad');log(k.name+': '+msg,'bad');return;
+ }
+ if(s.legal && s.legal.status==='reviewed' && a>=s.legal.opened+4){
+   var proven=r()<.65;
+   s.legal.status=proven?'liable':'closed';s.legal.closedAt=a;
+   var decision=proven?'Vụ việc đã được xét xử. Con phải chịu trách nhiệm theo phán quyết trong hồ sơ.':'Vụ việc khép lại vì hồ sơ chưa đủ chứng cứ để kết luận.';
+   if(proven)E.ELITE148.rep(l,-4);
+   if(s.legal.pregnancy){
+     s.legal.parentage=r()<.75?'confirmed':'unconfirmed';
+     decision+=s.legal.parentage==='confirmed'?' Kết quả xác minh cha con riêng biệt xác nhận trách nhiệm cấp dưỡng.':' Chưa xác nhận được quan hệ cha con.';
+   }
+   remember(l,k,decision,4,'neutral');log(k.name+': '+decision,'neutral');return;
+ }
+ if(s.legal && s.legal.parentage==='confirmed' && a-s.legal.opened<=18 && s.legal.paidAge!==a){
+   s.legal.paidAge=a;
+   var due=l.base*.035, paid=pathSpend(l,k,due,'Cấp dưỡng sau khi xác minh cha con');
+   if(paid<due)k.debt158+=due-paid;
+ }
+ if(s.step>=3||a<s.next)return;
+ var text=pathStep(l,k,p,s,r);
+ s.lastText=text;s.step++;s.next=a+2+Math.floor(r()*3);s.response=null;
+ remember(l,k,text,3,'neutral',false);log(k.name+' '+text,'neutral');
+}
+
+function pathDescription(p){
+ var s=p&&p.path834, parts=[];
+ if(s&&s.lastText)parts.push('Con '+s.lastText);
+ if(s&&s.legal)parts.push('Hồ sơ vụ việc: '+({investigating:'đang xác minh',reviewed:'đang xem xét',liable:'đã có phán quyết',closed:'đã khép lại'}[s.legal.status]||'đang theo dõi')+'.');
+ return parts.join(' ');
+}
+function pathResponse(l,k,p,choice,log){
+ var s=p.path834;
+ if(!s||s.response||s.step>=3)return;
+ s.response=choice;
+ var listening=choice==='listen';
+ rel(k,p,listening?2:-2,listening?2:-1,listening?-1:2);
+ var text=listening?'được gia đình nghe kể trước khi cùng đặt giới hạn cụ thể.':'bị yêu cầu làm theo cách gia đình mong muốn.';
+ remember(l,k,text,2,listening?'good':'bad',false);log(k.name+' '+text,'neutral');
+}
+
 function year(l,r,log,a,F){if(!l.alive)return;(l.kids||[]).forEach(function(k){if(!live(k)||k.born>l.age)return;var p=init(l,k);if(p.year===l.age)return;p.year=l.age;var ka=age(l,k),tr=tier(l,F);evolve(l,k,p,r);schoolYear(l,k,r,log,F);retake(l,k,p,r,log);if(p.gapUntil===ka){p.gapUntil=null;var back=r()<.4+p.traits.ambition/200;if(back)p.retakeAt=ka+1;log(k.name+' kết thúc năm nghỉ, quyết định '+(back?'ôn thi lại đại học.':'đi làm theo sở thích về '+p.interests[0]+'.'),'neutral');}
  if(!k.jail&&near(k)){var e=pickEvent(l,k,p,r,tr);if(e){p.seen[e.id]=l.age;if(e.ask){if(e.id==='ill')p.ill=true;X.next(l,'moment141',r,{id:X.uid(l,k),ev:e.id},{manual:false});}else e.run(l,k,p,r,log,tr);}}
+ developPath(l,k,p,rng(l.id+':path834:'+X.uid(l,k)+':'+ka),log);
  resurface(l,k,p,r,log);});}
 X.menu('moment141','Chuyện của con',function(l){return l&&l.alive?true:'Cuộc đời đã kết thúc';},function(l,d){var a=d.arg||{},k=find(l,a.id),e=EV.find(function(x){return x.id===a.ev;});return k&&e?k.name+' ('+age(l,k)+' tuổi): '+e.ask+'. Cách bạn phản ứng ảnh hưởng tới sự tin tưởng, gắn bó và nỗi sợ của con.':'Hoàn cảnh đã thay đổi.';},function(l,a){var k=find(l,a.id);if(!k||!ASK[a.ev])return[];return ASK[a.ev].map(function(o){return{k:o[0],l:o[1],run:function(l,r,log){var kid=find(l,a.id);if(kid)o[2](l,kid,init(l,kid),r,log);}};});},0);
 // Age-appropriate parenting requests. Adults only receive advice and support.
@@ -118,15 +299,20 @@ function requests(l,k){var a=age(l,k),b=l.base||1,p=init(l,k),fav=p.interests[0]
  {k:'adviseHome',min:19,max:200,l:'Góp ý chuyện nơi ở, hôn nhân và con cái của con',run:function(l,k,p,r,log){var x=react(l,k,r,-.2,false);log(k.name+' '+REACT[x]+'. Quyết định cuối cùng vẫn là của con.','neutral');}},
  {k:'support',min:19,max:200,l:'Hỗ trợ con một khoản tài chính · '+H.money(l,b*.2),cost:b*.2,run:function(l,k,p,r,log){var take=r()<.5+(100-p.traits.selfReliance)/200;if(!take){log(k.name+' cảm ơn nhưng muốn tự lo; bạn giữ lại khoản tiền.','neutral');rel(k,p,2,1,0);return false;}rel(k,p,1,2,0);log(k.name+' nhận khoản hỗ trợ của bố mẹ.','good');}},
  {k:'repair',min:6,max:200,l:'Xin lỗi và nói chuyện về chuyện cũ',show:function(l,k,p){return p.trust<50||p.memories.some(function(m){return m.tone==='bad'&&!m.healed;});},run:function(l,k,p,r,log){var m=p.memories.filter(function(x){return x.tone==='bad'&&!x.healed;}).pop(),ok=r()<.45+p.attach/200+p.traits.empathy/300;if(ok&&m)m.healed=true;rel(k,p,ok?6:2,ok?4:1,-3);log(ok?'Bạn xin lỗi '+k.name+(m?' về chuyện "'+m.text+'"':'')+'. Con im lặng một lúc rồi ôm bạn.':'Bạn mở lời xin lỗi; '+k.name+' cần thêm thời gian, nhưng cánh cửa đã hé mở.','good');}}];
+ if(p.path834 && p.path834.step<3 && !p.path834.response){
+   all.unshift({k:'pathListen',min:10,max:200,l:'Dành thời gian nói chuyện riêng với con',run:function(l,k,p,r,log){pathResponse(l,k,p,'listen',log);}},
+     {k:'pathPress',min:10,max:200,l:'Yêu cầu con làm theo kỳ vọng của gia đình',run:function(l,k,p,r,log){pathResponse(l,k,p,'press',log);}});
+ }
+ if(E.WORLD836)all=all.concat(E.WORLD836.familyRows(l,k));
  return all.filter(function(o){return a>=o.min&&a<=o.max&&(!o.show||o.show(l,k,p));});}
 X.menu('children141','Tính cách và chuyện của các con',function(l){return !l||!l.alive?'Cuộc đời đã kết thúc':l.age<16?'Cần đủ 16 tuổi':!(l.kids||[]).some(live)?'Chưa có con':true;},'Mỗi người con có tính cách riêng, thay đổi dần theo thời gian. Tính cách chỉ làm thay đổi khả năng xảy ra, không định sẵn kết quả.',function(l){return (l.kids||[]).filter(live).slice(0,40).map(function(k){var id=X.uid(l,k);return{k:id,l:k.name+' · '+age(l,k)+' tuổi · '+stage(age(l,k)),run:function(l,r){X.next(l,'child141',r,{id:id});}};});},16,'Tình cảm & gia đình');
 X.menu('child141','Hồ sơ và cách đồng hành',function(l){return l&&l.alive?true:'Cuộc đời đã kết thúc';},function(l,d){var k=find(l,(d.arg||{}).id);return k?profile(l,k):'Hoàn cảnh của con đã thay đổi.';},function(l,a){var k=find(l,a.id);if(!k)return[];var p=init(l,k);return requests(l,k).map(function(o){return{k:o.k,l:o.l,why:p.acted[o.k]===l.age?'Đã làm năm nay':!near(k)?'Con đang sống với người giám hộ khác':o.cost&&l.money<o.cost?'Chưa đủ tiền ('+H.money(l,o.cost)+')':true,run:function(l,r,log){var kid=find(l,a.id);if(!kid)return;var q=init(l,kid);if(q.acted[o.k]===l.age||o.cost&&l.money<o.cost)return;q.acted[o.k]=l.age;var res=o.run(l,kid,q,r,log);if(o.cost&&res!==false)H.cash(l,-o.cost,o.k==='support'?'Hỗ trợ con':'Chi phí cho con');}};});},16);
 function words(v,hi,mid,lo){return v>=70?hi:v>=40?mid:lo;}
 function profile(l,k){var p=init(l,k),a=age(l,k),t=p.traits,stand=KEYS.filter(function(x){return t[x]>=72||t[x]<=28;}).sort(function(x,y){return Math.abs(t[y]-50)-Math.abs(t[x]-50);}).slice(0,4).map(function(x){return TRAITS[x][t[x]>=50?1:0];});
  var status=a<3?'ở nhà với gia đình':a<6?'học mẫu giáo':a<18?(p.school?'học lực '+p.school.band:'đang đi học'):k.uniUntil?'đang học đại học':k.internship170&&E.EDUCATION170?'đang '+E.EDUCATION170.describe(l,k):k.job&&E.kidTitle?'làm '+E.kidTitle(k):p.examFail&&p.examFail.age>=a-1?'đang '+FAIL[p.examFail.choice]:'đang tìm hướng đi';
- return k.name+' · '+a+' tuổi · giai đoạn '+stage(a)+'. Nét nổi bật: '+(stand.length?stand.join(', '):'cân bằng, chưa có nét nào quá rõ')+'. Sở thích: '+p.interests.join(', ')+(p.talent.shown?'; năng khiếu '+p.talent.domain+' '+words(p.talent.level,'nổi bật','khá','đang hình thành'):'')+'. Ước mơ: '+(p.dream||'chưa rõ')+'. Tin tưởng bố mẹ: '+words(p.trust,'nhiều','vừa phải','còn dè dặt')+'; gắn bó: '+words(p.attach,'rất gắn bó','bình thường','xa cách')+'; áp lực, e sợ: '+words(p.fear,'nặng nề','có phần','thoải mái')+'. Hiện tại: '+status+'.'+(p.plan.home?' Nơi ở: '+p.plan.home+'.':'')+(p.plan.marriage?' Hôn nhân: '+p.plan.marriage+'.':'')+(p.milestones.length?' Cột mốc: '+p.milestones.slice(-4).map(function(m){return m.text+' ('+m.age+' tuổi)';}).join('; ')+'.':'');}
+ return (p.path834?pathDescription(p)+' ':'')+k.name+' · '+a+' tuổi · giai đoạn '+stage(a)+'. Nét nổi bật: '+(stand.length?stand.join(', '):'cân bằng, chưa có nét nào quá rõ')+'. Sở thích: '+p.interests.join(', ')+(p.talent.shown?'; năng khiếu '+p.talent.domain+' '+words(p.talent.level,'nổi bật','khá','đang hình thành'):'')+'. Ước mơ: '+(p.dream||'chưa rõ')+'. Tin tưởng bố mẹ: '+words(p.trust,'nhiều','vừa phải','còn dè dặt')+'; gắn bó: '+words(p.attach,'rất gắn bó','bình thường','xa cách')+'; áp lực, e sợ: '+words(p.fear,'nặng nề','có phần','thoải mái')+'. Hiện tại: '+status+'.'+(p.plan.home?' Nơi ở: '+p.plan.home+'.':'')+(p.plan.marriage?' Hôn nhân: '+p.plan.marriage+'.':'')+(p.milestones.length?' Cột mốc: '+p.milestones.slice(-4).map(function(m){return m.text+' ('+m.age+' tuổi)';}).join('; ')+'.':'');}
 // The university exam: keep the original pass roll and replace only the fixed "always vocational" outcome after a fail.
 var D18=E.DEC.con_18;if(D18){var apply18=D18.apply;D18.apply=function(l,d,key,r,log){var n=d&&d.data&&d.data.n,k=(l.kids||[]).find(function(x){return live(x)&&x.name===n;}),failed=false,wrapped=function(m,tone){if(k&&typeof m==='string'&&m.indexOf(' thi trượt đại học, quyết định đi học nghề.')>=0){failed=true;return;}return log.apply(this,arguments);};var out=apply18.call(this,l,d,key,r,wrapped);if(failed&&k)afterFail(l,k,r,log);else if(k&&k.uniUntil)milestone(l,k,'Đỗ đại học');return out;};}
 var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);(l.kids||[]).forEach(function(k){var p=k.persona141;if(!p)return;p.traits=p.traits||{};KEYS.forEach(function(x){if(!Number.isFinite(p.traits[x]))p.traits[x]=50;});['memories','milestones','interests'].forEach(function(x){if(!Array.isArray(p[x]))p[x]=[];});if(!p.interests.length)p.interests=['đọc sách'];['seen','acted','plan'].forEach(function(x){if(!p[x]||typeof p[x]!=='object')p[x]={};});if(!p.talent)p.talent={domain:p.interests[0],level:50,shown:false};['trust','attach','fear'].forEach(function(x){if(!Number.isFinite(p[x]))p[x]=x==='fear'?15:50;});});};
-E.HOOKS.year.push(year);E.CHILD141={init:init,react:react,schoolScore:schoolScore,band:band,failChoice:failChoice,afterFail:afterFail,tier:tier,year:year,profile:profile,requests:requests,events:EV,remember:remember,rel:rel,TRAITS:TRAITS};
+E.HOOKS.year.push(year);E.CHILD141={paths:PATHS,pathDescription:pathDescription,init:init,react:react,schoolScore:schoolScore,band:band,failChoice:failChoice,afterFail:afterFail,tier:tier,year:year,profile:profile,requests:requests,events:EV,remember:remember,rel:rel,TRAITS:TRAITS};
 })(globalThis.G);

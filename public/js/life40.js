@@ -52,7 +52,8 @@
     var x = ma0.apply(this, arguments);
     l.uniName = uniFor(l, k, r); l.flags.gradTries = 0; l.flags.gradOK = false;
     if (k === 'med') { l.schoolEnd = l.age + 6; l.pending.unshift(E.DEC.nganh_y.make(l, r)); return x; }
-    var yrs = (k === 'it' && isBK(l)) || (k === 'art' && /Kiến trúc/.test(l.uniName || '')) ? 5 : 4;
+    var isGB = !l.abroad && H.resCode && H.resCode(l) === 'GB';
+    var yrs = isGB ? (E.studyRegion829 && E.studyRegion829(l) === 'Scotland' ? 4 : 3) : ((k === 'it' && isBK(l)) || (k === 'art' && /Kiến trúc/.test(l.uniName || '')) ? 5 : 4);
     l.schoolEnd = l.age + yrs; if (l.abroad && l.abroad.study) l.abroad.until = l.schoolEnd;
     if (l.uniName) log('Trường: ' + l.uniName + ' — chương trình ' + yrs + ' năm' + (yrs === 5 ? (k === 'it' ? ' (kỹ sư)' : ' (kiến trúc sư)') : '') + '.', 'neutral');
     return x;
@@ -62,7 +63,7 @@
   // 2. NGÀNH Y
   // ===================================================================
   var TRACK = {
-    dk: { n: 'Y khoa (bác sĩ đa khoa)', y: 6, job: 'bac_si', d: '6 năm · ra trường thực hành 18 tháng mới có chứng chỉ hành nghề' },
+    dk: { n: 'Y khoa (bác sĩ đa khoa)', y: 6, job: 'bac_si', d: '6 năm · cần hoàn thành thực hành và điều kiện hành nghề tại nơi làm việc' },
     rhm: { n: 'Răng – Hàm – Mặt', y: 6, job: 'nha_si', d: '6 năm · điểm chuẩn rất cao · ra trường thu nhập cao' },
     yhct: { n: 'Y học cổ truyền', y: 6, job: 'bac_si', spec: 'yhct', d: '6 năm · châm cứu, bốc thuốc, phục hồi chức năng' },
     duoc: { n: 'Dược học', y: 5, job: 'duoc_si', d: '5 năm · làm bệnh viện, công ty dược, mở nhà thuốc' },
@@ -99,6 +100,7 @@
   E.medHospitals = hospitals;
   function workPlace(l, r) {
     var c = city(l), sp = l.med && l.med.spec, hn = /Hà Nội/.test(c) || !/Hồ Chí Minh/.test(c) && north(c);
+    if (l.med.track === 'ydp') return 'cơ sở y tế dự phòng tại '+(l.uniCity||l.city||'nơi cư trú');
     if (l.med.track === 'duoc') return pick(r, isVN(l) && !(l.abroad && l.abroad.perm) ? ['khoa Dược của bệnh viện tỉnh', 'một công ty dược', 'chuỗi nhà thuốc lớn'] : ['một chuỗi nhà thuốc', 'một công ty dược']);
     if (!isVN(l) || (l.abroad && l.abroad.perm)) return 'bệnh viện thành phố';
     if (l.med.track === 'qy') return pick(r, hn ? ['Bệnh viện Trung ương Quân đội 108', 'Bệnh viện Quân y 103'] : ['Bệnh viện Quân y 175']);
@@ -155,27 +157,29 @@
     text: function (l) { return 'Ra trường, bạn phải chọn chuyên khoa để theo cả đời. Mỗi chuyên khoa một áp lực, một mức thu nhập.' + (l.flags.noiTru ? ' Là bác sĩ nội trú, bạn được ưu tiên chọn.' : ''); },
     opts: [0, 1, 2, 3, 4, 5].map(function (i) {
       return { k: 's' + i, l: function (l, d) { var s = SPEC[d.ks[i]]; return s ? s[0] : ''; }, h: function (l, d) { var s = SPEC[d.ks[i]]; return s ? (s[1] >= 1.4 ? 'thu nhập cao' : s[1] >= 1.15 ? 'thu nhập khá' : s[1] < 1 ? 'thu nhập thấp hơn, ít người theo' : 'thu nhập trung bình') + (s[2] ? ' · nhiều ca mổ, áp lực cao' : ' · khám, điều trị') : ''; }, req: function (l, d) { return !!d.ks[i]; }, ai: { w: 1 },
-        run: function (l, r, log, d) { var k = d.ks[i]; l.med.spec = k; log('Chọn chuyên khoa ' + SPEC[k][0] + ', về công tác ở ' + workPlace(l, r) + '. Thực hành 18 tháng để được cấp chứng chỉ hành nghề.', 'good'); } };
+        run: function (l, r, log, d) { var k = d.ks[i]; l.med.spec = k; log('Chọn chuyên khoa ' + SPEC[k][0] + ', về công tác ở ' + workPlace(l, r) + '. Cần hoàn thành thực hành và điều kiện cấp phép tại nơi hành nghề.', 'good'); } };
     })
   });
   // ra trường: vào nghề theo hướng đã học
   E.HOOKS.year.push(function (l, r, log, a) {
     if (!l.med || l.med.out || studying(l)) return;
-    if (l.edu < 5 || (l.abroad && l.abroad.study)) return; l.med.out = true;
-    if (l.job) return;
+    if (l.edu < 5 || (l.abroad && l.abroad.study)) return;
+    if (l.job) { if(TRACK[l.med.track]&&jid(l)===TRACK[l.med.track].job)l.med.out=true; return; }
     var t = TRACK[l.med.track]; if (!t) return;
     l.flags.needJob = false;
     E.startJob(l, t.job, r, log);
+    if(!l.job||jid(l)!==t.job){l.flags.needJob=true;return;}
+    l.med.out=true;
     if (l.flags.noiTru && l.job && l.job.rank < 1) l.job.rank = 1;
     if (!l.med.spec && /^(dk|qy)$/.test(l.med.track)) { l.pending.push(E.DEC.chuyen_khoa.make(l, r)); return; }
-    log('Về công tác ở ' + workPlace(l, r) + (t.job === 'bac_si' || t.job === 'nha_si' ? '. Thực hành 18 tháng để được cấp chứng chỉ hành nghề.' : '.'), 'neutral');
+    log('Về công tác ở ' + workPlace(l, r) + (t.job === 'bac_si' || t.job === 'nha_si' ? '. Cần hoàn thành thực hành và điều kiện cấp phép tại nơi hành nghề.' : '.'), 'neutral');
   });
   // thu nhập theo chuyên khoa
   var cy0 = E.careerYear;
   E.careerYear = function (l) { var inc = cy0.apply(this, arguments); if (inc > 0 && l.med && l.med.spec && /^(bac_si|phong_kham)$/.test(jid(l)) && SPEC[l.med.spec]) inc *= SPEC[l.med.spec][1]; return inc; };
   // mở phòng khám theo chuyên môn
   SC('mo_phong_kham_ck', {
-    title: 'Mở phòng khám riêng', valid: function (l) { return (jid(l) === 'bac_si' && rk(l) >= 2) || (jid(l) === 'nha_si' && rk(l) === 1); },
+    title: 'Mở phòng khám riêng', valid: function (l) { return (!l.med || l.med.track !== 'ydp') && ((jid(l) === 'bac_si' && rk(l) >= 2) || (jid(l) === 'nha_si' && rk(l) === 1)); },
     text: function (l) { var s = l.med && SPEC[l.med.spec]; return 'Có tiếng trong nghề, bệnh nhân quen đông. Mở một phòng khám ' + (jid(l) === 'nha_si' ? 'nha khoa' : s ? 'chuyên khoa ' + s[0].toLowerCase() : 'tư') + ' cần khoảng ' + mo(l, V(l, 2500)) + ' (thuê mặt bằng, máy móc, giấy phép).'; },
     opts: [
       { k: 'mo', l: 'Mở phòng khám', h: function (l) { return '~' + mo(l, V(l, 2500)); }, req: function (l) { return l.money >= V(l, 1200); }, ai: { w: 1, amb: 1, risk: 0.5 }, run: function (l, r, log) {

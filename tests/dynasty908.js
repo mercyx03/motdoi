@@ -6,6 +6,17 @@ function open(l,id,arg){l.pending=[E.DEC[id].make(l,()=>.1,arg||{})];return l.pe
 function choose(l,key){const d=l.pending[0],k=key==='cancel'?key:String(d.data.keys.indexOf(key));ok(d.opts.some(o=>o.k===k),d.id+' exposes '+key);E.resolve(l,k);}
 function person(l,i){return D.people(l).find(p=>p.person===l.kids[i]);}
 function company(l,share=60){const c={name:'Công ty thử nghiệm',value:l.base*100,share,sector:'tech',governance:1,roles:{},holders137:[]};E.BUSINESS123.companies(l).push(c);E.TREASURY165.ensure(l,c,true);return c;}
+// Parent-owned enterprise: divide by the eligible parent count, never the individual object.
+for(const alive of [[true,true],[true,false],[false,true],[false,false]]){
+ const l=life();l.fam.fAlive=alive[0];l.fam.mAlive=alive[1];l.fam.noDad=false;
+ const before=JSON.stringify(l.fam),v=D.voters(l,{family:{}}),count=alive.filter(Boolean).length;
+ ok(v.length===count,'only living parent owners vote '+alive);
+ v.forEach(p=>near(p.share,100/count,'finite equal parent voting weight'));
+ near(v.reduce((n,p)=>n+p.share,0),count?100:0,'parent voting total');
+ ok(JSON.stringify(l.fam)===before,'viewing votes preserves family ownership');
+ const saved=E.migrate(JSON.parse(JSON.stringify(l)));
+ ok(D.voters(saved,{family:{}}).every(p=>Number.isFinite(p.share)),'parent voting survives reload');
+}
 for(const c of G.W.C){let l=life();l.mode='world';l.country=c.code;l.cur='usd';l.gdp=c.gdp;l.city=c.cities[0];l.abroad=null;let p=person(l,0),q=D.profile(l,p);ok(q.management>=0&&q.management<=100&&q.reputation<=100&&q.ambition<=100,'bounded profile '+c.code);for(const id of ['dynasty908','heirProfile908','heirSupport908','childBranch908','allowance908','governance908','familyGathering908','inheritanceReview908']){const d=E.DEC[id].make(l,()=>.2,{id:p.id});ok(!/undefined|NaN|\[object Object\]/.test(d.text+d.opts.map(o=>o.l).join(' ')),'clean '+id+' '+c.code);}near(D.usd(l,1000)*G.CUR.priceLevel(c.gdp),1000,'nominal USD '+c.code);let saved=E.migrate(JSON.parse(JSON.stringify(l)));ok(D.profile(saved,person(saved,0)).management===q.management,'save profile '+c.code);}
 {
  let l=life(),p=person(l,0),q=D.profile(l,p);open(l,'heirSupport908',{id:p.id});choose(l,'self');ok(q.endorsements.self&&q.endorsements.self.at===l.age,'endorsement saved');let old=JSON.stringify(q.endorsements);open(l,'heirSupport908',{id:p.id});ok(!l.pending[0].opts.some(o=>o.k===String(l.pending[0].data.keys.indexOf('self'))),'repeat supporter disabled');ok(JSON.stringify(q.endorsements)===old,'opening no reroll');

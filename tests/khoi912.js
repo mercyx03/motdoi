@@ -25,7 +25,7 @@ for (const school of ['upper', 'priv']) for (let seed = 1; seed <= 40; seed++) {
 }
 // 2. Người chơi tự chọn: nguồn manual, reload không đổi khối, không kẹt năm học.
 {
-  const l = student(912001);
+  const l = student(912001); l.st.kno = 90; // Isolate block selection from admission balance.
   playYear(l, d => d.id === 'chon_khoi' ? 'C00' : null);
   ok(l.khoi === 'C00' && l.flags.khoi912.src === 'manual', 'manual choice recorded');
   const r = reload(l); ok(r.khoi === 'C00' && r.flags.khoi912.src === 'manual', 'reload keeps manual choice');

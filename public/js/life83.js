@@ -120,7 +120,7 @@
   KID('k6_bai_tho', 9, 13, 'Báo tường ngày Nhà giáo', [function (l) { return 'Lớp làm báo tường chào mừng ngày Nhà giáo' + (vn(l) ? ' 20/11' : '') + ', cô giao bạn viết một bài thơ.'; }], [
     { k: 'viet', l: 'Thức khuya viết bài thơ về cô', ai: { w: 1.2 }, out: [[0.6, 'Bài thơ được đọc trước toàn trường. Cô giáo rưng rưng.', { kno: 2, hap: 3 }, 'good', mem('Bài thơ tặng cô được đọc trước toàn trường.', 2)], [0.4, 'Vần chưa chuẩn nhưng cô vẫn dán bài thơ vào giữa tờ báo.', { hap: 1 }, 'good']] },
     { k: 've', l: 'Xin vẽ tranh thay vì viết', out: [[1, 'Bức tranh bó hoa tặng cô được dán ngay trang đầu tờ báo tường.', { hap: 2 }, 'good']] },
-    { k: 'chep', l: 'Chép một bài thơ trên mạng', ai: { bad: 1, w: 0.5 }, out: [[0.5, 'Cô nhận ra bài thơ chép mạng, nhẹ nhàng nhắc bạn trước lớp. Bạn xấu hổ đỏ mặt.', { karma: -2, hap: -2 }, 'bad'], [0.5, 'Không ai phát hiện, nhưng lời khen nghe chẳng vui.', { karma: -1 }, 'neutral']] }], school);
+    { k: 'chep', l: 'Chép một bài thơ trên mạng', ai: { bad: 1, w: 0.5 }, out: [[0.5, 'Cô nhận ra bài thơ chép mạng, nhẹ nhàng nhắc bạn trước lớp. Bạn xấu hổ đỏ mặt.', { karma: -2, hap: -2 }, 'bad'], [0.5, 'Không ai phát hiện, nhưng lời khen nghe chẳng vui.', { karma: -1 }, 'neutral']] }], function (l) { return vn(l) && school(l); });
 
   KID('k6_nguoi_la', 10, 14, 'Người lạ trên mạng', ['Một tài khoản lạ kết bạn, khen bạn dễ thương, hỏi tên trường, địa chỉ nhà rồi rủ gặp mặt.', 'Một "anh / chị" trong nhóm game hứa tặng quà, chỉ cần gửi ảnh và nói nhà ở đâu.'], [
     { k: 'ke', l: 'Kể ngay với bố mẹ', ai: { smart: 1, w: 1.4 }, out: [[1, 'Bố mẹ chặn tài khoản và báo cho nhà trường. Hóa ra kẻ đó từng dụ dỗ nhiều bạn nhỏ khác.', { karma: 2, kno: 1 }, 'good']] },

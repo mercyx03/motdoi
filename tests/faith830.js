@@ -1,0 +1,11 @@
+const assert=require('assert'),G=require('./hardcore-isolation').gameContext(),E=G.E;
+function life(c){const l=E.createLife({mode:c==='VN'?'vn':'world',country:c,year:1990,seed:830});Object.assign(l,{age:30,money:l.base*5,pending:[],indep:true});return l;}
+function choose(l,id,key,arg){const d=E.DEC[id].make(l,E.H.rf(l),arg),i=d.data.keys.indexOf(key);assert(i>=0 && d.opts.some(o=>o.k===String(i)),key);l.pending=[d];E.resolve(l,String(i));}
+const l=life('VN');l.religion='Công giáo';const k={name:'An',born:l.age,sex:'F',alive:true};l.kids=[k];const id=E.UPDATE110.uid(l,k);choose(l,'babyFaith830','0',{id});choose(l,'babyFaith830','0',{id});assert.equal(k.faith830.saint,'Maria');assert.equal(k.name,'An');assert.deepEqual(E.migrate(JSON.parse(JSON.stringify(l))).kids[0].faith830,k.faith830);
+for(const [faith,word] of [['Tin Lành','Dâng Con'],['Cao Đài','Tắm Thánh'],['Không tôn giáo','chè trôi nước'],['Phật giáo','Cầu an']])assert(E.FAITH830.rites(l,faith,k).join(' ').includes(word));
+const uk=life('GB');uk.school='uni';uk.dev915={c:{motor:{known:true}}};choose(uk,'disability918','reg:self');uk.age++;E.HOOKS.year.forEach(fn=>fn(uk,E.H.rf(uk),()=>{}));const d=E.WELFARE918.state(uk).dis.self;assert.equal(d.status,'approved');choose(uk,'disability918','edu0self');assert(d.education);choose(uk,'disability918','ride:self');assert.equal(d.rideAt,uk.age);
+const v=life('VN');v.religion='Công giáo';choose(v,'dossier830','submit');assert.equal(v.flags.dossier830.faith,'Công giáo');
+console.log('PASS faith830: newborn branches, names, saves, foreign support, accommodations, transit and truthful disclosure');
+const ru=life('RU'),child={sex:'F',name:'Anna Petrova'};assert.equal(E.FAITH830.displayName(ru,child,{saint:'Olga',fatherName:'Ivan Petrov',faith:'Chính thống giáo Đông phương'}),'Olga Ivanovna Petrova');
+v.partner={name:'Lan',age:28,status:'dating',close:60,religion130:'Chính thống giáo Đông phương'};v.religion='Không tôn giáo';choose(v,'faithHome830','consult');v.age++;choose(v,'faithHome830','answer');assert.equal(v.partner.faith830.wedding,'civil');choose(v,'faithHome830','pause');assert.equal(v.partner.weddingHold130,v.age);
+console.log('PASS patronymic snapshot, year-later consultation and wedding hold');

@@ -2,12 +2,14 @@
 const assert=require('assert'),path=require('path'),{launch,page,sleep}=require('./lib/cdp');
 const url=process.env.MOTDOI_URL||'http://127.0.0.1:8084/';
 (async()=>{const c=await launch();try{for(const width of [390,1280]){const p=await page(c,url+'updates.html',{width,height:950});await sleep(600);
-assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('8.10.27-showbiz')),'new note first');
-assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('chưa phát hành')),'packaged label');
+assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('8.10.30')),'new note first');
+assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('Đã phát hành')),'released label');
+assert(await p.eval(()=>document.querySelector('#updateTimeline .update-entry').innerText.includes('ông bà')), 'last detail visible');
+assert(await p.eval(()=>[...document.querySelectorAll('#updateTimeline .update-entry')].some(e=>e.innerText.includes('8.10.27-showbiz') && e.innerText.includes('Đã phát hành'))),'prior upload released');
 await p.eval(()=>{const e=document.querySelector('#updateSearch');e.value='boi thuong';e.dispatchEvent(new Event('input',{bubbles:true}));});await sleep(100);
 assert((await p.eval(()=>document.querySelector('#updateTimeline').innerText)).includes('500%'),'unaccented search');
 await p.eval(()=>{[...document.querySelectorAll('#updateFilters button')].find(b=>b.innerText==='Tính năng').click();});assert((await p.eval(()=>document.querySelector('#updateTimeline').innerText)).includes('500%'),'feature filter includes new note');await p.eval(()=>{[...document.querySelectorAll('#updateFilters button')].find(b=>b.innerText==='Tất cả').click();});
 await p.screenshot(path.join(__dirname,'../.cache/update827-'+width+'.png'));
 assert(await p.eval(()=>document.documentElement.scrollWidth<=innerWidth+1),'no overflow');
 await p.eval(()=>{const e=document.querySelector('#updateSearch');e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));});const before=await p.eval(()=>document.querySelectorAll('#updateTimeline .update-entry').length);
-await p.eval(()=>document.querySelector('#moreUpdates').click());assert(await p.eval(n=>document.querySelectorAll('#updateTimeline .update-entry').length>n,before),'load more');assert.deepEqual(p.errors,[]);p.close();}}finally{await c.close();}console.log('PASS update827-browser: 390/1280px, packaged note, search, load more, no overflow/JS errors');})().catch(e=>{console.error(e);process.exitCode=1;});
+await p.eval(()=>document.querySelector('#moreUpdates').click());assert(await p.eval(n=>document.querySelectorAll('#updateTimeline .update-entry').length>n,before),'load more');assert.deepEqual(p.errors,[]);p.close();}}finally{await c.close();}console.log('PASS update827-browser: 390/1280px, released note, search, load more, no overflow/JS errors');})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -77,6 +77,7 @@
   function ct(x) { var u = school(x.school); return u ? u.name + ' · ' + (u.mn || E.MAJORS[x.major]) : ''; }
   // điểm thi năng khiếu (thang 10): ôn khối năng khiếu, luyện thi và năng khiếu thật quyết định
   function nkScore(l, u, r) {
+    if (E.nkExam853) return E.nkExam853(l, u);
     var match = u.talent ? l.talent === u.talent : /hội họa|âm nhạc/.test(l.talent || '');
     var s = (/S00|N00/.test(u.blocks.join()) ? 2.8 : 3.4) + (l.khoi && u.blocks.indexOf(l.khoi) >= 0 ? 0.8 : 0) + (l.flags.nkPrep ? 0.8 : 0) +
       (l.flags.tPrep || 0) * 0.8 + Math.max(0, l.flags.luyenThi || 0) * 0.3 + (match ? U.clamp(((l.skill || 20) - 30) / 18, 0, 3.5) : 0) + U.normal(r) * 0.9;
@@ -93,7 +94,7 @@
       if (u) d.opts.forEach(function (o) {
         if (o.k.indexOf('major_') !== 0) return;
         var m = o.k.slice(6);
-        if (u.nk) { o.l = u.mn + (u.majors.length > 1 && m === 'edu' ? ' (hệ sư phạm)' : ''); o.h = 'Mốc văn hóa mô phỏng ' + u.score + '/30 · ' + nkLabel(u); }
+        if (u.nk) { o.l = u.mn + (u.majors.length > 1 && m === 'edu' ? ' (hệ sư phạm)' : ''); o.h = 'Điểm văn hóa mục tiêu ' + u.score + '/30 · ' + nkLabel(u); }
         o.h += ' · xét khối ' + blocksOf(u, m).join(', ') + (l.khoi ? fits(l, u, m) ? ' · ✓ hợp khối ' + l.khoi : ' · ✗ không xét khối ' + l.khoi + ' của bạn' : '');
       });
     } else if (s.region) {
@@ -112,7 +113,7 @@
     }
     var list2 = s.wishes.length ? s.wishes.map(function (x, i) { return 'NV' + (i + 1) + ': ' + ct(x); }).join('; ') : 'Chưa có nguyện vọng';
     d.text = list2 + '. ' + (K ? 'Bạn thi khối ' + l.khoi + ' (' + K.n + ') — chỉ trường xét khối này mới nhận hồ sơ' + (NK_BLOCKS[l.khoi] ? ', trường nghệ thuật có thêm vòng thi năng khiếu' : '') + '. ' : '') +
-      'Chọn tối đa 5 trường/ngành theo thứ tự yêu thích. Xét nguyện vọng đầu tiên đủ điểm; điểm trong game là mô phỏng.';
+      'Chọn tối đa 5 trường/ngành theo thứ tự yêu thích. Xét nguyện vọng đầu tiên đủ điểm; điểm mục tiêu cần đối chiếu theo ngành và kỳ tuyển sinh.';
     return d;
   };
   // máy tự chọn: chỉ chọn trường hợp khối
@@ -149,14 +150,14 @@
     for (var i = 0; i < s.wishes.length && !found; i++) {
       var x = s.wishes[i], u = school(x.school); if (!u) continue;
       if (!fits(l, u, x.major)) { log('NV' + (i + 1) + ' (' + u.name + ') không xét khối ' + l.khoi + ' — hồ sơ không hợp lệ.', 'neutral'); continue; }
-      var entryReason = EDU54.entryReason && EDU54.entryReason(l, u);
+      var entryReason = EDU54.entryReason && EDU54.entryReason(l, u, x);
       if (entryReason) { log('NV' + (i + 1) + ' (' + u.name + ') không đủ điều kiện: ' + entryReason + '.', 'neutral'); continue; }
       if (u.nk) {
         var t = nkDone[u.id] != null ? nkDone[u.id] : (nkDone[u.id] = nkScore(l, u, r));
         var cult = l.examScore >= u.score;
         log('Thi năng khiếu tại ' + u.name + ' (' + u.nk + '): ' + sc(t) + '/10' + (t >= u.nkPass ? ' — đạt.' : ' — chưa đạt.') + (t >= u.nkPass && !cult ? ' Nhưng điểm văn hóa chưa đủ mốc ' + u.score + '.' : ''), t >= u.nkPass ? 'good' : 'neutral');
         if (t >= u.nkPass && cult) found = x;
-      } else if (l.examScore >= EDU54.threshold(u, x.major) || EDU54.direct(l, x.major)) found = x;
+      } else if (EDU54.acceptedOffer872 && EDU54.acceptedOffer872(l,u,x) || l.examScore >= EDU54.threshold(u, x.major) || EDU54.direct(l, x.major)) found = x;
     }
     if (!found) { log('Chưa đạt các nguyện vọng đã nộp. Bạn có thể ôn thi lại, học nghề hoặc đi làm.', 'neutral'); l.pending.unshift(E.DEC.uniFail.make(l, r)); return; }
     var a = school(found.school);
