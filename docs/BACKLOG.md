@@ -394,3 +394,11 @@ Bổ sung cuối trước bàn giao: school920 sửa ghi đè p=0 ở Hàn Quố
 - GĐ6: chưa nghiệm thu toàn diện, thiết bị/save thật và REVIEWS_DB Production chưa xác minh. Bản72 giữ packaged cho tới khi chủ dự án xác nhận upload.
 
 - Bản72: package:cloudflare PASS28file/3513880byte, SHA2568133799687D4B53CE348885D5B2511BBF6C33541102B4D0B5DBF42C81DA9C21C; loading/API-admin cục bộ và16view giáo dục/phối ngẫu hoàng gia trên dist đạt. Nhật ký195mục,194mục cũ không đổi; kiểm JSON/HTML, tìm/lọc/tải thêm390/1280 đạt. Chi tiết PLAYER-FEEDBACK-872.md.
+
+### Tiếp tục toàn phạm vi sau72
+
+Chủ dự án yêu cầu làm hết mục triển khai rồi mới gói chung, bỏ nghiệm thu toàn diện. Ma trận hiện hành và nguồn/kiểm thử ở [BACKLOG-IMPLEMENTATION-873.md](BACKLOG-IMPLEMENTATION-873.md). Các mục rộng vẫn mở cho đến khi có triển khai và đối chiếu đủ; artifact72 không phải bản của thay đổi đang làm.
+
+Đã qua kiểm thử trọng điểm cho phần đã triển khai về khoản vay cửa hàng, tuyển sinh Y/Luật Mỹ, học tại nhà Pennsylvania/Québec, đổi đội tuyển, nhập tịch theo cư trú, ly hôn England/Wales và sổ kỳ hạn NS&I. Bổ sung dữ liệu ngành, hồ sơ họ tên Tây Ban Nha, nguồn lao động và chi trả y tế cho phạm vi ghi trong ma trận. Các mục triển khai còn lại vẫn mở.
+
+Theo yêu cầu đóng gói riêng sau đó, 8.10.73 Preview đã tạo dist và dist.zip mới. Trạng thái các mục triển khai xem sổ tiến độ. Bản này chưa được xác nhận phát hành.

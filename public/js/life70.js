@@ -25,12 +25,42 @@
   function resid(l) { return (l.flags.residYrs = l.flags.residYrs || {}); }
   function citizen(l, code) { return (l.flags.citizen || []).indexOf(code) >= 0; }
   E.isCitizenOf = function (l, code) { return code === l.country || citizen(l, code); };
-  function where(l) { return l.abroad && l.abroad.perm ? l.abroad.code : null; }
+  function where(l) { return l.abroad && l.abroad.perm && !l.abroad.visit907 ? l.abroad.code : null; }
+  var residence873 = {
+    US:{from:2026, min:5, text:'Diện phổ thông: thường trú ít nhất 5 năm, duy trì cư trú liên tục và có mặt tại Mỹ ít nhất 30 tháng trong 5 năm. USCIS: https://www.uscis.gov/citizenship/learn-about-citizenship/citizenship-and-naturalization/i-am-a-lawful-permanent-resident-of-5-years'},
+    CA:{from:2018, min:3, text:'Có mặt ít nhất 1.095 ngày trong 5 năm, trong đó ít nhất 730 ngày là thường trú. Cư trú tạm hợp lệ tính nửa ngày, tối đa 365 ngày quy đổi. IRCC: https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/who.html'},
+    AU:{from:2026, min:4, text:'Diện phổ thông: 4 năm cư trú hợp pháp, 12 tháng cuối có thường trú. Hạn vắng mặt là 12 tháng trong 4 năm và 90 ngày trong năm cuối. Home Affairs: https://immi.homeaffairs.gov.au/citizenship/become-a-citizen/permanent-resident'}
+  };
+  function trackResidence873(l, age) {
+    var a=l.abroad, cfg=a&&residence873[a.code];
+    if(!cfg||a.trapped||a.visit907)return;
+    var old=l.flags.residYrs&&l.flags.residYrs[a.code];
+    if(a.natLegacy873)return;
+    if(!a.natYears873&&!Number.isFinite(a.arrived873)&&a.perm&&old>0){a.natLegacy873=true;return;}
+    var years=a.natYears873||(a.natYears873={});
+    if(Object.prototype.hasOwnProperty.call(years,age))return;
+    var valid=a.perm||(E.ABROAD_DEPTH900?E.ABROAD_DEPTH900.valid(l):Number.isFinite(a.until)&&a.until>=age);
+    years[age]=!valid||l.jailUntil>age||l.flags.paroleUntil>age?'gap':a.perm?'permanent':'temporary';
+    Object.keys(years).filter(function(y){return +y<age-5;}).forEach(function(y){delete years[y];});
+  }
+  function naturalization873(l,c,age) {
+    var a=l.abroad, cfg=residence873[c], recorded=a&&a.natYears873;
+    if(!cfg||!a||a.natLegacy873||age+l.birthYear<cfg.from||(!recorded&&!Number.isFinite(a.arrived873)))return null;
+    var recent=Array.from({length:5},function(_,i){return recorded&&recorded[age-i-1]||'gap';});
+    var pr=recent.filter(function(k){return k==='permanent';}).length;
+    var temp=recent.filter(function(k){return k==='temporary';}).length;
+    var ok=c==='US'?pr===5:c==='CA'?pr>=2&&pr+Math.min(1,temp/2)>=3:recent[0]==='permanent'&&!recent.slice(0,4).includes('gap');
+    return {ok:ok, years:pr+temp, min:cfg.min, text:cfg.text};
+  }
+  E.naturalization873=naturalization873;
   E.HOOKS.year.unshift(function (l, r, log, a) { // đặt đầu danh sách: độc lập với các hook khác
-    var c = where(l); if (!c || !l.alive) return;
+    if(!l.alive)return;
+    trackResidence873(l,a);
+    var c = where(l); if (!c) return;
     var y = resid(l); y[c] = (y[c] || 0) + 1;
     var R0 = rule(c), need = R0[0];
-    if (!need || E.isCitizenOf(l, c) || a < 18 || y[c] < need || !free(l)) return;
+    var eligibility=naturalization873(l,c,a+1);
+    if (!need || E.isCitizenOf(l, c) || a < 18 || (eligibility?!eligibility.ok:y[c]<need) || !free(l)) return;
     var F = l.flags; if (F.natAsk && F.natAsk[c] != null && a - F.natAsk[c] < 3) return;
     if (l.record && l.flags.releasedAt != null && a - l.flags.releasedAt < 10) return; // có tiền án gần đây thì chưa đủ điều kiện
     (F.natAsk = F.natAsk || {})[c] = a;
@@ -39,9 +69,9 @@
   });
   SC('nhap_quoc_tich', {
     title: function (l, d) { return 'Nhập quốc tịch ' + d.name; },
-    prep: function (l, r, a) { var c = (a && a.code) || where(l), B = W.BY[c] || {}, R0 = rule(c); return { code: c, name: B.name || c, need: R0[0], renounce: !!R0[1], yrs: resid(l)[c] || 0 }; },
+    prep: function (l, r, a) { var c = (a && a.code) || where(l), B = W.BY[c] || {}, R0 = rule(c); var eligibility=naturalization873(l,c,l.age+(l._yearRun?1:0)); return { code: c, name: B.name || c, need: eligibility?eligibility.min:R0[0], renounce: !!R0[1], yrs: eligibility?eligibility.years:resid(l)[c] || 0, presence873:eligibility }; },
     valid: function (l, d) { return !!d && !!d.code && where(l) === d.code && !E.isCitizenOf(l, d.code); },
-    text: function (l, d) { return 'Bạn đã sống ở ' + d.name + ' ' + d.yrs + ' năm — đủ điều kiện cư trú ' + d.need + ' năm để xin nhập quốc tịch. Hồ sơ gồm thi ngôn ngữ, hiểu biết xã hội, chứng minh thu nhập và lý lịch.' + (d.renounce ? ' ' + d.name + ' không chấp nhận hai quốc tịch: muốn nhập quốc tịch thì phải thôi quốc tịch ' + (W.BY[l.country] ? W.BY[l.country].name : 'gốc') + '.' : ' ' + d.name + ' cho phép giữ quốc tịch gốc.'); },
+    text: function (l, d) { if(d.presence873)return d.presence873.text+'\nHồ sơ trong game dùng các năm cư trú đã ghi nhận để xét điều kiện theo thời gian.'; return 'Bạn đã sống ở ' + d.name + ' ' + d.yrs + ' năm — đủ điều kiện cư trú ' + d.need + ' năm để xin nhập quốc tịch. Hồ sơ gồm thi ngôn ngữ, hiểu biết xã hội, chứng minh thu nhập và lý lịch.' + (d.renounce ? ' ' + d.name + ' không chấp nhận hai quốc tịch: muốn nhập quốc tịch thì phải thôi quốc tịch ' + (W.BY[l.country] ? W.BY[l.country].name : 'gốc') + '.' : ' ' + d.name + ' cho phép giữ quốc tịch gốc.'); },
     opts: [
       { k: 'nop', l: function (l, d) { return 'Nộp hồ sơ nhập quốc tịch ' + d.name; }, h: function (l) { return 'Lệ phí, thi cử khoảng ' + H.money(l, l.base * 0.06); }, ai: { w: 1.1, smart: 0.6 }, run: function (l, r, log, d) {
         H.cash(l, -l.base * 0.06, 'Hồ sơ nhập quốc tịch');

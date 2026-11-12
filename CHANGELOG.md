@@ -1,3 +1,9 @@
+## 8.10.73 — Hồ sơ học tập, khoản vay gia đình và đổi đội tuyển
+
+- Bổ sung hồ sơ MD/J.D., tên ngành, hạn báo cáo học tại nhà và căn cứ đổi đội tuyển.
+- Giữ quyền thu hồi vốn cửa hàng qua chia tay và thừa kế.
+- Bổ sung quy trình cư trú, ly hôn, tiết kiệm và nguồn địa phương. Gói Preview chờ xác nhận upload.
+
 ## 8.10.72 — Tiến độ ngành Y, cổ phần gia đình và góp ý người chơi
 
 - Giữ chương trình/bằng cấp khi đóng menu, sửa hạn nội trú và hướng tìm việc ngành Y.

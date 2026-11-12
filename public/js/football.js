@@ -157,13 +157,13 @@
     if (load && r() < risk) { s.injury = r() < .2 ? 60 : 8; H.fx(l, { hea: -5 }); log('Chấn thương khi tập luyện: cần phục hồi ' + s.injury + ' tuần, không thi đấu khi chưa bình phục.', 'bad'); }
     if (athlete(l)) l.skill = rating(l);s.bridgeSkill897=l.skill||0;
   }
-  function match(l, season, id, opponent, r, international, knockout) {
+  function match(l, season, id, opponent, r, international, knockout, atHome) {
     var prior = season.matches.find(function (m) { return m.id === id; }); if (prior) return prior;
     var s = peek(l), c = club(s.club), quality = international ? D.markets[s.national.country][4] : c ? c.strength : 30;
     var available = !s.injury && s.fitness > 25 && !(E.CAREER_DEPTH900&&E.CAREER_DEPTH900.sportState(l).injury>=60), ability = rating(l)+(E.CAREER_DEPTH900?E.CAREER_DEPTH900.power(l):0), coach = s.coach.trust;
     var chance = U.clamp(.55 + (ability - quality) / 100 + (coach - 50) / 250, .08, .96);
     var minutes = !available ? 0 : r() < chance ? 60 + Math.floor(r() * 31) : r() < .5 ? 15 + Math.floor(r() * 25) : 0;
-    var home = season.matches.length % 2 === 0, tactical = s.style === (c && c.tactics) ? 3 : 0;
+    var home = atHome==null?season.matches.length % 2 === 0:atHome, tactical = s.style === (c && c.tactics) ? 3 : 0;
     var edge = (quality - opponent + (minutes ? ability * .1 : 0) + tactical + (home ? 3 : 0) + (s.form - 50) * .1) / 40;
     var gf = Math.max(0, Math.floor(r() * 4 + edge)), ga = Math.max(0, Math.floor(r() * 4 - edge));
     var won = gf > ga || knockout && gf === ga && r() < .5;
@@ -177,7 +177,7 @@
     season.matches.push(m);
     if (minutes) {
       var total = international ? s.national : s.totals;
-      if (international) { total.caps++; total.goals += goals; total.assists += assists; }
+      if (international) { total.caps++; total.goals += goals; total.assists += assists; var senior=total.level?total.level==='ĐTQG':l.age>=23, official=!id.endsWith(':friendly');m.association=total.country;(total.appearances873||(total.appearances873=[])).push({year:season.year,age:l.age,country:total.country,senior:senior,official:official,final:senior&&official&&!id.includes(':qualifier'),citizenships:E.GLOBAL919.citizenships(l).filter(function(code){return nationality873(l,code);})}); }
       else { total.apps++; total.goals += goals; total.assists += assists; total.minutes += minutes; total.clean += m.clean; }
       s.form = U.clamp(s.form + (won ? 2 : -2) + goals, 10, 95);
       s.fitness = Math.max(0, s.fitness - 1);
@@ -226,18 +226,112 @@
       Object.keys(team.years).sort().slice(0,-50).forEach(function(k){delete team.years[k];});
     });
   }
+
+  var FIFA873 = 'https://inside.fifa.com/legal/news/updated-documentation-guidance-player-eligibility-change-association';
+  function nationality873(l, code) {
+    if (code === l.flags.renounced) return false;
+    return E.GLOBAL919.citizenships(l).includes(code);
+  }
+  function representation873(l, code) {
+    if (!D.markets[code]) return 'Chưa có đội tuyển này trong danh mục bóng đá';
+    if (!nationality873(l, code)) return 'Cần có quốc tịch của đội tuyển';
+    if (code === l.country) return null;
+    if (code === 'GB') return 'Cần hồ sơ xác định liên đoàn trong Vương quốc Anh';
+    var foreign = l.abroad;
+    if (!foreign || foreign.code !== code || foreign.trapped || !Number.isFinite(foreign.arrived873??foreign.since)) {
+      return 'Cần hồ sơ xác nhận nơi sinh, huyết thống hoặc thời gian cư trú';
+    }
+    var arrival=foreign.arrived873??foreign.since;
+    if (arrival >= 10 && arrival < 18) return 'Hồ sơ đến cư trú khi 10–17 tuổi cần xét lý do chuyển đến';
+    if (l.age - arrival < (arrival < 10 ? 3 : 5)) return 'Chưa đủ thời gian cư trú';
+    return null;
+  }
+  function associationReason873(l, code) {
+    var player = peek(l), national = player && player.national;
+    if (!national || !active(l)) return 'Cần hồ sơ cầu thủ đang hoạt động';
+    if (code === national.country) return 'Đang đại diện đội tuyển này';
+    if (year(l) < 2021) return 'Chưa có quy tắc đổi liên đoàn theo thời kỳ này';
+    var reason = representation873(l, code);
+    if (reason) return reason;
+    var appearances = national.appearances873 || [];
+    if (national.caps > appearances.length) return 'Bản lưu cũ thiếu lịch sử trận để xác định điều kiện';
+    if (national.changed873) return 'Đã đổi liên đoàn đại diện';
+    var official = appearances.filter(function(m) { return m.official; });
+    if (!official.length) return null;
+    var first = official[0], last = official[official.length - 1];
+    var senior = appearances.filter(function(m) { return m.senior; });
+    if (!senior.some(function(m) { return m.official; })) {
+      if (first.citizenships.includes(code) || last.age < 21) return null;
+      return 'Cần có quốc tịch mới trước trận chính thức đầu tiên hoặc đủ điều kiện đổi sau khi thi đấu trẻ';
+    }
+    if (!first.citizenships.includes(code) || last.age >= 21 || senior.length > 3 ||
+        senior.some(function(m) { return m.final; }) || year(l) - senior[senior.length - 1].year <= 3) {
+      return 'Chưa đáp ứng điều kiện đổi liên đoàn sau khi ra sân ở cấp đội tuyển quốc gia';
+    }
+    return null;
+  }
+  function requestAssociation873(l, code) {
+    var national = peek(l) && peek(l).national;
+    if (!national || national.request873 || associationReason873(l, code)) return false;
+    national.request873 = {from:national.country, to:code, at:year(l), due:year(l)+1};
+    return true;
+  }
+  function reviewAssociation873(l, log) {
+    var national = peek(l) && peek(l).national, request = national && national.request873;
+    if (!request || year(l) < request.due) return false;
+    var reason = request.from !== national.country ? 'Đội tuyển hiện tại đã thay đổi' : associationReason873(l, request.to);
+    delete national.request873;
+    if (reason) {
+      log('Hồ sơ đổi đội tuyển chưa được chấp thuận. ' + reason + '.', 'neutral');
+      return false;
+    }
+    national.country = request.to;
+    national.qualified = {};
+    national.called = false;
+    national.captain = false;
+    if ((national.appearances873 || []).some(function(m) { return m.official; })) national.changed873 = request;
+    log('Hồ sơ đã được chấp thuận. Có thể được xét triệu tập cho ' + G.W.BY[request.to].name + '.', 'good');
+    return true;
+  }
+  X.menu('footballAssociation873', 'Hồ sơ đại diện đội tuyển', function(l) {
+    return active(l) ? true : 'Cần hồ sơ bóng đá đang hoạt động';
+  }, function(l) {
+    var national = peek(l).national, request = national.request873;
+    return 'Đội tuyển hiện tại: ' + (G.W.BY[national.country] || {}).name +
+      (request ? '\nĐang chờ xét đổi đội tuyển. Tạm dừng triệu tập trong thời gian xét.' : '') +
+      '\nNguồn: ' + FIFA873;
+  }, function(l) {
+    var national = peek(l).national;
+    if (national.request873) return [{k:'withdraw', l:'Rút hồ sơ đang xét', run:function() { delete national.request873; }}];
+    return E.GLOBAL919.citizenships(l).filter(function(code) { return code !== national.country; }).map(function(code) {
+      var reason = associationReason873(l, code);
+      return {k:code, l:'Xin đại diện ' + G.W.BY[code].name + (reason ? ' · ' + reason : ''), why:reason || true,
+        run:function(l,r,log) {
+          if (requestAssociation873(l,code)) log('Đã gửi hồ sơ. Trong lúc chờ xét, bạn không ra sân cho đội tuyển nào.', 'neutral');
+        }};
+    });
+  }, 16, 'Công việc');
+  E.HOOKS.year.push(function(l,r,log) {
+    if (!l.alive) return;
+    var a=l.abroad;
+    if (a&&!a.trapped&&!Number.isFinite(a.arrived873)&&!Number.isFinite(a.since)) a.arrived873=l.age;
+    reviewAssociation873(l,log);
+  });
+  E.FOOTBALL_ASSOCIATION873 = {reason:associationReason873, request:requestAssociation873, review:reviewAssociation873};
   function national(l, z, r, log) {
     var s = peek(l), n = s.national, market = D.markets[n.country];
     n.called = false;
-    if (!market || s.injury || s.fitness < 35 || n.country !== l.country) { n.reason = 'Chưa đủ điều kiện đại diện hoặc thể lực.'; nationWorld(l,z); return; }
+    if (!market || s.injury || s.fitness < 35 || n.request873 || representation873(l, n.country)) { n.reason = 'Chưa đủ điều kiện đại diện hoặc thể lực.'; nationWorld(l,z); return; }
     var apps = z.matches.filter(function (m) { return !m.international && m.minutes > 0; }).length;
     var threshold = market[4] - (l.age < 23 ? 12 : 0), chance = U.clamp(.35 + (rating(l) - threshold) / 90 + apps / 150, .02, .88);
     if (apps < 5 || rating(l) < threshold - 6 || r() >= chance) { n.reason = 'Cần ra sân ít nhất 5 trận, cải thiện năng lực vị trí và phong độ; còn cạnh tranh danh sách triệu tập.'; nationWorld(l,z); return; }
-    n.called = true; n.level = l.age < 17 ? 'U17' : l.age < 20 ? 'U20' : l.age < 23 ? 'U23' : 'ĐTQG';
-    n.captain = n.caps > 40 && s.skills.discipline > 75;
+    var senior=l.age>=23||l.age>=16&&rating(l)>=market[4]+8;
+    n.called = true; n.level = senior?'ĐTQG':l.age<17?'U17':l.age<20?'U20':'U23';
+    var caps=n.changed873?(n.appearances873||[]).filter(m=>m.country===n.country).length:n.caps;
+    n.captain = caps > 40 && s.skills.discipline > 75;
     log('Được triệu tập ' + n.level + ' ' + n.country + (n.captain ? ' với vai trò đội trưởng.' : '.'), 'good');
     var conf = D.confeds[market[0]], y = z.year;
-    if (l.age < 23) { if ((y - D.calendar.youth.anchor) % 2 === 0) tournament(l, z, 'Giải trẻ ' + n.level + ' · ' + market[0], conf.strength - 10, r, true, true); nationWorld(l,z); return; }
+    if (!senior) { if ((y - D.calendar.youth.anchor) % 2 === 0) tournament(l, z, 'Giải trẻ ' + n.level + ' · ' + market[0], conf.strength - 10, r, true, true); nationWorld(l,z); return; }
     match(l, z, 'national:' + y + ':friendly', conf.strength, r, true, false);
     [{ name: conf.nation, anchor: conf.anchor, cycle: conf.cycle, strength: conf.strength },
       { name: 'FIFA World Cup', anchor: D.calendar.world.anchor, cycle: 4, strength: 86 }].forEach(function (ev) {
@@ -290,7 +384,7 @@
     var table = peers.map(function (x) { return { id: x.id, name: x.name, points: 0, gf: 0, ga: 0 }; });
     for (var i = 0; i < peers.length; i++) for (var j = i + 1; j < peers.length; j++) for (var leg = 0; leg < 2; leg++) {
       var a = peers[i], b = peers[j], own = a.id === c.id || b.id === c.id;
-      var m = own ? match(l, z, 'league:' + y + ':' + a.id + ':' + b.id + ':' + leg, (a.id === c.id ? b : a).strength - (youth ? 15 : 0), r, false, false) : { gf: Math.floor(r() * 4), ga: Math.floor(r() * 4) };
+      var m = own ? match(l, z, 'league:' + y + ':' + a.id + ':' + b.id + ':' + leg, (a.id === c.id ? b : a).strength - (youth ? 15 : 0), r, false, false, leg===0?a.id===c.id:b.id===c.id) : { gf: Math.floor(r() * 4), ga: Math.floor(r() * 4) };
       if (own) { m.opponentName = (a.id === c.id ? b : a).name;if(E.CAREER_DEPTH900)E.CAREER_DEPTH900.match(l,m.opponentName,m.gf>m.ga?1:5); m.competition = youth ? stageFor(l) + ' · ' + league : league; }
       var gf = own && b.id === c.id ? m.ga : m.gf, ga = own && b.id === c.id ? m.gf : m.ga;
       table[i].gf += gf; table[i].ga += ga; table[j].gf += ga; table[j].ga += gf;

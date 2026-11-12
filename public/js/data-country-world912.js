@@ -263,13 +263,14 @@
     if (D.profiles[cc]) throw new Error('Country already has a depth profile: ' + cc);
     var key = { edu: cc.toLowerCase() + 'Edu912', work: cc.toLowerCase() + 'Work912', culture: cc.toLowerCase() + 'Culture912', wed: cc.toLowerCase() + 'Wed912' }, u = urls(cc);
     Object.keys(key).forEach(function (kind) { D.sources[key[kind]] = u[kind].url; });
+    function itemSource(kind,index,row){if(!row[2])return key[kind];var id=key[kind]+':'+index;D.sources[id]=row[2];return id;}
     var p = {
       countryCode: cc,
       education: sp.e.map(function (x, i) { return { id: ['academic', 'vocational', 'higher'][i] + '912', name: x[0], note: x[1], route: ['academic', 'vocational', 'applied'][i], source: key.edu }; }),
       festivals: sp.f.map(function (x) { return { id: /_[a-z]{2}$/.test(x[0]) ? x[0] : x[0] + '_' + cc.toLowerCase(), name: x[1], date: x[2], calendar: x[3], activity: x[4], since: x[5], source: key.culture }; }),
-      marriage: sp.m.map(function (x, i) { return { id: 'wed' + i + '912', name: x[0], note: x[1], source: key.wed }; }),
+      marriage: sp.m.map(function (x, i) { return { id: 'wed' + i + '912', name: x[0], note: x[1], source: itemSource('wed',i,x) }; }),
       cuisine: { dishes: sp.d.slice(), source: key.culture },
-      labor: sp.w.map(function (x, i) { return { id: 'work' + i + '912', name: x[0], note: x[1], source: key.work }; }),
+      labor: sp.w.map(function (x, i) { return { id: 'work' + i + '912', name: x[0], note: x[1], source: itemSource('work',i,x) }; }),
       lifeEvents: events(cc, sp).map(function (ev) { ev.source = key[ev.source]; return ev; })
     };
     if (sp.x) p.exam = sp.x;

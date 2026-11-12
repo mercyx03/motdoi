@@ -1,6 +1,30 @@
 {
-  "generatedAt": "2026-11-12T00:58:39.759Z",
+  "generatedAt": "2026-11-12T02:16:38.147Z",
   "entries": [
+    {
+      "id": "education-family-world-81073",
+      "version": "8.10.73",
+      "publishedAt": "2026-11-12T09:16:38.119+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Hồ sơ học tập, khoản vay gia đình và đổi đội tuyển",
+      "summary": "Bổ sung các bước tuyển sinh, nộp hồ sơ học tại nhà, thu hồi vốn cửa hàng và xét điều kiện đại diện đội tuyển.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khoản cho bạn đời vay để mở cửa hàng vẫn được ghi sau chia tay hoặc khi người vay qua đời. Người thừa kế có thể nhận quyền thu hồi. Tiền chỉ được ghi khi thực sự thu được khoản trả.",
+        "Hồ sơ Y và Luật tại Harvard, Stanford và UCLA có các bước đối chiếu bằng cấp, bài thi, nộp hồ sơ và theo dõi thư nhận học tùy trường. Thêm GRE, MCAT, PREview và một số học phần chuẩn bị trước khi học Y.",
+        "Thêm tên chương trình và thời lượng tham chiếu ở MIT, UCL và Cambridge. Tại Pennsylvania và Québec, có thể chọn ngày nộp báo cáo học tại nhà và xem hồ sơ đúng hạn hay trễ hạn.",
+        "Cầu thủ có thể nộp hồ sơ đổi đội tuyển. Game đối chiếu quốc tịch, thời gian cư trú và các trận đã thi đấu trước khi quyết định. Lịch trận câu lạc bộ phân biệt lượt sân nhà và sân khách.",
+        "Hồ sơ nhập tịch thường tại Canada, Mỹ và Úc xem xét thời gian cư trú đã ghi, có phân biệt tạm trú với thường trú.",
+        "Tại England và Wales, hồ sơ ly hôn khi thụ án có quyết định có điều kiện và quyết định cuối cùng. Thêm sổ NS&I bằng bảng Anh, với lãi gộp và khóa rút trước hạn.",
+        "Bổ sung nguồn cho một số mục lao động, hôn nhân và quyền lợi khám bệnh theo nơi ở. Hồ sơ hoàng gia Tây Ban Nha có thêm mốc Asturias năm 1977 và kiểm tra đúng cha mẹ khi đăng ký thứ tự họ."
+      ]
+    },
     {
       "id": "player-feedback-81072",
       "version": "8.10.72",

@@ -1165,7 +1165,7 @@
           return;
         }
         H.cash(life, -c[4], 'Phí xuất khẩu lao động');
-        life.abroad = { code: c[0], name: c[1], until: life.age + 3, mult: c[3], perm: false };
+        life.abroad = { code: c[0], name: c[1], until: life.age + 3, mult: c[3], perm: false, arrived873: life.age };
         life.prevJob = life.job; life.school = null;
         life.job = { id: 'xkld', rank: 0, yrs: 0, t: c[2] + ' ở ' + c[1] }; life.indep = true; life.flags.needJob = false;
         log((life.money < 0 ? 'Vay tiền đóng phí, sang ' : 'Sang ') + c[1] + ' làm ' + c[2] + '.', 'big'); life.st.soc -= 8; life.st.hap -= 2;
@@ -1301,7 +1301,7 @@
     var oldCountry = life.abroad && W.BY[life.abroad.code];
     var oldGdp = oldCountry ? oldCountry.gdp : life.gdp;
     var cc = W.BY[c[0]];
-    life.abroad = { code: c[0], name: c[1], perm: true, pool: c[2], base: cc.gdp * 1000 * 0.55 * 0.75 };
+    life.abroad = { code: c[0], name: c[1], perm: true, arrived873: life.age, pool: c[2], base: cc.gdp * 1000 * 0.55 * 0.75 };
     life.urban = true; life.place = cc.cities[U.randint(r, 0, Math.min(3, cc.cities.length - 1))]; life.city = life.place;
     if (life.ownHouse) { // bán nhà trước khi đi, trả nợ vay mua nhà
       var homeDebt = (life.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (life.mortgage || 0);

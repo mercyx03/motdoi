@@ -86,10 +86,47 @@
   function dcase(l) { var c = st(l).div; return c && !c.closed ? c : null; }
   function divWhy(l) { var r = X.reason(l, 18); if (r !== true && !jailed(l)) return r; if (!spouse(l)) return 'Cần đang trong hôn nhân'; return jailed(l) || spouse(l).separated919 != null || dcase(l) ? true : 'Dành cho hôn nhân khi một bên đang chấp hành án hoặc đã ly thân vì án tù'; }
   function bond(l, p) { return E.RELATIONS108 ? E.RELATIONS108.bond(l, p) : p.close || 50; }
+
+  function divorceRoute873(l) {
+    var code=H.resCode(l), y=l.birthYear+l.age, date=E.EDUCATION863&&E.EDUCATION863.date(l);
+    var region=E.STUDY857&&E.STUDY857.region(l);
+    if (code==='GB' && (region==='England'||region==='Wales') && (y>2022||y===2022&&date>='2022-04-06')) return 'england-wales';
+    return null;
+  }
+  function grantDivorce873(l,c,log) {
+    c.stage='granted';c.closed=l.age;c.decided=l.age;
+    log('Tòa đã ban hành quyết định cuối cùng về ly hôn giữa bạn và '+c.name+'. Hồ sơ con chung và tài sản được xử lý riêng.', 'bad');
+    H.endPartner(l,log,'div');
+  }
+  function progressDivorce873(l,c,log) {
+    if(c.route873!=='england-wales')return false;
+    if(c.stage==='filed'||c.stage==='nocontact'){
+      c.stage='conditional';c.conditionalAt=l.age;c.due=l.age+1;
+      log('Tòa ban hành conditional order sau khi xem xét hồ sơ và thông báo. Hai người vẫn đang kết hôn; cần final order để chấm dứt hôn nhân.','neutral');
+    }else if(c.stage==='conditional'){
+      c.stage='final-ready';
+      if(c.by==='partner'){
+        c.stage='final-requested';c.due=l.age+1;
+        log(c.name+' đã gửi yêu cầu final order. Hôn nhân còn hiệu lực trong lúc chờ tòa.','neutral');
+      }
+      else log('Đã đến bước xin final order. Mở lại hồ sơ ly hôn để gửi yêu cầu cuối cùng.','neutral');
+    }else if(c.stage==='final-requested')grantDivorce873(l,c,log);
+    return true;
+  }
+  function caseFee873(l,route,mutual,aid) {
+    var date=E.EDUCATION863&&E.EDUCATION863.date(l);
+    if(route==='england-wales'&&date>='2026-01-01'){
+      var gbp=date>='2026-07-13'?628:612;
+      var usd=gbp/G.CUR.CUR.GB.rate;
+      return {gbp:gbp,charge:l.cur==='vnd'?usd*G.CUR.VND/1e6:usd/G.CUR.priceLevel(G.W.BY.GB.gdp)};
+    }
+    return {gbp:null,charge:aid?0:l.base*(mutual?.01:.03)};
+  }
   function openCase(l, by, mutual, aid, log) {
-    var p = spouse(l), fee = aid ? 0 : l.base * (mutual ? 0.01 : 0.03);
-    if (!p || dcase(l)) return; if (fee) H.cash(l, -fee, 'Án phí, chi phí hồ sơ ly hôn');
-    st(l).div = { id: l.id + ':div920:' + l.age, by: by, mutual: mutual, aid: aid, at: l.age, due: l.age + 1, stage: 'filed', post: 0, who: pid(l, p), name: p.name };
+    var p=spouse(l),route=divorceRoute873(l),fee=caseFee873(l,route,mutual,aid);
+    if(by==='me'&&fee.gbp&&l.money<fee.charge)return;
+    if (!p || dcase(l)) return; if (by==='me'&&fee.charge) H.cash(l, -fee.charge, 'Án phí, chi phí hồ sơ ly hôn');
+    st(l).div = { id: l.id + ':div920:' + l.age, by: by, mutual: mutual, aid: aid&&!fee.gbp, feeGBP873:fee.gbp, at: l.age, due: l.age + 1, stage: 'filed', route873: route, post: 0, who: pid(l, p), name: p.name };
     log((by === 'me' ? 'Bạn nộp đơn ' : p.name + ' nộp đơn ') + (mutual ? 'thuận tình ly hôn' : 'ly hôn đơn phương') + ' lên tòa có thẩm quyền' + (jailed(l) ? '; trại giam hỗ trợ chuyển hồ sơ và lấy ý kiến của bạn' : '') + '. Hôn nhân vẫn còn hiệu lực cho đến khi có quyết định.', 'neutral');
   }
   function divYear(l, r, log) {
@@ -98,6 +135,7 @@
     if (!c && p && jailed(l) && p.separated919 != null && (p.affection108 == null ? (p.close || 50) : p.affection108) < 35 && u(l.id + ':divby:' + l.age) < 0.3) { openCase(l, 'partner', u(l.id + ':divm:' + l.age) < 0.5, true, log); return; }
     if (!c || l.age < c.due) return;
     if (c.stage === 'filed' && u(c.id + ':contact') < 0.08 && !c.notice) { c.notice = true; c.stage = 'nocontact'; c.due = l.age + 1; log('Tòa chưa tống đạt được giấy tờ cho ' + (c.by === 'me' ? c.name : 'bạn') + '; hồ sơ chờ thủ tục thông báo, thêm khoảng một năm.', 'neutral'); return; }
+    if(progressDivorce873(l,c,log))return;
     var granted = c.mutual || c.post >= 2 || u(c.id + ':dec:' + c.post) < 0.7;
     if (!granted) { c.post++; c.stage = 'postponed'; c.due = l.age + 1; log('Phiên hòa giải chưa thành, tòa hoãn để thu thập thêm ý kiến và chứng cứ về con chung, tài sản.', 'neutral'); return; }
     c.stage = 'granted'; c.closed = l.age; c.decided = l.age;
@@ -106,15 +144,19 @@
   }
   X.menu('divorceCase920', 'Ly hôn khi đang chấp hành án', divWhy, function (l) {
     var c = dcase(l), p = spouse(l);
-    return 'Ly thân không làm chấm dứt hôn nhân. Vợ, chồng (kể cả người đang chấp hành án) có quyền yêu cầu tòa giải quyết ly hôn; thủ tục gồm nộp đơn, hòa giải, có thể hoãn hoặc chờ thông báo khi không liên lạc được, rồi mới có quyết định. Chưa có quyết định thì hôn nhân vẫn còn.' +
+    return ((c?c.route873:divorceRoute873(l))==='england-wales'?'England và Wales: chờ tối thiểu 20 tuần sau khi tòa phát hành đơn để xin conditional order. Sau khi được cấp, đợi tối thiểu 43 ngày để xin final order. Game xử lý qua các lượt năm. Nguồn: https://www.gov.uk/divorce/apply-for-conditional-order-decree-nisi\nBiểu phí và hướng dẫn xin hỗ trợ: https://www.gov.uk/divorce/file-for-divorce\n':'')+((c?c.route873:divorceRoute873(l))==='england-wales'?'Hôn nhân chấm dứt khi tòa cấp final order.':'Ly thân chưa chấm dứt hôn nhân. Trong hồ sơ này, tòa có thể hoãn hoặc chờ thông báo cho người còn lại trước khi ra quyết định.') +
       (p ? '\n' + p.name + (p.separated919 != null ? ' · đã ly thân từ khi bạn ' + p.separated919 + ' tuổi' : '') : '') +
-      (c ? '\nHồ sơ: ' + (c.by === 'me' ? 'bạn nộp' : 'người ấy nộp') + ', ' + (c.mutual ? 'thuận tình' : 'đơn phương') + ' — ' + { filed: 'chờ hòa giải', postponed: 'đang hoãn', nocontact: 'chờ thông báo' }[c.stage] + ', dự kiến xét khi bạn ' + c.due + ' tuổi.' : '');
+      (c ? '\nHồ sơ: ' + (c.by === 'me' ? 'bạn nộp' : 'người ấy nộp') + ', ' + (c.mutual ? 'thuận tình' : 'đơn phương') + ' — ' + { filed: c.route873==='england-wales'?'chờ xét conditional order':'chờ hòa giải', postponed: 'đang hoãn', nocontact: 'chờ thông báo', conditional:'đã có conditional order', 'final-ready':'có thể xin final order', 'final-requested':'đã xin final order' }[c.stage] + ', dự kiến xét khi bạn ' + c.due + ' tuổi.' : '');
   }, function (l) {
     var c = dcase(l), p = spouse(l), poor = l.money < l.base;
+    if(c&&c.stage==='final-ready'&&c.by==='me')return [{k:'final873',l:'Nộp yêu cầu final order',run:function(l,r,log){c.stage='final-requested';c.due=l.age+1;log('Đã nộp yêu cầu final order. Hôn nhân còn hiệu lực trong lúc chờ tòa.','neutral');}}];
     if (c) return [{ k: 'withdraw', l: c.by === 'me' ? 'Rút đơn (hai người muốn giữ hôn nhân)' : 'Nói chuyện với người ấy về việc rút đơn', why: c.by === 'me' || bond(l, p) >= 45 ? true : 'Người ấy giữ quyết định nộp đơn', run: function (l, r, log) { c.closed = 'withdrawn'; c.stage = 'withdrawn'; log('Đơn ly hôn được rút; hai người vẫn là vợ chồng.', 'neutral'); } }];
+    var fee=caseFee873(l,divorceRoute873(l),false,poor);
+    var feeLabel=fee.gbp?'£'+fee.gbp+' · án phí nộp đơn':poor?'Được trợ giúp pháp lý miễn phí':'~'+mo(l,l.base*.03);
+    var affordable=fee.gbp&&l.money<fee.charge?'Chưa đủ án phí':true;
     return [
-      { k: 'mutual', l: 'Bàn với ' + p.name + ' để nộp đơn thuận tình', h: 'Người ấy có quyền đồng ý hoặc không', run: function (l, r, log) { var yes = u(l.id + ':divok:' + l.age) < U.clamp(0.75 - bond(l, p) / 200, 0.2, 0.85); if (!yes) { log(p.name + ' chưa đồng ý ly hôn lúc này. Bạn vẫn có thể nộp đơn đơn phương.', 'neutral'); return; } openCase(l, 'me', true, poor, log); } },
-      { k: 'single', l: 'Nộp đơn ly hôn đơn phương', h: poor ? 'Được trợ giúp pháp lý miễn phí' : '~' + mo(l, l.base * 0.03), run: function (l, r, log) { openCase(l, 'me', false, poor, log); } }
+      { k: 'mutual', l: 'Bàn với ' + p.name + ' để nộp đơn thuận tình', h: fee.gbp?feeLabel:'Người ấy có quyền đồng ý hoặc không', why:affordable, run: function (l, r, log) { var yes = u(l.id + ':divok:' + l.age) < U.clamp(0.75 - bond(l, p) / 200, 0.2, 0.85); if (!yes) { log(p.name + ' chưa đồng ý ly hôn lúc này. Bạn vẫn có thể nộp đơn đơn phương.', 'neutral'); return; } openCase(l, 'me', true, poor, log); } },
+      { k: 'single', l: 'Nộp đơn ly hôn đơn phương', h:feeLabel, why:affordable, run: function (l, r, log) { openCase(l, 'me', false, poor, log); } }
     ];
   }, 18, 'Tình cảm & gia đình');
   // người đang thụ án vẫn mở được mục này (X.reason chặn người không tự do)

@@ -762,8 +762,8 @@
 
   // 3.7 Khám chữa bệnh: công hay tư
   var CARE = {
-    GB: ['NHS', 'Bác sĩ gia đình chuyển bạn đến chuyên khoa của NHS. Danh sách chờ là vài tháng, miễn phí; khám tư nhanh hơn nhưng phải tự trả.'],
-    CA: ['bảo hiểm y tế tỉnh', 'Khám chuyên khoa qua bảo hiểm y tế tỉnh là miễn phí nhưng phải chờ lâu; phòng khám ngoài bảo hiểm nhanh hơn, tốn tiền.'],
+    GB: ['NHS', 'Lịch khám và điều kiện chi trả tùy nơi bạn ở, tình trạng cư trú và loại dịch vụ.'],
+    CA: ['bảo hiểm y tế tỉnh hoặc vùng lãnh thổ', 'Chương trình công của tỉnh hoặc vùng lãnh thổ chi trả các dịch vụ bác sĩ và bệnh viện cần thiết thuộc phạm vi bảo hiểm. Cần kiểm tra bạn đã có bảo hiểm tại nơi ở và dịch vụ có được chi trả. https://www.canada.ca/en/health-canada/services/hospital-care.html'],
     AU: ['Medicare', 'Bệnh viện công qua Medicare miễn phí nhưng mổ không gấp phải chờ; bảo hiểm tư được chọn bác sĩ và ngày mổ.'],
     IN: ['bệnh viện công', 'Bệnh viện công rẻ nhưng hàng người chờ từ tờ mờ sáng; bệnh viện tư sạch sẽ, nhanh, giá cao.'],
     NG: ['bệnh viện công', 'Bệnh viện công thiếu bác sĩ, phải mua thuốc và vật tư ở ngoài; phòng khám tư tốt hơn nhưng đắt.'],
@@ -779,12 +779,18 @@
     TR: ['bệnh viện công', 'Bệnh viện công có bảo hiểm SGK đặt lịch qua ứng dụng nhưng kín lịch; bệnh viện tư khám ngay.'],
     TH: ['chế độ y tế toàn dân', 'Bệnh viện công theo chế độ y tế toàn dân chi phí rất thấp nhưng chờ lâu; bệnh viện tư nhanh và tiện nghi hơn.']
   };
+  function careNote873(l){
+    var row=pick(CARE,l),region=here(l)==='GB'&&E.STUDY857&&E.STUDY857.region(l);
+    if(region==='England'&&l.birthYear+l.age>=2021)return 'Bệnh viện NHS thường cần bác sĩ gia đình chuyển khám. Quyền bắt đầu điều trị không khẩn cấp do bác sĩ chuyên khoa phụ trách trong 18 tuần có ngoại lệ. Phí bệnh viện của khách quốc tế tùy tình trạng cư trú và diện được miễn. https://www.nhs.uk/nhs-services/hospitals/guide-to-nhs-waiting-times-in-england/\nhttps://www.nhs.uk/nhs-services/hospitals/about-nhs-hospital-services/';
+    if(region==='Scotland'&&l.birthYear+l.age>=2026)return 'NHS Scotland xét điều kiện theo tư cách lưu trú. Khoa cấp cứu miễn phí; nhập viện hoặc khám ngoại trú sau đó có thể phát sinh phí đối với khách. https://www.nhsinform.scot/care-support-and-rights/health-rights/access/healthcare-for-overseas-visitors/';
+    return row[1];
+  }
   SC('qg_kham_benh', {
     title: function (l) { return 'Khám chữa ' + (l.ill ? l.ill.n : 'bệnh'); },
     valid: function (l) { return world(l) && !!pick(CARE, l) && !!l.ill && l.indep && once(l, 'qg_kham_benh', 3); },
-    text: function (l) { return pick(CARE, l)[1]; },
+    text: careNote873,
     opts: [
-      { k: 'cong', l: function (l) { return 'Chờ khám theo ' + pick(CARE, l)[0]; }, h: 'Rẻ hoặc miễn phí, phải chờ', ai: { w: 1 }, run: function (l, r, log) { mark(l, 'qg_kham_benh'); stress(l, 4); fx(l, { hap: -1 }); log(U.pick(r, ["Bạn chờ khám theo hệ thống công. Mất nhiều thời gian, nhưng cuối cùng cũng được bác sĩ chuyên khoa điều trị.","Xếp hàng từ sáng sớm, đến chiều mới tới lượt. Bác sĩ khám kỹ, kê đơn và hẹn tái khám.","Chờ mấy tuần mới có lịch hẹn, trong lúc chờ bạn uống thuốc theo đơn của bác sĩ gia đình."]), 'neutral'); } },
+      { k: 'cong', l: function (l) { return 'Chờ khám theo ' + pick(CARE, l)[0]; }, h: 'Kiểm tra phạm vi chi trả và lịch hẹn', ai: { w: 1 }, run: function (l, r, log) { mark(l, 'qg_kham_benh'); if(['GB','CA'].includes(here(l))){log('Bạn hỏi cơ sở y tế về quyền lợi và lịch chuyển khám. Chi phí sẽ phụ thuộc dịch vụ và hồ sơ chi trả.','neutral');return;} stress(l, 4); fx(l, { hap: -1 }); log(U.pick(r, ["Bạn chờ khám theo hệ thống công. Mất nhiều thời gian, nhưng cuối cùng cũng được bác sĩ chuyên khoa điều trị.","Xếp hàng từ sáng sớm, đến chiều mới tới lượt. Bác sĩ khám kỹ, kê đơn và hẹn tái khám.","Chờ mấy tuần mới có lịch hẹn, trong lúc chờ bạn uống thuốc theo đơn của bác sĩ gia đình."]), 'neutral'); } },
       { k: 'tu', l: 'Đi khám tư cho nhanh', h: function (l) { return 'Khoảng ' + H.money(l, cost(l, 0.04)) + ', điều trị sớm hơn'; }, req: function (l) { return l.money >= cost(l, 0.04); }, ai: { w: 0.8, smart: 1.1 }, run: function (l, r, log) { mark(l, 'qg_kham_benh'); pay(l, 0.04, 'Khám chữa bệnh tư'); if (l.ill && l.ill.cure != null) l.ill.cure = Math.min(0.95, l.ill.cure * 1.15); fx(l, { hea: 2 }); log(U.pick(r, ["Bạn đi khám tư, được làm xét nghiệm và bắt đầu điều trị ngay trong tuần.","Phòng khám tư nhận ngay trong ngày, có kết quả xét nghiệm sau vài giờ.","Bạn chọn bệnh viện tư, phòng sạch sẽ, bác sĩ giải thích cặn kẽ phác đồ điều trị."]), 'good'); } }
     ]
   });

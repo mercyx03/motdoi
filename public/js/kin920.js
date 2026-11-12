@@ -221,7 +221,7 @@
     var p = partner(l); if (!p || p.shop920 || l.money < l.base * 1.6) return;
     var cap = l.base * 1.5; H.cash(l, -cap, (kind === 'stake' ? 'Góp vốn cửa hàng của ' : 'Cho vay vốn cửa hàng của ') + p.name);
     p.shop920 = { cap: cap, kind: kind, at: l.age, val: cap, owed: kind === 'loan' ? cap : 0 };
-    var c = shopCompany(l, p, p.shop920);
+    var c = shopCompany(l, p, p.shop920);if(kind==='loan')E.RELATIVE163.registerClaim(l,p);
     log(c.name + ' được ghi vào danh mục doanh nghiệp, có sổ tiền mặt, báo cáo và cổ tức hằng năm. ' + (kind === 'stake' ? 'Theo thỏa thuận, bạn góp tiền và giữ 50%; người ấy góp công vận hành và giữ 50%.' : 'Người ấy sở hữu cửa hàng; khoản vay của bạn được trả từ tiền riêng thực có, không cho bạn cổ phần.'), 'good');
   }
   E.SC('shopAsk920', { title: 'Vốn mở cửa hàng', prep: function (l) { var p = partner(l); return { at: l.age, person871: p && X.uid(l, p) }; }, valid: function (l, d) { var p = partner(l); return !!(p && !p.shop920 && d && d.at === l.age && (!d.person871 || d.person871 === X.uid(l, p))); },
@@ -230,7 +230,7 @@
       { k: 'loan', l: 'Cho vay, hẹn trả dần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { openShop(l, 'loan', log); } },
       { k: 'no', l: 'Chưa đủ khả năng; cùng tìm nguồn khác', run: function (l, r, log) { log('Hai người thống nhất bắt đầu nhỏ hơn hoặc chờ thêm.', 'neutral'); } }] });
   function shopYear(l, r, log) {
-    var p = partner(l), q = p && p.shop920; if (!q) return;
+    var p = partner(l), q = p && p.shop920; if (!q) {E.RELATIVE163.settleClaims(l,log);return;}
     if (!q.closed) {
       if (!q.company871) q.legacy871 = true;
       var c = shopCompany(l, p, q);
@@ -239,12 +239,9 @@
     }
     if (q.yr === l.age) return; q.yr = l.age;
     // Corporate settlement pays dividends once. A personal loan is not company debt.
-    if (q.kind === 'loan' && q.owed > 0) {
-      E.RELATIVE163.account(l, p); var pay = Math.min(q.owed, Math.max(0, p.savings158) * .15);
-      if (pay > 0 && E.RELATIVE163.post(l, p, -pay, 'Trả vốn vay cửa hàng', 'shop871:' + q.company871 + ':' + l.age)) { q.owed -= pay; H.cash(l, pay, p.name + ' trả nợ vốn cửa hàng'); var rows = p.finance163.years, last = rows[rows.length - 1]; if (last && last.age === l.age) { last.savings = p.savings158; last.debt = Math.max(0, Number(p.debt158) || 0) + Math.max(0, Number(p.owe) || 0) + q.owed; last.debtPaid += pay; } }
-    }
+    E.RELATIVE163.settleClaims(l,log);
   }
-  var convertShop871 = E.abroadConvert; E.abroadConvert = function (l, f) { var out = convertShop871.apply(this, arguments), q = l.partner && l.partner.shop920; if (q) ['cap', 'val', 'owed'].forEach(function (k) { if (Number.isFinite(q[k])) q[k] *= f; }); return out; };
+  var convertShop871 = E.abroadConvert; E.abroadConvert = function (l, f) { var out = convertShop871.apply(this, arguments), q = l.partner && l.partner.shop920; if (q) ['cap', 'val', 'owed'].forEach(function (k) { if (Number.isFinite(q[k])) q[k] *= f; });E.RELATIVE163.convertClaims(l,f); return out; };
   function helpYear(l) { var s = st(l), c = { maid: 0.08, nanny: 0.18 }[s.help]; if (c && s.helpPaid !== l.age) { s.helpPaid = l.age; if (l.money < l.base * c) { s.help = 'none'; return; } H.cash(l, -l.base * c, s.help === 'nanny' ? 'Lương bảo mẫu' : 'Giúp việc theo giờ'); }
     if (s.pbudget && s.pbPaid !== l.age && partner(l) && !(partner(l).inc > 0)) { s.pbPaid = l.age; H.cash(l, -s.pbudget * 12, 'Ngân sách cá nhân của ' + partner(l).name); } }
   function arrYear(l, r, log) {

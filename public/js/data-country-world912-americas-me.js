@@ -59,9 +59,9 @@
   A('CA', {
     e: [['Trung học theo tỉnh bang', 'Không có kỳ thi quốc gia; mỗi tỉnh có yêu cầu tốt nghiệp riêng.'], ['College và học nghề (Red Seal)', 'College và học nghề; chứng nhận Red Seal liên tỉnh.'], ['Đại học', 'Có khoản vay sinh viên liên bang và tỉnh.']],
     f: [['canada_day', 'Canada Day', '1/7', 'fixed', 'xem pháo hoa', 1867], ['truth_reconciliation', 'Ngày Sự thật và Hòa giải', '30/9', 'fixed', 'mặc áo cam và tìm hiểu lịch sử trường nội trú'], ['thanksgiving', 'Thanksgiving', 'Thứ Hai thứ hai tháng 10', 'variable', 'ăn bữa tối gia đình']],
-    m: [['Giấy phép theo tỉnh', 'Mỗi tỉnh cấp giấy phép kết hôn.'], ['Hôn nhân bình đẳng', 'Từ 2005, hai người cùng giới có thể kết hôn.'], ['Độ tuổi tối thiểu', 'Luật liên bang: không dưới 16; tỉnh có quy định đồng ý.']],
+    m: [['Giấy phép theo tỉnh', 'Mỗi tỉnh cấp giấy phép kết hôn.'], ['Hôn nhân bình đẳng', 'Từ 2005, hai người cùng giới có thể kết hôn.'], ['Độ tuổi tối thiểu', 'Luật liên bang yêu cầu từ đủ 16 tuổi. Các tỉnh và vùng lãnh thổ có quy định riêng về sự đồng ý và giấy phép.', 'https://laws-lois.justice.gc.ca/eng/acts/c-31.5/section-2.2.html']],
     d: ['Poutine', 'Butter tarts', 'Tourtière', 'Nanaimo bar', 'Bannock'],
-    w: [['Luật tiêu chuẩn việc làm tỉnh', 'Phần lớn người lao động theo luật tỉnh; một số ngành theo Canada Labour Code.'], ['Giờ làm', 'Ngưỡng làm thêm thường là 40 hoặc 44 giờ tùy tỉnh.'], ['Phép năm', 'Mốc thường gặp: 2 tuần, tăng theo thâm niên.'], ['CPP/QPP', 'Hưu trí công.'], ['EI', 'Bảo hiểm việc làm.']]
+    w: [['Luật tiêu chuẩn việc làm tỉnh', 'Phần lớn người lao động theo luật tỉnh; một số ngành theo Canada Labour Code.'], ['Giờ làm', 'Ngưỡng làm thêm thường là 40 hoặc 44 giờ tùy tỉnh.'], ['Phép năm tại Ontario', 'Theo Employment Standards Act của Ontario, người thuộc phạm vi áp dụng được tối thiểu 2 tuần dưới 5 năm làm việc, 3 tuần từ đủ 5 năm. Tỉnh khác có thể áp dụng mức riêng.', 'https://www.ontario.ca/document/your-guide-employment-standards-act-0/vacation'], ['CPP/QPP', 'Hưu trí công.'], ['EI', 'Bảo hiểm việc làm.']]
   });
   A('CL', {
     e: [['Enseñanza media và PAES', 'Kỳ thi PAES cho tuyển sinh đại học.'], ['Liceos técnico-profesionales, CFT, IP', 'Trung học kỹ thuật và trung tâm đào tạo.'], ['Đại học', 'Có chính sách miễn học phí theo thu nhập (gratuidad).']],

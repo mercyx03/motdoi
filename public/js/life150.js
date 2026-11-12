@@ -115,7 +115,7 @@
     function took(label, v) { if (v > 1e-9) { left -= v; detail.push([label, v]); } }
     var c = Math.min(Math.max(0, l.money), left); l.money -= c; took('tiền mặt', c);
     if (left > 1e-9) {
-      var cats = [], books = X.peek(l).bankBooks || [], A = l.assets || {};
+      var cats = [], books = (X.peek(l).bankBooks || []).filter(function(b){return !b.locked873||l.age>=b.due;}), A = l.assets || {};
       var bookV = books.reduce(function (s, b) { return s + (b.principal || 0); }, 0); if (bookV > 0) cats.push({ n: 'sổ tiết kiệm', v: bookV, scale: function (k) { books.forEach(function (b) { b.principal *= k; }); } });
       ['save', 'gold', 'stock', 'land'].forEach(function (key) { if ((A[key] || 0) > 0) cats.push({ n: { save: 'tiền gửi', gold: 'vàng', stock: 'cổ phiếu', land: 'đất' }[key], v: A[key], scale: function (k) { A[key] *= k; if (l.basis && l.basis[key]) l.basis[key] *= k; } }); });
       var pos = l.marketBook && l.marketBook.positions || {}, posKeys = Object.keys(pos);
