@@ -35,7 +35,7 @@
     IN: { n: 'Farewell party', g: 'final', p: 0.8, when: 'trước kỳ thi cuối cấp', note: 'Khối dưới tổ chức tiễn khối cuối; có nơi có nhảy, có nơi chỉ văn nghệ; trang phục tùy trường (saree, kurta, đồ trang trọng).', guests: 'school', ok: 'secondary' },
     PK: { n: 'Farewell party', g: 'final', p: 0.75, when: 'trước kỳ thi cuối cấp', note: 'Hình thức và trang phục theo trường, không mặc định có khiêu vũ.', guests: 'school', ok: 'secondary' },
     DE: { n: 'Abiball', g: 'final', p: 0.9, when: 'sau hoặc sát kỳ thi Abitur', note: 'Phụ huynh và thầy cô có thể cùng dự tùy hình thức.', guests: 'family', ok: 'secondary' },
-    FI: { n: 'Vanhojen tanssit (vũ hội của khóa trên)', g: 'pre', p: 0.95, when: 'tháng 2, sau khi khóa cuối nghỉ để ôn thi', note: 'Dành cho học sinh lukio khóa áp chót, không phải lễ tốt nghiệp; tập nhảy nhiều tuần.', guests: 'school', dance: 'các điệu nhảy cổ điển', ok: 'official', src: 'espoo.fi — Vanhojen tanssit 5.–6.2.2026 (khối: nguồn thứ cấp)' },
+    FI: { n: 'Vanhojen tanssit (vũ hội của khóa trên)', g: 'pre', p: 0.95, when: 'tháng 2, sau khi khóa cuối nghỉ để ôn thi', note: 'Dành cho học sinh lukio khóa áp chót, không phải lễ tốt nghiệp; tập nhảy nhiều tuần.', guests: 'school', dance: 'các điệu nhảy cổ điển', ok: 'official', src: 'https://jamsa.fi/ajankohtaista/tiedotteet/jamsan-lukion-penkkarit-ja-vanhojen-tanssit/' },
     RU: { n: 'Vypusknoy (lễ/tiệc tốt nghiệp)', g: 'final', p: 0.85, when: 'cuối tháng 6', note: 'Quy mô tùy lớp và thời kỳ; không phải lớp nào cũng xa xỉ.', guests: 'family', ok: 'secondary' },
     UA: { n: 'Vypusknyi (lễ tốt nghiệp)', g: 'final', p: 0.85, when: 'cuối năm học', note: 'Hình thức riêng của Ukraina, tùy điều kiện thời kỳ.', guests: 'family', ok: 'secondary' },
     AT: { n: 'Maturaball', g: 'final', p: 0.85, when: 'thường vào mùa thu/đông năm cuối, trước kỳ matura', note: 'Học sinh tự tổ chức theo văn hóa vũ hội.', guests: 'open', dance: 'valse', ok: 'secondary' },
@@ -44,7 +44,7 @@
     KR: { n: 'Lễ tốt nghiệp và chụp ảnh cùng lớp', g: 'final', p: 0, when: 'tháng 2', note: 'Lễ hội trường (thường mùa thu) tách khỏi lễ tốt nghiệp; prom hiếm.', guests: 'family', ok: 'secondary' },
     JP: { n: 'Lễ tốt nghiệp (sotsugyō-shiki)', g: 'final', p: 0, when: 'tháng 3', note: 'Có nơi còn tục tặng khuy áo thứ hai (đồng phục gakuran) — tùy người, không bắt buộc, không có nghĩa là đã thành đôi.', guests: 'family', ok: 'secondary' },
     TR: { n: 'Mezuniyet balosu', g: 'final', p: 0.6, when: 'cuối năm học', note: 'Tùy trường/địa phương; khách sạn ven Bosphorus chỉ là một lựa chọn ở Istanbul.', guests: 'school', ok: 'secondary' },
-    HR: { n: 'Norijada', g: 'final', p: 0.8, when: 'khoảng 100 ngày trước khi kết thúc năm cuối', note: 'Học sinh cuối cấp đi diễu hành vui ở một số thành phố, do trường/địa phương quản lý an toàn.', guests: 'school', ok: 'secondary' },
+    HR: { n: 'Norijada', g: 'final', p: 0.8, when: 'ngày học cuối cùng của khối cuối cấp', note: 'Hoạt động chia tay cuối cấp theo trường và địa phương; không phải dạ vũ bắt buộc.', guests: 'school', format: 'gathering', ok: 'official', src: 'https://pomorska-dubrovnik.hr/upload/dokument_1752054506.pdf' },
     RS: { n: 'Maturska večer (dạ tiệc tốt nghiệp)', g: 'final', p: 0.85, when: 'cuối năm học', note: 'Lễ riêng của Serbia, không phải Norijada.', guests: 'school', ok: 'secondary' },
     HU: { n: 'Szalagavató (lễ gắn ruy băng)', g: 'final', p: 0.9, when: 'mùa thu/đông năm cuối', note: 'Gắn ruy băng, biểu diễn valse cùng gia đình, theo lịch trường.', guests: 'family', dance: 'valse', ok: 'secondary' }
   };
@@ -66,8 +66,9 @@
     ['ET','Tiệc injera mừng tốt nghiệp','Cùng gia đình chia bánh injera và mời khách cà phê pha bằng jebena.'],
     ['BR MX','Dạ tiệc cuối cấp','Có thể mời cha, mẹ hoặc người thân mở điệu nhảy đầu tiên.']
   ].forEach(function(row){row[0].split(' ').forEach(function(code){
-    var prior=PROM[code]; PROM[code]=Object.assign({g:'final',p:0.55,when:'theo lịch của trường',guests:'school',ok:'simulation'},prior||{}, {n:row[1],note:row[2],p:prior && prior.p>0 ? prior.p : 0.55});
+    var prior=PROM[code]; PROM[code]=Object.assign({g:'final',p:0.55,when:'theo lịch của trường',guests:'school',ok:'simulation'},prior||{}, {n:row[1],note:row[2],p:prior && prior.p!=null ? prior.p : 0.55});
   });});
+  ['HR','IT','KR','CN','BE'].forEach(function(c){if(PROM[c])PROM[c].format='gathering';});
   var activities={PL:'Tập polonaise cho Studniówka',IT:'Ghi lời nhắn 100 ngày trước kỳ thi',BE:'Dựng tiết mục 100 ngày',KR:'Chụp ảnh và viết lời chúc cho lớp',CN:'Làm sổ lưu niệm Bách Nhật',NG:'Thiết kế trang phục Ankara cho thảm đỏ',KE:'Chuẩn bị mâm ăn chung với họ hàng',TZ:'Mời hàng xóm tới bữa cơm mừng tốt nghiệp',LB:'Tập dabke cùng nhóm bạn',EG:'Chơi tabla trong ban nhạc lớp',AE:'Phụ trách thảm đỏ và gian chụp ảnh',SA:'Đón khách với qahwa, chà là và bukhoor',QA:'Chuẩn bị bàn cà phê và chà là',IN:'Dựng tiết mục Bollywood với khóa dưới',BD:'Chuẩn bị video chia tay và lời chúc',PK:'Đọc thơ shayari tặng lớp',ID:'Tập angklung với ban nhạc trường',CD:'Tập nhảy ndombolo cùng bạn bè',ET:'Mời khách dùng injera và cà phê',BR:'Mời cha, mẹ hoặc người thân mở điệu nhảy',MX:'Tập khiêu vũ với người thân'};
   Object.keys(activities).forEach(function(code){if(PROM[code])PROM[code].activity=activities[code];});
   var DEF = { n: 'Buổi chia tay cuối cấp', g: 'final', p: 0.35, when: 'cuối năm học', note: 'Truyền thống của nước này chưa có dữ liệu riêng; dùng mô tả chung.', guests: 'school', ok: 'generic' };
@@ -79,7 +80,7 @@
   function left(l) { return endAge(l) - l.age - 1; } // tuổi trong năm học đang diễn ra tăng trước khi trường cập nhật schoolEnd: năm cuối = 1
   function key(l) { var sp = l.flags.study54 && l.flags.study54.special; return cc(l) + ':' + l.school + ':' + (sp && !(l.school==='upper' && E.WORLD120.p(l).highSchool) && sp.name || l.uniName || 'local') + ':' + (l.birthYear + endAge(l)); }
   function profile(l) {
-    var s = st(l), k = key(l); var named = cc(l)==='VN' && l.school==='upper' && E.WORLD120.p(l).highSchool;
+    var s = st(l), k = key(l); if(s.prof[k]&&rec(cc(l)).p===0)s.prof[k].prom=false; var named = cc(l)==='VN' && l.school==='upper' && E.WORLD120.p(l).highSchool;
     var selectedType = named && (named.type || (/chuyên/i.test(named.name) ? 'chuyên' : 'công lập'));
     if (s.prof[k] && (named ? s.prof[k].schoolName===named.name : cc(l)!=='VN' || s.prof[k].type!=='chuyên' || s.prof[k].res>=0.82)) return s.prof[k];
     var sp = l.flags.study54 && l.flags.study54.special, type = sp ? 'chuyên' : l.school === 'priv' ? (u(l.id + k + ':intl') < 0.25 ? 'quốc tế' : 'tư thục') : l.school === 'voc' ? 'nghề' : 'công lập';
@@ -144,7 +145,9 @@
     var q = l.partner; if (q && q.alive !== false) out.push({ k: 'who:partner', l: 'Đi cùng người yêu ' + q.name, why: Math.abs((q.age || l.age) - l.age) > 3 ? 'Khách mời cần cùng lứa tuổi học sinh' : p.guests === 'school' && !q.school108 ? 'Trường chỉ cho học sinh trong trường dự' : true, run: function (l, r, log) { e.who = 'partner'; e.date = q.name; log('Bạn và ' + q.name + ' cùng đi.', 'good'); } });
     return out;
   }
+  function currentEvent(l,e) { return !!(e && inSchool(l) && e.age===l.age && e.cc===cc(l) && e.school===key(l)); }
   function attend(l, e, r, log) {
+    if(!currentEvent(l,e))return;
     var c = ticket(l, e), p = profile(l), R = rec(e.cc);
     if (e.stage !== 'accepted' || !afford(l, c) && !(p.fund && c)) return;
     if (c) { if (afford(l, c)) H.cash(l, -c, payer(l) + ': ' + label(e)); else log('Quỹ hỗ trợ của trường đóng phần phí của bạn.', 'neutral'); }
@@ -152,10 +155,12 @@
     var w = e.date ? [e.date] : [];
     friends(l).slice(0, 4).forEach(function (f) { if (u(e.id + ':fr:' + f.name) < 0.6) { f.close = U.clamp((f.close || 50) + 2, 0, 100); w.push(f.name); } });
     var t;
-    if (e.kind === 'prom' || e.kind === 'prom2') {
+    if ((e.kind === 'prom' || e.kind === 'prom2') && R.format === 'gathering') {
+      t = e.name + ': bạn cùng lớp tham gia hoạt động chia tay cuối cấp và chụp ảnh lưu niệm theo kế hoạch của trường.';
+    } else if (e.kind === 'prom' || e.kind === 'prom2') {
       t = e.name + (R.dance ? ': mở màn bằng ' + R.dance : '') + '; bạn ' + (e.who === 'alone' ? 'đi một mình và nhảy cùng các bạn trong lớp' : e.who === 'group' ? 'đi cùng nhóm bạn' : 'đi cùng ' + e.date) + '. Cả lớp chụp ảnh, cảm ơn thầy cô.';
       if (p.crown && u(e.id + ':crown') < 0.08 + (l.st.soc || 50) / 1000) t += ' Bạn được các bạn bình chọn trong danh hiệu của buổi tiệc.';
-      t += ' Sau tiệc, lớp đi ăn khuya có thầy cô và phụ huynh đưa về.';
+      t += ' Kết thúc hoạt động, bạn cùng lớp thu xếp ra về theo kế hoạch của trường.';
     } else if (e.kind === 'grad') t = 'Lễ tốt nghiệp: bạn mặc trang phục của buổi lễ, gửi lời cảm ơn thầy cô và chụp ảnh cùng gia đình.';
     else if (e.kind === 'yearbook') t = 'Bạn góp ảnh và lời nhắn vào kỷ yếu của lớp.';
     else if (e.kind === 'trip' || e.kind === 'senior') t = (e.kind === 'senior' ? 'Chuyến đi cuối cấp ' : 'Chuyến ngoại khóa ') + (e.dest || '') + ' cùng lớp, có giáo viên đi kèm.';
@@ -163,6 +168,7 @@
     log(t, 'good'); memo(l, e, t, w);
   }
   function evRows(l, e) {
+    if(!currentEvent(l,e))return [];
     var out = [];
     if (e.stage === 'announced') {
       out.push({ k: 'join', l: 'Đăng ký tham gia', run: function (l, r, log) { e.stage = 'accepted'; log('Bạn đăng ký ' + label(e) + '.', 'neutral'); } });
@@ -170,19 +176,33 @@
       return out;
     }
     if (e.stage !== 'accepted') return [{ k: 'none', l: e.stage === 'completed' ? 'Đã tham dự' : e.stage === 'cancelled' ? 'Sự kiện đã hủy' : 'Đã không tham gia', why: 'Không còn bước nào', run: function () { } }];
-    var formal = e.kind === 'prom' || e.kind === 'prom2' || e.kind === 'grad';
+    var gathering = rec(e.cc).format === 'gathering';
+    var formal = !gathering && (e.kind === 'prom' || e.kind === 'prom2') || e.kind === 'grad';
     if (formal && !e.outfit) return outfitRows(l, e);
-    if ((e.kind === 'prom' || e.kind === 'prom2') && !e.who) return companionRows(l, e);
+    if (!gathering && (e.kind === 'prom' || e.kind === 'prom2') && !e.who) return companionRows(l, e);
     if ((e.kind === 'prom' || e.kind === 'prom2') && !e.prep && rec(cc(l)).activity) {
       var activity=rec(cc(l)).activity;
       out.push({k:'prep:local',l:activity,run:function(l,r,log){e.prep='local';e.activity=activity;H.fx(l,{soc:1});log('Bạn cùng lớp chuẩn bị: '+activity+'.','good');H.mem(l,activity,2);}});
     }
-    if ((e.kind === 'prom' || e.kind === 'prom2') && !e.prep) [['dance', 'Tập nhảy cùng lớp'], ['help', 'Tham gia ban tổ chức (chọn nhạc, trang trí)'], ['skip', 'Không cần chuẩn bị thêm']].forEach(function (x) { out.push({ k: 'prep:' + x[0], l: x[1], run: function (l, r, log) { e.prep = x[0]; if (x[0] !== 'skip') H.fx(l, { soc: 1 }); log(x[0] === 'dance' ? 'Mấy tuần tập nhảy sau giờ học.' : x[0] === 'help' ? 'Bạn cùng ban tổ chức lo nhạc và trang trí.' : 'Bạn để dành sức cho buổi tối.', 'neutral'); } }); });
+    if ((e.kind === 'prom' || e.kind === 'prom2') && !e.prep) [['dance', 'Tập nhảy cùng lớp'], ['help', 'Tham gia ban tổ chức (chọn nhạc, trang trí)'], ['skip', 'Không cần chuẩn bị thêm']].filter(function(x){return !gathering || x[0]!=='dance';}).forEach(function (x) { out.push({ k: 'prep:' + x[0], l: x[1], run: function (l, r, log) { e.prep = x[0]; if (x[0] !== 'skip') H.fx(l, { soc: 1 }); log(x[0] === 'dance' ? 'Mấy tuần tập nhảy sau giờ học.' : x[0] === 'help' ? 'Bạn cùng ban tổ chức lo nhạc và trang trí.' : 'Bạn để dành sức cho buổi sinh hoạt.', 'neutral'); } }); });
     else if (e.kind === 'senior' && !e.dest) tripChoices(l).forEach(function (t) { out.push({ k: 'dest:' + t[0], l: 'Bình chọn đi ' + t[0], h: '~' + mo(l, l.base * t[1]), run: function (l, r, log) { e.dest = t[0]; e.cost = t[1]; log('Lớp chọn đi ' + t[0] + '.', 'neutral'); } }); });
     else if (e.kind === 'yearbook' && !e.photo) [['group', 'Chỉ ảnh tập thể', 0], ['solo', 'Chụp thêm ảnh cá nhân', 0.01]].forEach(function (x) { out.push({ k: 'photo:' + x[0], l: x[1], h: x[2] ? '~' + mo(l, l.base * x[2]) : '', why: afford(l, l.base * x[2]) ? true : 'Chưa đủ tiền', run: function (l, r, log) { e.photo = x[0]; if (x[2]) H.cash(l, -l.base * x[2], payer(l) + ': ảnh kỷ yếu'); attend(l, e, r, log); } }); });
     else { var c = ticket(l, e), ok = afford(l, c) || profile(l).fund; out.push({ k: 'go', l: 'Tham dự ' + label(e), h: c ? payer(l) + ' ~' + mo(l, c) + (profile(l).fund ? ' (có quỹ hỗ trợ)' : '') : '', why: ok ? true : 'Chưa đủ tiền — có thể không tham gia, không phát sinh nợ', run: function (l, r, log) { if ((e.kind === 'trip' || e.kind === 'senior' || e.kind === 'campfire') && u(e.id + ':wx:' + (e.post || 0)) < 0.06) { if (!e.post) { e.post = 1; log('Thời tiết xấu, trường dời ' + label(e) + ' sang dịp khác trong năm.', 'neutral'); return; } e.stage = 'cancelled'; log(label(e) + ' bị hủy vì thời tiết; không thu phí.', 'neutral'); return; } attend(l, e, r, log); } }); }
     out.push({ k: 'cancel', l: 'Rút đăng ký', h: 'Chưa trả phí thì không mất tiền', run: function (l, r, log) { e.stage = 'declined'; e.alt = 'withdrew'; log('Bạn rút đăng ký ' + label(e) + '.', 'neutral'); } });
     return out;
+  }
+  // Inline vector assets travel with the existing school module in the build.
+  // Decorative symbols do not invent portraits or alter event state.
+  function illustration(l,d) {
+    if(!d||d.id!=='school920')return '';
+    var id=d.data&&d.data.arg&&d.data.arg.id,s=l.flags&&l.flags.school920,e=s&&s.inst&&s.inst[id];
+    if(!e||!['yearbook','prom','prom2'].includes(e.kind))return '';
+    var book=e.kind==='yearbook',gathering=rec(e.cc).format==='gathering';
+    var body=book?'<path d="M158 48 Q240 25 320 48 Q400 25 482 48 V164 Q400 140 320 164 Q240 140 158 164Z" fill="#f5e6ca"/><path d="M320 48V164" stroke="#bf9d64" stroke-width="3"/><rect x="183" y="64" width="110" height="58" rx="5" fill="#527a79"/><circle cx="216" cy="84" r="8" fill="#f5e6ca"/><circle cx="259" cy="84" r="8" fill="#f5e6ca"/><path d="M201 113Q216 89 231 113M244 113Q259 89 274 113" fill="#f5e6ca"/><path d="M346 68H455M346 86H447M346 104H459M183 139H287M346 128L373 118L398 130L432 116" stroke="#66807b" stroke-width="4" stroke-linecap="round"/>':'<path d="M50 24Q320 105 590 24" fill="none" stroke="#e6c27a" stroke-width="3"/><path d="M85 35L100 66L120 45M170 56L188 88L207 63M260 71L280 102L300 74M350 73L370 102L388 70M440 62L458 88L477 55M520 44L541 66L557 34" fill="#97bcac"/><rect x="145" y="126" width="350" height="8" rx="4" fill="#e6c27a"/><path d="M163 134V176M477 134V176" stroke="#97bcac" stroke-width="7"/><rect x="268" y="91" width="104" height="35" rx="6" fill="#688f87"/><circle cx="320" cy="108" r="10" fill="#f5e6ca"/>';
+    return '<svg class="school-art871" viewBox="0 0 640 200" role="img" aria-label="'+(book?'Sổ kỷ yếu và lời nhắn của lớp':gathering?'Góc lưu niệm buổi chia tay':'Trang trí tiệc cuối cấp')+'" style="display:block;width:100%;max-height:180px;border-radius:14px;margin:12px 0"><rect width="640" height="200" rx="16" fill="#183f43"/><circle cx="70" cy="150" r="26" fill="#244f51"/><circle cx="569" cy="100" r="44" fill="#244f51"/>'+body+'</svg>';
+  }
+  function continueRows(l,e,rows) {
+    return rows.map(function(row){var out=Object.assign({},row),run=row.run;out.run=function(l,r,log){if(!currentEvent(l,e))return;run(l,r,log);if(inSchool(l)&&e.age===l.age&&e.school===key(l)&&e.stage==='accepted'&&!l.pending.some(function(d){return d.id==='school920';}))X.next(l,'school920',r,{id:e.id});};return out;});
   }
   X.menu('school920', 'Sự kiện ở trường: ngoại khóa, kỷ yếu, tốt nghiệp, prom', function (l) { if (!inSchool(l)) return 'Cần đang đi học phổ thông'; return live(l).length ? true : 'Năm học này chưa có sự kiện nào'; }, function (l, d) {
     var a = d && d.arg || {}, e = a.id && st(l).inst[a.id], p = inSchool(l) ? profile(l) : null, R = rec(cc(l));
@@ -190,7 +210,7 @@
     return 'Trường ' + (p ? p.type : '') + ' · nguồn lực ' + (p ? Math.round(p.res * 100) : '?') + '/100' + (p && p.fund ? ' · có quỹ hỗ trợ học sinh khó khăn' : '') + '. Mọi hoạt động là tự nguyện; không ảnh hưởng điều kiện tốt nghiệp.';
   }, function (l, arg) {
     var e = arg && arg.id && st(l).inst[arg.id];
-    if (e) return evRows(l, e).concat([{ k: 'back', l: '← Danh sách sự kiện', run: function (l, r) { X.next(l, 'school920', r, {}); } }]);
+    if (e) return continueRows(l,e,evRows(l, e)).concat([{ k: 'back', l: '← Danh sách sự kiện', run: function (l, r) { X.next(l, 'school920', r, {}); } }]);
     return live(l).map(function (x) { return { k: x.id, l: U.cap(label(x)) + ' · ' + { announced: 'mở đăng ký', accepted: 'đã đăng ký', declined: 'không tham gia', completed: 'đã dự', cancelled: 'đã hủy' }[x.stage], run: function (l, r) { X.next(l, 'school920', r, { id: x.id }); } }; });
   }, 6, 'Học tập');
 
@@ -249,5 +269,5 @@
   if (wc) { var wv = wc.valid; wc.valid = function (l, d) { var c = E.comingOfAge173 && E.comingOfAge173(l); if (c && RITES[c.key] && RITES[c.key].when(l)) return false; return wv.apply(this, arguments); }; }
 
   E.HOOKS.year.push(function (l, r, log) { if (!l.alive || !['vn', 'world'].includes(l.mode)) return; plan(l, log); var s = l.flags.school920; if (s && s.inst) Object.keys(s.inst).forEach(function (k) { var e = s.inst[k]; if (e.age < l.age - 1 && e.stage === 'announced') { e.stage = 'declined'; e.alt = 'expired'; } if (l.age - e.age > 6) delete s.inst[k]; }); });
-  E.SCHOOL920 = { PROM: PROM, rec: rec, profile: profile, key: key, plan: plan, live: live, evRows: evRows, attend: attend, label: label, wardrobe: wardrobe, OUTFIT: OUTFIT, RITES: RITES, RESEARCH: RESEARCH, rites: rites };
+  E.SCHOOL920 = { illustration: illustration, PROM: PROM, rec: rec, profile: profile, key: key, plan: plan, live: live, evRows: evRows, attend: attend, label: label, wardrobe: wardrobe, OUTFIT: OUTFIT, RITES: RITES, RESEARCH: RESEARCH, rites: rites };
 })(globalThis.G);

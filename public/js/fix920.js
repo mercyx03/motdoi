@@ -127,7 +127,7 @@
     GB: { mode: 'leave', ok: 'official', note: 'Visa học ngắn hạn ở Anh không cho chuyển sang visa sinh viên từ trong nước; phải nộp từ nước nhà (gov.uk/student-visa/switch-to-this-visa).' },
     JP: { mode: 'onshore', ok: 'secondary', note: 'Nhật: đổi/gia hạn tư cách lưu trú du học tại cục xuất nhập cảnh (nguồn thứ cấp, chưa đọc nguyên văn).' },
     KR: { mode: 'onshore', ok: 'secondary', note: 'Hàn: đổi D-4 sang D-2 tại chỗ (nguồn thứ cấp).' },
-    DE: { mode: 'onshore', ok: 'secondary', note: 'Đức: từ khóa tiếng có thể xin giấy phép du học tại Sở ngoại kiều (nguồn thứ cấp).' },
+    DE: { mode: 'onshore', ok: 'official', source: 'https://verwaltung.bund.de/leistungsverzeichnis/DE/leistung/99010019001013/herausgeber/NI-480594815/region/030000000000', note: 'Đức: khóa tiếng có thể chuyển mục đích cư trú nếu đạt điều kiện của diện mới; cơ quan ngoại kiều xét hồ sơ, không tự được nhập học hoặc gia hạn. Nguồn: Bundesportal, §16f AufenthG.' },
     AU: { mode: 'onshore', ok: 'secondary', note: 'Úc: nộp visa sinh viên mới khi còn trong nước nếu visa hiện tại không có điều kiện cấm (nguồn thứ cấp).' },
     CA: { mode: 'onshore', ok: 'secondary', note: 'Canada: đổi giấy phép học tại chỗ khi còn hiệu lực (nguồn thứ cấp).' },
     US: { mode: 'onshore', ok: 'secondary', note: 'Mỹ: chuyển trường trong diện F-1 qua SEVIS (nguồn thứ cấp).' }

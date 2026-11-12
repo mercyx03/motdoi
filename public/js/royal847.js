@@ -2619,7 +2619,7 @@
       var u=E.EDUCATION54.schools.find(function(a){return a.id===w.school;});if(!u)return {index:index+1,status:'Thiếu thông tin trường trong bản lưu'};
       var cut=u.nk?u.score:E.EDUCATION54.threshold(u,w.major),missing=[];
       if(!E.ARTS84.fits({khoi:b},u,w.major))missing.push('Tổ hợp không phù hợp');
-      var reason=E.EDUCATION54.entryReason&&E.EDUCATION54.entryReason(l,u);if(reason)missing.push(reason);
+      var reason=E.EDUCATION54.entryReason&&E.EDUCATION54.entryReason(l,u,w);if(reason)missing.push(reason);
       if(u.nk&&nk.low.total<u.nkPass)missing.push('Năng khiếu cần ≥'+u.nkPass+'/10; dự kiến '+nk.low.total+'–'+nk.high.total);
       var direct=!u.nk&&E.EDUCATION54.direct(l,w.major);
       return {index:index+1,schoolName:u.name,program:w.program||E.MAJORS[w.major]||w.major,cut:cut,missing:missing,

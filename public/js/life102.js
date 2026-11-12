@@ -150,7 +150,7 @@
     for (var i = 0; i < s.wishes.length && !found; i++) {
       var x = s.wishes[i], u = school(x.school); if (!u) continue;
       if (!fits(l, u, x.major)) { log('NV' + (i + 1) + ' (' + u.name + ') không xét khối ' + l.khoi + ' — hồ sơ không hợp lệ.', 'neutral'); continue; }
-      var entryReason = EDU54.entryReason && EDU54.entryReason(l, u);
+      var entryReason = EDU54.entryReason && EDU54.entryReason(l, u, x);
       if (entryReason) { log('NV' + (i + 1) + ' (' + u.name + ') không đủ điều kiện: ' + entryReason + '.', 'neutral'); continue; }
       if (u.nk) {
         var t = nkDone[u.id] != null ? nkDone[u.id] : (nkDone[u.id] = nkScore(l, u, r));

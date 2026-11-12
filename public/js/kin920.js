@@ -210,19 +210,41 @@
     opts: [{ k: 'yes', l: 'Ủng hộ, chi từ quỹ chung', run: function (l, r, log, d) { var p = partner(l); p.goal920.ok = 'fund'; H.cash(l, -l.base * GOALS[d.k][1], 'Hỗ trợ dự định của ' + p.name); p.close = clamp((p.close || 50) + 3); log('Bạn ủng hộ ' + p.name + ' theo đuổi ' + GOALS[d.k][0] + '.', 'good'); } },
       { k: 'cheap', l: 'Ủng hộ theo cách tiết kiệm (tự học, lớp cộng đồng)', run: function (l, r, log, d) { var p = partner(l); p.goal920.ok = 'cheap'; H.cash(l, -l.base * GOALS[d.k][1] * 0.3, 'Hỗ trợ dự định của ' + p.name); p.close = clamp((p.close || 50) + 1); log('Hai người chọn cách tiết kiệm; ' + p.name + ' vẫn bắt đầu dự định.', 'neutral'); } },
       { k: 'no', l: 'Nói thật năm nay tài chính chưa cho phép', run: function (l, r, log) { var p = partner(l); p.goal920.ok = 'no'; p.goal920.end = 'declined'; p.goal920.endAt = l.age; p.close = clamp((p.close || 50) - 2); log(p.name + ' hiểu, nhưng có chút buồn. Hai người hẹn xem lại sau.', 'neutral'); } }] });
-  E.SC('shopAsk920', { title: 'Vốn mở cửa hàng', prep: function (l) { return { at: l.age }; }, valid: function (l, d) { var p = partner(l); return !!(p && !p.shop920 && d && d.at === l.age); },
-    text: function (l) { var p = partner(l); return p.name + ' đã chuẩn bị kế hoạch mở một cửa hàng nhỏ và hỏi bạn về vốn (~' + mo(l, l.base * 1.5) + '). Kinh doanh có thể lãi hoặc lỗ; vốn là khoản góp, cho vay hoặc quà theo thỏa thuận, không tự sinh lời.'; },
-    opts: [{ k: 'stake', l: 'Góp vốn, cùng chia lãi/lỗ', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { var p = partner(l); H.cash(l, -l.base * 1.5, 'Góp vốn cửa hàng của ' + p.name); p.shop920 = { cap: l.base * 1.5, kind: 'stake', at: l.age, val: l.base * 1.5 }; log('Bạn góp vốn; cửa hàng của ' + p.name + ' khai trương.', 'good'); } },
-      { k: 'loan', l: 'Cho vay, hẹn trả dần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { var p = partner(l); H.cash(l, -l.base * 1.5, 'Cho ' + p.name + ' vay vốn'); p.shop920 = { cap: l.base * 1.5, kind: 'loan', at: l.age, val: l.base * 1.5, owed: l.base * 1.5 }; log('Bạn cho ' + p.name + ' vay vốn mở cửa hàng.', 'neutral'); } },
-      { k: 'no', l: 'Chưa đủ khả năng; cùng tìm nguồn khác (vay ưu đãi, làm nhỏ trước)', run: function (l, r, log) { log('Hai người thống nhất bắt đầu nhỏ hơn hoặc chờ thêm.', 'neutral'); } }] });
-  function shopYear(l, r, log) {
-    var p = partner(l), q = p && p.shop920; if (!q || q.closed || q.yr === l.age) return; q.yr = l.age;
-    var x = u(l.id + ':shop:' + l.age), prof = q.cap * (x < 0.25 ? -0.25 : x < 0.55 ? 0.02 : x < 0.9 ? 0.12 : 0.3);
-    q.val = Math.max(0, q.val + prof * 0.3); p.inc = Math.max(0, (p.inc || 0) * 0.5 + Math.max(0, prof) / 12);
-    if (q.kind === 'stake' && prof > 0) H.cash(l, prof * 0.5, 'Chia lãi cửa hàng của ' + p.name);
-    if (q.kind === 'loan' && q.owed > 0 && prof > 0) { var pay = Math.min(q.owed, prof * 0.5); q.owed -= pay; H.cash(l, pay, p.name + ' trả nợ vốn'); }
-    if (x < 0.06 && l.age - q.at >= 2) { q.closed = l.age; log('Cửa hàng của ' + p.name + ' làm ăn khó khăn và đóng cửa' + (q.kind === 'loan' && q.owed > 0 ? '; khoản vay còn ' + mo(l, q.owed) + ' hai người bàn cách trả' : '') + '.', 'bad'); }
+  function shopCompany(l, p, q) {
+    var all = E.BUSINESS123.companies(l), c = q.company871 && all.find(function (v) { return X.uid(l, v) === q.company871; });
+    if (q.company871) return c || null;
+    c = { name: 'Cửa hàng ' + p.name, sector: 'retail', value: Math.max(0, Number(q.val) || 0), share: q.kind === 'stake' ? 50 : 0, created: q.at, governance: 0,
+      holders137: [{ id: X.uid(l, p), name: p.name, kind: 'bạn đời', share: q.kind === 'stake' ? 50 : 100 }], partnerShop871: X.uid(l, p) };
+    E.BUSINESS133.ensure(c); all.push(c); q.company871 = X.uid(l, c); E.TREASURY165.ensure(l, c, q.at === l.age && !q.legacy871); return c;
   }
+  function openShop(l, kind, log) {
+    var p = partner(l); if (!p || p.shop920 || l.money < l.base * 1.6) return;
+    var cap = l.base * 1.5; H.cash(l, -cap, (kind === 'stake' ? 'Góp vốn cửa hàng của ' : 'Cho vay vốn cửa hàng của ') + p.name);
+    p.shop920 = { cap: cap, kind: kind, at: l.age, val: cap, owed: kind === 'loan' ? cap : 0 };
+    var c = shopCompany(l, p, p.shop920);
+    log(c.name + ' được ghi vào danh mục doanh nghiệp, có sổ tiền mặt, báo cáo và cổ tức hằng năm. ' + (kind === 'stake' ? 'Theo thỏa thuận, bạn góp tiền và giữ 50%; người ấy góp công vận hành và giữ 50%.' : 'Người ấy sở hữu cửa hàng; khoản vay của bạn được trả từ tiền riêng thực có, không cho bạn cổ phần.'), 'good');
+  }
+  E.SC('shopAsk920', { title: 'Vốn mở cửa hàng', prep: function (l) { var p = partner(l); return { at: l.age, person871: p && X.uid(l, p) }; }, valid: function (l, d) { var p = partner(l); return !!(p && !p.shop920 && d && d.at === l.age && (!d.person871 || d.person871 === X.uid(l, p))); },
+    text: function (l) { var p = partner(l); return p.name + ' đã chuẩn bị kế hoạch mở một cửa hàng nhỏ và hỏi bạn về vốn (~' + mo(l, l.base * 1.5) + '). Góp vốn theo thỏa thuận 50/50, người ấy góp công vận hành; cho vay thì người ấy giữ toàn bộ cổ phần. Kinh doanh có thể lãi hoặc lỗ.'; },
+    opts: [{ k: 'stake', l: 'Góp vốn, nhận 50% cổ phần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { openShop(l, 'stake', log); } },
+      { k: 'loan', l: 'Cho vay, hẹn trả dần', req: function (l) { return l.money >= l.base * 1.6; }, run: function (l, r, log) { openShop(l, 'loan', log); } },
+      { k: 'no', l: 'Chưa đủ khả năng; cùng tìm nguồn khác', run: function (l, r, log) { log('Hai người thống nhất bắt đầu nhỏ hơn hoặc chờ thêm.', 'neutral'); } }] });
+  function shopYear(l, r, log) {
+    var p = partner(l), q = p && p.shop920; if (!q) return;
+    if (!q.closed) {
+      if (!q.company871) q.legacy871 = true;
+      var c = shopCompany(l, p, q);
+      if (!c || c.merged) { q.closed = l.age; log('Cửa hàng không còn hoạt động trong danh mục; khoản vay cá nhân còn lại vẫn được theo dõi.', 'neutral'); }
+      else q.val = c.value;
+    }
+    if (q.yr === l.age) return; q.yr = l.age;
+    // Corporate settlement pays dividends once. A personal loan is not company debt.
+    if (q.kind === 'loan' && q.owed > 0) {
+      E.RELATIVE163.account(l, p); var pay = Math.min(q.owed, Math.max(0, p.savings158) * .15);
+      if (pay > 0 && E.RELATIVE163.post(l, p, -pay, 'Trả vốn vay cửa hàng', 'shop871:' + q.company871 + ':' + l.age)) { q.owed -= pay; H.cash(l, pay, p.name + ' trả nợ vốn cửa hàng'); var rows = p.finance163.years, last = rows[rows.length - 1]; if (last && last.age === l.age) { last.savings = p.savings158; last.debt = Math.max(0, Number(p.debt158) || 0) + Math.max(0, Number(p.owe) || 0) + q.owed; last.debtPaid += pay; } }
+    }
+  }
+  var convertShop871 = E.abroadConvert; E.abroadConvert = function (l, f) { var out = convertShop871.apply(this, arguments), q = l.partner && l.partner.shop920; if (q) ['cap', 'val', 'owed'].forEach(function (k) { if (Number.isFinite(q[k])) q[k] *= f; }); return out; };
   function helpYear(l) { var s = st(l), c = { maid: 0.08, nanny: 0.18 }[s.help]; if (c && s.helpPaid !== l.age) { s.helpPaid = l.age; if (l.money < l.base * c) { s.help = 'none'; return; } H.cash(l, -l.base * c, s.help === 'nanny' ? 'Lương bảo mẫu' : 'Giúp việc theo giờ'); }
     if (s.pbudget && s.pbPaid !== l.age && partner(l) && !(partner(l).inc > 0)) { s.pbPaid = l.age; H.cash(l, -s.pbudget * 12, 'Ngân sách cá nhân của ' + partner(l).name); } }
   function arrYear(l, r, log) {
@@ -311,5 +333,5 @@
     if (!l.alive || !['vn', 'world'].includes(l.mode)) return;
     homeYear(l, r, log); helpYear(l); arrYear(l, r, log); goalYear(l, r, log); shopYear(l, r, log); parYear(l); cheatYear(l, r, log);
   });
-  E.KIN920 = { kin: kin, kinText: kinText, meet: meet, setHome: setHome, HOME: HOME, want: want, load: load, setArr: setArr, ARR: ARR, GOALS: GOALS, goalYear: goalYear, pr: pr, ACTS: ACTS, commit: commit, cheatP: cheatP, cheatYear: cheatYear };
+  E.KIN920 = { kin: kin, kinText: kinText, meet: meet, setHome: setHome, HOME: HOME, want: want, load: load, setArr: setArr, ARR: ARR, GOALS: GOALS, goalYear: goalYear, shopYear: shopYear, pr: pr, ACTS: ACTS, commit: commit, cheatP: cheatP, cheatYear: cheatYear };
 })(globalThis.G);

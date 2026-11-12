@@ -1,5 +1,34 @@
 'use strict';const assert=require('assert'),G=require('./hardcore-isolation').gameContext(),E=G.E,F=E.FOOTBALL;
+for (const [country, league, first] of [['DE','2. Bundesliga','Hertha BSC'],['ES','LALIGA HYPERMOTION','RC Deportivo']]) {
+  const teams = E.FOOTBALL_DATA.clubs.filter(c => c.country === country && c.tier === 2);
+  assert.equal(teams.length, 4);
+  assert.equal(teams[0].id, country+'-4');
+  assert.equal(teams[0].name, first);
+  assert(teams.every(c => c.league === league && c.referenceSeason === '2025/26' && c.source));
+}
+for (const [country, league] of [['DE','3. Liga'],['ES','Primera Federación']]) {
+  const teams = E.FOOTBALL_DATA.clubs.filter(c => c.country === country && c.tier === 3);
+  assert.deepEqual(teams.map(c => c.id), [8,9,10,11].map(i => country+'-'+i));
+  assert(teams.every(c => c.league === league && c.referenceSeason === '2025/26' && c.source && !c.cup));
+}
 function life(age=18,skill=90){const l=E.createLife({mode:'vn',seed:897});Object.assign(l,{age,school:null,indep:true,job:null,pending:[],money:l.base*1000,talent:'thể thao',talentSub:'bóng đá',skill});l.flags.military=0;F.init(l,()=>.5);return l;}
+{
+  let promoted=life(20,95);
+  assert(F.negotiate(promoted,'VN-4',()=>0,()=>{}));
+  assert(F.accept(promoted,F.peek(promoted).offers[0].id,()=>.5,()=>{}));
+  const first=F.season(promoted,()=>.5,()=>{});
+  assert.equal(first.tier,2);
+  assert.equal(first.movement.to,1);
+  assert.equal(F.season(promoted,()=>.5,()=>{}),first);
+  promoted=E.migrate(JSON.parse(JSON.stringify(promoted)));
+  assert.equal(F.peek(promoted).divisions[first.movement.counterpart],2);
+  promoted.age++;
+  const next=F.season(promoted,()=>.5,()=>{});
+  assert.equal(next.tier,1);
+  assert.equal(next.club,'VN-4');
+  assert.equal(next.table.length,first.table.length);
+  assert(!next.table.some(row=>row.id===first.movement.counterpart));
+}
 function choose(l,key){const d=l.pending[0];const i=d.data&&d.data.keys?d.data.keys.indexOf(key):null;const k=i==null?key:String(i);assert(d.opts.some(o=>o.k===k),d.id+' exposes '+key);E.resolve(l,k);}
 let high=life(),low=life(18,10),c=F.club('VN-3');assert(F.rating(high)>F.rating(low)+25);assert(F.negotiationChance(high,c)>F.negotiationChance(low,c));let before=F.rating(high);high.skill+=5;F.syncTalent(high);assert(F.rating(high)>before);let once=JSON.stringify(F.peek(high).skills);F.syncTalent(high);assert.equal(JSON.stringify(F.peek(high).skills),once);
 let unrelated=life();unrelated.flags.football=null;unrelated.talent='game';unrelated.talentSub='FPS';unrelated.skill=100;F.init(unrelated,()=>.5);assert(F.rating(unrelated)<50,'unrelated game skill is not football experience');

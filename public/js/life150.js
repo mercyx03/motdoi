@@ -206,7 +206,7 @@
   }
   function nameOf(l, key) { var h = heirKeys(l).find(function (x) { return x.key === key; }); return h ? h.name : null; }
   function protectedHeir(l, h, atAge) { return h.spouse && vn(l) || h.kid != null && (atAge != null ? atAge : l.age) - l.kids[h.kid].born < 18; }
-  X.menu('will150', 'Di chúc chi tiết', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150', 'Di chúc chi tiết', E.WILL70.reason,
     function (l) {
       var w = W(l), base = l.flags.will70, debt = (l.loans || []).reduce(function (s, x) { return s + (x.bal || 0); }, 0) + (l.mortgage || 0);
       var lines = ['Tài sản vẫn thuộc về bạn khi còn sống; di chúc chỉ có hiệu lực khi bạn qua đời và có thể sửa bất cứ lúc nào.',
@@ -227,10 +227,11 @@
       rows.push({ k: 'clear', l: 'Xóa các điều khoản chi tiết', why: Object.keys(W(l).specific).length || W(l).exclude.length || W(l).executor || Object.keys(W(l).manage).length ? true : 'Chưa có điều khoản chi tiết', run: function (l, r, log) { delete l.flags.will150; log('Bạn xóa các điều khoản chi tiết trong di chúc; tỷ lệ chia giữ nguyên.', 'neutral'); } });
       return rows;
     }, 18, 'Tiền bạc');
-  X.menu('will150_asset', 'Giao tài sản cụ thể', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  E.ACT.find(function (a) { return a.id === 'will150'; }).jail = true;
+  X.menu('will150_asset', 'Giao tài sản cụ thể', E.WILL70.reason,
     'Món được giao cụ thể tính vào phần hưởng của người nhận; nếu giá trị vượt phần hưởng, người nhận bù chênh lệch cho những người khác. Nếu di sản không đủ trả nợ, tài sản có thể phải bán.',
     function (l) { var w = W(l); return assets(l).slice(0, 30).map(function (a) { return { k: a.key, l: a.n + ' · ' + mo(l, a.v) + (w.specific[a.key] ? ' → ' + (nameOf(l, w.specific[a.key]) || '?') : ''), run: function (l, r) { X.next(l, 'will150_to', r, { asset: a.key }); } }; }); });
-  X.menu('will150_to', 'Người nhận tài sản', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_to', 'Người nhận tài sản', E.WILL70.reason,
     function (l, d) { var a = assets(l).find(function (x) { return x.key === (d && d.arg && d.arg.asset); }); return a ? 'Giao ' + a.n + ' (' + mo(l, a.v) + ') cho:' : 'Tài sản không còn.'; },
     function (l, arg) {
       var a = assets(l).find(function (x) { return x.key === arg.asset; }); if (!a) return [];
@@ -238,13 +239,13 @@
       if (w.specific[a.key]) rows.push({ k: 'none', l: 'Bỏ chỉ định, chia theo tỷ lệ', run: function (l, r, log) { delete W(l).specific[a.key]; log('Di chúc: ' + a.n + ' chia theo tỷ lệ chung.', 'neutral'); } });
       return rows;
     });
-  X.menu('will150_exclude', 'Người không được hưởng thừa kế', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_exclude', 'Người không được hưởng thừa kế', E.WILL70.reason,
     function (l) { return 'Chỉ áp dụng với con đã trưởng thành.' + (vn(l) ? ' Theo luật Việt Nam, con chưa thành niên và vợ/chồng vẫn được ít nhất 2/3 một suất thừa kế; điều khoản trái luật sẽ không có hiệu lực.' : '') + ' Người bị loại thường dễ khởi kiện tranh chấp.'; },
     function (l) {
       var w = W(l);
       return heirKeys(l).filter(function (h) { return h.kid != null; }).map(function (h) { var on = w.exclude.indexOf(h.key) >= 0; return { k: h.key, l: (on ? 'Khôi phục quyền thừa kế cho ' : 'Không cho ') + h.name + (on ? '' : ' hưởng thừa kế'), why: on || h.adult ? true : 'Con chưa thành niên luôn được hưởng thừa kế', run: function (l, r, log) { var x = W(l); if (on) x.exclude.splice(x.exclude.indexOf(h.key), 1); else { x.exclude.push(h.key); Object.keys(x.specific).forEach(function (k) { if (x.specific[k] === h.key) delete x.specific[k]; }); } log('Di chúc: ' + h.name + (on ? ' được khôi phục quyền thừa kế.' : ' không được hưởng thừa kế.'), 'neutral'); } }; });
     });
-  X.menu('will150_executor', 'Người thi hành di chúc', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_executor', 'Người thi hành di chúc', E.WILL70.reason,
     'Người thi hành di chúc quản lý việc phân chia, không trở thành chủ sở hữu di sản. Văn phòng luật độc lập làm giảm nguy cơ tranh chấp, thu phí khoảng 1% di sản.',
     function (l) {
       var rows = heirKeys(l).filter(function (h) { return h.spouse || h.adult; }).map(function (h) { return { k: h.key, l: h.name, run: function (l, r, log) { W(l).executor = { key: h.key, name: h.name, kind: h.spouse ? 'spouse' : 'kid' }; log('Di chúc: ' + h.name + ' là người thi hành.', 'neutral'); } }; });
@@ -252,7 +253,7 @@
       rows.push({ k: 'lawyer', l: 'Văn phòng luật độc lập (phí khoảng 1% di sản)', run: function (l, r, log) { W(l).executor = { key: 'lawyer', name: 'Văn phòng luật độc lập', kind: 'lawyer' }; log('Di chúc: giao văn phòng luật độc lập thi hành.', 'neutral'); } });
       return rows;
     });
-  X.menu('will150_manage', 'Quyền điều hành doanh nghiệp', function (l) { return l.alive && l.age >= 18 ? true : 'Từ 18 tuổi'; },
+  X.menu('will150_manage', 'Quyền điều hành doanh nghiệp', E.WILL70.reason,
     'Quyền điều hành là vị trí quản lý; cổ phần (quyền sở hữu) vẫn chia theo di chúc và pháp luật. Người được giao điều hành vẫn có thể từ chối.',
     function (l) {
       var rows = [];

@@ -1,6 +1,30 @@
 {
-  "generatedAt": "2026-11-11T01:08:16.118Z",
+  "generatedAt": "2026-11-12T00:19:15.738Z",
   "entries": [
+    {
+      "id": "life-school-football-81071",
+      "version": "8.10.71",
+      "publishedAt": "2026-11-12T00:19:15.640Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Ngành học, sự kiện cuối cấp và đời sống bóng đá",
+      "summary": "Bổ sung tên câu lạc bộ có nguồn, sửa nguyện vọng ngành học và nối các bước sự kiện, tài chính gia đình.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Danh mục bóng đá có 192 tên câu lạc bộ với nguồn tham chiếu; mùa tham chiếu có thể khác nhau giữa các giải. Mùa thi đấu và thu nhập trong cuộc đời vẫn được tính theo cơ chế trò chơi.",
+        "Đội tuyển tiếp tục thi đấu khi bạn không được gọi hoặc đã giải nghệ. Cầu thủ có thể thương lượng tài trợ, thực hiện nghĩa vụ quảng bá và nhận khoản thanh toán theo hợp đồng; giải nghệ hoặc hết hợp đồng sẽ tất toán phần đã hoàn thành.",
+        "Bổ sung chương trình có nguồn cho sáu trường Việt Nam. Nguyện vọng cũ sai tên chương trình cần chọn lại; giữ nguyên bằng đã hoàn thành. MD và J.D. tại Harvard, Stanford, UCLA kiểm tra bằng cử nhân trước khi nhập học.",
+        "Sự kiện cuối cấp đi tiếp qua từng bước chuẩn bị; có hình minh họa kỷ yếu và tiệc. Buổi chia tay tại một số nơi không còn ép lễ phục, chọn bạn đi cùng hay khiêu vũ. Thẻ cũ sau đổi trường, chuyển nước hoặc qua năm không được thu tiền tham dự.",
+        "Chuyển từ khóa tiếng sang đại học tại chỗ giữ đúng nơi ở và tiền tệ. Rút hồ sơ, bị từ chối hoặc hết hạn xử lý khoản học phí chưa dùng và nơi trở về.",
+        "Cửa hàng của bạn đời có vốn, cổ phần và sổ doanh nghiệp chung; trả vay từ tiền riêng thực có. Đóng cửa hàng không tự xóa khoản vay cá nhân.",
+        "Công nhận bằng điều dưỡng và giáo viên kiểm đúng ngành. Di chúc xét khả năng liên lạc và tiếp cận thủ tục khi đang bị giam hoặc kiểm soát.",
+        "Nhóm trẻ cùng hai cha mẹ tại Tây Ban Nha có quy trình xin đổi thứ tự họ theo mốc chuyển tiếp; giữ tên cũ, không đổi quyền kế vị hoặc họ của anh chị đã trưởng thành."
+      ]
+    },
     {
       "id": "reference-ucl-vff-fscs-81070",
       "version": "8.10.70",

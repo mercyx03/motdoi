@@ -68,7 +68,7 @@ ok(!!M, 'md4b module');
 }
 // D12: công nhận bằng, thường trú
 {
-  const l = life(1201, { age: 28, edu: 5, major: 'med' }); const r = I.rec(l, 'de'); r.lis = r.spk = r.rd = r.wr = 70; E.TRAVEL918.state(l).passport = { cc: 'VN', issued: 27, until: 37 };
+  const l = life(1201, { age: 28, edu: 5, major: 'dieu_duong' }); const r = I.rec(l, 'de'); r.lis = r.spk = r.rd = r.wr = 70; E.TRAVEL918.state(l).passport = { cc: 'VN', issued: 27, until: 37 };
   ok(/công nhận bằng/.test(GL.laborWhy(l, 'DE')), 'German nursing route requires recognition'); pick(l, 'recog919', 'sub:DE:nurse'); l.age++; hooks(l);
   const st = M.recogState(l)['DE:nurse']; ok(st.stage === 'done' || st.stage === 'partial', 'assessment result: full or partial');
   if (st.stage === 'partial') { pick(l, 'recog919', 'adapt:DE:nurse'); for (let i = 0; i < 4 && st.stage !== 'done'; i++) { l.age++; hooks(l); if (st.stage === 'partial') pick(l, 'recog919', 'adapt:DE:nurse'); } }

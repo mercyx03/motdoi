@@ -2,7 +2,7 @@
 
 ## Điều kiện thực tế để lập di chúc (`di_chuc70`)
 
-Trạng thái: chủ dự án yêu cầu ngày 26/10/2026; **chưa triển khai**, ngoài phạm vi nghiệm thu GĐ2.5. GĐ2.5 tiếp tục kiểm theo hành vi và ngoại lệ hiện tại.
+Trạng thái: chủ dự án yêu cầu ngày 26/10/2026; **đã triển khai trong workspace**, kiểm thử chuyên đề đạt, chờ gói chung. GĐ2.5 tiếp tục kiểm theo hành vi và ngoại lệ hiện tại.
 
 Mục tiêu: nhân vật bị giam giữ, bị kiểm soát hoặc không thể liên lạc và tiếp cận thủ tục cần thiết không được tự do lập di chúc như bình thường. Không cấm tuyệt đối mọi trường hợp giam giữ: nếu có điều kiện hợp pháp và thực tế thì vẫn có thể cho phép.
 
@@ -138,7 +138,7 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 
 - Tỷ lệ AI có con thấp (đã ghi từ GĐ2.5) — hạng mục cân bằng gameplay, không thuộc GĐ6.
 - `life.id` phụ thuộc giờ thật: cùng seed với giờ thật cho đời khác nhau (cảnh báo smoke) — không đổi cấu trúc ID trong GĐ6.
-- Điều kiện lập di chúc theo hoàn cảnh (`di_chuc70`) — mục đầu tiên của backlog, chưa triển khai.
+- Điều kiện lập di chúc theo hoàn cảnh (`di_chuc70`) — đã triển khai và kiểm thử, chờ gói chung.
 - Danh sách nhóm chủ đề chống lặp (GĐ5) mới bao phủ các cụm đã thấy trong số liệu; mở rộng khi có thêm dữ liệu người chơi.
 - Bấm giờ chế độ Tự động trên thiết bị người chơi thật; profiling giao diện điện thoại.
 - Bản lưu thật của người chơi chưa có mẫu để kiểm (chỉ có bản lưu do máy tạo).
@@ -338,3 +338,43 @@ Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên ng
 
 - Bổ sung UCL A100 kỳ 2027, bốn đội Hạng Nhì Việt Nam 2026, diện 189 Úc và hạn mức FSCS Anh.
 - Các mục rộng ở 8.10.69 vẫn mở; chưa phủ ngành và tuyển sinh từng trường, mùa giải/thị trường còn thiếu, luật và phúc lợi theo thời kỳ, tài chính/y tế/nghề và sự kiện địa phương.
+
+### Tiến độ sau 8.10.70
+
+- Bổ sung 16 CLB hạng hai và hạng ba Đức/Tây Ban Nha theo mùa 2025/26, giữ mã đội và hiện nguồn/mùa trong hồ sơ. football897 và football-payroll901 đạt.
+- Các nhóm dữ liệu mở ở trên chưa hoàn tất. Giữ gói 8.10.70 cho tới khi hoàn tất phạm vi và kiểm thử trọng điểm trên mã cuối.
+
+- Điều kiện lập di chúc đã nối cả trình soạn cơ bản và chi tiết. Khi bị cô lập, chặn cả lưu/hủy từ trình soạn cũ; tại Việt Nam từ 2017, người đang thụ án có thể xin lịch xác nhận cho năm sau. Mốc hẹn là quy ước thời gian của game. Tham chiếu Điều 638, Bộ luật Dân sự 91/2015/QH13: https://vanban.chinhphu.vn/default.aspx?docid=183188&pageid=27160 . update551 và assets912 đạt.
+
+- Bóng đá: đã triển khai trao đổi vị trí lên/xuống hạng cho mùa sau trong mô hình rút gọn. Giữ quân số mỗi hạng, giữ hợp đồng và mã đội, lưu bảng cũ và thay đổi hạng qua tải lại. Chưa có lịch/luật theo mùa cho toàn bộ thị trường. Thế giới đội tuyển và hợp đồng tài trợ được bổ sung ở tiến độ bên dưới.
+- Singapore: đã đối chiếu Điều 121 Hiến pháp về quốc tịch khi sinh tại Singapore và dẫn hướng dẫn ICA đối với trẻ sinh ở nước ngoài. Chưa phủ các quy định quốc tịch còn lại theo thời kỳ.
+- Kiểm thử nhật ký quốc gia tìm đúng mục 8.9.4 đã phát hành bằng truy vấn không dấu. Mục này có thể nằm sau các bản cập nhật mới hơn.
+
+### Tiến độ triển khai tiếp sau 8.10.70 — chưa đóng gói
+
+- Đã thay toàn bộ 192 vị trí CLB trong 16 thị trường bằng tên thật có nguồn tham chiếu; giữ mã đội. Dữ liệu hạng dưới có mùa riêng (không coi đội hình tham chiếu là thành phần thật của mọi năm). Chặn tự chuyển hạng giữa MLS/USL, hệ NZ đang chuyển thể thức, Mexico và ranh giới K2/K3 chưa đủ điều kiện giấy phép. Còn lịch/luật chính thức từng giải và thời kỳ, FIFA/đổi đội tuyển.
+- Đã có đội tuyển tiếp tục thi đấu khi nhân vật không được gọi, chấn thương hoặc giải nghệ, không cộng thành tích cá nhân; đàm phán tài trợ, nghĩa vụ quảng bá, thu nhập một lần, chấm dứt và tất toán khi rời nghề. Đây là kết quả phát sinh trong cuộc đời, không phải thành tích/hợp đồng ngoài đời của người thật.
+- Đã sửa khóa tiếng sang đại học tại chỗ: giữ nơi ở khi xét, không quy đổi tiền hai lần, dùng nơi ở gốc khi trở về; từ chối/rút/hết hạn trả đúng trạng thái và học phí còn lại.
+- Cửa hàng bạn đời đã nối BUSINESS123/TREASURY165 và sổ RELATIVE163: vốn/cổ phần hoặc khoản cho vay, giá trị công ty, trả nợ có biên nhận; không tạo thêm thu nhập cửa hàng giả. Giữ cửa hàng cũ khi nâng bản lưu.
+- Công nhận bằng điều dưỡng/giáo viên kiểm đúng ngành; không dùng bằng đại học bất kỳ hoặc nghề bác sĩ thay bằng điều dưỡng. Hồ sơ cũ thiếu ngành không tự hoàn tất.
+- Đổi thứ tự họ nhóm trẻ cùng hai cha mẹ tại ES: đồng thuận cha mẹ, ghi ý kiến, nộp và quyết định ở năm sau; lưu tên cũ, không đổi kế vị, không tác động anh chị thành niên hoặc con khác cha/mẹ. Còn lịch sử/ngoại lệ hộ tịch ngoài phạm vi đã cấu trúc.
+- Kiểm thử chuyên đề hiện đạt: football-reference871 (132), football-world871 (11), football-sponsors871 (14), study-onshore871 (17), professional-qualification871 (6), spain-surname871 (16), partner-shop871 (13), football897 và football-payroll901. Các mục giáo dục/pháp lý/đời sống quốc gia/tài chính/y tế còn mở vẫn là triển khai, không chuyển sang nghiệm thu để đánh dấu xong.
+- Gói dist/dist.zip chưa được dựng lại cho các thay đổi này; không dùng gói 8.10.70 cũ để công bố các mục mới.
+
+- Tiếp tục giáo dục: danh mục có nguồn của HUS, UIT, UET, HCMUS, HUST và Y Dược Huế; nguyện vọng/card cũ sai chương trình yêu cầu chọn lại, giữ nguyên bằng đã nhận. MD/J.D. tại Harvard/Stanford/UCLA chặn nhập học khi chưa có bằng cử nhân, dùng chung điều kiện ở xét tuyển và dự báo. Còn môn tiên quyết, bài thi/đánh giá và chương trình graduate đầy đủ; chưa coi đường Y/Luật Mỹ hoàn tất.
+- Kiểm thử bổ sung: courses871 (40), institutions867 (804), education-fallback-graduation (104), exam-model (565), player107 (84), university136 đạt. Browser courses871: 10 lượt chọn ngành và lưu/tải ở 390/1280, không lỗi JS/tràn ngang. player107 cập nhật chương trình HUST đã xác minh và ngoại ngữ có trước xét hồ sơ; kiểm tra không đủ tiền vẫn có lối hủy/chuyển học trong nước, không mở hồ sơ thu phí.
+- Cửa hàng: sổ tài chính người thân cộng riêng nợ vốn cửa hàng, không đưa vào khoản nợ tự trả hai lần. Cửa hàng đóng vẫn trả khoản vay cá nhân từ tiền riêng, không tái mở công ty cũ. partner-shop871 (16) và relative-finance163 (25) đạt. Chưa đối chiếu đầy đủ chuyển chủ nợ khi qua đời/chuyển thế hệ.
+
+### Bàn giao sang Claude — 11/11/2026 13:39 UTC+7
+
+Chủ dự án yêu cầu ghi chú và chuyển người thực hiện. Trạng thái chi tiết, file đang sửa, kết quả kiểm thử, phần dở/chưa làm và artifact cũ: xem [HANDOFF-CLAUDE-871.md](HANDOFF-CLAUDE-871.md). Chưa hoàn thành toàn bộ triển khai, chưa build/commit/push các thay đổi sau 8.10.70.
+
+Bổ sung cuối trước bàn giao: school920 sửa ghi đè p=0 ở Hàn Quốc, tách buổi chia tay khỏi dạ vũ; sửa mốc Norijada theo nguồn trường, bổ sung nguồn FI; có minh họa vector kỷ yếu/tiệc và mở bước kế tiếp liên tục. md5-920 đạt118; browser school871 đạt6 chuỗi prom/kỷ yếu/gathering ở390/1280, lưu/tải, không lỗiJS/tràn. Còn caKR/cache/stale và quick trên mã cuối sau sửa school/app.
+
+### Tiếp tục sau bàn giao — 8.10.71 Preview, 12/11/2026
+
+- Chủ dự án yêu cầu tiếp tục. Đã chặn thẻ sự kiện trường học cũ sau đổi trường/quốc gia/năm, bổ sung school-context871:19 PASS; md5-920:118, partner-shop871:16; browser school871:6 chuỗi390/1280 PASS.
+- Quick trên mã cuối: smoke11/saves10/save-safety10/NPC14 PASS. courses87140/football-reference871132/football-sponsors87114/study-onshore87117/spain-surname87116 PASS. Full regression không chạy theo yêu cầu.
+- Nhật ký71 packaged, 193mục cũ nguyên dữ liệu. npm run package:cloudflare PASS:28file,ZIP3511204byte,SHA256C70F857561BD305C8C1D2BF24442989C350A7925EC2C4F571CC4D027F4BE1081; so tên/hash từng entry đạt,loading8cuộcđời/API-admin cục bộ đạt. GiữWorker/routes/headers/.well-known. Gói gồm thay đổi y tế riêng có sẵn ngoài commit.
+- Đã xác minh lại originmercyx03/motdoi công khai,push/admin,0workflow/0hook/0deployment bằng API qua credential Git; gh không có trongPATH. Không deploy. REVIEWS_DB chưa kiểm chứng.
+- Đây là gói Preview mới cho phần đã triển khai, KHÔNG hoàn tất toàn BACKLOG. Các nhóm giáo dục graduate/học phí/quy chế, dữ liệu quốc gia/di trú/y tế/tài chính, luật hoàng gia lịch sử, thể thức/FIFA và chuyển thế hệ/chủ nợ cửa hàng vẫn mở trong bản bàn giao. Tiếp tục theo phạm vi chủ dự án; không dừng vì có artifact.
