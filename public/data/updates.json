@@ -5,8 +5,8 @@
       "id": "player-feedback-81072",
       "version": "8.10.72",
       "publishedAt": "2026-11-12T00:58:39.661Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-12T00:58:39.661Z",
       "title": "Giữ tiến độ học Y, cổ phần gia đình và các phim đã nhận",
       "summary": "Sửa đường tốt nghiệp và tìm việc ngành Y, bổ sung thương lượng cổ phần, làm gọn hồ sơ học tập và nối tiếp các lựa chọn trong cuộc đời.",
       "tags": [
@@ -28,14 +28,15 @@
         "Nhận phim mới không còn ghi đè phim đã đóng máy đang chờ phát hành. Từng hợp đồng và phim được tính riêng, kể cả hai phim cùng tên; danh sách chờ và tiến độ được giữ qua lưu/tải.",
         "Sửa việc lương quản lý doanh nghiệp gia đình bị tính thêm thuế lợi nhuận doanh nghiệp trước thuế lương.",
         "Hồ sơ J.D. Harvard có chuẩn bị tài liệu, CAS, LSAT, nộp, phỏng vấn, quyết định và thư nhận học có hạn qua nhiều năm. Tuyển sinh mới dùng thời lượng J.D. Harvard ba năm, MD Harvard/UCLA bốn năm; giữ niên hạn đang học của bản lưu cũ. Điều kiện, phí tham chiếu và nguồn được ghi trong hồ sơ; kết quả của nhân vật do diễn biến cuộc đời quyết định."
-      ]
+      ],
+      "correctedAt": "2026-11-12T01:14:30.640Z"
     },
     {
       "id": "life-school-football-81071",
       "version": "8.10.71",
       "publishedAt": "2026-11-12T00:19:15.640Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-12T00:19:15.640Z",
       "title": "Ngành học, sự kiện cuối cấp và đời sống bóng đá",
       "summary": "Bổ sung tên câu lạc bộ có nguồn, sửa nguyện vọng ngành học và nối các bước sự kiện, tài chính gia đình.",
       "tags": [
@@ -52,14 +53,15 @@
         "Cửa hàng của bạn đời có vốn, cổ phần và sổ doanh nghiệp chung; trả vay từ tiền riêng thực có. Đóng cửa hàng không tự xóa khoản vay cá nhân.",
         "Công nhận bằng điều dưỡng và giáo viên kiểm đúng ngành. Di chúc xét khả năng liên lạc và tiếp cận thủ tục khi đang bị giam hoặc kiểm soát.",
         "Nhóm trẻ cùng hai cha mẹ tại Tây Ban Nha có quy trình xin đổi thứ tự họ theo mốc chuyển tiếp; giữ tên cũ, không đổi quyền kế vị hoặc họ của anh chị đã trưởng thành."
-      ]
+      ],
+      "correctedAt": "2026-11-12T01:14:30.566Z"
     },
     {
       "id": "reference-ucl-vff-fscs-81070",
       "version": "8.10.70",
       "publishedAt": "2026-11-11T01:08:15.989Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-11T01:08:15.989Z",
       "title": "Y khoa UCL, Hạng Nhì Việt Nam và thông tin theo nước",
       "summary": "Bổ sung học phí theo kỳ, bốn câu lạc bộ, diện tay nghề Úc và bảo hiểm tiền gửi Anh.",
       "tags": [
@@ -71,14 +73,15 @@
         "Danh mục Anh có chương trình Medicine MBBS BSc tại UCL, yêu cầu UCAT và học phí công bố cho năm 2027/28.",
         "Thêm Đắk Lắk, Vĩnh Long, Quảng Ngãi và Trường Giang Gia Định theo Hạng Nhì Quốc gia 2026. Giữ mã đội trong bản lưu.",
         "Hồ sơ cư trú Úc có điều kiện được mời của diện tay nghề 189. Mục ngân hàng Anh thêm hạn mức bảo hiểm tiền gửi FSCS theo mốc hiệu lực."
-      ]
+      ],
+      "correctedAt": "2026-11-12T01:14:30.490Z"
     },
     {
       "id": "reference-jd-vleague2-81069",
       "version": "8.10.69",
       "publishedAt": "2026-11-11T01:03:41.279Z",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-11T01:03:41.279Z",
       "title": "Luật tại Harvard, Hạng Nhất Việt Nam và dữ liệu theo nước",
       "summary": "Thêm thông tin tuyển sinh, đội bóng, cư trú, bảo hiểm tiền gửi và tước hiệu lịch sử có nguồn.",
       "tags": [
@@ -91,7 +94,8 @@
         "Hạng Nhất Việt Nam thêm Công an Nhân dân, Hưng Yên, Thái Nguyên và Thép Cần Thơ theo nguồn VPF mùa 2026/27. Các mã đội trong bản lưu được giữ.",
         "Hồ sơ cư trú Canada có điều kiện kinh nghiệm làm việc của Canadian Experience Class và điều kiện Canada Child Benefit đối với người cư trú tạm.",
         "Hồ sơ ngân hàng tại Mỹ có hạn mức bảo hiểm tiền gửi FDIC. Hồ sơ Tây Ban Nha có căn cứ riêng cho danh xưng danh dự của Juan Carlos I và Sofía."
-      ]
+      ],
+      "correctedAt": "2026-11-12T01:14:30.408Z"
     },
     {
       "id": "reference-residence-payroll-81068",

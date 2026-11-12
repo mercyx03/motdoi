@@ -64,3 +64,7 @@ Mã cuối trước đóng gói: smoke11/11, saves10/10, save-safety10/10, NPC14
 - Phiên bản/nhật ký: package.json, package-lock.json, CHANGELOG.md, docs/update-extra.json, public/data/updates.json; docs/BACKLOG.md, HANDOFF-CLAUDE-871.md và báo cáo này.
 - Test mới: education872-browser, family-shares872, films872, hls872, medical-progress872, pacing872, professional-degree872, royal-panel872-browser, temptation872, uk-application872, feedback872-updates-browser trong tests/*.js; điều chỉnh tests/business137.js và tests/courses871.js theo hành vi đã xác minh.
 - Artifact theo chính sách hiện hành: dist.zip được theo dõi, dist/ vẫn ignore. Không stage các thay đổi riêng có sẵn hoặc file bảo vệ.
+
+### Xác nhận trạng thái phát hành69–72 — 12/11/2026
+
+Chủ dự án yêu cầu chuyển8.10.69–8.10.72 sang đã phát hành, dùng mốc giờ chuẩn bị từng bản theo chỉ dẫn trước. Đã cập nhật releaseStatus/releasedAt/correctedAt bằng công cụ release-update; nội dung và các mục khác giữ nguyên. Gói lại28file,ZIP3514246byte,SHA2565CC16BFB0FA47745F40CF08F20CF7E76306A8B7A14D6243B4166A6C90E31ACFB; loading8cuộc đời vàAPI/admin cục bộ đạt; update-release1137checks vàgiao diện390/1280 đạt. Không tự deploy; trạng thái phát hành nhật ký không thay thế nghiệm thu toàn diện hoặc xác minhREVIEWS_DBProduction. Baseline quay lại đợt trạng thái này:0c796f7.
