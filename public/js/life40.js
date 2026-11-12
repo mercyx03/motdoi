@@ -163,11 +163,13 @@
   // ra trường: vào nghề theo hướng đã học
   E.HOOKS.year.push(function (l, r, log, a) {
     if (!l.med || l.med.out || studying(l)) return;
-    if (l.edu < 5 || (l.abroad && l.abroad.study)) return; l.med.out = true;
-    if (l.job) return;
+    if (l.edu < 5 || (l.abroad && l.abroad.study)) return;
+    if (l.job) { if(TRACK[l.med.track]&&jid(l)===TRACK[l.med.track].job)l.med.out=true; return; }
     var t = TRACK[l.med.track]; if (!t) return;
     l.flags.needJob = false;
     E.startJob(l, t.job, r, log);
+    if(!l.job||jid(l)!==t.job){l.flags.needJob=true;return;}
+    l.med.out=true;
     if (l.flags.noiTru && l.job && l.job.rank < 1) l.job.rank = 1;
     if (!l.med.spec && /^(dk|qy)$/.test(l.med.track)) { l.pending.push(E.DEC.chuyen_khoa.make(l, r)); return; }
     log('Về công tác ở ' + workPlace(l, r) + (t.job === 'bac_si' || t.job === 'nha_si' ? '. Cần hoàn thành thực hành và điều kiện cấp phép tại nơi hành nghề.' : '.'), 'neutral');

@@ -1,3 +1,10 @@
+## 8.10.72 — Tiến độ ngành Y, cổ phần gia đình và góp ý người chơi
+
+- Giữ chương trình/bằng cấp khi đóng menu, sửa hạn nội trú và hướng tìm việc ngành Y.
+- Thương lượng cổ phần người thân, nối danh tính qua di sản; tab phối ngẫu hoàng gia; nhiều phim chờ phát hành.
+- Thu gọn hồ sơ học ở Anh; giảm chuyện ngẫu nhiên, thêm tiếp diễn tin nhắn sau hai năm.
+- Lộ trình J.D./MD được tách đúng tên và niên hạn tuyển sinh mới. Trạng thái packaged, chưa xác nhận upload.
+
 ## 8.10.70 — Chương trình UCL, Hạng Nhì Việt Nam và tham chiếu theo nước
 
 - Bổ sung dữ liệu UCL, VFF, visa 189 và FSCS từ nguồn chính thức.

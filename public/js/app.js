@@ -787,7 +787,14 @@
     });
   }
 
-  function renderAll() { if (!S.life) return; renderTopbar(); renderScene(); renderId(); renderStats(); renderFin(); renderFam(); renderFocus(); renderActions(); renderCohort(); renderMap(); renderPlace(); renderOfficeDesk(); }
+  function renderRoyal872() {
+    var l=S.life,box=$('#royalPanel872'),nav=$('#royalNav872'),p=l&&l.partner,married=p&&p.alive!==false&&p.status==='married'&&p.royal920,visible=!!(l&&(l.flags.royal&&!l.flags.royal.quit||married));
+    if(!box||!nav)return;box.hidden=nav.hidden=!visible;$('#mnav').style.setProperty('--nav-count872',visible?'6':'5');if(!visible){box.innerHTML='';return;}
+    var R=E.ROYAL920,q=E.ROYAL837&&E.ROYAL837.context(l),cc=married?p.royal920.cc:l.flags.royal.c,h=married?R.house(l,cc):q&&q.h||R.house(l,cc),member=married&&R.byId(h,p.royal920.id),actions=E.actions(l).filter(function(x){return ['royalRole920','royalDuty920','royalLife837','royalNames858'].includes(x.id);});
+    box.innerHTML='<h3>Hoàng gia</h3><p>'+esc(h.name)+' · '+esc(G.W.BY[cc]&&G.W.BY[cc].name||cc)+'</p>'+(married?'<p>Phối ngẫu: '+esc(p.name)+(member?' · '+esc(R.mainTitle(member)):'')+'</p>':'')+'<div class="chips">'+actions.map(function(x){return '<button class="btn sm" data-royal-act872="'+esc(x.id)+'"'+(x.ok===true?'':' disabled title="'+esc(x.ok)+'"')+'>'+esc(x.l)+'</button>';}).join('')+'</div>';
+    $$('[data-royal-act872]',box).forEach(function(b){b.onclick=function(){doAction(b.dataset.royalAct872);};});
+  }
+  function renderAll() { if (!S.life) return; renderTopbar(); renderScene(); renderId(); renderStats(); renderFin(); renderFam(); renderRoyal872(); renderFocus(); renderActions(); renderCohort(); renderMap(); renderPlace(); renderOfficeDesk(); }
 
   function currentPlace(l) {
     if (l.jailUntil != null && l.age < l.jailUntil) return 'Trại giam';
@@ -1392,6 +1399,12 @@
     var es=E.ROYAL858.context(l)?.c==='ES',esExtra=es?'<label for="royalJoiner862">Cách nối hai họ</label><select id="royalJoiner862"><option value=" "'+(n.surnameJoiner===' '?' selected':'')+'>Khoảng trắng</option><option value=" y "'+(n.surnameJoiner===' y '?' selected':'')+'>y</option><option value=" i "'+(n.surnameJoiner===' i '?' selected':'')+'>i</option></select><label for="royalRegnal862">Tên trị vì (chỉ dùng khi giữ ngôi)</label><input id="royalRegnal862" maxlength="100" value="'+esc(n.regnalName||'')+'"><label for="royalOrdinal862">Số thứ tự La Mã (có thể để trống)</label><input id="royalOrdinal862" maxlength="15" value="'+esc(n.regnalOrdinal||'')+'">':'',esFields=es?'<label for="royalFirst862">Họ thứ nhất</label><input id="royalFirst862" maxlength="100" value="'+esc(n.firstSurname||'')+'"><label for="royalSecond862">Họ thứ hai</label><input id="royalSecond862" maxlength="100" value="'+esc(n.secondSurname||'')+'"><label for="royalPhrase862">Cụm truyền thống (có thể để trống)</label><input id="royalPhrase862" maxlength="100" value="'+esc(n.traditionalPhrase||'')+'">':'';
     return '<div class="family-form">'+esFields+esExtra+(es?'<label for="royalBirth865">Ngày sinh đã xác minh (nếu có)</label><input id="royalBirth865" type="date" value="'+esc(n.birthDate865||'')+'">':'')+'<label for="royalGiven858">Tên chính</label><input id="royalGiven858" maxlength="100" value="'+esc(n.given[0]||n.daily)+'"><label for="royalMiddle858">Tên đệm (phân cách bằng dấu phẩy, có thể để trống)</label><input id="royalMiddle858" maxlength="300" value="'+esc(n.given.slice(1).join(', '))+'"><label for="royalDaily858">Tên gọi hằng ngày</label><input id="royalDaily858" maxlength="100" value="'+esc(n.daily)+'"><label for="royalSurname858">'+(es?'Họ đầy đủ (sửa ở hai ô họ phía trên)':'Họ gia đình đã chọn (trống nếu chưa xác định)')+'</label><input id="royalSurname858"'+(es?' readonly':'')+' maxlength="100" value="'+esc(n.legalSurname||'')+'"><label for="royalService858">Tên dùng tại trường/quân đội (trống để theo bối cảnh)</label><input id="royalService858" maxlength="100" value="'+esc(n.service||'')+'"><p id="royalNameStatus858" role="status"></p></div>';
   }
+  function educationText872(l,d) {
+    var details=G.E.H.resCode(l)==='GB'&&/^(study_wishes54|sixth829|schoolEngland829|ukAlevelIb850|mockUniExam853)$/.test(d.id);
+    if(!details)return '<p'+(/^football/.test(d.id)?' class="football-summary"':String(d.text||'').includes('\n')?' class="dec-lines"':'')+'>'+esc(d.text)+'</p>';
+    var st=l.flags.study54||{},summary=d.id==='study_wishes54'?(st.selected?'Chọn chương trình tại trường đang xem.':st.region?'Chọn trường để xem ngành và điều kiện.':st.wishes&&st.wishes.length?'Đã có '+st.wishes.length+' nguyện vọng. Kiểm tra thứ tự rồi nộp hồ sơ; chưa nhập học ở bước này.':'Thêm trường và ngành bạn muốn học. Chưa nộp hồ sơ hoặc thay đổi chương trình hiện tại.'):d.id==='sixth829'?'Bạn đã hoàn thành Year 11. Chọn hướng học hoặc đào tạo tiếp theo.':d.id==='ukAlevelIb850'?'Chọn môn và hướng A-Level/IB phù hợp ngành dự định. Điều kiện từng trường nằm trong chi tiết.':d.id==='mockUniExam853'?'Kết quả thi thử giúp xem mức chuẩn bị và phần cần cải thiện; không phải quyết định trúng tuyển.':'Xem giai đoạn đang học và chọn bước tiếp theo bên dưới.';
+    return '<p class="education-next872">'+esc(summary)+'</p><details class="education-details872"><summary>Xem chi tiết, bảng điểm và điều kiện</summary><p class="dec-lines">'+esc(d.text)+'</p></details>';
+  }
   function showDecision() {
     if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; }
     clearDecPill();
@@ -1411,7 +1424,7 @@
     // v3.1: lựa chọn nào tốn tiền mà chưa ghi giá thì ghi luôn chi phí ước tính
     var costs = !aiPick && E.optCosts && d.id !== 'market_trade' ? E.optCosts(l, d) : {};
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
-      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2>' + (E.SCHOOL920 ? E.SCHOOL920.illustration(l,d) : '') + '<p' + (/^football/.test(d.id) ? ' class="football-summary"' : String(d.text || '').indexOf('\n') >= 0 ? ' class="dec-lines"' : '') + '>' + esc(d.text) + '</p>' +
+      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2>' + (E.SCHOOL920 ? E.SCHOOL920.illustration(l,d) : '') + educationText872(l,d) +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
       (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + royalNameForm858(l,d) + royalCouncilForm865(l,d) + assetSearch912(d) + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts' + (d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7 ? ' many' : '') + '">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); var many = d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7; return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(many && o.k === 'cancel' ? '← Quay lại' : o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +

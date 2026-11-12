@@ -437,7 +437,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
   .lifebar .wrap { padding-top: 6px; padding-bottom: 6px; }
   .agebox .meta { display: block; font-size: 11.5px; max-width: 52vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #life.active ~ .mnav, body.inlife .mnav { display: grid; }
-  .mnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; grid-template-columns: repeat(5, 1fr); background: color-mix(in srgb, var(--surface) 96%, transparent); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 4px 4px calc(4px + env(safe-area-inset-bottom)); }
+  .mnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; grid-template-columns: repeat(var(--nav-count872, 5), 1fr); background: color-mix(in srgb, var(--surface) 96%, transparent); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 4px 4px calc(4px + env(safe-area-inset-bottom)); }
   .mnav button { appearance: none; border: 0; background: transparent; color: var(--ink); font-size: 11.5px; padding: 6px 2px; display: flex; flex-direction: column; align-items: center; gap: 2px; border-radius: 10px; cursor: pointer; }
   .mnav button span { font-size: 18px; line-height: 1; }
   .mnav button:active { background: var(--surface-2); }
@@ -674,3 +674,5 @@ footer .disclaimer b { color: var(--accent); }
 .opts.many .opt[data-k="cancel"] { position: sticky; bottom: 0; background: var(--surface); border-color: var(--accent); z-index: 1; }
 
 .reel li.final.royal { white-space: normal; text-align: center; font-size: 13px; line-height: 1.25; }
+
+.mnav button[hidden], #royalPanel872[hidden] { display: none; }

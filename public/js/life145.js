@@ -90,6 +90,9 @@
       if (queued.some(function (x) { return x.g === g; })) return false;
       if (s.h.some(function (x) { return x[2] === g.key && a - x[0] < g.gap; })) return false;
     }
+    // Quiet years and one incidental story leave room for consequential choices.
+    // Only random, non-recurring daily triggers pass this gate; scheduled milestones bypass it.
+    if(t==='daily'&&src&&typeof src.when==='function'&&!src.rep){if(!chance(l,'quiet-year872',.45))return false;if(queued.some(function(x){return x.t==='daily';})||s.h.some(function(x){return x[0]===a&&x[1]==='d';}))return false;}
     // Hai tình huống khác ID nhưng gần như cùng nội dung trong 3 năm: bỏ cái sau. Chuỗi đang diễn ra (rep) được giữ.
     if (!(src && src.rep)) {
       var me = sig(d);

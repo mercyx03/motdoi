@@ -378,3 +378,19 @@ Bổ sung cuối trước bàn giao: school920 sửa ghi đè p=0 ở Hàn Quố
 - Nhật ký71 packaged, 193mục cũ nguyên dữ liệu. npm run package:cloudflare PASS:28file,ZIP3511204byte,SHA256C70F857561BD305C8C1D2BF24442989C350A7925EC2C4F571CC4D027F4BE1081; so tên/hash từng entry đạt,loading8cuộcđời/API-admin cục bộ đạt. GiữWorker/routes/headers/.well-known. Gói gồm thay đổi y tế riêng có sẵn ngoài commit.
 - Đã xác minh lại originmercyx03/motdoi công khai,push/admin,0workflow/0hook/0deployment bằng API qua credential Git; gh không có trongPATH. Không deploy. REVIEWS_DB chưa kiểm chứng.
 - Đây là gói Preview mới cho phần đã triển khai, KHÔNG hoàn tất toàn BACKLOG. Các nhóm giáo dục graduate/học phí/quy chế, dữ liệu quốc gia/di trú/y tế/tài chính, luật hoàng gia lịch sử, thể thức/FIFA và chuyển thế hệ/chủ nợ cửa hàng vẫn mở trong bản bàn giao. Tiếp tục theo phạm vi chủ dự án; không dừng vì có artifact.
+
+### Đang triển khai sau 8.10.71 — chưa đóng gói
+
+- J.D. Harvard: hồ sơ STUDY54 có CAS, thi LSAT/mẫu viết, tài liệu, nộp phí, xét/phỏng vấn/quyết định các năm sau, thư nhận học có hạn và tối đa ba lượt nộp thường. Thư được xác nhận qua luồng nguyện vọng; không dùng điểm THPT để bác thư đã được nhận, không nhập học ngay khi nộp. GRE hiện được nhận qua hồ sơ kết quả nhưng chưa có hành động thi GRE riêng. Chưa gộp vào lộ trình MD/Stanford/UCLA.
+- Tách tên/thời lượng J.D. Harvard3năm, MD Harvard/UCLA4năm ở tuyển sinh mới; giữ niên hạn đã học của save cũ. Thêm hook gradUniversity ở đúng lúc engine đã cho tốt nghiệp; bằng chuyên nghiệp không nâng thành PhD. professional-degree87216/hls87219/courses87140/institutions867804/education-fallback-graduation104/university136/player10784 PASS. Chưa chạy quick/browser trên mã này.
+- Nguồn J.D.: https://hls.harvard.edu/jdadmissions/apply-to-harvard-law-school/jdapplicants/jd-application-components/ ; phí LSAT/CAS: https://www.lsac.org/lsat/register-lsat/lsat-cas-fees (biểu2026–27). MD: https://medstudenthandbook.hms.harvard.edu/105-five-year-md-program và https://catalog.registrar.ucla.edu/browse/College%20and%20Schools/DavidGeffenSchoolofMedicine/Medical-Programs . Thời gian xử lý theo năm/điểm thi/xác suất là cơ chế cuộc đời, không phải lịch hay điểm chuẩn chính thức.
+
+### Góp ý người chơi — 8.10.72, 12/11/2026
+
+- Đã triển khai các sửa đổi mới: hạn nội trú Y; bằng tốt nghiệp và menu an toàn; tìm vị trí ngành Y; hồ sơ Anh tách nộp/kết quả/nhập học và chi tiết thu gọn; giảm chuyện ngẫu nhiên; thương lượng cổ phần người thân, danh tính qua di sản và liên kết biểu quyết/liên minh; tab phối ngẫu hoàng gia; hàng chờ nhiều phim; cơ hội cám dỗ theo giàu/nổi tiếng và tiếp diễn tin nhắn sau hai năm. Chi tiết, giới hạn và kiểm thử: docs/PLAYER-FEEDBACK-872.md.
+- Lương quản lý gia đình/tập đoàn được phân loại thu nhập tiền lương, không tính thêm thuế lợi nhuận doanh nghiệp cá nhân.
+- Bằng chỉ khôi phục khi còn bản ghi tốt nghiệp xác nhận. Save cũ đã xóa cả hồ sơ không đủ căn cứ để tự cấp bằng; chưa có save thật người góp ý để đối chiếu. Cổ đông cũ thiếu liên kết danh tính không tự ghép theo tên trùng.
+- Các nhóm dữ liệu rộng của yêu cầu trước (danh mục chương trình/học phí/quy chế mọi trường, homeschool theo vùng, đối chiếu từng câu quốc gia, di trú/phúc lợi/y tế/tài chính, luật hoàng gia lịch sử, thể thức/FIFA, chủ nợ cửa hàng khi chuyển thế hệ) VẪN MỞ. Không chuyển thành nghiệm thu đơn thuần hoặc đánh dấu đã hoàn tất toàn BACKLOG.
+- GĐ6: chưa nghiệm thu toàn diện, thiết bị/save thật và REVIEWS_DB Production chưa xác minh. Bản72 giữ packaged cho tới khi chủ dự án xác nhận upload.
+
+- Bản72: package:cloudflare PASS28file/3513880byte, SHA2568133799687D4B53CE348885D5B2511BBF6C33541102B4D0B5DBF42C81DA9C21C; loading/API-admin cục bộ và16view giáo dục/phối ngẫu hoàng gia trên dist đạt. Nhật ký195mục,194mục cũ không đổi; kiểm JSON/HTML, tìm/lọc/tải thêm390/1280 đạt. Chi tiết PLAYER-FEEDBACK-872.md.

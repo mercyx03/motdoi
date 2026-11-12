@@ -157,7 +157,7 @@
         var cult = l.examScore >= u.score;
         log('Thi năng khiếu tại ' + u.name + ' (' + u.nk + '): ' + sc(t) + '/10' + (t >= u.nkPass ? ' — đạt.' : ' — chưa đạt.') + (t >= u.nkPass && !cult ? ' Nhưng điểm văn hóa chưa đủ mốc ' + u.score + '.' : ''), t >= u.nkPass ? 'good' : 'neutral');
         if (t >= u.nkPass && cult) found = x;
-      } else if (l.examScore >= EDU54.threshold(u, x.major) || EDU54.direct(l, x.major)) found = x;
+      } else if (EDU54.acceptedOffer872 && EDU54.acceptedOffer872(l,u,x) || l.examScore >= EDU54.threshold(u, x.major) || EDU54.direct(l, x.major)) found = x;
     }
     if (!found) { log('Chưa đạt các nguyện vọng đã nộp. Bạn có thể ôn thi lại, học nghề hoặc đi làm.', 'neutral'); l.pending.unshift(E.DEC.uniFail.make(l, r)); return; }
     var a = school(found.school);

@@ -1,3 +1,5 @@
+> Cập nhật12/11/2026: nhóm góp ý người chơi72 và hồ sơ J.D./MD đã được triển khai tiếp; xem PLAYER-FEEDBACK-872.md và cuối BACKLOG.md để biết kiểm thử, giới hạn và artifact hiện tại. Snapshot dưới vẫn giữ các nhóm dữ liệu rộng chưa hoàn tất.
+
 > Cập nhật 12/11/2026: chủ dự án đã yêu cầu tiếp tục. dist/dist.zip hiện là Preview8.10.71 mới (3511204byte), quick và school-context871 đã đạt; xem cuối BACKLOG.md. Nội dung dưới là snapshot bàn giao11/11, các câu artifact cũ/chưa build đã được mốc mới thay thế. Phạm vi toàn BACKLOG vẫn chưa xong.
 
 # Bàn giao cho Claude — Một Đời, phần tiếp sau 8.10.70

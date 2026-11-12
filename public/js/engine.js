@@ -1487,8 +1487,8 @@
       if (r() < Math.min(1, pr * difficulty(life).events) && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id, undefined, T); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
 
-    // nhịp tuổi thơ: từ 1 đến 14 tuổi, năm nào cũng nên có một lựa chọn hợp lứa tuổi
-    if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.85)) {
+    // Nhịp tuổi thơ: giữ mốc một tuổi; các năm khác có thể yên bình.
+    if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.35)) {
       var kidT = (hardcorePool ? [] : TRIG).filter(function (T) {
         return T.child && (!E.CONTEXT143 || E.CONTEXT143.factor(T, life) > 0) && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
@@ -1848,6 +1848,7 @@
       else if (sc === 'uni' || sc === 'abroad') {
         life.edu = Math.max(life.edu, 5); log('Tốt nghiệp đại học ngành ' + (life.majorName || MAJORS[life.major]) + (sc === 'abroad' ? ' ở ' + (life.abroad ? life.abroad.name : 'nước ngoài') : life.uniCity ? ' ở ' + life.uniCity : '') + '.', 'big'); st.hap += 6;
         H.mem(life, 'Lễ tốt nghiệp — bố mẹ đứng dưới khán đài, mắt rưng rưng.', 4);
+        runHooks('gradUniversity', [life, r, log, sc]);
         if (sc === 'abroad') H.sched(life, 'du_hoc_ve', 1);
         else {
           if (life.cityStudent && r() < 0.7 && !life.movedTo) { moveToCity(life, life.cityStudent.city); log('Quyết định ở lại ' + life.cityStudent.city + ' lập nghiệp sau khi ra trường.', 'neutral'); }

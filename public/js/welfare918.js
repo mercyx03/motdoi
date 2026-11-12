@@ -86,6 +86,7 @@
   // ================= C7: thuế kinh doanh (trừ tiền thật, Việt Nam, từ 2026) =================
   function owner(l) { var c = l.job && E.jobDef ? E.jobDef(l) : null; return !!(c && (/^kd_/.test(c.id) || c.owner || c.cat === 'biz' && /^(chủ|giám đốc)/.test(c.t[Math.min(l.job.rank || 0, c.t.length - 1)] || ''))); }
   function bizTax(l, out, log) {
+    var job=l.job&&E.resolveJob(l.job.id);if(job==='quan_ly_gia_dinh139'||E.BUSINESS133&&job===E.BUSINESS133.chair)return out; // Remuneration is wage income, not the company's taxable profit.
     if (!owner(l) || !vn(l) || year(l) < 2026) return out;
     var s = st(l); if (s.taxAt === l.age) return out; s.taxAt = l.age;
     var y = l.yr || (l.yr = { items: [] }); if (E.economy114Income && y.pre918 !== l.age) { var raw = out; out = E.economy114Income(l, raw, 'career'); y.pre918 = l.age; } // thuế trên lợi nhuận sau điều chỉnh bền vững (life115)

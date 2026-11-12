@@ -1,6 +1,35 @@
 {
-  "generatedAt": "2026-11-12T00:19:15.738Z",
+  "generatedAt": "2026-11-12T00:58:39.759Z",
   "entries": [
+    {
+      "id": "player-feedback-81072",
+      "version": "8.10.72",
+      "publishedAt": "2026-11-12T00:58:39.661Z",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Giữ tiến độ học Y, cổ phần gia đình và các phim đã nhận",
+      "summary": "Sửa đường tốt nghiệp và tìm việc ngành Y, bổ sung thương lượng cổ phần, làm gọn hồ sơ học tập và nối tiếp các lựa chọn trong cuộc đời.",
+      "tags": [
+        "Sửa lỗi",
+        "Học tập",
+        "Đời sống",
+        "Tính năng"
+      ],
+      "details": [
+        "Ba năm nội trú được tính vào thời hạn chương trình Y, tránh coi thời gian đang học là quá hạn tốt nghiệp. Bảo vệ đạt vẫn cần đủ các điều kiện đầu ra; mục tiến độ chỉ rõ phần còn thiếu.",
+        "Đóng nguyện vọng không còn tự chọn đi làm. Người đang học có nút đóng và xem tiến độ; người đã tốt nghiệp có hướng tìm việc theo bằng hiện có, không quay lại ngã rẽ phổ thông. Bằng được ghi khi tốt nghiệp; chỉ khôi phục hồ sơ có dữ liệu xác nhận, không tự cấp bằng từ một lần bảo vệ.",
+        "Sau tốt nghiệp ngành Y có mục tìm vị trí theo hướng đào tạo. Giữ bằng và chuyên ngành khi mở hoặc đóng menu. Không tự coi bằng đại học là đã có mọi giấy phép hành nghề.",
+        "Giảm chuyện đời thường ngẫu nhiên và cho phép có năm yên bình. Các lịch hẹn, chuỗi đang diễn ra và mốc học tập bắt buộc tiếp tục được xử lý.",
+        "Tại Anh, màn hình học tập hiển thị bước cần làm trước; bảng điểm, điều kiện và mô tả đầy đủ nằm trong Xem chi tiết. Nộp hồ sơ, nhận kết quả và xác nhận nhập học là các thao tác riêng; có thể rút hồ sơ mà giữ nguyên việc học và bằng cấp.",
+        "Có thể hỏi mua cổ phần của anh chị em và người thân trưởng thành, chờ phản hồi hoặc giá thương lượng ở năm sau rồi quyết định thanh toán bằng tiền cá nhân. Mua đủ có thể phá thế sở hữu 50/50; quyền điều hành còn có ứng cử, vận động và liên minh. Không tự lấy phần của người không đồng ý bán.",
+        "Danh tính cổ đông được nối qua di sản sang đời con. Thương lượng kiểm tra lại người bán, cổ phần, thời hạn và tiền; không trừ ngân quỹ công ty, không thanh toán hai lần.",
+        "Người giàu hoặc nổi tiếng có thêm cơ hội gặp cám dỗ, có khoảng nghỉ giữa các lần. Ưu tiên người quen trưởng thành phù hợp, giữ quyền từ chối; quan hệ ngoài hôn nhân đi qua bước xác nhận và luồng hậu quả hiện có. Tin nhắn mập mờ có thể trở lại sau hai năm với lời nhắc chuyện cũ.",
+        "Kết hôn với thành viên hoàng gia mở mục Hoàng gia riêng, hiển thị gia đình và các việc phù hợp với vai trò hiện tại.",
+        "Nhận phim mới không còn ghi đè phim đã đóng máy đang chờ phát hành. Từng hợp đồng và phim được tính riêng, kể cả hai phim cùng tên; danh sách chờ và tiến độ được giữ qua lưu/tải.",
+        "Sửa việc lương quản lý doanh nghiệp gia đình bị tính thêm thuế lợi nhuận doanh nghiệp trước thuế lương.",
+        "Hồ sơ J.D. Harvard có chuẩn bị tài liệu, CAS, LSAT, nộp, phỏng vấn, quyết định và thư nhận học có hạn qua nhiều năm. Tuyển sinh mới dùng thời lượng J.D. Harvard ba năm, MD Harvard/UCLA bốn năm; giữ niên hạn đang học của bản lưu cũ. Điều kiện, phí tham chiếu và nguồn được ghi trong hồ sơ; kết quả của nhân vật do diễn biến cuộc đời quyết định."
+      ]
+    },
     {
       "id": "life-school-football-81071",
       "version": "8.10.71",
