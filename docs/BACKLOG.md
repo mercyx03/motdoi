@@ -414,3 +414,7 @@ Theo yêu cầu mới của chủ dự án: cổ phần công ty gia đình ng�
 ### Gói 8.10.75 Preview
 
 8.10.73 và 8.10.74 đã ghi phát hành (13/11/2026 10:40 +07:00). Bản 8.10.75 sửa lỗi gốc khiến AI ít kết hôn và có con, đo lại tỷ lệ theo nhiều seed, thêm ngưỡng chào mua Anh/Nhật/Úc/Mỹ, gỡ bế tắc 50/50 khi bầu Chủ tịch và quy chế hôn nhân Monaco 1882 từ Công báo gốc. Chi tiết và phần còn mở: [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81075--tình-cảm-có-con-luật-chào-mua-monaco-1882).
+
+### Gói 8.10.76 Preview
+
+Đợt 1 các mục dữ liệu lớn: Tây Ban Nha 1876, ly hôn Scotland/Bắc Ireland, bốn liên đoàn Anh, Johns Hopkins/Yale, mức xác minh hồ sơ quốc gia. Chi tiết và phần còn mở: [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81076--đợt-1-các-mục-dữ-liệu-lớn).

@@ -337,4 +337,49 @@ function pick(l,id,key,arg){
   assert.equal(l.flags.kidAskAt,undefined);
   for(const d of l.pending)delete E.DEC[d.id];
 }
+
+// 8.10.76: ly hôn khi thụ án ở Scotland và Bắc Ireland
+for(const [city,route] of [['Glasgow','scotland'],['Belfast','ni']]){
+  const l=life('GB');l.city=city;l.place=city;l.jailUntil=l.age+8;
+  assert.equal(E.FIN920.route873(l),route,city+' route');
+  l.partner={name:'Sam',sex:'F',age:l.age,alive:true,status:'married',since:l.age-1};
+  const st=()=>Object.values(l.flags).find(v=>v&&v.div&&v.div.id)?.div;
+  E.FIN920.divYear(l,()=>.9,log);
+  E.FIN920.openCase(l,'me',true,true,log);
+  assert(!st(),route+': blocked before separation/marriage period');
+  if(route==='ni')assert.match(E.FIN920.routeBlock874(l,route,true),/hai năm đầu|2 năm đầu/);
+  l.age+=route==='ni'?2:1;E.FIN920.divYear(l,()=>.9,log);
+  assert.equal(E.FIN920.routeBlock874(l,route,true),null,route+' mutual allowed after required separation');
+  assert.match(E.FIN920.routeBlock874(l,route,false)||'',/không có đồng ý/);
+  E.FIN920.openCase(l,'me',true,true,log);const c=st();assert(c&&c.route873===route);
+  for(let i=0;i<4&&l.partner&&l.partner.status==='married';i++){l.age++;E.FIN920.divYear(l,()=>.9,log);}
+  assert(!l.partner||l.partner.status!=='married',route+' divorce granted');
+  if(route==='scotland')assert.equal(c.procedure874,'simplified');
+}
+
+// 8.10.76: bốn liên đoàn trong Vương quốc Anh
+{
+  const l=life('VN',27),A=E.FOOTBALL_ASSOCIATION873;E.FOOTBALL.init(l,()=>.5);
+  l.flags.citizen=['GB'];
+  assert.match(A.reason(l,'GB'),/liên đoàn trong Vương quốc Anh|5 năm học/);
+  l.flags.ukEdu874={Scotland:5};
+  assert.equal(A.reason(l,'GB'),null);
+  assert(A.request(l,'GB'));l.age++;assert(A.review(l,log));
+  assert.match(A.ukTeam874(l),/Scotland/);
+  l.flags.footballBirth874={country:'VN',ancestors:[{country:'GB',degree:2,region:'Wales'}]};
+  const d=E.DEC.footballAssociation873.make(l,()=>.5);
+  assert(d.data.keys.includes('uk:Wales'),'grandparent born in Wales offers FAW');
+  E.DEC.footballAssociation873.apply(l,d,String(d.data.keys.indexOf('uk:Wales')),()=>.5,log);
+  assert.match(A.ukTeam874(l),/Wales/);
+}
+
+// 8.10.76: Johns Hopkins MD và Yale J.D.
+{
+  const l=life('US'),S=E.EDUCATION54,P=S.professional873;
+  assert(S.schools.some(u=>u.id==='US_jhu')&&S.schools.some(u=>u.id==='US_yale'));
+  assert.equal(P.profiles['US_jhu:med'].fee,100);assert.equal(P.profiles['US_yale:law'].fee,85);
+  assert.match(P.profiles['US_yale:law'].source,/bulletin\.yale\.edu/);
+  S.state(l).graduated872=[];l.edu=3;
+  assert(P.reason(l,'US_jhu:med',false),'needs a bachelor degree first');
+}
 console.log('PASS routes873: medical and legal admissions, football eligibility, prison divorce, fixed-term savings, dated home education, residence for naturalization, named courses, entrance tests, Québec withdrawal, family birthplace and official references');

@@ -91,8 +91,19 @@
     var code=H.resCode(l), y=l.birthYear+l.age, date=E.EDUCATION863&&E.EDUCATION863.date(l);
     var region=E.STUDY857&&E.STUDY857.region(l);
     if (code==='GB' && (region==='England'||region==='Wales') && (y>2022||y===2022&&date>='2022-04-06')) return 'england-wales';
+    if (code==='GB' && region==='Scotland' && y>=2006) return 'scotland';
+    if (code==='GB' && region==='Northern Ireland') return 'ni';
     return null;
   }
+  // 8.10.76: Scotland (Divorce (Scotland) Act 1976 sửa đổi 2006: sống tách 1 năm có đồng ý / 2 năm không cần đồng ý) và Bắc Ireland (Matrimonial Causes (NI) Order 1978: không nộp trong 2 năm đầu; tách 2 năm có đồng ý / 5 năm).
+  var ROUTE874={scotland:{name:'Scotland',sepMutual:1,sepAlone:2,minMarried:0,source:'https://www.scotcourts.gov.uk/taking-action/divorce-and-dissolution-of-civil-partnership/simplifieddo-it-yourself-procedure'},
+    ni:{name:'Bắc Ireland',sepMutual:2,sepAlone:5,minMarried:2,source:'https://www.legislation.gov.uk/nisi/1978/1045/part/II'}};
+  function sepYears874(l,p){var s=st(l),from=p&&p.separated919!=null?p.separated919:null;if(s.jailSince874!=null&&(from==null||s.jailSince874<from))from=s.jailSince874;return from==null?0:l.age-from;}
+  function routeBlock874(l,route,mutual){var R=ROUTE874[route],p=spouse(l);if(!R||!p)return null;if(R.minMarried&&l.age-(p.since==null?l.age:p.since)<R.minMarried)return R.name+': chưa thể nộp đơn trong '+R.minMarried+' năm đầu hôn nhân';var need=mutual?R.sepMutual:R.sepAlone,have=sepYears874(l,p);return have<need?R.name+': cần sống tách biệt ít nhất '+need+' năm'+(mutual?' (hai bên đồng ý)':' khi không có đồng ý')+'; hiện '+have+' năm':null;}
+  function progressUK874(l,c,log){var R=ROUTE874[c.route873];if(!R)return false;
+    if(c.route873==='scotland'){if(c.stage==='filed'){var kids=(l.kids||[]).some(function(k){return k.alive!==false&&l.age-k.born<16;});c.procedure874=c.mutual||sepYears874(l,spouse(l))>=2?(kids?'ordinary':'simplified'):'ordinary';log('Tòa Sheriff xem xét hồ sơ theo thủ tục '+(c.procedure874==='simplified'?'đơn giản (không có con dưới 16 tuổi)':'thông thường')+'.','neutral');grantDivorce873(l,c,log);}return true;}
+    if(c.stage==='filed'){c.stage='nisi';c.due=l.age+1;log('Tòa ban hành decree nisi. Hai người vẫn là vợ chồng cho tới khi có decree absolute.','neutral');return true;}
+    if(c.stage==='nisi'){grantDivorce873(l,c,log);return true;}return true;}
   function grantDivorce873(l,c,log) {
     c.stage='granted';c.closed=l.age;c.decided=l.age;
     log('Tòa đã ban hành quyết định cuối cùng về ly hôn giữa bạn và '+c.name+'. Hồ sơ con chung và tài sản được xử lý riêng.', 'bad');
@@ -117,6 +128,7 @@
     return true;
   }
   function progressDivorce873(l,c,log) {
+    if(ROUTE874[c.route873])return progressUK874(l,c,log);
     if(c.route873!=='england-wales')return false;
     if(c.stage==='nocontact'&&c.by==='me')return true;
     if(c.stage==='service-review'){
@@ -148,7 +160,8 @@
     return {gbp:null,charge:aid?0:l.base*(mutual?.01:.03)};
   }
   function openCase(l, by, mutual, aid, log) {
-    var p=spouse(l),route=divorceRoute873(l),fee=caseFee873(l,route,mutual,aid);
+    var p=spouse(l),route=divorceRoute873(l),fee=caseFee873(l,route,mutual,aid),block=routeBlock874(l,route,mutual);
+    if(block){if(by==='me'&&log)log(block+'.','neutral');return;}
     if(by==='me'&&fee.gbp&&l.money<fee.charge)return;
     if (!p || dcase(l)) return; if (by==='me'&&fee.charge) H.cash(l, -fee.charge, 'Án phí, chi phí hồ sơ ly hôn');
     st(l).div = { id: l.id + ':div920:' + l.age, by: by, mutual: mutual, aid: aid&&!fee.gbp, feeGBP873:fee.gbp, at: l.age, due: l.age + 1, stage: 'filed', route873: route, post: 0, who: pid(l, p), name: p.name };
@@ -156,6 +169,7 @@
   }
   function divYear(l, r, log) {
     var p = spouse(l), c = dcase(l);
+    if (jailed(l)) { if (st(l).jailSince874 == null) st(l).jailSince874 = l.age; } else if (!p) delete st(l).jailSince874;
     if (c && (!p || pid(l, p) !== c.who)) { c.closed = 'moot'; c.stage = 'closed'; return; }
     if (!c && p && jailed(l) && p.separated919 != null && (p.affection108 == null ? (p.close || 50) : p.affection108) < 35 && u(l.id + ':divby:' + l.age) < 0.3) { openCase(l, 'partner', u(l.id + ':divm:' + l.age) < 0.5, true, log); return; }
     if (!c || l.age < c.due) return;
@@ -169,7 +183,7 @@
   }
   X.menu('divorceCase920', 'Ly hôn khi đang chấp hành án', divWhy, function (l) {
     var c = dcase(l), p = spouse(l);
-    return ((c?c.route873:divorceRoute873(l))==='england-wales'?'England và Wales: chờ tối thiểu 20 tuần sau khi tòa phát hành đơn để xin conditional order. Sau khi được cấp, đợi tối thiểu 43 ngày để xin final order. Game xử lý qua các lượt năm. Nguồn: https://www.gov.uk/divorce/apply-for-conditional-order-decree-nisi\nBiểu phí và hướng dẫn xin hỗ trợ: https://www.gov.uk/divorce/file-for-divorce\n':'')+((c?c.route873:divorceRoute873(l))==='england-wales'?'Hôn nhân chấm dứt khi tòa cấp final order.':'Ly thân chưa chấm dứt hôn nhân. Trong hồ sơ này, tòa có thể hoãn hoặc chờ thông báo cho người còn lại trước khi ra quyết định.') +
+    return ((c?c.route873:divorceRoute873(l))==='england-wales'?'England và Wales: chờ tối thiểu 20 tuần sau khi tòa phát hành đơn để xin conditional order. Sau khi được cấp, đợi tối thiểu 43 ngày để xin final order. Game xử lý qua các lượt năm. Nguồn: https://www.gov.uk/divorce/apply-for-conditional-order-decree-nisi\nBiểu phí và hướng dẫn xin hỗ trợ: https://www.gov.uk/divorce/file-for-divorce\n':'')+((c?c.route873:divorceRoute873(l))==='england-wales'?'Hôn nhân chấm dứt khi tòa cấp final order.':ROUTE874[c?c.route873:divorceRoute873(l)]?(function(R){return R.name+': cần sống tách biệt '+R.sepMutual+' năm nếu hai bên đồng ý hoặc '+R.sepAlone+' năm nếu không'+(R.minMarried?'; không nộp đơn trong '+R.minMarried+' năm đầu hôn nhân':'')+'. Thời gian thụ án được tính là sống tách biệt. Bạn đã sống tách '+sepYears874(l,spouse(l))+' năm. Nguồn: '+R.source;})(ROUTE874[c?c.route873:divorceRoute873(l)]):'Ly thân chưa chấm dứt hôn nhân. Trong hồ sơ này, tòa có thể hoãn hoặc chờ thông báo cho người còn lại trước khi ra quyết định.') +
       (p ? '\n' + p.name + (p.separated919 != null ? ' · đã ly thân từ khi bạn ' + p.separated919 + ' tuổi' : '') : '') +
       (c ? '\nHồ sơ: ' + (c.by === 'me' ? 'bạn nộp' : 'người ấy nộp') + ', ' + (c.mutual ? 'thuận tình' : 'đơn phương') + ' — ' + { filed: c.route873==='england-wales'?'chờ xét conditional order':'chờ hòa giải', postponed: 'đang hoãn', nocontact: 'chờ tống đạt', 'service-review':'chờ quyết định về tống đạt', conditional:'đã có conditional order', 'final-ready':'có thể xin final order', 'final-requested':'đã xin final order' }[c.stage] + (c.stage==='nocontact'&&c.by==='me'&&c.route873==='england-wales'?' · cần xử lý tống đạt. '+serviceSource874:', dự kiến xét khi bạn '+c.due+' tuổi.') : '');
   }, function (l) {
@@ -305,6 +319,6 @@
     var p = l.partner; if (p && p.jobLast920 === undefined) { p.jobLast920 = p.job || null; p.jobIdLast920 = p.jobId || null; }
     if (l.flags.sens920 == null && G.sens920) l.flags.sens920 = G.sens920;
   };
-  E.FIN920 = { pid: pid, jobTrack: jobTrack, profile: profile, home: home, visible: visible, present: present, settleKids: settleKids, divYear: divYear, openCase: openCase, switchRule: switchRule, SWITCH: SWITCH, cases: cases, resBlock: resBlock, residence: residence, ADOPT: ADOPT, adoptCit: adoptCit, cullClaim: cullClaim, CULL: CULL };
+  E.FIN920 = { route873: divorceRoute873, routeBlock874: routeBlock874, sepYears874: sepYears874, pid: pid, jobTrack: jobTrack, profile: profile, home: home, visible: visible, present: present, settleKids: settleKids, divYear: divYear, openCase: openCase, switchRule: switchRule, SWITCH: SWITCH, cases: cases, resBlock: resBlock, residence: residence, ADOPT: ADOPT, adoptCit: adoptCit, cullClaim: cullClaim, CULL: CULL };
   E.FAM920 = { present: present, home: home, visible: visible };
 })(globalThis.G);

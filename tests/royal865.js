@@ -46,4 +46,36 @@ for(const cc of ['MC','ES']){let f=cc==='MC'?fixture():esFixture(),{l,h,me}=f;if
  l.age=43;l.royalDate858='1923-09-13';
  ok(R.order(l,h).length===0,'1876 route closes at suspension');
 }
+// 8.10.76: Hiến pháp 1876 — mất khả năng (Điều 71), Cortes chỉ định nhiếp chính (Điều 70), giám hộ (Điều 73)
+{
+ const {l,h,me,heir,wife}=esFixture();
+ l.birthYear=1850;l.age=40;l.royalDate858='1890-06-01';
+ Object.assign(me,{by:1850,alive:true,spouse:'wife'});Object.assign(wife,{by:1855,spouse:'player',alive:true});
+ Object.assign(heir,{by:1872,parent:'player'});heir.es862.parents=['player','wife'];h.seat='player';
+ ok(T.esIncapacity(l,h,'request',{confirmed:true,scenario:true}),'1876 incapacity case opens');
+ ok(T.esIncapacity(l,h,'evidence',{confirmed:true,scenario:true}),'1876 evidence');
+ l.age=41;l.royalDate858='1891-06-01';
+ ok(T.esIncapacity(l,h,'cortes',{confirmed:true,scenario:true,reference:'Cortes 1891'}),'Cortes recognise incapacity');
+ ok(me.es862.incapacity865.era874==='1876'&&/1876/.test(me.es862.incapacity865.source),'1876 source recorded');
+ T.esRegency(l,h);
+ ok(h.es862.regency865.reason==='incapacity'&&h.es862.regency865.ref===heir.id&&h.es862.regency865.basis==='71','eldest child over sixteen regent (Art. 71)');
+ heir.by=1880;T.esRegency(l,h);
+ ok(h.es862.regency865.ref===wife.id,'consort when child under sixteen (Art. 71)');
+}
+{
+ const {l,h,me,heir,wife}=esFixture();
+ l.birthYear=1850;l.age=40;l.royalDate858='1890-06-01';
+ Object.assign(me,{by:1850,alive:false});Object.assign(wife,{by:1855,alive:false});
+ Object.assign(heir,{by:1885});heir.es862.parents=['player','wife'];h.seat=heir.id;
+ h.members.forEach(m=>{if(m!==heir&&m!==me&&m!==wife)m.by=1880;});
+ const off=['o1','o2','o3'].map((id,i)=>{const m=person(id,null,1840+i,'M',{es862:{nationalities865:['ES']}});h.members.push(m);return m;});
+ T.esRegency(l,h);ok(h.es862.regency865.pending&&h.es862.regency865.basis==='70','no regent: interim council, Cortes must appoint');
+ ok(!T.cortesRegents(l,h,['o1','o2'],{confirmed:true,reference:'Cortes'}),'two regents rejected (1, 3 or 5)');
+ ok(T.cortesRegents(l,h,['o1','o2','o3'],{confirmed:true,reference:'Cortes 1890'}),'Cortes appoint three regents (Art. 70)');
+ ok(h.es862.regency865.members.length===3&&!h.es862.regency865.pending,'regency of three in force');
+ ok(T.guardian(l,h,'o1',{confirmed:true,basis:'cortes',reference:'Cortes tutor'})===false,'regent cannot also be tutor unless parent (Art. 73)');
+ const tutor=person('tutor',null,1845,'F',{es862:{nationalities865:['ES']}});h.members.push(tutor);
+ ok(T.guardian(l,h,'tutor',{confirmed:true,basis:'cortes',reference:'Cortes tutor'}),'Cortes name a separate tutor');
+ ok(h.es862.guardian865.era874==='1876','tutor record carries 1876 basis');
+}
 console.log('PASS royal865: '+n+' historical/regency/procedure checks');

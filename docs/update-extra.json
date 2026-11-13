@@ -1,5 +1,28 @@
 [
   {
+    "id": "law-sport-81076",
+    "version": "8.10.76",
+    "publishedAt": "2026-11-13T11:11:29.000+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Nhiếp chính Tây Ban Nha 1876, ly hôn ở Scotland và Bắc Ireland, bốn liên đoàn bóng đá Anh",
+    "summary": "Bổ sung các bước nhiếp chính, giám hộ và mất khả năng của Hiến pháp Tây Ban Nha 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; chọn đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland; thêm hồ sơ Y khoa Johns Hopkins và Luật Yale; ghi rõ mức xác minh của thông tin quốc gia.",
+    "tags": [
+      "Hoàng gia",
+      "Pháp luật",
+      "Thể thao",
+      "Học tập"
+    ],
+    "details": [
+      "Tây Ban Nha 1876–1923: Cortes có thể công nhận Quân vương mất khả năng; nhiếp chính lần lượt là con trưởng trên 16 tuổi, phối ngẫu, rồi người được gọi theo Hiến pháp. Khi không ai đủ điều kiện, Hội đồng Bộ trưởng tạm quyền cho tới khi Cortes chỉ định một, ba hoặc năm người. Giám hộ Quân vương vị thành niên theo di chúc, cha hoặc mẹ góa, hoặc Cortes chọn; chỉ cha hoặc mẹ được kiêm cả nhiếp chính và giám hộ.",
+      "Ly hôn khi đang thụ án ở Scotland: cần sống tách biệt một năm nếu hai bên đồng ý, hai năm nếu không. Có thủ tục đơn giản khi không có con dưới 16 tuổi. Thời gian thụ án được tính là sống tách biệt.",
+      "Ở Bắc Ireland: không được nộp đơn trong hai năm đầu hôn nhân; cần sống tách biệt hai năm nếu hai bên đồng ý, năm năm nếu không. Tòa ra decree nisi trước, rồi mới tới decree absolute.",
+      "Bóng đá: người có quốc tịch Anh có thể đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland nếu sinh ra ở đó, có cha mẹ hoặc ông bà ruột sinh ra ở đó, hoặc học ít nhất năm năm trước 18 tuổi tại đó. Có thể chọn liên đoàn khi chưa ra sân chính thức cấp đội tuyển.",
+      "Thêm hồ sơ Y khoa (MD) tại Johns Hopkins và Luật (J.D.) tại Yale, có lệ phí hồ sơ và các bước tuyển sinh như các trường hiện có.",
+      "Thông tin về giáo dục, hôn nhân và điều kiện làm việc ở từng quốc gia nay ghi rõ khi mục chỉ dựa trên nguồn tổng hợp quốc tế, chưa được đối chiếu riêng."
+    ]
+  },
+  {
     "id": "family-life-81075",
     "version": "8.10.75",
     "publishedAt": "2026-11-13T10:54:28.000+07:00",

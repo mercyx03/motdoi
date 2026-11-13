@@ -547,6 +547,12 @@
 
   // Hồ sơ theo tiêu chí 3/3/3/5/5/5, mở rộng chính resolver và state văn hóa này.
   var DEPTH = E.COUNTRY_DEPTH_DATA || { sources: {}, profiles: {} }, CASES = {};
+  // 8.10.76: mức xác minh theo từng mệnh đề. Nguồn tổng hợp quốc tế (ILO, UNESCO, World Bank) chỉ xác nhận bối cảnh chung,
+  // chưa đối chiếu riêng từng tên lễ, lộ trình học hay quy định; giao diện ghi rõ thay vì coi là đã kiểm chứng.
+  var GENERAL874 = /(^|\.)(ilo\.org|unesco\.org|education-profiles\.org|worldbank\.org)$/;
+  function verify874(row) { if (!row || !row.source) return 'none'; var u = DEPTH.sources[row.source], h = (String(u && (u.url || u)).match(/https?:\/\/([^/]+)/) || [])[1] || ''; return GENERAL874.test(h) ? 'general' : 'specific'; }
+  function vtag874(row) { var v = verify874(row); return v === 'general' ? ' · Nguồn tổng hợp quốc tế, chưa đối chiếu riêng mục này' : v === 'none' ? ' · Chưa có nguồn' : ''; }
+  E.VERIFY874 = { level: verify874, tag: vtag874 };
   Object.keys(DEPTH.profiles).forEach(function (cc) {
     if (!G.W.BY[cc] || !/^[A-Z]{2}$/.test(cc)) throw new Error('Invalid country depth code: ' + cc);
     var dp = DEPTH.profiles[cc], p = P[cc] || (P[cc] = {}), previousExam = p.ex;
@@ -641,8 +647,8 @@
       { k: 'light', l: 'Giảm nhịp, hẹn sang năm', h: 'Giữ công việc đang làm dở · giảm căng thẳng', run: function (l, r, log) { q.due = l.age + 1; caseRecord(l, e, q, 'light', 'Giảm nhịp và giữ hồ sơ.'); stress(l, -2); log('Bạn cùng người liên quan điều chỉnh lịch và hẹn lại năm sau.', 'neutral'); } },
       { k: 'pause', l: 'Dừng kế hoạch hiện tại', h: 'Không tự quyết thay người yêu, trường học hay nơi làm việc', run: function (l, r, log) { q.status = 'paused'; caseRecord(l, e, q, 'pause', 'Dừng kế hoạch hiện tại.'); log('Bạn khép lại kế hoạch đang làm dở, giữ lịch sử đã trao đổi.', 'neutral'); } }
     ];
-    if (e.kind === 'education') return depthAt(l).education.map(function (route) { return { k: route.route, l: 'Lập kế hoạch: ' + route.name, h: route.note, run: function (l, r, log) { startCase(l, e, route.route, 0, r, log); } }; });
-    if (e.kind === 'marriage') return depthAt(l).marriage.map(function (item, i) { return { k: item.id, l: 'Cùng tìm hiểu: ' + item.name, h: item.note, run: function (l, r, log) { startCase(l, e, item.id, 0, r, log); } }; });
+    if (e.kind === 'education') return depthAt(l).education.map(function (route) { return { k: route.route, l: 'Lập kế hoạch: ' + route.name, h: route.note + vtag874(route), run: function (l, r, log) { startCase(l, e, route.route, 0, r, log); } }; });
+    if (e.kind === 'marriage') return depthAt(l).marriage.map(function (item, i) { return { k: item.id, l: 'Cùng tìm hiểu: ' + item.name, h: item.note + vtag874(item), run: function (l, r, log) { startCase(l, e, item.id, 0, r, log); } }; });
     var labels = e.options || ['Cùng chuẩn bị và hẹn xem lại', 'Tham gia một phần vừa sức', 'Tạm hoãn'];
     return labels.map(function (label, i) { var rate = i === 0 && (e.kind === 'training' || e.kind === 'safety') ? .01 : 0;
       return { k: ['plan', 'light', 'pause'][i], l: label, h: rate && adult(l) ? 'Chi phí chuẩn bị ước tính: ' + H.money(l, l.base * rate) : 'Không chi thêm tiền', why: !rate || !adult(l) || l.money >= l.base * rate, run: function (l, r, log) { startCase(l, e, ['plan', 'light', 'pause'][i], rate, r, log); } };
@@ -660,7 +666,7 @@
   X.menu('countryStories173', 'Câu chuyện riêng ở nơi đang sống', function (l) { return ok(l) && l.age >= 12 && currentDepth(l) ? true : 'Chưa có đợt nội dung riêng phù hợp nơi cư trú hoặc năm này'; }, function (l) { var p = depthAt(l); return p ? 'Những lựa chọn tại ' + cname(code(l)) + '. Câu chuyện được nhớ qua các năm; chỉ một chuyện mới được hệ thống đưa tới mỗi năm. Dữ liệu có mốc tham chiếu ' + p.metadata.referenceYear + '.' : 'Chưa có đợt nội dung riêng ở đây.'; }, function (l) { var p = depthAt(l); return p ? p.lifeEvents.map(function (e) { return { k: e.id, l: e.title, why: caseWhy(l, e), run: function (l, r) { X.next(l, e.eventId, r, {}, { manual: true }); } }; }) : []; }, 12, 'Cuộc sống & quan hệ');
   X.menu('countryLabor173', 'Đối chiếu điều kiện làm việc địa phương', function (l) { return ok(l) && l.age >= 18 && l.job && currentDepth(l) ? true : 'Cần đang đi làm tại nơi có hồ sơ đã nghiên cứu'; }, function (l) { var p = depthAt(l); return p ? 'Mốc tham chiếu ' + p.metadata.referenceYear + '. Điều kiện có ngoại lệ theo ngành, hợp đồng và hoàn cảnh; đây không phải kết luận về nơi làm việc của bạn. Không tự tăng lương hoặc truy lĩnh.' : 'Chưa có hồ sơ đã nghiên cứu ở đây.'; }, function (l) {
     var cc = code(l);
-    var p = depthAt(l); return p ? p.labor.map(function (policy) { return { k: policy.id, l: policy.name + ': ' + policy.note, h:policy.source.includes(':')?'Nguồn: '+E.COUNTRY_DEPTH_DATA.sources[policy.source]:'', why: peek(l).laborAt !== l.age ? true : 'Đã đối chiếu một nội dung trong năm', run: function (l, r, log) { var s = st(l); s.laborReviewed = s.laborReviewed || {}; s.laborReviewed[cc] = s.laborReviewed[cc] || {}; s.laborReviewed[cc][policy.id] = { age: l.age, referenceYear: depthAt(l).metadata.referenceYear, source:policy.source }; s.laborAt = l.age; stress(l, -1); log('Bạn giữ bản đối chiếu: ' + policy.name + '. Hiểu rõ thông tin sẽ giúp khi trao đổi chuyện công việc sau này.', 'neutral'); } }; }) : [];
+    var p = depthAt(l); return p ? p.labor.map(function (policy) { return { k: policy.id, l: policy.name + ': ' + policy.note, h:(policy.source.includes(':')?'Nguồn: '+E.COUNTRY_DEPTH_DATA.sources[policy.source]:'')+vtag874(policy), why: peek(l).laborAt !== l.age ? true : 'Đã đối chiếu một nội dung trong năm', run: function (l, r, log) { var s = st(l); s.laborReviewed = s.laborReviewed || {}; s.laborReviewed[cc] = s.laborReviewed[cc] || {}; s.laborReviewed[cc][policy.id] = { age: l.age, referenceYear: depthAt(l).metadata.referenceYear, source:policy.source }; s.laborAt = l.age; stress(l, -1); log('Bạn giữ bản đối chiếu: ' + policy.name + '. Hiểu rõ thông tin sẽ giúp khi trao đổi chuyện công việc sau này.', 'neutral'); } }; }) : [];
   }, 18, 'Học tập & sự nghiệp');
   E.HOOKS.year.push(function (l, r, log) {
     var p = currentDepth(l); if (!p || !ok(l)) return;

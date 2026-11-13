@@ -17,15 +17,19 @@ X.menu('institutionsCountry867','Tra danh mục cơ sở theo quốc gia',functi
 var professional871={
  US_harvard:{med:'https://hms.harvard.edu/education-admissions/md-program/admissions/preparing-apply/eligibility',law:'https://hls.harvard.edu/jdadmissions/apply-to-harvard-law-school/jdapplicants/'},
  US_stanford:{med:'https://med.stanford.edu/md-admissions/academic-requirements.html',law:'https://law.stanford.edu/apply/how-to-apply/jd-application-process/'},
- US_ucla:{med:'https://medschool.ucla.edu/education/md-education/admissions/preparing-to-apply',law:'https://law.ucla.edu/admissions/jd-admissions/frequently-asked-questions'}
+ US_ucla:{med:'https://medschool.ucla.edu/education/md-education/admissions/preparing-to-apply',law:'https://law.ucla.edu/admissions/jd-admissions/frequently-asked-questions'},
+ US_jhu:{med:'https://www.hopkinsmedicine.org/som/education-programs/md-program/application-process/'},
+ US_yale:{law:'https://bulletin.yale.edu/node/3881'}
 };
+// 8.10.76: thêm Johns Hopkins (MD) và Yale (J.D.); điểm xét tuyển của trường là ước tính trong game.
+[{id:'US_jhu',name:'Johns Hopkins University',country:'US',region:'Trong nước',city:'Baltimore',score:27,majors:['med','it','eco'],world:true,language111:{entry:0,exit:0},reference:{type:'simulation',year:null,scale:30}},{id:'US_yale',name:'Yale University',country:'US',region:'Trong nước',city:'New Haven',score:27,majors:['law','eco','art'],world:true,language111:{entry:0,exit:0},reference:{type:'simulation',year:null,scale:30}}].forEach(function(u){if(!S.schools.some(function(x){return x.id===u.id;}))S.schools.push(u);});
 var entry871=S.entryReason;
 S.entryReason=function(l,u,w){var reason=entry871&&entry871.apply(this,arguments);if(reason)return reason;var ref=u&&professional871[u.id],m=w&&w.major;if(ref&&ref[m]&&!(Number.isFinite(l.edu)&&l.edu>=5))return 'Cần hoàn thành bằng cử nhân trước khi nhập học '+(m==='med'?'MD':'J.D.')+'; bằng THPT hoặc cao đẳng chưa đủ';return null;};
 S.professionalReferences=professional871;
 // A named professional programme keeps its own duration and degree identity.
 // Existing enrolled/finished lives are retained; this applies to new admissions.
 var namedAdmission872=E.DEC.major.apply;
-E.DEC.major.apply=function(l,d,k,r,log){var a=S.state(l).admitted,isJD=a&&a.age===l.age&&a.school==='US_harvard'&&k==='law'&&a.major==='law'&&l.edu>=5;var isMD=a&&a.age===l.age&&a.major==='med'&&k==='med'&&l.edu>=5&&['US_harvard','US_ucla'].includes(a.school);var out=namedAdmission872.apply(this,arguments);if((isJD||isMD)&&l.school==='uni'){a.program=isJD?'Juris Doctor (J.D.)':'Doctor of Medicine (MD)';a.degree872={name:a.program,years:isJD?3:4,priorEdu:l.edu,source:isJD?professional871.US_harvard.law:a.school==='US_harvard'?'https://medstudenthandbook.hms.harvard.edu/105-five-year-md-program':'https://catalog.registrar.ucla.edu/browse/College%20and%20Schools/DavidGeffenSchoolofMedicine/Medical-Programs'};l.majorName=a.program;l.schoolEnd=l.age+a.degree872.years;if(l.abroad&&l.abroad.study)l.abroad.until=l.schoolEnd;log(a.program+': chương trình chuẩn '+a.degree872.years+' năm. Điều kiện hành nghề được xét riêng sau tốt nghiệp.','good');}return out;};
+E.DEC.major.apply=function(l,d,k,r,log){var a=S.state(l).admitted,isJD=a&&a.age===l.age&&a.school==='US_harvard'&&k==='law'&&a.major==='law'&&l.edu>=5;var isMD=a&&a.age===l.age&&a.major==='med'&&k==='med'&&l.edu>=5&&['US_harvard','US_ucla','US_jhu'].includes(a.school);var out=namedAdmission872.apply(this,arguments);if((isJD||isMD)&&l.school==='uni'){a.program=isJD?'Juris Doctor (J.D.)':'Doctor of Medicine (MD)';a.degree872={name:a.program,years:isJD?3:4,priorEdu:l.edu,source:isJD?professional871.US_harvard.law:a.school==='US_harvard'?'https://medstudenthandbook.hms.harvard.edu/105-five-year-md-program':'https://catalog.registrar.ucla.edu/browse/College%20and%20Schools/DavidGeffenSchoolofMedicine/Medical-Programs'};l.majorName=a.program;l.schoolEnd=l.age+a.degree872.years;if(l.abroad&&l.abroad.study)l.abroad.until=l.schoolEnd;log(a.program+': chương trình chuẩn '+a.degree872.years+' năm. Điều kiện hành nghề được xét riêng sau tốt nghiệp.','good');}return out;};
 var namedWish872=E.DEC.study_wishes54.apply;
 E.DEC.study_wishes54.apply=function(l,d,k,r,log){var before=S.state(l).admitted,out=namedWish872.apply(this,arguments),a=S.state(l).admitted;if(k==='submit'&&a!==before&&a&&a.degree872)l.majorName=a.program=a.degree872.name;return out;};
 (E.HOOKS.gradUniversity||(E.HOOKS.gradUniversity=[])).push(function(l){var a=S.state(l).admitted,degree=a&&a.degree872;if(!degree)return;var degrees=S.state(l).degrees872||(S.state(l).degrees872=[]);if(!degrees.some(function(v){return v.school===a.school&&v.started===a.age;}))degrees.push({school:a.school,started:a.age,finished:l.age+1,name:degree.name,source:degree.source});});
@@ -170,7 +174,9 @@ var PRO873={
  'US_ucla:law':{school:'US_ucla',major:'law',degree:'Juris Doctor (J.D.)',years:3,fee:75,interview:false,source:'https://law.ucla.edu/admissions/jd-admissions/first-year-jd-applicants'},
  'US_harvard:med':{school:'US_harvard',major:'med',degree:'Doctor of Medicine (MD)',years:4,fee:100,interview:true,maxAttempts:2,source:professional871.US_harvard.med},
  'US_stanford:med':{school:'US_stanford',major:'med',degree:'Doctor of Medicine (MD)',years:4,fee:100,interview:true,source:professional871.US_stanford.med},
- 'US_ucla:med':{school:'US_ucla',major:'med',degree:'Doctor of Medicine (MD)',years:4,fee:125,interview:true,preview:true,domestic:true,source:professional871.US_ucla.med}
+ 'US_ucla:med':{school:'US_ucla',major:'med',degree:'Doctor of Medicine (MD)',years:4,fee:125,interview:true,preview:true,domestic:true,source:professional871.US_ucla.med},
+ 'US_jhu:med':{school:'US_jhu',major:'med',degree:'Doctor of Medicine (MD)',years:4,fee:100,interview:true,source:professional871.US_jhu.med},
+ 'US_yale:law':{school:'US_yale',major:'law',degree:'Juris Doctor (J.D.)',years:3,fee:85,interview:false,source:professional871.US_yale.law}
 };
 function proRoot873(l){var st=S.state(l);return st.professional873||(st.professional873={dossiers:{},history:[],campus:[],premed:[]});}
 function proState873(l,key){var root=proRoot873(l);return root.dossiers[key]||(root.dossiers[key]={key:key,attempts:[],history:[]});}

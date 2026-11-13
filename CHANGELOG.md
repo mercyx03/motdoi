@@ -1,3 +1,7 @@
+## 8.10.76 — Tây Ban Nha 1876, ly hôn Scotland/Bắc Ireland, bốn liên đoàn Anh
+
+- Nhiếp chính, giám hộ, mất khả năng và Cortes theo Hiến pháp 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; liên đoàn Anh/Scotland/Wales/Bắc Ireland; hồ sơ Johns Hopkins MD và Yale J.D.; mức xác minh hồ sơ quốc gia và công cụ đối chiếu. Gói Preview chờ xác nhận upload.
+
 ## 8.10.75 — Tình cảm đôi lứa, kế hoạch có con, luật chào mua theo nước
 
 - Sửa lỗi tình cảm đôi lứa không thay đổi theo thời gian (rất ít cặp đủ điều kiện cưới); cặp đã quyết định có con tiếp tục thử qua các năm; đo lại tỷ lệ AI có con.
