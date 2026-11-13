@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-12T02:16:38.147Z",
+  "generatedAt": "2026-11-13T08:41:33.528Z",
   "entries": [
+    {
+      "id": "mortgage-ipo-81078",
+      "version": "8.10.78",
+      "publishedAt": "2026-11-13T15:41:00.000+07:00",
+      "releaseStatus": "packaged",
+      "title": "Giữ nhà đang vay khi chuyển nước, chia nợ đồng hạng khi chủ nợ mất, điều kiện niêm yết Anh và Mỹ",
+      "summary": "Nhà còn nợ thế chấp không còn bị bán gấp khi bạn đổi nước; di sản người vay chia đều theo tỷ lệ cho các chủ nợ; điều kiện IPO riêng cho Anh và Mỹ; thêm dòng giáo dục đối chiếu nguồn chính thức.",
+      "tags": [
+        "Tài chính",
+        "Quốc gia",
+        "Kinh doanh"
+      ],
+      "details": [
+        "Chuyển nước khi nhà còn vay thế chấp: nếu giá trị nhà vượt nợ đủ rộng, căn nhà được giữ lại làm tài sản ở nơi cũ và khoản vay tiếp tục trả dần, quy đổi tiền theo nước mới. Trễ hạn kéo dài thì ngân hàng phát mại; bán nhà sẽ tất toán khoản vay bằng tiền sẵn có; dọn về ở lại thì khoản vay trở lại là vay mua nhà. Nhà nợ gần bằng giá trị vẫn bán như trước.",
+        "Khi người vay vốn cửa hàng của bạn qua đời và di sản còn nhiều chủ nợ: tiền mặt di sản chia đồng hạng theo tỷ lệ cho bạn, nợ cá nhân và các quyền thu hồi khác của cùng người vay; không còn dừng lại chờ đối soát vô thời hạn.",
+        "Niêm yết cổ phiếu: Anh áp dụng quy tắc từ 29/07/2024 (vốn hóa từ 30 triệu bảng, 10% cổ phiếu cho công chúng, không đòi hồ sơ ba năm); Mỹ áp dụng điều kiện Nasdaq Global Market (lợi nhuận trước thuế từ 1 triệu USD, vốn chủ từ 15 triệu USD, 400 cổ đông). Nước khác vẫn dùng điều kiện chung.",
+        "Hồ sơ quốc gia: thêm 7 dòng giáo dục của Nhật, Đức, Úc và Singapore đối chiếu với bộ giáo dục hoặc cơ quan chính thức; nay 251/3705 mục có nguồn riêng."
+      ]
+    },
     {
       "id": "country-verified-81077",
       "version": "8.10.77",

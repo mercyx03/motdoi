@@ -178,7 +178,7 @@
     var inheritedItems = [].concat(l.flags && l.flags.heirOf && l.flags.heirOf.items || [], l.flags && l.flags.heirItemsTrust && l.flags.heirItemsTrust.items || []);
     var convertedItems = new Set();
     inheritedItems.forEach(function (item) { if (!item || convertedItems.has(item)) return; convertedItems.add(item); fields(item, ['v']); if(E.BUSINESS137)E.BUSINESS137.scaleItem(item,f); fields(item.data, ['v', 'basis', 'cap', 'unit', 'R']); });
-    (l.loans || []).forEach(function (x) { fields(x, ['bal']); });
+    (l.loans || []).forEach(function (x) { fields(x, ['bal', 'pay']); });
     [l.assets, l.basis].forEach(function (A) { if (A) fields(A, Object.keys(A)); });
     [l.port, l.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { fields(P[k], ['v', 'basis']); }); });
     fields(l.si, ['sum', 'm']);
@@ -198,7 +198,8 @@
       { k: 've', l: 'Về Việt Nam', ai: { w: 0.6 }, run: function (l, r, log) {
         var name = l.abroad.name, code = l.abroad.code;
         H.cash(l, -flight(l), 'Vé máy bay về Việt Nam');
-        if (l.ownHouse && H.keepHome874 && H.keepHome874(l)) log('Căn nhà ở ' + name + ' không còn nợ vay nên được giữ lại làm tài sản; có thể bán hoặc quay lại ở sau.', 'neutral');
+        var kept = l.ownHouse && H.keepHome874 ? H.keepHome874(l) : false;
+        if (kept) log(kept === 'lien' ? 'Căn nhà ở ' + name + ' vẫn còn nợ thế chấp nhưng giá trị lớn hơn nợ nên được giữ lại; khoản vay tiếp tục trả dần, trễ hạn kéo dài thì ngân hàng sẽ phát mại.' : 'Căn nhà ở ' + name + ' không còn nợ vay nên được giữ lại làm tài sản; có thể bán hoặc quay lại ở sau.', 'neutral');
         else if (l.ownHouse) { log('Bán căn nhà ở ' + name + ' được ' + mo(l, l.houseVal) + ' để tất toán khoản vay mua nhà.', 'neutral'); sellHouse(l, 'Bán nhà ở ' + name); }
         var remote = l.job && /^fl_/.test(E.resolveJob(l.job.id));
         var f = toVNDf(l); l.flags.abroadSaved = { code: code, name: name, perm: true, pool: l.abroad.pool, base: l.abroad.base, place: l.place }; l.abroad = null; l.cur = 'vnd'; E.abroadConvert(l, f); if (H.reoccupy874) H.reoccupy874(l, 'VN', log);

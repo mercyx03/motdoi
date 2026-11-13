@@ -106,4 +106,15 @@ console.log('business874 (bổ sung): '+n+' nhóm đạt');
 // 15. Monaco 1882: mọi thành viên Gia đình Quân chủ kết hôn cần Quân vương cho phép
 {const h={cc:'MC',seat:'sov'};const m={id:'cousin'};const mk=y=>{const l=fam(30);l.birthYear=y-30;l.age=30;return l;};
  assert.equal(E.ROYAL837.consentNeeded(mk(1950),h,m),true);const r=E.MONACO861_DATA.rules.statutes1882;assert(/journaldemonaco\.gouv\.mc/.test(r.source));ok('Monaco 1882: kết hôn cần Quân vương cho phép (Công báo 1882)');}
+// 8.10.78: điều kiện niêm yết riêng Anh và Mỹ
+{const mk=(cc,year)=>{const l=fam(20);l.birthYear=year-30;l.age=30;l.country=cc;l.cur='usd';return l;};const c=cc=>({listed874:{mult:1},country874:cc});
+ const gb=B.rules(mk('GB',2026),c('GB')),gb0=B.rules(mk('GB',2023),c('GB')),us=B.rules(mk('US',2026),c('US')),de=B.rules(mk('DE',2026),c('DE')),vn=B.rules(mk('VN',2026),c('VN'));
+ assert.equal(gb.years,0,'Anh không còn yêu cầu hồ sơ ba năm');assert.equal(gb.float,.1);assert.match(gb.source,/UKLR/);assert.match(gb.source,/Takeover Code/,'vẫn giữ nguồn ngưỡng chào mua');assert(gb.minCap>0&&gb.exchanges[0].includes('London'));
+ assert.notEqual(gb0.source.indexOf('UKLR'),0,'trước 2025 chưa áp dụng UKLR');assert(!/UKLR 5/.test(gb0.source),'thời kỳ trước dùng điều kiện chung');
+ assert.equal(us.investors,400);assert(us.minProfit>0&&us.minCap>us.minProfit,'Mỹ: lợi nhuận 1 triệu và vốn chủ 15 triệu USD');assert.match(us.source,/5405/);
+ assert.equal(de.investors,100,'nước chưa đối chiếu giữ điều kiện chung');assert.equal(vn.cc,'VN');
+ const l=mk('US',2026);const co={name:'Cty Mỹ',value:us.minCap*2,share:80,sector:'tech',roles:{},created:20,lastProfit:us.minProfit*.5,country874:'US'};E.BUSINESS123.companies(l).push(co);E.BUSINESS133.ensure(co);const pr=B.ipoProblems?B.ipoProblems(l,co):null;
+ if(pr)assert(pr.some(x=>/Lợi nhuận năm gần nhất/.test(x)),'lợi nhuận dưới ngưỡng bị chặn');
+ const l2=mk('GB',2026),co2={name:'Cty Anh',value:gb.minCap*2,share:80,sector:'tech',roles:{},created:20,country874:'GB'};E.BUSINESS123.companies(l2).push(co2);E.BUSINESS133.ensure(co2);const pr2=B.ipoProblems?B.ipoProblems(l2,co2):[];
+ assert(!pr2.some(x=>/năm tài chính gần nhất có lãi/.test(x)),'Anh không đòi số năm có lãi');ok('niêm yết riêng Anh và Mỹ');}
 console.log('business874 (tổng): '+n+' nhóm đạt');

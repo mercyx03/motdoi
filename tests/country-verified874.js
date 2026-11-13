@@ -30,4 +30,10 @@ ok(E.legalToMarry(l)===false,'nam 21 ở Trung Quốc chưa được kết hôn'
 l.age=22;ok(E.legalToMarry(l)===true,'nam 22 đủ tuổi');
 const v=life('VN',2010,19,'M');v.abroad=null;v.country='VN';v.partner={name:'B',age:19,sex:'F',alive:true};
 ok(E.legalToMarry(v)===false,'Việt Nam vẫn nam 20');
+// 8.10.78: dòng giáo dục đối chiếu nguồn cơ quan giáo dục chính thức
+{const D=E.COUNTRY_DEPTH_DATA,edu=(c,id)=>D.profiles[c].education.find(r=>r.id===id);
+ const want=[['JP','kosen',/mext\.go\.jp/],['JP','higher',/mext\.go\.jp/],['DE','academic912',/kmk\.org/],['DE','vocational912',/kmk\.org/],['AU','higher912',/studyassist\.gov\.au/],['SG','academic912',/moe\.gov\.sg/],['SG','vocational912',/moe\.gov\.sg/]];
+ for(const [c,id,re] of want){const r=edu(c,id);ok(r&&r.verified874&&r.verified874.scope.length>20,c+' '+id+' có phạm vi đối chiếu');ok(re.test(D.sources[r.source]),c+' '+id+' dẫn cơ quan chính thức');ok(r.sourceGeneral874&&r.sourceGeneral874!==r.source,c+' '+id+' giữ nguồn tổng hợp cũ để đối chiếu');}
+ ok(!/phần thi chung/.test(edu('DE','academic912').note),'bỏ mệnh đề chung chung không có nguồn');
+ ok(!edu('DE','higher912').verified874&&!edu('SG','higher912').verified874,'mệnh đề chưa có nguồn chính thức không bị gắn nhãn đã đối chiếu');}
 console.log('PASS country-verified874: '+n+' checks');

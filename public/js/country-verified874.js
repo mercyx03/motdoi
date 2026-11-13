@@ -13,7 +13,13 @@ var SRC={
  deAge874:'https://www.gesetze-im-internet.de/bgb/__1303.html',
  deCeremony874:'https://www.gesetze-im-internet.de/bgb/__1310.html',
  jpAge874:'https://www.moj.go.jp/EN/MINJI/minji07_00218.html',
- thAge874:'https://www.thailandlawonline.com/translations/marriage-equality-act-amendment-act-no-24-b-e-2567'
+ thAge874:'https://www.thailandlawonline.com/translations/marriage-equality-act-amendment-act-no-24-b-e-2567',
+ mextSchool874:'https://www.mext.go.jp/en/policy/education/overview/index.htm',
+ kmkPaths874:'https://www.kmk.org/en/bildungsministerkonferenz/bildungsthemen/educational-paths-and-qualifications.html',
+ kmkVocational874:'https://www.kmk.org/en/bildungsministerkonferenz/bildungsthemen/berufliche-bildung-und-weiterbildung.html',
+ studyAssist874:'https://www.studyassist.gov.au/financial-and-study-support/hecs-help',
+ moeExpress874:'https://www.moe.gov.sg/secondary/courses/express',
+ moePathways874:'https://www.moe.gov.sg/post-secondary/admissions/pse/explore-pathways'
 };
 Object.keys(SRC).forEach(function(k){D.sources[k]=SRC[k];});
 // [nước, trường, id, nguồn, phạm vi/căn cứ, ghi chú thay thế (nếu cần sửa)]
@@ -34,7 +40,14 @@ var ROWS=[
  ['PH','marriage','wed0912','phFamily874','Bộ luật Gia đình Philippines (EO 209/1987), Điều 9–11 về giấy phép kết hôn.'],
  ['PH','marriage','wed2912','phFamily874','Bộ luật Gia đình chỉ quy định vô hiệu/hủy hôn; ly hôn theo Bộ luật Nhân thân Hồi giáo (PD 1083) áp dụng cho người Hồi giáo.'],
  ['DE','marriage','wed1912','deBGB874','BGB §1353 (hôn nhân giữa hai người khác hoặc cùng giới, từ 01/10/2017).'],
- ['DE','marriage','wed0912','deCeremony874','BGB §1310: hôn nhân chỉ thành lập khi hai người tuyên bố trước viên chức hộ tịch (Standesamt); §1303: tuổi kết hôn 18.']
+ ['DE','marriage','wed0912','deCeremony874','BGB §1310: hôn nhân chỉ thành lập khi hai người tuyên bố trước viên chức hộ tịch (Standesamt); §1303: tuổi kết hôn 18.'],
+ ['JP','education','kosen','mextSchool874','MEXT, mục School System: trường cao đẳng kỹ thuật (Kōsen) nhận người đã học xong trung học cơ sở, chương trình liên tục 5 năm (5,5 năm với hàng hải), lập từ 1962.'],
+ ['JP','education','higher','mextSchool874','MEXT, mục Institutions of Higher Education: đại học (cần học xong trung học phổ thông, ít nhất 4 năm cho bằng cử nhân), junior college, Kōsen, trường đào tạo chuyên môn (Senshu-gakko) cấp danh hiệu senmonshi sau ít nhất 2 năm.'],
+ ['DE','education','academic912','kmkPaths874','KMK, Educational paths and qualifications: gymnasiale Oberstufe kết thúc bằng kỳ thi Abitur, cấp bằng đủ điều kiện vào đại học (Allgemeine Hochschulreife).','Abitur kết thúc bậc gymnasiale Oberstufe; ở hầu hết các bang, đề thi do bộ giáo dục bang ra, và các bang phải bảo đảm công nhận lẫn nhau.'],
+ ['DE','education','vocational912','kmkVocational874','KMK, Vocational Education: đào tạo nghề kép giữa doanh nghiệp và trường nghề (Berufsschule).'],
+ ['AU','education','higher912','studyAssist874','Study Assist (Chính phủ Úc): HECS-HELP là khoản vay trả phần đóng góp của sinh viên trong Commonwealth supported place; chỉ trả khi thu nhập đạt ngưỡng.'],
+ ['SG','education','academic912','moeExpress874','MOE Singapore, Express course: 4 năm trung học dẫn đến GCE O-Level; sau đó vào JC/MI học A-Level hoặc IB Diploma.'],
+ ['SG','education','vocational912','moePathways874','MOE Singapore, Explore pathways: ITE (Nitec, Higher Nitec) và polytechnic (diploma 3 năm, thực hành).']
 ];
 var applied=0;ROWS.forEach(function(x){var p=D.profiles[x[0]],arr=p&&p[x[1]],row=arr&&arr.find(function(r){return r.id===x[2];});if(!row)return;row.sourceGeneral874=row.source;row.source=x[3];row.verified874={at:AT,scope:x[4]};if(x[5])row.note=x[5];applied++;});
 // Tuổi kết hôn tối thiểu (có cha mẹ đồng ý khi luật yêu cầu) theo nơi sống và năm; life87 gọi khi không áp luật Việt Nam.

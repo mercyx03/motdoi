@@ -1,3 +1,11 @@
+## 8.10.78 — Giữ nhà đang vay khi chuyển nước, chia nợ đồng hạng, niêm yết Anh và Mỹ
+
+- Nhà còn nợ thế chấp được giữ lại khi đổi nước nếu vốn chủ sở hữu còn ít nhất 10% giá trị; khoản vay gắn với căn nhà, trả dần và quy đổi tiền; phát mại khi trễ hạn kéo dài; bán nhà thì tất toán; dọn về ở lại thì trở lại vay mua nhà.
+- Di sản người vay vốn cửa hàng: chia đồng hạng theo tỷ lệ giữa quyền thu hồi của bạn, nợ cá nhân và các quyền thu hồi khác.
+- Điều kiện niêm yết riêng Anh (UKLR, từ 29/07/2024) và Mỹ (Nasdaq Global Market, Income Standard).
+- 7 dòng giáo dục Nhật, Đức, Úc, Singapore đối chiếu nguồn chính thức (251/3705).
+- Kiểm thử: move874 (17), business874 (17 nhóm), receivables873 (39), country-verified874 (133).
+
 ## 8.10.77 — Đối chiếu luật hôn nhân theo nước, tuổi kết hôn theo thời kỳ
 
 - Tuổi kết hôn theo nơi sống và năm ở Trung Quốc, Indonesia, Hàn Quốc, Nhật Bản, Thái Lan, Philippines, Singapore, Đức; 17 mục hồ sơ quốc gia chuyển sang nguồn văn bản chính thức (246/3705 mục có nguồn riêng).
