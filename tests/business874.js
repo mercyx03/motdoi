@@ -91,3 +91,19 @@ let n=0;const ok=(m)=>{n++;console.log('  ✓ '+m);};
 // 12. Giao diện có nút mở lại bảng vừa đóng
 {const app=require('fs').readFileSync(require('path').join(__dirname,'..','public','js','app.js'),'utf8');assert(/reopenPanel874/.test(app)&&/Mở lại: /.test(app));ok('nút mở lại bảng vừa đóng');}
 console.log('business874: '+n+' nhóm đạt');
+// 13. Ngưỡng chào mua theo nước và thời kỳ
+{const mk=(cc,year)=>{const l=fam(20);l.birthYear=year-30;l.age=30;l.country=cc;return l;};const c=cc=>({listed874:{mult:1},country874:cc});
+ assert.equal(B.tenderNeeded(mk('GB',2026),c('GB'),25,31),30);assert.equal(B.tenderNeeded(mk('US',2026),c('US'),25,60),null);
+ assert.equal(B.tenderNeeded(mk('JP',2025),c('JP'),25,33),null);assert.equal(B.tenderNeeded(mk('JP',2027),c('JP'),25,31),30);
+ assert.equal(B.tenderNeeded(mk('AU',2026),c('AU'),10,21),20);assert.equal(B.tenderNeeded(mk('AU',2026),c('AU'),22,27),25);
+ assert.match(B.rules(mk('GB',2026),c('GB')).source,/Takeover Code/);ok('ngưỡng chào mua Anh/Nhật/Úc/Mỹ theo thời kỳ');}
+// 14. Bế tắc 50/50 khi bầu Chủ tịch: không tự giải quyết, có lối thương lượng
+{const l=fam(13);l.fam.fJob='nông dân';l.sibList=[{name:'Anh Bình',sex:'M',born:l.age-33,alive:true,edu:6}];const sid=X.uid(l,l.sibList[0]);
+ const c={name:'Cty 5050',value:90000,share:50,sector:'general',roles:{},created:20,holders137:[{id:sid,name:'Anh Bình',share:50}]};E.BUSINESS123.companies(l).push(c);E.BUSINESS133.ensure(c);c.governance908={nominations:{},history:[]};
+ assert.equal(B.tie(l,{company:c},'chair',50,[],{id:'self'}),false);assert(B.deadlock(c),'ghi nhận bế tắc');l.age++;B.year(l,()=>.5,log);assert(B.deadlock(c),'không tự hết sau một năm');
+ const d=E.DEC.deadlock874.make(l,()=>.5,{cid:X.uid(l,c)});E.DEC.deadlock874.apply(l,d,String(d.data.keys.indexOf('split')),()=>.01,log);assert(!B.deadlock(c));assert.equal(c.chair908.id,sid);assert.equal(E.resolveJob(l.job.id),B.JOB);take();ok('bế tắc 50/50: nhiều năm, thương lượng chia vai trò');}
+console.log('business874 (bổ sung): '+n+' nhóm đạt');
+// 15. Monaco 1882: mọi thành viên Gia đình Quân chủ kết hôn cần Quân vương cho phép
+{const h={cc:'MC',seat:'sov'};const m={id:'cousin'};const mk=y=>{const l=fam(30);l.birthYear=y-30;l.age=30;return l;};
+ assert.equal(E.ROYAL837.consentNeeded(mk(1950),h,m),true);const r=E.MONACO861_DATA.rules.statutes1882;assert(/journaldemonaco\.gouv\.mc/.test(r.source));ok('Monaco 1882: kết hôn cần Quân vương cho phép (Công báo 1882)');}
+console.log('business874 (tổng): '+n+' nhóm đạt');

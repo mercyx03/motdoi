@@ -1,3 +1,8 @@
+## 8.10.75 — Tình cảm đôi lứa, kế hoạch có con, luật chào mua theo nước
+
+- Sửa lỗi tình cảm đôi lứa không thay đổi theo thời gian (rất ít cặp đủ điều kiện cưới); cặp đã quyết định có con tiếp tục thử qua các năm; đo lại tỷ lệ AI có con.
+- Ngưỡng chào mua Anh/Nhật/Úc/Mỹ theo thời kỳ; bế tắc 50/50 khi bầu Chủ tịch; quy chế hôn nhân Monaco 1882. 8.10.73 và 8.10.74 đã ghi phát hành 13/11/2026 10:40 (+07:00).
+
 ## 8.10.74 — Cổ phần công ty gia đình, niêm yết và lương điều hành
 
 - Công ty của bố mẹ có cơ cấu cổ đông ngẫu nhiên (chưa niêm yết hoặc đã niêm yết); mua cổ phần từ đối tác, trên sàn, chào mua công khai hoặc từ bố mẹ để giành quyền kiểm soát trước khi thừa kế.
