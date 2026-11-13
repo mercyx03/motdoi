@@ -5,8 +5,8 @@
       "id": "country-verified-81077",
       "version": "8.10.77",
       "publishedAt": "2026-11-13T13:31:00.000+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T08:27:00.000Z",
       "title": "Đối chiếu luật hôn nhân theo nước, nguyên nhân qua đời và điện lưới theo số liệu quốc tế, gỡ chữ \"mô phỏng\"",
       "summary": "Tuổi kết hôn ở 8 nước đổi theo nơi sống và năm; nguyên nhân qua đời của nhân vật và người thân theo từng nước (WHO/World Bank); nhà có điện lưới hay chưa theo nước, năm và vùng; gỡ chữ \"mô phỏng\" trong giao diện; sửa số phiên bản hiển thị.",
       "tags": [
@@ -22,16 +22,16 @@
         "Nguyên nhân qua đời của nhân vật, bố mẹ, anh chị em và bạn đời theo số liệu từng nước (World Bank WDI, gốc WHO Global Health Estimates): tỷ trọng bệnh truyền nhiễm, bệnh không lây và chấn thương; tai nạn giao thông, bạo lực, lao, sốt rét, HIV, tiêu chảy, ngộ độc theo tỷ lệ của nước đó. Biết bơi, rượu, ma túy, thuốc lá và bệnh đang mắc vẫn được tính. Nước chưa có số liệu giữ bảng cũ.",
         "Điện lưới tại nhà theo nước, năm sinh, thành thị hay nông thôn và nhóm thu nhập gia đình. Nhà chưa có điện được kéo điện dần theo tốc độ phủ điện của nước đó; trẻ đi học học bài dưới đèn dầu, ngày có điện được ghi vào nhật ký và ký ức.",
         "Gỡ chữ \"mô phỏng\" thừa trong các thông báo công vụ, bầu cử, hạn chế xuất cảnh, hoàng gia, Monaco, Tây Tạng và nhà ở xã hội; giữ lại ghi chú về kịch bản chính trị và giờ bay giả lập.",
-        "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi 8.10.56).",
-        "Đã đối chiếu với tài liệu API của 1in8b.life; đề xuất cải tiến tiếp theo nằm trong docs/REVIEW-1IN8B-874.md."
-      ]
+        "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi 8.10.56)."
+      ],
+      "correctedAt": "2026-11-13T08:28:13.705Z"
     },
     {
       "id": "law-sport-81076",
       "version": "8.10.76",
       "publishedAt": "2026-11-13T11:11:29.000+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T08:27:00.000Z",
       "title": "Nhiếp chính Tây Ban Nha 1876, ly hôn ở Scotland và Bắc Ireland, bốn liên đoàn bóng đá Anh",
       "summary": "Bổ sung các bước nhiếp chính, giám hộ và mất khả năng của Hiến pháp Tây Ban Nha 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; chọn đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland; thêm hồ sơ Y khoa Johns Hopkins và Luật Yale; ghi rõ mức xác minh của thông tin quốc gia.",
       "tags": [
@@ -47,14 +47,15 @@
         "Bóng đá: người có quốc tịch Anh có thể đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland nếu sinh ra ở đó, có cha mẹ hoặc ông bà ruột sinh ra ở đó, hoặc học ít nhất năm năm trước 18 tuổi tại đó. Có thể chọn liên đoàn khi chưa ra sân chính thức cấp đội tuyển.",
         "Thêm hồ sơ Y khoa (MD) tại Johns Hopkins và Luật (J.D.) tại Yale, có lệ phí hồ sơ và các bước tuyển sinh như các trường hiện có.",
         "Thông tin về giáo dục, hôn nhân và điều kiện làm việc ở từng quốc gia nay ghi rõ khi mục chỉ dựa trên nguồn tổng hợp quốc tế, chưa được đối chiếu riêng."
-      ]
+      ],
+      "correctedAt": "2026-11-13T08:28:13.497Z"
     },
     {
       "id": "family-life-81075",
       "version": "8.10.75",
       "publishedAt": "2026-11-13T10:54:28.000+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T08:27:00.000Z",
       "title": "Tình cảm đôi lứa, kế hoạch có con và luật chào mua theo từng nước",
       "summary": "Tình cảm giữa hai người thay đổi theo thời gian bên nhau, giúp các cặp đôi đi tới hôn nhân và có con đúng với mong muốn hơn. Bổ sung luật chào mua cổ phần của Anh, Nhật, Úc, Mỹ, cách gỡ bế tắc 50/50 và quy chế hôn nhân hoàng gia Monaco năm 1882.",
       "tags": [
@@ -70,7 +71,8 @@
         "Ngưỡng phải chào mua cổ phần theo nơi đăng ký công ty: Anh 30% (Takeover Code Rule 9); Nhật một phần ba trước 2026, 30% từ 2026; Úc 20% và tối đa 3% mỗi sáu tháng khi đã trên 20%; Mỹ không có ngưỡng chào mua bắt buộc mà phải công bố khi nắm từ 5%.",
         "Khi bầu Chủ tịch hòa phiếu 50/50, công ty rơi vào bế tắc kéo dài và điểm quản trị giảm dần. Có thể thương lượng chia vai trò Chủ tịch và Tổng giám đốc, mời chủ tịch độc lập hoặc mua thêm cổ phần để phá thế cân bằng.",
         "Hoàng gia Monaco từ năm 1883 đến trước năm 2015: mọi thành viên Gia đình Quân chủ kết hôn đều cần Quân vương cho phép; kết hôn không phép làm người đó và con cháu mất quyền kế vị, theo quy chế đăng trên Công báo Monaco năm 1882."
-      ]
+      ],
+      "correctedAt": "2026-11-13T08:28:13.267Z"
     },
     {
       "id": "family-business-81074",
