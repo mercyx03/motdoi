@@ -58,3 +58,9 @@ World Bank WDI (CC BY 4.0), tải 13/11/2026 qua api.worldbank.org: EG.ELC.ACCS.
 EG.ELC.ACCS.UR.ZS, SH.DTH.COMM.ZS (2019), SH.DTH.INJR.ZS (2021), SH.STA.TRAF.P5, VC.IHR.PSRC.P5, SH.TBS.INCD,
 SH.MLR.INCD.P3, SH.DYN.AIDS.ZS, SH.STA.POIS.P5, SH.DYN.NCOM.ZS, SH.STA.WASH.P5. Nằm trong `public/js/data-health874.js`.
 Tỷ trọng nhóm nguyên nhân theo tuổi ở mức thế giới là ước tính làm tròn của game từ cấu trúc GHE, không phải số liệu tải về.
+
+## Nhịp yêu–cưới của nhân vật AI (đo 8.10.78, chưa sửa)
+
+- Phễu 25 đời Mỹ sinh 1990: 24 có người yêu, 13 kết hôn (tuổi trung vị khoảng 36), 22 lần được hỏi chuyện con, 18 chọn có, 9 thực sự có con. Chuyện con thường được hỏi muộn (trung vị 36 tuổi) vì cưới muộn.
+- Ở quyết định cưới, AI chọn "chưa vội" khoảng 64% số lần (74/116), cao hơn nhiều so với bảng chọn tự động (33%): khi tình cảm dưới 75 điểm, lựa chọn cưới bị ẩn nên chỉ còn "chưa vội" hoặc ngỏ lời sớm.
+- Thử tăng tốc độ tăng tình cảm (8→11 điểm/năm), hỏi cưới thường hơn và giảm xác suất chia tay sau 25 tuổi: con/đời Mỹ 0,40→0,53 nhưng Nigeria 0,55→0,50 (40 đời mỗi nước), nằm trong sai số, nên đã hoàn tác. Muốn kết luận cần ít nhất vài trăm đời mỗi nước.
