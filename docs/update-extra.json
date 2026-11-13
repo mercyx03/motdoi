@@ -1,5 +1,21 @@
 [
   {
+    "id": "wage-tax-81079",
+    "version": "8.10.79",
+    "publishedAt": "2026-11-13T16:05:00.000+07:00",
+    "releaseStatus": "packaged",
+    "title": "Thuế thu nhập tiền lương ở Anh, Úc, Singapore, Canada",
+    "summary": "Lương ở bốn nước này nay bị trừ thuế theo biểu chính thức, có lịch sử theo năm trong hồ sơ.",
+    "tags": [
+      "Tài chính",
+      "Quốc gia"
+    ],
+    "details": [
+      "Anh (từ 2023–24), Úc (từ 2024–25, gồm Medicare 2%), Singapore (từ 2023), Canada liên bang (từ 2026): thuế tính trên thu nhập chịu thuế theo biểu, hiển thị ở bảng lương và hồ sơ nghề nghiệp.",
+      "Chưa gồm Scotland, National Insurance, phụ phí Medicare, thuế tỉnh Canada và các khoản giảm trừ; đây là ước tính, không phải tờ khai."
+    ]
+  },
+  {
     "id": "mortgage-ipo-81078",
     "version": "8.10.78",
     "publishedAt": "2026-11-13T15:41:00.000+07:00",

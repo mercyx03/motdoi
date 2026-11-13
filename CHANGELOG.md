@@ -1,3 +1,9 @@
+## 8.10.79 — Thuế thu nhập tiền lương ở Anh, Úc, Singapore, Canada
+
+- Nhân vật có việc làm ăn lương sống ở Anh, Úc, Singapore, Canada nay bị trừ thuế thu nhập theo biểu chính thức (Anh từ 2023–24, Úc từ 2024–25 gồm thuế Medicare 2%, Singapore từ 2023, Canada liên bang từ 2026); lịch sử thuế theo năm lưu trong hồ sơ, hiện ở bảng lương và dòng nghề nghiệp.
+- Chưa gồm: Scotland, National Insurance, phụ phí Medicare, thuế tỉnh Canada, giảm trừ cá nhân; ngưỡng 500.000/1.000.000 Singapore chưa đối chiếu được. Việt Nam và Mỹ giữ module thuế cũ.
+- Kiểm thử: tax879 (1150 kiểm tra).
+
 ## 8.10.78 — Giữ nhà đang vay khi chuyển nước, chia nợ đồng hạng, niêm yết Anh và Mỹ
 
 - Nhà còn nợ thế chấp được giữ lại khi đổi nước nếu vốn chủ sở hữu còn ít nhất 10% giá trị; khoản vay gắn với căn nhà, trả dần và quy đổi tiền; phát mại khi trễ hạn kéo dài; bán nhà thì tất toán; dọn về ở lại thì trở lại vay mua nhà.
