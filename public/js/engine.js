@@ -1097,7 +1097,10 @@
           opts: [opt('yes', canBirth ? 'Sinh thêm một em bé' : 'Nhận nuôi một đứa trẻ', ''), opt('no', 'Chưa / không muốn', '')] };
       },
       auto: function (life, d, r) {
-        var want = life.flags.wantKids != null ? life.flags.wantKids : (life.flags.wantKids = Math.max(0, Math.round(life.tfr + U.normal(r) * 0.9)));
+        var chosen=life.flags.familyPlan108;
+        var explicit=chosen&&Number.isInteger(chosen.want)&&(chosen.chosenWant874||chosen.want!==2);
+        if(explicit&&life.kids.length>=chosen.want)return 'no';
+        var want = explicit?chosen.want:life.flags.wantKids != null ? life.flags.wantKids : (life.flags.wantKids = Math.max(0, Math.round(life.tfr + U.normal(r) * 0.9)));
         if (d.data.adopt) return r() < 0.25 && life.kids.length < Math.max(1, want) ? 'yes' : 'no';
         return life.kids.length < want ? 'yes' : (r() < 0.08 ? 'yes' : 'no');
       },
@@ -1303,7 +1306,7 @@
     var cc = W.BY[c[0]];
     life.abroad = { code: c[0], name: c[1], perm: true, arrived873: life.age, pool: c[2], base: cc.gdp * 1000 * 0.55 * 0.75 };
     life.urban = true; life.place = cc.cities[U.randint(r, 0, Math.min(3, cc.cities.length - 1))]; life.city = life.place;
-    if (life.ownHouse) { // bán nhà trước khi đi, trả nợ vay mua nhà
+    if (life.ownHouse && !(H.keepHome874 && H.keepHome874(life, oldCountry ? oldCountry.code : life.country))) { // bán nhà trước khi đi, trả nợ vay mua nhà
       var homeDebt = (life.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (life.mortgage || 0);
       life.money += life.houseVal - homeDebt; life.houseVal = 0; life.ownHouse = false; life.mortgage = 0;
       life.loans = (life.loans || []).filter(function (x) { return x.type !== 'home'; });
@@ -1315,6 +1318,7 @@
     } else {
       E.abroadConvert(life, C.priceLevel(oldGdp) / C.priceLevel(cc.gdp));
     }
+    if (H.reoccupy874) H.reoccupy874(life, c[0], log);
     setBase(life);
     if (life.job) life.job = { id: E.resolveJob(life.job.id) === 'nong' ? 'phu_ho' : E.resolveJob(life.job.id), rank: 0, yrs: 0 };
     else life.flags.needJob = true;
@@ -1449,7 +1453,7 @@
       var pm = 0.13 + (life.focus === 'social' ? 0.07 : 0) - (a > 40 ? 0.08 : 0) + (life.st.soc - 50) / 400 + (E.LOOKS134 ? E.LOOKS134.loveBonus(life) : 0); // ngoại hình ưa nhìn dễ có người yêu hơn
       if (r() < pm) add('love');
     } else if (p && p.status === 'dating' && a - p.since >= 1 && (life.flags.marryAskAt == null || a - life.flags.marryAskAt >= 2 + Math.min(4, life.flags.marryWait || 0)) && r() < 0.4) { add('marry'); life.flags.marryAskAt = a; } // v3.0: không hỏi chuyện cưới năm nào cũng như năm nào
-    if (p && p.status !== 'dating' && a <= 50 && (life.flags.noKidUntil == null || a >= life.flags.noKidUntil) && (life.flags.kidAskAt == null || a - life.flags.kidAskAt >= 2) && life.kids.length < (life.flags.familyPlan108 ? life.flags.familyPlan108.want : 2) && !(life.flags.pregnancy108) && (!E.RELATIONS108 || E.RELATIONS108.fertile(life,p)) && r() < (life.kids.length >= 1 ? 0.08 : 0.2)) { add('kid'); life.flags.kidAskAt = a; }
+    if (p && p.status !== 'dating' && a <= 50 && (life.flags.noKidUntil == null || a >= life.flags.noKidUntil) && (life.flags.kidAskAt == null || a - life.flags.kidAskAt >= 2) && life.kids.length < (life.flags.familyPlan108 ? life.flags.familyPlan108.want : 2) && !(life.flags.pregnancy108) && (!E.RELATIONS108 || E.RELATIONS108.fertile(life,p)) && r() < (life.kids.length >= 1 ? 0.08 : 0.2)) { var beforeKid=q.length; add('kid'); if(q.length>beforeKid)life.flags.kidAskAt=a; }
     if (p && p.status !== 'dating' && a - p.since >= 2 && r() < (isVN(life) ? 0.012 : 0.02) * (life.st.hap < 45 ? 2 : 1)) add('divorce');
     // di chuyển
     if (!life.urban && !life.flags.cityAsked && a >= 18 && a <= 35 && !life.school && r() < 0.12) add('city');

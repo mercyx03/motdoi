@@ -1,3 +1,10 @@
+## 8.10.74 — Cổ phần công ty gia đình, niêm yết và lương điều hành
+
+- Công ty của bố mẹ có cơ cấu cổ đông ngẫu nhiên (chưa niêm yết hoặc đã niêm yết); mua cổ phần từ đối tác, trên sàn, chào mua công khai hoặc từ bố mẹ để giành quyền kiểm soát trước khi thừa kế.
+- Đưa công ty lên sàn theo điều kiện Luật Chứng khoán 2019; giá thị trường của cổ phần niêm yết tính vào tài sản.
+- Sửa lỗi trúng cử CEO/Chủ tịch không đổi chức vụ và lương; lương điều hành theo quy mô công ty; thiên phú kinh doanh +20–30% lợi nhuận; niềm tin bố mẹ theo thành tích.
+- Sửa lỗi về Việt Nam mất tài sản (quy đổi đủ, giữ nhà không vay nợ, không nhân sai tiền khi về từ lao động/du học); nút mở lại bảng vừa đóng; gỡ nhãn “mô phỏng” thừa. Gói Preview chờ xác nhận upload.
+
 ## 8.10.73 — Hồ sơ học tập, khoản vay gia đình và đổi đội tuyển
 
 - Bổ sung hồ sơ MD/J.D., tên ngành, hạn báo cáo học tại nhà và căn cứ đổi đội tuyển.

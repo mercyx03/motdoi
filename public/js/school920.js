@@ -48,7 +48,7 @@
     RS: { n: 'Maturska večer (dạ tiệc tốt nghiệp)', g: 'final', p: 0.85, when: 'cuối năm học', note: 'Lễ riêng của Serbia, không phải Norijada.', guests: 'school', ok: 'secondary' },
     HU: { n: 'Szalagavató (lễ gắn ruy băng)', g: 'final', p: 0.9, when: 'mùa thu/đông năm cuối', note: 'Gắn ruy băng, biểu diễn valse cùng gia đình, theo lịch trường.', guests: 'family', dance: 'valse', ok: 'secondary' }
   };
-  // Các chương trình bên dưới là phương án trường/gia đình có thể chọn trong mô phỏng.
+  // Các chương trình bên dưới là phương án trường/gia đình có thể chọn trong game.
   [
     ['IT','I cento giorni','Gặp lớp trước kỳ thi cuối cấp, viết lời nhắn gửi tương lai.'],
     ['BE','Ngày hội 100 ngày','Lớp chuẩn bị tiết mục chia tay cùng thầy cô.'],

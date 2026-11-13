@@ -279,7 +279,7 @@
   }, 18, 'Học tập');
   X.menu('disability918','Hỗ trợ người khuyết tật',function(l){return l.alive && disPeople(l).length?true:'Chưa có nhu cầu hỗ trợ được ghi nhận';},function(l){
     var d=st(l).dis||{};
-    return 'Quyền lợi mô phỏng theo nơi sống và nhu cầu cá nhân. '+disPeople(l).map(function(p){var e=d[p.key];return p.name+': '+(!e||(e.country||'VN')!==disCountry(l)?'chưa xét tại nơi ở hiện tại':e.status==='pending'?'đang xét':disLevel[e.level]+' · '+mo(l,allowance(l,e.level))+'/năm');}).join(' · ');
+    return 'Quyền lợi ước tính theo nơi sống và nhu cầu cá nhân. '+disPeople(l).map(function(p){var e=d[p.key];return p.name+': '+(!e||(e.country||'VN')!==disCountry(l)?'chưa xét tại nơi ở hiện tại':e.status==='pending'?'đang xét':disLevel[e.level]+' · '+mo(l,allowance(l,e.level))+'/năm');}).join(' · ');
   },function(l){var d=st(l).dis||{},out=[];
     disPeople(l).forEach(function(p){var e=d[p.key],cc=disCountry(l);
       if(disResident(l)&&(!e||(e.country||'VN')!==cc))out.push({k:'reg:'+p.key,l:'Nộp hồ sơ hỗ trợ cho '+p.name,run:function(l,r,log){var s=st(l);s.dis=s.dis||{};s.dis[p.key]={status:'pending',at:l.age,country:cc,name:p.name};log('Đã nộp hồ sơ, năm sau xét kết quả.','neutral');}});
@@ -300,7 +300,7 @@
   X.menu('policy918', 'Đề xuất và thí điểm chính sách', function (l) { var r = X.reason(l, 25); if (r !== true) return r; if (!polScope(l)) return 'Cần giữ chức vụ cấp tỉnh hoặc cấp bộ trở lên'; return true; }, function (l) {
     var q = st(l).prop || {}, sc = polScope(l), e = R.state(l);
     return (sc === 'national' ? 'Bạn có thể trình đề xuất chính sách toàn quốc; hội đồng thẩm định xét dựa trên uy tín, khả năng phối hợp và sự ủng hộ, không phải tự bạn quyết định. Được thông qua thì có hiệu lực sau 2 năm.' : 'Bạn có thể đề xuất thí điểm trong địa bàn tỉnh mình; chính sách chỉ áp dụng cho người sống tại tỉnh.') +
-      ' Mỗi đề xuất tốn ngân sách đơn vị và chỉ một đề xuất mỗi 3 năm. Kết quả chỉ thay đổi thế giới mô phỏng của đời này.' + (q.pending ? '\nĐang thẩm định: ' + q.pending.id + '.' : '') + (q.hist && q.hist.length ? '\nĐã đề xuất: ' + q.hist.map(function (h) { return h.id + ' (' + (h.ok ? 'thông qua' : 'chưa thông qua') + ')'; }).join(', ') + '.' : '') +
+      ' Mỗi đề xuất tốn ngân sách đơn vị và chỉ một đề xuất mỗi 3 năm. Kết quả chỉ thay đổi thế giới game của đời này.' + (q.pending ? '\nĐang thẩm định: ' + q.pending.id + '.' : '') + (q.hist && q.hist.length ? '\nĐã đề xuất: ' + q.hist.map(function (h) { return h.id + ' (' + (h.ok ? 'thông qua' : 'chưa thông qua') + ')'; }).join(', ') + '.' : '') +
       (e.pilot ? Object.keys(e.pilot).map(function (k) { return '\nThí điểm ' + k + ' tại ' + e.pilot[k].prov + ' từ ' + e.pilot[k].from; }).join('') : '');
   }, function (l) {
     var q = st(l).prop || {}, sc = polScope(l), S = S174(), budget = S && E.STATE917 ? E.STATE917.projState(l) : null, cost = l.base * (sc === 'national' ? 1.5 : 0.8);

@@ -232,13 +232,46 @@
     if (code === l.flags.renounced) return false;
     return E.GLOBAL919.citizenships(l).includes(code);
   }
+  function birthEvidence874(l) {
+    return l.flags.footballBirth874||{country:(l.gen||1)===1?l.country:null,ancestors:[]};
+  }
+  function recordFootballBirth874(l,k,other) {
+    if(!k||k.footballBirth874||k.adopted||!['partner','outside'].includes(k.birthContext108)||!other||other.sex===l.sex)return;
+    var parent=birthEvidence874(l),ancestors=[];
+    if(G.W.BY[parent.country])ancestors.push({country:parent.country,degree:1});
+    (parent.ancestors||[]).filter(function(a){return a.degree===1&&G.W.BY[a.country];}).forEach(function(a){
+      ancestors.push({country:a.country,degree:2});
+    });
+    var country=l.sex==='F'&&!l.flags.homeVisit907&&!l.abroad?.visit907&&!l.abroad?.trapped?H.resCode(l):null;
+    k.footballBirth874={country:country,ancestors:ancestors};
+  }
+  var childFootball874=E.childOpts;
+  E.childOpts=function(l,k){
+    var o=childFootball874.apply(this,arguments);
+    if(k.footballBirth874)o.parent.footballBirth874=JSON.parse(JSON.stringify(k.footballBirth874));
+    return o;
+  };
+  var createFootball874=E.createLife;
+  E.createLife=function(options){
+    var l=createFootball874.apply(this,arguments),parent=options&&options.parent;
+    l.flags.footballBirth874=parent?(parent.footballBirth874?JSON.parse(JSON.stringify(parent.footballBirth874)):{country:null,ancestors:[]}):{country:l.country,ancestors:[]};
+    return l;
+  };
+  function footballBirthLink874(l,code){
+    var data=birthEvidence874(l);
+    if(data.country===code)return 'nơi sinh';
+    if((data.ancestors||[]).some(function(a){return a.degree===1&&a.country===code;}))return 'nơi sinh của cha hoặc mẹ ruột';
+    if((data.ancestors||[]).some(function(a){return a.degree===2&&a.country===code;}))return 'nơi sinh của ông hoặc bà ruột';
+    return null;
+  }
   function representation873(l, code) {
     if (!D.markets[code]) return 'Chưa có đội tuyển này trong danh mục bóng đá';
     if (!nationality873(l, code)) return 'Cần có quốc tịch của đội tuyển';
     if (code === l.country) return null;
     if (code === 'GB') return 'Cần hồ sơ xác định liên đoàn trong Vương quốc Anh';
+    if(footballBirthLink874(l,code))return null;
     var foreign = l.abroad;
-    if (!foreign || foreign.code !== code || foreign.trapped || !Number.isFinite(foreign.arrived873??foreign.since)) {
+    if (!foreign || foreign.code !== code || foreign.trapped || foreign.visit907 || !Number.isFinite(foreign.arrived873??foreign.since)) {
       return 'Cần hồ sơ xác nhận nơi sinh, huyết thống hoặc thời gian cư trú';
     }
     var arrival=foreign.arrived873??foreign.since;
@@ -304,8 +337,8 @@
     var national = peek(l).national;
     if (national.request873) return [{k:'withdraw', l:'Rút hồ sơ đang xét', run:function() { delete national.request873; }}];
     return E.GLOBAL919.citizenships(l).filter(function(code) { return code !== national.country; }).map(function(code) {
-      var reason = associationReason873(l, code);
-      return {k:code, l:'Xin đại diện ' + G.W.BY[code].name + (reason ? ' · ' + reason : ''), why:reason || true,
+      var reason = associationReason873(l, code), birthLink=footballBirthLink874(l,code);
+      return {k:code, l:'Xin đại diện ' + G.W.BY[code].name + (reason ? ' · ' + reason : ''), h:birthLink?'Căn cứ: '+birthLink:'', why:reason || true,
         run:function(l,r,log) {
           if (requestAssociation873(l,code)) log('Đã gửi hồ sơ. Trong lúc chờ xét, bạn không ra sân cho đội tuyển nào.', 'neutral');
         }};
@@ -314,10 +347,10 @@
   E.HOOKS.year.push(function(l,r,log) {
     if (!l.alive) return;
     var a=l.abroad;
-    if (a&&!a.trapped&&!Number.isFinite(a.arrived873)&&!Number.isFinite(a.since)) a.arrived873=l.age;
+    if (a&&!a.trapped&&!a.visit907&&!Number.isFinite(a.arrived873)&&!Number.isFinite(a.since)) a.arrived873=l.age;
     reviewAssociation873(l,log);
   });
-  E.FOOTBALL_ASSOCIATION873 = {reason:associationReason873, request:requestAssociation873, review:reviewAssociation873};
+  E.FOOTBALL_ASSOCIATION873 = {reason:associationReason873, request:requestAssociation873, review:reviewAssociation873,recordBirth:recordFootballBirth874,birthLink:footballBirthLink874};
   function national(l, z, r, log) {
     var s = peek(l), n = s.national, market = D.markets[n.country];
     n.called = false;

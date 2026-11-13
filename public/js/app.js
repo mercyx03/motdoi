@@ -1120,7 +1120,9 @@
     if (S.actSub === undefined) S.actSub = LS.get('mkn.actsub', null);
     var subSel = sel && subs[sel] && S.actSub && subs[sel][S.actSub] ? S.actSub : null, list = sel ? subs[sel] ? subSel ? subs[sel][subSel] : null : groups[sel] : null;
     function actChip(x) { return '<button class="chip act' + (x.ok === true ? '' : ' off') + '" data-act="' + x.id + '"' + (x.ok === true ? '' : ' title="' + esc(x.ok) + '" disabled') + '>' + esc(x.l) + (x.ok===true?'':'<small class="action-reason">'+esc(x.ok)+'</small>') + '</button>'; }
+    var reopen874 = S.lastPanel874 && S.lastPanel874.life === l.id && E.DEC[S.lastPanel874.id] ? S.lastPanel874 : null;
     p.innerHTML = '<h3>Việc bạn muốn làm <span class="muted small" style="text-transform:none;letter-spacing:0">· ' + (left == null ? 'không giới hạn lượt' : 'còn ' + left + '/' + lim + ' lượt năm nay') + '</span></h3>' +
+      (reopen874 ? '<div class="chips reopen874"><button class="chip sm on" id="reopen874" title="Mở lại bảng vừa đóng">↺ Mở lại: ' + esc(reopen874.title) + '</button></div>' : '') +
       '<div class="chips actgroups">' + Object.keys(groups).map(function (g) {
         var n = groups[g].filter(function (x) { return x.ok === true; }).length + (subs[g] && subs[g][SPENDSUB] && g === SPEND ? subs[g][SPENDSUB].filter(function (x) { return groups[g].indexOf(x) < 0; }).length : 0);
         return '<button class="chip sm' + (g === sel ? ' on' : '') + (n ? '' : ' off') + '" data-ag="' + esc(g) + '">' + esc(g) + (n ? ' <small>' + n + '</small>' : '') + '</button>';
@@ -1135,6 +1137,7 @@
     $$('[data-ag]', p).forEach(function (b) { b.onclick = function () { S.actG = S.actG === b.dataset.ag ? null : b.dataset.ag; LS.set('mkn.actg', S.actG); S.actSub = null; LS.set('mkn.actsub', null); if (S.actG && !S.paused && S.phase !== 'dead') { S.paused = true; S.actPause = true; renderTopbar(); toast('Đã tạm dừng để bạn chọn việc — bấm Tiếp tục khi xong'); } else if (!S.actG && S.actPause) { S.actPause = false; S.paused = false; S.last = performance.now(); renderTopbar(); } renderActions(); }; });
     $$('[data-asub]', p).forEach(function (b) { b.onclick = function () { S.actSub = b.dataset.asub || null; LS.set('mkn.actsub', S.actSub); renderActions(); }; });
     $$('[data-act]', p).forEach(function (b) { b.onclick = function () { doAction(b.dataset.act); }; });
+    var rb874 = $('#reopen874', p); if (rb874) rb874.onclick = reopenPanel874;
     $$('[data-recur]', p).forEach(function (b) { b.onclick = function () { var on = E.recurToggle(S.life, b.dataset.recur); toast(on ? 'Đã bật — từ năm nay sẽ tự động chi mỗi kỳ' : 'Đã tắt khoản chi định kỳ này'); persist(); renderActions(); }; });
   }
   function recurHtml(l) {
@@ -1143,6 +1146,15 @@
       var off = x.ok !== true;
       return '<button class="chip act recur-c' + (x.on ? ' on' : '') + (off && !x.on ? ' off' : '') + '" data-recur="' + x.id + '"' + (off && !x.on ? ' disabled title="' + esc(x.ok) + '"' : '') + '>' + (x.on ? '✓ ' : '') + esc(x.l) + ' <small>' + esc(x.per) + ' · ~' + esc(x.cost) + '</small></button>';
     }).join('') + '</div>';
+  }
+  function reopenPanel874() {
+    var l = S.life, x = S.lastPanel874;
+    if (!l || !x || !l.alive || S.phase === 'decision' || S.phase === 'reflect' || S.phase === 'dead') return;
+    if ((E.ACT || []).some(function (a) { return a.id === x.id; }) && !(x.arg && Object.keys(x.arg).length)) { doAction(x.id); return; }
+    var D = E.DEC[x.id], d = null;
+    try { d = D && D.make(l, U.rand(l), x.arg); } catch (e) { if (window.console) console.error(e); }
+    if (!d || !D.valid(l, d.data || {})) { S.lastPanel874 = null; toast('Bảng này không còn mở được trong hoàn cảnh hiện tại'); renderActions(); return; }
+    d.manual = true; l.pending.unshift(d); S.skipping = false; renderTopbar(); showDecision();
   }
   function doAction(id) {
     var l = S.life;
@@ -1460,6 +1472,8 @@
     closeModal();
     var cur = S.life.pending[0], wasManual = cur && cur.manual, rest = S.life.pending.length - 1;
     if (cur && byHand) cur.byHand912 = true; // nguồn lựa chọn: người chơi tự bấm (khoi-track.js)
+    // 8.10.74: nhớ bảng menu vừa thao tác để mở lại bằng một lần bấm
+    if (cur && byHand && E.DEC[cur.id] && E.DEC[cur.id].menu110) S.lastPanel874 = { id: cur.id, arg: cur.data && cur.data.arg, title: cur.title, life: S.life.id };
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
     var queued0 = S.life.pending.slice(1);
     var stick915 = !!(byHand && cur && cur.manual && k !== 'cancel' && E.DEC[cur.id] && E.DEC[cur.id].menu110 && cur.opts.length >= 7), scroll915 = stick915 ? document.querySelector('.opts.many') : null;

@@ -1,5 +1,33 @@
 [
   {
+    "id": "family-business-81074",
+    "version": "8.10.74",
+    "publishedAt": "2026-11-13T10:28:12.000+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Cổ phần công ty gia đình, đưa công ty lên sàn và lương điều hành",
+    "summary": "Công ty của bố mẹ có cơ cấu cổ đông riêng và có thể đã niêm yết. Bạn có thể mua dần cổ phần, giành quyền điều hành, đưa công ty lên sàn và nhận lương theo quy mô doanh nghiệp. Về nước không còn làm mất nhà và tài sản.",
+    "tags": [
+      "Doanh nghiệp",
+      "Gia đình",
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Công ty của bố mẹ giờ có thể là công ty chưa niêm yết hoặc công ty đã niêm yết. Bố mẹ không phải lúc nào cũng giữ 100%: phần còn lại thuộc đối tác góp vốn, quỹ đầu tư hoặc cổ đông đại chúng. Bố mẹ cũng có thể tự đưa công ty lên sàn khi đủ điều kiện.",
+      "Mục mới “Cổ phần công ty gia đình và thâu tóm” cho phép mua phần của đối tác, mua dần trên sàn hoặc đăng ký chào mua công khai, đề nghị bố mẹ chuyển nhượng hay tặng cổ phần. Khi nắm trên 50% quyền biểu quyết, bạn có thể tự bầu Tổng giám đốc và Chủ tịch ngay khi bố mẹ còn sống. Anh chị em có tham vọng cũng có thể mua dần cổ phần để cạnh tranh.",
+      "Với công ty Việt Nam đã niêm yết, mua thêm khiến tỷ lệ sở hữu vượt các mốc 25%, 35%, 45%, 55%, 65% và 75% phải chào mua công khai; mua dần trên sàn tối đa 5% mỗi năm. Căn cứ là Luật Chứng khoán 2019 (áp dụng từ 2021).",
+      "Có thể đưa công ty bạn kiểm soát lên sàn qua các bước: kiểm toán và chuyển đổi, nộp hồ sơ chào bán, chờ xét duyệt rồi chọn tỷ lệ chào bán ra công chúng. Ở Việt Nam từ 2021 cần vốn chủ sở hữu từ 30 tỷ đồng, hai năm liền có lãi, ROE từ 5% và chào bán tối thiểu 15% cổ phiếu. Sau niêm yết, giá trị thị trường của phần cổ phần được tính vào tài sản và biến động theo kết quả kinh doanh. Các nước khác dùng điều kiện chung, ghi rõ mức xác minh.",
+      "Sửa lỗi ứng cử Tổng giám đốc hoặc Chủ tịch thành công mà chức vụ và lương không đổi. Nay trúng cử là nhận chức danh mới, lương tính theo quy mô và lợi nhuận công ty, trả từ chi phí doanh nghiệp. Hội đồng quản trị hòa phiếu khi bổ nhiệm Tổng giám đốc sẽ theo phía Chủ tịch; Chủ tịch công ty đại chúng tại Việt Nam không kiêm Tổng giám đốc.",
+      "Lương khi được bố mẹ giao điều hành công ty gia đình được tính lại theo quy mô doanh nghiệp, không còn mức rất thấp như trước.",
+      "Thành tích học tập, năng khiếu, giải thưởng và kinh nghiệm làm việc giúp bố mẹ tin tưởng hơn. Mức tin cao có thể mang lại chức vụ trong công ty từ khi còn trẻ, được đề bạt, được tặng cổ phần, được giao quyền điều hành sớm và được ưu tiên trong di chúc. Con chưa thành niên vẫn giữ phần tối thiểu theo luật Việt Nam.",
+      "Thiên phú kinh doanh giúp công ty bạn trực tiếp điều hành có lợi nhuận cao hơn khoảng 20–30% trong những năm có lãi.",
+      "Sửa lỗi chuyển từ nước ngoài về Việt Nam làm mất tài sản: mọi khoản tiết kiệm, đầu tư và tài sản theo dõi riêng đều được quy đổi đầy đủ. Nhà không còn nợ vay được giữ lại thay vì bị bán, và bạn dọn về ở lại khi trở về đúng nơi đó. Chi phí chuyển nước giảm về mức hợp lý. Người đi lao động hoặc du học bằng tiền Việt không còn bị quy đổi sai khi về nước.",
+      "Thêm nút “Mở lại” trong danh sách việc để quay về bảng vừa đóng (ví dụ bảng nhân viên và lương trong quản lý doanh nghiệp) chỉ bằng một lần bấm.",
+      "Gỡ bớt chữ “mô phỏng” không cần thiết trong giao diện. Những tham số chưa có nguồn được ghi là ước tính; các ghi chú về kịch bản chính trị vẫn giữ."
+    ]
+  },
+  {
     "id": "education-family-world-81073",
     "version": "8.10.73",
     "publishedAt": "2026-11-12T09:16:38.119+07:00",

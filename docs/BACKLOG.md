@@ -402,3 +402,11 @@ Chủ dự án yêu cầu làm hết mục triển khai rồi mới gói chung, 
 Đã qua kiểm thử trọng điểm cho phần đã triển khai về khoản vay cửa hàng, tuyển sinh Y/Luật Mỹ, học tại nhà Pennsylvania/Québec, đổi đội tuyển, nhập tịch theo cư trú, ly hôn England/Wales và sổ kỳ hạn NS&I. Bổ sung dữ liệu ngành, hồ sơ họ tên Tây Ban Nha, nguồn lao động và chi trả y tế cho phạm vi ghi trong ma trận. Các mục triển khai còn lại vẫn mở.
 
 Theo yêu cầu đóng gói riêng sau đó, 8.10.73 Preview đã tạo dist và dist.zip mới. Trạng thái các mục triển khai xem sổ tiến độ. Bản này chưa được xác nhận phát hành.
+
+### Tiếp tục triển khai sau gói 8.10.73
+
+Đã bổ sung bài thi cho hồ sơ MIT/UCL, hạn chuyển học tại nhà giữa năm Québec, căn cứ huyết thống FIFA, bước tống đạt hồ sơ ly hôn England/Wales và nhiếp chính Tây Ban Nha theo Hiến pháp 1876. Phạm vi và phần còn thiếu ở [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#tiếp-tục-sau-gói-81073). Các thay đổi này chưa có trong dist.zip 8.10.73.
+
+### Gói 8.10.74 Preview — doanh nghiệp gia đình và đổi nơi sống
+
+Theo yêu cầu mới của chủ dự án: cổ phần công ty gia đình ngẫu nhiên (niêm yết hoặc không), thâu tóm trước khi thừa kế, đưa công ty lên sàn, sửa lỗi trúng cử không đổi chức vụ/lương, lương điều hành theo quy mô, thiên phú kinh doanh, niềm tin bố mẹ theo thành tích, sửa lỗi về Việt Nam mất tài sản, nút mở lại bảng vừa đóng và gỡ nhãn “mô phỏng” thừa. Mục “Tranh quyền doanh nghiệp gia đình” có thêm ca 50/50 (Chủ tịch quyết khi bổ nhiệm TGĐ), anh chị em tự mua dần cổ phần; bế tắc bầu Chủ tịch vẫn mở. Chi tiết, nguồn và kiểm thử ở [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81074--doanh-nghiệp-gia-đình-niêm-yết-đổi-nơi-sống). Các nhóm dữ liệu rộng trong checklist bàn giao vẫn mở. GĐ6 chưa nghiệm thu; REVIEWS_DB Production chưa xác minh.

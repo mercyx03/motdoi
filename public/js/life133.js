@@ -39,6 +39,7 @@ function companyYear(l,r,log){var q=S(l),crisis=q.crisis&&q.crisis.until>l.age,t
   var opp=r()<s.opp+f.opp,shock=!opp&&r()<.04*s.cyc;if(opp){m+=s.sd*1.2;notes.push(c.name+' trúng hợp đồng lớn');}if(shock){m-=s.sd*1.5;notes.push(c.name+' gặp cú sốc ngành');}
   var fresh=c.fresh&&c.fresh.until>l.age?c.fresh.amt*.6:0,overhead=f.cost+(c.chairCost137||0)+(c.groupCost137||0),profit=Math.max(0,c.value-fresh)*m-overhead-(ops?ops.payroll-ops.baselinePayroll+ops.nonCash:0);c.chairCost137=0;c.groupCost137=0;
   Object.keys(c.roles).forEach(function(id){var x=c.roles[id];if(x.kind==='relative'&&r()<.05*(1-x.skill)){profit-=c.value*.03;notes.push(c.name+': '+ROLES[id].n+' để thất thoát vốn');}});
+  if(E.BIZ874)profit=E.BIZ874.talent(l,c,profit);
   if(E.TREASURY165){var settlement=E.TREASURY165.settle(l,c,profit,f.loss*(team?.75:1),overhead,ops);profit=settlement.profit;total+=settlement.dividend*c.share/100*.95;}else if(profit>=0){var div=profit*(ctrl?c.payout:.4);c.value+=profit-div;total+=div*c.share/100*.95;}else c.value=Math.max(0,c.value+profit*f.loss*(team?.75:1));
   var beforeGrowth=c.value;if(c.value>0)c.value*=1+s.g*(r()*1.4-.2)*(profit>0?1:.3)+f.g*(profit>0?1:0);
   c.value=Math.round(c.value*100)/100;c.lastProfit=Math.round(profit*100)/100;c.lastAt=l.age;c.peak=Math.max(c.peak||0,c.value);

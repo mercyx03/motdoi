@@ -88,7 +88,13 @@ function pick(l,id,key,arg){
   assert.equal(c.route873,'england-wales');
   assert.equal(c.feeGBP873,628);
   assert.equal(l.money,before-628/G.CUR.CUR.GB.rate/G.CUR.priceLevel(G.W.BY.GB.gdp));
-  while(l.age<c.due||c.stage==='filed'||c.stage==='nocontact'){l.age++;E.FIN920.divYear(l,()=>0,log);}
+  for(let step=0;step<8&&c.stage!=='final-ready';step++){
+    if(c.stage==='nocontact'){
+      if((c.service874?.attempts||[]).length<2)pick(l,'divorceCase920','search874');
+      else pick(l,'divorceCase920','dispense874');
+    }
+    l.age++;E.FIN920.divYear(l,()=>0,log);
+  }
   assert(l.partner);
   assert.equal(c.stage,'final-ready');
   pick(l,'divorceCase920','final873');
@@ -179,11 +185,24 @@ function pick(l,id,key,arg){
   st.wishes=[{school:u.id,major:program.major,program:program.name}];
   const d=E.DEC.study_wishes54.make(l,()=>0);
   E.DEC.study_wishes54.apply(l,d,'submit',()=>0,log);
+  const blocked=E.DEC.ukApplication872.make(l,()=>0);
+  assert(!blocked.opts.some(o=>o.k===String(blocked.data.keys.indexOf('result'))));
+  pick(l,'ukApplication872','tara874');
+  pick(l,'undergraduateTests874','TARA');
+  const tara=st.undergraduateTests874[0];
+  assert.equal(tara.cycle,2027);
+  assert(tara.writing&&tara.critical>=1&&tara.critical<=9&&tara.problem>=1&&tara.problem<=9);
   pick(l,'ukApplication872','result');
   pick(l,'ukApplication872','enroll');
   assert.equal(l.school,'uni');
   assert.equal(l.schoolEnd,21);
   assert.equal(l.majorName,program.name);
+}
+{
+  const l=life('GB',20),st=E.EDUCATION54.state(l);
+  st.ukApplication872={stage:'submitted',at:18,until:19,wishes:[]};
+  pick(l,'undergraduateTests874','TARA');
+  assert.equal(st.undergraduateTests874[0].cycle,l.birthYear+l.age+1);
 }
 {
   const D=E.COUNTRY_DEPTH_DATA;
@@ -205,4 +224,117 @@ function pick(l,id,key,arg){
   assert.match(d.text,/NHS Scotland/);
   assert(!d.text.includes('18 tuần'));
 }
-console.log('PASS routes873: medical and legal admissions, football eligibility, prison divorce, fixed-term savings, dated home education, residence for naturalization, named courses, healthcare and official labour references');
+{
+  const l=life('US',18), S=E.EDUCATION54, u=S.schools.find(u=>u.id==='US_mit');
+  l.edu=3;
+  const w={school:u.id,major:'it',program:S.programs(u)[0].name};
+  assert.match(S.entryReason(l,u,w),/SAT hoặc ACT/);
+  pick(l,'undergraduateTests874','SAT');
+  pick(l,'undergraduateTests874','ACT');
+  const [sat,act]=S.state(l).undergraduateTests874;
+  assert.equal(sat.score,sat.math+sat.readingWriting);
+  assert.equal(act.score,Math.round((act.english+act.math+act.reading)/3));
+  const loaded=E.migrate(JSON.parse(JSON.stringify(l)));
+  assert.equal(S.entryReason(loaded,u,w),null);
+  assert.deepEqual(JSON.parse(JSON.stringify(S.state(loaded).undergraduateTests874)),JSON.parse(JSON.stringify(S.state(l).undergraduateTests874)));
+}
+{
+  let l=life('CA',14);
+  Object.assign(l,{educationRegion:'QC',school:'lower',schoolEnd:18});
+  const S=E.STUDY857, route=S.rule(l).routes[0].id;
+  assert(S.request(l,route,'gia đình chuyển lịch'));
+  const h=S.home(l);
+  h.documents=h.plan=h.consulted=h.credential=true;
+  pick(l,'homeschool857','qcWithdrawal874');
+  pick(l,'homeschool857','qcDate:2026-12-15',l.pending[0].data.arg);
+  assert.equal(h.qcWithdrawal874.last,'2026-12-15');
+  assert(S.submit(l)&&S.start(l));
+  const notice='thông báo hằng năm', plan='learning project';
+  assert.equal(S.reportingDeadline873(l,notice,2026).due,'2026-12-25');
+  assert.equal(S.reportingDeadline873(l,plan,2026).due,'2027-01-14');
+  pick(l,'homeschool857','report:'+notice);
+  pick(l,'homeschool857','date:2026-12-25',l.pending[0].data.arg);
+  assert.equal(h.filings873['2026:'+notice].timing,'on-time');
+  l=E.migrate(JSON.parse(JSON.stringify(l)));
+  l.age++;
+  pick(l,'homeschool857','overdue:'+plan);
+  pick(l,'homeschool857','date:2027-01-14',l.pending[0].data.arg);
+  assert.equal(S.home(l).filings873['2026:'+plan].timing,'on-time');
+  assert(!S.logObligation(l,plan,2026,'2027-01-15'));
+}
+{
+  const A=E.FOOTBALL_ASSOCIATION873, parent=life('FR',30);
+  parent.sex='F';
+  parent.abroad={code:'VN',perm:true,arrived873:20};
+  const child={name:'An',sex:'M',born:30,alive:true,birthContext108:'partner'};
+  parent.kids=[child];
+  A.recordBirth(parent,child,{sex:'M'});
+  const heir=E.createLife(E.childOpts(parent,child));
+  heir.age=25;heir.alive=true;heir.school=null;heir.indep=true;
+  E.FOOTBALL.init(heir,()=>.5);
+  assert.equal(heir.country,'VN');
+  assert.equal(A.birthLink(heir,'FR'),'nơi sinh của cha hoặc mẹ ruột');
+  assert.match(A.reason(heir,'FR'),/quốc tịch/);
+  heir.flags.citizen=['FR'];
+  assert.equal(A.reason(heir,'FR'),null);
+  const adopted={name:'Bình',adopted:true,birthContext108:'adopt'};
+  A.recordBirth(parent,adopted,{sex:'M'});
+  assert.equal(adopted.footballBirth874,undefined);
+  heir.sex='F';
+  const grandchild={birthContext108:'partner'};
+  A.recordBirth(heir,grandchild,{sex:'M'});
+  assert(grandchild.footballBirth874.ancestors.some(a=>a.country==='FR'&&a.degree===2));
+}
+{
+  const l=life('GB');
+  l.educationRegion='England';
+  l.jailUntil=l.age+9;
+  l.partner={name:'Alex',sex:'F',age:25,alive:true,status:'married'};
+  E.FIN920.openCase(l,'me',false,false,log);
+  const c=Object.values(l.flags).find(v=>v&&v.div?.id).div;
+  c.stage='nocontact';
+  c.notice=true;
+  l.age++;
+  E.FIN920.divYear(l,()=>0,log);
+  assert.equal(c.stage,'nocontact');
+  const d=E.DEC.divorceCase920.make(l,()=>0);
+  assert(!d.opts.some(o=>o.k===String(d.data.keys.indexOf('dispense874'))));
+  pick(l,'divorceCase920','search874');
+  l.age++;
+  pick(l,'divorceCase920','search874');
+  pick(l,'divorceCase920','dispense874');
+  assert.equal(c.stage,'service-review');
+  E.FIN920.divYear(l,()=>0,log);
+  assert.equal(c.stage,'service-review');
+  l.age++;
+  E.FIN920.divYear(l,()=>0,log);
+  assert.equal(c.service874.granted,l.age);
+  assert.equal(c.stage,'filed');
+  assert(l.partner);
+}
+{
+  const l=life('GB');
+  l.partner={name:'Alex',sex:l.sex==='F'?'M':'F',age:25,alive:true,status:'married',since:20};
+  E.RELATIONS108.plan(l).want=0;
+  E.RELATIONS108.plan(l).chosenWant874=true;
+  assert.equal(E.DEC.kid.auto(l,{data:{adopt:true}},()=>0),'no');
+  E.RELATIONS108.plan(l).want=1;
+  l.flags.wantKids=0;
+  assert.equal(E.DEC.kid.auto(l,{data:{adopt:false}},()=>0),'yes');
+  l.kids.push({name:'An',born:l.age-4});
+  assert.equal(E.DEC.kid.auto(l,{data:{adopt:false}},()=>0),'no');
+}
+{
+  const l=life('GB'), cap=E.difficulty(l).cap;
+  l.partner={name:'Alex',sex:l.sex==='F'?'M':'F',age:25,alive:true,status:'married',since:20};
+  l.sched=Array.from({length:cap},(_,i)=>{
+    const id='fixtureKidQueue874_'+i;
+    E.DEC[id]={make:()=>({id,title:'Việc đã hẹn',text:'Đến lịch hẹn',opts:[]})};
+    return {id,at:l.age};
+  });
+  E.beginYear(l,{auto:true});
+  assert.equal(l.pending.length,cap);
+  assert.equal(l.flags.kidAskAt,undefined);
+  for(const d of l.pending)delete E.DEC[d.id];
+}
+console.log('PASS routes873: medical and legal admissions, football eligibility, prison divorce, fixed-term savings, dated home education, residence for naturalization, named courses, entrance tests, Québec withdrawal, family birthplace and official references');

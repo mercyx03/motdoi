@@ -57,15 +57,112 @@ S.hls872={state:hls,ready:hlsReady,offer:hlsOffer,year:hlsYear872};
 var wish871=E.DEC.study_wishes54,make871=wish871.make,apply871=wish871.apply;
 wish871.make=function(l){var d=make871.apply(this,arguments),st=S.state(l),u=S.schools.find(function(v){return v.id===st.selected;}),ref=u&&S.courseReferences[u.id];var pro=u&&professional871[u.id];if(pro)d.text+='\nY khoa (MD) và Luật (J.D.) yêu cầu đã hoàn thành bằng cử nhân trước khi nhập học. Hồ sơ còn được xét theo điều kiện riêng của trường.\nNguồn MD: '+pro.med+'\nNguồn J.D.: '+pro.law;if(ref){d.text+='\nChương trình đối chiếu'+(ref.year?' khóa '+ref.year:'')+': '+ref.source;S.programs(u).filter(function(p){return p.details;}).forEach(function(p){d.text+='\n'+p.name+' · '+p.details+' '+p.source;});if(u.id==='US_mit')d.text+='\nMIT yêu cầu SAT hoặc ACT, bảng điểm và thư giới thiệu cho hồ sơ năm nhất. Nguồn: https://mitadmissions.org/apply/firstyear/deadlines-requirements/';}return d;};
 wish871.apply=function(l,d,k,r,log){var st=S.state(l),u=S.schools.find(function(v){return v.id===st.selected;});if(u&&S.courseReferences[u.id]&&/^(major_|program_)/.test(k)){if(!wish871.valid(l,d.data)||d.data.view!==st.selected)return;var p=S.programs(u).find(function(v){return v.key===k;}),o=d.opts.find(function(v){return v.k===k;});if(!p||!o||o.l!==p.name){log('Danh mục ngành của trường đã được cập nhật. Hãy chọn lại chương trình trong danh sách mới.','neutral');l.pending.unshift(wish871.make(l,r));return;}}if(k==='submit'){if(!wish871.valid(l,d.data)||!d.opts.some(function(o){return o.k===k;}))return;var invalid=S.state(l).wishes.filter(function(w){var u=S.schools.find(function(v){return v.id===w.school;});return u&&S.courseReferences[u.id]&&!S.programs(u).some(function(p){return p.major===w.major&&(!w.program||p.name===w.program);});});if(invalid.length){log('Có nguyện vọng dùng tên chương trình cũ chưa khớp danh mục của trường. Hãy bỏ nguyện vọng đó và chọn lại chương trình trước khi nộp.','neutral');l.pending.unshift(wish871.make(l,r));return;}}return apply871.apply(this,arguments);};
+// Entrance tests are recorded separately from the high-school result and the offer.
+var undergraduateTests874={
+  SAT:{country:'US',fee:68,unit:'USD',source:'https://satsuite.collegeboard.org/sat/registration/fees-refunds/test-fees'},
+  ACT:{country:'US',fee:70,unit:'USD',source:'https://www.act.org/content/act/en/products-and-services/the-act/registration/fees.html'},
+  TARA:{country:'GB',fee:78,unit:'GBP',source:'https://esat-tmua.ac.uk/about-the-tests/tara/'}
+};
+function underRecords874(l){return l.flags.study54?.undergraduateTests874||[];}
+function underRequirement874(l,u,w){
+  if(!u||!w||l.birthYear+l.age<2026)return null;
+  if(u.id==='US_mit')return 'mit';
+  if(u.id==='GB_ucl'&&w.major==='it')return 'ucl';
+  return null;
+}
+function underCycle874(l){
+  var application=ukApplication872(l);
+  var active=application&&['submitted','offer'].includes(application.stage)&&l.age<=application.until;
+  return l.birthYear+(active?application.at:l.age)+1;
+}
+function underEligible874(l,req){
+  var cycle=underCycle874(l);
+  return underRecords874(l).some(function(result){
+    if(result.at>l.age)return false;
+    return req==='mit'?['SAT','ACT'].includes(result.kind)&&Number.isFinite(result.score):
+      result.kind==='TARA'&&result.cycle===cycle&&result.writing===true&&Number.isFinite(result.critical)&&Number.isFinite(result.problem);
+  });
+}
+function underFee874(test){
+  return test.fee/(G.CUR.CUR[test.country].rate*G.CUR.priceLevel(G.W.BY[test.country].gdp));
+}
+function takeUnder874(l,kind,r,log){
+  var test=undergraduateTests874[kind], records=underRecords874(l), year=l.birthYear+l.age;
+  var fee=underFee874(test);
+  if(l.money<fee||records.some(function(v){return v.kind===kind&&(kind==='TARA'?v.cycle===underCycle874(l):v.at===l.age);}))return false;
+  var ability=function(){return G.U.clamp(.25+l.st.kno*.007+(r()-.5)*.30,0,1);};
+  var result={kind:kind,at:l.age,year:year,fee:test.fee,currency:test.unit};
+  if(kind==='SAT'){
+    result.readingWriting=200+10*Math.round(60*ability());
+    result.math=200+10*Math.round(60*ability());
+    result.score=result.readingWriting+result.math;
+  }else if(kind==='ACT'){
+    result.english=1+Math.round(35*ability());
+    result.math=1+Math.round(35*ability());
+    result.reading=1+Math.round(35*ability());
+    result.score=Math.round((result.english+result.math+result.reading)/3);
+  }else{
+    result.cycle=underCycle874(l);
+    result.critical=Math.round(10+80*ability())/10;
+    result.problem=Math.round(10+80*ability())/10;
+    result.writing=true;
+  }
+  H.cash(l,-fee,'Đăng ký bài thi '+kind);
+  var st=S.state(l);
+  (st.undergraduateTests874||(st.undergraduateTests874=[])).push(result);
+  log('Đã lưu kết quả '+kind+' vào hồ sơ tuyển sinh. Trường sẽ xét cùng các thành phần hồ sơ khác.','neutral');
+  return true;
+}
+function underTestsWhy874(l){
+  return X.reason(l,16)===true&&l.cur==='usd'&&['US','GB'].includes(H.resCode(l))&&l.birthYear+l.age>=2026?
+    true:'Cần từ 16 tuổi và ở Mỹ hoặc Vương quốc Anh trong kỳ có dữ liệu bài thi.';
+}
+X.menu('undergraduateTests874','Bài thi tuyển sinh SAT, ACT và TARA',underTestsWhy874,function(l){
+  var choices=H.resCode(l)==='US'?['SAT','ACT']:['TARA'];
+  return (H.resCode(l)==='US'?'MIT nhận SAT hoặc ACT và xét cùng hồ sơ.': 'UCL yêu cầu TARA cho Computer Science BSc. Hai phần lý luận có điểm 1–9; bài viết được gửi cho trường.')+
+    '\n'+choices.map(function(kind){return kind+' · '+undergraduateTests874[kind].source;}).join('\n')+'\n'+
+    underRecords874(l).map(function(v){return v.kind+' · '+(v.kind==='TARA'?'Tư duy phản biện '+v.critical+' · Giải quyết vấn đề '+v.problem+' · kỳ '+v.cycle:v.score)+' · tuổi '+v.at;}).join('\n');
+},function(l){
+  var out=Object.keys(undergraduateTests874).filter(function(kind){return undergraduateTests874[kind].country===H.resCode(l);}).map(function(kind){
+    var test=undergraduateTests874[kind];
+    return {k:kind,l:'Đăng ký và thi '+kind+' · '+test.fee+' '+test.unit,
+      why:underRecords874(l).some(function(v){return v.kind===kind&&(kind==='TARA'?v.cycle===underCycle874(l):v.at===l.age);})?'Đã có kết quả năm nay':
+        l.money<underFee874(test)?'Chưa đủ lệ phí':true,
+      run:function(l,r,log){if(underTestsWhy874(l)===true&&test.country===H.resCode(l)){takeUnder874(l,kind,r,log);X.next(l,'undergraduateTests874',r);}}};
+  });
+  if(ukActive872(l)&&ukApplicationFree872(l))out.push({k:'return874',l:'Quay lại hồ sơ đại học tại Anh',run:function(l,r){X.next(l,'ukApplication872',r);}});
+  else if(S.state(l).kind==='wishes'&&S.applicant(l))out.push({k:'return874',l:'Quay lại nguyện vọng đại học',run:function(l,r){l.pending.unshift(wish871.make(l,r));}});
+  return out;
+},16,'Học tập');
+var underEntry874=S.entryReason;
+S.entryReason=function(l,u,w){
+  var prior=underEntry874.apply(this,arguments), req=underRequirement874(l,u,w);
+  if(prior||!req||underEligible874(l,req))return prior||null;
+  var a=ukApplication872(l);
+  if(req==='ucl'&&a?.stage==='offer'&&!a.testsPolicy874&&a.result?.admitted?.school===w.school&&a.result.admitted.major===w.major)return null;
+  return req==='mit'?'Cần kết quả SAT hoặc ACT trong hồ sơ':'Cần kết quả TARA đúng kỳ của hồ sơ UCL';
+};
+var underWishMake874=wish871.make,underWishApply874=wish871.apply;
+wish871.make=function(l){
+  var d=underWishMake874.apply(this,arguments),st=S.state(l),u=S.schools.find(function(row){return row.id===st.selected;});
+  var need=underRequirement874(l,u,u&&{major:'it'})||st.wishes.some(function(w){return underRequirement874(l,S.schools.find(function(row){return row.id===w.school;}),w);});
+  if(need&&underTestsWhy874(l)===true)d.opts.unshift({k:'underTests874',l:'Xem hoặc dự bài thi tuyển sinh'});
+  return d;
+};
+wish871.apply=function(l,d,k,r,log){
+  if(k==='underTests874'&&wish871.valid(l,d.data)&&d.opts.some(function(o){return o.k===k;})&&underTestsWhy874(l)===true){X.next(l,'undergraduateTests874',r);return;}
+  return underWishApply874.apply(this,arguments);
+};
+
 // UK applications keep submission, result and enrollment as separate decisions.
 var ukWishMake872=wish871.make,ukWishApply872=wish871.apply;
 function ukApplication872(l){return S.state(l).ukApplication872;}
 function ukApplicationFree872(l){return H.resCode(l)==='GB'&&X.reason(l,18)===true&&!l.school;}
 function ukActive872(l){var a=ukApplication872(l);return a&&['submitted','offer'].includes(a.stage);}
 function ukProbe872(l,a){var probe=JSON.parse(JSON.stringify(l)),st=S.state(probe);st.wishes=JSON.parse(JSON.stringify(a.wishes));st.kind='wishes';st.submitted=false;st.selected=st.region=null;var previous=st.admitted,logs=[],r=H.rf(probe),d=ukWishMake872(probe,r);ukWishApply872.call(wish871,probe,d,'submit',r,function(t){logs.push(t);});return {accepted:st.admitted!==previous&&!!probe.school,admitted:st.admitted,score:probe.examScore,logs:logs};}
-X.menu('ukApplication872','Theo dõi hồ sơ đại học tại Anh',function(l){return ukApplicationFree872(l)&&ukActive872(l)?true:'Cần hồ sơ đang chờ tại Vương quốc Anh';},function(l){var a=ukApplication872(l);return !a?'Chưa có hồ sơ.':a.stage==='offer'?'Đã có kết quả nhận học. Xem chi tiết rồi xác nhận nhập học hoặc từ chối; công việc và chương trình hiện tại chưa đổi.':'Đã gửi '+a.wishes.length+' nguyện vọng. Bước tiếp theo: xem kết quả xét hồ sơ. Chưa nhập học ở bước nộp.';},function(l){var a=ukApplication872(l);if(!a)return [];if(l.age>a.until)return [{k:'expired',l:'Đóng hồ sơ đã hết hạn và chọn lại nguyện vọng',run:function(l,r,log){a.stage='expired';S.state(l).submitted=false;log('Hồ sơ cũ đã hết hạn; bằng và lịch sử học được giữ nguyên.','neutral');}}];var out=[];if(a.stage==='submitted')out.push({k:'result',l:'Nhận kết quả xét hồ sơ',run:function(l,r,log){var result=ukProbe872(l,a);a.result=result;a.resultAt=l.age;a.stage=result.accepted?'offer':'rejected';log(result.accepted?'Bạn nhận được kết quả phù hợp một nguyện vọng. Mở hồ sơ để xác nhận nhập học hoặc từ chối.':'Chưa có nguyện vọng được nhận. Bạn giữ nguyên bằng cấp và có thể chọn lại hướng học hoặc tìm việc.','neutral');if(result.accepted)X.next(l,'ukApplication872',r);else S.state(l).submitted=false;}});if(a.stage==='offer')out.push({k:'enroll',l:'Xác nhận nhập học '+(S.schools.find(function(u){return u.id===a.result.admitted.school;})||{}).name,run:function(l,r,log){if(!ukApplicationFree872(l)||a.stage!=='offer'||l.age>a.until)return;var st=S.state(l);st.wishes=JSON.parse(JSON.stringify(a.wishes));st.kind='wishes';st.submitted=false;st.selected=st.region=null;if(Number.isFinite(a.result.score))l.examScore=a.result.score;var d=ukWishMake872(l,r);ukWishApply872.call(wish871,l,d,'submit',r,log);a.stage=l.school?'enrolled':'changed';if(!l.school)log('Điều kiện hiện tại đã thay đổi; chưa nhập học, bằng cũ được giữ nguyên.','neutral');}});out.push({k:'withdraw',l:a.stage==='offer'?'Từ chối nhận học, giữ hướng đi hiện tại':'Rút hồ sơ, chưa nhập học',run:function(l,r,log){a.stage='withdrawn';S.state(l).submitted=false;log('Bạn rút hồ sơ đại học; chưa nhập học và không mất bằng đã có.','neutral');}});return out;},18,'Học tập');
+X.menu('ukApplication872','Theo dõi hồ sơ đại học tại Anh',function(l){return ukApplicationFree872(l)&&ukActive872(l)?true:'Cần hồ sơ đang chờ tại Vương quốc Anh';},function(l){var a=ukApplication872(l);return !a?'Chưa có hồ sơ.':a.stage==='offer'?'Đã có kết quả nhận học. Xem chi tiết rồi xác nhận nhập học hoặc từ chối; công việc và chương trình hiện tại chưa đổi.':'Đã gửi '+a.wishes.length+' nguyện vọng. Bước tiếp theo: xem kết quả xét hồ sơ. Chưa nhập học ở bước nộp.';},function(l){var a=ukApplication872(l);if(!a)return [];if(l.age>a.until)return [{k:'expired',l:'Đóng hồ sơ đã hết hạn và chọn lại nguyện vọng',run:function(l,r,log){a.stage='expired';S.state(l).submitted=false;log('Hồ sơ cũ đã hết hạn; bằng và lịch sử học được giữ nguyên.','neutral');}}];var out=[];var needsTara=a.stage==='submitted'&&a.wishes.some(function(w){return underRequirement874(l,S.schools.find(function(u){return u.id===w.school;}),w)==='ucl';})&&!underEligible874(l,'ucl');if(needsTara)out.push({k:'tara874',l:'Dự TARA cho nguyện vọng UCL',run:function(l,r){X.next(l,'undergraduateTests874',r);}});if(a.stage==='submitted')out.push({k:'result',l:'Nhận kết quả xét hồ sơ',why:needsTara?'Cần kết quả TARA đúng kỳ trước khi nhận quyết định':true,run:function(l,r,log){var result=ukProbe872(l,a);a.result=result;a.resultAt=l.age;a.stage=result.accepted?'offer':'rejected';log(result.accepted?'Bạn nhận được kết quả phù hợp một nguyện vọng. Mở hồ sơ để xác nhận nhập học hoặc từ chối.':'Chưa có nguyện vọng được nhận. Bạn giữ nguyên bằng cấp và có thể chọn lại hướng học hoặc tìm việc.','neutral');if(result.accepted)X.next(l,'ukApplication872',r);else S.state(l).submitted=false;}});if(a.stage==='offer')out.push({k:'enroll',l:'Xác nhận nhập học '+(S.schools.find(function(u){return u.id===a.result.admitted.school;})||{}).name,run:function(l,r,log){if(!ukApplicationFree872(l)||a.stage!=='offer'||l.age>a.until)return;var st=S.state(l);st.wishes=[JSON.parse(JSON.stringify(a.result.admitted))];st.kind='wishes';st.submitted=false;st.selected=st.region=null;if(Number.isFinite(a.result.score))l.examScore=a.result.score;var d=ukWishMake872(l,r);ukWishApply872.call(wish871,l,d,'submit',r,log);a.stage=l.school?'enrolled':'changed';if(!l.school)log('Điều kiện hiện tại đã thay đổi; chưa nhập học, bằng cũ được giữ nguyên.','neutral');}});out.push({k:'withdraw',l:a.stage==='offer'?'Từ chối nhận học, giữ hướng đi hiện tại':'Rút hồ sơ, chưa nhập học',run:function(l,r,log){a.stage='withdrawn';S.state(l).submitted=false;log('Bạn rút hồ sơ đại học; chưa nhập học và không mất bằng đã có.','neutral');}});return out;},18,'Học tập');
 wish871.make=function(l){var d=ukWishMake872.apply(this,arguments);if(H.resCode(l)==='GB'&&ukActive872(l)){d.opts=d.opts.filter(function(o){return o.k!=='submit';});d.opts.unshift({k:'trackUK872',l:'Theo dõi hồ sơ đã nộp',h:'Nhận kết quả và xác nhận nhập học'});}return d;};
-wish871.apply=function(l,d,k,r,log){if(H.resCode(l)==='GB'){if(k==='trackUK872'&&ukActive872(l)){X.next(l,'ukApplication872',r);return;}if(k==='submit'){var st=S.state(l);if(!wish871.valid(l,d.data)||!d.opts.some(function(o){return o.k===k;})||!st.wishes.length||ukActive872(l))return;var probe=ukProbe872(l,{wishes:st.wishes});if(probe.logs.some(function(t){return /tên chương trình cũ|Danh mục ngành.*cập nhật/.test(t); })){probe.logs.forEach(function(t){log(t,'neutral');});return;}st.ukApplication872={stage:'submitted',at:l.age,until:l.age+1,wishes:JSON.parse(JSON.stringify(st.wishes))};log('Đã nộp hồ sơ. Mở Theo dõi hồ sơ đại học tại Anh để nhận kết quả rồi xác nhận nhập học.','neutral');X.next(l,'ukApplication872',r);return;}}return ukWishApply872.apply(this,arguments);};
+wish871.apply=function(l,d,k,r,log){if(H.resCode(l)==='GB'){if(k==='trackUK872'&&ukActive872(l)){X.next(l,'ukApplication872',r);return;}if(k==='submit'){var st=S.state(l);if(!wish871.valid(l,d.data)||!d.opts.some(function(o){return o.k===k;})||!st.wishes.length||ukActive872(l))return;var probe=ukProbe872(l,{wishes:st.wishes});if(probe.logs.some(function(t){return /tên chương trình cũ|Danh mục ngành.*cập nhật/.test(t); })){probe.logs.forEach(function(t){log(t,'neutral');});return;}st.ukApplication872={stage:'submitted',at:l.age,until:l.age+1,testsPolicy874:true,wishes:JSON.parse(JSON.stringify(st.wishes))};log('Đã nộp hồ sơ. Mở Theo dõi hồ sơ đại học tại Anh để nhận kết quả rồi xác nhận nhập học.','neutral');X.next(l,'ukApplication872',r);return;}}return ukWishApply872.apply(this,arguments);};
 
 // Professional applications live in STUDY54; standardized results reuse the existing test dossier.
 var PRO873={

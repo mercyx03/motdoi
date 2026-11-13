@@ -21,4 +21,29 @@ for(const cc of ['MC','ES']){let f=cc==='MC'?fixture():esFixture(),{l,h,me}=f;if
 {let {l,h,me,heir}=esFixture('2026-03-10');heir.by=2008;heir.birthDate865='2008-09-01';me.es862.incapacity865={from:S.date(l),recognizedBy:'Cortes'};T.esRegency(l,h);ok(h.es862.regency865.ref!==heir.id,'ES heir before actual18 cannot act');l.royalDate858='2026-09-01';T.esRegency(l,h);ok(h.es862.regency865.ref===heir.id,'ES adult birthday replaces interim regent');}
 {let {l,h}=fixture();l.kids=[{name:'Child snapshot',sex:'F',born:l.age-20,alive:true,edu:3,study:70}];R.kidsYear(l,()=>{});let kid=l.kids[0],m=R.byId(h,kid.royal920.id),d=m.by+'-07-07';ok(T.recordBirth(l,h,m,d),'child date entered');ok(kid.birthMonth===7&&kid.birthDay===7,'child canonical birthday linked');let snapshot=R.snapshot(l,kid),next=E.createLife({mode:'world',country:'MC',seed:9865,year:m.by});ok(R.restore(next,snapshot),'restore child');ok(next.birthMonth===7&&next.birthDay===7&&R.byId(R.st(next).houses.MC,'player').birthDate865===d,'handoff retains canonical birthday, not newly randomized');}
 {let l;for(let seed=1;seed<1000;seed++){l=E.createLife({mode:'world',country:'ES',seed:865000+seed,year:2000});if(l.flags.royal)break;}let m=R.byId(R.st(l).houses.ES,'player'),expected='2000-'+String(l.birthMonth).padStart(2,'0')+'-'+String(l.birthDay).padStart(2,'0');ok(m.birthDate865===expected,'new royal birth uses existing date');const stamp=JSON.stringify([l.birthMonth,l.birthDay,m.birthDate865]),log=JSON.stringify(l.log),cash=l.money;E.migrateExt(l);E.migrateExt(l);ok(JSON.stringify([l.birthMonth,l.birthDay,m.birthDate865])===stamp&&JSON.stringify(l.log)===log&&l.money===cash,'birth migration idempotent no log/cash rewrite');}
+{
+ const {l,h,me,heir,wife}=esFixture();
+ l.birthYear=1880;l.age=20;l.royalDate858='1900-10-01';
+ Object.assign(me,{by:1848,alive:false,spouse:'wife'});
+ Object.assign(heir,{by:1887,birthDate865:'1887-10-15'});
+ Object.assign(wife,{by:1856,role:'dowager',spouse:'player'});
+ h.members.find(m=>m.id==='root').by=1820;
+ const relative=h.members.find(m=>m.id==='sister');relative.by=1878;
+ heir.es862.parents=['player','wife'];
+ ok(R.order(l,h)[0]===heir,'Restoration line follows primogeniture and representation');
+ R.succeed(l,h,()=>{});
+ ok(h.seat===heir.id&&h.es862.regency865.ref===wife.id,'widowed parent regency under 1876 Constitution');
+ ok(!T.canExercise(l,h,heir),'sovereign younger than sixteen needs regent');
+ wife.es862.remarried865=true;
+ T.esRegency(l,h);
+ ok(h.es862.regency865.ref===relative.id,'remarriage ends regency and qualified relative takes over');
+ relative.by=1882;
+ T.esRegency(l,h);
+ ok(h.es862.regency865.pending&&h.es862.regency865.basis==='70','council interim when no eligible relative');
+ l.age=23;l.royalDate858='1903-10-15';
+ T.esRegency(l,h);
+ ok(T.canExercise(l,h,heir)&&!h.es862.regency865,'sixteenth birthday ends regency');
+ l.age=43;l.royalDate858='1923-09-13';
+ ok(R.order(l,h).length===0,'1876 route closes at suspension');
+}
 console.log('PASS royal865: '+n+' historical/regency/procedure checks');

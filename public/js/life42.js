@@ -193,14 +193,15 @@
   function flight(l) { return 15 / toVNDf(l); } // vé máy bay khứ hồi ~15 triệu đồng, tính ra tiền nước sở tại
   SC('ve_vn_song', {
     title: 'Về Việt Nam sống một thời gian', valid: function (l) { return vnBorn(l) && !!(l.abroad && l.abroad.perm); },
-    text: function (l) { return 'Bạn đang sống ở ' + l.abroad.name + '. Về Việt Nam ở một thời gian thì phải bán / thanh lý nhà cửa, xe bên này, đổi tiền sang tiền Việt, mua vé máy bay (khoảng ' + mo(l, flight(l)) + ').' + (l.job ? ' Công việc hiện tại sẽ phải nghỉ, trừ khi làm việc từ xa.' : ''); },
+    text: function (l) { return 'Bạn đang sống ở ' + l.abroad.name + '. Về Việt Nam ở một thời gian thì đổi tiền sang tiền Việt; nhà không còn nợ vay được giữ lại làm tài sản, nhà đang vay sẽ bán để tất toán, mua vé máy bay (khoảng ' + mo(l, flight(l)) + ').' + (l.job ? ' Công việc hiện tại sẽ phải nghỉ, trừ khi làm việc từ xa.' : ''); },
     opts: [
       { k: 've', l: 'Về Việt Nam', ai: { w: 0.6 }, run: function (l, r, log) {
         var name = l.abroad.name, code = l.abroad.code;
         H.cash(l, -flight(l), 'Vé máy bay về Việt Nam');
-        if (l.ownHouse) { log('Bán căn nhà ở ' + name + ' được ' + mo(l, l.houseVal) + '.', 'neutral'); sellHouse(l, 'Bán nhà ở ' + name); }
+        if (l.ownHouse && H.keepHome874 && H.keepHome874(l)) log('Căn nhà ở ' + name + ' không còn nợ vay nên được giữ lại làm tài sản; có thể bán hoặc quay lại ở sau.', 'neutral');
+        else if (l.ownHouse) { log('Bán căn nhà ở ' + name + ' được ' + mo(l, l.houseVal) + ' để tất toán khoản vay mua nhà.', 'neutral'); sellHouse(l, 'Bán nhà ở ' + name); }
         var remote = l.job && /^fl_/.test(E.resolveJob(l.job.id));
-        var f = toVNDf(l); l.flags.abroadSaved = { code: code, name: name, perm: true, pool: l.abroad.pool, base: l.abroad.base, place: l.place }; l.abroad = null; l.cur = 'vnd'; convertAll(l, f);
+        var f = toVNDf(l); l.flags.abroadSaved = { code: code, name: name, perm: true, pool: l.abroad.pool, base: l.abroad.base, place: l.place }; l.abroad = null; l.cur = 'vnd'; E.abroadConvert(l, f); if (H.reoccupy874) H.reoccupy874(l, 'VN', log);
         var h = l.flags.vnHome || {}; l.place = h.place || (l.prov && l.prov.old) || l.place; l.city = h.city || l.place; l.urban = h.urban != null ? h.urban : l.urban; l.movedTo = h.movedTo; if (h.cityWealth) l.cityWealth = h.cityWealth; H.setBase(l);
         if (!remote) { l.job = null; l.flags.needJob = true; }
         log('Về Việt Nam sống một thời gian sau những năm ở ' + name + '. Tiền tiết kiệm đổi sang tiền Việt được ' + mo(l, Math.max(0, l.money)) + '.' + (remote ? ' Vẫn làm việc từ xa như cũ.' : ''), 'big');
@@ -212,14 +213,14 @@
   A('ve_vn_song', 'Gia đình & bạn bè', 'Về Việt Nam sống một thời gian', { min: 20, sc: 've_vn_song', avail: function (l) { return !vnBorn(l) || !(l.abroad && l.abroad.perm) ? 'Không áp dụng' : (l.ventures || []).length ? 'Đang có cơ sở kinh doanh ở nước ngoài' : true; } });
   SC('quay_lai_nn', {
     title: function (l) { return 'Quay lại ' + l.flags.abroadSaved.name; }, valid: function (l) { return !!l.flags.abroadSaved && !l.abroad; },
-    text: function (l) { var S = l.flags.abroadSaved; return 'Bạn tính quay lại ' + S.name + '. Phải đổi tiền Việt sang tiền nước đó, mua vé máy bay (khoảng ' + mo(l, 25) + '), tìm lại chỗ ở, việc làm.' + (l.ownHouse ? ' Căn nhà ở Việt Nam sẽ bán đi.' : ''); },
+    text: function (l) { var S = l.flags.abroadSaved; return 'Bạn tính quay lại ' + S.name + '. Phải đổi tiền Việt sang tiền nước đó, mua vé máy bay (khoảng ' + mo(l, 25) + '), tìm lại chỗ ở, việc làm.' + (l.ownHouse ? ' Căn nhà ở Việt Nam được giữ nếu không còn nợ vay, còn vay thì bán để tất toán.' : ''); },
     opts: [
       { k: 'di', l: function (l) { return 'Quay lại ' + l.flags.abroadSaved.name; }, req: function (l) { return l.money >= 25; }, ai: { w: 0.6 }, run: function (l, r, log) {
         var S = l.flags.abroadSaved; H.cash(l, -25, 'Vé máy bay sang ' + S.name);
-        if (l.ownHouse) sellHouse(l, 'Bán nhà ở Việt Nam');
+        if (l.ownHouse && !(H.keepHome874 && H.keepHome874(l))) sellHouse(l, 'Bán nhà ở Việt Nam');
         var remote = l.job && /^fl_/.test(E.resolveJob(l.job.id));
         l.flags.vnHome = { place: l.place, city: l.city, urban: l.urban, movedTo: l.movedTo, cityWealth: l.cityWealth };
-        l.abroad = { code: S.code, name: S.name, perm: true, pool: S.pool, base: S.base }; l.cur = 'usd'; convertAll(l, 1 / toVNDf(l)); l.place = S.place; l.city = S.place; l.urban = true; l.flags.abroadSaved = null; H.setBase(l);
+        l.abroad = { code: S.code, name: S.name, perm: true, pool: S.pool, base: S.base }; l.cur = 'usd'; E.abroadConvert(l, 1 / toVNDf(l)); if (H.reoccupy874) H.reoccupy874(l, S.code, log); l.place = S.place; l.city = S.place; l.urban = true; l.flags.abroadSaved = null; H.setBase(l);
         if (!remote) { l.job = null; l.flags.needJob = true; }
         log('Quay lại ' + S.name + ', đổi tiền Việt được ' + mo(l, Math.max(0, l.money)) + '. Bắt đầu lại ở ' + S.place + '.', 'big');
       } },

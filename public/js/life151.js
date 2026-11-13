@@ -309,7 +309,7 @@
 
   // ---------- Nhanh Như Chớp: thang chuỗi đúng liên tiếp ----------
   // Luật mô phỏng: 15 câu hỏi nhanh; đúng thì lên một bậc, sai thì về bậc 0; điểm là chuỗi đúng dài nhất.
-  // Đạt chuỗi 10 câu đúng liên tiếp: giải 20 triệu đồng (bản mô phỏng Việt Nam). Không được bỏ qua câu.
+  // Đạt chuỗi 10 câu đúng liên tiếp: giải 20 triệu đồng (phiên bản Việt Nam). Không được bỏ qua câu.
   HANDLERS.streak = {
     start: function (l, r, a, sh) { a.qi = 0; a.streak = 0; a.best = 0; a.total = sh.questions; a.helper = companion(l); newQ(l, a, 2, { choices: 3 }); },
     title: function (l, a) { return 'Câu ' + (a.qi + 1) + '/' + a.total; },

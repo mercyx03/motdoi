@@ -104,13 +104,13 @@
   }
   function request(l,id,motive){var a=rule(l),v=route(l,id),s=hs(l,true);
     if(!v||l.age<5||l.age>19||['active','pending'].includes(s.status)||a.ages&&l.age<a.ages[0])return false;
-    s.key=a.key;s.route=id;s.motive=motive||'nhịp học';s.status='draft';s.documents=false;s.plan=false;s.consulted=false;s.credential=false;s.submittedAt=null;
+    s.key=a.key;s.route=id;s.motive=motive||'nhịp học';s.status='draft';s.documents=false;s.plan=false;s.consulted=false;s.credential=false;s.submittedAt=null;delete s.qcWithdrawal874;
     history(l,s,'Chuẩn bị '+v.name+'; lý do: '+s.motive);return true;
   }
   function submit(l){var s=hs(l),v=s&&route(l,s.route);if(!s||!v||s.status!=='draft'||s.key!==rule(l).key)return false;
     if(prerequisites(l,s).length){s.status='needsInfo';history(l,s,'Cần bổ sung hồ sơ');return false;}
     var needs=['approval','registration'].includes(v.mode)||H.resCode(l)==='GB'&&(peek(l).specialSchool||peek(l).attendanceOrder);
-    s.status=needs?'pending':'approved';s.submittedAt=year(l);history(l,s,needs?'Chờ cơ quan / trường tiếp nhận xét hồ sơ':'Đã hoàn tất thủ tục thông báo');return true;
+    s.status=needs?'pending':'approved';s.submittedAt=year(l);history(l,s,needs?'Chờ cơ quan / trường tiếp nhận xét hồ sơ':s.qcWithdrawal874?'Đã chuẩn bị hồ sơ chuyển giữa năm; còn hạn thông báo và kế hoạch học':'Đã hoàn tất thủ tục thông báo');return true;
   }
   function review(l){var s=hs(l);if(!s||s.status!=='pending'||s.key!==rule(l).key||year(l)<=s.submittedAt)return false;
     s.status=prerequisites(l,s).length?'needsInfo':'approved';history(l,s,s.status==='approved'?'Hồ sơ được duyệt':'Cần bổ sung');return true;
@@ -137,7 +137,26 @@
     var date=l.educationDate863;
     return /^\d{4}-\d{2}-\d{2}$/.test(date||'') && Number(date.slice(0,4))===year(l) ? date : null;
   }
+  function calendarDate874(value){
+    return /^\d{4}-\d{2}-\d{2}$/.test(value||'')&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&
+      new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
+  }
+  function qcWithdrawal874(l,value){
+    var s=hs(l), current=reportingDate873(l);
+    if(!s||s.key!=='CA:QC'||rule(l).key!==s.key||!['draft','needsInfo','approved'].includes(s.status)||!l.school||
+      !calendarDate874(value)||!value.startsWith(year(l)+'-')||current&&value>current)return false;
+    s.qcWithdrawal874={last:value,schoolYear:year(l)-(value.slice(5,7)<'07'?1:0)};
+    history(l,s,'Ghi ngày cuối đến trường tại Québec: '+value);
+    return true;
+  }
+  function filingStart874(s){return s.qcWithdrawal874?s.qcWithdrawal874.schoolYear:s.started;}
   function reportingDeadline873(l,id,period) {
+    var s=hs(l), mid=rule(l).key==='CA:QC'&&s&&s.qcWithdrawal874;
+    if(mid&&mid.schoolYear===period&&(id==='thông báo hằng năm'||id==='learning project')){
+      var due=new Date(mid.last+'T00:00:00Z');
+      due.setUTCDate(due.getUTCDate()+(id==='thông báo hằng năm'?10:30));
+      return {opens:mid.last,due:due.toISOString().slice(0,10)};
+    }
     var info=rule(l).calendar873, range=info&&info.reports[id];
     if(!range)return null;
     return {opens:(period+range[0])+'-'+range[1],due:(period+range[2])+'-'+range[3]};
@@ -148,7 +167,7 @@
     if(date<deadline.opens)return 'early';
     return date>deadline.due?'late':'on-time';
   }
-  function logObligation(l,id,forYear,submittedOn){var s=hs(l),at=forYear==null?year(l):forYear;if(!active(l)||!obligations(l).includes(id)||!Number.isInteger(at)||at>year(l)||at<s.started)return false;var k=at+':'+id;if(s.obligations[k])return false;if(submittedOn&&(!/^\d{4}-\d{2}-\d{2}$/.test(submittedOn)||!submittedOn.startsWith(year(l)+'-')||!Number.isFinite(Date.parse(submittedOn))||new Date(submittedOn).toISOString().slice(0,10)!==submittedOn))return false;var timing=reportTiming873(l,id,at,submittedOn);if(timing==='early')return false;s.obligations[k]=true;if(reportingDeadline873(l,id,at)){var filed=s.filings873||(s.filings873={});filed[k]={date:submittedOn||reportingDate873(l),timing:timing,deadline:reportingDeadline873(l,id,at).due};}history(l,s,'Nộp '+id+' cho năm '+at+(timing==='late'?' · nộp sau hạn':timing==='undated'?' · chưa ghi ngày nộp':''));return true;}
+  function logObligation(l,id,forYear,submittedOn){var s=hs(l),at=forYear==null?year(l):forYear;if(!active(l)||!obligations(l).includes(id)||!Number.isInteger(at)||at>year(l)||at<filingStart874(s))return false;var k=at+':'+id;if(s.obligations[k])return false;if(submittedOn&&(!calendarDate874(submittedOn)||!submittedOn.startsWith(year(l)+'-')))return false;var timing=reportTiming873(l,id,at,submittedOn);if(timing==='early')return false;s.obligations[k]=true;if(reportingDeadline873(l,id,at)){var filed=s.filings873||(s.filings873={});filed[k]={date:submittedOn||reportingDate873(l),timing:timing,deadline:reportingDeadline873(l,id,at).due};}history(l,s,'Nộp '+id+' cho năm '+at+(timing==='late'?' · nộp sau hạn':timing==='undated'?' · chưa ghi ngày nộp':''));return true;}
   function study(l,subject,mode,log){var s=hs(l);if(!active(l)||s.schoolManaged||!['math','lit','english','science','humanities'].includes(subject))return false;
     if(s.practiceYear!==year(l)){s.practiceYear=year(l);s.blocks=0;s.tutorHours=0;}
     var maxBlocks=l.flags.educationVersion863?6:3,maxHours=l.flags.educationVersion863?24:12;if(s.blocks>=maxBlocks)return false;
@@ -194,6 +213,18 @@
     if(t.age<5||t.age>19)return out;
     var a=rule(t),s=hs(t),base=arg.kid?{kid:arg.kid}:{};
     function action(k,label,fn,why){out.push({k:k,l:label,why:why||true,run:function(l,r,log){var z=target(l,base,true);if(!z)return;reconcile(z);fn(z,log);if(z.kid){z.kid.study829=z.flags.study829;z.kid.study=z.st.kno;z.kid.mockExam853=z.flags.mockExam853;var h=hs(z);if(h)h.childSchool={school:z.school,schoolEnd:z.schoolEnd};H.cash(l,z.money-l.money,'Giáo dục tại nhà cho '+z.name);}X.next(l,'homeschool857',r,base);}});}
+    if(a.key==='CA:QC'&&s&&['draft','needsInfo','approved'].includes(s.status)&&t.school){
+      if(arg.qcDate874){
+        var known=reportingDate873(t);
+        var dates=['01','02','03','04','05','06','09','10','11','12'].map(function(month){return year(t)+'-'+month+'-15';});
+        if(known)dates=dates.filter(function(date){return date<=known;}).concat(known);
+        Array.from(new Set(dates)).forEach(function(date){action('qcDate:'+date,'Ngày cuối đi học: '+date,function(z){qcWithdrawal874(z,date);});});
+        out.push({k:'back874',l:'Quay lại hồ sơ',run:function(l,r){X.next(l,'homeschool857',r,base);}});
+        return out;
+      }
+      out.push({k:'qcWithdrawal874',l:s.qcWithdrawal874?'Sửa ngày cuối đi học · '+s.qcWithdrawal874.last:'Chuyển giữa năm · ghi ngày cuối đi học',
+        run:function(l,r){X.next(l,'homeschool857',r,Object.assign({},base,{qcDate874:true}));}});
+    }
     if(arg.filing873&&active(t)){
       var filing=arg.filing873, deadline=reportingDeadline873(t,filing.id,filing.period), current=reportingDate873(t);
       if(deadline&&[year(t),year(t)-1].includes(filing.period)&&obligations(t).includes(filing.id)){
@@ -229,7 +260,7 @@
         }else action(key,label,function(z){logObligation(z,v,period);},done?'Đã nộp kỳ này':true);
       }
       obligations(t).forEach(function(v){filingRow(v,year(t),'report:'+v);});
-      if(s.started<year(t))obligations(t).filter(function(v){return !s.obligations[(year(t)-1)+':'+v];}).forEach(function(v){filingRow(v,year(t)-1,'overdue:'+v);});
+      if(filingStart874(s)<year(t))obligations(t).filter(function(v){return !s.obligations[(year(t)-1)+':'+v];}).forEach(function(v){filingRow(v,year(t)-1,'overdue:'+v);});
       action('community','Câu lạc bộ, lớp nhóm và thể thao cộng đồng',function(z,log){var q=hs(z);if(q.socialAt===year(z))return;q.socialAt=year(z);H.fx(z,{soc:2,hap:2});history(z,q,'Tham gia nhóm cộng đồng');log('Bạn dành thời gian gặp bạn bè và học nhóm.','good');},s.socialAt===year(t)?'Đã tham gia năm nay':true);
       action('diploma','Xét homeschool diploma do gia đình cấp',function(z){diploma(z);},milestones(t).credentialEligible?true:'Cần hoàn thành môn và lộ trình có căn cứ cấp diploma');
       if(a.aid)[1,2].forEach(function(p){action('aid'+p,'Nhận trợ cấp NZ kỳ '+p+' sau khai báo (chỉ năm học đầy đủ)',function(z){claim(z,p,z.aidOrdinal||0);});});
@@ -321,5 +352,5 @@
     z.enrolled.forEach(function(k){var p=z.languages[k]||(z.languages[k]={level:0,years:0});if(c.full.includes(k))return;p.level=Math.min(100,p.level+(3+(l.st.kno||50)/20)*(1-p.level/130));p.years++;if(!['la','grc'].includes(k)){l.lang=l.lang||{};l.lang[k]=Math.max(l.lang[k]||0,Math.min(5,Math.floor(p.level/20)));}});
   });
   var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments),s=hs(l);if(s)p.jobInfo.push('Học tại nhà: '+(STATUS[s.status]||s.status)+' · '+milestones(l).missing.join('; '));return p;};
-  E.STUDY857={REGIONS:REGIONS,RULES:RULES,SOURCES:SOURCES,LANG:LANG,QUAL:QUAL,rule:rule,region:region,peek:peek,home:hs,active:active,request:request,submit:submit,review:review,start:start,back:back,reconcile:reconcile,study:study,milestones:milestones,diploma:diploma,claim:claim,logObligation:logObligation,reportingDeadline873:reportingDeadline873,report:report,en:en,eng:eng,schoolConfig:schoolConfig,chooseLanguage:chooseLanguage,select:select,electiveReason:electiveReason,gcseCalculate:gcseCalculate,gcseForecast:gcseForecast,gcseSit:gcseSit,register:register,examReason:examReason,child:child};
+  E.STUDY857={REGIONS:REGIONS,RULES:RULES,SOURCES:SOURCES,LANG:LANG,QUAL:QUAL,rule:rule,region:region,peek:peek,home:hs,active:active,request:request,submit:submit,review:review,start:start,back:back,reconcile:reconcile,study:study,milestones:milestones,diploma:diploma,claim:claim,logObligation:logObligation,reportingDeadline873:reportingDeadline873,qcWithdrawal874:qcWithdrawal874,report:report,en:en,eng:eng,schoolConfig:schoolConfig,chooseLanguage:chooseLanguage,select:select,electiveReason:electiveReason,gcseCalculate:gcseCalculate,gcseForecast:gcseForecast,gcseSit:gcseSit,register:register,examReason:examReason,child:child};
 })(globalThis.G);

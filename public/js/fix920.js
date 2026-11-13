@@ -98,8 +98,33 @@
     log('Tòa đã ban hành quyết định cuối cùng về ly hôn giữa bạn và '+c.name+'. Hồ sơ con chung và tài sản được xử lý riêng.', 'bad');
     H.endPartner(l,log,'div');
   }
+  var serviceSource874='https://www.gov.uk/divorce-missing-husband-wife';
+  function divorceService874(l,c,action,log) {
+    if(!c||c!==dcase(l)||c.by!=='me'||c.route873!=='england-wales'||c.stage!=='nocontact')return false;
+    var p=spouse(l);
+    if(!p||pid(l,p)!==c.who)return false;
+    var service=c.service874||(c.service874={attempts:[],source:serviceSource874});
+    if(action==='search'){
+      if(service.attempts.some(function(attempt){return attempt.at===l.age;})||service.attempts.length>=2)return false;
+      var method=service.attempts.length?'xác minh địa chỉ qua hồ sơ và cơ quan có thẩm quyền':'hỏi người thân và kiểm tra địa chỉ cuối cùng đã biết';
+      service.attempts.push({at:l.age,method:method,result:'chưa xác nhận được địa chỉ'});
+      log('Đã ghi lần tìm địa chỉ của '+c.name+' trong hồ sơ tống đạt.','neutral');
+      return true;
+    }
+    if(action!=='dispense'||service.attempts.length<2||service.requested!=null)return false;
+    service.requested=l.age;c.stage='service-review';c.due=l.age+1;
+    log('Đã gửi đề nghị miễn tống đạt kèm các lần tìm địa chỉ. Chờ quyết định của tòa.','neutral');
+    return true;
+  }
   function progressDivorce873(l,c,log) {
     if(c.route873!=='england-wales')return false;
+    if(c.stage==='nocontact'&&c.by==='me')return true;
+    if(c.stage==='service-review'){
+      if(!c.service874||c.service874.attempts.length<2)return true;
+      c.service874.granted=l.age;c.stage='filed';c.due=l.age+1;
+      log('Tòa đã chấp thuận miễn tống đạt sau khi xem các lần tìm địa chỉ. Đơn tiếp tục được xét.','neutral');
+      return true;
+    }
     if(c.stage==='filed'||c.stage==='nocontact'){
       c.stage='conditional';c.conditionalAt=l.age;c.due=l.age+1;
       log('Tòa ban hành conditional order sau khi xem xét hồ sơ và thông báo. Hai người vẫn đang kết hôn; cần final order để chấm dứt hôn nhân.','neutral');
@@ -134,7 +159,7 @@
     if (c && (!p || pid(l, p) !== c.who)) { c.closed = 'moot'; c.stage = 'closed'; return; }
     if (!c && p && jailed(l) && p.separated919 != null && (p.affection108 == null ? (p.close || 50) : p.affection108) < 35 && u(l.id + ':divby:' + l.age) < 0.3) { openCase(l, 'partner', u(l.id + ':divm:' + l.age) < 0.5, true, log); return; }
     if (!c || l.age < c.due) return;
-    if (c.stage === 'filed' && u(c.id + ':contact') < 0.08 && !c.notice) { c.notice = true; c.stage = 'nocontact'; c.due = l.age + 1; log('Tòa chưa tống đạt được giấy tờ cho ' + (c.by === 'me' ? c.name : 'bạn') + '; hồ sơ chờ thủ tục thông báo, thêm khoảng một năm.', 'neutral'); return; }
+    if (c.stage === 'filed' && u(c.id + ':contact') < 0.08 && !c.notice) { c.notice = true; c.stage = 'nocontact'; c.due = l.age + 1; log('Tòa chưa tống đạt được giấy tờ cho ' + (c.by === 'me' ? c.name : 'bạn') + (c.by==='me'&&c.route873==='england-wales'?'. Mở hồ sơ ly hôn để ghi những lần tìm địa chỉ và làm thủ tục với tòa.':'. Hồ sơ chờ thủ tục thông báo.'), 'neutral'); return; }
     if(progressDivorce873(l,c,log))return;
     var granted = c.mutual || c.post >= 2 || u(c.id + ':dec:' + c.post) < 0.7;
     if (!granted) { c.post++; c.stage = 'postponed'; c.due = l.age + 1; log('Phiên hòa giải chưa thành, tòa hoãn để thu thập thêm ý kiến và chứng cứ về con chung, tài sản.', 'neutral'); return; }
@@ -146,10 +171,20 @@
     var c = dcase(l), p = spouse(l);
     return ((c?c.route873:divorceRoute873(l))==='england-wales'?'England và Wales: chờ tối thiểu 20 tuần sau khi tòa phát hành đơn để xin conditional order. Sau khi được cấp, đợi tối thiểu 43 ngày để xin final order. Game xử lý qua các lượt năm. Nguồn: https://www.gov.uk/divorce/apply-for-conditional-order-decree-nisi\nBiểu phí và hướng dẫn xin hỗ trợ: https://www.gov.uk/divorce/file-for-divorce\n':'')+((c?c.route873:divorceRoute873(l))==='england-wales'?'Hôn nhân chấm dứt khi tòa cấp final order.':'Ly thân chưa chấm dứt hôn nhân. Trong hồ sơ này, tòa có thể hoãn hoặc chờ thông báo cho người còn lại trước khi ra quyết định.') +
       (p ? '\n' + p.name + (p.separated919 != null ? ' · đã ly thân từ khi bạn ' + p.separated919 + ' tuổi' : '') : '') +
-      (c ? '\nHồ sơ: ' + (c.by === 'me' ? 'bạn nộp' : 'người ấy nộp') + ', ' + (c.mutual ? 'thuận tình' : 'đơn phương') + ' — ' + { filed: c.route873==='england-wales'?'chờ xét conditional order':'chờ hòa giải', postponed: 'đang hoãn', nocontact: 'chờ thông báo', conditional:'đã có conditional order', 'final-ready':'có thể xin final order', 'final-requested':'đã xin final order' }[c.stage] + ', dự kiến xét khi bạn ' + c.due + ' tuổi.' : '');
+      (c ? '\nHồ sơ: ' + (c.by === 'me' ? 'bạn nộp' : 'người ấy nộp') + ', ' + (c.mutual ? 'thuận tình' : 'đơn phương') + ' — ' + { filed: c.route873==='england-wales'?'chờ xét conditional order':'chờ hòa giải', postponed: 'đang hoãn', nocontact: 'chờ tống đạt', 'service-review':'chờ quyết định về tống đạt', conditional:'đã có conditional order', 'final-ready':'có thể xin final order', 'final-requested':'đã xin final order' }[c.stage] + (c.stage==='nocontact'&&c.by==='me'&&c.route873==='england-wales'?' · cần xử lý tống đạt. '+serviceSource874:', dự kiến xét khi bạn '+c.due+' tuổi.') : '');
   }, function (l) {
     var c = dcase(l), p = spouse(l), poor = l.money < l.base;
     if(c&&c.stage==='final-ready'&&c.by==='me')return [{k:'final873',l:'Nộp yêu cầu final order',run:function(l,r,log){c.stage='final-requested';c.due=l.age+1;log('Đã nộp yêu cầu final order. Hôn nhân còn hiệu lực trong lúc chờ tòa.','neutral');}}];
+    if(c&&c.stage==='nocontact'&&c.by==='me'&&c.route873==='england-wales'){
+      var attempts=c.service874?.attempts||[];
+      return [
+        {k:'search874',l:'Tìm địa chỉ và ghi lại lần liên lạc',why:attempts.length>=2?'Đã có hai lần tìm':attempts.some(function(a){return a.at===l.age;})?'Có thể tìm tiếp vào năm sau':true,
+          run:function(l,r,log){divorceService874(l,c,'search',log);}},
+        {k:'dispense874',l:'Gửi D13B đề nghị tòa miễn tống đạt',why:attempts.length>=2?true:'Cần hồ sơ các lần tìm địa chỉ',
+          run:function(l,r,log){divorceService874(l,c,'dispense',log);}},
+        {k:'withdraw',l:'Rút đơn ly hôn',run:function(l,r,log){c.closed='withdrawn';c.stage='withdrawn';log('Bạn rút đơn. Hôn nhân vẫn còn hiệu lực.','neutral');}}
+      ];
+    }
     if (c) return [{ k: 'withdraw', l: c.by === 'me' ? 'Rút đơn (hai người muốn giữ hôn nhân)' : 'Nói chuyện với người ấy về việc rút đơn', why: c.by === 'me' || bond(l, p) >= 45 ? true : 'Người ấy giữ quyết định nộp đơn', run: function (l, r, log) { c.closed = 'withdrawn'; c.stage = 'withdrawn'; log('Đơn ly hôn được rút; hai người vẫn là vợ chồng.', 'neutral'); } }];
     var fee=caseFee873(l,divorceRoute873(l),false,poor);
     var feeLabel=fee.gbp?'£'+fee.gbp+' · án phí nộp đơn':poor?'Được trợ giúp pháp lý miễn phí':'~'+mo(l,l.base*.03);

@@ -1,0 +1,247 @@
+/* 8.10.74: cổ phần công ty gia đình, thâu tóm, niêm yết, lương điều hành và thiên phú kinh doanh.
+   Mở rộng hệ thống sẵn có: PATH139 (kế nghiệp), governance908 (ứng cử/biểu quyết), BUSINESS133/137 (công ty, cổ đông người thân),
+   TREASURY165 (sổ quỹ) và DEALS166 (định giá). Mọi trường mới đều khởi tạo lười để bản lưu cũ tiếp tục chạy. */
+(function(G){'use strict';
+var E=G.E,H=E.H,U=G.U,X=E.UPDATE110,C=E.WORLD120,B=E.BUSINESS123,R=E.BUSINESS133,P=E.PATH139,JOB='dieu_hanh874';
+var SRC={
+ law:'Luật Chứng khoán số 54/2019/QH14 (văn bản hợp nhất của Văn phòng Quốc hội): https://vbpl.moj.gov.vn/TW/Lists/vbpq/Attachments/177809/24_VBHN-VPQH_651215.doc',
+ decree:'Nghị định 155/2020/NĐ-CP, Điều 109 về điều kiện niêm yết cổ phiếu (được sửa đổi bởi Nghị định 245/2025/NĐ-CP)',
+ civil:'Bộ luật Dân sự 2015, Điều 644 (người thừa kế không phụ thuộc vào nội dung di chúc)'
+};
+function u(k){var h=2166136261;k=String(k);for(var i=0;i<k.length;i++){h^=k.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967296;}
+function yr(l){return l.birthYear+l.age;}
+function r2(v){return Math.round(v*100)/100;}
+function pct(v){return (Math.round(v*10)/10)+'%';}
+function money(l,v){return H.money(l,v);}
+function adult(l){return X.reason(l,18);}
+function companies(l){return B.companies(l).filter(function(c){return !c.merged;});}
+function byId(l,id){return companies(l).find(function(c){return X.uid(l,c)===id;});}
+function talentLv(l){return l.talent==='kinh doanh'?(E.talentLevel?E.talentLevel(l).lv:1):0;}
+function sum(a,f){return a.reduce(function(n,x){return n+(f?f(x):x);},0);}
+
+// ===== 1. Thiên phú kinh doanh: lợi nhuận dương tăng 20–30% khi bạn trực tiếp nắm quyền =====
+function runs(l,c){var x=c&&c.roles&&c.roles.ceo;return !!c&&(c.share>50||x&&x.kind==='self'||c.managed139&&post(l)&&post(l).c===c);}
+function talentFactor(l,c){var lv=talentLv(l);if(!lv||!runs(l,c))return 1;return 1.2+.1*Math.min(1,(lv-1)/9);}
+function talent(l,c,profit){if(!(profit>0))return profit;var f=talentFactor(l,c);if(f>1)c.talent874={at:l.age,factor:r2(f),extra:r2(profit*(f-1))};return profit*f;}
+
+// ===== 2. Cơ cấu sở hữu công ty của bố mẹ (ngẫu nhiên, ổn định theo cuộc đời) =====
+function family(l){var q=P.successor(l);return q&&q.available&&!q.sold?q:null;}
+function parentHas(l,k){return /chủ tịch|tập đoàn|doanh nhân|giám đốc/.test(l.fam[k+'Job']||'');}
+function cap(l){var q=family(l);if(!q)return null;if(q.cap874)return q.cap874;
+ var key=l.id+':cap874',vn=H.resCode?H.resCode(l)==='VN':l.country==='VN',open=!vn||yr(l)>=2000||q.companyId,big=l.fam.q>=5;
+ var legacy=!!(q.companyId||q.finished||q.chosen||q.reviewAt!=null||q.trainAt!=null||q.selfWilling!=null||q.proposed!=null||q.governance908);// bản lưu đã bàn kế nghiệp: giữ cơ cấu cũ (bố mẹ 100%, chưa niêm yết)
+ var listed=!legacy&&open&&u(key+':listed')<(big?.4:.15),parents=legacy?100:listed?30+Math.round(u(key+':p')*400)/10:u(key+':all')<.4?100:55+Math.round(u(key+':p')*450)/10;
+ var fh=parentHas(l,'f'),mh=parentHas(l,'m'),fs=fh&&mh?Math.round(parents*(.5+u(key+':split')*.2)*10)/10:fh||!mh?parents:0;
+ var rest=r2(100-parents),others=[];
+ if(rest>0){if(listed){others.push({id:'public',name:'Cổ đông đại chúng',share:r2(rest*.7),kind:'public'});others.push({id:'fund',name:'Quỹ đầu tư tổ chức',share:r2(rest-r2(rest*.7)),kind:'fund'});}
+  else if(rest>=20){others.push({id:'partner1',name:'Nhóm đối tác góp vốn sáng lập',share:r2(rest*.6),kind:'partner'});others.push({id:'partner2',name:'Nhà đầu tư tư nhân',share:r2(rest-r2(rest*.6)),kind:'partner'});}
+  else others.push({id:'partner1',name:'Nhóm đối tác góp vốn sáng lập',share:rest,kind:'partner'});}
+ q.cap874={v:1,listed:listed,exchange:listed?(vn?(u(key+':ex')<.6?'HOSE':'HNX'):'sàn chứng khoán trong nước'):null,mult:listed?r2(1.3+u(key+':m')*1.5):1,
+  parents:{f:fs,m:r2(parents-fs)},self:0,kin:{},others:others,trades:[],legacy:legacy,since:yr(l)};
+ return q.cap874;}
+function famCompany(l){var q=family(l)||P.successor(l),k=q&&q.cap874;if(!q)return null;var id=k&&k.companyId||q.companyId;return id?companies(l).find(function(c){return c.uid110===id||X.uid(l,c)===id;}):null;}
+function parentName(l,k){return l.fam[k+'Name']||(k==='f'?'Bố':'Mẹ');}
+function parentsTotal(k){return r2((k.parents.f||0)+(k.parents.m||0));}
+function othersTotal(k){return r2(sum(k.others,function(o){return o.share;}));}
+function kinTotal(k){return r2(sum(Object.keys(k.kin),function(id){return k.kin[id].share;}));}
+function selfName(l){return l.name;}
+function famValue(l){var q=family(l),c=famCompany(l);return c?c.value:q?q.value:0;}
+function famMult(l){var k=cap(l),c=famCompany(l);return c&&c.listed874?c.listed874.mult:k&&k.listed?k.mult:1;}
+
+// Biến cổ phần ảo thành hồ sơ công ty thật (khi bạn có chức vụ, kiểm soát hoặc nhận bàn giao). Không cộng hai lần.
+function materialize(l,why){var q=family(l)||P.successor(l),k=q&&cap(l);if(!q||!k)return null;var c=famCompany(l);
+ if(!c){c={name:q.name,value:q.value,share:0,sector:q.sector||'general',governance:1,created:l.age,roles:{},family874:true};B.companies(l).push(c);q.companyId=X.uid(l,c);}
+ if(k.materialized&&k.companyId===X.uid(l,c))return c;
+ R.ensure(c);c.family874=true;c.share=r2((c.share||0)+k.self);k.self=0;c.holders137=c.holders137||[];
+ ['f','m'].forEach(function(p){var s=k.parents[p]||0;if(s>0&&l.fam[p+'Alive'])c.holders137.push({id:'parent:'+p,name:parentName(l,p),share:s,parent874:true});k.parents[p]=0;});
+ Object.keys(k.kin).forEach(function(id){var x=k.kin[id],h=c.holders137.find(function(h){return h.id===id;});if(h)h.share=r2(h.share+x.share);else c.holders137.push({id:id,name:x.name,share:x.share});});k.kin={};
+ c.ext874=k.others.map(function(o){return Object.assign({},o);});k.others=[];
+ if(k.listed&&!c.listed874)c.listed874={at:yr(l),exchange:k.exchange,mult:k.mult,inherited:true,history:[]};
+ if(!c.roles.ceo&&!(q.chosen&&q.finished))c.roles.ceo={kind:'pro',name:(parentHas(l,'f')?parentName(l,'f'):parentName(l,'m'))+' (người sáng lập)',skill:.7,parent874:true};
+ k.materialized=true;k.companyId=X.uid(l,c);k.materializedWhy=why||'';return c;}
+
+// Giá trị cổ phần của bạn khi chưa có hồ sơ công ty (chỉ phần bạn sở hữu, không cộng tài sản của bố mẹ).
+function virtualStake(l){var q=family(l),k=q&&q.cap874;if(!k||k.materialized||q.inherited)return 0;return Math.max(0,q.value)*k.self/100*(k.listed?k.mult:1);}
+function listedPremium(l){return sum(companies(l),function(c){return c.listed874&&c.share>0?Math.max(0,c.value)*c.share/100*(c.listed874.mult-1):0;});}
+
+// ===== 3. Niềm tin của bố mẹ theo thành tích khi trưởng thành =====
+function merit(l){var s=Math.min(30,(l.edu||0)*4)+Math.min(15,talentLv(l)*1.5)+Math.min(20,(l.medals||[]).length*4)+Math.min(10,(l.titles||[]).length*2);
+ if(l.uniTier>=1.25)s+=8;if(l.flags&&l.flags.studiedAbroad)s+=4;s+=U.clamp(((l.st&&l.st.kno||50)-50)/5,-5,10);
+ var j=l.job&&C.job(l);if(j===JOB||j==='quan_ly_gia_dinh139')s+=Math.min(15,(l.job.yrs||0)*3);
+ if(l.flags&&(l.flags.criminal||l.flags.wanted)||l.jailUntil!=null&&l.jailUntil>l.age)s-=40;return U.clamp(s,0,100);}
+function relTrust(l){var out=[];['f','m'].forEach(function(k){if(!l.fam[k+'Alive'])return;var q=E.NPC?E.NPC.relation(l,'parent:'+k):null;out.push(q&&Number.isFinite(q.trust)?q.trust:60);});return out.length?sum(out)/out.length:60;}
+function trust(l){return Math.round(U.clamp(relTrust(l)*.4+merit(l)*.7,0,100));}
+
+// ===== 4. Chức vụ điều hành và lương theo quy mô công ty =====
+E.CAR[JOB]={id:JOB,t:['Tổng giám đốc (CEO)','Chủ tịch hội đồng quản trị','Chủ tịch kiêm Tổng giám đốc','Trợ lý Tổng giám đốc','Giám đốc chi nhánh','Phó Tổng giám đốc'],vn:[0],yrs:[],cat:'biz',sec:'formal',edu:0,sigma:0,fail:0,loss:0,hidden:1,w:0,minAge:18,owner:true};
+var JUNIOR={assistant:{rank:3,n:'Trợ lý Tổng giám đốc',k:.9},branch:{rank:4,n:'Giám đốc chi nhánh',k:1.2},deputy:{rank:5,n:'Phó Tổng giám đốc',k:1.6}};
+function rankFor(roles){var ceo=roles.indexOf('ceo')>=0,chair=roles.indexOf('chair')>=0;return ceo&&chair?2:chair?1:ceo?0:JUNIOR[roles[0]]?JUNIOR[roles[0]].rank:0;}
+function post(l){var j=l.job&&C.job(l);if(j==='quan_ly_gia_dinh139'){var q=P.successor(l),c=q&&q.companyId&&companies(l).find(function(x){return x.uid110===q.companyId;});if(!c)return null;var roles=['ceo'];if(c.chair908&&c.chair908.id==='self'||q.chair908&&q.chair908.id==='self')roles.push('chair');return {c:c,roles:roles,family:true};}
+ if(j!==JOB||!l.job.post874)return null;var p=l.job.post874;if(p.family&&!p.cid){var f=family(l);return f?{q:f,roles:p.roles,family:true}:null;}var c2=byId(l,p.cid);return c2?{c:c2,roles:p.roles,family:!!p.family}:null;}
+function execPay(l,x){if(!x)return 0;var value=Math.max(0,x.c?x.c.value:x.q.value),profit=x.c?x.c.lastProfit:x.q.lastProfit874,roles=x.roles||[],ceo=roles.indexOf('ceo')>=0,chair=roles.indexOf('chair')>=0;
+ var size=U.clamp(1+Math.log10(Math.max(1,value/Math.max(1,l.base)))/2,1,3),k=ceo&&chair?3:ceo?2.2:chair?1.6:JUNIOR[roles[0]]?JUNIOR[roles[0]].k:1;
+ var pay=l.base*k*size+Math.max(0,profit||0)*(ceo?.05:chair?.02:.01),capPay=Math.max(l.base*1.2,value*.03);return Math.max(l.base*.8,Math.min(pay,capPay));}
+function charge(l,x,pay){if(x.c&&C.job(l)==='quan_ly_gia_dinh139'){x.c.value=Math.max(0,x.c.value-pay);}else if(x.c){x.c.groupCost137=(x.c.groupCost137||0)+pay;}else x.q.value=Math.max(0,x.q.value-pay);}
+function startPost(l,r,log,where,roles,family){var cur=l.job&&C.job(l)===JOB&&l.job.post874,same=cur&&(cur.cid||null)===(where||null)&&!!cur.family===!!family;
+ if(C.officer(l)||(!l.retired&&E.isStableService&&E.isStableService(l)&&!same)){log('Kết quả được ghi nhận nhưng bạn đang giữ vị trí công vụ, chưa thể nhận lương điều hành. Hãy rời vị trí đó trước.','neutral');return false;}
+ if(same){roles.forEach(function(x){if(cur.roles.indexOf(x)<0)cur.roles.push(x);});cur.roles=cur.roles.filter(function(x){return !JUNIOR[x]||!cur.roles.some(function(y){return y==='ceo'||y==='chair';});});l.job.rank=rankFor(cur.roles);return true;}
+ l.job=null;if(E.startJob(l,JOB,r||Math.random,log,true)===false||!l.job)return false;l.job.post874={cid:where||null,roles:roles.slice(),family:!!family,since:l.age};l.job.rank=rankFor(roles);l.flags.needJob=false;return true;}
+function dropRole(l,c,role,log){var p=l.job&&C.job(l)===JOB&&l.job.post874;if(!p||p.cid!==X.uid(l,c))return;p.roles=p.roles.filter(function(x){return x!==role;});if(!p.roles.length){l.job=null;l.flags.needJob=true;log('Bạn thôi giữ chức vụ tại '+c.name+' sau kết quả biểu quyết; cổ phần vẫn giữ nguyên.','neutral');}else l.job.rank=rankFor(p.roles);}
+
+var DN='Luật Doanh nghiệp 2020 số 59/2020/QH14: Điều 153 (phiếu ngang nhau tại Hội đồng quản trị theo ý kiến Chủ tịch), Điều 156 khoản 2 (Chủ tịch công ty đại chúng không kiêm Tổng giám đốc)';
+// Ca 50/50: Tổng giám đốc do Hội đồng quản trị bổ nhiệm, phiếu ngang nhau theo phía Chủ tịch. Bầu Chủ tịch hòa phiếu thì vẫn bế tắc.
+function tie(l,e,role,votes,ballots,p){if(Math.abs(votes-50)>1e-6||role!=='ceo')return false;var ch=e.company?e.company.chair908:e.family&&e.family.chair908;if(!ch)return false;var b=ballots.find(function(x){return x.id===ch.id;});if(!b||b.choice!==p.id)return false;var s=e.company||e.family;(s.governance908||{}).tie874={at:l.age,chair:ch.name};return true;}
+function publicVN(l,c){return !!(c&&c.listed874)&&jurisdiction(l,c)==='VN'&&yr(l)>=2021;}
+// Sửa lỗi bầu cử: trúng cử thì nhận chức vụ, lương và tên chức danh mới.
+function elected(l,e,role,p,result,log,r){if(!result||!result.won)return;var self=p.id==='self';
+ if(e.family){var q=e.family,k=cap(l),older=l.age+Math.max(l.fam.fAge||0,l.fam.mAge||0)>=60,mine=k&&k.self>50;if(!self)return;
+  if(role==='ceo'&&mine){var c=materialize(l,'trúng cử');c.roles.ceo={kind:'self',since:l.age,elected908:true};q.finished=true;q.companyId=c.uid110||X.uid(l,c);if(C.job(l)!=='quan_ly_gia_dinh139'){l.job=null;E.startJob(l,'quan_ly_gia_dinh139',r||Math.random,log,true);}log('Bố mẹ bàn giao quyền điều hành sau kết quả biểu quyết. Bạn là Tổng giám đốc '+c.name+', lương khoảng '+money(l,execPay(l,post(l))/12)+'/tháng, trả từ chi phí công ty.','big');return;}
+  if(C.job(l)==='quan_ly_gia_dinh139')return;var roles=role==='ceo'?['deputy']:['chair'];if(startPost(l,r,log,null,roles,true))log(role==='ceo'?'Bạn được chọn làm người kế nghiệp và nhận chức Phó Tổng giám đốc '+q.name+' (lương khoảng '+money(l,execPay(l,post(l))/12)+'/tháng). Bố mẹ còn điều hành cho tới khi bàn giao'+(older?'; bố mẹ đã đến tuổi nghỉ, có thể chọn Bàn giao quyền điều hành ngay.':'.'):'Bạn nhận chức Chủ tịch hội đồng quản trị '+q.name+', lương khoảng '+money(l,execPay(l,post(l))/12)+'/tháng.','big');
+  return;}
+ var c2=e.company;if(!c2)return;if(self&&publicVN(l,c2)){var other=role==='ceo'?'chair':'ceo',pp=l.job&&C.job(l)===JOB&&l.job.post874;if(pp&&pp.cid===X.uid(l,c2)&&pp.roles.indexOf(other)>=0){pp.roles=pp.roles.filter(function(x){return x!==other;});if(other==='ceo')c2.roles.ceo={kind:'pro',skill:.7,name:'Tổng giám đốc chuyên nghiệp'};else delete c2.chair908;log('Công ty đã niêm yết: theo '+DN+', bạn thôi chức cũ để nhận chức mới.','neutral');}}var fq=c2.family874&&P.successor(l);if(fq&&role==='ceo'){fq.chosen={id:p.id,name:p.name};fq.finished=true;fq.companyId=c2.uid110||X.uid(l,c2);}if(self){startPost(l,r,log,X.uid(l,c2),[role],false);log('Bạn nhận chức '+(role==='ceo'?'Tổng giám đốc':'Chủ tịch hội đồng quản trị')+' '+c2.name+'. Lương khoảng '+money(l,execPay(l,post(l))/12)+'/tháng, tính vào chi phí công ty.','big');}else dropRole(l,c2,role,log);}
+
+var career=E.careerYear;E.careerYear=function(l,r,log){var j=C.job(l);if(j!==JOB&&j!=='quan_ly_gia_dinh139')return career.apply(this,arguments);var x=post(l);
+ if(!x){if(j===JOB){l.job=null;l.flags.needJob=true;if(typeof log==='function')log('Công ty bạn điều hành không còn hoạt động; chức vụ kết thúc.','neutral');return 0;}return career.apply(this,arguments);}
+ var st=l.flags.exec874||(l.flags.exec874={});if(st.paidAt===l.age)return 0;st.paidAt=l.age;var pay=execPay(l,x);charge(l,x,pay);l.job.yrs=(l.job.yrs||0)+1;l.job.last=pay/12;l.workYrs=(l.workYrs||0)+1;return pay;};
+var monthly=E.monthlyEst;E.monthlyEst=function(l,id){var j=E.resolveJob(id);return (j===JOB||j==='quan_ly_gia_dinh139')&&post(l)?execPay(l,post(l))/12:monthly.apply(this,arguments);};
+var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments),x=post(l);if(x){var m=execPay(l,x)/12;p.salary={gross:m,net:m};p.jobInfo=p.jobInfo||[];p.jobInfo.push((x.c?x.c.name:x.q.name)+': '+x.roles.map(function(k){return k==='ceo'?'Tổng giám đốc':k==='chair'?'Chủ tịch HĐQT':JUNIOR[k].n;}).join(', ')+'.');}var k=family(l)&&family(l).cap874;if(k&&!k.materialized&&k.self>0)p.assets&&p.assets.push(['Cổ phần '+family(l).name+' · '+pct(k.self),virtualStake(l)]);return p;};
+var title=E.jobTitle;E.jobTitle=function(l){var t=title.apply(this,arguments),x=post(l);if(!x)return t;var n=x.c?x.c.name:x.q.name;if(C.job(l)==='quan_ly_gia_dinh139')return (x.roles.indexOf('chair')>=0?'Chủ tịch kiêm Tổng giám đốc':'Tổng giám đốc')+' · '+n;return t+' · '+n;};
+var net=E.netWorth;E.netWorth=function(l){return net.apply(this,arguments)+virtualStake(l)+listedPremium(l);};
+
+// ===== 5. Quy định chào bán, niêm yết và chào mua công khai theo nơi, thời kỳ =====
+function jurisdiction(l,c){return c&&c.country874||(H.resCode?H.resCode(l):l.country);}
+function vndToLocal(l,m){return l.cur==='vnd'?m:m*1e6/G.CUR.VND;}
+function rules(l,c){var cc=jurisdiction(l,c),y=yr(l);
+ if(cc==='VN'){if(y<2000)return{open:false,why:'Việt Nam chưa có sàn giao dịch chứng khoán tập trung trước năm 2000.',level:'lịch sử'};
+  if(y>=2021)return{open:true,cc:cc,minCap:vndToLocal(l,30000),years:2,roe:.05,float:.15,floatBig:.1,big:vndToLocal(l,1e6),investors:100,tender:[25,35,45,55,65,75],exchanges:['HOSE','HNX'],source:SRC.law+' · Điều 15 (chào bán lần đầu), Điều 35 (chào mua công khai); '+SRC.decree,level:'đã đối chiếu điều khoản chính; chi tiết sửa đổi 2025 chưa đọc toàn văn'};
+  if(y>=2007)return{open:true,cc:cc,minCap:vndToLocal(l,10000),years:1,roe:0,float:.15,floatBig:.15,big:Infinity,investors:100,tender:[25],tenderStep:10,exchanges:['HOSE','HNX'],source:'Luật Chứng khoán 2006 số 70/2006/QH11 (mức vốn 10 tỷ đồng, thay thế từ 01/01/2021)',level:'mức vốn đã đối chiếu; điều kiện khác dùng gần đúng'};
+  return{open:true,cc:cc,minCap:vndToLocal(l,10000),years:2,roe:0,float:.2,floatBig:.2,big:Infinity,investors:100,tender:[25],tenderStep:10,exchanges:['HOSE'],source:'Giai đoạn 2000–2006',level:'chưa đối chiếu văn bản thời kỳ này; game dùng điều kiện thận trọng'};}
+ return{open:true,cc:cc,minCap:l.base*60,years:2,roe:.03,float:.15,floatBig:.1,big:l.base*6000,investors:100,tender:[30],tenderStep:0,exchanges:['sàn chứng khoán tại '+((G.W.BY[cc]||{}).name||cc)],source:'Quy định niêm yết tại '+((G.W.BY[cc]||{}).name||cc),level:'chưa đối chiếu quy định riêng của nước này; game dùng điều kiện chung (kiểm toán, lãi hai năm, tỷ lệ cổ phiếu tự do chuyển nhượng)'};}
+function profits(l,c){var t=E.TREASURY165?E.TREASURY165.ensure(l,c):null,ys=t&&t.years?t.years.slice(-2).map(function(y){return y.profit;}):[];if(!ys.length&&c.lastAt!=null)ys=[c.lastProfit];return ys;}
+function ipoProblems(l,c){var q=rules(l,c),out=[];if(!q.open)return [q.why];if(c.share<=50)out.push('Cần kiểm soát trên 50% để triệu tập đại hội cổ đông thông qua phương án');if(c.value<q.minCap)out.push('Vốn chủ sở hữu cần từ '+money(l,q.minCap));var ps=profits(l,c);if(ps.length<q.years||ps.slice(-q.years).some(function(p){return !(p>0);}))out.push('Cần '+q.years+' năm tài chính gần nhất có lãi');if(q.roe&&!((c.lastProfit||0)/Math.max(1,c.value)>=q.roe))out.push('ROE năm gần nhất cần từ '+Math.round(q.roe*100)+'%');var t=E.TREASURY165&&E.TREASURY165.ensure(l,c);if(t&&t.debt>c.value)out.push('Nợ đang vượt vốn chủ sở hữu');return out;}
+function ipo(c){return c.ipo874||(c.ipo874={stage:'none',history:[]});}
+function multiple(l,c,r){var s=R.sector(c),roe=(c.lastProfit||0)/Math.max(1,c.value);return r2(U.clamp(1.3+s.g*10+roe*6+(c.governance||0)*.05+(r()-.5)*.6,1.1,4.5));}
+function ipoStep(l,c,step,arg,r,log){var s=ipo(c),q=rules(l,c);
+ if(step==='prep'){if(s.stage!=='none'&&s.stage!=='rejected')return false;var fee=Math.max(l.base*.3,c.value*.01);if(!E.TREASURY165||!E.TREASURY165.spend(l,c,fee,'Chuyển đổi công ty cổ phần, kiểm toán và tư vấn IPO')){log('Quỹ công ty chưa đủ '+money(l,fee)+' cho kiểm toán và tư vấn.','neutral');return false;}s.stage='prep';s.at=l.age;s.due=l.age+1;log(c.name+' bắt đầu chuẩn hóa sổ sách, kiểm toán báo cáo tài chính và chọn công ty chứng khoán tư vấn. Có thể nộp hồ sơ từ năm sau.','neutral');return true;}
+ if(step==='file'){if(s.stage!=='prep'||l.age<s.due)return false;var bad=ipoProblems(l,c);if(bad.length){log('Chưa đủ điều kiện nộp hồ sơ: '+bad.join('; ')+'.','neutral');return false;}s.stage='filed';s.filedAt=l.age;s.due=l.age+1;s.rule=q.source;log('Đã nộp hồ sơ đăng ký chào bán cổ phiếu lần đầu ra công chúng. Kết quả xét duyệt có vào năm sau.','neutral');return true;}
+ if(step==='review'){if(s.stage!=='filed'||l.age<s.due)return false;var ok=r()<U.clamp(.7+(c.governance||0)*.05+((c.lastProfit||0)/Math.max(1,c.value))*2,.3,.95);s.stage=ok?'approved':'rejected';s.reviewedAt=l.age;s.history.push({at:l.age,ok:ok});log(ok?'Hồ sơ được cấp giấy chứng nhận chào bán. Bạn chọn tỷ lệ chào bán ra công chúng.':'Hồ sơ chưa được chấp thuận; cần bổ sung thuyết minh và có thể chuẩn bị lại.',ok?'good':'bad');return true;}
+ if(step==='offer'){if(s.stage!=='approved')return false;var f=arg,minF=c.value>=q.big?q.floatBig:q.float;if(!(f>=minF&&f<=.4))return false;var m=multiple(l,c,r),pre=c.value*m,raise=pre*f/(1-f),old=c.share;
+  c.share=r2(old*(1-f));(c.holders137||[]).forEach(function(h){h.share=r2(h.share*(1-f));});(c.ext874||[]).forEach(function(o){o.share=r2(o.share*(1-f));});c.ext874=(c.ext874||[]).concat([{id:'ipo'+l.age,name:'Nhà đầu tư mua cổ phiếu IPO',share:r2(f*100),kind:'public'}]);
+  if(E.TREASURY165)E.TREASURY165.capital(l,c,raise*.97);c.value+=raise*.97;c.fresh={amt:raise,until:l.age+2};c.peak=Math.max(c.peak||0,c.value);
+  var ex=q.exchanges[c.value>=q.minCap*3||q.exchanges.length<2?0:1];c.listed874={at:yr(l),exchange:ex,mult:m,ipoMult:m,float:f,history:[{y:yr(l),mult:m}],rule:q.source,level:q.level};c.country874=q.cc;s.stage='listed';s.listedAt=l.age;var pp=l.job&&C.job(l)===JOB&&l.job.post874;if(publicVN(l,c)&&pp&&pp.cid===X.uid(l,c)&&pp.roles.indexOf('ceo')>=0&&pp.roles.indexOf('chair')>=0){pp.roles=['chair'];l.job.rank=rankFor(pp.roles);c.roles.ceo={kind:'pro',skill:.7,name:'Tổng giám đốc chuyên nghiệp'};log('Sau niêm yết, theo '+DN+', bạn giữ chức Chủ tịch và giao ghế Tổng giám đốc cho người điều hành chuyên nghiệp.','neutral');}
+  log(c.name+' chào bán '+Math.round(f*100)+'% cổ phiếu, thu về '+money(l,raise*.97)+' sau phí và niêm yết trên '+ex+'. Thị trường định giá gấp '+m+' lần giá trị sổ sách; phần của bạn ('+pct(c.share)+') có giá thị trường khoảng '+money(l,c.value*c.share/100*m)+'.','big');return true;}
+ return false;}
+function tenderNeeded(l,c,from,to){var q=rules(l,c);if(!c.listed874&&!(c.virtual874&&c.listed))return null;var hit=null;q.tender.forEach(function(t){if(from<t&&to>=t&&hit==null)hit=t;});if(hit==null&&q.tenderStep&&from>=q.tender[0]&&to-from>=q.tenderStep)hit=from+q.tenderStep;return hit;}
+
+// ===== 6. Mua thêm cổ phần: từ cổ đông ngoài, trên sàn hoặc chào mua công khai =====
+function buyPrice(l,value,mult,percent,premium){return Math.max(0,value)*mult*percent/100*(1+premium);}
+function buyExternal(l,c,o,percent,r,log,tender){var listed=!!c.listed874,price=buyPrice(l,c.value,listed?c.listed874.mult:1,percent,tender?.15:listed?.02:.25),limit=listed&&!tender?5:100;
+ if(!(percent>0)||percent>o.share+1e-9||percent>limit)return false;var t=tenderNeeded(l,c,c.share,c.share+percent);if(t!=null&&!tender){log('Mua thêm sẽ đưa tỷ lệ lên '+t+'%: phải đăng ký chào mua công khai thay vì mua dần trên sàn.','neutral');return false;}
+ if(l.money<price){log('Cần '+money(l,price)+' tiền cá nhân để mua '+percent+'%.','neutral');return false;}
+ if(!listed&&!tender&&r()>.55){log(o.name+' chưa đồng ý bán ở mức giá này.','neutral');return false;}
+ var filled=tender?r2(percent*(.45+r()*.5)):percent;price=price*filled/percent;H.cash(l,-price,'Mua cổ phần '+c.name);if(!o.implicit)o.share=r2(o.share-filled);c.share=r2(c.share+filled);c.ext874=(c.ext874||[]).filter(function(x){return x.share>1e-6;});
+ log((tender?'Đợt chào mua công khai kết thúc: ':'')+'bạn mua '+filled+'% '+c.name+' với giá '+money(l,price)+'. Tỷ lệ của bạn: '+pct(c.share)+(c.share>50?' — bạn nắm quyền kiểm soát biểu quyết.':'.'),'big');return true;}
+function implicitExternal(c){var used=(c.share||0)+sum(c.holders137||[],function(h){return h.share;})+sum(c.ext874||[],function(o){return o.share;});return r2(Math.max(0,100-used));}
+function externals(c){var ext=c.ext874||(c.ext874=[]),avail=Math.max(0,100-(c.share||0)-sum(c.holders137||[],function(h){return h.share;})),tot=sum(ext,function(o){return o.share;});if(tot>avail+1e-6&&tot>0)ext.forEach(function(o){o.share=r2(o.share*avail/tot);});var out=ext.filter(function(o){return o.share>1e-6;}),rest=r2(avail-sum(out,function(o){return o.share;}));if(rest>.05)out.push({id:'other',name:'Cổ đông khác',share:rest,kind:'other',implicit:true});return out;}
+
+// Cổ phần ảo trước khi có hồ sơ công ty
+function virtualBuy(l,o,percent,r,log,tender){var q=family(l),k=cap(l);if(!q||!k||k.materialized)return false;var mult=k.listed?k.mult:1,price=buyPrice(l,q.value,mult,percent,tender?.15:k.listed?.02:.25),limit=k.listed&&!tender?5:100;
+ if(!(percent>0)||percent>o.share+1e-9||percent>limit)return false;var c={virtual874:true,listed:k.listed};var t=tenderNeeded(l,c,k.self,k.self+percent);if(t!=null&&!tender){log('Mua thêm sẽ đưa tỷ lệ của bạn lên '+t+'%: phải đăng ký chào mua công khai.','neutral');return false;}
+ if(l.money<price){log('Cần '+money(l,price)+' tiền cá nhân.','neutral');return false;}if(!k.listed&&!tender&&r()>.5){log(o.name+' chưa muốn bán phần vốn góp lúc này.','neutral');return false;}
+ var filled=tender?r2(percent*(.45+r()*.5)):percent;price=price*filled/percent;H.cash(l,-price,'Mua cổ phần '+q.name);o.share=r2(o.share-filled);k.self=r2(k.self+filled);k.others=k.others.filter(function(x){return x.share>1e-6;});k.trades.push({at:l.age,from:o.id,pct:filled,price:price});
+ log('Bạn mua '+filled+'% '+q.name+' từ '+o.name+' với '+money(l,price)+'. Bạn đang giữ '+pct(k.self)+'; bố mẹ '+pct(parentsTotal(k))+'.','big');if(k.self>50)takeover(l,r,log);return true;}
+function askParents(l,kind,percent,r,log){var q=family(l),k=cap(l);if(!q||!k||k.materialized)return false;var st=k.ask||(k.ask={});if(st.at===l.age){log('Năm nay bạn đã bàn với bố mẹ về cổ phần.','neutral');return false;}st.at=l.age;var have=parentsTotal(k);if(!(percent>0)||percent>have)return false;
+ var tr=trust(l),control=k.self+percent>50&&have-percent<50,chance=U.clamp((tr-40)/60-(control?.25:0)-(kind==='gift'?.15:0),.03,.9);
+ var price=kind==='gift'?0:buyPrice(l,q.value,k.listed?k.mult:1,percent,-(tr>=80?.2:.05));if(kind==='buy'&&l.money<price){log('Cần '+money(l,price)+' để mua phần của bố mẹ.','neutral');return false;}
+ if(r()>chance){log('Bố mẹ chưa đồng ý '+(kind==='gift'?'tặng':'chuyển nhượng')+' cổ phần lúc này'+(control?' vì sẽ trao quyền kiểm soát':'')+'. Mức tin tưởng hiện tại '+tr+'/100; thành tích học tập, công việc và cách bạn điều hành sẽ được ghi nhận.','neutral');return false;}
+ take(k,percent);k.self=r2(k.self+percent);if(price)H.cash(l,-price,'Mua cổ phần '+q.name+' từ bố mẹ');k.trades.push({at:l.age,from:'parents',pct:percent,price:price,kind:kind});
+ log('Bố mẹ '+(kind==='gift'?'tặng':'chuyển nhượng')+' bạn '+percent+'% '+q.name+(price?' với giá '+money(l,price):'')+'. Bạn đang giữ '+pct(k.self)+'.','big');if(k.self>50)takeover(l,r,log);return true;}
+function take(k,percent){var f=k.parents.f||0,m=k.parents.m||0,t=f+m;if(t<=0)return;var a=r2(percent*f/t);k.parents.f=r2(f-a);k.parents.m=r2(m-(percent-a));if(k.parents.m<0){k.parents.f=r2(k.parents.f+k.parents.m);k.parents.m=0;}}
+// Nắm trên 50%: hồ sơ công ty được lập để bạn ứng cử bằng số phiếu thật; bố mẹ vẫn giữ phần còn lại.
+function takeover(l,r,log){var c=materialize(l,'nắm quyền kiểm soát');if(c)log('Bạn nắm '+pct(c.share)+' quyền biểu quyết tại '+c.name+'. Có thể đề cử và bầu lại Tổng giám đốc, Chủ tịch ở mục Ứng cử và biểu quyết.','big');}
+
+// ===== 7. Thừa kế cổ phần theo di chúc và mức tin tưởng =====
+function weights(l,heirs){var lk=cap(l);if(lk&&lk.legacy){var eq=heirs.map(function(h){return{h:h,w:1,share:1/Math.max(1,heirs.length)};});return eq;}var tr=trust(l),out=heirs.map(function(h){var w=h.id==='self'?1+Math.max(0,tr-50)/25:1+Math.max(0,(h.score||45)-45)/30;return{h:h,w:w};}),total=sum(out,function(x){return x.w;});
+ var q=P.successor(l),favored=tr>=92&&(q&&q.chosen&&q.chosen.id==='self'||post(l));out.forEach(function(x){x.share=x.w/total;});
+ if(favored){var others=out.filter(function(x){return x.h.id!=='self';}),willing=others.filter(function(x){return x.h.interest!==false;});var me=out.find(function(x){return x.h.id==='self';});if(me){me.share=willing.length?.6:1;var rest=1-me.share;others.forEach(function(x){x.share=others.length?rest/others.length:0;});me.favored=true;}}
+ var vn=(H.resCode?H.resCode(l):l.country)==='VN';if(vn){var n=out.length,floor=(1/n)*2/3;out.forEach(function(x){if(x.h.age<18&&x.share<floor){var need=floor-x.share;x.share=floor;x.forced=true;var donors=out.filter(function(y){return y!==x&&y.share>floor;}),tot=sum(donors,function(y){return y.share;});donors.forEach(function(y){y.share-=need*y.share/tot;});}});}
+ return out;}
+function inherit(l,q,heirs,log){var k=cap(l),pool=k&&!k.materialized?parentsTotal(k):0;if(k&&!k.materialized)k.parents={f:0,m:0};var c=materialize(l,'thừa kế')||famCompany(l);if(!c)return false;c.holders137=(c.holders137||[]).filter(function(h){if(h.parent874||/^parent:/.test(h.id)){pool+=h.share;return false;}return true;});if(k&&k.materialized){pool+=parentsTotal(k);k.parents={f:0,m:0};}
+ if(!(pool>0))pool=0;var ws=weights(l,heirs),me=0,notes=[];ws.forEach(function(x){var s=r2(pool*x.share);if(!(s>0))return;if(x.h.id==='self'){c.share=r2(c.share+s);me=s;}else{var h=c.holders137.find(function(y){return y.id===x.h.id;});if(h)h.share=r2(h.share+s);else c.holders137.push({id:x.h.id,name:x.h.name,share:s});}notes.push(x.h.name+' '+pct(s)+(x.forced?' (phần bắt buộc)':''));});
+ if(q.chosen&&q.chosen.id!=='self'&&!c.roles.ceo)c.roles.ceo={kind:'pro',name:q.chosen.name,skill:.7,inherited137:true};if(q.chosen&&q.chosen.id==='self'&&ws.some(function(x){return x.favored;}))c.chair908={id:'self',name:l.name,since:l.age};
+ var fav=ws.some(function(x){return x.favored;});
+ log('Hoàn tất thừa kế '+c.name+': '+notes.join(', ')+'. Bạn nhận '+pct(me)+', tổng nắm '+pct(c.share)+'.'+(fav?' Di chúc của bố mẹ trao phần lớn cổ phần và quyền điều hành cho bạn vì tin tưởng vào năng lực đã chứng minh.':'')+(pool<100?' Phần còn lại vẫn thuộc cổ đông khác.':''),'big');
+ if(ws.some(function(x){return x.forced;}))log('Theo '+SRC.civil+', người thừa kế chưa thành niên vẫn được giữ phần tối thiểu dù di chúc ưu tiên người khác.','neutral');q.inherit874={at:l.age,pool:pool,mine:me,favored:fav};return true;}
+
+// ===== 8. Diễn biến hằng năm =====
+function year(l,r,log){if(!l.alive)return;r=r||(H.rf?H.rf(l):Math.random);log=typeof log==='function'?log:function(){};
+ var q=family(l),k=q&&cap(l),st=l.flags.family874||(l.flags.family874={});
+ if(k&&!q.inherited){
+  // một người mất: phần cổ phần chuyển cho người còn lại theo di chúc trong game
+  ['f','m'].forEach(function(p){var o=p==='f'?'m':'f';if(!l.fam[p+'Alive']&&(k.parents[p]||0)>0&&l.fam[o+'Alive']){k.parents[o]=r2((k.parents[o]||0)+k.parents[p]);log(parentName(l,o)+' tiếp nhận '+pct(k.parents[p])+' cổ phần của '+parentName(l,p)+' tại '+q.name+'.','neutral');k.parents[p]=0;}
+   var c=famCompany(l),h=c&&(c.holders137||[]).find(function(x){return x.id==='parent:'+p;}),h2=c&&(c.holders137||[]).find(function(x){return x.id==='parent:'+o;});if(h&&!l.fam[p+'Alive']&&l.fam[o+'Alive']){if(h2)h2.share=r2(h2.share+h.share);else c.holders137.push({id:'parent:'+o,name:parentName(l,o),share:h.share,parent874:true});c.holders137=c.holders137.filter(function(x){return x!==h;});}});
+  if(!k.materialized&&st.econAt!==l.age){st.econAt=l.age;var profit=q.value*(.07+U.clamp(U.normal(r),-2.5,2.5)*.06);q.lastProfit874=r2(profit);if(profit>0){var div=profit*.4;q.value+=profit-div;if(k.self>0){var mine=div*k.self/100*.95;H.cash(l,mine,'Cổ tức '+q.name);st.divTotal=(st.divTotal||0)+mine;}}else q.value=Math.max(0,q.value+profit*.8);
+   if(k.listed)k.mult=r2(U.clamp(k.mult*Math.exp(.15*U.clamp(U.normal(r),-2.5,2.5)+(profit/Math.max(1,q.value)-.06)*2),.5,8));
+   // anh chị em có tham vọng cũng tự mua dần phần của cổ đông ngoài (cạnh tranh quyền kiểm soát)
+   (l.sibList||[]).filter(function(s){return s.alive!==false&&l.age-s.born>=25;}).forEach(function(s){var id=X.uid(l,s),o=k.others.find(function(x){return x.share>=1;});if(!o||r()>.06)return;var n=r2(Math.min(o.share,1+r()*2));o.share=r2(o.share-n);var x=k.kin[id]||(k.kin[id]={name:s.name||s.n,share:0});x.share=r2(x.share+n);log((s.name||s.n)+' mua thêm '+pct(n)+' '+q.name+' từ cổ đông bên ngoài, hiện giữ '+pct(x.share)+'.','neutral');});
+   k.others=k.others.filter(function(x){return x.share>1e-6;});
+   // bố mẹ tự đưa công ty lên sàn khi đủ điều kiện ở nơi đăng ký (cổ phần cũ bị pha loãng, có thêm cổ đông đại chúng)
+   var rl=rules(l,null);if(!k.listed&&rl.open&&q.value>=rl.minCap&&q.lastProfit874>0&&r()<.012){var f=.2,m=r2(1.4+r()*1.2);['f','m'].forEach(function(p){k.parents[p]=r2((k.parents[p]||0)*(1-f));});k.self=r2(k.self*(1-f));Object.keys(k.kin).forEach(function(id){k.kin[id].share=r2(k.kin[id].share*(1-f));});k.others.forEach(function(o){o.share=r2(o.share*(1-f));});k.others.push({id:'public',name:'Cổ đông đại chúng',share:r2(100-parentsTotal(k)-k.self-kinTotal(k)-othersTotal(k)),kind:'public'});k.listed=true;k.mult=m;k.exchange=rl.exchanges[0];k.listedAt=yr(l);q.value+=q.value*m*f/(1-f)*.97;log(q.name+' chào bán 20% cổ phiếu ra công chúng và niêm yết trên '+k.exchange+'. Bố mẹ còn '+pct(parentsTotal(k))+'; giá thị trường gấp '+m+' lần sổ sách.','big');}}
+  // thành tích → bố mẹ giao chức vụ và tặng cổ phần
+  var tr=trust(l),free=adult(l)===true&&!l.school&&!C.officer(l)&&!(E.BUSINESS133&&E.BUSINESS133.seated(l));
+  if(free&&!q.finished&&l.age<=35&&C.job(l)!==JOB&&C.job(l)!=='quan_ly_gia_dinh139'&&tr>=70&&(st.offerAt==null||l.age-st.offerAt>=3)&&r()<.35){st.offerAt=l.age;X.next(l,'familyRole874',r,{role:tr>=88?'deputy':tr>=78?'branch':'assistant'},{manual:false});}
+  if(C.job(l)===JOB&&l.job.post874&&l.job.post874.family){var pr=l.job.post874,j=pr.roles[0],nx=j==='assistant'?'branch':j==='branch'?'deputy':null;if(nx&&(l.job.yrs||0)>=2&&tr>=75&&st.promoAt!==l.age&&r()<.4){st.promoAt=l.age;pr.roles=[nx];l.job.rank=rankFor(pr.roles);log('Bố mẹ đánh giá cao kết quả công việc, giao bạn chức '+JUNIOR[nx].n+' tại '+q.name+'.','good');}}
+  if(!k.materialized&&l.age>=18&&tr>=80&&parentsTotal(k)>5&&(st.giftAt==null||l.age-st.giftAt>=4)&&r()<.3){st.giftAt=l.age;var g=r2(Math.min(parentsTotal(k)-5,3+Math.round(r()*7)));if(g>0){take(k,g);k.self=r2(k.self+g);k.trades.push({at:l.age,from:'parents',pct:g,kind:'gift'});log('Ghi nhận những thành tích của bạn, bố mẹ tặng '+pct(g)+' cổ phần '+q.name+'. Bạn đang giữ '+pct(k.self)+'.','good');if(k.self>50)takeover(l,r,log);}}
+ }
+ // công ty đã niêm yết: giá thị trường biến động, chi phí công bố thông tin
+ companies(l).forEach(function(c){var x=c.listed874;if(!x||x.at===yr(l))return;if(x.lastAt===l.age)return;x.lastAt=l.age;var roe=(c.lastProfit||0)/Math.max(1,c.value);x.mult=r2(U.clamp(x.mult*Math.exp(.16*U.clamp(U.normal(r),-2.5,2.5)+(roe-.06)*2),.4,9));x.history=(x.history||[]).concat([{y:yr(l),mult:x.mult}]).slice(-30);c.groupCost137=(c.groupCost137||0)+Math.max(l.base*.05,c.value*.0015);});}
+E.HOOKS.year.push(year);
+
+// Phiếu bầu công ty gia đình theo tỷ lệ sở hữu thật (trước đây bố mẹ chia đều 100%).
+function voters(l,q){var k=cap(l),c=famCompany(l),out=[];if(k&&k.materialized&&c){if(c.share>0)out.push({id:'self',name:l.name,share:c.share});(c.holders137||[]).forEach(function(h){if(h.share>0)out.push({id:h.id,name:h.name,share:h.share});});externals(c).forEach(function(o){out.push({id:'external:'+o.id,name:o.name,share:o.share});});return out;}
+ ['f','m'].forEach(function(p){var s=k.parents[p]||0;if(s>0&&l.fam[p+'Alive'])out.push({id:'parent:'+p,name:parentName(l,p),share:s});});if(k.self>0)out.push({id:'self',name:l.name,share:k.self});Object.keys(k.kin).forEach(function(id){if(k.kin[id].share>0)out.push({id:id,name:k.kin[id].name,share:k.kin[id].share});});k.others.forEach(function(o){out.push({id:'external:'+o.id,name:o.name,share:o.share});});return out;}
+// ===== 9. Menu =====
+function famWhy(l){var a=X.reason(l,16);if(a!==true)return a;var q=family(l);return q&&!q.inherited?true:'Gia đình chưa có doanh nghiệp, hoặc cổ phần đã được chia thừa kế';}
+X.menu('familyCapital874','Cổ phần công ty gia đình và thâu tóm',famWhy,function(l){var q=family(l),k=cap(l),c=famCompany(l),tr=trust(l),v=famValue(l),m=famMult(l);
+ var lines=[q.name+' · '+(k.listed||c&&c.listed874?'công ty niêm yết'+((c&&c.listed874||k).exchange?' trên '+(c&&c.listed874||k).exchange:''):'công ty chưa niêm yết')+' · giá trị sổ sách '+money(l,v)+(m!==1?' · thị trường định giá gấp '+m+' lần':'')];
+ if(k.materialized&&c){lines.push('Cổ đông: bạn '+pct(c.share)+'; '+(c.holders137||[]).map(function(h){return h.name+' '+pct(h.share);}).join('; ')+(externals(c).length?'; '+externals(c).map(function(o){return o.name+' '+pct(o.share);}).join('; '):''));}
+ else lines.push('Cổ đông: bố mẹ '+pct(parentsTotal(k))+' ('+parentName(l,'f')+' '+pct(k.parents.f||0)+', '+parentName(l,'m')+' '+pct(k.parents.m||0)+'); bạn '+pct(k.self)+(kinTotal(k)?'; anh chị em '+pct(kinTotal(k)):'')+(k.others.length?'; '+k.others.map(function(o){return o.name+' '+pct(o.share);}).join('; '):''));
+ lines.push('Bố mẹ tin tưởng bạn '+tr+'/100 (thành tích học tập, năng khiếu, giải thưởng, kinh nghiệm điều hành và quan hệ). Mức tin cao giúp được giao chức vụ sớm, được tặng hoặc chuyển nhượng cổ phần và được ưu tiên trong di chúc.');
+ lines.push('Quyền điều hành do biểu quyết theo tỷ lệ sở hữu. Trên 50% phiếu thì bạn tự quyết bầu Tổng giám đốc, Chủ tịch.');
+ if(k.listed||c&&c.listed874){var rl=rules(l,c);lines.push('Mua dần trên sàn tối đa 5%/năm. Vượt ngưỡng '+rl.tender.join('%, ')+'% phải chào mua công khai. Nguồn: '+rl.source+'. Mức xác minh: '+rl.level+'.');}
+ return lines.join('\n');},
+ function(l){var q=family(l),k=cap(l),c=famCompany(l),out=[];
+  if(k.materialized&&c){out.push({k:'company',l:'Mở hồ sơ cổ phần '+c.name+' · mua thêm, niêm yết',run:function(l,r){X.next(l,'companyMarket874',r,{cid:X.uid(l,c)});}});}
+  else{k.others.forEach(function(o){[1,5,10].forEach(function(p){if(p>o.share+1e-9)return;out.push({k:'buy:'+o.id+':'+p,l:'Mua '+p+'% từ '+o.name+' · ~'+money(l,buyPrice(l,q.value,k.listed?k.mult:1,p,k.listed?.02:.25)),why:adult(l)===true?k.listed&&p>5?'Trên sàn tối đa 5%/năm; dùng chào mua công khai':true:adult(l),run:function(l,r,log){virtualBuy(l,o,p,r,log,false);}});});
+    if(k.listed)out.push({k:'tender:'+o.id,l:'Đăng ký chào mua công khai tới '+Math.min(o.share,20)+'% từ '+o.name+' (giá cao hơn 15%)',why:adult(l),run:function(l,r,log){virtualBuy(l,o,r2(Math.min(o.share,20)),r,log,true);}});});
+   [5,10,25].forEach(function(p){if(p>parentsTotal(k))return;out.push({k:'pbuy'+p,l:'Đề nghị bố mẹ chuyển nhượng '+p+'% cho bạn',why:adult(l),run:function(l,r,log){askParents(l,'buy',p,r,log);}});});
+   out.push({k:'pgift',l:'Xin bố mẹ tặng một phần cổ phần',why:adult(l)===true?parentsTotal(k)>=5?true:'Bố mẹ còn quá ít cổ phần':adult(l),run:function(l,r,log){askParents(l,'gift',5,r,log);}});}
+  out.push({k:'role',l:'Xin bố mẹ giao một chức vụ trong công ty',why:adult(l)!==true?adult(l):l.school?'Cần thu xếp việc học trước':C.job(l)===JOB||C.job(l)==='quan_ly_gia_dinh139'?'Bạn đang giữ chức vụ':q.finished?'Đã bàn giao điều hành':true,run:function(l,r,log){var tr=trust(l);if(r()<U.clamp((tr-35)/55,.05,.95)){X.next(l,'familyRole874',r,{role:tr>=88?'deputy':tr>=78?'branch':'assistant'});}else log('Bố mẹ muốn thấy thêm thành tích trước khi giao chức vụ (tin tưởng '+tr+'/100).','neutral');}});
+  out.push({k:'early',l:'Đề nghị bố mẹ giao quyền điều hành sớm',why:adult(l)!==true?adult(l):q.finished?'Đã bàn giao điều hành':(l.job&&l.job.post874&&l.job.post874.family)||trust(l)>=85?true:'Cần đang giữ chức vụ trong công ty hoặc được tin tưởng từ 85/100',run:function(l,r,log){var st=l.flags.family874||(l.flags.family874={});if(st.earlyAt===l.age){log('Năm nay đã bàn chuyện này.','neutral');return;}st.earlyAt=l.age;var tr=trust(l);if(r()<U.clamp((tr-60)/40,.05,.9)){q.chosen={id:'self',name:l.name};var c=materialize(l,'bàn giao sớm');c.roles.ceo={kind:'self',since:l.age};q.finished=true;q.companyId=c.uid110||X.uid(l,c);l.job=null;E.startJob(l,'quan_ly_gia_dinh139',r,log,true);if(tr>=90)c.chair908={id:'self',name:l.name,since:l.age};log('Bố mẹ giao toàn quyền điều hành '+c.name+' cho bạn'+(tr>=90?', kiêm Chủ tịch hội đồng quản trị':'')+'. Cổ phần của bố mẹ giữ nguyên tới khi có quyết định khác. Lương khoảng '+money(l,execPay(l,post(l))/12)+'/tháng.','big');}else log('Bố mẹ muốn tiếp tục điều hành thêm một thời gian (tin tưởng '+tr+'/100).','neutral');}});
+  out.push({k:'governance',l:'Ứng cử và biểu quyết Tổng giám đốc, Chủ tịch',why:adult(l),run:function(l,r){X.next(l,'governance908',r);}});
+  return out;},16,'Doanh nghiệp & tập đoàn');
+X.menu('familyRole874','Bố mẹ đề nghị bạn nhận chức vụ',function(l){return adult(l)!==true?adult(l):family(l)?true:'Không còn doanh nghiệp gia đình';},function(l,d){var q=family(l),role=JUNIOR[d.arg.role]?d.arg.role:'assistant',x={q:q,roles:[role]};return 'Ghi nhận những thành tích của bạn, bố mẹ đề nghị bạn nhận chức '+JUNIOR[role].n+' tại '+q.name+'. Lương khoảng '+money(l,execPay(l,x)/12)+'/tháng. Nhận việc sẽ thôi công việc hiện tại; làm tốt có thể được đề bạt và giao quyền điều hành.';},function(l,a){var role=JUNIOR[a.role]?a.role:'assistant';return [{k:'accept',l:'Nhận chức '+JUNIOR[role].n,why:l.school?'Cần thu xếp việc học':C.officer(l)?'Cần rời vị trí công vụ':true,run:function(l,r,log){if(startPost(l,r,log,null,[role],true))log('Bạn nhận chức '+JUNIOR[role].n+' tại '+family(l).name+'.','big');}},{k:'decline',l:'Cảm ơn bố mẹ, tiếp tục con đường riêng',run:function(l,r,log){log('Bạn từ chối chức vụ. Quyền thừa kế không vì thế mà mất.','neutral');}}];},18);
+
+function companyText(l,c){var s=ipo(c),q=rules(l,c),x=c.listed874,ext=externals(c);return c.name+' · bạn giữ '+pct(c.share)+(c.holders137&&c.holders137.length?' · người thân: '+c.holders137.map(function(h){return h.name+' '+pct(h.share);}).join(', '):'')+(ext.length?' · cổ đông ngoài: '+ext.map(function(o){return o.name+' '+pct(o.share);}).join(', '):'')+
+ '\n'+(x?'Đang niêm yết trên '+x.exchange+' · giá thị trường gấp '+x.mult+' lần sổ sách · vốn hóa '+money(l,c.value*x.mult)+' · phần của bạn '+money(l,c.value*c.share/100*x.mult)+'. Công ty niêm yết chịu chi phí công bố thông tin hằng năm; giá có thể giảm khi lợi nhuận kém.':'Chưa niêm yết. Tiến trình: '+{none:'chưa bắt đầu',prep:'đang kiểm toán, chuẩn hóa sổ sách',filed:'đã nộp hồ sơ chào bán',approved:'đã được chấp thuận, chờ chọn tỷ lệ chào bán',rejected:'hồ sơ bị trả lại',listed:'đã niêm yết'}[s.stage]+'.')+
+ (q.open?'\nĐiều kiện tại nơi đăng ký: vốn chủ sở hữu từ '+money(l,q.minCap)+'; '+q.years+' năm liền trước có lãi'+(q.roe?'; ROE từ '+Math.round(q.roe*100)+'%':'')+'; chào bán tối thiểu '+Math.round(q.float*100)+'% cổ phiếu cho ít nhất '+q.investors+' nhà đầu tư không phải cổ đông lớn. Nguồn: '+q.source+'. Mức xác minh: '+q.level+'.':'\n'+q.why)+(talentLv(l)&&runs(l,c)?'\nThiên phú kinh doanh: lợi nhuận dương tăng khoảng '+Math.round((talentFactor(l,c)-1)*100)+'% khi bạn trực tiếp điều hành.':'');}
+X.menu('companyMarket874','Cổ phần, thâu tóm và niêm yết',adult,function(l,d){var c=byId(l,d.arg.cid);return c?companyText(l,c):'Công ty không còn hoạt động.';},function(l,a){var c=byId(l,a.cid);if(!c)return[];var s=ipo(c),out=[],listed=!!c.listed874;
+ externals(c).forEach(function(o){[1,5,10].forEach(function(p){if(p>o.share+1e-9)return;out.push({k:'buy:'+o.id+':'+p,l:'Mua '+p+'% từ '+o.name+' · ~'+money(l,buyPrice(l,c.value,listed?c.listed874.mult:1,p,listed?.02:.25)),why:listed&&p>5?'Trên sàn tối đa 5%/năm':true,run:function(l,r,log){buyExternal(l,c,o,p,r,log,false);}});});if(listed)out.push({k:'tender:'+o.id,l:'Chào mua công khai tới '+Math.min(o.share,25)+'% từ '+o.name,run:function(l,r,log){buyExternal(l,c,o,r2(Math.min(o.share,25)),r,log,true);}});});
+ if(listed){[1,5].forEach(function(p){out.push({k:'sell'+p,l:'Bán '+p+'% trên sàn · ~'+money(l,c.value*c.listed874.mult*p/100*.99),why:c.share>=p?(c.sell874===l.age?'Đã bán năm nay':true):'Không đủ cổ phiếu',run:function(l,r,log){if(c.sell874===l.age||c.share<p)return;c.sell874=l.age;var cash=c.value*c.listed874.mult*p/100*.99;c.share=r2(c.share-p);var o=(c.ext874||[]).find(function(x){return x.kind==='public';});if(o)o.share=r2(o.share+p);else c.ext874=(c.ext874||[]).concat([{id:'public',name:'Cổ đông đại chúng',share:p,kind:'public'}]);H.cash(l,cash,'Bán cổ phiếu '+c.name);log('Bán '+p+'% '+c.name+' trên '+c.listed874.exchange+', nhận '+money(l,cash)+'. Bạn còn '+pct(c.share)+(c.share<=50?'; không còn quá bán quyền biểu quyết.':'.'),c.share<=50?'bad':'money');}});});}
+ else{var bad=ipoProblems(l,c);
+  if(s.stage==='none'||s.stage==='rejected')out.push({k:'prep',l:'Chuẩn bị IPO: kiểm toán, chuyển đổi công ty cổ phần',h:'Phí ~'+money(l,Math.max(l.base*.3,c.value*.01))+' từ quỹ công ty',why:c.share>50?true:'Cần kiểm soát trên 50%',run:function(l,r,log){ipoStep(l,c,'prep',null,r,log);}});
+  if(s.stage==='prep')out.push({k:'file',l:'Nộp hồ sơ chào bán cổ phiếu lần đầu ra công chúng',why:l.age<s.due?'Cần hoàn tất kiểm toán (năm sau)':bad.length?bad[0]:true,run:function(l,r,log){ipoStep(l,c,'file',null,r,log);}});
+  if(s.stage==='filed')out.push({k:'review',l:'Nhận kết quả xét duyệt hồ sơ',why:l.age<s.due?'Chờ đến năm sau':true,run:function(l,r,log){ipoStep(l,c,'review',null,r,log);}});
+  if(s.stage==='approved')[.15,.2,.25,.3].forEach(function(f){var q=rules(l,c),minF=c.value>=q.big?q.floatBig:q.float;if(f<minF)return;out.push({k:'offer'+f,l:'Chào bán '+Math.round(f*100)+'% cổ phiếu ra công chúng và niêm yết',h:'Bạn bị pha loãng còn khoảng '+pct(c.share*(1-f)),run:function(l,r,log){ipoStep(l,c,'offer',f,r,log);}});});}
+ out.push({k:'governance',l:'Ứng cử và biểu quyết ban điều hành',run:function(l,r){X.next(l,'governanceCompany908',r,{cid:X.uid(l,c)});}});return out;},18);
+var rows=R.dealRows;R.dealRows=function(l,i){var out=rows.apply(this,arguments),c=B.companies(l)[i];if(c&&!c.merged)out.push({k:'market874',l:c.listed874?'Cổ phiếu niêm yết · mua, bán, chào mua công khai':'Thâu tóm cổ phần và đưa công ty lên sàn',run:function(l,r){C.queue(l,'companyMarket874',r,{cid:X.uid(l,c)});}});return out;};
+
+// Bàn giao theo luồng cũ: dùng lại hồ sơ đã lập và giữ cơ cấu sở hữu, không tạo bản sao công ty.
+var sApply=E.DEC.succession139&&E.DEC.succession139.apply;if(sApply)E.DEC.succession139.apply=function(l,d,k,r,log){var q=P.successor(l),before=q&&q.cap874&&q.cap874.materialized?q.cap874.companyId:null,out=sApply.apply(this,arguments);q=P.successor(l);if(!q||!q.cap874)return out;var cs=B.companies(l);
+ if(before&&q.companyId&&q.companyId!==before){var dup=cs.find(function(c){return c.uid110===q.companyId;}),orig=cs.find(function(c){return c.uid110===before||X.uid(l,c)===before;});if(dup&&orig&&dup!==orig){cs.splice(cs.indexOf(dup),1);orig.roles=Object.assign(orig.roles||{},dup.roles||{});q.companyId=orig.uid110||before;}}
+ else if(q.finished&&q.companyId&&!q.cap874.materialized)materialize(l,'bàn giao');return out;};
+// Chuyển vùng tiền tệ: chỉ các khoản tiền trong lịch sử giao dịch cần quy đổi (tỷ lệ % và hệ số định giá giữ nguyên).
+var convert=E.abroadConvert;E.abroadConvert=function(l,f){var out=convert.apply(this,arguments),q=l.flags&&P.successor(l),k=q&&q.cap874;if(k)(k.trades||[]).forEach(function(t){if(Number.isFinite(t.price))t.price*=f;});if(q&&Number.isFinite(q.lastProfit874))q.lastProfit874*=f;var s=l.flags&&l.flags.family874;if(s&&Number.isFinite(s.divTotal))s.divTotal*=f;return out;};
+
+E.BIZ874={JOB:JOB,DN:DN,tie:tie,voters:voters,SRC:SRC,talent:talent,talentFactor:talentFactor,cap:cap,materialize:materialize,famCompany:famCompany,virtualStake:virtualStake,listedPremium:listedPremium,merit:merit,trust:trust,post:post,execPay:execPay,startPost:startPost,elected:elected,rules:rules,ipoProblems:ipoProblems,ipoStep:ipoStep,tenderNeeded:tenderNeeded,buyExternal:buyExternal,virtualBuy:virtualBuy,askParents:askParents,weights:weights,inherit:inherit,year:year,externals:externals,parentsTotal:parentsTotal};
+})(globalThis.G);
