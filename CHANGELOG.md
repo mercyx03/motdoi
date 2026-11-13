@@ -1,3 +1,8 @@
+## 8.10.77 — Đối chiếu luật hôn nhân theo nước, tuổi kết hôn theo thời kỳ
+
+- Tuổi kết hôn theo nơi sống và năm ở Trung Quốc, Indonesia, Hàn Quốc, Nhật Bản, Thái Lan, Philippines, Singapore, Đức; 17 mục hồ sơ quốc gia chuyển sang nguồn văn bản chính thức (246/3705 mục có nguồn riêng).
+- Nguyên nhân qua đời theo số liệu từng nước (World Bank WDI/WHO GHE) cho nhân vật và người thân; điện lưới tại nhà theo nước, năm, vùng và nhóm thu nhập; gỡ chữ "mô phỏng" thừa trong giao diện; sửa số phiên bản hiển thị; rà soát với 1in8b.life (docs/REVIEW-1IN8B-874.md).
+
 ## 8.10.76 — Tây Ban Nha 1876, ly hôn Scotland/Bắc Ireland, bốn liên đoàn Anh
 
 - Nhiếp chính, giám hộ, mất khả năng và Cortes theo Hiến pháp 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; liên đoàn Anh/Scotland/Wales/Bắc Ireland; hồ sơ Johns Hopkins MD và Yale J.D.; mức xác minh hồ sơ quốc gia và công cụ đối chiếu. Gói Preview chờ xác nhận upload.

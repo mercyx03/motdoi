@@ -165,7 +165,7 @@
   function housingWhy(l) {
     if (!vn(l)) return 'Chính sách nhà ở xã hội của Việt Nam, cần đang sống tại Việt Nam';
     if (!l.indep || l.age < 18) return 'Cần tự lập'; if (l.ownHouse) return 'Đã có nhà thuộc sở hữu';
-    if (!l.urban) return 'Mô phỏng nguồn cung nhà ở xã hội tại đô thị';
+    if (!l.urban) return 'Nhà ở xã hội chỉ có ở đô thị';
     var m = monthlyVnd(l), cap = m.couple ? BAL.socialIncome.couple : BAL.socialIncome.single;
     if ((m.couple ? m.total : m.own) > cap) return 'Thu nhập ' + (m.couple ? 'hai vợ chồng' : '') + ' vượt ' + cap + ' triệu/tháng';
     return true;

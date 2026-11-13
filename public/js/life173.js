@@ -551,7 +551,7 @@
   // chưa đối chiếu riêng từng tên lễ, lộ trình học hay quy định; giao diện ghi rõ thay vì coi là đã kiểm chứng.
   var GENERAL874 = /(^|\.)(ilo\.org|unesco\.org|education-profiles\.org|worldbank\.org)$/;
   function verify874(row) { if (!row || !row.source) return 'none'; var u = DEPTH.sources[row.source], h = (String(u && (u.url || u)).match(/https?:\/\/([^/]+)/) || [])[1] || ''; return GENERAL874.test(h) ? 'general' : 'specific'; }
-  function vtag874(row) { var v = verify874(row); return v === 'general' ? ' · Nguồn tổng hợp quốc tế, chưa đối chiếu riêng mục này' : v === 'none' ? ' · Chưa có nguồn' : ''; }
+  function vtag874(row) { var v = verify874(row); if (row && row.verified874) return ' · Đã đối chiếu: ' + row.verified874.scope; return v === 'general' ? ' · Nguồn tổng hợp quốc tế, chưa đối chiếu riêng mục này' : v === 'none' ? ' · Chưa có nguồn' : ''; }
   E.VERIFY874 = { level: verify874, tag: vtag874 };
   Object.keys(DEPTH.profiles).forEach(function (cc) {
     if (!G.W.BY[cc] || !/^[A-Z]{2}$/.test(cc)) throw new Error('Invalid country depth code: ' + cc);

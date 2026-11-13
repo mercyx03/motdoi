@@ -211,7 +211,7 @@
     var tags = [E.QUINT[f.q].replace('một trong những ', '').replace('một ', '').replace('gia đình', 'Gia đình'), l.urban ? 'Thành thị' : 'Nông thôn'];
     if (l.flags.royal) tags.unshift(E.royalBirthLabel(l));
     if (l.eth) tags.push(l.eth); if (l.chosenOrient || l.orient !== 'straight') tags.push('LGBTQ+');
-    $('#heroProfile').innerHTML = '<div class="eyebrow">MỘT LƯỢT MÔ PHỎNG CÓ THỂ BẮT ĐẦU NHƯ SAU</div><h3>Hồ sơ xuất phát</h3>' +
+    $('#heroProfile').innerHTML = '<div class="eyebrow">MỘT CUỘC ĐỜI CÓ THỂ BẮT ĐẦU NHƯ SAU</div><h3>Hồ sơ xuất phát</h3>' +
       '<div class="idhead" style="margin:6px 0 10px">' + E.art.avatar(Object.assign({}, l, { age: 6, school: 'primary', job: null })) + '<div><b style="font-size:17px">' + esc(l.name) + '</b><div class="small muted">' + (l.sex === 'M' ? 'Bé trai' : 'Bé gái') + ' · ' + esc(where) + '</div></div></div>' +
       '<div class="prow"><span>Nơi sinh</span><span>' + esc(where) + '</span></div>' +
       '<div class="prow"><span>Gia đình</span><span>' + esc(U.cap(fam)) + '</span></div>' +

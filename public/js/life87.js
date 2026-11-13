@@ -6,7 +6,7 @@
   'use strict';
   var U = G.U, E = G.E, H = E.H;
   function vnLaw(l) { return H.isVN(l) && !(l.abroad && l.abroad.perm); }
-  function marryAge(l, sex) { return vnLaw(l) ? (sex === 'M' ? 20 : 18) : 18; }
+  function marryAge(l, sex) { if (vnLaw(l)) return sex === 'M' ? 20 : 18; var a874 = E.MARRY_AGE874 && E.MARRY_AGE874.age(l, sex); return a874 || 18; }
   function legalToMarry(l) { var p = l.partner; if (!p || p.alive === false) return false; return l.age >= marryAge(l, l.sex) && (p.age == null || p.age >= marryAge(l, p.sex)); }
   E.marryAge = marryAge; E.legalToMarry = legalToMarry;
   function gate(id) { var D = E.DEC[id]; if (!D) return; var v = D.valid; D.valid = function (l, d) { return legalToMarry(l) && (!v || v.apply(this, arguments)); }; }
@@ -20,7 +20,7 @@
     CB.apply = function (l, d, k, r, log) {
       if (k === 'cuoi' && l.partner && !legalToMarry(l)) {
         var p = l.partner, need = Math.max(marryAge(l, l.sex) - l.age, p.age != null ? marryAge(l, p.sex) - p.age : 0);
-        log((vnLaw(l) ? 'Theo Luật Hôn nhân và Gia đình, nam từ đủ 20, nữ từ đủ 18 tuổi mới được đăng ký kết hôn. ' : 'Chưa đủ tuổi kết hôn theo luật. ') + 'Hai gia đình cho hai bạn về ở cùng nhau, hẹn ' + need + ' năm nữa đủ tuổi sẽ làm đám cưới.', 'neutral');
+        log((vnLaw(l) ? 'Theo Luật Hôn nhân và Gia đình, nam từ đủ 20, nữ từ đủ 18 tuổi mới được đăng ký kết hôn. ' : ('Chưa đủ tuổi kết hôn theo luật' + (E.MARRY_AGE874 && E.MARRY_AGE874.at(l) ? ' (' + E.MARRY_AGE874.at(l).text + ')' : '') + '. ')) + 'Hai gia đình cho hai bạn về ở cùng nhau, hẹn ' + need + ' năm nữa đủ tuổi sẽ làm đám cưới.', 'neutral');
         l.flags.marryWhenLegal = p.name;
         return cbAp.call(this, l, d, 'cung_nuoi', r, log);
       }

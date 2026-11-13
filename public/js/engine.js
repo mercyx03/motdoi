@@ -1926,7 +1926,7 @@
       p.age++;
       if (p.status === 'dating' && a - p.since >= 1 && r() < 0.12) { var why = E.breakupWhy ? E.breakupWhy(life, p, r) : null; log('Chia tay ' + p.name + (why ? '. ' + why.t : '.'), 'bad'); H.mem(life, why && why.m ? why.m : 'Cuộc chia tay với ' + p.name + ' dưới cơn mưa.', 2); life.partner = null; life.exes++; st.hap -= 7; }
       else if (r() < qBase(p.sex === 'M' ? life.mortM : life.mortF, p.age)) {
-        log((partnerWord(life, p) === 'người bạn đời' ? 'Người bạn đời ' : U.cap(partnerWord(life, p)) + ' ') + p.name + ' qua đời ở tuổi ' + p.age + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(p.age, r)) + '.', 'bad');
+        log((partnerWord(life, p) === 'người bạn đời' ? 'Người bạn đời ' : U.cap(partnerWord(life, p)) + ' ') + p.name + ' qua đời ở tuổi ' + p.age + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(p.age, r, null, life, p.sex, E.resCode ? E.resCode(life) : life.country)) + '.', 'bad');
         H.mem(life, 'Ngày tiễn ' + p.name + ' về với đất — một nửa của bạn đã đi xa.', 6);
         life.partner = null; p.alive = false; p.died = a;
         if (p.status !== 'dating') life.widowed++; else life.flags.lateDating = p.name;
@@ -1963,8 +1963,8 @@
     // ---- Bố mẹ ----
     if (a >= 1) { if (!f.mCareer) parentYear(life, r, log, 'm'); if (!f.noDad && !f.fCareer) parentYear(life, r, log, 'f'); } // v7.3: bố / mẹ là nhân vật đời trước thì đi đúng con đường sự nghiệp đã sống
     var mCause = null;
-    if (f.mAlive && !(life.flags.heirKeep && life.flags.heirKeep.m != null && a <= life.flags.heirKeep.m) && r() < qBase(life.mortF, f.mAge + a)) { f.mAlive = false; mCause = H.deathCause(f.mAge + a, r); log('Mẹ qua đời ở tuổi ' + (f.mAge + a) + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(mCause) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày mẹ ra đi. Từ nay không còn ai gọi bạn về ăn cơm.', 7); }
-    if (f.fAlive && !(life.flags.heirKeep && life.flags.heirKeep.f != null && a <= life.flags.heirKeep.f) && r() < qBase(life.mortM, f.fAge + a) * (f.vice === 'alcohol' || f.vice === 'drugs' ? 1.8 : f.vice === 'gang' ? 1.5 : 1)) { f.fAlive = false; var fCause = H.deathCause(f.fAge + a, r, f.vice), tries = 0; while (mCause && fCause === mCause && !/tai nạn|tuổi già|thanh thản/.test(fCause) && tries++ < 8) fCause = H.deathCause(f.fAge + a, r, f.vice); // v3.0: bố mẹ mất cùng năm không trùng một bệnh
+    if (f.mAlive && !(life.flags.heirKeep && life.flags.heirKeep.m != null && a <= life.flags.heirKeep.m) && r() < qBase(life.mortF, f.mAge + a)) { f.mAlive = false; mCause = H.deathCause(f.mAge + a, r, null, life, 'F'); log('Mẹ qua đời ở tuổi ' + (f.mAge + a) + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(mCause) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày mẹ ra đi. Từ nay không còn ai gọi bạn về ăn cơm.', 7); }
+    if (f.fAlive && !(life.flags.heirKeep && life.flags.heirKeep.f != null && a <= life.flags.heirKeep.f) && r() < qBase(life.mortM, f.fAge + a) * (f.vice === 'alcohol' || f.vice === 'drugs' ? 1.8 : f.vice === 'gang' ? 1.5 : 1)) { f.fAlive = false; var fCause = H.deathCause(f.fAge + a, r, f.vice, life, 'M'), tries = 0; while (mCause && fCause === mCause && !/tai nạn|tuổi già|thanh thản/.test(fCause) && tries++ < 8) fCause = H.deathCause(f.fAge + a, r, f.vice, life, 'M'); // v3.0: bố mẹ mất cùng năm không trùng một bệnh
       log('Bố qua đời ở tuổi ' + (f.fAge + a) + (mCause && fCause === mCause && /tai nạn/.test(fCause) ? ' — cùng mẹ, trong một vụ ' + fCause : mCause && fCause === mCause ? ', cùng năm với mẹ, ' + (/thanh thản/.test(fCause) ? fCause : 'vì ' + fCause) : (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(fCause)) + '.', 'bad'); st.hap -= 14; H.mem(life, 'Ngày bố ra đi, bạn mới hiểu những lời bố nói năm xưa.', 7); }
     if (!f.mAlive && !f.fAlive) life.flags.caring = false;
 
@@ -2059,7 +2059,7 @@
     qx = Math.min(0.97, qx);
     if (a >= 115) qx = 1;
     if (r() < qx) {
-      var cause = deathCause(life, a, r);
+      var cause = E.LIFECOURSE874 ? E.LIFECOURSE874.forLife(life, a, r, deathCause) : deathCause(life, a, r);
       life.alive = false; life.pending = []; life.death = { age: a, cause: cause, year: life.birthYear + a, sudden: /tai nạn|đuối nước|bạo lực|nhồi máu|đột quỵ/.test(cause) && !life.ill };
       log('Qua đời vì ' + cause + ' ở tuổi ' + a + '.', 'death');
     }

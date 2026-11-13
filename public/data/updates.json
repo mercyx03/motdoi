@@ -2,6 +2,31 @@
   "generatedAt": "2026-11-12T02:16:38.147Z",
   "entries": [
     {
+      "id": "country-verified-81077",
+      "version": "8.10.77",
+      "publishedAt": "2026-11-13T13:31:00.000+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Đối chiếu luật hôn nhân theo nước, nguyên nhân qua đời và điện lưới theo số liệu quốc tế, gỡ chữ \"mô phỏng\"",
+      "summary": "Tuổi kết hôn ở 8 nước đổi theo nơi sống và năm; nguyên nhân qua đời của nhân vật và người thân theo từng nước (WHO/World Bank); nhà có điện lưới hay chưa theo nước, năm và vùng; gỡ chữ \"mô phỏng\" trong giao diện; sửa số phiên bản hiển thị.",
+      "tags": [
+        "Pháp luật",
+        "Hôn nhân",
+        "Quốc gia",
+        "Sức khỏe"
+      ],
+      "details": [
+        "Tuổi kết hôn theo nơi sống và năm: Trung Quốc nam 22, nữ 20 (từ 1981); Indonesia 19 cho cả hai từ 15/10/2019 (trước đó nữ 16); Hàn Quốc 18 cho cả hai từ 2008 (trước đó nữ 16); Nhật Bản 18 cho cả hai từ 1/4/2022; Thái Lan 18 từ 23/1/2025 (trước đó 17); Philippines, Singapore và Đức 18. Nhân vật chưa đủ tuổi sẽ chung sống và hẹn cưới khi đủ tuổi như ở Việt Nam.",
+        "Singapore: từ 21 tuổi tự đăng ký; 18–21 cần cha mẹ đồng ý; dưới 18 phải có Giấy phép Hôn nhân Đặc biệt.",
+        "Mục hồ sơ quốc gia đã đối chiếu hiển thị phạm vi văn bản (điều luật, ngày hiệu lực) thay cho nhãn \"nguồn tổng hợp\"; hiện 246/3705 mục có nguồn riêng.",
+        "Nguyên nhân qua đời của nhân vật, bố mẹ, anh chị em và bạn đời theo số liệu từng nước (World Bank WDI, gốc WHO Global Health Estimates): tỷ trọng bệnh truyền nhiễm, bệnh không lây và chấn thương; tai nạn giao thông, bạo lực, lao, sốt rét, HIV, tiêu chảy, ngộ độc theo tỷ lệ của nước đó. Biết bơi, rượu, ma túy, thuốc lá và bệnh đang mắc vẫn được tính. Nước chưa có số liệu giữ bảng cũ.",
+        "Điện lưới tại nhà theo nước, năm sinh, thành thị hay nông thôn và nhóm thu nhập gia đình. Nhà chưa có điện được kéo điện dần theo tốc độ phủ điện của nước đó; trẻ đi học học bài dưới đèn dầu, ngày có điện được ghi vào nhật ký và ký ức.",
+        "Gỡ chữ \"mô phỏng\" thừa trong các thông báo công vụ, bầu cử, hạn chế xuất cảnh, hoàng gia, Monaco, Tây Tạng và nhà ở xã hội; giữ lại ghi chú về kịch bản chính trị và giờ bay giả lập.",
+        "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi 8.10.56).",
+        "Đã đối chiếu với tài liệu API của 1in8b.life; đề xuất cải tiến tiếp theo nằm trong docs/REVIEW-1IN8B-874.md."
+      ]
+    },
+    {
       "id": "law-sport-81076",
       "version": "8.10.76",
       "publishedAt": "2026-11-13T11:11:29.000+07:00",

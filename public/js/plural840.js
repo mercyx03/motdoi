@@ -87,7 +87,7 @@
   }
   function note(l,s){
     var c=code(l),r=s.record;
-    if(!r||r.anchor!==id(l,l.partner))return 'Đối chiếu hình thức của hôn nhân hiện tại trước khi lập hồ sơ. '+(c==='NP'?'Hôn nhân hiện đại ở Nepal không mở đăng ký thêm. Tập quán lịch sử chỉ để tìm hiểu.':c==='CN'?'Ở Tây Tạng chỉ mô phỏng tập quán xã hội; không cấp thêm giấy hôn nhân dân sự.':c==='IN'?'Phụ thuộc luật nhân thân, bang và chứng cứ của cộng đồng.':'Tập quán của địa phương không mặc định áp dụng cho mọi gia đình.');
+    if(!r||r.anchor!==id(l,l.partner))return 'Đối chiếu hình thức của hôn nhân hiện tại trước khi lập hồ sơ. '+(c==='NP'?'Hôn nhân hiện đại ở Nepal không mở đăng ký thêm. Tập quán lịch sử chỉ để tìm hiểu.':c==='CN'?'Ở Tây Tạng đây chỉ là tập quán xã hội; không cấp thêm giấy hôn nhân dân sự.':c==='IN'?'Phụ thuộc luật nhân thân, bang và chứng cứ của cộng đồng.':'Tập quán của địa phương không mặc định áp dụng cho mọi gia đình.');
     return labels[r.form]+' · '+r.code+' · '+(review[c]||'Đối chiếu đăng ký, sự tự nguyện, tài sản và nghĩa vụ chu cấp')+'.'+(s.proposal?' Đang xét hồ sơ của '+s.proposal.person.name+'.':'');
   }
   X.menu('pluralUnion840','Hồ sơ kết hôn thêm và gia đình theo tập quán',reason,l=>note(l,state(l)),function(l){
@@ -103,7 +103,7 @@
     }
     if(s.record.form==='tribal'&&!s.record.proof&&choices(l).includes('tribal')&&s.record.code===c){
       rows.push({k:'proof',l:'Nộp chứng cứ về cộng đồng và quyết định công nhận tập quán',why:s.record.at>=l.age||s.record.reviewAt===l.age?'Chờ năm thẩm tra tiếp theo':true,run:function(l,r,log){
-        s.record.reviewAt=l.age;s.record.proof=r()<.55;log(s.record.proof?'Hồ sơ mô phỏng xác nhận quy tắc áp dụng cho riêng cộng đồng này.':'Chứng cứ chưa đủ; không thể đăng ký thêm.','neutral');
+        s.record.reviewAt=l.age;s.record.proof=r()<.55;log(s.record.proof?'Hồ sơ xác nhận quy tắc áp dụng cho riêng cộng đồng này.':'Chứng cứ chưa đủ; không thể đăng ký thêm.','neutral');
       }});return rows;
     }
     if(!localRule(l,s))return [{k:'info',l:'Xem kết luận hồ sơ',run:(l,r,log)=>log('Hình thức hôn nhân hoặc địa bàn hiện tại không mở đăng ký thêm.','neutral')}];

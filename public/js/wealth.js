@@ -472,7 +472,7 @@
       if (s.wed && s.kids < 3 && sa >= 24 && sa <= 42 && ch(r, 0.1)) { s.kids++; if (s.kids === 1 && a >= 6) log(U.cap(w) + ' sinh con đầu lòng — bạn lên chức ' + (s.born > 0 ? 'bác' : s.sex === 'M' ? (l.sex === 'M' ? 'chú' : 'cô') : (l.sex === 'M' ? 'cậu' : 'dì')) + '.', 'good'); }
       // anh chị em mất (tuổi già, bệnh tật, tai nạn hiếm)
       var q = sa < 40 ? 0.0012 : Math.min(0.5, 0.002 * Math.exp((sa - 50) * 0.085));
-      if (ch(r, q)) { s.alive = false; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r)) + '.', 'bad'); fx(l, { hap: s.close > 70 ? -14 : -8 }); H.mem(l, 'Ngày tiễn ' + w + ' — người cùng lớn lên dưới một mái nhà.', s.close > 70 ? 5 : 4); }
+      if (ch(r, q)) { s.alive = false; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r, null, l, s.sex)) + '.', 'bad'); fx(l, { hap: s.close > 70 ? -14 : -8 }); H.mem(l, 'Ngày tiễn ' + w + ' — người cùng lớn lên dưới một mái nhà.', s.close > 70 ? 5 : 4); }
       s.close = U.clamp(s.close + (ch(r, 0.5) ? -1 : 0), 10, 100);
     });
   }

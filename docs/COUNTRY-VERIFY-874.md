@@ -1,8 +1,8 @@
-# Đối chiếu hồ sơ quốc gia — mức xác minh từng mệnh đề (8.10.76)
+# Đối chiếu hồ sơ quốc gia — mức xác minh từng mệnh đề (8.10.77)
 
 Tạo bởi `node tools/audit-country-verify874.js`. Nguồn tổng hợp quốc tế (ILO, UNESCO, education-profiles.org, World Bank) chỉ xác nhận bối cảnh chung; mệnh đề dẫn tới các nguồn này cần thay bằng văn bản riêng của quốc gia (luật ngày lễ, luật hôn nhân, bộ luật lao động, cơ quan giáo dục) trước khi coi là đã đối chiếu. Trong game, các mục này được ghi “Nguồn tổng hợp quốc tế, chưa đối chiếu riêng mục này”.
 
-Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổng hợp 3476 · chưa có nguồn 0.
+Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 246 · nguồn tổng hợp 3459 · chưa có nguồn 0.
 
 | Mã | Quốc gia | Nguồn riêng | Nguồn tổng hợp | Trường cần đối chiếu |
 |---|---|---|---|---|
@@ -39,14 +39,12 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | CI | Bờ Biển Ngà | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CL | Chile | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CM | Cameroon | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| CN | Trung Quốc | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CO | Colombia | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CR | Costa Rica | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CU | Cuba | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CV | Cabo Verde | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CY | Síp | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | CZ | Séc | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| DE | Đức | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | DJ | Djibouti | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | DK | Đan Mạch | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | DO | Cộng hòa Dominica | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
@@ -71,7 +69,6 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | HR | Croatia | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | HT | Haiti | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | HU | Hungary | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| ID | Indonesia | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | IL | Israel | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | IN | Ấn Độ | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | IQ | Iraq | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
@@ -86,7 +83,6 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | KI | Kiribati | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | KM | Comoros | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | KP | Triều Tiên | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| KR | Hàn Quốc | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | KW | Kuwait | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | KZ | Kazakhstan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | LA | Lào | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
@@ -127,7 +123,6 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | PA | Panama | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | PE | Peru | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | PG | Papua New Guinea | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| PH | Philippines | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | PK | Pakistan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | PL | Ba Lan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | PS | Palestine | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
@@ -144,7 +139,6 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | SC | Seychelles | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | SD | Sudan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | SE | Thụy Điển | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| SG | Singapore | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | SI | Slovenia | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | SK | Slovakia | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | SL | Sierra Leone | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
@@ -159,7 +153,6 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | SZ | Eswatini | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | TD | Chad | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | TG | Togo | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
-| TH | Thái Lan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | TJ | Tajikistan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | TL | Đông Timor | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | TM | Turkmenistan | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
@@ -180,9 +173,16 @@ Tổng: 3705 mệnh đề ở 195 hồ sơ · nguồn riêng 229 · nguồn tổ
 | ZA | Nam Phi | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | ZM | Zambia | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
 | ZW | Zimbabwe | 0 | 19 | education 3, festivals 3, marriage 3, labor 5, lifeEvents 5 |
+| ID | Indonesia | 1 | 18 | education 3, festivals 3, marriage 2, labor 5, lifeEvents 5 |
 | CA | Canada | 2 | 17 | education 3, festivals 3, marriage 2, labor 4, lifeEvents 5 |
+| CN | Trung Quốc | 2 | 17 | education 3, festivals 3, marriage 1, labor 5, lifeEvents 5 |
+| DE | Đức | 2 | 17 | education 3, festivals 3, marriage 1, labor 5, lifeEvents 5 |
+| KR | Hàn Quốc | 2 | 17 | education 3, festivals 3, marriage 1, labor 5, lifeEvents 5 |
+| TH | Thái Lan | 2 | 17 | education 3, festivals 3, marriage 1, labor 5, lifeEvents 5 |
 | ES | Tây Ban Nha | 3 | 16 | education 3, festivals 3, marriage 3, labor 2, lifeEvents 5 |
 | GB | Vương quốc Anh | 3 | 16 | education 3, festivals 3, marriage 2, labor 3, lifeEvents 5 |
+| PH | Philippines | 3 | 16 | education 3, festivals 3, labor 5, lifeEvents 5 |
+| SG | Singapore | 5 | 14 | education 3, marriage 1, labor 5, lifeEvents 5 |
 | AD | Andorra | 6 | 13 | education 3, festivals 3, marriage 3, lifeEvents 4 |
 | BT | Bhutan | 6 | 13 | education 3, festivals 3, marriage 3, lifeEvents 4 |
 | DM | Dominica | 6 | 13 | education 3, festivals 3, marriage 3, lifeEvents 4 |
