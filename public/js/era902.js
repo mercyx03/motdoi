@@ -32,7 +32,7 @@
     ['stream', /livestream|\bstreamer\b|\btwitch\b/i, 2011, 'Twitch 2011'],
     ['dating_app', /tinder|ứng dụng hẹn hò|app hẹn hò/i, 2009, 'Grindr 2009, Tinder 2012'],
     ['ridehail', /\bgrab\b|\buber\b|tài xế công nghệ|xe ôm công nghệ/i, 2009, 'Uber 2009'],
-    ['ewallet', /ví điện tử|\bmomo\b|zalopay|thanh toán qr|quét mã qr/i, 2011, 'ví điện tử/QR thanh toán đại chúng từ khoảng 2011'],
+    ['ewallet', /ví điện tử|\bmomo\b|zalopay|thanh toán qr|quét mã qr/i, 2012, 'ví MoMo được cấp phép 11/2012 (M_Service lập 2007 làm dịch vụ nạp tiền điện thoại); ví điện tử đại chúng từ khoảng 2012'],
     ['crypto', /tiền mã hóa|bitcoin|\bcrypto\b|\bnft\b/i, 2009, 'Bitcoin 2009'],
     ['ai', /ChatGPT|chatgpt|trí tuệ nhân tạo|\bAI\b|deepfake/, 2016, 'AI đại chúng từ khoảng 2016; ChatGPT 2022'],
     ['covid', /covid|giãn cách xã hội/i, 2020, 'COVID-19 đại dịch 2020'],
@@ -72,7 +72,7 @@
     ['atvncg', /anh trai vượt ngàn chông gai|anh trai ["“]?say hi/i, 2024, 'chương trình truyền hình thực tế phát sóng lần đầu năm 2024']
   ].map(function (t) { return { id: t[0], re: t[1], from: t[2], basis: t[3], ad: ADOPT[t[0]] || null }; });
   // Nghề không nhận ra được qua tên (năm đầu tiên nghề có thể tồn tại): tài xế công nghệ 2009 (Uber), quán net 1991, lập trình viên 1950, v.v.
-  var JOB_FROM = { tx_cn: 2009, quan_net: 1991, kd_online: 1995, dev: 1950, data: 1960, fl_dev: 1960, fl_video: 1975, tuyen_thu_es: 1997, coach_es: 1997, caster_es: 1997, dau_tu_es: 1997, cay_thue: 2009, lua_dao: 1995, tiep_vien: 1930, kskl: 1930, phi_cong: 1914, ky_su_vu_tru: 1957, nc_y_sinh: 1940, telesale: 1960, tiem_dt: 1985, rapper: 1973, dj: 1935 };
+  var JOB_FROM = { tx_cn: 2009, quan_net: 1994, kd_online: 1995, dev: 1950, data: 1960, fl_dev: 1960, fl_video: 1975, tuyen_thu_es: 1997, coach_es: 1997, caster_es: 1997, dau_tu_es: 1997, cay_thue: 2009, lua_dao: 1995, tiep_vien: 1930, kskl: 1930, phi_cong: 1914, ky_su_vu_tru: 1957, nc_y_sinh: 1940, telesale: 1960, tiem_dt: 1985, rapper: 1973, dj: 1935 };
   var MAXFROM = Object.keys(JOB_FROM).reduce(function (m, k) { return Math.max(m, JOB_FROM[k]); }, TECH.reduce(function (m, t) { return Math.max(m, t.from); }, 0)), NONE = [], cache = {}, stats = { text: 0, scene: 0, opts: 0, job: 0, act: 0 };
   function worldYear(l) { return l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; }
   function localAt(l, y) { var cc = (l && l.abroad && l.abroad.perm && l.abroad.code) || (l && l.country); return cc && E.ERA920 && y >= E.ERA920.FROM && y <= E.ERA920.TO ? E.ERA920.at(cc, y) : null; }

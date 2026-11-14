@@ -41,7 +41,7 @@ Module: `public/js/data-era920.js` (dữ liệu, sinh tự động), `public/js/
 ## Tên nước, tình trạng chính trị, tên thành phố (`era920-pol.js`)
 - 148 nước có ít nhất một giai đoạn bối cảnh (thuộc địa đến năm độc lập, Liên Xô, Tiệp Khắc, Nam Tư, Đức chia đôi, Việt Nam chia hai miền, apartheid, chiến tranh và độc tài lớn…); 18 tên nước theo năm (Miến Điện, Zaire, Ceylon…); 19 tên thành phố đổi theo năm (Sài Gòn trước 2/7/1976, Bombay, Leningrad…).
 - Hiện ở màn thiết lập, dòng nhật ký đầu đời và mỗi khi tình trạng đổi trong đời; tên thành phố cũ thay vào nhật ký, văn bản cảnh và vị trí.
-- **Chưa kiểm chứng từng dòng với nguồn gốc** trong phiên làm việc này: đây là các mốc công khai (Liên Hợp Quốc, bách khoa); cần đối chiếu trước khi dùng làm khẳng định lịch sử.
+- **Đã đối chiếu ngày 15/11/2026 với bách khoa trực tuyến (nguồn thứ cấp, chưa đọc văn bản gốc)**: 83 năm độc lập và 118 khẳng định chế độ/tên gọi, xem `docs/ERA-DOI-CHIEU-NGUON-940.md`; đây là các mốc công khai (Liên Hợp Quốc, bách khoa); cần đối chiếu trước khi dùng làm khẳng định lịch sử.
 
 ## Hiệu chỉnh và kết quả đo
 - Mô phỏng 100 đời mỗi ca (mầm cố định), so tuổi thọ thế hệ của engine với tuổi thọ thế hệ dựng từ đường tử vong theo năm (không gồm bệnh/tai nạn):

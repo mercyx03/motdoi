@@ -21,7 +21,7 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
 {
   ok(HI && HI.EP.length >= 16, 'có ít nhất 16 biến cố (' + HI.EP.length + ')');
   ok(new Set(HI.EP.map(e => e.id)).size === HI.EP.length, 'mã biến cố không trùng');
-  ok(HI.EP.every(e => e.title && e.from >= 1950 && e.to >= e.from && e.to <= 2023 && e.ver === 'public' && typeof e.who === 'function' && typeof e.run === 'function'), 'mỗi biến cố có tiêu đề, khoảng năm trong 1950–2023, mức kiểm chứng và hàm phạm vi');
+  ok(HI.EP.every(e => e.title && e.from >= 1950 && e.to >= e.from && e.to <= 2023 && e.ver === 'secondary' && typeof e.who === 'function' && typeof e.run === 'function'), 'mỗi biến cố có tiêu đề, khoảng năm trong 1950–2023, mức kiểm chứng và hàm phạm vi');
   ok(E.DEC.hist920_choice && E.DEC.hist920_choice.def.opts.length === 3, 'có cảnh lựa chọn chung');
   const withAsk = HI.EP.filter(e => e.ask); ok(withAsk.length >= 5 && withAsk.every(e => typeof e.choose === 'function'), 'biến cố có lựa chọn đều có hàm xử lý');
 }

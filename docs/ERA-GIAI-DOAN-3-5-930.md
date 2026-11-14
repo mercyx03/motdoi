@@ -36,7 +36,7 @@ Module: `public/js/hist920.js` (biến cố), `public/js/era920-pol.js` (bối c
 - Các tham số này được chọn để biến cố có hậu quả đáng kể trong mô phỏng; chưa được hiệu chỉnh với số liệu thương vong hay kinh tế cụ thể của từng nước và chưa so với ước tính đã công bố. Không dùng để suy ra số liệu lịch sử.
 
 ## Mức kiểm chứng
-- Ngày tháng và sự kiện là kiến thức công khai (bách khoa, Liên Hợp Quốc, tài liệu nghiên cứu về chiến tranh Đông Dương, Hiệp định Genève, cải cách ruộng đất và sửa sai 1956, 30/4/1975, chế độ Khmer Đỏ, chuyển đổi kinh tế Đông Âu, chiến tranh Nam Tư, khủng hoảng 1997 và 2008, sóng thần 26/12/2004, COVID-19). **Chưa đọc lại từng nguồn trong phiên làm việc này** (mức `ver: public`): cần đối chiếu trước khi dùng làm khẳng định lịch sử cho người chơi.
+- Ngày tháng và sự kiện là kiến thức công khai (bách khoa, Liên Hợp Quốc, tài liệu nghiên cứu về chiến tranh Đông Dương, Hiệp định Genève, cải cách ruộng đất và sửa sai 1956, 30/4/1975, chế độ Khmer Đỏ, chuyển đổi kinh tế Đông Âu, chiến tranh Nam Tư, khủng hoảng 1997 và 2008, sóng thần 26/12/2004, COVID-19). **Đã đối chiếu ngày 15/11/2026 với bách khoa trực tuyến và kết quả tìm kiếm web (mức `ver: secondary`)**, chưa đọc văn bản gốc hay nghiên cứu học thuật; kết quả và các chỗ nguồn còn khác nhau ở `docs/ERA-DOI-CHIEU-NGUON-940.md`.
 - Các câu trong game giữ cách nói trung tính, không số liệu thương vong cụ thể ngoài vài mốc rất quen thuộc (ngày 17/4/1975, 26/12/2004, tháng/năm).
 
 ## Giới hạn / chưa làm

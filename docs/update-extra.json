@@ -1,5 +1,24 @@
 [
   {
+    "id": "era-verify-93100",
+    "version": "9.3.1",
+    "publishedAt": "2026-11-15T05:24:58+07:00",
+    "releaseStatus": "packaged",
+    "title": "Đối chiếu nguồn cho bối cảnh lịch sử và sửa các mốc sai",
+    "summary": "Các mốc độc lập, chế độ, chiến tranh và biến cố đã được đối chiếu với bách khoa trực tuyến; vài chỗ sai đã được sửa.",
+    "tags": [
+      "Thời đại",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Đã đối chiếu 83 năm độc lập, 118 khẳng định về chế độ, chiến tranh, tên nước và tên thành phố, cùng các biến cố lịch sử với bách khoa trực tuyến và kết quả tìm kiếm; phần lớn khớp. Đây vẫn là nguồn thứ cấp, chưa phải văn bản gốc.",
+      "Sửa: quần đảo Ellice đổi tên thành Tuvalu từ 1975 chứ không phải 1978; quán internet đầy đủ chỉ có từ 1994; ví MoMo từ 2012; một lỗi đánh máy ở dòng bối cảnh đảo Síp 1974.",
+      "Các con số như số người bị giam sau 1975, số người di cư năm 1954 hay số thuyền nhân khác nhau nhiều giữa các nguồn nên game không nêu số; tỷ lệ vượt biên thành công hay thất bại chỉ là tham số trò chơi.",
+      "Bảng đối chiếu đầy đủ, kèm nơi nguồn còn khác nhau, nằm trong tài liệu của dự án. Đời sinh năm nay không đổi."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "era-events-93000",
     "version": "9.3.0",
     "publishedAt": "2026-11-15T00:58:53+07:00",

@@ -1,3 +1,12 @@
+## 9.3.1 — Đối chiếu nguồn cho bối cảnh lịch sử
+
+- Đối chiếu ngày 15/11/2026 với bách khoa trực tuyến (bản wikitext) và kết quả tìm kiếm web: 83 năm độc lập (khớp bảng "List of national independence days", 5 nước có ghi chú), 118 khẳng định chế độ/chiến tranh/tên nước/tên thành phố trong `era920-pol.js` (116 khớp tự động, 2 lệch do tên bài và định dạng ngày, đã xác nhận bằng mắt), 54 khẳng định về 17 biến cố và 14 mốc công nghệ (47 khớp tự động, 7 lệch do tên bài hoặc định dạng, đã xác nhận bằng tìm kiếm web). Nguồn là thứ cấp, chưa đọc văn bản gốc.
+- Sửa: `NAMES` quần đảo Ellice → Tuvalu đổi tên 1975 (trước ghi 1977); lỗi đánh máy "đảo đảo chính" ở Síp 1974; `quan_net` 1991 → 1994; mốc ví điện tử 2011 → 2012 (ví MoMo cấp phép 11/2012).
+- Mức kiểm chứng của 17 biến cố: `ver: public` → `ver: secondary`; cập nhật mô tả trong `hist920.js`, `era920-pol.js` và tài liệu giai đoạn 2, 3–5.
+- Các số liệu còn khác nhau giữa nguồn (trại cải tạo, di cư 1954, thuyền nhân, sơ tán học sinh) được ghi trong tài liệu; game không nêu số. Phân bổ nước định cư của thuyền nhân và các tỷ lệ rủi ro chưa có nguồn đối chiếu (tham số).
+- Chưa đối chiếu: 40 mốc công nghệ còn lại của giai đoạn 1; từng dòng bối cảnh của 148 nước (mới kiểm 118 khẳng định đại diện).
+- Tài liệu: `docs/ERA-DOI-CHIEU-NGUON-940.md`.
+
 ## 9.3.0 — Biến cố lịch sử có hậu quả nhiều năm (giai đoạn 3–5)
 
 - `public/js/hist920.js` (mới): 17 biến cố lịch sử theo nước, năm, vùng, tuổi, giới, nghề và gia đình. Việt Nam: chiến tranh Đông Dương 1950–1953, Genève 1954 (ở lại hay di cư), cải cách ruộng đất và sửa sai 1956, chiến tranh miền Nam (lệnh nhập ngũ, giao tranh, Tết Mậu Thân ở Huế), chiến tranh miền Bắc (sơ tán, không kích), sau 30/4/1975 (học tập cải tạo, kinh tế mới, vượt biên), làn sóng người Hoa 1978–1979, bao cấp và đổi tiền 1978/1985, chiến tranh Campuchia. Thế giới: Khmer Đỏ 1975–1979, cú sốc dầu mỏ, chuyển đổi kinh tế Liên Xô cũ và Đông Âu (lạm phát phi mã, mất việc), chiến tranh Nam Tư, khủng hoảng châu Á 1997, khủng hoảng 2008 và nợ châu Âu, sóng thần 2004, COVID-19.

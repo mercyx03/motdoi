@@ -6,7 +6,7 @@
    · Lựa chọn quan trọng (nhập ngũ hay hoãn, ở lại hay đi, vượt biên) là cảnh E.SC 'hist920_choice'; lựa chọn được ghi vào l.flags.hist920 và ảnh hưởng các biến cố sau (phía nào của Việt Nam, đã nhập ngũ, đã tị nạn).
    · Quyết định ngẫu nhiên băm theo mã đời + năm + nhãn (tải lại bản lưu không đổi kết quả, không phụ thuộc số lần rút ngẫu nhiên nơi khác). Chỉ áp cho đời có số liệu theo năm (E.ERA920) và năm thế giới đến 2023.
    · KHÔNG gán tính cách tốt/xấu theo giàu nghèo, tôn giáo hay dân tộc. Dân tộc, nghề cha mẹ, tầng lớp gia đình chỉ xuất hiện khi chính biến cố lịch sử có tiêu chí đó (ghi rõ trong mô tả biến cố); mọi xác suất là tham số trò chơi, không phải thống kê.
-   · Mức kiểm chứng: sự kiện và ngày tháng là kiến thức công khai (bách khoa, Liên Hợp Quốc, tài liệu nghiên cứu), CHƯA đối chiếu từng dòng với nguồn gốc trong phiên làm việc này (ver: 'public'); xem docs/ERA-GIAI-DOAN-3-5-930.md. */
+   · Mức kiểm chứng (ver: 'secondary'): ngày tháng và sự kiện đã đối chiếu ngày 15/11/2026 với bách khoa trực tuyến và kết quả tìm kiếm web (nguồn THỨ CẤP); CHƯA đọc văn bản gốc hay nghiên cứu học thuật. Số liệu thương vong và tỷ lệ là tham số trò chơi. Xem docs/ERA-DOI-CHIEU-NGUON-940.md. */
 (function (G) {
   'use strict';
   var E = G.E, H = E && E.H, U = G.U, W = G.W, X = E && E.ERA920; if (!X || !E.SC || !E.UPDATE110) return;
@@ -101,7 +101,7 @@
   var WARTRAUMA = 0.35;
 
   // ======================= VIỆT NAM =======================
-  add({ id: 'vn_indochina', title: 'Chiến tranh Đông Dương lần thứ nhất', from: 1950, to: 1953, ver: 'public',
+  add({ id: 'vn_indochina', title: 'Chiến tranh Đông Dương lần thứ nhất', from: 1950, to: 1953, ver: 'secondary',
     who: function (l) { return inVN(l) ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var w = (c.male && c.age >= 17 && c.age <= 38 ? 0.3 : 0.1) * (c.urban ? 0.7 : 1.15); if (u(l, 'ind:' + y) >= w) return;
@@ -109,7 +109,7 @@
       else { H.fx(l, { hea: -2, hap: -4, money: -0.2 }); log('Chiến sự lan tới vùng bạn sống; gia đình phải chạy khỏi làng một thời gian, nhà cửa và vụ mùa bị tổn hại.', 'bad'); open(l, 'displaced', 1); if (u(l, 'indt:' + y) < 0.5) open(l, 'trauma', 1); }
       H.mem(l, 'Những năm chiến tranh với Pháp, gia đình phải rời làng chạy loạn.', 3);
     } });
-  add({ id: 'vn_geneva', title: 'Hiệp định Genève 1954: chia cắt và di cư', from: 1954, to: 1955, ver: 'public',
+  add({ id: 'vn_geneva', title: 'Hiệp định Genève 1954: chia cắt và di cư', from: 1954, to: 1955, ver: 'secondary',
     who: function (l) { return inVN(l) && !st(l).did.vn_geneva ? 1 : 0; },
     ask: function (l) { var n = vnSide(l) === 'north'; return 'Hiệp định Genève (7/1954) chia Việt Nam tại vĩ tuyến 17. ' + (n ? 'Trong 300 ngày, người dân miền Bắc được phép tự do đi lại để chuyển vào miền Nam.' : 'Lực lượng và cán bộ Việt Minh ở miền Nam được tập kết ra Bắc, một số gia đình đi cùng.') + ' Gia đình bạn phải quyết định ở lại hay rời đi, và đã đi thì khó trở về.'; },
     run: function (l, y, r, log, c) {
@@ -127,7 +127,7 @@
     H.fx(l, { soc: -8, hap: -3, money: -0.3 }); open(l, 'displaced', 2); log((family ? 'Gia đình bạn quyết định ra đi: ' : 'Bạn quyết định ra đi: ') + 'bỏ lại nhà cửa, lên đường ' + (to === 'south' ? 'vào miền Nam' : 'ra miền Bắc') + ' và bắt đầu lại ở một nơi lạ.', 'big');
     H.mem(l, 'Năm 1954, cả nhà dắt díu nhau rời quê, không biết bao giờ mới được trở về.', 5);
   }
-  add({ id: 'vn_land_reform', title: 'Cải cách ruộng đất ở miền Bắc', from: 1953, to: 1956, ver: 'public',
+  add({ id: 'vn_land_reform', title: 'Cải cách ruộng đất ở miền Bắc', from: 1953, to: 1956, ver: 'secondary',
     who: function (l) { return inVN(l) && vnSide(l) === 'north' && !l.urban ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l); if (s.landHit || y > 1955) return; var p = [0, 0.04, 0.07, 0.14, 0.3, 0.45][c.q] * (y === 1954 ? 0.7 : 1); if (u(l, 'lr:' + y) >= p) return;
@@ -156,7 +156,7 @@
   function draftMark(s, y) { if (s.draftAsked) s.asked2 = y; else s.draftAsked = y; }
   var DRAFT_REQ = function (l, k) { return k !== 'b' || !!l.school; };
   var DRAFT_AI = function (l, k) { var t = l.tr || {}; return k === 'a' ? 1.2 : k === 'b' ? 2 : 0.25 * Math.exp(-((t.moral || 60) - 45) / 30) * Math.exp(((t.risk || 50) - 50) / 40); };
-  add({ id: 'vn_war_south', title: 'Chiến tranh ở miền Nam', from: 1960, to: 1975, ver: 'public',
+  add({ id: 'vn_war_south', title: 'Chiến tranh ở miền Nam', from: 1960, to: 1975, ver: 'secondary',
     who: function (l) { return inVN(l) && vnSide(l) !== 'north' ? 1 : 0; },
     ask: function () { return 'Lệnh động viên gọi thanh niên vào quân đội. Chiến sự ngày một lan rộng quanh vùng bạn sống.'; }, req: DRAFT_REQ, ai: DRAFT_AI,
     choose: function (l, k, r, log, d) { draftChoice(l, r, log, 'south', k); },
@@ -171,7 +171,7 @@
       else if (x < 0.14 && loseParent(l, log, 'mất vì chiến tranh.')) { open(l, 'hardship', 2); }
       else { H.fx(l, { hap: -5, money: -0.35, soc: -2 }); open(l, 'displaced', 1); if (!c.urban && u(l, 'wsm:' + y) < 0.6) { relocate(l, 'TP. Hồ Chí Minh'); log('Làng bạn nằm giữa vùng giao tranh; cả nhà bỏ ruộng vườn chạy lên thành phố, sống nhờ họ hàng và làm đủ thứ nghề.', 'bad'); } else log('Chiến sự khiến nhà cửa và mùa màng bị thiệt hại; gia đình phải di tản tạm.', 'bad'); }
     } });
-  add({ id: 'vn_war_north', title: 'Chiến tranh ở miền Bắc: không kích và sơ tán', from: 1965, to: 1973, ver: 'public',
+  add({ id: 'vn_war_north', title: 'Chiến tranh ở miền Bắc: không kích và sơ tán', from: 1965, to: 1973, ver: 'secondary',
     who: function (l) { return inVN(l) && vnSide(l) === 'north' ? 1 : 0; },
     ask: function () { return 'Lệnh gọi thanh niên nhập ngũ để vào chiến trường miền Nam trong khi máy bay Mỹ đánh phá miền Bắc.'; }, req: DRAFT_REQ, ai: DRAFT_AI,
     choose: function (l, k, r, log, d) { draftChoice(l, r, log, 'north', k); },
@@ -183,7 +183,7 @@
       if (near && c.age < 15 && !s['evac' + y] && (y === 1965 || y === 1966 || y === 1967 || y === 1972)) { s['evac' + y] = 1; H.fx(l, { soc: -3, hap: -3 }); l.st.kno -= 1; log('Máy bay Mỹ đánh phá Hà Nội và Hải Phòng; trường học sơ tán về nông thôn, bạn xa bố mẹ nhiều tháng và học trong lớp học che hầm.', 'bad'); H.mem(l, 'Những tháng sơ tán về quê giữa tiếng còi báo động.', 3); return; }
       if (u(l, 'wn:' + y) < (near ? 0.12 : 0.05)) { if (u(l, 'wnx:' + y) < 0.15) { injure(l, log, 'Bạn bị thương trong một đợt không kích.', false); } else { H.fx(l, { hap: -4, money: -0.25 }); log('Một đợt ném bom làm hỏng nhà và tài sản của gia đình bạn.', 'bad'); open(l, 'hardship', 1); } }
     } });
-  add({ id: 'vn_1975', title: 'Sau 30/4/1975: chuyển giao, học tập cải tạo, kinh tế mới, vượt biên', from: 1975, to: 1979, ver: 'public',
+  add({ id: 'vn_1975', title: 'Sau 30/4/1975: chuyển giao, học tập cải tạo, kinh tế mới, vượt biên', from: 1975, to: 1979, ver: 'secondary',
     who: function (l) { return inVN(l) ? 1 : 0; },
     ask: function (l) { return 'Cuộc sống sau 30/4/1975 đảo lộn: ' + (st(l).camp ? 'gia đình có người phải đi học tập cải tạo, ' : '') + 'thu nhập sụt, nhà cửa và giấy tờ phải làm lại. Bạn nghe nói về vùng kinh tế mới và về những chuyến vượt biên bằng thuyền nhỏ.'; },
     req: function (l, k) { return k !== 'c' || (l.age >= 14 && l.money > l.base * 0.3); },
@@ -204,7 +204,7 @@
       if (y === 1975 && ok && !s.camp && mil && u(l, 'camp') < 0.4) { s.camp = y; if (c.age >= 18) { if (!jobLoss(l, log, 'Sau 30/4/1975 bạn phải trình diện học tập cải tạo và bị thôi việc cũ.')) log('Sau 30/4/1975 bạn phải trình diện học tập cải tạo; khi trở về, nguồn sống cũ không còn.', 'bad'); H.fx(l, { hap: -8, soc: -6, money: -0.3 }); } else { H.fx(l, { hap: -6, soc: -3 }); log('Sau 30/4/1975, bố hoặc mẹ bạn phải đi học tập cải tạo ở xa; cả nhà sống nhờ khoản dành dụm ít ỏi và sự giúp đỡ của họ hàng.', 'bad'); } open(l, 'hardship', 2); open(l, 'classLabel', 1); H.mem(l, 'Sau 30/4/1975, người lớn trong nhà phải đi học tập cải tạo, cả nhà thiếu thốn.', 5); return; }
       if (y >= 1976 && ok && !s.did.vn_1975 && c.age >= 14 && (s.camp || u(l, 'kt:' + y) < (c.urban ? 0.22 : 0.06))) { s.did.vn_1975 = 'pending'; ask(l, r, 'vn_1975', { a: { l: 'Ở lại, tìm sống bằng nghề phụ', h: 'Tiết kiệm, bán dần đồ đạc' }, b: { l: 'Đi vùng kinh tế mới', h: 'Được cấp đất khai hoang, điều kiện khắc nghiệt' }, c: { l: 'Tìm đường vượt biên', h: 'Rủi ro rất lớn, đi là khó quay về' } }); }
     } });
-  add({ id: 'vn_exodus_hoa', title: 'Làn sóng rời đi 1978–1979', from: 1978, to: 1979, ver: 'public',
+  add({ id: 'vn_exodus_hoa', title: 'Làn sóng rời đi 1978–1979', from: 1978, to: 1979, ver: 'secondary',
     who: function (l) { return inVN(l) && l.eth === 'Hoa' && l.age >= 5 ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l); if (s.exodus || u(l, 'hoa:' + y) >= 0.5) return; s.exodus = y;
@@ -213,7 +213,7 @@
       else log('Trong làn sóng người Hoa rời Việt Nam năm 1978–1979, nhiều gia đình quanh bạn ra đi; gia đình bạn ở lại nhưng bị thiệt hại về làm ăn và các mối quan hệ.', 'bad');
       H.mem(l, 'Những năm 1978–1979, láng giềng và họ hàng người Hoa lần lượt ra đi.', 4);
     } });
-  add({ id: 'vn_subsidy', title: 'Thời bao cấp và những lần đổi tiền', from: 1976, to: 1988, ver: 'public',
+  add({ id: 'vn_subsidy', title: 'Thời bao cấp và những lần đổi tiền', from: 1976, to: 1988, ver: 'secondary',
     who: function (l) { return inVN(l) ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l); if (y === 1978 && !s.doi78) { s.doi78 = 1; savings(l, 0.25, log, 'Năm 1978 đổi tiền: số tiền tiết kiệm bị hạn mức đổi và mất giá'); }
@@ -222,7 +222,7 @@
       else if (y <= 1986 && c.urban && !s.sub2) { s.sub2 = 1; log('Thời bao cấp: hàng hóa khan hiếm, xếp hàng mua gạo, vải, thịt bằng tem phiếu.', 'neutral'); }
       if (y === 1987 && !s.doimoi) { s.doimoi = 1; log('Sau Đại hội VI (12/1986), công cuộc Đổi Mới nới lỏng kinh tế tư nhân; năm 1988 Nghị quyết 10 giao ruộng ổn định cho hộ nông dân.', 'good'); if (!c.urban && !l.job) H.fx(l, { money: 0.1 }); }
     } });
-  add({ id: 'vn_cambodia_war', title: 'Chiến tranh biên giới và Campuchia', from: 1978, to: 1989, ver: 'public',
+  add({ id: 'vn_cambodia_war', title: 'Chiến tranh biên giới và Campuchia', from: 1978, to: 1989, ver: 'secondary',
     who: function (l) { return inVN(l) ? 1 : 0; },
     ask: function () { return 'Lệnh gọi nhập ngũ: bộ đội Việt Nam đang chiến đấu ở biên giới phía Bắc và có mặt ở Campuchia.'; }, req: DRAFT_REQ, ai: DRAFT_AI,
     choose: function (l, k, r, log) { draftChoice(l, r, log, 'camb', k); },
@@ -234,7 +234,7 @@
   // ======================= CAMPUCHIA 1975–1979 =======================
   // Chế độ Khmer Đỏ (17/4/1975–7/1/1979): cưỡng bức sơ tán các thành phố, bỏ tiền tệ và chợ, trường học đóng cửa, lao động tập thể, đói và bệnh; số người chết ước tính 1,5–2 triệu.
   // Số liệu UN của năm đó có tuổi thọ khoảng 12; mô hình tử vong của engine không xuống thấp tới vậy (sàn 25) nên phần chênh được cộng bằng nguy cơ riêng của biến cố (tham số trò chơi).
-  add({ id: 'kh_khmer_rouge', title: 'Chế độ Khmer Đỏ ở Campuchia', from: 1975, to: 1979, ver: 'public',
+  add({ id: 'kh_khmer_rouge', title: 'Chế độ Khmer Đỏ ở Campuchia', from: 1975, to: 1979, ver: 'secondary',
     who: function (l) { return res(l) === 'KH' ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l);
@@ -255,12 +255,12 @@
     } });
   // ======================= TOÀN CẦU =======================
   var OECD = /^(US|CA|GB|DE|FR|IT|JP|AU|NZ|ES|SE|NO|DK|NL|BE|AT|CH|FI|IE)$/;
-  add({ id: 'w_oil_recession', title: 'Cú sốc dầu mỏ và suy thoái 1974–1975, 1980–1982', from: 1974, to: 1982, ver: 'public',
+  add({ id: 'w_oil_recession', title: 'Cú sốc dầu mỏ và suy thoái 1974–1975, 1980–1982', from: 1974, to: 1982, ver: 'secondary',
     who: function (l) { return OECD.test(res(l)) && (wy(l) <= 1975 || wy(l) >= 1980) ? 1 : 0; },
     run: function (l, y, r, log, c) { var s = st(l), k = 'oil' + (y <= 1975 ? 'a' : 'b'); if (s.seen[k] || !l.job || l.age < 18 || l.age > 62) return; var cat = c.cat, p = (cat === 'worker' ? 0.12 : cat === 'sale' || cat === 'service' ? 0.07 : cat === 'state' || cat === 'uniform' || cat === 'edu' || cat === 'med' ? 0.015 : 0.05); if (u(l, k) >= p) return; s.seen[k] = 1; jobLoss(l, log, 'Giá dầu tăng vọt kéo theo suy thoái; xí nghiệp cắt giảm nhân sự và bạn bị cho nghỉ việc.'); H.fx(l, { hap: -5, money: -0.1 }); open(l, 'hardship', 1); H.mem(l, 'Năm ấy bị cho nghỉ việc giữa suy thoái kinh tế.', 3); } });
   var INFL = { RU: [1992, 1994], UA: [1992, 1995], BY: [1992, 1995], KZ: [1992, 1994], KG: [1992, 1995], TJ: [1992, 1995], TM: [1992, 1996], UZ: [1992, 1994], AM: [1992, 1994], AZ: [1992, 1995], GE: [1992, 1994], MD: [1992, 1994], LT: [1992, 1993], LV: [1992, 1993], EE: [1992, 1993], PL: [1989, 1991], RO: [1990, 1993], BG: [1991, 1997], AL: [1991, 1992], RS: [1992, 1994], HR: [1991, 1993], BA: [1992, 1995], MK: [1992, 1993] };
   var TRANS = /^(RU|UA|BY|KZ|KG|TJ|TM|UZ|AM|AZ|GE|MD|LT|LV|EE|PL|HU|CZ|SK|RO|BG|AL|RS|HR|BA|MK|SI|ME|MN)$/;
-  add({ id: 'w_transition', title: 'Chuyển đổi kinh tế sau 1989–1991', from: 1990, to: 1999, ver: 'public',
+  add({ id: 'w_transition', title: 'Chuyển đổi kinh tế sau 1989–1991', from: 1990, to: 1999, ver: 'secondary',
     who: function (l) { return TRANS.test(res(l)) ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l), cc = res(l), w = INFL[cc];
@@ -270,7 +270,7 @@
     } });
   var YU = { HR: [1991, 1995], BA: [1992, 1995], SI: [1991, 1991], RS: [1991, 1999], ME: [1991, 1999], MK: [2001, 2001] };
   var YUW = { 'Sarajevo': 3, 'Banja Luka': 1.2, 'Zagreb': 0.4, 'Split': 0.5, 'Belgrade': 0.5 };
-  add({ id: 'w_yugoslav_wars', title: 'Các cuộc chiến tranh ở Nam Tư cũ', from: 1991, to: 2001, ver: 'public',
+  add({ id: 'w_yugoslav_wars', title: 'Các cuộc chiến tranh ở Nam Tư cũ', from: 1991, to: 2001, ver: 'secondary',
     who: function (l) { var w = YU[res(l)]; return w && wy(l) >= w[0] && wy(l) <= w[1] ? 1 : 0; },
     ask: function (l) { return 'Chiến sự lan tới nơi bạn sống. Nhiều gia đình đã rời đi; đi là bỏ lại nhà cửa và công việc.'; },
     req: function (l, k) { return true; }, ai: function (l, k) { return k === 'a' ? 1 : 0.25 * (l.money > l.base ? 1.6 : 1); },
@@ -282,7 +282,7 @@
       H.fx(l, { hap: -6, money: -0.3 }); open(l, 'displaced', 1); log('Chiến tranh ở Nam Tư cũ làm gia đình bạn mất nhà hoặc phải sống lánh nạn trong thời gian dài.', 'bad');
     } });
   var ASIA97 = { TH: 1, ID: 1.4, KR: 1.2, MY: 0.8, PH: 0.5 };
-  add({ id: 'w_asia_crisis', title: 'Khủng hoảng tài chính châu Á 1997–1998', from: 1997, to: 1999, ver: 'public',
+  add({ id: 'w_asia_crisis', title: 'Khủng hoảng tài chính châu Á 1997–1998', from: 1997, to: 1999, ver: 'secondary',
     who: function (l) { return ASIA97[res(l)] ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l), k = 'as97'; if (s.seen[k] || y > 1998) return; var w = ASIA97[res(l)];
@@ -291,7 +291,7 @@
       else if (u(l, k + 's') < 0.5 * w) { s.seen[k] = 1; savings(l, 0.12 * w, log, 'Đồng nội tệ mất giá mạnh, tiền để dành co lại'); }
     } });
   var GFC = { US: [2008, 2010, 1, 0.8], GB: [2008, 2010, 0.7, 0.5], IE: [2008, 2012, 1.1, 1], ES: [2008, 2013, 1.3, 0.8], GR: [2009, 2016, 1.5, 0.5], IS: [2008, 2010, 1, 0.5], PT: [2010, 2014, 1, 0.3], IT: [2009, 2013, 0.8, 0.3] };
-  add({ id: 'w_gfc', title: 'Khủng hoảng tài chính toàn cầu 2008 và khủng hoảng nợ châu Âu', from: 2008, to: 2016, ver: 'public',
+  add({ id: 'w_gfc', title: 'Khủng hoảng tài chính toàn cầu 2008 và khủng hoảng nợ châu Âu', from: 2008, to: 2016, ver: 'secondary',
     who: function (l) { var w = GFC[res(l)]; return w && wy(l) >= w[0] && wy(l) <= w[1] ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l), w = GFC[res(l)], k = 'gfc'; if (s.seen[k] === 2) return;
@@ -299,10 +299,10 @@
       if (!s.seen.gfch && l.ownHouse && l.houseVal > 0) { s.seen.gfch = 1; var f = 0.22 * w[3]; l.houseVal *= 1 - f; log('Giá nhà giảm mạnh sau khủng hoảng: căn nhà của bạn mất khoảng ' + Math.round(f * 100) + '% giá trị' + ((l.mortgage || 0) > l.houseVal ? ', thấp hơn cả khoản vay còn nợ' : '') + '.', 'bad'); H.fx(l, { hap: -4 }); if ((l.mortgage || 0) > l.houseVal) open(l, 'hardship', 1); }
       if (y >= w[1]) s.seen[k] = 2;
     } });
-  add({ id: 'w_tsunami_2004', title: 'Sóng thần Ấn Độ Dương 26/12/2004', from: 2004, to: 2004, ver: 'public',
+  add({ id: 'w_tsunami_2004', title: 'Sóng thần Ấn Độ Dương 26/12/2004', from: 2004, to: 2004, ver: 'secondary',
     who: function (l) { return /^(ID|LK|IN|TH|MV|MY|SO)$/.test(res(l)) && l.coast ? 1 : 0; },
     run: function (l, y, r, log) { var cc = res(l), w = { ID: 0.1, LK: 0.12, IN: 0.03, TH: 0.04, MV: 0.2, MY: 0.02, SO: 0.03 }[cc]; if (u(l, 'tsu') >= w) return; if (u(l, 'tsud') < 0.12) { H.kill(l, 'sóng thần Ấn Độ Dương', log, true); return; } H.fx(l, { hap: -10, money: -0.7, hea: -3 }); open(l, 'displaced', 2); open(l, 'trauma', 2); log('Sóng thần Ấn Độ Dương (26/12/2004) quét qua vùng ven biển nơi bạn sống: nhà cửa trôi mất, nhiều người quen thiệt mạng.', 'bad'); H.mem(l, 'Ngày 26/12/2004, con sóng khổng lồ cuốn đi nhà cửa và những người thân quen.', 5); } });
-  add({ id: 'w_covid', title: 'Đại dịch COVID-19', from: 2020, to: 2022, ver: 'public',
+  add({ id: 'w_covid', title: 'Đại dịch COVID-19', from: 2020, to: 2022, ver: 'secondary',
     who: function (l) { return 1; },
     run: function (l, y, r, log, c) {
       var s = st(l), inf = { 2020: 0.08, 2021: 0.2, 2022: 0.45 }[y] * (c.age >= 65 ? 0.8 : 1); // tham số trò chơi, không phải thống kê
