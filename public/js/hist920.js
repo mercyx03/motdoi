@@ -97,7 +97,7 @@
   if (E.MAJOR) E.MAJOR.hist920_choice = 1; // lựa chọn lớn của đời người: hiện như quyết định quan trọng
   function ask(l, r, id, ch, extra) { var e = BY[id]; var d = { id: id, title: e.title, text: e.ask(l), ch: ch }; if (extra) for (var p in extra) d[p] = extra[p]; E.UPDATE110.next(l, 'hist920_choice', r, d, { manual: false }); }
   function add(e) { EP.push(e); BY[e.id] = e; return e; }
-  var VNQ = [['US', 60], ['AU', 14], ['CA', 14], ['FR', 5], ['DE', 4], ['GB', 3]]; // nơi định cư (tham số trò chơi, theo thứ tự lớn nhỏ chung của các nước tiếp nhận)
+  var VNQ = [['US', 55], ['AU', 15], ['CA', 14], ['FR', 9], ['DE', 4], ['GB', 3]]; // nơi định cư (tham số trò chơi, theo thứ tự lớn nhỏ chung của các nước tiếp nhận)
   var WARTRAUMA = 0.35;
 
   // ======================= VIỆT NAM =======================
@@ -137,7 +137,7 @@
   function warDeath(l, log, side) { H.kill(l, side === 'south' ? 'tử trận trong chiến tranh' : 'hy sinh ngoài mặt trận', log, true); }
   function soldierYear(l, y, log, side) {
     var s = st(l), sd = s.soldier; if (!sd || !(l.flags.military && l.age < l.flags.military)) return;
-    var peak = y >= 1965 && y <= 1972, k = sd.k, pd = (peak ? 0.04 : 0.02) * k, pi = (peak ? 0.1 : 0.05) * k;
+    var peak = y >= 1965 && y <= 1972, k = sd.k, sk = side === 'north' ? 1.5 : 1, pd = (peak ? 0.04 : 0.02) * k * sk, pi = (peak ? 0.1 : 0.05) * k; // tử vong quân nhân miền Bắc và Việt Cộng (0,44–1,1 triệu) cao hơn quân đội miền Nam (0,22–0,31 triệu)
     if (u(l, 'sd:' + y) < pd) { warDeath(l, log, side); return; }
     if (u(l, 'si:' + y) < pi) { injure(l, log, 'Bạn bị thương trong một trận đánh, phải nằm trạm quân y nhiều tháng.', u(l, 'sib:' + y) < 0.3); open(l, 'trauma', 2); }
     else if (u(l, 'st:' + y) < WARTRAUMA) open(l, 'trauma', 1);
@@ -193,7 +193,7 @@
       if (k === 'a') { H.fx(l, { hap: -2, money: -0.1 }); log('Bạn ở lại, tìm sống bằng nghề phụ và bán dần đồ đạc.', 'neutral'); open(l, 'hardship', 1); return; }
       if (k === 'b') { H.fx(l, { hea: -3, hap: -3, soc: -4, money: -0.25 }); relocate(l, 'Lâm Đồng'); l.urban = false; open(l, 'hardship', 2); open(l, 'displaced', 1); log('Gia đình lên vùng kinh tế mới khai hoang: đất xấu, thiếu nước và thiếu thuốc, vụ đầu thất bát.', 'bad'); return; }
       var x = u(l, 'boat:' + wy(l));
-      if (x < 0.15) { H.kill(l, 'chìm tàu hoặc kiệt sức trên biển khi vượt biên', log, true); }
+      if (x < 0.2) { H.kill(l, 'chìm tàu hoặc kiệt sức trên biển khi vượt biên', log, true); }
       else if (x < 0.4) { H.fx(l, { hap: -10, money: -0.4, soc: -3 }); open(l, 'trauma', 2); log('Chuyến đi bị chặn lại; bạn bị bắt giữ ít lâu rồi thả về, mất hết tiền dành dụm.', 'bad'); }
       else { H.fx(l, { hap: -4 }); open(l, 'trauma', 2); if (!resettle(l, r, log, VNQ)) log('Bạn đến được trại tị nạn nhưng chưa được nước nào nhận.', 'neutral'); else log('Sau nhiều tháng ở trại tị nạn, bạn được một nước nhận định cư.', 'big'); }
     },
@@ -259,12 +259,13 @@
     who: function (l) { return OECD.test(res(l)) && (wy(l) <= 1975 || wy(l) >= 1980) ? 1 : 0; },
     run: function (l, y, r, log, c) { var s = st(l), k = 'oil' + (y <= 1975 ? 'a' : 'b'); if (s.seen[k] || !l.job || l.age < 18 || l.age > 62) return; var cat = c.cat, p = (cat === 'worker' ? 0.12 : cat === 'sale' || cat === 'service' ? 0.07 : cat === 'state' || cat === 'uniform' || cat === 'edu' || cat === 'med' ? 0.015 : 0.05); if (u(l, k) >= p) return; s.seen[k] = 1; jobLoss(l, log, 'Giá dầu tăng vọt kéo theo suy thoái; xí nghiệp cắt giảm nhân sự và bạn bị cho nghỉ việc.'); H.fx(l, { hap: -5, money: -0.1 }); open(l, 'hardship', 1); H.mem(l, 'Năm ấy bị cho nghỉ việc giữa suy thoái kinh tế.', 3); } });
   var INFL = { RU: [1992, 1994], UA: [1992, 1995], BY: [1992, 1995], KZ: [1992, 1994], KG: [1992, 1995], TJ: [1992, 1995], TM: [1992, 1996], UZ: [1992, 1994], AM: [1992, 1994], AZ: [1992, 1995], GE: [1992, 1994], MD: [1992, 1994], LT: [1992, 1993], LV: [1992, 1993], EE: [1992, 1993], PL: [1989, 1991], RO: [1990, 1993], BG: [1991, 1997], AL: [1991, 1992], RS: [1992, 1994], HR: [1991, 1993], BA: [1992, 1995], MK: [1992, 1993] };
+  var SEV = /^(RU|UA|BY|KZ|KG|TJ|TM|UZ|AM|AZ|GE|MD|RS|BA)$/; // lạm phát từ hàng trăm đến hàng nghìn %/năm (Nga 1992 khoảng 2.500%): tiền gửi bằng nội tệ gần như mất hết, nên mất nhiều hơn
   var TRANS = /^(RU|UA|BY|KZ|KG|TJ|TM|UZ|AM|AZ|GE|MD|LT|LV|EE|PL|HU|CZ|SK|RO|BG|AL|RS|HR|BA|MK|SI|ME|MN)$/;
   add({ id: 'w_transition', title: 'Chuyển đổi kinh tế sau 1989–1991', from: 1990, to: 1999, ver: 'secondary',
     who: function (l) { return TRANS.test(res(l)) ? 1 : 0; },
     run: function (l, y, r, log, c) {
       var s = st(l), cc = res(l), w = INFL[cc];
-      if (w && y >= w[0] && y <= w[1] && !s.seen['inf' + cc + y]) { s.seen['inf' + cc + y] = 1; savings(l, y === w[0] ? 0.35 : 0.2, log, 'Lạm phát phi mã sau khi giá cả được thả nổi: tiền để dành mất giá nhanh'); }
+      if (w && y >= w[0] && y <= w[1] && !s.seen['inf' + cc + y]) { s.seen['inf' + cc + y] = 1; savings(l, SEV.test(cc) ? (y === w[0] ? 0.6 : 0.3) : (y === w[0] ? 0.35 : 0.2), log, 'Lạm phát phi mã sau khi giá cả được thả nổi: tiền để dành mất giá nhanh'); }
       if (c.age >= 18 && c.age <= 62 && l.job && !s.seen['tr' + y]) { var p = (c.cat === 'state' || c.cat === 'uniform' || c.cat === 'worker' ? 0.09 : 0.05) * (y <= 1994 ? 1.3 : 0.8); if (u(l, 'tr:' + y) < p) { s.seen['tr' + y] = 1; jobLoss(l, log, 'Xí nghiệp nhà nước nơi bạn làm bị cổ phần hóa hoặc đóng cửa; lương bị nợ nhiều tháng rồi bạn mất việc.'); H.fx(l, { hap: -5 }); open(l, 'hardship', 2); H.mem(l, 'Những năm 1990, xí nghiệp đóng cửa và lương bị nợ hàng tháng.', 3); } }
       if (cc === 'AL' && y === 1997 && !s.seen.alb97) { s.seen.alb97 = 1; savings(l, 0.4, log, 'Các quỹ đầu tư kiểu kim tự tháp sụp đổ, tiền tiết kiệm của nhiều gia đình biến mất'); }
     } });
@@ -305,7 +306,7 @@
   add({ id: 'w_covid', title: 'Đại dịch COVID-19', from: 2020, to: 2022, ver: 'secondary',
     who: function (l) { return 1; },
     run: function (l, y, r, log, c) {
-      var s = st(l), inf = { 2020: 0.08, 2021: 0.2, 2022: 0.45 }[y] * (c.age >= 65 ? 0.8 : 1); // tham số trò chơi, không phải thống kê
+      var s = st(l), inf = { 2020: 0.08, 2021: 0.2, 2022: 0.35 }[y] * (c.age >= 65 ? 0.8 : 1); // tham số trò chơi, không phải thống kê
       if (y === 2020 && !s.seen.cv0) { s.seen.cv0 = 1; log('Năm 2020: đại dịch COVID-19 bùng phát toàn cầu; trường học đóng cửa, đi lại bị hạn chế, nhiều nơi giãn cách xã hội.', 'neutral'); if (c.age >= 6 && c.age < 18 && c.student) { l.st.kno -= 2; } if (l.job && /service|sale|show|beauty|free/.test(c.cat || '') && u(l, 'cvj') < 0.12) { jobLoss(l, log, 'Quán và cơ sở nơi bạn làm phải đóng cửa nhiều tháng; bạn mất việc.'); open(l, 'hardship', 1); } }
       if (u(l, 'cvi:' + y) < inf && !s.seen['cvi' + y]) { s.seen['cvi' + y] = 1; var sev = c.age >= 65 ? 0.3 : c.age >= 50 ? 0.12 : 0.04; if (u(l, 'cvs:' + y) < sev * (l.st.hea < 50 ? 1.8 : 1)) { H.fx(l, { hea: -14 }); l.flags.chronic = Math.min(3, (l.flags.chronic || 0) + (u(l, 'cvl:' + y) < 0.3 ? 1 : 0)); log('Bạn nhiễm COVID-19 nặng, phải nằm viện nhiều ngày; hồi phục chậm.', 'bad'); } else { H.fx(l, { hea: -3 }); log('Bạn nhiễm COVID-19, sốt vài ngày rồi khỏi.', 'neutral'); } }
     } });

@@ -1,3 +1,10 @@
+## 9.3.2 — Hiệu chỉnh tham số biến cố và đối chiếu bổ sung (phần A)
+
+- `hist920.js`: tử vong quân nhân miền Bắc ×1,5 (so với 220.000–313.000 lính miền Nam và 444.000–1.100.000 miền Bắc/Việt Cộng); vượt biên chết 20% (UNHCR ước tính 200.000–250.000 chết trong gần 800.000 đến nơi); nước định cư 55/15/14/9/4/3 (Hoa Kỳ hơn một nửa); `SEV`: lạm phát phi mã mất 60%/30% tiền để dành ở Liên Xô cũ, Serbia, Bosnia, 35%/20% ở nhóm khác; COVID 2022 45% → 35%.
+- `era902.js`: MRI 1977 → 1976. Đối chiếu bổ sung 45 khẳng định công nghệ (41 khớp tự động, 4 đã xác nhận hoặc ghi chú) và văn bản Hiệp định đình chỉ chiến sự 20/7/1954 (điều 14(d), 15, 1).
+- `era920.js`: tham số bù tử vong tách thành `E.ERA920.CAL`; đo lại 10 ca x 40 đời: chênh tuổi thọ trung bình +1,2 năm, chết trước 5 tuổi 0,90 so với UN; không đổi hệ số.
+- Tài liệu: `docs/ERA-DOI-CHIEU-NGUON-940.md`, `docs/ERA-GIAI-DOAN-2-920.md`, `docs/ERA-GIAI-DOAN-3-5-930.md`.
+
 ## 9.3.1 — Đối chiếu nguồn cho bối cảnh lịch sử
 
 - Đối chiếu ngày 15/11/2026 với bách khoa trực tuyến (bản wikitext) và kết quả tìm kiếm web: 83 năm độc lập (khớp bảng "List of national independence days", 5 nước có ghi chú), 118 khẳng định chế độ/chiến tranh/tên nước/tên thành phố trong `era920-pol.js` (116 khớp tự động, 2 lệch do tên bài và định dạng ngày, đã xác nhận bằng mắt), 54 khẳng định về 17 biến cố và 14 mốc công nghệ (47 khớp tự động, 7 lệch do tên bài hoặc định dạng, đã xác nhận bằng tìm kiếm web). Nguồn là thứ cấp, chưa đọc văn bản gốc.

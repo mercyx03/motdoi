@@ -1,5 +1,25 @@
 [
   {
+    "id": "era-calib-93200",
+    "version": "9.3.2",
+    "publishedAt": "2026-11-15T05:53:13+07:00",
+    "releaseStatus": "packaged",
+    "title": "Hiệu chỉnh rủi ro chiến tranh, vượt biên, lạm phát và COVID-19 theo mốc đã công bố",
+    "summary": "Các tỷ lệ rủi ro của biến cố lịch sử được kéo về cùng bậc độ lớn với các ước tính công bố; một mốc MRI được sửa.",
+    "tags": [
+      "Thời đại",
+      "Cân bằng"
+    ],
+    "details": [
+      "Người lính miền Bắc và Việt Cộng chịu rủi ro tử trận cao hơn lính miền Nam, phản ánh số người chết ước tính cao hơn nhiều.",
+      "Vượt biên: khoảng một phần năm số người ra đi chết trên biển; phần lớn người đến nơi được Hoa Kỳ nhận, tiếp theo là Úc, Canada và Pháp.",
+      "Lạm phát phi mã ở Liên Xô cũ, Serbia và Bosnia làm mất phần lớn tiền để dành năm đầu; ở các nước khác mất ít hơn. Tỷ lệ nhiễm COVID-19 năm 2022 giảm từ 45% xuống 35% cho khớp các nghiên cứu huyết thanh.",
+      "Ảnh MRI người đầu tiên là năm 1976 chứ không phải 1977. Hiệu chỉnh tử vong theo năm đo lại trên 400 đời ở 10 nước: sai lệch trung bình khoảng một năm tuổi thọ.",
+      "Các tỷ lệ vẫn là tham số trò chơi, không phải thống kê. Đời sinh năm nay không đổi."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "era-verify-93100",
     "version": "9.3.1",
     "publishedAt": "2026-11-15T05:24:58+07:00",

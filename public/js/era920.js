@@ -53,7 +53,7 @@
     var y = worldYear(l); if (m.y === y) return; m.y = y;
     var s = S(m.cc); if (!s) return;
     var i = idx(y), b = idx(m.by), e0 = l.e0 + (s.e[i] - s.e[b]), u5 = l.u5 * (s.u[i] / s.u[b]), h = Math.abs((l.e0sex != null ? l.e0sex : l.e0) - l.e0);
-    m.ka = 1 - 0.2 * Math.max(0, Math.min(1, (76 - e0) / 22)); m.kc = 1 - 0.22 * Math.max(0, Math.min(1, (u5 - 8) / 50)); // bù phần tử vong cộng thêm của engine ở mức tử vong cao (xem cal)
+    m.ka = 1 - CAL.a * Math.max(0, Math.min(1, (CAL.e - e0) / CAL.w)); m.kc = 1 - CAL.c * Math.max(0, Math.min(1, (u5 - CAL.u) / CAL.v)); // bù phần tử vong cộng thêm của engine ở mức tử vong cao (xem cal)
     l.mort = buildCached(l.e0sex != null && l.sex === 'F' ? e0 + h : e0 - h, u5);
     l.mortM = buildCached(e0 - h, u5); l.mortF = buildCached(e0 + h, u5);
   }
@@ -67,7 +67,8 @@
   function gdp(l) { var m = l && l.era920; if (!m) return l.gdp; var s = S(m.cc); if (!s) return l.gdp; return l.gdp * Math.min(1.25, s.g[idx(worldYear(l))]); }
   // hệ số bù: engine cộng thêm tử vong từ bệnh nặng, tai nạn, tiêm chủng và sự kiện (hiệu chỉnh CAL ở mức tuổi thọ hiện nay). Ở mức tử vong cao (đời xưa) phần cộng thêm này làm kết quả vượt số liệu UN:
   // đo bằng mô phỏng 100 đời mỗi ca (VN 1950, NG 1960, IN 1950, JP 1950): trẻ chết trước 5 tuổi 29–42% so với 21–32%; hệ số giảm tuyến tính tới −22% (trẻ em, theo tử vong dưới 5) và −20% (người lớn, theo tuổi thọ) rồi bằng 1 ở mức hiện nay.
+  var CAL = { a: 0.2, e: 76, w: 22, c: 0.22, u: 8, v: 50 };
   function cal(l, a) { var m = l.era920, k = m && (a < 5 ? m.kc : m.ka); return k == null ? 1 : k; }
-  E.ERA920 = { cal: cal, FROM: FROM, TO: TO, data: D, at: at, mobile: mobile, net: net, birth: birth, urbanK: urbanK, refresh: refresh, tfrNow: tfrNow, gdp: gdp, isEra: isEra, worldYear: worldYear, series: S };
+  E.ERA920 = { cal: cal, CAL: CAL, FROM: FROM, TO: TO, data: D, at: at, mobile: mobile, net: net, birth: birth, urbanK: urbanK, refresh: refresh, tfrNow: tfrNow, gdp: gdp, isEra: isEra, worldYear: worldYear, series: S };
   E.devGdp = gdp;
 })(globalThis.G);

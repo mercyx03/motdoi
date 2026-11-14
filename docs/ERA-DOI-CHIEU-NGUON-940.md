@@ -1,4 +1,4 @@
-# Đối chiếu nguồn cho bối cảnh lịch sử (9.3.1)
+# Đối chiếu nguồn cho bối cảnh lịch sử (9.3.1, bổ sung 9.3.2)
 
 Ngày thực hiện: 15/11/2026. Kiểm các khẳng định trong `public/js/era920-pol.js` (độc lập, chế độ, chiến tranh, tên nước, tên thành phố), `public/js/hist920.js` (17 biến cố) và một phần bảng mốc công nghệ `public/js/era902.js`.
 
@@ -314,3 +314,10 @@ Ngày thực hiện: 15/11/2026. Kiểm các khẳng định trong `public/js/er
 | `t-appstore` | App Store 2008 | [App Store (Apple)](https://en.wikipedia.org/wiki/App_Store_(Apple)) | khớp |
 | `t-skype` | Skype 2003 | [Skype](https://en.wikipedia.org/wiki/Skype) | khớp |
 | `t-atvncg` | Anh trai vượt ngàn chông gai 2024 | [Anh Trai Vượt Ngàn Chông Gai](https://en.wikipedia.org/wiki/Anh_Trai_V%C6%B0%E1%BB%A3t_Ng%C3%A0n_Ch%C3%B4ng_Gai) | chưa khớp tự động (xem mục ghi chú) |
+## Bổ sung 15/11/2026 (9.3.2)
+- **40 mốc công nghệ còn lại**: 45 khẳng định chạy thêm, 41 khớp tự động. 4 lệch do tên bài hoặc định dạng: Twitch 2011, CT lâm sàng 1971, giải esports Red Annihilation 1997 (đều là mốc rất quen thuộc, chưa tìm được nguồn khác trong lượt này; giữ nguyên) và MRI. Với MRI, nguồn cho thấy ảnh MRI người đầu tiên là ngón tay năm 1976 (Mansfield, Nottingham), toàn thân 3/7/1977 (Damadian); mốc sớm nhất sửa từ 1977 thành 1976.
+- **Văn bản gốc (bản chép lại trên Wikisource) của Hiệp định đình chỉ chiến sự ở Việt Nam, 20/7/1954**: điều 14(d) cho phép dân thường ở vùng của bên này sang vùng của bên kia, được giúp đỡ, từ khi hiệp định có hiệu lực đến khi di chuyển quân đội xong; điều 15 giới hạn việc di chuyển quân trong 300 ngày; điều 1 lập vùng phi quân sự rộng không quá 5 km mỗi bên giới tuyến quân sự tạm thời. Khớp với câu trong game; tuy vậy văn bản không nêu tên vĩ tuyến 17 (đường nằm trên bản đồ đính kèm và tuyên bố cuối cùng).
+- Các điểm nhạy cảm khác (cải cách ruộng đất, học tập cải tạo, Khmer Đỏ) chưa đọc được văn bản gốc hay nghiên cứu học thuật; vẫn ở mức nguồn thứ cấp.
+
+## Hiệu chỉnh tham số biến cố (15/11/2026)
+Xem `docs/ERA-GIAI-DOAN-3-5-930.md`, mục tham số. Thay đổi: tử vong quân nhân miền Bắc ×1,5; vượt biên chết 20% (trước 15%); phân bổ nước định cư US 55 / AU 15 / CA 14 / FR 9 / DE 4 / GB 3; mất tiền khi lạm phát phi mã 60%/30% với nhóm Liên Xô cũ, Serbia, Bosnia và 35%/20% với nhóm khác; COVID-19 2022 từ 45% xuống 35%. Mọi tỷ lệ vẫn là tham số, chỉ đã được kéo về cùng bậc độ lớn với các mốc công bố.

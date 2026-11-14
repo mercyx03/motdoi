@@ -57,6 +57,9 @@ Module: `public/js/data-era920.js` (dữ liệu, sinh tự động), `public/js/
 - Không có hệ số bù: Việt Nam 1950 chết trước 5 tuổi 32% so với UN 21%, Nigeria 1960 42% so với 32%.
 - `tests/era920.js` kiểm mẫu nhỏ hơn (60 đời) với ngưỡng rộng: chỉ là rào chắn, không thay cho phép đo ở trên.
 
+## Đo lại hệ số bù tử vong (15/11/2026)
+- 10 ca (Ấn Độ 1950, Nigeria 1960, Brazil 1970, Nhật 1950, Ai Cập 1965, Indonesia 1960, Mexico 1960, Đức 1950, Kenya 1970, Thổ Nhĩ Kỳ 1965) x 40 đời: chênh trung bình tuổi thọ mô phỏng so với đường tử vong theo năm +1,2 năm; chết trước 5 tuổi bằng 0,90 so với UN. Từng ca lệch tới −2 đến +8 năm (sai số mẫu khoảng ±4 năm). Thử đổi hệ số trẻ em 0,22 thành 0,17 chỉ đổi kết quả trong sai số (0,93), nên giữ nguyên.
+
 ## Giới hạn đã biết
 - Tiền lương, giá cả, tỷ giá, chi phí y tế và các số tiền tuyệt đối trong game vẫn theo mặt bằng giá 2026 (xem `docs/ERA-POLICY-917.md`). Đời xưa vì vậy giàu hơn thực tế về tiền, nhưng nghèo hơn về y tế, tiêm chủng, đô thị và học tập. Việc đưa GDP vào lương và giá cần sửa chi phí tuyệt đối ở nhiều module; chưa làm.
 - Chính sách theo nước và năm (bảo hiểm y tế, lương hưu, giáo dục bắt buộc, quyền bầu cử…) chưa có ngoài `era917.js`: chi phí y tế ở nước giàu vẫn chỉ phụ thuộc `life.gdp` hiện nay.

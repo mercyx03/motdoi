@@ -41,7 +41,7 @@
     ['surrogacy', /mang thai hộ/i, 1985, 'mang thai hộ dùng phôi (gestational) từ 1985'],
     ['pill', /thuốc tránh thai|viên tránh thai/i, 1960, 'viên tránh thai Enovid 1960'],
     ['dna', /\bADN\b|\bDNA\b|xét nghiệm huyết thống/i, 1985, 'dấu vân tay ADN 1985'],
-    ['mri', /\bMRI\b|cộng hưởng từ/i, 1977, 'ảnh MRI người đầu tiên 1977'],
+    ['mri', /\bMRI\b|cộng hưởng từ/i, 1976, 'ảnh MRI người đầu tiên (ngón tay) 1976; toàn thân 3/7/1977'],
     ['ct', /chụp CT|\bCT scan\b|cắt lớp vi tính/i, 1971, 'CT lâm sàng đầu tiên 1971'],
     ['chemo', /hóa trị/i, 1946, 'hóa trị liệu ung thư đầu tiên thập niên 1940'],
     ['transplant', /ghép (thận|gan|tim|tạng)/i, 1954, 'ghép thận thành công đầu tiên 1954'],
