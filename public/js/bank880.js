@@ -13,9 +13,9 @@ var DATA={
  US:{from:2026,cur:'USD',asOf:'2026-10-19',published:'2026-10-19',
   name:'Chứng chỉ tiền gửi (CD) — lãi bình quân toàn quốc (FDIC)',
   source:'https://www.fdic.gov/national-rates-and-rate-caps',
-  loanSource:'https://www.federalreserve.gov/releases/g19/current/default.htm',
-  deposit:{1:.0176,2:.0155,3:.0139,5:.0141},loans:{bank:.119,car:.0754,card:.2119},
-  note:'FDIC National Rates 19/10/2026 (CD 12 tháng 1,76%); Fed G.19 quý 3/2026: vay cá nhân 24 tháng 11,90%, vay mua xe mới 60 tháng 7,54%, thẻ tín dụng 21,19%. Lãi vay mua nhà chưa có nguồn chính thức nên giữ mức cũ.'},
+  loanSource:'https://www.federalreserve.gov/releases/g19/current/default.htm',loanSources:{home:'https://www.freddiemac.com/pmms'},
+  deposit:{1:.0176,2:.0155,3:.0139,5:.0141},loans:{home:.0711,bank:.119,car:.0754,card:.2119},
+  note:'FDIC National Rates 19/10/2026 (CD 12 tháng 1,76%); Fed G.19 quý 3/2026: vay cá nhân 24 tháng 11,90%, vay mua xe mới 60 tháng 7,54%, thẻ tín dụng 21,19%. Freddie Mac PMMS 12/11/2026: vay mua nhà cố định 30 năm 7,11%.'},
  CA:{from:2026,cur:'CAD',asOf:'2026-11-11',published:'2026-11-11',
   name:'GIC kỳ hạn — lãi niêm yết của các ngân hàng lớn (Bank of Canada)',
   source:'https://www.bankofcanada.ca/rates/banking-and-financial-statistics/posted-interest-rates-offered-by-chartered-banks/',
@@ -36,7 +36,7 @@ function loanRate(l,type){var d=data(l);return d&&d.loans[type]!=null?d.loans[ty
 function note(l){var d=data(l);return d?'Lãi tham chiếu nơi đang sống: '+d.note:'';}
 // Khoản vay mới nhận lãi của nơi đang sống; ghi nguồn vào hợp đồng để không đổi khi chuyển nước hay khi biểu cập nhật.
 var add=H.addLoan;H.addLoan=function(l,type){var n=(l.loans||[]).length,out=add.apply(this,arguments),rate=loanRate(l,type),d=data(l),L=l.loans&&l.loans.length>n?l.loans[l.loans.length-1]:null;
- if(L&&L.type===type&&rate!=null){L.rate=rate;L.ref880={cc:code(l),asOf:d.asOf,source:d.loanSource||d.source,year:year(l)};}
+ if(L&&L.type===type&&rate!=null){L.rate=rate;L.ref880={cc:code(l),asOf:d.asOf,source:(d.loanSources&&d.loanSources[type])||d.loanSource||d.source,year:year(l)};}
  return out;};
 E.BANK880={DATA:DATA,data:data,offers:offers,loanRate:loanRate,note:note,verifiedAt:'2026-11-14'};
 })(globalThis.G);

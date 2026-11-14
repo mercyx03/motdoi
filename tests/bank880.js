@@ -27,7 +27,7 @@ ok(B.offers(life('SG',2027)).length===0&&B.offers(life('DE',2027)).length===0,'S
 // vay mới theo lãi nơi sống; vay trước mốc và loại không có số liệu giữ mức cũ
 {const l=life('AU',2027);H.addLoan(l,'home',l.base*3);const L=l.loans.at(-1);ok(L.rate===.062&&L.ref880.cc==='AU'&&L.ref880.year===2027,'vay mua nhà Úc 6,2% (RBA F6)');}
 {const l=life('US',2027);H.addLoan(l,'card',l.base*.2);H.addLoan(l,'home',l.base*3);H.addLoan(l,'family',l.base*.2);
- ok(l.loans[0].rate===.2119&&l.loans[1].rate===.08&&!l.loans[1].ref880&&l.loans[2].rate===0,'thẻ Mỹ 21,19%; vay nhà Mỹ và vay người thân giữ mức cũ');}
+ ok(l.loans[0].rate===.2119&&l.loans[1].rate===.0711&&/freddiemac/.test(l.loans[1].ref880.source)&&l.loans[2].rate===0&&!l.loans[2].ref880,'thẻ Mỹ 21,19%; vay nhà Mỹ 7,11% (Freddie Mac); vay người thân giữ mức cũ');}
 {const l=life('GB',2024);H.addLoan(l,'bank',l.base);ok(l.loans.at(-1).rate===.09&&!l.loans.at(-1).ref880,'năm trước số liệu giữ 9%');}
 {const l=life('CA',2027);H.addLoan(l,'home',l.base*3);const L=l.loans.at(-1);ok(L.rate===.0619,'Canada vay nhà 6,19% niêm yết');
  l.country='US';H.addLoan(l,'bank',l.base*.5);ok(L.rate===.0619&&l.loans.at(-1).rate===.119,'chuyển nước: khoản cũ giữ lãi lúc ký, khoản mới theo nơi mới');}
@@ -39,4 +39,7 @@ ok(B.offers(life('SG',2027)).length===0&&B.offers(life('DE',2027)).length===0,'S
 {let tagged=0;const add=H.addLoan;H.addLoan=function(l,type){const k=(l.loans||[]).length,o=add.apply(this,arguments),L=l.loans&&l.loans.length>k?l.loans.at(-1):null;if(L&&L.ref880){tagged++;ok(B.DATA[L.ref880.cc].loans[L.type]===L.rate&&L.ref880.year>=2026,'lãi khớp biểu');}return o;};
  try{for(let s=1;s<=10;s++)for(const cc of ['US','AU','GB','CA']){const l=E.createLife({mode:'world',country:cc,seed:4400+s,year:2000});E.runHeadless(l);ok(l.age>0,'chạy hết đời '+cc);}}finally{H.addLoan=add;}
  ok(tagged>=1,'trong game có khoản vay nhận lãi theo nước ('+tagged+')');}
+// nhãn lãi ở cảnh vay tiền theo nước (scenarios.js), Việt Nam giữ ~9%
+{const lab=(cc,mode)=>{const l=E.createLife({mode,country:cc,seed:3,year:1990});Object.assign(l,{birthYear:1997,age:30,indep:true});return E.DEC.vay_tien.def.opts.find(o=>o.k==='bank').l(l);};
+ ok(/~11.9%/.test(lab('US','world'))&&/~9.9%/.test(lab('GB','world'))&&/~9%/.test(lab('VN','vn')),'nhãn vay ngân hàng theo nước');}
 console.log('PASS bank880: '+n+' checks');

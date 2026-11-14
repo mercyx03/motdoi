@@ -1,7 +1,7 @@
 /* 8.10.79: thuế thu nhập tiền lương theo nước sống (Anh, Úc, Singapore, Canada), mở rộng cách Việt Nam (tax-resident.js) và Mỹ (world836.js) đã làm.
    Đầu vào là thu nhập làm công sau bảo hiểm bắt buộc sẵn có; thuế tính theo biểu lũy tiến của năm thu nhập, đổi qua tiền địa phương rồi trở lại đơn vị tiền của game.
    Chỉ áp dụng cho năm có biểu đã đối chiếu; năm trước mốc đó và nước chưa có biểu giữ hành vi cũ (không thuế). Ước tính: chưa gồm giảm trừ cá nhân, thuế địa phương và đóng góp an sinh riêng.
-   8.10.80: Anh có biểu Scotland (2024–25 trở đi) và National Insurance Class 1 thay mức bảo hiểm chung 8%; thuế Anh tính trên lương trước NI như PAYE. */
+   8.10.80: Anh có biểu Scotland (2023–24 trở đi) và National Insurance Class 1 thay mức bảo hiểm chung 8%; thuế Anh tính trên lương trước NI như PAYE. */
 (function(G){'use strict';var E=G.E,H=E.H;if(!E.careerYear||!E.ECON918)return;
 var SRC={
  GB:'https://www.gov.uk/government/publications/rates-and-allowances-income-tax/income-tax-rates-and-allowances-current-and-past',
@@ -9,13 +9,13 @@ var SRC={
  SG:'https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-residency-and-tax-rates/individual-income-tax-rates',
  CA:'https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html'};
 // Scotland: giới hạn trên của thu nhập chịu thuế (sau miễn thuế) theo bảng PAYE cho người sử dụng lao động của gov.uk; năm sau 2026–27 giữ biểu 2026–27.
-var SCOT={rates:[.19,.2,.21,.42,.45,.48],
- 2024:[2306,13991,31092,62430,125140,Infinity],2025:[2827,14921,31092,62430,125140,Infinity],2026:[3967,16956,31092,62430,125140,Infinity]};
+var SCOT={rates:[.19,.2,.21,.42,.45,.48],rates2023:[.19,.2,.21,.42,.47],
+ 2023:[2162,13118,31092,125140,Infinity],2024:[2306,13991,31092,62430,125140,Infinity],2025:[2827,14921,31092,62430,125140,Infinity],2026:[3967,16956,31092,62430,125140,Infinity]};
 SRC.SCT='https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027';SRC.NI='https://www.gov.uk/national-insurance-rates-letters';
 // bands: [giới hạn trên của thu nhập chịu thuế, thuế suất]; from: năm thu nhập đầu tiên áp dụng.
 var RULES={
- GB:{from:2023,name:'Anh (Anh, xứ Wales, Bắc Ireland)',cur:'GBP',scope:'Biểu thuế thu nhập 2023–24 đến 2026–27: miễn thuế 12.570 bảng (giảm dần khi thu nhập trên 100.000), 20% đến 37.700, 40% đến 125.140, 45% trên đó. Scotland dùng biểu riêng từ 2024–25 (19% đến 48%, năm 2023–24 chưa đối chiếu nên tạm dùng biểu chung). National Insurance Class 1 từ 2024–25: 8% từ 12.570 đến 50.270, 2% trên đó.',
-  allowance:function(g){return Math.max(0,12570-Math.max(0,(g-100000)/2));},bands:function(y,region){var s=region==='SCT'&&SCOT[Math.min(y,2026)];return s?s.map(function(b,i){return [b,SCOT.rates[i]];}):[[37700,.2],[125140,.4],[Infinity,.45]];},
+ GB:{from:2023,name:'Anh (Anh, xứ Wales, Bắc Ireland)',cur:'GBP',scope:'Biểu thuế thu nhập 2023–24 đến 2026–27: miễn thuế 12.570 bảng (giảm dần khi thu nhập trên 100.000), 20% đến 37.700, 40% đến 125.140, 45% trên đó. Scotland dùng biểu riêng từ 2023–24 (19% đến 47%; từ 2024–25 là 19% đến 48%). National Insurance Class 1 từ 2024–25: 8% từ 12.570 đến 50.270, 2% trên đó.',
+  allowance:function(g){return Math.max(0,12570-Math.max(0,(g-100000)/2));},bands:function(y,region){var s=region==='SCT'&&SCOT[Math.max(2023,Math.min(y,2026))];return s?s.map(function(b,i){return [b,(y<2024?SCOT.rates2023:SCOT.rates)[i]];}):[[37700,.2],[125140,.4],[Infinity,.45]];},
   ni:function(y,g){return y<2024?0:Math.max(0,Math.min(g,50270)-12570)*.08+Math.max(0,g-50270)*.02;}},
  AU:{from:2024,name:'Úc',cur:'AUD',scope:'Biểu cư dân Úc: miễn thuế đến 18.200 đô la; 16% đến 45.000 (15% từ 2026–27), 30% đến 135.000, 37% đến 190.000, 45% trên đó. Thêm thuế Medicare 2% (giảm cho thu nhập thấp: miễn đến 28.011, giảm dần đến 35.013 theo mức 2025–26); chưa gồm phụ phí Medicare.',
   levy:function(t){return Math.min(t*.02,Math.max(0,(t-28011)*.1));},allowance:function(){return 18200;},bands:function(y){return [[26800,y>=2026?.15:.16],[116800,.3],[171800,.37],[Infinity,.45]];}},
@@ -42,7 +42,7 @@ E.careerYear=function(l,r,log){var cc=code(l),R=RULES[cc],job=l.job,c=job&&E.job
  if(R.ni&&year(l)>=2024){base=out+si;if(si>0){ni=fromLocal(l,R.ni(year(l),toLocal(l,base)));out+=si-ni;y.si=ni;y.ni879=true;}}
  var q=compute(cc,year(l),toLocal(l,base),reg);if(!q)return out;var tax=fromLocal(l,q.tax);
  var row={age:l.age,year:year(l),cc:cc,gross:out,taxableLocal:q.taxable,tax:tax,cur:R.cur,rate:out>0?tax/out:0,region:reg||undefined,ni:ni==null?undefined:ni,siOld:ni==null?undefined:si};s.history.push(row);s.history=s.history.slice(-30);
- if(tax>0&&l.alive)log('Thuế thu nhập tiền lương ở '+(reg==='SCT'&&year(l)>=2024?'Scotland':R.name)+' (ước tính): '+H.money(l,tax)+'/năm, khoảng '+Math.round(row.rate*100)+'% thu nhập sau bảo hiểm'+(ni!=null?'; National Insurance '+H.money(l,ni)+'/năm thay mức bảo hiểm chung':'')+'.','neutral');
+ if(tax>0&&l.alive)log('Thuế thu nhập tiền lương ở '+(reg==='SCT'?'Scotland':R.name)+' (ước tính): '+H.money(l,tax)+'/năm, khoảng '+Math.round(row.rate*100)+'% thu nhập sau bảo hiểm'+(ni!=null?'; National Insurance '+H.money(l,ni)+'/năm thay mức bảo hiểm chung':'')+'.','neutral');
  return out-tax;};
 var label=E.siLabel;E.siLabel=function(l){return l&&l.yr&&l.yr.ni879&&code(l)==='GB'?'National Insurance Class 1':label.apply(this,arguments);};
 var slip=E.ECON918.slip;E.ECON918.slip=function(l){var p=slip.apply(this,arguments),s=l.flags.tax879,row=s&&s.history[s.history.length-1];if(p&&row&&row.age===p.age&&!p.taxed){p.tax=row.tax;p.taxed=true;p.net-=row.tax;p.tax879=true;}return p;};

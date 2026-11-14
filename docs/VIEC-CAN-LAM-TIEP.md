@@ -13,9 +13,9 @@ Cập nhật: 2026-11-13, sau bản 8.10.79. Nhánh làm việc: `codex/life-con
 `audit-world-520.json`, `.local-state-review.txt`, `Claude.md`, `public/js/healthsys919.js`, `tests/healthsys-rx-cap.js`, `PROMPT*.md`, `docs/HANDOFF-CLAUDE-874.md`. `REVIEWS_DB` production chưa kiểm chứng; gói vẫn là Preview.
 
 ## Nhóm 1: ngân hàng và y tế theo nơi (8.10.80 đã làm phần chính, gói packaged)
-- Ngân hàng: `bank880.js` có Anh, Mỹ, Canada, Úc từ 2026 (nguồn BoE, FDIC, Fed G.19, Bank of Canada, RBA). Còn thiếu: Singapore (MAS đã ngừng chuỗi lãi suất ngân hàng, cần nguồn khác), lãi vay mua nhà Mỹ (chưa đọc Freddie Mac PMMS), lãi theo năm trước 2026, bảo hiểm tiền gửi SDIC Singapore, nhãn "~9%/năm" cố định ở cảnh vay ngân hàng (`scenarios.js`).
-- Y tế: `health880.js` có NHS England phí kê đơn/PPC và Nhật Bản từ 70 tuổi. Chưa đọc được nguyên văn MHLW cho tỷ lệ 70–74 và ngưỡng thu nhập ngang người đang làm (đang dùng 383/520 vạn yên). Các nước khác vẫn là nguồn thứ cấp của `healthsys919.js`.
-- Thuế (tax879): đã thêm Scotland 2024–25 trở đi, National Insurance từ 2024–25, đối chiếu hai ngưỡng Singapore. Còn thiếu: Scotland 2023–24, phụ phí Medicare, thuế tỉnh Canada, giảm trừ cá nhân.
+- Ngân hàng: `bank880.js` có Anh, Mỹ, Canada, Úc từ 2026 (nguồn BoE, FDIC, Fed G.19, Bank of Canada, RBA). Đã có thêm lãi vay mua nhà Mỹ (Freddie Mac PMMS) và nhãn lãi theo nước ở `scenarios.js`. Còn thiếu: Singapore (MAS đã ngừng chuỗi lãi suất ngân hàng, cần nguồn khác), lãi theo năm trước 2026, bảo hiểm tiền gửi SDIC Singapore.
+- Y tế: `health880.js` có NHS England phí kê đơn/PPC và Nhật Bản từ 70 tuổi. Chưa đọc được nguyên văn MHLW cho tỷ lệ 70–74 và ngưỡng thu nhập ngang người đang làm (đang dùng 383/520 vạn yên); trang `iryouhoken01` chỉ là ảnh và PDF, cần đọc tay hoặc tìm trang văn bản khác. Các nước khác vẫn là nguồn thứ cấp của `healthsys919.js`.
+- Thuế (tax879): đã thêm Scotland 2023–24 trở đi, National Insurance từ 2024–25, đối chiếu hai ngưỡng Singapore. Còn thiếu: phụ phí Medicare, thuế tỉnh Canada, giảm trừ cá nhân.
 
 ## Nhóm chưa làm
 2. Visa, nhập tịch, phúc lợi theo nước.

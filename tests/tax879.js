@@ -40,7 +40,8 @@ ok(gb>=1&&rows>=1,'có người làm công ở Anh bị khấu trừ thuế tron
 near(T.compute('GB',2026,30000,'SCT').tax,3451.07,'Scotland 2026–27 30.000 bảng');
 near(T.compute('GB',2025,30000,'SCT').tax,3482.82,'Scotland 2025–26 30.000 bảng');
 near(T.compute('GB',2026,200000,'SCT').tax,83634.35,'Scotland 200.000 bảng (mất miễn thuế)');
-near(T.compute('GB',2023,30000,'SCT').tax,3486,'Scotland 2023–24 chưa có biểu riêng: tạm dùng biểu chung');
+near(T.compute('GB',2023,30000,'SCT').tax,3507.5,'Scotland 2023–24 (bảng PAYE gov.uk, bậc cao nhất 47%)');
+ok(T.compute('GB',2023,200000,'SCT').tax>T.compute('GB',2023,200000).tax,'Scotland 2023–24 cao hơn biểu chung ở thu nhập cao (42% đến 125.140, 47% trên đó)');
 near(T.compute('GB',2026,30000,'ENG').tax,3486,'England không đổi khi có vùng');
 ok(T.compute('GB',2026,30000,'SCT').tax<T.compute('GB',2026,30000).tax&&T.compute('GB',2026,60000,'SCT').tax>T.compute('GB',2026,60000).tax,'Scotland thấp hơn ở lương thấp, cao hơn ở lương khá');
 near(T.RULES.GB.ni(2026,30000),1394.4,'NI 30.000 bảng');
