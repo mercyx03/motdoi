@@ -5,7 +5,7 @@
       "id": "looks-study-fund-90001",
       "version": "9.0.1",
       "publishedAt": "2026-11-14T16:31:59.043+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Sửa ngoại hình khi quen lại người cũ, xem trước ngoại hình người yêu và xin tiền bố mẹ để du học",
       "summary": "Quen lại người cũ giữ nguyên ngoại hình; xem ngoại hình trước khi quyết định tìm hiểu; du học nói rõ thiếu gì và cho xin hoặc mượn bố mẹ.",
       "tags": [
@@ -18,13 +18,14 @@
         "Khi gặp người mới, lời giới thiệu hiện ngoại hình (điểm và nhãn) trước khi bạn chọn tìm hiểu; cảnh gặp lại người cũ cũng hiện ngoại hình hiện tại.",
         "Du học: khi tiền riêng chưa đủ học phí, game nêu rõ thiếu bao nhiêu và cho xin hoặc mượn bố mẹ, rồi nộp hồ sơ tự túc luôn. Bước visa liệt kê từng điều kiện còn thiếu kèm số tiền. Bố mẹ có thể đồng ý đủ, giúp một phần hoặc từ chối; khả năng theo thu nhập gia đình, số con và tiền tiết kiệm ước tính."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-14T13:01:00.000Z",
+      "correctedAt": "2026-11-14T13:00:50.718Z"
     },
     {
       "id": "family-naturalization-90000",
       "version": "9.0.0",
       "publishedAt": "2026-11-14T14:32:54.180+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Nhập quốc tịch nhiều giai đoạn, nợ anh chị em, trợ cấp thất nghiệp, bế tắc công ty gia đình và homeschool sâu hơn",
       "summary": "Hồ sơ nhập quốc tịch là quy trình nhiều năm; trả nợ giúp anh chị em có hệ quả lâu dài; mất việc ở Anh và Canada có trợ cấp theo đóng góp; bế tắc 50/50 công ty gia đình leo thang; sáu vùng homeschool có thủ tục chi tiết hơn.",
       "tags": [
@@ -40,7 +41,8 @@
         "Công ty gia đình: bế tắc 50/50 kéo dài ba năm thì phía còn lại đề nghị nhượng 1% hoặc ra tòa; giữ nguyên làm giảm điểm quản trị và sau ba lần tòa tự chỉ định chủ tịch độc lập.",
         "Học tại nhà: British Columbia, Queensland, Manitoba, Nova Scotia, Florida và Virginia có hạn nộp, báo cáo, tài trợ và điều kiện văn bằng theo trang chính thức. Các vùng còn lại giữ quy tắc chung."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-14T13:01:00.000Z",
+      "correctedAt": "2026-11-14T13:00:50.604Z"
     },
     {
       "id": "bank-health-81080",
