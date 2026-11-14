@@ -1,3 +1,12 @@
+## 9.1.0 — Chọn năm sinh từ 1900 và chặn công nghệ, sự kiện chưa tồn tại (giai đoạn 1)
+
+- Màn thiết lập có ô "Năm sinh (thử nghiệm)": để mặc định là năm nay hoặc chọn một năm từ 1900. Năm sinh được kiểm tra, lưu cùng cài đặt và dùng cả ở hồ sơ xuất phát.
+- Đời sinh năm cũ không còn gặp những thứ chưa tồn tại: TV trước 1936, điện thoại di động trước 1983, internet và email trước 1991, Facebook trước 2004, YouTube 2005, smartphone 2007, TikTok 2016, livestream, game online, esports, tiền mã hóa, AI đại chúng, Covid, và các kỹ thuật y học (thụ tinh ống nghiệm, MRI, CT, ADN, hóa trị, ghép tạng) cùng nghề (YouTuber, streamer, tài xế công nghệ, lập trình viên trước 1950...). Bảng mốc và cơ sở: `docs/ERA-GIAI-DOAN-1-910.md`.
+- Cách làm: lọc lời kể và văn bản cảnh qua `E.famLogic`/`famFix` có sẵn, cắt lựa chọn hoặc bỏ cảnh sai thời khi dựng cảnh, từ chối nghề chưa có trong `startJob`, ẩn hành động sai thời; "nhắn tin" thành "viết thư" hoặc "gọi điện" thay vì bỏ nội dung tình cảm (`era902.js`). Đời sinh từ 2024 trở đi không đổi một byte.
+- Kết quả đo: 2.400 đời mô phỏng ở nhiều năm sinh, từ vài chục lần sai thời mỗi 40 đời xuống 0 theo thước đo độc lập; mỗi đời vẫn có khoảng 460–510 dòng nhật ký.
+- Chưa làm (giai đoạn 2 trở đi): tuổi thọ, kinh tế, tên nước và thành phố theo năm, mức phổ biến công nghệ theo từng nước, chính sách và sự kiện lịch sử từng nước. Màn thiết lập ghi rõ giới hạn này.
+- Kiểm thử: `tests/era902.js` (31 kiểm tra), thước đo `tests/era-oracle902.js`; sửa `tests/chains-gd4.js` cho bền với thay đổi nội dung.
+
 ## 9.0.2 — Rà logic hàng loạt: Sixth Form ở Anh, nghỉ hưu lặp lại, trẻ di cư, trần số con
 
 Quét 2.400 đời mô phỏng tự động ở 20 nước, so trạng thái từng năm với các quy tắc bất biến (người đã mất sống lại, sự kiện một lần lặp lại, trạng thái bị kẹt nhiều năm, giá trị NaN, tuổi thọ lệch theo nước) và chạy lại bộ rà văn bản cũ trên 500 đời.

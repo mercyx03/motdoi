@@ -1539,6 +1539,7 @@
     if (!life.alive) { life.pending = []; return; }
     var inMil = life.flags.military && life.age < life.flags.military;
     life.pending = life.pending.filter(function (d) {
+      if (d.data && d.data.eraSkip) return false; // 9.1: cảnh sai thời (era902.js)
       if (schoolOff(life, (d.title || "") + " " + (d.text || ""))) return false;
       if (inMil && !/^(nv_|treat$|phau_thuat$)/.test(d.id)) return false; // v3.3: đang tại ngũ thì chỉ còn chuyện quân ngũ
       if (life.abroad && life.abroad.trapped && !/^(kh_|treat$|phau_thuat$)/.test(d.id)) return false;

@@ -22,6 +22,9 @@
     life: null, cohort: null, speed: 1, paused: false, auto: false, skipping: false,
     progress: 0, queue: [], phase: 'idle', yearRunning: false, last: 0, modalTimer: null
   };
+  // 9.1: năm sinh do người chơi chọn (1900 đến năm nay); để trống là năm nay
+  var NOW_YEAR = new Date().getFullYear(), MIN_YEAR = (G.E.ERA902 && G.E.ERA902.YEAR_MIN) || 1900;
+  S.set.year = (+S.set.year >= MIN_YEAR && +S.set.year < NOW_YEAR) ? Math.floor(+S.set.year) : null;
   if (window.MOTDOI_PREVIEW) { S.preview = Object.assign({}, window.MOTDOI_PREVIEW); delete window.MOTDOI_PREVIEW; }
   S.set.name = '';
   S.set.difficulty = 'normal';
@@ -122,6 +125,10 @@
   function syncSetupUI() {
     var vn = S.set.mode === 'vn';
     var country = $('#countrySel');
+    var ys = $('#yearSel');
+    if (ys.options.length === 0) { ys.add(new Option('Năm nay (' + NOW_YEAR + ')', '')); for (var y = NOW_YEAR - 1; y >= MIN_YEAR; y--) ys.add(new Option(String(y), String(y))); }
+    ys.value = S.set.year ? String(S.set.year) : '';
+    $('#yearHint').textContent = S.set.year ? 'Chế độ thử nghiệm giai đoạn 1: game tránh công nghệ và sự kiện chưa tồn tại vào năm ' + S.set.year + '. Tuổi thọ, kinh tế, tên nước và sự kiện lịch sử riêng từng nước vẫn là của hiện nay, sẽ được bổ sung dần.' : 'Để mặc định là năm nay, hoặc chọn một năm từ ' + MIN_YEAR + ' để thử một đời trong quá khứ.';
     if (country.options.length === 1) {
       W.C.filter(function (c) { return c.births > 0; })
         .sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); })
@@ -199,7 +206,7 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed() }; }
+  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var where = E.isVN(l) ? l.provLabel + ' · Việt Nam' : l.city + ' · ' + l.countryName;
@@ -283,6 +290,7 @@
   $$('.tab').forEach(function (t) { t.onclick = function () { S.set.mode = t.dataset.mode; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); }; });
   $$('#variantChips .chip').forEach(function (c) { c.onclick = function () { S.set.variant = c.dataset.variant; S.set.prov = ''; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); }; });
   $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); };
+  $('#yearSel').onchange = function () { S.set.year = this.value ? +this.value : null; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
   $('#countrySel').onchange = function () { S.set.country = this.value; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
   $('#ethSel').onchange = function () { S.set.eth = this.value; saveSettings(); };
   $('#nameInp').oninput = function () { S.set.name = this.value; };
@@ -307,7 +315,7 @@
   });
 
   $('#bornBtn').onclick = function () {
-    var opts = { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin };
+    var opts = { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin, year: S.set.year || undefined };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
     bornWith(opts);
   };

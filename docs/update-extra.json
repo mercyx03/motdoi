@@ -1,5 +1,23 @@
 [
   {
+    "id": "era-year-select-91000",
+    "version": "9.1.0",
+    "publishedAt": "2026-11-14T21:28:00+07:00",
+    "releaseStatus": "packaged",
+    "title": "Chọn năm sinh từ 1900, chặn công nghệ và sự kiện chưa tồn tại (thử nghiệm)",
+    "summary": "Thêm ô chọn năm sinh; đời sinh năm cũ không còn gặp YouTube, smartphone, internet hay Covid trước khi chúng xuất hiện.",
+    "tags": [
+      "Thời đại",
+      "Tính năng mới"
+    ],
+    "details": [
+      "Màn thiết lập có ô \"Năm sinh (thử nghiệm)\", từ 1900 đến năm nay; để mặc định là năm nay như trước.",
+      "Đời sinh năm cũ tránh những thứ chưa tồn tại vào thời đó: tivi, điện thoại di động, internet, mạng xã hội, YouTube, smartphone, TikTok, livestream, game online, tiền mã hóa, AI, Covid, một số kỹ thuật y học và nghề mới. Tin nhắn thời chưa có tin nhắn được kể bằng thư hoặc cuộc gọi.",
+      "Đây là giai đoạn 1: tuổi thọ, kinh tế, tên nước và thành phố, mức phổ biến công nghệ theo từng nước và các sự kiện lịch sử riêng từng nước vẫn là của hiện nay, sẽ được bổ sung dần. Đời sinh năm nay không thay đổi."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "logic-sweep-90002",
     "version": "9.0.2",
     "publishedAt": "2026-11-14T20:50:34+07:00",

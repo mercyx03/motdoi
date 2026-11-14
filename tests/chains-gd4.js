@@ -196,7 +196,7 @@ ok(married, 'marriage: có nhân vật đã kết hôn để kiểm');
 
 // ---------- 7. Bạn bè: danh tính theo uid, không nhầm người trùng tên ----------
 let social = null;
-for (let s = 700; s < 760 && !social; s++) social = grow(s, x => x.age >= 25 && x.age <= 40 && x.indep && E.friendsOf(x).filter(f => x.age + (f.d || 0) >= 18).length >= 2);
+for (let s = 700; s < 760 && !social; s++) social = grow(s, x => x.age >= 25 && x.age <= 40 && x.indep && !x.abroad && E.friendsOf(x).filter(f => x.age + (f.d || 0) >= 18).length >= 2);
 ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
 {
   const l = clone(social), fs2 = E.friendsOf(l).filter(f => l.age + (f.d || 0) >= 18), A = fs2[0], B = fs2[1];

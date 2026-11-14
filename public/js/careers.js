@@ -317,6 +317,7 @@
     id = resolveJob(id);
     if (id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     var c = CAR[id];
+    if (E.ERA902 && E.ERA902.jobBlocked(l, id, c)) { if (!quiet) log('Nghề này chưa xuất hiện vào thời của bạn.', 'neutral'); return false; } // 9.1: không nhận nghề chưa tồn tại
     if (c.minAge && l.age < c.minAge) { if (!quiet) log('Công việc này chỉ nhận từ ' + c.minAge + ' tuổi.', 'neutral'); return false; }
     if (l.job && resolveJob(l.job.id) === id && l.job.yrs === 0 && l.jobsHist && l.jobsHist.length && l.jobsHist[l.jobsHist.length - 1].from === l.age) return; // v2.8: vừa nhận đúng việc này trong năm
     if (l.school && l.school !== 'police') { if (!quiet) log('Bỏ dở việc học để đi làm.', 'bad'); l.school = null; l.schoolEnd = null; l.cityStudent = null; if (l.abroad && l.abroad.study) l.abroad = null; }
