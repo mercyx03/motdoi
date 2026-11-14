@@ -1,3 +1,10 @@
+## 9.0.1 — Sửa ngoại hình khi quen lại người cũ, xem trước ngoại hình, xin tiền bố mẹ để du học
+
+- Sửa lỗi quen lại người cũ bị đổi ngoại hình: ngoại hình người yêu được lưu khi chia tay và giữ nguyên khi quay lại (trước đây tung lại từ đầu nên người cao điểm thành thấp điểm); bản lưu cũ tính lại đúng như lúc mới quen.
+- Tìm người yêu: lời giới thiệu người mới gặp hiện ngoại hình (điểm và nhãn) trước khi bạn quyết định; người đó giữ đúng điểm đã xem. Cảnh gặp lại người cũ cũng hiện ngoại hình hiện tại (`looks890.js`).
+- Du học (`fund890.js`): khi tiền của bạn chưa đủ học phí cả khóa, cảnh nộp hồ sơ nêu rõ thiếu bao nhiêu và cho xin hoặc mượn bố mẹ rồi nộp hồ sơ tự túc luôn; bước xin visa liệt kê từng điều kiện còn thiếu kèm số tiền (học phí, giấy tờ, kế hoạch học, ngoại ngữ, quỹ sinh hoạt) và có dòng xin / mượn bố mẹ. Khả năng của bố mẹ theo thu nhập và tiền tiết kiệm ước tính chia cho số con, xác suất đồng ý theo năng lực học tập, không theo giàu nghèo.
+- Kiểm thử: looks890 (537), fund890 (45), cùng các bộ liên quan.
+
 ## 9.0.0 — Nhập quốc tịch nhiều giai đoạn, nợ gia đình, trợ cấp thất nghiệp, bế tắc công ty, độ sâu homeschool
 
 - Nhập quốc tịch (`nat880.js`): nộp hồ sơ vào hàng chờ 1–3 năm, phỏng vấn có thể thuê luật sư, hủy khi rời nước, mất thường trú, đi tù hoặc có tiền án mới; nợ xấu giảm cơ hội; trượt thì nộp lại sau 1 năm.

@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-14T09:06:19.579Z",
+  "generatedAt": "2026-11-14T09:32:59.255Z",
   "entries": [
+    {
+      "id": "looks-study-fund-90001",
+      "version": "9.0.1",
+      "publishedAt": "2026-11-14T16:31:59.043+07:00",
+      "releaseStatus": "packaged",
+      "title": "Sửa ngoại hình khi quen lại người cũ, xem trước ngoại hình người yêu và xin tiền bố mẹ để du học",
+      "summary": "Quen lại người cũ giữ nguyên ngoại hình; xem ngoại hình trước khi quyết định tìm hiểu; du học nói rõ thiếu gì và cho xin hoặc mượn bố mẹ.",
+      "tags": [
+        "Tình cảm",
+        "Học tập",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Quen lại người cũ không còn bị đổi ngoại hình: điểm ngoại hình được lưu lúc chia tay và giữ nguyên khi quay lại.",
+        "Khi gặp người mới, lời giới thiệu hiện ngoại hình (điểm và nhãn) trước khi bạn chọn tìm hiểu; cảnh gặp lại người cũ cũng hiện ngoại hình hiện tại.",
+        "Du học: khi tiền riêng chưa đủ học phí, game nêu rõ thiếu bao nhiêu và cho xin hoặc mượn bố mẹ, rồi nộp hồ sơ tự túc luôn. Bước visa liệt kê từng điều kiện còn thiếu kèm số tiền. Bố mẹ có thể đồng ý đủ, giúp một phần hoặc từ chối; khả năng theo thu nhập gia đình, số con và tiền tiết kiệm ước tính."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "family-naturalization-90000",
       "version": "9.0.0",
