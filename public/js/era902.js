@@ -12,6 +12,9 @@
   var E = G.E; if (!E || !E.DEC) return;
   var YEAR_MIN = 1900;
   // [id, nhận diện, năm đầu tiên, cơ sở]. Chỉ ghi mốc có thể đối chiếu công khai.
+  // 9.2: mức phổ cập THEO NƯỚC (era920.js, ITU/WDI): dưới ngưỡng ở nước và năm đó thì coi như chưa có, dù trên thế giới đã có từ năm ghi ở TECH.
+  // Ngưỡng là tham số trò chơi (thuê bao di động trên 100 dân / % dân dùng internet), không phải mốc thống kê.
+  var ADOPT = { mobile: ['mobile', 1], sms: ['mobile', 3], smartphone: ['internet', 5], internet: ['internet', 1], wifi: ['internet', 2], google: ['internet', 1], facebook: ['internet', 3], youtube: ['internet', 3], instagram: ['internet', 5], tiktok: ['internet', 10], zalo: ['internet', 3], stream: ['internet', 5], dating_app: ['internet', 5], ridehail: ['internet', 5], ewallet: ['internet', 5], crypto: ['internet', 3], ai: ['internet', 5], videocall: ['internet', 3], podcast: ['internet', 3], spotify: ['internet', 5], appstore: ['internet', 5], netculture: ['internet', 1] };
   var TECH = [
     ['tv', /\btivi\b|\bti vi\b|\bTV\b|truyền hình/i, 1936, 'BBC phát sóng truyền hình công cộng thường xuyên từ 11/1936'],
     ['mobile', /điện thoại di động|điện thoại cầm tay|đi động/i, 1983, 'Motorola DynaTAC bán thương mại 1983'],
@@ -67,32 +70,40 @@
     ['ielts', /\bIELTS\b/, 1989, 'IELTS ra mắt 1989'],
     ['toefl', /\bTOEFL\b/i, 1964, 'TOEFL 1964'],
     ['atvncg', /anh trai vượt ngàn chông gai|anh trai ["“]?say hi/i, 2024, 'chương trình truyền hình thực tế phát sóng lần đầu năm 2024']
-  ].map(function (t) { return { id: t[0], re: t[1], from: t[2], basis: t[3] }; });
+  ].map(function (t) { return { id: t[0], re: t[1], from: t[2], basis: t[3], ad: ADOPT[t[0]] || null }; });
   // Nghề không nhận ra được qua tên (năm đầu tiên nghề có thể tồn tại): tài xế công nghệ 2009 (Uber), quán net 1991, lập trình viên 1950, v.v.
   var JOB_FROM = { tx_cn: 2009, quan_net: 1991, kd_online: 1995, dev: 1950, data: 1960, fl_dev: 1960, fl_video: 1975, tuyen_thu_es: 1997, coach_es: 1997, caster_es: 1997, dau_tu_es: 1997, cay_thue: 2009, lua_dao: 1995, tiep_vien: 1930, kskl: 1930, phi_cong: 1914, ky_su_vu_tru: 1957, nc_y_sinh: 1940, telesale: 1960, tiem_dt: 1985, rapper: 1973, dj: 1935 };
   var MAXFROM = Object.keys(JOB_FROM).reduce(function (m, k) { return Math.max(m, JOB_FROM[k]); }, TECH.reduce(function (m, t) { return Math.max(m, t.from); }, 0)), NONE = [], cache = {}, stats = { text: 0, scene: 0, opts: 0, job: 0, act: 0 };
   function worldYear(l) { return l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; }
+  function localAt(l, y) { var cc = (l && l.abroad && l.abroad.perm && l.abroad.code) || (l && l.country); return cc && E.ERA920 && y >= E.ERA920.FROM && y <= E.ERA920.TO ? E.ERA920.at(cc, y) : null; }
+  var ADO = {};
+  function activeFor(l) {
+    var y = worldYear(l), g = activeAt(y), a = localAt(l, y); if (!a) return g;
+    var cc = (l.abroad && l.abroad.perm && l.abroad.code) || l.country, k = cc + ':' + y, c = ADO[k]; if (c) return c;
+    var extra = TECH.filter(function (t) { return t.ad && y >= t.from && !(a[t.ad[0]] >= t.ad[1]); });
+    return (ADO[k] = extra.length ? g.concat(extra) : g);
+  }
   function activeAt(y) { if (y >= MAXFROM) return NONE; return cache[y] || (cache[y] = TECH.filter(function (t) { return y < t.from; })); }
   function firstHit(act, s) { for (var i = 0; i < act.length; i++) if (act[i].re.test(s)) return act[i]; return null; }
-  function anachronism(l, s) { var a = activeAt(worldYear(l)); return a.length && typeof s === 'string' && s ? firstHit(a, s) : null; }
+  function anachronism(l, s) { var a = activeFor(l); return a.length && typeof s === 'string' && s ? firstHit(a, s) : null; }
   // Thay từ theo thời đại (giữ nội dung tình cảm thay vì bỏ câu): [nhận diện, năm hết hiệu lực, thay thế theo năm].
   function caseLike(src, w) { return src.charAt(0) !== src.charAt(0).toLowerCase() ? w.charAt(0).toUpperCase() + w.slice(1) : w; }
   var SUBS = [
-    { re: /nhắn tin/gi, to: 1992, f: function (y) { return y < 1960 ? 'viết thư' : 'gọi điện'; } },
-    { re: /tin nhắn/gi, to: 1992, f: function (y) { return y < 1960 ? 'lá thư' : 'lời nhắn'; } },
-    { re: /gọi video/gi, to: 2003, f: function (y) { return y < 1960 ? 'viết thư' : 'gọi điện'; } }
+    { re: /nhắn tin/gi, to: 2024, f: function (y, l) { var a = localAt(l, y); if (a ? (a.mobile >= 3 || a.internet >= 1) : y >= 1992) return null; return (a ? a.fixed >= 0.5 : y >= 1960) ? 'gọi điện' : 'viết thư'; } },
+    { re: /tin nhắn/gi, to: 2024, f: function (y, l) { var a = localAt(l, y); if (a ? (a.mobile >= 3 || a.internet >= 1) : y >= 1992) return null; return (a ? a.fixed >= 0.5 : y >= 1960) ? 'lời nhắn' : 'lá thư'; } },
+    { re: /gọi video/gi, to: 2024, f: function (y, l) { var a = localAt(l, y); if (a ? a.internet >= 3 : y >= 2003) return null; return (a ? a.fixed >= 0.5 : y >= 1960) ? 'gọi điện' : 'viết thư'; } }
   ];
   var SUBS_TO = SUBS.reduce(function (m, x) { return Math.max(m, x.to); }, 0);
   function substitute(l, s) {
     var y = worldYear(l); if (y >= SUBS_TO || typeof s !== 'string') return s;
-    for (var i = 0; i < SUBS.length; i++) if (y < SUBS[i].to) s = s.replace(SUBS[i].re, function (m) { return caseLike(m, SUBS[i].f(y)); });
+    for (var i = 0; i < SUBS.length; i++) if (y < SUBS[i].to) s = s.replace(SUBS[i].re, function (m) { var w = SUBS[i].f(y, l); return w == null ? m : caseLike(m, w); });
     return s;
   }
   // Cắt các câu sai thời. Trả về chuỗi mới; null khi là dòng nhật ký và không còn gì; giữ nguyên bản gốc khi là văn bản cảnh mà câu nào cũng sai thời.
   function clean(l, s, isLog) {
     if (typeof s !== 'string' || !s) return s;
     s = substitute(l, s);
-    var a = activeAt(worldYear(l)); if (!a.length || !firstHit(a, s)) return s;
+    var a = activeFor(l); if (!a.length || !firstHit(a, s)) return s;
     var removed = 0, lines = s.split('\n').map(function (line) {
       if (!firstHit(a, line)) return line;
       var parts = line.replace(/([.!?…]+)\s+/g, '$1\u0001').split('\u0001'), keep = parts.filter(function (p) { return !firstHit(a, p); });
@@ -111,7 +122,7 @@
   };
   // --- 2. cảnh: cắt lựa chọn sai thời, bỏ cả cảnh nếu cốt lõi sai thời ---
   function refine(l, dec) {
-    var a = activeAt(worldYear(l)); if (!a.length || !dec || typeof dec !== 'object') return dec;
+    var a = activeFor(l); if (!a.length || !dec || typeof dec !== 'object') return dec;
     if (typeof dec.title === 'string') dec.title = substitute(l, dec.title);
     if (typeof dec.text === 'string') dec.text = substitute(l, dec.text);
     if (Array.isArray(dec.opts)) dec.opts.forEach(function (o) { if (o) { if (typeof o.l === 'string') o.l = substitute(l, o.l); if (typeof o.h === 'string') o.h = substitute(l, o.h); } });
@@ -134,14 +145,14 @@
   var SC0 = E.SC; if (typeof SC0 === 'function') E.SC = function (id) { var r = SC0.apply(this, arguments); wrapDec(id); return r; };
   // --- 3. nghề chưa tồn tại: careers.js gọi trước khi nhận việc ---
   function jobBlocked(l, id, c) {
-    var y = worldYear(l); if (y >= MAXFROM) return false;
+    var y = worldYear(l); if (y >= MAXFROM && !(E.ERA920 && y <= E.ERA920.TO)) return false;
     if (JOB_FROM[id] && y < JOB_FROM[id]) { stats.job++; return true; }
-    var a = activeAt(y); if (!a.length) return false;
+    var a = activeFor(l); if (!a.length) return false;
     var s = String(id) + ' ' + ((c && c.t) || []).join(' ') + ' ' + ((c && c.prod) || []).join(' ');
     if (firstHit(a, s)) { stats.job++; return true; } return false;
   }
   // --- 4. hành động chủ động ---
-  var actions0 = E.actions; if (typeof actions0 === 'function') E.actions = function (l) { var out = actions0.apply(this, arguments); if (!activeAt(worldYear(l)).length) return out; return out.filter(function (x) { if (firstHit(activeAt(worldYear(l)), x.l || '')) { stats.act++; return false; } return true; }); };
-  E.ERA902 = { YEAR_MIN: YEAR_MIN, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
+  var actions0 = E.actions; if (typeof actions0 === 'function') E.actions = function (l) { var out = actions0.apply(this, arguments); if (!activeFor(l).length) return out; return out.filter(function (x) { if (firstHit(activeFor(l), x.l || '')) { stats.act++; return false; } return true; }); };
+  E.ERA902 = { YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
   if (E.ERA917) E.ERA917.tech = E.ERA902; // gắn vào khung thời đại có sẵn
 })(globalThis.G);

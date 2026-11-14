@@ -7,10 +7,11 @@
 var IDS=['net_coi','viec_online','tiktok','nap_game','ld_app_khoa_tk','net_tre_tron_hoc','telesale_data_ban','es_hop_dong_doi','es_ban_do','es_toxic_mang','es_nghien_choi','es_scout','fl_khach_quyt','fl_bhxh_tu_nguyen','fl_hop_dong_doc_quyen','fl_dich_tai_lieu_mat','fl_content_ai','fl_aff_hang_kem','fl_long_tieng_giong_ai','fl_burnout_lam_dem','cn_mang_xa_hoi_toxic','ghep_game','chon_game','dk_game','dk_game_nho','dk_ship','dk_ship_nho','fan_sinh_nhat','fan_vote','fan_photocard','fan_war','mxh_boc_phot','mxh_hoi_nhom','k6_lua_game'];
 var FULL=.75;
 function hash(k){var h=2166136261;k=String(k);for(var i=0;i<k.length;i++){h^=k.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967296;}
-function base(l){var c=H.resCode(l),v=D.net[c];return v==null?null:v/100;}
+// 9.2: đời sinh trước 2024 dùng tỷ lệ dùng internet CỦA NĂM ĐANG SỐNG (era920.js, cùng nguồn ITU/WDI) thay vì số liệu hiện nay.
+function base(l,age){var c=H.resCode(l),v=D.net[c];if(E.ERA920&&l.birthYear!=null){var y=l.birthYear+(age==null?l.age:age);if(y<=E.ERA920.TO){var n=E.ERA920.net(c,y);if(n!=null)return n/100;}}return v==null?null:v/100;}
 // Mức tiếp cận hiệu dụng của một người trong năm hiện tại của họ (0..1).
 function effective(l,age){
- var b=base(l);if(b==null)return null;
+ var b=base(l,age);if(b==null)return null;
  var a=age==null?l.age:age,w=a<25?1.5:a<55?1:.6; // người trẻ dùng internet nhiều hơn mức trung bình toàn quốc, người lớn tuổi ít hơn
  var x=Math.min(1,b*w);
  x*=l.urban===false?.8:l.urban?1.12:1;

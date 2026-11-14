@@ -1,3 +1,24 @@
+## 9.3.0 — Biến cố lịch sử có hậu quả nhiều năm (giai đoạn 3–5)
+
+- `public/js/hist920.js` (mới): 17 biến cố lịch sử theo nước, năm, vùng, tuổi, giới, nghề và gia đình. Việt Nam: chiến tranh Đông Dương 1950–1953, Genève 1954 (ở lại hay di cư), cải cách ruộng đất và sửa sai 1956, chiến tranh miền Nam (lệnh nhập ngũ, giao tranh, Tết Mậu Thân ở Huế), chiến tranh miền Bắc (sơ tán, không kích), sau 30/4/1975 (học tập cải tạo, kinh tế mới, vượt biên), làn sóng người Hoa 1978–1979, bao cấp và đổi tiền 1978/1985, chiến tranh Campuchia. Thế giới: Khmer Đỏ 1975–1979, cú sốc dầu mỏ, chuyển đổi kinh tế Liên Xô cũ và Đông Âu (lạm phát phi mã, mất việc), chiến tranh Nam Tư, khủng hoảng châu Á 1997, khủng hoảng 2008 và nợ châu Âu, sóng thần 2004, COVID-19.
+- Cơ chế: việc dang dở (chấn thương tâm lý, di dời, túng thiếu, nhãn thành phần) kéo sang các năm sau, nhẹ đi hoặc khép lại theo tiền, việc làm, bạn đời, sức khỏe; việc mới mở chỉ bắt đầu tính từ năm sau. Lựa chọn quan trọng là cảnh `hist920_choice` (nhập ngũ/hoãn/tránh, ở lại/đi, kinh tế mới/vượt biên), máy tự chọn theo tính cách và hoàn cảnh, lựa chọn được ghi vào `flags.hist920` và đổi biến cố sau (phía của Việt Nam, đã làm lính, đã tị nạn). Quyết định băm theo mã đời + năm nên tải lại không đổi kết quả.
+- Dùng hệ thống có sẵn, không thêm hệ thống riêng: `flags.military`, `l.job`/`flags.needJob`, `flags.chronic`, `fam.fAlive`, `H.emigrate`, `H.moveToCity`, `E.SC` + `E.UPDATE110.next`.
+- `era920-pol.js`: thêm bối cảnh chính trị cho 148 nước (độc tài, nội chiến, đảo chính, đổi chế độ).
+- Chỉ áp cho đời có số liệu theo năm và năm thế giới đến 2023; đời sinh 2024 trở đi không đổi byte nào (kiểm thử băm).
+- Sự kiện là kiến thức công khai, CHƯA đối chiếu từng nguồn trong phiên này (`ver: public`); xác suất và mức thiệt hại là tham số trò chơi.
+- Kiểm thử: `tests/hist920.js` (86 kiểm tra). Tài liệu: `docs/ERA-GIAI-DOAN-3-5-930.md`.
+
+## 9.2.0 — Số liệu quốc gia theo năm 1950–2023, tên nước và thành phố theo năm (giai đoạn 2)
+
+- `tools/build-era-data920.js` + `public/js/data-era920.js` (sinh tự động, 195 nước × 74 năm): tuổi thọ và tổng tỷ suất sinh (UN WPP 2024), tử vong dưới 5 tuổi (UN IGME), % đô thị (UN WUP), GDP bình quân tương đối (Maddison 2023), thuê bao di động, đường dây cố định và người dùng internet (ITU/WDI), qua Our World in Data (CC BY). URL và SHA-256 của từng nguồn nằm trong tệp dữ liệu; phần ước tính được đánh dấu (tử vong trẻ em trước năm đầu có số liệu, GDP thiếu).
+- `public/js/era920.js`: đời sinh 1950–2023 dùng tuổi thọ, u5, tỷ suất sinh của năm sinh; đường tử vong `life.mort/mortM/mortF` được nạp lại MỖI NĂM theo số liệu của năm đó (trước đây cả đời dùng số liệu hiện nay); số con mong muốn theo tỷ suất sinh năm quyết định; xác suất sinh ở đô thị theo năm; ngưỡng phát triển theo năm (`E.devGdp`, thay `life.gdp` ở lao động trẻ em, tảo hôn, lao phổi, tiêm chủng, học tập, nghề của mẹ, muốn di cư, hạnh phúc nền); hệ số bù tử vong đo bằng mô phỏng.
+- `era902.js`: công nghệ chỉ xuất hiện khi nước đang sống đủ mức phổ cập (di động, internet); "nhắn tin" đổi theo mức điện thoại. `access890.js`: tiếp cận internet theo năm đang sống.
+- `era920-pol.js`: tên nước theo năm (Miến Điện, Zaire…), tình trạng chính trị (thuộc địa đến năm độc lập, Liên Xô, Nam Tư, Đức chia đôi, Việt Nam chia hai miền, apartheid…) và tên thành phố (Sài Gòn trước 2/7/1976, Bombay…).
+- `engine.js`: nối `E.ERA920` (birth/refresh/cal/tfrNow/urbanK/devGdp); đời Việt Nam sinh trước 2025 dùng 63 tỉnh. `app.js`: ô năm sinh 1950–nay, nhóm thử nghiệm 1900–1949, mô tả theo nước và năm.
+- Đo: Ấn Độ 1950 (mô phỏng 46,6 so với mô hình 46,3), Nigeria 1960 (38,7 / 39,6), Nhật 1950 (75,4 / 73,6), Hoa Kỳ 2000 (79,3 / 79,5), Việt Nam 1950 (50,0 / 53,3); chết trước 5 tuổi trong khoảng ±10 điểm % so với UN (Việt Nam cao hơn do hệ số nhóm vốn có). Chi tiết và giới hạn: `docs/ERA-GIAI-DOAN-2-920.md`.
+- Chưa làm: lương và giá theo năm, chính sách từng nước, số liệu trước 1950 (không bịa; nhóm thử nghiệm).
+- Kiểm thử: `tests/era920.js` (64 kiểm tra); sửa `tests/era902.js` (dòng mô tả) và `tests/chains-gd4.js` (mục nghề nghiệp bền với may rủi của một mầm cố định).
+
 ## 9.1.0 — Chọn năm sinh từ 1900 và chặn công nghệ, sự kiện chưa tồn tại (giai đoạn 1)
 
 - Màn thiết lập có ô "Năm sinh (thử nghiệm)": để mặc định là năm nay hoặc chọn một năm từ 1900. Năm sinh được kiểm tra, lưu cùng cài đặt và dùng cả ở hồ sơ xuất phát.

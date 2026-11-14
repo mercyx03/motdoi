@@ -1,6 +1,49 @@
 {
-  "generatedAt": "2026-11-14T14:28:01.042Z",
+  "generatedAt": "2026-11-14T17:58:53.441Z",
   "entries": [
+    {
+      "id": "era-events-93000",
+      "version": "9.3.0",
+      "publishedAt": "2026-11-15T00:58:53+07:00",
+      "releaseStatus": "packaged",
+      "title": "Biến cố lịch sử có hậu quả nhiều năm: Việt Nam, Khmer Đỏ, Đông Âu, COVID-19",
+      "summary": "Đời sinh năm cũ gặp các biến cố lớn của đúng nước và thời điểm, có lựa chọn và hậu quả kéo dài nhiều năm.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Việt Nam: chiến tranh Đông Dương (1950–1953), Hiệp định Genève 1954 và lựa chọn ở lại hay di cư, cải cách ruộng đất và đợt sửa sai 1956, chiến tranh ở hai miền (lệnh nhập ngũ, sơ tán, giao tranh), 30/4/1975 với học tập cải tạo, kinh tế mới và vượt biên, làn sóng người Hoa 1978–1979, thời bao cấp và hai lần đổi tiền, chiến tranh Campuchia.",
+        "Nơi sinh quyết định bạn chịu biến cố nào: tỉnh sinh ra cho biết miền Bắc hay miền Nam; tuổi, giới tính, nghề và gia đình quyết định ai bị gọi nhập ngũ, ai mất việc, ai phải rời nhà.",
+        "Lựa chọn được ghi nhớ: nhập ngũ, hoãn, tránh nghĩa vụ; ở lại hay đi; vượt biên có thể chết, bị bắt hoặc đến nơi định cư. Điều bạn chọn đổi các biến cố sau (phía của đất nước, đã làm lính, đã tị nạn).",
+        "Hậu quả không biến mất ngay: chấn thương tâm lý, di dời, túng thiếu và nhãn thành phần mở ra rồi kéo sang các năm sau, nhẹ dần hoặc dai dẳng tùy tiền, việc làm, gia đình và sức khỏe.",
+        "Thế giới: Khmer Đỏ ở Campuchia 1975–1979, chuyển đổi kinh tế và lạm phát phi mã ở Liên Xô cũ và Đông Âu, các cuộc chiến ở Nam Tư cũ, cú sốc dầu mỏ 1974–1975 và 1980–1982, khủng hoảng châu Á 1997, khủng hoảng tài chính 2008, sóng thần 2004 và đại dịch COVID-19.",
+        "Hơn 140 nước có dòng bối cảnh chính trị theo năm (thuộc địa đến năm độc lập, độc tài, nội chiến, đảo chính) hiện trong nhật ký khi tình trạng đổi.",
+        "Các mốc và sự kiện là kiến thức công khai, chưa đối chiếu lại từng nguồn; xác suất và mức thiệt hại là tham số trò chơi, không phải số liệu thương vong. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": null
+    },
+    {
+      "id": "era-data-92000",
+      "version": "9.2.0",
+      "publishedAt": "2026-11-15T00:40:00+07:00",
+      "releaseStatus": "packaged",
+      "title": "Đời sinh 1950–2023 dùng số liệu thật theo năm, tên nước và thành phố đúng thời",
+      "summary": "Tuổi thọ, sinh đẻ, trẻ em tử vong, đô thị hóa, điện thoại và internet nay theo đúng nước và đúng năm.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Chọn năm sinh từ 1950 đến nay: tuổi thọ, tổng tỷ suất sinh, tử vong dưới 5 tuổi, tỷ lệ dân đô thị, thuê bao di động và người dùng internet lấy theo đúng nước và đúng năm (Liên Hợp Quốc, Ngân hàng Thế giới, ITU, Maddison, qua Our World in Data). Đường tử vong được tính lại mỗi năm, nên người sinh năm 1950 hưởng cải thiện y tế qua các thập niên thay vì sống cả đời với số liệu hiện nay.",
+        "Số con, cỡ gia đình, nghề của mẹ, lao động trẻ em, tảo hôn, lao phổi, tiêm chủng và học tập theo mức phát triển của năm đang sống. Việt Nam sinh trước 2025 dùng 63 tỉnh như thời đó.",
+        "Điện thoại di động, mạng xã hội và nhắn tin chỉ xuất hiện khi nước bạn sống đủ mức phổ cập: một đứa trẻ ở Nigeria năm 2004 chưa có Facebook như đứa trẻ ở Mỹ cùng năm.",
+        "Tên nước và thành phố theo năm: Sài Gòn trước 2/7/1976, Bombay, Leningrad, Miến Điện, Zaire, Liên Xô, Tiệp Khắc, Nam Tư, Đức chia đôi; thuộc địa đến năm độc lập. Hiện ở màn thiết lập và trong nhật ký.",
+        "Năm sinh 1900–1949 vẫn chọn được nhưng thuộc nhóm thử nghiệm: trước 1950 chưa có số liệu dân số theo từng nước và từng năm nên game không bịa số liệu, chỉ tránh công nghệ chưa có.",
+        "Chưa làm: lương và giá cả theo năm, chính sách từng nước (hưu trí, bảo hiểm y tế, giáo dục bắt buộc). Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-year-select-91000",
       "version": "9.1.0",

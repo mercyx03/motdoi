@@ -79,13 +79,17 @@ const chains = l => (l.flags.chains144 || { active: [], done: [] });
 
 // ---------- 2. Nghề nghiệp: nhường suất → tìm việc → được giới thiệu ----------
 {
-  const l = adult(21, 32); l.edu = 5; l.st.kno = 70; E.startJob(l, 'van_phong', H.rf(l), say(l), true);
-  const giu = clone(l); decide(giu, 'cs_cat_giam', 'giu');
-  ok(!C.active(giu, 'career'), 'career: giữ việc thì không mở chuỗi');
-  const d0 = decide(l, 'cs_cat_giam', 'nhuong');
-  const c = C.active(l, 'career');
-  ok(c && c.npc.name === d0.data.n && !l.job && l.lastJob, 'career: nhường suất → chuỗi nhớ đúng người đồng nghiệp');
-  const s = nextStage(l, c.id);
+  // giai đoạn "tìm việc" xuất hiện theo xác suất của từng đời: thử vài mầm cho tới khi gặp đời có nhánh này (không phụ thuộc may rủi của một mầm cố định)
+  let l = null, c = null, d0 = null, s = null;
+  for (let seed = 21; seed < 90 && !s; seed++) {
+    const x = adult(seed, 32); x.edu = 5; x.st.kno = 70; E.startJob(x, 'van_phong', H.rf(x), say(x), true);
+    const giu = clone(x); decide(giu, 'cs_cat_giam', 'giu');
+    ok(!C.active(giu, 'career'), 'career: giữ việc thì không mở chuỗi');
+    const dd = decide(x, 'cs_cat_giam', 'nhuong'), cc = C.active(x, 'career');
+    ok(cc && cc.npc.name === dd.data.n && !x.job && x.lastJob, 'career: nhường suất → chuỗi nhớ đúng người đồng nghiệp');
+    const ss = nextStage(clone(x), cc.id);
+    if (ss && ss.id === 'ch144_job_search' && ss.at === 33) { l = x; c = cc; d0 = dd; s = nextStage(l, c.id); }
+  }
   ok(s && s.id === 'ch144_job_search' && s.at === 33, 'career: năm sau còn thất nghiệp thì có lựa chọn tìm việc');
   const m0 = l.money; decide(l, s.id, 'retrain', s.arg);
   ok(l.money < m0 && c.data.retrained && c.stage === 1, 'career: học nghề trừ học phí đúng một lần');
