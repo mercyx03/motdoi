@@ -3,7 +3,7 @@
     "id": "bank-health-81080",
     "version": "8.10.80",
     "publishedAt": "2026-11-14T07:07:19.235+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Lãi suất ngân hàng theo nước, phí thuốc NHS và đồng chi trả Nhật Bản, thuế Scotland và National Insurance",
     "summary": "Sổ tiết kiệm và khoản vay mới ở Anh, Mỹ, Canada, Úc theo lãi suất của ngân hàng trung ương; phí kê đơn và phiếu trả trước thuốc của NHS England; tỷ lệ tự trả viện phí ở Nhật từ 70 tuổi; thuế lương Scotland và National Insurance.",
     "tags": [
@@ -18,7 +18,8 @@
       "Nhật Bản từ 70 tuổi: 70–74 tự trả 20%; từ 75 tự trả 10%, hoặc 20% nếu thu nhập hộ từ 200 vạn yên (một người) hay 320 vạn yên (hai người trở lên); thu nhập ngang người đang làm trả 30%.",
       "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2023–24 (19% đến 47–48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; hai ngưỡng 500.000 và 1.000.000 SGD đã đối chiếu IRAS."
     ],
-    "releasedAt": null
+    "releasedAt": "2026-11-14T05:20:24.615Z",
+    "correctedAt": "2026-11-14T05:20:28.915Z"
   },
   {
     "id": "wage-tax-81079",
