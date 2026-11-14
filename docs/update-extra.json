@@ -1,5 +1,27 @@
 [
   {
+    "id": "family-naturalization-90000",
+    "version": "9.0.0",
+    "publishedAt": "2026-11-14T14:32:54.180+07:00",
+    "releaseStatus": "packaged",
+    "title": "Nhập quốc tịch nhiều giai đoạn, nợ anh chị em, trợ cấp thất nghiệp, bế tắc công ty gia đình và homeschool sâu hơn",
+    "summary": "Hồ sơ nhập quốc tịch là quy trình nhiều năm; trả nợ giúp anh chị em có hệ quả lâu dài; mất việc ở Anh và Canada có trợ cấp theo đóng góp; bế tắc 50/50 công ty gia đình leo thang; sáu vùng homeschool có thủ tục chi tiết hơn.",
+    "tags": [
+      "Gia đình",
+      "Tài chính",
+      "Quốc gia",
+      "Kinh doanh"
+    ],
+    "details": [
+      "Nhập quốc tịch: nộp hồ sơ rồi chờ nhiều năm, phỏng vấn có thể thuê luật sư; hồ sơ bị hủy nếu bạn rời nước, đi tù hoặc có tiền án mới; trượt thì nộp lại sau một năm.",
+      "Gia đình: trả nợ giúp anh chị em tạo khoản nợ theo dõi nhiều năm (trả theo đợt, lỡ hẹn, qua đời); trễ lâu thì chọn bỏ qua, gia hạn, kiện hoặc trừ vào di sản. Di chúc rõ ràng giảm nguy cơ kiện di sản.",
+      "Phúc lợi: người thường trú ở Anh và Canada đã đóng bảo hiểm mà mất việc nhận trợ cấp thất nghiệp theo đóng góp (mức là tham số trò chơi).",
+      "Công ty gia đình: bế tắc 50/50 kéo dài ba năm thì phía còn lại đề nghị nhượng 1% hoặc ra tòa; giữ nguyên làm giảm điểm quản trị và sau ba lần tòa tự chỉ định chủ tịch độc lập.",
+      "Học tại nhà: British Columbia, Queensland, Manitoba, Nova Scotia, Florida và Virginia có hạn nộp, báo cáo, tài trợ và điều kiện văn bằng theo trang chính thức. Các vùng còn lại giữ quy tắc chung."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "bank-health-81080",
     "version": "8.10.80",
     "publishedAt": "2026-11-14T07:07:19.235+07:00",

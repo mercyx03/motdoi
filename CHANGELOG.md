@@ -1,3 +1,14 @@
+## 9.0.0 — Nhập quốc tịch nhiều giai đoạn, nợ gia đình, trợ cấp thất nghiệp, bế tắc công ty, độ sâu homeschool
+
+- Nhập quốc tịch (`nat880.js`): nộp hồ sơ vào hàng chờ 1–3 năm, phỏng vấn có thể thuê luật sư, hủy khi rời nước, mất thường trú, đi tù hoặc có tiền án mới; nợ xấu giảm cơ hội; trượt thì nộp lại sau 1 năm.
+- Gia đình (`fam890.js`): trả nợ giúp anh chị em thành khoản nợ nhiều năm (trả theo đợt, lỡ hẹn, qua đời), có cảnh xử lý (bỏ qua, gia hạn, kiện, trừ vào di sản); di chúc rõ ràng giảm nguy cơ kiện di sản; nợ cũ được bù trừ trong thỏa thuận.
+- Phúc lợi (`welfare890.js`): người thường trú ở Anh và Canada đã đóng bảo hiểm mất việc nhận trợ cấp thất nghiệp theo đóng góp (mức tham số trò chơi); nguồn gov.uk và canada.ca.
+- Doanh nghiệp gia đình (`business890.js`): bế tắc 50/50 leo thang theo năm (nhượng 1%, ra tòa, tòa tự chỉ định sau ba lần giữ nguyên).
+- Học tại nhà (`study-home890.js`): nâng độ sâu British Columbia, Queensland, Manitoba, Nova Scotia, Florida (đạo luật 2023), Virginia theo trang chính thức đọc được ngày 14/11/2026.
+- Bóng đá: test nhất quán qua nhiều đời cầu thủ và cầu thủ có caps (không thêm quy tắc mới vì nguồn FIFA không đọc được).
+- Chưa làm: quy tắc ngày vắng mặt và ngoại lệ nhập tịch (thiếu dữ liệu độ dài chuyến đi), phúc lợi Mỹ/Úc, ngoại lệ pháp lý nhiều chủ nợ và thời hiệu, homeschool Ontario/Western Australia/South Australia/Tasmania/phần lớn bang Mỹ (nguồn không đọc được), quy tắc FIFA trước 2021, lãi suất Singapore. Regression đầy đủ chưa có kết quả.
+- Kiểm thử: nat880 (39), fam890 (55), welfare890 (48), business890 (37), study-home890 (38), football890 (2446), cùng các bộ liên quan.
+
 ## 8.10.80 — Lãi suất ngân hàng theo nước, phí thuốc NHS, đồng chi trả Nhật Bản, thuế Scotland và National Insurance
 
 - Ngân hàng (`bank880.js`, nối `life112.js` và `H.addLoan`): từ năm 2026, sổ tiết kiệm có kỳ hạn và khoản vay mới ở Anh (Bank of England, tháng 9/2026), Mỹ (FDIC 19/10/2026, Fed G.19 quý 3/2026), Canada (Bank of Canada 11/11/2026), Úc (RBA F4/F5 tháng 10, F6 tháng 9/2026) theo lãi bình quân hoặc niêm yết; khoản vay ghi nguồn, giữ lãi lúc ký khi chuyển nước. Singapore chưa có (MAS đã ngừng chuỗi lãi suất ngân hàng); vay mua nhà Mỹ theo Freddie Mac PMMS 12/11/2026 (30 năm, 7,11%); nhãn lãi ở cảnh vay ngân hàng (`scenarios.js`) hiện theo nước.
