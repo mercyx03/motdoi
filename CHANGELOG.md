@@ -5,6 +5,8 @@
 - Phúc lợi (`welfare890.js`): người thường trú ở Anh và Canada đã đóng bảo hiểm mất việc nhận trợ cấp thất nghiệp theo đóng góp (mức tham số trò chơi); nguồn gov.uk và canada.ca.
 - Doanh nghiệp gia đình (`business890.js`): bế tắc 50/50 leo thang theo năm (nhượng 1%, ra tòa, tòa tự chỉ định sau ba lần giữ nguyên).
 - Học tại nhà (`study-home890.js`): nâng độ sâu British Columbia, Queensland, Manitoba, Nova Scotia, Florida (đạo luật 2023), Virginia theo trang chính thức đọc được ngày 14/11/2026.
+- Tiếp cận internet theo nước (`access890.js`, WDI IT.NET.USER.ZS): sự kiện mạng xã hội, việc trực tuyến, freelance, game, thể thao điện tử, giao hàng qua ứng dụng ít xuất hiện hơn ở nước và hoàn cảnh ít người dùng internet (nông thôn, nhà nghèo, người lớn tuổi); nước đã phổ cập không đổi.
+- Sửa lỗi từ rà soát: hồ sơ nhập quốc tịch không bị hủy oan khi về thăm quê; hòa giải di sản không còn tạo tiền bù trừ; tòa/phía kia lên làm chủ tịch thì gỡ ghế của bạn; không trả trợ cấp thất nghiệp cho người đang ở tù hoặc nhập ngũ.
 - Bóng đá: test nhất quán qua nhiều đời cầu thủ và cầu thủ có caps (không thêm quy tắc mới vì nguồn FIFA không đọc được).
 - Chưa làm: quy tắc ngày vắng mặt và ngoại lệ nhập tịch (thiếu dữ liệu độ dài chuyến đi), phúc lợi Mỹ/Úc, ngoại lệ pháp lý nhiều chủ nợ và thời hiệu, homeschool Ontario/Western Australia/South Australia/Tasmania/phần lớn bang Mỹ (nguồn không đọc được), quy tắc FIFA trước 2021, lãi suất Singapore. Regression đầy đủ chưa có kết quả.
 - Kiểm thử: nat880 (39), fam890 (55), welfare890 (48), business890 (37), study-home890 (38), football890 (2446), cùng các bộ liên quan.

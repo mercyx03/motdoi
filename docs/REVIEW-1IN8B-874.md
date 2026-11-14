@@ -64,3 +64,11 @@ Tỷ trọng nhóm nguyên nhân theo tuổi ở mức thế giới là ước t
 - Phễu 25 đời Mỹ sinh 1990: 24 có người yêu, 13 kết hôn (tuổi trung vị khoảng 36), 22 lần được hỏi chuyện con, 18 chọn có, 9 thực sự có con. Chuyện con thường được hỏi muộn (trung vị 36 tuổi) vì cưới muộn.
 - Ở quyết định cưới, AI chọn "chưa vội" khoảng 64% số lần (74/116), cao hơn nhiều so với bảng chọn tự động (33%): khi tình cảm dưới 75 điểm, lựa chọn cưới bị ẩn nên chỉ còn "chưa vội" hoặc ngỏ lời sớm.
 - Thử tăng tốc độ tăng tình cảm (8→11 điểm/năm), hỏi cưới thường hơn và giảm xác suất chia tay sau 25 tuổi: con/đời Mỹ 0,40→0,53 nhưng Nigeria 0,55→0,50 (40 đời mỗi nước), nằm trong sai số, nên đã hoàn tác. Muốn kết luận cần ít nhất vài trăm đời mỗi nước.
+
+## Đối chiếu lại ngày 14/11/2026 (bản 9.0)
+
+Đã đọc lại trang https://1in8b.life/vi/api/, bản tiếng Anh và `openapi.json` (engine 0.10.13, 172 nước, 5 điểm cuối có khóa, danh mục không khóa và kết nối MCP). Điều khoản cấm thu thập hàng loạt câu trả lời, dựng lại engine, huấn luyện AI trên câu trả lời, nên không lấy dữ liệu từ API; chỉ dùng cùng nguồn mở (WDI, UN, WHO) mà họ công bố.
+
+- Giao diện Một Đời luôn sinh vào năm hiện tại (không có ô chọn năm sinh), nên trục năm sinh 1950–2025 của 1in8b không phải khoảng trống ảnh hưởng người chơi. `createLife` có tham số `year` nhưng tuổi thọ và tử vong dưới 5 tuổi không đổi theo năm sinh; chỉ có ý nghĩa nếu sau này thêm chọn năm sinh.
+- Đã làm trong 9.0: mức tiếp cận internet theo nước (WDI IT.NET.USER.ZS) gating sự kiện phụ thuộc internet (`access890.js`).
+- Còn tồn đọng: điểm đến di cư theo UN DESA Migrant Stock và hạnh phúc theo WHR 2024 (cần đọc tệp bảng tính, chưa làm), giá nhà OECD theo năm, tử vong trẻ em theo năm (chỉ cần nếu có chọn năm sinh), TV/điện thoại/máy tính tại nhà (WDI không có chỉ số TV).
