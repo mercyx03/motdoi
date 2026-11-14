@@ -335,6 +335,15 @@
   var grad=E.gradFail;E.gradFail=function(l){if(active(l)&&!hs(l).schoolManaged)return true;return grad&&grad.apply(this,arguments);};
   ['hs'].forEach(function(id){if(!E.DEC[id])return;var old=E.DEC[id].valid;E.DEC[id].valid=function(l){if(hs(l)&&['active','reviewResidence'].includes(hs(l).status)&&!hs(l).schoolManaged)return false;return old?old.apply(this,arguments):true;};});
   function completedGcse(l){var results=eng(l).results||{},keys=Object.keys(results);if(keys.length)return results[keys[keys.length-1]];var diploma=hs(l)?.diploma;return diploma?.type==='igcse'?diploma.transcript:null;}
+  // 9.0.2: học sinh England đang học ở trường mà chưa từng mở menu GCSE thì trường tự đăng ký và cho thi cuối Year 11; trước đây Sixth Form đòi kết quả GCSE nên nhân vật kẹt ở "trung học" tới hết đời.
+  function autoGcse(l,log){
+    if(!en(l)||!l.alive||l.age<15||l.age>17||l.school!=='lower'||peek(l).track||completedGcse(l)||active(l)&&!hs(l).schoolManaged)return false;
+    if(E.EDUCATION863&&l.flags.educationVersion863&&!E.EDUCATION863.science(l).length)E.EDUCATION863.chooseScience(l,'combined');
+    var s=eng(l,true),c=schoolConfig(l);s.registration={year:year(l),subjects:examSubjects(l),schoolId:c.id,privateCandidate:false,fee:0,assessments:'Trường đăng ký thi cho học sinh đang theo học',auto:true};
+    var rows=gcseSit(l);if(!rows||!rows.length)return false;
+    var avg=Math.round(rows.reduce(function(n,x){return n+x.grade;},0)/rows.length*10)/10;
+    log('Kết thúc Year 11, trường đăng ký cho bạn dự kỳ thi GCSE. Điểm trung bình '+avg+'/9 trên '+rows.length+' môn.','neutral');return true;
+  }
   var sixth=E.DEC.sixth829,sixthValid=sixth.valid,sixthPrep=sixth.def.prep,sixthApply=sixth.apply;
   sixth.valid=function(l){if(!en(l))return sixthValid.apply(this,arguments);return l.alive&&l.age>=16&&l.age<=19&&!peek(l).track&&!!(peek(l).gcse||completedGcse(l));};
   sixth.def.prep=function(l,r){if(!en(l))return sixthPrep.apply(this,arguments);var result=completedGcse(l);return {grade:peek(l).gcse||(result?Math.round(result.reduce(function(n,x){return n+x.grade;},0)/result.length):0)};};
@@ -343,7 +352,7 @@
   var careApply=E.DEC.careSchool138.apply;E.DEC.careSchool138.apply=function(l,d,k,r,log){if(active(l)){log('Hãy dùng Quay lại trường trong hồ sơ học tại nhà để đối chiếu học bạ.','neutral');return;}return careApply.apply(this,arguments);};
   var heir=E.heirAtAge;if(heir)E.heirAtAge=function(parent,k){var l=heir.apply(this,arguments);if(l&&k.study829){l.flags.study829=JSON.parse(JSON.stringify(k.study829));if(k.mockExam853)l.flags.mockExam853=JSON.parse(JSON.stringify(k.mockExam853));l.educationRegion=parent.abroad?parent.abroad.educationRegion:parent.educationRegion;var h=hs(l);if(h&&h.childSchool){l.school=h.childSchool.school;l.schoolEnd=h.childSchool.schoolEnd;}if(h&&h.status==='active'&&!h.schoolManaged&&k.edu==null)l.edu=Math.min(l.edu,2);reconcile(l);}return l;};
   E.HOOKS.year.push(function(l,r,log){
-    reconcile(l);var s=hs(l);if(s&&s.status==='pending')review(l);
+    reconcile(l);var s=hs(l);if(s&&s.status==='pending')review(l);autoGcse(l,log);
     if(active(l)&&s.tick!==year(l)){s.tick=year(l);var due=obligations(l).filter(function(k){return !s.obligations[year(l)+':'+k];});if(due.length)log('Học tại nhà: còn '+due.join(', ')+'. Hồ sơ chưa nộp được giữ sang lần xem sau.','neutral');if(s.socialAt!==year(l))log('Bạn có thể tìm câu lạc bộ hoặc lớp nhóm để duy trì bạn bè khi học tại nhà.','neutral');}
     (l.kids||[]).forEach(function(k){if(k.study829){var t=child(l,k.uid110,true);if(t){reconcile(t);review(t);}}});
     if(!en(l)||l.age<7||l.age>17)return;var z=eng(l,true),c=schoolConfig(l),key=ks(l);if(z.at===year(l))return;z.at=year(l);
@@ -352,5 +361,5 @@
     z.enrolled.forEach(function(k){var p=z.languages[k]||(z.languages[k]={level:0,years:0});if(c.full.includes(k))return;p.level=Math.min(100,p.level+(3+(l.st.kno||50)/20)*(1-p.level/130));p.years++;if(!['la','grc'].includes(k)){l.lang=l.lang||{};l.lang[k]=Math.max(l.lang[k]||0,Math.min(5,Math.floor(p.level/20)));}});
   });
   var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments),s=hs(l);if(s)p.jobInfo.push('Học tại nhà: '+(STATUS[s.status]||s.status)+' · '+milestones(l).missing.join('; '));return p;};
-  E.STUDY857={REGIONS:REGIONS,RULES:RULES,SOURCES:SOURCES,LANG:LANG,QUAL:QUAL,rule:rule,region:region,peek:peek,home:hs,active:active,request:request,submit:submit,review:review,start:start,back:back,reconcile:reconcile,study:study,milestones:milestones,diploma:diploma,claim:claim,logObligation:logObligation,reportingDeadline873:reportingDeadline873,qcWithdrawal874:qcWithdrawal874,report:report,en:en,eng:eng,schoolConfig:schoolConfig,chooseLanguage:chooseLanguage,select:select,electiveReason:electiveReason,gcseCalculate:gcseCalculate,gcseForecast:gcseForecast,gcseSit:gcseSit,register:register,examReason:examReason,child:child};
+  E.STUDY857={autoGcse:autoGcse,REGIONS:REGIONS,RULES:RULES,SOURCES:SOURCES,LANG:LANG,QUAL:QUAL,rule:rule,region:region,peek:peek,home:hs,active:active,request:request,submit:submit,review:review,start:start,back:back,reconcile:reconcile,study:study,milestones:milestones,diploma:diploma,claim:claim,logObligation:logObligation,reportingDeadline873:reportingDeadline873,qcWithdrawal874:qcWithdrawal874,report:report,en:en,eng:eng,schoolConfig:schoolConfig,chooseLanguage:chooseLanguage,select:select,electiveReason:electiveReason,gcseCalculate:gcseCalculate,gcseForecast:gcseForecast,gcseSit:gcseSit,register:register,examReason:examReason,child:child};
 })(globalThis.G);

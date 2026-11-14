@@ -322,6 +322,7 @@
     if (l.school && l.school !== 'police') { if (!quiet) log('Bỏ dở việc học để đi làm.', 'bad'); l.school = null; l.schoolEnd = null; l.cityStudent = null; if (l.abroad && l.abroad.study) l.abroad = null; }
     l.job = { id: id, rank: startRank(l, c), yrs: 0, since: l.age, rankSince: l.age };
     l.job.rankTracked = l.job.rank;
+    if (l.retired) { l.retired = false; l.flags.afterRet = Math.max(l.flags.afterRet || 0, l.age + 5); if (!quiet) log('Đã nghỉ hưu nhưng bạn quay lại làm việc.', 'neutral'); } // 9.0.2: người nghỉ hưu nhận việc mới không còn bị "nghỉ hưu" lặp lại mỗi năm
     if (c.prod) l.job.p = U.pick(r, c.prod);
     if (c.fame && !l.fame) l.fame = U.randint(r, 200, 3000) * (l.talent === c.talent ? 2 : 1);
     if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) { if (l.talent !== 'game' && !l.gameType) l.gameType = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = E.gameFor(l, r); } // v2.8: game khớp thể loại sở trường

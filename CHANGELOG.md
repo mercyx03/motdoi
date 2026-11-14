@@ -1,3 +1,15 @@
+## 9.0.2 — Rà logic hàng loạt: Sixth Form ở Anh, nghỉ hưu lặp lại, trẻ di cư, trần số con
+
+Quét 2.400 đời mô phỏng tự động ở 20 nước, so trạng thái từng năm với các quy tắc bất biến (người đã mất sống lại, sự kiện một lần lặp lại, trạng thái bị kẹt nhiều năm, giá trị NaN, tuổi thọ lệch theo nước) và chạy lại bộ rà văn bản cũ trên 500 đời.
+
+- Sửa lỗi lớn: học sinh England chưa từng mở menu GCSE bị kẹt ở bậc "trung học" tới hết đời và không bao giờ lên được Sixth Form hay đại học (26 trên 40 đời thử). Nay trường tự đăng ký và cho thi GCSE cuối Year 11 cho học sinh đang học chưa tự đăng ký (`study-home857.js`); học tại nhà và người đã chọn Sixth Form không bị đè.
+- Sửa lỗi: người đã nghỉ hưu nhận việc mới không còn bị "Nghỉ hưu" lặp lại mỗi năm; nhận việc thì tạm thôi nghỉ hưu và tuổi nghỉ sau được lùi (`careers.js`).
+- Sửa lỗi: trẻ em đi cùng gia đình di cư hoặc tị nạn không còn bị gắn cờ "cần việc làm" nhiều năm (`engine.js`).
+- Sửa lỗi: kế hoạch con mặc định (2 con) không còn chặn nhân vật tự động muốn đông con hơn theo tỷ suất sinh của nước; kế hoạch do người chơi đặt vẫn được tôn trọng (`engine.js`).
+- Sửa lời kể: dòng hóa trị không còn dấu cách thừa trước phần chi phí (`health915.js`).
+- Kiểm thử: `tests/logic902.js` (24 kiểm tra) cùng `npm run test:quick`.
+- Chưa sửa, đã đo: nhân vật tự động vẫn sinh ít con hơn tỷ suất sinh của nước (Nigeria 0,45 con mỗi đời so với 5,9; Mỹ 0,44 so với 1,5) vì tuổi bị hỏi chuyện con muộn và xác suất thụ thai; cần đo lớn hơn trước khi chỉnh.
+
 ## 9.0.1 — Sửa ngoại hình khi quen lại người cũ, xem trước ngoại hình, xin tiền bố mẹ để du học
 
 - Sửa lỗi quen lại người cũ bị đổi ngoại hình: ngoại hình người yêu được lưu khi chia tay và giữ nguyên khi quay lại (trước đây tung lại từ đầu nên người cao điểm thành thấp điểm); bản lưu cũ tính lại đúng như lúc mới quen.

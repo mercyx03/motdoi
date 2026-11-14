@@ -1,12 +1,33 @@
 {
-  "generatedAt": "2026-11-14T09:32:59.255Z",
+  "generatedAt": "2026-11-14T13:50:49.363Z",
   "entries": [
+    {
+      "id": "logic-sweep-90002",
+      "version": "9.0.2",
+      "publishedAt": "2026-11-14T20:50:34+07:00",
+      "releaseStatus": "packaged",
+      "title": "Rà logic hàng loạt: sửa kẹt Sixth Form ở Anh, nghỉ hưu lặp lại và trẻ di cư",
+      "summary": "Quét hàng nghìn đời mô phỏng ở 20 nước để tìm trạng thái kẹt hoặc mâu thuẫn, rồi sửa các lỗi tìm được.",
+      "tags": [
+        "Sửa lỗi",
+        "Học tập",
+        "Gia đình"
+      ],
+      "details": [
+        "Học sinh ở Anh (England) không còn bị kẹt ở bậc trung học cả đời: nếu bạn chưa tự đăng ký, trường sẽ đăng ký cho bạn thi GCSE cuối Year 11 để bạn lên Sixth Form hoặc đại học. Ai học tại nhà hoặc đã chọn lộ trình riêng thì giữ nguyên.",
+        "Người đã nghỉ hưu rồi đi làm lại không còn bị thông báo \"Nghỉ hưu\" lặp đi lặp lại mỗi năm.",
+        "Trẻ em theo gia đình di cư hoặc tị nạn không còn bị coi là đang \"cần tìm việc\" suốt nhiều năm.",
+        "Nhân vật tự động có mong muốn đông con theo tỷ suất sinh của nước vẫn được hỏi chuyện sinh thêm sau hai con; kế hoạch con do bạn đặt vẫn được tôn trọng.",
+        "Sửa dấu cách thừa trong dòng hóa trị."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "looks-study-fund-90001",
       "version": "9.0.1",
       "publishedAt": "2026-11-14T16:31:59.043+07:00",
       "releaseStatus": "released",
-      "title": "Sửa ngoại hình khi quen lại người cũ, xem trước ngoại hình người yêu và xin tiền bố mẹ để du học",
+      "title": "Quen lại người cũ giữ ngoại hình, xem ngoại hình trước, xin tiền bố mẹ du học",
       "summary": "Quen lại người cũ giữ nguyên ngoại hình; xem ngoại hình trước khi quyết định tìm hiểu; du học nói rõ thiếu gì và cho xin hoặc mượn bố mẹ.",
       "tags": [
         "Tình cảm",
@@ -26,7 +47,7 @@
       "version": "9.0.0",
       "publishedAt": "2026-11-14T14:32:54.180+07:00",
       "releaseStatus": "released",
-      "title": "Nhập quốc tịch nhiều giai đoạn, nợ anh chị em, trợ cấp thất nghiệp, bế tắc công ty gia đình và homeschool sâu hơn",
+      "title": "Nhập tịch nhiều giai đoạn, nợ anh chị em, trợ cấp thất nghiệp, hùn vốn và homeschool",
       "summary": "Hồ sơ nhập quốc tịch là quy trình nhiều năm; trả nợ giúp anh chị em có hệ quả lâu dài; mất việc ở Anh và Canada có trợ cấp theo đóng góp; bế tắc 50/50 công ty gia đình leo thang; sáu vùng homeschool có thủ tục chi tiết hơn.",
       "tags": [
         "Gia đình",
@@ -39,7 +60,8 @@
         "Gia đình: trả nợ giúp anh chị em tạo khoản nợ theo dõi nhiều năm (trả theo đợt, lỡ hẹn, qua đời); trễ lâu thì chọn bỏ qua, gia hạn, kiện hoặc trừ vào di sản. Di chúc rõ ràng giảm nguy cơ kiện di sản.",
         "Phúc lợi: người thường trú ở Anh và Canada đã đóng bảo hiểm mà mất việc nhận trợ cấp thất nghiệp theo đóng góp (mức là tham số trò chơi).",
         "Công ty gia đình: bế tắc 50/50 kéo dài ba năm thì phía còn lại đề nghị nhượng 1% hoặc ra tòa; giữ nguyên làm giảm điểm quản trị và sau ba lần tòa tự chỉ định chủ tịch độc lập.",
-        "Học tại nhà: British Columbia, Queensland, Manitoba, Nova Scotia, Florida và Virginia có hạn nộp, báo cáo, tài trợ và điều kiện văn bằng theo trang chính thức. Các vùng còn lại giữ quy tắc chung."
+        "Học tại nhà: British Columbia, Queensland, Manitoba, Nova Scotia, Florida và Virginia có hạn nộp, báo cáo, tài trợ và điều kiện văn bằng theo trang chính thức. Các vùng còn lại giữ quy tắc chung.",
+        "Mạng và thiết bị: sự kiện mạng xã hội, việc làm trực tuyến, freelance, game và giao hàng qua ứng dụng xuất hiện ít hơn ở nước và hoàn cảnh ít người dùng internet (theo số liệu World Bank); nước đã phổ cập không đổi."
       ],
       "releasedAt": "2026-11-14T13:01:00.000Z",
       "correctedAt": "2026-11-14T13:00:50.604Z"
@@ -49,7 +71,7 @@
       "version": "8.10.80",
       "publishedAt": "2026-11-14T07:07:19.235+07:00",
       "releaseStatus": "released",
-      "title": "Lãi suất ngân hàng theo nước, phí thuốc NHS và đồng chi trả Nhật Bản, thuế Scotland và National Insurance",
+      "title": "Lãi suất ngân hàng theo nước, thuốc NHS, đồng chi trả Nhật, thuế Scotland và NI",
       "summary": "Sổ tiết kiệm và khoản vay mới ở Anh, Mỹ, Canada, Úc theo lãi suất của ngân hàng trung ương; phí kê đơn và phiếu trả trước thuốc của NHS England; tỷ lệ tự trả viện phí ở Nhật từ 70 tuổi; thuế lương Scotland và National Insurance.",
       "tags": [
         "Tài chính",
@@ -61,7 +83,7 @@
         "Khoản vay mới theo lãi nơi đang sống: vay mua nhà Anh 4,63%, Mỹ 7,11% (30 năm), Canada 6,19%, Úc 6,2%; vay tiêu dùng Anh 9,85%, Mỹ 11,90%; thẻ tín dụng Mỹ 21,19%, Úc 21,74%. Khoản vay đã ký giữ lãi cũ, kể cả khi chuyển nước. Singapore và các nước khác giữ mức cũ.",
         "NHS England: phí kê đơn cố định £9,90 mỗi lần; có thể mua phiếu trả trước PPC 3 tháng (£32,05) hoặc 12 tháng (£114,50) và bật tự gia hạn. Học sinh 16–18 học toàn thời gian được miễn.",
         "Nhật Bản từ 70 tuổi: 70–74 tự trả 20%; từ 75 tự trả 10%, hoặc 20% nếu thu nhập hộ từ 200 vạn yên (một người) hay 320 vạn yên (hai người trở lên); thu nhập ngang người đang làm trả 30%.",
-        "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2023–24 (19% đến 47–48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; hai ngưỡng 500.000 và 1.000.000 SGD đã đối chiếu IRAS."
+        "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2023–24 (19% đến 47–48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; hai ngưỡng 500 nghìn và 1 triệu SGD đã đối chiếu IRAS."
       ],
       "releasedAt": "2026-11-14T05:20:24.615Z",
       "correctedAt": "2026-11-14T05:20:28.915Z"
@@ -126,7 +148,7 @@
         "Nguyên nhân qua đời của nhân vật, bố mẹ, anh chị em và bạn đời theo số liệu từng nước (World Bank WDI, gốc WHO Global Health Estimates): tỷ trọng bệnh truyền nhiễm, bệnh không lây và chấn thương; tai nạn giao thông, bạo lực, lao, sốt rét, HIV, tiêu chảy, ngộ độc theo tỷ lệ của nước đó. Biết bơi, rượu, ma túy, thuốc lá và bệnh đang mắc vẫn được tính. Nước chưa có số liệu giữ bảng cũ.",
         "Điện lưới tại nhà theo nước, năm sinh, thành thị hay nông thôn và nhóm thu nhập gia đình. Nhà chưa có điện được kéo điện dần theo tốc độ phủ điện của nước đó; trẻ đi học học bài dưới đèn dầu, ngày có điện được ghi vào nhật ký và ký ức.",
         "Gỡ chữ \"mô phỏng\" thừa trong các thông báo công vụ, bầu cử, hạn chế xuất cảnh, hoàng gia, Monaco, Tây Tạng và nhà ở xã hội; giữ lại ghi chú về kịch bản chính trị và giờ bay giả lập.",
-        "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi 8.10.56)."
+        "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi số phiên bản cũ)."
       ],
       "correctedAt": "2026-11-13T08:28:13.705Z"
     },

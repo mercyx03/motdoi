@@ -1321,7 +1321,7 @@
     if (H.reoccupy874) H.reoccupy874(life, c[0], log);
     setBase(life);
     if (life.job) life.job = { id: E.resolveJob(life.job.id) === 'nong' ? 'phu_ho' : E.resolveJob(life.job.id), rank: 0, yrs: 0 };
-    else life.flags.needJob = true;
+    else if (life.age >= 15) life.flags.needJob = true; // 9.0.2: trẻ em đi cùng gia đình không bị gắn cờ "cần việc làm" suốt nhiều năm
     log('Di cư sang ' + c[1] + ', sống ở ' + life.place + '.', 'big'); life.st.soc -= 10;
     H.mem(life, 'Ngày đặt chân đến ' + life.place + ', ' + c[1] + ' — một khởi đầu mới.', 4);
   }
@@ -1453,7 +1453,7 @@
       var pm = 0.13 + (life.focus === 'social' ? 0.07 : 0) - (a > 40 ? 0.08 : 0) + (life.st.soc - 50) / 400 + (E.LOOKS134 ? E.LOOKS134.loveBonus(life) : 0); // ngoại hình ưa nhìn dễ có người yêu hơn
       if (r() < pm) add('love');
     } else if (p && p.status === 'dating' && a - p.since >= 1 && (life.flags.marryAskAt == null || a - life.flags.marryAskAt >= 2 + Math.min(4, life.flags.marryWait || 0)) && r() < 0.4) { add('marry'); life.flags.marryAskAt = a; } // v3.0: không hỏi chuyện cưới năm nào cũng như năm nào
-    if (p && p.status !== 'dating' && a <= 50 && (life.flags.noKidUntil == null || a >= life.flags.noKidUntil) && (life.flags.kidAskAt == null || a - life.flags.kidAskAt >= 2) && life.kids.length < (life.flags.familyPlan108 ? life.flags.familyPlan108.want : 2) && !(life.flags.pregnancy108) && (!E.RELATIONS108 || E.RELATIONS108.fertile(life,p)) && r() < ((life.flags.wantKids != null ? life.flags.wantKids : 2) > life.kids.length ? (life.kids.length >= 1 ? 0.18 : 0.35) : 0.05)) { /* 8.10.74b: cặp còn mong con được hỏi thường hơn */ var beforeKid=q.length; add('kid'); if(q.length>beforeKid)life.flags.kidAskAt=a; }
+    if (p && p.status !== 'dating' && a <= 50 && (life.flags.noKidUntil == null || a >= life.flags.noKidUntil) && (life.flags.kidAskAt == null || a - life.flags.kidAskAt >= 2) && life.kids.length < (life.flags.familyPlan108 && (life.flags.familyPlan108.chosenWant874 || life.flags.familyPlan108.want !== 2) ? life.flags.familyPlan108.want : Math.max(2, life.flags.wantKids || 0)) && !(life.flags.pregnancy108) && (!E.RELATIONS108 || E.RELATIONS108.fertile(life,p)) && r() < ((life.flags.wantKids != null ? life.flags.wantKids : 2) > life.kids.length ? (life.kids.length >= 1 ? 0.18 : 0.35) : 0.05)) { /* 8.10.74b: cặp còn mong con được hỏi thường hơn; 9.0.2: kế hoạch mặc định 2 con không còn chặn nhân vật AI muốn đông con hơn theo tỷ suất sinh của nước */ var beforeKid=q.length; add('kid'); if(q.length>beforeKid)life.flags.kidAskAt=a; }
     if (p && p.status !== 'dating' && a - p.since >= 2 && r() < (isVN(life) ? 0.012 : 0.02) * (life.st.hap < 45 ? 2 : 1)) add('divorce');
     // di chuyển
     if (!life.urban && !life.flags.cityAsked && a >= 18 && a <= 35 && !life.school && r() < 0.12) add('city');
