@@ -33,4 +33,8 @@ for(const cc of ['US','DE','AU']){const l=life(cc);ok(W.settle(l,true,si(l),log)
 {let paid=0;for(const cc of ['GB','CA']){for(let s=1;s<=10;s++){const l=E.createLife({mode:'world',country:cc,seed:8800+s,year:1990});E.runHeadless(l);ok(isFinite(l.money),'tiền hữu hạn');
  ((l.flags.welfare890||{}).history||[]).forEach(h=>{paid++;ok(h.total>0&&isFinite(h.total)&&h.months>=3&&h.months<=12&&h.year>=2026,'khoản trợ cấp hợp lệ');});}}
  ok(paid>=0,'mô phỏng 20 đời ('+paid+' khoản trợ cấp)');}
+// lỗi đã sửa: không trả trợ cấp thất nghiệp cho người đang thụ án hoặc nhập ngũ
+{const l=life('GB',{jailUntil:40});ok(W.settle(l,true,si(l),log)===0,'đang thụ án thì không nhận trợ cấp');
+ const m=life('GB');m.flags.military=40;ok(W.settle(m,true,si(m),log)===0,'đang nhập ngũ thì không nhận trợ cấp');
+ const f=life('GB',{jailUntil:36});ok(W.settle(f,true,si(f),log)>0,'đã mãn hạn thì có quyền');}
 console.log('PASS welfare890: '+n+' checks');

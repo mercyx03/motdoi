@@ -11,6 +11,7 @@ function round(v){return Math.round(v*100)/100;}
 function due(l,c){var k=D.deadlock(c);if(!k)return false;if(c.share>50+1e-9||(c.holders137||[]).some(function(h){return h.share>50+1e-9;})){k.stage='resolved';k.how=k.how||'ownership';return false;}var e=k.esc890||(k.esc890={n:0,last:k.at});return l.age-k.at>=AFTER&&l.age-e.last>=(e.n?EVERY:0);}
 function court(l,c,k,log,forced){
  var cost=l.base*.6;H.cash(l,-cost,'Án phí và luật sư đòi chủ tịch độc lập');
+ if(D.dropRole)D.dropRole(l,c,'chair',log);
  k.stage='resolved';k.how=forced?'court-forced':'court';c.chair908={id:'independent',name:'Chủ tịch độc lập do tòa chỉ định',since:l.age};c.chairCost137=(c.chairCost137||0)+l.base*1.2;
  var o=rival(c);if(o&&E.DYNASTY908&&E.DYNASTY908.relation)E.DYNASTY908.relation(l,'self',o.id,-4);
  log((forced?'Sau nhiều lần bế tắc, hai bên bị buộc ra tòa. ':'')+'Tòa chỉ định chủ tịch độc lập cho '+c.name+'. Bạn trả '+money(l,cost)+' án phí, thù lao chủ tịch do công ty chịu; quan hệ với phía còn lại xấu đi.','neutral');
@@ -34,7 +35,7 @@ X.menu('deadlock890','Đề nghị giải quyết bế tắc công ty',function(
   {k:'cede',l:'Nhượng 1% cho '+o.name+' để họ nắm quá bán',h:'Nhận '+money(l,c.value*.01*.85)+'; bạn còn '+round(c.share-1)+'%',why:c.share>1?true:'Không đủ cổ phần',run:function(l,r,log){
    if(c.share<=1||!D.deadlock(c))return;var cash=c.value*.01*.85;H.cash(l,cash,'Nhượng 1% cổ phần để giải bế tắc');
    c.share=round(c.share-1);var h=(c.holders137||[]).find(function(x){return x.id===o.id;});if(h)h.share=round(h.share+1);
-   k.stage='resolved';k.how='cede';c.chair908={id:o.id,name:o.name,since:l.age};
+   if(D.dropRole)D.dropRole(l,c,'chair',log);k.stage='resolved';k.how='cede';c.chair908={id:o.id,name:o.name,since:l.age};
    if(E.DYNASTY908&&E.DYNASTY908.relation)E.DYNASTY908.relation(l,'self',o.id,2);
    log('Bạn nhượng 1% '+c.name+' cho '+o.name+', nhận '+money(l,cash)+'. '+o.name+' nắm quá bán và làm Chủ tịch; bạn còn '+c.share+'% và không còn thế cân bằng.','neutral');}},
   {k:'court',l:'Ra tòa nhờ chọn chủ tịch độc lập · '+money(l,l.base*.6),why:l.money>=l.base*.6?true:'Không đủ tiền án phí',run:function(l,r,log){if(!D.deadlock(c)||l.money<l.base*.6)return;court(l,c,k,log,false);}},

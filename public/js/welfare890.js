@@ -14,6 +14,7 @@ function state(l){return l.flags.welfare890||(l.flags.welfare890={history:[]});}
 function eligible(l,hadJob,contribYrs,last){
  var R=RULES[code(l)];
  if(!R||year(l)<FROM||!hadJob||l.job||l.retired||!l.alive)return null;
+ if(l.jailUntil!=null&&l.age<l.jailUntil||l.flags.military&&l.age<l.flags.military)return null;
  if(!l.abroad||!l.abroad.perm)if(code(l)!==l.country)return null;
  if(!(contribYrs>=1)||last==null||l.age-last>1)return null;
  return R;

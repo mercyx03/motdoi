@@ -45,4 +45,10 @@ function interview(l,key,roll){const d=E.DEC.nat880_interview.make(l,()=>.5,{cod
 // người ở nước không có hồ sơ: hệ thống cũ không bị ảnh hưởng, chạy cả đời không lỗi
 {let filed=0,done=0;for(let s=1;s<=12;s++){const l=E.createLife({mode:'world',country:'VN',seed:6600+s,year:1990});E.runHeadless(l);ok(l.age>=0&&isFinite(l.money),'chạy hết đời');if(l.flags.nat880)filed++;if((l.flags.citizen||[]).length)done++;}
  ok(filed>=0&&done>=0,'mô phỏng nhiều đời đạt ('+filed+' hồ sơ treo, '+done+' có quốc tịch mới)');}
+// lỗi đã sửa: về thăm quê không hủy hồ sơ; phí luật sư không mất khi hồ sơ đã bị hủy
+{const l=life();file(l,()=>.9);l.age++;l.flags.homeVisit907={dest:'VN',at:l.age};const logs=[];year(l,()=>.5,t=>logs.push(t));
+ ok(N.state(l)&&N.state(l).stage==='review'&&!/bị hủy/.test(logs.join()),'đang về thăm quê: hồ sơ không bị hủy oan');
+ delete l.flags.homeVisit907;year(l);ok(N.state(l).stage==='interview','hết chuyến thăm thì hồ sơ tiếp tục');}
+{const l=life();file(l,()=>.9);l.age++;year(l);l.abroad=null;const m0=l.money;const d=E.DEC.nat880_interview.make(l,()=>.5,{code:'CA'}),o=E.DEC.nat880_interview.def.opts.find(x=>x.k==='prep');o.run(l,()=>.01,()=>{},d.data);
+ ok(Math.abs(l.money-m0)<1e-6&&!N.state(l),'hồ sơ đã mất hiệu lực thì không bị thu phí luật sư');}
 console.log('PASS nat880: '+n+' checks');

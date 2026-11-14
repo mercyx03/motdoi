@@ -65,4 +65,8 @@ function overdue(){const l=life();applyTra(l,1,.9);let y=0;while(!l.pending.some
 {let withDebt=0,closed=0;for(let s=1;s<=20;s++){const l=E.createLife({mode:'world',country:s%2?'US':'VN',seed:7700+s,year:1985});E.runHeadless(l);ok(isFinite(l.money),'tiền hữu hạn');
   ((l.flags.fam890||{}).debts||[]).forEach(d=>{withDebt++;ok(d.bal>=-1e-6&&d.bal<=d.amount+1e-6&&['open','settle','closed'].includes(d.status),'sổ nợ nhất quán');if(d.status==='closed')closed++;});}
  ok(withDebt>=0,'mô phỏng 20 đời ('+withDebt+' khoản nợ, '+closed+' đã đóng)');}
+// lỗi đã sửa: hòa giải di sản không phát tiền bù trừ; chỉ nhường phần thì mới bù trừ
+{const l=life();applyTra(l,1,.9);const q=F.open(l)[0];q.offset=true;l.fam.mAlive=false;l.fam.fAlive=false;l.flags.inherit=true;
+ const d=E.DEC.fd_kien_di_san.make(l,()=>.5,{});d.data.i=1;d.data.v=l.base*2;const m0=l.money;E.DEC.fd_kien_di_san.apply(l,d,'hoa_giai',()=>.99,()=>{});
+ ok(q.paid===0&&q.bal===q.amount&&l.money<=m0+1e-6,'hòa giải không tạo tiền từ hư không');}
 console.log('PASS fam890: '+n+' checks');

@@ -43,4 +43,7 @@ const choose=(l,c,key,roll)=>{const d=E.DEC.deadlock890.make(l,()=>.5,{cid:X.uid
 {const {l,c}=fam(['Anh Bình']);tick(l,3);c.merged=true;l.pending=[];tick(l,2);ok(true,'công ty đã sáp nhập không gây lỗi');}
 // chạy nhiều đời: không lỗi
 for(let s=1;s<=10;s++){const l=E.createLife({mode:'vn',seed:9100+s,year:1990});E.runHeadless(l);ok(isFinite(l.money),'tiền hữu hạn');}
+// lỗi đã sửa: người chơi đang giữ ghế Chủ tịch thì được gỡ ghế khi tòa hoặc phía kia lên thay
+{for(const key of ['court','cede']){const {l,c}=fam(['Anh Bình']);tick(l,3);const calls=[];const orig=B.dropRole;B.dropRole=(...a)=>{calls.push(a[2]);return orig(...a);};
+ choose(l,c,key,.5);B.dropRole=orig;ok(calls.includes('chair'),key+': gỡ vai trò Chủ tịch của người chơi');}}
 console.log('PASS business890: '+n+' checks');

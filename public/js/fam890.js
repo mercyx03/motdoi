@@ -72,7 +72,7 @@ var ksText=ks.def.text;ks.def.text=function(l,d){var t=typeof ksText==='function
  return t+(q?' Trong hồ sơ, người này còn nợ bạn '+money(l,q.bal)+' từ trước.':'')+(l.flags.fdTranh==='doi'?' Chuyện bạn từng đòi chia trước khi cha mẹ còn sống bị đem ra làm lý lẽ.':'');};
 var ksApply=ks.apply;ks.apply=function(l,dec,k){var out=ksApply.apply(this,arguments),s=dec&&dec.data&&dec.data.i>=0?l.sibList[dec.data.i]:null;
  if(s){var q=peek(l).debts.find(function(x){return x.sib===X.uid(l,s)&&(x.status==='open'||x.status==='settle')&&x.bal>.5;});
-  if(q&&q.offset&&k!=='kien'){var back=Math.min(q.bal,dec.data.v*.3);H.cash(l,back,'Bù trừ nợ anh chị em vào thỏa thuận di sản');q.bal-=back;q.paid+=back;if(q.bal<=.5){q.status='closed';q.result='offset';}
+  if(q&&q.offset&&k==='nhuong'){var back=Math.min(q.bal,dec.data.v*.3);H.cash(l,back,'Bù trừ nợ anh chị em vào thỏa thuận di sản');q.bal-=back;q.paid+=back;if(q.bal<=.5){q.status='closed';q.result='offset';}
    X.log(l,'Khoản nợ cũ được trừ vào thỏa thuận di sản: bạn thu lại '+money(l,back)+'.','neutral');}}
  return out;};
 // 3. Quy đổi tiền khi đổi nước

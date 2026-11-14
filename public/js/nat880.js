@@ -33,7 +33,7 @@ SC('nat880_interview',{
  valid:function(l,d){var s=st(l);return !!s&&s.stage==='interview'&&where(l)===s.code&&!!d&&d.code===s.code;},
  text:function(l,d){var s=st(l);return 'Hồ sơ nhập quốc tịch '+d.name+' đã được xét tới vòng phỏng vấn và kiểm tra ngôn ngữ, hiểu biết xã hội. Bạn đã chờ '+(l.age-(s?s.filedAge:l.age))+' năm. Có thể tự đi thi, thuê luật sư và lớp ôn ('+H.money(l,lawyerFee(l))+') hoặc rút hồ sơ.';},
  opts:[
-  {k:'prep',l:function(l){return 'Thuê luật sư, ôn thi · '+H.money(l,lawyerFee(l));},req:function(l){return l.money>=lawyerFee(l);},ai:{w:.9,smart:.8},run:function(l,r,log,d){H.cash(l,-lawyerFee(l),'Luật sư và lớp ôn thi quốc tịch');finish(l,r,log,true);}},
+  {k:'prep',l:function(l){return 'Thuê luật sư, ôn thi · '+H.money(l,lawyerFee(l));},req:function(l){return l.money>=lawyerFee(l);},ai:{w:.9,smart:.8},run:function(l,r,log,d){finish(l,r,log,true);}},
   {k:'self',l:'Tự đi phỏng vấn và làm bài thi',ai:{w:1.2},run:function(l,r,log){finish(l,r,log,false);}},
   {k:'withdraw',l:'Rút hồ sơ, chưa muốn nhập quốc tịch lúc này',ai:{w:.2},run:function(l,r,log){void880(l,log,'bạn chủ động rút hồ sơ.');}}
  ]
@@ -41,6 +41,7 @@ SC('nat880_interview',{
 function finish(l,r,log,prep){
  var s=st(l);if(!s||s.stage!=='interview')return;
  if(where(l)!==s.code){void880(l,log,'bạn không còn thường trú ở nước này.');return;}
+ if(prep){if(l.money<lawyerFee(l))prep=false;else H.cash(l,-lawyerFee(l),'Luật sư và lớp ôn thi quốc tịch');}
  delete l.flags.nat880;
  if(r()<chance(l,Object.assign({},s),prep)){
   (l.flags.citizen=l.flags.citizen||[]).push(s.code);if(s.renounce)l.flags.renounced=l.country;
@@ -53,6 +54,7 @@ function finish(l,r,log,prep){
 }
 E.HOOKS.year.push(function(l,r,log,a){
  var s=st(l);if(!s||!l.alive)return;
+ if(l.flags.homeVisit907)return; // đang về thăm quê: nơi cư trú tạm thời bị thay, chưa xét hủy hồ sơ
  if(l.jailUntil!=null&&l.age<l.jailUntil){void880(l,log,'bạn đang thụ án.');return;}
  if(where(l)!==s.code){void880(l,log,'bạn không còn thường trú ở '+s.name+'.');return;}
  if((l.record||0)>s.record0){void880(l,log,'hồ sơ phát sinh tiền án mới trong lúc chờ xét.');return;}
