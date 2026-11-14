@@ -1,5 +1,26 @@
 [
   {
+    "id": "bank-health-81080",
+    "version": "8.10.80",
+    "publishedAt": "2026-11-14T07:07:19.235+07:00",
+    "releaseStatus": "packaged",
+    "title": "Lãi suất ngân hàng theo nước, phí thuốc NHS và đồng chi trả Nhật Bản, thuế Scotland và National Insurance",
+    "summary": "Sổ tiết kiệm và khoản vay mới ở Anh, Mỹ, Canada, Úc theo lãi suất của ngân hàng trung ương; phí kê đơn và phiếu trả trước thuốc của NHS England; tỷ lệ tự trả viện phí ở Nhật từ 70 tuổi; thuế lương Scotland và National Insurance.",
+    "tags": [
+      "Tài chính",
+      "Sức khỏe",
+      "Quốc gia"
+    ],
+    "details": [
+      "Ngân hàng: từ năm 2026, mở sổ tiết kiệm có kỳ hạn theo lãi bình quân của Anh (Bank of England 4,42%), Mỹ (FDIC, CD 12 tháng 1,76%), Canada (GIC niêm yết, Bank of Canada) và Úc (RBA, 1 năm 5,00%). Anh vẫn có trái phiếu NS&I.",
+      "Khoản vay mới theo lãi nơi đang sống: vay mua nhà Anh 4,63%, Canada 6,19%, Úc 6,2%; vay tiêu dùng Anh 9,85%, Mỹ 11,90%; thẻ tín dụng Mỹ 21,19%, Úc 21,74%. Khoản vay đã ký giữ lãi cũ, kể cả khi chuyển nước. Singapore và các nước khác giữ mức cũ.",
+      "NHS England: phí kê đơn cố định £9,90 mỗi lần; có thể mua phiếu trả trước PPC 3 tháng (£32,05) hoặc 12 tháng (£114,50) và bật tự gia hạn. Học sinh 16–18 học toàn thời gian được miễn.",
+      "Nhật Bản từ 70 tuổi: 70–74 tự trả 20%; từ 75 tự trả 10%, hoặc 20% nếu thu nhập hộ từ 200 vạn yên (một người) hay 320 vạn yên (hai người trở lên); thu nhập ngang người đang làm trả 30%.",
+      "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2024–25 (19% đến 48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; hai ngưỡng 500.000 và 1.000.000 SGD đã đối chiếu IRAS."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "wage-tax-81079",
     "version": "8.10.79",
     "publishedAt": "2026-11-13T16:05:00.000+07:00",

@@ -12,10 +12,10 @@ Cập nhật: 2026-11-13, sau bản 8.10.79. Nhánh làm việc: `codex/life-con
 ## Không commit, không xóa
 `audit-world-520.json`, `.local-state-review.txt`, `Claude.md`, `public/js/healthsys919.js`, `tests/healthsys-rx-cap.js`, `PROMPT*.md`, `docs/HANDOFF-CLAUDE-874.md`. `REVIEWS_DB` production chưa kiểm chứng; gói vẫn là Preview.
 
-## Nhóm 1 còn dở: ngân hàng và y tế theo nơi
-- Ngân hàng: game chỉ có ngân hàng Việt Nam và trái phiếu NS&I Anh (`life112.js`). Cần lãi tiết kiệm, lãi vay theo nước từ nguồn ngân hàng trung ương.
-- Y tế: `healthsys919.js` dùng nguồn thứ cấp (`docs/MD4-SOURCES.md`). Dữ liệu đã tra, chưa đưa vào: NHS Anh phí đơn thuốc 9,90 bảng, PPC 3 tháng 32,05, 12 tháng 114,50; Nhật đồng chi trả 20% dưới 6 tuổi, 30% từ 6 đến 69, 20% từ 70 đến 74, 10% từ 75 (30% nếu thu nhập cao). Làm bằng lớp dữ liệu riêng, không sửa file bị giữ.
-- Thuế (tax879) chưa gồm: Scotland, National Insurance, phụ phí Medicare, thuế tỉnh Canada, giảm trừ cá nhân. Hai ngưỡng Singapore 500.000 và 1.000.000 chưa đối chiếu.
+## Nhóm 1: ngân hàng và y tế theo nơi (8.10.80 đã làm phần chính, gói packaged)
+- Ngân hàng: `bank880.js` có Anh, Mỹ, Canada, Úc từ 2026 (nguồn BoE, FDIC, Fed G.19, Bank of Canada, RBA). Còn thiếu: Singapore (MAS đã ngừng chuỗi lãi suất ngân hàng, cần nguồn khác), lãi vay mua nhà Mỹ (chưa đọc Freddie Mac PMMS), lãi theo năm trước 2026, bảo hiểm tiền gửi SDIC Singapore, nhãn "~9%/năm" cố định ở cảnh vay ngân hàng (`scenarios.js`).
+- Y tế: `health880.js` có NHS England phí kê đơn/PPC và Nhật Bản từ 70 tuổi. Chưa đọc được nguyên văn MHLW cho tỷ lệ 70–74 và ngưỡng thu nhập ngang người đang làm (đang dùng 383/520 vạn yên). Các nước khác vẫn là nguồn thứ cấp của `healthsys919.js`.
+- Thuế (tax879): đã thêm Scotland 2024–25 trở đi, National Insurance từ 2024–25, đối chiếu hai ngưỡng Singapore. Còn thiếu: Scotland 2023–24, phụ phí Medicare, thuế tỉnh Canada, giảm trừ cá nhân.
 
 ## Nhóm chưa làm
 2. Visa, nhập tịch, phúc lợi theo nước.

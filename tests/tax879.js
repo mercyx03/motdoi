@@ -36,4 +36,19 @@ for(const cc of ['GB','AU','SG','CA']){const q=T.compute(cc,2026,1e6);ok(q.tax<q
 function run(cc,seed){const l=E.createLife({mode:'world',country:cc,seed:seed,year:1990});E.runHeadless(l);return l;}
 let gb=0,vn=0,de=0,rows=0;for(let s=1;s<=6;s++){const a=run('GB',900+s),b=run('VN',900+s),c=run('DE',900+s);if(a.flags.tax879&&a.flags.tax879.history.length){gb++;rows+=a.flags.tax879.history.length;a.flags.tax879.history.forEach(h=>{ok(h.tax>=0&&h.tax<h.gross,'thuế nằm trong khoảng hợp lệ');ok(h.year>=2023,'chỉ từ năm có biểu');});}if(b.flags.tax879&&b.flags.tax879.history.length)vn++;if(c.flags.tax879&&c.flags.tax879.history.length)de++;}
 ok(gb>=1&&rows>=1,'có người làm công ở Anh bị khấu trừ thuế trong game ('+gb+' đời, '+rows+' kỳ)');ok(vn===0&&de===0,'Việt Nam và Đức không dùng module này');
+// 8.10.80: Scotland (bảng PAYE gov.uk), National Insurance Class 1, hai ngưỡng cao Singapore (IRAS)
+near(T.compute('GB',2026,30000,'SCT').tax,3451.07,'Scotland 2026–27 30.000 bảng');
+near(T.compute('GB',2025,30000,'SCT').tax,3482.82,'Scotland 2025–26 30.000 bảng');
+near(T.compute('GB',2026,200000,'SCT').tax,83634.35,'Scotland 200.000 bảng (mất miễn thuế)');
+near(T.compute('GB',2023,30000,'SCT').tax,3486,'Scotland 2023–24 chưa có biểu riêng: tạm dùng biểu chung');
+near(T.compute('GB',2026,30000,'ENG').tax,3486,'England không đổi khi có vùng');
+ok(T.compute('GB',2026,30000,'SCT').tax<T.compute('GB',2026,30000).tax&&T.compute('GB',2026,60000,'SCT').tax>T.compute('GB',2026,60000).tax,'Scotland thấp hơn ở lương thấp, cao hơn ở lương khá');
+near(T.RULES.GB.ni(2026,30000),1394.4,'NI 30.000 bảng');
+near(T.RULES.GB.ni(2026,60000),3210.6,'NI 60.000 bảng (2% trên 50.270)');
+near(T.RULES.GB.ni(2026,12000),0,'NI dưới ngưỡng');
+ok(T.RULES.GB.ni(2023,60000)===0,'NI trước 2024–25 giữ bảo hiểm chung');
+near(T.compute('SG',2026,500000).tax,84150,'Singapore 500.000 (IRAS 84.150)');
+near(T.compute('SG',2026,1000000).tax,199150,'Singapore 1.000.000 (IRAS 199.150)');
+{let rowsNI=0,lives=0;for(let s=1;s<=8;s++){const l=E.createLife({mode:'world',country:'GB',seed:1700+s,year:1995});l.city='Edinburgh';E.runHeadless(l);const h=(l.flags.tax879||{history:[]}).history;if(h.length)lives++;h.forEach(r=>{if(r.ni!=null){rowsNI++;ok(r.ni>=0&&r.ni<r.gross,'NI hợp lệ');ok(r.year>=2024,'NI chỉ từ 2024');}});}
+ ok(lives>=1&&rowsNI>=1,'đời ở Anh có dòng NI ('+lives+' đời, '+rowsNI+' kỳ)');}
 console.log('PASS tax879: '+n+' checks');

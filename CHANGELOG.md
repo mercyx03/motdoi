@@ -1,3 +1,10 @@
+## 8.10.80 — Lãi suất ngân hàng theo nước, phí thuốc NHS, đồng chi trả Nhật Bản, thuế Scotland và National Insurance
+
+- Ngân hàng (`bank880.js`, nối `life112.js` và `H.addLoan`): từ năm 2026, sổ tiết kiệm có kỳ hạn và khoản vay mới ở Anh (Bank of England, tháng 9/2026), Mỹ (FDIC 19/10/2026, Fed G.19 quý 3/2026), Canada (Bank of Canada 11/11/2026), Úc (RBA F4/F5 tháng 10, F6 tháng 9/2026) theo lãi bình quân hoặc niêm yết; khoản vay ghi nguồn, giữ lãi lúc ký khi chuyển nước. Singapore chưa có (MAS đã ngừng chuỗi lãi suất ngân hàng); vay mua nhà Mỹ giữ mức cũ.
+- Y tế (`health880.js`, lớp riêng trên `healthsys919.js`): phí kê đơn NHS England £9,90 cố định, PPC 3 tháng £32,05 và 12 tháng £114,50 (menu Sức khỏe, có tự gia hạn), miễn cho học sinh 16–18; Nhật Bản từ 70 tuổi: 20% (70–74), 10%/20% (75+, ngưỡng 200/320 vạn yên từ 10/2022), 30% với thu nhập ngang người đang làm (ngưỡng 383/520 vạn yên chưa đọc được nguyên văn).
+- Thuế (`tax879.js`): biểu Scotland 2024–25 đến 2026–27 theo bảng PAYE gov.uk (2023–24 chưa đối chiếu, tạm dùng biểu chung); National Insurance Class 1 (8% từ 12.570 đến 50.270 bảng, 2% trên đó) thay mức bảo hiểm chung 8% từ 2024–25, thuế Anh tính trên lương trước NI; ngưỡng 500.000/1.000.000 Singapore đã đối chiếu IRAS.
+- Kiểm thử: tax879 (1471), bank880 (83), health880 (59), cùng các bộ liên quan.
+
 ## 8.10.79 — Thuế thu nhập tiền lương ở Anh, Úc, Singapore, Canada
 
 - Nhân vật có việc làm ăn lương sống ở Anh, Úc, Singapore, Canada nay bị trừ thuế thu nhập theo biểu chính thức (Anh từ 2023–24, Úc từ 2024–25 gồm thuế Medicare 2%, Singapore từ 2023, Canada liên bang từ 2026); lịch sử thuế theo năm lưu trong hồ sơ, hiện ở bảng lương và dòng nghề nghiệp.

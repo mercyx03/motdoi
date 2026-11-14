@@ -15,10 +15,10 @@ var britishBond873={
   rates:{1:.0499,2:.0507,3:.0510,5:.0517},issues:{1:93,2:81,3:83,5:75},min:500,max:1000000
 };
 function bankOffers866(l){
-  var code=H.resCode(l);
+  var code=H.resCode(l),market=E.BANK880?E.BANK880.offers(l):[]; // 8.10.80: lãi bình quân thị trường theo nước (bank880.js)
   if(code==='VN'&&l.cur==='vnd')return banks;
-  if(code==='GB'&&l.cur==='usd'&&(l.birthYear+l.age>2026||l.birthYear+l.age===2026&&(!l.educationDate863||!l.educationDate863.startsWith('2026-')||l.educationDate863>=britishBond873.asOf)))return [britishBond873];
-  return [];
+  if(code==='GB'&&l.cur==='usd'&&(l.birthYear+l.age>2026||l.birthYear+l.age===2026&&(!l.educationDate863||!l.educationDate863.startsWith('2026-')||l.educationDate863>=britishBond873.asOf)))return [britishBond873].concat(market);
+  return market;
 }
 function interest112(book,elapsed,early){
   if(book.compound873)return book.principal*(Math.pow(1+book.rate,book.term)-1);
@@ -35,10 +35,10 @@ function insurance873(l){
 }
 menu('bank112','Ngân hàng và sổ tiết kiệm',adult,function(l){
   var offers=bankOffers866(l),ref=offers[0];
-  return books(l).length+' sổ đang mở. '+(ref?'Biểu tham chiếu '+(ref.asOf||'10/11/2026')+'. Nguồn: '+(ref.source||bankSource866):'Chưa có biểu lãi suất đối chiếu để mở sổ mới tại đây.')+'\n'+insurance873(l);
+  return books(l).length+' sổ đang mở. '+(ref?'Biểu tham chiếu '+(ref.asOf||'10/11/2026')+'. Nguồn: '+(ref.source||bankSource866):'Chưa có biểu lãi suất đối chiếu để mở sổ mới tại đây.')+'\n'+insurance873(l)+(E.BANK880&&E.BANK880.note(l)?'\n'+E.BANK880.note(l):'');
 },function(l){
   return bankOffers866(l).map(function(b){
-    return {k:b.k,l:b.n,h:'12 tháng · '+(b.rates[1]*100).toFixed(b.issues?2:1)+'%/năm · '+(b.currency||'VND'),run:function(l,r){next(l,'bankTerm112',r,{bank:b.k});}};
+    return {k:b.k,l:b.n,h:'12 tháng · '+(b.rates[1]*100).toFixed(b.issues||b.market880?2:1)+'%/năm · '+(b.currency||'VND'),run:function(l,r){next(l,'bankTerm112',r,{bank:b.k});}};
   }).concat(books(l).map(function(b){
     return {k:b.id,l:(b.locked873&&l.age<b.due?'Đang giữ đến đáo hạn: ':'Rút sổ ')+b.bank+' · '+H.money(l,b.principal),
       h:'Đáo hạn tuổi '+b.due+' · '+(b.rate*100).toFixed(2)+'%/năm',why:b.locked873&&l.age<b.due?'Chưa đáo hạn':true,
