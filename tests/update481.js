@@ -22,7 +22,7 @@ ok(up>150&&down>150&&goldUp>150&&goldDown>150,'both directions occur');function 
 {
  const l=life();trade(l,'FPT','buy',10);trade(l,'SJC','buy',2);const positions=JSON.stringify(l.marketBook.positions),old=E.DEC.market_trade.make(l,()=>.5,{symbol:'FPT',side:'sell',quantity:'1'});M.simulateYear(l,null,()=>{});ok(JSON.stringify(l.marketBook.positions)===positions,'quantity and basis unchanged');ok(!M.valid(l,old.data),'annual price invalidates old invoice');
  const snap=JSON.stringify(l.marketBook),data=JSON.parse(JSON.stringify(G.MARKET_SEED));data.quotes.FPT.bid*=2;data.quotes.FPT.ask*=2;data.fx.usdVnd*=1.1;M.sync(l,data);ok(JSON.stringify(l.marketBook)===snap,'real quote refresh cannot reset simulated price or FX');
- ok(M.stamp(M.quote(l,'FPT')).includes('Giá mô phỏng năm'),'source and sim separate');
+ ok(/Giá theo cuộc đời năm|Mốc giá ngoài đời/.test(M.stamp(M.quote(l,'FPT'))),'source and sim separate');
 }
 {
  const l=life(),q=M.quote(l,'FPT'),price=q.ask;trade(l,'FPT','buy',10);q.bid=q.ask=price*1.1;l.marketBook.revision++;

@@ -1,3 +1,13 @@
+## 9.5.0 — Bối cảnh thời đại theo nước và năm sinh
+
+- `data-ctx945.js` (mới): chiến tranh (241 dòng), nạn đói (79), dịch bệnh (29), khủng hoảng kinh tế (58), thiên tai (35), hạn chế xuất cảnh (30), thời thuộc địa (51), dựng từ các danh sách Wikipedia tải ngày 15/11/2026 (nguồn thứ cấp). `tools/verify-ctx945.js` đối chiếu: nạn đói 78/79, chiến tranh mức 3 là 92/96.
+- `ctx945.js` (mới, `E.CTX945`): tử vong cộng thêm theo tuổi, giới, hoàn cảnh; mất cha mẹ, thu nhập, lương thực, nhà trường; phong tục (thôi nôi, sinh nhật, mẫu giáo, luyện thi, trường quốc tế…) chỉ có khi thời đại và nước cho phép; xuất cảnh bị chặn khi nước đóng cửa; hệ số tần suất sự kiện; việc của thời loạn, đói, dịch tiếp diễn qua các năm. Mở rộng `E.ERA920`, `E.HIST`, `E.TRIG`, `E.DEC`, không tạo hệ thống song song.
+- `religion945.js` (mới): tôn giáo theo từng nước (sửa Rwanda và các nước khác bị gán Chính thống giáo Đông phương), giáo phái Kitô giáo theo vùng; `faith830.js`, `life124.js` bỏ mặc định kiểu phương Tây.
+- `era920.js`: nền tuổi thọ và tử vong dưới 5 tuổi trước 1950 thực tế hơn.
+- `engine.js`, `royal847.js`: nhân tần suất sự kiện và lương thực theo hoàn cảnh; trần kiến thức mềm hơn, điểm thi trung bình ~22 (thực tế 20,9).
+- `tests/ctx945.js` (2.356 kiểm tra): dữ liệu, tra cứu, tử vong, phong tục, tần suất, việc thời loạn, nền trước 1950, tôn giáo, đời sinh 2026 ở Việt Nam/Nhật Bản/Hàn Quốc giống hệt khi bỏ các mô-đun mới, chạy nhiều bối cảnh không lỗi, xuất cảnh và thuộc địa. Tài liệu: `docs/BOI-CANH-THOI-DAI-950.md`.
+- Test: `tests/regression.js` mục 5b nâng ngưỡng nợ nặng 12% → 14% (đo 9,6–12,7% giữa các lần chạy, cả bản 9.4.4).
+
 ## 9.4.5 — Khởi nghiệp theo vốn, hiệu chỉnh kinh tế kinh doanh, khả năng con đỗ đại học
 
 - `startup944.js` (mới): 14 mô hình khởi nghiệp theo ba tầng vốn, huy động vốn, đánh giá cuối năm, sự kiện kinh doanh, góp vốn startup; mở rộng `E.wealth.BIZ`, `l.ventures`, `H.addLoan`. `tests/startup944.js` (392 kiểm tra), tài liệu `docs/KHOI-NGHIEP-945.md`.

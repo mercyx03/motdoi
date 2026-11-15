@@ -200,7 +200,7 @@ section('5b. Các lỗi logic đã từng gặp (không được tái phát)');
     const med = r[Math.floor(r.length / 2)], neg = r.filter(x => x < -2).length / r.length;
     console.log('   Tài sản cuối đời (' + mode + '): trung vị ' + med.toFixed(1) + ' lần thu nhập cơ sở, nợ nặng ' + (neg * 100).toFixed(1) + '%');
     ok(med > 4 && med < 120, mode + ': tài sản cuối đời trung vị hợp lý (' + med.toFixed(1) + ')'); // V5: bình thường không còn tự đốt tới 97% tiền dư chỉ vì giàu; mốc trung vị tăng, vẫn kiểm tra hữu hạn và nợ phía dưới.
-    ok(neg < 0.12, mode + ': tỷ lệ nợ nặng cuối đời hợp lý');
+    ok(neg < 0.14, mode + ': tỷ lệ nợ nặng cuối đời hợp lý'); // 9.5.0: mẫu ~560 đời nên sai số ~1,3 điểm phần trăm; đo 9,6–12,7% giữa các lần chạy (cả bản 9.4.4), ngưỡng 12% sát trung bình nên báo lỗi ngẫu nhiên; thực tế khoảng một phần chục hộ có tài sản ròng âm
     // v1.0: tiền mặt âm tối đa 3 lần thu nhập cơ sở. v2.0 có thêm khoản vay (trần 4 lần mỗi khoản, vỡ nợ sau 3 năm) → nợ ròng không quá 8 lần
     ok(r[0] >= -8.01, mode + ': nợ không phình vô hạn (thấp nhất ' + r[0].toFixed(1) + ' lần thu nhập cơ sở)');
   }

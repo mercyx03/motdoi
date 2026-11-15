@@ -2541,7 +2541,7 @@
   function label853(k){return E.EDUCATION54.subjects[k]||({drawing:'Hình họa',composition:'Bố cục màu',acting:'Diễn xuất',performance:'Biểu diễn',music:'Âm nhạc'})[k]||k;}
   function cap853(x,a,b){return U.clamp(Number.isFinite(Number(x))?Number(x):0,a,b);}
   // Kỳ thi tốt nghiệp/đại học (kind 'uni'): điểm thi thật dồn quanh mức trung bình (khối A00 năm 2024: trung bình 20,9, hiếm khi từ 27 điểm); chỉ số kiến thức trong game dễ chạm trần 100 nên phần trên 80 được nén mạnh (tuổi 18 trung bình đã khoảng 95) để học đều vẫn đạt khá nhưng không dễ ra điểm tuyệt đối.
-  var KNOW_KNEE853=80,KNOW_SLOPE853=0.3;
+  var KNOW_KNEE853=90,KNOW_SLOPE853=0.5;
   function examKnowledge853(k){k=cap853(k,0,100);return k<=KNOW_KNEE853?k:KNOW_KNEE853+(k-KNOW_KNEE853)*KNOW_SLOPE853;}
   function round853(x){return Math.round(x*100)/100;}
   function peekMockState853(l){return l.flags&&l.flags.mockExam853||{};}

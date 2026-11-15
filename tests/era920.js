@@ -123,7 +123,7 @@ const near = (a, b, t, m) => ok(Math.abs(a - b) <= t, m + ' (' + a + ' vs ' + b 
   ok(P.rename({ country: 'KZ', birthYear: 2000, age: 20 }, 'ở Astana') === 'ở Nur-Sultan' && P.rename({ country: 'KZ', birthYear: 2000, age: 24 }, 'ở Astana') === 'ở Astana', 'Astana/Nur-Sultan theo năm');
   const l = E.createLife({ mode: 'world', country: 'RU', seed: 61, year: 1975 }); E.runHeadless(l);
   ok(l.log.some(x => /Bối cảnh năm 1975/.test(x.t) && /Liên Xô/.test(x.t)) && l.log.some(x => /Liên Xô tan rã/.test(x.t)), 'đời sinh 1975 ở Nga ghi bối cảnh lúc sinh và lúc Liên Xô tan rã');
-  const v = E.createLife({ mode: 'vn', seed: 62, year: 1965 }); E.runHeadless(v); ok(v.log.some(x => /chia hai miền/.test(x.t)) && v.log.some(x => /chiến tranh Việt Nam kết thúc/.test(x.t)), 'đời Việt Nam 1965 ghi bối cảnh chiến tranh và thống nhất');
+  let v1 = false, v2 = false; for (let sd = 62; sd < 82 && !(v1 && v2); sd++) { const v = E.createLife({ mode: 'vn', seed: sd, year: 1965 }); E.runHeadless(v); if (v.log.some(x => /chia hai miền/.test(x.t)) && v.log.some(x => /chiến tranh Việt Nam kết thúc/.test(x.t))) { v1 = v2 = true; } } ok(v1 && v2, 'đời Việt Nam 1965 ghi bối cảnh chiến tranh và thống nhất (quét nhiều mầm: từ 9.5 nhân vật có thể chết trong chiến tranh trước 1975)');
   const m = E.createLife({ mode: 'vn', seed: 63, year: 2026 }); E.runHeadless(m); ok(!m.log.some(x => /Bối cảnh năm/.test(x.t)), 'đời hiện nay không có dòng bối cảnh lịch sử');
 }
 // 9b. chính sách theo năm: hôn nhân cùng giới chỉ hợp pháp từ năm có hiệu lực của từng nước

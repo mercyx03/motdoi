@@ -1,5 +1,26 @@
 [
   {
+    "id": "era-context-95000",
+    "version": "9.5.0",
+    "publishedAt": "2026-11-16T00:34:48+07:00",
+    "releaseStatus": "packaged",
+    "title": "Hoàn cảnh thời đại: chiến tranh, nạn đói, dịch bệnh theo từng nước và năm sinh",
+    "summary": "Năm sinh và nước sinh nay quyết định hoàn cảnh: thời chiến, nạn đói, thuộc địa, đóng cửa biên giới, và sửa tôn giáo sai theo nước.",
+    "tags": [
+      "Tính năng mới",
+      "Cân bằng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Mỗi đời sinh ra giữa chiến tranh, nạn đói, dịch bệnh, khủng hoảng hay thiên tai lớn của nước đó sẽ khó khăn hơn hẳn: trẻ nhỏ và người già dễ chết hơn, cha mẹ có thể mất sớm, thiếu ăn, nghỉ học, nhà bị di dời. Nam giới tuổi chiến đấu chịu rủi ro lớn nhất ở thời chiến.",
+      "Ngày xưa chưa có thì giờ không có: lễ thôi nôi bốc đồ, tiệc sinh nhật, mẫu giáo, đồ chơi mua sẵn, lò luyện thi, học thêm và trường quốc tế chỉ xuất hiện từ khi thời đại và nước đó đã có, và không có giữa chiến sự hay nạn đói. Nhà nghèo ở thời kỳ nghèo khó cũng thường không có.",
+      "Bối cảnh được dựng cho hàng trăm cuộc chiến tranh, nạn đói, dịch bệnh, khủng hoảng kinh tế, thiên tai lớn từ 1900 đến nay, thời thuộc địa và các giai đoạn đóng cửa biên giới. Khi nước đóng cửa thì xuất khẩu lao động, du học, di cư gần như không thể.",
+      "Thời loạn có việc riêng: tìm chỗ trú, xếp hàng khẩu phần, con ốm, bị gọi nhập ngũ, mất việc, dịch bệnh, dựng lại cuộc sống. Việc chưa xong tiếp diễn sang năm sau và để lại dấu ấn.",
+      "Sửa dữ liệu sai: tôn giáo nay theo từng nước (trước đây một số nước như Rwanda ra \"Chính thống giáo Đông phương\"), giáo phái Kitô giáo theo vùng. Điểm thi trung bình sát thực tế hơn (khoảng 22 so với 20,9). Nền tử vong trước 1950 thực tế hơn. Đời sinh gần đây ở nước giàu hầu như không đổi."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "startup-econ-94500",
     "version": "9.4.5",
     "publishedAt": "2026-11-15T18:53:08+07:00",

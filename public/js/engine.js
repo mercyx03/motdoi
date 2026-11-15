@@ -452,7 +452,7 @@
     life.city = city; life.birthCity = city;
     life.place = life.urban ? city : 'vùng nông thôn gần ' + city;
     life.pool = c.pool.indexOf(':') >= 0 ? U.wkey(r, c.pool) : c.pool;
-    life.religion = U.wkey(r, W.REL[life.pool] || 'Không rõ:1');
+    life.religion = U.wkey(r, (E.REL945 && E.REL945.weights(life)) || W.REL[life.pool] || 'Không rõ:1'); // 9.5: bảng tôn giáo theo từng nước cho các nhóm tên dùng chung
     life.gdp = c.gdp; life.e0nat = c.e0;
     life.e0 = c.e0 + (life.urban ? 0.8 : -0.6);
     life.u5 = c.u5 * (life.urban ? 0.85 : 1.15);
@@ -1495,7 +1495,7 @@
       var seenN = scN[T.id] || 0;
       if (!T.rep && seenN >= (T.max || 3)) continue;
       var pv = life.flags.prevSeen || {}; // v3.4: chuyện đã gặp ở các đời trước thì đời này ít gặp lại hơn
-      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.pace || 1) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
+      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.pace || 1) * (E.CTX945 ? E.CTX945.eventK(T, life) : 1) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
       if (E.CONTEXT143) pr = E.CONTEXT143.probability(T, life, pr);
       if (r() < Math.min(1, pr * difficulty(life).events) && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id, undefined, T); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
@@ -1688,7 +1688,7 @@
     if (E.sponsorContributionAllowed && !E.sponsorContributionAllowed(life)) F.partner = 0;
     var styleK = E.lifestyleFactor ? E.lifestyleFactor(life) : ({ save: 0.82, normal: 1, lavish: 1.25 }[life.spend] || 1);
     var wealthK = E.wealthLivingK ? E.wealthLivingK(life, income) : 1; // v5.8.0: nhà giàu chi tiêu sinh hoạt nhiều hơn nhà bình thường, nhà nghèo
-    F.food = (b * 0.3 + (p ? b * 0.22 : 0)) * styleK * wealthK;
+    F.food = (b * 0.3 + (p ? b * 0.22 : 0)) * styleK * wealthK * (E.CTX945 ? E.CTX945.foodK(E.CTX945.of(life)) : 1); // 9.5: lương thực đắt lên khi đói, chiến tranh, siêu lạm phát
     var util = (b * 0.15 + (p ? b * 0.13 : 0)) * styleK * wealthK;
     F.food += util;
     F.rent = !life.ownHouse && life.urban ? b * 0.12 : 0;
@@ -2050,7 +2050,7 @@
       (life.orient !== 'straight' && life.realized && !life.out && a >= 16 ? -3 : 0) + (life.abroad && !life.abroad.perm ? -3 : 0) +
       (a < 18 && f.vice ? -4 : 0) + (inJail ? -12 : 0) + (life.flags.thugDebt ? -6 : 0) + (life.spend === 'lavish' ? 2 : life.spend === 'save' ? -1 : 0) + (life.bff && life.bff.alive ? 2 : 0);
     st.hap += (tgt - st.hap) * 0.22 + fHap + U.normal(r) * 3;
-    st.kno += (a < 6 ? 1 : life.school ? 1 : 0) + fK - 0.2 - (a > 65 ? 0.6 : 0) + U.normal(r) * 1;
+    st.kno += (a < 6 ? 1 : life.school ? 1 : 0) + fK - 0.2 - (a > 65 ? 0.6 : 0) + U.normal(r) * 1 - Math.max(0, st.kno - 58) * 0.12; // 9.5: quên dần ở mức kiến thức cao, để tuổi 18 không còn dồn lên 95–100 (kiến thức tăng qua sự kiện vẫn đúng như hiển thị)
     var sT = 50 + (hasP ? 8 : 0) + Math.min(10, life.kids.length * 2) + (life.grand ? 4 : 0) + (life.bff && life.bff.alive ? 4 : 0);
     st.soc += (sT - st.soc) * 0.12 + fS + U.normal(r) * 2;
     clampSt(life);
