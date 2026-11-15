@@ -68,8 +68,8 @@ const near = (a, b, t, m) => ok(Math.abs(a - b) <= t, m + ' (' + a + ' vs ' + b 
 // 5. đời sinh từ 2026 không đổi một byte so với khi không có ba module era920
 {
   const SKIP = ['js/data-era920.js', 'js/era920.js', 'js/era920-pol.js'];
-  const hashes = e => [['vn', 'VN'], ['world', 'US'], ['world', 'JP'], ['world', 'NG']].map(([mode, cc], i) => { const l = e.createLife({ mode, country: cc, seed: 4600 + i, year: 2026 }); e.runHeadless(l); const s = Object.assign({}, l); delete s.v; return crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex'); });
-  const a = hashes(gameContext({ skip: SKIP }).E), b = hashes(gameContext().E); ok(a.every((h, i) => h === b[i]), 'đời sinh 2026 giống hệt khi có và không có số liệu theo năm');
+  const hashes = e => [['vn', 'VN'], ['world', 'VN']].map(([mode, cc], i) => { const l = e.createLife({ mode, country: cc, seed: 4600 + i, year: 2026 }); /* nước khác Việt Nam: tỷ suất sinh đời hiện nay nay lấy số liệu UN (9.4) nên khác khi bỏ module */ e.runHeadless(l); const s = Object.assign({}, l); delete s.v; return crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex'); });
+  const a = hashes(gameContext({ skip: SKIP }).E), b = hashes(gameContext().E); ok(a.every((h, i) => h === b[i]), 'đời Việt Nam sinh 2026 giống hệt khi có và không có số liệu theo năm');
 }
 // 6. mô phỏng: tuổi thọ và tử vong dưới 5 tuổi của đời mô phỏng bám đường tử vong theo năm (kiểm tra thô, mẫu nhỏ)
 {
@@ -126,6 +126,16 @@ const near = (a, b, t, m) => ok(Math.abs(a - b) <= t, m + ' (' + a + ' vs ' + b 
   const v = E.createLife({ mode: 'vn', seed: 62, year: 1965 }); E.runHeadless(v); ok(v.log.some(x => /chia hai miền/.test(x.t)) && v.log.some(x => /chiến tranh Việt Nam kết thúc/.test(x.t)), 'đời Việt Nam 1965 ghi bối cảnh chiến tranh và thống nhất');
   const m = E.createLife({ mode: 'vn', seed: 63, year: 2026 }); E.runHeadless(m); ok(!m.log.some(x => /Bối cảnh năm/.test(x.t)), 'đời hiện nay không có dòng bối cảnh lịch sử');
 }
+// 9b. chính sách theo năm: hôn nhân cùng giới chỉ hợp pháp từ năm có hiệu lực của từng nước
+{
+  const l = E.createLife({ mode: 'world', country: 'US', seed: 91, year: 1990 }); l.age = 20; /* 2010 */ ok(E.H.sameSexLegal(l) === false, 'Mỹ 2010: chưa hợp pháp cùng giới');
+  l.age = 26; /* 2016 */ ok(E.H.sameSexLegal(l) === true, 'Mỹ 2016: đã hợp pháp');
+  const nl = E.createLife({ mode: 'world', country: 'NL', seed: 92, year: 1970 }); nl.age = 30; ok(E.H.sameSexLegal(nl) === false, 'Hà Lan 2000: chưa'); nl.age = 31; ok(E.H.sameSexLegal(nl) === true, 'Hà Lan 2001: nước đầu tiên');
+  const jp = E.createLife({ mode: 'world', country: 'JP', seed: 93, year: 1990 }); jp.age = 30; ok(E.H.sameSexLegal(jp) === false, 'Nhật: không thuộc danh sách');
+  const now = E.createLife({ mode: 'world', country: 'US', seed: 94, year: 2026 }); ok(E.H.sameSexLegal(now) === true, 'đời sinh 2026 giữ nguyên');
+  ok(G.W.SSM.every(c => X.SSM_Y[c] != null), 'mọi nước trong danh sách có năm hiệu lực');
+}
+{ const ng = E.createLife({ mode: 'world', country: 'NG', seed: 95, year: 2026 }), kr = E.createLife({ mode: 'world', country: 'KR', seed: 96, year: 2026 }); near(ng.tfr, X.at('NG', 2023).tfr, 0.01, 'Nigeria hiện nay: tỷ suất sinh theo UN'); ok(kr.tfr < 1 && kr.tfr >= 0.7, 'Hàn Quốc hiện nay: tỷ suất sinh dưới 1'); }
 // 10. giao diện và bản lưu cũ
 {
   const html = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'app.js'), 'utf8');

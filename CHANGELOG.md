@@ -1,3 +1,11 @@
+## 9.4.0 — Thêm biến cố, hôn nhân cùng giới theo năm, tỷ suất sinh thực (phần B, C)
+
+- `hist920.js`: `w_civil_wars` (24 nước, tham số `CIVIL`/`FLEE`), `w_authoritarian` (`DICT`/`EXILE`), `w_chernobyl`, `w_tohoku_2011`; Quảng Trị gán phía một lần theo mã đời (20% Bắc). Ukraina từ 2022: nam 18–60 không có lựa chọn rời nước.
+- `era920.js`: `SSM_Y` (năm hiệu lực hôn nhân cùng giới của 37 nước) và `ssmLegal`; `engine.js` `sameSexLegal` và độ chấp nhận xã hội dùng nó cho đời sinh trước 2024; `tfrModern`: tổng tỷ suất sinh của đời hiện nay ở nước ngoài Việt Nam theo UN 2023 (đời sinh 2026 ở các nước này đổi so với trước, đời Việt Nam không đổi).
+- Không làm: lương/giá theo năm (đơn vị `base` dùng chung thu nhập và chi phí ở khoảng 1.000 chỗ; nhân theo GDP làm tiền tiết kiệm xói mòn như lạm phát, cần thiết kế lại); số liệu trước 1950 (chuỗi không đều, ~30 nước); TV/điện/nước sạch theo năm (không có chuỗi mở).
+- Đối chiếu nguồn học thuật và công bố bổ sung: xem `docs/ERA-DOI-CHIEU-NGUON-940.md` (Heuveline 2015, Moïse, UNSCEAR, UNHCR, Pew).
+- Kiểm thử: `tests/hist920.js` (100 kiểm tra), `tests/era920.js` (73 kiểm tra).
+
 ## 9.3.2 — Hiệu chỉnh tham số biến cố và đối chiếu bổ sung (phần A)
 
 - `hist920.js`: tử vong quân nhân miền Bắc ×1,5 (so với 220.000–313.000 lính miền Nam và 444.000–1.100.000 miền Bắc/Việt Cộng); vượt biên chết 20% (UNHCR ước tính 200.000–250.000 chết trong gần 800.000 đến nơi); nước định cư 55/15/14/9/4/3 (Hoa Kỳ hơn một nửa); `SEV`: lạm phát phi mã mất 60%/30% tiền để dành ở Liên Xô cũ, Serbia, Bosnia, 35%/20% ở nhóm khác; COVID 2022 45% → 35%.

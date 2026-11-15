@@ -69,6 +69,10 @@
   // đo bằng mô phỏng 100 đời mỗi ca (VN 1950, NG 1960, IN 1950, JP 1950): trẻ chết trước 5 tuổi 29–42% so với 21–32%; hệ số giảm tuyến tính tới −22% (trẻ em, theo tử vong dưới 5) và −20% (người lớn, theo tuổi thọ) rồi bằng 1 ở mức hiện nay.
   var CAL = { a: 0.2, e: 76, w: 22, c: 0.22, u: 8, v: 50 };
   function cal(l, a) { var m = l.era920, k = m && (a < 5 ? m.kc : m.ka); return k == null ? 1 : k; }
-  E.ERA920 = { cal: cal, CAL: CAL, FROM: FROM, TO: TO, data: D, at: at, mobile: mobile, net: net, birth: birth, urbanK: urbanK, refresh: refresh, tfrNow: tfrNow, gdp: gdp, isEra: isEra, worldYear: worldYear, series: S };
+  // Năm hôn nhân cùng giới có hiệu lực toàn quốc (đối chiếu bách khoa/Pew 15/11/2026; Canada 2005 là năm luật liên bang, Mexico 2022 là năm đủ các bang, Anh tính Anh và xứ Wales 2014)
+  var SSM_Y = { NL: 2001, BE: 2003, ES: 2005, CA: 2005, ZA: 2006, NO: 2009, SE: 2009, PT: 2010, IS: 2010, AR: 2010, DK: 2012, BR: 2013, FR: 2013, UY: 2013, NZ: 2013, GB: 2014, LU: 2015, US: 2015, IE: 2015, CO: 2016, FI: 2017, MT: 2017, DE: 2017, AU: 2017, AT: 2019, EC: 2019, CR: 2020, CL: 2022, CH: 2022, SI: 2022, CU: 2022, MX: 2022, AD: 2023, EE: 2024, GR: 2024, LI: 2025, TH: 2025 };
+  function ssmLegal(l, cc) { var m = l && l.era920; if (!m) return true; var y = SSM_Y[cc]; return y == null || worldYear(l) >= y; }
+  function tfrModern(cc) { var s = S(cc); return s ? Math.max(0.7, Math.min(8.5, s.t[N - 1])) : null; }
+  E.ERA920 = { tfrModern: tfrModern, ssmLegal: ssmLegal, SSM_Y: SSM_Y, cal: cal, CAL: CAL, FROM: FROM, TO: TO, data: D, at: at, mobile: mobile, net: net, birth: birth, urbanK: urbanK, refresh: refresh, tfrNow: tfrNow, gdp: gdp, isEra: isEra, worldYear: worldYear, series: S };
   E.devGdp = gdp;
 })(globalThis.G);

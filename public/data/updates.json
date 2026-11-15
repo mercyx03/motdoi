@@ -1,6 +1,28 @@
 {
-  "generatedAt": "2026-11-14T22:53:13.772Z",
+  "generatedAt": "2026-11-15T00:19:05.861Z",
   "entries": [
+    {
+      "id": "era-events-94000",
+      "version": "9.4.0",
+      "publishedAt": "2026-11-15T07:19:05+07:00",
+      "releaseStatus": "packaged",
+      "title": "Thêm nội chiến, độc tài, Chernobyl, Tōhoku, hôn nhân cùng giới theo năm và tỷ suất sinh thực",
+      "summary": "Đời sinh năm cũ gặp thêm chiến tranh, độc tài và thảm họa; nhiều quy định và số liệu theo đúng năm hơn.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Nội chiến và chiến tranh ở 24 nước, từ Syria, Ukraine, Afghanistan, Liban đến Angola, Sri Lanka, Colombia và Peru: có lựa chọn ở lại hay đi tị nạn; ở Ukraine từ 2022, nam giới 18–60 tuổi không được rời nước.",
+        "Chính quyền độc tài ở Argentina, Chile, Brazil, Uruguay, Hy Lạp, Hàn Quốc, Philippines, Ethiopia, Tây Ban Nha, Bồ Đào Nha và Myanmar: gia đình bị gây khó dễ, mất việc, có thể chọn lưu vong. Game không gán quan điểm cho nhân vật.",
+        "Chernobyl 1986 ở Ukraine, Belarus, Nga (vùng Gomel và Kyiv bị tác động nhiều nhất) và động đất, sóng thần Tōhoku 2011 ở Nhật.",
+        "Hôn nhân cùng giới chỉ hợp pháp từ năm có hiệu lực ở từng nước (Hà Lan 2001, Mỹ 2015, Thái Lan 2025…); trước đó đời sinh năm cũ không được tính là hợp pháp.",
+        "Tỷ suất sinh của nhân vật sinh năm nay ở các nước ngoài Việt Nam theo số liệu Liên Hợp Quốc 2023 (ví dụ Nigeria 4,5, Hàn Quốc 0,72) thay vì công thức cũ, nên số con mong muốn sát thực tế hơn.",
+        "Quảng Trị, nơi sông Bến Hải chia đôi, nay thuộc phía Bắc hoặc phía Nam tùy nhân vật.",
+        "Chưa làm: lương và giá cả theo năm, các chính sách còn lại, Rwanda và số liệu trước 1950."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-calib-93200",
       "version": "9.3.2",

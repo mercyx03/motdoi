@@ -321,3 +321,14 @@ Ngày thực hiện: 15/11/2026. Kiểm các khẳng định trong `public/js/er
 
 ## Hiệu chỉnh tham số biến cố (15/11/2026)
 Xem `docs/ERA-GIAI-DOAN-3-5-930.md`, mục tham số. Thay đổi: tử vong quân nhân miền Bắc ×1,5; vượt biên chết 20% (trước 15%); phân bổ nước định cư US 55 / AU 15 / CA 14 / FR 9 / DE 4 / GB 3; mất tiền khi lạm phát phi mã 60%/30% với nhóm Liên Xô cũ, Serbia, Bosnia và 35%/20% với nhóm khác; COVID-19 2022 từ 45% xuống 35%. Mọi tỷ lệ vẫn là tham số, chỉ đã được kéo về cùng bậc độ lớn với các mốc công bố.
+## Bổ sung lần 3 (15/11/2026, phần A còn dở)
+- **Nguồn học thuật và công bố (qua tìm kiếm web; chưa mở bản gốc)**:
+  - Khmer Đỏ: Heuveline (Population Studies, 2015) trung vị 1,9 triệu người chết vượt mức bình thường, khoảng tin cậy 95% 1,2–2,8 triệu, bằng 21% dân số có nguy cơ; Bannister và Johnson (1993) 1,05 triệu; báo cáo nhân khẩu cho ECCC (Tabeau, 2009). Mức 20–30% cộng dồn trong game cùng bậc.
+  - Cải cách ruộng đất: Moïse (1983) khoảng 5.000 người bị xử tử (3.000–15.000), bản 2001 dựa tài liệu Hungary gần 15.000; ước tính thời Chiến tranh Lạnh 50.000–100.000; Porter 800–2.500. Phân tích quy thành phần chưa tìm thấy; game không nêu số.
+  - Học tập cải tạo: ước tính từ 500.000 đến trên 1 triệu người (tùy nguồn), thời gian giam từ vài tháng đến trên 15 năm; chính quyền ban đầu nói tối đa ba năm. Chưa mở được công trình của Desbarats.
+  - Mốc công nghệ: CT lâm sàng đầu tiên 1/10/1971 (Atkinson Morley, Hounsfield và Ambrose); Twitch 6/6/2011; Red Annihilation (Quake) tại E3, tháng 5 hoặc 6/1997. Cả ba khớp mốc trong game.
+  - Thuyền nhân: các nguồn chênh nhiều về số chết (30.000 theo Wain 1981, 100.000–140.000 theo CIA, 200.000–400.000 theo UNHCR); tỷ lệ bị chặn không tìm thấy nguồn. Hoa Kỳ nhận hơn một nửa số đến nơi (gần 800.000 đến bờ).
+  - Chernobyl (UNSCEAR qua World Nuclear Association): khoảng 116.000 người sơ tán 1986; Tōhoku: khoảng 20.000 người chết hoặc mất tích (Cơ quan Tái thiết Nhật Bản); lệnh cấm nam 18–60 tuổi rời Ukraina từ 24/2/2022.
+  - Hôn nhân cùng giới (Pew và tổng hợp báo chí): Hà Lan 2001, Bỉ 2003, Tây Ban Nha và Canada 2005, Nam Phi 2006, Argentina 2010, Colombia 2016, Costa Rica 2020, Chile, Thụy Sĩ, Slovenia, Cuba 2022. Riêng Mexico: Mexico City 2009, toàn quốc 2022 (game dùng 2022); Na Uy, Thụy Điển 2009 chưa xác nhận lại trong lần này.
+- **Bảng chính trị 148 nước**: 222 dòng; 83 dòng thuộc địa kiểm riêng từng năm; 139 dòng còn lại kiểm theo loại sự kiện (118 khẳng định), chưa kiểm riêng năm tuyên bố độc lập của từng nước Xô viết và Nam Tư cũ (game ghi chung "thuộc Liên Xô đến 1990, tan rã 1991"; Litva, Latvia, Estonia và Gruzia đã tuyên bố độc lập sớm hơn nên cách ghi này là giản lược).
+- Không làm được: bài kiểm tử vong lớn song song (tiến trình nền bị chậm, bỏ); số liệu chỉ lấy từ lượt chạy trực tiếp.

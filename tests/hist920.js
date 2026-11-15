@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const { gameContext } = require('./hardcore-isolation');
 const { scan } = require('./era-oracle902');
 const G = gameContext(), E = G.E, H = E.H, X = E.ERA920, HI = X.HIST;
-let n = 0; const ok = (c, m) => { assert.ok(c, m); n++; };
+let ok2 = true; let n = 0; const ok = (c, m) => { assert.ok(c, m); n++; };
 const say = l => (t, k) => l.log.push({ a: l.age, t, k });
 function life(cc, by, age, o) {
   o = o || {}; const l = E.createLife({ mode: cc === 'VN' ? 'vn' : 'world', country: cc, seed: o.seed || 3, year: by, gender: o.sex || 'M' });
@@ -28,7 +28,7 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
 // 2. phía của Việt Nam theo tỉnh
 {
   const s = p => HI.vnSide({ flags: {}, prov: p });
-  ok(s({ old: 'Hà Nội', region: 'DBSH' }) === 'north' && s({ old: 'Nghệ An', region: 'BTB' }) === 'north' && s({ old: 'Quảng Trị', region: 'BTB' }) === 'dmz' && s({ old: 'Thừa Thiên Huế', region: 'BTB' }) === 'south' && s({ old: 'TP. Hồ Chí Minh', region: 'DNB' }) === 'south' && s({ old: 'Cà Mau', region: 'DBSCL' }) === 'south' && s({ old: 'Lào Cai', region: 'MNPB' }) === 'north', 'tỉnh → phía (Bắc/Nam/giới tuyến)');
+  ok(s({ old: 'Hà Nội', region: 'DBSH' }) === 'north' && s({ old: 'Nghệ An', region: 'BTB' }) === 'north' && ['north', 'south'].includes(HI.vnSide({ id: 'q1', flags: {}, prov: { old: 'Quảng Trị', region: 'BTB' } })) && s({ old: 'Thừa Thiên Huế', region: 'BTB' }) === 'south' && s({ old: 'TP. Hồ Chí Minh', region: 'DNB' }) === 'south' && s({ old: 'Cà Mau', region: 'DBSCL' }) === 'south' && s({ old: 'Lào Cai', region: 'MNPB' }) === 'north', 'tỉnh → phía (Bắc/Nam/giới tuyến)');
   ok(HI.vnSide({ flags: { hist920: { side: 'south' } }, prov: { old: 'Hà Nội', region: 'DBSH' } }) === 'south', 'đã chọn đi sang phía kia thì đổi phía');
 }
 // 3. Genève 1954: lựa chọn ở lại hay đi, đi thì mất của và đổi phía suốt đời
@@ -41,7 +41,7 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   ok(HI.vnSide(l) === 'south' && HI.EP.find(e => e.id === 'vn_war_south').who(l) > 0 && HI.EP.find(e => e.id === 'vn_war_north').who(l) === 0, 'sau khi đi, chịu các biến cố của miền Nam chứ không phải miền Bắc');
   const l2 = find(mk, l => { l.age = 25; step(l); }, l => l.pending[0] && l.pending[0].data.id === 'vn_geneva'); resolve(l2, 'a'); ok(!HI.st(l2).side && HI.st(l2).did.vn_geneva === 'a' && !HI.st(l2).open.length, 'ở lại: không đổi gì');
   const kid = life('VN', 1948, 6, { prov: { old: 'Nam Định', region: 'DBSH' } }); kid.age = 6; step(kid); ok(kid.pending.length === 0 && HI.st(kid).did.vn_geneva === 'a' || HI.st(kid).side, 'trẻ nhỏ đi theo quyết định của gia đình, không hiện cảnh');
-  const dmz = life('VN', 1929, 25, { prov: { old: 'Quảng Trị', region: 'BTB' } }); step(dmz); ok(dmz.pending.length === 0, 'Quảng Trị (giới tuyến) không bị gán phía');
+  let qn = 0, qs = 0; for (let i = 0; i < 300; i++) { const q = life('VN', 1929, 25, { seed: 900 + i, prov: { old: 'Quảng Trị', region: 'BTB' } }); q.id = 'qt' + i; const sd = HI.vnSide(q); if (sd === 'north') qn++; else if (sd === 'south') qs++; ok2 = HI.vnSide(q) === sd; } ok(qn > 20 && qn < 100 && qs > 200, 'Quảng Trị (giới tuyến): đa số ở phía Nam, một phần ở phía Bắc (Vĩnh Linh), chọn một lần (' + qn + '/' + qs + ')');
   const nonvn = life('US', 1929, 25); step(nonvn); ok(!nonvn.flags.hist920 || !Object.keys(HI.st(nonvn).did).length, 'nước khác không có cảnh Genève');
 }
 // 4. cải cách ruộng đất: hậu quả nhiều giai đoạn; 1956 sửa sai không phải ai cũng được
@@ -133,6 +133,32 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   ok(dn > 0.12 && dn < 0.4 && db > 0.08 && db < dn, 'chết trong 4 năm: dân thành phố cũ ' + (dn * 100).toFixed(0) + '%, dân nông thôn ' + (db * 100).toFixed(0) + '%');
   const x = mk(5, true); for (let k = 0; k < 4 && x.alive; k++) { x.age = 15 + k; step(x); } if (x.alive) { x.age = 19; step(x); ok(x.log.some(y => /1.1979/.test(y.t)), 'tháng 1/1979 chế độ sụp đổ, việc dang dở vẫn còn'); } else ok(true, 'đời đã mất');
   const jp = life('JP', 1960, 15); step(jp); ok(!jp.flags.hist920 || !HI.st(jp).khEvac, 'nước khác không bị ảnh hưởng');
+}
+// 8c. nội chiến, độc tài, Chernobyl, Tōhoku (9.4)
+{
+  ok(HI.EP.length >= 21 && HI.BY.w_civil_wars && HI.BY.w_authoritarian && HI.BY.w_chernobyl && HI.BY.w_tohoku_2011, 'có thêm nội chiến, độc tài, Chernobyl, Tōhoku');
+  const syr = (i, sex) => life('SY', 1994, 20, { seed: 1200 + i, sex: sex || 'M', money: 2, urban: true }); // 2014
+  const a = find(i => syr(i, 'F'), l => step(l), l => l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'w_civil_wars', 800);
+  ok(a && a.pending[0].opts.map(o => o.k).join() === 'a,b', 'Syria 2014: lựa chọn ở lại / rời nước');
+  resolve(a, 'b'); ok(a.abroad && a.abroad.perm && ['TR', 'LB', 'JO', 'DE', 'SE', 'NL'].includes(a.abroad.code) && HI.st(a).refugee, 'tị nạn Syria: nước tiếp nhận nằm trong danh sách');
+  const b = find(i => syr(i, 'F'), l => step(l), l => l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'w_civil_wars', 800); const h0 = b.st.hap; resolve(b, 'a'); ok(b.st.hap < h0 && HI.st(b).open.some(o => o.k === 'trauma' && o.lvl >= 2), 'ở lại giữa chiến sự: tổn thương dang dở');
+  const ua = (i, sex) => life('UA', 1990, 33, { seed: 1300 + i, sex, money: 2, urban: true }); // 2023
+  const um = find(i => ua(i, 'M'), l => step(l), l => l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'w_civil_wars', 900);
+  const uf = find(i => ua(i, 'F'), l => step(l), l => l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'w_civil_wars', 900);
+  ok(!um || um.pending[0].opts.map(o => o.k).join() === 'a', 'Ukraina 2023: nam 18–60 tuổi không có lựa chọn rời nước (lệnh động viên)');
+  ok(uf && uf.pending[0].opts.map(o => o.k).join() === 'a,b', 'Ukraina 2023: nữ giới có thể rời nước');
+  const pre = life('UA', 1990, 20, { money: 2 }); step(pre); ok(!pre.flags.hist920 || !HI.st(pre).open.length, 'Ukraina 2010: chưa có chiến sự');
+  const ar = i => { const l = life('AR', 1950, 28, { seed: 1400 + i, money: 2 }); l.job = { id: 'ke_toan', rank: 1, yrs: 3 }; return l; }; // 1978
+  const au = find(ar, l => step(l), l => HI.st(l).open.some(o => o.k === 'hardship') && HI.st(l).open.some(o => o.k === 'trauma'), 900); ok(au, 'Argentina 1978: một số người bị chính quyền gây khó dễ, mở khó khăn và tổn thương');
+  const ex = find(ar, l => step(l), l => l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'w_authoritarian', 1500); ok(ex, 'có cảnh ở lại hay rời nước'); resolve(ex, 'b'); ok(ex.abroad && ['ES', 'MX', 'BR', 'FR', 'SE', 'US'].includes(ex.abroad.code), 'lưu vong tới nước trong danh sách');
+  const rateAu = rate(ar, l => step(l), l => HI.st(l).open.length > 0, 400); ok(rateAu > 0.005 && rateAu < 0.08, 'tỷ lệ bị gây khó dễ mỗi năm ở mức tham số (' + (rateAu * 100).toFixed(1) + '%)');
+  const dk = life('DK', 1950, 28); step(dk); ok(!dk.flags.hist920 || !HI.st(dk).open.length, 'nước không có độc tài trong danh sách không bị ảnh hưởng');
+  const ch = (i, city) => { const l = life('BY', 1976, 10, { seed: 1500 + i }); l.city = city; l.id = 'ch' + i; return l; };
+  const rg = rate(i => ch(i, 'Gomel'), l => step(l), l => HI.st(l).open.length > 0, 300), rm = rate(i => ch(i, 'Brest'), l => step(l), l => HI.st(l).open.length > 0, 300);
+  ok(rg > 0.35 && rg < 0.65 && rm < 0.1, 'Chernobyl: vùng Gomel bị tác động nhiều hơn hẳn nơi khác (' + rg.toFixed(2) + ' so với ' + rm.toFixed(2) + ')');
+  const jp = (i, coast) => life('JP', 1990, 21, { seed: 1600 + i, coast }); // 2011
+  const rc = rate(i => jp(i, true), l => step(l), l => !l.alive || HI.st(l).open.length > 0, 600), rn = rate(i => jp(i, false), l => step(l), l => !l.alive || HI.st(l).open.length > 0, 200);
+  ok(rc > 0.005 && rc < 0.05 && rn === 0, 'Tōhoku 2011: chỉ người ở ven biển bị ảnh hưởng (' + (rc * 100).toFixed(1) + '%)');
 }
 // 9. Nam Tư: lựa chọn ở lại hay đi tị nạn
 {

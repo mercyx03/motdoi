@@ -1,4 +1,4 @@
-# Giai đoạn 3–5 bối cảnh lịch sử: biến cố có hậu quả nhiều giai đoạn (9.3.0)
+# Giai đoạn 3–5 bối cảnh lịch sử: biến cố có hậu quả nhiều giai đoạn (9.3.0, mở rộng 9.4.0)
 
 Module: `public/js/hist920.js` (biến cố), `public/js/era920-pol.js` (bối cảnh chính trị theo năm). Kiểm thử: `tests/hist920.js`. Mở rộng `E.ERA920`; dùng hệ thống có sẵn (nghĩa vụ quân sự `flags.military`, mất việc `l.job`/`flags.needJob`, bệnh mạn tính `flags.chronic`, cha mẹ qua đời `fam.fAlive`, di cư `H.emigrate`, chuyển nơi ở `H.moveToCity`, cảnh `E.SC` + `E.UPDATE110.next`).
 
@@ -46,3 +46,17 @@ Module: `public/js/hist920.js` (biến cố), `public/js/era920-pol.js` (bối c
 - Chưa có: chính sách từng nước theo năm (hưu trí, bảo hiểm y tế, giáo dục bắt buộc, quyền bầu cử); Rwanda 1994 và các cuộc diệt chủng khác (game không có danh tính nhóm nên chỉ ghi bối cảnh, không bịa danh tính ngẫu nhiên); đảo chính, độc tài, nội chiến ngoài danh sách trên chỉ có dòng bối cảnh, chưa có cơ chế.
 - Việt Nam: vùng trong thời chiến chia theo tỉnh sinh ra (63 tỉnh hiện nay), không theo địa giới thời đó; Quảng Trị (giới tuyến) không bị gán phía; không mô hình thành viên gia đình đi tập kết hay mất tích.
 - Nhật 2011 (động đất, sóng thần), Chernobyl 1986, Syria, Arab Spring, Ukraine 2022 chưa có cơ chế (chỉ có dòng bối cảnh cho Syria, Ukraine).
+
+## Bổ sung 9.4.0
+| Mã | Tên | Năm | Có lựa chọn |
+|---|---|---|---|
+| `w_civil_wars` | Nội chiến và chiến tranh nơi bạn sống (24 nước: Syria 2011–, Ukraina 2022–, Afghanistan 1979–1989, Liban, Sudan, Angola, Mozambique, Liberia, Sierra Leone, Sri Lanka, Colombia, Nepal, Peru, Guatemala, El Salvador, Somalia, Congo, Burundi, Algeria, Ethiopia, Nigeria 1967–1969, Iran–Iraq, Iraq 2003–2011, Lào) | 1960–2023 | có (ở lại / rời nước hoặc chuyển nơi yên hơn; nam 18–60 tuổi ở Ukraina từ 2022 không được rời nước) |
+| `w_authoritarian` | Dưới chính quyền độc tài (Argentina, Chile, Brazil, Uruguay, Hy Lạp, Hàn Quốc, Philippines, Ethiopia, Tây Ban Nha, Bồ Đào Nha, Myanmar) | 1950–1990 | có (ở lại / lưu vong) |
+| `w_chernobyl` | Thảm họa Chernobyl 26/4/1986 (Ukraina, Belarus, Nga; Gomel 50%, Kyiv và Zhytomyr 30%, nơi khác 3%) | 1986 | không |
+| `w_tohoku_2011` | Động đất và sóng thần Tōhoku 11/3/2011 (Nhật, người ở ven biển) | 2011 | không |
+
+- Nội chiến: xác suất bị tác động trực tiếp mỗi năm là tham số (4–30% tùy cuộc chiến); nam 18–45 tuổi có 20% bị thương nếu bị tác động; nơi tị nạn (Syria: Thổ Nhĩ Kỳ 45, Liban 15, Jordan 10, Đức 20, Thụy Điển 5, Hà Lan 5; Ukraina: Ba Lan 40, Đức 25, …) là tham số theo bậc độ lớn, không phải số liệu UNHCR.
+- Độc tài: xác suất gia đình bị gây khó dễ 0,6–3% mỗi năm; **không gán quan điểm hay danh tính** cho nhân vật. Nơi lưu vong là tham số.
+- Chernobyl: UNSCEAR ghi nhận khoảng 116.000 người sơ tán năm 1986 và ung thư tuyến giáp tăng ở trẻ bị phơi nhiễm; game dùng 1% trẻ bị bệnh tuyến giáp nếu bị tác động, 15% phải rời nhà. Tōhoku: khoảng 20.000 người chết hoặc mất tích; game dùng 2% người ven biển bị tác động, 12% trong số đó tử vong.
+- Quảng Trị (bị sông Bến Hải chia đôi) nay được gán phía một lần theo mã đời: 20% phía Bắc (Vĩnh Linh), 80% phía Nam (tham số).
+- `era920.js`: hôn nhân cùng giới chỉ hợp pháp từ năm có hiệu lực của từng nước (37 nước, Hà Lan 2001 … Thái Lan 2025) cho đời sinh trước 2024; tổng tỷ suất sinh của đời hiện nay ở nước ngoài Việt Nam dùng số liệu UN 2023 (Nigeria 4,48, Hàn Quốc 0,72) thay công thức theo tử vong trẻ em.

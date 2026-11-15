@@ -452,7 +452,7 @@
     life.u5 = c.u5 * (life.urban ? 0.85 : 1.15);
     life.fam = { q: U.clamp(Math.round(3 + (life.urban ? 0.4 : -0.3) + U.normal(r) * 1.1), 1, 5) };
     life.houseType = '';
-    life.tfr = U.clamp(1.2 + c.u5 * 0.045, 1.0, 6.8);
+    life.tfr = (E.ERA920 && E.ERA920.tfrModern(c.code)) || U.clamp(1.2 + c.u5 * 0.045, 1.0, 6.8); // 9.4: tổng tỷ suất sinh thực (UN WPP 2023) thay công thức theo u5 khi có số liệu
     life.coast = r() < 0.3;
   }
 
@@ -857,7 +857,7 @@
     if (p.status === 'married') return p.sex === 'M' ? 'chồng' : 'vợ';
     return 'người yêu';
   }
-  function sameSexLegal(life) { return W.SSM.indexOf(resCode(life)) >= 0; }
+  function sameSexLegal(life) { return W.SSM.indexOf(resCode(life)) >= 0 && (!E.ERA920 || E.ERA920.ssmLegal(life, resCode(life))); } // 9.4: đời xưa theo năm hợp pháp của từng nước
 
   // nơi học đại học theo vùng
   function uniPlaces(l) {
@@ -1214,7 +1214,7 @@
       apply: function (life, d, k, r, log) {
         if (k !== 'yes') { life.flags.outAskedAt = life.age; return; }
         life.out = true;
-        var acc = W.SSM.indexOf(resCode(life)) >= 0 ? 0.75 : W.CRIM.indexOf(resCode(life)) >= 0 ? 0.2 : isVN(life) ? 0.55 : 0.45;
+        var acc = W.SSM.indexOf(resCode(life)) >= 0 && (!E.ERA920 || E.ERA920.ssmLegal(life, resCode(life))) ? 0.75 : W.CRIM.indexOf(resCode(life)) >= 0 ? 0.2 : isVN(life) ? 0.55 : 0.45;
         if (r() < acc) { log('Công khai xu hướng tính dục với gia đình. Bố mẹ ôm bạn vào lòng.', 'good'); life.st.hap += 10; life.st.soc += 4; H.mem(life, 'Cái ôm của bố mẹ ngày bạn dám sống thật với chính mình.', 5); }
         else { log('Công khai với gia đình. Bố mẹ sốc và cần thời gian để chấp nhận.', 'bad'); life.st.hap -= 6; life.flags.famTension = true; H.mem(life, 'Bữa cơm im lặng sau ngày bạn công khai với gia đình.', 4); }
       }

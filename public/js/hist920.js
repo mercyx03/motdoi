@@ -27,7 +27,7 @@
   function vnSide(l) {
     var s = st(l); if (s.side) return s.side; var p = l.prov; if (!p) return 'south';
     if (p.region === 'DBSH' || p.region === 'MNPB' || (p.region === 'BTB' && NORTH_BTB.test(p.old || ''))) return 'north';
-    if (p.old === 'Quảng Trị') return 'dmz'; return 'south';
+    if (p.old === 'Quảng Trị') { s.side = u(l, 'dmz') < 0.2 ? 'north' : 'south'; return s.side; } return 'south'; // Quảng Trị bị sông Bến Hải chia đôi: huyện Vĩnh Linh ở phía Bắc, phần còn lại ở phía Nam; tỷ lệ 20/80 là tham số, chọn một lần theo mã đời
   }
   // ---- việc dang dở ----
   var OPEN = {
@@ -309,6 +309,67 @@
       var s = st(l), inf = { 2020: 0.08, 2021: 0.2, 2022: 0.35 }[y] * (c.age >= 65 ? 0.8 : 1); // tham số trò chơi, không phải thống kê
       if (y === 2020 && !s.seen.cv0) { s.seen.cv0 = 1; log('Năm 2020: đại dịch COVID-19 bùng phát toàn cầu; trường học đóng cửa, đi lại bị hạn chế, nhiều nơi giãn cách xã hội.', 'neutral'); if (c.age >= 6 && c.age < 18 && c.student) { l.st.kno -= 2; } if (l.job && /service|sale|show|beauty|free/.test(c.cat || '') && u(l, 'cvj') < 0.12) { jobLoss(l, log, 'Quán và cơ sở nơi bạn làm phải đóng cửa nhiều tháng; bạn mất việc.'); open(l, 'hardship', 1); } }
       if (u(l, 'cvi:' + y) < inf && !s.seen['cvi' + y]) { s.seen['cvi' + y] = 1; var sev = c.age >= 65 ? 0.3 : c.age >= 50 ? 0.12 : 0.04; if (u(l, 'cvs:' + y) < sev * (l.st.hea < 50 ? 1.8 : 1)) { H.fx(l, { hea: -14 }); l.flags.chronic = Math.min(3, (l.flags.chronic || 0) + (u(l, 'cvl:' + y) < 0.3 ? 1 : 0)); log('Bạn nhiễm COVID-19 nặng, phải nằm viện nhiều ngày; hồi phục chậm.', 'bad'); } else { H.fx(l, { hea: -3 }); log('Bạn nhiễm COVID-19, sốt vài ngày rồi khỏi.', 'neutral'); } }
+    } });
+  // ======================= NỘI CHIẾN, XUNG ĐỘT, ĐỘC TÀI, THẢM HỌA (9.4) =======================
+  // CIVIL[mã] = [từ năm, đến năm, xác suất mỗi năm bị tác động trực tiếp (tham số), tên]; FLEE[mã] = nơi tị nạn (thứ tự và tỷ lệ là tham số, theo bậc độ lớn của số liệu UNHCR).
+  var CIVIL = { SY: [2011, 2023, 0.3, 'nội chiến Syria'], UA: [2022, 2023, 0.2, 'cuộc tấn công toàn diện của Nga'], AF: [1979, 1989, 0.15, 'chiến tranh Liên Xô ở Afghanistan'], LB: [1975, 1990, 0.25, 'nội chiến Liban'], SD: [1983, 2004, 0.12, 'nội chiến Sudan'], AO: [1975, 2001, 0.15, 'nội chiến Angola'], MZ: [1977, 1991, 0.15, 'nội chiến Mozambique'], LR: [1989, 2003, 0.25, 'nội chiến Liberia'], SL: [1991, 2001, 0.25, 'nội chiến Sierra Leone'], LK: [1983, 2008, 0.08, 'nội chiến Sri Lanka'], CO: [1964, 2015, 0.04, 'xung đột vũ trang ở Colombia'], NP: [1996, 2005, 0.05, 'nội chiến Nepal'], PE: [1980, 1999, 0.05, 'xung đột nội bộ ở Peru'], GT: [1960, 1995, 0.07, 'nội chiến Guatemala'], SV: [1979, 1991, 0.15, 'nội chiến El Salvador'], SO: [1991, 2023, 0.15, 'nội chiến Somalia'], CD: [1996, 2002, 0.15, 'các cuộc chiến tranh Congo'], BI: [1993, 2004, 0.12, 'nội chiến Burundi'], DZ: [1991, 2001, 0.05, 'nội chiến Algeria'], ET: [1974, 1990, 0.08, 'nội chiến Ethiopia'], NG: [1967, 1969, 0.12, 'nội chiến Nigeria'], IR: [1980, 1988, 0.08, 'chiến tranh Iran–Iraq'], IQ: [2003, 2011, 0.12, 'chiến tranh Iraq'], LA: [1960, 1974, 0.1, 'nội chiến Lào'] };
+  var FLEE = { SY: [['TR', 45], ['LB', 15], ['JO', 10], ['DE', 20], ['SE', 5], ['NL', 5]], UA: [['PL', 40], ['DE', 25], ['CZ', 10], ['GB', 5], ['IT', 5], ['ES', 5], ['US', 5], ['CA', 5]], AF: [['PK', 40], ['IR', 40], ['DE', 8], ['GB', 5], ['US', 7]], IQ: [['SY', 20], ['JO', 20], ['SE', 15], ['DE', 15], ['US', 15], ['GB', 15]], LB: [['FR', 25], ['US', 25], ['CA', 15], ['AU', 15], ['DE', 10], ['BR', 10]], LK: [['IN', 30], ['GB', 20], ['CA', 20], ['DE', 10], ['AU', 10], ['CH', 10]] };
+  var FLEE_NOTE = 'số nước tiếp nhận tương đối; tham số trò chơi';
+  add({ id: 'w_civil_wars', title: 'Nội chiến và chiến tranh nơi bạn sống', from: 1960, to: 2023, ver: 'secondary',
+    who: function (l) { var w = CIVIL[res(l)]; return w && wy(l) >= w[0] && wy(l) <= w[1] ? 1 : 0; },
+    ask: function (l) { var w = CIVIL[res(l)]; return 'Chiến sự (' + w[3] + ') ngày một gần. ' + (FLEE[res(l)] ? 'Nhiều gia đình đã rời nước ra đi; ở lại là giữ nhà và việc làm nhưng chịu rủi ro.' : 'Nhiều gia đình đã chuyển tới nơi yên hơn; ở lại là giữ nhà và việc làm nhưng chịu rủi ro.'); },
+    req: function (l, k) { if (k !== 'b') return true; var s = st(l); return !(res(l) === 'UA' && wy(l) >= 2022 && l.sex === 'M' && l.age >= 18 && l.age <= 60 && !s.exempt); }, // lệnh động viên: nam 18–60 tuổi không được rời Ukraina từ 24/2/2022 (có ngoại lệ)
+    ai: function (l, k) { return k === 'a' ? 1 : 0.3 * (l.money > l.base ? 1.5 : 1) * (kidsHome(l) ? 1.3 : 1); },
+    choose: function (l, k, r, log) {
+      var cc = res(l);
+      if (k === 'a') { H.fx(l, { hap: -6, hea: -3 }); open(l, 'trauma', 2); log('Bạn ở lại, sống giữa chiến sự, những đợt thiếu điện nước và thức ăn.', 'bad'); return; }
+      open(l, 'trauma', 1);
+      if (FLEE[cc] && resettle(l, r, log, FLEE[cc])) return;
+      var B = W.BY[cc]; relocate(l, B && B.cities[0]); open(l, 'displaced', 2); log('Bạn rời nơi ở, chuyển tới thành phố lớn an toàn hơn và bắt đầu lại.', 'bad');
+    },
+    run: function (l, y, r, log, c) {
+      var cc = res(l), w = CIVIL[cc], s = st(l); if (!w) return;
+      var p = w[2] * (c.urban ? 1 : 1.1) * (kidsHome(l) ? 1.1 : 1); if (u(l, 'cw:' + y) >= Math.min(0.7, p)) return;
+      if (c.male && c.age >= 18 && c.age <= 45 && u(l, 'cwm:' + y) < 0.2) { injure(l, log, 'Bạn bị động viên hoặc cuốn vào giao tranh và bị thương.', false); open(l, 'trauma', 2); return; }
+      if (u(l, 'cwx:' + y) < 0.35 && !s.refugee && !s.asked) { s.asked = y; ask(l, r, 'w_civil_wars', { a: { l: 'Ở lại nơi mình sống', h: 'Giữ nhà và việc làm, chấp nhận rủi ro' }, b: { l: FLEE[cc] ? 'Rời nước đi tị nạn' : 'Chuyển tới nơi yên hơn', h: 'Bỏ lại nhà cửa, bắt đầu lại ở nơi khác' } }); return; }
+      H.fx(l, { hap: -5, money: -0.3 }); open(l, 'displaced', 1); if (u(l, 'cwt:' + y) < 0.3) open(l, 'trauma', 1);
+      log('Chiến sự (' + w[3] + ') làm nhà cửa và sinh kế của gia đình bạn tổn hại; có thời gian bạn phải sống lánh nạn.', 'bad');
+    } });
+  // chính quyền độc tài: gia đình hoặc bản thân bị theo dõi, mất việc, bị giam. Không gán quan điểm hay danh tính cho nhân vật; xác suất chung theo nước và năm (tham số).
+  var DICT = { AR: [1976, 1983, 0.03], CL: [1973, 1989, 0.03], BR: [1964, 1984, 0.015], UY: [1973, 1984, 0.03], GR: [1967, 1973, 0.015], KR: [1961, 1986, 0.01], PH: [1972, 1980, 0.015], ET: [1974, 1990, 0.03], ES: [1950, 1974, 0.006], PT: [1950, 1973, 0.006], MM: [1962, 1987, 0.015] };
+  var EXILE = { AR: [['ES', 30], ['MX', 25], ['BR', 10], ['FR', 15], ['SE', 10], ['US', 10]], CL: [['SE', 20], ['FR', 15], ['MX', 15], ['AR', 15], ['CA', 10], ['AU', 10], ['US', 15]], UY: [['AR', 30], ['SE', 20], ['ES', 15], ['MX', 15], ['FR', 10], ['AU', 10]], BR: [['FR', 25], ['CL', 20], ['US', 20], ['MX', 15], ['SE', 10], ['PT', 10]], GR: [['FR', 30], ['SE', 20], ['DE', 20], ['GB', 20], ['US', 10]], ES: [['FR', 40], ['MX', 20], ['AR', 15], ['VE', 15], ['DE', 10]], PT: [['FR', 50], ['DE', 15], ['US', 15], ['CA', 10], ['BR', 10]], ET: [['US', 30], ['SE', 20], ['DE', 20], ['SD', 10], ['GB', 10], ['CA', 10]] };
+  add({ id: 'w_authoritarian', title: 'Dưới chính quyền độc tài', from: 1950, to: 1990, ver: 'secondary',
+    who: function (l) { var w = DICT[res(l)]; return w && wy(l) >= w[0] && wy(l) <= w[1] && l.age >= 16 ? 1 : 0; },
+    ask: function () { return 'Gia đình bạn bị chính quyền gây khó dễ: bị theo dõi, gọi lên làm việc, người quen bị bắt. Có người đã rời nước; đi là bỏ lại nhà cửa, việc làm và họ hàng.'; },
+    req: function (l, k) { return k !== 'b' || !!EXILE[res(l)]; },
+    ai: function (l, k) { var t = l.tr || {}; return k === 'a' ? 1 : 0.35 * Math.exp(((t.risk || 50) - 50) / 40) * (l.money > l.base ? 1.4 : 1); },
+    choose: function (l, k, r, log) { if (k === 'a') { H.fx(l, { hap: -4, soc: -3 }); open(l, 'trauma', 1); log('Bạn ở lại, sống dè chừng từng lời nói, từng người quen.', 'bad'); return; } open(l, 'trauma', 1); if (!resettle(l, r, log, EXILE[res(l)])) log('Bạn chưa tìm được nước nhận.', 'neutral'); },
+    run: function (l, y, r, log, c) {
+      var cc = res(l), w = DICT[cc], s = st(l); if (!w || s['au' + cc]) return; if (u(l, 'au:' + y) >= w[2]) return; s['au' + cc] = y;
+      if (c.age >= 18 && l.job && u(l, 'auj:' + y) < 0.5) jobLoss(l, log, 'Bạn bị cho thôi việc sau khi bị chính quyền để ý.');
+      H.fx(l, { hap: -6, soc: -5, money: -0.2 }); open(l, 'hardship', 1); open(l, 'trauma', 1);
+      if (u(l, 'aux:' + y) < 0.4 && !s.refugee && EXILE[cc]) { ask(l, r, 'w_authoritarian', { a: { l: 'Ở lại, im lặng sống tiếp', h: 'Giữ nhà và họ hàng, tiếp tục bị để ý' }, b: { l: 'Rời nước', h: 'Bỏ lại tất cả, khó có ngày về' } }); return; }
+      log('Chế độ độc tài khiến gia đình bạn bị theo dõi và gây khó dễ; cuộc sống thu hẹp lại.', 'bad');
+    } });
+  // thảm họa nguyên tử và thiên tai lớn
+  var CHERN = { 'Gomel': 0.5, 'Kyiv': 0.3, 'Minsk': 0.08, 'Mogilev': 0.2, 'Zhytomyr': 0.3 };
+  add({ id: 'w_chernobyl', title: 'Thảm họa Chernobyl 26/4/1986', from: 1986, to: 1986, ver: 'secondary',
+    who: function (l) { return /^(UA|BY|RU)$/.test(res(l)) ? 1 : 0; },
+    run: function (l, y, r, log, c) {
+      var w = CHERN[l.city] || 0.03; if (u(l, 'ch:' + y) >= w) return; var s = st(l);
+      H.fx(l, { hap: -5 }); open(l, 'trauma', 1);
+      if (c.age < 18 && u(l, 'cht:' + y) < 0.01) { l.flags.chronic = Math.min(3, (l.flags.chronic || 0) + 1); log('Sau thảm họa Chernobyl, bạn được phát hiện bệnh tuyến giáp do phơi nhiễm khi còn nhỏ (UNSCEAR ghi nhận ung thư tuyến giáp tăng ở trẻ bị phơi nhiễm).', 'bad'); }
+      if (u(l, 'chm:' + y) < 0.15) { open(l, 'displaced', 1); H.fx(l, { money: -0.3, soc: -3 }); log('Gia đình bạn phải rời vùng nhiễm xạ, bỏ lại nhà và vườn.', 'bad'); }
+      else log('Ngày 26/4/1986 lò phản ứng Chernobyl phát nổ; bạn lo cho sức khỏe cả nhà, nhiều tuần liền ăn uống và đi lại dè chừng.', 'bad');
+      H.mem(l, 'Mùa xuân 1986, nỗi sợ nhiễm xạ phủ lên cả vùng.', 3); s.chernobyl = y;
+    } });
+  add({ id: 'w_tohoku_2011', title: 'Động đất và sóng thần Tōhoku 11/3/2011', from: 2011, to: 2011, ver: 'secondary',
+    who: function (l) { return res(l) === 'JP' && l.coast ? 1 : 0; },
+    run: function (l, y, r, log) {
+      if (u(l, 'th:' + y) >= 0.02) return;
+      if (u(l, 'thd:' + y) < 0.12) { H.kill(l, 'sóng thần sau trận động đất Tōhoku', log, true); return; }
+      H.fx(l, { hap: -8, money: -0.6, hea: -3 }); open(l, 'displaced', 2); open(l, 'trauma', 2);
+      log('Trận động đất và sóng thần ngày 11/3/2011 quét qua vùng ven biển: nhà cửa mất, phải sống ở nơi sơ tán nhiều tháng; sự cố nhà máy điện hạt nhân Fukushima Daiichi kéo dài thêm lệnh sơ tán.', 'bad'); H.mem(l, 'Ngày 11/3/2011, con sóng cuốn đi nhà cửa và những người quen.', 5);
     } });
   // ======================= HOOK NĂM =======================
   function step(l, r, log) {
