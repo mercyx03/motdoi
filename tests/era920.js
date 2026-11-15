@@ -136,6 +136,7 @@ const near = (a, b, t, m) => ok(Math.abs(a - b) <= t, m + ' (' + a + ' vs ' + b 
   ok(G.W.SSM.every(c => X.SSM_Y[c] != null), 'mọi nước trong danh sách có năm hiệu lực');
 }
 { const ng = E.createLife({ mode: 'world', country: 'NG', seed: 95, year: 2026 }), kr = E.createLife({ mode: 'world', country: 'KR', seed: 96, year: 2026 }); near(ng.tfr, X.at('NG', 2023).tfr, 0.01, 'Nigeria hiện nay: tỷ suất sinh theo UN'); ok(kr.tfr < 1 && kr.tfr >= 0.7, 'Hàn Quốc hiện nay: tỷ suất sinh dưới 1'); }
+{ const P = X.POL; ok(/sáp nhập năm 1940/.test(P.status('LT', 1980)) && /chưa công nhận/.test(P.status('LT', 1990)) && /tan rã/.test(P.status('LV', 1991)) && /Libya lần thứ hai/.test(P.status('LY', 2015)) && /Nam Sudan/.test(P.status('SS', 2015)) && /Yemen/.test(P.status('YE', 2016)), 'bối cảnh Baltic 1940/1990/1991 và các xung đột 2011–2023'); }
 // 10. giao diện và bản lưu cũ
 {
   const html = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'app.js'), 'utf8');

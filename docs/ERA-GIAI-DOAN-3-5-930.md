@@ -60,3 +60,7 @@ Module: `public/js/hist920.js` (biến cố), `public/js/era920-pol.js` (bối c
 - Chernobyl: UNSCEAR ghi nhận khoảng 116.000 người sơ tán năm 1986 và ung thư tuyến giáp tăng ở trẻ bị phơi nhiễm; game dùng 1% trẻ bị bệnh tuyến giáp nếu bị tác động, 15% phải rời nhà. Tōhoku: khoảng 20.000 người chết hoặc mất tích; game dùng 2% người ven biển bị tác động, 12% trong số đó tử vong.
 - Quảng Trị (bị sông Bến Hải chia đôi) nay được gán phía một lần theo mã đời: 20% phía Bắc (Vĩnh Linh), 80% phía Nam (tham số).
 - `era920.js`: hôn nhân cùng giới chỉ hợp pháp từ năm có hiệu lực của từng nước (37 nước, Hà Lan 2001 … Thái Lan 2025) cho đời sinh trước 2024; tổng tỷ suất sinh của đời hiện nay ở nước ngoài Việt Nam dùng số liệu UN 2023 (Nigeria 4,48, Hàn Quốc 0,72) thay công thức theo tử vong trẻ em.
+
+## Bổ sung 9.4.1
+- `w_civil_wars` thêm Libya (2011; 2014–2020), Yemen (2014–), Nam Sudan (2013–), Cộng hòa Trung Phi (2012–), Mali (2012–), Myanmar (2021–), Ethiopia Tigray (2020–2022); mỗi nước có thể có nhiều giai đoạn. Đã đối chiếu Wikipedia (10 trên 11 khẳng định khớp tự động; Estonia 20/8/1991 lệch do tên bài); tìm kiếm web không xác nhận thêm được.
+- Bối cảnh Baltic: 1950–1989 "bị sáp nhập năm 1940, nhiều nước không công nhận"; 1990 "tuyên bố khôi phục độc lập nhưng Liên Xô chưa công nhận"; 1991 "Liên Xô tan rã; độc lập được công nhận từ tháng 8–9/1991". Trước đây ghi chung "thuộc Liên Xô đến 1990".

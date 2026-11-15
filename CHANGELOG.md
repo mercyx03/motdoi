@@ -1,3 +1,9 @@
+## 9.4.1 — Thêm xung đột 2011–2023 và bối cảnh Baltic
+
+- `hist920.js`: `CIVIL` hỗ trợ nhiều giai đoạn mỗi nước (`civWin`); thêm LY, YE, SS, CF, ML, MM, ET (Tigray). `era920-pol.js`: các dòng bối cảnh tương ứng; Baltic tách khỏi nhóm Xô viết chung (1940, 1990, 1991).
+- Hiệu chỉnh tử vong đo lần hai (12 ca x 50 đời, +0,74 năm, u5 0,90); giữ nguyên hệ số. Tài liệu: `docs/ERA-DOI-CHIEU-NGUON-940.md`.
+- Kiểm thử: `tests/hist920.js` 101, `tests/era920.js` 74 kiểm tra.
+
 ## 9.4.0 — Thêm biến cố, hôn nhân cùng giới theo năm, tỷ suất sinh thực (phần B, C)
 
 - `hist920.js`: `w_civil_wars` (24 nước, tham số `CIVIL`/`FLEE`), `w_authoritarian` (`DICT`/`EXILE`), `w_chernobyl`, `w_tohoku_2011`; Quảng Trị gán phía một lần theo mã đời (20% Bắc). Ukraina từ 2022: nam 18–60 không có lựa chọn rời nước.

@@ -160,6 +160,7 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   const rc = rate(i => jp(i, true), l => step(l), l => !l.alive || HI.st(l).open.length > 0, 600), rn = rate(i => jp(i, false), l => step(l), l => !l.alive || HI.st(l).open.length > 0, 200);
   ok(rc > 0.005 && rc < 0.05 && rn === 0, 'Tōhoku 2011: chỉ người ở ven biển bị ảnh hưởng (' + (rc * 100).toFixed(1) + '%)');
 }
+{ const who = (cc, by, age) => HI.BY.w_civil_wars.who(life(cc, by, age)); ok(who('LY', 1995, 20) === 1 && who('LY', 1980, 33) === 0 && who('YE', 1995, 22) === 1 && who('MM', 2000, 22) === 1 && who('ET', 2000, 21) === 1 && who('ET', 1990, 20) === 0 && who('ET', 1960, 20) === 1 && who('SS', 1995, 20) === 1 && who('DK', 1995, 20) === 0, 'cửa sổ xung đột nhiều giai đoạn: Libya, Yemen, Myanmar, Tigray, Nam Sudan'); }
 // 9. Nam Tư: lựa chọn ở lại hay đi tị nạn
 {
   const mk = i => life('BA', 1965, 28, { seed: 150 + i, money: 2, urban: true }); const sar = i => { const l = mk(i); l.city = 'Sarajevo'; l.place = 'Sarajevo'; return l; };

@@ -313,11 +313,15 @@
   // ======================= NỘI CHIẾN, XUNG ĐỘT, ĐỘC TÀI, THẢM HỌA (9.4) =======================
   // CIVIL[mã] = [từ năm, đến năm, xác suất mỗi năm bị tác động trực tiếp (tham số), tên]; FLEE[mã] = nơi tị nạn (thứ tự và tỷ lệ là tham số, theo bậc độ lớn của số liệu UNHCR).
   var CIVIL = { SY: [2011, 2023, 0.3, 'nội chiến Syria'], UA: [2022, 2023, 0.2, 'cuộc tấn công toàn diện của Nga'], AF: [1979, 1989, 0.15, 'chiến tranh Liên Xô ở Afghanistan'], LB: [1975, 1990, 0.25, 'nội chiến Liban'], SD: [1983, 2004, 0.12, 'nội chiến Sudan'], AO: [1975, 2001, 0.15, 'nội chiến Angola'], MZ: [1977, 1991, 0.15, 'nội chiến Mozambique'], LR: [1989, 2003, 0.25, 'nội chiến Liberia'], SL: [1991, 2001, 0.25, 'nội chiến Sierra Leone'], LK: [1983, 2008, 0.08, 'nội chiến Sri Lanka'], CO: [1964, 2015, 0.04, 'xung đột vũ trang ở Colombia'], NP: [1996, 2005, 0.05, 'nội chiến Nepal'], PE: [1980, 1999, 0.05, 'xung đột nội bộ ở Peru'], GT: [1960, 1995, 0.07, 'nội chiến Guatemala'], SV: [1979, 1991, 0.15, 'nội chiến El Salvador'], SO: [1991, 2023, 0.15, 'nội chiến Somalia'], CD: [1996, 2002, 0.15, 'các cuộc chiến tranh Congo'], BI: [1993, 2004, 0.12, 'nội chiến Burundi'], DZ: [1991, 2001, 0.05, 'nội chiến Algeria'], ET: [1974, 1990, 0.08, 'nội chiến Ethiopia'], NG: [1967, 1969, 0.12, 'nội chiến Nigeria'], IR: [1980, 1988, 0.08, 'chiến tranh Iran–Iraq'], IQ: [2003, 2011, 0.12, 'chiến tranh Iraq'], LA: [1960, 1974, 0.1, 'nội chiến Lào'] };
+  // thêm cuộc xung đột mới (mỗi nước có thể có nhiều giai đoạn): [từ, đến, xác suất, tên]
+  CIVIL.LY = [[2011, 2011, 0.25, 'nội chiến Libya'], [2014, 2020, 0.2, 'nội chiến Libya lần thứ hai']]; CIVIL.YE = [2014, 2023, 0.25, 'nội chiến Yemen']; CIVIL.SS = [2013, 2023, 0.15, 'nội chiến Nam Sudan']; CIVIL.CF = [2012, 2023, 0.15, 'xung đột ở Cộng hòa Trung Phi']; CIVIL.ML = [2012, 2023, 0.08, 'xung đột ở Mali']; CIVIL.MM = [2021, 2023, 0.1, 'xung đột sau cuộc đảo chính 2021']; CIVIL.ET = [CIVIL.ET, [2020, 2022, 0.1, 'xung đột ở Tigray']];
+  Object.keys(CIVIL).forEach(function (k) { if (typeof CIVIL[k][0] === 'number') CIVIL[k] = [CIVIL[k]]; });
+  function civWin(cc, y) { var a = CIVIL[cc] || []; for (var i = 0; i < a.length; i++) if (y >= a[i][0] && y <= a[i][1]) return a[i]; return null; }
   var FLEE = { SY: [['TR', 45], ['LB', 15], ['JO', 10], ['DE', 20], ['SE', 5], ['NL', 5]], UA: [['PL', 40], ['DE', 25], ['CZ', 10], ['GB', 5], ['IT', 5], ['ES', 5], ['US', 5], ['CA', 5]], AF: [['PK', 40], ['IR', 40], ['DE', 8], ['GB', 5], ['US', 7]], IQ: [['SY', 20], ['JO', 20], ['SE', 15], ['DE', 15], ['US', 15], ['GB', 15]], LB: [['FR', 25], ['US', 25], ['CA', 15], ['AU', 15], ['DE', 10], ['BR', 10]], LK: [['IN', 30], ['GB', 20], ['CA', 20], ['DE', 10], ['AU', 10], ['CH', 10]] };
   var FLEE_NOTE = 'số nước tiếp nhận tương đối; tham số trò chơi';
   add({ id: 'w_civil_wars', title: 'Nội chiến và chiến tranh nơi bạn sống', from: 1960, to: 2023, ver: 'secondary',
-    who: function (l) { var w = CIVIL[res(l)]; return w && wy(l) >= w[0] && wy(l) <= w[1] ? 1 : 0; },
-    ask: function (l) { var w = CIVIL[res(l)]; return 'Chiến sự (' + w[3] + ') ngày một gần. ' + (FLEE[res(l)] ? 'Nhiều gia đình đã rời nước ra đi; ở lại là giữ nhà và việc làm nhưng chịu rủi ro.' : 'Nhiều gia đình đã chuyển tới nơi yên hơn; ở lại là giữ nhà và việc làm nhưng chịu rủi ro.'); },
+    who: function (l) { return civWin(res(l), wy(l)) ? 1 : 0; },
+    ask: function (l) { var w = civWin(res(l), wy(l)) || CIVIL[res(l)][0]; return 'Chiến sự (' + w[3] + ') ngày một gần. ' + (FLEE[res(l)] ? 'Nhiều gia đình đã rời nước ra đi; ở lại là giữ nhà và việc làm nhưng chịu rủi ro.' : 'Nhiều gia đình đã chuyển tới nơi yên hơn; ở lại là giữ nhà và việc làm nhưng chịu rủi ro.'); },
     req: function (l, k) { if (k !== 'b') return true; var s = st(l); return !(res(l) === 'UA' && wy(l) >= 2022 && l.sex === 'M' && l.age >= 18 && l.age <= 60 && !s.exempt); }, // lệnh động viên: nam 18–60 tuổi không được rời Ukraina từ 24/2/2022 (có ngoại lệ)
     ai: function (l, k) { return k === 'a' ? 1 : 0.3 * (l.money > l.base ? 1.5 : 1) * (kidsHome(l) ? 1.3 : 1); },
     choose: function (l, k, r, log) {
@@ -328,7 +332,7 @@
       var B = W.BY[cc]; relocate(l, B && B.cities[0]); open(l, 'displaced', 2); log('Bạn rời nơi ở, chuyển tới thành phố lớn an toàn hơn và bắt đầu lại.', 'bad');
     },
     run: function (l, y, r, log, c) {
-      var cc = res(l), w = CIVIL[cc], s = st(l); if (!w) return;
+      var cc = res(l), w = civWin(cc, y), s = st(l); if (!w) return;
       var p = w[2] * (c.urban ? 1 : 1.1) * (kidsHome(l) ? 1.1 : 1); if (u(l, 'cw:' + y) >= Math.min(0.7, p)) return;
       if (c.male && c.age >= 18 && c.age <= 45 && u(l, 'cwm:' + y) < 0.2) { injure(l, log, 'Bạn bị động viên hoặc cuốn vào giao tranh và bị thương.', false); open(l, 'trauma', 2); return; }
       if (u(l, 'cwx:' + y) < 0.35 && !s.refugee && !s.asked) { s.asked = y; ask(l, r, 'w_civil_wars', { a: { l: 'Ở lại nơi mình sống', h: 'Giữ nhà và việc làm, chấp nhận rủi ro' }, b: { l: FLEE[cc] ? 'Rời nước đi tị nạn' : 'Chuyển tới nơi yên hơn', h: 'Bỏ lại nhà cửa, bắt đầu lại ở nơi khác' } }); return; }

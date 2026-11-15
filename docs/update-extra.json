@@ -1,5 +1,23 @@
 [
   {
+    "id": "era-conflicts-94100",
+    "version": "9.4.1",
+    "publishedAt": "2026-11-15T07:41:13+07:00",
+    "releaseStatus": "packaged",
+    "title": "Thêm xung đột Libya, Yemen, Nam Sudan, Mali, Tigray và bối cảnh Baltic chính xác hơn",
+    "summary": "Thêm các cuộc xung đột gần đây vào mô phỏng và sửa cách ghi bối cảnh ba nước Baltic.",
+    "tags": [
+      "Thời đại",
+      "Tính năng mới"
+    ],
+    "details": [
+      "Nhân vật ở Libya, Yemen, Nam Sudan, Cộng hòa Trung Phi, Mali, Myanmar và vùng Tigray của Ethiopia có thể gặp chiến sự đúng thời điểm, với lựa chọn ở lại hay rời đi.",
+      "Estonia, Latvia và Litva: đời sinh trước 1990 được ghi là sống trong một nước bị Liên Xô sáp nhập năm 1940; năm 1990 là năm tuyên bố khôi phục độc lập nhưng chưa được công nhận.",
+      "Hiệu chỉnh tử vong được đo lại trên khoảng một nghìn đời ở 22 nước: sai lệch tuổi thọ trung bình dưới một năm. Đời sinh năm nay không đổi."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "era-events-94000",
     "version": "9.4.0",
     "publishedAt": "2026-11-15T07:19:05+07:00",
