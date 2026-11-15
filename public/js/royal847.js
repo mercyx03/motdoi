@@ -2540,6 +2540,9 @@
   var ART853 = ['drawing','composition','acting','performance','music'];
   function label853(k){return E.EDUCATION54.subjects[k]||({drawing:'Hình họa',composition:'Bố cục màu',acting:'Diễn xuất',performance:'Biểu diễn',music:'Âm nhạc'})[k]||k;}
   function cap853(x,a,b){return U.clamp(Number.isFinite(Number(x))?Number(x):0,a,b);}
+  // Kỳ thi tốt nghiệp/đại học (kind 'uni'): điểm thi thật dồn quanh mức trung bình (khối A00 năm 2024: trung bình 20,9, hiếm khi từ 27 điểm); chỉ số kiến thức trong game dễ chạm trần 100 nên phần trên 80 được nén mạnh (tuổi 18 trung bình đã khoảng 95) để học đều vẫn đạt khá nhưng không dễ ra điểm tuyệt đối.
+  var KNOW_KNEE853=80,KNOW_SLOPE853=0.3;
+  function examKnowledge853(k){k=cap853(k,0,100);return k<=KNOW_KNEE853?k:KNOW_KNEE853+(k-KNOW_KNEE853)*KNOW_SLOPE853;}
   function round853(x){return Math.round(x*100)/100;}
   function peekMockState853(l){return l.flags&&l.flags.mockExam853||{};}
   function skills853(l,kind){
@@ -2557,7 +2560,7 @@
   function peekExamApt853(){return 0;} // Legacy examApt remains in the save, no hidden penalty.
   function inputs853(l,kind,block,subject){
     var f=l.flags||{},ac=f.welfare918&&f.welfare918.dis&&f.welfare918.dis.self,s=skills853(l,kind==='hs'||kind==='special'?'hs':'uni'),records=f.study54&&f.study54.records||{};
-    return {kind:kind,block:block||l.khoi||'A00',subject:subject||'math',knowledge:cap853(l.st&&l.st.kno,0,100),skills:s,
+    return {kind:kind,block:block||l.khoi||'A00',subject:subject||'math',knowledge:kind==='uni'?examKnowledge853(l.st&&l.st.kno):cap853(l.st&&l.st.kno,0,100),skills:s,
       subjectSkills:Object.assign({},f.mockExam853&&f.mockExam853.specificV2&&f.mockExam853.specificV2[kind==='hs'||kind==='special'?'hs':'uni']||{}),records:Object.assign({},records),accommodation:!!(ac&&ac.education&&(ac.country||'VN')==='VN'),focus:l.focus==='study',stress:cap853(l.mind&&l.mind.stress,0,100),
       talentMatch:(/^[HV]/.test(block||l.khoi||'')&&l.talent==='hội họa')||(/^S/.test(block||l.khoi||'')&&l.talent==='diễn xuất')||(/^N/.test(block||l.khoi||'')&&l.talent==='âm nhạc'),prep:cap853(f.luyenThi,0,6),skill:cap853(l.skill,0,100),nkPrep:cap853(f.nkPrep,0,1),tPrep:cap853(f.tPrep,0,4),
       fatigue:f.mockExam853&&f.mockExam853.fatigueAt===l.age?cap853(f.mockExam853.fatigue,0,20):0};

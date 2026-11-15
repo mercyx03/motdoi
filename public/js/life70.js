@@ -61,9 +61,9 @@
     var R0 = rule(c), need = R0[0];
     var eligibility=naturalization873(l,c,a+1);
     if (!need || E.isCitizenOf(l, c) || a < 18 || (eligibility?!eligibility.ok:y[c]<need) || !free(l)) return;
-    var F = l.flags; if (F.natAsk && F.natAsk[c] != null && a - F.natAsk[c] < 3) return;
+    var F = l.flags, askN = (F.natAskN && F.natAskN[c]) || 0; if (F.natAsk && F.natAsk[c] != null && a - F.natAsk[c] < Math.min(12, 3 + 2 * askN)) return; // hỏi lại thưa dần: 3, 5, 7… năm, tối đa 12 năm
     if (l.record && l.flags.releasedAt != null && a - l.flags.releasedAt < 10) return; // có tiền án gần đây thì chưa đủ điều kiện
-    (F.natAsk = F.natAsk || {})[c] = a;
+    (F.natAsk = F.natAsk || {})[c] = a; (F.natAskN = F.natAskN || {})[c] = askN + 1;
     if (F.natNever && F.natNever[c]) return;
     l.pending.push(E.DEC.nhap_quoc_tich.make(l, r, { code: c }));
   });

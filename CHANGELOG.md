@@ -1,3 +1,10 @@
+## 9.4.4 — Cân bằng tám mục hồi quy còn lỗi
+
+- Điểm thi THPT (`royal847.js`): kiến thức trên 80 nén còn 30% ở kỳ thi tốt nghiệp/đại học; trung bình ~23 thay vì ~25,2 (thực tế 20,9).
+- `jobs.js`: chuyển ngang giữa nghề lao động, dịch vụ và văn phòng, thương mại (`tests/career-lateral944.js`, 211 kiểm tra).
+- Văn bản và nhịp: `life173.js`, `school920.js`, `world836.js`, `life121.js`, `abroad-depth.js`, `econ918.js`, `health-aging.js`, `welfare918.js`, `life80.js`, `life125.js`; `engine.js` thêm `vary`, `stamp`, bỏ thông báo trung tính lặp trong 5 năm và `pace` của tình huống; `life91.js` drama ×2; `life54/55/57.js` thưa hơn; `life70.js` hỏi nhập quốc tịch thưa dần.
+- Chi tiết và kết quả chạy lại: `docs/HOI-QUY-942.md`.
+
 ## 9.4.3 — Rwanda 1990–1997, rà từng mục hồi quy còn lỗi
 
 - `hist920.js`: biến cố `rw_1994` (chiến sự 1990–1993, 1994 rủi ro tử vong theo tỉ lệ toàn dân và lựa chọn ở lại hoặc vượt biên, hậu quả từ 1995); không phân nhóm bản sắc. `tests/hist920.js` thêm mục 14 (176 kiểm tra).

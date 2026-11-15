@@ -89,12 +89,34 @@
     tx_cn: [['tai_xe_tai', 1, 0.1, 0, 'Có người giới thiệu chỗ lái xe tải đường dài, thu nhập khá hơn.']],
     kd_tu_do: [['chu_dau_tu', 0, 8, 2, 'Công ty làm ăn tốt, bạn tính lấn sân đầu tư bất động sản.']]
   };
+  // Chuyển ngang giữa các nghề gần nhau (không cần vốn): nhóm nghề lao động dịch vụ và nhóm văn phòng thương mại. Nghề cần chứng chỉ, ngạch nhà nước, danh tiếng hay phi pháp không nằm trong đây.
+  var LATERAL = {
+    labor: ['worker', 'poor', 'farm', 'service', 'beauty'],
+    office: ['office', 'sale', 'biz', 'free']
+  };
+  function lateralFamily(c) { for (var f in LATERAL) if (LATERAL[f].indexOf(c.cat) >= 0) return f; return null; }
+  function lateralFor(l) {
+    var cur = jid(l), c = cur && E.CAR[cur]; if (!c || c.hidden || c.owner || c.fame || c.crime || c.skillRank != null || !E.jobEligible) return null;
+    var fam = lateralFamily(c); if (!fam) return null;
+    var tired = (l.st.hap < 55 || (l.mind && l.mind.stress > 60)), long = l.job.yrs >= 8;
+    if (!tired && !long) return null; // chuyển ngang khi chán nản, kiệt sức hoặc đã làm rất lâu một chỗ
+    var pool = Object.keys(E.CAR).filter(function (id) {
+      var t = E.CAR[id]; return id !== cur && !t.hidden && !t.owner && !t.fame && !t.crime && t.skillRank == null && lateralFamily(t) === fam && t.t.length >= 2 && (!t.maxAge || l.age <= t.maxAge) && E.jobEligible(l, t) && !(t.edu > c.edu + 1);
+    }).sort(); // sắp xếp để kết quả ổn định giữa các lần gọi trong cùng một năm
+    if (!pool.length) return null;
+    var h = { rs: (l.rs ^ Math.imul(l.age + 1, 2654435761) ^ Math.imul(l.job.yrs + 7, 40503)) | 0 }, to = pool[Math.floor(U.rand(h) * pool.length)], t2 = E.CAR[to];
+    var rk = Math.min(t2.t.length - 1, rank(l) >= 2 ? 1 : 0), why = tired
+      ? 'Công việc ' + E.jobTitle(l).toLowerCase() + ' đã làm bạn mệt mỏi; một người quen giới thiệu chỗ ' + t2.t[rk].toLowerCase() + ' ở nơi khác. Lương có thể thấp hơn lúc đầu và bạn phải học lại việc.'
+      : 'Làm ' + E.jobTitle(l).toLowerCase() + ' nhiều năm, bạn có cơ hội sang làm ' + t2.t[rk].toLowerCase() + '. Công việc mới ít quen thuộc nhưng có thể mở ra hướng đi khác.';
+    return [to, rk, 0, 0, why, 'lateral'];
+  }
   function pathFor(l) {
-    var ps = PATHS[jid(l)]; if (!ps) return null;
-    return ps.filter(function (p) { return rank(l) >= p[3] && !(p[0] === jid(l) && rank(l) >= p[1]); })[0] || null;
+    var ps = PATHS[jid(l)];
+    var p = ps && ps.filter(function (p) { return rank(l) >= p[3] && !(p[0] === jid(l) && rank(l) >= p[1]); })[0];
+    return p || lateralFor(l);
   }
   SC('chuyen_huong', {
-    title: 'Ngã rẽ sự nghiệp', prep: function (l) { var p = pathFor(l); return p ? { to: p[0], rk: p[1], cost: p[2], t: p[4] } : null; },
+    title: 'Ngã rẽ sự nghiệp', prep: function (l) { var p = pathFor(l); return p ? { to: p[0], rk: p[1], cost: p[2], t: p[4], lateral: p[5] === 'lateral' } : null; },
     valid: function (l) { return !!(l.job && pathFor(l)); },
     text: function (l, d) { return d.t + (d.cost ? ' Cần khoảng ' + mb(l, d.cost) + ' vốn ban đầu, hiện bạn có ' + mo(l, l.money) + '.' : ''); },
     opts: [

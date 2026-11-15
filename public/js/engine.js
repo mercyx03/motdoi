@@ -14,6 +14,12 @@
   };
   function difficulty(l) { return DIFFICULTIES['normal']; }
 
+  // Thông báo trung tính giống hệt trong vòng 5 năm gần nhất không kể lại (trạng thái vẫn còn nguyên, chỉ đỡ lặp); sự kiện tốt, xấu hoặc quan trọng luôn được ghi.
+  function recentDupLog(life, e) { var L = life.log, n = L.length; for (var i = n - 1; i >= 0 && n - i <= 80; i--) { var x = L[i]; if (e.a - x.a > 5) break; if (x.t === e.t) return true; } return false; }
+  // Chọn một cách diễn đạt theo (đời, tuổi, khóa) một cách ổn định, để thông báo định kỳ không đọc giống hệt nhau mỗi năm.
+  function vary(l, key, arr) { var h = (l.rs | 0) ^ Math.imul(l.age + 1, 2654435761); for (var i = 0; i < key.length; i++) h = Math.imul(h ^ key.charCodeAt(i), 16777619); h ^= h >>> 15; return arr[(h >>> 0) % arr.length]; }
+  // Gắn mốc tuổi vào thông báo hằng năm ("Ở tuổi 34, ...") để mỗi năm là một dòng riêng, không phải câu chép lại.
+  function stamp(l, text) { text = String(text); return 'Ở tuổi ' + l.age + ', ' + text.charAt(0).toLowerCase() + text.slice(1); }
   function dev(l) { return E.devGdp ? E.devGdp(l) : l.gdp; } // 9.2: mức phát triển của năm đang sống (đời sinh từ 2024: bằng l.gdp)
   function RF(life) { return function () { return U.rand(life); }; }
   function isVN(life) { return life.country === 'VN'; }
@@ -1087,7 +1093,7 @@
           life.st.hap += 10; life.st.soc += 5;
           H.mem(life, p.status === 'cohabit' ? 'Ngày cùng ' + p.name + ' dọn về chung một nhà — chìa khóa có hai cái tên.' : 'Ngày cưới ' + p.name + ' — bạn cười không ngớt.', 5);
         } else if (k === 'split') { log('Chia tay ' + p.name + '.', 'bad'); life.partner = null; life.exes++; life.st.hap -= 8; }
-        else { life.flags.marryWait = (life.flags.marryWait || 0) + 1; log(life.flags.marryWait >= 2 ? 'Vẫn chưa sẵn sàng — hai bạn cứ yêu nhau thêm một thời gian nữa.' : 'Hai bạn quyết định chưa vội.', 'neutral'); } // v3.0: càng hoãn thì càng lâu mới hỏi lại
+        else { life.flags.marryWait = (life.flags.marryWait || 0) + 1; log(life.flags.marryWait >= 2 ? E.vary(life, 'mw2', ['Vẫn chưa sẵn sàng — hai bạn cứ yêu nhau thêm một thời gian nữa.', 'Chuyện cưới lại gác sang một bên; hai bạn muốn hiểu nhau thêm.', 'Hai bạn vẫn chưa đặt ngày; không ai muốn vội vàng.']) : E.vary(life, 'mw1', ['Hai bạn quyết định chưa vội.', 'Cả hai thấy chưa phải lúc, và thống nhất đợi thêm.', 'Hai bạn gác chuyện cưới lại, chưa ai thấy cần gấp.']), 'neutral'); } // v3.0: càng hoãn thì càng lâu mới hỏi lại
       }
     },
     kid: {
@@ -1489,7 +1495,7 @@
       var seenN = scN[T.id] || 0;
       if (!T.rep && seenN >= (T.max || 3)) continue;
       var pv = life.flags.prevSeen || {}; // v3.4: chuyện đã gặp ở các đời trước thì đời này ít gặp lại hơn
-      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
+      var pr = (typeof T.p === 'function' ? T.p(life, a) : T.p) * (T.pace || 1) * (T.rep ? 1 : Math.pow(0.7, seenN)) * (pv[T.id] && !T.rep ? 0.4 : 1);
       if (E.CONTEXT143) pr = E.CONTEXT143.probability(T, life, pr);
       if (r() < Math.min(1, pr * difficulty(life).events) && !q.some(function (d) { return d.id === T.id; })) { var n0 = q.length; add(T.id, undefined, T); if (q.length > n0) { cdm[T.id] = a; scN[T.id] = seenN + 1; } }
     }
@@ -1524,7 +1530,7 @@
     if (!d) return [];
     if (DEC[d.id] && DEC[d.id].valid && !DEC[d.id].valid(life, d.data || {})) { life.pending.shift(); prune(life); if(d.manual&&life.alive){releaseUnusedAction(life,d);var expired={a:life.age,y:life.birthYear+life.age,t:'Lựa chọn “'+d.title+'” không còn phù hợp với hoàn cảnh hiện tại; chưa thực hiện và không trừ tiền.',k:'neutral'};life.log.push(expired);return [expired];} return []; }
     var r = RF(life), out = [];
-    var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: life.age, y: life.birthYear + life.age, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
+    var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: life.age, y: life.birthYear + life.age, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; if (k === 'neutral' && recentDupLog(life, e)) return; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
     var valid = d.opts.some(function (o) { return o.k === key; });
     if (!valid) key = DEC[d.id] ? DEC[d.id].auto(life, d, r) : null;
     life.pending.shift();
@@ -1810,7 +1816,7 @@
     if (E.ERA920) E.ERA920.refresh(life);
     life._yearRun = true;
     var r = RF(life), a = life.age, out = [];
-    var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death' && k !== 'money') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
+    var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death' && k !== 'money') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; if (k === 'neutral' && recentDupLog(life, e)) return; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
     if (E.TRANSIT907 && E.TRANSIT907.visit(life)) E.TRANSIT907.restore(life, log);
     var f = life.fam, st = life.st;
     var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
@@ -2263,7 +2269,7 @@
     SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave, registerSchemaStep: registerSchemaStep,
     actions: actions, act: act, actAvail: actAvail, parentMonthly: parentMonthly, PARENT_PAY: PARENT_PAY, parentKind: parentKind, parentYear: parentYear,
     isMajor: isMajor, MAJOR: MAJOR, GAMES: GAMES, gameFor: gameFor, anyGame: anyGame, PETS: PETS, GAME_SUB: GAME_SUB, ACTS_PER_YEAR: ACTS_PER_YEAR, actsLimit: actsLimit, talentText: talentText,
-    EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,
+    EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, vary: vary, stamp: stamp, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,
     LOAN_TYPES: LOAN_TYPES, IDOLS: IDOLS, IDOL_BORN: IDOL_BORN, VICE: VICE, CONSCRIPT: CONSCRIPT,
     REFLECT_AGES: REFLECT_AGES, schoolName: schoolName, isVN: isVN, inVN: inVN, hasVNOrigin: hasVNOrigin, resCode: resCode, H: H, SC: SC, eduP: eduP, uniPlaces: uniPlaces, housePrice: housePrice
   };

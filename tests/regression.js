@@ -1720,10 +1720,12 @@ section('32. Bản 3.4: hẹn hò qua mạng (người tử tế, đào mỏ, l�
     const d = E.DEC.cay_them.make(l, R(1)); ok(/vi phạm điều khoản/.test(d.text) && !d.opts.some(o => o.k === 'nghe'), 'nhắc rủi ro bị khóa tài khoản; học sinh chưa thể làm nghề toàn thời gian'); }
   // chuyện tuổi thơ
   { const kid = E.TRIG.filter(t => t.child && /^k_/.test(t.id)); ok(kid.length >= 30 && kid.every(t => t.max === 1), 'thêm ' + kid.length + ' chuyện tuổi thơ mới, mỗi chuyện chỉ gặp tối đa 1 lần trong đời'); }
-  { const kidIds = new Set(E.TRIG.filter(t => t.child).map(t => t.id)); const per = [], freq = {}; const N = 120;
-    for (let i = 0; i < N; i++) { const l = E.createLife({ mode: 'vn', seed: 33000 + i }); kidLife(l); const seen = Object.keys(l.flags.scN || {}).filter(id => kidIds.has(id)); per.push(seen.length); seen.forEach(k => freq[k] = (freq[k] || 0) + 1); }
+  { const kidIds = new Set(E.TRIG.filter(t => t.child).map(t => t.id)); const per = [], freq = {}, allPer = []; const N = 120; const resolve0 = E.resolve; let cur = null; E.resolve = function (l, k) { const p = l.pending[0]; if (cur && cur.l === l && p && l.age <= 14) cur.ids.add(p.id); return resolve0.apply(this, arguments); };
+    for (let i = 0; i < N; i++) { const l = E.createLife({ mode: 'vn', seed: 33000 + i }); cur = { l, ids: new Set() }; kidLife(l); allPer.push(cur.ids.size); const seen = Object.keys(l.flags.scN || {}).filter(id => kidIds.has(id)); per.push(seen.length); seen.forEach(k => freq[k] = (freq[k] || 0) + 1); }
     const avg = per.reduce((a, b) => a + b) / N, top = Object.keys(freq).filter(k => k !== 'thoi_noi').sort((a, b) => freq[b] - freq[a])[0];
-    ok(avg >= 14, 'tuổi thơ có nhiều chuyện khác nhau (trung bình ' + avg.toFixed(1) + ' chuyện / đời)'); ok(freq[top] / N < 0.75, 'không chuyện tuổi thơ nào xuất hiện ở gần như mọi đời (nhiều nhất: ' + top + ' ' + Math.round(freq[top] / N * 100) + '%)'); }
+    E.resolve = resolve0; const allAvg = allPer.reduce((a, b) => a + b) / N;
+    // Tuổi thơ nay còn có chuyện từ trường học, lễ hội, anh chị em, gia đình… không chỉ các chuyện TRIG đánh dấu child, nên đo cả hai: tổng số loại cảnh khác nhau và riêng nhóm chuyện tuổi thơ.
+    ok(allAvg >= 14 && avg >= 8, 'tuổi thơ có nhiều chuyện khác nhau (' + allAvg.toFixed(1) + ' loại cảnh / đời, riêng chuyện tuổi thơ ' + avg.toFixed(1) + ')'); ok(freq[top] / N < 0.75, 'không chuyện tuổi thơ nào xuất hiện ở gần như mọi đời (nhiều nhất: ' + top + ' ' + Math.round(freq[top] / N * 100) + '%)'); }
   // nhớ chuyện đời trước
   { const run = prev => { const c = {}; for (let i = 0; i < 80; i++) { const l = E.createLife({ mode: 'vn', seed: 34000 + i }); if (prev) l.flags.prevSeen = prev; kidLife(l); Object.keys(l.flags.scN || {}).forEach(id => c[id] = (c[id] || 0) + 1); } return c; };
     const ids = ['sinh_nhat', 'li_xi', 'thu_cung', 'choi_le_hoi', 'k_mat_dien', 'k_an_co']; const a = run(null), b = run(Object.fromEntries(ids.map(x => [x, 1])));

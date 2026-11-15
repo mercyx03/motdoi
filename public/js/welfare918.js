@@ -223,7 +223,7 @@
     if (!T9 || !l.abroad) return; var t = T9.state(l); if (T9.passport(l)) return;
     var fee = l.country === 'VN' ? ledger(l, 0.2) : l.base * 0.015, own = l.indep; if (own) H.cash(l, -fee, 'Lệ phí hộ chiếu');
     t.passport = { cc: l.country, issued: l.age, until: l.age + (l.age < 14 ? 5 : 10), forTrip: l.abroad.code };
-    log && log((own ? 'Bạn làm hộ chiếu' : 'Bố mẹ làm hộ chiếu cho bạn') + ' trước khi sang ' + (l.abroad.name || l.abroad.code) + ' (lệ phí ' + mo(l, fee) + (own ? '' : ', gia đình chi') + ').', 'neutral');
+    log && log(E.stamp(l, (own ? 'Bạn làm hộ chiếu' : 'Bố mẹ làm hộ chiếu cho bạn') + ' trước khi sang ' + (l.abroad.name || l.abroad.code) + ' (lệ phí ' + mo(l, fee) + (own ? '' : ', gia đình chi') + ').'), 'neutral');
   }
 
   // ================= B×C: cán bộ đề xuất / thí điểm chính sách =================

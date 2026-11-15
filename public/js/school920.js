@@ -109,7 +109,7 @@
     if (!inSchool(l) || l.age < 6) return;
     var s = st(l), p = profile(l), R = rec(cc(l)), made = [];
     function add(kind, extra) { var id = iid(l, kind); if (s.inst[id]) return; s.inst[id] = Object.assign({ id: id, kind: kind, cc: cc(l), school: p.key, year: yr(l), age: l.age, stage: 'announced' }, extra || {}); made.push(kind); }
-    if (l.age >= 7 && l.age <= 17 && u(l.id + ':trip:' + l.age) < 0.7) add('trip', { dest: tripChoices(l)[0][0] });
+    if (l.age >= 7 && l.age <= 17 && u(l.id + ':trip:' + l.age) < 0.7) add('trip', { dest: (function () { var c = tripChoices(l); return c[Math.floor(u(l.id + ':dest:' + l.age) * c.length)][0]; })() }); /* điểm đến đổi theo năm học, không lặp mãi một nơi */
     var fin = left(l) === 1 && ['upper', 'priv', 'voc'].indexOf(l.school) >= 0;
     if (fin) { add('grad'); add('yearbook'); if (p.prom && R.g === 'final') add('prom', { name: R.n }); if (cc(l) === 'VN' || u(l.id + ':senior') < 0.4) add('senior'); if (p.campfire) add('campfire'); }
     if (R.g === 'pre' && left(l) === 2 && p.prom && ['upper', 'priv'].indexOf(l.school) >= 0) add('prom', { name: R.n });

@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-15T06:30:13.519Z",
+  "generatedAt": "2026-11-15T09:49:45.106Z",
   "entries": [
+    {
+      "id": "era-balance-94400",
+      "version": "9.4.4",
+      "publishedAt": "2026-11-15T16:49:44+07:00",
+      "releaseStatus": "packaged",
+      "title": "Điểm thi sát thực tế hơn, đổi nghề linh hoạt hơn, tuổi thơ và đời sống bớt lặp",
+      "summary": "Điểm thi tốt nghiệp quanh mức thực tế, thêm chuyển ngang giữa các nghề gần nhau, lời kể bớt lặp và ít bị hỏi dồn.",
+      "tags": [
+        "Cân bằng",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Điểm thi tốt nghiệp THPT không còn dồn lên rất cao: học đều vẫn đạt khá, điểm trung bình quanh 23 trên thang 30 (khối A00 năm 2024 thật là 20,9), hiếm khi chạm 27 điểm.",
+        "Khi chán nản, kiệt sức hoặc làm rất lâu một chỗ, nhân vật có thể được mời chuyển sang nghề gần nghề cũ; bắt đầu lại với thâm niên mới và bậc thấp hơn.",
+        "Lời kể dịp lễ, chuyến ngoại khóa, chuyện chỗ ở và nhiều thông báo hằng năm đa dạng hơn, bớt lặp lại nguyên văn.",
+        "Một số cảnh lặp mỗi năm (chuyện đời sống nơi ở, gia hạn cư trú, hỏi nhập quốc tịch, dịp lễ) nay thưa hơn để bạn bớt bị hỏi dồn; chuyện công sở, hàng xóm, mạng xã hội và họp lớp xảy ra thường hơn một chút."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-rwanda-94300",
       "version": "9.4.3",

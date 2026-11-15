@@ -672,7 +672,9 @@ function pick(l, id, key, arg, r = () => 0.2) {
  Object.assign(l,{age:16,edu:2,school:'upper',khoi:'A00'});l.st.kno=95;l.flags.examApt=-2.6;
  const before=JSON.stringify(l),f=M.estimateUniExam853(l);
  ok(JSON.stringify(l)===before,'forecast is pure');
- ok(f.expected30>25,'strong knowledge is not suppressed by legacy hidden aptitude');
+ const weak=E.createLife({mode:'vn',seed:85301});Object.assign(weak,{age:16,edu:2,school:'upper',khoi:'A00'});weak.st.kno=60;weak.flags.examApt=-2.6;
+ // 9.4.4: kiến thức trên 80 được nén vào thang điểm thật (A00 2024 trung bình 20,9); kiến thức 95 vẫn cao hơn rõ so với kiến thức 60
+ ok(f.expected30>21&&f.expected30>M.estimateUniExam853(weak).expected30+3,'strong knowledge is not suppressed by legacy hidden aptitude');
  pick(l,'mockUniExam853','uni_mock_standard');pick(l,'mockUniExam853','uni_mock_intensive');
  ok(l.flags.mockExam853.uniCount===2,'bounded training blocks');
  const a=E.rollExamScore(l,()=>0),b=E.rollExamScore(l,()=>1);

@@ -79,7 +79,7 @@
     var target = essentials(l) / 12 * b.months;
     if (b.auto && l.money < target) { if (b.cutAt == null || b.cutAt < l.age - 1) log('Quỹ khẩn cấp dưới mức ' + b.months + ' tháng chi tiêu thiết yếu; gia đình tự cắt các khoản không cần thiết trong năm tới.', 'neutral'); b.cutAt = l.age; }
     else if (b.cutAt != null && b.cutAt < l.age && l.money >= target * 1.5) b.cutAt = null;
-    var q = s.budget.pressure; if (q && q.y === year(l) && q.p >= 0.03 && !b.warnAt) { b.warnAt = l.age; log('Năm nay giá cả tăng nhanh hơn thu nhập: chi tiêu thiết yếu của gia đình đắt hơn khoảng ' + Math.round(q.p * 100) + '%.', 'neutral'); }
+    var q = s.budget.pressure; if (q && q.y === year(l) && q.p >= 0.03 && !b.warnAt) { b.warnAt = l.age; log(E.stamp(l, E.vary(l, 'infl918', ['Năm nay giá cả tăng nhanh hơn thu nhập: chi tiêu thiết yếu của gia đình đắt hơn khoảng ' + Math.round(q.p * 100) + '%.', 'Vật giá leo thang hơn lương năm ' + year(l) + ': các khoản thiết yếu của gia đình đắt thêm khoảng ' + Math.round(q.p * 100) + '%.', 'Tiền chợ, tiền nhà và hóa đơn đều nhích lên; chi tiêu thiết yếu đắt hơn khoảng ' + Math.round(q.p * 100) + '% so với thu nhập.'])), 'neutral'); }
     if (b.warnAt != null && l.age - b.warnAt >= 5) b.warnAt = null;
   }
   X.menu('budget918', 'Ngân sách gia đình', function (l) { var r = X.reason(l, 18); if (r !== true) return r; return l.indep ? true : 'Cần tự lập để quản lý ngân sách'; }, function (l) {

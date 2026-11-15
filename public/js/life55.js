@@ -74,6 +74,6 @@
     {k:'later',l:'Tạm hoãn để sắp xếp lại',run:function(l,r,log,d){outcome(l,r,log,d,'later');}}
   ]});
   E.ACT.push({id:'nghe_chuyen_moi',g:'Công việc',l:'Tình huống chuyên môn trong nghề',min:18,sc:'nghe_chuyen_moi',avail:function(l){return pool(l).length?true:'Chưa có tình huống mới phù hợp công việc';},ai:{w:.2}});
-  E.TRIG.push({id:'nghe_chuyen_moi',when:function(l){return pool(l).length>0;},p:.45,cd:2,rep:true});
+  E.TRIG.push({id:'nghe_chuyen_moi',when:function(l){return pool(l).length>0;},p:.38,cd:2,rep:true});
   E.CAREER_STORIES={cases:cases,pool:pool,valid:valid};
 })(G);

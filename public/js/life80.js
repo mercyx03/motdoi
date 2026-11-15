@@ -119,7 +119,7 @@
   E.HOOKS.year.unshift(function (l, r, log, a) { // đầu danh sách: độc lập với các hook khác
     if (!l.job) { l.flags.rankSeen = null; return; }
     var S = l.flags.rankSeen, id = E.resolveJob(l.job.id), rk = l.job.rank || 0;
-    if (S && S.id === id && rk > S.rk && !l.job.fam) { var c = E.jobDef(l); if (c && !c.fame && c.skillRank == null) { var why = []; why.push('đủ ' + (S.need || 3) + ' năm kinh nghiệm ở vị trí cũ'); if (l.st.kno >= 70) why.push('kiến thức vững'); if (l.focus === 'work') why.push('tập trung cho công việc'); if ((l.job.rep || 50) >= 65) why.push('uy tín tốt trong nghề'); log('Lý do được thăng chức: ' + why.join(', ') + '.', 'neutral'); } }
+    if (S && S.id === id && rk > S.rk && !l.job.fam) { var c = E.jobDef(l); if (c && !c.fame && c.skillRank == null) { var why = []; why.push('đủ ' + (S.need || 3) + ' năm kinh nghiệm ở vị trí cũ'); if (l.st.kno >= 70) why.push('kiến thức vững'); if (l.focus === 'work') why.push('tập trung cho công việc'); if ((l.job.rep || 50) >= 65) why.push('uy tín tốt trong nghề'); log(E.stamp(l, 'Lý do được thăng chức: ' + why.join(', ') + '.'), 'neutral'); } }
     var cc = E.jobDef(l); l.flags.rankSeen = { id: id, rk: rk, need: cc && cc.yrs ? cc.yrs[rk] || 3 : 3 };
   });
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));
