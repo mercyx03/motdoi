@@ -47,12 +47,12 @@ section('0. Phiên bản & trang');
   ok(refs.length === MODULES.length + UI_SCRIPTS.length + 4, 'index.html nạp đủ ' + (MODULES.length + UI_SCRIPTS.length) + ' script + loader + support + 2 stylesheets (' + refs.length + ')');
   UI_SCRIPTS.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp ' + m));
   MODULES.forEach(m => ok(html.indexOf('src="' + m + '?v=') >= 0, 'index.html nạp module ' + m));
-  ok(html.indexOf('logo.webp?v=' + G.VERSION) >= 0 && fs.existsSync(path.join(ROOT, 'logo.webp')), 'logo Một Đời tồn tại & được dùng');
+  ok(/logo\.webp\?v=\d+\.\d+\.\d+/.test(html) && fs.existsSync(path.join(ROOT, 'logo.webp')), 'logo Một Đời tồn tại & được dùng (khóa cache chỉ đổi khi tệp logo đổi)');
   ok(/<title>Một Đời/.test(html), 'tên game là "Một Đời"');
   ok(refs.every(r => /\?v=\d+\.\d+\.\d+(?:[-.][a-z0-9]+)*"$/i.test(r)), 'mọi tài nguyên có cache key phiên bản module; hash bản đóng gói được kiểm bởi loading.js');
   refs.forEach(r => { const f = r.split('"')[1].split('?')[0]; ok(fs.existsSync(path.join(ROOT, f)), 'tệp tồn tại: ' + f); });
   const cl = fs.readFileSync(path.join(__dirname, '..', 'CHANGELOG.md'), 'utf8');
-  ok(cl.indexOf('## v' + G.VERSION) >= 0, 'CHANGELOG có mục cho v' + G.VERSION);
+  ok(new RegExp('^## v?' + G.VERSION.replace(/\./g, '\\.') + '(?![0-9.])', 'm').test(cl), 'CHANGELOG có mục cho v' + G.VERSION);
   const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8');
   ['#bornBtn', '#provSel', '#ethSel', '#nameInp', '#genderChips', '#orientChips', '#lenChips', '#logList', '#lifeMap', '#cohortLive', '#placePanel', '#modalRoot', '#memAll', '#endWrap', '#birthWrap', '#skipBtn', '#autoBtn', '#pauseBtn', '#speeds', '#exitBtn', '#actPanel', '#finPanel', '#recentList', '#sharedWrap', '#famPanel', '#idCard', '#statsPanel', '#heroProfile', '#scenePanel', '#minorBtn', '#jobsBtn', '#statJobs']
     .forEach(id => ok(html.indexOf('id="' + id.slice(1) + '"') >= 0 && appSrc.indexOf(id) >= 0, 'phần tử giao diện ' + id + ' tồn tại & được dùng'));
@@ -524,7 +524,8 @@ section('13. Hành động chủ động');
   if (l.alive) {
     E.beginYear(l, {}); l.pending = []; l.flags.military = null; // đang đi nghĩa vụ thì không làm được việc khác
     const acts = E.actions(l);
-    ok(acts.length === E.ACT.length && acts.every(a => !badText(a.l) && !badText(a.g)), 'danh sách hành động sạch (' + acts.length + ')');
+    const hiddenActs = ['hitman176']; // life176 ẩn menu thuê sát thủ khi nhân vật chưa có hợp đồng
+    ok(acts.length >= E.ACT.length - hiddenActs.length && acts.length <= E.ACT.length && acts.every(a => !badText(a.l) && !badText(a.g)), 'danh sách hành động sạch (' + acts.length + ')');
     ok(E.ACT.every(a => !!E.DEC[a.sc || a.id]), 'mọi hành động đều có tình huống tương ứng');
     const avail = acts.filter(a => a.ok === true);
     ok(avail.length >= 8, 'người 25 tuổi có nhiều việc để làm (' + avail.length + ')');
