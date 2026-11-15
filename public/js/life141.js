@@ -38,7 +38,7 @@ function react(l,k,r,fit,harsh){var p=init(l,k),t=p.traits,a=age(l,k),au=autonom
  if(harsh)rel(k,p,-3,-1,6);return out;}
 // School result from ability, diligence, interest, mood, money, environment, support and current events; obedience is not a factor.
 function schoolScore(l,k,r,F){var p=init(l,k),t=p.traits,tr=tier(l,F),mood=100-p.fear-(l.st&&l.st.hap<35?10:0);
- var s=(k.study!=null?k.study:50)*.45+t.diligent*.2+t.curious*.08+mood*.1+p.attach*.07+(tr==='low'?-4:tr==='rich'?4:0)+(l.urban?2:0)+(k.tutor?3:0)-(k.fear140||0)*.08-(k.vice?8:0)-(p.ill?6:0)+gauss(r)*7;return U.clamp(s,0,100);}
+ var s=(k.study!=null?k.study:50)*.45+t.diligent*.2+t.curious*.08+mood*.1+p.attach*.07+(tr==='low'?-4:tr==='rich'?4:0)+(l.urban?2:0)+(k.tutor?3:0)+(k.family53&&k.family53.school==='international'?5:k.family53&&k.family53.school==='private'?2.5:0)+(k.family53&&k.family53.course==='coach'?1.5:0)-(k.fear140||0)*.08-(k.vice?8:0)-(p.ill?6:0)+gauss(r)*7;return U.clamp(s,0,100);}
 function band(s){return s>=78?'rất tốt':s>=63?'khá':s>=48?'trung bình':'đang chật vật';}
 function schoolYear(l,k,r,log,F){var a=age(l,k),p=init(l,k);if(a<6||a>17){return;}var s=schoolScore(l,k,r,F),b=band(s),prev=p.school&&p.school.band;k.study=U.clamp((k.study!=null?k.study:50)+(s-(k.study!=null?k.study:50))*.15,0,100);p.school={band:b,age:a,score:Math.round(s)};
  if(prev&&prev!==b){var up=['đang chật vật','trung bình','khá','rất tốt'].indexOf(b)>['đang chật vật','trung bình','khá','rất tốt'].indexOf(prev);log('Kết quả học tập năm nay của '+k.name+' '+(up?'tiến bộ':'đi xuống')+', ở mức '+b+(up?'.':(p.fear>45?'; con có vẻ căng thẳng ở nhà.':t(p)))+'','neutral');}}

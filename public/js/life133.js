@@ -23,7 +23,9 @@ function pct(v){return Math.round(v*1000)/10+'%';}
 function share(v){return Math.round(v*10)/10;}
 function ensure(c){if(!SECTORS[c.sector])c.sector='general';if(!c.roles||typeof c.roles!=='object')c.roles={};if(typeof c.payout!=='number')c.payout=.5;if(!(c.peak>=c.value))c.peak=c.value;return c;}
 function randomSector(r){var k=Object.keys(SECTORS).filter(function(k){return k!=='general';});return k[Math.floor(r()*k.length)%k.length];}
-function pay(l,c,kind){var k=KINDS[kind];return k?l.base*k.pay+Math.max(0,c.value)*(kind==='relative'?.001:k.rate):0;}
+// Lương ban điều hành theo quy mô công ty: công ty nhỏ không trả mức lương của tập đoàn (trước đây bổ nhiệm một giám đốc vào công ty vốn vài trăm triệu làm lỗ 35–60% vốn mỗi năm, năm nào cũng lỗ).
+function sizeK(l,c){return U.clamp(Math.max(0,(c&&c.value)||0)/(l.base*12),.08,1);}
+function pay(l,c,kind){var k=KINDS[kind];return k?l.base*k.pay*sizeK(l,c)+Math.max(0,c.value)*(kind==='relative'?.001:k.rate):0;}
 function selfSkill(l){return U.clamp(((l.st.kno||0)*.5+(l.st.soc||0)*.3)/100+(l.edu>=7?.15:l.edu>=5?.1:0),.1,.9);}
 // Tác động tổng hợp của ban điều hành lên một công ty.
 function effects(l,c){if(E.BUSINESS137)E.BUSINESS137.refreshRoles(l,c);var f={m:0,sd:1,loss:1,g:0,opp:0,cost:0},roles=ensure(c).roles;Object.keys(ROLES).forEach(function(id){var x=roles[id];if(!x)return;var s=x.kind==='self'?selfSkill(l):x.skill;f.cost+=E.LEADERS169?E.LEADERS169.pay(l,c,x):pay(l,c,x.kind);if(id==='ceo')f.m+=(s-.35)*.05;if(id==='cfo'){f.sd*=1-.3*s;f.loss*=1-.4*s;}if(id==='coo')f.m+=(s-.3)*.025;if(id==='cso'){f.g+=s*.02;f.opp+=s*.05;}});if(!roles.ceo)f.m-=.005;return f;}

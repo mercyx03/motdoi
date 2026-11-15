@@ -12,6 +12,14 @@
   function mo(l, v) { return H.money(l, v); }
   function pick(r, a) { return U.pick(r, a); }
   function ch(r, p) { return r() < p; }
+  // Khả năng con đỗ đại học: học lực là gốc, học thêm / gia sư, trường tư hoặc quốc tế, lớp có giáo viên hướng dẫn và nề nếp giúp thêm; thói hư, sợ hãi kéo xuống. Trước đây chỉ 0,05 + học lực/140 nên con học lực 100 vẫn trượt gần một phần tư số lần dù được học thêm và học trường quốc tế.
+  function uniChance(l, k) {
+    if (!k) return 0.4;
+    var s = k.study == null ? 50 : k.study, f = k.family53 || {}, ab = s + (k.tutor ? 4 : 0) + (f.school === 'international' ? 3 : f.school === 'private' ? 1.5 : 0) + (f.course === 'coach' ? 2 : 0) + (k.boost > 1 ? 2 : 0) - (k.vice ? 8 : 0) - (k.fear140 || 0) * 0.05;
+    return Math.max(0.04, Math.min(0.96, 1 / (1 + Math.exp(-(ab - 55) / 16))));
+  }
+  function chanceWord(p) { return p >= 0.9 ? 'rất cao' : p >= 0.7 ? 'cao' : p >= 0.45 ? 'trung bình' : p >= 0.25 ? 'thấp' : 'rất thấp'; }
+  E.uniChance = uniChance;
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped); }
   function pct(x) { return (x >= 0 ? '+' : '−') + Math.abs(Math.round(x * 100)) + '%'; }
 
@@ -349,7 +357,7 @@
     valid: function (l, d) { var k = kidByName(l, d && d.n); return !!(k && k.alive); },
     text: function (l, d) { return d.n + ' vừa học xong phổ thông' + (d.s >= 65 ? ', học lực khá giỏi' : d.s < 40 ? ', học hành lẹt đẹt' : '') + '. Con đứng trước ngã rẽ đầu đời — và bạn có tiếng nói.'; },
     opts: [
-      { k: 'uni', l: 'Ủng hộ con học đại học', h: function (l) { return 'Hỗ trợ ' + mb(l, 0.15) + '/năm trong 4 năm'; }, ai: function (l, d) { return 0.4 + d.s / 60; }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; var pass = ch(r, 0.05 + k.study / 140); if (pass) { k.edu = 3; k.uniUntil = l.age - k.born + 4; k.tuition = l.base * 0.15; k.close = Math.min(100, k.close + 5); log('Con ' + d.n + ' thi đỗ đại học! Cả nhà mở tiệc nhỏ.', 'good'); fx(l, { hap: 6 }); H.mem(l, 'Ngày ' + d.n + ' đỗ đại học, bạn khoe với cả xóm.', 3); } else { k.edu = 4; log('Con ' + d.n + ' thi trượt đại học, quyết định đi học nghề.', 'bad'); } } },
+      { k: 'uni', l: 'Ủng hộ con học đại học', h: function (l, d) { var kk = d && kidByName(l, d.n); return 'Hỗ trợ ' + mb(l, 0.15) + '/năm trong 4 năm' + (kk ? ' · khả năng đỗ: ' + chanceWord(uniChance(l, kk)) : ''); }, ai: function (l, d) { return 0.4 + d.s / 60; }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; var pc = uniChance(l, k), pass = ch(r, pc); if (pass) { k.edu = 3; k.uniUntil = l.age - k.born + 4; k.tuition = l.base * 0.15; k.close = Math.min(100, k.close + 5); log('Con ' + d.n + ' thi đỗ đại học! Cả nhà mở tiệc nhỏ.', 'good'); fx(l, { hap: 6 }); H.mem(l, 'Ngày ' + d.n + ' đỗ đại học, bạn khoe với cả xóm.', 3); } else { k.edu = 4; if (pc >= 0.75) log('Dù học lực tốt, đúng năm thi ' + d.n + ' bị ốm và căng thẳng nên điểm thấp hơn kỳ vọng.', 'neutral'); log('Con ' + d.n + ' thi trượt đại học, quyết định đi học nghề.', 'bad'); } } },
       { k: 'abroad', l: 'Cho con đi du học', h: function (l) { return mb(l, 0.8) + '/năm · cần dư dả'; }, req: function (l) { return l.money > l.base * 3; }, ai: { cost: 3, amb: 1, w: 0.6 }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; k.uniUntil = l.age - k.born + 4; k.tuition = l.base * 0.8; k.abroadStudy = true; k.boost = 1.3; log('Tiễn con ' + d.n + ' ra sân bay đi du học. Căn nhà bỗng rộng thênh thang.', 'big'); H.mem(l, 'Ở sân bay, ' + d.n + ' ngoái lại vẫy tay rồi khuất sau cửa an ninh.', 5); } },
       { k: 'voc', l: 'Khuyên con học nghề cho chắc', ai: { w: 0.8 }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; k.edu = 4; log('Con ' + d.n + ' đi học nghề, hai năm sau có tay nghề vững.', 'neutral'); } },
       { k: 'work', l: 'Bảo con đi làm sớm phụ giúp gia đình', ai: { w: 0.4 }, run: function (l, r, log, d) { var k = kidByName(l, d.n); if (!k) return; k.edu = 3; k.close -= 10; log('Con ' + d.n + ' gác lại giấc mơ giảng đường, đi làm phụ giúp nhà.', 'bad'); cashB(l, 0.05, 'Con phụ giúp'); } },

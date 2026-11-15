@@ -300,6 +300,9 @@
     { k: 'resort', n: 'resort nghỉ dưỡng ven biển', cap: 150000, rev: 11000, vc: 0.3, mg: 0.14, sd: 0.16, cost: 'nhân sự, bảo dưỡng biệt thự, bãi biển, khấu hao', tour: 1 }
   ];
   BIZ.forEach(function (b) { b.mu = b.mg * b.rev * 12 / b.cap; }); // tỉ suất lãi trên vốn khi làm ăn bình thường (để tương thích)
+  // rủi ro đóng cửa hằng năm ngoài thua lỗ (hz), ngành thực phẩm chịu giá nguyên liệu (food)
+  var BIZ_EXTRA = { store: { hz: 0.025 }, cafe: { hz: 0.05, food: 1 }, rest: { hz: 0.055, food: 1 }, spa: { hz: 0.045 }, gym: { hz: 0.045 }, hotel: { hz: 0.02, renew: 0.025 }, hotel4: { hz: 0.015, renew: 0.025 }, resort: { hz: 0.015, renew: 0.025 } };
+  BIZ.forEach(function (b) { var x = BIZ_EXTRA[b.k]; if (x) for (var p in x) b[p] = x[p]; });
   function bizV(l, x) { return vnd(l) ? x : x / 90 * l.base; } // ra tiền đang dùng: VN là triệu đồng, nước khác quy theo mức sống
   function bizOf(k) { return BIZ.filter(function (b) { return b.k === k; })[0] || BIZ[0]; }
   function venFix(l, v) { // đời chơi từ bản cũ: suy ra doanh thu theo vốn
@@ -389,7 +392,10 @@
       var B = venFix(l, v);
       var econ = l.mkt && l.mkt.stock === 'sập' ? 0.85 : l.mkt && l.mkt.stock === 'tăng mạnh' ? 1.05 : 1;
       // lượng khách năm nay: tay nghề quản lý × kinh tế × dao động; năm đầu còn ít người biết, năm thứ hai mới đông dần
-      var dem = v.q * econ * Math.exp(U.normal(r) * B.sd) * (v.yrs === 1 ? 0.6 : v.yrs === 2 ? 0.88 : 1) * (v.br > 1 ? 1.03 : 1);
+      var ramp = B.ramp || [0.76, 0.93]; // đường cong khách quen: năm đầu chưa đông, năm hai gần đủ (trước đây 0,6 và 0,88 làm năm đầu lỗ 25–35% vốn ở hầu hết ngành)
+      var dem = v.q * econ * Math.exp(U.normal(r) * B.sd) * (v.yrs === 1 ? ramp[0] : v.yrs === 2 ? ramp[1] : 1) * (v.br > 1 ? 1.03 : 1);
+      var ownerBusy = B.labor === 'full' && !!l.job && !v.hired944; // việc cần chủ đứng quầy cả ngày mà bạn còn đi làm: chỉ mở được một phần thời gian
+      if (ownerBusy) dem *= 0.62;
       if (B.tour && ch(r, 0.03)) { dem *= 0.35; log('Du lịch đóng băng (dịch bệnh, khủng hoảng kinh tế) — ' + v.n + ' vắng khách, phòng trống hàng tháng liền.', 'bad'); }
       // Competition persists across years; multiple branches require paid management.
       v.market = U.clamp((v.market == null ? 1 : v.market) * .8 + .2 + U.normal(r) * .10, .55, 1.2);
@@ -397,9 +403,10 @@
       if (ch(r, .08)) { dem *= .65; log('Khách giảm vì đối thủ mới hoặc nhu cầu chững lại: ' + v.n + '.', 'neutral'); }
       var R = v.R * v.br, rev = R * dem;
       var overhead = R * Math.min(.12, Math.max(0, v.br - 1) * .02);
-      var renewal = v.cap * .025;
-      var manager = a >= 65 || l.job ? rev * .03 : 0;
-      var cost = rev * B.vc + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
+      var renewal = v.cap * (B.renew || .03);
+      var manager = a >= 65 || l.job ? rev * (ownerBusy ? .1 : .03) : 0;
+      var shock = 1; if (B.food && ch(r, .12)) { shock = 1 + .06 + r() * .08; log('Giá nguyên liệu và gas tăng, ' + v.n + ' hụt thêm phần lãi nếu chưa kịp điều chỉnh giá bán.', 'neutral'); }
+      var cost = rev * B.vc * shock + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
       var operatingProfit = rev - cost;
       if (rev > cost) cost += (rev - cost) * (1 - E.difficulty(l).passive);
       if (E.economy114Business && rev > cost) cost += rev - cost - E.economy114Business(l, rev - cost, v.cap);
@@ -410,6 +417,9 @@
       // tay nghề quản lý khá lên theo năm (hoặc mất khách dần nếu bỏ bê)
       v.q = U.clamp(1 + (v.q - 1) * 0.92 + U.normal(r) * 0.05 + (v.yrs <= 3 ? 0.02 : 0), 0.45, 1.45);
       log(U.cap(v.n) + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : '') + ': doanh thu ~' + mo(l, rev / 12) + '/tháng, chi phí ' + B.cost + ', quản lý và tái đầu tư ~' + mo(l, cost / 12) + '/tháng → ' + (prof >= 0 ? 'lãi ' + mo(l, prof) + ' cả năm.' : 'lỗ ' + mo(l, -prof) + ' cả năm.'), prof >= 0 ? 'good' : 'bad');
+      // rủi ro đóng cửa ngoài thua lỗ: bị đòi mặt bằng, chủ kiệt sức, giấy phép, tranh chấp; cao hơn khi đang thua lỗ
+      var hz = (B.hz == null ? 0.03 : B.hz) * (v.bad > 0 ? 1.8 : 1) * (v.yrs <= 2 ? 1.3 : 1) * (v.dropHz944 ? 0.5 : 1);
+      if (v.yrs >= 1 && hz > 0 && ch(r, hz)) { closeVen(l, i, log, 0.35, 'Buộc đóng cửa do ' + pick(r, ['chủ nhà đòi lại mặt bằng', 'chủ quán kiệt sức và bệnh', 'bị đình chỉ vì giấy phép', 'đối tác tranh chấp và rút vốn']) + ':'); fx(l, { hap: -8 }); continue; }
       if (v.bad >= 3 || (v.bad >= 2 && l.money < 0)) {
         if (v.br > 1 && v.bad < 4) { v.br--; v.cap -= v.unit; v.bad = 1; log('Thua lỗ kéo dài, phải đóng bớt một chi nhánh ' + v.n + ', còn ' + v.br + ' cơ sở.', 'bad'); fx(l, { hap: -6 }); }
         else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); if (l.mind) l.mind.stress = Math.min(100, l.mind.stress + 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }

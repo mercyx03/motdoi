@@ -1,11 +1,31 @@
 {
-  "generatedAt": "2026-11-15T09:49:45.106Z",
+  "generatedAt": "2026-11-15T11:53:08.424Z",
   "entries": [
+    {
+      "id": "startup-econ-94500",
+      "version": "9.4.5",
+      "publishedAt": "2026-11-15T18:53:08+07:00",
+      "releaseStatus": "packaged",
+      "title": "Khởi nghiệp theo vốn, kinh doanh sát thực tế hơn, con học giỏi dễ đỗ đại học",
+      "summary": "Thêm mục Khởi nghiệp theo vốn, sửa tình trạng công ty nhỏ năm nào cũng lỗ và khả năng con đỗ đại học.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục mới \"Khởi nghiệp theo vốn\" (nhóm Tiền bạc): vốn nhỏ thì bán bánh mì, cá viên chiên, trà sữa, quần áo, bán hàng online; vốn vừa thì tiệm tạp hóa, giặt ủi, nail, quán cơm, tiệm bánh; vốn lớn thì nhượng quyền, xưởng, trang trại, thành lập công ty hoặc góp vốn startup.",
+        "Mỗi mô hình có bản phân tích hòa vốn và quỹ dự phòng. Bạn chọn cách huy động vốn (tiền tự có, vay người thân, vay ngân hàng hoặc chuẩn bị thêm), rồi đánh giá cuối năm thứ nhất và thứ hai, đối mặt các việc kinh doanh như kiểm tra vệ sinh, giải tỏa vỉa hè, đối thủ mở cạnh bên, hàng tồn.",
+        "Kinh doanh sát thực tế hơn: năm đầu thường lỗ nhẹ rồi khá dần, một phần cơ sở phải đóng cửa. Công ty nhỏ không còn phải trả lương ban điều hành như tập đoàn nên không còn lỗ gần hết vốn mỗi năm.",
+        "Con học giỏi, được học thêm hoặc học trường quốc tế nay có khả năng đỗ đại học cao hơn rõ; trường quốc tế và lớp có người hướng dẫn giúp giữ học lực qua các năm."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-balance-94400",
       "version": "9.4.4",
       "publishedAt": "2026-11-15T16:49:44+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Điểm thi sát thực tế hơn, đổi nghề linh hoạt hơn, tuổi thơ và đời sống bớt lặp",
       "summary": "Điểm thi tốt nghiệp quanh mức thực tế, thêm chuyển ngang giữa các nghề gần nhau, lời kể bớt lặp và ít bị hỏi dồn.",
       "tags": [
@@ -18,13 +38,14 @@
         "Lời kể dịp lễ, chuyến ngoại khóa, chuyện chỗ ở và nhiều thông báo hằng năm đa dạng hơn, bớt lặp lại nguyên văn.",
         "Một số cảnh lặp mỗi năm (chuyện đời sống nơi ở, gia hạn cư trú, hỏi nhập quốc tịch, dịp lễ) nay thưa hơn để bạn bớt bị hỏi dồn; chuyện công sở, hàng xóm, mạng xã hội và họp lớp xảy ra thường hơn một chút."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.638Z"
     },
     {
       "id": "era-rwanda-94300",
       "version": "9.4.3",
       "publishedAt": "2026-11-15T13:30:13+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Thêm Rwanda 1990–1997 và sửa lỗi hiển thị lượt hẹn yêu xa",
       "summary": "Nhân vật ở Rwanda trong những năm 1990 chịu chiến sự và biến cố năm 1994; lựa chọn hẹn dịp khác khi yêu xa nay có dòng giải thích.",
       "tags": [
@@ -36,13 +57,14 @@
         "Trò chơi không gán rủi ro cho nhóm nào; mức rủi ro là tỉ lệ trung bình chung của cả nước.",
         "Khi yêu xa, lựa chọn \"Chưa khớp lịch, hẹn dịp khác\" nay có dòng giải thích đi kèm. Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.469Z"
     },
     {
       "id": "era-quality-94200",
       "version": "9.4.2",
       "publishedAt": "2026-11-15T09:26:38+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Rút gọn tiêu đề cập nhật cũ và rà soát độ tin cậy",
       "summary": "Mười bốn tiêu đề cập nhật quá dài đã được rút gọn; không đổi nội dung tính năng.",
       "tags": [
@@ -53,13 +75,14 @@
         "Rà soát thêm độ tin cậy của phần bối cảnh lịch sử: đối chiếu thêm một công trình nghiên cứu về Campuchia thập niên 1970 và từng nước Xô viết, Nam Tư cũ.",
         "Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.287Z"
     },
     {
       "id": "era-conflicts-94100",
       "version": "9.4.1",
       "publishedAt": "2026-11-15T07:41:13+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Thêm xung đột Libya, Yemen, Nam Sudan, Mali, Tigray và bối cảnh Baltic chính xác hơn",
       "summary": "Thêm các cuộc xung đột gần đây vào mô phỏng và sửa cách ghi bối cảnh ba nước Baltic.",
       "tags": [
@@ -71,13 +94,14 @@
         "Estonia, Latvia và Litva: đời sinh trước 1990 được ghi là sống trong một nước bị Liên Xô sáp nhập năm 1940; năm 1990 là năm tuyên bố khôi phục độc lập nhưng chưa được công nhận.",
         "Hiệu chỉnh tử vong được đo lại trên khoảng một nghìn đời ở 22 nước: sai lệch tuổi thọ trung bình dưới một năm. Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.118Z"
     },
     {
       "id": "era-events-94000",
       "version": "9.4.0",
       "publishedAt": "2026-11-15T07:19:05+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Nội chiến, độc tài, Chernobyl, Tōhoku, hôn nhân cùng giới theo năm",
       "summary": "Đời sinh năm cũ gặp thêm chiến tranh, độc tài và thảm họa; nhiều quy định và số liệu theo đúng năm hơn.",
       "tags": [
@@ -93,14 +117,14 @@
         "Quảng Trị, nơi sông Bến Hải chia đôi, nay thuộc phía Bắc hoặc phía Nam tùy nhân vật.",
         "Chưa làm: lương và giá cả theo năm, các chính sách còn lại, Rwanda và số liệu trước 1950."
       ],
-      "releasedAt": null,
-      "correctedAt": "2026-11-15T07:50:42+07:00"
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.944Z"
     },
     {
       "id": "era-calib-93200",
       "version": "9.3.2",
       "publishedAt": "2026-11-15T05:53:13+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Hiệu chỉnh rủi ro chiến tranh, vượt biên, lạm phát và COVID-19 theo mốc đã công bố",
       "summary": "Các tỷ lệ rủi ro của biến cố lịch sử được kéo về cùng bậc độ lớn với các ước tính công bố; một mốc MRI được sửa.",
       "tags": [
@@ -114,13 +138,14 @@
         "Ảnh MRI người đầu tiên là năm 1976 chứ không phải 1977. Hiệu chỉnh tử vong theo năm đo lại trên 400 đời ở 10 nước: sai lệch trung bình khoảng một năm tuổi thọ.",
         "Các tỷ lệ vẫn là tham số trò chơi, không phải thống kê. Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.774Z"
     },
     {
       "id": "era-verify-93100",
       "version": "9.3.1",
       "publishedAt": "2026-11-15T05:24:58+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Đối chiếu nguồn cho bối cảnh lịch sử và sửa các mốc sai",
       "summary": "Các mốc độc lập, chế độ, chiến tranh và biến cố đã được đối chiếu với bách khoa trực tuyến; vài chỗ sai đã được sửa.",
       "tags": [
@@ -133,13 +158,14 @@
         "Các con số như số người bị giam sau 1975, số người di cư năm 1954 hay số thuyền nhân khác nhau nhiều giữa các nguồn nên game không nêu số; tỷ lệ vượt biên thành công hay thất bại chỉ là tham số trò chơi.",
         "Bảng đối chiếu đầy đủ, kèm nơi nguồn còn khác nhau, nằm trong tài liệu của dự án. Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.599Z"
     },
     {
       "id": "era-events-93000",
       "version": "9.3.0",
       "publishedAt": "2026-11-15T00:58:53+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Biến cố lịch sử có hậu quả nhiều năm: Việt Nam, Khmer Đỏ, Đông Âu, COVID-19",
       "summary": "Đời sinh năm cũ gặp các biến cố lớn của đúng nước và thời điểm, có lựa chọn và hậu quả kéo dài nhiều năm.",
       "tags": [
@@ -155,13 +181,14 @@
         "Hơn 140 nước có dòng bối cảnh chính trị theo năm (thuộc địa đến năm độc lập, độc tài, nội chiến, đảo chính) hiện trong nhật ký khi tình trạng đổi.",
         "Các mốc và sự kiện là kiến thức công khai, chưa đối chiếu lại từng nguồn; xác suất và mức thiệt hại là tham số trò chơi, không phải số liệu thương vong. Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.439Z"
     },
     {
       "id": "era-data-92000",
       "version": "9.2.0",
       "publishedAt": "2026-11-15T00:40:00+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Đời sinh 1950–2023 dùng số liệu thật theo năm, tên nước và thành phố đúng thời",
       "summary": "Tuổi thọ, sinh đẻ, trẻ em tử vong, đô thị hóa, điện thoại và internet nay theo đúng nước và đúng năm.",
       "tags": [
@@ -176,13 +203,14 @@
         "Năm sinh 1900–1949 vẫn chọn được nhưng thuộc nhóm thử nghiệm: trước 1950 chưa có số liệu dân số theo từng nước và từng năm nên game không bịa số liệu, chỉ tránh công nghệ chưa có.",
         "Chưa làm: lương và giá cả theo năm, chính sách từng nước (hưu trí, bảo hiểm y tế, giáo dục bắt buộc). Đời sinh năm nay không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.268Z"
     },
     {
       "id": "era-year-select-91000",
       "version": "9.1.0",
       "publishedAt": "2026-11-14T21:28:00+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Chọn năm sinh từ 1900, chặn công nghệ và sự kiện chưa tồn tại (thử nghiệm)",
       "summary": "Thêm ô chọn năm sinh; đời sinh năm cũ không còn gặp YouTube, smartphone, internet hay Covid trước khi chúng xuất hiện.",
       "tags": [
@@ -194,13 +222,14 @@
         "Đời sinh năm cũ tránh những thứ chưa tồn tại vào thời đó: tivi, điện thoại di động, internet, mạng xã hội, YouTube, smartphone, TikTok, livestream, game online, tiền mã hóa, AI, Covid, một số kỹ thuật y học và nghề mới. Tin nhắn thời chưa có tin nhắn được kể bằng thư hoặc cuộc gọi.",
         "Đây là giai đoạn 1: tuổi thọ, kinh tế, tên nước và thành phố, mức phổ biến công nghệ theo từng nước và các sự kiện lịch sử riêng từng nước vẫn là của hiện nay, sẽ được bổ sung dần. Đời sinh năm nay không thay đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.080Z"
     },
     {
       "id": "logic-sweep-90002",
       "version": "9.0.2",
       "publishedAt": "2026-11-14T20:50:34+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Rà logic hàng loạt: sửa kẹt Sixth Form ở Anh, nghỉ hưu lặp lại và trẻ di cư",
       "summary": "Quét hàng nghìn đời mô phỏng ở 20 nước để tìm trạng thái kẹt hoặc mâu thuẫn, rồi sửa các lỗi tìm được.",
       "tags": [
@@ -215,7 +244,8 @@
         "Nhân vật tự động có mong muốn đông con theo tỷ suất sinh của nước vẫn được hỏi chuyện sinh thêm sau hai con; kế hoạch con do bạn đặt vẫn được tôn trọng.",
         "Sửa dấu cách thừa trong dòng hóa trị."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:02.920Z"
     },
     {
       "id": "looks-study-fund-90001",

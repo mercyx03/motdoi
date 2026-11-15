@@ -1,3 +1,11 @@
+## 9.4.5 — Khởi nghiệp theo vốn, hiệu chỉnh kinh tế kinh doanh, khả năng con đỗ đại học
+
+- `startup944.js` (mới): 14 mô hình khởi nghiệp theo ba tầng vốn, huy động vốn, đánh giá cuối năm, sự kiện kinh doanh, góp vốn startup; mở rộng `E.wealth.BIZ`, `l.ventures`, `H.addLoan`. `tests/startup944.js` (392 kiểm tra), tài liệu `docs/KHOI-NGHIEP-945.md`.
+- `life133.js`: lương ban điều hành theo quy mô công ty (trước đây công ty nhỏ có giám đốc lỗ 35–60% vốn mỗi năm).
+- `wealth.js`: khách năm đầu 76% và năm hai 93% (trước 60% và 88%), rủi ro đóng cửa hằng năm, giá nguyên liệu, chủ vừa đi làm chỉ bán một phần thời gian; thêm thuê người đứng quầy.
+- `expansion.js`, `life141.js`: khả năng con đỗ đại học tính cả học thêm, trường tư/quốc tế, lớp hướng dẫn (trước 0,05 + học lực/140, học lực 100 vẫn trượt gần một phần tư); trường quốc tế và lớp hướng dẫn giúp giữ học lực qua các năm. `tests/child-uni944.js` (68 kiểm tra).
+- Nhật ký cập nhật: các mục từ 9.0.2 đến 9.4.4 đã ghi phát hành.
+
 ## 9.4.4 — Cân bằng tám mục hồi quy còn lỗi
 
 - Điểm thi THPT (`royal847.js`): kiến thức trên 80 nén còn 30% ở kỳ thi tốt nghiệp/đại học; trung bình ~23 thay vì ~25,2 (thực tế 20,9).
