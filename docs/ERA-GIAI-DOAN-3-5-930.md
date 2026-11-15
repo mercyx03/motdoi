@@ -64,3 +64,8 @@ Module: `public/js/hist920.js` (biến cố), `public/js/era920-pol.js` (bối c
 ## Bổ sung 9.4.1
 - `w_civil_wars` thêm Libya (2011; 2014–2020), Yemen (2014–), Nam Sudan (2013–), Cộng hòa Trung Phi (2012–), Mali (2012–), Myanmar (2021–), Ethiopia Tigray (2020–2022); mỗi nước có thể có nhiều giai đoạn. Đã đối chiếu Wikipedia (10 trên 11 khẳng định khớp tự động; Estonia 20/8/1991 lệch do tên bài); tìm kiếm web không xác nhận thêm được.
 - Bối cảnh Baltic: 1950–1989 "bị sáp nhập năm 1940, nhiều nước không công nhận"; 1990 "tuyên bố khôi phục độc lập nhưng Liên Xô chưa công nhận"; 1991 "Liên Xô tan rã; độc lập được công nhận từ tháng 8–9/1991". Trước đây ghi chung "thuộc Liên Xô đến 1990".
+
+## Bổ sung 9.4.3: Rwanda 1990–1997
+- `hist920.js` có biến cố `rw_1994`: 1990–1993 chiến sự khiến một phần gia đình phải tạm lánh (12%); 1994 tử vong theo tỉ lệ trung bình toàn dân 9% (tham số, đối chiếu mức ước tính hàng trăm nghìn đến khoảng một triệu người trên khoảng 7 triệu dân), người sống sót chọn tìm chỗ ẩn náu trong nước hoặc vượt biên (CD 55, TZ 25, BI 12, UG 8; tham số) với tổn thương và mất nơi ở được ghi nhớ nhiều năm; 1995 trở đi có hậu quả sống dang dở.
+- Trò chơi không mô phỏng nhóm bản sắc của nhân vật nên rủi ro không gán cho nhóm nào và không bịa danh tính ngẫu nhiên; chỉ dòng bối cảnh chính trị (`era920-pol.js`) nêu đúng lịch sử. Đối chiếu Wikipedia (tải 15/11/2026): khoảng 100 ngày, kết thúc giữa tháng 7/1994, gần hai triệu người rời nước, chiến tranh bắt đầu tháng 10/1990. Số tử vong theo từng nhóm không dùng trong mô phỏng.
+- Chưa kiểm: số tử vong trên toàn dân (9%) là tham số mô hình, chưa đối chiếu nguồn gốc từng nghiên cứu nhân khẩu học.

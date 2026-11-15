@@ -1,3 +1,10 @@
+## 9.4.3 — Rwanda 1990–1997, rà từng mục hồi quy còn lỗi
+
+- `hist920.js`: biến cố `rw_1994` (chiến sự 1990–1993, 1994 rủi ro tử vong theo tỉ lệ toàn dân và lựa chọn ở lại hoặc vượt biên, hậu quả từ 1995); không phân nhóm bản sắc. `tests/hist920.js` thêm mục 14 (176 kiểm tra).
+- `romance912.js`: lựa chọn `remoteWait` của hẹn hò yêu xa thiếu dòng giải thích (làm mục 9 của hồi quy báo văn bản không sạch).
+- `tests/regression.js`: cập nhật điều kiện lỗi thời so với các hệ thống nhiều giai đoạn đã có (nhập quốc tịch, nhận nuôi, kế hoạch điều trị ung thư, hoàng gia, bạn đời có nghề riêng, bóng đá tự do), mẫu số độ phủ tình huống, thu nhập tuổi 36 đo bằng `fin.inc`, điều kiện truy cứu tội phạm qua hồ sơ điều tra, tên mục CHANGELOG. Chi tiết: `docs/HOI-QUY-942.md`.
+- Không đổi: giá và lương theo năm (vẫn cần thiết kế lại đơn vị tiền), dữ liệu trước 1950.
+
 ## 9.4.2 — Sửa 4 test hỏng sẵn, rút gọn tiêu đề cập nhật, rà soát độ tin cậy
 
 - Sửa test (không đổi game): `royal847` (England: chấp nhận trường tự đăng ký thi GCSE từ 9.0.2), `context-weighting` (việc làm trực tuyến phụ thuộc xác suất tiếp cận internet theo năm; thử nhiều mã đời; probe có lựa chọn thật), `continuity101` (học bổng Úc chịu thuế của module thuế Úc), `community` (14 tiêu đề cập nhật quá 85 ký tự đã rút gọn, dùng `correctedAt`).

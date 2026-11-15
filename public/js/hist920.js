@@ -253,6 +253,29 @@
         s.khEnd = 1; H.fx(l, { hap: 6, soc: 3 }); open(l, 'hardship', 2); log('Tháng 1/1979 chế độ Khmer Đỏ sụp đổ ở Phnôm Pênh; mọi người tìm đường về quê cũ giữa nạn đói và hoang tàn.', 'good'); H.mem(l, 'Đầu năm 1979, chế độ cũ sụp đổ và cả nhà đi tìm lại những người còn sống.', 5);
       }
     } });
+  // Rwanda 1990–1997. Trò chơi không mô phỏng nhóm bản sắc của nhân vật, nên rủi ro chỉ là tỉ lệ trung bình trên toàn dân (tham số), không gán cho một nhóm nào.
+  var RW_FLEE = [['CD', 55], ['TZ', 25], ['BI', 12], ['UG', 8]];
+  add({ id: 'rw_1994', title: 'Chiến tranh và diệt chủng ở Rwanda', from: 1990, to: 1997, ver: 'secondary',
+    who: function (l) { return res(l) === 'RW' ? 1 : 0; },
+    ask: function (l) { return 'Từ đầu tháng 4/1994 bạo lực lan khắp Rwanda; hàng trăm nghìn người đã bị giết và gần hai triệu người sẽ phải rời nước. Bạn có thể tìm nơi ẩn náu ngay trong nước hoặc vượt biên sang nước láng giềng.'; },
+    ai: function (l, k) { return k === 'a' ? 1 : 0.4 * (kidsHome(l) ? 1.3 : 1); },
+    choose: function (l, k, r, log) {
+      open(l, 'trauma', 3);
+      if (k === 'b' && resettle(l, r, log, RW_FLEE)) { open(l, 'displaced', 3); H.mem(l, 'Mùa hè 1994, bạn rời Rwanda giữa cảnh hỗn loạn, bỏ lại nhà cửa.', 5); return; }
+      open(l, 'hardship', 2); H.fx(l, { hap: -10, hea: -6 }); log('Bạn ở lại, nhiều ngày phải trốn tránh và mất liên lạc với người thân.', 'bad'); H.mem(l, 'Mùa hè năm 1994, những tuần lễ tưởng không bao giờ kết thúc.', 5);
+    },
+    run: function (l, y, r, log, c) {
+      var s = st(l);
+      if (y <= 1993) { if (!s.rwWar && u(l, 'rw:war') < 0.12) { s.rwWar = 1; open(l, 'displaced', 1); log('Từ tháng 10/1990 chiến sự giữa chính phủ và lực lượng nổi dậy từ phía bắc khiến gia đình bạn phải tạm lánh khỏi nơi ở.', 'bad'); } return; }
+      if (y === 1994 && !s.rwGen) {
+        s.rwGen = 1;
+        if (u(l, 'rw:death') < 0.09) { H.kill(l, 'bạo lực trong vụ diệt chủng ở Rwanda năm 1994', log, false); return; }
+        log('Ngày 6–7/4/1994, sau vụ máy bay chở tổng thống bị bắn rơi, bạo lực bùng lên ở Rwanda và kéo dài khoảng 100 ngày.', 'big');
+        ask(l, r, 'rw_1994', { a: { l: 'Tìm chỗ ẩn náu trong nước', h: 'Ở lại gần nhà, rủi ro rất cao' }, b: { l: 'Vượt biên sang nước láng giềng', h: 'Bỏ lại nhà cửa, trở thành người tị nạn' } });
+        return;
+      }
+      if (y >= 1995 && !s.rwAfter) { s.rwAfter = 1; open(l, 'hardship', 2); H.fx(l, { hap: -3 }); log('Sau những biến cố năm 1994, đất nước chật vật xây dựng lại; nhiều gia đình mất người thân và nhà cửa.', 'bad'); }
+    } });
   // ======================= TOÀN CẦU =======================
   var OECD = /^(US|CA|GB|DE|FR|IT|JP|AU|NZ|ES|SE|NO|DK|NL|BE|AT|CH|FI|IE)$/;
   add({ id: 'w_oil_recession', title: 'Cú sốc dầu mỏ và suy thoái 1974–1975, 1980–1982', from: 1974, to: 1982, ver: 'secondary',

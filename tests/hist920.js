@@ -202,4 +202,29 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   const hashes = e => [['vn', 'VN'], ['world', 'US'], ['world', 'NG']].map(([mode, cc], i) => { const l = e.createLife({ mode, country: cc, seed: 4700 + i, year: 2026 }); e.runHeadless(l); const s = Object.assign({}, l); delete s.v; return crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex'); });
   const a = hashes(gameContext({ skip: ['js/hist920.js'] }).E), b = hashes(gameContext().E); ok(a.every((h, i) => h === b[i]), 'đời sinh 2026 giống hệt khi có và không có hist920');
 }
+// 14. Rwanda 1990–1997: rủi ro theo tỉ lệ toàn dân, không phân nhóm bản sắc; lựa chọn ở lại hoặc vượt biên; hậu quả sau đó
+{
+  ok(HI.BY.rw_1994 && HI.BY.rw_1994.from === 1990 && HI.BY.rw_1994.to === 1997, 'có biến cố Rwanda 1990–1997');
+  ok(!HI.BY.rw_1994.who(life('US', 1985, 9)) && !HI.BY.rw_1994.who(life('BI', 1985, 9)) && HI.BY.rw_1994.who(life('RW', 1985, 9)), 'chỉ áp dụng cho người đang sống ở Rwanda');
+  const rw = (i, y, a) => life('RW', y, a, { seed: 1300 + i });
+  let dead = 0, N = 600; for (let i = 0; i < N; i++) { const l = rw(i, 1985, 9); l.id = 'rw' + i; step(l); if (!l.alive) { dead++; ok(/Rwanda/.test(l.death.cause) && l.death.age === 9, 'ghi đúng nguyên nhân và tuổi khi qua đời'); } }
+  ok(dead / N > 0.05 && dead / N < 0.14, 'tử vong năm 1994 theo tham số khoảng 9% (' + (dead / N * 100).toFixed(1) + '%)');
+  let early = 0; for (let i = 0; i < 300; i++) { const l = rw(i, 1980, 9); l.id = 'rwe' + i; step(l); if (!l.alive) early++; } // năm 1989: chưa có biến cố
+  ok(early === 0, 'trước 1990 không có biến cố (' + early + ')');
+  const a = find(i => rw(i, 1985, 9), l => step(l), l => l.alive && l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'rw_1994', 400);
+  ok(!!a, 'người sống sót được hỏi ở lại hay vượt biên');
+  if (a) {
+    const o = a.pending[0].data; ok(/gần hai triệu|hàng trăm nghìn/.test(o.text), 'lời dẫn nêu quy mô bằng số liệu ước lượng');
+    const b = find(i => rw(i, 1985, 9), l => step(l), l => l.alive && l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'rw_1994', 400);
+    resolve(b, 'b');
+    ok(HI.st(b).refugee && ['CD', 'TZ', 'BI', 'UG'].includes(HI.st(b).refugee.to) && b.abroad && b.abroad.code === HI.st(b).refugee.to, 'vượt biên: thành người tị nạn ở nước láng giềng');
+    ok(HI.st(b).open.some(x => x.k === 'trauma' && x.lvl >= 3) && HI.st(b).open.some(x => x.k === 'displaced'), 'tổn thương và mất nơi ở được ghi nhớ nhiều năm');
+    const c = find(i => rw(i, 1985, 9), l => step(l), l => l.alive && l.pending[0] && l.pending[0].data && l.pending[0].data.id === 'rw_1994', 400); const h0 = c.st.hap; resolve(c, 'a');
+    ok(c.st.hap < h0 && !HI.st(c).refugee && HI.st(c).open.some(x => x.k === 'hardship'), 'ở lại: hạnh phúc giảm, còn hậu quả đời sống dang dở');
+  }
+  // năm 1995: một lần ghi nhận hậu quả
+  const z = find(i => rw(i, 1985, 10), l => { HI.st(l).rwGen = 1; step(l); }, l => HI.st(l).rwAfter === 1, 100); ok(!!z, 'năm 1995 ghi nhận hậu quả một lần');
+  // đời sinh sau 1994 không dính biến cố tử vong
+  let late = 0; for (let i = 0; i < 200; i++) { const l = rw(i, 1995, 1); l.id = 'rwl' + i; step(l); if (!l.alive) late++; } ok(late === 0, 'người sinh năm 1995 không chịu rủi ro tử vong của năm 1994 (' + late + ')');
+}
 console.log('PASS hist920: ' + n + ' checks');

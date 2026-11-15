@@ -1,6 +1,24 @@
 {
-  "generatedAt": "2026-11-15T02:26:38.671Z",
+  "generatedAt": "2026-11-15T06:30:13.519Z",
   "entries": [
+    {
+      "id": "era-rwanda-94300",
+      "version": "9.4.3",
+      "publishedAt": "2026-11-15T13:30:13+07:00",
+      "releaseStatus": "packaged",
+      "title": "Thêm Rwanda 1990–1997 và sửa lỗi hiển thị lượt hẹn yêu xa",
+      "summary": "Nhân vật ở Rwanda trong những năm 1990 chịu chiến sự và biến cố năm 1994; lựa chọn hẹn dịp khác khi yêu xa nay có dòng giải thích.",
+      "tags": [
+        "Thời đại",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Nhân vật sống ở Rwanda từ năm 1990 đến 1997 có thể phải tạm lánh vì chiến sự, đối mặt rủi ro rất cao trong năm 1994 và chọn ở lại hay vượt biên sang nước láng giềng; tổn thương và mất nơi ở được ghi nhớ nhiều năm.",
+        "Trò chơi không gán rủi ro cho nhóm nào; mức rủi ro là tỉ lệ trung bình chung của cả nước.",
+        "Khi yêu xa, lựa chọn \"Chưa khớp lịch, hẹn dịp khác\" nay có dòng giải thích đi kèm. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-quality-94200",
       "version": "9.4.2",

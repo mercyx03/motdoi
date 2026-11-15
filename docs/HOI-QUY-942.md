@@ -17,3 +17,6 @@ Mục 20 (bệnh ung thư gan tái phát sau 6–40 năm bị bộ kiểm đếm
 
 ## Chưa làm
 Các lỗi có sẵn ở trên chưa sửa vì cần quyết định về cách chơi (ngưỡng, mẫu số, cách bắt giữ), không nằm trong phạm vi bối cảnh lịch sử.
+
+## Cập nhật 9.4.3 (sau khi xem từng mục lỗi)
+Sau khi cập nhật điều kiện lỗi thời và sửa lỗi hiển thị lượt hẹn yêu xa, các mục 0, 6, 10, 13, 18, 20, 25, 30, 34, 35, 45, 48, 61, 66, 67, 74 và tình huống hen_ho trong mục 9 đã chạy lại và đạt. Còn lỗi, cần quyết định về cân bằng hoặc nội dung: mục 16 (207 lựa chọn mỗi đời, ngưỡng dưới 200), 19 (điểm thi THPT trung bình 25,5 và 46% đạt từ 27 điểm trong mẫu chơi tự động, cao hơn thực tế), 21 (rẽ hướng nghề nghiệp 2–6 trên 400 đời, ngưỡng trên 8; phần lớn nghề chưa có hướng chuyển), 22 và 32 (tuổi thơ lặp 3,4% và trung bình 9,5 chuyện mỗi đời, ngưỡng 3% và 14), 24 (13 dòng nhật ký lặp trong cùng năm, chủ yếu dịp lễ, chưa tìm ra nguyên nhân), 38 (14,5% dòng nhật ký lặp khi sống nước khác, ngưỡng 7%), 69 (drama ngẫu nhiên 1,04 lần mỗi đời, ngưỡng trên 1,5). Các mục này cũng lỗi giống hệt trên bản gốc 9.0.2.
