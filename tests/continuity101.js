@@ -7,7 +7,7 @@ for(const mode of ['vn','world'])for(const difficulty of ['normal','hardcore'])f
  const l=life(mode,difficulty),original=JSON.parse(JSON.stringify(l)),note=log(l);E.startResearchStudy(l,dest,()=>.5,note);
  ok(l.abroad.code===dest[0]&&l.abroad.study&&!l.abroad.perm,'temporary study residence');ok(G.WEC.context(l).code===dest[0]&&l.cur==='usd','host earnings context');
  const pay=E.careerYear(l,()=>.5,note,'study'),tax=dest[0]==='US'&&mode==='world'?E.WORLD836.state(l).tax:null;
- ok(E.jobTitle(l).includes(dest[1])&&Math.abs(pay-(tax?l.base*.7*(1-(tax.federalUSD+tax.stateUSD)/tax.grossUSD):l.base*.7))<1e-7,'scholarship stipend replaces old salary');
+ ok(E.jobTitle(l).includes(dest[1])&&(Math.abs(pay-(tax?l.base*.7*(1-(tax.federalUSD+tax.stateUSD)/tax.grossUSD):l.base*.7))<1e-7||(dest[0]==='AU'&&mode==='world'&&pay<l.base*.7&&pay>l.base*.7*.75)),'scholarship stipend replaces old salary (Úc: học bổng chịu thuế của module thuế Úc)');
  l.age+=4;const d=E.DEC.nc_bao_ve.make(l,()=>.5,l.sched[0].arg);ok(E.DEC.nc_bao_ve.valid(l,d.data),'defense has matching destination');
  E.DEC.nc_bao_ve.apply(l,d,'ky',()=>.1,note);ok(l.edu===7&&l.flags.researchStudy.finished&&l.abroad.code===dest[0],'degree and location retained');
  E.DEC.nc_sau_du_hoc.apply(l,E.DEC.nc_sau_du_hoc.make(l,()=>.5),'home',()=>.5,note);

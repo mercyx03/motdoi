@@ -1,6 +1,23 @@
 {
-  "generatedAt": "2026-11-15T00:41:13.801Z",
+  "generatedAt": "2026-11-15T02:26:38.671Z",
   "entries": [
+    {
+      "id": "era-quality-94200",
+      "version": "9.4.2",
+      "publishedAt": "2026-11-15T09:26:38+07:00",
+      "releaseStatus": "packaged",
+      "title": "Rút gọn tiêu đề cập nhật cũ và rà soát độ tin cậy",
+      "summary": "Mười bốn tiêu đề cập nhật quá dài đã được rút gọn; không đổi nội dung tính năng.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Các tiêu đề dài của những lần cập nhật trước nay gọn hơn để dễ đọc trên trang cập nhật.",
+        "Rà soát thêm độ tin cậy của phần bối cảnh lịch sử: đối chiếu thêm một công trình nghiên cứu về Campuchia thập niên 1970 và từng nước Xô viết, Nam Tư cũ.",
+        "Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-conflicts-94100",
       "version": "9.4.1",
@@ -24,7 +41,7 @@
       "version": "9.4.0",
       "publishedAt": "2026-11-15T07:19:05+07:00",
       "releaseStatus": "packaged",
-      "title": "Thêm nội chiến, độc tài, Chernobyl, Tōhoku, hôn nhân cùng giới theo năm và tỷ suất sinh thực",
+      "title": "Nội chiến, độc tài, Chernobyl, Tōhoku, hôn nhân cùng giới theo năm",
       "summary": "Đời sinh năm cũ gặp thêm chiến tranh, độc tài và thảm họa; nhiều quy định và số liệu theo đúng năm hơn.",
       "tags": [
         "Thời đại",
@@ -39,7 +56,8 @@
         "Quảng Trị, nơi sông Bến Hải chia đôi, nay thuộc phía Bắc hoặc phía Nam tùy nhân vật.",
         "Chưa làm: lương và giá cả theo năm, các chính sách còn lại, Rwanda và số liệu trước 1950."
       ],
-      "releasedAt": null
+      "releasedAt": null,
+      "correctedAt": "2026-11-15T07:50:42+07:00"
     },
     {
       "id": "era-calib-93200",
@@ -251,7 +269,7 @@
       "version": "8.10.78",
       "publishedAt": "2026-11-13T15:41:00.000+07:00",
       "releaseStatus": "released",
-      "title": "Giữ nhà đang vay khi chuyển nước, chia nợ đồng hạng khi chủ nợ mất, điều kiện niêm yết Anh và Mỹ",
+      "title": "Giữ nhà đang vay khi chuyển nước, chia nợ khi chủ nợ mất, điều kiện niêm yết",
       "summary": "Nhà còn nợ thế chấp không còn bị bán gấp khi bạn đổi nước; di sản người vay chia đều theo tỷ lệ cho các chủ nợ; điều kiện IPO riêng cho Anh và Mỹ; thêm dòng giáo dục đối chiếu nguồn chính thức.",
       "tags": [
         "Tài chính",
@@ -265,7 +283,7 @@
         "Hồ sơ quốc gia: thêm 7 dòng giáo dục của Nhật, Đức, Úc và Singapore đối chiếu với bộ giáo dục hoặc cơ quan chính thức; nay 251/3705 mục có nguồn riêng."
       ],
       "releasedAt": "2026-11-13T09:15:00.000Z",
-      "correctedAt": "2026-11-13T16:15:00.000+07:00"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "country-verified-81077",
@@ -273,7 +291,7 @@
       "publishedAt": "2026-11-13T13:31:00.000+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-13T08:27:00.000Z",
-      "title": "Đối chiếu luật hôn nhân theo nước, nguyên nhân qua đời và điện lưới theo số liệu quốc tế, gỡ chữ \"mô phỏng\"",
+      "title": "Đối chiếu luật hôn nhân, nguyên nhân qua đời và điện lưới theo nước",
       "summary": "Tuổi kết hôn ở 8 nước đổi theo nơi sống và năm; nguyên nhân qua đời của nhân vật và người thân theo từng nước (WHO/World Bank); nhà có điện lưới hay chưa theo nước, năm và vùng; gỡ chữ \"mô phỏng\" trong giao diện; sửa số phiên bản hiển thị.",
       "tags": [
         "Pháp luật",
@@ -290,7 +308,7 @@
         "Gỡ chữ \"mô phỏng\" thừa trong các thông báo công vụ, bầu cử, hạn chế xuất cảnh, hoàng gia, Monaco, Tây Tạng và nhà ở xã hội; giữ lại ghi chú về kịch bản chính trị và giờ bay giả lập.",
         "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi số phiên bản cũ)."
       ],
-      "correctedAt": "2026-11-13T08:28:13.705Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "law-sport-81076",
@@ -298,7 +316,7 @@
       "publishedAt": "2026-11-13T11:11:29.000+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-13T08:27:00.000Z",
-      "title": "Nhiếp chính Tây Ban Nha 1876, ly hôn ở Scotland và Bắc Ireland, bốn liên đoàn bóng đá Anh",
+      "title": "Nhiếp chính Tây Ban Nha 1876, ly hôn ở Scotland, bốn liên đoàn bóng đá Anh",
       "summary": "Bổ sung các bước nhiếp chính, giám hộ và mất khả năng của Hiến pháp Tây Ban Nha 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; chọn đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland; thêm hồ sơ Y khoa Johns Hopkins và Luật Yale; ghi rõ mức xác minh của thông tin quốc gia.",
       "tags": [
         "Hoàng gia",
@@ -314,7 +332,7 @@
         "Thêm hồ sơ Y khoa (MD) tại Johns Hopkins và Luật (J.D.) tại Yale, có lệ phí hồ sơ và các bước tuyển sinh như các trường hiện có.",
         "Thông tin về giáo dục, hôn nhân và điều kiện làm việc ở từng quốc gia nay ghi rõ khi mục chỉ dựa trên nguồn tổng hợp quốc tế, chưa được đối chiếu riêng."
       ],
-      "correctedAt": "2026-11-13T08:28:13.497Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "family-life-81075",
@@ -846,7 +864,7 @@
       "version": "8.10.53",
       "publishedAt": "2026-11-06T14:30:00+07:00",
       "releaseStatus": "released",
-      "title": "Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Thi thử Đại học: Ước lượng điểm chuẩn, chẩn đoán năng lực phòng thi và cải thiện điểm thi thật",
+      "title": "Thi thử vào lớp 10 và thi thử đại học: ước điểm chuẩn, chẩn đoán năng lực",
       "summary": "Theo góp ý của người chơi, bổ sung tính năng Thi thử Cấp 2 vào Cấp 3 (Lớp 10) và Thi thử Đại học ngay trong mục Học tập, giúp ước lượng chính xác khoảng điểm thi thật, xác suất đỗ từng trường/nguyện vọng, giải thích vì sao chỉ số Kiến thức cao vẫn có thể thiếu điểm vào trường Top và tích lũy điểm cộng thực chiến cho kỳ thi chính thức.",
       "tags": [
         "Tính năng",
@@ -859,7 +877,7 @@
         "Hiển thị trực tiếp ước lượng điểm và tỷ lệ đỗ ngay trên các màn hình quyết định: khi bước vào kỳ thi lớp 10 (Chọn trường cấp ba), Chọn trường cấp 3 / chuyên, Chọn tổ hợp khối thi THPT, Luyện thi đại học và Đăng ký nguyện vọng Đại học – Cao đẳng, hệ thống tự động hiển thị khoảng điểm thi dự kiến (hoặc điểm thi thật đã có) cùng xác suất đỗ và chênh lệch điểm chuẩn của từng trường để người chơi chủ động điều chỉnh mục tiêu."
       ],
       "releasedAt": "2026-11-06T07:30:30.000Z",
-      "correctedAt": "2026-11-06T07:32:09.864Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "royal-line-heir-titles-81052",
@@ -867,7 +885,7 @@
       "publishedAt": "2026-11-06T13:34:00+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-06T06:34:00.000Z",
-      "title": "Thứ tự kế vị theo nhánh và tước hiệu xứ sở của Thái tử/Thái nữ cùng bạn đời tại các hoàng gia châu Âu",
+      "title": "Thứ tự kế vị và tước hiệu của Thái tử, Thái nữ cùng bạn đời ở hoàng gia châu Âu",
       "summary": "Làm rõ thứ tự kế vị theo nhánh của người kế vị (cháu đích tôn đứng ngay sau cha/mẹ và đẩy chú/dì xuống), và cập nhật tước hiệu xứ sở của Thái tử/Thái nữ cùng tước hiệu bạn đời theo từng quốc gia.",
       "tags": [
         "Tính năng",
@@ -879,7 +897,7 @@
         "Tước hiệu xứ sở của người kế vị số 1: Anh — Thân vương/Thân vương nữ xứ Wales kèm Công tước xứ Cornwall và Công tước xứ Rothesay (Scotland); Bỉ — Công tước/Nữ Công tước xứ Brabant; Tây Ban Nha — Thân vương/Thân vương nữ xứ Asturias; Thụy Điển — Công tước/Nữ Công tước của xứ do Quốc vương phong (như xứ Västergötland); Na Uy — Thái tử/Thái nữ Na Uy, không phong xứ; Đan Mạch — Thái tử/Thái nữ Đan Mạch kèm tước gia tộc Monpezat; Monaco — Hầu tước/Nữ Hầu tước xứ Baux; Luxembourg — Đại Công tước Kế vị, có thể kèm Thân vương xứ Bourbon-Parma; Liechtenstein — Thân vương/Thân vương nữ Kế vị.",
         "Tước hiệu bạn đời: vợ của Thái tử hưởng phiên bản nữ của tước xứ theo chồng (Vương phi xứ Wales, Nữ Công tước xứ Brabant, Vương phi xứ Asturias, Nữ Hầu tước xứ Baux, Đại Công tước Phi Kế vị, Thân vương Phi Kế vị...). Chồng của Thái nữ không được nắm tước xứ gốc của vợ: Bỉ phong Hoàng tử Bỉ, Tây Ban Nha phong Vương thân Tây Ban Nha, Luxembourg phong Hoàng tử xứ Luxembourg, Monaco phong Hoàng thân Monaco, Liechtenstein là Hoàng tử xứ Liechtenstein dạng phối ngẫu, Na Uy và Đan Mạch là Hoàng tử, Vương thân (như Hoàng thân Henrik luôn đi sau vợ một bước); riêng Thụy Điển cho chồng mượn danh Công tước cùng xứ ở thế hạ vị (như Hoàng tử Daniel, Công tước xứ Västergötland) nhưng không sở hữu xứ về pháp lý."
       ],
-      "correctedAt": "2026-11-06T06:34:01.180Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "uk-school-fix-euro-royals-81051",
@@ -887,7 +905,7 @@
       "publishedAt": "2026-11-06T07:54:00+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-06T00:55:00.000Z",
-      "title": "Chuẩn hóa chương trình học Vương quốc Anh & Quy tắc kế vị, tôn giáo, đặc quyền trắng Vatican và con ngoài giá thú tại 10 Hoàng gia Châu Âu",
+      "title": "Chuẩn hóa chương trình học Anh và quy tắc kế vị ở 10 hoàng gia châu Âu",
       "summary": "Khắc phục triệt để lỗi chương trình học và sự kiện học đường Việt Nam xuất hiện tại Vương quốc Anh và nước ngoài; mở rộng toàn diện 10 Hoàng gia Châu Âu về quyền kế vị (8 nước bình đẳng tuyệt đối vs. 2 nước ưu tiên nam giới Tây Ban Nha & Monaco), quyền phủ quyết dự luật Công giáo của Thân vương Monaco, Đặc quyền màu trắng Vatican, Luật Gia tộc Liechtenstein, quy định tôn giáo con cái và cơ chế hợp pháp hóa con ngoài giá thú sau sinh tại Monaco.",
       "tags": [
         "Sửa lỗi",
@@ -903,7 +921,7 @@
         "Mở rộng chiều sâu Hoàng gia Bỉ (BE) và Liechtenstein (LI): tại Bỉ, Hiến pháp thế tục tách biệt nhà thờ – nhà nước (luật kế vị chỉ xét dòng dõi hợp pháp từ Vua Albert II và chấp thuận hôn nhân của Vua/Quốc hội, không bắt buộc tôn giáo dù kết hôn khác đạo), song thực tế gia đình Vua Philippe, Hoàng hậu Mathilde và Thái nữ Elisabeth rất sùng đạo Công giáo và Hoàng hậu Mathilde (cùng Hoàng hậu Tây Ban Nha, Đại Công tước phu nhân Luxembourg, Thân vương phi Monaco) được Tòa thánh Vatican trao \"Đặc quyền màu trắng\" (Privilège du blanc — mặc trang phục trắng khi diện kiến Giáo hoàng); tại Liechtenstein, Công giáo là Quốc giáo, Luật Hôn nhân gia tộc (House Law) đòi hỏi môn đăng hộ đối và văn bản đồng ý của Thân vương trị vì để giữ quyền kế vị.",
         "Chuẩn hóa 2 nhóm quy định tôn giáo đối với con cái và luật về con ngoài giá thú tại 10 Hoàng gia Châu Âu: Nhóm bắt buộc 100% con cái phải rửa tội và nuôi dạy theo đạo Hoàng gia nếu không sẽ mất quyền kế vị (Anh Quốc theo Anh giáo Church of England; Thụy Điển, Na Uy, Đan Mạch theo Tin Lành Lutheran; Monaco, Liechtenstein theo Công giáo La Mã) đối lập với Nhóm tự do pháp lý / giao thoa gia đình (Hà Lan rửa tội Tin Lành Orange-Nassau nhưng Thái nữ Catharina-Amalia và các em vừa đi lễ Công giáo cùng mẹ là Hoàng hậu Máxima vừa dự lễ Tin Lành cùng cha là Vua Willem-Alexander; Bỉ, Tây Ban Nha, Luxembourg tự do trên giấy tờ nhưng tự nguyện nuôi dạy Công giáo). Đặc biệt, mô phỏng cơ chế \"Hợp pháp hóa sau sinh\" độc nhất tại Monaco (con sinh ngoài giá thú lập tức được đưa vào hàng kế vị ngay khi cha mẹ ruột kết hôn hợp pháp như các con của Công chúa Caroline) so với lệnh cấm vĩnh viễn ở 9 hoàng gia châu Âu còn lại."
       ],
-      "correctedAt": "2026-11-06T00:56:31.069Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "kr-baekil-es-royal-uk-ib-mbti-81050",
@@ -911,7 +929,7 @@
       "publishedAt": "2026-11-05T16:02:00+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-05T09:02:00.000Z",
-      "title": "Lễ Baek-il 100 ngày Hàn Quốc, kế vị nhiều thế hệ Tây Ban Nha, A-Level/IB Anh Quốc, đam mê – sở đoản và 16 nhóm MBTI",
+      "title": "Lễ Baek-il Hàn Quốc, kế vị Tây Ban Nha, A-Level/IB Anh, 16 nhóm MBTI",
       "summary": "Thêm Lễ Baek-il 100 ngày tại Hàn Quốc theo 3 phân khúc gia đình, quy tắc sắc phong kế vị nhiều thế hệ & Công giáo Tây Ban Nha, lộ trình A-Level vs. IB tại Anh theo nhóm ngành đại học, hệ thống đam mê – năng khiếu – sở đoản, 16 nhóm tính cách MBTI và phân biệt giờ sinh/tuổi con giáp Á Đông với phương Tây.",
       "tags": [
         "Tính năng",
@@ -926,7 +944,7 @@
         "Tại Vương quốc Anh (GB), bổ sung định hướng chuyên sâu giữa A-Level và IB Diploma ở bậc dự bị đại học (Sixth Form) theo 3 nhóm ngành đại học: Nhóm 1 bắt buộc hoặc ưu tiên tuyệt đối A-Level chuyên sâu 3–4 môn đạt A/A* (Y – Nha – Thú y cần Hóa + Sinh; Kỹ thuật chuyên sâu tại Russell Group như Imperial/Cambridge và Khoa học Máy tính cực kỳ ưu tiên Toán + Toán nâng cao Further Maths + Lý/Máy tính), Nhóm 2 cực kỳ chuộng IB Diploma nhờ bài Tiểu luận EE 4.000 từ và Lý thuyết nhận thức TOK (Luật LLB, khối ngành tinh hoa PPE tại Oxford/LSE, Quan hệ Quốc tế và Tâm lý học), và Nhóm 3 cân bằng tùy phong cách học lệch sâu hay học đều rộng (Kinh tế – Tài chính – Kinh doanh cần Maths HL nếu học IB; Kiến trúc – Thiết kế cân đối giữa thời gian làm Portfolio ở A-Level và Visual Arts HL + CAS/EE ở IB).",
         "Bổ sung hệ thống Đam mê (Passions), Năng khiếu / Sở trường sẵn có (Aptitudes) và Sở đoản (Weaknesses) đa lĩnh vực: nhân vật không tự động ghét một ngành không thuộc đam mê của mình trừ khi đó là sở đoản; làm đúng đam mê giúp hăng say và năng suất hơn, có năng khiếu sẵn có giúp học và làm việc trơn tru dù không nhất thiết đam mê, còn với sở đoản người chơi có quyền né tránh hoặc kiên trì rèn luyện để khắc phục; theo năm tháng sở thích có thể chuyển dịch tự nhiên ở mức vừa phải nhưng mọi kỹ năng đã luyện từ trước đều được giữ nguyên. Kết hợp 16 nhóm tính cách MBTI (INTJ..ESFP) ảnh hưởng vừa phải tới phong cách học tập, công việc và cách quan tâm gia đình mà vẫn giữ trọn quyền quyết định cho người chơi, đồng thời tách biệt văn hóa Giờ sinh Can Chi & 12 Con Giáp chỉ xuất hiện ở các nước Á Đông (VN, CN, JP, KR, KP...) còn các nước phương Tây chỉ dùng giờ đồng hồ 24h và cung Hoàng đạo phương Tây."
       ],
-      "correctedAt": "2026-11-05T09:04:18.186Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "india-religions-varna-vn-faith-81049",
@@ -957,7 +975,7 @@
       "publishedAt": "2026-11-05T14:57:00+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-05T07:57:23.000Z",
-      "title": "Đào tạo người kế vị Na Uy – Đan Mạch, nghi lễ không vương miện và hạn ngạch suất học Ấn Độ",
+      "title": "Đào tạo người kế vị Na Uy, Đan Mạch và hạn ngạch suất học Ấn Độ",
       "summary": "Thêm lộ trình trường công lập và nghi lễ của Hoàng gia Na Uy, Đan Mạch cùng hệ thống đẳng cấp, cải đạo và hạn ngạch đại học tại Ấn Độ.",
       "tags": [
         "Tính năng",
@@ -972,7 +990,7 @@
         "Nghi lễ Hoàng gia Đan Mạch (bỏ đăng quang tôn giáo từ năm 1849): bàn giao quyền lực tại Hội đồng Nhà nước, Thủ tướng bước ra ban công Cung điện Christiansborg tuyên bố ba lần trước thần dân, nhà vua mới mặc quân phục xuất hiện trên ban công mà không đội vương miện, sau đó diễu hành xe ngựa ấm áp theo văn hóa Hygge và dự lễ tạ ơn dân sự tại nhà thờ.",
         "Tại Ấn Độ, bổ sung chiều sâu về nguồn gốc đẳng cấp trong cổ thư Hindu, phong trào cải đạo sang Phật giáo Tân xe (Navayana năm 1956 của Tiến sĩ B.R. Ambedkar) và hệ thống hạn ngạch Hiến pháp SC (15%), ST (7.5%), OBC (27%) khi thi tuyển đại học danh tiếng (IIT, AIIMS ngành Y) và công chức: điểm chuẩn thấp hơn, miễn học phí, ký túc xá miễn phí và trợ cấp sinh hoạt cho SC/ST; mô phỏng nghịch lý pháp lý khi người Dalit cải đạo sang Kitô giáo hoặc Hồi giáo bị mất tư cách hạn ngạch SC dù định kiến xã hội chưa biến mất, cùng các cuộc tranh luận xã hội về chỉ tiêu đại học."
       ],
-      "correctedAt": "2026-11-05T08:06:28.768Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "royal-upbringing-births-81047",
@@ -1501,7 +1519,7 @@
       "version": "8.10.23-md4b",
       "releaseStatus": "released",
       "publishedAt": "2026-11-02T21:38:00.000+07:00",
-      "title": "Một Đời — Làm đẹp, diễn viên quốc tế, quan hệ thượng lưu và hoàn thiện đời sống đa quốc gia",
+      "title": "Làm đẹp, diễn viên quốc tế, quan hệ thượng lưu và đời sống đa quốc gia",
       "summary": "Gộp tẩy/nhuộm tóc vào mục Làm đẹp, thêm bấm khuyên và trang sức; diễn viên có giải thưởng, liên hoan phim, lời mời từ đạo diễn và danh tiếng quốc tế; hẹn hò tìm được người thu nhập cao; nhiều hệ du học, lao động, nhận nuôi, y tế, chăn nuôi được hoàn thiện.",
       "tags": [
         "Tính năng mới",
@@ -1525,7 +1543,7 @@
         "Chăn nuôi gia súc, gia cầm với dịch bệnh theo loài và khai báo thú y; quy tắc trong nhà bảo vệ người mang thai hoặc suy giảm miễn dịch khi nuôi thú cưng."
       ],
       "releasedAt": "2026-11-02T23:21:25.000Z",
-      "correctedAt": "2026-11-02T23:21:26.076Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "md4-multinational-822",
@@ -1584,7 +1602,7 @@
       "version": "8.10.20-c918",
       "releaseStatus": "released",
       "publishedAt": "2026-11-02T12:00:00.000+07:00",
-      "title": "Một Đời — Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu và chính sách theo thời đại",
+      "title": "Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu",
       "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được đối chiếu lại.",
       "tags": [
         "Tính năng",
@@ -1609,7 +1627,7 @@
         "Sửa: tên nước hiện mã (VN, KR) ở mục quốc tịch của con; văn bản nhiều dòng trong các tình huống bị dồn thành một đoạn; số thập phân dùng dấu phẩy."
       ],
       "releasedAt": "2026-11-02T06:04:00.000Z",
-      "correctedAt": "2026-11-02T06:04:33.742Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "state-drama-era-819",
@@ -1643,7 +1661,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-01T15:29:00.000Z",
       "publishedAt": "2026-11-01T20:45:00.000+07:00",
-      "title": "Một Đời — Lãnh đạo cấp cao không còn bị tụt chức vì “quy hoạch cán bộ nguồn”, chi phí điều trị thận và gan hợp lý hơn",
+      "title": "Lãnh đạo cấp cao không còn tụt chức vì quy hoạch cán bộ nguồn",
       "summary": "Đợt quy hoạch cán bộ nguồn nay chỉ dành cho cán bộ cấp dưới; người đã giữ chức từ cấp phó sở trở lên giữ nguyên chức vụ.",
       "tags": [
         "Sửa lỗi"
@@ -1654,7 +1672,7 @@
         "Nếu tình huống cũ còn nằm chờ trong bản lưu, chọn “Nhận nhiệm vụ mới” sẽ không chuyển chức mà chỉ báo bạn giữ nguyên vị trí.",
         "Bệnh thận và bệnh gan mạn: tiền theo dõi cơ bản không còn bị tính hai lần cùng chi phí chữa bệnh hằng năm; lọc máu, ghép tạng, thuốc kháng virus chỉ được trả khi còn tiền sinh hoạt dự phòng — nếu không đủ, việc điều trị bị gián đoạn thay vì đẩy bạn vào nợ."
       ],
-      "correctedAt": "2026-11-01T15:29:14.847Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "countries-crime-organ-integrity-817",
@@ -1662,7 +1680,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T16:00:00.000+07:00",
-      "title": "Một Đời — Đủ 195 quốc gia có câu chuyện riêng, biến động trong giới ngầm, trợ giúp pháp lý trong trại và bệnh thận, bệnh gan theo giai đoạn",
+      "title": "Đủ 195 quốc gia có câu chuyện riêng, giới ngầm, trợ giúp pháp lý, bệnh thận và gan",
       "summary": "Mọi quốc gia giờ đều có lộ trình học, lễ hội, chuyện cưới hỏi, món ăn, điều kiện làm việc và năm câu chuyện kéo dài nhiều năm của riêng nước đó; nhóm trong giới ngầm có người cầm đầu, có thể đổi người dẫn dắt hoặc tan rã; người đang thi hành án có thể đề nghị trợ giúp pháp lý; bệnh thận và bệnh gan mạn tiến triển theo giai đoạn với lọc máu, ghép tạng và thuốc kháng virus.",
       "tags": [
         "Tính năng",
@@ -1682,7 +1700,7 @@
         "Sửa lỗi: du học xong chọn ở lại tìm việc nay có nút “Tìm việc” trong thời hạn cư trú tìm việc (trước đây nút biến mất vì bị coi như lao động theo hợp đồng).",
         "Sửa lỗi: anh chị em được mang sang từ đời trước không còn bị ghi “đang đi học” khi đã ngoài 40 tuổi — họ có nghề thật của mình. Sửa lỗi một chỉ số trong chu cấp có thể thành giá trị không hợp lệ, và lỗi đôi khi vẫn ghi chuyện mất ngủ sau dòng qua đời."
       ],
-      "correctedAt": "2026-11-01T13:30:22.460Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "illness-cancer-development-upgrade-816",
@@ -1791,7 +1809,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T10:10:00.000+07:00",
-      "title": "Một Đời — Chọn khối thi chắc chắn, bán đúng tài sản muốn bán, hẹn hò có lượt và có quyền từ chối",
+      "title": "Chọn khối thi chắc chắn, bán đúng tài sản, hẹn hò có lượt và quyền từ chối",
       "summary": "Học sinh THPT luôn được tự chọn và đổi khối thi trước kỳ thi; bảng việc làm phản hồi nhanh hơn rõ rệt, hồ sơ chi tiết trên điện thoại không còn bị trong suốt; tài sản có bộ lọc, tìm kiếm và phân trang khi bán, tặng hay lập di chúc; tìm người yêu tới 10 lượt mỗi năm và người được gặp có thể từ chối; gói cố vấn thừa kế tính học phí đúng tỷ giá và cộng rõ ràng tối đa 50 điểm mỗi chuyên môn.",
       "tags": [
         "Sửa lỗi",
@@ -1812,7 +1830,7 @@
         "Gói cố vấn thừa kế 5 triệu USD tính học phí đúng tỷ giá (khoảng 127 tỷ đồng ở Việt Nam; trước đây bị tính sai lớn hơn rất nhiều). Mỗi chuyên môn trong 7 chuyên môn được cộng tổng cộng tối đa 50 điểm từ khóa (gói 1 triệu USD: 30 điểm): phần lớn trong 10 năm học, phần còn lại khi hoàn thành; không vượt 100 và không cộng vào mọi chỉ số khác.",
         "Khóa cố vấn đang học trong bản lưu cũ được tính tiếp phần đã nhận, không thu phí lại; khóa đã hoàn thành trước đây được bù một lần lên mức mới. Giá dịch vụ tính bằng USD trong đường tối cũng được quy đổi đúng tỷ giá."
       ],
-      "correctedAt": "2026-11-01T13:30:21.673Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "gameshow-crime-prison-upgrade-811",

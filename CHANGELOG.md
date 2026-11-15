@@ -1,3 +1,10 @@
+## 9.4.2 — Sửa 4 test hỏng sẵn, rút gọn tiêu đề cập nhật, rà soát độ tin cậy
+
+- Sửa test (không đổi game): `royal847` (England: chấp nhận trường tự đăng ký thi GCSE từ 9.0.2), `context-weighting` (việc làm trực tuyến phụ thuộc xác suất tiếp cận internet theo năm; thử nhiều mã đời; probe có lựa chọn thật), `continuity101` (học bổng Úc chịu thuế của module thuế Úc), `community` (14 tiêu đề cập nhật quá 85 ký tự đã rút gọn, dùng `correctedAt`).
+- `tests/regression.js` chạy đầy đủ lần đầu: chạy được các mục 1–8 trên 77 mục, không có kiểm tra nào thất bại; tiến trình bị dừng ở mục 9 (khuôn nhân vật đa dạng) nên 68 mục còn lại chưa chạy.
+- Chơi qua giao diện bản đóng gói ở chế độ Tự động (nam sinh 1948): chạy tới 1975, nhật ký có Genève, chiến sự, nhập ngũ; không lỗi console. Chưa bấm tay từng cảnh lựa chọn.
+- Đối chiếu bổ sung: chương của Heuveline (National Research Council) về Campuchia; từng nước Xô viết và Nam Tư cũ. Xem `docs/ERA-DOI-CHIEU-NGUON-940.md`.
+
 ## 9.4.1 — Thêm xung đột 2011–2023 và bối cảnh Baltic
 
 - `hist920.js`: `CIVIL` hỗ trợ nhiều giai đoạn mỗi nước (`civWin`); thêm LY, YE, SS, CF, ML, MM, ET (Tigray). `era920-pol.js`: các dòng bối cảnh tương ứng; Baltic tách khỏi nhóm Xô viết chung (1940, 1990, 1991).

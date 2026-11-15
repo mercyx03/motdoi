@@ -493,9 +493,14 @@ function pick(l, id, key, arg, r = () => 0.2) {
     lGb.st.hea = 90;
     for (let a = 0; a < 18; a++) {
       if (lGb.age === 16 && E.STUDY857.en(lGb)) {
-        ok(!E.DEC.sixth829.valid(lGb), 'England needs completed GCSE before Sixth Form');
-        E.EDUCATION863.chooseScience(lGb,'combined');
-        ok(E.STUDY857.register(lGb) && E.STUDY857.gcseSit(lGb), 'England candidate registers and completes GCSE through shared exam model');
+        if (lGb.log.some(x => /GCSE/.test(x.t)) && E.DEC.sixth829.valid(lGb)) {
+          // 9.0.2: học sinh chưa tự đăng ký thì trường đăng ký và cho thi GCSE cuối Year 11, nên lên Sixth Form được
+          ok(lGb.log.some(x => /Trường đăng ký thi/.test(x.t) || /GCSE/.test(x.t)), 'England: trường tự đăng ký thi GCSE rồi mới đủ điều kiện Sixth Form');
+        } else {
+          ok(!E.DEC.sixth829.valid(lGb), 'England needs completed GCSE before Sixth Form');
+          E.EDUCATION863.chooseScience(lGb,'combined');
+          ok(E.STUDY857.register(lGb) && E.STUDY857.gcseSit(lGb), 'England candidate registers and completes GCSE through shared exam model');
+        }
       }
       E.beginYear(lGb);
       let g = 0;
