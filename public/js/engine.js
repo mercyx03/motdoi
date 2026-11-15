@@ -130,7 +130,7 @@
   }
   // v2.3: các module mở rộng đăng ký xử lý thêm vào vòng năm
   var HOOKS = { year: [], gradUpper: [] };
-  function runHooks(name, args) { HOOKS[name].forEach(function (fn) { fn.apply(null, args); }); }
+  function runHooks(name, args) { HOOKS[name].forEach(function (fn) { if (name === 'year' && args[0] && args[0].alive === false) return; /* một hook trước đã khiến nhân vật qua đời: các hook sau không ghi thêm gì (nhật ký kết thúc ở dòng "Qua đời") */ fn.apply(null, args); }); }
 
   // ================= TRỢ GIÚP CHO CÁC MODULE =================
   var H = {

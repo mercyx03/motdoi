@@ -4,6 +4,7 @@
 - `life133.js`: lương ban điều hành theo quy mô công ty (trước đây công ty nhỏ có giám đốc lỗ 35–60% vốn mỗi năm).
 - `wealth.js`: khách năm đầu 76% và năm hai 93% (trước 60% và 88%), rủi ro đóng cửa hằng năm, giá nguyên liệu, chủ vừa đi làm chỉ bán một phần thời gian; thêm thuê người đứng quầy.
 - `expansion.js`, `life141.js`: khả năng con đỗ đại học tính cả học thêm, trường tư/quốc tế, lớp hướng dẫn (trước 0,05 + học lực/140, học lực 100 vẫn trượt gần một phần tư); trường quốc tế và lớp hướng dẫn giúp giữ học lực qua các năm. `tests/child-uni944.js` (68 kiểm tra).
+- `engine.js`, `world836.js`: nếu một hook trong năm khiến nhân vật qua đời thì các hook sau không ghi thêm gì (trước đây hồi quy mục 5 thỉnh thoảng gặp một dòng nhật ký sau "Qua đời", ví dụ chuyện nhà có thêm em).
 - Nhật ký cập nhật: các mục từ 9.0.2 đến 9.4.4 đã ghi phát hành.
 
 ## 9.4.4 — Cân bằng tám mục hồi quy còn lỗi
