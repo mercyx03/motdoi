@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-15T23:46:39.836Z",
+  "generatedAt": "2026-11-16T04:57:32.449Z",
   "entries": [
+    {
+      "id": "era-regions-95200",
+      "version": "9.5.2",
+      "publishedAt": "2026-11-16T11:57:17+07:00",
+      "releaseStatus": "packaged",
+      "title": "Bối cảnh từng vùng cho mọi cuộc chiến, nạn đói và thiên tai lớn",
+      "summary": "Cùng một năm nhưng mỗi thành phố một cảnh ngộ; sơ tán thật sự chuyển bạn tới nơi yên hơn.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mọi cuộc chiến, nạn đói và thiên tai lớn (mức 2–3) trong bảng bối cảnh nay có mức riêng theo thành phố hoặc tỉnh: Hà Nội, Hải Phòng và Nghệ An bị ném bom 1965–1968 còn vùng núi phía Bắc là nơi sơ tán; Tây Ninh, Rạch Giá và Long Xuyên chịu chiến tranh biên giới 1977–1978; Lạng Sơn, Hà Giang 1979–1988; Tôkyô 1923, Kobe 1995, Sendai 2011, Thiên Tân 1976, Yên Bái 2024, Beirut 2020, Marrakesh 2023… mỗi nơi một mức khác nhau.",
+        "Sửa những cửa sổ quá dài: Việt Nam 1955–1964 không còn bị coi là chiến tranh toàn quốc (miền Bắc hòa bình, miền Nam bất ổn dần), Baltic và Kavkaz thời Thế chiến II là hậu phương chứ không phải chiến trường, Đông Bengal 1947–48, Algeria, Chile, Argentina… theo từng giai đoạn của chính nó.",
+        "Thêm các biến cố 1955–2025 còn thiếu: nội chiến Sudan lần thứ nhất ở miền nam, chiến tranh biên giới Việt Nam 1977–1988, Israel–Hezbollah 2024, Israel–Iran 2025, Amhara 2023, bạo lực băng đảng Ecuador, động đất Managua, Guatemala, Chile 2010, Ecuador 2016, Mexico 2017, Herat 2023, lũ Pakistan 2022, động đất Myanmar 2025, lũ Valencia 2024.",
+        "Chọn sơ tán khi có chiến sự hoặc rời quê khi đói nay thật sự chuyển bạn tới một thành phố yên hơn (ưu tiên cùng vùng ở Việt Nam), bỏ lại việc làm và phải tìm việc mới. Quê cũ yên rồi thì có thể về, sau bảy năm thì bạn ổn định ở nơi mới.",
+        "Màn chọn năm sinh nay hiện bối cảnh của nước và năm đó, kèm lưu ý nơi sinh quyết định bạn gặp gì."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-depth-95100",
       "version": "9.5.1",

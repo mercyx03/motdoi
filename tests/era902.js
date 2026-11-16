@@ -62,7 +62,7 @@ const mk = y => ({ birthYear: y, age: 0 });
   ok(/id="yearSel"/.test(html) && /id="yearHint"/.test(html), 'có ô chọn năm sinh trong màn thiết lập');
   ok(/js\/era902\.js/.test(html) && html.indexOf('js/era902.js') > html.indexOf('js/fund890.js') && html.indexOf('js/era902.js') < html.indexOf('js/app.js'), 'era902.js nạp sau mọi module nội dung, trước app.js');
   ok(/year: S\.set\.year \|\| undefined/.test(app) && /S\.set\.year = \(\+S\.set\.year >= MIN_YEAR/.test(app), 'năm sinh được kiểm tra và truyền vào createLife');
-  ok(/function yearHintText/.test(app) && /chưa có số liệu dân số theo từng nước và từng năm/.test(app) && /chưa có chính sách từng nước và các biến cố còn lại/.test(app), 'ghi rõ giới hạn cho người chơi (giai đoạn 2 đã có số liệu từ 1950)');
+  ok(/function yearHintText/.test(app) && /chưa có số liệu dân số theo từng nước và từng năm/.test(app) && (/chưa có chính sách từng nước và các biến cố còn lại/.test(app) || /function ctxHintText/.test(app)), 'ghi rõ giới hạn cho người chơi (giai đoạn 2 đã có số liệu từ 1950)');
 }
 // 5. bản lưu cũ và vòng JSON
 { const l = E.createLife({ mode: 'world', country: 'JP', seed: 5700, year: 1960 }); const o = JSON.parse(JSON.stringify(l)); E.runHeadless(o); ok(!o.alive && isFinite(o.money), 'đời sinh 1960 qua vòng JSON vẫn chạy hết'); }

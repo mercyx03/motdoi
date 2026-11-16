@@ -85,12 +85,13 @@ const known = new Set(G.W.C.map(c => c.code)); const groups = new Set(Object.key
 }
 // 7. Việc của thời loạn / đói / dịch
 {
+  const CITY952 = { VN: 'Hà Nội', ET: 'Mekelle', IR: 'Ahvaz', NL: 'Amsterdam', JP: 'Tokyo', KH: 'Phnôm Pênh', SY: 'Aleppo' }; // 9.5.2: bối cảnh theo vùng, nên chọn nơi chịu biến cố
   const cases = [['VN', 1968, 'M', 17], ['ET', 1984, 'F', 8], ['IR', 1985, 'M', 30], ['NL', 1944, 'F', 25], ['DE', 1922, 'M', 35], ['JP', 1923, 'F', 12], ['PE', 2020, 'M', 40], ['KH', 1976, 'F', 19], ['SY', 2014, 'M', 22], ['ZW', 2008, 'F', 28]];
   const seen = new Set();
   cases.forEach(([cc, y, sex, age], i) => {
-    const l = life(cc, y - age, { seed: 80 + i, sex, age, mode: cc === 'VN' ? 'vn' : 'world' }); const c = C.of(l); const ks = C.kindsFor(l, c); ok(ks.length >= 1, cc + ' ' + y + ': có ít nhất một loại việc');
+    const l = life(cc, y - age, { seed: 80 + i, sex, age, mode: cc === 'VN' ? 'vn' : 'world' }); if (CITY952[cc]) { l.city = CITY952[cc]; l.place = l.city; } const c = C.of(l); const ks = C.kindsFor(l, c); ok(ks.length >= 1, cc + ' ' + y + ': có ít nhất một loại việc');
     ks.forEach(k => { seen.add(k); const ev = C.EV[k]; ok(ev.n && ev.t(l, c) && !/undefined|NaN/.test(ev.t(l, c)), 'văn bản sạch: ' + k); const opts = ev.o(l, c); ok(opts.length >= 2 && opts.every(o => o.k && o.l && o.h && typeof o.run === 'function' && !/undefined|NaN/.test(o.l + o.h)), k + ': ít nhất 2 lựa chọn sạch');
-      opts.forEach(o => { const x = life(cc, y - age, { seed: 90 + i, sex, age, mode: cc === 'VN' ? 'vn' : 'world' }); x.money = x.base * 3; const r = R(x), c2 = C.of(x); const o2 = C.EV[k].o(x, c2).find(z => z.k === o.k); o2.run(x, r, say(x)); ok(isFinite(x.money) && isFinite(x.st.hap) && isFinite(x.st.hea), 'chạy được: ' + k + '/' + o.k + ' (' + cc + ')'); }); });
+      opts.forEach(o => { const x = life(cc, y - age, { seed: 90 + i, sex, age, mode: cc === 'VN' ? 'vn' : 'world' }); if (CITY952[cc]) { x.city = CITY952[cc]; x.place = x.city; } x.money = x.base * 3; const r = R(x), c2 = C.of(x); const o2 = C.EV[k].o(x, c2).find(z => z.k === o.k); o2.run(x, r, say(x)); ok(isFinite(x.money) && isFinite(x.st.hap) && isFinite(x.st.hea), 'chạy được: ' + k + '/' + o.k + ' (' + cc + ')'); }); });
   });
   ok(seen.size >= 7, 'đã thử ' + seen.size + ' loại việc');
   // chọn theo hoàn cảnh: lính chỉ có ở nơi có chiến sự và với nam trong độ tuổi

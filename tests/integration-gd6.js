@@ -5,6 +5,8 @@ const { gameContext } = require('./hardcore-isolation');
 let checks = 0;
 const ok = (c, m) => { assert(c, m); checks++; };
 
+// 9.5.2: so sánh không phụ thuộc thứ tự khóa (khóa có giá trị undefined bị JSON bỏ khi lưu rồi được gán lại ở cuối đối tượng sau khi tải, ví dụ cap874.listed của business874)
+function canon(v) { return JSON.stringify(v, (k, x) => x && typeof x === 'object' && !Array.isArray(x) ? Object.keys(x).sort().reduce((o, key) => { o[key] = x[key]; return o; }, {}) : x); }
 function year(E, l) {
   E.beginYear(l, { auto: true });
   let g = 0; while (l.pending.length && l.alive && g++ < 64) E.resolve(l, E.autoKey(l));
@@ -53,7 +55,7 @@ function year(E, l) {
     if ((a.flags.chains144 && a.flags.chains144.done.length + a.flags.chains144.active.length) || (a.flags.pace145 && a.flags.pace145.h.length)) withState++;
     const reloaded = B.migrate(JSON.parse(JSON.stringify(b))); // như app.js khi bấm "Tiếp tục sống"
     for (let y = 0; y < 12 && a.alive; y++) { year(A, a); year(B, reloaded); }
-    ok(JSON.stringify(a) === JSON.stringify(reloaded), 'lưu / tải ở 38 tuổi rồi chơi tiếp 12 năm cho kết quả giống hệt (#' + i + ')');
+    ok(canon(a) === canon(reloaded), 'lưu / tải ở 38 tuổi rồi chơi tiếp 12 năm cho kết quả giống hệt (#' + i + ')');
   }
   ok(tried >= 5 && withState >= 3, 'đã kiểm ' + tried + ' đời, ' + withState + ' đời có dữ liệu GĐ4/GĐ5 lúc lưu');
 }

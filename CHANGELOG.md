@@ -1,3 +1,10 @@
+## 9.5.2 — Bối cảnh từng vùng cho mọi cuộc chiến, nạn đói và thiên tai lớn
+
+- `data-ctx952.js` (mới): 421 dòng vùng theo thành phố hoặc tỉnh. Trong 378 sự kiện mức 2–3 của chiến tranh, nạn đói và thiên tai, 327 có vùng riêng và 51 có lý do giữ đồng đều cả nước (`D.ZONE_NATIONAL`). Sửa các cửa sổ quốc gia quá dài (Việt Nam 1955–1964, hậu phương Kavkaz và Trung Á 1941–45, Đông Bengal 1947–48, Chile, Argentina) và thêm biến cố 1955–2025 còn thiếu (nội chiến Sudan lần thứ nhất, biên giới Việt Nam 1977–1988, Liban 2024, Iran 2025, Amhara, Ecuador, thiên tai 1972–2025).
+- `ctx945.js`: lựa chọn sơ tán và rời quê khi đói thật sự chuyển nhân vật tới thành phố yên hơn (`refuge`, `relocateTo`); quê cũ yên thì có thể về, sau bảy năm thì ổn định (`refugeReturn`). Không đổi định dạng lưu: chỉ thêm `flags.ctx945.refuge`, bản lưu cũ không có thì bỏ qua.
+- `app.js`: màn chọn năm sinh hiện bối cảnh của nước và năm đó.
+- Test: `tests/ctx952.js` (3.912 kiểm tra: dữ liệu, độ phủ, hơn 120 mốc lịch sử theo thành phố, cơ chế sơ tán); `tests/ctx945.js` chọn nơi sinh chịu biến cố; `tests/era902.js` nhận câu giới hạn mới ở màn chọn năm; `tests/integration-gd6.js` so sánh lưu/tải không phụ thuộc thứ tự khóa (khóa `undefined` của `cap874.listed` bị JSON bỏ rồi gán lại ở cuối).
+
 ## 9.5.1 — Thư mời học bổng, học đại học muộn ở nước ngoài, bối cảnh từng vùng, nợ sâu
 
 - `uni945.js` (mới): thư mời nhập học và học bổng cho học sinh có thành tích (trong nước và du học, chọn trường rồi ngành, giữ học bổng bằng học lực); học đại học muộn cho người sống ở nước khác theo quyền cư trú (công dân, thường trú, người tị nạn sau 2 năm), có bổ túc, năm dự bị, nộp hồ sơ vào nguyện vọng của nước sở tại. Mở rộng `E.DEC.uni`, `E.EDUCATION54`, `E.GLOBAL919`, chuỗi `abroad107`; `scenarios.js` ghi hồ sơ tị nạn khi bỏ chạy.

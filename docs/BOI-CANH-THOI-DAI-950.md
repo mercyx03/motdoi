@@ -100,3 +100,30 @@ Khi tiền âm sâu (dưới −1 lần thu nhập cơ sở): ăn ở thanh đ�
 - Vùng chỉ có ở những nơi nêu trong bảng; thành phố khác dùng mức quốc gia. Việt Nam dùng tên tỉnh, các nước khác dùng danh sách thành phố của dữ liệu thế giới.
 - Chưa mô hình bản sắc nhóm (ví dụ nhóm bị nhắm tới trong một chiến dịch cụ thể): chỉ có tỷ lệ dân cư vùng chịu ảnh hưởng.
 - Hai test trình duyệt cũ (`browser-foundation-updates`, `update827-browser`) cần trình duyệt điều khiển được nên không chạy ở môi trường này.
+
+---
+
+# Bản 9.5.2 — vùng cho mọi cuộc chiến, nạn đói, thiên tai lớn; sơ tán thật sự
+
+## Độ phủ
+Mọi sự kiện mức 2–3 của chiến tranh, nạn đói và thiên tai trong bảng quốc gia (378 sự kiện sau khi mở rộng nhóm nước) hoặc có dòng vùng riêng trong `data-ctx952.js` (327), hoặc nằm trong `ZONE_NATIONAL` kèm lý do vì sao cả nước chịu như nhau (51: ví dụ chiếm đóng và nội chiến Nam Tư 1941–45, nội chiến Liberia, chiếm đóng Singapore, các nước Baltic và Ukraine thời Thế chiến II, nạn đói Moldova 1946–47). `tests/ctx952.js` kiểm tra điều này nên sau này thêm sự kiện mới mà quên vùng sẽ bị báo lỗi.
+
+## Nguyên tắc dựng vùng
+- Chỉ dùng các thành phố có trong danh sách của từng nước (Việt Nam dùng tỉnh lỵ). Thành phố khác dùng mức quốc gia.
+- Dòng sau ghi đè dòng trước cùng năm: đặt mức nền cho cả nước (regex `.` với `'=0'`) rồi nâng nơi bị trực tiếp.
+- Theo địa lý, không theo nhóm người: không gán số phận theo sắc tộc, tôn giáo hay giàu nghèo.
+- Sửa cửa sổ quốc gia quá dài bằng dòng thời gian: Việt Nam 1955–1959 hòa bình mong manh, 1960–1964 miền Bắc dựng nước còn miền Nam bất ổn; Kavkaz và Trung Á 1941–45 là hậu phương; các nước Baltic 1921–22 đã hết chiến tranh giành độc lập.
+
+## Biến cố thêm mới
+Nội chiến Sudan lần thứ nhất (miền nam, nay là Nam Sudan); biên giới Tây Nam 1977–1978 và phía Bắc 1979–1988 của Việt Nam; Israel–Hezbollah 2024; Israel–Iran 2025; xung đột Amhara 2023–2025; bạo lực băng đảng Ecuador; Taliban và ISKP; thiên tai Managua 1972, Guatemala 1976, Chile 2010, Ecuador 2016, Mexico 2017, Beirut 2020, Haiti 2021, lũ Pakistan 2022, Herat 2023, lũ Maiduguri 2024, lũ Valencia 2024, động đất Myanmar 2025; di dời do nội chiến Sudan 2023 và Liban 2024.
+
+## Sơ tán thật sự (`ctx945.js`)
+Lựa chọn "Sơ tán về vùng yên hơn" (chiến sự) và "Rời quê đi tìm nơi có ăn" (nạn đói) trước đây chỉ trừ chỉ số. Nay `refuge(l)` chọn trong ba nơi yên nhất của nước đó (ưu tiên cùng vùng ở Việt Nam; yên hơn ít nhất hai bậc theo 3·chiến sự + 2·đói + thiên tai), cố định theo mã đời. Nhân vật chuyển tới đó và bỏ việc cũ. Quê cũ đã yên (độ khó từ 3 trở xuống, tương đương chiến sự mức 1) sau ít nhất một năm thì mỗi năm có khả năng về; sau bảy năm thì ổn định ở nơi mới. Người đã ở nước ngoài không dùng bảng vùng của quê.
+
+## Màn chọn năm sinh
+`app.js` hiện bối cảnh của nước và năm sinh đã chọn, kèm số dòng vùng của năm đó.
+
+## Giới hạn
+- Vùng chỉ có ở các thành phố trong danh sách; người ở nông thôn dùng thành phố gần nhất.
+- Mức vùng là ước lượng từ mô tả trên Wikipedia, không phải số liệu thống kê.
+- Dòng hiển thị trên màn chọn năm sinh chưa kiểm trong trình duyệt ở bản này.

@@ -122,15 +122,29 @@
     $('#provHint').textContent = h;
   }
 
+  // 9.5.2: bối cảnh theo nước và năm sinh (chiến sự, nạn đói, dịch, thuộc địa, hạn chế xuất cảnh) và các vùng khác mức chung
+  function ctxHintText(cc, y) {
+    var C = G.E && G.E.CTX945; if (!C || !C.at || y < 1900) return '';
+    var o = C.at(cc, y), lv = ['', 'một phần', 'rõ rệt', 'rất nặng'], p = [];
+    if (o.war) p.push((o.labels.war || 'chiến sự') + ' (' + lv[o.war] + ')');
+    if (o.fam) p.push((o.labels.fam || 'thiếu lương thực') + ' (' + lv[o.fam] + ')');
+    if (o.epi >= 2 && o.labels.epi) p.push(o.labels.epi + ' (' + lv[o.epi] + ')');
+    if (o.dis) p.push((o.labels.dis || 'thiên tai') + ' (' + lv[o.dis] + ')');
+    if (o.econ >= 2 && o.labels.econ) p.push(o.labels.econ);
+    if (o.colony) p.push('thuộc ' + o.colony);
+    if (o.restrict >= 2) p.push('hạn chế ra nước ngoài' + (o.restrict >= 3 ? ' gần như tuyệt đối' : ''));
+    var zones = ((C.ZONEX || {})[cc] || []).filter(function (z) { return y >= z.a && y <= z.b; }).length;
+    return ' Bối cảnh năm sinh: ' + (p.length ? p.join('; ') : 'không có biến cố lớn trong bảng bối cảnh') + '.' + (zones ? ' Một số thành phố hoặc tỉnh chịu mức khác mức chung của cả nước (' + zones + ' dòng vùng năm này); nơi sinh quyết định bạn gặp gì.' : '');
+  }
   // 9.2: mô tả những gì thay đổi theo năm sinh đã chọn (số liệu thật theo nước và năm từ 1950; trước 1950 chỉ chặn công nghệ sai thời)
   function yearHintText() {
     var y = S.set.year, X = G.E.ERA920, F = X && X.FROM || 1950, T = X && X.TO || 2023;
     if (!y) return 'Để mặc định là năm nay, hoặc chọn một năm từ ' + F + ' để sống một đời trong quá khứ với số liệu của năm đó (tuổi thọ, sinh đẻ, trẻ em tử vong, đô thị hóa, điện thoại và internet).';
-    if (y < F) return 'Thử nghiệm: trước năm ' + F + ' chưa có số liệu dân số theo từng nước và từng năm, nên game chỉ tránh công nghệ và sự kiện chưa tồn tại vào năm ' + y + '; tuổi thọ, sinh đẻ và kinh tế lấy mức ' + F + '.';
+    if (y < F) return 'Thử nghiệm: trước năm ' + F + ' chưa có số liệu dân số theo từng nước và từng năm, nên game chỉ tránh công nghệ và sự kiện chưa tồn tại vào năm ' + y + '; tuổi thọ, sinh đẻ và kinh tế lấy mức ' + F + '.' + ctxHintText(S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', y);
     var cc = S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', a = X && y <= T ? X.at(cc, y) : null, c = W.BY[cc], nm = c ? c.name : cc;
     if (!a) return 'Từ năm ' + (T + 1) + ' game dùng số liệu hiện nay của nước bạn sinh ra.';
     function d(v, n) { return Number(v).toFixed(n).replace('.', ','); }
-    return 'Năm ' + y + ', ' + nm + ': tuổi thọ lúc sinh khoảng ' + d(a.e0, 0) + ' năm, phụ nữ trung bình ' + d(a.tfr, 1) + ' con, khoảng ' + d(a.u5 / 10, 0) + '% trẻ chết trước 5 tuổi, ' + d(a.urban, 0) + '% dân ở đô thị, ' + (a.mobile < 0.5 && a.internet < 0.5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet') + ' (UN WPP 2024, UN IGME, UN WUP, Maddison, ITU qua Our World in Data). Số liệu cả nước. Đã có tên nước và thành phố theo năm cùng một số biến cố lớn (Việt Nam 1950–1989, hậu Xô-viết và Nam Tư thập niên 1990, khủng hoảng 1997 và 2008, sóng thần 2004, COVID-19); chưa có chính sách từng nước và các biến cố còn lại.' + (a.u5Observed ? '' : ' Tử vong trẻ em năm này là ước tính từ tuổi thọ.');
+    return 'Năm ' + y + ', ' + nm + ': tuổi thọ lúc sinh khoảng ' + d(a.e0, 0) + ' năm, phụ nữ trung bình ' + d(a.tfr, 1) + ' con, khoảng ' + d(a.u5 / 10, 0) + '% trẻ chết trước 5 tuổi, ' + d(a.urban, 0) + '% dân ở đô thị, ' + (a.mobile < 0.5 && a.internet < 0.5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet') + ' (UN WPP 2024, UN IGME, UN WUP, Maddison, ITU qua Our World in Data). Số liệu cả nước. Đã có tên nước và thành phố theo năm.' + ctxHintText(cc, y) + (a.u5Observed ? '' : ' Tử vong trẻ em năm này là ước tính từ tuổi thọ.');
   }
   function syncSetupUI() {
     var vn = S.set.mode === 'vn';
