@@ -142,7 +142,7 @@ const near = (a, b, t, m) => ok(Math.abs(a - b) <= t, m + ' (' + a + ' vs ' + b 
   const html = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'app.js'), 'utf8');
   ok(['js/data-era920.js', 'js/era920.js', 'js/era902.js', 'js/era920-pol.js'].every((s, i, a) => html.indexOf(s) > 0 && (i === 0 || html.indexOf(s) > html.indexOf(a[i - 1]) || s === 'js/era902.js')), 'ba module era920 nạp trong index.html');
   ok(html.indexOf('js/data-era920.js') < html.indexOf('js/era920.js') && html.indexOf('js/era920.js') < html.indexOf('js/era920-pol.js') && html.indexOf('js/era920-pol.js') < html.indexOf('js/app.js'), 'thứ tự nạp: dữ liệu, module, tên nước, app');
-  ok(/function yearHintText/.test(app) && /optgroup/.test(app) && /thử nghiệm: chưa có số liệu theo năm/.test(app), 'ô năm sinh có nhóm thử nghiệm trước 1950 và mô tả theo nước');
+  ok(/function yearHintText/.test(app) && /optgroup/.test(app) && /trước ' \+ FULL_FROM/.test(app) && !/thử nghiệm|ước tính từ tuổi thọ/.test(app), 'ô năm sinh có nhóm các năm trước 1950 và mô tả theo nước, không có chú thích thử nghiệm');
   const old = E.createLife({ mode: 'world', country: 'JP', seed: 71, year: 2026 }); const o = JSON.parse(JSON.stringify(old)); E.runHeadless(o); ok(!o.alive && isFinite(o.money) && !o.era920, 'bản lưu cũ (không cờ era920) chạy như trước');
   const e = E.createLife({ mode: 'world', country: 'JP', seed: 72, year: 1960 }); const t = JSON.parse(JSON.stringify(e)); E.runHeadless(t); ok(!t.alive && isFinite(t.money) && t.era920, 'đời có cờ era920 qua vòng JSON chạy hết');
 }

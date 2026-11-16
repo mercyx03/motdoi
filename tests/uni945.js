@@ -10,6 +10,11 @@ function yearOf(l) { E.beginYear(l, { auto: true }); let k = 0; while (l.pending
 function to(l, age) { while (l.alive && l.age < age) yearOf(l); return l; }
 // học sinh đang ở ngã rẽ 18 tuổi (decision 'uni' đang chờ), có thể gắn thành tích
 function atCrossroads(seed, tweak, Ex) {
+  // hạt giống chỉ là điểm xuất phát: lấy đời đầu tiên còn sống tới ngã rẽ đại học
+  for (let s = seed; s < seed + 60; s++) { const l = crossroads(s, tweak, Ex); if (l.alive && l.pending[0] && l.pending[0].id === 'uni' && (!tweak || l.pending[0].opts.some(o => o.k === 'offers945'))) return l; }
+  return crossroads(seed, tweak, Ex);
+}
+function crossroads(seed, tweak, Ex) {
   Ex = Ex || E; const l = Ex.createLife({ mode: 'vn', seed }); let g = 0;
   while (l.alive && l.age < 18 && g++ < 30) { Ex.beginYear(l, { auto: true }); let k = 0; while (l.pending.length && l.alive && k++ < 30) Ex.resolve(l, Ex.autoKey(l)); if (l.alive) Ex.finishYear(l); Ex.endYear(l); }
   Ex.beginYear(l, { auto: true }); if (tweak) tweak(l);

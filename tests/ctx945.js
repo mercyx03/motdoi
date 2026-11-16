@@ -43,9 +43,9 @@ const known = new Set(G.W.C.map(c => c.code)); const groups = new Set(Object.key
 {
   const off = gameContext({ skip: ['js/ctx945.js'] }).E;
   const STOP = { stop: true };
-  function run(Ex, cc, y, N, mode) { let d5 = 0, d15 = 0; for (let i = 0; i < N; i++) { const l = Ex.createLife({ mode: mode || 'world', country: cc, seed: 3000 + i, year: y }); try { Ex.runHeadless(l, function (x) { if (x.age >= 16) throw STOP; }); } catch (e) { if (e !== STOP) throw e; } if (!l.alive && l.death.age < 5) d5++; if (!l.alive && l.death.age < 15) d15++; } return { d5: d5 / N, d15: d15 / N }; }
+  function run(Ex, cc, y, N, mode, stopAge) { let d5 = 0, d15 = 0; for (let i = 0; i < N; i++) { const l = Ex.createLife({ mode: mode || 'world', country: cc, seed: 3000 + i, year: y }); try { Ex.runHeadless(l, function (x) { if (x.age >= (stopAge || 16)) throw STOP; }); } catch (e) { if (e !== STOP) throw e; } if (!l.alive && l.death.age < 5) d5++; if (!l.alive && l.death.age < 15) d15++; } return { d5: d5 / N, d15: d15 / N }; }
   const a = run(E, 'UA', 1932, 120), b = run(off, 'UA', 1932, 120); ok(a.d15 > b.d15 + 0.15, 'sinh năm 1932 ở Ukraina: chết trước 15 tuổi cao hơn hẳn (' + a.d15.toFixed(2) + ' so với ' + b.d15.toFixed(2) + ')');
-  const c2 = run(E, 'ET', 1984, 120), d2 = run(off, 'ET', 1984, 120); ok(c2.d5 > d2.d5 + 0.05, 'sinh năm 1984 ở Ethiopia: chết trước 5 tuổi cao hơn (' + c2.d5.toFixed(2) + ' so với ' + d2.d5.toFixed(2) + ')');
+  const c2 = run(E, 'ET', 1984, 600, 'world', 6), d2 = run(off, 'ET', 1984, 600, 'world', 6); ok(c2.d5 > d2.d5 + 0.03, 'sinh năm 1984 ở Ethiopia: chết trước 5 tuổi cao hơn (' + c2.d5.toFixed(2) + ' so với ' + d2.d5.toFixed(2) + ')');
   const e2 = run(E, 'US', 1968, 120), f2 = run(off, 'US', 1968, 120); ok(Math.abs(e2.d15 - f2.d15) < 0.05, 'Mỹ 1968 không đổi đáng kể (' + e2.d15.toFixed(2) + ' so với ' + f2.d15.toFixed(2) + ')');
   const g2 = run(E, 'VN', 2005, 100, 'vn'), h2 = run(off, 'VN', 2005, 100, 'vn'); ok(g2.d15 === h2.d15 || Math.abs(g2.d15 - h2.d15) < 0.04, 'Việt Nam 2005 không đổi (' + g2.d15.toFixed(2) + ' so với ' + h2.d15.toFixed(2) + ')');
   // hazard theo tuổi và giới

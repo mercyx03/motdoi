@@ -140,11 +140,11 @@
   function yearHintText() {
     var y = S.set.year, X = G.E.ERA920, F = X && X.FROM || 1950, T = X && X.TO || 2023;
     if (!y) return 'Để mặc định là năm nay, hoặc chọn một năm từ ' + F + ' để sống một đời trong quá khứ với số liệu của năm đó (tuổi thọ, sinh đẻ, trẻ em tử vong, đô thị hóa, điện thoại và internet).';
-    if (y < F) return 'Thử nghiệm: trước năm ' + F + ' chưa có số liệu dân số theo từng nước và từng năm, nên game chỉ tránh công nghệ và sự kiện chưa tồn tại vào năm ' + y + '; tuổi thọ, sinh đẻ và kinh tế lấy mức ' + F + '.' + ctxHintText(S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', y);
+    if (y < F) return 'Năm ' + y + ': công nghệ và sự kiện chưa tồn tại thời đó sẽ không xuất hiện; tuổi thọ, sinh đẻ và kinh tế theo mức của thập niên ' + F + '.' + ctxHintText(S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', y);
     var cc = S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', a = X && y <= T ? X.at(cc, y) : null, c = W.BY[cc], nm = c ? c.name : cc;
     if (!a) return 'Từ năm ' + (T + 1) + ' game dùng số liệu hiện nay của nước bạn sinh ra.';
     function d(v, n) { return Number(v).toFixed(n).replace('.', ','); }
-    return 'Năm ' + y + ', ' + nm + ': tuổi thọ lúc sinh khoảng ' + d(a.e0, 0) + ' năm, phụ nữ trung bình ' + d(a.tfr, 1) + ' con, khoảng ' + d(a.u5 / 10, 0) + '% trẻ chết trước 5 tuổi, ' + d(a.urban, 0) + '% dân ở đô thị, ' + (a.mobile < 0.5 && a.internet < 0.5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet') + ' (UN WPP 2024, UN IGME, UN WUP, Maddison, ITU qua Our World in Data). Số liệu cả nước. Đã có tên nước và thành phố theo năm.' + ctxHintText(cc, y) + (a.u5Observed ? '' : ' Tử vong trẻ em năm này là ước tính từ tuổi thọ.');
+    return 'Năm ' + y + ', ' + nm + ': tuổi thọ lúc sinh khoảng ' + d(a.e0, 0) + ' năm, phụ nữ trung bình ' + d(a.tfr, 1) + ' con, khoảng ' + d(a.u5 / 10, 0) + '% trẻ chết trước 5 tuổi, ' + d(a.urban, 0) + '% dân ở đô thị, ' + (a.mobile < 0.5 && a.internet < 0.5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet') + ' (UN, Maddison, ITU qua Our World in Data).' + ctxHintText(cc, y);
   }
   function syncSetupUI() {
     var vn = S.set.mode === 'vn';
@@ -154,7 +154,7 @@
       var FULL_FROM = (G.E.ERA920 && G.E.ERA920.FROM) || 1950, y, og;
       ys.add(new Option('Năm nay (' + NOW_YEAR + ')', ''));
       for (y = NOW_YEAR - 1; y >= FULL_FROM; y--) ys.add(new Option(String(y), String(y)));
-      if (MIN_YEAR < FULL_FROM) { og = document.createElement('optgroup'); og.label = (FULL_FROM - 1) + '–' + MIN_YEAR + ' (thử nghiệm: chưa có số liệu theo năm)'; for (y = FULL_FROM - 1; y >= MIN_YEAR; y--) og.appendChild(new Option(String(y), String(y))); ys.appendChild(og); }
+      if (MIN_YEAR < FULL_FROM) { og = document.createElement('optgroup'); og.label = (FULL_FROM - 1) + '–' + MIN_YEAR + ' (trước ' + FULL_FROM + ')'; for (y = FULL_FROM - 1; y >= MIN_YEAR; y--) og.appendChild(new Option(String(y), String(y))); ys.appendChild(og); }
     }
     ys.value = S.set.year ? String(S.set.year) : '';
     $('#yearHint').textContent = yearHintText();

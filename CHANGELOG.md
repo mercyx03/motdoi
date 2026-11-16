@@ -1,3 +1,12 @@
+## 9.5.3 — Tuổi thơ nhỏ đa dạng hơn, bớt cảnh lạc ở chợ phiên; hợp đồng cầu thủ dài tới 7 năm
+
+- `kid953.js` (mới, trên cơ chế sẵn có `E.SC`, `E.TRIG`, `E.CHAIN144`): hợp nhất hai tình huống `bi_lac` và `k6_lac_cho`. Mỗi đời chỉ gặp một lần, hiếm hơn nhiều (thời bình khoảng 1–3% số đời, trước đây khoảng 23%). Nơi bị lạc (chợ phiên, ngày hội, siêu thị, bến xe) đổi theo nước, năm, nông thôn hay thành thị và nghề của bố mẹ. Hậu quả đi tiếp qua chuỗi `lost953`: sợ chỗ đông người (giảm dịp hội hè, hòa nhạc đến tuổi 24) hoặc học thuộc địa chỉ nhà (dễ được tự đi xe buýt hơn).
+- Vùng chiến sự hoặc thiên tai nặng (`E.CTX945`) thay cảnh đi chợ bằng thất lạc khi chạy loạn (`k953_lac_so_tan`); chuỗi `sep953` kéo vài năm: tìm tin người thân, đoàn tụ hoặc chưa có tin.
+- Mười chuyện tuổi thơ mới: với tay lên bếp, bờ nước sau nhà, nuốt nhầm đồ, cơn sốt giữa đêm, nhà có thêm em bé (đổi `close` của em trong `sibList`), đêm hội, trò giả làm người lớn, chuyến đi xa đầu tiên, phụ giúp việc nhỏ, thất lạc khi chạy loạn. Kết quả phụ thuộc mức tiếp cận y tế (nơi ở, thời đại, chiến sự, dịch), số người trông và vật dụng có trong nhà theo năm. Co giật do sốt có thể tái phát vài năm rồi hết; suýt đuối nước làm sợ nước đến khi học bơi.
+- `football.js`: `contractYears` đặt độ dài hợp đồng theo tuổi, tiềm năng và vị thế (ngôi sao đang sung sức 5–7 năm); chi sinh hoạt vượt 60 lần thu nhập cơ sở mỗi năm chỉ còn một phần tư phần vượt (wrapper `E.finishYear`), phần dư vào tiền mặt và tài sản ròng, hồ sơ ghi rõ mức tăng. Test `tests/football-contract953.js` (23 kiểm tra); `football-career` chỉnh theo hợp đồng dài.
+- `app.js`: bỏ các chú thích “thử nghiệm” và “ước tính” ở màn chọn năm sinh.
+- Test: `tests/kid953.js` (828 kiểm tra). Sửa các test nhạy hạt giống: `ctx945` (mẫu Ethiopia lớn hơn), `uni945` (chọn đời đi tới ngã rẽ), `logic902` (trẻ mất khi còn đi học), `showbiz-idol`, `era902`, `era920`.
+
 ## 9.5.2 — Bối cảnh từng vùng cho mọi cuộc chiến, nạn đói và thiên tai lớn
 
 - `data-ctx952.js` (mới): 421 dòng vùng theo thành phố hoặc tỉnh. Trong 378 sự kiện mức 2–3 của chiến tranh, nạn đói và thiên tai, 327 có vùng riêng và 51 có lý do giữ đồng đều cả nước (`D.ZONE_NATIONAL`). Sửa các cửa sổ quốc gia quá dài (Việt Nam 1955–1964, hậu phương Kavkaz và Trung Á 1941–45, Đông Bengal 1947–48, Chile, Argentina) và thêm biến cố 1955–2025 còn thiếu (nội chiến Sudan lần thứ nhất, biên giới Việt Nam 1977–1988, Liban 2024, Iran 2025, Amhara, Ecuador, thiên tai 1972–2025).

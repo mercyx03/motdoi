@@ -83,7 +83,7 @@ function pro(country = 'VN', id = country + '-0') {
   ok(!s.national.called, 'injured player not called up');
   ok(l.money === cash, 'injury simulation cannot duplicate signing bonus');
   ok(E.careerYear(l, r, log) > 0 && s.earnings.signingUSD === 0, 'contract salary survives injury; signing paid once');
-  l.age = 29; F.annual(l, r, log);
+  l.age = s.contract.end - l.birthYear; F.annual(l, r, log); // hợp đồng dài 3–7 năm: hết hạn đúng năm kết thúc
   ok(s.stage === 'free' && !s.contract && F.income(l, r, log) === 0, 'expired contract stops income');
 }
 {

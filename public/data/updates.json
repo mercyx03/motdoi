@@ -1,11 +1,35 @@
 {
-  "generatedAt": "2026-11-16T04:57:32.449Z",
+  "generatedAt": "2026-11-16T12:40:18.361Z",
   "entries": [
+    {
+      "id": "kid-childhood-95300",
+      "version": "9.5.3",
+      "publishedAt": "2026-11-16T18:34:28+07:00",
+      "releaseStatus": "released",
+      "title": "Tuổi thơ nhỏ đa dạng hơn, hợp đồng cầu thủ dài tới 7 năm",
+      "summary": "Bớt cảnh lạc ở chợ phiên, thêm chuyện tuổi thơ theo nơi sinh và thời đại; cầu thủ ký hợp đồng 5–7 năm và lương lớn vào tài sản ròng.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng"
+      ],
+      "details": [
+        "Hai chuyện “Lạc mẹ giữa chợ phiên” và “Lạc mất mẹ” được gộp lại: mỗi đời chỉ gặp tối đa một lần và hiếm hơn rất nhiều (trước đây khoảng một phần tư số đời, nay chỉ còn vài phần trăm thời bình).",
+        "Nơi bạn bị lạc đổi theo nơi sinh và thời đại: chợ phiên, ngày hội, siêu thị (chỉ khi đã có), bến xe; nhà buôn bán ở chợ thì quen đường hơn.",
+        "Lạc xong còn hậu quả nhiều năm: có thể sợ chỗ đông người nên bỏ lỡ hội hè, hòa nhạc; hoặc học thuộc địa chỉ nhà nên được tự đi xe buýt sớm hơn. Đứng ở rìa xem pháo hoa có thể làm nỗi sợ nguôi dần.",
+        "Ở vùng có chiến sự hoặc thiên tai nặng, cảnh đi chợ được thay bằng cảnh thất lạc khi chạy loạn, kéo dài nhiều năm: tìm tin người thân, đoàn tụ hoặc chưa có tin.",
+        "Thêm mười chuyện tuổi thơ mới: với tay lên bếp, bờ nước sau nhà, nuốt nhầm đồ, cơn sốt giữa đêm, nhà có thêm em bé, đêm hội, trò giả làm người lớn, chuyến đi xa đầu tiên, phụ giúp việc nhỏ, thất lạc khi chạy loạn. Cơ sở y tế gần hay xa, số người trông trẻ và vật dụng trong nhà theo năm quyết định kết quả.",
+        "Bỏ các dòng chú thích “thử nghiệm” ở màn chọn năm sinh.",
+        "Bóng đá: hợp đồng chuyên nghiệp nay dài ngắn theo tuổi và vị thế. Dưới 18 tuổi 2–3 năm, 18–22 tuổi 3–5 năm, đang sung sức 3–5 năm, ngôi sao đang sung sức 5–7 năm, 30–32 tuổi 2–4 năm, trên 32 tuổi 1–2 năm.",
+        "Bóng đá: lương hợp đồng lớn không còn bị chi sinh hoạt ăn gần hết. Chi tiêu vượt ngưỡng mức sống chỉ còn một phần tư phần vượt, phần dư vào tiền mặt và tài sản ròng; hồ sơ bóng đá ghi rõ năm đó tài sản ròng tăng bao nhiêu."
+      ],
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.280Z"
+    },
     {
       "id": "era-regions-95200",
       "version": "9.5.2",
       "publishedAt": "2026-11-16T11:57:17+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Bối cảnh từng vùng cho mọi cuộc chiến, nạn đói và thiên tai lớn",
       "summary": "Cùng một năm nhưng mỗi thành phố một cảnh ngộ; sơ tán thật sự chuyển bạn tới nơi yên hơn.",
       "tags": [
@@ -15,18 +39,19 @@
       ],
       "details": [
         "Mọi cuộc chiến, nạn đói và thiên tai lớn (mức 2–3) trong bảng bối cảnh nay có mức riêng theo thành phố hoặc tỉnh: Hà Nội, Hải Phòng và Nghệ An bị ném bom 1965–1968 còn vùng núi phía Bắc là nơi sơ tán; Tây Ninh, Rạch Giá và Long Xuyên chịu chiến tranh biên giới 1977–1978; Lạng Sơn, Hà Giang 1979–1988; Tôkyô 1923, Kobe 1995, Sendai 2011, Thiên Tân 1976, Yên Bái 2024, Beirut 2020, Marrakesh 2023… mỗi nơi một mức khác nhau.",
-        "Sửa những cửa sổ quá dài: Việt Nam 1955–1964 không còn bị coi là chiến tranh toàn quốc (miền Bắc hòa bình, miền Nam bất ổn dần), Baltic và Kavkaz thời Thế chiến II là hậu phương chứ không phải chiến trường, Đông Bengal 1947–48, Algeria, Chile, Argentina… theo từng giai đoạn của chính nó.",
+        "Sửa những cửa sổ quá dài: Việt Nam 1955–1964 không còn bị coi là chiến tranh toàn quốc (miền Bắc hòa bình, miền Nam bất ổn dần), Kavkaz và Trung Á thời Thế chiến II là hậu phương chứ không phải chiến trường, Đông Bengal 1947–48 nhẹ hơn Punjab, Chile và Argentina đàn áp đỉnh điểm rồi dịu dần theo từng giai đoạn của chính nó.",
         "Thêm các biến cố 1955–2025 còn thiếu: nội chiến Sudan lần thứ nhất ở miền nam, chiến tranh biên giới Việt Nam 1977–1988, Israel–Hezbollah 2024, Israel–Iran 2025, Amhara 2023, bạo lực băng đảng Ecuador, động đất Managua, Guatemala, Chile 2010, Ecuador 2016, Mexico 2017, Herat 2023, lũ Pakistan 2022, động đất Myanmar 2025, lũ Valencia 2024.",
         "Chọn sơ tán khi có chiến sự hoặc rời quê khi đói nay thật sự chuyển bạn tới một thành phố yên hơn (ưu tiên cùng vùng ở Việt Nam), bỏ lại việc làm và phải tìm việc mới. Quê cũ yên rồi thì có thể về, sau bảy năm thì bạn ổn định ở nơi mới.",
         "Màn chọn năm sinh nay hiện bối cảnh của nước và năm đó, kèm lưu ý nơi sinh quyết định bạn gặp gì."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.429Z"
     },
     {
       "id": "era-depth-95100",
       "version": "9.5.1",
       "publishedAt": "2026-11-15T23:45:39Z",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Thư mời học bổng, học đại học muộn ở nước ngoài, bối cảnh từng vùng",
       "summary": "Học sinh nổi bật được chọn trường theo thư mời, người sống ở nước khác học đại học muộn được, mỗi vùng mỗi cảnh ngộ.",
       "tags": [
@@ -41,13 +66,14 @@
         "Thêm chuyện của những chính sách lớn: cải cách ruộng đất và tập thể hóa, chiến dịch chính trị, di dời và chia cắt đất nước. Cùng một chính sách, nhà ít của được chia thêm, nhà nhiều của mất nhiều hơn; bạn chọn nộp, giấu, tham gia hay bỏ đi, và mỗi lựa chọn để lại hệ quả về sau.",
         "Thời thuộc địa có thuế và phu dịch, kỳ thi vào trường thuộc địa, tuyển lính cho chính quốc, phong trào đòi độc lập. Lựa chọn của bạn được nhắc lại khi đất nước giành độc lập. Siêu lạm phát khiến tiền tiết kiệm mất giá: đổi vàng, đổi ngoại tệ hay giữ tiền mặt cho kết quả rất khác nhau."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.574Z"
     },
     {
       "id": "era-context-95000",
       "version": "9.5.0",
       "publishedAt": "2026-11-16T00:34:48+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Hoàn cảnh thời đại: chiến tranh, nạn đói, dịch bệnh theo từng nước và năm sinh",
       "summary": "Năm sinh và nước sinh nay quyết định hoàn cảnh: thời chiến, nạn đói, thuộc địa, đóng cửa biên giới, và sửa tôn giáo sai theo nước.",
       "tags": [
@@ -62,13 +88,14 @@
         "Thời loạn có việc riêng: tìm chỗ trú, xếp hàng khẩu phần, con ốm, bị gọi nhập ngũ, mất việc, dịch bệnh, dựng lại cuộc sống. Việc chưa xong tiếp diễn sang năm sau và để lại dấu ấn.",
         "Sửa dữ liệu sai: tôn giáo nay theo từng nước (trước đây một số nước như Rwanda ra \"Chính thống giáo Đông phương\"), giáo phái Kitô giáo theo vùng. Điểm thi trung bình sát thực tế hơn (khoảng 22 so với 20,9). Nền tử vong trước 1950 thực tế hơn. Đời sinh gần đây ở nước giàu hầu như không đổi."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.708Z"
     },
     {
       "id": "startup-econ-94500",
       "version": "9.4.5",
       "publishedAt": "2026-11-15T18:53:08+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Khởi nghiệp theo vốn, kinh doanh sát thực tế hơn, con học giỏi dễ đỗ đại học",
       "summary": "Thêm mục Khởi nghiệp theo vốn, sửa tình trạng công ty nhỏ năm nào cũng lỗ và khả năng con đỗ đại học.",
       "tags": [
@@ -82,7 +109,8 @@
         "Kinh doanh sát thực tế hơn: năm đầu thường lỗ nhẹ rồi khá dần, một phần cơ sở phải đóng cửa. Công ty nhỏ không còn phải trả lương ban điều hành như tập đoàn nên không còn lỗ gần hết vốn mỗi năm.",
         "Con học giỏi, được học thêm hoặc học trường quốc tế nay có khả năng đỗ đại học cao hơn rõ; trường quốc tế và lớp có người hướng dẫn giúp giữ học lực qua các năm."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.861Z"
     },
     {
       "id": "era-balance-94400",

@@ -105,13 +105,22 @@
     var role = ability > c.strength + 8 ? 1.8 : ability < c.strength - 8 ? .5 : 1;
     return Math.round(c.financeUSD * .18 * (.35 + ability / 100) * fame * age * role * (s.position === 'FW' ? 1.1 : 1));
   }
+  // 9.5.3: độ dài hợp đồng theo tuổi, tiềm năng và vị thế: trẻ 2–3 năm, 18–22 tuổi 3–5, đang sung sức 3–5 (ngôi sao 5–7), 30–32 tuổi 2–4, trên 32 tuổi 1–2
+  function contractYears(l, c, r) {
+    var s = peek(l), star = s.reputation >= 70 || rating(l) > c.strength + 8;
+    if (l.age < 18) return s.potential >= 75 ? 3 : 2;
+    if (l.age > 32) return l.age > 35 ? 1 : 1 + Math.floor(r() * 2);
+    if (l.age >= 30) return 2 + Math.floor(r() * (star ? 3 : 2));
+    if (l.age <= 22) return 3 + (s.potential >= 70 ? 1 : 0) + Math.floor(r() * 2);
+    return star ? 5 + Math.floor(r() * 3) : 3 + Math.floor(r() * 3);
+  }
   function negotiate(l, id, r, log) {
     var s=peek(l),c=club(id),y=year(l),why=negotiationWhy(l,c);if(why!==true){log(why,'neutral');return false;}
     (s.negotiations897||(s.negotiations897={}))[id]=y;s.negotiateAt=y;
     var renewal=s.contract&&s.contract.club===id;
     if(r()>negotiationChance(l,c)){log(c.name+' chưa gửi đề nghị sau đánh giá vị trí và ngân sách. Bạn có thể liên hệ CLB khác trong hạn mức năm nay.','neutral');return false;}
     s.offers=s.offers.filter(function(o){return o.id!=='pro:'+id+':'+y;});
-    s.offers.push({id:'pro:'+id+':'+y,club:id,kind:'pro',expires:y,annualUSD:wage(l,c),years:l.age<18?2:l.age>32?1:3,transferUSD:s.contract&&!renewal?Math.round(s.contract.annualUSD*Math.max(0,s.contract.end-y)):0});
+    s.offers.push({id:'pro:'+id+':'+y,club:id,kind:'pro',expires:y,annualUSD:wage(l,c),years:contractYears(l,c,r),transferUSD:s.contract&&!renewal?Math.round(s.contract.annualUSD*Math.max(0,s.contract.end-y)):0});
     log(c.name+' gửi hợp đồng để bạn xem và quyết định; phí chuyển nhượng thuộc CLB, không cộng vào tiền cá nhân.','good');return true;
   }
   function accept(l, offerId, r, log, opts) {
@@ -665,12 +674,21 @@
     if (employed(l)) {
       var gross = usd(l, s.contract.annualUSD) / 12;
       p.salary = { gross: gross, net: gross * .85, netLabel: 'Sau thuế / phí đại diện (15%)' };
-      if (s.earnings && s.earnings.year === year(l)) p.jobInfo.push('Quyết toán bóng đá năm ' + year(l) + ': ' + H.money(l, usd(l, s.earnings.netUSD)) + ' sau thuế/phí, gồm lương và thưởng; sinh hoạt tính riêng.');
+      if (s.earnings && s.earnings.year === year(l)) p.jobInfo.push('Quyết toán bóng đá năm ' + year(l) + ': ' + H.money(l, usd(l, s.earnings.netUSD)) + ' sau thuế/phí, gồm lương và thưởng' + (s.earnings.saved953 != null ? '; sau chi tiêu cả năm, tài sản ròng tăng ' + H.money(l, s.earnings.saved953) : '; sinh hoạt tính riêng') + '.');
     }
     return p;
   };
   // State KPI depends on knowledge/reputation which can change after year hooks.
   // Finalise the derived profile before saving, so reload does not recompute a different KPI.
+  // 9.5.3: lương hợp đồng lớn: chi sinh hoạt không tăng mãi theo thu nhập (trên 60 lần thu nhập cơ sở mỗi năm chỉ còn một phần tư phần vượt); phần dư vào tiền mặt và tài sản ròng
+  var finish953 = E.finishYear; E.finishYear = function (l) {
+    var out = finish953.apply(this, arguments), f = l && l.fin, s = peek(l);
+    if (!f || !s || !s.earnings || s.earnings.year !== year(l) || !(f.life > 0) || !(l.money >= 0) || s.earnings.kept953) return out;
+    var cut = Math.max(0, f.life - 60 * l.base) * .75;
+    if (cut > 0) { l.money += cut; f.life -= cut; f.spend -= cut; f.save += cut; }
+    s.earnings.kept953 = true; s.earnings.spent953 = f.spend; s.earnings.saved953 = f.save;
+    return out;
+  };
   var endYear = E.endYear; E.endYear = function (l) { var out = endYear.apply(this, arguments); if (E.STATE174 && l.flags && l.flags.state174) E.STATE174.syncState(l); return out; };
   var migrate = E.migrateExt; E.migrateExt = function (l) { if (migrate) migrate.apply(this, arguments); if (athlete(l) && !peek(l)) init(l, null, true);if(peek(l)){syncTalent(l);syncOccupation(l,H.rf(l));} };
   E.SC('footballDiscovery', { title: 'Cơ hội bóng đá ở địa phương', valid: function (l) { return free(l) && l.age <= 12 && !peek(l); },

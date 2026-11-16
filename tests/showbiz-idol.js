@@ -60,7 +60,7 @@ function signed(o = {}) { for (let s = 0; s < 60; s++) { const l = kid(Object.as
   ok(st.months >= 3, 'có 3 kỳ đánh giá trong năm (' + st.months + ')');
   ok(st.evals.length >= 3 && st.evals.every(e => e.rank >= 1 && e.rank <= 12), 'mỗi kỳ có điểm và thứ hạng trong lứa');
   ok(L.skill(l, 'sing').level !== sing0 || L.skill(l, 'dance').level !== 60, 'luyện tập thay đổi kỹ năng');
-  ok(l.school, 'vẫn đi học trong thời gian thực tập bán thời gian');
+  ok(l.school || l.log.some(x => /Bỏ dở việc học/.test(x.t)), 'vẫn đi học trong thời gian thực tập bán thời gian (trừ khi nhà tự quyết định cho nghỉ học đi làm)');
   while (l.age < 18) year(E, l);
   year(E, l);
   const a = L.state(l).agency; ok(st.stage === 'trainee' && a.status === 'offer' && a.docs, 'đủ 18 tuổi: được mời sang Hàn Quốc toàn thời gian qua luồng sẵn có (' + a.status + ')');

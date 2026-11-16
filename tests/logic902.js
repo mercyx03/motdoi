@@ -14,7 +14,7 @@ function gb(seed, age) {
   let stuck = 0, withGcse = 0, higher = 0;
   for (let i = 0; i < 30; i++) {
     const l = E.createLife({ mode: 'world', country: 'GB', seed: 7000 + i * 11, year: 2026 }); E.runHeadless(l);
-    if (l.school === 'lower') stuck++;
+    if (l.school === 'lower' && !(l.death && l.death.age < 16)) stuck++; // trẻ mất khi còn đi học không tính là kẹt
     if (l.edu >= 3) higher++;
     if (l.flags.study829 && l.flags.study829.england && l.flags.study829.england.results && Object.keys(l.flags.study829.england.results).length) withGcse++;
   }
