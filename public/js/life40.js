@@ -14,7 +14,7 @@
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function jid(l) { return l.job ? E.resolveJob(l.job.id) : ''; }
   function rk(l) { return l.job ? l.job.rank || 0 : 0; }
   function fmt(n) { return U.fmtNum(Math.round(n)); }

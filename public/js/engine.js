@@ -1349,7 +1349,7 @@
   H.endPartner = endPartner;
 
   function housePrice(life) {
-    if (life.cur === 'vnd') return Math.round((life.urban ? 2600 : 700) * (life.cityWealth || life.wealthIdx));
+    if (life.cur === 'vnd') return Math.round((life.urban ? 2600 : 700) * (life.cityWealth || life.wealthIdx) * ((life.flags && life.flags.eraK954) || 1)); // 9.5.4: giá nhà theo thu nhập của thời đại
     return Math.round(life.base * (life.urban ? 6 : 3.5));
   }
   H.housePrice = housePrice;

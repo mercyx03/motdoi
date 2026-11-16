@@ -12,7 +12,7 @@
   function pick(r, a) { return U.pick(r, a); }
   function ch(r, p) { return r() < p; }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function busy(l) { return (l.jailUntil != null && l.age < l.jailUntil) || (l.abroad && l.abroad.trapped) || (l.flags.military && l.age < l.flags.military); }
   function parentsAlive(l) { return l.fam.mAlive || l.fam.fAlive; }
   function resName(l) { return l.abroad && l.abroad.perm ? l.abroad.name : l.countryName || 'trong nước'; }

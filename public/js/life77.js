@@ -7,7 +7,7 @@
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function mo(l, v) { return H.money(l, v); }
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function parent(l) { var f = l.fam || {}, m = !f.noMom && f.mAlive, b = !f.noDad && f.fAlive; return m && b ? 'bố mẹ' : m ? 'mẹ' : b ? 'bố' : ''; }

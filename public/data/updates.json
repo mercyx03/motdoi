@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-16T12:40:18.361Z",
+  "generatedAt": "2026-11-16T14:32:18.726Z",
   "entries": [
+    {
+      "id": "economy-era-95400",
+      "version": "9.5.4",
+      "publishedAt": "2026-11-16T21:32:18+07:00",
+      "releaseStatus": "packaged",
+      "title": "Lương và giá nhà theo thời đại, cầu thủ gia hạn hoặc tự do, sửa thừa kế",
+      "summary": "Người sinh năm 1960 hay 1985 có mức lương, tiền nhà đúng thời đó; cầu thủ hết hợp đồng có đường đi tiếp.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Lương và chi phí theo thời đại: người sinh năm 1950 ở Việt Nam có mặt bằng thu nhập chỉ khoảng một phần tám hiện nay, 1985 khoảng một phần năm, 2000 khoảng một phần ba. Tiền ăn ở, tiền nhà, học phí và giá nhà đi theo mặt bằng ấy; thu nhập lớn dần mỗi năm cùng nền kinh tế. Các nước khác cũng theo mức phát triển của chính họ.",
+        "Xe ô tô giữ giá thực nên với thu nhập thời trước là rất đắt, chỉ ít người mua được. Người sinh từ 2024 không đổi.",
+        "Bóng đá: lương hợp đồng tăng theo năm, hợp đồng dài có điều khoản giải phóng cho CLB đủ tiền mua đứt giữa chừng.",
+        "Bóng đá: năm cuối hợp đồng bạn quyết định gia hạn, đòi tăng lương, chạy hết hợp đồng để ra thị trường hoặc giải nghệ. Hết hợp đồng thành cầu thủ tự do sẽ nhận lời mời từ các CLB phù hợp; chờ quá lâu thì phong độ và tên tuổi giảm. Chơi tự động không còn bỏ trống nhiều năm không câu lạc bộ.",
+        "Sửa lỗi thừa kế: khi cha hoặc mẹ mất lúc còn vợ/chồng, phần thừa kế của con ở \"sống tiếp đời con\" nay khớp với màn chia tài sản cuối đời, không còn lệch."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "kid-childhood-95300",
       "version": "9.5.3",

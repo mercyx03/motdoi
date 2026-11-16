@@ -19,7 +19,7 @@
   function yr(l, a) { return l.birthYear + (a == null ? l.age : a); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
   // số tiền ghi theo triệu đồng ở Việt Nam; nước khác quy đổi theo mức sống
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function wrapApply(id, after) { var D = E.DEC[id]; if (!D) return; var ap = D.apply; D.apply = function (l, dec, k, r, log) { var x = ap.apply(this, arguments); after(l, dec, k, r, log); return x; }; }
   function jobC(l) { return l.job ? E.jobDef(l) : null; }
   function hobbyName(l) { var h = l.hobby && E.leisure && E.leisure.HOBBY[l.hobby]; return h ? h.n : ''; }

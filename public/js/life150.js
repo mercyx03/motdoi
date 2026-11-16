@@ -297,6 +297,8 @@
   if (E.WILL70) {
     var est = E.WILL70.estate;
     E.WILL70.estate = function (l) { var s = est.apply(this, arguments); if (!s || !l.flags || !(l.flags.will150 || married(l.partner) && fresh(l.partner))) return s; if (memo && memo.has(s)) return memo.get(s); var d = derive(l, s); if (memo) memo.set(s, d); return d; };
+    // 9.5.4: phần của từng con lấy từ cùng bản di sản đã chia lại (vợ/chồng được ít nhất 2/3 suất, phí thi hành…) như màn cuối đời và phần chia tài sản, không phải bản gốc chưa chia lại
+    E.WILL70.forKid = function (l, i) { var s = E.WILL70.estate(l); return s.list.concat(s.law).filter(function (x) { return x.kid === i; }).reduce(function (t, x) { return t + x.amount; }, 0); };
   }
   // Hiện vật: đồ sưu tầm vào di sản; tài sản được giao cụ thể đi trước khi chia theo tỷ lệ
   if (E.BUSINESS137) {

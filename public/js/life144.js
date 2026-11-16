@@ -14,7 +14,7 @@
   function roll(l, c, y) { return hash([l.rs, l.id, c.id, c.stage, y].join(':')) / 4294967296; }
   function isVN(l) { return H.isVN(l); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function mo(l, v) { return H.money(l, v); }
   function fx(l, o) { H.fx(l, o); }
   function stress(l, d) { if (l.mind) l.mind.stress = U.clamp(l.mind.stress + d, 0, 100); }

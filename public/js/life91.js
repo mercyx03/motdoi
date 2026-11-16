@@ -20,7 +20,7 @@
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   var DRAMA_PACE = 2; // drama ngoài gia đình (công sở, hàng xóm, mạng xã hội, trường, họp lớp…): đủ để phần lớn đời gặp ít nhất một chuyện, vẫn không dày
   function T(id, when, p, cd, max) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: p, pace: DRAMA_PACE, cd: cd || 5, max: max || 1 }); } // pace nhân xác suất khi chọn tình huống (engine); giữ nguyên p gốc để các phép kiểm trọng số ngữ cảnh vẫn đúng
-  function V(l, tr) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function office(l) { if (!l.job || l.retired || (E.isCrime && E.isCrime(l)) || l.job.fam) return false; var c = E.jobDef && E.jobDef(l); return !!c && !c.fame && c.cat !== 'farm' && c.cat !== 'biz' && !(E.isFreelanceJob && E.isFreelanceJob(l)) && (!H.isEmployee || H.isEmployee(l)); }
   function rep(l, d) { if (l.job) l.job.rep = U.clamp((l.job.rep == null ? 50 : l.job.rep) + d, 0, 100); }
   function name(l, r, sx) { return H.stranger(l, r, sx || (r() < 0.5 ? 'M' : 'F')); }

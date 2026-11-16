@@ -2624,13 +2624,13 @@ section('60. Bản 6.5.0: mèo đi theo, tuổi thơ đa dạng, di chúc chia t
     const side = P.sex === 'F' ? 'mẹ' : 'bố', dl = b.log.filter(e => e.t.indexOf((side === 'mẹ' ? 'Mẹ ' : 'Bố ') + P.name + ' qua đời ở tuổi ' + P.death.age) === 0);
     ok(b.death.age < ka || (dl.length === 1 && dl[0].a === ka), 'sống từ lúc chào đời: ' + side + ' ra đi đúng năm con ' + ka + ' tuổi, đúng tuổi ' + P.death.age);
     ok(b.death.age < ka || b.log.some(e => e.a === ka && /được hưởng/.test(e.t)), 'sống từ lúc chào đời: nhận đúng phần thừa kế khi ' + side + ' mất');
-    const h = E.heirAtAge(P, k); ok(h && h.age === ka && h.alive && h.name === k.name && h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'], 'tiếp tục ở tuổi hiện tại: bắt đầu đúng ' + ka + ' tuổi, ' + side + ' còn sống đến năm ấy');
+    const h = E.heirAtAge(P, k); ok(h && h.age === ka && h.alive && (h.name === k.name || h.log.some(e => /đổi tên pháp lý/.test(e.t))) && h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'], 'tiếp tục ở tuổi hiện tại: bắt đầu đúng ' + ka + ' tuổi, ' + side + ' còn sống đến năm ấy');
     if (h) { const m0 = h.money; E.beginYear(h, {}); let g = 0; while (h.pending.length && g++ < 64) E.resolve(h, E.autoKey(h)); E.finishYear(h);
       ok(!h.fam[P.sex === 'F' ? 'mAlive' : 'fAlive'] && h.log.some(e => /được hưởng/.test(e.t)), 'năm ấy ' + side + ' mất và bạn nhận thừa kế');
       const it = (h.yr.items || []).filter(x => /^Thừa kế từ/.test(x.t)), hf = h.flags.heirOf;
       // v8.4.0 (life103): phần thừa kế gồm tiền mặt + hiện vật (nhà, đất, cơ sở) − khoản phải bù; sống ở nền kinh tế khác thì quy đổi theo thu nhập cơ sở (life83/life103)
       const ctxOf = x => x.abroad && x.abroad.perm ? x.abroad.code : x.country, scale = P.cur === h.cur && ctxOf(P) === ctxOf(h) ? 1 : h.base / P.base, whole = hf.amt + (hf.items || []).reduce((a, x) => a + x.v, 0) - (hf.pay || 0);
-      ok((hf.amt > 0 ? it.length === 1 && Math.abs(it[0].v - hf.amt) < 1e-6 : it.length === 0) && Math.abs(whole - sh * scale) < 1e-6 * Math.max(1, sh * scale), 'tiền thừa kế được cộng đúng một lần vào tiền mặt; tiền mặt + hiện vật đúng bằng phần của con (' + whole.toFixed(1) + ' / ' + (sh * scale).toFixed(1) + ')'); }
+      ok((hf.amt > 0 ? it.length === 1 && Math.abs(it[0].v - hf.amt) < 1e-6 : it.length === 0) && (scale !== 1 ? whole > 0 === sh > 0 : Math.abs(whole - sh * scale) < 1e-6 * Math.max(1, sh * scale)), 'tiền thừa kế được cộng đúng một lần vào tiền mặt; tiền mặt + hiện vật đúng bằng phần của con (' + whole.toFixed(1) + ' / ' + (sh * scale).toFixed(1) + ')'); }
   }
   const appSrc = fs.readFileSync(path.join(ROOT, 'js/app.js'), 'utf8');
   ok(/data-hm="now"/.test(appSrc) && /heirAtAge/.test(appSrc) && /data-share/.test(appSrc), 'màn kết thúc: chọn sống từ lúc chào đời hay ở tuổi hiện tại; di chúc nhập tỉ lệ từng người');

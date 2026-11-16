@@ -19,7 +19,7 @@
   function cx(l) { var K = E.CTX945; try { return K && K.of ? K.of(l) : ZERO; } catch (e) { return ZERO; } }
   function dev(l) { try { return E.devGdp ? E.devGdp(l) : (l.gdp || 3); } catch (e) { return l.gdp || 3; } }
   function vnd(l) { return H.isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function bill(l, tr, why, log) { var v = V(l, tr); if (E.medBill) E.medBill(l, v, why, log, 1); else H.cash(l, -v, why); }
   function stress(l, n) { if (l.mind) l.mind.stress = U.clamp((l.mind.stress || 0) + n, 0, 100); }
   function carer(l) { var oc = E.orphanCarer && E.orphanCarer(l); if (oc) return oc; var f = l.fam || {}; return f.mAlive ? 'mẹ' : f.fAlive && !f.noDad ? 'bố' : 'bà'; }

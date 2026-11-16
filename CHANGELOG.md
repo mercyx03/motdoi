@@ -1,3 +1,10 @@
+## 9.5.4 — Lương và giá nhà theo thời đại, hợp đồng cầu thủ gia hạn và tự do, sửa thừa kế
+
+- `price954.js` (mới): thu nhập cơ sở `l.base` nhân với mức phát triển thật của nước đang sống tại năm đó so với hiện nay (cùng dãy `E.ERA920` mà `E.devGdp` đã dùng; Việt Nam 1950 còn khoảng 13%, 1985 khoảng 18%, 2000 khoảng 34%). Lương, chi phí ăn ở, tiền nhà, học phí (hàm `V()` ở 25 tệp, nay Việt Nam cũng nhân hệ số `flags.eraK954`) và giá nhà (`housePrice`) đi theo; thu nhập lớn dần mỗi năm theo nền kinh tế, tiền đã tích lũy giữ nguyên. Xe giữ giá thực nên so với thu nhập thời ấy rất đắt. Người sinh từ 2024 và các năm từ 2023: hệ số bằng 1, không đổi một byte.
+- `football.js`: lương hợp đồng tăng theo năm (`raise`, 2–8%), điều khoản giải phóng (`release`, 3,5–5,5 lần lương, CLB đủ tiền mới mua đứt giữa chừng), quyết định `footballExpiry954` khi sắp hết hạn (gia hạn, đòi tăng lương, chạy hết hợp đồng, giải nghệ), thị trường cầu thủ tự do `footballFree954` (nhận lời mời, chờ một mùa, giải nghệ). Chơi tự động không còn bỏ trống nhiều năm.
+- `life150.js`: `E.WILL70.forKid` (phần thừa kế của từng con, dùng cho "sống tiếp đời con") lấy từ cùng bản di sản đã chia lại như màn cuối đời; trước đây khi còn vợ/chồng phần này lệch (ví dụ 278,8 so với 209,0).
+- Test mới: `tests/price954.js` (22), `tests/football-expiry954.js` (125), `tests/inherit954.js` (194). Sửa test hồi quy mục 60 (đổi tên pháp lý, đổi tiền khi con ra nước ngoài), `football-payroll901`.
+
 ## 9.5.3 — Tuổi thơ nhỏ đa dạng hơn, bớt cảnh lạc ở chợ phiên; hợp đồng cầu thủ dài tới 7 năm
 
 - `kid953.js` (mới, trên cơ chế sẵn có `E.SC`, `E.TRIG`, `E.CHAIN144`): hợp nhất hai tình huống `bi_lac` và `k6_lac_cho`. Mỗi đời chỉ gặp một lần, hiếm hơn nhiều (thời bình khoảng 1–3% số đời, trước đây khoảng 23%). Nơi bị lạc (chợ phiên, ngày hội, siêu thị, bến xe) đổi theo nước, năm, nông thôn hay thành thị và nghề của bố mẹ. Hậu quả đi tiếp qua chuỗi `lost953`: sợ chỗ đông người (giảm dịp hội hè, hòa nhạc đến tuổi 24) hoặc học thuộc địa chỉ nhà (dễ được tự đi xe buýt hơn).

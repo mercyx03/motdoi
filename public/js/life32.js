@@ -16,7 +16,7 @@
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function rng(r, a, b) { return a + (b - a) * r(); }
   function jobC(l) { return l.job ? E.jobDef(l) : null; }
   function rich(l) { return l.money > l.base * 8 || (!l.indep && l.fam.q >= 5); }

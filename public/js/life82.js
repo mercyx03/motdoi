@@ -7,7 +7,7 @@
   'use strict';
   var U = G.U, E = G.E, H = E.H;
   function vnd(l) { return H.isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function mo(l, v) { return H.money(l, v); }
   // [ôn đều, luyện chuyên sâu, học nhóm, lò luyện thi] · [làm chắc, ưu tiên bài khó, kiểm tra] · dạng đề thi chuyên
   var SUB = {
