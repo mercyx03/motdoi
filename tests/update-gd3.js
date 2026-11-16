@@ -1,3 +1,4 @@
+require('./lib/update-compat');
 const assert=require('assert'),fs=require('fs'),cp=require('child_process');
 const now=JSON.parse(fs.readFileSync('public/data/updates.json')),old=JSON.parse(cp.execFileSync('git',['show','e9fd613:public/data/updates.json'],{encoding:'utf8'}));
 assert(now.entries.length>=old.entries.length+1);assert(now.entries.some(x=>x.id==='gd3-context-weighting'));for(const e of old.entries)assert.deepStrictEqual(now.entries.find(x=>x.id===e.id),e);

@@ -1,3 +1,4 @@
+require('./lib/update-compat');
 /* Nhật ký đợt nâng cấp theo góp ý người chơi: mỗi mốc một mục, chưa phát hành, giữ nguyên toàn bộ 95 mục trước đợt. */
 const assert=require('assert'),fs=require('fs'),cp=require('child_process');
 const kept=(n,o,m)=>{if(o.releaseStatus==='packaged'&&n&&n.releaseStatus==='released'){assert(Date.parse(n.releasedAt)>=Date.parse(n.publishedAt),'released after prepared: '+o.id);const s=x=>{const y=Object.assign({},x);delete y.releaseStatus;delete y.releasedAt;delete y.correctedAt;return y;};assert.deepStrictEqual(s(n),s(o),m);}else assert.deepStrictEqual(n,o,m);}; // ghi phát hành chỉ được đổi releaseStatus/releasedAt/correctedAt của mục đang chờ

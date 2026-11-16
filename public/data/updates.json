@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-15T17:34:48.756Z",
+  "generatedAt": "2026-11-15T23:46:39.836Z",
   "entries": [
+    {
+      "id": "era-depth-95100",
+      "version": "9.5.1",
+      "publishedAt": "2026-11-15T23:45:39Z",
+      "releaseStatus": "packaged",
+      "title": "Thư mời học bổng, học đại học muộn ở nước ngoài, bối cảnh từng vùng",
+      "summary": "Học sinh nổi bật được chọn trường theo thư mời, người sống ở nước khác học đại học muộn được, mỗi vùng mỗi cảnh ngộ.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Học sinh có giải thưởng, điểm thi xuất sắc hoặc được tuyển thẳng giờ nhận thư mời nhập học kèm học bổng (toàn phần, 50% hoặc 25% học phí). Bạn chọn trường, chọn ngành, hoặc từ chối để tự đăng ký. Đủ ngoại ngữ thì có thêm thư mời du học. Học bổng phải giữ bằng học lực khá trở lên; tụt học lực là mất.",
+        "Người sống ở nước khác (tị nạn, thường trú, nhập quốc tịch) mà mới học tới phổ thông nay có thể đăng ký đại học ở nước đó. Có quốc tịch thì đóng học phí như người bản xứ; thường trú hoặc người tị nạn đã ổn định hai năm thì đóng cao hơn; mới đến thì chưa được. Có thể học bổ túc phổ thông, học năm dự bị về ngôn ngữ rồi mới nộp hồ sơ.",
+        "Cùng một năm nhưng mỗi vùng một cảnh ngộ: Hà Nội 1967 bị ném bom nặng hơn Sài Gòn, miền Bắc đói năm 1945 còn Nam Kỳ thì không, vùng Biafra 1968 bị phong tỏa còn Lagos thì không, Amsterdam đói mùa đông 1944 hơn Eindhoven, Hiroshima 1945, thành phố bị vây hay gần tiền tuyến khác hẳn vùng hậu phương.",
+        "Thêm chuyện của những chính sách lớn: cải cách ruộng đất và tập thể hóa, chiến dịch chính trị, di dời và chia cắt đất nước. Cùng một chính sách, nhà ít của được chia thêm, nhà nhiều của mất nhiều hơn; bạn chọn nộp, giấu, tham gia hay bỏ đi, và mỗi lựa chọn để lại hệ quả về sau.",
+        "Thời thuộc địa có thuế và phu dịch, kỳ thi vào trường thuộc địa, tuyển lính cho chính quốc, phong trào đòi độc lập. Lựa chọn của bạn được nhắc lại khi đất nước giành độc lập. Siêu lạm phát khiến tiền tiết kiệm mất giá: đổi vàng, đổi ngoại tệ hay giữ tiền mặt cho kết quả rất khác nhau."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "era-context-95000",
       "version": "9.5.0",

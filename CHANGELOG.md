@@ -1,3 +1,11 @@
+## 9.5.1 — Thư mời học bổng, học đại học muộn ở nước ngoài, bối cảnh từng vùng, nợ sâu
+
+- `uni945.js` (mới): thư mời nhập học và học bổng cho học sinh có thành tích (trong nước và du học, chọn trường rồi ngành, giữ học bổng bằng học lực); học đại học muộn cho người sống ở nước khác theo quyền cư trú (công dân, thường trú, người tị nạn sau 2 năm), có bổ túc, năm dự bị, nộp hồ sơ vào nguyện vọng của nước sở tại. Mở rộng `E.DEC.uni`, `E.EDUCATION54`, `E.GLOBAL919`, chuỗi `abroad107`; `scenarios.js` ghi hồ sơ tị nạn khi bỏ chạy.
+- `data-ctx951.js` (mới) và `ctx945.js`: 61 dòng bối cảnh theo vùng/thành phố, 57 dòng chính sách xã hội lớn (ruộng đất, chiến dịch chính trị, di dời); tám loại sự kiện mới (thuế, trường, tuyển lính, phong trào độc lập, ruộng đất, chiến dịch chính trị, di dời, siêu lạm phát), dấu ấn khi hết thời thuộc địa.
+- `engine.js`: nợ sâu thì ăn ở thanh đạm hơn và nợ được cơ cấu lại sau ba năm không trả nổi (tài sản ròng âm nặng cuối đời ở Việt Nam ~6%, trước đó 10–13%); `life136.js`, `engine.js` sửa chữ "null tuổi" và "ngành undefined".
+- Dữ liệu: Leningrad chỉ còn là vùng bị đói; nước Nga nói chung ở mức thiếu lương thực thời chiến. `tools/verify-ctx945.js`: nạn đói 79/79, chiến tranh mức 3 là 96/96.
+- Test: `tests/uni945.js` (232), `tests/ctx951.js` (1.087); sửa các test nhật ký cập nhật cũ qua `tests/lib/update-compat.js`, `update460`, hồi quy mục 9 (có `KNOWN_UNCOVERED945` chỉ được giảm) và mục 21; mục 5b về ngưỡng 12% như cũ. Tài liệu: `docs/BOI-CANH-THOI-DAI-950.md`.
+
 ## 9.5.0 — Bối cảnh thời đại theo nước và năm sinh
 
 - `data-ctx945.js` (mới): chiến tranh (241 dòng), nạn đói (79), dịch bệnh (29), khủng hoảng kinh tế (58), thiên tai (35), hạn chế xuất cảnh (30), thời thuộc địa (51), dựng từ các danh sách Wikipedia tải ngày 15/11/2026 (nguồn thứ cấp). `tools/verify-ctx945.js` đối chiếu: nạn đói 78/79, chiến tranh mức 3 là 92/96.

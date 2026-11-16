@@ -1784,7 +1784,10 @@
     if (life.retired || a >= 62) share = Math.max(share, 0.92); // v7.1: về già tiêu dần khoản dư (sức khỏe, con cháu, hiếu hỉ) thay vì tiếp tục tích lũy
     F.life = life.money >= 0 && surplus > 0 ? surplus * share : 0;
     if (focus === 'rest') F.life += b * 0.06;
-    if (life.money < 0) { F.life = 0; var cut = Math.max(0, ess - Math.max(ess * 0.8, income + F.partner)); F.food -= Math.min(cut, F.food * 0.2); }
+    if (life.money < 0) { // 9.5.1: nợ sâu thì ăn ở thanh đạm hơn (ở ghép, ở nhờ, bớt đi lại) thay vì cứ chi như cũ rồi bị xóa nợ
+      F.life = 0; var deep = life.money < -b, cut = Math.max(0, ess - Math.max(ess * (deep ? 0.55 : 0.8), income + F.partner)), c1 = Math.min(cut, F.food * (deep ? 0.3 : 0.2)); F.food -= c1; cut -= c1;
+      if (deep && cut > 0) { var c2 = Math.min(cut, F.rent * 0.6); F.rent -= c2; cut -= c2; if (c2 > 0 && !life.flags.sharedRoom945) { life.flags.sharedRoom945 = true; log('Hết tiền, bạn ở ghép và nhờ người quen để giảm tiền nhà.', 'neutral'); } }
+      if (deep && cut > 0) F.travel -= Math.min(cut, F.travel); }
     F.interest = life.money < 0 ? life.money * 0.06 : life.money * 0.001;
     if (F.interest > 0) F.interest *= difficulty(life).passive;
     var spend = F.food + F.rent + F.travel + F.kids + F.parents + F.health + F.debt + F.life;
@@ -1793,7 +1796,10 @@
     if (life.money < -b * 3) {
       life.money = -b * 3;
       if (!life.flags.debtHelp) { life.flags.debtHelp = true; log(life.kids.some(function (k) { return k.alive && a - k.born >= 22; }) ? 'Các con góp tiền giúp trả bớt nợ.' : 'Được người thân giúp đỡ trả bớt nợ.', 'neutral'); }
-    }
+      // 9.5.1: không trả nổi nhiều năm liền thì nợ được cơ cấu lại (thỏa thuận với chủ nợ), không bị treo ở mức sàn suốt đời
+      life.flags.clampYrs = (life.flags.clampYrs || 0) + 1;
+      if (life.flags.clampYrs >= 3 && a >= 25) { life.flags.clampYrs = 0; life.money = -b; life.flags.debtSettle945 = (life.flags.debtSettle945 || 0) + 1; log('Nhiều năm không trả nổi, bạn thỏa thuận với chủ nợ: nợ được cơ cấu lại, đổi lại hồ sơ tín dụng xấu nhiều năm.', 'neutral'); }
+    } else if (life.money > -b * 2 && life.flags.clampYrs) life.flags.clampYrs = 0;
     if (life.ownHouse) life.houseVal *= 1 + ((life.birthYear + a) % 5 === 0 ? -.025 : .008);
     if (life.vehVal) life.vehVal *= 0.88;
     if (life.mortgage > 0) { // khoản vay mua nhà kiểu cũ (bản 1.0)
@@ -1861,7 +1867,7 @@
         runHooks('gradUpper', [life, r, log]);
       } else if (sc === 'voc') { life.edu = Math.max(life.edu, 4); log('Hoàn thành chương trình học nghề.', 'good'); life.flags.needJob = true; }
       else if (sc === 'uni' || sc === 'abroad') {
-        life.edu = Math.max(life.edu, 5); log('Tốt nghiệp đại học ngành ' + (life.majorName || MAJORS[life.major]) + (sc === 'abroad' ? ' ở ' + (life.abroad ? life.abroad.name : 'nước ngoài') : life.uniCity ? ' ở ' + life.uniCity : '') + '.', 'big'); st.hap += 6;
+        life.edu = Math.max(life.edu, 5); log('Tốt nghiệp đại học ngành ' + (life.majorName || MAJORS[life.major] || 'đã chọn') + (sc === 'abroad' ? ' ở ' + (life.abroad ? life.abroad.name : 'nước ngoài') : life.uniCity ? ' ở ' + life.uniCity : '') + '.', 'big'); st.hap += 6;
         H.mem(life, 'Lễ tốt nghiệp — bố mẹ đứng dưới khán đài, mắt rưng rưng.', 4);
         runHooks('gradUniversity', [life, r, log, sc]);
         if (sc === 'abroad') H.sched(life, 'du_hoc_ve', 1);

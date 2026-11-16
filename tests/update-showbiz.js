@@ -1,3 +1,4 @@
+require('./lib/update-compat');
 /* Nhật ký đợt nâng cấp showbiz: mỗi mốc một mục, chưa phát hành, giữ nguyên toàn bộ nhật ký trước đợt (đã phát hành 8.6.0). */
 const assert=require('assert'),fs=require('fs'),cp=require('child_process');
 const now=JSON.parse(fs.readFileSync('public/data/updates.json')),old=JSON.parse(cp.execFileSync('git',['show','acc6aa5:public/data/updates.json'],{encoding:'utf8'}));

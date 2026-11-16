@@ -30,16 +30,39 @@
   var cache = {};
   function best(list, y) { var b = null; for (var i = 0; i < list.length; i++) { var w = list[i]; if (y >= w.a && y <= w.b && (!b || w.s > b.s)) b = w; } return b; }
   // Các nước còn đang chịu ảnh hưởng của đại dịch cúm 1918 toàn cầu / Đại suy thoái được áp cho mọi nước; mức giảm nhẹ ở nước giàu tách biệt khỏi chiến sự.
+  // mức tổng hợp từ các thành phần (dùng cho cả mức quốc gia và mức đã chỉnh theo vùng)
+  function derive(o) {
+    o.crisis = Math.max(o.war, o.fam, o.epi >= 2 ? o.epi : 0, o.dis, o.econ >= 3 ? 3 : o.econ >= 2 ? 2 : 0);
+    var multi = (o.war >= 2 ? 1 : 0) + (o.fam >= 2 ? 1 : 0) + (o.epi >= 2 ? 1 : 0) + (o.dis >= 2 ? 1 : 0) + (o.econ >= 2 ? 1 : 0);
+    o.level = Math.min(3, o.crisis + (multi >= 2 ? 1 : 0)); if (o.crisis === 0 && o.econ === 1) o.level = 0;
+    o.hard = Math.max(o.war, o.fam, o.epi >= 2 ? o.epi : 0, o.dis, o.econ >= 3 ? 3 : 0); // mức dùng cho phong tục: kinh tế bao cấp hay suy thoái nhẹ không làm mất lễ thôi nôi
+    return o;
+  }
+  // chính sách xã hội và chính trị lớn (ruộng đất, chiến dịch chính trị, di dời) theo nước và năm
+  var SOCX = {};
+  (D.SOC || []).forEach(function (r) { expand(r[0]).forEach(function (c) { ((SOCX[c] = SOCX[c] || {})[r[3]] = (SOCX[c][r[3]] || [])).push({ a: r[1], b: r[2], s: r[4], sh: r[5], n: r[6] }); }); });
+  function socOf(cc, y, o) {
+    var I = SOCX[cc]; o.land = o.purge = o.expel = 0; o.soc = {};
+    if (!I) return o;
+    ['land', 'purge', 'expel'].forEach(function (k) { var b = I[k] && best(I[k], y); if (b) { o[k] = b.s; o.soc[k] = { s: b.s, share: b.sh, n: b.n }; } });
+    return o;
+  }
+  // vùng trong nước (thành phố hoặc tỉnh) chịu mức khác mức chung của nước
+  var ZONEX = {};
+  (D.ZONE || []).forEach(function (r) { (ZONEX[r[0]] = ZONEX[r[0]] || []).push({ a: r[1], b: r[2], re: new RegExp(r[3], 'i'), d: r[4], n: r[5] }); });
+  function zoneRows(cc, y, city) { var Z = ZONEX[cc]; if (!Z || !city) return null; var out = null; for (var i = 0; i < Z.length; i++) { var z = Z[i]; if (y >= z.a && y <= z.b && z.re.test(city)) (out = out || []).push(z); } return out; }
+  function zoned(c, rows) {
+    var o = Object.assign({}, c); o.zone = []; o.labels = Object.assign({}, c.labels);
+    rows.forEach(function (z) { ['war', 'fam', 'dis'].forEach(function (k) { var v = z.d[k]; if (v == null) return; o[k] = typeof v === 'string' ? +v.slice(1) : Math.max(0, Math.min(3, o[k] + v)); if (o[k] > 0 && (z.d[k] !== 0)) o.labels[k] = z.n; }); o.zone.push(z.n); });
+    return derive(o);
+  }
   function at(cc, y) {
     var key = cc + ':' + y; if (cache[key]) return cache[key];
     var I = IDX[cc] || { war: [], fam: [], epi: [], econ: [], dis: [] };
     var w = best(I.war, y), f = best(I.fam, y), e = best(I.epi.concat(GLOBAL.epi), y), c = best(I.econ.concat(GLOBAL.econ), y), d = best(I.dis, y);
     var o = { cc: cc, y: y, war: w ? w.s : 0, fam: f ? f.s : 0, epi: e ? e.s : 0, econ: c ? c.s : 0, dis: d ? d.s : 0, warKind: w && w.k, econKind: c && c.k, labels: { war: w && w.n, fam: f && f.n, epi: e && e.n, econ: c && c.n, dis: d && d.n } };
     var rs = best(RES[cc] || [], y); o.restrict = rs ? rs.s : 0; o.restrictLabel = rs && rs.n; o.colony = colonyAt(cc, y);
-    o.crisis = Math.max(o.war, o.fam, o.epi >= 2 ? o.epi : 0, o.dis, o.econ >= 3 ? 3 : o.econ >= 2 ? 2 : 0);
-    var multi = (o.war >= 2 ? 1 : 0) + (o.fam >= 2 ? 1 : 0) + (o.epi >= 2 ? 1 : 0) + (o.dis >= 2 ? 1 : 0) + (o.econ >= 2 ? 1 : 0);
-    o.level = Math.min(3, o.crisis + (multi >= 2 ? 1 : 0)); if (o.crisis === 0 && o.econ === 1) o.level = 0;
-    o.hard = Math.max(o.war, o.fam, o.epi >= 2 ? o.epi : 0, o.dis, o.econ >= 3 ? 3 : 0); // mức dùng cho phong tục: kinh tế bao cấp hay suy thoái nhẹ không làm mất lễ thôi nôi
+    socOf(cc, y, o); derive(o);
     return (cache[key] = o);
   }
   function wy(l) { return l.birthYear + (l.age || 0); }
@@ -51,7 +74,7 @@
     var p = d < 1.2 ? 3 : d < 2.5 ? 2 : d < 6 ? 1 : 0; if (y < 1935 && p < 3 && d < 15) p++; return p;
   }
   function of(l) {
-    var y = wy(l), c = at(resCc(l), y), o = Object.create(c); o.pov = pov(l); o.lux = Math.max(c.level, o.pov >= 3 ? 2 : o.pov >= 2 ? 1 : 0); return o;
+    var y = wy(l), cc0 = resCc(l), c = at(cc0, y), zr = zoneRows(cc0, y, l.city || l.place); if (zr) c = zoned(c, zr); var o = Object.create(c); o.pov = pov(l); o.lux = Math.max(c.level, o.pov >= 3 ? 2 : o.pov >= 2 ? 1 : 0); return o;
   }
   function st(l) { return l.flags.ctx945 || (l.flags.ctx945 = { noted: {} }); }
   function r2(l, tag) { var h = 2166136261, s = String(l.id) + ':' + tag; for (var i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); h ^= h >>> 15; h = Math.imul(h, 2246822507); h ^= h >>> 13; return (h >>> 0) / 4294967296; }
@@ -173,6 +196,8 @@
     if (c.level >= 1 && l.age >= 3 && !(l.pending || []).some(function (d) { return d.id === 'ctx945_event'; }) && r() < [0, 0.12, 0.3, 0.5][c.level]) {
       var kind = pickKind(l, c, r); if (kind) X.next(l, 'ctx945_event', r, { kind: kind, y: wy(l) }, { manual: false });
     }
+    colonyEnd(l, c, log);
+    socialTrigger(l, c, r);
   }
   function customsLog(l, c, log) {
     var s = st(l);
@@ -221,6 +246,93 @@
       { k: 'quiet', l: 'Im lặng, sống kín tiếng', h: 'An toàn tương đối, nặng nề tinh thần', run: function (l, r, log) { H.fx(l, { hap: -3, soc: -2 }); log('Cả nhà sống thận trọng, không nói chuyện với ai về chuyện chung; ai cũng nơm nớp.', 'bad'); } },
       { k: 'flee', l: 'Tìm cách rời đi', h: 'Rủi ro cao, bỏ lại tất cả', run: function (l, r, log) { H.cash(l, -0.3 * l.base, 'Chi phí rời đi'); H.fx(l, { hap: -4 }); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 3); log('Gia đình bỏ lại nhà cửa và lên đường trong đêm.', 'bad'); } }]; } }
   };
+
+  // ---- 9.5.1: thời thuộc địa, ruộng đất, chiến dịch chính trị, di dời, lạm phát: sự kiện có nhiều bước và để lại dấu ấn ----
+  function cls(l) { var q = (l.fam && l.fam.q) || 3; return q >= 4 ? 'propertied' : q <= 2 ? 'poor' : 'middle'; }
+  function clsText(l) { var k = cls(l); return k === 'propertied' ? 'gia đình có của cải đáng kể' : k === 'poor' ? 'gia đình ít ruộng, ít của' : 'gia đình vừa đủ sống'; }
+  var EXILE = { VN: ['US', 'AU', 'CA', 'FR'], IN: ['PK'], PK: ['IN'], BD: ['IN'], PL: ['DE'], CZ: ['DE'], DE: ['US', 'GB'], GR: ['TR'], TR: ['GR'], DZ: ['FR'], UG: ['GB'], BA: ['DE', 'AT', 'SE'], HR: ['DE', 'AT'], RW: ['TZ', 'BE'], SY: ['DE', 'TR', 'SE', 'LB'], UA: ['PL', 'DE', 'CZ'], AF: ['PK', 'IR', 'DE'], MM: ['BD'], CY: ['GB'], PS: ['JO', 'LB'], IL: ['US', 'FR'], KH: ['FR', 'US'], CN: ['US', 'HK'], SU: ['US', 'DE'], CU: ['US'], KP: ['KR'], ET: ['US', 'SD'], AR: ['ES', 'MX'], CL: ['AR', 'SE'], ID: ['NL'], TW: ['US'], PH: ['US'], ES: ['FR', 'MX'], RO: ['DE', 'US'], AL: ['IT'], IQ: ['SE', 'JO'], IR: ['US', 'GB', 'DE'], UG2: [] };
+  function exile(l, r) {
+    var cc = resCc(l), list = (EXILE[cc] || ['US', 'GB', 'DE', 'FR']).filter(function (c) { return G.W.BY[c] && c !== cc; }); if (!list.length || !H.emigrate) return false;
+    var c = list[Math.floor(r() * list.length)], B = G.W.BY[c]; H.emigrate(l, [c, B.name, B.pool], r, function (t, k) { l.log.push({ a: l.age, y: wy(l), t: t, k: k || 'neutral' }); });
+    l.flags.refugee945 = { to: c, y: wy(l) }; if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); return true;
+  }
+  function jailRisk(l, p, years, why, r, log) { if (r() < p && H.jail) { H.jail(l, years, why, log); return true; } return false; }
+  function prom(l) { return (l.edu >= 5 ? 1 : 0) + (l.fam && l.fam.q >= 4 ? 1 : 0) + ((l.fame || 0) > 1e5 ? 1 : 0); }
+  Object.assign(EV, {
+    col_tax: { n: 'Thuế và sưu dưới chế độ thuộc địa', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return 'Chính quyền thuộc địa (' + (c.colony || 'chính quốc') + ') thu thuế đầu người, thuế muối rượu và bắt đi làm công ích; ' + clsText(l) + ', hạn nộp đã tới.'; }, o: function (l, c) { return [
+      { k: 'pay', l: 'Nộp đủ thuế, thắt lưng buộc bụng', h: 'Tốn tiền, yên thân', run: function (l, r, log) { H.cash(l, -0.08 * l.base, 'Thuế thuộc địa'); H.fx(l, { hap: -2 }); log('Cả nhà dành phần lớn mùa thu hoạch để nộp thuế; năm đó ăn uống tằn tiện.', 'bad'); } },
+      { k: 'labor', l: 'Đi làm phu thay tiền thuế', h: 'Không tốn tiền nhưng mất sức và thời gian', run: function (l, r, log) { H.fx(l, { hea: -4, hap: -3 }); if (l.age >= 16 && r() < 0.03) { H.kill(l, 'kiệt sức khi làm phu đường dưới thời thuộc địa', log, false); return; } log('Bạn đi làm phu đường nhiều tuần liền, sức khỏe hao mòn nhưng nhà không phải nộp tiền.', 'bad'); } },
+      { k: 'evade', l: 'Khai thiếu, tìm cách né thuế', h: 'Giữ được tiền, có thể bị phạt hoặc bắt giam', run: function (l, r, log) { if (r() < 0.35) { H.cash(l, -0.15 * l.base, 'Bị phạt vì trốn thuế'); if (!jailRisk(l, 0.25, 1, 'trốn thuế', r, log)) log('Bạn bị lý trưởng phát hiện khai gian và bị phạt nặng.', 'bad'); } else { H.cash(l, 0.03 * l.base, 'Né được thuế'); log('Nhờ nhà ở xa và biết cách khai báo, gia đình né được phần thuế năm nay.', 'neutral'); } } },
+      { k: 'move', l: 'Rời làng ra thành phố hoặc đồn điền kiếm sống', h: 'Bỏ ruộng vườn, có thể có việc làm công', run: function (l, r, log) { H.cash(l, -0.05 * l.base, 'Chi phí rời làng'); H.fx(l, { hap: -3 }); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 1); log('Gia đình rời làng ra nơi có việc làm công ở thành phố / đồn điền; cuộc sống bấp bênh nhưng tránh được thuế đầu người ở quê.', 'neutral'); } }]; } },
+    col_exam: { n: 'Kỳ thi vào trường thuộc địa', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return 'Trường dạy chữ của chính quyền thuộc địa (' + (c.colony || '') + ') chỉ nhận số ít học sinh; ' + clsText(l) + ', thầy đồ làng khuyên bạn thử thi.'; }, o: function (l, c) { return [
+      { k: 'try', l: 'Dốc sức ôn thi vào trường', h: 'Cần học lực; đỗ thì mở đường làm thông ngôn, thư ký, thầy giáo', run: function (l, r, log) { var q = (l.fam && l.fam.q) || 3, p = Math.max(0.05, Math.min(0.9, 0.1 + (l.st.kno - 40) / 80 + (q - 3) * 0.06)); if (r() < p) { l.st.kno = Math.min(100, l.st.kno + 4); l.flags.colSchool945 = true; H.fx(l, { hap: 6, soc: 2 }); l.edu = Math.max(l.edu, 1); log('Bạn đỗ vào trường của chính quyền thuộc địa; được học chữ quốc ngữ và tiếng chính quốc, cả làng đến chúc mừng.', 'good'); H.mem(l, 'Ngày đọc tên mình trong danh sách đỗ vào trường thuộc địa.', 6); } else { H.fx(l, { hap: -3 }); log('Bạn trượt kỳ thi vì số chỗ quá ít; năm sau có thể thử lại hoặc ở nhà giúp việc.', 'neutral'); } } },
+      { k: 'village', l: 'Học thầy đồ làng, giữ chữ nho', h: 'Rẻ, kiến thức vững nhưng khó vào công chức', run: function (l, r, log) { l.st.kno = Math.min(100, l.st.kno + 2); log('Bạn tiếp tục học chữ với thầy đồ làng; vốn chữ nghĩa vững nhưng cửa vào công chức thuộc địa hẹp.', 'neutral'); } },
+      { k: 'work', l: 'Ở nhà phụ việc đồng áng', h: 'Có thêm tay làm, không đi học', run: function (l, r, log) { H.cash(l, 0.03 * l.base, 'Phụ việc đồng áng'); log('Bạn ở nhà giúp bố mẹ; ruộng nương không đợi ai.', 'neutral'); } }]; } },
+    col_levy: { n: 'Tuyển lính và phu cho chính quốc', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return 'Chính quyền thuộc địa tuyển thanh niên làm lính, lính thợ và phu đưa sang tham chiến hoặc làm hậu cần cho ' + (c.colony || 'chính quốc') + '.'; }, o: function (l, c) { return [
+      { k: 'go', l: 'Ghi tên nhập ngũ, theo đoàn đi xa', h: 'Có lương, đi nhiều năm, rủi ro tử trận hoặc bệnh', run: function (l, r, log) { l.flags.military = Math.max(l.flags.military || 0, l.age + 3); H.fx(l, { hap: -3 }); H.cash(l, 0.05 * l.base, 'Tiền ứng khi nhập ngũ'); if (r() < 0.1) { H.kill(l, 'tử trận hoặc bệnh khi phục vụ chính quốc', log, false); return; } l.flags.veteran945 = true; log('Bạn lên tàu đi xa ba năm làm lính / lính thợ cho chính quốc; thư nhà hiếm, bệnh tật và khí hậu lạ làm nhiều người gục ngã.', 'big'); H.mem(l, 'Con tàu rời bến, bạn đứng ở boong nhìn bờ quê khuất dần.', 8); } },
+      { k: 'hide', l: 'Trốn vào rừng, nhờ làng che giấu', h: 'Tránh đi xa, bị truy tìm và liên lụy gia đình', run: function (l, r, log) { H.fx(l, { hap: -4, soc: -2 }); if (r() < 0.4) { H.cash(l, -0.1 * l.base, 'Bị phạt vì trốn tuyển'); jailRisk(l, 0.3, 1, 'trốn tuyển lính', r, log); log('Bạn bị lính tuần lùng ra, gia đình phải chịu phạt.', 'bad'); } else log('Bạn lánh trong rừng nhiều tháng, nhờ làng che chở mà qua được đợt tuyển.', 'neutral'); } },
+      { k: 'bribe', l: 'Đút lót lý trưởng xin hoãn · tốn kém', h: 'Mất tiền, có thể thoát', run: function (l, r, log) { var cost = 0.25 * l.base; if (l.money < cost) { H.fx(l, { hap: -3 }); log('Không đủ tiền chạy chọt; tên bạn vẫn nằm trong danh sách.', 'bad'); return; } H.cash(l, -cost, 'Hối lộ để hoãn tuyển'); log('Món tiền lớn đủ để tên bạn được gạch khỏi danh sách năm nay.', 'neutral'); } }]; } },
+    col_movement: { n: 'Phong trào đòi độc lập', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return 'Phong trào chống ách ' + (c.colony || 'thuộc địa') + ' lan tới vùng bạn sống: truyền đơn, họp kín, những vụ bắt bớ; ai cũng phải chọn một thái độ.'; }, o: function (l, c) { return [
+      { k: 'join', l: 'Tham gia hoạt động, đi theo phong trào', h: 'Có thể được trọng dụng sau độc lập; rủi ro bị bắt hoặc chết', run: function (l, r, log) { l.flags.indep945 = 'fighter'; H.fx(l, { soc: 3, hap: -2 }); if (r() < [0, 0.04, 0.1, 0.18][Math.max(1, Math.min(3, c.war || 1))]) { H.kill(l, 'bị bắt và hy sinh trong phong trào đòi độc lập', log, false); return; } if (!jailRisk(l, 0.3, 2, 'hoạt động chống chính quyền thuộc địa', r, log)) log('Bạn đi theo phong trào, làm liên lạc và tải lương; mỗi ngày đều có thể bị bắt.', 'big'); } },
+      { k: 'support', l: 'Âm thầm giúp đỡ: cơm gạo, chỗ ở, tin tức', h: 'Giữ được gia đình, rủi ro vừa', run: function (l, r, log) { l.flags.indep945 = l.flags.indep945 || 'supporter'; H.fx(l, { soc: 1, hap: -1 }); H.cash(l, -0.04 * l.base, 'Giúp đỡ phong trào'); if (r() < 0.12) { H.cash(l, -0.1 * l.base, 'Bị lục soát và tịch thu'); log('Nhà bạn bị lính lục soát vì nghi chứa chấp; mất một phần của cải.', 'bad'); } else log('Cả nhà lặng lẽ chia sẻ gạo và chỗ ngủ, giữ kín chuyện.', 'neutral'); } },
+      { k: 'stay', l: 'Giữ im lặng, lo việc nhà', h: 'An toàn tương đối, không ai cảm kích', run: function (l, r, log) { H.fx(l, { hap: -1 }); log('Bạn không dính vào chuyện chính trị, lo sinh kế; người này nghĩ bạn khôn, người kia nghĩ bạn nhát.', 'neutral'); } },
+      { k: 'inform', l: 'Báo cho chính quyền biết · nặng nề lương tâm', h: 'Được thưởng và bảo vệ, nhưng bị làng khinh', run: function (l, r, log) { l.flags.indep945 = 'informer'; H.cash(l, 0.1 * l.base, 'Tiền thưởng báo tin'); H.fx(l, { soc: -8, hap: -6 }); log('Bạn khai báo cho sở mật thám; bạn được thưởng, nhưng hàng xóm từ đó tránh mặt gia đình bạn.', 'bad'); } }]; } },
+    land: { n: 'Cải cách ruộng đất, tập thể hóa, quốc hữu hóa', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return (c.soc.land ? c.soc.land.n : 'Chính sách ruộng đất mới') + ': tài sản được kê khai và phân loại lại; ' + clsText(l) + '.'; }, o: function (l, c) { var k = cls(l); return [
+      { k: 'comply', l: k === 'poor' ? 'Nhận phần ruộng, phần nhà được chia' : 'Khai đúng và giao nộp theo quy định', h: k === 'poor' ? 'Có thêm tư liệu sản xuất' : 'Mất phần tài sản vượt mức quy định', run: function (l, r, log) { if (k === 'poor') { H.cash(l, 0.15 * l.base, 'Được chia ruộng vườn'); H.fx(l, { hap: 4 }); log('Gia đình bạn được chia một mảnh ruộng; lần đầu có đất riêng để cấy.', 'good'); } else if (k === 'middle') { H.cash(l, -0.1 * l.base, 'Giao nộp theo quy định'); H.fx(l, { hap: -2 }); log('Gia đình bị xếp vào diện phải giao nộp một phần ruộng và nông cụ.', 'bad'); } else { H.cash(l, -0.35 * l.base, 'Tịch thu và giao nộp tài sản'); H.fx(l, { hap: -6, soc: -3 }); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'hardship', 2); log('Phần lớn ruộng đất, nhà cửa của gia đình bị tịch thu hoặc giao nộp; cả nhà phải dọn ra ở nhờ.', 'bad'); } } },
+      { k: 'hide', l: 'Giấu bớt của cải, khai nhỏ lại', h: 'Giữ được ít nhiều, nếu bị phát hiện bị xử nặng', run: function (l, r, log) { if (r() < 0.4) { H.cash(l, -0.3 * l.base, 'Bị phạt vì khai gian'); H.fx(l, { hap: -6, soc: -4 }); jailRisk(l, 0.35, 2, 'khai gian tài sản', r, log); log('Việc giấu của bị tố giác; gia đình bị phạt nặng và mang tiếng.', 'bad'); } else { H.cash(l, -0.08 * l.base, 'Giao nộp một phần'); log('Gia đình giấu được phần cốt lõi và chỉ nộp một phần; sống trong lo âu.', 'neutral'); } } },
+      { k: 'join', l: 'Tham gia ban hay đội thi hành', h: 'Có chỗ đứng, gánh nặng lương tâm', run: function (l, r, log) { H.cash(l, 0.05 * l.base, 'Phụ cấp tham gia thi hành'); H.fx(l, { soc: 3, hap: -3 }); l.flags.landBoard945 = true; log('Bạn nhận việc trong ban thi hành; có chỗ đứng trong bộ máy, nhưng phải tận mắt chứng kiến nhiều cảnh nặng nề.', 'neutral'); } },
+      { k: 'leave', l: 'Bỏ đi nơi khác, tìm đường ra nước ngoài · tốn kém', h: 'Bỏ lại tất cả', run: function (l, r, log) { H.cash(l, -0.3 * l.base, 'Chi phí bỏ đi'); H.fx(l, { hap: -5 }); if (!(E.CTX945.emigAllowed(l) && exile(l, r))) { if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); log('Gia đình bỏ làng đi nơi khác sống ẩn danh.', 'bad'); } } }]; } },
+    purge: { n: 'Chiến dịch chính trị và tố giác', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return (c.soc.purge ? c.soc.purge.n : 'Một chiến dịch chính trị') + ' lan tới nơi bạn sống: kiểm điểm, đấu tố, bắt bớ; một câu nói hay một lý lịch cũng có thể thành tội.'; }, o: function (l, c) { return [
+      { k: 'selfcrit', l: 'Làm bản kiểm điểm, theo đúng yêu cầu', h: 'An toàn tương đối, mất thể diện', run: function (l, r, log) { H.fx(l, { hap: -4, soc: -2 }); if (r() < 0.08 * Math.min(3, prom(l) + 1)) { jailRisk(l, 1, 1, 'bị quy vào diện nghi vấn', r, log); return; } log('Bạn viết bản kiểm điểm theo mẫu, đứng trước cuộc họp cho tới khi được cho qua.', 'bad'); } },
+      { k: 'denounce', l: 'Tố giác người khác để tự bảo vệ · nặng nề lương tâm', h: 'Thoát nạn, mất bạn bè, day dứt', run: function (l, r, log) { l.flags.denounced945 = true; H.fx(l, { hap: -8, soc: -10 }); l.karma = (l.karma || 0) - 6; log('Bạn khai tên một người quen để tự cứu mình; nhiều năm sau bạn vẫn nhớ ánh mắt người ấy.', 'bad'); H.mem(l, 'Cái tên bạn đã nói trong buổi họp năm ấy.', 8); } },
+      { k: 'resist', l: 'Từ chối kiểm điểm, giữ quan điểm', h: 'Giữ được lương tâm, rủi ro bị bắt nặng', run: function (l, r, log) { H.fx(l, { hap: -3, soc: 1 }); if (!jailRisk(l, 0.35 + 0.1 * c.purge, 3, 'chống chiến dịch chính trị', r, log)) { H.cash(l, -0.1 * l.base, 'Bị điều tra, tước phụ cấp'); log('Bạn từ chối kiểm điểm; công việc bị đình chỉ nhưng chưa bị bắt.', 'bad'); } } },
+      { k: 'leave', l: 'Rời nơi ở, tìm cách ra nước ngoài · tốn kém', h: 'Bỏ lại tất cả', run: function (l, r, log) { H.cash(l, -0.3 * l.base, 'Chi phí rời đi'); H.fx(l, { hap: -4 }); if (!(E.CTX945.emigAllowed(l) && r() < 0.6 && exile(l, r))) { if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); H.fx(l, { hap: -2 }); log('Bạn bỏ đi về vùng khác, sống kín tiếng; chưa tìm được đường ra nước ngoài.', 'bad'); } } }]; } },
+    expel: { n: 'Di dời và trục xuất', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return (c.soc.expel ? c.soc.expel.n : 'Một cuộc di dời lớn') + ': nhiều gia đình trong vùng phải rời nơi ở với rất ít thời gian chuẩn bị.'; }, o: function (l, c) { return [
+      { k: 'go', l: 'Lên đường cùng đoàn người', h: 'Mang theo ít đồ, đường dài nguy hiểm', run: function (l, r, log) { H.fx(l, { hap: -6, hea: -3 }); H.cash(l, -0.2 * l.base, 'Mất nhà cửa khi di dời'); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 3); if (r() < [0, 0.01, 0.03, 0.06][c.expel] * (l.age < 5 || l.age > 60 ? 2 : 1)) { H.kill(l, 'kiệt sức hoặc bạo lực trên đường di dời', log, false); return; } log('Gia đình bạn gom ít đồ đạc và đi cùng đoàn người rời quê; nhiều người không tới được nơi ở mới.', 'bad'); } },
+      { k: 'cross', l: 'Tìm đường sang nước khác xin cư trú · tốn kém', h: 'Có thể được nhận, có thể bị từ chối', run: function (l, r, log) { H.cash(l, -0.25 * l.base, 'Chi phí đường đi'); if (E.CTX945.emigAllowed(l) && exile(l, r)) { H.fx(l, { hap: -4 }); log('Sau nhiều tháng chờ đợi giấy tờ ở trại và biên giới, gia đình được nhận cư trú ở nước mới; tình trạng ban đầu rất bấp bênh.', 'big'); } else { H.fx(l, { hap: -5 }); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); log('Gia đình bị chặn ở biên giới và quay lại sống tạm ở vùng khác.', 'bad'); } } },
+      { k: 'hide', l: 'Ở lại, nhờ người quen che giấu', h: 'Giữ nhà nếu may, rủi ro rất cao', run: function (l, r, log) { if (r() < [0, 0.04, 0.12, 0.25][c.expel]) { H.kill(l, 'bị phát hiện khi ở lại giữa cuộc di dời', log, false); return; } H.fx(l, { hap: -5, soc: -2 }); log('Gia đình bạn tìm được nơi ẩn ở nhà một người quen, sống nhiều tháng không dám ra ngoài.', 'bad'); } }]; } },
+    hyp_savings: { n: 'Tiền mất giá, tiền tiết kiệm tan biến', soc: true, when: function () { return false; }, w: 0, t: function (l, c) { return 'Đồng tiền mất giá từng ngày' + (c.labels.econ ? ' (' + c.labels.econ + ')' : '') + '; tiền tiết kiệm đang bốc hơi nhanh hơn lương tăng.'; }, o: function (l, c) { return [
+      { k: 'gold', l: 'Đổi tiền ra vàng, hàng hóa', h: 'Giữ được phần lớn giá trị, khó đổi lại', run: function (l, r, log) { var m = Math.max(0, l.money); H.cash(l, -0.12 * m, 'Hao hụt khi đổi tiền ra vàng và hàng'); log('Bạn kịp đổi phần lớn tiền ra vàng và hàng hóa trước khi giá nhảy tiếp.', 'neutral'); } },
+      { k: 'dollar', l: 'Mua ngoại tệ, gửi qua người quen', h: 'Giữ giá trị khá tốt, có rủi ro pháp lý', run: function (l, r, log) { var m = Math.max(0, l.money); H.cash(l, -0.18 * m, 'Chênh lệch khi đổi ngoại tệ'); if (r() < 0.1) { H.cash(l, -0.1 * m, 'Bị tịch thu ngoại tệ'); log('Một phần ngoại tệ bị tịch thu khi kiểm tra.', 'bad'); } else log('Bạn đổi một phần tiền sang ngoại tệ thông qua người quen.', 'neutral'); } },
+      { k: 'hold', l: 'Giữ tiền mặt, tin là sẽ ổn lại', h: 'Mất phần lớn giá trị', run: function (l, r, log) { var m = Math.max(0, l.money); H.cash(l, -(0.5 + 0.1 * c.econ) * m, 'Tiền mất giá'); H.fx(l, { hap: -5 }); log('Tiền để trong nhà mất gần hết sức mua chỉ sau vài tháng; nhiều năm tiết kiệm tan thành không.', 'bad'); } },
+      { k: 'spend', l: 'Tiêu và trữ lương thực ngay', h: 'Không mất giá trị nhưng cạn tiền mặt', run: function (l, r, log) { var m = Math.max(0, l.money); H.cash(l, -0.6 * m, 'Mua trữ hàng thiết yếu'); H.fx(l, { hap: 1 }); log('Bạn dùng tiền mua gạo, dầu và vật dụng thiết yếu trữ cho cả năm; tiền mặt cạn nhưng nhà đủ ăn.', 'neutral'); } }]; } }
+  });
+  function socialKinds(l, c) {
+    var s = st(l), y = wy(l), out = [];
+    function once(k, tag, yrs) { var key = k + ':' + tag, last = s.noted[key]; if (last != null && y - last < (yrs || 99)) return false; return true; }
+    function mark(k, tag) { s.noted[k + ':' + tag] = y; }
+    var male = l.sex === 'M';
+    if (c.colony && !c.soc.colony) {
+      if (l.age >= 16 && l.age <= 60 && once('col_tax', 'a', 2) && r2(l, 'ctax:' + y) < 0.25) out.push(['col_tax', 'a', 0.9]);
+      if (l.age >= 10 && l.age <= 15 && once('col_exam', 'a', 99) && r2(l, 'cexam:' + y) < 0.5) out.push(['col_exam', 'a', 1]);
+      var world = (y >= 1914 && y <= 1918) || (y >= 1939 && y <= 1945);
+      if (male && l.age >= 17 && l.age <= 45 && (world || c.war >= 2) && once('col_levy', 'a', 4) && r2(l, 'clev:' + y) < 0.3) out.push(['col_levy', 'a', 1]);
+      if (l.age >= 16 && c.war >= 1 && once('col_movement', 'a', 3) && r2(l, 'cmov:' + y) < 0.3) out.push(['col_movement', 'a', 1]);
+    }
+    ['land', 'purge', 'expel'].forEach(function (k) {
+      var sc = c.soc && c.soc[k]; if (!sc || l.age < (k === 'expel' ? 0 : 14)) return;
+      var tag = sc.n; if (!once(k, tag, k === 'purge' ? 3 : 99)) return;
+      var share = sc.share * (k === 'purge' ? 0.6 + 0.2 * prom(l) : 1); if (r2(l, 'expo:' + k + ':' + tag) >= Math.min(0.95, share)) return;
+      if (r2(l, 'pick:' + k + ':' + y) < (k === 'expel' ? 0.7 : 0.45)) out.push([k, tag, 1]);
+    });
+    if (c.econ >= 3 && c.econKind === 'hyp' && l.age >= 18 && l.money > l.base * 0.3 && once('hyp_savings', c.labels.econ || 'h', 99) && r2(l, 'hyp:' + y) < 0.6) out.push(['hyp_savings', c.labels.econ || 'h', 1]);
+    return out;
+  }
+  function socialTrigger(l, c, r) {
+    if ((l.pending || []).some(function (d) { return d.id === 'ctx945_event'; })) return;
+    var ks = socialKinds(l, c); if (!ks.length) return;
+    var pick = ks[Math.floor(r() * ks.length)], s = st(l); s.noted[pick[0] + ':' + pick[1]] = wy(l);
+    X.next(l, 'ctx945_event', r, { kind: pick[0], y: wy(l) }, { manual: false });
+  }
+  // Hết thời thuộc địa: dấu ấn của những lựa chọn trước đó
+  function colonyEnd(l, c, log) {
+    var s = st(l), y = wy(l); if (s.noted.colEnd || c.colony) return;
+    var prev = at(resCc(l), y - 1); if (!prev.colony) return; s.noted.colEnd = y;
+    var f = l.flags.indep945;
+    log('Năm ' + y + ' đất nước chấm dứt ách ' + prev.colony + '. ' + (f === 'fighter' ? 'Những năm hoạt động của bạn được ghi nhận; bạn có chỗ đứng trong chính quyền mới.' : f === 'informer' ? 'Việc bạn từng báo tin cho chính quyền cũ bị nhắc lại; bạn bị xa lánh.' : f === 'supporter' ? 'Cả xóm biết nhà bạn từng giúp đỡ phong trào; bạn được trọng nể.' : 'Bạn vừa mừng vừa lo vì mọi thứ sắp thay đổi.'), f === 'informer' ? 'bad' : 'big');
+    if (f === 'fighter') { H.fx(l, { soc: 6, hap: 4 }); l.flags.statusHero945 = true; } else if (f === 'informer') { H.fx(l, { soc: -8, hap: -4 }); } else if (f === 'supporter') H.fx(l, { soc: 3 });
+    if (l.flags.colSchool945 && l.age >= 18) { H.fx(l, { soc: 2 }); log('Vốn chữ và tiếng chính quốc của bạn được cần đến khi cơ quan mới thiếu người biết chữ.', 'good'); }
+  }
   function kindsFor(l, c) { return Object.keys(EV).filter(function (k) { return EV[k].when(c, l); }); }
   function pickKind(l, c, r) { var ks = kindsFor(l, c); if (!ks.length) return null; return U.wpick(r, ks, function (k) { return EV[k].w; }); }
   X.menu('ctx945_event', 'Việc của thời buổi khó khăn', function (l) { return X.reason(l, 3); }, function (l, d) { var a = d && d.arg || {}, c = of(l), e = EV[a.kind]; return e ? e.n + '. ' + e.t(l, c) + ' Hoàn cảnh chung: ' + (labelOf(c) ? labelOf(c)[1] : 'thời kỳ khó khăn') + '.' : 'Chuyện này không còn hiệu lực.'; }, function (l, arg) { var e = EV[arg && arg.kind], c = of(l); return e ? e.o(l, c).map(function (o) { return Object.assign({ why: true }, o); }) : []; }, 3);
@@ -228,5 +340,5 @@
   // ------------------------------------------------------------------
   // 6. Bảng tra cứu và thử nghiệm
   // ------------------------------------------------------------------
-  E.CTX945 = { emigAllowed: emigAllowed, EMIG: EMIG, colonyAt: colonyAt, of: of, at: at, pov: pov, hazard: hazard, eventK: eventK, customAllowed: customAllowed, CUSTOMS: CUSTOMS, EV: EV, incomeK: incomeK, foodK: foodK, IDX: IDX, GLOBAL: GLOBAL, labelOf: labelOf, kindsFor: kindsFor, schoolOptionOk: schoolOptionOk, DATA: D };
+  E.CTX945 = { socialKinds: socialKinds, exile: exile, cls: cls, derive: derive, zoneRows: zoneRows, ZONEX: ZONEX, SOCX: SOCX, emigAllowed: emigAllowed, EMIG: EMIG, colonyAt: colonyAt, of: of, at: at, pov: pov, hazard: hazard, eventK: eventK, customAllowed: customAllowed, CUSTOMS: CUSTOMS, EV: EV, incomeK: incomeK, foodK: foodK, IDX: IDX, GLOBAL: GLOBAL, labelOf: labelOf, kindsFor: kindsFor, schoolOptionOk: schoolOptionOk, DATA: D };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

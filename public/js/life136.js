@@ -25,7 +25,7 @@ function why(l){var w=X.reason(l,16);return w!==true?w:student(l)?true:'Cần đ
 X.menu('studyReview136','Tiến độ đại học và điều kiện tốt nghiệp',why,function(l){
   var s=state(l);
   return 'Chương trình: '+(l.uniName||l.majorName||'đại học')+'.\n'+checklist(l)+
-    '\nHạn dự kiến: '+s.due+' tuổi; kỳ xét tiếp theo: '+l.schoolEnd+' tuổi; tối đa 4 năm gia hạn trong game. Hoàn tất các điều kiện để được xét bằng khi kết thúc năm học.';
+    '\nHạn dự kiến: '+s.due+' tuổi; kỳ xét tiếp theo: '+(l.schoolEnd!=null?l.schoolEnd:s.due)+' tuổi; tối đa 4 năm gia hạn trong game. Hoàn tất các điều kiện để được xét bằng khi kết thúc năm học.';
 },function(l){
   var language=E.EDU111.exitRequirement(l),q=C.p(l);
   var rows=[{k:'credits',l:'Xem tín chỉ, học lại hoặc bổ sung chuyên cần',why:actionReason(l,'student121'),run:function(l,r){X.next(l,'student121',r);}}];

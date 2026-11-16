@@ -60,3 +60,43 @@ Trần kiến thức bão hòa mềm (`KNOW_KNEE853=90`, độ dốc 0,5) cộng
 - Thời thuộc địa chủ yếu hiện qua ghi chú và hạn chế; chưa có chuỗi sự kiện riêng cho từng thuộc địa.
 - Bản lưu cũ: đời đang chơi tiếp tục bình thường, các trường mới được tính khi cần; không đổi định dạng lưu.
 - Đời sinh 1950 trở đi ở nước và năm không có biến cố gần như không đổi; kết quả thống kê dao động giữa các lần chạy vì dùng `Date` thật.
+
+---
+
+# Bản 9.5.1 — vùng trong nước, chính sách xã hội lớn, thuộc địa, đại học cho học sinh nổi bật và người sống ở nước khác
+
+## Bối cảnh theo vùng (`data-ctx951.js`, `ZONE`)
+61 dòng cho thành phố hoặc tỉnh chịu mức khác mức chung của nước. Nhân vật tra theo thành phố đang sống (`l.city`). Ví dụ: Hà Nội 1965–68 và cuối 1972 bị ném bom nặng, 1969–71 ngừng ném bom; Sài Gòn 1965–67 và 1969–74 tương đối yên; Nam Kỳ không bị nạn đói 1945; Biafra 1967–70 đói và chiến sự nặng trong khi Lagos ngoài vùng; Amsterdam 1944–45 đói còn Eindhoven đã giải phóng; Hiroshima 1945; Leningrad bị vây (nước Nga nói chung chỉ ở mức thiếu lương thực thời chiến); Thành Đô trong Đại nhảy vọt so với Thượng Hải được ưu tiên khẩu phần; Kharkiv so với Lviv năm 2023; Aleppo so với Damascus. Thành phố không có trong bảng dùng mức quốc gia. Mức chỉnh là cộng/trừ hoặc đặt mức (`'=3'`).
+
+## Chính sách xã hội lớn (`SOC`)
+57 dòng, ba loại: ruộng đất (`land`: cải cách ruộng đất, tập thể hóa, quốc hữu hóa), chiến dịch chính trị (`purge`: thanh trừng, đấu tố, kiểm điểm, giám sát), di dời (`expel`: chia cắt Ấn Độ – Pakistan, hoán đổi dân cư Hy Lạp – Thổ Nhĩ Kỳ, di dân sau Thế chiến II, vượt biên bằng thuyền, tị nạn Syria, Ukraina…). Mỗi dòng có mức (1–3) và tỷ lệ dân cư vùng chịu ảnh hưởng trực tiếp; một đời chỉ gặp sự kiện nếu "trúng" tỷ lệ đó (tính cố định theo mã đời nên không dao động giữa các lần mở). Không gán số phận theo sắc tộc hay tôn giáo; chiến dịch chính trị tăng xác suất theo mức nổi bật của hồ sơ (học vấn cao, gia đình có của, danh tiếng) như một biến tình huống.
+
+## Sự kiện mới (đều đi qua `ctx945_event`, có nhiều lựa chọn và hậu quả phụ thuộc hoàn cảnh)
+| Sự kiện | Điều kiện | Hậu quả chính |
+|---|---|---|
+| `land` | chính sách ruộng đất đang hiệu lực, nhân vật "trúng" tỷ lệ | nhà ít của được chia thêm, nhà vừa phải nộp một phần, nhà nhiều của mất nhiều; giấu của có thể bị phạt hoặc tù; tham gia ban thi hành; bỏ đi |
+| `purge` | chiến dịch chính trị | kiểm điểm, tố giác (mất bạn bè, lương tâm nặng, ghi nhớ trong đời), từ chối (rủi ro bị bắt), rời đi (bị chặn nếu nước đóng cửa) |
+| `expel` | di dời, chia cắt | đi theo đoàn người (mất nhà, nguy hiểm), sang nước khác xin cư trú (tạo hồ sơ tị nạn), ở lại ẩn náu (rủi ro rất cao) |
+| `col_tax` | thuộc địa | nộp thuế, làm phu thay thuế, né thuế, rời làng |
+| `col_exam` | thuộc địa, 10–15 tuổi | thi vào trường thuộc địa (xác suất theo học lực và hoàn cảnh nhà), học thầy đồ, ở nhà phụ việc |
+| `col_levy` | thuộc địa, nam, thế chiến hoặc chiến sự | nhập ngũ (đi nhiều năm, dùng cơ chế nghĩa vụ có sẵn), trốn, đút lót |
+| `col_movement` | thuộc địa có chiến sự | tham gia, giúp đỡ kín đáo, giữ im lặng, báo tin; khi hết thuộc địa nhật ký nhắc lại lựa chọn đó |
+| `hyp_savings` | siêu lạm phát, có tiền tiết kiệm | đổi vàng, mua ngoại tệ, giữ tiền mặt (mất phần lớn), tiêu và trữ hàng |
+
+## Thư mời nhập học và học bổng (`uni945.js`)
+Ngã rẽ sau phổ thông (`E.DEC.uni`) có thêm lựa chọn "Xem thư mời nhập học và học bổng" khi nhân vật có thành tích: huy chương quốc tế, giải quốc gia (tuyển thẳng), điểm thi xuất sắc. Điểm thành tích quyết định mức hỗ trợ (toàn phần, 50% hoặc 25% học phí). Gồm tối đa ba thư của trường trong nước (cao nhất, giữa, thấp nhất trong những trường đủ điều kiện, chỉ ngành hợp khối thi; trường năng khiếu giữ quy trình thi riêng) và tối đa hai thư du học (cần đủ ngôn ngữ giảng dạy, nước cho phép xuất cảnh theo bối cảnh, từ 1950). Chọn trường rồi chọn ngành, nhập học qua đúng hệ thống nguyện vọng có sẵn (móc `acceptedOffer872`). Học bổng được giữ nếu học lực khá; tụt dưới mức thì mất; học bổng toàn phần có trợ cấp sinh hoạt hằng năm. Thư du học đi tiếp vào chuỗi du học có sẵn (`abroad107_school`), xét học bổng trả đúng mức trong thư trong một năm. Có thể từ chối để tự đăng ký như thường.
+
+## Học đại học muộn ở nước đang sống (`uni945.js`, menu `lateUni945`)
+Dành cho người đang sống ở nước khác (tị nạn, thường trú, nhập quốc tịch) mới học tới phổ thông. Quyền đăng ký: công dân (học phí như người bản xứ); thường trú; người tị nạn được công nhận sau 2 năm (học phí cao hơn khoảng 1,5 lần); người mới đến hoặc chỉ cư trú tạm thì chưa, kèm lý do. Các bước: học bổ túc nếu chưa có bằng phổ thông; học năm dự bị (ngôn ngữ giảng dạy, bổ sung kiến thức) nếu chưa đủ ngôn ngữ; nộp hồ sơ (điểm đầu vào bị trừ nếu ngôn ngữ yếu, người tị nạn có thể bị trừ do bằng cấp cũ chưa được công nhận) rồi mở danh sách nguyện vọng của chính nước sở tại. Người chơi được hỏi lại mỗi vài năm (móc cuối năm, không thêm sự kiện ngẫu nhiên nên đời bình thường không đổi); chế độ tự động tự học dự bị rồi nộp hồ sơ.
+
+## Nợ sâu (`engine.js`)
+Khi tiền âm sâu (dưới −1 lần thu nhập cơ sở): ăn ở thanh đạm hơn (bớt tiền ăn, ở ghép/ở nhờ giảm tiền nhà, bớt đi lại). Không trả nổi ba năm liền ở mức sàn thì nợ được cơ cấu lại (thỏa thuận với chủ nợ). Tỷ lệ tài sản ròng âm nặng cuối đời ở Việt Nam đo được từ 10–13% xuống khoảng 6%.
+
+## Kiểm chứng
+`tests/ctx951.js` (1.087 kiểm tra), `tests/uni945.js` (232), `tests/ctx945.js` (2.356). `node tools/verify-ctx945.js <thư mục nguồn>`: nạn đói 79/79, chiến tranh mức 3 là 96/96 (Thời kỳ đặc biệt của Cuba và vài từ khóa đã bổ sung). Sửa các test cũ: nhật ký cập nhật (so sánh chuẩn hóa giờ và tiêu đề đã rút gọn, `tests/lib/update-compat.js`), `update460`, mục 21 và mục 9 của hồi quy (xem `KNOWN_UNCOVERED945`).
+
+## Giới hạn còn lại
+- 26 tình huống nối tiếp hoặc theo vai trò (hoàng gia, bóng đá, một số chuỗi tòa án) chưa có bối cảnh kiểm thử riêng; danh sách `KNOWN_UNCOVERED945` trong `tests/regression.js` chỉ được bớt đi.
+- Vùng chỉ có ở những nơi nêu trong bảng; thành phố khác dùng mức quốc gia. Việt Nam dùng tên tỉnh, các nước khác dùng danh sách thành phố của dữ liệu thế giới.
+- Chưa mô hình bản sắc nhóm (ví dụ nhóm bị nhắm tới trong một chiến dịch cụ thể): chỉ có tỷ lệ dân cư vùng chịu ảnh hưởng.
+- Hai test trình duyệt cũ (`browser-foundation-updates`, `update827-browser`) cần trình duyệt điều khiển được nên không chạy ở môi trường này.

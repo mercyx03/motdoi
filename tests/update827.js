@@ -1,4 +1,5 @@
 'use strict';
+require('./lib/update-compat');
 const fs=require('fs'),cp=require('child_process'),assert=require('assert');
 const data=JSON.parse(fs.readFileSync('public/data/updates.json','utf8')), old=JSON.parse(cp.execFileSync('git',['show','b15490d:public/data/updates.json'],{encoding:'utf8'}));
 const id='scandal-contract-quiz-827',entry=data.entries.find(e=>e.id===id);assert.equal(entry.id,id);assert.equal(entry.releaseStatus,'released');assert.equal(Date.parse(entry.releasedAt),Date.parse('2026-11-03T13:55:34+07:00'));assert.equal(data.entries.find(e=>e.version==='8.10.28').id,'olympia-culture-828');assert.equal(data.entries.find(e=>e.version==='8.10.28').releaseStatus,'released');assert.deepStrictEqual(data.entries.slice(data.entries.indexOf(entry)+1),old.entries,'all previous notes unchanged');
