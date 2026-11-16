@@ -5,7 +5,7 @@
       "id": "era-society-95500",
       "version": "9.5.5",
       "publishedAt": "2026-11-16T23:54:13+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Lương, giá và sự kiện đúng thời đại, phân biệt đối xử trong lịch sử",
       "summary": "Người sinh trước nay chỉ gặp những chuyện có thật vào thời của mình, với mức lương và giá cả của thời ấy.",
       "tags": [
@@ -22,7 +22,8 @@
         "Vận động viên chuyên nghiệp ngoài bóng đá có hợp đồng nhiều năm với mức sàn tăng theo năm; ca sĩ, diễn viên, doanh nhân thu nhập lớn không còn chi sinh hoạt ăn hết phần dư.",
         "Bỏ chữ \"(hư cấu)\" khỏi tên công ty và chương trình."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-16T21:57:56.000Z",
+      "correctedAt": "2026-11-16T21:57:57.097Z"
     },
     {
       "id": "economy-era-95400",
