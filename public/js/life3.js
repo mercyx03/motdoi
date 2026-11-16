@@ -112,10 +112,12 @@
   // người làm công ăn lương ở khu vực chính thức đóng BHXH 8% · BHYT 1,5% · BHTN 1% (tối đa trên 46,8 triệu/tháng)
   function insured(l) {
     var c = jobC(l);
-    return !!(c && (E.pensionCovered ? E.pensionCovered(l, c) : c.sec === 'formal' && H.isEmployee(l)) && c.id !== 'xkld' && !l.pensioned && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && !l.abroad.perm) && !(l.jailUntil != null && l.age < l.jailUntil));
+    return !!(c && eraInsured(l, c) && (E.pensionCovered ? E.pensionCovered(l, c) : c.sec === 'formal' && H.isEmployee(l)) && c.id !== 'xkld' && !l.pensioned && !(l.flags.military && l.age < l.flags.military) && !(l.abroad && !l.abroad.perm) && !(l.jailUntil != null && l.age < l.jailUntil));
   }
   E.insured = insured;
-  function siRate(l) { return H.inVN(l) ? 0.105 : 0.08; }
+  // 9.5.5: Việt Nam: mức đóng của người lao động theo năm (BHXH 1995; BHYT; BHTN 2009); trước 1995 chỉ khu vực nhà nước có bảo hiểm
+  function siRate(l) { if (!H.inVN(l)) return 0.08; var y = l.birthYear + l.age; return !l.era920 || y >= 2018 ? 0.105 : y >= 2012 ? 0.105 : y >= 2010 ? 0.095 : y >= 2009 ? 0.075 : y >= 1995 ? 0.06 : 0.05; }
+  function eraInsured(l, c) { if (!l.era920 || !H.inVN(l)) return true; var y = l.birthYear + l.age; if (y >= 1995) return true; if (y < 1962) return false; return c.cat === 'state' || c.cat === 'uniform' || (E.isStableService && E.isStableService(l)); }
   E.siLabel = function (l) { return H.inVN(l) ? 'BHXH, BHYT, BHTN' : 'bảo hiểm xã hội & y tế'; };
   var LVN = ['Mới tập', 'Làm quen', 'Khá', 'Giỏi', 'Rất giỏi', 'Xuất sắc', 'Tinh anh', 'Chuyên nghiệp', 'Bậc thầy', 'Huyền thoại'];
   function tLevel(sk) { return Math.min(10, 1 + Math.floor((sk || 0) / 10)); }

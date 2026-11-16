@@ -33,5 +33,15 @@
   E.createLife = function () { var l = create.apply(this, arguments); if (l && l.era920 && l.flags && l.flags.eraK954 == null) apply(l); return l; };
   // mỗi năm thu nhập lớn theo nền kinh tế (chạy trước các hook khác để cả năm dùng cùng một mức)
   E.HOOKS.year.unshift(function (l) { if (l && l.alive && l.era920) apply(l); });
+  // 9.5.5: chi tiêu sinh hoạt không tăng mãi theo thu nhập — phần chi vượt 60 lần thu nhập cơ sở mỗi năm chỉ còn một phần tư; phần dư vào tiền mặt và tài sản ròng.
+  // Áp cho mọi nghề thu nhập lớn (cầu thủ, vận động viên, ca sĩ, diễn viên, doanh nhân); cầu thủ đã được tính riêng ở football.js nên bỏ qua.
+  var finish = E.finishYear;
+  E.finishYear = function (l) {
+    var out = finish.apply(this, arguments), f = l && l.fin;
+    if (!f || f.capped955 || !(f.life > 0) || !(l.money >= 0) || !(l.base > 0)) return out;
+    f.capped955 = true; var cap = 60 * l.base, cut = Math.max(0, f.life - cap) * 0.75;
+    if (cut > 0) { l.money += cut; f.life -= cut; f.spend -= cut; f.save += cut; }
+    return out;
+  };
   E.PRICE954 = { rel: rel, apply: apply };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

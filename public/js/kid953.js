@@ -400,5 +400,5 @@
     ]
   }, null, 0.8);
 
-  E.KID953 = { crowd: crowd, access: access, eyes: eyes, lostOk: lostOk, turbulent: turbulent, newSib: newSib, hs: hs, lostRun: lostRun, sepRun: sepRun, patchLost: patchLost };
+  E.KID953 = { KID: KID, access: access, cx: cx, dev: dev, hs: hs, carer: carer, eyes: eyes, V: V, bill: bill, turbulent: turbulent, crowd: crowd, access: access, eyes: eyes, lostOk: lostOk, turbulent: turbulent, newSib: newSib, hs: hs, lostRun: lostRun, sepRun: sepRun, patchLost: patchLost };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

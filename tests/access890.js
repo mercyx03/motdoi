@@ -31,5 +31,5 @@ ok(A.wrapped===A.IDS.length,'đã bọc toàn bộ trigger phụ thuộc interne
 {const ids=E.TRIG.filter(x=>!A.IDS.includes(x.id));ok(ids.length>500&&ids.every(x=>!x.access890),'trigger khác không bị bọc');}
 // chạy nhiều đời ở nước ít internet và nhiều internet: không lỗi, ít sự kiện internet hơn
 {const count=(cc,seeds)=>{let c=0;for(let s=1;s<=seeds;s++){const l=E.createLife({mode:'world',country:cc,seed:9300+s,year:2026});E.runHeadless(l);ok(isFinite(l.money),'tiền hữu hạn '+cc);c+=l.log.filter(e=>/TikTok|mạng xã hội|livestream|giao hàng qua ứng dụng|freelance/i.test(e.t||'')).length;}return c;};
- const low=count('SS',25),high=count('KR',25);ok(high>=low,'nước phổ cập có không ít hơn sự kiện internet ('+high+' vs '+low+')');}
+ const low=count('SS',70),high=count('KR',70);ok(high>=low,'nước phổ cập có không ít hơn sự kiện internet ('+high+' vs '+low+')');}
 console.log('PASS access890: '+n+' checks');

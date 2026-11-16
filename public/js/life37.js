@@ -3,7 +3,7 @@
    · tuổi thơ như mọi bạn khác; khoảng 12–13 tuổi nhận ra mình rung động với ai
    · tình huống: thầm thương bạn cùng lớp, nói với bạn thân, bố mẹ giục cưới, đi VietPride, ra mắt người yêu cùng giới với gia đình,
      về chung một nhà, hàng xóm / chủ nhà dò hỏi, hội bạn trêu "ai là tóp mỡ, ai là bột tôm", bị hiểu lầm "song tính là chưa quyết định"…
-   Nhân vật và tình huống đều hư cấu, viết với tinh thần tôn trọng. */
+   Nhân vật và tình huống đều, viết với tinh thần tôn trọng. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;

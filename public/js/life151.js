@@ -4,7 +4,7 @@
    · E.QUIZ151: câu hỏi sinh theo quy tắc (toán, logic, quy luật, đơn vị, thời gian…) và từ bảng dữ kiện đã kiểm chứng
      (thủ đô, hành tinh, nguyên tố, mốc lịch sử, văn học, khoa học…). Đáp án được tính / tra lại tự động; không dùng AI trả phí.
    · Trạng thái từng cuộc thi lưu trong bản lưu (câu hỏi đang hỏi, chuỗi đúng, tiền tích lũy) nên tải lại không đổi câu, không nhận thưởng hai lần.
-   · Format là mô phỏng lấy cảm hứng từ chương trình thật; diễn biến, câu hỏi và người chơi khác đều hư cấu. */
+   · Format là mô phỏng lấy cảm hứng từ chương trình thật; diễn biến, câu hỏi và người chơi khác đều. */
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110;

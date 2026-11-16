@@ -126,7 +126,7 @@
 
   // ===================== Tóc và hiến tóc =====================
   // Tóc mọc khoảng 12–15 cm mỗi năm (tham số gameplay). Hai chương trình hiến tóc dưới đây là HƯ CẤU, điều kiện khác nhau.
-  var HAIR = [{ k: 'p1', n: 'Chương trình làm tóc giả cho bệnh nhi (hư cấu)', min: 20, dyed: true, bleached: false }, { k: 'p2', n: 'Quỹ tóc giả cộng đồng (hư cấu)', min: 30, dyed: true, bleached: true }];
+  var HAIR = [{ k: 'p1', n: 'Chương trình làm tóc giả cho bệnh nhi', min: 20, dyed: true, bleached: false }, { k: 'p2', n: 'Quỹ tóc giả cộng đồng', min: 30, dyed: true, bleached: true }];
   // Routine trims maintain a personal length unless the player chooses to grow it out.
   function groomedLength(l) {
     var r = rng(l.id + ':hair915'), target = Math.round(3 + r() * (l.sex === 'F' ? 30 : 9));

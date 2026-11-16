@@ -624,7 +624,7 @@
     if (people[id]) return people[id];
     var r = E.LIFE138.random(l.id + ':' + id);
     q.actor = id;
-    var p = E.LIFE138.person(l, id, H.stranger(l, r, 'F'), 'F', l.birthYear - 8, e.kind === 'education' ? 'người tư vấn học tập hư cấu' : e.kind === 'work' ? 'người phụ trách công việc hư cấu' : 'người quen địa phương hư cấu', [e.countryCode]);
+    var p = E.LIFE138.person(l, id, H.stranger(l, r, 'F'), 'F', l.birthYear - 8, e.kind === 'education' ? 'người tư vấn học tập' : e.kind === 'work' ? 'người phụ trách công việc' : 'người quen địa phương', [e.countryCode]);
     p.goal173 = e.goal; return p;
   }
   function caseRecord(l, e, q, choice, text) {

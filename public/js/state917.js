@@ -7,7 +7,7 @@
    · Người được nâng đỡ (đồng minh): nhớ người đã giúp, có thể hỗ trợ phối hợp hoặc bất đồng; không bảo đảm thăng chức.
    · Dự án công: ngân sách đơn vị tách hẳn tiền riêng của người chơi, giới hạn 2 dự án, tiến độ nhiều năm, biến số ngoài kiểm soát,
      thất bại/giải trình. Từ nhiệm có xác nhận; kỷ luật khi liêm chính thấp có quy trình giải trình.
-   Cơ quan và người trong game là hư cấu theo cấu trúc; danh sách bộ theo cơ cấu Chính phủ từ 2025 (14 bộ, 3 cơ quan ngang bộ)
+   Cơ quan và người trong game là theo cấu trúc; danh sách bộ theo cơ cấu Chính phủ từ 2025 (14 bộ, 3 cơ quan ngang bộ)
    là mô phỏng giản lược, cần đối chiếu khi thay đổi. */
 (function (G) {
   'use strict';

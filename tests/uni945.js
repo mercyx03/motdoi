@@ -11,7 +11,7 @@ function to(l, age) { while (l.alive && l.age < age) yearOf(l); return l; }
 // học sinh đang ở ngã rẽ 18 tuổi (decision 'uni' đang chờ), có thể gắn thành tích
 function atCrossroads(seed, tweak, Ex) {
   // hạt giống chỉ là điểm xuất phát: lấy đời đầu tiên còn sống tới ngã rẽ đại học
-  for (let s = seed; s < seed + 60; s++) { const l = crossroads(s, tweak, Ex); if (l.alive && l.pending[0] && l.pending[0].id === 'uni' && (!tweak || l.pending[0].opts.some(o => o.k === 'offers945'))) return l; }
+  for (let s = seed; s < seed + 60; s++) { const l = crossroads(s, tweak, Ex); if (l.alive && l.pending[0] && l.pending[0].id === 'uni' && (!tweak || l.pending[0].opts.some(o => o.k === 'offers945') && UN.offers(l).some(o => o.t !== 'foreign'))) return l; }
   return crossroads(seed, tweak, Ex);
 }
 function crossroads(seed, tweak, Ex) {

@@ -5,7 +5,7 @@
      hạng A → ngôi sao) theo đúng bậc nghề sẵn có, dựa trên vai đã đóng, giải thưởng, danh tiếng.
    · Phim thành công / đoạt giải → lời mời quảng bá trên Running Man, 2 Ngày 1 Đêm (life48) hoặc chương trình Hàn Quốc;
      ngôi sao được mời làm giám khảo Gương Mặt Thân Quen. Có đường chuyển sang đạo diễn (xưởng phim life60) hoặc làm nhà sản xuất.
-   Dự án, đạo diễn, bạn diễn, doanh thu và giải thưởng là mô phỏng hư cấu. */
+   Dự án, đạo diễn, bạn diễn, doanh thu và giải thưởng là mô phỏng. */
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, SH = E.SHOW151, C = E.ELITE148;

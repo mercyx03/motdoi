@@ -5,7 +5,7 @@
    · Running Man Việt Nam / 2 Ngày 1 Đêm (life48) giữ nguyên mùa quay, cát-xê, số tập; các chặng đặc trưng (săn manh mối, xé bảng tên,
      giành bữa tối, giành chỗ ngủ) nay được quyết định bằng trò chơi nhỏ tương ứng.
    · Chương trình mới qua E.SHOW151: Running Man Hàn Quốc, New Journey to the West, The Genius, The Devil's Plan, Bloody Game.
-   Mọi diễn biến, khách mời và người chơi khác là mô phỏng hư cấu. */
+   Mọi diễn biến, khách mời và người chơi khác là mô phỏng. */
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, SH = E.SHOW151, C = E.ELITE148;

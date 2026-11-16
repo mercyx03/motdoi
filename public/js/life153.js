@@ -6,7 +6,7 @@
      chọn nón vàng, thử giọng với ba giám khảo, đối đầu, loại trực tiếp, liveshow bình chọn, mặt nạ — chấm theo kỹ năng thật (life138),
      bài hát chọn, chuẩn bị, danh tiếng và câu chuyện. Người nổi tiếng có thể làm huấn luyện viên / giám khảo.
    · Người dẫn Người Ấy Là Ai, Đảo Thiên Đường, Bạn Muốn Hẹn Hò (life41) giữ nguyên.
-   Format là mô phỏng lấy cảm hứng từ chương trình thật; thí sinh, giám khảo, diễn biến đều hư cấu. */
+   Format là mô phỏng lấy cảm hứng từ chương trình thật; thí sinh, giám khảo, diễn biến đều. */
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, SH = E.SHOW151, C = E.ELITE148;

@@ -1,5 +1,5 @@
 /* Đường tối 912 — đàn em là NPC, địa bàn, đánh giá rủi ro, tổng hợp án, uy tín khi quay lại nghề.
-   Cơ chế hư cấu bằng chỉ số trừu tượng; không mô tả cách thực hiện hay né tránh điều tra ngoài đời.
+   Cơ chế bằng chỉ số trừu tượng; không mô tả cách thực hiện hay né tránh điều tra ngoài đời.
    · Mở rộng CRIME911 (crime-depth.js: hồ sơ điều tra, sức ép, nhóm) và "thế giới ngầm" (life47: đánh úp, truy sát), không thay thế.
    · Đàn em: vai trò (bảo vệ, cảnh giới, kế toán, thương lượng, hậu cần), kỹ năng, tính cách, lòng tin, phần chia, lịch sử; có thể rời
      nhóm hoặc trở thành người cung cấp thông tin khi bị đối xử tệ. Vai trò giảm rủi ro thật nhưng có trần — không có miễn trừ 100%.

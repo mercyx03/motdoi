@@ -59,7 +59,7 @@
   function pool(l){if(!free(l)||!l.job)return[];var c=E.jobDef(l),s=state(l);if(!c||l.job.id==='an_xin'||c.sec==='crime'||(s.at===l.age&&s.count>=2))return[];return cases.filter(function(x){var at=s.seen[l.job.id+':'+x.id];return x.cat===c.cat&&(at==null||l.age-at>=4);});}
   function token(l){if(!l.job.storyToken){l.flags.careerStorySerial=(l.flags.careerStorySerial||0)+1;l.job.storyToken=l.flags.careerStorySerial;}return l.job.storyToken;}
   function valid(l,d){if(!d||!d.caseId)return pool(l).length>0;return !!(l.job&&d.at===l.age&&d.job===l.job.id&&d.token===token(l)&&d.rank===(l.job.rank||0)&&pool(l).some(function(c){return c.id===d.caseId;}));}
-  function cost(l){return l.cur==='vnd'?.8:l.base*.8/90;}
+  function cost(l){return l.cur==='vnd'?.8*((l.flags&&l.flags.eraK954)||1):l.base*.8/90;}
   function outcome(l,r,log,d,k){if(!valid(l,d))return;var s=state(l),c=cases.filter(function(x){return x.id===d.caseId;})[0];if(k==='learn'&&l.money<cost(l))return;if(s.at!==l.age){s.at=l.age;s.count=0;}s.count++;s.seen[l.job.id+':'+c.id]=l.age;
     var rep=k==='care'?3:k==='learn'?4:k==='rush'?-4:0;l.job.rep=U.clamp((l.job.rep==null?50:l.job.rep)+rep,0,100);
     if(k==='learn'){H.cash(l,-cost(l),'Bồi dưỡng kỹ năng nghề');H.fx(l,{kno:1});log(c.title+': bạn tự chi '+H.money(l,cost(l))+' từ tiền riêng để bồi dưỡng kỹ năng; chưa đồng nghĩa được thăng chức.','neutral');}

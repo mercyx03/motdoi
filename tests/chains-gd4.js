@@ -211,7 +211,7 @@ ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
   B.alive = false;
   C.yearly(l, H.rf(l), say(l), l.age);
   ok(C.active(l, 'friend'), 'friend: người trùng tên qua đời không làm hủy chuỗi');
-  const l2 = clone(l); l2.friends.concat([l2.bff]).filter(f => f && f.uid110 === A.uid110).forEach(f => { f.alive = false; });
+  const l2 = clone(l); l2.friends.concat([l2.bff]).filter(f => f && f.uid110 === A.uid110).forEach(f => { f.alive = false; }); { const q = E.NPC.find(l2, A.uid110); if (q && q.obj) q.obj.alive = false; }
   C.yearly(l2, H.rf(l2), say(l2), l2.age);
   ok(!C.active(l2, 'friend') && chains(l2).done.some(x => x.result === 'gone'), 'friend: đúng người ấy qua đời → hủy chuỗi');
   l.job = null; l.retired = false; l.money = -l.base;

@@ -3,7 +3,7 @@
    · Em xinh "Say Hi" (ca sĩ nữ trẻ): cùng thể thức
    · Anh trai vượt ngàn chông gai (nghệ sĩ nam có tên tuổi, từ 30 tuổi): Đêm Hội ngộ → Công diễn 1 → 5 → Đêm chung kết (Gia tộc Anh tài Toàn năng)
    Mỗi vòng ghép đội ngẫu nhiên với các anh trai / em xinh / anh tài thật của chương trình; có thể bị loại rồi được bình chọn cứu / hồi sinh, hoặc vô địch nếu đủ mạnh.
-   Diễn biến hư cấu, chỉ mô phỏng thể thức chương trình. */
+   Diễn biến, chỉ mô phỏng thể thức chương trình. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;

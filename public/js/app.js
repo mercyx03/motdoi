@@ -134,7 +134,8 @@
     if (o.colony) p.push('thuộc ' + o.colony);
     if (o.restrict >= 2) p.push('hạn chế ra nước ngoài' + (o.restrict >= 3 ? ' gần như tuyệt đối' : ''));
     var zones = ((C.ZONEX || {})[cc] || []).filter(function (z) { return y >= z.a && y <= z.b; }).length;
-    return ' Bối cảnh năm sinh: ' + (p.length ? p.join('; ') : 'không có biến cố lớn trong bảng bối cảnh') + '.' + (zones ? ' Một số thành phố hoặc tỉnh chịu mức khác mức chung của cả nước (' + zones + ' dòng vùng năm này); nơi sinh quyết định bạn gặp gì.' : '');
+    var bx = G.E && G.E.BIAS955 && G.E.BIAS955.hint ? G.E.BIAS955.hint(cc, y) : '';
+    return ' Bối cảnh năm sinh: ' + (p.length ? p.join('; ') : 'không có biến cố lớn trong bảng bối cảnh') + '.' + bx + (zones ? ' Một số thành phố hoặc tỉnh chịu mức khác mức chung của cả nước (' + zones + ' dòng vùng năm này); nơi sinh quyết định bạn gặp gì.' : '');
   }
   // 9.2: mô tả những gì thay đổi theo năm sinh đã chọn (số liệu thật theo nước và năm từ 1950; trước 1950 chỉ chặn công nghệ sai thời)
   function yearHintText() {

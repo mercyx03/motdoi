@@ -189,9 +189,11 @@
   function resolveJob(id) { return CAR[id] ? id : ALIAS[id] || 'cong_nhan'; }
   function J(l) { return l.job ? CAR[resolveJob(l.job.id)] : null; }
 
+  // 9.5.5: lương theo thời đại — hệ số flags.eraK954 (price954.js) nhân vào mọi bảng lương; chênh lệch vùng miền tính trên thu nhập cơ sở chưa nhân hệ số
   function scale(l, c, monthly) {
-    if (G.WEC) { var local = G.WEC.scale(l, c, monthly); if (local != null) return local; }
-    if (l.cur === 'vnd') return Math.pow(l.base / 90, 0.45); // chênh lệch vùng miền: Hà Nội/TP.HCM cao hơn ~20–30%
+    var K = (l.flags && l.flags.eraK954) || 1;
+    if (G.WEC) { var local = G.WEC.scale(l, c, monthly); if (local != null) return local * K; }
+    if (l.cur === 'vnd') return Math.pow(l.base / K / 90, 0.45) * K; // chênh lệch vùng miền: Hà Nội/TP.HCM cao hơn ~20–30%
     return l.base / 90;
   }
   // thu nhập theo danh tiếng (triệu/tháng ở VN)

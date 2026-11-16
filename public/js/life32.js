@@ -47,14 +47,17 @@
   function abroadRes(l) { return !vnd(l); }
   function resCity(l) { var W = G.W, c = W && W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country]; return { place: l.place || l.city || (c && c.cities[0]) || 'thành phố', big: !!(c && (l.place || l.city) && c.cities.slice(0, 2).indexOf(l.place || l.city) >= 0) }; }
   function cls(l) { if (abroadRes(l)) { var rc = resCity(l); return rc.big ? 'big' : l.urban ? 'urb' : 'rur'; } return H.inBigCity(l) ? 'big' : (l.urban || l.movedTo) ? 'urb' : 'rur'; }
+  // 9.5.5: giá nhà theo thu nhập thời đó (hệ số flags.eraK954 của price954.js); loại nhà chỉ có từ năm nhất định ở Việt Nam
+  function ek(l) { return (l.flags && l.flags.eraK954) || 1; }
+  var HT_FROM = { cu: 1960, lau: 1988, mini: 2003, cc: 1998, ccc: 2005 };
   function hPrice(l, h, r) {
     var c = cls(l);
-    if (h.m) { var g = (G.W && G.W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country] || {}).gdp || l.gdp || 20; return h.m[c] * g * 1000 * 0.55 * (l.urban ? 1.1 : 0.8) * (g < 8 ? 1.6 : g < 20 ? 1.25 : 1) * (r ? rng(r, 0.9, 1.15) : 1); } // nước thu nhập thấp: giá nhà / thu nhập cao hơn
+    if (h.m) { var g = (G.W && G.W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country] || {}).gdp || l.gdp || 20; return h.m[c] * g * 1000 * 0.55 * (l.urban ? 1.1 : 0.8) * (g < 8 ? 1.6 : g < 20 ? 1.25 : 1) * ek(l) * (r ? rng(r, 0.9, 1.15) : 1); } // nước thu nhập thấp: giá nhà / thu nhập cao hơn
     var p = h.p[c] != null ? h.p[c] : h.p.urb;
     if (!vnd(l)) return p / 90 * l.base * 0.35 * (r ? rng(r, 0.9, 1.15) : 1);
-    return Math.round(p * (c !== 'big' && l.cityWealth ? Math.min(1.3, Math.max(0.7, l.cityWealth)) : 1) * (r ? rng(r, 0.88, 1.18) : 1));
+    return Math.round(p * ek(l) * (c !== 'big' && l.cityWealth ? Math.min(1.3, Math.max(0.7, l.cityWealth)) : 1) * (r ? rng(r, 0.88, 1.18) : 1));
   }
-  function avail(l) { if (abroadRes(l)) return HTW; var c = cls(l); return HT.filter(function (h) { return h.p[c] != null; }); }
+  function avail(l) { if (abroadRes(l)) return HTW; var c = cls(l); var wy = l.birthYear + l.age; return HT.filter(function (h) { return h.p[c] != null && !(l.era920 && HT_FROM[h.k] && wy < HT_FROM[h.k]); }); }
   function homeDebt(l) { return (l.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (l.mortgage || 0); }
   function have(l) { return Math.max(0, l.money) + (l.ownHouse ? Math.max(0, (l.houseVal || 0) - homeDebt(l)) : 0); }
   function canLoan(l, price) { return l.indep && H.canBankLoan(l) && H.loanAgeOk(l, 'home') && (l.income || 0) > 0 && price * 0.7 <= Math.max(l.income || 0, l.base * 0.5) * 9; }

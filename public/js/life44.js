@@ -78,7 +78,7 @@
     opts: [
       { k: 'chia_se', l: function (l) { return E.hasFamily && !E.hasFamily(l) ? 'Ngồi lại với bạn bè thân, cùng kể về người đã khuất' : 'Ngồi lại với gia đình, cùng kể về người đã khuất'; }, ai: { w: 1.3, soc: 1 }, run: function (l, r, log) { log((E.hasFamily && !E.hasFamily(l) ? 'Mấy người bạn thân' : 'Cả nhà') + ' ngồi lại kể chuyện về người đã khuất, vừa khóc vừa cười. Nỗi đau vẫn còn, nhưng không còn phải mang một mình.', 'good'); stress(l, -12); fx(l, { hap: 5, soc: 2 }); } },
       { k: 'viec', l: 'Lao vào công việc cho quên', ai: { w: 0.8 }, run: function (l, r, log) { log('Lao vào làm việc từ sáng đến tối. Đến lúc dừng lại, nỗi buồn vẫn ở đó.', 'neutral'); stress(l, 6); } },
-      { k: 'tu_van', l: 'Tìm đến chuyên gia tâm lý', ai: { w: 0.5, smart: 1 }, run: function (l, r, log) { H.cash(l, -(isVN(l) && l.cur === 'vnd' ? 2 : 2 / 90 * l.base), 'Tư vấn tâm lý'); log('Đi gặp chuyên gia tâm lý vài buổi, học cách sống cùng nỗi nhớ.', 'good'); stress(l, -18); fx(l, { hap: 4 }); } }
+      { k: 'tu_van', l: 'Tìm đến chuyên gia tâm lý', ai: { w: 0.5, smart: 1 }, run: function (l, r, log) { H.cash(l, -(isVN(l) && l.cur === 'vnd' ? 2 * ((l.flags && l.flags.eraK954) || 1) : 2 / 90 * l.base), 'Tư vấn tâm lý'); log('Đi gặp chuyên gia tâm lý vài buổi, học cách sống cùng nỗi nhớ.', 'good'); stress(l, -18); fx(l, { hap: 4 }); } }
     ]
   });
   T('sau_mat_mat', function (l, a) { return a >= 12 && l.flags.lossAt != null && a - l.flags.lossAt <= 1 && (l.flags.lossFelt || 0) >= 1; }, 0.3, 6, 3);

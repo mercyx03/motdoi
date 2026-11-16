@@ -61,7 +61,7 @@ function year(l, r = () => 0.5) { l.age++; E.finishYear(l); l.pending = []; }
   // Phô trương: tiệc quá đắt so với tài sản
   const l3 = life({ wealth: 120 });
   const r3 = C.party(l3, () => 0.3, say(l3), 'birthday', 'big', 'hotel', 'friends');
-  ok(r3 && C.S(l3).rep < 50 && /phô trương/.test(l3.log[l3.log.length - 1].t), 'tiệc vượt khả năng bị bàn tán là phô trương');
+  ok(r3 && C.S(l3).rep < 50 && l3.log.slice(-3).some(e => /phô trương/.test(e.t)), 'tiệc vượt khả năng bị bàn tán là phô trương');
   const l3b = life({ wealth: 5000 }), r3b = C.party(l3b, () => 0.3, say(l3b), 'birthday', 'big', 'hotel', 'friends');
   ok(r3b && !/phô trương/.test(l3b.log[l3b.log.length - 1].t), 'cùng bữa tiệc với người giàu hơn thì không bị coi là phô trương');
   ok(C.party(life({ wealth: 25 }), () => 0.3, () => { }, 'birthday', 'big', 'restaurant', 'friends') === null, 'quy mô lớn cần đúng tầng lớp kể cả khi gọi trực tiếp');

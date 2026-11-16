@@ -229,7 +229,7 @@
       return /Hà Nội|Hồ Chí Minh/.test(c || '') || (l.urban && /Hà Nội|Hồ Chí Minh/.test(l.prov.old));
     },
     aiW: aiW,
-    // v2.4: thần tượng có năm sinh — chỉ chọn người đang ở độ tuổi biểu diễn; năm 2060 trở đi phần lớn là thế hệ ca sĩ mới (hư cấu)
+    // v2.4: thần tượng có năm sinh — chỉ chọn người đang ở độ tuổi biểu diễn; năm 2060 trở đi phần lớn là thế hệ ca sĩ mới
     pickIdol: function (r, l) {
       var y = l.birthYear + l.age;
       var pool = (isVN(l) || r() < 0.3 ? IDOLS.vn.concat(IDOLS.world) : IDOLS.world).filter(function (n) { var b = IDOL_BORN[n]; return b && y - b >= 16 && y - b <= 50; });
@@ -257,7 +257,7 @@
   var IDOLS = {
     vn: ['Sơn Tùng M-TP', 'Đen Vâu', 'Mỹ Tâm', 'Hà Anh Tuấn', 'HIEUTHUHAI', 'Hoàng Thùy Linh', 'Tăng Duy Tân', 'Bích Phương', 'Vũ.', 'Soobin Hoàng Sơn', 'MONO', 'Tóc Tiên', 'Noo Phước Thịnh', 'Hồ Ngọc Hà', 'Phương Mỹ Chi', 'Anh Trai Say Hi'],
     world: ['Taylor Swift', 'BTS', 'BLACKPINK', 'BIGBANG', 'G-Dragon', 'The Weeknd', 'Bruno Mars', 'Coldplay', 'Ed Sheeran', 'Billie Eilish', 'Ariana Grande', 'Justin Bieber', 'TWICE', 'SEVENTEEN', 'NewJeans', 'Lady Gaga', 'Dua Lipa', 'Olivia Rodrigo', 'Maroon 5', 'Adele'],
-    // v2.4: thế hệ thần tượng tương lai (tên hư cấu) cho những năm mà các ngôi sao hôm nay đã về hưu
+    // v2.4: thế hệ thần tượng tương lai cho những năm mà các ngôi sao hôm nay đã về hưu
     next: ['nhóm nhạc NOVA', 'Lyra', 'ARIA', 'Zeno', 'nhóm nhạc STELLAR', 'Kai Rivers', 'Mira', 'ban nhạc The Lanterns', 'nhóm nhạc ORBIT', 'Sena'],
     nextVN: ['Minh Vy', 'Kai Phạm', 'Bảo Khang', 'nhóm nhạc Sao Mai', 'Lam Anh', 'Đông Nghi', 'Rin Trần']
   };
@@ -1169,13 +1169,13 @@
         var c = d.data.c;
         if (k === 'no') { log('Từ chối lời mời đi ' + c[1] + '.', 'neutral'); if (!life.job && !life.school) life.flags.needJob = true; return; }
         if (k === 'go' && r() < 0.15) {
-          H.cash(life, -c[4] * 0.6, 'Mất tiền cọc cho công ty môi giới ma');
-          log('Đóng tiền cọc rồi mới phát hiện công ty môi giới là lừa đảo — mất trắng ' + fmtMoney(life, c[4] * 0.6) + '.', 'bad');
+          H.cash(life, -c[4] * 0.6 * ((life.flags && life.flags.eraK954) || 1), 'Mất tiền cọc cho công ty môi giới ma');
+          log('Đóng tiền cọc rồi mới phát hiện công ty môi giới là lừa đảo — mất trắng ' + fmtMoney(life, c[4] * 0.6 * ((life.flags && life.flags.eraK954) || 1)) + '.', 'bad');
           H.fx(life, { hap: -10 }); H.mem(life, 'Ngày biết mình bị công ty xuất khẩu lao động ma lừa mất tiền.', 3);
           if (!life.job) life.flags.needJob = true;
           return;
         }
-        H.cash(life, -c[4], 'Phí xuất khẩu lao động');
+        H.cash(life, -c[4] * ((life.flags && life.flags.eraK954) || 1), 'Phí xuất khẩu lao động');
         life.abroad = { code: c[0], name: c[1], until: life.age + 3, mult: c[3], perm: false, arrived873: life.age };
         life.prevJob = life.job; life.school = null;
         life.job = { id: 'xkld', rank: 0, yrs: 0, t: c[2] + ' ở ' + c[1] }; life.indep = true; life.flags.needJob = false;

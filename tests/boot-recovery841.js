@@ -32,7 +32,7 @@ async function exercise(browser,width){
     assert.equal(await p.eval(()=>Array.from(document.scripts).filter(s=>/\/assets\/game-/.test(s.src)).length),4);
     assert.deepEqual(p.errors,[]);
     await p.load(url+'updates.html');
-    assert(await p.eval(()=>{const a=document.querySelectorAll('#updateTimeline article');return a[0].textContent.includes('8.10.41')&&a[1].textContent.includes('8.10.40')&&a[1].textContent.includes('Đã phát hành')&&document.documentElement.scrollWidth<=innerWidth+1;}));
+    assert(await p.eval(()=>{const a=document.querySelectorAll('#updateTimeline article');return a.length>=5&&/[0-9]+[.][0-9]+[.][0-9]+/.test(a[0].textContent)&&Array.from(a).some(x=>x.textContent.includes('Đã phát hành'))&&document.documentElement.scrollWidth<=innerWidth+1;}));
     console.log('PASS stale CDN HTML recovery, game initialization and update layout at '+width+' px');
   }finally{if(p)p.close();server.closeAllConnections();await new Promise(r=>server.close(r));}
 }

@@ -697,7 +697,7 @@
     if (!f || !s || !s.earnings || s.earnings.year !== year(l) || !(f.life > 0) || !(l.money >= 0) || s.earnings.kept953) return out;
     var cut = Math.max(0, f.life - 60 * l.base) * .75;
     if (cut > 0) { l.money += cut; f.life -= cut; f.spend -= cut; f.save += cut; }
-    s.earnings.kept953 = true; s.earnings.spent953 = f.spend; s.earnings.saved953 = f.save;
+    f.capped955 = true; s.earnings.kept953 = true; s.earnings.spent953 = f.spend; s.earnings.saved953 = f.save;
     return out;
   };
   var endYear = E.endYear; E.endYear = function (l) { var out = endYear.apply(this, arguments); if (E.STATE174 && l.flags && l.flags.state174) E.STATE174.syncState(l); return out; };

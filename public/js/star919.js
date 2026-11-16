@@ -1,5 +1,5 @@
 /* Một Đời — Diễn viên vươn ra quốc tế (8.10.23). Mở rộng sự nghiệp diễn xuất của life154 (ACTOR154: dự án, đề cử, giải thưởng).
-   · Giải thưởng trong nước theo nơi đang sống (tên các giải có thật, kết quả trong game là hư cấu) và vòng liên hoan phim quốc tế
+   · Giải thưởng trong nước theo nơi đang sống (tên các giải có thật, kết quả trong game là) và vòng liên hoan phim quốc tế
      (Cannes, Berlin, Venice, Busan, Toronto, Sundance, Asian Film Awards, Oscar). Được chọn/đoạt giải dựa trên chất lượng phim,
      vai diễn và độ nổi tiếng quốc tế; Oscar cho diễn xuất rất hiếm.
    · Đạo diễn nổi tiếng (nhân vật HƯ CẤU, không phải người thật) mời đóng thẳng, không qua casting, khi bạn đã có vai chính/giải
@@ -49,7 +49,7 @@
     log('Đạo diễn ' + p.dirName + ' (' + o.dir.style + ') mời bạn vai chính trong "' + p.title + '" mà không cần thử vai.', 'big');
   }
   X.menu('directorOffers919', 'Lời mời đóng phim từ đạo diễn nổi tiếng', function (l) { var r = X.reason(l, 16); if (r !== true) return r; return st(l).offers.some(function (o) { return o.status === 'open' && o.until >= l.age; }) ? true : 'Chưa có lời mời trực tiếp'; }, function (l) {
-    return 'Các đạo diễn trong mục này là nhân vật hư cấu. Lời mời trực tiếp không qua casting nhưng vẫn phải đàm phán hợp đồng, có thể bị hủy nếu bạn đang bận dự án khác hoặc chưa có giấy phép làm việc ở nước ngoài.\n' + st(l).offers.filter(function (o) { return o.status === 'open'; }).map(function (o) { return '• ' + o.dir.name + ' — ' + (o.intl ? 'đạo diễn ' + cname(o.cc) : 'đạo diễn trong nước') + ', uy tín ' + o.dir.rep + '/100, phong cách ' + o.dir.style; }).join('\n');
+    return 'Lời mời trực tiếp không qua casting nhưng vẫn phải đàm phán hợp đồng, có thể bị hủy nếu bạn đang bận dự án khác hoặc chưa có giấy phép làm việc ở nước ngoài.\n' + st(l).offers.filter(function (o) { return o.status === 'open'; }).map(function (o) { return '• ' + o.dir.name + ' — ' + (o.intl ? 'đạo diễn ' + cname(o.cc) : 'đạo diễn trong nước') + ', uy tín ' + o.dir.rep + '/100, phong cách ' + o.dir.style; }).join('\n');
   }, function (l) { var out = []; st(l).offers.filter(function (o) { return o.status === 'open'; }).forEach(function (o) { out.push({ k: 'acc:' + o.id, l: 'Nhận lời ' + o.dir.name + (o.intl ? ' (phim ' + cname(o.cc) + ')' : ''), why: acceptWhy(l, o), run: function (l, r, log) { accept(l, o, r, log); } }); out.push({ k: 'dec:' + o.id, l: 'Từ chối lịch sự ' + o.dir.name, run: function (l, r, log) { o.status = 'declined'; log('Bạn từ chối lời mời của ' + o.dir.name + '; hai bên hẹn dịp khác.', 'neutral'); } }); }); return out; }, 16, 'Nghề nghiệp');
   // Liên hoan phim quốc tế: xét các đề cử năm trước của life154 (chất lượng q), mỗi phim một lần.
   function festYear(l, log) {
@@ -74,7 +74,7 @@
     var s = st(l), aw = A.S(l).awards.filter(function (a) { return a.won; });
     return 'Độ nổi tiếng quốc tế: ' + Math.round(s.intl) + '/100' + (Object.keys(s.markets).length ? ' · được biết đến ở ' + Object.keys(s.markets).map(cname).join(', ') : '') + '. Giải thưởng trong nước ở nơi bạn sống: ' + domestic(l).join(', ') + '.' +
       (aw.length ? '\nĐã đoạt: ' + aw.slice(-6).map(function (a) { return a.name + ' ("' + a.title + '", ' + a.year + ')'; }).join('; ') : '') + (s.fests.length ? '\nLiên hoan phim: ' + s.fests.slice(-5).map(function (f) { return f.fest + (f.prize ? ' — ' + f.prize : ' — tuyển chọn') + ' (' + f.year + ')'; }).join('; ') : '') +
-      '\nĐạo diễn quốc tế mời khi độ nổi tiếng quốc tế từ 25. Kết quả giải thưởng trong trò chơi là hư cấu.';
+      '\nĐạo diễn quốc tế mời khi độ nổi tiếng quốc tế từ 25.';
   }, function (l) { var s = st(l), out = [];
     out.push({ k: 'press', l: 'Quảng bá phim ở thị trường nước ngoài (phỏng vấn, fan meeting)', h: mo(l, l.base * 0.05), why: s.pressAt === l.age ? 'Đã quảng bá năm nay' : !A.S(l).credits.length ? 'Cần có phim đã phát hành' : l.money < l.base * 0.05 ? 'Chưa đủ tiền' : true, run: function (l, r, log) { s.pressAt = l.age; H.cash(l, -l.base * 0.05, 'Quảng bá phim ở nước ngoài'); var g = r() < 0.6 ? 4 : 1; s.intl = Math.min(100, s.intl + g); log(g > 1 ? 'Chuyến quảng bá được báo chí nước ngoài đưa tin.' : 'Chuyến quảng bá ít người biết; cần thêm tác phẩm nổi bật.', 'neutral'); } });
     out.push({ k: 'lang', l: 'Học thoại tiếng Anh cho vai quốc tế', h: 'Qua mục Danh tính → học ngoại ngữ', run: function (l, r) { X.next(l, 'identity919', r, { learn: 'en' }); } });

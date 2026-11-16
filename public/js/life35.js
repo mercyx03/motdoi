@@ -4,7 +4,7 @@
      theo năng khiếu hay chọn hướng khác đều được, nhưng luôn có đề xuất. Thi năng khiếu đỗ hay trượt tùy trình độ và sự chuẩn bị.
    · sự kiện theo bối cảnh từng ngành: ca hát (mua bài hát, tự sáng tác, thi truyền hình, clip lan truyền, bản quyền, giữ giọng), mỹ thuật,
      sân khấu – điện ảnh, thể thao, ngoại ngữ, kỹ thuật, và các nghề trước đây ít sự kiện.
-   Mọi nhân vật, tình huống đều hư cấu, không ám chỉ cá nhân hay tổ chức nào. */
+   Mọi nhân vật, tình huống đều, không ám chỉ cá nhân hay tổ chức nào. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;
