@@ -5,7 +5,7 @@
       "id": "economy-era-95400",
       "version": "9.5.4",
       "publishedAt": "2026-11-16T21:32:18+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Lương và giá nhà theo thời đại, cầu thủ gia hạn hoặc tự do, sửa thừa kế",
       "summary": "Người sinh năm 1960 hay 1985 có mức lương, tiền nhà đúng thời đó; cầu thủ hết hợp đồng có đường đi tiếp.",
       "tags": [
@@ -20,7 +20,8 @@
         "Bóng đá: năm cuối hợp đồng bạn quyết định gia hạn, đòi tăng lương, chạy hết hợp đồng để ra thị trường hoặc giải nghệ. Hết hợp đồng thành cầu thủ tự do sẽ nhận lời mời từ các CLB phù hợp; chờ quá lâu thì phong độ và tên tuổi giảm. Chơi tự động không còn bỏ trống nhiều năm không câu lạc bộ.",
         "Sửa lỗi thừa kế: khi cha hoặc mẹ mất lúc còn vợ/chồng, phần thừa kế của con ở \"sống tiếp đời con\" nay khớp với màn chia tài sản cuối đời, không còn lệch."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-16T15:25:56.000Z",
+      "correctedAt": "2026-11-16T15:25:56.377Z"
     },
     {
       "id": "kid-childhood-95300",
