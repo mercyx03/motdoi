@@ -463,6 +463,43 @@
   H.sibs = sibs; H.sibCall = sibCall; H.sibWord = sibWord;
   E.sibAge = sibAge;
 
+  var SIB_CAREERS = [
+    ['chuyên viên tài chính', 'quản lý tài chính', 'giám đốc tài chính'],
+    ['kỹ sư', 'trưởng nhóm kỹ thuật', 'giám đốc kỹ thuật'],
+    ['chuyên viên nghiên cứu', 'trưởng nhóm nghiên cứu', 'giám đốc nghiên cứu'],
+    ['chuyên viên kinh doanh', 'quản lý kinh doanh', 'giám đốc kinh doanh']
+  ];
+  function sibCareer(l, s, log) {
+    var age = sibAge(l, s);
+    if (!E.PATH139 || !E.LIFE138 || age < 18 || s.adultJob || /^tổng giám đốc /.test(s.job || '')) return;
+    var path = s.career961;
+    if (!path) {
+      if (s.job && s.job !== 'đang đi học' && !SIB_JOBS.includes(s.job)) return;
+      var next = E.LIFE138.random(l.id + ':sibling-career:' + s.n + ':' + s.born);
+      var skill = 30 + Math.floor(next() * 66), ambition = Math.floor(next() * 100);
+      var access = Math.max(0, (l.fam.q || 1) - 1) * 4;
+      path = s.career961 = { skill: skill, ambition: ambition, track: Math.floor(next() * SIB_CAREERS.length),
+        edu: s.edu || (skill + access >= 68 && ambition >= 35 ? 5 : 3), years: 0, training: 0 };
+    }
+    if (path.year === l.age) return;
+    path.year = l.age;
+    if (path.edu >= 5 && age < 22) {
+      s.job = 'đang học đại học';
+      return;
+    }
+    s.edu = Math.max(s.edu || 0, path.edu);
+    var company = (l.fam.fAlive || l.fam.mAlive) && E.PATH139.successor(l);
+    if (company && company.available && !company.finished && path.skill >= 62 && path.ambition >= 45 && age <= 65 && E.LIFE138.sync(l).people[E.UPDATE110.uid(l,s)].willing) {
+      path.training++;
+      s.job = path.training >= 5 ? 'quản lý tại ' + company.name : 'chuyên viên tại ' + company.name;
+      if (path.training === 1 || path.training === 5) log(s.n + ' trở thành ' + s.job + '.', 'good');
+    } else if (path.edu >= 5 && age <= 65) {
+      var jobs = SIB_CAREERS[path.track];
+      s.job = jobs[path.years >= 12 && path.skill >= 78 && path.ambition >= 70 ? 2 : path.years >= 5 && path.ambition >= 55 ? 1 : 0];
+    }
+    path.years++;
+  }
+
   function sibYear(l, r, log, a) {
     initSibs(l);
     // mẹ sinh em bé (em út) khi bạn còn nhỏ
@@ -476,6 +513,7 @@
       var sa = sibAge(l, s), w = sibCall(l, s);
       // 8.10.17: anh chị em mang sang từ đời trước khởi đầu là "đang đi học"; khi trưởng thành nhận nghề đã biết hoặc một nghề cố định theo tên (không tiêu RNG).
       if (s.job === 'đang đi học' && sa >= 22) { s.job = s.adultJob || SIB_JOBS[Math.abs(String(s.n).split('').reduce(function (h, ch) { return (h * 31 + ch.charCodeAt(0)) | 0; }, 7)) % SIB_JOBS.length]; }
+      sibCareer(l, s, log);
       // anh chị em lập gia đình, sinh con
       if (!s.wed && sa >= 22 && sa <= 38 && ch(r, 0.14)) { s.wed = true; log('Đám cưới của ' + w + '. Cả nhà tất bật mấy ngày liền.', 'good'); fx(l, { hap: 2, soc: 2 }); s.close = Math.min(100, s.close + 2); }
       // cháu gọi bạn: con của anh/chị → chú/cô (bên nội) hoặc cậu/dì (bên ngoại); con của em → bác

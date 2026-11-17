@@ -57,6 +57,7 @@ function materialize(l,why){var q=family(l)||P.successor(l),k=q&&cap(l);if(!q||!
  Object.keys(k.kin).forEach(function(id){var x=k.kin[id],h=c.holders137.find(function(h){return h.id===id;});if(h)h.share=r2(h.share+x.share);else c.holders137.push({id:id,name:x.name,share:x.share});});k.kin={};
  c.ext874=k.others.map(function(o){return Object.assign({},o);});k.others=[];
  if(k.listed&&!c.listed874)c.listed874={at:yr(l),exchange:k.exchange,mult:k.mult,inherited:true,history:[]};
+ if(q.finished&&q.chosen&&q.vote908&&q.vote908.won&&q.chosen.id===q.vote908.candidate&&q.chosen.id!=='self')c.roles.ceo={kind:'relative',personId:q.chosen.id,name:q.chosen.name,skill:.7,since:l.age,elected908:true};
  if(!c.roles.ceo&&!(q.chosen&&q.finished))c.roles.ceo={kind:'pro',name:(parentHas(l,'f')?parentName(l,'f'):parentName(l,'m'))+' (người sáng lập)',skill:.7,parent874:true};
  k.materialized=true;k.companyId=X.uid(l,c);k.materializedWhy=why||'';return c;}
 
@@ -261,7 +262,7 @@ var rows=R.dealRows;R.dealRows=function(l,i){var out=rows.apply(this,arguments),
 // Bàn giao theo luồng cũ: dùng lại hồ sơ đã lập và giữ cơ cấu sở hữu, không tạo bản sao công ty.
 var sApply=E.DEC.succession139&&E.DEC.succession139.apply;if(sApply)E.DEC.succession139.apply=function(l,d,k,r,log){var q=P.successor(l),before=q&&q.cap874&&q.cap874.materialized?q.cap874.companyId:null,out=sApply.apply(this,arguments);q=P.successor(l);if(!q||!q.cap874)return out;var cs=B.companies(l);
  if(before&&q.companyId&&q.companyId!==before){var dup=cs.find(function(c){return c.uid110===q.companyId;}),orig=cs.find(function(c){return c.uid110===before||X.uid(l,c)===before;});if(dup&&orig&&dup!==orig){cs.splice(cs.indexOf(dup),1);orig.roles=Object.assign(orig.roles||{},dup.roles||{});q.companyId=orig.uid110||before;}}
- else if(q.finished&&q.companyId&&!q.cap874.materialized)materialize(l,'bàn giao');return out;};
+ else if(q.finished&&!q.cap874.materialized&&(q.companyId||q.vote908&&q.vote908.won&&q.chosen&&q.chosen.id===q.vote908.candidate))materialize(l,'bàn giao');return out;};
 // Chuyển vùng tiền tệ: chỉ các khoản tiền trong lịch sử giao dịch cần quy đổi (tỷ lệ % và hệ số định giá giữ nguyên).
 var convert=E.abroadConvert;E.abroadConvert=function(l,f){var out=convert.apply(this,arguments),q=l.flags&&P.successor(l),k=q&&q.cap874;if(k)(k.trades||[]).forEach(function(t){if(Number.isFinite(t.price))t.price*=f;});if(q&&Number.isFinite(q.lastProfit874))q.lastProfit874*=f;var s=l.flags&&l.flags.family874;if(s&&Number.isFinite(s.divTotal))s.divTotal*=f;return out;};
 

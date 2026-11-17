@@ -78,6 +78,37 @@ for (const [asset, costShift] of [[parent, -loan.hostWage], [host, loan.hostWage
   const matched = baseline.football959.clubs.find(a => a.id === asset.id);
   assert(Math.abs(asset.history.at(-1).cost - matched.history.at(-1).cost - costShift) < 1e-5);
 }
+const promotion = E.migrate(JSON.parse(JSON.stringify(l)));
+const pc = B.companies(promotion)[0], pa = pc.football959.clubs.find(a => a.id === parent.id);
+const decision = E.DEC.footballCompany959.make(promotion, () => .5, { cid: X.uid(promotion, pc) });
+assert(decision.opts.some(o => o.l.includes('lên đội một')));
+delete pc.football959.loans.at(-1).rating;
+assert(F.promote(promotion, pc, pa, log));
+assert(!F.promote(promotion, pc, pa, log));
+assert(!pa.youth960 && pa.first961.name === 'Trần Minh');
+assert.equal(pa.first961.until - pa.first961.from, 2);
+const noPromotion = E.migrate(JSON.parse(JSON.stringify(l)));
+const nc = B.companies(noPromotion)[0];
+promotion.age++; noPromotion.age++;
+F.season(promotion, pc, () => .5, log); F.season(noPromotion, nc, () => .5, log);
+const na = nc.football959.clubs.find(a => a.id === parent.id);
+assert.equal(pa.history.at(-1).first, 'Trần Minh');
+assert(Math.abs(pa.history.at(-1).cost - na.history.at(-1).cost - pa.first961.wage) < 1e-5);
+assert(pa.history.at(-1).form > na.history.at(-1).form);
+promotion.age += 2;
+F.season(promotion, pc, () => .5, log);
+assert.equal(pa.history.at(-1).first, null);
+
+const transfer = E.migrate(JSON.parse(JSON.stringify(l)));
+const tc = B.companies(transfer)[0], ta = tc.football959.clubs.find(a => a.id === parent.id);
+tc.football959.loans.at(-1).rating = 55;
+assert(!F.promote(transfer, tc, ta, log));
+assert(F.transfer(transfer, tc, ta, log) && !F.transfer(transfer, tc, ta, log));
+const fee = tc.football959.loans.at(-1).offer961.fee, cashBeforeTransfer = T.ensure(transfer, tc).cash;
+transfer.age++;
+assert(F.transfer(transfer, tc, ta, log));
+assert(Math.abs(T.ensure(transfer, tc).cash - cashBeforeTransfer - fee) < 1e-5);
+assert(!F.transfer(transfer, tc, ta, log));
 
 const dst = { name: 'Pháp nhân nhận sáp nhập', value: c.value, share: 100, governance: 0 };
 B.companies(l).push(dst);

@@ -17,7 +17,7 @@
         F.club(to.id).strength > F.club(from.id).strength + 5 ||
         loans(c).some(function (q) { return activeLoan(q) && (q.from === from.id || q.to === to.id); })) return false;
     var wage = from.book * .004;
-    loans(c).push({ name: player.name, from: from.id, to: to.id, year: y + 1, share: share, wage: wage, status: 'scheduled' });
+    loans(c).push({ name: player.name, born: player.born, from: from.id, to: to.id, year: y + 1, share: share, wage: wage, status: 'scheduled' });
     log(player.name + ' sẽ thi đấu một mùa tại ' + F.club(to.id).name + '. Đội nhận chịu ' + Math.round(share * 100) + '% lương và cầu thủ trở về khi hết mùa.', 'neutral');
     return true;
   }
@@ -26,8 +26,9 @@
     loans(c).forEach(function (q) {
       if (!activeLoan(q) || q.year > y) return;
       var from = clubAsset(c, q.from), to = clubAsset(c, q.to), youth = from && from.youth960;
-      if (q.year !== y || !youth || !to) { q.status = 'cancelled'; return; }
+      if (q.year !== y || !youth || youth.name !== q.name || (q.born != null && q.born !== youth.born) || !to) { q.status = 'cancelled'; return; }
       q.minutes = Math.round(700 + r() * 850);
+      q.rating = Math.round(U.clamp(45 + q.minutes / 40 + (r() - .5) * 20, 0, 100));
       q.hostWage = q.wage * q.share;
       q.parentWage = q.wage - q.hostWage;
       q.status = 'returned';
@@ -38,6 +39,51 @@
       log(q.name + ' chơi ' + q.minutes + ' phút cho ' + F.club(q.to).name + ', rồi trở về ' + F.club(q.from).name + '.', 'good');
     });
     return adjustments;
+  }
+  function review(c, a) {
+    var p = a.youth960;
+    if (!p || loans(c).some(function (q) { return activeLoan(q) && q.from === a.id; })) return null;
+    var q = loans(c).slice().reverse().find(function (q) {
+      return q.from === a.id && q.name === p.name && q.status === 'returned' && (q.born == null || q.born === p.born);
+    });
+    if (!q || q.decision961) return null;
+    return { loan: q, player: p, rating: q.rating == null ? Math.round(45 + q.minutes / 40) : q.rating };
+  }
+  function firstTeamCheck(l, c, a) {
+    if (!allowed(l, c) || !owned(c).includes(a)) return 'Cần quyền điều hành CLB';
+    var report = review(c, a);
+    if (!report || year(l) - report.loan.year > 2) return 'Cần báo cáo sau mùa cho mượn còn hiệu lực';
+    if (a.first961 && a.first961.until > year(l)) return 'Đã dùng suất phát triển đội một';
+    if (report.loan.minutes < 900 || report.rating < 67) return 'HLV cần ít nhất 900 phút thi đấu và đánh giá 67/100';
+    if (T.ensure(l, c).cash < reserve(l, c) + a.book * .008) return 'Ngân quỹ chưa đủ lương mùa đầu và dự phòng';
+    return true;
+  }
+  function promote(l, c, a, log) {
+    if (firstTeamCheck(l, c, a) !== true) return false;
+    var report = review(c, a), y = year(l);
+    a.first961 = { name: report.player.name, from: y + 1, until: y + 3, wage: a.book * .008, rating: report.rating };
+    report.loan.decision961 = 'promoted';
+    delete a.youth960;
+    log(report.player.name + ' ký hợp đồng phát triển đội một hai mùa với ' + F.club(a.id).name + '.', 'good');
+    return true;
+  }
+  function transferProspect(l, c, a, log) {
+    if (!allowed(l, c) || !owned(c).includes(a)) return false;
+    var r = review(c, a), y = year(l);
+    if (!r || y - r.loan.year > 2 || (!r.loan.offer961 && y - r.loan.year >= 2)) return false;
+    if (!r.loan.offer961) {
+      r.loan.offer961 = { due: y + 1, fee: a.book * (.012 + r.rating * .00025) };
+      log('Công ty nhận đề nghị chuyển nhượng ' + r.player.name + ', có thể chốt vào mùa sau.', 'neutral');
+      return true;
+    }
+    if (y !== r.loan.offer961.due) return false;
+    var fee = r.loan.offer961.fee;
+    T.transaction(l, c, fee, 'Phí chuyển nhượng ' + r.player.name, 'investing');
+    c.value += fee;
+    r.loan.decision961 = 'sold';
+    delete a.youth960;
+    log('Hoàn tất chuyển nhượng ' + r.player.name + ', ngân quỹ CLB nhận ' + H.money(l, fee) + '.', 'good');
+    return true;
   }
   function occupied(l, id) {
     return B.companies(l).some(function (c) { return !c.merged && owned(c).some(function (a) { return a.id === id; }); });
@@ -100,14 +146,16 @@
     clubs.forEach(function (a) {
       if (a.since >= y || a.history.some(function (h) { return h.year === y; })) return;
       var club = F.club(a.id);
-      var form = U.clamp(club.strength + (r() - .5) * 40 + a.academy * .16, 0, 100);
+      var first = a.first961 && a.first961.from <= y && y < a.first961.until ? a.first961 : null;
+      var form = U.clamp(club.strength + (r() - .5) * 40 + a.academy * .16 + (first ? Math.max(1, (first.rating - 60) * .14) : 0), 0, 100);
       var revenue = a.book * (.055 + a.fans * .00045 + form * .00065 + (network ? .009 : 0) + (a.plan === 'commercial' ? .017 : 0));
-      var cost = a.book * (.127 + (a.plan === 'youth' ? .021 : a.plan === 'commercial' ? .008 : 0) + (network ? .004 : 0)) + (wages[a.id] || 0);
+      var cost = a.book * (.127 + (a.plan === 'youth' ? .021 : a.plan === 'commercial' ? .008 : 0) + (network ? .004 : 0)) + (wages[a.id] || 0) + (first ? first.wage : 0);
       var net = revenue - cost;
       a.fans = U.clamp(a.fans + (form - 55) * .12 + (a.plan === 'commercial' ? 2 : 0), 10, 100);
       a.academy = U.clamp(a.academy + (a.plan === 'youth' ? 7 : 2) + (network ? 2 : 0), 0, 100);
-      if (a.academy >= 12 && (!a.youth960 || y - a.youth960.born > 21)) a.youth960 = { name: H.stranger(l, r, 'M'), born: y - 17, minutes: 0 };
-      a.history.push({ year: y, revenue: revenue, cost: cost, form: Math.round(form) });
+      var report = review(c, a);
+      if (a.academy >= 12 && (!a.youth960 || (y - a.youth960.born > 21 && (!report || y - report.loan.year > 2)))) a.youth960 = { name: H.stranger(l, r, 'M'), born: y - 17, minutes: 0 };
+      a.history.push({ year: y, revenue: revenue, cost: cost, form: Math.round(form), first: first ? first.name : null });
       if (a.history.length > 8) a.history.shift();
       T.transaction(l, c, revenue, 'Vé, tài trợ và doanh thu ' + club.name, 'operating');
       T.transaction(l, c, -cost, 'Quỹ lương và vận hành ' + club.name, 'operating');
@@ -122,8 +170,10 @@
     var clubs = owned(c), t = T.ensure(l, c);
     return c.name + ' · ngân quỹ ' + H.money(l, t.cash) + '. Mỗi giải quốc gia tối đa một CLB do công ty này kiểm soát. Có thể dùng chung tuyển trạch và học viện khi sở hữu ở nhiều quốc gia. Giá và kết quả hoạt động được tính trong trò chơi.\n' +
       clubs.map(function (a) {
-        var last = a.history[a.history.length - 1];
+        var last = a.history[a.history.length - 1], report = review(c, a), first = a.first961;
         return F.club(a.id).name + ' · ' + plans[a.plan] + ' · học viện ' + a.academy + '/100' +
+          (report && year(l) - report.loan.year <= 2 ? '\nHLV: ' + report.player.name + ' · ' + report.loan.minutes + ' phút · ' + report.rating + '/100 sau khi trở về.' : '') +
+          (first && first.until > year(l) ? '\nĐội một: ' + first.name + ' · lương ' + H.money(l, first.wage) + '/mùa đến hết ' + (first.until - 1) + '.' : '') +
           (last ? ' · mùa ' + last.year + ': thu ' + H.money(l, last.revenue) + ', chi ' + H.money(l, last.cost) : '');
       }).join('\n') + '\n' + loans(c).slice(-6).map(function (q) {
         return q.name + ' · ' + F.club(q.from).name + ' → ' + F.club(q.to).name + ' · mùa ' + q.year +
@@ -143,12 +193,19 @@
     if (markets.size > 1) out.push({ k: 'network', l: p.network ? 'Tách vận hành các CLB' : 'Vận hành mạng lưới tuyển trạch và học viện chung',
       run: function (l, r, log) { if (allowed(l, c)) { p.network = !p.network; log(p.network ? 'Công ty chia sẻ đội tuyển trạch và chương trình đào tạo giữa các CLB.' : 'Các CLB trở lại vận hành riêng.', 'neutral'); } } });
     p.clubs.forEach(function (a) {
-      var name = F.club(a.id).name;
+      var name = F.club(a.id).name, report = review(c, a);
+      if (report && y - report.loan.year <= 2) {
+        out.push({ k: 'promote:' + a.id, l: 'Đưa ' + report.player.name + ' lên đội một · ' + H.money(l, a.book * .008) + '/mùa',
+          why: firstTeamCheck(l, c, a), run: function (l, r, log) { promote(l, c, a, log); } });
+        var offer = report.loan.offer961;
+        if ((!offer && y - report.loan.year < 2) || (offer && y <= offer.due)) out.push({ k: 'transfer:' + a.id, l: offer ? 'Chốt bán ' + report.player.name + ' · ' + H.money(l, offer.fee) : 'Tìm đề nghị chuyển nhượng cho ' + report.player.name,
+          why: offer && y < offer.due ? 'Chờ đến mùa ' + offer.due : true, run: function (l, r, log) { transferProspect(l, c, a, log); } });
+      }
       if (p.network && a.youth960 && y + 1 - a.youth960.born <= 21) p.clubs.filter(function (target) {
         return target !== a && F.club(target.id).strength <= F.club(a.id).strength + 5;
       }).forEach(function (target) {
         [.25, .5, .75].forEach(function (share) {
-          out.push({ k: 'loan:' + a.id + ':' + target.id + ':' + share, l: 'Cho mượn ' + a.youth960.name + ' → ' + F.club(target.id).name + ' · chia lương ' + Math.round(share * 100) + '%',
+          out.push({ k: 'loan:' + a.id + ':' + target.id + ':' + share, l: (report ? 'Cho mượn tiếp ' : 'Cho mượn ') + a.youth960.name + ' → ' + F.club(target.id).name + ' · chia lương ' + Math.round(share * 100) + '%',
             why: loans(c).some(function (q) { return activeLoan(q) && (q.from === a.id || q.to === target.id); }) ? 'Đã có lịch mượn cho đội' : true,
             run: function (l, r, log) { startYouthLoan(l, c, a, target, share, log); } });
         });
@@ -182,8 +239,8 @@
     scale(c, factor);
     if (!c.football959) return;
     c.football959.deals.forEach(function (d) { d.amount *= factor; });
-    owned(c).forEach(function (a) { a.book *= factor; a.history.forEach(function (h) { h.revenue *= factor; h.cost *= factor; }); });
-    loans(c).forEach(function (q) { ['wage', 'parentWage', 'hostWage'].forEach(function (k) { if (Number.isFinite(q[k])) q[k] *= factor; }); });
+    owned(c).forEach(function (a) { a.book *= factor; if (a.first961) a.first961.wage *= factor; a.history.forEach(function (h) { h.revenue *= factor; h.cost *= factor; }); });
+    loans(c).forEach(function (q) { if (q.offer961) q.offer961.fee *= factor; ['wage', 'parentWage', 'hostWage'].forEach(function (k) { if (Number.isFinite(q[k])) q[k] *= factor; }); });
   };
   var merge = T.merge;
   T.merge = function (l, companies, target) {
@@ -206,5 +263,5 @@
     // Kế nhiệm đổi tuổi nhân vật, còn năm hợp đồng và mùa giải là năm lịch.
     if (c.football959) c.football959.deals = [];
   };
-  E.FOOTBALL_BUS959 = { book: book, season: runSeason, propose: propose, confirm: confirm, sell: sell, price: price, loan: startYouthLoan };
+  E.FOOTBALL_BUS959 = { book: book, season: runSeason, propose: propose, confirm: confirm, sell: sell, price: price, loan: startYouthLoan, promote: promote, transfer: transferProspect };
 })(globalThis.G);

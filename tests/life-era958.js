@@ -59,4 +59,21 @@ assert(routes(2004).includes('KR'));
 assert(!routes(2012).includes('DE'));
 assert(routes(2013).includes('DE'));
 assert(!xkld.valid(life('VN', 1997, 25), { c: ['KR'] }));
+const exam = E.DEC.world_exam173, school = E.DEC.world_school173, work = E.DEC.world_workplace173;
+for (const [year, expected] of [[1949,false],[1951,false],[1952,true],[1965,true],[1966,false],[1976,false],[1977,true]]) {
+  const l = life('CN', year, 17);
+  l.school = 'upper';
+  assert.equal(exam.valid(l, {}), expected);
+  if (expected) assert(exam.make(l, () => .5).text.includes('Gaokao'));
+}
+for (const [year, expected] of [[1940,false],[1984,false],[1985,true]]) {
+  const l = life('FR', year, 15);
+  l.school = 'lower';
+  assert.equal(school.make(l, () => .5).text.includes('Định hướng vào lycée'), expected);
+}
+for (const [year, expected] of [[1940,false],[2010,true]]) {
+  const l = life('FR', year, 25);
+  l.job = { id: 'ke_toan' };
+  assert.equal(work.make(l, () => .5).text.includes('email'), expected);
+}
 console.log('PASS dated school transitions, historic first-job list, migration and stale decision');

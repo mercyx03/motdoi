@@ -100,7 +100,7 @@
   function ex(fn) { return fn; }
   var P = {
     VN: { h: ['tet_vn'], deep: 1 },
-    CN: { h: ['chunjie', 'zhongqiu'], sc: 'cn', ex: ex(function (y) { return y >= 1966 && y <= 1976 ? null : 'Gaokao (kỳ thi tuyển sinh đại học)'; }), deep: 1 },
+    CN: { h: ['chunjie', 'zhongqiu'], sc: 'cn', ex: ex(function (y) { return y >= 1952 && (y < 1966 || y >= 1977) ? 'Gaokao (kỳ thi tuyển sinh đại học)' : null; }), deep: 1 },
     JP: { h: ['shogatsu', 'obon'], sc: 'jp', wk: 'jp', co: 'jp', ex: ex(function (y) { return y >= 2021 ? 'Kỳ thi chung tuyển sinh đại học (Kyōtsū Test)' : y >= 1990 ? 'Kỳ thi Trung tâm (Center Test)' : y >= 1979 ? 'Kỳ thi Kyōtsū Ichiji' : 'kỳ thi tuyển sinh riêng của từng trường đại học'; }), deep: 1 },
     KR: { h: ['seollal', 'chuseok'], sc: 'kr', wk: 'kr', co: 'kr', ex: ex(function (y) { return y >= 1994 ? 'Suneung (CSAT)' : 'kỳ thi tuyển sinh đại học'; }), deep: 1 },
     MN: { h: ['tsagaan', 'naadam'] },
@@ -360,7 +360,7 @@
     us: { min: 13, max: 17, title: 'Hoạt động ngoại khóa', text: 'Ở nhiều trường trung học, hoạt động ngoại khóa như thể thao, tranh biện, nhạc kịch hay tình nguyện là phần quen thuộc của đời sống học đường.', o: [['team', 'Vào đội thể thao của trường', { hea: 3, soc: 2 }, 2], ['debate', 'Tham gia câu lạc bộ tranh biện hoặc khoa học', { kno: 3 }, 1], ['volunteer', 'Đi tình nguyện ở cộng đồng', { soc: 2, karma: 2 }, 0], ['job', 'Làm thêm cuối tuần', { soc: 1 }, 1]] },
     gb: { min: 14, max: 15, title: 'Chọn môn GCSE', text: 'Học sinh ở Anh thường chọn một số môn tự chọn cho chương trình GCSE từ khoảng 14 tuổi.', since: 1988, o: [['science', 'Chọn thêm khoa học và toán', { kno: 3 }, 2], ['arts', 'Chọn nghệ thuật, âm nhạc hoặc kịch', { hap: 3 }, 0], ['lang', 'Chọn thêm ngoại ngữ và nhân văn', { kno: 2, soc: 1 }, 1]] },
     de: { min: 10, max: 10, title: 'Chọn loại trường sau tiểu học', text: 'Ở Đức, sau tiểu học (thường hết lớp 4) học sinh chuyển sang các loại trường khác nhau như Gymnasium, Realschule hay Gesamtschule; quy định khác nhau theo từng bang.', o: [['gym', 'Theo Gymnasium, hướng tới Abitur', { kno: 2 }, 2], ['real', 'Theo Realschule, mở đường học nghề kép', { kno: 1, hap: 1 }, 0], ['gesamt', 'Theo Gesamtschule, quyết định sau', { soc: 1, hap: 1 }, 0]] },
-    fr: { min: 15, max: 15, title: 'Định hướng vào lycée', text: 'Cuối collège, học sinh Pháp được định hướng vào lycée phổ thông, công nghệ hoặc nghề.', o: [['general', 'Lycée phổ thông', { kno: 2 }, 1], ['techno', 'Lycée công nghệ', { kno: 1, hap: 1 }, 0], ['pro', 'Lycée nghề, sớm thực hành', { hap: 2 }, -1]] },
+    fr: { min: 15, max: 15, since: 1985, title: 'Định hướng vào lycée', text: 'Cuối collège, học sinh Pháp được định hướng vào lycée phổ thông, công nghệ hoặc nghề.', o: [['general', 'Lycée phổ thông', { kno: 2 }, 1], ['techno', 'Lycée công nghệ', { kno: 1, hap: 1 }, 0], ['pro', 'Lycée nghề, hướng tới baccalauréat professionnel', { hap: 2 }, -1]] },
     in: { min: 14, max: 17, title: 'Lớp luyện thi (coaching) cho kỳ thi lớn', text: 'Nhiều học sinh Ấn Độ học thêm ở trung tâm luyện thi trước các kỳ thi lớp 10, lớp 12 và thi đầu vào.', o: [['coach', 'Học trung tâm luyện thi', { kno: 3 }, 4, .03], ['peer', 'Học nhóm với bạn bè', { kno: 2, soc: 1 }, 1], ['steady', 'Tự ôn đều, giữ nhịp sinh hoạt', { kno: 1, hea: 1 }, 0]] },
     generic: { min: 11, max: 17, title: 'Một dự án ở trường', text: 'Lớp bạn có một dự án chung và vài câu lạc bộ đang tuyển thành viên.', o: [['club', 'Tham gia câu lạc bộ của trường', { soc: 2, hap: 1 }, 1], ['project', 'Nhận phần việc chính trong dự án', { kno: 2 }, 2], ['light', 'Làm phần vừa sức, dành thời gian nghỉ', { hap: 2 }, 0]] }
   };
@@ -433,7 +433,11 @@
     us: { title: 'Buổi kết nối nghề nghiệp', text: function () { return 'Công ty mời tham gia một buổi networking với các phòng ban và đối tác. Nhiều người dùng dịp này để giới thiệu dự án của mình.'; }, o: [['pitch', 'Chuẩn bị giới thiệu dự án của mình', { soc: 2, kno: 1 }, 3, 1], ['listen', 'Tham gia, chủ yếu lắng nghe', { soc: 1, kno: 1 }, 1, 0], ['skip', 'Không tham gia, về nhà nghỉ', { hap: 1 }, 0, -1]] },
     generic: { title: 'Làm quen văn hóa nơi làm việc', text: function () { return 'Nơi làm việc có những quy tắc ngầm về giờ giấc, cách họp và cách góp ý. Bạn chọn cách thích nghi.'; }, o: [['observe', 'Quan sát và hỏi đồng nghiệp lâu năm', { soc: 2, kno: 1 }, 2, 0], ['propose', 'Đề xuất cải tiến một quy trình', { kno: 2 }, 2, 1], ['keep', 'Giữ cách làm việc quen thuộc', { hap: 1 }, 0, 0]] }
   };
-  function workKey(l) { return profileOf(code(l)).work || 'generic'; }
+  function workKey(l) {
+    var k = profileOf(code(l)).work || 'generic';
+    if (k === 'fr' && E.ERA902 && E.ERA902.anachronism(l, 'email')) return 'generic';
+    return k;
+  }
   function workWhy(l) { return ok(l) && l.job && !l.retired && l.age >= 20 && l.age <= 65 && !H.inVN(l) ? true : 'Chưa phù hợp'; }
   C.incident('world_workplace173', 'Văn hóa nơi làm việc', workWhy, function (l) { var w = WORK[workKey(l)]; return w.title + ' · ' + cname(code(l)) + '. ' + w.text(year(l)) + ' Điều kiện cụ thể còn tùy nơi làm việc và hồ sơ hợp đồng.'; }, function (l) {
     var w = WORK[workKey(l)];

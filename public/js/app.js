@@ -1032,7 +1032,7 @@
         if (k.jail && ka < k.jail) info = ' · đang thụ án';
         else if (k.internship170 && E.EDUCATION170) info = ' · ' + esc(E.EDUCATION170.describe(l, k));
         else if (k.job || k.role147) info = ' · ' + esc(E.kidTitle(k)) + (k.inc ? ' · ' + esc(money(l, k.inc)) + '/tháng' : '');
-        else if (k.uniUntil) info = ' · ' + (k.abroadStudy ? 'du học' : 'sinh viên đại học');
+        else if (k.uniUntil) info = ' · ' + (k.degree961 ? 'đang học ' + E.childDegreeName(k.degree961) : k.abroadStudy ? 'du học' : 'sinh viên đại học');
         else if (ka >= 6 && ka <= 17) info = ' · học ' + (k.study >= 70 ? 'giỏi' : k.study >= 45 ? 'khá' : 'yếu');
         if (k.vice) info += ' · <span style="color:var(--bad)">' + esc(k.vice === 'game' ? 'nghiện game' : k.vice) + '</span>';
         if (k.upbringing && k.upbringing.stress >= 65) info += ' · cần được lắng nghe thêm';

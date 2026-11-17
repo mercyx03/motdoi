@@ -307,6 +307,7 @@
     var share = k.close >= 70 ? 0.14 : k.close >= 45 ? 0.08 : k.close >= 25 ? 0.03 : 0;
     return Math.min(inc * share, l.base * 0.6);
   };
+  E.childDegreeName = function (level) { return level === 7 ? 'tiến sĩ' : level === 6 ? 'thạc sĩ' : 'đại học'; };
   function kidsYear(l, r, log, a) {
     l.kids.forEach(function (k) {
       if (!k.alive) return;
@@ -326,7 +327,7 @@
       // 18 tuổi: ngã rẽ của con — bố mẹ góp ý
       if (ka === 18 && !k.path18) { k.path18 = true; H.sched(l, 'con_18', 0, { n: k.name }); }
       // tốt nghiệp
-      if (k.uniUntil && ka >= k.uniUntil) { k.uniUntil = null; k.edu = Math.max(k.edu, 5); log('Con ' + k.name + ' tốt nghiệp đại học.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Ngày dự lễ tốt nghiệp của ' + k.name + ', bạn khóc lúc nào không hay.', 4); }
+      if (k.uniUntil && ka >= k.uniUntil) { var degree = E.childDegreeName(k.degree961); k.uniUntil = null; k.edu = Math.max(k.edu || 0, k.degree961 || 5); delete k.degree961; log('Con ' + k.name + ' tốt nghiệp ' + degree + '.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Ngày dự lễ tốt nghiệp của ' + k.name + ', bạn khóc lúc nào không hay.', 4); }
       if (!k.uniUntil) k.tuition = 0;
       if (k.tuition && l.indep) H.cash(l, -k.tuition, 'Tiền học cho ' + k.name);
       // đi làm

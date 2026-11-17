@@ -1,5 +1,24 @@
 [
   {
+    "id": "first-team-postgraduate-succession-96100",
+    "version": "9.6.1",
+    "publishedAt": "2026-11-17T13:55:19+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Cầu thủ trẻ lên đội một, con học cao hơn và anh chị em kế nghiệp",
+    "summary": "Theo dõi cầu thủ sau mùa cho mượn, hỗ trợ con học thạc sĩ hoặc tiến sĩ, và để anh chị em có năng lực thử sức với gia nghiệp.",
+    "tags": [
+      "Tính năng",
+      "Cải tiến"
+    ],
+    "details": [
+      "Sau mùa cho mượn, xem số phút và đánh giá của HLV tại CLB chủ quản. Nếu cầu thủ đạt yêu cầu và CLB đủ ngân quỹ, bạn có thể ký hợp đồng phát triển đội một hai mùa. Bạn cũng có thể cho mượn tiếp hoặc tìm đề nghị chuyển nhượng.",
+      "Trong hồ sơ của con, bạn có thể đề nghị hỗ trợ học phí hoặc động viên con xin học bổng. Thạc sĩ học hai năm, tiến sĩ học bốn năm. Con nhận bằng sau khi hoàn thành chương trình.",
+      "Anh chị em có thể học đại học, tiến lên các vị trí chuyên môn và quản lý, hoặc tích lũy kinh nghiệm ở công ty gia đình. Người phù hợp có thể ứng cử rồi tiếp quản nếu được biểu quyết thông qua. Bạn vẫn có thể theo đuổi nghề mình thích.",
+      "Sự kiện theo nơi ở và năm đã điều chỉnh kỳ Gaokao tại Trung Quốc, lộ trình tú tài nghề ở Pháp và nội dung đi làm tại Pháp ở giai đoạn chưa dùng email."
+    ]
+  },
+  {
     "id": "club-loans-and-work-history-96000",
     "version": "9.6.0",
     "publishedAt": "2026-11-17T10:59:30+07:00",
