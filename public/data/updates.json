@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-17T07:56:16.713Z",
+  "generatedAt": "2026-11-17T08:16:46.135Z",
   "entries": [
+    {
+      "id": "mentor-work-review-and-youth-development-96700",
+      "version": "9.6.7",
+      "publishedAt": "2026-11-17T15:16:46+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Tiếp nối lời khuyên của thầy cô và cơ hội phát triển nghề",
+      "summary": "Trao đổi khi công việc gặp khó, bổ sung hồ sơ còn dở và rèn kỹ năng cho cầu thủ trẻ sau mùa cho mượn.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sau lần thầy cô hỏi thăm công việc, bạn có thể kể thật về khó khăn rồi nhìn lại kết quả sau một đến hai năm. Lựa chọn tiếp theo thay đổi khi bạn đã đổi việc hoặc người thầy cũ không còn.",
+        "Khi hồ sơ công tác tại FBI, CIA hoặc MI5 cần bổ sung, phần việc được giữ sang năm sau. Bạn có thể đối chiếu lại cùng người hướng dẫn hoặc bàn giao để chuyển sang việc khác. Hồ sơ được duyệt chỉ tính thành tích một lần.",
+        "Cầu thủ đã có đủ phút thi đấu nhưng chưa đạt đánh giá để lên đội một có thể rèn kỹ năng tại CLB chủ quản. Công ty trả phí, HLV đánh giá lại vào mùa sau. Trong thời gian này, cầu thủ tiếp tục ở đội chủ quản.",
+        "Rút hoặc để quá hạn hồ sơ tuyển dụng sẽ khép cả phần chuẩn bị của lần nộp đó."
+      ]
+    },
     {
       "id": "deeper-mentor-recruitment-and-loans-96600",
       "version": "9.6.6",

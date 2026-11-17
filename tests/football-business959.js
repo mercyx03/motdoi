@@ -130,6 +130,38 @@ function secondLoan(plan) {
   return scheduled.minutes;
 }
 assert(secondLoan('youth') > secondLoan('commercial'));
+// A below-threshold return can be coached, paid once and reassessed next season.
+const coached = E.migrate(JSON.parse(JSON.stringify(l)));
+const coachedCompany = B.companies(coached)[0];
+const coachedPlayer = coachedCompany.football959.clubs.find(a => a.id === parent.id);
+const coachingReport = coachedCompany.football959.loans.at(-1);
+coachingReport.minutes=1100;coachingReport.rating=63;
+const wallet=coached.money,treasury=T.ensure(coached,coachedCompany),beforeCoach=treasury.cash,valueBeforeCoach=coachedCompany.value;
+assert(F.training(coached,coachedCompany,coachedPlayer,log));
+assert(!F.training(coached,coachedCompany,coachedPlayer,log));
+assert(Math.abs(beforeCoach-treasury.cash-coachedPlayer.book*.002)<1e-5);
+assert(Math.abs(valueBeforeCoach-coachedCompany.value-coachedPlayer.book*.002)<1e-5);
+assert.equal(coached.money,wallet);
+assert(!F.promote(coached,coachedCompany,coachedPlayer,log));
+assert(!F.transfer(coached,coachedCompany,coachedPlayer,log));
+const coachingHost=coachedCompany.football959.clubs.find(a => a.id === host.id);
+assert(!F.loan(coached,coachedCompany,coachedPlayer,coachingHost,.5,log));
+const coachedSave=E.migrate(JSON.parse(JSON.stringify(coached)));
+const savedCompany=B.companies(coachedSave)[0],savedPlayer=savedCompany.football959.clubs.find(a=>a.id===parent.id);
+coachedSave.age++;
+F.season(coachedSave,savedCompany,()=>.5,log);
+const finalReport=savedCompany.football959.loans.at(-1);
+assert.equal(finalReport.training967.status,'completed');
+assert.equal(finalReport.rating,69);
+F.season(coachedSave,savedCompany,()=>.5,log);
+assert.equal(finalReport.rating,69,'replaying season does not repeat training');
+assert(F.promote(coachedSave,savedCompany,savedPlayer,log));
+const replaced=E.migrate(JSON.parse(JSON.stringify(coached)));
+const replacedCompany=B.companies(replaced)[0],replacedPlayer=replacedCompany.football959.clubs.find(a=>a.id===parent.id);
+replacedPlayer.youth960={name:'Cầu thủ khác',born:replaced.birthYear+replaced.age-17,minutes:0};
+replaced.age++;
+F.season(replaced,replacedCompany,()=>.5,log);
+assert.equal(replacedCompany.football959.loans.at(-1).training967.status,'cancelled');
 const dst = { name: 'Pháp nhân nhận sáp nhập', value: c.value, share: 100, governance: 0 };
 B.companies(l).push(dst);
 T.merge(l, [c, dst], dst);

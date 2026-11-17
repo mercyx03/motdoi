@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.6.7: còn hồi quy toàn bộ trên mã cuối, bản lưu thật và xác nhận binding REVIEWS_DB Production. Phạm vi tiếp tục ba chuỗi cũ gồm khó khăn sau nhận việc và hồi âm thầy cô, bổ sung hồ sơ công tác, huấn luyện sau mùa cho mượn. Kiểm tra rời nghề/đổi việc, người hướng dẫn đã mất, nạp lại, chi trả và đánh giá một lần.
+
 - 9.6.6: còn hồi quy toàn bộ, bản lưu người chơi và xác nhận binding REVIEWS_DB Production. Đợt mở rộng các chuỗi thầy cô giới thiệu việc, ứng tuyển FBI/CIA/MI5 và cầu thủ cho mượn lần tiếp theo; kiểm tra điều kiện, thời hạn và cách các lựa chọn cạnh tranh khép lại.
 
 - 9.6.5: còn hồi quy toàn bộ và bản lưu thực tế trên mã cuối, cùng xác nhận binding REVIEWS_DB Production. Phạm vi gồm hệ quả nhiều năm của việc tham gia hoạt động tuổi nhỏ, tiến độ hồ sơ nghề, sinh hoạt và cách liên lạc theo nơi ở/năm, nút tự động trong menu và các chuỗi cần kiểm tra khi hết lượt, đổi nơi sống hoặc tải bản lưu cũ.

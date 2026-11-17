@@ -110,4 +110,59 @@ assert(scheduled&&scheduled.arg.cid===c.id);
 l.age++;E.beginYear(l,{auto:true});
 const due=l.pending.find(item=>item.id===scheduled.id);
 assert(due&&E.DEC[due.id].valid(l,due.data));
+// Keep the mentor's advice across a save, a work change and a later reply.
+l=life('GB');c=trip(l);
+open(l,c,'childMemory965');E.resolve(l,'mentor');
+l.school=null;
+open(l,c,'childOpportunity965');E.resolve(l,'job');
+E.startJob(l,'ke_toan',draw,log,true);
+open(l,c,'childMentorReply966');E.resolve(l,'difficulty');
+assert.equal(c.stage,3);
+l=E.migrate(JSON.parse(JSON.stringify(l)));c=C.active(l,'childPath965');
+E.startJob(l,'van_phong',draw,log,true);
+d=open(l,c,'childMentorProgress967');
+assert(d.text.includes('đổi hướng'));
+const knowledgeBefore=l.st.kno;
+E.resolve(l,'practice');
+assert.equal(l.st.kno,Math.min(100,knowledgeBefore+2));
+assert(!C.active(l,'childPath965'));
+E.DEC.childMentorProgress967.apply(l,d,'practice',draw,log);
+assert.equal(l.st.kno,Math.min(100,knowledgeBefore+2),'old reply cannot grant progress twice');
+
+l=life('JP');c=trip(l);open(l,c,'childMemory965');E.resolve(l,'mentor');
+l.school=null;open(l,c,'childOpportunity965');E.resolve(l,'job');
+L.state(l).people[c.data.mentor.id].alive=false;
+d=open(l,c,'childMentorReply966');
+assert(!d.opts.some(o=>['update','difficulty','retry'].includes(o.k)));
+E.resolve(l,'later');
+assert(!C.active(l,'childPath965'),'lost mentor always has a closing choice');
+
+// A case needing revision persists until the following year, credits once and stays bound to the job.
+l=life('US',27,2000);l.edu=5;l.school=null;l.st.kno=80;l.st.hea=90;
+assert(E.AGENCY962.advance(l,'cia_analyst962',draw,log));
+for(let n=0;n<3;n++){l.age++;assert(E.AGENCY962.advance(l,'cia_analyst962',draw,log));}
+function agencyRoll(l,key,roll){
+ const menu=E.DEC.agency962.make(l,draw),option=menu.opts.find(o=>X.menuKey(menu,o.k)===key);
+ assert(option,key);E.DEC.agency962.apply(l,menu,option.k,roll,log);return menu;
+}
+agencyRoll(l,'standard',()=>.99);
+assert(l.job.agencyRevision967);
+assert.equal(l.job.agencyWork,0);
+assert(!E.DEC.agency962.make(l,draw).opts.some(o=>X.menuKey(E.DEC.agency962.make(l,draw),o.k)==='revise'));
+l=E.migrate(JSON.parse(JSON.stringify(l)));l.age++;
+const revision=agencyRoll(l,'revise',draw);
+assert.equal(l.job.agencyWork,1);
+assert(!l.job.agencyRevision967);
+E.DEC.agency962.apply(l,revision,String(revision.data.keys.indexOf('revise')),draw,log);
+assert.equal(l.job.agencyWork,1);
+l.age++;agencyRoll(l,'standard',()=>.99);l.age++;
+agencyRoll(l,'close-work',draw);
+assert(!l.job.agencyRevision967&&l.job.agencyWork===1);
+
+l=life('US',27,2000);l.edu=5;l.school=null;
+assert(E.AGENCY962.advance(l,'cia_analyst962',draw,log));
+agencyRoll(l,'prep:cia_analyst962',draw);
+agencyRoll(l,'withdraw',draw);
+assert(!l.flags.agency962.prep966,'withdrawing clears preparation from abandoned attempt');
+
 console.log('PASS childhood continuity, dated local activities, stale/automatic menus and agency next steps');

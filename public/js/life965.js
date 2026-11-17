@@ -30,6 +30,11 @@ function canSeekWork(l) {
  var action=E.ACT.find(function(a){return a.id==='tim_viec';});
  return !!(action&&E.actAvail(l,action)===true&&E.DEC.job.valid(l,{requested:true}));
 }
+function mentorAlive(l,c) {
+ var id=c.data.mentor&&c.data.mentor.id,p=id&&L.state(l).people[id];
+ return !!id&&(!p||p.alive!==false);
+}
+function jobStamp(l){return l.job?l.job.id+':'+l.job.since:null;}
 function invite(l,kind,label){
  if(!free(l)||l.age>17||C.active(l,'childPath965'))return;
  var school=L.school(l),p=school&&L.state(l).people[school.roster[0]],mentor=school&&L.state(l).people[school.homeroom];
@@ -59,7 +64,7 @@ C.define('childPath965',{max:2,stages:[
   {k:'skill',l:'Luyện tiếp điều mình thích',run:function(l,r,log,c){
     lesson(l,c);c.data.path='skill';log('Bạn dành thời gian luyện tiếp sở thích đã khám phá.','good');C.advance(l,c,[2,5]);
   }},
-  {k:'mentor',l:'Hỏi giáo viên về hướng học và việc làm',req:function(l,c){return !!c.data.mentor;},run:function(l,r,log,c){
+  {k:'mentor',l:'Hỏi giáo viên về hướng học và việc làm',req:mentorAlive,run:function(l,r,log,c){
     c.data.path='mentor';log(c.data.mentor.name+' gợi ý bạn tiếp tục rèn kỹ năng và hẹn trao đổi khi chuẩn bị đi làm.','good');
     var wait=Math.max(2,16-l.age);C.advance(l,c,[wait,wait+10]);
   }},
@@ -70,7 +75,7 @@ C.define('childPath965',{max:2,stages:[
  text:function(l,c){
    var f=peer(l,c);
    if(c.data.path==='friend')return f?f.name+' vẫn nhớ lần hai bạn gặp lại sau hoạt động ở trường.':'Người bạn cũ đã mất liên lạc.';
-   if(c.data.path==='mentor')return c.data.mentor.name+' gửi lời hỏi thăm và gợi ý cách tìm một việc phù hợp.';
+   if(c.data.path==='mentor')return mentorAlive(l,c)?c.data.mentor.name+' gửi lời hỏi thăm và gợi ý cách tìm một việc phù hợp.':'Bạn nhớ lời hướng dẫn của thầy cô trước đây.';
    return 'Bạn đã dành vài năm giữ sở thích bắt đầu từ '+c.data.label+'.';
  },
  opts:[
@@ -78,22 +83,48 @@ C.define('childPath965',{max:2,stages:[
    req:function(l,c){return !!peer(l,c);},run:function(l,r,log,c){var f=peer(l,c);f.close=Math.min(100,(f.close||50)+12);H.mem(l,'Bạn vẫn giữ liên lạc với '+f.name+' từ thời đi học.',5);C.close(l,c,'friend',log,'Bạn nối lại liên lạc với '+f.name+'.','good');}},
   {k:'skill',l:'Hoàn thiện một tác phẩm từ sở thích đó',req:function(l,c){return c.data.path==='skill';},
    run:function(l,r,log,c){lesson(l,c);H.mem(l,'Tác phẩm đầu tay từ sở thích tuổi nhỏ.',4);C.close(l,c,'skill',log,'Bạn hoàn thiện một tác phẩm đầu tay và giữ nó làm kỷ niệm.','good');}},
-  {k:'job',l:'Xem việc phù hợp tại nơi đang sống',req:function(l,c){return c.data.path==='mentor'&&canSeekWork(l);},
+  {k:'job',l:'Xem việc phù hợp tại nơi đang sống',req:function(l,c){return c.data.path==='mentor'&&mentorAlive(l,c)&&canSeekWork(l);},
    run:function(l,r,log,c){log(c.data.mentor.name+' giúp bạn biết nên hỏi việc ở đâu.','good');C.advance(l,c,[1,3]);X.next(l,'job',r);}},
   {k:'later',l:'Nhớ lại và tiếp tục việc của mình',run:function(l,r,log,c){C.close(l,c,'memory',log,'Bạn mỉm cười khi nghĩ về những năm đi học.');}}
  ]},
  {dec:'childMentorReply966',after:[1,3],p:1,when:free,valid:free,title:'Thầy cô hỏi thăm sau lần giới thiệu',
   text:function(l,c){
-    return c.data.mentor.name+(l.job?' hỏi bạn công việc hiện tại có phù hợp với mình không.':' hỏi bạn đã tìm được việc phù hợp chưa.');
+    return mentorAlive(l,c)?c.data.mentor.name+(l.job?' hỏi bạn công việc hiện tại có phù hợp với mình không.':' hỏi bạn đã tìm được việc phù hợp chưa.'):'Bạn nhớ người thầy từng giới thiệu việc và những điều đã được hướng dẫn.';
   },
   opts:[
-    {k:'update',l:'Kể lại chuyện công việc và cảm ơn thầy cô',req:function(l){return !!l.job;},
+    {k:'update',l:'Kể lại chuyện công việc và cảm ơn thầy cô',req:function(l,c){return mentorAlive(l,c)&&!!l.job;},
      run:function(l,r,log,c){H.fx(l,{hap:2});H.mem(l,'Lần báo tin đi làm cho '+c.data.mentor.name+'.',4);C.close(l,c,'employed',log,'Bạn kể về công việc hiện tại và cảm ơn người từng hướng dẫn mình.','good');}},
     {k:'retry',l:'Hỏi thêm cách tìm việc và xem cơ hội tại địa phương',
-     req:function(l){return !l.job&&canSeekWork(l);},
+     req:function(l,c){return mentorAlive(l,c)&&!l.job&&canSeekWork(l);},
      run:function(l,r,log,c){C.close(l,c,'retry',log,'Thầy cô góp ý bạn thử một vị trí vừa sức hoặc tìm ở một nơi khác.','good');X.next(l,'job',r);}},
-    {k:'later',l:'Gửi lời hỏi thăm, để khi khác nói về công việc',
-     run:function(l,r,log,c){C.close(l,c,'memory',log,'Bạn giữ liên lạc với thầy cô dù đang chọn hướng riêng.');}}
+    {k:'difficulty',l:'Kể thật về khó khăn và xin lời khuyên',
+     req:function(l,c){return mentorAlive(l,c)&&!!l.job&&!E.isCrime(l)&&!l.retired;},
+     run:function(l,r,log,c){
+       c.data.job967=jobStamp(l);
+       log(c.data.mentor.name+' đề nghị bạn chọn một kỹ năng còn yếu, luyện đều và trao đổi với người hướng dẫn tại nơi làm việc.','neutral');
+       C.advance(l,c,[1,2]);
+     }},
+    {k:'later',l:'Giữ lời khuyên và tiếp tục hướng đi của mình',
+     run:function(l,r,log,c){C.close(l,c,'memory',log,mentorAlive(l,c)?'Bạn giữ liên lạc với thầy cô dù đang chọn hướng riêng.':'Bạn giữ lại lời khuyên cũ và tiếp tục con đường của mình.');}}
+  ]},
+ {dec:'childMentorProgress967',after:[1,2],p:1,when:free,valid:free,title:'Nhìn lại lời khuyên sau thời gian đi làm',
+  text:function(l,c){
+    if(!mentorAlive(l,c))return 'Bạn nhớ lời khuyên của thầy cô và tự xem lại hướng đi của mình.';
+    return c.data.mentor.name+(jobStamp(l)===c.data.job967?' hỏi bạn đã tìm được cách thích nghi ở nơi làm việc chưa.':' hỏi thăm sau khi biết bạn đã đổi hướng công việc.');
+  },
+  opts:[
+    {k:'practice',l:'Dành thời gian rèn kỹ năng còn yếu tại nơi làm việc',
+     req:function(l,c){return mentorAlive(l,c)&&!!l.job&&!E.isCrime(l)&&!l.retired;},
+     run:function(l,r,log,c){
+       H.fx(l,{kno:2,soc:1,hap:2});
+       H.mem(l,'Lời khuyên của '+c.data.mentor.name+' giúp bạn nhìn lại cách làm việc.',4);
+       C.close(l,c,'adapted',log,'Bạn bắt đầu làm việc có kế hoạch hơn và vẫn giữ thói quen hỏi khi chưa rõ.','good');
+     }},
+    {k:'change',l:'Trao đổi về việc tìm một công việc phù hợp hơn',
+     req:function(l,c){return mentorAlive(l,c)&&canSeekWork(l);},
+     run:function(l,r,log,c){C.close(l,c,'new-direction',log,'Thầy cô cùng bạn nhìn lại điều mình muốn ở công việc.','neutral');X.next(l,'job',r);}},
+    {k:'close',l:'Giữ lời khuyên và tự chọn bước tiếp theo',
+     run:function(l,r,log,c){C.close(l,c,'own-direction',log,'Bạn giữ lại điều đã học và chọn nhịp đi của riêng mình.');}}
   ]}
 ]});
 E.childActivity965=invite;
