@@ -87,6 +87,16 @@
 
   function saveSettings() { var s = Object.assign({}, S.set); delete s.name; LS.set(K.settings, s); }
 
+  function setupName968(name) {
+    var P=E.ERA920&&E.ERA920.POL;
+    return P?P.rename({birthYear:S.set.year||NOW_YEAR,age:0},name):name;
+  }
+  function syncBirthRegion968() {
+    if(!(S.set.year&&S.set.year<2025)||S.set.variant==='63')return false;
+    var p=S.set.prov!==''&&VN.P34[+S.set.prov],old=p&&(p.members.find(function(m){return m.name===p.name;})||p.members[0]);
+    S.set.variant='63';S.set.prov=old?String(old.id):'';S.preview=null;
+    return true;
+  }
   function provList() {
     var list = S.set.variant === '63' ? VN.P63 : VN.P34;
     return list.slice().sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); });
@@ -95,7 +105,7 @@
     var ps = $('#provSel');
     ps.innerHTML = '<option value="">🎲 Ngẫu nhiên (theo dân số)</option>' + provList().map(function (p) {
       var extra = S.set.variant === '34' ? (p.kind === 'Thành phố' ? ' (thành phố)' : '') : '';
-      return '<option value="' + p.id + '">' + esc(p.name + extra) + '</option>';
+      return '<option value="' + p.id + '">' + esc((S.set.year&&S.set.year<2025?'Khu vực ':'')+setupName968(p.name)+extra) + '</option>';
     }).join('');
     ps.value = S.set.prov;
     if (ps.value !== String(S.set.prov)) { S.set.prov = ''; ps.value = ''; }
@@ -107,7 +117,7 @@
     es.value = S.set.eth;
   }
   function updateProvHint() {
-    var h = 'Ngẫu nhiên: quay theo dân số thực tế của từng tỉnh.';
+    var h = S.set.year&&S.set.year<2025?'Chọn vùng sinh để xem bối cảnh theo năm và nơi chào đời.':'Ngẫu nhiên: quay theo dân số thực tế của từng tỉnh.';
     if (S.set.prov !== '') {
       if (S.set.variant === '34') {
         var p = VN.P34[+S.set.prov];
@@ -119,35 +129,43 @@
         h = VN.REGIONS[o.region] + ' · dân số ~' + U.fmtNum(o.pop / 1000, 2) + ' triệu · từ 1/7/2025 thuộc ' + o.newName + '.';
       }
     }
+    if(S.set.year&&S.set.year<2025&&S.set.prov!==''){
+      var area=VN.P63[+S.set.prov];
+      h=area?VN.REGIONS[area.region]+' · '+setupName968(area.city)+'.'+ctxHintText('VN',S.set.year,area.city):h;
+    }
     $('#provHint').textContent = h;
   }
 
   // 9.5.2: bối cảnh theo nước và năm sinh (chiến sự, nạn đói, dịch, thuộc địa, hạn chế xuất cảnh) và các vùng khác mức chung
-  function ctxHintText(cc, y) {
+  function ctxHintText(cc, y, city) {
     var C = G.E && G.E.CTX945; if (!C || !C.at || y < 1900) return '';
-    var o = C.at(cc, y), lv = ['', 'một phần', 'rõ rệt', 'rất nặng'], p = [];
+    var o = city?C.levelAt(cc,y,city):C.at(cc, y), lv = ['', 'một phần', 'rõ rệt', 'rất nặng'], p = [];
     if (o.war) p.push((o.labels.war || 'chiến sự') + ' (' + lv[o.war] + ')');
     if (o.fam) p.push((o.labels.fam || 'thiếu lương thực') + ' (' + lv[o.fam] + ')');
     if (o.epi >= 2 && o.labels.epi) p.push(o.labels.epi + ' (' + lv[o.epi] + ')');
     if (o.dis) p.push((o.labels.dis || 'thiên tai') + ' (' + lv[o.dis] + ')');
     if (o.econ >= 2 && o.labels.econ) p.push(o.labels.econ);
-    if (o.colony) p.push('thuộc ' + o.colony);
+    var P=E.ERA920&&E.ERA920.POL,pol=P&&P.status(cc,y);
+    if(pol)p.push(pol);else if(o.colony)p.push('thuộc '+o.colony);
     if (o.restrict >= 2) p.push('hạn chế ra nước ngoài' + (o.restrict >= 3 ? ' gần như tuyệt đối' : ''));
     var zones = ((C.ZONEX || {})[cc] || []).filter(function (z) { return y >= z.a && y <= z.b; }).length;
     var bx = G.E && G.E.BIAS955 && G.E.BIAS955.hint ? G.E.BIAS955.hint(cc, y) : '';
-    return ' Bối cảnh năm sinh: ' + (p.length ? p.join('; ') : 'không có biến cố lớn trong bảng bối cảnh') + '.' + bx + (zones ? ' Một số thành phố hoặc tỉnh chịu mức khác mức chung của cả nước (' + zones + ' dòng vùng năm này); nơi sinh quyết định bạn gặp gì.' : '');
+    return ' Bối cảnh năm sinh: ' + (p.length ? p.join('; ') : 'không có biến cố lớn trong bảng bối cảnh') + '.' + bx + (!city&&zones?' Bối cảnh cụ thể còn tùy thành phố hoặc vùng sinh.':'');
   }
   // 9.2: mô tả những gì thay đổi theo năm sinh đã chọn (số liệu thật theo nước và năm từ 1950; trước 1950 chỉ chặn công nghệ sai thời)
   function yearHintText() {
-    var y = S.set.year, X = G.E.ERA920, F = X && X.FROM || 1950, T = X && X.TO || 2023;
-    if (!y) return 'Để mặc định là năm nay, hoặc chọn một năm từ ' + F + ' để sống một đời trong quá khứ với số liệu của năm đó (tuổi thọ, sinh đẻ, trẻ em tử vong, đô thị hóa, điện thoại và internet).';
-    if (y < F) return 'Năm ' + y + ': công nghệ và sự kiện chưa tồn tại thời đó sẽ không xuất hiện; tuổi thọ, sinh đẻ và kinh tế theo mức của thập niên ' + F + '.' + ctxHintText(S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', y);
-    var cc = S.set.mode === 'world' && S.set.country ? S.set.country : 'VN', a = X && y <= T ? X.at(cc, y) : null, c = W.BY[cc], nm = c ? c.name : cc;
-    if (!a) return 'Từ năm ' + (T + 1) + ' game dùng số liệu hiện nay của nước bạn sinh ra.';
-    function d(v, n) { return Number(v).toFixed(n).replace('.', ','); }
-    return 'Năm ' + y + ', ' + nm + ': tuổi thọ lúc sinh khoảng ' + d(a.e0, 0) + ' năm, phụ nữ trung bình ' + d(a.tfr, 1) + ' con, khoảng ' + d(a.u5 / 10, 0) + '% trẻ chết trước 5 tuổi, ' + d(a.urban, 0) + '% dân ở đô thị, ' + (a.mobile < 0.5 && a.internet < 0.5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet') + ' (UN, Maddison, ITU qua Our World in Data).' + ctxHintText(cc, y);
+    var y=S.set.year||NOW_YEAR,X=E.ERA920,F=X&&X.FROM||1950,T=X&&X.TO||2023;
+    if(S.set.mode==='world'&&!S.set.country)return 'Năm '+y+': quốc gia và vùng sinh sẽ được chọn khi chào đời. Bối cảnh, sinh hoạt và cơ hội thay đổi theo nơi được chọn và từng năm bạn sống.';
+    var cc=S.set.mode==='world'?S.set.country:'VN',P=X&&X.POL,c=W.BY[cc],nm=P&&P.nameAt(cc,y)||c&&c.name||cc;
+    var context=ctxHintText(cc,y);
+    if(y<F)return 'Năm '+y+', '+nm+': sinh hoạt và cơ hội theo thời kỳ. Sức khỏe và kinh tế trước 1950 được ước tính từ dữ liệu sớm nhất và xu hướng thời đại.'+context;
+    var a=X&&y<=T?X.at(cc,y):null;
+    if(!a)return 'Năm '+y+', '+nm+': dùng số liệu gần nhất; hoạt động và sự kiện vẫn theo năm đang sống.'+context;
+    function d(v,n){return Number(v).toFixed(n).replace('.',',');}
+    return 'Năm '+y+', '+nm+': tuổi thọ lúc sinh khoảng '+d(a.e0,0)+' năm, phụ nữ trung bình '+d(a.tfr,1)+' con, khoảng '+d(a.u5/10,0)+'% trẻ chết trước 5 tuổi, '+d(a.urban,0)+'% dân ở đô thị, '+(a.mobile<.5&&a.internet<.5?'chưa có điện thoại di động và internet đại chúng':d(a.mobile,0)+' thuê bao di động trên 100 dân và '+d(a.internet,0)+'% dân dùng internet')+' (UN, Maddison, ITU qua Our World in Data).'+context;
   }
   function syncSetupUI() {
+    if(syncBirthRegion968()){saveSettings();fillSelects();}
     var vn = S.set.mode === 'vn';
     var country = $('#countrySel');
     var ys = $('#yearSel');
@@ -159,17 +177,19 @@
     }
     ys.value = S.set.year ? String(S.set.year) : '';
     $('#yearHint').textContent = yearHintText();
-    if (country.options.length === 1) {
+    if (country.options.length === 1 || country.dataset.year968!==String(S.set.year||NOW_YEAR)) {
+      country.dataset.year968=String(S.set.year||NOW_YEAR);
+      country.innerHTML='<option value="">🎲 Ngẫu nhiên (theo số trẻ chào đời)</option>';
       W.C.filter(function (c) { return c.births > 0; })
         .sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); })
-        .forEach(function (c) { country.add(new Option(c.name, c.code)); });
+        .forEach(function (c) { var P=E.ERA920&&E.ERA920.POL,n=P&&P.nameAt(c.code,S.set.year||NOW_YEAR);country.add(new Option(n&&n!==c.name?n+' — '+c.name:c.name,c.code)); });
     }
     country.value = S.set.country || '';
     if (!country.value) { S.set.country = ''; country.value = ''; }
     $$('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.mode === S.set.mode); });
     $('#vnOpts').classList.toggle('hidden', !vn);
     $('#worldOpts').classList.toggle('hidden', vn);
-    $$('#variantChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.variant === S.set.variant); });
+    $$('#variantChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.variant === S.set.variant);c.disabled=!!(S.set.year&&S.set.year<2025&&c.dataset.variant==='34'); });
     var g = S.set.gender;
     $$('#genderChips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.g === g); });
     var fam = S.set.orient === 'lgbt' || LGBT_SUB.indexOf(S.set.orient) >= 0;
@@ -236,10 +256,11 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
+  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, prov:S.set.mode==='vn'?S.set.prov:'',eth:S.set.mode==='vn'?S.set.eth:'',gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
-    var where = E.isVN(l) ? l.provLabel + ' · Việt Nam' : l.city + ' · ' + l.countryName;
+    var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':l.city+' · '+(P&&P.nameAt(l.country,l.birthYear)||l.countryName);
+    if(P)where=P.rename(l,where);
     var orph = f.orphan && f.orphan.adopted == null ? f.orphan : null; // v7.1: xuất thân mồ côi
     var fam = orph ? 'Mồ côi · ' + orph.carer + ' nuôi dưỡng' : (f.noDad ? '' : 'Bố ' + f.fJob + ' · ') + 'Mẹ ' + f.mJob;
     var inc = f.mInc + f.fInc;
@@ -319,10 +340,10 @@
   // sự kiện trang chủ
   $$('.tab').forEach(function (t) { t.onclick = function () { S.set.mode = t.dataset.mode; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); }; });
   $$('#variantChips .chip').forEach(function (c) { c.onclick = function () { S.set.variant = c.dataset.variant; S.set.prov = ''; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); }; });
-  $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); };
-  $('#yearSel').onchange = function () { S.set.year = this.value ? +this.value : null; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
+  $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); $('#yearHint').textContent=yearHintText(); S.preview=null;renderProfile(); };
+  $('#yearSel').onchange = function () { S.set.year = this.value ? +this.value : null; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); };
   $('#countrySel').onchange = function () { S.set.country = this.value; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
-  $('#ethSel').onchange = function () { S.set.eth = this.value; saveSettings(); };
+  $('#ethSel').onchange = function () { S.set.eth = this.value; S.preview=null;saveSettings();renderProfile(); };
   $('#nameInp').oninput = function () { S.set.name = this.value; };
   $$('#genderChips .chip').forEach(function (c) { c.onclick = function () { S.set.gender = c.dataset.g; if ((c.dataset.g === 'F' && /^(top|bot)$/.test(S.set.orient)) || (c.dataset.g === 'M' && S.set.orient === 'les')) S.set.orient = 'lgbt'; saveSettings(); syncSetupUI(); }; });
   $$('#orientChips .chip').forEach(function (c) { c.onclick = function () { var fam = S.set.orient === 'lgbt' || LGBT_SUB.indexOf(S.set.orient) >= 0; S.set.orient = c.dataset.o === 'lgbt' ? (fam ? null : 'lgbt') : (S.set.orient === c.dataset.o ? null : c.dataset.o); saveSettings(); syncSetupUI(); }; }); // bấm lần nữa để bỏ chọn

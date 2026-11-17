@@ -50,7 +50,7 @@
   // vùng trong nước (thành phố hoặc tỉnh) chịu mức khác mức chung của nước
   var ZONEX = {};
   (D.ZONE || []).forEach(function (r) { (ZONEX[r[0]] = ZONEX[r[0]] || []).push({ a: r[1], b: r[2], re: new RegExp(r[3], 'i'), d: r[4], n: r[5] }); });
-  function zoneRows(cc, y, city) { var Z = ZONEX[cc]; if (!Z || !city) return null; var out = null; for (var i = 0; i < Z.length; i++) { var z = Z[i]; if (y >= z.a && y <= z.b && z.re.test(city)) (out = out || []).push(z); } return out; }
+  function zoneRows(cc, y, city) { var Z = ZONEX[cc]; if (!Z || !city) return null; var P=E.ERA920&&E.ERA920.POL; if(P&&P.canonicalCity)city=P.canonicalCity(city); var out = null; for (var i = 0; i < Z.length; i++) { var z = Z[i]; if (y >= z.a && y <= z.b && z.re.test(city)) (out = out || []).push(z); } return out; }
   function zoned(c, rows) {
     var o = Object.assign({}, c); o.zone = []; o.labels = Object.assign({}, c.labels);
     rows.forEach(function (z) { ['war', 'fam', 'dis'].forEach(function (k) { var v = z.d[k]; if (v == null) return; o[k] = typeof v === 'string' ? +v.slice(1) : Math.max(0, Math.min(3, o[k] + v)); if (o[k] > 0 && (z.d[k] !== 0)) o.labels[k] = z.n; }); o.zone.push(z.n); });
@@ -194,7 +194,7 @@
     }
     // khủng hoảng kéo dài: chuyện của thời loạn
     if (c.level >= 1 && l.age >= 3 && !(l.pending || []).some(function (d) { return d.id === 'ctx945_event'; }) && r() < [0, 0.12, 0.3, 0.5][c.level]) {
-      var kind = pickKind(l, c, r); if (kind) X.next(l, 'ctx945_event', r, { kind: kind, y: wy(l) }, { manual: false });
+      var kind = pickKind(l, c, r); if (kind) X.next(l, 'ctx945_event', r, { kind: kind, y: wy(l), cc:resCc(l), city:l.city||l.place }, { manual: false });
     }
     colonyEnd(l, c, log);
     socialTrigger(l, c, r);
@@ -355,7 +355,7 @@
     if ((l.pending || []).some(function (d) { return d.id === 'ctx945_event'; })) return;
     var ks = socialKinds(l, c); if (!ks.length) return;
     var pick = ks[Math.floor(r() * ks.length)], s = st(l); s.noted[pick[0] + ':' + pick[1]] = wy(l);
-    X.next(l, 'ctx945_event', r, { kind: pick[0], y: wy(l) }, { manual: false });
+    X.next(l, 'ctx945_event', r, { kind: pick[0], y: wy(l), cc:resCc(l), city:l.city||l.place }, { manual: false });
   }
   // Hết thời thuộc địa: dấu ấn của những lựa chọn trước đó
   function colonyEnd(l, c, log) {
@@ -369,6 +369,13 @@
   function kindsFor(l, c) { return Object.keys(EV).filter(function (k) { return EV[k].when(c, l); }); }
   function pickKind(l, c, r) { var ks = kindsFor(l, c); if (!ks.length) return null; return U.wpick(r, ks, function (k) { return EV[k].w; }); }
   X.menu('ctx945_event', 'Việc của thời buổi khó khăn', function (l) { return X.reason(l, 3); }, function (l, d) { var a = d && d.arg || {}, c = of(l), e = EV[a.kind]; return e ? e.n + '. ' + e.t(l, c) + ' Hoàn cảnh chung: ' + (labelOf(c) ? labelOf(c)[1] : 'thời kỳ khó khăn') + '.' : 'Chuyện này không còn hiệu lực.'; }, function (l, arg) { var e = EV[arg && arg.kind], c = of(l); return e ? e.o(l, c).map(function (o) { return Object.assign({ why: true }, o); }) : []; }, 3);
+  function eventCurrent(l,data) {
+    var a=data&&data.arg||data&&data.data&&data.data.arg||{},e=EV[a.kind];
+    return !!(e&&e.when(of(l),l)&&(a.y==null||a.y===wy(l))&&(!a.cc||a.cc===resCc(l))&&(!a.city||a.city===(l.city||l.place)));
+  }
+  var contextMenu=E.DEC.ctx945_event,contextValid=contextMenu.valid,contextApply=contextMenu.apply;
+  contextMenu.valid=function(l,data){return contextValid.apply(this,arguments)&&eventCurrent(l,data);};
+  contextMenu.apply=function(l,d){if(!this.valid(l,d.data))return;return contextApply.apply(this,arguments);};
   E.HOOKS.year.push(yearHook);
   // ------------------------------------------------------------------
   // 6. Bảng tra cứu và thử nghiệm

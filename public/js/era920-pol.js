@@ -56,8 +56,8 @@
   // tên nước dùng thời đó: [mã, từ, đến, tên]
   var NAMES = [['MM', 1950, 1988, 'Miến Điện (Burma)'], ['LK', 1950, 1971, 'Ceylon'], ['CD', 1971, 1996, 'Zaire'], ['BJ', 1960, 1974, 'Dahomey'], ['BF', 1960, 1983, 'Thượng Volta'], ['SZ', 1950, 2017, 'Swaziland'], ['MK', 1991, 2018, 'Macedonia'], ['WS', 1950, 1996, 'Tây Samoa'], ['ZW', 1950, 1979, 'Rhodesia'], ['BZ', 1950, 1972, 'Honduras thuộc Anh'], ['GY', 1950, 1965, 'Guiana thuộc Anh'], ['TV', 1950, 1974, 'quần đảo Ellice'], ['KI', 1950, 1978, 'quần đảo Gilbert'], ['VU', 1950, 1979, 'Tân Hebrides'], ['DJ', 1967, 1976, 'Lãnh thổ người Afar và Issa'], ['KH', 1970, 1974, 'Cộng hòa Khmer'], ['KH', 1975, 1978, 'Campuchia Dân chủ'], ['KH', 1979, 1988, 'Cộng hòa Nhân dân Campuchia']];
   // tên thành phố: [tên hiện nay, tên thời đó, năm cuối còn dùng tên cũ, (tùy chọn) năm đầu]
-  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990], ['Volgograd', 'Stalingrad', 1960], ['Almaty', 'Alma-Ata', 1992], ['Astana', 'Akmola', 1997], ['Bishkek', 'Frunze', 1990], ['Dushanbe', 'Stalinabad', 1960], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974]];
-  function resCC(l) { return (l && l.abroad && l.abroad.perm && l.abroad.code) || (l && l.country) || null; }
+  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928]];
+  function resCC(l) { return l ? E.H.resCode(l) : null; }
   function status(cc, y) { var s = STATUS[cc]; if (!s) return null; for (var i = 0; i < s.length; i++) if (y >= s[i][0] && y <= s[i][1]) return s[i][2]; return null; }
   function nameAt(cc, y) { for (var i = 0; i < NAMES.length; i++) if (NAMES[i][0] === cc && y >= NAMES[i][1] && y <= NAMES[i][2]) return NAMES[i][3]; return null; }
   function wy(l) { return l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; }
@@ -67,26 +67,32 @@
   function rename(l, s) {
     var y = wy(l); if (typeof s !== 'string' || y > CITY_MAX || !s) return s;
     for (var i = 0; i < CITIES.length; i++) {
-      var c = CITIES[i]; if (y > c[2] || s.indexOf(c[0]) < 0) continue;
+      var c = CITIES[i]; if (y > c[2] || (c[3] != null && y < c[3]) || s.indexOf(c[0]) < 0) continue;
       s = s.replace(cityRe(c[0]), function (m, p) { return p + c[1]; });
     }
     if (y >= 2019 && y <= 2021 && s.indexOf('Astana') >= 0) s = s.replace(cityRe('Astana'), function (m, p) { return p + 'Nur-Sultan'; });
+    return s;
+  }
+  // Tên hiển thị có thể đã lưu theo thời kỳ; bảng vùng vẫn dùng định danh địa lý hiện có.
+  function canonicalCity(s) {
+    if(typeof s!=='string')return s;
+    CITIES.concat([['Astana','Nur-Sultan']]).forEach(function(c){s=s.replace(cityRe(c[1]),function(m,p){return p+c[0];});});
     return s;
   }
   function note(l) { var cc = resCC(l), y = wy(l); return cc ? status(cc, y) : null; }
   var famLogic0 = E.famLogic;
   E.famLogic = function (l, t, isLog) { var u = famLogic0 ? famLogic0.call(this, l, t, isLog) : t; return u == null ? u : rename(l, u); };
   var placeText0 = E.placeText;
-  if (typeof placeText0 === 'function') E.placeText = function (l) { return rename(l, placeText0.apply(this, arguments)); };
+  if (typeof placeText0 === 'function') E.placeText = function (l) { var s=rename(l, placeText0.apply(this, arguments)), n=nameAt(l.country,wy(l)); return n&&l.countryName?s.replace(l.countryName,n):s; };
   // đời có số liệu theo năm: ghi bối cảnh chính trị lúc sinh và mỗi khi tình trạng đổi
   E.HOOKS.year.push(function (l, r, log) {
     if (!l.alive || !l.era920 || wy(l) > X.TO) return;
-    var cc = l.country, y = wy(l), s = status(cc, y), m = l.era920, prev = m.pol === undefined ? undefined : m.pol;
-    if (prev === s) return; m.pol = s || null;
+    var cc = resCC(l), y = wy(l), s = status(cc, y), m = l.era920, prev = m.polCC && m.polCC !== cc ? undefined : m.pol;
+    if (prev === s && m.polCC === cc) return; m.polCC=cc; m.pol = s || null;
     if (!s && prev === undefined) return;
     var nm = nameAt(cc, y);
     if (s) log((prev === undefined ? 'Bối cảnh năm ' + y + ': ' : 'Năm ' + y + ', bối cảnh nơi bạn sống đổi: ') + (nm ? nm + ' — ' : '') + s + '.', 'info');
     else if (prev) log('Năm ' + y + ': ' + (nameAt(cc, y - 1) ? nameAt(cc, y - 1) + ' không còn dùng tên cũ. ' : '') + 'Tình trạng chính trị nơi bạn sống đã khác trước.', 'info');
   });
-  X.POL = { STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, nameAt: nameAt, rename: rename, note: note };
+  X.POL = { canonicalCity: canonicalCity, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, nameAt: nameAt, rename: rename, note: note };
 })(globalThis.G);

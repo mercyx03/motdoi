@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.6.8: kiểm thử trọng điểm cho thiết lập năm/vùng sinh, nghề bố mẹ, tên thành phố nhiều thời kỳ, nơi cư trú và sự kiện quá hạn. Đã rà tính nhất quán 194 nước có lượt sinh, 1.083 địa điểm tại 10 mốc năm; đây không phải xác minh lịch sử toàn bộ. Còn hồi quy toàn diện, bản lưu thật, đối chiếu ranh giới hành chính/địa danh và các đô thị hình thành muộn chưa có bảng mốc riêng; REVIEWS_DB Production chưa xác minh. Xem docs/BIRTH-ERA-968.md.
+
 - 9.6.7: còn hồi quy toàn bộ trên mã cuối, bản lưu thật và xác nhận binding REVIEWS_DB Production. Phạm vi tiếp tục ba chuỗi cũ gồm khó khăn sau nhận việc và hồi âm thầy cô, bổ sung hồ sơ công tác, huấn luyện sau mùa cho mượn. Kiểm tra rời nghề/đổi việc, người hướng dẫn đã mất, nạp lại, chi trả và đánh giá một lần.
 
 - 9.6.6: còn hồi quy toàn bộ, bản lưu người chơi và xác nhận binding REVIEWS_DB Production. Đợt mở rộng các chuỗi thầy cô giới thiệu việc, ứng tuyển FBI/CIA/MI5 và cầu thủ cho mượn lần tiếp theo; kiểm tra điều kiện, thời hạn và cách các lựa chọn cạnh tranh khép lại.

@@ -184,11 +184,15 @@
     if (firstHit(a, s)) { stats.job++; return true; } return false;
   }
   // --- 4. hành động chủ động ---
+  function parentJobAllowed(l, title) {
+    var id = /shipper/.test(title) ? 'shipper' : /tài xế công nghệ/.test(title) ? 'tx_cn' : /phần mềm/.test(title) ? 'dev' : null;
+    return !jobBlocked(l, id || '', {t:[title]});
+  }
   function actionBlocked(l, a) {
     if (idBlocked(a.id, l) || idBlocked(a.sc, l)) return true;
     var label = typeof a.l === 'function' ? a.l(l) : a.l;
     return !!anachronism(l, substitute(l, label));
   }
-  E.ERA902 = { ID_FROM: ID_FROM, idBlocked: idBlocked, actionBlocked: actionBlocked, YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
+  E.ERA902 = { parentJobAllowed: parentJobAllowed, ID_FROM: ID_FROM, idBlocked: idBlocked, actionBlocked: actionBlocked, YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
   if (E.ERA917) E.ERA917.tech = E.ERA902; // gắn vào khung thời đại có sẵn
 })(globalThis.G);

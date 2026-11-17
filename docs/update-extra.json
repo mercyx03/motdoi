@@ -1,5 +1,27 @@
 [
   {
+    "id": "birthplace-and-year-context-96800",
+    "version": "9.6.8",
+    "publishedAt": "2026-11-17T15:45:37+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Bối cảnh nơi sinh và năm sinh",
+    "summary": "Chọn vùng sinh đúng thời kỳ, nghề của bố mẹ phù hợp hơn và sự kiện địa phương theo nơi đang sống.",
+    "tags": [
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Chọn năm sinh trước 2025 sẽ chuyển sang danh sách vùng sinh trước sáp nhập, giữ đúng khu vực đã chọn thay vì hiểu nhầm chỉ số tỉnh. Sinh ở Việt Nam qua chế độ thế giới cũng dùng đúng danh sách theo năm.",
+      "Khi chọn quốc gia ngẫu nhiên, phần giới thiệu không còn lấy nhầm bối cảnh Việt Nam. Chọn một nước sẽ thấy bối cảnh chính trị, tên gọi và biến cố theo năm đó; chọn vùng ở Việt Nam sẽ thấy ảnh hưởng tại vùng thay vì chỉ mức chung cả nước.",
+      "Hồ sơ xuất phát và nhật ký chào đời dùng tên địa điểm theo thời kỳ; nơi sinh giữ tên của năm chào đời khi nhân vật lớn lên. Xem trước phản ánh vùng và dân tộc đã chọn. Sửa tên cũ bị dùng quá sớm ở Saint Petersburg, Volgograd, Astana, Bishkek, Almaty, Dushanbe và Huambo.",
+      "Nghề của bố mẹ khi chào đời và khi tìm lại việc được kiểm tra theo năm, tránh shipper, tài xế công nghệ, kỹ sư phần mềm, bán hàng trực tuyến hoặc làm truyền hình xuất hiện quá sớm.",
+      "Sự kiện địa phương vẫn nhận đúng vùng khi bản lưu dùng tên thành phố lịch sử. Bối cảnh chính trị khi đang ở nước ngoài theo nơi đang sống.",
+      "Lựa chọn của thời loạn hết hiệu lực khi đã đổi năm, đổi nơi ở hoặc hoàn cảnh gây ra sự kiện không còn. Lựa chọn cũ không tiếp tục trừ tiền hay gây thương vong ở nơi mới.",
+      "Giải thích rõ hơn số liệu ước tính trước 1950 và vẫn hiển thị bối cảnh cho các năm gần đây."
+    ]
+  },
+  {
     "id": "mentor-work-review-and-youth-development-96700",
     "version": "9.6.7",
     "publishedAt": "2026-11-17T15:16:46+07:00",
