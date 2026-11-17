@@ -1,5 +1,21 @@
 [
   {
+    "id": "school-event-navigation-96400",
+    "version": "9.6.4",
+    "publishedAt": "2026-11-17T14:35:37+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Sửa lỗi kẹt sau khi tham gia ngoại khóa",
+    "summary": "Có thể trở về danh sách sự kiện hoặc đóng bảng để chơi tiếp, kể cả khi đã dùng hết lượt trong năm.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Chuyến ngoại khóa đã tham dự chỉ hiện trong phần tổng kết. Chế độ tự động có thể đi tiếp sau khi xem đến một sự kiện đã kết thúc.",
+      "Khi mở bản lưu cũ, trò chơi bỏ bảng ngoại khóa bị trùng hoặc đã qua năm học. Lịch sử tham dự và kỷ niệm vẫn được giữ."
+    ]
+  },
+  {
     "id": "period-actions-and-household-life-96300",
     "version": "9.6.3",
     "publishedAt": "2026-11-17T14:27:15+07:00",

@@ -19,7 +19,7 @@ function migrate(l){
 // player is never left with a dialog that can neither be chosen nor closed.
 // Mandatory story cards carry no token and are never touched here.
 function capped(l){return (l.acts||0)>=limit(l);}
-function blocked(l,d){var a=d&&d.data;return !!(a&&a.deferredTurn894&&a.actionYear850===l.age&&capped(l)&&!(d.opts||[]).some(function(o){return /^(cancel|back|close)$/.test(o.k);}));}
+function blocked(l,d){var a=d&&d.data;return !!(a&&a.deferredTurn894&&a.actionYear850===l.age&&capped(l)&&!(d.opts||[]).some(function(o){return /^(cancel|back|close)$/.test(X.menuKey(d,o.k));}));}
 function dropBlocked(l){var out=[];while(l.pending&&l.pending.length&&blocked(l,l.pending[0]))out.push(l.pending.shift());return out;}
 var m=E.migrateExt;E.migrateExt=function(l){if(m)m(l);migrate(l);dropBlocked(l);};
 ['family100_children','family100_parents','family100_romance','dau_tu_lon','quan_ly_dau_tu'].forEach(function(id){var a=E.ACT.find(function(a){return a.id===id;}),d=a&&E.DEC[a.sc||id];if(d)d.reusableAction906=true;});
@@ -32,7 +32,7 @@ E.ACTIONS894={capped:capped,blocked:blocked,dropBlocked:dropBlocked};
 // have no token and never consume the player's annual action allowance.
 var resolve=E.resolve;
 E.resolve=function(l,key){
- var d=l.pending[0],a=d&&d.data,token=a&&a.deferredTurn894&&a.actionYear850===l.age?a:null;
+ var d=l.pending[0],nav=X.menuKey(d,key),a=d&&d.data,token=a&&a.deferredTurn894&&a.actionYear850===l.age?a:null;
  if(!token)return resolve.apply(this,arguments);
  var rootAction=E.ACT.find(function(x){return x.id===token.actionId850;}),rootMenu=rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).menu110||rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).reusableAction906;
  if(!rootMenu&&l.flags.actAt&&l.flags.actAt[token.actionId850]===l.age){l.pending.shift();return [];}
@@ -40,11 +40,11 @@ E.resolve=function(l,key){
  if(!d.opts.some(function(x){return x.k===key;})||def&&def.valid&&!def.valid(l,a)||o&&o.req&&!o.req(l,a))return resolve.apply(this,arguments);
  var snapshot=l.acts>=limit(l)?copy(l):null,old=l.pending.slice(1),before=facts(l),used=l.acts||0,out=resolve.apply(this,arguments);
  l.acts=used; // old cancel handlers refunded an opening cost that no longer exists
- var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=/^(cancel|back|close)$/.test(key);
+ var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=key==='cancel'||/^(back|close)$/.test(nav);
  var changed=facts(l)!==before,spend=!cancel&&(children.length===0||changed||a.actionCommitted897===true);
  if(spend&&snapshot){restore(l,snapshot);var e={a:l.age,y:l.birthYear+l.age,t:'Đã hết lượt năm nay. Bạn vẫn có thể xem các phương án hoặc để dịp khác; lựa chọn chưa được thực hiện.',k:'neutral'};l.log.push(e);dropBlocked(l);return [e];}
  if(spend){l.acts=(l.acts||0)+1;var root=E.ACT.find(function(x){return x.id===token.actionId850;});if(root&&!(E.DEC[root.sc||root.id]||{}).menu110&&!(E.DEC[root.sc||root.id]||{}).reusableAction906)(l.flags.actAt||(l.flags.actAt={}))[token.actionId850]=l.age;}
- children.forEach(function(x){if(cancel||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});
+ children.forEach(function(x){if((cancel&&nav!=='back')||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});
  return out;
 };
 // Clear stale expiry flags as soon as a fresh certificate exists. A queued old

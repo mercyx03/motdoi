@@ -17,6 +17,10 @@ function menu(id,title,why,text,choices,min,group){
  E.DEC[id].menu110=true;
  if(group)E.ACT.push({id:id,g:group,l:title,min:min==null?18:min,sc:id,avail:why,ai:function(){return 0;}});
 }
+function menuKey(d,key){
+ if(!d||!E.DEC[d.id]?.menu110||!/^\d+$/.test(String(key)))return key;
+ return d.data?.keys?.[Number(key)]||key;
+}
 function reason(l,min){return !l||!l.alive?'Cuộc đời đã kết thúc':l.age<min?'Cần đủ '+min+' tuổi':!E.FAMILY53.free(l)?'Cần được tự do đi lại':true;}
-E.UPDATE110={state:s,peek:p,free:free,uid:uid,log:log,next:next,menu:menu,reason:reason};
+E.UPDATE110={state:s,peek:p,free:free,uid:uid,log:log,next:next,menu:menu,menuKey:menuKey,reason:reason};
 })(globalThis.G);

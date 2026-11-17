@@ -201,18 +201,53 @@
     var body=book?'<path d="M158 48 Q240 25 320 48 Q400 25 482 48 V164 Q400 140 320 164 Q240 140 158 164Z" fill="#f5e6ca"/><path d="M320 48V164" stroke="#bf9d64" stroke-width="3"/><rect x="183" y="64" width="110" height="58" rx="5" fill="#527a79"/><circle cx="216" cy="84" r="8" fill="#f5e6ca"/><circle cx="259" cy="84" r="8" fill="#f5e6ca"/><path d="M201 113Q216 89 231 113M244 113Q259 89 274 113" fill="#f5e6ca"/><path d="M346 68H455M346 86H447M346 104H459M183 139H287M346 128L373 118L398 130L432 116" stroke="#66807b" stroke-width="4" stroke-linecap="round"/>':'<path d="M50 24Q320 105 590 24" fill="none" stroke="#e6c27a" stroke-width="3"/><path d="M85 35L100 66L120 45M170 56L188 88L207 63M260 71L280 102L300 74M350 73L370 102L388 70M440 62L458 88L477 55M520 44L541 66L557 34" fill="#97bcac"/><rect x="145" y="126" width="350" height="8" rx="4" fill="#e6c27a"/><path d="M163 134V176M477 134V176" stroke="#97bcac" stroke-width="7"/><rect x="268" y="91" width="104" height="35" rx="6" fill="#688f87"/><circle cx="320" cy="108" r="10" fill="#f5e6ca"/>';
     return '<svg class="school-art871" viewBox="0 0 640 200" role="img" aria-label="'+(book?'Sổ kỷ yếu và lời nhắn của lớp':gathering?'Góc lưu niệm buổi chia tay':'Trang trí tiệc cuối cấp')+'" style="display:block;width:100%;max-height:180px;border-radius:14px;margin:12px 0"><rect width="640" height="200" rx="16" fill="#183f43"/><circle cx="70" cy="150" r="26" fill="#244f51"/><circle cx="569" cy="100" r="44" fill="#244f51"/>'+body+'</svg>';
   }
+  function openEventMenu(l,r,arg) {
+    l.pending=l.pending.filter(function(d){return d.id!=='school920';});
+    X.next(l,'school920',r,arg);
+  }
+  function actionable(e) { return e.stage==='announced'||e.stage==='accepted'; }
   function continueRows(l,e,rows) {
-    return rows.map(function(row){var out=Object.assign({},row),run=row.run;out.run=function(l,r,log){if(!currentEvent(l,e))return;run(l,r,log);if(inSchool(l)&&e.age===l.age&&e.school===key(l)&&e.stage==='accepted'&&!l.pending.some(function(d){return d.id==='school920';}))X.next(l,'school920',r,{id:e.id});};return out;});
+    return rows.map(function(row){var out=Object.assign({},row),run=row.run;out.run=function(l,r,log){if(!currentEvent(l,e))return;run(l,r,log);if(currentEvent(l,e)&&e.stage==='accepted')openEventMenu(l,r,{id:e.id});};return out;});
   }
   X.menu('school920', 'Sự kiện ở trường: ngoại khóa, kỷ yếu, tốt nghiệp, prom', function (l) { if (!inSchool(l)) return 'Cần đang đi học phổ thông'; return live(l).length ? true : 'Năm học này chưa có sự kiện nào'; }, function (l, d) {
     var a = d && d.arg || {}, e = a.id && st(l).inst[a.id], p = inSchool(l) ? profile(l) : null, R = rec(cc(l));
-    if (e) return label(e) + ' · ' + { announced: 'đang mở đăng ký', accepted: 'đã đăng ký', declined: 'không tham gia', completed: 'đã tham dự', cancelled: 'đã hủy' }[e.stage] + ((e.kind === 'prom' || e.kind === 'prom2') ? '\n' + R.n + ': ' + R.when + '. ' + R.note : '') + (e.outfit ? '\nTrang phục đã chọn.' : '') + (e.who ? '\nĐi cùng: ' + (e.who === 'alone' ? 'một mình' : e.who === 'group' ? 'nhóm bạn' : e.date) : '');
-    return 'Trường ' + (p ? p.type : '') + ' · nguồn lực ' + (p ? Math.round(p.res * 100) : '?') + '/100' + (p && p.fund ? ' · có quỹ hỗ trợ học sinh khó khăn' : '') + '. Mọi hoạt động là tự nguyện; không ảnh hưởng điều kiện tốt nghiệp.';
+    if (currentEvent(l,e)) return label(e) + ' · ' + { announced: 'đang mở đăng ký', accepted: 'đã đăng ký', declined: 'không tham gia', completed: 'đã tham dự', cancelled: 'đã hủy' }[e.stage] + ((e.kind === 'prom' || e.kind === 'prom2') ? '\n' + R.n + ': ' + R.when + '. ' + R.note : '') + (e.outfit ? '\nTrang phục đã chọn.' : '') + (e.who ? '\nĐi cùng: ' + (e.who === 'alone' ? 'một mình' : e.who === 'group' ? 'nhóm bạn' : e.date) : '');
+    var finished=live(l).filter(function(x){return !actionable(x);});
+    var status={completed:'đã tham dự',declined:'không tham gia',cancelled:'đã hủy'};
+    var history=finished.map(function(x){return U.cap(label(x))+' · '+status[x.stage];}).join('\n');
+    return (history?history+'\n':'')+'Trường ' + (p ? p.type : '') + ' · nguồn lực ' + (p ? Math.round(p.res * 100) : '?') + '/100' + (p && p.fund ? ' · có quỹ hỗ trợ học sinh khó khăn' : '') + '. Mọi hoạt động là tự nguyện; không ảnh hưởng điều kiện tốt nghiệp.';
   }, function (l, arg) {
     var e = arg && arg.id && st(l).inst[arg.id];
-    if (e) return continueRows(l,e,evRows(l, e)).concat([{ k: 'back', l: '← Danh sách sự kiện', run: function (l, r) { X.next(l, 'school920', r, {}); } }]);
-    return live(l).map(function (x) { return { k: x.id, l: U.cap(label(x)) + ' · ' + { announced: 'mở đăng ký', accepted: 'đã đăng ký', declined: 'không tham gia', completed: 'đã dự', cancelled: 'đã hủy' }[x.stage], run: function (l, r) { X.next(l, 'school920', r, { id: x.id }); } }; });
+    if (arg && arg.id) return (currentEvent(l,e)&&actionable(e)?continueRows(l,e,evRows(l,e)):[]).concat([{ k: 'back', l: '← Danh sách sự kiện', run: function (l, r) { openEventMenu(l,r,{}); } }]);
+    return live(l).filter(actionable).map(function (x) { return { k: x.id, l: U.cap(label(x)) + ' · ' + (x.stage==='announced'?'mở đăng ký':'đã đăng ký'), run: function (l, r) { openEventMenu(l,r,{id:x.id}); } }; });
   }, 6, 'Học tập');
+
+  var schoolMenu=E.DEC.school920,schoolAuto=schoolMenu.auto,schoolApply=schoolMenu.apply,schoolValid=schoolMenu.valid;
+  function stillCurrent(l,d) {
+    var id=d&&d.arg&&d.arg.id;
+    return !id||currentEvent(l,st(l).inst[id]);
+  }
+  schoolMenu.valid=function(l,d){return stillCurrent(l,d)&&schoolValid.apply(this,arguments);};
+  schoolMenu.auto=function(l,d){
+    if(d.data?.deferredTurn894&&E.ACTIONS894?.capped(l))return 'cancel';
+    var choice=schoolAuto.apply(this,arguments);
+    return X.menuKey(d,choice)==='back'||choice==='-1'?'cancel':choice;
+  };
+  schoolMenu.apply=function(l,d,key){
+    if(key==='cancel'||schoolMenu.valid(l,d.data))l.pending=l.pending.filter(function(x){return x.id!=='school920'||x===d;});
+    return schoolApply.apply(this,arguments);
+  };
+  var migrateSchool=E.migrateExt;
+  E.migrateExt=function(l){
+    if(migrateSchool)migrateSchool.apply(this,arguments);
+    var seen=false;
+    l.pending=(l.pending||[]).filter(function(d){
+      if(d.id!=='school920')return true;
+      if(seen||!schoolMenu.valid(l,d.data))return false;
+      seen=true;
+      return true;
+    });
+  };
 
   // ================= RITE: lễ trưởng thành =================
   var LATIN = ['MX', 'PE', 'CO', 'AR', 'CL', 'EC', 'VE', 'BO', 'PY', 'UY', 'GT', 'HN', 'SV', 'NI', 'CR', 'PA', 'DO', 'CU', 'PR'];

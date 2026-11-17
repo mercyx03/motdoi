@@ -1526,7 +1526,8 @@
     if (cur && byHand && E.DEC[cur.id] && E.DEC[cur.id].menu110) S.lastPanel874 = { id: cur.id, arg: cur.data && cur.data.arg, title: cur.title, life: S.life.id };
     var pets0 = (S.life.pets || []).length, kids0 = S.life.kids.length;
     var queued0 = S.life.pending.slice(1);
-    var stick915 = !!(byHand && cur && cur.manual && k !== 'cancel' && E.DEC[cur.id] && E.DEC[cur.id].menu110 && cur.opts.length >= 7), scroll915 = stick915 ? document.querySelector('.opts.many') : null;
+    var exitMenu = k==='cancel'||cur&&/^(back|close)$/.test(E.UPDATE110.menuKey(cur,k));
+    var stick915 = !!(byHand && cur && cur.manual && !exitMenu && E.DEC[cur.id] && E.DEC[cur.id].menu110 && cur.opts.length >= 7), scroll915 = stick915 ? document.querySelector('.opts.many') : null;
     if (stick915) S.keepScroll915 = { id: cur.id, top: scroll915 ? scroll915.scrollTop : 0 };
     var entries = E.resolve(S.life, k);
     // Menu có nhiều lựa chọn: giữ nguyên khung để chọn tiếp nhiều mục, chỉ thoát khi bấm “Quay lại”.
