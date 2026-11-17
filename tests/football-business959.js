@@ -50,4 +50,69 @@ assert.equal(copy.football959.clubs.length, 2);
 const prior = F.book(copy); T.scale(copy, .5); assert.equal(F.book(copy), prior * .5);
 assert(F.sell(roundTrip, copy, copy.football959.clubs[0], log));
 assert.equal(copy.football959.clubs.length, 1);
+
+// Match the two clubs by relative strength so the recipient offers more playing time.
+const [parent, host] = c.football959.clubs.slice().sort((a, b) => E.FOOTBALL.club(b.id).strength - E.FOOTBALL.club(a.id).strength);
+parent.youth960 = { name: 'Trần Minh', born: l.birthYear + l.age - 17, minutes: 0 };
+const balanceBeforeLoan = t.cash;
+const loanMenu = E.DEC.footballCompany959.make(l, () => .5, { cid: X.uid(l, c) });
+assert(loanMenu.opts.some(o => o.l.includes('Trần Minh') && o.l.includes('50%')));
+assert(F.loan(l, c, parent, host, .5, log));
+assert(!F.loan(l, c, parent, host, .75, log));
+assert.equal(t.cash, balanceBeforeLoan);
+const sold = E.migrate(JSON.parse(JSON.stringify(l)));
+const soldCompany = B.companies(sold)[0];
+assert(F.sell(sold, soldCompany, soldCompany.football959.clubs.find(a => a.id === host.id), log));
+assert.equal(soldCompany.football959.loans.at(-1).status, 'cancelled');
+const unloaned = E.migrate(JSON.parse(JSON.stringify(l)));
+const baseline = B.companies(unloaned)[0];
+baseline.football959.loans = [];
+l.age++; unloaned.age++;
+F.season(l, c, () => .5, log);
+F.season(unloaned, baseline, () => .5, log);
+const loan = c.football959.loans.at(-1);
+assert.equal(loan.status, 'returned');
+assert(loan.minutes >= 700 && parent.youth960.minutes === loan.minutes);
+assert.equal(loan.hostWage + loan.parentWage, loan.wage);
+for (const [asset, costShift] of [[parent, -loan.hostWage], [host, loan.hostWage]]) {
+  const matched = baseline.football959.clubs.find(a => a.id === asset.id);
+  assert(Math.abs(asset.history.at(-1).cost - matched.history.at(-1).cost - costShift) < 1e-5);
+}
+
+const dst = { name: 'Pháp nhân nhận sáp nhập', value: c.value, share: 100, governance: 0 };
+B.companies(l).push(dst);
+T.merge(l, [c, dst], dst);
+c.merged = true;
+assert.equal(F.book(c), 0);
+assert.equal(dst.football959.clubs.length, 2);
+assert.equal(dst.football959.loans.at(-1).status, 'returned');
+dst.football959.deals.push({ id: 'stale', review: l.birthYear + l.age + 1, amount: 500 });
+const heir = E.createLife({ mode: 'world', country: 'FR', seed: 960, year: l.birthYear + l.age - 25 });
+Object.assign(heir, { age: 25, indep: true, pending: [] });
+const inherited = JSON.parse(JSON.stringify(dst));
+inherited.share = 60;
+const receipt = { t: 'company137', data: inherited, v: inherited.value * .6, age137: l.age, receipt137: 'club-company-test' };
+E.BUSINESS137.receiveCompany(heir, receipt, log);
+E.BUSINESS137.receiveCompany(heir, receipt, log);
+const inheritedCompany = B.companies(heir)[0];
+assert.equal(B.companies(heir).length, 1);
+assert.equal(inheritedCompany.football959.clubs.length, 2);
+assert.equal(inheritedCompany.football959.loans.at(-1).year, loan.year);
+assert.equal(inheritedCompany.football959.deals.length, 0);
+const account = T.ensure(heir, inheritedCompany);
+const cashBeforeSale = account.cash, walletBeforeSale = heir.money;
+function sale(percent, price) {
+  return { status: 'accepted', percent, price, funds: price, shareAt: inheritedCompany.share, due: heir.age, expires: heir.age + 1 };
+}
+const partial = sale(10, 100);
+assert(E.DEALS166.complete(heir, inheritedCompany, partial, log));
+assert.equal(inheritedCompany.share, 50);
+assert(!F.sell(heir, inheritedCompany, inheritedCompany.football959.clubs[0], log));
+assert.equal(account.cash, cashBeforeSale);
+const exit = sale(50, 500);
+assert(E.DEALS166.complete(heir, inheritedCompany, exit, log));
+assert(!E.DEALS166.complete(heir, inheritedCompany, exit, log));
+assert(inheritedCompany.merged);
+assert.equal(account.cash, cashBeforeSale);
+assert.equal(heir.money - walletBeforeSale, 588);
 console.log('PASS €5m salary, corporate buy/review/accounts, multi-country portfolio, conversion, save/load and divestment');

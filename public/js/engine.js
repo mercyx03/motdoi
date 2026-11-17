@@ -1156,15 +1156,28 @@
       }
     },
     xkld: {
+      routes: function (life) {
+        var y = life.birthYear + life.age;
+        return [['JP', 'Nhật Bản', 'thực tập sinh kỹ năng', 3.6, 160, 1993],
+          ['KR', 'Hàn Quốc', 'lao động theo chương trình EPS', 4.2, 100, 2004],
+          ['TW', 'Đài Loan', 'lao động nhà máy', 3.0, 120, 2001],
+          ['DE', 'Đức', 'điều dưỡng viên', 5, 200, 2013]].filter(function (route) { return y >= route[5]; });
+      },
+      valid: function (life, data) {
+        if (E.CTX945 && !E.CTX945.emigAllowed(life)) return false;
+        return DEC.xkld.routes(life).some(function (route) { return !data || !data.c || route[0] === data.c[0]; });
+      },
       make: function (life, r, fromUni) {
-        var c = U.wpick(r, [['JP', 'Nhật Bản', 'thực tập sinh kỹ năng', 3.6, 160], ['KR', 'Hàn Quốc', 'lao động theo chương trình EPS', 4.2, 100], ['TW', 'Đài Loan', 'lao động nhà máy', 3.0, 120], ['DE', 'Đức', 'điều dưỡng viên', 5, 200]],
-          function (x) { return { JP: 5, KR: 2, TW: 4, DE: 0.6 }[x[0]]; });
+        var routes = DEC.xkld.routes(life);
+        if (!routes.length) return { id: 'xkld', title: 'Việc làm ở nước ngoài', text: 'Năm này chưa có chương trình phù hợp trong danh sách.', data: {}, opts: [opt('no', 'Ở lại', '')] };
+        var c = U.wpick(r, routes, function (x) { return { JP: 5, KR: 2, TW: 4, DE: 0.6 }[x[0]]; });
         return { id: 'xkld', title: 'Đi xuất khẩu lao động ' + c[1] + '?', data: { c: c },
           text: 'Một công ty môi giới giới thiệu suất đi ' + c[1] + ' làm ' + c[2] + ' trong 3 năm. Phí ban đầu khoảng ' + fmtMoney(life, c[4]) + '.',
           opts: [opt('go', 'Đi ' + c[1], 'Thu nhập gấp nhiều lần ở quê'), opt('check', 'Tìm hiểu kỹ công ty môi giới trước', 'Chậm hơn nhưng an toàn hơn'), opt('no', 'Ở lại Việt Nam', '')] };
       },
       auto: function (life, d, r) { var x = r(); return x < 0.25 ? 'go' : x < 0.45 ? 'check' : 'no'; },
       apply: function (life, d, k, r, log) {
+        if (!d.data.c || !DEC.xkld.valid(life, d.data)) return;
         life.flags.xkldAsked = true;
         var c = d.data.c;
         if (k === 'no') { log('Từ chối lời mời đi ' + c[1] + '.', 'neutral'); if (!life.job && !life.school) life.flags.needJob = true; return; }
