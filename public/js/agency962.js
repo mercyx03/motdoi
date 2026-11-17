@@ -54,6 +54,20 @@ function basic(l,id){
  if(p.physical&&professional(l)<(l.edu>=6?1:2))return 'Cần '+(l.edu>=6?1:2)+' năm kinh nghiệm chuyên môn';
  return true;
 }
+function prepKey(id){return roles[id].focus==='kno'?'ôn phân tích và viết báo cáo':'luyện trình bày và xử lý tình huống';}
+function prepWhy(l,id){
+ var s=peek(l),q=s.application,last=s.lastOutcome965;
+ if(basic(l,id)!==true||employed(l)||q&&q.id!==id)return false;
+ return !!(q&&q.stage==='screen'&&l.age<=q.due||!q&&last?.id===id&&last.retry&&l.age<last.retry)&&s.prep966?.at!==l.age&&!(s.prep966?.id===id&&s.prep966.count>=2);
+}
+function prepare(l,id,log){
+ if(!prepWhy(l,id))return false;
+ var s=state(l),old=s.prep966;
+ s.prep966={id:id,at:l.age,count:Math.min(2,(old?.id===id?old.count:0)+1)};
+ if(l.mind)l.mind.stress=U.clamp((l.mind.stress||0)+2,0,100);
+ log('Bạn '+prepKey(id)+' cho vòng đánh giá của '+roles[id].agency+'.','good');
+ return true;
+}
 function advance(l,id,r,log){
  var p=roles[id],s=state(l),q=s.application;
  if(basic(l,id)!==true||q&&q.id!==id||l.job&&l.job.id===id)return false;
@@ -64,10 +78,12 @@ function advance(l,id,r,log){
    log('Bạn nộp hồ sơ '+p.agency+'. Sang năm sẽ có vòng đánh giá.','neutral');
    return true;
  }
- if(l.age<q.due)return false;
+ if(l.age<q.due||l.age>q.due+2)return false;
  if(q.stage==='offer')return E.startJob(l,id,r,log)===true;
  var screened=q.stage==='screen';
- var score=screened?(l.st.kno*.55+l.st[p.focus]*.25+Math.min(20,professional(l)*4)):(l.st.hea*.45+l.st.kno*.35+10);
+ var prep=s.prep966&&s.prep966.id===id?s.prep966.count:0;
+ if(screened)delete s.prep966;
+ var score=screened?(l.st.kno*.55+l.st[p.focus]*.25+Math.min(20,professional(l)*4)+prep*7):(l.st.hea*.45+l.st.kno*.35+10);
  if(r()>=U.clamp(.15+score/125,.2,.93)){
    delete s.application;
    s.retryAt=l.age+2;
@@ -88,7 +104,7 @@ E.startJob=function(l,id,r,log,quiet){
  var key=E.resolveJob(id),p=roles[key];
  if(!p)return start.apply(this,arguments);
  var q=peek(l).application;
- if(!q||q.id!==key||q.stage!=='offer'||q.due>l.age||basic(l,key)!==true)return false;
+ if(!q||q.id!==key||q.stage!=='offer'||q.due>l.age||l.age>q.due+2||basic(l,key)!==true)return false;
  var before=l.job;
  start.call(this,l,key,r,log,quiet);
  if(!l.job||l.job===before||l.job.id!==key)return false;
@@ -129,7 +145,7 @@ X.menu('agency962','Điều tra liên bang và tình báo',available,
  function(l){
    var q=peek(l).application,p=employed(l);
    if(p){var c=E.jobDef(l),rank=l.job.rank||0;return p.work+'. Hồ sơ đã hoàn thành: '+(l.job.agencyWork||0)+'. '+(rank<c.t.length-1?'Bậc tiếp theo: '+c.t[rank+1]+' · cần '+(rank+1)*2+' hồ sơ và '+c.yrs[rank]+' năm ở bậc hiện tại ('+(l.job.yrs||0)+' năm).':'Đang ở bậc cao nhất của đường nghề này.');}
-   if(q)return 'Hồ sơ '+roles[q.id].ranks[0]+' · '+({screen:'đánh giá năng lực',vetting:'thẩm tra',offer:'nhận việc'})[q.stage]+' từ năm '+(l.birthYear+q.due)+'.'+(basic(l,q.id)===true?'':' '+basic(l,q.id)+'.');
+   if(q)return 'Hồ sơ '+roles[q.id].ranks[0]+' · '+({screen:'đánh giá năng lực',vetting:'thẩm tra',offer:'nhận việc'})[q.stage]+' từ năm '+(l.birthYear+q.due)+' đến hết '+(l.birthYear+q.due+2)+'.'+(basic(l,q.id)===true?'':' '+basic(l,q.id)+'.');
    var last=peek(l).lastOutcome965;
    return (last?roles[last.id].agency+': '+last.reason+(last.retry?' Có thể nộp lại từ năm '+(l.birthYear+last.retry)+'.':'')+'\n':'')+
       'Chọn vị trí theo quốc tịch, bằng cấp và kinh nghiệm.\n'+Object.keys(roles).filter(function(id){return roles[id].country===location(l)&&roles[id].since<=calendar(l);}).map(function(id){var why=basic(l,id);return roles[id].ranks[0]+' · '+(why===true?'đủ điều kiện nộp hồ sơ':why);}).join('\n');
@@ -146,21 +162,23 @@ X.menu('agency962','Điều tra liên bang và tình báo',available,
      var why=basic(l,id);
      if(why===true){
        if(l.job&&l.job.id===id)why='Đang làm công việc này';
-       else if(q&&q.due>l.age||!q&&s.retryAt>l.age)why='Chưa đến năm xử lý tiếp';
+       else if(q&&(q.due>l.age||l.age>q.due+2)||!q&&s.retryAt>l.age)why='Chưa đến năm xử lý tiếp';
      }
      out.push({k:id,l:(q?{screen:'Dự vòng đánh giá · ',vetting:'Hoàn tất thẩm tra · ',offer:'Nhận việc · '}[q.stage]:'Nộp hồ sơ · ')+roles[id].ranks[0],why:why,
        run:function(l,r,log){advance(l,id,r,log);}});
+     if(prepWhy(l,id))out.push({k:'prep:'+id,l:U.cap(prepKey(id))+' · '+roles[id].agency,
+       h:'Tăng mức chuẩn bị cho vòng đánh giá. Tối đa hai buổi được tính.',run:function(l,r,log){prepare(l,id,log);}});
    });
    if(q)out.push({k:'withdraw',l:'Rút hồ sơ đang xét',run:function(l,r,log){delete state(l).application;log('Bạn rút hồ sơ tuyển dụng.','neutral');}});
    return out;
  },18,'Công việc');
 E.HOOKS.year.push(function(l,r,log){
  var q=peek(l).application;
- if(q&&(!clearance(l)||location(l)!==roles[q.id].country)){
-   var reason=location(l)!==roles[q.id].country?'Nơi cư trú thay đổi.':'Điều kiện thẩm tra đã thay đổi.';
+ if(q&&(!clearance(l)||location(l)!==roles[q.id].country||l.age>q.due+2)){
+   var reason=location(l)!==roles[q.id].country?'Nơi cư trú thay đổi.':!clearance(l)?'Điều kiện thẩm tra đã thay đổi.':'Đã qua hạn của vòng tuyển.';
    state(l).lastOutcome965={id:q.id,reason:reason,at:l.age};
    delete state(l).application;
-   log('Hồ sơ tuyển dụng đã đóng vì nơi cư trú hoặc lý lịch thay đổi.','neutral');
+   log('Hồ sơ tuyển dụng đã đóng. '+reason,'neutral');
  }
 });
 E.AGENCY962={basic:basic,advance:advance};

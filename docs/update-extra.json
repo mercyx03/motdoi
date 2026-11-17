@@ -1,5 +1,23 @@
 [
   {
+    "id": "deeper-mentor-recruitment-and-loans-96600",
+    "version": "9.6.6",
+    "publishedAt": "2026-11-17T14:56:16+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Thêm bước tiếp nối sau lời giới thiệu, thi tuyển và cho mượn",
+    "summary": "Thầy cô hỏi thăm sau lần giới thiệu việc. Ứng viên có thể chuẩn bị lại sau khi trượt, còn CLB nhận mượn ảnh hưởng đến cơ hội ra sân.",
+    "tags": [
+      "Cải tiến",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Sau khi thầy cô giới thiệu việc, họ có thể hỏi thăm vài năm sau. Bạn có thể kể về công việc đang làm, xin thêm góp ý để tìm việc hoặc giữ liên lạc khi chọn hướng riêng.",
+      "Trong chuỗi ứng tuyển FBI, CIA hoặc MI5, bạn có thể luyện kỹ năng cho vòng đánh giá khi đang chờ. Mỗi vòng có hạn xử lý và hồ sơ quá hạn cần được nộp lại.",
+      "Khi cho mượn cầu thủ trẻ, xem khoảng phút thi đấu dự kiến ở đội nhận. Đội ưu tiên học viện và có mức cạnh tranh phù hợp tạo thêm cơ hội ra sân. Nếu chọn cho mượn tiếp, đề nghị chuyển nhượng đang chờ của chính cầu thủ đó sẽ khép lại."
+    ]
+  },
+  {
     "id": "childhood-paths-and-local-life-96500",
     "version": "9.6.5",
     "publishedAt": "2026-11-17T14:44:05+07:00",

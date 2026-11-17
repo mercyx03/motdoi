@@ -54,6 +54,12 @@ d=open(l,c,'childOpportunity965');
 assert(d.opts.some(o=>o.k==='job'));
 E.resolve(l,'job');
 assert.equal(l.pending[0].id,'job');
+assert.equal(c.stage,2);
+l=E.migrate(JSON.parse(JSON.stringify(l)));c=C.active(l,'childPath965');
+d=open(l,c,'childMentorReply966');
+assert(d.opts.some(o=>o.k==='retry'));
+E.resolve(l,'retry');
+assert.equal(l.pending[0].id,'job');
 assert(!C.active(l,'childPath965'));
 
 l=life('JP',12);
@@ -79,6 +85,24 @@ l.age++;
 assert(E.AGENCY962.advance(l,'cia_analyst962',()=>.99,log));
 const rejected=E.DEC.agency962.make(l,draw).text;
 assert(rejected.includes('kiến thức')&&rejected.includes('2030'));
+function agencyOption(l,key){
+  const menu=E.DEC.agency962.make(l,draw);
+  const option=menu.opts.find(o=>X.menuKey(menu,o.k)===key);
+  assert(option,'expected '+key);
+  E.DEC.agency962.apply(l,menu,option.k,draw,log);
+}
+agencyOption(l,'prep:cia_analyst962');
+assert.equal(l.flags.agency962.prep966.count,1);
+l.age++;
+agencyOption(l,'prep:cia_analyst962');
+assert.equal(l.flags.agency962.prep966.count,2);
+l.age++;
+assert(E.AGENCY962.advance(l,'cia_analyst962',draw,log));
+l.age++;
+assert(E.AGENCY962.advance(l,'cia_analyst962',()=>.48,log),'second application may use preparation');
+assert.equal(l.flags.agency962.application.stage,'vetting');
+l.age+=4;
+assert(!E.AGENCY962.advance(l,'cia_analyst962',draw,log),'past due application cannot be accepted');
 l=life('JP');c=trip(l);
 C.yearly(l,draw,log,l.age);
 const scheduled=l.sched.find(item=>item.id==='childMemory965');

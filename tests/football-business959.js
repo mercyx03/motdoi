@@ -110,6 +110,26 @@ assert(F.transfer(transfer, tc, ta, log));
 assert(Math.abs(T.ensure(transfer, tc).cash - cashBeforeTransfer - fee) < 1e-5);
 assert(!F.transfer(transfer, tc, ta, log));
 
+// An academy-focused host gives the same prospect a better chance to play.
+function secondLoan(plan) {
+  const replay = E.migrate(JSON.parse(JSON.stringify(l)));
+  const company = B.companies(replay)[0], source = company.football959.clubs.find(a => a.id === parent.id);
+  const destination = company.football959.clubs.find(a => a.id === host.id);
+  source.youth960.born = replay.birthYear + replay.age - 18;
+  const old = company.football959.loans.at(-1);
+  old.born = source.youth960.born;
+  assert(F.transfer(replay, company, source, log));
+  destination.plan = plan;
+  assert(F.loan(replay, company, source, destination, .5, log));
+  assert(!old.offer961, 'new loan closes competing offer');
+  const scheduled = company.football959.loans.at(-1);
+  assert(!F.transfer(replay, company, source, log));
+  replay.age++;
+  F.season(replay, company, () => .5, log);
+  assert.equal(scheduled.status, 'returned');
+  return scheduled.minutes;
+}
+assert(secondLoan('youth') > secondLoan('commercial'));
 const dst = { name: 'Pháp nhân nhận sáp nhập', value: c.value, share: 100, governance: 0 };
 B.companies(l).push(dst);
 T.merge(l, [c, dst], dst);

@@ -10,14 +10,26 @@
   function loans(c) { var p = portfolio(c); return p.loans || (p.loans = []); }
   function clubAsset(c, id) { return owned(c).find(function (a) { return a.id === id; }); }
   function activeLoan(q) { return q.status === 'scheduled'; }
+  function playingTime(from,to) {
+    var competition=F.club(to.id).strength-F.club(from.id).strength;
+    var minimum=Math.round(U.clamp(700-competition*14+(to.plan==='youth'?100:0),620,980));
+    return [minimum,minimum+850];
+  }
+  function loanConflict(c,from,to) {
+    return loans(c).some(function(q){return activeLoan(q)&&(q.from===from.id||q.to===to.id);});
+  }
   function startYouthLoan(l, c, from, to, share, log) {
     var player = from && from.youth960, y = year(l);
     if (!allowed(l, c) || !portfolio(c).network || !owned(c).includes(from) || !owned(c).includes(to) || from === to ||
         !player || y + 1 - player.born > 21 || (share !== .25 && share !== .5 && share !== .75) ||
         F.club(to.id).strength > F.club(from.id).strength + 5 ||
-        loans(c).some(function (q) { return activeLoan(q) && (q.from === from.id || q.to === to.id); })) return false;
-    var wage = from.book * .004;
-    loans(c).push({ name: player.name, born: player.born, from: from.id, to: to.id, year: y + 1, share: share, wage: wage, status: 'scheduled' });
+        loanConflict(c,from,to)) return false;
+    var wage = from.book * .004, report=review(c,from);
+    if(report&&report.loan.offer961){
+      delete report.loan.offer961;
+      log('Đề nghị chuyển nhượng cũ khép lại vì cầu thủ sẽ tiếp tục được cho mượn.','neutral');
+    }
+    loans(c).push({ name: player.name, born: player.born, from: from.id, to: to.id, year: y + 1, share: share, wage: wage, playing966:playingTime(from,to), status: 'scheduled' });
     log(player.name + ' sẽ thi đấu một mùa tại ' + F.club(to.id).name + '. Đội nhận chịu ' + Math.round(share * 100) + '% lương và cầu thủ trở về khi hết mùa.', 'neutral');
     return true;
   }
@@ -27,7 +39,8 @@
       if (!activeLoan(q) || q.year > y) return;
       var from = clubAsset(c, q.from), to = clubAsset(c, q.to), youth = from && from.youth960;
       if (q.year !== y || !youth || youth.name !== q.name || (q.born != null && q.born !== youth.born) || !to) { q.status = 'cancelled'; return; }
-      q.minutes = Math.round(700 + r() * 850);
+      var range=q.playing966||[700,1550];
+      q.minutes = Math.round(range[0]+r()*(range[1]-range[0]));
       q.rating = Math.round(U.clamp(45 + q.minutes / 40 + (r() - .5) * 20, 0, 100));
       q.hostWage = q.wage * q.share;
       q.parentWage = q.wage - q.hostWage;
@@ -216,7 +229,8 @@
       }).forEach(function (target) {
         [.25, .5, .75].forEach(function (share) {
           out.push({ k: 'loan:' + a.id + ':' + target.id + ':' + share, l: (report ? 'Cho mượn tiếp ' : 'Cho mượn ') + a.youth960.name + ' → ' + F.club(target.id).name + ' · chia lương ' + Math.round(share * 100) + '%',
-            why: loans(c).some(function (q) { return activeLoan(q) && (q.from === a.id || q.to === target.id); }) ? 'Đã có lịch mượn cho đội' : true,
+            h:'Dự kiến '+playingTime(a,target).join('–')+' phút mùa '+(y+1)+(report&&report.loan.offer961?' · đề nghị chuyển nhượng đang có sẽ khép lại':''),
+            why: loanConflict(c,a,target) ? 'Đã có lịch mượn cho đội' : true,
             run: function (l, r, log) { startYouthLoan(l, c, a, target, share, log); } });
         });
       });

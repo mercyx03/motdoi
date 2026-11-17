@@ -26,6 +26,10 @@ function lesson(l,c){
  skill.level=Math.min(100,skill.level+5);
  skill.interest=true;
 }
+function canSeekWork(l) {
+ var action=E.ACT.find(function(a){return a.id==='tim_viec';});
+ return !!(action&&E.actAvail(l,action)===true&&E.DEC.job.valid(l,{requested:true}));
+}
 function invite(l,kind,label){
  if(!free(l)||l.age>17||C.active(l,'childPath965'))return;
  var school=L.school(l),p=school&&L.state(l).people[school.roster[0]],mentor=school&&L.state(l).people[school.homeroom];
@@ -74,10 +78,23 @@ C.define('childPath965',{max:2,stages:[
    req:function(l,c){return !!peer(l,c);},run:function(l,r,log,c){var f=peer(l,c);f.close=Math.min(100,(f.close||50)+12);H.mem(l,'Bạn vẫn giữ liên lạc với '+f.name+' từ thời đi học.',5);C.close(l,c,'friend',log,'Bạn nối lại liên lạc với '+f.name+'.','good');}},
   {k:'skill',l:'Hoàn thiện một tác phẩm từ sở thích đó',req:function(l,c){return c.data.path==='skill';},
    run:function(l,r,log,c){lesson(l,c);H.mem(l,'Tác phẩm đầu tay từ sở thích tuổi nhỏ.',4);C.close(l,c,'skill',log,'Bạn hoàn thiện một tác phẩm đầu tay và giữ nó làm kỷ niệm.','good');}},
-  {k:'job',l:'Xem việc phù hợp tại nơi đang sống',req:function(l,c){return c.data.path==='mentor'&&!!E.DEC.job&&E.DEC.job.valid(l,{requested:true});},
-   run:function(l,r,log,c){C.close(l,c,'referred',log,c.data.mentor.name+' giúp bạn biết nên hỏi việc ở đâu.');X.next(l,'job',r);}},
+  {k:'job',l:'Xem việc phù hợp tại nơi đang sống',req:function(l,c){return c.data.path==='mentor'&&canSeekWork(l);},
+   run:function(l,r,log,c){log(c.data.mentor.name+' giúp bạn biết nên hỏi việc ở đâu.','good');C.advance(l,c,[1,3]);X.next(l,'job',r);}},
   {k:'later',l:'Nhớ lại và tiếp tục việc của mình',run:function(l,r,log,c){C.close(l,c,'memory',log,'Bạn mỉm cười khi nghĩ về những năm đi học.');}}
- ]}
+ ]},
+ {dec:'childMentorReply966',after:[1,3],p:1,when:free,valid:free,title:'Thầy cô hỏi thăm sau lần giới thiệu',
+  text:function(l,c){
+    return c.data.mentor.name+(l.job?' hỏi bạn công việc hiện tại có phù hợp với mình không.':' hỏi bạn đã tìm được việc phù hợp chưa.');
+  },
+  opts:[
+    {k:'update',l:'Kể lại chuyện công việc và cảm ơn thầy cô',req:function(l){return !!l.job;},
+     run:function(l,r,log,c){H.fx(l,{hap:2});H.mem(l,'Lần báo tin đi làm cho '+c.data.mentor.name+'.',4);C.close(l,c,'employed',log,'Bạn kể về công việc hiện tại và cảm ơn người từng hướng dẫn mình.','good');}},
+    {k:'retry',l:'Hỏi thêm cách tìm việc và xem cơ hội tại địa phương',
+     req:function(l){return !l.job&&canSeekWork(l);},
+     run:function(l,r,log,c){C.close(l,c,'retry',log,'Thầy cô góp ý bạn thử một vị trí vừa sức hoặc tìm ở một nơi khác.','good');X.next(l,'job',r);}},
+    {k:'later',l:'Gửi lời hỏi thăm, để khi khác nói về công việc',
+     run:function(l,r,log,c){C.close(l,c,'memory',log,'Bạn giữ liên lạc với thầy cô dù đang chọn hướng riêng.');}}
+  ]}
 ]});
 E.childActivity965=invite;
 function contacts(l){return allFriends(l).filter(function(f){return (f.loc||'HOME')!==E.locOf(l);});}
