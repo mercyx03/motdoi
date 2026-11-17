@@ -61,6 +61,15 @@ const run = (l, id, k) => { const d = E.DEC[id].make(l, H.rf(l)); ok(d.opts.some
   ok(won > 3 && won < 60 && jailed > 0, 'đấu tranh: có lúc thành công (' + won + '/' + N + '), có lúc bị bắt (' + jailed + ')');
   const s = life('US', 1925, 41); s.age = 25; s.alive = true; s.pending = []; s.city = 'Atlanta'; s.indep = true; s.flags.bias955 = { m_us_black_jc: 1, noted: {} }; s.money = s.base * 3;
   run(s, 'bias955_race', 'di'); ok(s.city !== 'Atlanta', 'chuyển ra khỏi miền nam Mỹ');
+  for (let i = 0; i < 20; i++) {
+    const x = life('ZA', 1932, 9000 + i);
+    Object.assign(x, { age: 28, alive: true, pending: [], indep: true, school: null, money: x.base * 5 });
+    x.flags.bias955 = { m_za_apartheid: 1, noted: {} };
+    run(x, 'bias955_race', 'di');
+    const dest = H.resCode(x);
+    ok(dest !== 'ZA' && !D.RACE.some(r => r[1] === dest && r[2] <= 1960 && r[3] >= 1960 && Math.max(r[5], r[9] || 0) >= 3), 'có thể di cư nhưng loại điểm đến có rào cản chủng tộc ngang nơi cũ');
+    ok(x.log.some(e => /Bạn rời Nam Phi/.test(e.t)), 'nhật ký giữ đúng nước đã rời');
+  }
 }
 // 7. Người đồng tính, song tính
 {

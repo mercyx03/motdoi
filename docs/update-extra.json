@@ -1,5 +1,23 @@
 [
   {
+    "id": "event-continuity-95600",
+    "version": "9.5.6",
+    "publishedAt": "2026-11-17T09:24:24+07:00",
+    "releaseStatus": "packaged",
+    "title": "Ôn thi đúng năm, giải nghệ đúng hạn và sửa tình huống lễ hội",
+    "summary": "Kết quả chuyển cấp đến đúng lúc, vận động viên chơi trọn mùa cuối và nhật ký ghi đúng nơi bạn rời đi.",
+    "tags": [
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Sự kiện chuẩn bị chuyển cấp chỉ xuất hiện trước năm chuyển cấp. Cách ôn đã chọn giúp tích lũy kiến thức cho kỳ tuyển sinh hiện có, và bạn nhận kết quả khi dự kỳ tuyển sinh.",
+      "Khi chọn giải nghệ lúc hợp đồng hết hạn, vận động viên vẫn thi đấu và hưởng mức sàn trong mùa cuối. Hồ sơ sau giải nghệ được ghi khi hợp đồng kết thúc, kể cả khi lưu rồi quay lại.",
+      "Khi rời đi vì bị phân biệt đối xử, nhật ký ghi đúng nơi đã rời. Game xét điểm đến theo đúng loại rào cản đang khiến bạn phải chuyển đi.",
+      "Lễ Tạ ơn thời chưa phổ biến truyền hình bỏ lựa chọn xem màn hình. Chuyện ngắm trăng ở Nhật Bản và Hàn Quốc có lựa chọn và lời kể phù hợp với cảnh mở đầu."
+    ],
+    "releasedAt": null
+  },
+  {
     "id": "era-regions-95200",
     "version": "9.5.2",
     "publishedAt": "2026-11-16T11:57:17+07:00",

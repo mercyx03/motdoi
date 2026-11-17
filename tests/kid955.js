@@ -33,6 +33,16 @@ const run = (l, id, k) => { const d = E.DEC[id].make(l, H.rf(l)); ok(d.opts.some
   // chọn lựa có kết quả và ký ức
   const l = life('KR', 2000, 6, 5); run(l, 'k955_tet_am', 'chuc'); ok(l.log.some(x => /Seollal|lạy|mừng tuổi|bao đỏ|lì xì/i.test(x.t)) || l.mem.some(m => /phong bao đỏ/.test(m.t)), 'chọn chúc Tết có kết quả');
   const l2 = life('IN', 2000, 6, 6); const m0 = l2.mem.length; run(l2, 'k955_diwali', 'den'); ok(l2.mem.length > m0, 'xếp đèn Diwali để lại ký ức');
+  for (const cc of ['US', 'CA']) {
+    const d = E.DEC.k955_tha_on;
+    ok(!d.make(life(cc, 1915, 6), () => 0).opts.some(o => o.k === 'tv'), cc + ' 1915: không có lựa chọn xem truyền hình');
+    ok(d.make(life(cc, 1990, 6), () => 0).opts.some(o => o.k === 'tv'), cc + ' 1990: vẫn có lựa chọn xem truyền hình');
+  }
+  for (const cc of ['JP', 'KR']) {
+    const moon = life(cc, 2000, 6);
+    const d = run(moon, 'k955_trung_thu_a', 'ngam');
+    ok(!d.opts.find(o => o.k === 'den').l.includes('đèn lồng') && moon.log.some(e => e.t.includes('chú thỏ')), cc + ': lựa chọn và kết quả hợp với cảnh ngắm trăng');
+  }
 }
 // 3. Tuổi 1–2
 {
@@ -47,16 +57,38 @@ const run = (l, id, k) => { const d = E.DEC[id].make(l, H.rf(l)); ok(d.opts.some
 // 4. Tuổi 10–14 theo nước
 {
   const l = life('JP', 2000, 12, 14, { school: 'lower' });
-  ok(['k955_doi_the_thao', 'k955_thi_chuyen_cap', 'k955_hoc_ngoai_ngu', 'k955_viec_vat'].every(id => trig(id).when(l, 12) || id === 'k955_viec_vat' && false), 'JP 12 tuổi có đội, kỳ thi, ngoại ngữ');
-  ok(/trung học phổ thông ở Nhật/.test(E.DEC.k955_thi_chuyen_cap.make(l, H.rf(l)).text), 'kỳ thi chuyển cấp đúng nước (Nhật)');
-  const k = life('KR', 2000, 12, 15, { school: 'lower' }); ok(/Hàn Quốc/.test(E.DEC.k955_thi_chuyen_cap.make(k, H.rf(k)).text), 'Hàn Quốc');
+  ok(['k955_doi_the_thao', 'k955_hoc_ngoai_ngu', 'k955_viec_vat'].every(id => trig(id).when(l, 12)), 'JP 12 tuổi có đội, ngoại ngữ và việc vặt');
+  const id = 'k955_thi_chuyen_cap', exam = trig(id);
+  ok(!exam.when(l, 12) && !exam.when(life('VN', 2010, 11, 22, { school: 'primary' }), 11), 'chưa tới năm cuối trung học cơ sở thì chưa chuẩn bị chuyển cấp');
+  const k = life('JP', 2000, 14, 15, { school: 'lower' });
+  ok(exam.when(k, 14) && E.DEC[id].make(k, H.rf(k)).text.includes('chọn hướng đi'), 'JP: chuẩn bị theo luồng chuyển cấp hiện có');
+  const gb = life('GB', 2000, 15, 15, { school: 'lower' });
+  ok(exam.when(gb, 15) && !exam.when(life('GB', 2000, 14, 15, { school: 'lower' }), 14), 'GB: chuẩn bị trước luồng chuyển cấp ở tuổi 16');
   const u = life('US', 2000, 12, 16, { school: 'lower' }); ok(/bóng chày/.test(E.DEC.k955_doi_the_thao.make(u, H.rf(u)).text), 'Mỹ: đội bóng chày');
   const i = life('IN', 2000, 12, 17, { school: 'lower' }); ok(/cricket/.test(E.DEC.k955_doi_the_thao.make(i, H.rf(i)).text), 'Ấn Độ: cricket');
   ok(!trig('k955_doi_the_thao').when(life('JP', 2000, 12, 18), 12), 'không đi học thì không có đội của trường');
   const fm = life('NG', 1985, 12, 19, { school: 'lower' }); fm.fam.q = 1; fm.urban = false; ok(trig('k955_viec_nha_nong').when(fm, 12), 'nhà nghèo ở nông thôn có chuyện việc đồng áng đan xen việc học');
   const rich = life('DE', 2010, 12, 20, { school: 'lower' }); rich.fam.q = 5; ok(!trig('k955_viec_nha_nong').when(rich, 12), 'nhà đủ đầy ở nước giàu không có chuyện đồng áng');
   const w = life('US', 2000, 13, 21, { school: 'lower' }); const m0 = w.money; run(w, 'k955_viec_vat', 'nhan'); ok(w.money > m0 - 1e-9 || w.yr && w.yr.items.some(x => /Công việc đầu tiên/.test(x.t)), 'công việc đầu tiên có tiền công');
-  const e = life('VN', 2000, 12, 22, { school: 'lower' }); run(e, 'k955_thi_chuyen_cap', 'on'); ok(e.log.length >= 1, 'ôn luyện có kết quả');
+  const e = life('VN', 2000, 14, 22, { school: 'lower' });
+  const other = JSON.parse(JSON.stringify(e));
+  e.st.kno = other.st.kno = 50;
+  ok(exam.when(e, 14) && E.DEC[id].make(e, H.rf(e)).text.includes('vào lớp 10'), 'VN: ôn lớp 10 đúng năm, có nội dung riêng');
+  const before = e.log.length;
+  run(e, id, 'on');
+  ok(e.st.kno === 53 && e.school === 'lower' && !e.log.slice(before).some(x => /đỗ|vào được trường/.test(x.t)), 'ôn luyện tăng kiến thức, kết quả chờ kỳ tuyển sinh');
+  for (const x of [e, other]) {
+    x.age = 15;
+    x.school = null;
+    x.focus = null;
+    const hs = E.DEC.hs;
+    hs.apply(x, hs.make(x), 'thpt', () => .52, () => {});
+  }
+  const forecast = x => {
+    const d = x.pending.find(p => p.id === 'highSchool125');
+    return d && Number(d.text.match(/kỳ vọng ([\d.]+)/)?.[1]);
+  };
+  ok(forecast(e) > forecast(other), 'kiến thức tích lũy cải thiện điểm kỳ vọng ở luồng tuyển sinh lớp 10 hiện có');
 }
 // 5. Mật độ chuyện tuổi thơ: các nước ngoài Việt Nam có đủ chuyện ở tuổi 1–2 và 10–14
 {

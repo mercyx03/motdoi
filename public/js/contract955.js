@@ -32,9 +32,22 @@
     s.c = { job: key(l), start: y, end: y + n, floor: wage * 0.85 * (mult || 1), raise: raiseOf(l), n: (s.n || 0) + 1 };
     s.n = s.c.n; s.queued = null; s.gap = null; return s.c;
   }
+  function retireDue(l, r, log) {
+    var s = l.flags.pro955, c = s && s.c;
+    if (!c || !c.retire || wy(l) < c.end) return false;
+    s.c = null;
+    if (!eligible(l) || c.job !== key(l)) return false;
+    l.lastJob = l.job;
+    log('Hợp đồng thi đấu đã hết hạn.', 'neutral');
+    E.CAREER_DEPTH900.retire(l, r, log);
+    H.mem(l, 'Ngày giải nghệ thi đấu.', 5);
+    return true;
+  }
   var career = E.careerYear;
   E.careerYear = function (l, r, log) {
-    var out = career.apply(this, arguments); log = log || function () { };
+    log = log || function () { };
+    if (retireDue(l, r, log)) return 0;
+    var out = career.apply(this, arguments);
     if (!(out > 0) || !eligible(l)) return out;
     var s = st(l), y = wy(l), c = s.c;
     if (c && c.job !== key(l)) { s.c = c = null; }
@@ -46,22 +59,22 @@
     return out;
   };
   E.HOOKS.year.push(function (l, r, log) {
-    if (!l.flags || !l.flags.pro955 || !eligible(l)) return;
+    if (!l.flags || !l.flags.pro955 || retireDue(l, r, log) || !eligible(l)) return;
     var s = st(l), c = s.c, y = wy(l);
-    if (c && c.end - y <= 1 && s.queued !== c.end && !(l.pending || []).some(function (d) { return d.id === 'pro955_expiry'; })) { s.queued = c.end; X.next(l, 'pro955_expiry', r, null, { manual: false }); }
+    if (c && c.job === key(l) && c.end === y + 1 && !c.retire && s.queued !== c.end && !(l.pending || []).some(function (d) { return d.id === 'pro955_expiry'; })) { s.queued = c.end; X.next(l, 'pro955_expiry', r, null, { manual: false }); }
   });
   E.SC('pro955_expiry', {
     title: 'Hợp đồng thi đấu sắp hết hạn',
-    valid: function (l) { var c = l.flags && l.flags.pro955 && l.flags.pro955.c; return !!(eligible(l) && c && c.end - wy(l) <= 1); },
+    valid: function (l) { var c = l.flags && l.flags.pro955 && l.flags.pro955.c; return !!(eligible(l) && c && c.job === key(l) && c.end === wy(l) + 1 && !c.retire); },
     text: function (l) {
       var c = l.flags.pro955.c, perf = E.sportPerformance ? E.sportPerformance(l) : { points: 0, rank: 0 };
-      return 'Hợp đồng thi đấu của bạn kết thúc ' + (c.end - wy(l) <= 0 ? 'cuối mùa này' : 'sau một mùa nữa') + '. Mức sàn hiện tại ' + H.money(l, floorNow(c, wy(l))) + '/năm. ' + (perf.rank >= 2 ? 'Thành tích gần đây khiến nhiều nơi để mắt tới.' : perf.rank === 1 ? 'Thành tích ở mức khá, đủ để thương lượng.' : 'Thành tích chưa nổi bật nên khó đòi hỏi nhiều.') + (l.age >= 33 ? ' Tuổi ' + l.age + ' khiến cơ hội hẹp dần.' : '');
+      return 'Đây là mùa cuối theo hợp đồng thi đấu hiện tại. Mức sàn mùa này là ' + H.money(l, floorNow(c, wy(l))) + '/năm. ' + (perf.rank >= 2 ? 'Thành tích gần đây khiến nhiều nơi để mắt tới.' : perf.rank === 1 ? 'Thành tích ở mức khá, đủ để thương lượng.' : 'Thành tích chưa nổi bật nên khó đòi hỏi nhiều.') + (l.age >= 33 ? ' Tuổi ' + l.age + ' khiến cơ hội hẹp dần.' : '');
     },
     opts: [
       { k: 'renew', l: 'Gia hạn với bên hiện tại', ai: { w: 1.6 }, run: function (l, r, log) { renew(l, r, log, 1); } },
       { k: 'raise', l: 'Đòi tăng mức sàn mạnh khi gia hạn', ai: { w: .4, amb: 1 }, req: function (l) { return (E.sportPerformance ? E.sportPerformance(l).rank : 0) >= 1; }, run: function (l, r, log) { renew(l, r, log, 1.25); } },
       { k: 'market', l: 'Chạy hết hợp đồng, ra thị trường', ai: { w: .5, risk: 1 }, run: function (l, r, log) { var s = st(l); s.gap = s.c.end; log('Bạn không gia hạn, chờ hết hợp đồng để thương lượng với nơi khác.', 'neutral'); } },
-      { k: 'retire', l: 'Giải nghệ thi đấu khi hết hạn', ai: { w: .1 }, req: function (l) { return l.age >= 33; }, run: function (l, r, log) { var s = st(l); s.c = null; l.lastJob = l.job; l.job = null; l.flags.needJob = true; log('Bạn giải nghệ thi đấu, hồ sơ thành tích vẫn được giữ.', 'big'); H.mem(l, 'Ngày giải nghệ thi đấu.', 5); } }
+      { k: 'retire', l: 'Giải nghệ thi đấu khi hết hạn', ai: { w: .1 }, req: function (l) { return l.age >= 33; }, run: function (l, r, log) { st(l).c.retire = true; log('Bạn sẽ thi đấu hết mùa cuối rồi giải nghệ khi hợp đồng hết hạn.', 'neutral'); } }
     ]
   });
   function renew(l, r, log, mult) {

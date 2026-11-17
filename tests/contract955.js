@@ -42,8 +42,21 @@ const yearOf = l => { E.beginYear(l, { auto: true }); let g = 0; while (l.pendin
   ok(['renew', 'market'].every(k => d.opts.some(o => o.k === k)) && !d.opts.some(o => o.k === 'retire'), 'có gia hạn, ra thị trường; giải nghệ chỉ từ 33 tuổi');
   let renewed = 0; for (let i = 0; i < 40; i++) { const x = athlete('bóng rổ', 200 + i, 27); E.careerYear(x, () => .5, say(x)); const ss = P.state(x); ss.c.end = x.birthYear + x.age + 1; const e0 = ss.c.end; E.HOOKS.year.forEach(h => { try { h(x, H.rf(x), say(x), x.age); } catch (e) { } }); const dd = x.pending.find(q => q.id === 'pro955_expiry'); x.pending = [dd]; E.resolve(x, 'renew'); if (ss.c && ss.c.end > e0) renewed++; }
   ok(renewed > 15 && renewed < 40, 'gia hạn có ca được, có ca không (' + renewed + '/40)');
-  const old = athlete('bóng rổ', 60, 27); E.careerYear(old, () => .5, say(old)); old.age = 35; P.state(old).c.end = old.birthYear + old.age + 1; E.HOOKS.year.forEach(h => { try { h(old, H.rf(old), say(old), old.age); } catch (e) { } });
-  const od = old.pending.find(x => x.id === 'pro955_expiry'); ok(od.opts.some(o => o.k === 'retire'), '35 tuổi có lựa chọn giải nghệ'); old.pending = [od]; E.resolve(old, 'retire'); ok(!old.job && old.flags.needJob, 'giải nghệ thi đấu thì rời nghề');
+  const old = athlete('bắn cung', 60, 35); E.careerYear(old, () => .5, say(old)); P.state(old).c.end = old.birthYear + old.age + 1; E.HOOKS.year.forEach(h => { try { h(old, H.rf(old), say(old), old.age); } catch (e) { } });
+  const od = old.pending.find(x => x.id === 'pro955_expiry'); ok(od.opts.some(o => o.k === 'retire'), '35 tuổi có lựa chọn giải nghệ');
+  const end = P.state(old).c.end;
+  old.pending = [od]; E.resolve(old, 'retire');
+  ok(old.job && P.state(old).c.end === end && P.state(old).c.retire, 'chọn giải nghệ vẫn còn việc và hợp đồng trong mùa cuối');
+  const resumed = E.migrate(JSON.parse(JSON.stringify(old)));
+  const changed = JSON.parse(JSON.stringify(resumed));
+  changed.age++;
+  E.startJob(changed, 'cong_nhan', () => .5, () => {}, true);
+  E.careerYear(changed, () => .5, say(changed));
+  ok(changed.job && changed.job.id === 'cong_nhan' && !P.state(changed).c, 'kế hoạch cũ không xóa việc mới');
+  const floor = P.floorNow(P.state(resumed).c, end - 1);
+  ok(E.careerYear(resumed, () => .5, say(resumed)) >= floor && resumed.job, 'tải lại mùa cuối vẫn được hưởng mức sàn');
+  resumed.age++;
+  ok(E.careerYear(resumed, () => .5, say(resumed)) === 0 && !resumed.job && !P.state(resumed).c && resumed.flags.needJob && resumed.flags.sportRetired900, 'hết hạn mới giải nghệ, hết lương thi đấu và có hồ sơ sau giải nghệ');
 }
 // 4. Chi sinh hoạt: mọi người thu nhập lớn đều giữ phần dư vào tài sản ròng
 {

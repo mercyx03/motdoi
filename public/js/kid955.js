@@ -36,8 +36,8 @@
   // 1.2 Trung thu / Chuseok
   FEST('k955_trung_thu_a', 'CN TW HK KR SG JP', 'Đêm trăng rằm mùa thu', function (l) { var kr = cc(l) === 'KR', jp = cc(l) === 'JP'; return kr ? 'Dịp Chuseok, cả nhà về quê cúng tổ tiên và cùng làm bánh songpyeon.' : jp ? 'Đêm Tsukimi, nhà bạn bày bánh dango và cỏ bạc lên ngắm trăng.' : 'Trăng rằm tháng Tám, nhà bạn mua bánh trung thu, bé nào cũng cầm đèn lồng chạy khắp xóm.'; }, [
     { k: 'lam', l: 'Cùng người lớn làm bánh', ai: { w: 1.1 }, run: function (l, r, log) { log('Nặn bánh méo mó nhưng ăn ngon lạ, bạn khoe với cả họ.', 'good'); H.fx(l, { hap: 4, kno: 1 }); mem(l, 'Lần đầu tự tay nặn bánh đêm trăng rằm.', 2); } },
-    { k: 'den', l: 'Xách đèn lồng đi chơi với bạn bè', ai: { w: 1, soc: 1 }, run: function (l, r, log) { log('Đèn lồng tắt giữa đường, bạn bè nhường nhau thắp lại từng chiếc.', 'good'); H.fx(l, { hap: 4, soc: 3 }); } },
-    { k: 'ngam', l: 'Ngồi ngắm trăng nghe ông bà kể chuyện', ai: { w: 0.8 }, run: function (l, r, log) { log('Nghe tích chị Hằng và chú Cuội nhiều lần mà vẫn thích.', 'neutral'); H.fx(l, { hap: 2, kno: 1 }); } }
+    { k: 'den', l: function (l) { return cc(l) === 'JP' || cc(l) === 'KR' ? 'Mang bánh ra ngắm trăng cùng bạn bè' : 'Xách đèn lồng đi chơi với bạn bè'; }, ai: { w: 1, soc: 1 }, run: function (l, r, log) { log(cc(l) === 'JP' || cc(l) === 'KR' ? 'Các bạn chia bánh cho nhau rồi ngồi chờ trăng lên.' : 'Đèn lồng tắt giữa đường, bạn bè nhường nhau thắp lại từng chiếc.', 'good'); H.fx(l, { hap: 4, soc: 3 }); } },
+    { k: 'ngam', l: 'Ngồi ngắm trăng nghe ông bà kể chuyện', ai: { w: 0.8 }, run: function (l, r, log) { log(cc(l) === 'JP' || cc(l) === 'KR' ? 'Ông bà chỉ lên mặt trăng và kể chuyện chú thỏ giã bánh.' : 'Nghe truyện dân gian về cung trăng nhiều lần mà vẫn thích.', 'neutral'); H.fx(l, { hap: 2, kno: 1 }); } }
   ]);
   // 1.3 Diwali (Ấn Độ, Nepal, Fiji, Mauritius)
   FEST('k955_diwali', 'IN NP FJ MU', 'Đêm Diwali', function (l) { return 'Đêm Diwali, đèn dầu diya thắp kín bậu cửa, tiếng pháo vang khắp phố. ' + cap(carer(l)) + ' đang bày bánh kẹo ra mời khách.'; }, [
@@ -70,7 +70,7 @@
   // 1.7 Lễ Tạ ơn (Mỹ, Canada)
   FEST('k955_tha_on', 'US CA', 'Bữa tiệc Lễ Tạ ơn', function (l) { return 'Dịp Lễ Tạ ơn, nhà bạn đông kín họ hàng, bàn ăn bày gà tây, bí ngô nướng và bánh nướng.'; }, [
     { k: 'giup', l: 'Phụ giúp nhặt rau và bày bàn', ai: { w: 1.1 }, run: function (l, r, log) { log('Được giao việc như người lớn, bạn làm hết sức nghiêm túc.', 'good'); H.fx(l, { hap: 3, karma: 1 }); } },
-    { k: 'tv', l: 'Xem trận bóng chiều lễ cùng bố và các bác', ai: { w: 1 }, run: function (l, r, log) { log('Hò hét cùng cả nhà trước màn hình, chẳng hiểu hết luật nhưng vui.', 'good'); H.fx(l, { hap: 4, soc: 2 }); } },
+    { k: 'tv', l: 'Xem truyền hình cùng cả nhà', ai: { w: 1 }, req: function (l) { return wy(l) >= 1955; }, run: function (l, r, log) { log('Cả nhà ngồi quây quần trước màn hình, vừa xem vừa chuyện trò.', 'good'); H.fx(l, { hap: 4, soc: 2 }); } },
     { k: 'ke', l: 'Nghe ông bà kể chuyện ngày xưa quanh bàn ăn', ai: { w: 0.8 }, run: function (l, r, log) { log('Lần đầu bạn nghe chuyện gia đình mình đã đến đây như thế nào.', 'neutral'); H.fx(l, { kno: 2, hap: 2 }); } }
   ], 1900);
   // 1.8 Carnaval
@@ -148,12 +148,17 @@
       { k: 'xem', l: 'Chỉ đứng ngoài cổ vũ', ai: { w: 0.7 }, run: function (l, r, log) { log('Bạn ngồi trên khán đài hò hét, còn mơ một ngày sẽ vào sân.', 'neutral'); H.fx(l, { hap: 1, soc: 1 }); } },
       { k: 'tu', l: 'Bận việc nhà, không có thời gian', ai: { w: 0.6 }, req: function (l) { return poor(l) || !l.school; }, run: function (l, r, log) { log('Bạn ở nhà phụ việc, mắt vẫn dõi theo tiếng reo từ sân trường.', 'neutral'); H.fx(l, { hap: -1 }); } }] },
   function (l) { return !!l.school && calm(l); }, 1, 0.06);
-  K.KID('k955_thi_chuyen_cap', 11, 14, { title: 'Kỳ thi chuyển cấp',
-    text: function (l) { var c = cc(l); var n = c === 'JP' ? 'kỳ thi vào trung học phổ thông ở Nhật' : c === 'KR' ? 'kỳ thi vào trường phổ thông ở Hàn Quốc' : /^(CN|TW|HK)$/.test(c) ? 'kỳ thi chuyển cấp (trung khảo)' : c === 'GB' ? 'kỳ chọn trường theo năng lực' : c === 'IN' ? 'kỳ thi Board hoặc vào trường chuyên' : c === 'NG' ? 'kỳ thi chung vào trường trung học (Common Entrance)' : c === 'VN' ? 'kỳ thi vào lớp 10' : 'kỳ thi chuyển cấp'; return 'Sang năm bạn sẽ dự ' + n + '. Cả nhà bàn nhau chuyện học thêm, ôn tập và chọn trường.'; },
-    opts: [{ k: 'on', l: 'Dành cả mùa hè ôn luyện', ai: { w: 1.1, smart: 1 }, run: function (l, r, log) { H.fx(l, { kno: 3, hap: -2 }); if (r() < 0.65 + (l.st.kno - 50) / 200) { log('Điểm cao hơn mong đợi, bạn vào được trường mình chọn.', 'good'); l.flags.goodSchool955 = true; mem(l, 'Ngày có kết quả kỳ thi chuyển cấp.', 3); } else log('Điểm sát ngưỡng, bạn vào trường thứ hai trong danh sách.', 'neutral'); } },
-      { k: 'binh', l: 'Học vừa phải, giữ thời gian chơi', ai: { w: 0.9 }, run: function (l, r, log) { log('Bạn học đều đều rồi vào trường gần nhà.', 'neutral'); H.fx(l, { kno: 1, hap: 2 }); } },
-      { k: 'ban', l: 'Nhờ anh chị hoặc bạn học nhóm cùng', ai: { w: 0.8, soc: 1 }, run: function (l, r, log) { log('Học nhóm vui hơn học một mình, kết quả cũng khá tốt.', 'good'); H.fx(l, { kno: 2, soc: 2 }); } }] },
-  function (l) { return !!l.school && calm(l); }, 1.1, 0.07);
+  function englandTrack(l) { return E.england829 && E.england829(l); }
+  function preparingTransition(l) { return l.school === 'lower' && calm(l) && l.age === (englandTrack(l) ? 15 : 14); }
+  K.KID('k955_thi_chuyen_cap', 14, 15, { title: 'Chuẩn bị chuyển cấp', valid: preparingTransition,
+    text: function (l) {
+      var next = H.inVN(l) ? 'Năm tới là kỳ thi vào lớp 10.' : 'Năm tới, bạn sẽ chọn hướng đi sau khi học xong bậc hiện tại.';
+      return next + ' Cả nhà bàn xem nên dành bao nhiêu thời gian để chuẩn bị.';
+    },
+    opts: [{ k: 'on', l: 'Dành cả mùa hè ôn luyện', ai: { w: 1.1, smart: 1 }, run: function (l, r, log) { H.fx(l, { kno: 3, hap: -2 }); log('Bạn nắm chắc thêm nhiều phần khó sau một mùa hè ôn luyện.', 'good'); } },
+      { k: 'binh', l: 'Học vừa phải, giữ thời gian chơi', ai: { w: 0.9 }, run: function (l, r, log) { H.fx(l, { kno: 1, hap: 2 }); log('Bạn ôn đều và vẫn giữ được thời gian nghỉ ngơi.', 'neutral'); } },
+      { k: 'ban', l: 'Rủ bạn học nhóm', ai: { w: 0.8, soc: 1 }, run: function (l, r, log) { H.fx(l, { kno: 2, soc: 2 }); log('Cả nhóm cùng giải những bài trước đây còn vướng.', 'good'); } }] },
+  preparingTransition, 1.1, 0.07);
   K.KID('k955_viec_nha_nong', 10, 14, { title: 'Việc nhà và việc đồng áng',
     text: function (l) { return 'Mùa vụ đến, ' + carer(l) + ' cần thêm tay người ' + (l.urban ? 'trông quầy hàng của nhà' : 'ngoài đồng') + '. Việc học cũng đang vào giai đoạn quan trọng.'; },
     opts: [{ k: 'ca', l: 'Giúp cả buổi, hôm sau đến lớp muộn', ai: { w: 1 }, run: function (l, r, log) { log('Bạn giúp được nhiều việc, gia đình đỡ vất vả, nhưng bài vở bị lỡ vài buổi.', 'neutral'); H.fx(l, { karma: 2, kno: -1, hap: -1 }); } },

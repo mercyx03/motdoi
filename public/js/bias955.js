@@ -88,19 +88,29 @@
   function betterCity(l) {
     var b = G.W && G.W.BY[code(l)]; if (!b || !H.moveToCity) return null;
     var g = top(l), cur = String(l.city || l.place || '');
-    if (!g || !g.row[8]) return null; var re = new RegExp(g.row[8]);
+    if (!g || !g.row[8] || g.row[5] >= g.lv) return null; var re = new RegExp(g.row[8]);
     var list = (b.cities || []).filter(function (c) { return !re.test(c) && c !== cur; });
     return list.length ? list[Math.floor(hs(l, 'move' + wy(l)) * list.length)] : null;
+  }
+  function raceRiskAt(c, y) {
+    // Các nhóm hiện được mô hình theo từng nước. Dùng rào cản cao nhất đã ghi nhận để sàng lọc điểm đến.
+    return B.RACE.reduce(function (risk, row) {
+      return row[1] === c && y >= row[2] && y <= row[3] ? Math.max(risk, row[5], row[9] || 0) : risk;
+    }, 0);
   }
   function moveAway(l, r, log, why) {
     var city = betterCity(l);
     if (city && why === 'chủng tộc') { H.moveToCity(l, city); H.cash(l, -V(l, 2), 'Chi phí chuyển nơi ở'); H.fx(l, { hap: -1, soc: -2 }); log('Bạn dọn tới ' + city + ', nơi quy định bớt khắt khe hơn, bỏ lại họ hàng và quen biết cũ.', 'neutral'); return; }
     var okAbroad = E.CTX945 && E.CTX945.emigAllowed && E.CTX945.emigAllowed(l);
-    var here = why === 'lgbt' ? lgbtAt(code(l), wy(l)) : 3, dest = ['CA', 'GB', 'DE', 'NL', 'FR', 'AU', 'US', 'SE', 'NZ', 'CH'].filter(function (c) { return G.W && G.W.BY[c] && c !== code(l) && lgbtAt(c, wy(l)) < Math.max(1, here); });
+    var from = code(l), y = wy(l), riskAt = why === 'lgbt' ? lgbtAt : raceRiskAt;
+    var here = why === 'lgbt' ? lgbtAt(from, y) : top(l).lv;
+    var dest = ['CA', 'GB', 'DE', 'NL', 'FR', 'AU', 'US', 'SE', 'NZ', 'CH'].filter(function (c) {
+      return G.W && G.W.BY[c] && c !== from && riskAt(c, y) < here;
+    });
     if (okAbroad && dest.length && l.money > l.base * 0.3 && H.emigrate) {
       var c = dest[Math.floor(hs(l, 'dest' + wy(l)) * dest.length)], Bn = G.W.BY[c];
       H.cash(l, -l.base * 0.3, 'Chi phí rời đi'); H.emigrate(l, [c, Bn.name, Bn.pool], r, function (t, k) { l.log.push({ a: l.age, y: wy(l), t: t, k: k || 'neutral' }); });
-      log('Bạn rời hẳn ' + name(code(l)) + ' để tìm nơi sống bình yên hơn; nhớ nhà, nhưng không còn phải sợ.', 'big'); H.mem(l, 'Ngày rời quê hương vì bị phân biệt đối xử.', 6); return;
+      log('Bạn rời ' + name(from) + ' để tìm nơi sống bình yên hơn. Xa người thân, bạn phải gây dựng lại các mối quan hệ.', 'big'); H.mem(l, 'Ngày rời nơi ở cũ vì bị phân biệt đối xử.', 6); return;
     }
     H.fx(l, { hap: -2 }); log('Bạn tính chuyện bỏ đi nhưng không có đường đi hay tiền bạc đủ; mọi thứ đành ở lại như cũ.', 'neutral');
   }
