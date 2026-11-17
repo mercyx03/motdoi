@@ -5,7 +5,7 @@
       "id": "club-loans-and-work-history-96000",
       "version": "9.6.0",
       "publishedAt": "2026-11-17T10:59:30+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Cho mượn cầu thủ trẻ và giữ đúng quyền sở hữu CLB",
       "summary": "Các đội trong mạng lưới có thể chia lương để cầu thủ trẻ được thi đấu một mùa; lời mời đi làm nước ngoài theo đúng thời điểm các chương trình mở.",
       "tags": [
@@ -17,7 +17,8 @@
         "Khi sáp nhập, CLB và lịch sử các lượt mượn chuyển sang doanh nghiệp nhận sáp nhập. Sau khi thừa kế, lời đề nghị mua CLB cũ không tự tiếp tục. Mất quyền kiểm soát công ty thì bạn không còn được điều hành hay bán CLB thay công ty.",
         "Lời mời đi làm nước ngoài chỉ nhắc chương trình phù hợp với năm đang sống. Ví dụ, thực tập kỹ năng ở Nhật xuất hiện từ 1993 và chương trình EPS ở Hàn Quốc từ 2004."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-17T04:01:21.000Z",
+      "correctedAt": "2026-11-17T04:02:41.517Z"
     },
     {
       "id": "salary-and-football-95900",
