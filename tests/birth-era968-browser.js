@@ -1,5 +1,6 @@
 'use strict';
 const assert=require('node:assert/strict'),{spawn}=require('node:child_process');
+const expectedUpdates=require('../public/data/updates.json').entries;
 const {launch,page,sleep}=require('./lib/cdp');
 const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
 (async()=>{
@@ -39,9 +40,12 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
      const data=JSON.parse(document.querySelector('#updateHistoryData').textContent).entries,search=document.querySelector('#updateSearch');
      document.querySelector('#moreUpdates')?.click();
      search.value='noi sinh va nam sinh';search.dispatchEvent(new Event('input',{bubbles:true}));
-     return {version:data[0].version,status:data[0].releaseStatus,text:document.querySelector('#updateTimeline').innerText,overflow:document.documentElement.scrollWidth>innerWidth+1};
+     return {version:data[0].version,status:data[0].releaseStatus,unreleased:data.filter(e=>e.releaseStatus==='packaged').length,text:document.querySelector('#updateTimeline').innerText,overflow:document.documentElement.scrollWidth>innerWidth+1};
     });
-    assert.equal(update.version,'9.6.8');assert.equal(update.status,'packaged');assert(update.text.includes('nơi sinh và năm sinh'));assert(!update.overflow);
+    assert.equal(update.version,'9.6.8');assert.equal(update.status,expectedUpdates[0].releaseStatus);
+    assert.equal(update.unreleased,expectedUpdates.filter(e=>e.releaseStatus==='packaged').length);
+    assert(update.text.includes(update.status==='released'?'Đã phát hành':'Bản chuẩn bị'));
+    assert(update.text.includes('nơi sinh và năm sinh'));assert(!update.overflow);
     assert.deepEqual(p.errors,[]);console.log('PASS birth-era968-browser: region/year choices, historical names, preview, updates and layout '+width);
    }catch(error){console.error(p.errors);throw error;}finally{p.close();}
   }

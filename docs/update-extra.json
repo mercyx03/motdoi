@@ -3,8 +3,8 @@
     "id": "birthplace-and-year-context-96800",
     "version": "9.6.8",
     "publishedAt": "2026-11-17T15:45:37+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-17T08:45:37.000Z",
     "title": "Bối cảnh nơi sinh và năm sinh",
     "summary": "Chọn vùng sinh đúng thời kỳ, nghề của bố mẹ phù hợp hơn và sự kiện địa phương theo nơi đang sống.",
     "tags": [
@@ -19,14 +19,15 @@
       "Sự kiện địa phương vẫn nhận đúng vùng khi bản lưu dùng tên thành phố lịch sử. Bối cảnh chính trị khi đang ở nước ngoài theo nơi đang sống.",
       "Lựa chọn của thời loạn hết hiệu lực khi đã đổi năm, đổi nơi ở hoặc hoàn cảnh gây ra sự kiện không còn. Lựa chọn cũ không tiếp tục trừ tiền hay gây thương vong ở nơi mới.",
       "Giải thích rõ hơn số liệu ước tính trước 1950 và vẫn hiển thị bối cảnh cho các năm gần đây."
-    ]
+    ],
+    "correctedAt": "2026-11-17T08:59:15.584Z"
   },
   {
     "id": "mentor-work-review-and-youth-development-96700",
     "version": "9.6.7",
     "publishedAt": "2026-11-17T15:16:46+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-17T08:16:46.000Z",
     "title": "Tiếp nối lời khuyên của thầy cô và cơ hội phát triển nghề",
     "summary": "Trao đổi khi công việc gặp khó, bổ sung hồ sơ còn dở và rèn kỹ năng cho cầu thủ trẻ sau mùa cho mượn.",
     "tags": [
@@ -38,14 +39,15 @@
       "Khi hồ sơ công tác tại FBI, CIA hoặc MI5 cần bổ sung, phần việc được giữ sang năm sau. Bạn có thể đối chiếu lại cùng người hướng dẫn hoặc bàn giao để chuyển sang việc khác. Hồ sơ được duyệt chỉ tính thành tích một lần.",
       "Cầu thủ đã có đủ phút thi đấu nhưng chưa đạt đánh giá để lên đội một có thể rèn kỹ năng tại CLB chủ quản. Công ty trả phí, HLV đánh giá lại vào mùa sau. Trong thời gian này, cầu thủ tiếp tục ở đội chủ quản.",
       "Rút hoặc để quá hạn hồ sơ tuyển dụng sẽ khép cả phần chuẩn bị của lần nộp đó."
-    ]
+    ],
+    "correctedAt": "2026-11-17T08:59:15.692Z"
   },
   {
     "id": "deeper-mentor-recruitment-and-loans-96600",
     "version": "9.6.6",
     "publishedAt": "2026-11-17T14:56:16+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-17T07:56:16.000Z",
     "title": "Thêm bước tiếp nối sau lời giới thiệu, thi tuyển và cho mượn",
     "summary": "Thầy cô hỏi thăm sau lần giới thiệu việc. Ứng viên có thể chuẩn bị lại sau khi trượt, còn CLB nhận mượn ảnh hưởng đến cơ hội ra sân.",
     "tags": [
@@ -56,7 +58,8 @@
       "Sau khi thầy cô giới thiệu việc, họ có thể hỏi thăm vài năm sau. Bạn có thể kể về công việc đang làm, xin thêm góp ý để tìm việc hoặc giữ liên lạc khi chọn hướng riêng.",
       "Trong chuỗi ứng tuyển FBI, CIA hoặc MI5, bạn có thể luyện kỹ năng cho vòng đánh giá khi đang chờ. Mỗi vòng có hạn xử lý và hồ sơ quá hạn cần được nộp lại.",
       "Khi cho mượn cầu thủ trẻ, xem khoảng phút thi đấu dự kiến ở đội nhận. Đội ưu tiên học viện và có mức cạnh tranh phù hợp tạo thêm cơ hội ra sân. Nếu chọn cho mượn tiếp, đề nghị chuyển nhượng đang chờ của chính cầu thủ đó sẽ khép lại."
-    ]
+    ],
+    "correctedAt": "2026-11-17T08:59:15.794Z"
   },
   {
     "id": "childhood-paths-and-local-life-96500",
