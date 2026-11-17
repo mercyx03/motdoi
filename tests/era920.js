@@ -7,6 +7,17 @@ const { gameContext } = require('./hardcore-isolation');
 const G = gameContext(), E = G.E, X = E.ERA920, D = G.ERA920_DATA;
 let n = 0; const ok = (c, m) => { assert.ok(c, m); n++; };
 const near = (a, b, t, m) => ok(Math.abs(a - b) <= t, m + ' (' + a + ' vs ' + b + ')');
+{
+  const l = E.createLife({ mode: 'world', country: 'VN', seed: 957, year: 1986 });
+  l.age = 14;
+  const home = E.devGdp(l);
+  ok(E.ERA902.anachronism(l, 'Bạn đọc tin trên internet'), 'Việt Nam 2000: internet chưa đạt ngưỡng phổ cập của game');
+  l.abroad = { code: 'US', study: true };
+  near(E.devGdp(l), G.W.BY.US.gdp * Math.min(1.25, X.at('US', 2000).gdpRel), 1e-8, 'du học: mức phát triển dùng nước đang sống và năm thực tế');
+  ok(!E.ERA902.anachronism(l, 'Bạn đọc tin trên internet'), 'du học: cảnh dùng mức phổ cập của nước đang sống');
+  l.abroad = null;
+  near(E.devGdp(l), home, 1e-8, 'trở về: dùng lại nước gốc');
+}
 // 1. dữ liệu: đủ nước, đủ năm, giá trị hợp lý, có nguồn và hàm băm
 {
   const codes = G.W.C.map(c => c.code);

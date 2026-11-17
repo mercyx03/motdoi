@@ -93,18 +93,19 @@
     [/^lg_pride$/, 1970], [/^dk_ship$/, 2010], [/^dk_bar_nho$/, 1975], [/^mc_dan_lon$/, 1950], [/^(streamer|kol_|live_)/, 2011]
   ];
   var ID_MAX = ID_FROM.reduce(function (m, x) { return Math.max(m, x[1], x[2] ? Math.max.apply(null, Object.keys(x[2]).map(function (k) { return x[2][k]; })) : 0); }, 0);
+  function residence(l) { return l && (l.country || l.abroad && l.abroad.code) ? E.H.resCode(l) : null; }
   function idBlocked(id, l) {
     var y = l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; if (y >= ID_MAX || typeof id !== 'string') return false;
-    var cc = (l.abroad && l.abroad.perm && l.abroad.code) || l.country;
+    var cc = residence(l);
     for (var i = 0; i < ID_FROM.length; i++) if (ID_FROM[i][0].test(id)) { var from = ID_FROM[i][2] && ID_FROM[i][2][cc] != null ? ID_FROM[i][2][cc] : ID_FROM[i][1]; if (y < from) { stats.id = (stats.id || 0) + 1; return true; } }
     return false;
   }
   function worldYear(l) { return l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; }
-  function localAt(l, y) { var cc = (l && l.abroad && l.abroad.perm && l.abroad.code) || (l && l.country); return cc && E.ERA920 && y >= E.ERA920.FROM && y <= E.ERA920.TO ? E.ERA920.at(cc, y) : null; }
+  function localAt(l, y) { var cc = residence(l); return cc && E.ERA920 && y >= E.ERA920.FROM && y <= E.ERA920.TO ? E.ERA920.at(cc, y) : null; }
   var ADO = {};
   function activeFor(l) {
     var y = worldYear(l), g = activeAt(y), a = localAt(l, y); if (!a) return g;
-    var cc = (l.abroad && l.abroad.perm && l.abroad.code) || l.country, k = cc + ':' + y, c = ADO[k]; if (c) return c;
+    var k = residence(l) + ':' + y, c = ADO[k]; if (c) return c;
     var extra = TECH.filter(function (t) { return t.ad && y >= t.from && !(a[t.ad[0]] >= t.ad[1]); });
     return (ADO[k] = extra.length ? g.concat(extra) : g);
   }

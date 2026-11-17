@@ -67,7 +67,13 @@
     return m.cc === 'VN' ? Math.min(8.5, l.tfr * s.t[i] / s.t[b]) : s.t[i];
   }
   // --- 4. mức phát triển theo năm cho ngưỡng trong engine.js ---
-  function gdp(l) { var m = l && l.era920; if (!m) return l.gdp; var s = S(m.cc); if (!s) return l.gdp; return l.gdp * Math.min(1.25, s.g[idx(worldYear(l))]); }
+  function gdp(l) {
+    if (!l.era920) return l.gdp;
+    var cc = E.H.resCode(l), destination = cc !== l.country && G.W.BY[cc];
+    var base = destination ? destination.gdp : l.gdp;
+    var s = S(cc);
+    return s ? base * Math.min(1.25, s.g[idx(worldYear(l))]) : base;
+  }
   // hệ số bù: engine cộng thêm tử vong từ bệnh nặng, tai nạn, tiêm chủng và sự kiện (hiệu chỉnh CAL ở mức tuổi thọ hiện nay). Ở mức tử vong cao (đời xưa) phần cộng thêm này làm kết quả vượt số liệu UN:
   // đo bằng mô phỏng 100 đời mỗi ca (VN 1950, NG 1960, IN 1950, JP 1950): trẻ chết trước 5 tuổi 29–42% so với 21–32%; hệ số giảm tuyến tính tới −22% (trẻ em, theo tử vong dưới 5) và −20% (người lớn, theo tuổi thọ) rồi bằng 1 ở mức hiện nay.
   var CAL = { a: 0.2, e: 76, w: 22, c: 0.22, u: 8, v: 50 };

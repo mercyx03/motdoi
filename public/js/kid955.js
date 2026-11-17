@@ -139,15 +139,86 @@
   // ===================================================================
   // 3. TUỔI 10–14: thi chuyển cấp, đội thể thao, việc nhà và lao động của trẻ
   // ===================================================================
-  var TEAM = { football: 'AR BR CO CL PE UY EC GH NG SN CM CI ML MA EG DZ TN ES IT PT FR DE NL BE GB IE TR GR RU UA PL CZ HU RO RS HR VN TH ID MY KE TZ UG SA IR MX', cricket: 'IN PK BD LK AU NZ ZA ZW', baseball: 'US JP KR TW CU DO VE PR', basketball: 'PH LT', hockey: 'CA FI SE CZ SK', rugby: 'NZ FJ WS TO' };
-  function teamOf(l) { var c = cc(l); for (var k in TEAM) if (('' + TEAM[k]).split(' ').indexOf(c) >= 0) return k; return 'football'; }
-  var TNAME = { football: 'đội bóng đá của trường', cricket: 'đội cricket của trường', baseball: 'đội bóng chày của trường', basketball: 'đội bóng rổ của trường', hockey: 'đội khúc côn cầu trên băng', rugby: 'đội bóng bầu dục' };
-  K.KID('k955_doi_the_thao', 10, 14, { title: 'Thử vào đội thể thao',
-    text: function (l) { return 'Thầy cô thông báo tuyển người cho ' + TNAME[teamOf(l)] + '. Nhiều bạn trong lớp đăng ký.'; },
-    opts: [{ k: 'thu', l: 'Đăng ký và đi tập đều', ai: { w: 1.1, amb: 1 }, run: function (l, r, log) { if (r() < 0.55) { log('Bạn lọt vào đội dự bị, buổi chiều nào cũng tập đến tối mới về.', 'good'); H.fx(l, { hea: 3, soc: 3, hap: 3 }); mem(l, 'Lần đầu khoác áo đội thể thao của trường.', 3); } else { log('Bạn không lọt vào đội chính, nhưng vẫn theo tập và có thêm mấy người bạn mới.', 'neutral'); H.fx(l, { hea: 2, soc: 2 }); } } },
-      { k: 'xem', l: 'Chỉ đứng ngoài cổ vũ', ai: { w: 0.7 }, run: function (l, r, log) { log('Bạn ngồi trên khán đài hò hét, còn mơ một ngày sẽ vào sân.', 'neutral'); H.fx(l, { hap: 1, soc: 1 }); } },
-      { k: 'tu', l: 'Bận việc nhà, không có thời gian', ai: { w: 0.6 }, req: function (l) { return poor(l) || !l.school; }, run: function (l, r, log) { log('Bạn ở nhà phụ việc, mắt vẫn dõi theo tiếng reo từ sân trường.', 'neutral'); H.fx(l, { hap: -1 }); } }] },
-  function (l) { return !!l.school && calm(l); }, 1, 0.06);
+  var TEAM = { football: 'AR BR CO CL PE UY EC GH NG SN CM CI ML MA EG DZ TN ES IT PT FR DE NL BE GB IE TR GR RU UA PL CZ HU RO RS HR VN TH ID MY KE TZ UG SA IR MX', cricket: 'IN PK BD LK AU ZA ZW', baseball: 'US JP KR TW CU DO VE PR', basketball: 'PH LT', hockey: 'CA FI SE CZ SK', rugby: 'NZ FJ WS TO' };
+  var TNAME = { football: 'bóng đá', cricket: 'cricket', baseball: 'bóng chày', basketball: 'bóng rổ', hockey: 'khúc côn cầu trên băng', rugby: 'bóng bầu dục', athletics: 'điền kinh' };
+  function teamOf(l) {
+    var c = cc(l);
+    // Môn tuyển chọn là kịch bản của trường. Sân băng cần điều kiện tốt hơn, nhất là ở các đời trước.
+    if (TEAM.hockey.split(' ').indexOf(c) >= 0 && (!l.urban || (wy(l) < 1950 && l.school === 'primary'))) return 'athletics';
+    if (c === 'NZ' && wy(l) < 1920 && l.school === 'primary') return 'athletics';
+    for (var k in TEAM) if (TEAM[k].split(' ').indexOf(c) >= 0) return k;
+    return 'athletics';
+  }
+  var TEAM_NEXT = 'k955_the_thao_mua_sau';
+  function schoolSport(l) { return l.alive && !!l.school && l.age <= 17 && !(l.jailUntil > l.age) && !(l.abroad && l.abroad.trapped); }
+  function practiceOpen(l) { var ctx = K.cx(l); return calm(l) && ctx.epi < 2 && ctx.fam < 2; }
+  function schoolPlace(l) { return cc(l) + ':' + (l.city || l.place || ''); }
+  function sportRecord(l) { return l.flags.schoolSport955; }
+  function nextSeason(l, s) {
+    if (l.age >= 17) { s.closed = true; return; }
+    s.nextAge = l.age + 1;
+  }
+  function makeTeammate(l, r) {
+    var steady = r() < 0.5;
+    return { name: H.stranger(l, r, l.sex === 'F' ? 'F' : 'M'), style: steady ? 'kiên trì' : 'thích thi đấu', goal: steady ? 'tập đều cả mùa' : 'giành suất thi đấu', trust: 45 };
+  }
+  function trainSchoolTeam(l, r, log, intensive) {
+    var s = sportRecord(l);
+    if (!s || s.place !== schoolPlace(l)) {
+      s = l.flags.schoolSport955 = { sport: teamOf(l), place: schoolPlace(l), progress: s ? Math.floor(s.progress / 2) : 0, seasons: 0, role: 'retry', teammate: makeTeammate(l, r) };
+    }
+    var teammate = s.teammate, previous = s.role, matching = l.talentSub === TNAME[s.sport];
+    var chance = U.clamp(0.30 + (l.st.hea - 55) / 180 + s.progress * 0.035 + (matching ? (l.skill || 0) / 280 : 0) + (teammate.trust - 45) / 250 - (poor(l) && intensive ? 0.10 : 0), 0.12, 0.9);
+    if (intensive) {
+      if (previous === 'starter' || r() < chance) {
+        s.role = previous === 'reserve' || previous === 'starter' ? 'starter' : 'reserve';
+        log(s.role === 'starter' ? 'Bạn có suất thi đấu chính cho đội ' + TNAME[s.sport] + '.' : 'Bạn giành được một chỗ trong đội dự bị ' + TNAME[s.sport] + '.', 'good');
+        if (s.role !== previous) mem(l, 'Lần đầu vào ' + (s.role === 'starter' ? 'đội chính' : 'đội dự bị') + ' môn ' + TNAME[s.sport] + '.', 3);
+      } else {
+        s.role = previous === 'reserve' ? 'reserve' : 'retry';
+        log(s.role === 'reserve' ? 'Bạn giữ chỗ dự bị và biết mình cần luyện gì để tranh suất chính.' : 'Bạn chưa qua vòng tuyển, nhưng có thể trở lại mùa sau.', 'neutral');
+      }
+    } else {
+      s.role = previous === 'starter' ? 'reserve' : previous;
+      log(previous === 'starter' ? 'Bạn nhường suất chính để tập nhẹ và giữ thời gian học.' : 'Bạn tập cùng ' + teammate.name + ' ngoài giờ, giữ nhịp mà vẫn kịp làm bài.', 'neutral');
+    }
+    s.progress = Math.min(14, s.progress + (intensive ? 3 : 2));
+    s.seasons++;
+    teammate.trust = U.clamp(teammate.trust + (intensive === (teammate.style === 'thích thi đấu') ? 7 : 4), 0, 100);
+    if (matching) l.skill = U.clamp((l.skill || 0) + (intensive ? 3 : 1), 0, 100);
+    H.fx(l, intensive ? { hea: l.st.hea < 50 ? -2 : 1, soc: 2, kno: -1 } : { hea: 1, soc: 1, kno: 1 });
+    nextSeason(l, s);
+  }
+  function replaySeason(l, r, log) { trainSchoolTeam(l, r, log, true); }
+  function sportTryout(l) { return schoolSport(l) && practiceOpen(l) && l.age >= 10 && l.age <= 14 && !sportRecord(l); }
+  K.KID('k955_doi_the_thao', 10, 14, { title: 'Thử vào đội thể thao', valid: sportTryout,
+    text: function (l) { return 'Thầy cô thông báo tuyển người cho đội ' + TNAME[teamOf(l)] + ' của trường. Nhiều bạn trong lớp đăng ký.'; },
+    opts: [{ k: 'thu', l: 'Đăng ký và đi tập đều', ai: { w: 1.1, amb: 1 }, run: replaySeason },
+      { k: 'xem', l: 'Chỉ đứng ngoài cổ vũ', ai: { w: 0.7 }, run: function (l, r, log) { log('Bạn cổ vũ các bạn cùng lớp và hẹn lần khác thử sức.', 'neutral'); H.fx(l, { hap: 1, soc: 1 }); } },
+      { k: 'tu', l: 'Bận việc nhà, không có thời gian', ai: { w: 0.6 }, req: poor, run: function (l, r, log) { log('Bạn dành buổi chiều phụ việc nhà.', 'neutral'); } }] },
+  sportTryout, 1, 0.06);
+  E.SC(TEAM_NEXT, { title: 'Mùa thể thao tiếp theo',
+    valid: function (l) { var s = sportRecord(l); return schoolSport(l) && !!s && !s.closed && l.age >= s.nextAge; },
+    text: function (l) {
+      var s = sportRecord(l);
+      if (!practiceOpen(l)) return 'Hoàn cảnh ở nơi bạn sống khiến lịch tập và thi đấu phải tạm dừng.';
+      if (s.place !== schoolPlace(l)) return 'Ở nơi mới, trường tuyển đội ' + TNAME[teamOf(l)] + '. Kinh nghiệm tập trước đây vẫn có ích khi làm quen với đội mới.';
+      var role = { starter: 'đã thi đấu chính', reserve: 'đang ở đội dự bị', retry: 'chưa giành được suất', rest: 'đã nghỉ một mùa' }[s.role];
+      return 'Với môn ' + TNAME[s.sport] + ', bạn ' + role + '. ' + s.teammate.name + ' muốn ' + s.teammate.goal + ' và hỏi bạn định tập thế nào.';
+    },
+    opts: [
+      { k: 'compete', l: function (l) { var s = sportRecord(l); return s.place !== schoolPlace(l) ? 'Thử tuyển tại trường mới' : { starter: 'Giữ suất thi đấu chính', reserve: 'Tập thêm để tranh suất chính', retry: 'Thử tuyển lại', rest: 'Quay lại thử tuyển' }[s.role]; }, ai: { w: 1, amb: 1 }, req: practiceOpen, run: replaySeason },
+      { k: 'steady', l: 'Tập vừa sức để giữ thời gian học', ai: { w: 0.9, smart: 1 }, req: function (l) { return practiceOpen(l) && sportRecord(l).place === schoolPlace(l); }, run: function (l, r, log) { trainSchoolTeam(l, r, log, false); } },
+      { k: 'leave', l: 'Khép lại các mùa thể thao ở trường', ai: { w: 0.2 }, run: function (l, r, log) { sportRecord(l).closed = true; log('Bạn khép lại những mùa thể thao ở trường và sắp xếp lại lịch học.', 'neutral'); H.fx(l, { kno: 2 }); } },
+      { k: 'pause', l: 'Tạm nghỉ mùa này', ai: { w: 0.45 }, run: function (l, r, log) { var s = sportRecord(l); s.role = 'rest'; log('Bạn tạm gác thi đấu và dành thêm thời gian cho việc học.', 'neutral'); H.fx(l, { kno: 1, hap: 1 }); nextSeason(l, s); } }
+    ] });
+  E.HOOKS.year.push(function (l, r) {
+    var s = sportRecord(l);
+    if (!s || s.closed) return;
+    if (!l.school || l.age > 17) { s.closed = true; return; }
+    // Đợi chọn hướng học sau chuyển cấp để tuổi 15 không bị mất mùa vì school tạm rỗng.
+    if (E.DEC[TEAM_NEXT].valid(l) && !l.pending.some(function (d) { return d.id === TEAM_NEXT; })) E.UPDATE110.next(l, TEAM_NEXT, r, null, { manual: false });
+  });
   function englandTrack(l) { return E.england829 && E.england829(l); }
   function preparingTransition(l) { return l.school === 'lower' && calm(l) && l.age === (englandTrack(l) ? 15 : 14); }
   K.KID('k955_thi_chuyen_cap', 14, 15, { title: 'Chuẩn bị chuyển cấp', valid: preparingTransition,

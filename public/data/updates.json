@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-17T02:24:24.251Z",
+  "generatedAt": "2026-11-17T03:17:15.541Z",
   "entries": [
+    {
+      "id": "school-sport-context-95700",
+      "version": "9.5.7",
+      "publishedAt": "2026-11-17T10:17:15+07:00",
+      "releaseStatus": "packaged",
+      "title": "Đội thể thao học đường qua nhiều mùa",
+      "summary": "Tập luyện cùng đồng đội, tranh suất thi đấu và cân bằng thể thao với học tập khi hoàn cảnh đổi thay.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Đăng ký đội ở trường để bắt đầu một hành trình nhiều mùa. Khi chưa qua tuyển, bạn có thể thử lại. Khi ở đội dự bị, tập đều và phối hợp tốt giúp bạn tiến gần suất chính.",
+        "Gặp lại đồng đội ở các mùa sau và xây dựng sự tin cậy. Bạn có thể tập vừa sức để dành giờ học, tạm nghỉ hoặc khép lại hành trình. Tập đúng môn sở trường giúp rèn thêm kỹ năng.",
+        "Khi chuyển nơi ở, đội mới chọn môn phù hợp hơn và bạn mang theo một phần kinh nghiệm. Chiến sự, thiên tai, dịch bệnh hoặc thiếu lương thực nghiêm trọng có thể khiến mùa tập phải dừng.",
+        "Nội dung học tập và công nghệ dùng điều kiện của nơi bạn đang sống trong năm đó, kể cả khi đi du học. Ví dụ, khả năng dùng internet đầu những năm 2000 thay đổi khi bạn từ Việt Nam sang Mỹ."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "event-continuity-95600",
       "version": "9.5.6",
