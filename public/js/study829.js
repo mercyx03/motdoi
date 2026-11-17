@@ -18,6 +18,7 @@
     return 'Year '+y+' · Key Stage '+ks+' · '+(ks<=2?'Tiếng Anh, Toán, Khoa học, nghệ thuật, máy tính, thiết kế, địa lý, lịch sử, âm nhạc và thể chất.'+(ks===2?' Thêm ngoại ngữ.':''):ks===3?'Khoa học, nhân văn, công nghệ, ngoại ngữ và giáo dục công dân.':ks===4?'GCSE: tiếng Anh, toán, khoa học kép hoặc riêng Lý–Hóa–Sinh và môn tự chọn.':'Sixth Form: A-Level hoặc IB.');
   }
   E.england829=england;
+  E.modernSixth829=function(l){return england(l)&&(E.STUDY857 ? E.STUDY857.region(l) : region(l))==='England'&&l.birthYear+l.age>=2017;};
   var SIXTH_OPTS829=[
     ['science','A-Level: Hóa, Sinh, Toán — hướng y sinh','science','alevel',null,'med'],
     ['human','A-Level: Văn học Anh, Lịch sử, Chính trị — hướng luật','human','alevel',null,'law'],

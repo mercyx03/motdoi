@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-17T03:17:15.541Z",
+  "generatedAt": "2026-11-17T03:34:56.340Z",
   "entries": [
+    {
+      "id": "life-paths-and-nhs-95800",
+      "version": "9.5.8",
+      "publishedAt": "2026-11-17T10:34:56+07:00",
+      "releaseStatus": "packaged",
+      "title": "Đường đi sau đội trường, chuyển cấp và viện phí đúng thời",
+      "summary": "Dùng kinh nghiệm đội trường để thử tuyển, gặp lựa chọn học và làm phù hợp với năm sống, và sửa khoản thu NHS quá mức.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Các mùa thể thao ở trường giúp bạn thử sức với đội địa phương. Hồ sơ bóng đá đủ điều kiện có thể hỗ trợ khi thử tuyển học viện. Bạn tự chọn tiếp tục tập, thử lại hoặc giữ thể thao như sở thích.",
+        "Chuyển cấp ở Anh thời trước dùng lựa chọn học tiếp hoặc học nghề phù hợp với bối cảnh; màn GCSE theo thang điểm hiện đại xuất hiện từ năm phù hợp. Đời cũ ở Việt Nam có lựa chọn trường địa phương mà không bị áp địa chỉ trường thời nay.",
+        "Danh sách tìm việc loại nghề chưa có trong năm đó trước khi đưa cho bạn chọn. Lời mời di cư xét cả hạn chế rời nơi đi và xem điểm đến có phù hợp với năm sống.",
+        "Phí y tế dự báo có giới hạn. Với bản lưu cũ, game chỉ hoàn phí kê đơn NHS tính thừa khi còn đủ bằng chứng về khoản thu trong sổ thu chi và nhật ký; người được miễn phí không bị cộng tiền nhầm."
+      ],
+      "releasedAt": null
+    },
     {
       "id": "school-sport-context-95700",
       "version": "9.5.7",

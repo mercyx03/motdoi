@@ -17,8 +17,10 @@
   // Tình trạng cư trú dùng để xét quyền lợi: công dân/thường trú · cư trú dài hạn có thẻ (học, lao động) · khách ngắn hạn.
   function status(l) { var c = res(l), cit = (E.GLOBAL919 ? E.GLOBAL919.citizenships(l) : [l.country]).indexOf(c) >= 0; if (cit || l.abroad && l.abroad.perm) return 'resident'; if (l.abroad && (l.abroad.visit907 || l.flags.homeVisit907)) return 'visitor'; if (l.abroad && (l.abroad.study || l.abroad.labor919 || l.job && l.job.id === 'xkld' || l.abroad.residence900)) return 'permit'; return l.abroad ? 'visitor' : 'resident'; }
   // Tham số theo năm thế giới: số liệu đã biết đến 2025; từ 2026 trở đi tăng 3%/năm và ghi là dự báo (projection).
+  // Chặn lãi kép ở tương lai xa để phí y tế còn cùng thang giá với phần còn lại của game.
+  var PROJ_MAX = 10;
   function wy(l) { return (l.birthYear || 2000) + (l.age || 0); }
-  function byYear(tab, y) { var ks = Object.keys(tab).map(Number).sort(function (a, b) { return a - b; }), last = ks[ks.length - 1]; if (y <= last) { var v = tab[ks[0]]; ks.forEach(function (k) { if (k <= y) v = tab[k]; }); return { v: v, proj: false }; } return { v: tab[last] * Math.pow(1.03, y - last), proj: true }; }
+  function byYear(tab, y) { var ks = Object.keys(tab).map(Number).sort(function (a, b) { return a - b; }), last = ks[ks.length - 1]; if (!(y > last)) { var v = tab[ks[0]]; ks.forEach(function (k) { if (k <= y) v = tab[k]; }); return { v: v, proj: false }; } return { v: tab[last] * Math.pow(1.03, Math.min(y - last, PROJ_MAX)), proj: true }; }
   var US_OOP = { 2023: 9100, 2024: 9450, 2025: 9200 }, US_PARTB = { 2023: 226, 2024: 240, 2025: 257 }, ENG_RX = { 2023: 12.2, 2024: 12.4, 2025: 12.5 }; // USD xấp xỉ (phí kê đơn Anh £9,65–9,90)
   // Canada: tỉnh bang theo thành phố; Québec có thời gian chờ tới 3 tháng với người mới đến; thuốc kê đơn ở Québec có chương trình bắt buộc.
   var CA_PROV = { Toronto: 'ON', Ottawa: 'ON', Mississauga: 'ON', Hamilton: 'ON', Montreal: 'QC', 'Montréal': 'QC', 'Québec': 'QC', Quebec: 'QC', Vancouver: 'BC', Victoria: 'BC', Calgary: 'AB', Edmonton: 'AB', Winnipeg: 'MB', Halifax: 'NS', Saskatoon: 'SK', Regina: 'SK' };
@@ -41,7 +43,7 @@
         if (plan === 'market') return { name: 'Gói bảo hiểm Marketplace (tự mua)', share: 0.7, ded: 3500, cap: oop.v, proj: oop.proj, wait: 'vài ngày đến vài tuần', premium: low ? 0.02 : 0.07, note: 'Phí có thể được trợ cấp theo thu nhập.', ver: 'secondary' };
         return { name: 'Chưa có bảo hiểm', share: 0, ded: 0, cap: null, wait: 'phòng cấp cứu không được từ chối bệnh nhân cấp cứu (EMTALA), nhưng hóa đơn tự trả', note: 'Có thể mua gói Marketplace.', ver: 'secondary' };
       }
-      case 'GB': { var nat = ukNation(l), rxv = byYear(ENG_RX, wy(l)), payRx = nat === 'ENG' && age >= 16 && age < 60 && !low; return { name: UK_NAME[nat] + ' (' + (stt === 'permit' ? 'đã đóng phụ phí y tế IHS khi xin visa' : 'cư trú thường xuyên') + ')', nation: nat, share: 1, ded: 0, cap: null, rxFee: payRx ? rxv.v : 0, proj: rxv.proj, rx: 'Anh: thuốc kê đơn có phí cố định mỗi loại (Scotland, Wales, Bắc Ireland miễn); nha khoa theo mức, khám mắt có thu phí với người lớn', wait: plan === 'privateGB' ? 'vài tuần (bảo hiểm tư nhân)' : 'phẫu thuật không cấp cứu có thể chờ nhiều tháng', note: 'Quyền lợi theo cư trú, không theo quốc tịch.', ver: 'secondary' }; }
+      case 'GB': { var nat = ukNation(l), rxv = byYear(ENG_RX, wy(l)), payRx = nat === 'ENG' && age >= 16 && age < 60 && !(age <= 18 && l.school) && !low; return { name: UK_NAME[nat] + ' (' + (stt === 'permit' ? 'đã đóng phụ phí y tế IHS khi xin visa' : 'cư trú thường xuyên') + ')', nation: nat, share: 1, ded: 0, cap: null, rxFee: payRx ? rxv.v : 0, proj: rxv.proj, rx: 'Anh: thuốc kê đơn có phí cố định mỗi loại (Scotland, Wales, Bắc Ireland miễn); nha khoa theo mức, khám mắt có thu phí với người lớn', wait: plan === 'privateGB' ? 'vài tuần (bảo hiểm tư nhân)' : 'phẫu thuật không cấp cứu có thể chờ nhiều tháng', note: 'Quyền lợi theo cư trú, không theo quốc tịch.', ver: 'secondary' }; }
       case 'CA': { var pv = caProv(l), wait = pv === 'QC' && l.age - residedSince(l, 'CA') < 1 && stt === 'resident' && l.country !== 'CA', y2 = wy(l), dental = y2 >= 2025 || y2 >= 2024 && age >= 65; return { name: 'Bảo hiểm y tế tỉnh bang: ' + CA_NAME[pv], province: pv, share: wait ? 0.75 : 1, dental: dental, ded: 0, cap: null, rx: (pv === 'QC' ? 'Québec: thuốc kê đơn qua chương trình bắt buộc (công hoặc của chủ sử dụng). ' : '') + 'Nha khoa: ' + (dental ? 'Canadian Dental Care Plan cho người đủ điều kiện (không có bảo hiểm nha khoa, thu nhập dưới ngưỡng)' : 'chưa có chương trình liên bang cho nhóm tuổi này năm ' + y2) + '; mắt và thuốc ngoại trú phần lớn qua chương trình tỉnh hoặc bảo hiểm tư', wait: (wait ? 'người mới đến Québec chờ tới 3 tháng mới có thẻ; ' : '') + 'chuyên khoa/phẫu thuật chọn lọc thường chờ lâu', note: stt === 'permit' ? 'Diện học/lao động: tùy tỉnh có hoặc không thuộc chương trình công.' : '', ver: 'secondary' }; }
       case 'AU': return { name: stt === 'resident' ? 'Medicare (công dân/thường trú)' : 'Bảo hiểm bắt buộc theo visa (OSHC/OVHC)', share: stt === 'resident' ? 0.85 : 0.75, ded: 0, cap: null, wait: plan === 'privateAU' ? 'ngắn hơn ở bệnh viện tư' : 'bệnh viện công miễn phí, phẫu thuật chọn lọc có danh sách chờ', premium: plan === 'privateAU' ? 0.025 : 0, note: 'Bác sĩ đa khoa có thể bulk-bill hoặc thu thêm; thuế Medicare 2%.', ver: 'secondary' };
       case 'CH': { var d = s.chDed || 300; return { name: 'Bảo hiểm y tế cơ bản bắt buộc (KVG), khấu trừ CHF ' + d, share: 0.9, ded: d * 1.1, cap: d * 1.1 + 770, wait: 'thường ngắn, không bảo đảm mọi ca', premium: (d >= 2500 ? 0.06 : d >= 1500 ? 0.075 : 0.09) * (low ? 0.5 : 1), note: 'Phí bảo hiểm tháng cao, có hỗ trợ phí cho người thu nhập thấp; đồng chi trả 10% tối đa CHF 700/năm.', ver: 'secondary' }; }
@@ -89,8 +91,8 @@
     var p = policy(l); if (p.premium > 0) H.cash(l, -l.base * p.premium, 'Phí bảo hiểm y tế: ' + p.name);
   });
   X.menu('health919', 'Bảo hiểm y tế nơi đang sống', function (l) { var r = X.reason(l, 16); if (r !== true) return r; return vnHome(l) ? 'Đang sống tại Việt Nam: xem mục BHYT' : true; }, function (l) {
-    var p = policy(l), y = yr(l); return 'Nơi sống: ' + (W.BY[res(l)] ? W.BY[res(l)].name : res(l)) + ' · tình trạng: ' + { resident: 'công dân/thường trú', permit: 'cư trú có thẻ (học/lao động)', visitor: 'khách ngắn hạn' }[status(l)] + '.\nChương trình: ' + p.name + '. Chi trả ~' + Math.round(p.share * 100) + '%' + (p.ded ? ' sau khấu trừ ~' + mo(l, usd(l, p.ded)) + '/năm' : '') + (p.cap != null ? '; trần tự trả ~' + mo(l, usd(l, p.cap)) + '/năm' : '') + '. Tiếp cận: ' + p.wait + '.' + (p.rx ? '\n' + p.rx + '.' : '') + (p.note ? '\n' + p.note : '') +
-      '\nNăm nay đã tự trả ' + mo(l, y.oop) + (p.ded ? ', đã dùng khấu trừ ' + mo(l, y.ded) : '') + '. Mức nguồn: ' + (p.ver === 'secondary' ? 'tham chiếu thứ cấp 2025' : 'chưa đủ minh bạch, tham số trò chơi') + (p.proj ? '; số tiền năm ' + wy(l) + ' là dự báo (+3%/năm từ 2025)' : '') + '.' + (p.rxFee ? ' Phí thuốc kê đơn ~' + mo(l, usd(l, p.rxFee)) + '/lần.' : '');
+    var p = policy(l), y = yr(l), nhs = p.nation === 'ENG' && E.HEALTH880 && wy(l) >= E.HEALTH880.NHS.from; return 'Nơi sống: ' + (W.BY[res(l)] ? W.BY[res(l)].name : res(l)) + ' · tình trạng: ' + { resident: 'công dân/thường trú', permit: 'cư trú có thẻ (học/lao động)', visitor: 'khách ngắn hạn' }[status(l)] + '.\nChương trình: ' + p.name + '. Chi trả ~' + Math.round(p.share * 100) + '%' + (p.ded ? ' sau khấu trừ ~' + mo(l, usd(l, p.ded)) + '/năm' : '') + (p.cap != null ? '; trần tự trả ~' + mo(l, usd(l, p.cap)) + '/năm' : '') + '. Tiếp cận: ' + p.wait + '.' + (p.rx ? '\n' + p.rx + '.' : '') + (p.note ? '\n' + p.note : '') +
+      '\nNăm nay đã tự trả trong phần bảo hiểm ' + mo(l, y.oop) + (p.ded ? ', đã dùng khấu trừ ' + mo(l, y.ded) : '') + '. Mức nguồn: ' + (p.ver === 'secondary' ? 'tham chiếu thứ cấp 2025' : 'chưa đủ minh bạch, tham số trò chơi') + (p.proj && !nhs ? '; số tiền năm ' + wy(l) + ' là dự báo (+3%/năm từ 2025, tối đa ' + PROJ_MAX + ' năm)' : '') + '.' + (p.rxFee && !nhs ? ' Phí thuốc kê đơn ~' + mo(l, usd(l, p.rxFee)) + '/lần.' : '');
   }, function (l) {
     var c = res(l), s = st(l), out = [];
     if (c === 'US') out.push({ k: 'market', l: (s.plan === 'market' ? '✓ ' : '') + 'Mua gói Marketplace', why: s.plan === 'market' ? 'Đang dùng' : true, run: function (l, r, log) { s.plan = 'market'; log('Đăng ký gói bảo hiểm Marketplace; phí đóng hằng năm.', 'neutral'); } });
@@ -99,6 +101,47 @@
     if (!out.length) out.push({ k: 'ok', l: 'Đã hiểu quyền lợi', run: function () { } });
     return out;
   }, 16, 'Sức khỏe');
-  var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.health919 != null && typeof l.flags.health919 !== 'object') delete l.flags.health919; };
-  E.HEALTH919 = { caProv: caProv, ukNation: ukNation, byYear: byYear, policy: policy, status: status, split: split, cover: cover, yr: yr, state: st };
+  function shownAmount(s) {
+    var m = /^(\d[\d.]*)(?:,(\d+))? (.+)$/.exec(s);
+    if (!m) return null;
+    var units = /^(tỷ|triệu|k) (.+)$/.exec(m[3]);
+    var scale = units ? { tỷ: 1e9, triệu: 1e6, k: 1e3 }[units[1]] : 1;
+    return { value: Number(m[1].replace(/\./g, '') + (m[2] ? '.' + m[2] : '')) * scale, error: scale / (m[2] ? 20 : 2), currency: units ? units[2] : m[3] };
+  }
+  // Bản lưu cũ chỉ cho đối chiếu chắc chắn khi còn sổ thu chi của năm xảy ra khoản phí.
+  function rxRefund(l) {
+    var health = l.flags.health919, year = wy(l), delta = year - 2025;
+    if (l.flags.rxFix919 || res(l) !== 'GB' || ukNation(l) !== 'ENG' || delta <= PROJ_MAX || l.age < 16 || l.age >= 60 || !health || !health.y || health.y.age !== l.age || !l.yr || !Array.isArray(l.yr.items)) return 0;
+    var legacy = usd(l, ENG_RX[2025] * Math.pow(1.03, delta));
+    var nhs = E.HEALTH880;
+    var corrected = nhs ? nhs.local('GB', nhs.NHS.charge) : usd(l, byYear(ENG_RX, year).v);
+    var back = legacy - corrected;
+    if (!(back > 0) || !isFinite(back) || !Number.isFinite(l.money)) return 0;
+    var fee = shownAmount(mo(l, legacy)), log = l.log || [], used = new Set(), count = 0;
+    if (!fee) return 0;
+    log.forEach(function (e) {
+      if (!e || e.a !== l.age || e.y !== year || typeof e.t !== 'string') return;
+      var m = /^Viện phí (.+?): NHS England \([^)]+\) chi trả (.+?), bạn trả (.+?)\. Thời gian tiếp cận:/.exec(e.t);
+      if (!m) return;
+      var total = shownAmount(m[1]), insured = shownAmount(m[2]), paid = shownAmount(m[3]);
+      if (!total || !insured || !paid || [total, insured, paid].some(function (v) { return v.currency !== fee.currency; })) return;
+      var charged = paid.value - total.value + insured.value, error = total.error + insured.error + paid.error + fee.error;
+      if (!(charged > error) || Math.abs(charged - fee.value) > error) return;
+      var i = l.yr.items.findIndex(function (item, index) { return item && !used.has(index) && -item.v >= back && mo(l, -item.v) === m[3]; });
+      if (i < 0) return;
+      used.add(i);
+      count++;
+    });
+    var refund = back * count;
+    if (!count || count > health.y.n || !Number.isFinite(l.money + refund)) return 0;
+    l.flags.rxFix919 = 1;
+    H.cash(l, refund, 'Hoàn phí thuốc kê đơn NHS tính thừa');
+    log.push({ a: l.age, y: year, t: 'Hoàn lại ' + mo(l, refund) + ' phí thuốc kê đơn NHS tính thừa ở ' + count + ' lần khám có đối chiếu được.', k: 'good' });
+    return refund;
+  }
+  var mig = E.migrateExt; E.migrateExt = function (l) {
+    if (mig) mig(l); if (l && l.flags && l.flags.health919 != null && typeof l.flags.health919 !== 'object') delete l.flags.health919;
+    if (l && l.flags) rxRefund(l);
+  };
+  E.HEALTH919 = { caProv: caProv, ukNation: ukNation, byYear: byYear, policy: policy, status: status, split: split, cover: cover, yr: yr, state: st, rxRefund: rxRefund, PROJ_MAX: PROJ_MAX };
 })(globalThis.G);

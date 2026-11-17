@@ -55,7 +55,7 @@
     ['battleroyale', /\bpubg\b|free fire/i, 2017, 'PUBG 2017, Free Fire 2017'],
     ['minecraft', /minecraft/i, 2009, 'Minecraft 2009 (bản alpha)'],
     ['esports', /e-?sports?\b|giải esports/i, 1997, 'giải Quake Red Annihilation 1997'],
-    ['videogame', /trò chơi điện tử|chơi game|\bgame online\b|\bgame\b(?!\s*show)/i, 1972, 'Pong/Odyssey 1972'],
+    ['videogame', /trò chơi điện tử|chơi game|\bgame (?:online|thủ)\b/i, 1972, 'Pong/Odyssey 1972'],
     ['podcast', /podcast/i, 2004, 'podcast 2004'],
     ['spotify', /spotify/i, 2008, 'Spotify 2008'],
     ['fanculture', /fanmeeting|fan meeting|lightstick|\btrainee\b/i, 1996, 'văn hóa thần tượng hiện đại: H.O.T. ra mắt 1996'],
@@ -95,7 +95,10 @@
   var ID_MAX = ID_FROM.reduce(function (m, x) { return Math.max(m, x[1], x[2] ? Math.max.apply(null, Object.keys(x[2]).map(function (k) { return x[2][k]; })) : 0); }, 0);
   function residence(l) { return l && (l.country || l.abroad && l.abroad.code) ? E.H.resCode(l) : null; }
   function idBlocked(id, l) {
-    var y = l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; if (y >= ID_MAX || typeof id !== 'string') return false;
+    var y = worldYear(l);
+    if (typeof id !== 'string') return false;
+    if (/^(sixth829|gcse857|schoolEngland829|ukAlevelIb850)$/.test(id) && y < 2017) return true;
+    if (y >= ID_MAX) return false;
     var cc = residence(l);
     for (var i = 0; i < ID_FROM.length; i++) if (ID_FROM[i][0].test(id)) { var from = ID_FROM[i][2] && ID_FROM[i][2][cc] != null ? ID_FROM[i][2][cc] : ID_FROM[i][1]; if (y < from) { stats.id = (stats.id || 0) + 1; return true; } }
     return false;

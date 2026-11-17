@@ -77,12 +77,12 @@
   function year(l){return l.birthYear+l.age;}
   function region(l){
     var c=H.resCode(l),explicit=l.abroad?l.abroad.educationRegion:l.educationRegion;
-    var place=l.abroad?(l.abroad.city||''):[l.city,l.province,l.state,l.prov&&l.prov.old].filter(Boolean).join(' ');
+    var place=l.abroad?(l.abroad.city||l.city||''):[l.city,l.province,l.state,l.prov&&l.prov.old].filter(Boolean).join(' ');
     var list=REGIONS[c]||[],found=list.find(function(x){return explicit===x.id||explicit===x.name;});
     if(found)return found.id;
     found=list.find(function(x){return new RegExp('(^|[^A-Za-z])'+x.name+'([^A-Za-z]|$)','i').test(place);});
     if(found)return found.id;
-    var actualCity=l.abroad?l.abroad.city:l.city;
+    var actualCity=l.abroad&&l.abroad.city||l.city;
     if(c==='US'&&E.WORLD836&&E.WORLD836.places[actualCity])return E.WORLD836.places[actualCity][0];
     var cities={US:{Houston:'TX',Dallas:'TX',Austin:'TX','Los Angeles':'CA','San Francisco':'CA','New York':'NY',Boston:'MA'},GB:{London:'England',Manchester:'England',Birmingham:'England',Liverpool:'England',Leeds:'England',Bristol:'England',Glasgow:'Scotland',Edinburgh:'Scotland',Cardiff:'Wales',Belfast:'Northern Ireland'},CA:{Calgary:'AB',Edmonton:'AB',Regina:'SK',Saskatoon:'SK','Moose Jaw':'SK',Vancouver:'BC',Victoria:'BC',Winnipeg:'MB',Fredericton:'NB',Moncton:'NB',"St. John's":'NL',Halifax:'NS',Yellowknife:'NT',Iqaluit:'NU',Toronto:'ON',Ottawa:'ON',Charlottetown:'PE',Montréal:'QC',Montreal:'QC',Québec:'QC','Quebec City':'QC',Whitehorse:'YT'},AU:{Sydney:'NSW',Melbourne:'VIC',Canberra:'ACT',Darwin:'NT',Brisbane:'QLD',Adelaide:'SA',Hobart:'TAS',Perth:'WA'}};
     var map=cities[c]||{};return Object.keys(map).reduce(function(v,k){return v||(place.indexOf(k)>=0?map[k]:'');},'');
@@ -337,7 +337,7 @@
   function completedGcse(l){var results=eng(l).results||{},keys=Object.keys(results);if(keys.length)return results[keys[keys.length-1]];var diploma=hs(l)?.diploma;return diploma?.type==='igcse'?diploma.transcript:null;}
   // 9.0.2: học sinh England đang học ở trường mà chưa từng mở menu GCSE thì trường tự đăng ký và cho thi cuối Year 11; trước đây Sixth Form đòi kết quả GCSE nên nhân vật kẹt ở "trung học" tới hết đời.
   function autoGcse(l,log){
-    if(!en(l)||!l.alive||l.age<15||l.age>17||l.school!=='lower'||peek(l).track||completedGcse(l)||active(l)&&!hs(l).schoolManaged)return false;
+    if(!en(l)||!E.modernSixth829(l)||!l.alive||l.age<15||l.age>17||l.school!=='lower'||peek(l).track||completedGcse(l)||active(l)&&!hs(l).schoolManaged)return false;
     if(E.EDUCATION863&&l.flags.educationVersion863&&!E.EDUCATION863.science(l).length)E.EDUCATION863.chooseScience(l,'combined');
     var s=eng(l,true),c=schoolConfig(l);s.registration={year:year(l),subjects:examSubjects(l),schoolId:c.id,privateCandidate:false,fee:0,assessments:'Trường đăng ký thi cho học sinh đang theo học',auto:true};
     var rows=gcseSit(l);if(!rows||!rows.length)return false;

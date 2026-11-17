@@ -2613,7 +2613,7 @@
     var i=inputs853(l,'special',null,best);i.skills=skills853(l,'hs');
     return {min50:f.low.total,expected50:f.expected,max50:f.high.total,subjects:f.center.scores,kno:i.knowledge,hsCount:st.hsCount||0,
       bestSubj:best,bestSubjName:(E.EDUCATION54.subjects||{})[best]||best,specialScore:calculate853(i,0).total,
-      schools:E.EVENTS125.high.map(function(a){return {name:a.name,cut:a.cut,status:status853(f.low.total,f.high.total,a.cut)};}),last:st.hsLast||null,forecast:f};
+      schools:E.EVENTS125.highOptions(l).map(function(a){return {name:a.name,cut:a.cut,status:status853(f.low.total,f.high.total,a.cut)};}),last:st.hsLast||null,forecast:f};
   }
   function estimateUniExam853(l,block){
     var f=forecast853(l,'uni',block),nk=forecast853(l,'nk',block),b=block||l.khoi||'A00';

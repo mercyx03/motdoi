@@ -67,7 +67,8 @@
     var s = peek(l), c = club(id), y = year(l);
     if (!active(l) || !c || s.contract || s.injury>0 || !trialOptions(l).includes(c) || s.trials[id] === y || l.money < trialCost(l, c)){log('Chưa thử tuyển: kiểm tra tuổi học viện, nơi cư trú, hợp đồng, chấn thương, lượt thử và chi phí đi lại. Chưa trừ tiền.','neutral');return false;}
     H.cash(l, -trialCost(l, c), 'Đi lại và ăn ở thử tuyển bóng đá'); s.trials[id] = y;
-    var score = rating(l) + s.potential * .13 + (s.studyBalance ? 2 : 0) + r() * 24 - 12;
+    var school = s.schoolTrial958;
+    var score = rating(l) + s.potential * .13 + (s.studyBalance ? 2 : 0) + (school && school.country === c.country && c.country === H.resCode(l) ? school.bonus : 0) + r() * 24 - 12;
     var threshold = c.competition * .6 + l.age * .65;
     var result = score >= threshold + 9 ? 'accepted' : score >= threshold + 3 ? 'extended' : score >= threshold - 4 ? 'lower' : 'rejected';
     if (s.injury > 0) result = 'rejected';

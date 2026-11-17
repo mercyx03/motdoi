@@ -172,6 +172,7 @@
     if (intensive) {
       if (previous === 'starter' || r() < chance) {
         s.role = previous === 'reserve' || previous === 'starter' ? 'starter' : 'reserve';
+        if (s.role === 'starter') s.started = true;
         log(s.role === 'starter' ? 'Bạn có suất thi đấu chính cho đội ' + TNAME[s.sport] + '.' : 'Bạn giành được một chỗ trong đội dự bị ' + TNAME[s.sport] + '.', 'good');
         if (s.role !== previous) mem(l, 'Lần đầu vào ' + (s.role === 'starter' ? 'đội chính' : 'đội dự bị') + ' môn ' + TNAME[s.sport] + '.', 3);
       } else {
@@ -218,6 +219,47 @@
     if (!l.school || l.age > 17) { s.closed = true; return; }
     // Đợi chọn hướng học sau chuyển cấp để tuổi 15 không bị mất mùa vì school tạm rỗng.
     if (E.DEC[TEAM_NEXT].valid(l) && !l.pending.some(function (d) { return d.id === TEAM_NEXT; })) E.UPDATE110.next(l, TEAM_NEXT, r, null, { manual: false });
+  });
+  var CLUB_NEXT = 'k955_sau_doi_truong';
+  function clubDue(l) {
+    var s = sportRecord(l);
+    return l.alive && l.age >= 16 && l.age <= 21 && !!s && s.closed && (s.seasons >= 2 || s.role === 'starter' || s.started) && !s.clubDone && (!s.clubNext || l.age >= s.clubNext) && !(l.jailUntil > l.age) && !(l.abroad && l.abroad.trapped);
+  }
+  function footballPath(l) {
+    var s = sportRecord(l), f = E.FOOTBALL, current = f && f.peek(l);
+    return practiceOpen(l) && s.sport === 'football' && wy(l) >= 2000 && f && f.trialOptions(l).some(function (c) { return c.country === cc(l); }) && (!current || (current.stage === 'local' && !current.club && !current.contract && !current.legacyFallback));
+  }
+  E.SC(CLUB_NEXT, { title: 'Sau đội thể thao học đường', valid: clubDue,
+    text: function (l) {
+      var s = sportRecord(l);
+      return 'Bạn đã tích lũy ' + s.seasons + ' mùa tập ' + TNAME[s.sport] + '. ' + (s.clubLocal && s.clubPlace === schoolPlace(l) ? 'Đội địa phương hỏi bạn có muốn tiếp tục tập mùa này.' : 'Bạn có thể thử tuyển ở đội địa phương và thu xếp lịch học hoặc làm việc.');
+    },
+    opts: [
+      { k: 'academy', l: 'Dùng hồ sơ đội trường để tìm học viện bóng đá', ai: { w: 1, amb: 1 }, req: footballPath, run: function (l, r, log) {
+        var s = sportRecord(l), f = E.FOOTBALL.init(l, r);
+        f.schoolTrial958 = { country: cc(l), bonus: Math.min(8, s.seasons + s.progress * .25 + (s.started || s.role === 'starter' ? 2 : 0)) };
+        s.clubDone = true;
+        log('Bạn mang hồ sơ các mùa ở đội trường đi tìm buổi thử tuyển học viện.', 'good');
+        E.UPDATE110.next(l, 'footballClubs', r, { country: cc(l) }, { manual: false });
+      } },
+      { k: 'local', l: function (l) { var s = sportRecord(l); return s.clubLocal && s.clubPlace === schoolPlace(l) ? 'Tiếp tục tập với đội địa phương' : 'Thử tuyển ở đội địa phương'; }, ai: { w: 1.1, soc: 1 }, req: practiceOpen, run: function (l, r, log) {
+        var s = sportRecord(l), chance = U.clamp(.25 + s.seasons * .04 + s.progress * .018 + l.st.hea / 400 + (s.started || s.role === 'starter' ? .12 : 0), .2, .9);
+        if (s.clubPlace !== schoolPlace(l)) { s.clubLocal = false; s.clubPlace = schoolPlace(l); }
+        if (s.clubLocal || r() < chance) {
+          s.clubLocal = true;
+          s.clubSeasons = (s.clubSeasons || 0) + 1;
+          if (l.talentSub === TNAME[s.sport]) l.skill = U.clamp((l.skill || 0) + 2, 0, 100);
+          H.fx(l, { hea: 1, soc: 2 });
+          log('Bạn tập cùng đội địa phương, thu xếp lịch tập bên cạnh việc học hoặc công việc.', 'good');
+        } else log('Đội địa phương chưa nhận bạn đợt này. Bạn có thể thử lại mùa sau.', 'neutral');
+        s.clubNext = l.age + 1;
+      } },
+      { k: 'hobby', l: 'Giữ thể thao như sở thích', ai: { w: .6 }, run: function (l, r, log) { var s = sportRecord(l); s.clubDone = true; s.clubLocal = false; log('Bạn tiếp tục chơi ' + TNAME[s.sport] + ' lúc rảnh và khép lại chuyện thi tuyển.', 'neutral'); } },
+      { k: 'later', l: 'Hoãn quyết định đến mùa sau', ai: { w: .5 }, run: function (l) { sportRecord(l).clubNext = l.age + 1; } }
+    ] });
+  E.HOOKS.year.push(function (l, r) {
+    if (!clubDue(l) || l.pending.some(function (d) { return d.id === CLUB_NEXT || d.id === TEAM_NEXT; })) return;
+    E.UPDATE110.next(l, CLUB_NEXT, r, null, { manual: false });
   });
   function englandTrack(l) { return E.england829 && E.england829(l); }
   function preparingTransition(l) { return l.school === 'lower' && calm(l) && l.age === (englandTrack(l) ? 15 : 14); }

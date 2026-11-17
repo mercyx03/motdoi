@@ -261,6 +261,7 @@
     return w;
   }
   function eligible(l, c) {
+    if (E.ERA902 && E.ERA902.jobBlocked(l, c.id, c)) return false;
     if (c.id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     if (c.hidden) return false;
     if (c.minAge && l.age < c.minAge) return false;
