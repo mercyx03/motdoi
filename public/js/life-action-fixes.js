@@ -62,10 +62,11 @@ Object.keys(H.LANG).filter(function(k){return k!=='en';}).forEach(function(k){E.
 // One friend entry, with a stable identity for every person including namesakes.
 function friends(l){return [l.bff].concat(l.friends||[]).filter(function(f,i,all){return f&&f.alive!==false&&!f.faded&&all.findIndex(function(x){return x===f||x&&x.uid110&&x.uid110===f.uid110;})===i;});}
 function here(l,f){return (f.loc||'HOME')===E.locOf(l);}
+function howContact(l){return E.LOCAL965?E.LOCAL965.contact(l):'gọi video';}
 function friend(l,id){return friends(l).find(function(f){return X.uid(l,f)===id;});}
 for(var i=E.ACT.length-1;i>=0;i--)if(E.ACT[i].id==='gap_ban')E.ACT.splice(i,1);
-X.menu('friends894','Hẹn gặp bạn thân',function(l){return X.reason(l,8)!==true?X.reason(l,8):friends(l).length?true:'Chưa có bạn thân';},'Chọn người bạn muốn gặp hoặc liên lạc. Bạn ở xa có thể gọi video; mở danh sách không tốn lượt.',function(l){return friends(l).map(function(f){return {k:X.uid(l,f),l:f.name,h:here(l,f)?'Ở cùng nơi · có thể hẹn gặp':'Ở xa · gọi video',run:function(l,r){X.next(l,'friend894',r,{uid:X.uid(l,f)});}};});},8);
-X.menu('friend894','Dành thời gian cho bạn thân',function(l){return X.reason(l,8);},function(l,d){var f=friend(l,d.arg.uid);return f?'Bạn muốn làm gì cùng '+f.name+'?':'Người bạn này không còn liên lạc được.';},function(l,arg){var f=friend(l,arg.uid);if(!f)return[];return [{k:'talk',l:here(l,f)?'Hẹn gặp và tâm sự':'Gọi video để tâm sự',h:'Thực hiện mới tính 1 lượt',run:function(l,r,log){var f=friend(l,arg.uid);if(!f)return;f.close=Math.min(100,(f.close||50)+8);H.fx(l,{hap:2,soc:2});log((here(l,f)?'Bạn hẹn gặp ':'Bạn gọi video cho ')+f.name+', dành thời gian lắng nghe và chia sẻ.','good');}}];},8);
+X.menu('friends894','Hẹn gặp bạn thân',function(l){return X.reason(l,8)!==true?X.reason(l,8):friends(l).length?true:'Chưa có bạn thân';},'Chọn người bạn muốn gặp hoặc liên lạc. Với bạn ở xa, cách liên lạc tùy nơi và thời điểm.',function(l){return friends(l).map(function(f){return {k:X.uid(l,f),l:f.name,h:here(l,f)?'Ở cùng nơi · có thể hẹn gặp':'Ở xa · '+howContact(l),run:function(l,r){X.next(l,'friend894',r,{uid:X.uid(l,f)});}};});},8);
+X.menu('friend894','Dành thời gian cho bạn thân',function(l){return X.reason(l,8);},function(l,d){var f=friend(l,d.arg.uid);return f?'Bạn muốn làm gì cùng '+f.name+'?':'Người bạn này không còn liên lạc được.';},function(l,arg){var f=friend(l,arg.uid);if(!f)return[];return [{k:'talk',l:here(l,f)?'Hẹn gặp và tâm sự':G.U.cap(howContact(l))+' để tâm sự',h:'Thực hiện mới tính 1 lượt',run:function(l,r,log){var f=friend(l,arg.uid);if(!f)return;f.close=Math.min(100,(f.close||50)+8);H.fx(l,{hap:2,soc:2});log((here(l,f)?'Bạn hẹn gặp ':'Bạn '+howContact(l)+' cho ')+f.name+', dành thời gian lắng nghe và chia sẻ.','good');}}];},8);
 var meet=E.ACT.find(function(a){return a.id==='hen_ban_than';});if(meet){meet.sc='friends894';meet.g='Bạn bè';meet.avail=function(l){return friends(l).length?true:'Chưa có bạn thân';};}
 // Existing emergency cards keep their saved keys, but a distant friend receives
 // remote support rather than an impossible overnight visit.
@@ -74,7 +75,7 @@ if(crisis){var prep=crisis.def.prep;crisis.def.prep=function(l,r){var d=prep.app
  function target(l,d){return d&&(d.uid894?friend(l,d.uid894):friends(l).find(function(f){return f.name===d.n;}));}
  crisis.def.valid=function(l,d){return d&&d.n?!!target(l,d):friends(l).some(function(f){return l.age+(f.d||0)>=18;});};
  var support=crisis.def.opts.find(function(o){return o.k==='o_ben';});
- support.l=function(l,d){var f=target(l,d);return f&&!here(l,f)?'Gọi video, ở bên động viên từ xa':'Đến bên bạn để an ủi';};
+ support.l=function(l,d){var f=target(l,d);return f&&!here(l,f)?G.U.cap(howContact(l))+', động viên bạn từ xa':'Đến bên bạn để an ủi';};
  support.run=function(l,r,log,d){var f=target(l,d);if(!f)return;f.close=Math.min(100,(f.close||50)+12);H.fx(l,{karma:3,soc:2});log(here(l,f)?'Bạn đến bên '+f.name+' và ở lại lắng nghe, an ủi.':'Bạn gọi video cho '+f.name+', lắng nghe và nhờ người ở gần hỗ trợ; việc đi lại cần sắp xếp riêng.','good');if(E.CHAIN144&&E.CHAIN144.friendHelp)E.CHAIN144.friendHelp(l,'o_ben',d,{money:l.money});};
 }
 function canFly(l){return !!l.abroad&&X.reason(l,18)===true;}

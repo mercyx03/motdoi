@@ -59,6 +59,7 @@ function advance(l,id,r,log){
  if(basic(l,id)!==true||q&&q.id!==id||l.job&&l.job.id===id)return false;
  if(!q){
    if(s.retryAt>l.age)return false;
+   delete s.lastOutcome965;
    s.application={id:id,stage:'screen',due:l.age+1};
    log('Bạn nộp hồ sơ '+p.agency+'. Sang năm sẽ có vòng đánh giá.','neutral');
    return true;
@@ -70,7 +71,11 @@ function advance(l,id,r,log){
  if(r()>=U.clamp(.15+score/125,.2,.93)){
    delete s.application;
    s.retryAt=l.age+2;
-   log(p.agency+(screened?' chưa chọn hồ sơ qua vòng đánh giá.':' chưa thông qua vòng thẩm tra và đánh giá sức khỏe.')+' Có thể thử lại sau hai năm.','neutral');
+   var reason=screened?
+     (l.st.kno<65?'Bài đánh giá kiến thức chưa đạt mức cạnh tranh.':l.st[p.focus]<65?'Bài đánh giá kỹ năng chuyên môn chưa đạt mức cạnh tranh.':'Hồ sơ đã qua điều kiện cơ bản nhưng chưa được chọn trong đợt cạnh tranh.') :
+     (l.st.hea<65?'Vòng đánh giá sức khỏe cần kết quả tốt hơn.':'Hồ sơ chưa được thông qua ở vòng thẩm tra.');
+   s.lastOutcome965={id:id,reason:reason,at:l.age,retry:s.retryAt};
+   log(p.agency+': '+reason+' Có thể nộp lại từ năm '+(l.birthYear+s.retryAt)+'.','neutral');
    return true;
  }
  q.stage=screened?'vetting':'offer';
@@ -123,9 +128,11 @@ function available(l){
 X.menu('agency962','Điều tra liên bang và tình báo',available,
  function(l){
    var q=peek(l).application,p=employed(l);
-   if(p)return p.work+'. Hồ sơ đã hoàn thành: '+(l.job.agencyWork||0)+'.';
-   return q?'Hồ sơ '+roles[q.id].ranks[0]+' · '+({screen:'đánh giá năng lực',vetting:'thẩm tra',offer:'nhận việc'})[q.stage]+'.':
-     'Chọn vị trí theo quốc tịch, bằng cấp và kinh nghiệm. Quy trình tuyển trong game qua nhiều năm.';
+   if(p){var c=E.jobDef(l),rank=l.job.rank||0;return p.work+'. Hồ sơ đã hoàn thành: '+(l.job.agencyWork||0)+'. '+(rank<c.t.length-1?'Bậc tiếp theo: '+c.t[rank+1]+' · cần '+(rank+1)*2+' hồ sơ và '+c.yrs[rank]+' năm ở bậc hiện tại ('+(l.job.yrs||0)+' năm).':'Đang ở bậc cao nhất của đường nghề này.');}
+   if(q)return 'Hồ sơ '+roles[q.id].ranks[0]+' · '+({screen:'đánh giá năng lực',vetting:'thẩm tra',offer:'nhận việc'})[q.stage]+' từ năm '+(l.birthYear+q.due)+'.'+(basic(l,q.id)===true?'':' '+basic(l,q.id)+'.');
+   var last=peek(l).lastOutcome965;
+   return (last?roles[last.id].agency+': '+last.reason+(last.retry?' Có thể nộp lại từ năm '+(l.birthYear+last.retry)+'.':'')+'\n':'')+
+      'Chọn vị trí theo quốc tịch, bằng cấp và kinh nghiệm.\n'+Object.keys(roles).filter(function(id){return roles[id].country===location(l)&&roles[id].since<=calendar(l);}).map(function(id){var why=basic(l,id);return roles[id].ranks[0]+' · '+(why===true?'đủ điều kiện nộp hồ sơ':why);}).join('\n');
  },function(l){
    var s=peek(l),q=s.application,p=employed(l),out=[];
    if(p){
@@ -150,6 +157,8 @@ X.menu('agency962','Điều tra liên bang và tình báo',available,
 E.HOOKS.year.push(function(l,r,log){
  var q=peek(l).application;
  if(q&&(!clearance(l)||location(l)!==roles[q.id].country)){
+   var reason=location(l)!==roles[q.id].country?'Nơi cư trú thay đổi.':'Điều kiện thẩm tra đã thay đổi.';
+   state(l).lastOutcome965={id:q.id,reason:reason,at:l.age};
    delete state(l).application;
    log('Hồ sơ tuyển dụng đã đóng vì nơi cư trú hoặc lý lịch thay đổi.','neutral');
  }

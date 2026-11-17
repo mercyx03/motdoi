@@ -58,6 +58,15 @@
     if (T.ensure(l, c).cash < reserve(l, c) + a.book * .008) return 'Ngân quỹ chưa đủ lương mùa đầu và dự phòng';
     return true;
   }
+  function nextStep(l, c, a, report) {
+    var active=loans(c).find(function(q){return q.from===a.id&&activeLoan(q);});
+    if(active)return 'Cầu thủ trở về sau mùa '+active.year+'.';
+    if(!report)return '';
+    var y=year(l),offer=report.loan.offer961,verdict=firstTeamCheck(l,c,a);
+    if(y-report.loan.year>2)return 'Báo cáo cũ đã hết hiệu lực. Có thể cân nhắc một mùa cho mượn mới.';
+    return (verdict===true?'Có thể ký hợp đồng đội một.':verdict+'.')+
+      (offer&&offer.due>=y?' Đề nghị chuyển nhượng có thể chốt ở mùa '+offer.due+'.':' Có thể xem phương án cho mượn tiếp.');
+  }
   function promote(l, c, a, log) {
     if (firstTeamCheck(l, c, a) !== true) return false;
     var report = review(c, a), y = year(l);
@@ -170,9 +179,10 @@
     var clubs = owned(c), t = T.ensure(l, c);
     return c.name + ' · ngân quỹ ' + H.money(l, t.cash) + '. Mỗi giải quốc gia tối đa một CLB do công ty này kiểm soát. Có thể dùng chung tuyển trạch và học viện khi sở hữu ở nhiều quốc gia. Giá và kết quả hoạt động được tính trong trò chơi.\n' +
       clubs.map(function (a) {
-        var last = a.history[a.history.length - 1], report = review(c, a), first = a.first961;
+        var last = a.history[a.history.length - 1], report = review(c, a), first = a.first961, step=nextStep(l,c,a,report);
         return F.club(a.id).name + ' · ' + plans[a.plan] + ' · học viện ' + a.academy + '/100' +
           (report && year(l) - report.loan.year <= 2 ? '\nHLV: ' + report.player.name + ' · ' + report.loan.minutes + ' phút · ' + report.rating + '/100 sau khi trở về.' : '') +
+          (step?'\n'+step:'') +
           (first && first.until > year(l) ? '\nĐội một: ' + first.name + ' · lương ' + H.money(l, first.wage) + '/mùa đến hết ' + (first.until - 1) + '.' : '') +
           (last ? ' · mùa ' + last.year + ': thu ' + H.money(l, last.revenue) + ', chi ' + H.money(l, last.cost) : '');
       }).join('\n') + '\n' + loans(c).slice(-6).map(function (q) {

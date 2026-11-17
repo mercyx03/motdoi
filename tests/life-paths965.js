@@ -1,0 +1,89 @@
+'use strict';
+const assert=require('node:assert/strict'),{loadGame}=require('./lib/quick');
+const E=loadGame().E,C=E.CHAIN144,S=E.SCHOOL920,L=E.LIFE138,X=E.UPDATE110;
+const draw=()=>0,log=()=>{};
+function life(cc,age=10,birth=1970){
+ const l=E.createLife({mode:'world',country:cc,year:birth,seed:965,noOrphan:true});
+ Object.assign(l,{age,birthYear:birth,alive:true,school:'primary',abroad:null,pending:[],sched:[],acts:0,money:l.base*100,urban:true});
+ delete l.flags.military;
+ return l;
+}
+function trip(l){
+ const e={id:'trip-fixture',kind:'trip',stage:'accepted',age:l.age,cc:l.country,year:l.birthYear+l.age,school:S.key(l),dest:'địa phương'};
+ l.flags.school920={prof:{},inst:{[e.id]:e},mem:[]};
+ S.attend(l,e,draw,log);
+ assert.equal(e.stage,'completed');
+ return C.active(l,'childPath965');
+}
+function open(l,c,id){
+ l.age=c.next;
+ c.open={at:l.age,token:c.id+'#'+c.stage+'@'+l.age};
+ const d=E.DEC[id].make(l,draw,{cid:c.id,token:c.open.token});
+ l.pending=[d];return d;
+}
+let l=life('JP'),c=trip(l);
+assert(c&&c.data.peer&&c.data.mentor);
+let d=open(l,c,'childMemory965');
+assert(d.opts.some(o=>o.k==='peer'));
+E.resolve(l,'peer');
+const f=l.friends.find(f=>f.uid110===c.data.friend);
+assert(f&&f.school965===c.data.peer.id);
+l=E.migrate(JSON.parse(JSON.stringify(l)));c=C.active(l,'childPath965');
+l.abroad={code:'VN',perm:true};
+d=open(l,c,'childOpportunity965');
+assert(d.opts.some(o=>o.k==='friend'&&/viết thư|gọi điện/.test(o.l)));
+E.resolve(l,'friend');
+assert.equal(C.active(l,'childPath965'),null);
+assert(E.friendsOf(l).every(p=>p.uid110!==f.uid110),'distance remains');
+assert(l.friends.some(p=>p.uid110===f.uid110&&p.close>f.close));
+
+l=life('VN');
+E.childActivity965(l,'musicLocal963','buổi diễn');
+c=C.active(l,'childPath965');
+open(l,c,'childMemory965');E.resolve(l,'skill');
+assert.equal(L.skill(l,'sing').level,5);
+open(l,c,'childOpportunity965');E.resolve(l,'skill');
+assert.equal(L.skill(l,'sing').level,10);
+assert(!C.active(l,'childPath965'));
+
+l=life('GB');c=trip(l);
+open(l,c,'childMemory965');E.resolve(l,'mentor');
+assert(c.next>=16);
+l.school=null;
+d=open(l,c,'childOpportunity965');
+assert(d.opts.some(o=>o.k==='job'));
+E.resolve(l,'job');
+assert.equal(l.pending[0].id,'job');
+assert(!C.active(l,'childPath965'));
+
+l=life('JP',12);
+let other=life('VN',12);
+assert.notEqual(E.LOCAL965.local(l).play,E.LOCAL965.local(other).play);
+assert.notEqual(E.LOCAL965.contact(l),'gọi video');
+assert.equal(E.LOCAL965.contact(life('US',22,2000)),'gọi video');
+const menu=E.DEC.localLife965.make(l,draw);
+assert(menu.text.includes('1982')&&menu.text.includes('Nhật Bản'));
+assert(menu.opts.some(o=>X.menuKey(menu,o.k)==='play'));
+l.acts=7;
+assert.equal(E.act(l,'localLife965'),null);
+
+// Unlike a fresh menu, an old serialized card may have no matching option keys.
+const stale=E.DEC.localLife965.make(l,draw);
+stale.data.keys=['removed-row'];
+assert.equal(E.DEC.localLife965.auto(l,stale,draw),'cancel');
+
+l=life('US',27,2000);l.edu=5;l.school=null;l.st.kno=40;
+assert(E.AGENCY962.advance(l,'cia_analyst962',draw,log));
+assert(E.DEC.agency962.make(l,draw).text.includes('2028'));
+l.age++;
+assert(E.AGENCY962.advance(l,'cia_analyst962',()=>.99,log));
+const rejected=E.DEC.agency962.make(l,draw).text;
+assert(rejected.includes('kiến thức')&&rejected.includes('2030'));
+l=life('JP');c=trip(l);
+C.yearly(l,draw,log,l.age);
+const scheduled=l.sched.find(item=>item.id==='childMemory965');
+assert(scheduled&&scheduled.arg.cid===c.id);
+l.age++;E.beginYear(l,{auto:true});
+const due=l.pending.find(item=>item.id===scheduled.id);
+assert(due&&E.DEC[due.id].valid(l,due.data));
+console.log('PASS childhood continuity, dated local activities, stale/automatic menus and agency next steps');

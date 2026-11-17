@@ -166,6 +166,7 @@
     else if (e.kind === 'trip' || e.kind === 'senior') t = (e.kind === 'senior' ? 'Chuyến đi cuối cấp ' : 'Chuyến ngoại khóa ') + (e.dest || '') + ' cùng lớp, có giáo viên đi kèm.';
     else if (e.kind === 'campfire') t = 'Đêm lửa trại của trường: văn nghệ, trò chơi lớn, đốt lửa có ban tổ chức giám sát.';
     log(t, 'good'); memo(l, e, t, w);
+    if (E.childActivity965 && /^(trip|campfire|yearbook)$/.test(e.kind)) E.childActivity965(l,'school920',label(e));
   }
   function evRows(l, e) {
     if(!currentEvent(l,e))return [];

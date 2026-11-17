@@ -175,6 +175,7 @@
            if(!parents(l)||l.fam.q<2){log('Người chăm sóc chưa thu xếp đưa bạn đi lần này.','neutral');return;}
          }else H.cash(l,-d.cost,'Vé xem biểu diễn');
          fx(l,{hap:4,soc:1});log('Bạn đến xem '+localProgram(l)+' và về nhà với một giai điệu còn vương trong đầu.','good');
+         if(E.childActivity965)E.childActivity965(l,'musicLocal963',localProgram(l));
        }},
       {k:'no',l:'Để dịp khác',run:function(){}}
     ]

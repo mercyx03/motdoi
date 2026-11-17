@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-17T07:35:37.607Z",
+  "generatedAt": "2026-11-17T07:44:05.746Z",
   "entries": [
+    {
+      "id": "childhood-paths-and-local-life-96500",
+      "version": "9.6.5",
+      "publishedAt": "2026-11-17T14:44:05+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Kỷ niệm tuổi nhỏ mở ra những hướng đi mới",
+      "summary": "Gặp lại bạn cũ, theo đuổi sở thích hoặc được thầy cô gợi ý tìm việc. Bảng nghề cho biết bước tiếp theo và khi nào có thể thực hiện.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Một số chuyến ngoại khóa, buổi biểu diễn và sinh hoạt địa phương mở ra chuyện tiếp nối sau vài năm. Bạn có thể gặp lại người đã quen, luyện kỹ năng, hỏi thầy cô về việc làm hoặc giữ chuyện đó như một kỷ niệm.",
+        "Bảng CLB ghi mùa cầu thủ trở về, yêu cầu lên đội một và hạn chốt chuyển nhượng. Hồ sơ FBI, CIA và MI5 ghi năm xử lý tiếp, điều kiện và lý do chưa qua vòng xét. Kế nghiệp hiển thị bước đề cử, bỏ phiếu hoặc bàn giao.",
+        "Mục Sinh hoạt ở nơi đang sống có gợi ý vui chơi và tìm việc theo địa phương. Bạn bè ở xa có thể viết thư, gọi điện hoặc gọi video tùy nơi và năm.",
+        "Chế độ tự động dùng các nút còn hợp lệ trên bảng đang mở. Với bảng cũ chỉ còn đường quay lại, game có thể thoát để cuộc đời tiếp tục."
+      ]
+    },
     {
       "id": "school-event-navigation-96400",
       "version": "9.6.4",
