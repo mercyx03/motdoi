@@ -1802,6 +1802,9 @@
     if (life.retired || a >= 62) share = Math.max(share, 0.92); // v7.1: về già tiêu dần khoản dư (sức khỏe, con cháu, hiếu hỉ) thay vì tiếp tục tích lũy
     F.life = life.money >= 0 && surplus > 0 ? surplus * share : 0;
     if (focus === 'rest') F.life += b * 0.06;
+    // Tự chi theo mức sống nơi ở. Thu nhập đặc biệt lớn không tự nâng ngân sách.
+    var lifestyleCap = { save: 0.35, normal: 0.75, lavish: 1.5 }[life.spend] || 0.75;
+    F.life = Math.min(F.life, b * lifestyleCap);
     if (life.money < 0) { // 9.5.1: nợ sâu thì ăn ở thanh đạm hơn (ở ghép, ở nhờ, bớt đi lại) thay vì cứ chi như cũ rồi bị xóa nợ
       F.life = 0; var deep = life.money < -b, cut = Math.max(0, ess - Math.max(ess * (deep ? 0.55 : 0.8), income + F.partner)), c1 = Math.min(cut, F.food * (deep ? 0.3 : 0.2)); F.food -= c1; cut -= c1;
       if (deep && cut > 0) { var c2 = Math.min(cut, F.rent * 0.6); F.rent -= c2; cut -= c2; if (c2 > 0 && !life.flags.sharedRoom945) { life.flags.sharedRoom945 = true; log('Hết tiền, bạn ở ghép và nhờ người quen để giảm tiền nhà.', 'neutral'); } }

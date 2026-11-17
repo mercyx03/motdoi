@@ -1,11 +1,30 @@
 {
-  "generatedAt": "2026-11-17T03:34:56.340Z",
+  "generatedAt": "2026-11-17T03:47:36.958Z",
   "entries": [
+    {
+      "id": "salary-and-football-95900",
+      "version": "9.5.9",
+      "publishedAt": "2026-11-17T10:47:36+07:00",
+      "releaseStatus": "released",
+      "title": "Giữ phần dư từ lương lớn và xây mạng lưới CLB bóng đá",
+      "summary": "Chi mua sắm tự động có ngân sách rõ ràng và công ty có thể mua, điều hành nhiều đội bóng tại các thị trường khác nhau.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mua sắm, giải trí tự động có trần theo mức sống và chế độ chi tiêu bạn chọn. Lương, thưởng và cổ tức lớn không kéo khoản này tăng theo. Khoản dư sau các khoản chi được giữ lại.",
+        "Trong hồ sơ doanh nghiệp bạn kiểm soát, có thể chọn CLB, gửi đề nghị rồi quay lại chốt sau khi cổ đông phản hồi. Giao dịch dùng ngân quỹ doanh nghiệp và có thể bị từ chối.",
+        "Mỗi mùa CLB có doanh thu vé, tài trợ, quỹ lương và chi phí vận hành. Chọn ưu tiên học viện hoặc thương mại, rồi theo dõi kết quả trong sổ công ty. Sở hữu ở nhiều quốc gia sẽ mở lựa chọn dùng chung tuyển trạch và đào tạo."
+      ],
+      "releasedAt": "2026-11-17T03:49:25.000Z",
+      "correctedAt": "2026-11-17T03:49:25.578Z"
+    },
     {
       "id": "life-paths-and-nhs-95800",
       "version": "9.5.8",
       "publishedAt": "2026-11-17T10:34:56+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Đường đi sau đội trường, chuyển cấp và viện phí đúng thời",
       "summary": "Dùng kinh nghiệm đội trường để thử tuyển, gặp lựa chọn học và làm phù hợp với năm sống, và sửa khoản thu NHS quá mức.",
       "tags": [
@@ -18,13 +37,14 @@
         "Danh sách tìm việc loại nghề chưa có trong năm đó trước khi đưa cho bạn chọn. Lời mời di cư xét cả hạn chế rời nơi đi và xem điểm đến có phù hợp với năm sống.",
         "Phí y tế dự báo có giới hạn. Với bản lưu cũ, game chỉ hoàn phí kê đơn NHS tính thừa khi còn đủ bằng chứng về khoản thu trong sổ thu chi và nhật ký; người được miễn phí không bị cộng tiền nhầm."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-17T03:39:09.000Z",
+      "correctedAt": "2026-11-17T03:46:05.053Z"
     },
     {
       "id": "school-sport-context-95700",
       "version": "9.5.7",
       "publishedAt": "2026-11-17T10:17:15+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Đội thể thao học đường qua nhiều mùa",
       "summary": "Tập luyện cùng đồng đội, tranh suất thi đấu và cân bằng thể thao với học tập khi hoàn cảnh đổi thay.",
       "tags": [
@@ -37,13 +57,14 @@
         "Khi chuyển nơi ở, đội mới chọn môn phù hợp hơn và bạn mang theo một phần kinh nghiệm. Chiến sự, thiên tai, dịch bệnh hoặc thiếu lương thực nghiêm trọng có thể khiến mùa tập phải dừng.",
         "Nội dung học tập và công nghệ dùng điều kiện của nơi bạn đang sống trong năm đó, kể cả khi đi du học. Ví dụ, khả năng dùng internet đầu những năm 2000 thay đổi khi bạn từ Việt Nam sang Mỹ."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-17T03:19:21.000Z",
+      "correctedAt": "2026-11-17T03:46:04.962Z"
     },
     {
       "id": "event-continuity-95600",
       "version": "9.5.6",
       "publishedAt": "2026-11-17T09:24:24+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "title": "Ôn thi đúng năm, giải nghệ đúng hạn và sửa tình huống lễ hội",
       "summary": "Kết quả chuyển cấp đến đúng lúc, vận động viên chơi trọn mùa cuối và nhật ký ghi đúng nơi bạn rời đi.",
       "tags": [
@@ -55,7 +76,8 @@
         "Khi rời đi vì bị phân biệt đối xử, nhật ký ghi đúng nơi đã rời. Game xét điểm đến theo đúng loại rào cản đang khiến bạn phải chuyển đi.",
         "Lễ Tạ ơn thời chưa phổ biến truyền hình bỏ lựa chọn xem màn hình. Chuyện ngắm trăng ở Nhật Bản và Hàn Quốc có lựa chọn và lời kể phù hợp với cảnh mở đầu."
       ],
-      "releasedAt": null
+      "releasedAt": "2026-11-17T02:28:48.000Z",
+      "correctedAt": "2026-11-17T03:46:04.870Z"
     },
     {
       "id": "era-society-95500",

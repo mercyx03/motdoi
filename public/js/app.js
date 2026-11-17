@@ -939,7 +939,7 @@
     if (F.parents) row('Gửi bố mẹ', '−' + money(l, F.parents));
     if (F.health) row('Thuốc men', '−' + money(l, F.health));
     if (F.debt) row('Trả nợ', '−' + money(l, F.debt));
-    if (F.life) row('Mua sắm, giải trí', '−' + money(l, F.life));
+    if (F.life) row('Mua sắm, giải trí tự động', '−' + money(l, F.life));
     var items = (l.yr && l.yr.items || []).slice().sort(function (a, b) { return Math.abs(b.v) - Math.abs(a.v); }).slice(0, 5);
     var ev = items.map(function (x) { return '<li><span>' + esc(x.t) + '</span><b class="' + (x.v >= 0 ? 'pos' : 'neg') + '">' + (x.v >= 0 ? '+' : '−') + esc(money(l, Math.abs(x.v))) + '</b></li>'; }).join('');
     p.innerHTML = '<h3>Tài chính năm ' + (l.alive ? l.age - (S.yearRunning ? 0 : 1) >= 0 ? (l.birthYear + l.age - (S.yearRunning ? 0 : 1)) : '' : l.death.year) + '</h3>' +

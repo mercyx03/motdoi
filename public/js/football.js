@@ -692,13 +692,11 @@
   };
   // State KPI depends on knowledge/reputation which can change after year hooks.
   // Finalise the derived profile before saving, so reload does not recompute a different KPI.
-  // 9.5.3: lương hợp đồng lớn: chi sinh hoạt không tăng mãi theo thu nhập (trên 60 lần thu nhập cơ sở mỗi năm chỉ còn một phần tư phần vượt); phần dư vào tiền mặt và tài sản ròng
+  // Đồng bộ hồ sơ cầu thủ với bảng thu chi chung.
   var finish953 = E.finishYear; E.finishYear = function (l) {
     var out = finish953.apply(this, arguments), f = l && l.fin, s = peek(l);
-    if (!f || !s || !s.earnings || s.earnings.year !== year(l) || !(f.life > 0) || !(l.money >= 0) || s.earnings.kept953) return out;
-    var cut = Math.max(0, f.life - 60 * l.base) * .75;
-    if (cut > 0) { l.money += cut; f.life -= cut; f.spend -= cut; f.save += cut; }
-    f.capped955 = true; s.earnings.kept953 = true; s.earnings.spent953 = f.spend; s.earnings.saved953 = f.save;
+    if (!f || !s || !s.earnings || s.earnings.year !== year(l) || s.earnings.kept953) return out;
+    s.earnings.kept953 = true; s.earnings.spent953 = f.spend; s.earnings.saved953 = f.save;
     return out;
   };
   var endYear = E.endYear; E.endYear = function (l) { var out = endYear.apply(this, arguments); if (E.STATE174 && l.flags && l.flags.state174) E.STATE174.syncState(l); return out; };

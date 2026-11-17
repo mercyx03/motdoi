@@ -62,11 +62,11 @@ const yearOf = l => { E.beginYear(l, { auto: true }); let g = 0; while (l.pendin
 {
   const l = E.createLife({ mode: 'world', country: 'US', seed: 61, year: 2026 }); Object.assign(l, { age: 30, school: null, indep: true, pending: [], money: 10 }); l.money = 0;
   const base = l.base; l.job = null; E.beginYear(l, { auto: true }); l.pending = [];
-  l.yr = l.yr || { items: [] }; const big = base * 400; l.yr.items = []; E.finishYear(l); ok(!l.fin || l.fin.capped955 !== undefined || true, 'chạy được năm tài chính');
+  l.yr = l.yr || { items: [] }; l.yr.items = []; E.finishYear(l); ok(l.fin && l.fin.life <= base * .75, 'chạy được năm tài chính');
   const a = E.createLife({ mode: 'world', country: 'US', seed: 62, year: 2026 }); Object.assign(a, { age: 30, school: null, indep: true, pending: [], sched: [], money: 0 }); E.startJob(a, 'ca_si', () => .5, () => { }, true); a.fame = 1e6; a.job.rank = 3;
-  E.beginYear(a, { auto: true }); a.pending = []; E.finishYear(a); const f = a.fin; ok(!!f && f.capped955 === true, 'ca sĩ thu nhập lớn được áp quy tắc chi sinh hoạt');
+  E.beginYear(a, { auto: true }); a.pending = []; E.finishYear(a); const f = a.fin; ok(!!f && f.inc > a.base, 'ca sĩ có thu nhập lớn trong ca kiểm thử');
   ok(Math.abs(f.save - (f.inc + f.partner + f.interest - f.spend)) < 1e-6, 'sổ thu chi vẫn cân');
-  ok(f.life <= 60 * a.base + 0.25 * Math.max(0, f.inc) , 'chi sinh hoạt bị chặn ở mức hợp lý');
+  ok(f.life <= .75 * a.base, 'chi tự động có trần theo mức sống cơ sở');
   const o = E.createLife({ mode: 'vn', seed: 63, year: 2026 }); Object.assign(o, { age: 30, school: null, indep: true, pending: [], money: 0 }); E.startJob(o, 'cong_nhan', () => .5, () => { }, true);
   E.beginYear(o, { auto: true }); o.pending = []; E.finishYear(o); ok(!o.fin || !(o.fin.life > 60 * o.base), 'người thu nhập vừa phải không bị đổi');
 }
