@@ -225,7 +225,7 @@
   CT('dua_xe_dap', function (l, a) { return a >= 10 && a <= 14 && boy(l) && !l.urban; }, 99);
 
   SC('kpop', {
-    title: 'Thần tượng', prep: function (l, r) { return { n: l.idol || H.pickIdol(r, l) }; },
+    title: 'Thần tượng', prep: function (l, r) { return { n: l.idol || H.pickIdol(r, l) || 'một ca sĩ đang được yêu thích' }; },
     text: function (l, d) { return 'Bạn mê ' + d.n + ' như điếu đổ. Album mới ra mắt, kèm thẻ ảnh có chữ ký — đắt bằng tiền tiêu vặt ba tháng.'; },
     opts: [
       { k: 'buy', l: 'Nhịn ăn sáng để mua', run: function (l, r, log, d) { if (!l.idol) l.idol = d.n; cashB(l, -0.004, 'Album ' + d.n); fx(l, { hap: 5, hea: -1 }); log('Ôm album ' + d.n + ' về, mở ra trúng đúng thẻ ảnh mình thích nhất. Hét ầm cả nhà.', 'good'); H.mem(l, 'Chiếc album ' + d.n + ' mua bằng tiền nhịn ăn sáng.', 3); } },

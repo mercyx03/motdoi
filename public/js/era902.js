@@ -87,10 +87,10 @@
   var MAXFROM = Object.keys(JOB_FROM).reduce(function (m, k) { return Math.max(m, JOB_FROM[k]); }, TECH.reduce(function (m, t) { return Math.max(m, t.from); }, 0)), NONE = [], cache = {}, stats = { text: 0, scene: 0, opts: 0, job: 0, act: 0 };
   // 9.5.5: tình huống cả khái niệm là hiện đại (văn hóa fan, mạng xã hội, cuộc thi truyền hình, nghề làm móng…) — không xảy ra trước năm này; nước ghi riêng thì dùng năm riêng
   var ID_FROM = [
-    [/^(kpop|am_fan_cuong|scout155|sb_hop_dong_no_le)$/, 1996], [/^fan_san_bay$/, 1990], [/^show_rap$/, 1980], [/^am_clip_lan_truyen$/, 2005], [/^(creator_nghi|brand105_offer)$/, 2006], [/^(mxh_|cn_mang_xa_hoi)/, 2006],
+    [/^(kpop|concert_doi|fanmeeting|am_fan_cuong|scout155|sb_hop_dong_no_le)$/, 1996, { VN: 2000 }], [/^fan_san_bay$/, 1990], [/^show_rap$/, 1980], [/^am_clip_lan_truyen$/, 2005], [/^(creator_nghi|brand105_offer)$/, 2006], [/^(mxh_|cn_mang_xa_hoi)/, 2006],
     [/^sb_tao_phot$/, 1995], [/^sv_vay$/, 2012], [/^choi_game_nha$/, 1972], [/^chon_game$/, 2009], [/^am_thi_truyen_hinh$/, 1983, { VN: 2000 }], [/^db_cuoc_thi$/, 1990, { VN: 2010 }], [/^hh_moi$/, 1965, { VN: 2008 }],
-    [/^spa_tham_my_chui$/, 1990], [/^(dk_nail|nail_hoa_chat|dk_nail_nho)/, 1970, { VN: 1990 }], [/^nv_dien_thoai$/, 1995], [/^xkld/, 1960, { VN: 1992 }], [/^hx_karaoke$/, 1971, { VN: 1995 }],
-    [/^lg_pride$/, 1970], [/^dk_ship$/, 2010], [/^dk_bar_nho$/, 1975], [/^mc_dan_lon$/, 1950], [/^(streamer|kol_|live_)/, 2011]
+    [/^spa_tham_my_chui$/, 1990], [/^(dk_nail|nail_hoa_chat|dk_nail_nho)/, 1970, { VN: 1990 }], [/^nv_dien_thoai$/, 1995], [/^xkld/, 1960, { VN: 1992 }], [/^(?:hx_|k6_)?karaoke$/, 1971, { VN: 1995 }],
+    [/^(show_chon|bias_chon|concert_luu_tru)$/, 2024], [/^lg_pride$/, 1970], [/^dk_ship$/, 2010], [/^dk_bar_nho$/, 1975], [/^mc_dan_lon$/, 1950], [/^(streamer|kol_|live_)/, 2011]
   ];
   var ID_MAX = ID_FROM.reduce(function (m, x) { return Math.max(m, x[1], x[2] ? Math.max.apply(null, Object.keys(x[2]).map(function (k) { return x[2][k]; })) : 0); }, 0);
   function residence(l) { return l && (l.country || l.abroad && l.abroad.code) ? E.H.resCode(l) : null; }
@@ -151,13 +151,14 @@
   };
   // --- 2. cảnh: cắt lựa chọn sai thời, bỏ cả cảnh nếu cốt lõi sai thời ---
   function refine(l, dec) {
-    var a = activeFor(l); if (!a.length || !dec || typeof dec !== 'object') return dec;
+    if (!dec || typeof dec !== 'object') return dec;
+    var a = activeFor(l);
     if (typeof dec.title === 'string') dec.title = substitute(l, dec.title);
     if (typeof dec.text === 'string') dec.text = substitute(l, dec.text);
     if (Array.isArray(dec.opts)) dec.opts.forEach(function (o) { if (o) { if (typeof o.l === 'string') o.l = substitute(l, o.l); if (typeof o.h === 'string') o.h = substitute(l, o.h); } });
-    var skip = false, opts = Array.isArray(dec.opts) ? dec.opts : [];
+    var skip = idBlocked(dec.id, l), opts = Array.isArray(dec.opts) ? dec.opts : [];
     if (typeof dec.title === 'string' && firstHit(a, dec.title)) skip = true;
-    var keep = opts.filter(function (o) { return !firstHit(a, String(o.l || '') + ' ' + String(o.h || '')); });
+    var keep = opts.filter(function (o) { return !idBlocked(o.k, l) && !firstHit(a, String(o.l || '') + ' ' + String(o.h || '')); });
     if (keep.length < opts.length) { stats.opts += opts.length - keep.length; dec.opts = keep; if (!keep.length) skip = true; }
     if (typeof dec.text === 'string' && firstHit(a, dec.text)) {
       var t2 = clean(l, dec.text, false); if (t2 === dec.text) skip = true; else dec.text = t2; // câu nào cũng sai thời
@@ -183,7 +184,11 @@
     if (firstHit(a, s)) { stats.job++; return true; } return false;
   }
   // --- 4. hành động chủ động ---
-  var actions0 = E.actions; if (typeof actions0 === 'function') E.actions = function (l) { var out = actions0.apply(this, arguments); if (!activeFor(l).length) return out; return out.filter(function (x) { if (firstHit(activeFor(l), x.l || '')) { stats.act++; return false; } return true; }); };
-  E.ERA902 = { ID_FROM: ID_FROM, idBlocked: idBlocked, YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
+  function actionBlocked(l, a) {
+    if (idBlocked(a.id, l) || idBlocked(a.sc, l)) return true;
+    var label = typeof a.l === 'function' ? a.l(l) : a.l;
+    return !!anachronism(l, substitute(l, label));
+  }
+  E.ERA902 = { ID_FROM: ID_FROM, idBlocked: idBlocked, actionBlocked: actionBlocked, YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
   if (E.ERA917) E.ERA917.tech = E.ERA902; // gắn vào khung thời đại có sẵn
 })(globalThis.G);

@@ -1559,7 +1559,9 @@
   function resolve(life, key) {
     var d = life.pending[0];
     if (!d) return [];
-    if (DEC[d.id] && DEC[d.id].valid && !DEC[d.id].valid(life, d.data || {})) { life.pending.shift(); prune(life); if(d.manual&&life.alive){releaseUnusedAction(life,d);var expired={a:life.age,y:life.birthYear+life.age,t:'Lựa chọn “'+d.title+'” không còn phù hợp với hoàn cảnh hiện tại; chưa thực hiện và không trừ tiền.',k:'neutral'};life.log.push(expired);return [expired];} return []; }
+    var hadOption = d.opts.some(function (o) { return o.k === key; });
+    if (E.ERA902 && d.manual) E.ERA902.refine(life,d);
+    if ((d.manual && hadOption && !d.opts.some(function(o){return o.k===key;})) || (DEC[d.id] && DEC[d.id].valid && !DEC[d.id].valid(life, d.data || {}))) { life.pending.shift(); prune(life); if(d.manual&&life.alive){releaseUnusedAction(life,d);var expired={a:life.age,y:life.birthYear+life.age,t:'Lựa chọn “'+d.title+'” không còn phù hợp với hoàn cảnh hiện tại.',k:'neutral'};life.log.push(expired);return [expired];} return []; }
     var r = RF(life), out = [];
     var log = function (t, k) { if (k !== 'big' && k !== 'death' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: life.age, y: life.birthYear + life.age, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; if (k === 'neutral' && recentDupLog(life, e)) return; life.log.push(e); out.push(e); }; // v3.2: đã nghỉ học thì không kể chuyện trên lớp
     var valid = d.opts.some(function (o) { return o.k === key; });
@@ -1616,6 +1618,18 @@
   var ACTS_PER_YEAR = 3;
   // v2.7: dưới 10 tuổi 3 lượt · 10–17 tuổi 7 lượt · từ 18 tuổi không giới hạn
   function actsLimit(l) { return l.age < 10 ? 3 : l.age < 18 ? 7 : Infinity; }
+  function focusAllowed(l, id) {
+    if (l.age < 6) return id === 'baby';
+    if (id === 'work') return l.age >= 15 && !l.retired && !(l.jailUntil > l.age) && !(l.abroad && l.abroad.trapped);
+    if (id === 'balance') return l.age >= 21;
+    return ['study', 'health', 'social', 'rest'].includes(id);
+  }
+  function currentFocus(l) {
+    if (l.age < 6) return 'baby';
+    if (focusAllowed(l, l.focus)) return l.focus;
+    return l.age < 15 || l.focus === 'baby' ? 'study' : 'social';
+  }
+
   function actAvail(l, a) {
     if (!l.alive) return 'Đã qua đời';
     if (l.age < 4) return 'Dưới 4 tuổi, bé phản ứng tự nhiên với sự chăm sóc của người lớn';
@@ -1626,10 +1640,11 @@
     if (a.min != null && l.age < a.min) return 'Từ ' + a.min + ' tuổi';
     if (a.max != null && l.age > a.max) return 'Không còn phù hợp ở tuổi này';
     if (l.flags && l.flags.actAt && l.flags.actAt[a.id] === l.age) return 'Đã làm việc này năm nay'; // v2.4: tránh lặp cùng một việc trong một năm
+    if (E.ERA902 && E.ERA902.actionBlocked(l, a)) return 'Chưa phù hợp với nơi ở và thời kỳ này';
     var x = a.avail ? a.avail(l) : true;
     return x === true || x === undefined ? true : (x || 'Chưa thể làm lúc này');
   }
-  function actions(l) { return ACT.map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
+  function actions(l) { return ACT.filter(function(a){return !E.ERA902||!E.ERA902.actionBlocked(l,a);}).map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
   function act(l, id) {
     var a = ACT.filter(function (x) { return x.id === id; })[0];
     if (!a || actAvail(l, a) !== true) return null;
@@ -1637,6 +1652,7 @@
     if (D.valid && !D.valid(l, { requested: true })) return null;
     // Opening an action only previews its choices; resolve commits the turn.
     var d = DEC[a.sc || a.id].make(l, RF(l), a.arg ? a.arg(l) : null);
+    if (!d || !d.opts.length || d.data && d.data.eraSkip) return null;
     d.data = d.data || {}; d.data.requested = true; d.data.actionId850=a.id; d.data.actionYear850=l.age; d.data.deferredTurn894=true; d.manual = true;
     l.pending.unshift(d);
     return d;
@@ -1859,10 +1875,8 @@
     var log = function (t, k) { if (k !== 'big' && k !== 'death' && k !== 'money' && schoolOff(life, t)) return; if (E.famLogic && k !== 'death' && k !== 'money') { t = E.famLogic(life, t, true); if (t == null) return; } var e = { a: a, y: life.birthYear + a, t: E.lossText ? E.lossText(life, famFix(life, t), k) : famFix(life, t), k: k || '' }; if (k === 'neutral' && recentDupLog(life, e)) return; life.log.push(e); out.push(e); }; // v3.5: chưa / không đi học thì không có chuyện trên lớp
     if (E.TRANSIT907 && E.TRANSIT907.visit(life)) E.TRANSIT907.restore(life, log);
     var f = life.fam, st = life.st;
-    var focus = a < 6 ? 'baby' : life.focus === 'baby' ? 'study' : life.focus;
-    if (a >= 6 && life.focus === 'baby') life.focus = 'study';
-    if (a < 15 && focus === 'work') focus = 'study';
-    if (a < 21 && focus === 'balance') focus = a < 15 ? 'study' : 'social';
+    var focus = currentFocus(life);
+    life.focus = focus;
     var inJail = life.jailUntil != null && a < life.jailUntil;
     if (!life.yr) life.yr = { items: [] };
 
@@ -2307,7 +2321,7 @@
     runHeadless: runHeadless, makeCohort: makeCohort, netWorth: netWorth, obituary: obituary, statusLine: statusLine, fmtMoney: fmtMoney,
     jobTitle: jobTitle, orientLabel: orientLabel, placeText: placeText, buildMort: buildMort, qBase: qBase, migrate: migrate,
     SAVE_SCHEMA: SAVE_SCHEMA, saveSchema: saveSchema, checkSave: checkSave, registerSchemaStep: registerSchemaStep,
-    actions: actions, act: act, actAvail: actAvail, parentMonthly: parentMonthly, PARENT_PAY: PARENT_PAY, parentKind: parentKind, parentYear: parentYear,
+    actions: actions, act: act, actAvail: actAvail, focusAllowed: focusAllowed, currentFocus: currentFocus, parentMonthly: parentMonthly, PARENT_PAY: PARENT_PAY, parentKind: parentKind, parentYear: parentYear,
     isMajor: isMajor, MAJOR: MAJOR, GAMES: GAMES, gameFor: gameFor, anyGame: anyGame, PETS: PETS, GAME_SUB: GAME_SUB, ACTS_PER_YEAR: ACTS_PER_YEAR, actsLimit: actsLimit, talentText: talentText,
     EDU: EDU, MAJORS: MAJORS, QUINT: QUINT, TALENTS: TALENTS, DEC: DEC, vary: vary, stamp: stamp, TRIG: TRIG, ACT: ACT, EVENTS: EVENTS, CAR: CAR, LINES: LINES,
     LOAN_TYPES: LOAN_TYPES, IDOLS: IDOLS, IDOL_BORN: IDOL_BORN, VICE: VICE, CONSCRIPT: CONSCRIPT,

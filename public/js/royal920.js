@@ -1,5 +1,5 @@
 /* Một Đời — MD5 (8.10.24): royal920 — hoàng gia, tước vị, công vụ, ngân sách và kế vị (mở rộng life84, ELITE148).
-   · Mọi thành viên hoàng gia trong game là nhân vật HƯ CẤU (nhà hư cấu đặt trong nước quân chủ có thật), có mã người, năm sinh và cây
+   · Mọi thành viên hoàng gia trong game là nhân vật HƯ CẤU (nhà đặt trong nước quân chủ có thật), có mã người, năm sinh và cây
      kế vị cố định; không mỗi gala sinh thêm người thừa kế. Chỉ nước có chế độ quân chủ (E.MONARCHIES) mới có registry.
    · Anh là nhánh chi tiết: danh mục tước (sovereign, consort, Prince/Princess of Wales, Prince/Princess, Princess Royal, Duke…Baron)
      phân loại riêng (hoàng gia/quý tộc, thực/courtesy, cha truyền/chung thân), không phải một thang rank. Các nước khác: quy tắc kế vị
@@ -54,7 +54,7 @@
   function grant(p, key, how, hered, why, at, detail) { p.titles = p.titles || []; if (p.titles.some(function (t) { return t.key === key && !t.lost && (!detail || t.territory === detail.territory); })) return false; p.titles.push(Object.assign({ key: key, how: how, hered: !!hered, why: why, at: at },detail||{})); return true; }
   function mainTitle(p) { if(E.ROYAL858){var canonical=E.ROYAL858.title(p);if(canonical!=null)return canonical;}if(E.ROYAL837){var local=E.ROYAL837.title(p);if(local)return local;} var order = ['sovereign', 'consort', 'wales', 'royal', 'prince', 'duke', 'marquess', 'earl', 'viscount', 'baron'], t = (p.titles || []).filter(function (t) { return !t.lost; }).sort(function (a, b) { return order.indexOf(a.key) - order.indexOf(b.key); })[0]; return t ? tname(t.key, p.sex) + (t.how === 'courtesy' ? ' (danh xưng do kết hôn)' : '') : 'không có tước'; }
 
-  // ================= registry nhà hoàng gia (hư cấu) =================
+  // ================= registry nhà hoàng gia =================
   var HOUSE = ['Ashbourne', 'Valmont', 'Rhenvald', 'Castelor', 'Eldmere', 'Norhaven', 'Sorvik', 'Montclair'];
   function pool(c) { return String(W.BY[c] && W.BY[c].pool || 'en').split(',')[0].split(':')[0]; }
   function nm(l, r, c, sex) { try { return G.NAMES.worldName(r, pool(c), sex).first || G.NAMES.worldName(r, pool(c), sex).full.split(' ')[0]; } catch (e) { return sex === 'F' ? 'Elena' : 'Henrik'; } }
@@ -92,7 +92,7 @@
     (next.titles || []).forEach(function (t) { if (t.key === 'wales') t.lost = 'trở thành người trị vì'; });
     var sp = next.spouse && byId(h, next.spouse); if (sp && (h.cc!=='MC'||sp.sex==='F'&&next.sex==='M')) grant(sp, 'consort', 'courtesy', false, 'phối ngẫu của người trị vì', yr(l));
     if(E.ROYAL847&&E.ROYAL847.syncTitles)E.ROYAL847.syncTitles(l,h,next,sov,log);
-    if (log && st(l).met[h.cc]) log(h.name + ' (' + cname(h.cc) + ', nhân vật hư cấu): ' + next.name + ' kế vị ngai theo thứ tự kế vị.', 'neutral');
+    if (log && st(l).met[h.cc]) log(h.name + ' (' + cname(h.cc) + '): ' + next.name + ' kế vị ngai theo thứ tự kế vị.', 'neutral');
   }
   function houseYear(l, h, log) {
     if (st(l).inheritedAt843>yr(l)||h.yr === yr(l)) return; h.yr = yr(l);
@@ -120,11 +120,11 @@
     var pool0 = eligible(l, h), chance = (k === 'reception' ? 0.35 : k === 'intro' ? 0.4 : 0.12) * (x[2] === 'ticket' ? 0.8 : 1);
     if (!pool0.length || r() > chance) { log(x[0] + ' tại ' + cname(c) + ': bạn gặp nhiều người trong giới, nhưng không có dịp trò chuyện riêng với thành viên hoàng gia. Mua vé không đồng nghĩa được gặp riêng.', 'neutral'); return; }
     var m = pool0[Math.floor(r() * pool0.length)], rel = s.rel = s.rel || {}, q = rel[m.id] || (rel[m.id] = { cc: c, stage: 'met', trust: 10, at: yr(l) });
-    q.trust = Math.min(100, q.trust + 5); log(x[0] + ' tại ' + cname(c) + ': bạn được giới thiệu với ' + mainTitle(m) + ' ' + m.name + ' (' + h.name + ', nhân vật hư cấu). Hai người trò chuyện ngắn.', 'good');
+    q.trust = Math.min(100, q.trust + 5); log(x[0] + ' tại ' + cname(c) + ': bạn được giới thiệu với ' + mainTitle(m) + ' ' + m.name + ' (' + h.name + '). Hai người trò chuyện ngắn.', 'good');
   }
   function monCountries(l) { var out = [cc(l)].filter(function (c) { return MON[c]; }); if (tier(l) >= 3 || (l.fame || 0) >= 1e6) ['GB', 'NL', 'SE', 'JP', 'ES'].forEach(function (c) { if (out.indexOf(c) < 0 && MON[c]) out.push(c); }); return out; }
   X.menu('royalCircle920', 'Dạ tiệc, gala và giới hoàng gia', function (l) { var a = X.reason(l, 18); if (a !== true) return a; return monCountries(l).length || Object.keys(st(l).rel || {}).length ? true : 'Cần sống ở nước quân chủ, hoặc thuộc giới thượng lưu/nổi tiếng được mời ra nước ngoài'; }, function (l) {
-    return 'Các thành viên hoàng gia trong trò chơi là nhân vật hư cấu. Có thể không được mời; vé gala không mua được quyền gặp riêng. Quan hệ phát triển chậm, người kia có quyền từ chối.' + Object.keys(st(l).rel || {}).map(function (id) { var q = st(l).rel[id], h = house(l, q.cc), m = byId(h, id); return m ? '\n• ' + m.name + ' (' + mainTitle(m) + ', ' + cname(q.cc) + ') — ' + STAGE[q.stage] + ', tin cậy ' + Math.round(q.trust) : ''; }).join('');
+    return 'Có thể không được mời; vé gala không mua được quyền gặp riêng. Quan hệ phát triển chậm, người kia có quyền từ chối.' + Object.keys(st(l).rel || {}).map(function (id) { var q = st(l).rel[id], h = house(l, q.cc), m = byId(h, id); return m ? '\n• ' + m.name + ' (' + mainTitle(m) + ', ' + cname(q.cc) + ') — ' + STAGE[q.stage] + ', tin cậy ' + Math.round(q.trust) : ''; }).join('');
   }, function (l) {
     var out = [];
     monCountries(l).forEach(function (c) { Object.keys(EV).forEach(function (k) { out.push({ k: k + ':' + c, l: EV[k][0] + ' · ' + cname(c), h: EV[k][1] ? '~' + mo(l, l.base * EV[k][1]) : '', why: evWhy(l, k, c), run: function (l, r, log) { runEv(l, k, c, r, log); } }); }); });
@@ -170,13 +170,13 @@
     if (R.femaleLeaves && m.sex === 'F') { m.removed = 'rời hoàng tộc khi kết hôn'; (m.titles || []).forEach(function (t) { t.lost = 'kết hôn với thường dân theo luật hoàng thất'; }); log('Theo luật hoàng thất, ' + m.name + ' rời hoàng tộc khi kết hôn; hai bạn sống như thường dân.', 'neutral'); }
     else if (h.cc === 'GB') { if (m.sex === 'M') grant(me, 'prince', 'courtesy', false, 'vợ của hoàng tử — dùng danh xưng theo chồng', yr(l)); else log('Kết hôn với công chúa không tự cho chồng tước hiệu; nhà vua có thể phong hoặc không.', 'neutral'); }
     if(!byId(h,'player'))h.members.push(me); if(E.ROYAL837)E.ROYAL837.wedding(l,h,m,me,log); st(l).spouse = { cc: h.cc, id: m.id, role: null };
-    log('Đám cưới của bạn và ' + m.name + ' (' + h.name + ', nhân vật hư cấu). Tước hiệu, danh xưng và vai trò công vụ là các quyết định riêng.', 'big'); H.mem(l, 'Ngày cưới ' + m.name + '.', 8);
+    log('Đám cưới của bạn và ' + m.name + ' (' + h.name + '). Tước hiệu, danh xưng và vai trò công vụ là các quyết định riêng.', 'big'); H.mem(l, 'Ngày cưới ' + m.name + '.', 8);
     X.next(l, 'royalRole920', function () { return 0.5; }, {}, { manual: false });
   }
   X.menu('royalPerson920', 'Gặp gỡ thành viên hoàng gia', function (l) { return X.reason(l, 18); }, function (l, d) {
     var id = d && d.arg && d.arg.id, q = id && st(l).rel && st(l).rel[id], m = q && byId(house(l, q.cc), id);
     if (!m) return 'Không còn liên lạc.'; var h = house(l, q.cc), ln = lineOf(l, h, m);
-    return m.name + ' · ' + mainTitle(m) + ' · ' + age(l, m) + ' tuổi · ' + h.name + ' (' + cname(q.cc) + ', hư cấu) · ' + (ln ? 'thứ ' + ln + ' trong hàng kế vị' : 'ngoài hàng kế vị') + '\nQuan hệ: ' + STAGE[q.stage] + ', tin cậy ' + Math.round(q.trust) + '/100. Tính cách: ' + (m.warmth > 60 ? 'ấm áp' : 'kín đáo') + ', ' + (m.open > 55 ? 'cởi mở với người ngoài hoàng tộc' : 'thận trọng') + '. Quy định hôn nhân: ' + rule(q.cc).consent + '.';
+    return m.name + ' · ' + mainTitle(m) + ' · ' + age(l, m) + ' tuổi · ' + h.name + ' (' + cname(q.cc) + ') · ' + (ln ? 'thứ ' + ln + ' trong hàng kế vị' : 'ngoài hàng kế vị') + '\nQuan hệ: ' + STAGE[q.stage] + ', tin cậy ' + Math.round(q.trust) + '/100. Tính cách: ' + (m.warmth > 60 ? 'ấm áp' : 'kín đáo') + ', ' + (m.open > 55 ? 'cởi mở với người ngoài hoàng tộc' : 'thận trọng') + '. Quy định hôn nhân: ' + rule(q.cc).consent + '.';
   }, function (l, arg) {
     var id = arg && arg.id, q = id && st(l).rel && st(l).rel[id], m = q && byId(house(l, q.cc), id); if (!m) return [];
     var out = [{ k: 'step', l: { met: 'Trò chuyện thêm ở sự kiện sau', trust: 'Giữ liên lạc, chia sẻ quan tâm chung', invite: 'Nhận lời gặp riêng', dating: 'Hẹn hò kín đáo', family: 'Gặp gỡ gia đình', engaged: 'Chuẩn bị đám cưới', approval: 'Chờ quyết định chấp thuận' }[q.stage] || 'Gặp lại', why: stepWhy(l, q, m), run: function (l, r, log) { step(l, id, r, log); } }];

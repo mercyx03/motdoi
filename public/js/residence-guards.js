@@ -23,16 +23,16 @@ scope('viec_remote',function(l){return E.UPDATE110.free(l,18)&&!!l.abroad&&l.abr
 var concert=E.DEC.concert_di;if(concert){var prep=concert.def.prep,text=concert.def.text,oldApply=concert.apply;
  function locateConcert(l,d){var from=here(l),vn=['vn','rapvn','show'].includes(d.cat),cityCode=null;
   Object.keys(G.W.BY).some(function(code){if(G.W.BY[code].cities.includes(d.city)){cityCode=code;return true;}return false;});
-  if(vn){if(cityCode!=='VN')d.city=G.W.BY.VN.cities[0];cityCode='VN';}else if(l.abroad&&l.country!=='VN'){cityCode=from;d.city=G.W.BY[from].cities[0];}
+  if(vn){if(cityCode!=='VN')d.city=G.W.BY.VN.cities[0];cityCode='VN';}
   d.destination897=cityCode||from;d.residence897=from;d.far=d.destination897!==from;
   if(d.far)d.trip=Math.max(d.trip,1+.2/Math.max(.001,d.price));else d.trip=1;
   return d;
  }
  concert.def.prep=function(l){return locateConcert(l,prep.apply(this,arguments));};
- var randomConcert=E.DEC.concert;if(randomConcert){var rp=randomConcert.def.prep,ra=randomConcert.apply,rv=randomConcert.valid;randomConcert.def.prep=function(l){return locateConcert(l,rp.apply(this,arguments));};randomConcert.valid=function(l,d){return (!rv||rv(l,d))&&(!d||d.residence897===here(l));};randomConcert.apply=function(l,d,k,r,log){if(!randomConcert.valid(l,d.data)){log('Nơi cư trú đã đổi; hãy mở lại kế hoạch concert. Chưa thu tiền.','neutral');return;}return ra.apply(this,arguments);};}
- concert.def.text=function(l,d){return text(l,d)+(d.destination897!==here(l)?' Điểm đến '+(G.W.BY[d.destination897]||{}).name+'; dự toán đã gồm đi lại và lưu trú khứ hồi. Xem trực tuyến không cần chuyến đi.':'');};
+ var randomConcert=E.DEC.concert;if(randomConcert){var rp=randomConcert.def.prep,ra=randomConcert.apply,rv=randomConcert.valid;randomConcert.def.prep=function(l){return locateConcert(l,rp.apply(this,arguments));};randomConcert.valid=function(l,d){return (!rv||rv(l,d))&&(!d||d.residence897===here(l)&&E.concertAt(l,d));};randomConcert.apply=function(l,d,k,r,log){if(!randomConcert.valid(l,d.data)){log('Nơi cư trú đã đổi; hãy mở lại kế hoạch concert. Chưa thu tiền.','neutral');return;}return ra.apply(this,arguments);};}
+ concert.def.text=function(l,d){return text(l,d)+(d.destination897!==here(l)?' Điểm đến '+(G.W.BY[d.destination897]||{}).name+'; dự toán đã gồm đi lại và lưu trú khứ hồi.':'');};
  concert.def.opts.forEach(function(o){if(o.k==='stream')return;var req=o.req;o.req=function(l,d){if(req&&!req(l,d))return false;if(d.far&&l.age<18&&o.k!=='parents')return false;if(o.k==='parents'&&l.abroad&&!E.parentsWithYouAbroad(l))return false;return !d.far||E.MOBILITY122.barrier(l,d.destination897,false)===true;};});
- concert.valid=function(l,d){return !!d&&d.residence897===here(l);};
+ concert.valid=function(l,d){return !!d&&d.residence897===here(l)&&E.concertAt(l,d);};
  concert.apply=function(l,d,k,r,log){if(!concert.valid(l,d.data)){log('Bạn đã đổi nơi ở; hãy mở lại kế hoạch concert để xem chi phí từ nơi mới. Chưa thu tiền.','neutral');return;}if(k!=='stream'&&d.data.far&&E.MOBILITY122.barrier(l,d.data.destination897,false)!==true){log('Chưa thể đi theo điều kiện xuất nhập cảnh hiện tại; bạn vẫn có thể xem trực tuyến. Chưa thu tiền.','neutral');return;}return oldApply.apply(this,arguments);};
 }
 // Adult school is available locally abroad, but an old in-person enrolment

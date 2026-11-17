@@ -1,6 +1,26 @@
 {
-  "generatedAt": "2026-11-17T07:10:56.738Z",
+  "generatedAt": "2026-11-17T07:27:15.169Z",
   "entries": [
+    {
+      "id": "period-actions-and-household-life-96300",
+      "version": "9.6.3",
+      "publishedAt": "2026-11-17T14:27:15+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Việc làm hợp thời và đời sống gia đình tự nhiên hơn",
+      "summary": "Lựa chọn theo nơi ở, tuổi và năm đang sống. Các cảnh hoàng gia phản ánh việc gia nhân lo sinh hoạt trong nhà.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Những năm chưa có danh mục nhạc thần tượng phù hợp, bạn có thể đi xem một buổi biểu diễn tại nơi đang sống. Danh sách nghệ sĩ và chương trình mở theo thời kỳ; một số nhóm được kiểm tra theo năm ra mắt.",
+        "Mục Việc bạn muốn làm kiểm tra lại điều kiện trước khi mở hoặc thực hiện lựa chọn cũ. Trọng tâm năm hiển thị tuổi, năm và nơi ở, với nội dung phù hợp hơn khi đang học, tìm việc hoặc trong hoàn cảnh cần giữ an toàn.",
+        "Khi có gia nhân, họ phụ trách bữa ăn. Trẻ có thể vào thăm người thân đang ốm hoặc học làm một món cùng đầu bếp; các tình huống tuổi nhỏ dùng lời thoại phù hợp hơn.",
+        "Bỏ nhãn hư cấu lặp lại trong cuộc đời và các đuôi miễn phí, không chi tiền trên nút lựa chọn. Giá và điều kiện thực tế vẫn được hiển thị.",
+        "Khi chuyển sang sống tiếp đời con, tên đã ghi trong gia đình được giữ nếu phần dựng lại quá khứ có lựa chọn giữ họ."
+      ]
+    },
     {
       "id": "world-careers-and-family-dialogue-96200",
       "version": "9.6.2",

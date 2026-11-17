@@ -30,7 +30,7 @@ function outing(l,r,log,d){
  if(!free(l)||!mark(l,d))return;var x=context(l),t=x.urban?'Cùng '+carer(l)+' dạo công viên, đọc sách và chơi vận động ở '+x.place+'.':'Cùng '+carer(l)+' đi dạo đường làng, chăm luống cây và ngắm đồng từ lối đi an toàn.';
  log(t,'good');H.fx(l,{hap:3,hea:1,soc:1});H.mem(l,t,3);
 }
-function home(l,r,log,d){if(!free(l)||!mark(l,d))return;log('Ở '+context(l).place+', bạn cùng '+carer(l)+' nấu món đơn giản, đọc sách và nghỉ ngơi.','good');H.fx(l,{hap:2});}
+function home(l,r,log,d){if(!free(l)||!mark(l,d))return;log(staffedHome(l)?'Người chăm sóc thu xếp một buổi đọc sách ở nhà. Bữa ăn được gia nhân chuẩn bị.':'Ở '+context(l).place+', bạn cùng '+carer(l)+' chuẩn bị món đơn giản, đọc sách và nghỉ ngơi.','good');H.fx(l,{hap:2});}
 function holiday(id){
  E.SC(id,{title:'Một kỳ nghỉ phù hợp với gia đình',prep:function(l){return {id898:id,place898:here(l),at898:l.age};},valid:function(l,d){return free(l)&&(!d||!d.done898)&&(!d||d.at898==null||d.at898===l.age)&&(!d||!d.place898||d.place898===here(l));},
  text:function(l){var x=context(l);return 'Bạn đang sống ở '+x.place+(x.urban?' trong khu vực thành thị.':' trong khu vực nông thôn.')+' '+U.cap(carer(l))+' cùng bạn thu xếp kỳ nghỉ. '+(x.rich?'Gia đình có thể cân nhắc lớp sở thích, nhưng vẫn cần kiểm tra lịch và ngân sách thực tế.':'Có cả hoạt động miễn phí và lớp có học phí để chọn theo ngân sách.');},opts:[
@@ -99,5 +99,55 @@ var vnKids=['k_tro_dan_gian','k_an_co','k_co_do','k_ong_ba_ke','k_bong_da_dem','
 vnKids.forEach(function(id){var d=E.DEC[id];if(!d)return;var valid=d.valid;d.valid=function(l,a){return H.resCode(l)==='VN'&&valid(l,a);};E.TRIG.filter(function(t){return t.id===id;}).forEach(function(t){var when=t.when;t.when=function(l,a){return H.resCode(l)==='VN'&&when(l,a);};});});
 var migrateLocal=E.migrateExt;E.migrateExt=function(l){if(migrateLocal)migrateLocal(l);l.pending=(l.pending||[]).map(function(d){if(!localKids[d.id])return d;var next=E.DEC[d.id].make(l,H.rf(l),Object.assign({},d.data||{}));next.manual=d.manual;return next;});};
 E.CHILDHOOD898.childContext=childContext;
+
+function staffedHome(l) {
+ var royal=l.flags.royal;
+ return !!(royal&&!royal.quit&&H.resCode(l)===(royal.c||l.country))||!!(E.OFFICE171&&X.peek(l).staff&&E.OFFICE171.desk?.person(l,'household'));
+}
+function motherHome(l){return l.fam.mAlive&&!l.fam.noMom;}
+function fatherHome(l){return l.fam.fAlive&&!l.fam.noDad;}
+var staffedScenes={
+ giup_nha:{title:'Một ngày mẹ nghỉ dưỡng',text:'Mẹ không khỏe. Gia nhân lo bữa tối, người chăm sóc hỏi bạn có muốn vào thăm mẹ một lát không.',opts:{
+   cook:['Nhờ gia nhân chuẩn bị món mẹ thích rồi vào thăm','Gia nhân chuẩn bị món nhẹ. Bạn mang tấm thiệp vào thăm, mẹ mỉm cười khi đọc.','Một buổi ngồi cạnh mẹ khi mẹ không khỏe.',{karma:4,soc:2}],
+   out:['Chơi ở phòng riêng để mẹ nghỉ','Bạn trở về phòng chơi để mẹ được yên tĩnh. Người chăm sóc báo cho bạn khi mẹ đã thức.'],
+   grand:['Nhờ người chăm sóc đưa lời hỏi thăm','Người chăm sóc chuyển lời hỏi thăm của bạn để mẹ nghỉ thêm.',null,{karma:1}]
+ }},
+ nau_com:{title:'Buổi học nhỏ trong bếp',text:'Đầu bếp đã thu xếp bữa tối. Bạn có thể vào bếp học làm một món nhẹ, có người lớn hướng dẫn.',opts:{
+   cook:['Tập làm món nhẹ cùng đầu bếp','Bạn thử làm một món nhẹ cùng đầu bếp rồi mang ra mời gia đình.','Lần đầu học làm một món trong căn bếp của gia đình.',{hap:3,karma:2}],
+   noodle:['Để dịp khác','Bạn để đầu bếp tiếp tục chuẩn bị bữa tối và hẹn hôm khác sẽ thử.']
+ }}
+};
+Object.keys(staffedScenes).forEach(function(id){
+ var d=E.DEC[id],s=staffedScenes[id],f=d.def,valid=f.valid,title=f.title,description=f.text;
+ function homeFits(l,a){return id==='giup_nha'?a>=8&&a<=14&&motherHome(l)&&(staffedHome(l)||fatherHome(l)):a>=9&&a<=14&&(staffedHome(l)||motherHome(l)||fatherHome(l));}
+ f.valid=function(l,x){return l.alive&&homeFits(l,l.age)&&(!x||x.staffed963==null||x.staffed963===staffedHome(l))&&(!valid||valid(l,x));};
+ f.title=function(l,x){return staffedHome(l)?s.title:typeof title==='function'?title(l,x):title;};
+ f.text=function(l,x){return staffedHome(l)?s.text:typeof description==='function'?description(l,x):description;};
+ var prep=f.prep;
+ f.prep=function(l,r,arg){var x=prep?prep(l,r,arg):Object.assign({},arg||{});x.staffed963=staffedHome(l);return x;};
+ f.opts.forEach(function(o){
+   var row=s.opts[o.k],label=o.l,run=o.run;
+   o.l=function(l,x){return staffedHome(l)?row[0]:typeof label==='function'?label(l,x):label;};
+   o.run=function(l,r,log,x){
+     if(!f.valid(l,x))return;
+     if(!staffedHome(l))return run.apply(this,arguments);
+     log(row[1],row[3]?'good':'neutral');
+     if(row[2])H.mem(l,row[2],3);
+     if(row[3])H.fx(l,row[3]);
+   };
+ });
+ E.TRIG.filter(function(t){return t.id===id;}).forEach(function(t){var when=t.when;t.when=function(l,a){return homeFits(l,a)&&(staffedHome(l)||when.apply(this,arguments));};});
+});
+var migrateHome=E.migrateExt;
+E.migrateExt=function(l){
+ l.pending=(l.pending||[]).map(function(d){
+   if(!staffedScenes[d.id]||d.data&&d.data.staffed963!=null||!E.DEC[d.id].valid(l,d.data))return d;
+   var next=E.DEC[d.id].make(l,function(){return .5;},d.data);
+   next.manual=d.manual;
+   return next;
+ });
+ if(migrateHome)migrateHome(l);
+};
+
 
 })(globalThis.G);

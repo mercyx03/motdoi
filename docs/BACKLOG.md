@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.6.3: còn hồi quy toàn bộ trên mã cuối, thiết bị/bản lưu thật và xác nhận binding REVIEWS_DB Production. Phạm vi thay đổi gồm bộ lọc hành động theo nơi ở và năm, hoạt động âm nhạc, trọng tâm, tình huống gia đình có người phục vụ và văn bản lựa chọn.
+
 - 9.6.2: còn hồi quy toàn bộ trên mã cuối, thử trên thiết bị/bản lưu thật và kiểm chứng binding REVIEWS_DB. Phạm vi mới gồm tổ chức và nghề phi pháp địa phương, tuyển dụng FBI/CIA/MI5 và cách xưng hô trong tình huống của bố mẹ. Điều kiện tuyển và tiến độ trong game được giản lược theo lối chơi.
 
 - 9.6.1: còn regression toàn bộ trên mã cuối, thiết bị/bản lưu thực tế và kiểm chứng binding Production REVIEWS_DB. Phạm vi gồm giáo dục sau đại học của con, nghề nghiệp và bàn giao gia nghiệp cho anh chị em, cầu thủ trẻ sau khi hết mùa cho mượn, và mốc giáo dục Trung Quốc/Pháp.

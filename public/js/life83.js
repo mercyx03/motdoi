@@ -411,13 +411,22 @@
     } else if (h.debt) log(P + ' để lại khoản nợ, nhưng theo luật người thừa kế chỉ trả nợ trong phạm vi di sản được hưởng, nên bạn không phải gánh thêm.', 'neutral');
   });
   // tiếp tục ngay ở tuổi hiện tại của con: dựng lại những năm đã qua (máy tự chọn), chọn bản giống hồ sơ của con nhất
+  // The selected child's recorded name already describes the end of the replay.
+  function replayChoice(life) {
+    var scene = life.pending[0];
+    if (scene.id === 'surname919' && E.ID919) {
+      var keep = E.ID919.marryOptions(life).findIndex(function (o) { return !o.fam && !o.use; });
+      if (keep >= 0 && scene.opts.some(function (o) { return o.k === 'o' + keep; })) return 'o' + keep;
+    }
+    return E.autoKey(life);
+  }
   function ffTo(life, at) {
     var guard = 0;
     while (life.alive && life.age < at && guard++ < 130) {
       E.beginYear(life, { auto: true }); var g = 0;
-      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, E.autoKey(life));
+      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, replayChoice(life));
       if (life.alive) E.finishYear(life); g = 0;
-      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, E.autoKey(life));
+      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, replayChoice(life));
       E.endYear(life);
     }
     return life.alive && life.age === at;

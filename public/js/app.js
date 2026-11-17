@@ -486,6 +486,10 @@
   // CUỘC ĐỜI
   // =====================================================================
   var SPEEDS = [1, 2, 4, 8, 16];
+  function lifeText(t) { return E.lifeNarrative ? E.lifeNarrative(t) : t; }
+  function choiceText(t) {
+    return String(lifeText(t)||'').replace(/(?:^|[·,;]\s*)(?:không phát sinh (?:chi )?phí|không (?:chi|tốn|mất|trừ|thu) tiền|miễn (?:phí|học phí)|không mất phí)(?=\s*(?:$|[·,;.!]))[.!]?/gi,'').replace(/^\s*[·,;]\s*|\s*[·,;]\s*$/g,'').trim();
+  }
   var FOCUS = [
     ['study', 'Học hành', 'Học hành & phát triển bản thân: kiến thức tăng nhanh hơn, nhưng mệt hơn một chút.', 'Học hành', 'Chăm học: kiến thức tăng, dễ đạt thành tích.'],
     ['health', 'Sức khỏe', 'Chăm sóc sức khỏe: ăn uống, tập luyện, khám định kỳ.', 'Vận động', 'Chạy nhảy, chơi thể thao: khỏe mạnh hơn.'],
@@ -642,7 +646,7 @@
   function addLog(e, initial, bulk) {
     var li = document.createElement('li');
     li.className = (e.k || '') + (e.star ? ' starred' : '');
-    li.innerHTML = '<span class="a">' + e.a + ' tuổi</span><span class="t">' + esc(e.t) + '</span>' +
+    li.innerHTML = '<span class="a">' + e.a + ' tuổi</span><span class="t">' + esc(lifeText(e.t)) + '</span>' +
       (e.k === 'money' ? '' : '<button class="star" title="Đánh dấu khoảnh khắc đáng nhớ" aria-label="Đánh dấu khoảnh khắc">' + (e.star ? '★' : '☆') + '</button>');
     li._e = e;
     var ul = $('#logList');
@@ -788,7 +792,7 @@
       body+=b('Yêu cầu nhân sự chuẩn bị tiệc','tab','party',!D.person(l,'events'));
       s.plans896.filter(function(p){return p.status==='pending';}).forEach(function(p){body+=row('Dự toán tiệc đang chờ · tối đa '+esc(money(l,p.max)),b('Xem và duyệt các hạng mục','tab','party'));});
       s.proposals.forEach(function(p,i){if(p.status!=='pending')return;var text=p.type==='successor'?'Đề cử người kế nhiệm: '+((E.ELITE148.find(l,p.pid)||{}).name||'không còn'):p.text||'Đề xuất cần xem';body+=row(esc(text),p.type==='event'?b('Chọn quy mô để nhân sự lập kế hoạch','tab','party'):p.type==='successor'?b('Phỏng vấn và duyệt tuyển','successor',i):p.pid?b('Xem hồ sơ và gặp người được đề xuất','contact',i):b('Đã đọc','read',i));});
-      (l.pending||[]).filter(function(d){return /^(company|board|crisis123|academicCase125)/.test(d.id);}).forEach(function(d){body+=row('Cần bạn quyết định: '+esc(d.title),b('Xem sự việc','review',d.id));});
+      (l.pending||[]).filter(function(d){return /^(company|board|crisis123|academicCase125)/.test(d.id);}).forEach(function(d){body+=row('Cần bạn quyết định: '+esc(lifeText(d.title)),b('Xem sự việc','review',d.id));});
       body+='<h3>Báo cáo đã xử lý</h3>';
       body+=s.history.slice(-16).reverse().map(function(h){var p=E.ELITE148.find(l,h.pid),desc=h.result||F.tasks[h.task]||({ 'auto-renewed':'Đã tự gia hạn theo quyền được giao','contract-expired':'Hợp đồng hết hạn',dismissed:'Chấm dứt hợp đồng'})[h.reason]||'Cập nhật nhân sự';return row('<b>Tuổi '+h.age+' · '+esc(desc)+'</b><br>'+esc((p?p.name+' · ':'')+(h.status==='budget-blocked'?'Vượt hạn mức, chưa thực hiện':h.status==='done'?'Đã thực hiện':'Đã ghi nhận')+(h.cost?' · '+money(l,h.cost):''))+(h.events?'<p>'+esc(h.events.join('; '))+'</p>':'')+(h.reports?'<ul>'+h.reports.map(function(c){return '<li>'+esc(c.name||'Doanh nghiệp')+': '+esc(c.year==null?'chưa chốt năm':'Năm '+c.year+' · lợi nhuận '+money(l,c.profit)+' · tiền mặt '+money(l,c.cash))+'</li>';}).join('')+'</ul>':''));}).join('')||'<p class="muted">Chưa có công việc đã xử lý. Sau khi giao nhiệm vụ và hạn mức, báo cáo sẽ đến tại đây.</p>';
       body+=s.plans896.filter(function(p){return p.status==='done';}).slice(-5).map(function(p){return row('Đã tổ chức tiệc · thực chi '+esc(money(l,p.actual))+' · '+p.attendees.length+' khách có danh tính đã dự');}).join('');
@@ -829,7 +833,7 @@
     var l=S.life,box=$('#royalPanel872'),nav=$('#royalNav872'),p=l&&l.partner,married=p&&p.alive!==false&&p.status==='married'&&p.royal920,visible=!!(l&&(l.flags.royal&&!l.flags.royal.quit||married));
     if(!box||!nav)return;box.hidden=nav.hidden=!visible;$('#mnav').style.setProperty('--nav-count872',visible?'6':'5');if(!visible){box.innerHTML='';return;}
     var R=E.ROYAL920,q=E.ROYAL837&&E.ROYAL837.context(l),cc=married?p.royal920.cc:l.flags.royal.c,h=married?R.house(l,cc):q&&q.h||R.house(l,cc),member=married&&R.byId(h,p.royal920.id),actions=E.actions(l).filter(function(x){return ['royalRole920','royalDuty920','royalLife837','royalNames858'].includes(x.id);});
-    box.innerHTML='<h3>Hoàng gia</h3><p>'+esc(h.name)+' · '+esc(G.W.BY[cc]&&G.W.BY[cc].name||cc)+'</p>'+(married?'<p>Phối ngẫu: '+esc(p.name)+(member?' · '+esc(R.mainTitle(member)):'')+'</p>':'')+'<div class="chips">'+actions.map(function(x){return '<button class="btn sm" data-royal-act872="'+esc(x.id)+'"'+(x.ok===true?'':' disabled title="'+esc(x.ok)+'"')+'>'+esc(x.l)+'</button>';}).join('')+'</div>';
+    box.innerHTML='<h3>Hoàng gia</h3><p>'+esc(lifeText(h.name))+' · '+esc(G.W.BY[cc]&&G.W.BY[cc].name||cc)+'</p>'+(married?'<p>Phối ngẫu: '+esc(p.name)+(member?' · '+esc(R.mainTitle(member)):'')+'</p>':'')+'<div class="chips">'+actions.map(function(x){return '<button class="btn sm" data-royal-act872="'+esc(x.id)+'"'+(x.ok===true?'':' disabled title="'+esc(x.ok)+'"')+'>'+esc(x.l)+'</button>';}).join('')+'</div>';
     $$('[data-royal-act872]',box).forEach(function(b){b.onclick=function(){doAction(b.dataset.royalAct872);};});
   }
   function renderAll() { if (!S.life) return; renderTopbar(); renderScene(); renderId(); renderStats(); renderFin(); renderFam(); renderRoyal872(); renderFocus(); renderActions(); renderCohort(); renderMap(); renderPlace(); renderOfficeDesk(); }
@@ -1131,15 +1135,22 @@
       return;
     }
     var kid = a < 15;
-    var cur = l.focus === 'baby' ? 'study' : l.focus;
-    if (kid && cur === 'work') cur = 'study';
-    if (cur === 'balance' && a < 21) cur = kid ? 'study' : 'social';
-    var chips = FOCUS.filter(function (f) { return (!kid || f[3]) && !(f[5] && a < f[5]); }).map(function (f) {
-      return '<button class="chip' + (f[0] === cur ? ' on' : '') + '" data-f="' + f[0] + '">' + (kid ? f[3] : f[1]) + '</button>';
+    var cur = E.currentFocus(l);
+    var chips = FOCUS.filter(function (f) { return E.focusAllowed(l,f[0]); }).map(function (f) {
+      return '<button class="chip' + (f[0] === cur ? ' on' : '') + '" data-f="' + f[0] + '">' + (kid ? f[3] : f[0]==='work'&&!l.job ? (l.school?'Chuẩn bị nghề nghiệp':'Sinh kế') : f[1]) + '</button>';
     }).join('');
     var d = FOCUS.filter(function (f) { return f[0] === cur; })[0];
-    p.innerHTML = '<h3>Trọng tâm năm nay · ' + (a) + ' tuổi</h3><div class="chips">' + chips + '</div><div class="desc">' + esc(kid ? d[4] : d[2]) + '</div>';
-    $$('[data-f]', p).forEach(function (b) { b.onclick = function () { l.focus = b.dataset.f; renderFocus(); persist(); }; });
+    var description = kid ? d[4] : d[2];
+    if(cur==='work'&&!l.job)description=l.school?'Dành thời gian tìm hiểu nghề và chuẩn bị cho giai đoạn sau khi học.':'Tập trung lo sinh kế và chuẩn bị tìm việc.';
+    var local=E.CTX945&&E.CTX945.of(l);
+    if(cur==='health'&&!kid&&local&&local.war>=2)description='Giữ sức, nghỉ ngơi và vận động ở nơi an toàn.';
+    else if(cur==='health'&&!kid)description='Quan tâm bữa ăn, vận động và nghỉ ngơi. Chăm sóc y tế tùy điều kiện ở nơi đang sống.';
+    if(cur==='social'&&!kid&&local&&local.war>=2)description='Giữ liên lạc với người thân và giúp nhau trong điều kiện an toàn.';
+    else if(cur==='social'&&!kid&&E.ERA902.anachronism(l,'gọi video'))description='Dành thời gian thăm hỏi, viết thư cho người ở xa và gặp gỡ bạn bè tại nơi đang sống.';
+    if(cur==='balance'&&!l.job)description='Chia thời gian giữa sức khỏe, người thân và việc học hoặc rèn kỹ năng.';
+    var country=W.BY[E.H.resCode(l)];
+    p.innerHTML = '<h3>Trọng tâm năm nay · ' + a + ' tuổi · ' + (l.birthYear+a) + (country?' · '+esc(country.name):'') + '</h3><div class="chips">' + chips + '</div><div class="desc">' + esc(description) + '</div>';
+    $$('[data-f]', p).forEach(function (b) { b.onclick = function () { if (!E.focusAllowed(l,b.dataset.f)) return; l.focus = b.dataset.f; renderFocus(); persist(); }; });
   }
   function renderActions() {
     var l = S.life, p = $('#actPanel');
@@ -1358,7 +1369,7 @@
     var d = S.life && S.life.pending[0]; if (!d || S.phase !== 'decision') return;
     closeModal(); S.phase = 'decmin';
     var pill = $('#decPill') || document.body.appendChild(Object.assign(document.createElement('button'), { id: 'decPill', className: 'decpill' }));
-    pill.innerHTML = '<span class="dot"></span>Đang chờ bạn chọn: <b>' + esc(d.title) + '</b><span class="go">Mở lại ›</span>';
+    pill.innerHTML = '<span class="dot"></span>Đang chờ bạn chọn: <b>' + esc(lifeText(d.title)) + '</b><span class="go">Mở lại ›</span>';
     pill.onclick = function () { showDecision(); };
     renderAll();
   }
@@ -1451,9 +1462,9 @@
   }
   function educationText872(l,d) {
     var details=G.E.H.resCode(l)==='GB'&&/^(study_wishes54|sixth829|schoolEngland829|ukAlevelIb850|mockUniExam853)$/.test(d.id);
-    if(!details)return '<p'+(/^football/.test(d.id)?' class="football-summary"':String(d.text||'').includes('\n')?' class="dec-lines"':'')+'>'+esc(d.text)+'</p>';
+    if(!details)return '<p'+(/^football/.test(d.id)?' class="football-summary"':String(d.text||'').includes('\n')?' class="dec-lines"':'')+'>'+esc(lifeText(d.text))+'</p>';
     var st=l.flags.study54||{},summary=d.id==='study_wishes54'?(st.selected?'Chọn chương trình tại trường đang xem.':st.region?'Chọn trường để xem ngành và điều kiện.':st.wishes&&st.wishes.length?'Đã có '+st.wishes.length+' nguyện vọng. Kiểm tra thứ tự rồi nộp hồ sơ; chưa nhập học ở bước này.':'Thêm trường và ngành bạn muốn học. Chưa nộp hồ sơ hoặc thay đổi chương trình hiện tại.'):d.id==='sixth829'?'Bạn đã hoàn thành Year 11. Chọn hướng học hoặc đào tạo tiếp theo.':d.id==='ukAlevelIb850'?'Chọn môn và hướng A-Level/IB phù hợp ngành dự định. Điều kiện từng trường nằm trong chi tiết.':d.id==='mockUniExam853'?'Kết quả thi thử giúp xem mức chuẩn bị và phần cần cải thiện; không phải quyết định trúng tuyển.':'Xem giai đoạn đang học và chọn bước tiếp theo bên dưới.';
-    return '<p class="education-next872">'+esc(summary)+'</p><details class="education-details872"><summary>Xem chi tiết, bảng điểm và điều kiện</summary><p class="dec-lines">'+esc(d.text)+'</p></details>';
+    return '<p class="education-next872">'+esc(summary)+'</p><details class="education-details872"><summary>Xem chi tiết, bảng điểm và điều kiện</summary><p class="dec-lines">'+esc(lifeText(d.text))+'</p></details>';
   }
   function showDecision() {
     if (S.modalTimer) { clearTimeout(S.modalTimer); S.modalTimer = null; }
@@ -1467,6 +1478,7 @@
     if(/^office(171|Delegation171|Contract171|Reports171)$/.test(d.id)&&d.manual){l.pending.shift();openOffice896(d.id==='officeDelegation171'?'delegation':d.id==='officeContract171'?'staff':'inbox');return;}
     if(!d.manual&&/^(companyLeadershipCase169|board123|crisis123)$/.test(d.id)&&E.OFFICE171.desk.person(l,'reports')&&E.OFFICE171.state(l).enabled.reports){if(d.officeInbox896){openOffice896('inbox');return;}d.officeInbox896=true;S.phase='decision';minimizeDecision();renderOfficeDesk();toast('Trợ lý có hồ sơ quan trọng cần bạn duyệt tại Văn phòng gia đình.');return;}
     if (E.refreshActingWarning) E.refreshActingWarning(l, d);
+    if(E.ERA902&&d.manual){E.ERA902.refine(l,d);if(d.data?.eraSkip){choose(null,false);return;}}
     S.phase = 'decision';
     var major = E.isMajor(d);
     var firstBirthday=l.age===1&&d.id==='thoi_noi';
@@ -1474,9 +1486,9 @@
     // v3.1: lựa chọn nào tốn tiền mà chưa ghi giá thì ghi luôn chi phí ước tính
     var costs = !aiPick && E.optCosts && d.id !== 'market_trade' ? E.optCosts(l, d) : {};
     modal('<div class="tier ' + (major ? 'major' : 'minor') + '">' + (major ? '⚡ Ngã rẽ quyết định' : 'Lựa chọn thường ngày') + '</div>' +
-      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(d.title) + '</h2>' + (E.SCHOOL920 ? E.SCHOOL920.illustration(l,d) : '') + educationText872(l,d) +
+      '<div class="agep">' + ageStr(l.age) + ' · ' + (l.birthYear + l.age) + '</div><h2>' + esc(lifeText(d.title)) + '</h2>' + (E.SCHOOL920 ? E.SCHOOL920.illustration(l,d) : '') + educationText872(l,d) +
       (major ? '<p class="tierwarn">Lựa chọn này có thể thay đổi cả cuộc đời ' + esc(l.name) + '. Hãy cân nhắc kỹ.</p>' : '') +
-      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + royalNameForm858(l,d) + royalCouncilForm865(l,d) + assetSearch912(d) + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts' + (d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7 ? ' many' : '') + '">' + d.opts.map(function (o) { var h = [o.h, costs[o.k]].filter(Boolean).join(' · '); var many = d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7; return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(many && o.k === 'cancel' ? '← Quay lại' : o.l) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
+      (E.REPORTS167 ? E.REPORTS167.html(l,d,esc) : '') + royalNameForm858(l,d) + royalCouncilForm865(l,d) + assetSearch912(d) + willForm(l, d) + businessForm(l,d) + marketForm(l, d) + '<div class="opts' + (d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7 ? ' many' : '') + '">' + d.opts.map(function (o) { var h = [choiceText(o.h), costs[o.k]].filter(Boolean).join(' · '); var many = d.manual && E.DEC[d.id] && E.DEC[d.id].menu110 && d.opts.length >= 7; return '<button class="opt" data-k="' + esc(o.k) + '"><b>' + esc(many && o.k === 'cancel' ? '← Quay lại' : choiceText(o.l)) + '</b>' + (h ? '<span>' + esc(h) + '</span>' : '') + '</button>'; }).join('') + '</div>' +
       (aiPick ? '<div class="autonote">' + (S.auto ? 'Chế độ tự động' : 'Lựa chọn thường ngày') + ': AI đang cân nhắc theo tính cách của ' + esc(l.name) + '… (bấm một lựa chọn để tự quyết)</div>' : '') +
       '<div class="decmin-row"><button class="btn ghost sm" id="decMin" title="Phím Esc">⤓ Thu nhỏ — xem bảng, chỉnh trọng tâm rồi chọn sau</button></div>',
       function (box) {
@@ -1710,7 +1722,7 @@
       (S.lifeAch && S.lifeAch.length ? '<h3 style="margin:22px 0 4px">🏆 Thành tựu của đời này</h3>' + achHtml(S.lifeAch, S.newAch) : '') +
       (function () { var ch = lineage(l.id); return ch.length > 1 ? '<h3 style="margin:22px 0 4px">🌳 Gia phả</h3>' + treeHtml(ch) : ''; })() +
       (refl ? '<h3 style="margin:22px 0 4px">Những quãng lặng</h3><div class="refl-list">' + refl + '</div>' : '') +
-      (stars.length ? '<h3 style="margin:22px 0 4px">⭐ Khoảnh khắc bạn đã đánh dấu</h3><ul class="finale-list">' + stars.map(function (e) { return '<li>' + e.a + ' tuổi — ' + esc(e.t) + '</li>'; }).join('') + '</ul>' : '') +
+      (stars.length ? '<h3 style="margin:22px 0 4px">⭐ Khoảnh khắc bạn đã đánh dấu</h3><ul class="finale-list">' + stars.map(function (e) { return '<li>' + e.a + ' tuổi — ' + esc(lifeText(e.t)) + '</li>'; }).join('') + '</ul>' : '') +
       (kidsLive.length ? '<div class="card pad heir"><div class="eyebrow">Đời người nối tiếp</div><p style="margin:6px 0 10px">' + esc(l.name) + ' để lại ' + (kidsLive.length === 1 ? 'một người con' : kidsLive.length + ' người con') + '. Chọn một người con để sống tiếp: bắt đầu lại từ lúc chào đời trong gia đình do chính bạn gây dựng, hoặc tiếp tục ngay ở tuổi hiện tại của con và nhận phần thừa kế.</p><div class="go-row">' +
         kidsLive.map(function (k, i) { var ka = l.death.age - k.born; return '<button class="btn gold" data-heir="' + i + '">Sống tiếp đời ' + (k.sex === 'M' ? 'con trai' : 'con gái') + ' ' + esc(k.name) + ' (' + ka + ' tuổi)</button>'; }).join('') + '</div></div>' : '') +
       '<h3 style="margin:22px 0 4px">Những người sinh cùng giây</h3><div class="cohort">' + (cohort || []).map(function (c) {
