@@ -176,10 +176,11 @@ ok(F && K && P && S && R && E.SENS920, 'MD5 modules loaded');
 {
   const jp = life(27, { age: 18 }, 'world', { country: 'JP' }); ok(!S.rites(jp).includes('seijin'), 'Japan: no Seijin ceremony at legal age 18');
   jp.age = 20; ok(S.rites(jp).includes('seijin'), 'Japan: ceremony at 20');
-  const vn = life(28, { age: 13 }); vn.religion = 'Do Thái giáo'; ok(S.rites(vn).includes('mitzvah'), 'Bar/Bat Mitzvah follows religion, not passport');
+  const vn = life(28, { age: 13 }); vn.sex='M'; vn.religion = 'Do Thái giáo'; ok(S.rites(vn).includes('mitzvah'), 'Bar/Bat Mitzvah follows religion, not passport');
+  vn.sex='F';vn.age=12;ok(S.rites(vn).includes('bat'),'Bat Mitzvah at 12');
   const vn2 = life(29, { age: 13 }); vn2.religion = 'Phật giáo'; ok(!S.rites(vn2).includes('mitzvah'), 'no mitzvah without the faith');
   const ke = life(30, { age: 18 }, 'world', { country: 'KE' }); ok(S.RITES.maasai.observe && S.rites(ke).includes('maasai'), 'Maasai rites: observation only');
-  ok(Object.keys(S.RESEARCH).length === 3 && !S.RITES.naghol && !S.RITES.satere, 'Naghol/Sateré-Mawé/Rumspringa research only, no gameplay');
+  ok(['pentecost','amazon','amish','mentawai','bali'].every(k=>S.RITES[k].observe),'local traditions have observation paths');
   pick(jp, 'rite920', 'seijin:no'); ok(jp.flags.school920.rite.seijin.stage === 'declined' && !S.rites(jp).includes('seijin'), 'declining is final and penalty-free');
   if (E.DEC.world_coming173) { const j2 = life(31, { age: 20 }, 'world', { country: 'JP' }); ok(!E.DEC.world_coming173.valid(j2), 'generic coming-of-age incident not duplicated for Seijin'); }
 }
@@ -202,6 +203,6 @@ ok(F && K && P && S && R && E.SENS920, 'MD5 modules loaded');
   const b = R.st(l); b.spouse && (b.spouse.role = 'working'); const led = R.ledger(l); ok(led.grant > 0 && led.left === led.grant, 'working royal gets an official ledger');
   const m0 = l.money; b.spouse && (b.spouse.role = 'nonworking'); l.age++; const led2 = R.ledger(l); ok(led2.grant === 0 && l.money === m0, 'non-working: no official budget, no personal payout');
   const p = { titles: [] }; R.grant(p, 'duke', 'substantive', true, 'x', 1); R.grant(p, 'earl', 'substantive', true, 'y', 1); ok(p.titles.length === 2, 'two titles kept as separate records');
-  const born = life(34, { age: 30 }, 'world', { country: 'GB' }); born.flags.royal = { tier: 'direct', c: 'GB', house: 'x', reign: true }; const before = born.money; R.stipend(born, born.flags.royal, born.base * 12, quiet); ok(born.money - before <= born.base * 2 + 1e-6, 'reigning monarch no longer receives full grant as personal cash');
+  const born = life(34, { age: 30 }, 'world', { country: 'GB' }); born.flags.royal = { tier: 'direct', c: 'GB', house: 'x', reign: true }; const before = born.money, reserve = E.ROYAL860.state(born).reserve, publicLedger = JSON.stringify(R.ledger(born)); R.stipend(born, born.flags.royal, born.base * 12, quiet); ok(Math.abs((born.money - before) - (reserve - E.ROYAL860.state(born).reserve)) < 1e-6, 'monarch personal allowance is deducted from private family reserve'); ok(JSON.stringify(R.ledger(born)) === publicLedger, 'public grant is not transferred to personal cash');
 }
 console.log('md5-920: ' + count + ' checks passed');

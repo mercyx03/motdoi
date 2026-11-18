@@ -14,7 +14,7 @@
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function yr(l) { return l.birthYear + l.age; }
   function T(id, when, p, cd, max) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: p, cd: cd || 4, max: max || 1 }); }
 
@@ -122,32 +122,68 @@
   // ===================================================================
   var SSM = ['TH', 'AU', 'CA', 'US', 'NL', 'DE', 'FR', 'GB', 'ES', 'NZ', 'SE', 'IE', 'BE', 'DK', 'NO', 'CH', 'AT', 'PT', 'FI', 'IS', 'LU', 'MT', 'BR', 'AR', 'MX', 'CL', 'CO', 'UY', 'ZA', 'CR', 'EE', 'SI', 'GR', 'EC', 'CU', 'AD', 'LI'].filter(function (c) { return W && W.BY[c] && W.SSM.indexOf(c) >= 0; });
   E.SSM_LIST = SSM;
+  function weddingTravelAllowed(l) {
+    var p = l.partner;
+    return !!(l.alive && p && p.alive !== false && p.sex === l.sex && ['dating','cohabit'].includes(p.status)
+      && !l.abroad?.trapped && (!E.FAMILY53 || E.FAMILY53.free(l)) && (!E.CTX945 || E.CTX945.emigAllowed(l)));
+  }
+  function weddingDestination(l, cc) {
+    return cc !== H.resCode(l) && SSM.includes(cc) && (!E.ERA920 || E.ERA920.ssmLegal(l, cc))
+      && (cc === 'TH' ? !!E.thaiRegister983?.(l) : (!E.legalToMarry || E.legalToMarry(l, cc)));
+  }
+  function weddingDestinations(l) {
+    return weddingTravelAllowed(l) ? SSM.filter(function (cc) { return weddingDestination(l, cc); }) : [];
+  }
   var mk0 = E.DEC.marry.make, ap0 = E.DEC.marry.apply;
   E.DEC.marry.make = function (l, r) {
     var d = mk0.apply(this, arguments), p = l.partner;
-    if (p && p.sex === l.sex && !H.sameSexLegal(l) && SSM.length) {
+    var destinations = p && p.sex === l.sex && !H.sameSexLegal(l) ? weddingDestinations(l) : [];
+    if (destinations.length) {
       d.opts.splice(1, 0, { k: 'nuoc_ngoai', l: 'Cùng sang một nước đã công nhận hôn nhân đồng giới để kết hôn và sinh sống', h: 'Kết hôn hợp pháp · chuyển cả cuộc sống sang nước đó · chi phí thủ tục, vé máy bay' });
-      d.text += ' Nhiều nước đã công nhận hôn nhân cùng giới — gần nhất là Thái Lan, xa hơn có Úc, Canada, Mỹ, Hà Lan, Đức…';
+      d.text += ' Hai bạn có thể cân nhắc nơi đã cho đăng ký trong năm nay, chẳng hạn ' + destinations.slice(0, 3).map(function (cc) { return W.BY[cc].name; }).join(', ') + '.';
     }
     return d;
   };
   var au0 = E.DEC.marry.auto;
   E.DEC.marry.auto = function (l, d, r) { if (d.opts.some(function (o) { return o.k === 'nuoc_ngoai'; }) && r() < 0.12) return 'nuoc_ngoai'; return au0.apply(this, arguments); };
-  E.DEC.marry.apply = function (l, d, k, r, log) { if (k === 'nuoc_ngoai') { l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: 0 })); return; } return ap0.apply(this, arguments); };
+  E.DEC.marry.apply = function (l, d, k, r, log) {
+    if (k === 'nuoc_ngoai') {
+      if (weddingDestinations(l).length) l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: 0 }));
+      return;
+    }
+    return ap0.apply(this, arguments);
+  };
   var PER = 8;
   SC('ket_hon_nn', {
-    title: 'Chọn nước để kết hôn và sinh sống', valid: function (l) { return !!(l.partner && l.partner.sex === l.sex); },
-    prep: function (l, r, a) { var p = (a && a.p) || 0; return { p: p, cs: SSM.slice(p * PER, p * PER + PER) }; },
+    title: 'Chọn nước để kết hôn và sinh sống',
+    valid: function (l, d) { return weddingTravelAllowed(l) && (!d?.who983 || l.partner.uid110 === d.who983) && (!d?.from983 || d.from983 === H.resCode(l)); },
+    prep: function (l, r, a) {
+      var choices = weddingDestinations(l), p = Math.max(0, Math.min(a?.p || 0, Math.ceil(choices.length / PER) - 1));
+      return { p: p, cs: choices.slice(p * PER, p * PER + PER), who983: l.partner && E.UPDATE110.uid(l, l.partner), from983: H.resCode(l) };
+    },
     text: function (l, d) { return 'Các nước đã hợp pháp hóa hôn nhân đồng giới. Sang đó, hai bạn đăng ký kết hôn và bắt đầu cuộc sống mới: tìm việc, thuê nhà, mua sắm bằng tiền nước đó. Tiền tiết kiệm sẽ được quy đổi theo tỉ giá.'; },
     opts: Array.apply(null, Array(PER)).map(function (_, i) {
-      return { k: 'n' + i, l: function (l, d) { var c = d.cs[i]; return c ? W.BY[c].name : ''; }, h: function (l, d) { var c = d.cs[i]; if (!c) return ''; var B = W.BY[c]; return (c === 'TH' ? 'gần Việt Nam, hợp pháp từ 2025 · ' : '') + 'mức sống ' + (B.gdp >= 50 ? 'cao' : B.gdp >= 20 ? 'khá' : 'trung bình') + ' · thành phố: ' + B.cities.slice(0, 2).join(', '); }, req: function (l, d) { return !!d.cs[i]; }, ai: { w: 1 },
+      return { k: 'n' + i, l: function (l, d) { var c = d.cs[i]; return c ? W.BY[c].name : ''; }, h: function (l, d) { var c = d.cs[i]; if (!c) return ''; var B = W.BY[c]; return 'Mức sống ' + (B.gdp >= 50 ? 'cao' : B.gdp >= 20 ? 'khá' : 'trung bình') + ' · thành phố: ' + B.cities.slice(0, 2).join(', '); }, req: function (l, d) { return weddingDestination(l, d.cs[i]); }, ai: { w: 1 },
         run: function (l, r, log, d) { var c = d.cs[i]; moveAbroadMarried(l, r, log, c); } };
     }).concat([
-      { k: 'them', l: 'Xem thêm các nước khác ›', req: function (l, d) { return SSM.length > (d.p + 1) * PER; }, ai: { w: 0 }, run: function (l, r, log, d) { l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: d.p + 1 })); } },
-      { k: 'o_lai', l: 'Thôi, ở lại Việt Nam, sống chung là đủ', ai: { w: 0.5 }, run: function (l, r, log) { ap0.call(E.DEC.marry, l, { data: {} }, 'marry', r, log); } }
+      { k: 'them', l: 'Xem thêm các nước khác ›', req: function (l, d) { return weddingDestinations(l).length > (d.p + 1) * PER; }, ai: { w: 0 }, run: function (l, r, log, d) { l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: d.p + 1 })); } },
+      { k: 'o_lai', l: 'Ở lại nơi đang sống', ai: { w: 0.5 }, run: function (l, r, log) {
+        if (!H.sameSexLegal(l) && l.partner.status === 'dating' && E.legalToMarry(l)) ap0.call(E.DEC.marry, l, { data: {} }, 'cohabit', r, log);
+      } }
     ])
   });
+  var weddingTravel = E.DEC.ket_hon_nn, applyWeddingTravel = weddingTravel.apply;
+  weddingTravel.apply = function (l, d, key, r, log) {
+    if (!this.valid(l, d.data)) return;
+    if (/^n[0-7]$/.test(key) && !weddingDestination(l, d.data.cs?.[+key.slice(1)])) {
+      log('Nơi đã chọn chưa phù hợp với điều kiện kết hôn trong năm nay.', 'neutral');
+      if (weddingDestinations(l).length) l.pending.unshift(this.make(l, r, {p:0}));
+      return;
+    }
+    return applyWeddingTravel.apply(this, arguments);
+  };
   function moveAbroadMarried(l, r, log, c) {
+    if (!weddingTravelAllowed(l) || !weddingDestination(l, c)) return false;
     var B = W.BY[c], pool = String(B.pool || 'en').split(',')[0].split(':')[0];
     var cost = c === 'TH' ? 25 : 70; if (!vnd(l)) cost = l.abroad && l.abroad.perm ? cost / toVNDf(l) : V(l, cost); l.money -= cost; var costTxt = mo(l, cost);
     l.flags.vnHome = { place: l.place, city: l.city, urban: l.urban, movedTo: l.movedTo, cityWealth: l.cityWealth };
@@ -155,6 +191,7 @@
     l.partner.status = 'married'; l.partner.since = l.age; l.flags.ssmAbroad = c;
     log('Đăng ký kết hôn với ' + l.partner.name + ' ở ' + B.name + ' — tờ giấy hôn thú mà ở quê nhà chưa thể có. Thủ tục, vé máy bay, ổn định chỗ ở hết khoảng ' + costTxt + '.', 'big'); fx(l, { hap: 12 });
     H.mem(l, 'Ngày ký giấy kết hôn với ' + l.partner.name + ' ở ' + B.name + '.', 8);
+    return true;
   }
   E.moveAbroadMarried = moveAbroadMarried;
 
@@ -178,7 +215,7 @@
     var inheritedItems = [].concat(l.flags && l.flags.heirOf && l.flags.heirOf.items || [], l.flags && l.flags.heirItemsTrust && l.flags.heirItemsTrust.items || []);
     var convertedItems = new Set();
     inheritedItems.forEach(function (item) { if (!item || convertedItems.has(item)) return; convertedItems.add(item); fields(item, ['v']); if(E.BUSINESS137)E.BUSINESS137.scaleItem(item,f); fields(item.data, ['v', 'basis', 'cap', 'unit', 'R']); });
-    (l.loans || []).forEach(function (x) { fields(x, ['bal']); });
+    (l.loans || []).forEach(function (x) { fields(x, ['bal', 'pay']); });
     [l.assets, l.basis].forEach(function (A) { if (A) fields(A, Object.keys(A)); });
     [l.port, l.coins].forEach(function (P) { if (P) Object.keys(P).forEach(function (k) { fields(P[k], ['v', 'basis']); }); });
     fields(l.si, ['sum', 'm']);
@@ -193,14 +230,16 @@
   function flight(l) { return 15 / toVNDf(l); } // vé máy bay khứ hồi ~15 triệu đồng, tính ra tiền nước sở tại
   SC('ve_vn_song', {
     title: 'Về Việt Nam sống một thời gian', valid: function (l) { return vnBorn(l) && !!(l.abroad && l.abroad.perm); },
-    text: function (l) { return 'Bạn đang sống ở ' + l.abroad.name + '. Về Việt Nam ở một thời gian thì phải bán / thanh lý nhà cửa, xe bên này, đổi tiền sang tiền Việt, mua vé máy bay (khoảng ' + mo(l, flight(l)) + ').' + (l.job ? ' Công việc hiện tại sẽ phải nghỉ, trừ khi làm việc từ xa.' : ''); },
+    text: function (l) { return 'Bạn đang sống ở ' + l.abroad.name + '. Về Việt Nam ở một thời gian thì đổi tiền sang tiền Việt; nhà không còn nợ vay được giữ lại làm tài sản, nhà đang vay sẽ bán để tất toán, mua vé máy bay (khoảng ' + mo(l, flight(l)) + ').' + (l.job ? ' Công việc hiện tại sẽ phải nghỉ, trừ khi làm việc từ xa.' : ''); },
     opts: [
       { k: 've', l: 'Về Việt Nam', ai: { w: 0.6 }, run: function (l, r, log) {
         var name = l.abroad.name, code = l.abroad.code;
         H.cash(l, -flight(l), 'Vé máy bay về Việt Nam');
-        if (l.ownHouse) { log('Bán căn nhà ở ' + name + ' được ' + mo(l, l.houseVal) + '.', 'neutral'); sellHouse(l, 'Bán nhà ở ' + name); }
+        var kept = l.ownHouse && H.keepHome874 ? H.keepHome874(l) : false;
+        if (kept) log(kept === 'lien' ? 'Căn nhà ở ' + name + ' vẫn còn nợ thế chấp nhưng giá trị lớn hơn nợ nên được giữ lại; khoản vay tiếp tục trả dần, trễ hạn kéo dài thì ngân hàng sẽ phát mại.' : 'Căn nhà ở ' + name + ' không còn nợ vay nên được giữ lại làm tài sản; có thể bán hoặc quay lại ở sau.', 'neutral');
+        else if (l.ownHouse) { log('Bán căn nhà ở ' + name + ' được ' + mo(l, l.houseVal) + ' để tất toán khoản vay mua nhà.', 'neutral'); sellHouse(l, 'Bán nhà ở ' + name); }
         var remote = l.job && /^fl_/.test(E.resolveJob(l.job.id));
-        var f = toVNDf(l); l.flags.abroadSaved = { code: code, name: name, perm: true, pool: l.abroad.pool, base: l.abroad.base, place: l.place }; l.abroad = null; l.cur = 'vnd'; convertAll(l, f);
+        var f = toVNDf(l); l.flags.abroadSaved = { code: code, name: name, perm: true, pool: l.abroad.pool, base: l.abroad.base, place: l.place }; l.abroad = null; l.cur = 'vnd'; E.abroadConvert(l, f); if (H.reoccupy874) H.reoccupy874(l, 'VN', log);
         var h = l.flags.vnHome || {}; l.place = h.place || (l.prov && l.prov.old) || l.place; l.city = h.city || l.place; l.urban = h.urban != null ? h.urban : l.urban; l.movedTo = h.movedTo; if (h.cityWealth) l.cityWealth = h.cityWealth; H.setBase(l);
         if (!remote) { l.job = null; l.flags.needJob = true; }
         log('Về Việt Nam sống một thời gian sau những năm ở ' + name + '. Tiền tiết kiệm đổi sang tiền Việt được ' + mo(l, Math.max(0, l.money)) + '.' + (remote ? ' Vẫn làm việc từ xa như cũ.' : ''), 'big');
@@ -212,14 +251,14 @@
   A('ve_vn_song', 'Gia đình & bạn bè', 'Về Việt Nam sống một thời gian', { min: 20, sc: 've_vn_song', avail: function (l) { return !vnBorn(l) || !(l.abroad && l.abroad.perm) ? 'Không áp dụng' : (l.ventures || []).length ? 'Đang có cơ sở kinh doanh ở nước ngoài' : true; } });
   SC('quay_lai_nn', {
     title: function (l) { return 'Quay lại ' + l.flags.abroadSaved.name; }, valid: function (l) { return !!l.flags.abroadSaved && !l.abroad; },
-    text: function (l) { var S = l.flags.abroadSaved; return 'Bạn tính quay lại ' + S.name + '. Phải đổi tiền Việt sang tiền nước đó, mua vé máy bay (khoảng ' + mo(l, 25) + '), tìm lại chỗ ở, việc làm.' + (l.ownHouse ? ' Căn nhà ở Việt Nam sẽ bán đi.' : ''); },
+    text: function (l) { var S = l.flags.abroadSaved; return 'Bạn tính quay lại ' + S.name + '. Phải đổi tiền Việt sang tiền nước đó, mua vé máy bay (khoảng ' + mo(l, 25) + '), tìm lại chỗ ở, việc làm.' + (l.ownHouse ? ' Căn nhà ở Việt Nam được giữ nếu không còn nợ vay, còn vay thì bán để tất toán.' : ''); },
     opts: [
       { k: 'di', l: function (l) { return 'Quay lại ' + l.flags.abroadSaved.name; }, req: function (l) { return l.money >= 25; }, ai: { w: 0.6 }, run: function (l, r, log) {
         var S = l.flags.abroadSaved; H.cash(l, -25, 'Vé máy bay sang ' + S.name);
-        if (l.ownHouse) sellHouse(l, 'Bán nhà ở Việt Nam');
+        if (l.ownHouse && !(H.keepHome874 && H.keepHome874(l))) sellHouse(l, 'Bán nhà ở Việt Nam');
         var remote = l.job && /^fl_/.test(E.resolveJob(l.job.id));
         l.flags.vnHome = { place: l.place, city: l.city, urban: l.urban, movedTo: l.movedTo, cityWealth: l.cityWealth };
-        l.abroad = { code: S.code, name: S.name, perm: true, pool: S.pool, base: S.base }; l.cur = 'usd'; convertAll(l, 1 / toVNDf(l)); l.place = S.place; l.city = S.place; l.urban = true; l.flags.abroadSaved = null; H.setBase(l);
+        l.abroad = { code: S.code, name: S.name, perm: true, pool: S.pool, base: S.base }; l.cur = 'usd'; E.abroadConvert(l, 1 / toVNDf(l)); if (H.reoccupy874) H.reoccupy874(l, S.code, log); l.place = S.place; l.city = S.place; l.urban = true; l.flags.abroadSaved = null; H.setBase(l);
         if (!remote) { l.job = null; l.flags.needJob = true; }
         log('Quay lại ' + S.name + ', đổi tiền Việt được ' + mo(l, Math.max(0, l.money)) + '. Bắt đầu lại ở ' + S.place + '.', 'big');
       } },

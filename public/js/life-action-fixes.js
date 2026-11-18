@@ -19,7 +19,7 @@ function migrate(l){
 // player is never left with a dialog that can neither be chosen nor closed.
 // Mandatory story cards carry no token and are never touched here.
 function capped(l){return (l.acts||0)>=limit(l);}
-function blocked(l,d){var a=d&&d.data;return !!(a&&a.deferredTurn894&&a.actionYear850===l.age&&capped(l)&&!(d.opts||[]).some(function(o){return /^(cancel|back|close)$/.test(o.k);}));}
+function blocked(l,d){var a=d&&d.data;return !!(a&&a.deferredTurn894&&a.actionYear850===l.age&&capped(l)&&!(d.opts||[]).some(function(o){return /^(cancel|back|close)$/.test(X.menuKey(d,o.k));}));}
 function dropBlocked(l){var out=[];while(l.pending&&l.pending.length&&blocked(l,l.pending[0]))out.push(l.pending.shift());return out;}
 var m=E.migrateExt;E.migrateExt=function(l){if(m)m(l);migrate(l);dropBlocked(l);};
 ['family100_children','family100_parents','family100_romance','dau_tu_lon','quan_ly_dau_tu'].forEach(function(id){var a=E.ACT.find(function(a){return a.id===id;}),d=a&&E.DEC[a.sc||id];if(d)d.reusableAction906=true;});
@@ -32,7 +32,7 @@ E.ACTIONS894={capped:capped,blocked:blocked,dropBlocked:dropBlocked};
 // have no token and never consume the player's annual action allowance.
 var resolve=E.resolve;
 E.resolve=function(l,key){
- var d=l.pending[0],a=d&&d.data,token=a&&a.deferredTurn894&&a.actionYear850===l.age?a:null;
+ var d=l.pending[0],nav=X.menuKey(d,key),a=d&&d.data,token=a&&a.deferredTurn894&&a.actionYear850===l.age?a:null;
  if(!token)return resolve.apply(this,arguments);
  var rootAction=E.ACT.find(function(x){return x.id===token.actionId850;}),rootMenu=rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).menu110||rootAction&&(E.DEC[rootAction.sc||rootAction.id]||{}).reusableAction906;
  if(!rootMenu&&l.flags.actAt&&l.flags.actAt[token.actionId850]===l.age){l.pending.shift();return [];}
@@ -40,11 +40,11 @@ E.resolve=function(l,key){
  if(!d.opts.some(function(x){return x.k===key;})||def&&def.valid&&!def.valid(l,a)||o&&o.req&&!o.req(l,a))return resolve.apply(this,arguments);
  var snapshot=l.acts>=limit(l)?copy(l):null,old=l.pending.slice(1),before=facts(l),used=l.acts||0,out=resolve.apply(this,arguments);
  l.acts=used; // old cancel handlers refunded an opening cost that no longer exists
- var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=/^(cancel|back|close)$/.test(key);
+ var children=l.pending.filter(function(x){return old.indexOf(x)<0;}),cancel=key==='cancel'||/^(back|close)$/.test(nav);
  var changed=facts(l)!==before,spend=!cancel&&(children.length===0||changed||a.actionCommitted897===true);
  if(spend&&snapshot){restore(l,snapshot);var e={a:l.age,y:l.birthYear+l.age,t:'Đã hết lượt năm nay. Bạn vẫn có thể xem các phương án hoặc để dịp khác; lựa chọn chưa được thực hiện.',k:'neutral'};l.log.push(e);dropBlocked(l);return [e];}
  if(spend){l.acts=(l.acts||0)+1;var root=E.ACT.find(function(x){return x.id===token.actionId850;});if(root&&!(E.DEC[root.sc||root.id]||{}).menu110&&!(E.DEC[root.sc||root.id]||{}).reusableAction906)(l.flags.actAt||(l.flags.actAt={}))[token.actionId850]=l.age;}
- children.forEach(function(x){if(cancel||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});
+ children.forEach(function(x){if((cancel&&nav!=='back')||spend)return;x.data=x.data||{};x.data.actionId850=token.actionId850;x.data.actionYear850=l.age;x.data.deferredTurn894=true;x.manual=d.manual;});
  return out;
 };
 // Clear stale expiry flags as soon as a fresh certificate exists. A queued old
@@ -62,10 +62,11 @@ Object.keys(H.LANG).filter(function(k){return k!=='en';}).forEach(function(k){E.
 // One friend entry, with a stable identity for every person including namesakes.
 function friends(l){return [l.bff].concat(l.friends||[]).filter(function(f,i,all){return f&&f.alive!==false&&!f.faded&&all.findIndex(function(x){return x===f||x&&x.uid110&&x.uid110===f.uid110;})===i;});}
 function here(l,f){return (f.loc||'HOME')===E.locOf(l);}
+function howContact(l){return E.LOCAL965?E.LOCAL965.contact(l):'gọi video';}
 function friend(l,id){return friends(l).find(function(f){return X.uid(l,f)===id;});}
 for(var i=E.ACT.length-1;i>=0;i--)if(E.ACT[i].id==='gap_ban')E.ACT.splice(i,1);
-X.menu('friends894','Hẹn gặp bạn thân',function(l){return X.reason(l,8)!==true?X.reason(l,8):friends(l).length?true:'Chưa có bạn thân';},'Chọn người bạn muốn gặp hoặc liên lạc. Bạn ở xa có thể gọi video; mở danh sách không tốn lượt.',function(l){return friends(l).map(function(f){return {k:X.uid(l,f),l:f.name,h:here(l,f)?'Ở cùng nơi · có thể hẹn gặp':'Ở xa · gọi video',run:function(l,r){X.next(l,'friend894',r,{uid:X.uid(l,f)});}};});},8);
-X.menu('friend894','Dành thời gian cho bạn thân',function(l){return X.reason(l,8);},function(l,d){var f=friend(l,d.arg.uid);return f?'Bạn muốn làm gì cùng '+f.name+'?':'Người bạn này không còn liên lạc được.';},function(l,arg){var f=friend(l,arg.uid);if(!f)return[];return [{k:'talk',l:here(l,f)?'Hẹn gặp và tâm sự':'Gọi video để tâm sự',h:'Thực hiện mới tính 1 lượt',run:function(l,r,log){var f=friend(l,arg.uid);if(!f)return;f.close=Math.min(100,(f.close||50)+8);H.fx(l,{hap:2,soc:2});log((here(l,f)?'Bạn hẹn gặp ':'Bạn gọi video cho ')+f.name+', dành thời gian lắng nghe và chia sẻ.','good');}}];},8);
+X.menu('friends894','Hẹn gặp bạn thân',function(l){return X.reason(l,8)!==true?X.reason(l,8):friends(l).length?true:'Chưa có bạn thân';},'Chọn người bạn muốn gặp hoặc liên lạc. Với bạn ở xa, cách liên lạc tùy nơi và thời điểm.',function(l){return friends(l).map(function(f){return {k:X.uid(l,f),l:f.name,h:here(l,f)?'Ở cùng nơi · có thể hẹn gặp':'Ở xa · '+howContact(l),run:function(l,r){X.next(l,'friend894',r,{uid:X.uid(l,f)});}};});},8);
+X.menu('friend894','Dành thời gian cho bạn thân',function(l){return X.reason(l,8);},function(l,d){var f=friend(l,d.arg.uid);return f?'Bạn muốn làm gì cùng '+f.name+'?':'Người bạn này không còn liên lạc được.';},function(l,arg){var f=friend(l,arg.uid);if(!f)return[];return [{k:'talk',l:here(l,f)?'Hẹn gặp và tâm sự':G.U.cap(howContact(l))+' để tâm sự',h:'Thực hiện mới tính 1 lượt',run:function(l,r,log){var f=friend(l,arg.uid);if(!f)return;f.close=Math.min(100,(f.close||50)+8);H.fx(l,{hap:2,soc:2});log((here(l,f)?'Bạn hẹn gặp ':'Bạn '+howContact(l)+' cho ')+f.name+', dành thời gian lắng nghe và chia sẻ.','good');}}];},8);
 var meet=E.ACT.find(function(a){return a.id==='hen_ban_than';});if(meet){meet.sc='friends894';meet.g='Bạn bè';meet.avail=function(l){return friends(l).length?true:'Chưa có bạn thân';};}
 // Existing emergency cards keep their saved keys, but a distant friend receives
 // remote support rather than an impossible overnight visit.
@@ -74,7 +75,7 @@ if(crisis){var prep=crisis.def.prep;crisis.def.prep=function(l,r){var d=prep.app
  function target(l,d){return d&&(d.uid894?friend(l,d.uid894):friends(l).find(function(f){return f.name===d.n;}));}
  crisis.def.valid=function(l,d){return d&&d.n?!!target(l,d):friends(l).some(function(f){return l.age+(f.d||0)>=18;});};
  var support=crisis.def.opts.find(function(o){return o.k==='o_ben';});
- support.l=function(l,d){var f=target(l,d);return f&&!here(l,f)?'Gọi video, ở bên động viên từ xa':'Đến bên bạn để an ủi';};
+ support.l=function(l,d){var f=target(l,d);return f&&!here(l,f)?G.U.cap(howContact(l))+', động viên bạn từ xa':'Đến bên bạn để an ủi';};
  support.run=function(l,r,log,d){var f=target(l,d);if(!f)return;f.close=Math.min(100,(f.close||50)+12);H.fx(l,{karma:3,soc:2});log(here(l,f)?'Bạn đến bên '+f.name+' và ở lại lắng nghe, an ủi.':'Bạn gọi video cho '+f.name+', lắng nghe và nhờ người ở gần hỗ trợ; việc đi lại cần sắp xếp riêng.','good');if(E.CHAIN144&&E.CHAIN144.friendHelp)E.CHAIN144.friendHelp(l,'o_ben',d,{money:l.money});};
 }
 function canFly(l){return !!l.abroad&&X.reason(l,18)===true;}

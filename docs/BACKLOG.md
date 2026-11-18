@@ -2,7 +2,7 @@
 
 ## Điều kiện thực tế để lập di chúc (`di_chuc70`)
 
-Trạng thái: chủ dự án yêu cầu ngày 26/10/2026; **chưa triển khai**, ngoài phạm vi nghiệm thu GĐ2.5. GĐ2.5 tiếp tục kiểm theo hành vi và ngoại lệ hiện tại.
+Trạng thái: chủ dự án yêu cầu ngày 26/10/2026; **đã triển khai trong workspace**, kiểm thử chuyên đề đạt, chờ gói chung. GĐ2.5 tiếp tục kiểm theo hành vi và ngoại lệ hiện tại.
 
 Mục tiêu: nhân vật bị giam giữ, bị kiểm soát hoặc không thể liên lạc và tiếp cận thủ tục cần thiết không được tự do lập di chúc như bình thường. Không cấm tuyệt đối mọi trường hợp giam giữ: nếu có điều kiện hợp pháp và thực tế thì vẫn có thể cho phép.
 
@@ -13,6 +13,76 @@ Nghiệm thu riêng cần có ca: tự do bình thường; bị cô lập/kiểm
 Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp vào GĐ3.
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
+
+- 9.8.6: còn hồi quy toàn diện, đối chiếu save thật qua nhiều đợt sơ tán và xác minh binding REVIEWS_DB Production. Danh sách đảo chỉ gồm địa điểm có thể chơi trong game. Mức thiếu ăn của hộ Haiti là độ khó trong mô phỏng và dữ liệu địa phương dùng bước một năm.
+
+- 9.8.5: còn hồi quy toàn diện và xác minh binding REVIEWS_DB Production. Bối cảnh dùng mốc theo năm, chưa có ngày sinh hoặc giấy phép riêng theo từng cửa khẩu lịch sử. Kiểm tra thêm bản lưu thật từng đi qua nhiều vùng và các đợt chuyển giao cùng năm.
+
+- 9.8.4: còn hồi quy toàn diện, bản lưu thật qua nhiều lần đổi chỗ trú, đối chiếu thêm mốc mở lại tuyến sơ tán sau 2025 và xác minh binding REVIEWS_DB Production. Ngày thay đổi chính sách học ở Afghanistan hiển thị trong nội dung, hiệu lực trò chơi dùng bước một năm.
+
+- 9.8.3: còn hồi quy toàn diện, bản lưu thật ở ranh giới luật hôn nhân và xác minh binding REVIEWS_DB Production. Luật kết hôn dùng bước một năm. Ngoại lệ tòa án và xung đột luật theo quốc tịch chưa được mô phỏng.
+
+- 9.8.2: còn hồi quy toàn diện trên mã cuối, bản lưu thật qua nhiều lần gián đoạn học và sơ tán, cùng xác minh binding REVIEWS_DB Production. Các mốc cai quản và tình hình học đường cần tiếp tục đối chiếu tại những vùng chưa có bảng riêng.
+
+- 9.8.1: còn hồi quy toàn diện, bản lưu thật qua nhiều lần sơ tán và binding REVIEWS_DB Production. Năm thành lập và tên theo niên đại cần tiếp tục đối chiếu cho những địa phương chưa có mốc.
+
+- 9.8.0: còn hồi quy toàn diện, xác minh dữ liệu bản lưu thật chuyển nước và binding REVIEWS_DB Production. Tỷ trọng số ca sinh 1900–1949 dùng năm 1950. Hệ số hiệu chuẩn tuổi thọ cần nghiệm thu riêng trên mã cuối.
+
+- 9.7.9: còn hồi quy toàn diện, bản lưu thật và binding REVIEWS_DB Production. Các ca ctx945 (chạy đối chứng thiếu module phục hồi), ctx951 (hệ quả cải cách ruộng đất) và era920 (hiệu chuẩn tuổi thọ) đã thất bại trên cả 9.7.8 và 9.7.9. Tiếp tục đối chiếu những địa phương chưa có mốc chính thể, ranh giới và tên theo năm.
+
+- 9.7.8: còn hồi quy toàn diện, kiểm thử nhắc tìm việc và ngừng phí sơ tán trên bản lưu thật, cùng xác minh binding REVIEWS_DB Production.
+
+- 9.7.7: còn regression toàn diện, kiểm thử chuỗi nợ viện phí và thỏa thuận việc làm khi đổi bạn đời trên bản lưu thật, cùng xác minh binding REVIEWS_DB Production.
+
+- 9.7.6: còn regression toàn diện, kiểm thử Dự định của bạn đời trên bản lưu thật và xác minh binding REVIEWS_DB Production.
+
+- 9.7.5: còn nghiệm thu toàn diện các mốc sau sơ tán, hòa giải và ứng tuyển qua người thân trên bản lưu thật, cùng binding REVIEWS_DB Production. Ca hist920 về việc hồ sơ sơ tán tự khép lại sau nhiều năm thất bại cả trên 9.7.4 và 9.7.5; cần rà riêng quy tắc kết thúc khi người chơi chưa chọn ổn định hay trở về.
+
+- 9.7.4: còn nghiệm thu toàn diện và xác minh binding REVIEWS_DB Production. Bộ chains-gd4 có ca hẹn trả nợ khi tải lại không đạt trên bản 9.7.3 trước đợt sửa này; ghi nhận riêng, không tính PASS.
+
+- 9.7.3: cần nghiệm thu toàn diện kế hoạch chăm cháu và việc học/làm của con, danh tiếng bóng đá và nguồn người theo dõi trên mã cuối, bản lưu thật và binding REVIEWS_DB Production.
+
+- 9.7.2: cần nghiệm thu toàn diện nhịp thị trường cầu thủ tự do và khoảng cách với con trưởng thành trên mã cuối, bản lưu thật và xác minh binding REVIEWS_DB Production.
+
+- 9.6.9: nghiệm thu toàn diện các luồng địa điểm/năm, hồ sơ sau sơ tán và học nghề dùng sổ khóa học 170. Cần tiếp tục đối chiếu các đô thị chưa có mốc, ranh giới hành chính ngoài ba nhóm đã bổ sung, các lộ trình giáo dục địa phương, bản lưu thật và REVIEWS_DB Production. Các hệ số học phí/đánh giá/hồi phục là tham số game. Xem docs/ERA-969.md.
+
+- 9.6.8: kiểm thử trọng điểm cho thiết lập năm/vùng sinh, nghề bố mẹ, tên thành phố nhiều thời kỳ, nơi cư trú và sự kiện quá hạn. Đã rà tính nhất quán 194 nước có lượt sinh, 1.083 địa điểm tại 10 mốc năm; đây không phải xác minh lịch sử toàn bộ. Còn hồi quy toàn diện, bản lưu thật, đối chiếu ranh giới hành chính/địa danh và các đô thị hình thành muộn chưa có bảng mốc riêng; REVIEWS_DB Production chưa xác minh. Xem docs/BIRTH-ERA-968.md.
+
+- 9.6.7: còn hồi quy toàn bộ trên mã cuối, bản lưu thật và xác nhận binding REVIEWS_DB Production. Phạm vi tiếp tục ba chuỗi cũ gồm khó khăn sau nhận việc và hồi âm thầy cô, bổ sung hồ sơ công tác, huấn luyện sau mùa cho mượn. Kiểm tra rời nghề/đổi việc, người hướng dẫn đã mất, nạp lại, chi trả và đánh giá một lần.
+
+- 9.6.6: còn hồi quy toàn bộ, bản lưu người chơi và xác nhận binding REVIEWS_DB Production. Đợt mở rộng các chuỗi thầy cô giới thiệu việc, ứng tuyển FBI/CIA/MI5 và cầu thủ cho mượn lần tiếp theo; kiểm tra điều kiện, thời hạn và cách các lựa chọn cạnh tranh khép lại.
+
+- 9.6.5: còn hồi quy toàn bộ và bản lưu thực tế trên mã cuối, cùng xác nhận binding REVIEWS_DB Production. Phạm vi gồm hệ quả nhiều năm của việc tham gia hoạt động tuổi nhỏ, tiến độ hồ sơ nghề, sinh hoạt và cách liên lạc theo nơi ở/năm, nút tự động trong menu và các chuỗi cần kiểm tra khi hết lượt, đổi nơi sống hoặc tải bản lưu cũ.
+
+- 9.6.4: còn hồi quy toàn bộ trên mã cuối và xác nhận binding REVIEWS_DB trên Production. Đợt sửa kiểm tra bảng ngoại khóa sau khi tham dự, điều hướng hết lượt, các bước đăng ký, chế độ tự động và nạp lại bản lưu còn bảng sự kiện cũ.
+
+- 9.6.3: còn hồi quy toàn bộ trên mã cuối, thiết bị/bản lưu thật và xác nhận binding REVIEWS_DB Production. Phạm vi thay đổi gồm bộ lọc hành động theo nơi ở và năm, hoạt động âm nhạc, trọng tâm, tình huống gia đình có người phục vụ và văn bản lựa chọn.
+
+- 9.6.2: còn hồi quy toàn bộ trên mã cuối, thử trên thiết bị/bản lưu thật và kiểm chứng binding REVIEWS_DB. Phạm vi mới gồm tổ chức và nghề phi pháp địa phương, tuyển dụng FBI/CIA/MI5 và cách xưng hô trong tình huống của bố mẹ. Điều kiện tuyển và tiến độ trong game được giản lược theo lối chơi.
+
+- 9.6.1: còn regression toàn bộ trên mã cuối, thiết bị/bản lưu thực tế và kiểm chứng binding Production REVIEWS_DB. Phạm vi gồm giáo dục sau đại học của con, nghề nghiệp và bàn giao gia nghiệp cho anh chị em, cầu thủ trẻ sau khi hết mùa cho mượn, và mốc giáo dục Trung Quốc/Pháp.
+
+- 8.10.63–65: còn regression toàn bộ trên mã cuối, thiết bị/save thật và xác minh binding Pages REVIEWS_DB. Đã chạy trọng điểm giáo dục, bối cảnh quốc tế, chuỗi hoàng gia, nhiếp chính/hộ tịch, smoke, saves/save-safety/NPC và browser hẹp/rộng; không coi phần chưa chạy là PASS. Công việc chức năng còn mở ở docs/REMAINING-863-PROGRESS.md vẫn đang được triển khai theo yêu cầu hiện tại, không chuyển thành riêng việc nghiệm thu GĐ6.
+
+- 8.10.57: nghiệm thu toàn diện homeschool/England trên mã cuối; bổ sung luật còn unknown (38 bang/DC Mỹ, 11 tỉnh/lãnh thổ Canada, 6 vùng Australia, Northern Ireland), niên đại/ngoại lệ người dạy, văn bằng quốc tế và tuyển sinh từng cơ sở. Kiểm sự kiện trường học ở mọi module, NPC con và tổng giờ giám hộ qua nhiều con; trợ cấp theo tháng/ngày, hồ sơ credential thực tế và tín chỉ trường nhận. Nhóm regression 9,36,46,59 còn 98 lỗi/chưa phân loại hết (6.887.685 kiểm tra đạt); không coi nhóm này PASS. Rà lỗi cũ school-home-police838 (kỳ vọng chuyên nhưng công lập), tái hiện cả khi bỏ module mới. Chi tiết docs/HOMESCHOOL-ENGLAND-PROGRESS.md. Không tuyên bố khu vực chưa xác minh là đã nghiệm thu.
+
+- 8.10.54: hồi quy đầy đủ trên mã cuối cho mô hình thi thống nhất; mô phỏng thế giới/tài chính dài hạn sau cân bằng ngưỡng, kiểm tra mọi trạng thái hỗ trợ và mọi nguyện vọng quốc tế. Đã kiểm trọng điểm theo docs/EXAM-REVIEW-PROGRESS.md; chưa nghiệm thu toàn diện, chỉ Preview. Kiểm chứng binding REVIEWS_DB thực tế và cấu hình deployment tự động trước Production.
+
+- 8.10.53: regression toàn bộ trên mã cuối cho hệ thống Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Thi thử Đại học (ước lượng khoảng điểm thi, tỷ lệ đỗ từng trường/nguyện vọng, chẩn đoán tâm lý phòng thi `examApt` và cộng điểm thực chiến vào kỳ thi chính thức) (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
+- 8.10.52: regression toàn bộ trên mã cuối cho thứ tự kế vị theo nhánh (cháu đích tôn/nữ đẩy chú/dì xuống ở cả chế độ bình đẳng giới lẫn ưu tiên nam giới) và hệ thống tước hiệu xứ sở của Thái tử/Thái nữ cùng bạn đời tại các hoàng gia châu Âu (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
+- 8.10.51: regression toàn bộ trên mã cuối cho chương trình học Vương quốc Anh (GB) toàn vùng (England, Scotland, Wales, Northern Ireland) và hệ thống 10 Hoàng gia Châu Âu (tôn giáo, quyền kế vị, phủ quyết dự luật Công giáo của Thân vương Monaco, Đặc quyền màu trắng Vatican, Luật Gia tộc Liechtenstein, quy định tôn giáo con cái và hợp pháp hóa con ngoài giá thú sau sinh tại Monaco) (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
+- 8.10.50: regression toàn bộ trên mã cuối cho Lễ Baek-il 100 ngày Hàn Quốc, kế vị nhiều thế hệ Tây Ban Nha, A-Level/IB Anh Quốc, hệ thống đam mê – năng khiếu – sở đoản và 16 nhóm MBTI (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
+- 8.10.49: regression toàn bộ trên mã cuối cho hệ thống tôn giáo – đẳng cấp Varna – họ tên – hạn ngạch EWS 10% tại Ấn Độ và đời sống tín ngưỡng theo gia cảnh tại Việt Nam (chuyển sang GĐ6 theo chiến lược kiểm thử GĐ4–GĐ5).
+
+- 8.10.30: regression tổng thể, kiểm chứng chính sách trợ cấp từng địa phương, đối chiếu thực hành mỗi giáo xứ và binding Pages.
+
+- 8.10.29: regression toàn bộ, lịch trình từng vùng UK và các trường chuyên biệt, đối soát chuẩn xét hỗ trợ/vay thực tế, học sinh trao đổi trước đại học và nhiều điểm đến hơn.
+
+- 8.10.28: còn regression toàn bộ, đối chiếu văn hóa từng trường/cộng đồng và kiểm chứng binding Pages.
 
 - 8.10.27-showbiz: cần regression toàn bộ trên mã cuối, kiểm thử chiến dịch dài nhiều nhãn hàng/đổi nghề/qua đời và chuyển đời, các tình huống cực lớn hơn 50 hồ sơ; kiểm chứng binding REVIEWS_DB thực tế. Đã kiểm thử trọng điểm showbiz/câu hỏi/bồi thường, smoke và bản lưu; chỉ Preview, chưa nghiệm thu toàn diện.
 
@@ -116,7 +186,7 @@ Theo chiến lược chủ dự án ngày 26/10/2026: GĐ3 kết thúc ở trạ
 
 - Tỷ lệ AI có con thấp (đã ghi từ GĐ2.5) — hạng mục cân bằng gameplay, không thuộc GĐ6.
 - `life.id` phụ thuộc giờ thật: cùng seed với giờ thật cho đời khác nhau (cảnh báo smoke) — không đổi cấu trúc ID trong GĐ6.
-- Điều kiện lập di chúc theo hoàn cảnh (`di_chuc70`) — mục đầu tiên của backlog, chưa triển khai.
+- Điều kiện lập di chúc theo hoàn cảnh (`di_chuc70`) — đã triển khai và kiểm thử, chờ gói chung.
 - Danh sách nhóm chủ đề chống lặp (GĐ5) mới bao phủ các cụm đã thấy trong số liệu; mở rộng khi có thêm dữ liệu người chơi.
 - Bấm giờ chế độ Tự động trên thiết bị người chơi thật; profiling giao diện điện thoại.
 - Bản lưu thật của người chơi chưa có mẫu để kiểm (chỉ có bản lưu do máy tạo).
@@ -236,3 +306,169 @@ Cập nhật 8.10.15: §11.1–11.3 (di truyền theo cha mẹ, sàng lọc đ�
 Cập nhật 8.10.16: §11.4–11.5 (ung thư theo giai đoạn, bệnh mạn, phát triển trẻ) — kiểm thử trọng điểm đạt. Còn §13, phần nhỏ §12, phần lớn §14; chưa chạy regression toàn bộ. Thêm vào danh sách hỏng sẵn: blood910-browser (assertion nhật ký mới nhất).
 
 GĐ6 — Bản 8.10.26-salon còn chờ regression toàn bộ trên mã cuối và đối chiếu bản lưu thực tế của người báo lỗi.
+
+GĐ6 — Bản 8.10.31 còn chờ regression toàn bộ, đối chiếu bản lưu thực tế của người báo lỗi và xác minh cấu hình Pages.
+
+GĐ6 — Bản 8.10.33 về hồ sơ gia đình và dịch vụ ngầm còn chờ regression toàn bộ, kiểm tra thiết bị thật và xác minh binding Pages.
+
+GĐ6 — Bản 8.10.34 còn chờ regression toàn bộ, thiết bị thật và xác minh binding Pages.
+
+
+GĐ6 — 8.10.36: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật, hiệu chỉnh dữ liệu luật/rủi ro/chi phí và binding REVIEWS_DB thực tế. Phạm vi và giới hạn: docs/WORLD-836.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+
+GĐ6 — 8.10.37: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật, các ngoại lệ hiến định/giáo hội và binding Pages REVIEWS_DB. Chi tiết phạm vi và phần chưa mô phỏng: docs/ROYAL-837.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+
+GĐ6 — 8.10.42: còn regression toàn bộ mã cuối, thiết bị thật, save thật và xác minh binding REVIEWS_DB Pages. Cần đối chiếu migration tên bình luận trên bản sao dữ liệu thực tế; không thể phục hồi tên tài khoản đã xóa nếu dữ liệu không còn tên. Chi tiết docs/FEEDBACK-842.md. Artifact chỉ Preview.
+
+
+GĐ6 — 8.10.43: còn regression toàn bộ, thiết bị thật, bản lưu hoàng gia thật của người báo lỗi và cấu hình Pages REVIEWS_DB. Kế tục giữ cây gia đình hiện có; không tái tạo lịch sử từng tước nếu dữ liệu cũ đã mất. Chi tiết docs/ROYAL-843.md.
+
+
+GĐ6 — 8.10.44: còn regression toàn bộ mã cuối, thiết bị thật, save thật, các ngoại lệ lao động/giấy phép từng địa phương, luật hỗ trợ sinh sản đầy đủ và xác minh Pages REVIEWS_DB. Mốc tuổi, xác suất và giá là mô hình game, không phải đánh giá phát triển hoặc chẩn đoán cá nhân. Chi tiết docs/FAMILY-844.md.
+
+
+GĐ6 — 8.10.45: còn regression toàn bộ, thiết bị thật, bản lưu thật và binding Pages REVIEWS_DB. Bản lưu đã bốc xong trước sửa giữ kết quả, không tự xóa tiến độ để bốc lại. Chi tiết docs/BIRTHDAY-845.md.
+
+
+GĐ6 — 8.10.46: còn regression toàn bộ, thiết bị thật, save người góp ý thật và binding Pages REVIEWS_DB. Giữ lọc ngân sách theo xác nhận lại của chủ dự án; nghề tương lai là hướng rèn luyện, không bổ nhiệm nghề lúc một tuổi. Chi tiết docs/OBJECTS-846.md.
+
+GĐ6 — 8.10.47: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu hoàng gia nhiều thế hệ thật của người chơi và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn mô phỏng: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+GĐ6 — 8.10.48: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+GĐ6 — 8.10.50: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu người chơi thật và xác minh binding Pages REVIEWS_DB. Chi tiết phạm vi và giới hạn: docs/ROYAL-847.md. Bản Preview, chưa nghiệm thu toàn diện.
+
+GĐ6 — 8.10.55: còn regression toàn bộ, thiết bị thật và bản lưu của người góp ý về tốt nghiệp. tests/player107.js hiện thất bại ở bước xét du học cả trên mã trước thay đổi; cần cập nhật dữ liệu kiểm thử theo điều kiện ngôn ngữ hiện hành. Chưa kiểm chứng binding Pages REVIEWS_DB.
+
+GĐ6 — 8.10.56: còn regression tổng thể và bản lưu thật của người báo lỗi gia cảnh hoàng gia. Kiểm tra trọng điểm dùng cuộc đời tạo qua luồng game và bản lưu giả lập; chưa kiểm chứng Pages REVIEWS_DB.
+
+GĐ6 — 8.10.58: còn regression toàn bộ mã cuối, thiết bị thật, bản lưu hoàng gia nhiều thế hệ thực tế, toàn bộ ngoại lệ lịch sử/sắc lệnh từng cá nhân và xác minh Pages REVIEWS_DB. Theo dõi từng nước tại docs/ROYAL-858-PROGRESS.md; khi làm tiếp bắt đầu từ mục còn thiếu. Không coi các mô hình quyết định hư cấu là quy định pháp lý thật.
+
+GĐ6 — 8.10.59: còn regression toàn bộ, thiết bị và save thật; tiếp tục rà nội dung quốc tế ngoài nhóm tuổi thơ đã sửa, không coi 195 nước là 195 bộ phong tục đã nghiên cứu riêng. Chi tiết docs/CHILDHOOD-859.md. Pages REVIEWS_DB chưa xác minh.
+
+GĐ6 — 8.10.59 bổ sung: tests/life138.js lỗi “sibling can succeed instead of player” cả trên hai module childhood trước sửa (HEADc1d2365) và mã mới; cần rà fixture/điều kiện kế nhiệm doanh nghiệp riêng. Không tính đạt nhóm này.
+
+GĐ6 — 8.10.60: còn regression toàn bộ mã cuối, thiết bị và bản lưu hoàng gia thật, cân bằng dài hạn quỹ riêng/ảnh hưởng/chuỗi sự kiện, rà nguồn lực khi thay đổi tiền tệ và các tình huống chuyển thế hệ thực tế. Mô hình ưu đãi hoàng gia hư cấu, không phải dữ liệu tài chính hoặc ngoại hình thật. Pages REVIEWS_DB chưa kiểm chứng. Chi tiết docs/ROYAL-860.md.
+
+GĐ6 — 8.10.61 Monaco: còn regression toàn bộ mã cuối, thiết bị/save thật nhiều thế hệ, luật trước2002, toàn bộ sắc lệnh tước/phối ngẫu/remainder và hộ tịch từng thời kỳ; mở rộng dữ liệu cha mẹ thứ hai, quốc tịch và giấy tờ từ case thật. Khi làm tiếp bắt đầu mục còn thiếu tại docs/MONACO-861-PROGRESS.md. REVIEWS_DBProduction chưa xác minh; không coi nguồn chưa đủ làPASS.
+
+- GĐ6: Tây Ban Nha8.10.62 — regression toàn diện/thiết bị thật; luật trước1978/1987, họ trước2017, hộ tịch/phán quyết, organic/Cortes/nhiếp chính và dữ liệu tước lịch sử/ngoại lệ cá nhân chưa phủ đầy đủ. Xem docs/SPAIN-862-PROGRESS.md.
+
+### Đợt66 — kiểm thử trọng điểm, không thay nghiệm thu GĐ6
+
+- royal866/reference866/dynasty908/expansion842 và các hệ hoàng gia/giáo dục liên quan đạt; giao diện6view390/1280 đạt ở nguồn. Cần nghiệm thu toàn diện sau khi chốt mã.
+- depth899, origins-clubs904, life138, continuity101 FAIL; đã tái hiện cùng assertion trên toàn bộ nguồn public của HEAD a5800ea qua git cat-file, không phải lỗi mới được chứng minh của66. Chưa xem là PASS, cần đối chiếu fixture và đường đi mới trước nghiệm thu.
+- Dữ liệu thật toàn game và các chức năng đang thiếu vẫn là công việc triển khai của yêu cầu hiện hành, xem REFERENCE-866-PROGRESS.md; không đẩy các phần này sang GĐ6 chỉ vì người dùng loại trừ nghiệm thu toàn diện.
+
+Bổ sung66: study829, school-home-police838 cũng FAIL cùng assertion trên nguồn HEAD a5800ea. exam-model được cập nhật theo yêu cầu giữ tên trường,565checks đạt; không còn dùng điều kiện bắt buộc tên giả để kiểm tính trung thực của điểm mục tiêu.
+
+### GĐ6 — 8.10.67
+
+- Kiểm thử trọng điểm danh mục và luồng chọn ngành đạt. Còn nghiệm thu tổng thể, thiết bị và bản lưu thực tế, xác minh Pages REVIEWS_DB.
+- Dữ liệu triển khai còn thiếu: chương trình và tuyển sinh đã xác minh cho mọi cơ sở, danh mục bóng đá, định cư và phúc lợi theo từng nước, các ngoại lệ pháp lý và tước hiệu lịch sử.
+- football-payroll901 tái hiện cùng lỗi kiểm thử trên 8.10.66 và 8.10.67. Các lỗi nền khác theo mục 8.10.66 ở trên.
+
+### 8.10.68 — Dữ liệu còn cần bổ sung
+
+- Đã bổ sung lộ trình MD phổ biến tại Mỹ, sáu tên câu lạc bộ từ VPF/Premier League/LALIGA, tham chiếu Graduate và Universal Credit tại Anh, và hồ sơ thoái vị Tây Ban Nha năm 2014 từ BOE.
+- Còn danh mục ngành và quy chế từng trường, lịch sử giải đấu và câu lạc bộ ở các hạng còn thiếu, lộ trình cư trú và phúc lợi ngoài các mục đã xác minh, các sắc lệnh và ngoại lệ pháp lý lịch sử.
+- GĐ6 còn nghiệm thu toàn diện, thiết bị/bản lưu thật và xác minh binding Pages REVIEWS_DB.
+- 8.10.68: depth899, origins-clubs904, life138, continuity101, study829, school-home-police838 và football-payroll901 đều đạt khi chạy lại. depth900 xác minh đường thường trú cũ và hoàn phí.
+
+### 8.10.69 — Phạm vi dữ liệu đã đối chiếu
+
+- Bổ sung Harvard J.D., bốn CLB V.League 2 theo VPF mùa 2026/27, tham chiếu CEC/CCB Canada, FDIC Mỹ và điều khoản chuyển tiếp về tước danh dự Tây Ban Nha.
+- Còn cần đối chiếu chương trình/điểm/học phí theo kỳ, các đội/giải và mùa khác, các diện cư trú/phúc lợi còn thiếu, các văn bản hoàng gia chưa phủ, ngân hàng và chi phí y tế từng nước, nghề và sự kiện theo địa phương.
+
+### 8.10.70 — Tiến độ dữ liệu
+
+- Bổ sung UCL A100 kỳ 2027, bốn đội Hạng Nhì Việt Nam 2026, diện 189 Úc và hạn mức FSCS Anh.
+- Các mục rộng ở 8.10.69 vẫn mở; chưa phủ ngành và tuyển sinh từng trường, mùa giải/thị trường còn thiếu, luật và phúc lợi theo thời kỳ, tài chính/y tế/nghề và sự kiện địa phương.
+
+### Tiến độ sau 8.10.70
+
+- Bổ sung 16 CLB hạng hai và hạng ba Đức/Tây Ban Nha theo mùa 2025/26, giữ mã đội và hiện nguồn/mùa trong hồ sơ. football897 và football-payroll901 đạt.
+- Các nhóm dữ liệu mở ở trên chưa hoàn tất. Giữ gói 8.10.70 cho tới khi hoàn tất phạm vi và kiểm thử trọng điểm trên mã cuối.
+
+- Điều kiện lập di chúc đã nối cả trình soạn cơ bản và chi tiết. Khi bị cô lập, chặn cả lưu/hủy từ trình soạn cũ; tại Việt Nam từ 2017, người đang thụ án có thể xin lịch xác nhận cho năm sau. Mốc hẹn là quy ước thời gian của game. Tham chiếu Điều 638, Bộ luật Dân sự 91/2015/QH13: https://vanban.chinhphu.vn/default.aspx?docid=183188&pageid=27160 . update551 và assets912 đạt.
+
+- Bóng đá: đã triển khai trao đổi vị trí lên/xuống hạng cho mùa sau trong mô hình rút gọn. Giữ quân số mỗi hạng, giữ hợp đồng và mã đội, lưu bảng cũ và thay đổi hạng qua tải lại. Chưa có lịch/luật theo mùa cho toàn bộ thị trường. Thế giới đội tuyển và hợp đồng tài trợ được bổ sung ở tiến độ bên dưới.
+- Singapore: đã đối chiếu Điều 121 Hiến pháp về quốc tịch khi sinh tại Singapore và dẫn hướng dẫn ICA đối với trẻ sinh ở nước ngoài. Chưa phủ các quy định quốc tịch còn lại theo thời kỳ.
+- Kiểm thử nhật ký quốc gia tìm đúng mục 8.9.4 đã phát hành bằng truy vấn không dấu. Mục này có thể nằm sau các bản cập nhật mới hơn.
+
+### Tiến độ triển khai tiếp sau 8.10.70 — chưa đóng gói
+
+- Đã thay toàn bộ 192 vị trí CLB trong 16 thị trường bằng tên thật có nguồn tham chiếu; giữ mã đội. Dữ liệu hạng dưới có mùa riêng (không coi đội hình tham chiếu là thành phần thật của mọi năm). Chặn tự chuyển hạng giữa MLS/USL, hệ NZ đang chuyển thể thức, Mexico và ranh giới K2/K3 chưa đủ điều kiện giấy phép. Còn lịch/luật chính thức từng giải và thời kỳ, FIFA/đổi đội tuyển.
+- Đã có đội tuyển tiếp tục thi đấu khi nhân vật không được gọi, chấn thương hoặc giải nghệ, không cộng thành tích cá nhân; đàm phán tài trợ, nghĩa vụ quảng bá, thu nhập một lần, chấm dứt và tất toán khi rời nghề. Đây là kết quả phát sinh trong cuộc đời, không phải thành tích/hợp đồng ngoài đời của người thật.
+- Đã sửa khóa tiếng sang đại học tại chỗ: giữ nơi ở khi xét, không quy đổi tiền hai lần, dùng nơi ở gốc khi trở về; từ chối/rút/hết hạn trả đúng trạng thái và học phí còn lại.
+- Cửa hàng bạn đời đã nối BUSINESS123/TREASURY165 và sổ RELATIVE163: vốn/cổ phần hoặc khoản cho vay, giá trị công ty, trả nợ có biên nhận; không tạo thêm thu nhập cửa hàng giả. Giữ cửa hàng cũ khi nâng bản lưu.
+- Công nhận bằng điều dưỡng/giáo viên kiểm đúng ngành; không dùng bằng đại học bất kỳ hoặc nghề bác sĩ thay bằng điều dưỡng. Hồ sơ cũ thiếu ngành không tự hoàn tất.
+- Đổi thứ tự họ nhóm trẻ cùng hai cha mẹ tại ES: đồng thuận cha mẹ, ghi ý kiến, nộp và quyết định ở năm sau; lưu tên cũ, không đổi kế vị, không tác động anh chị thành niên hoặc con khác cha/mẹ. Còn lịch sử/ngoại lệ hộ tịch ngoài phạm vi đã cấu trúc.
+- Kiểm thử chuyên đề hiện đạt: football-reference871 (132), football-world871 (11), football-sponsors871 (14), study-onshore871 (17), professional-qualification871 (6), spain-surname871 (16), partner-shop871 (13), football897 và football-payroll901. Các mục giáo dục/pháp lý/đời sống quốc gia/tài chính/y tế còn mở vẫn là triển khai, không chuyển sang nghiệm thu để đánh dấu xong.
+- Gói dist/dist.zip chưa được dựng lại cho các thay đổi này; không dùng gói 8.10.70 cũ để công bố các mục mới.
+
+- Tiếp tục giáo dục: danh mục có nguồn của HUS, UIT, UET, HCMUS, HUST và Y Dược Huế; nguyện vọng/card cũ sai chương trình yêu cầu chọn lại, giữ nguyên bằng đã nhận. MD/J.D. tại Harvard/Stanford/UCLA chặn nhập học khi chưa có bằng cử nhân, dùng chung điều kiện ở xét tuyển và dự báo. Còn môn tiên quyết, bài thi/đánh giá và chương trình graduate đầy đủ; chưa coi đường Y/Luật Mỹ hoàn tất.
+- Kiểm thử bổ sung: courses871 (40), institutions867 (804), education-fallback-graduation (104), exam-model (565), player107 (84), university136 đạt. Browser courses871: 10 lượt chọn ngành và lưu/tải ở 390/1280, không lỗi JS/tràn ngang. player107 cập nhật chương trình HUST đã xác minh và ngoại ngữ có trước xét hồ sơ; kiểm tra không đủ tiền vẫn có lối hủy/chuyển học trong nước, không mở hồ sơ thu phí.
+- Cửa hàng: sổ tài chính người thân cộng riêng nợ vốn cửa hàng, không đưa vào khoản nợ tự trả hai lần. Cửa hàng đóng vẫn trả khoản vay cá nhân từ tiền riêng, không tái mở công ty cũ. partner-shop871 (16) và relative-finance163 (25) đạt. Chưa đối chiếu đầy đủ chuyển chủ nợ khi qua đời/chuyển thế hệ.
+
+### Bàn giao sang Claude — 11/11/2026 13:39 UTC+7
+
+Chủ dự án yêu cầu ghi chú và chuyển người thực hiện. Trạng thái chi tiết, file đang sửa, kết quả kiểm thử, phần dở/chưa làm và artifact cũ: xem [HANDOFF-CLAUDE-871.md](HANDOFF-CLAUDE-871.md). Chưa hoàn thành toàn bộ triển khai, chưa build/commit/push các thay đổi sau 8.10.70.
+
+Bổ sung cuối trước bàn giao: school920 sửa ghi đè p=0 ở Hàn Quốc, tách buổi chia tay khỏi dạ vũ; sửa mốc Norijada theo nguồn trường, bổ sung nguồn FI; có minh họa vector kỷ yếu/tiệc và mở bước kế tiếp liên tục. md5-920 đạt118; browser school871 đạt6 chuỗi prom/kỷ yếu/gathering ở390/1280, lưu/tải, không lỗiJS/tràn. Còn caKR/cache/stale và quick trên mã cuối sau sửa school/app.
+
+### Tiếp tục sau bàn giao — 8.10.71 Preview, 12/11/2026
+
+- Chủ dự án yêu cầu tiếp tục. Đã chặn thẻ sự kiện trường học cũ sau đổi trường/quốc gia/năm, bổ sung school-context871:19 PASS; md5-920:118, partner-shop871:16; browser school871:6 chuỗi390/1280 PASS.
+- Quick trên mã cuối: smoke11/saves10/save-safety10/NPC14 PASS. courses87140/football-reference871132/football-sponsors87114/study-onshore87117/spain-surname87116 PASS. Full regression không chạy theo yêu cầu.
+- Nhật ký71 packaged, 193mục cũ nguyên dữ liệu. npm run package:cloudflare PASS:28file,ZIP3511204byte,SHA256C70F857561BD305C8C1D2BF24442989C350A7925EC2C4F571CC4D027F4BE1081; so tên/hash từng entry đạt,loading8cuộcđời/API-admin cục bộ đạt. GiữWorker/routes/headers/.well-known. Gói gồm thay đổi y tế riêng có sẵn ngoài commit.
+- Đã xác minh lại originmercyx03/motdoi công khai,push/admin,0workflow/0hook/0deployment bằng API qua credential Git; gh không có trongPATH. Không deploy. REVIEWS_DB chưa kiểm chứng.
+- Đây là gói Preview mới cho phần đã triển khai, KHÔNG hoàn tất toàn BACKLOG. Các nhóm giáo dục graduate/học phí/quy chế, dữ liệu quốc gia/di trú/y tế/tài chính, luật hoàng gia lịch sử, thể thức/FIFA và chuyển thế hệ/chủ nợ cửa hàng vẫn mở trong bản bàn giao. Tiếp tục theo phạm vi chủ dự án; không dừng vì có artifact.
+
+### Đang triển khai sau 8.10.71 — chưa đóng gói
+
+- J.D. Harvard: hồ sơ STUDY54 có CAS, thi LSAT/mẫu viết, tài liệu, nộp phí, xét/phỏng vấn/quyết định các năm sau, thư nhận học có hạn và tối đa ba lượt nộp thường. Thư được xác nhận qua luồng nguyện vọng; không dùng điểm THPT để bác thư đã được nhận, không nhập học ngay khi nộp. GRE hiện được nhận qua hồ sơ kết quả nhưng chưa có hành động thi GRE riêng. Chưa gộp vào lộ trình MD/Stanford/UCLA.
+- Tách tên/thời lượng J.D. Harvard3năm, MD Harvard/UCLA4năm ở tuyển sinh mới; giữ niên hạn đã học của save cũ. Thêm hook gradUniversity ở đúng lúc engine đã cho tốt nghiệp; bằng chuyên nghiệp không nâng thành PhD. professional-degree87216/hls87219/courses87140/institutions867804/education-fallback-graduation104/university136/player10784 PASS. Chưa chạy quick/browser trên mã này.
+- Nguồn J.D.: https://hls.harvard.edu/jdadmissions/apply-to-harvard-law-school/jdapplicants/jd-application-components/ ; phí LSAT/CAS: https://www.lsac.org/lsat/register-lsat/lsat-cas-fees (biểu2026–27). MD: https://medstudenthandbook.hms.harvard.edu/105-five-year-md-program và https://catalog.registrar.ucla.edu/browse/College%20and%20Schools/DavidGeffenSchoolofMedicine/Medical-Programs . Thời gian xử lý theo năm/điểm thi/xác suất là cơ chế cuộc đời, không phải lịch hay điểm chuẩn chính thức.
+
+### Góp ý người chơi — 8.10.72, 12/11/2026
+
+- Đã triển khai các sửa đổi mới: hạn nội trú Y; bằng tốt nghiệp và menu an toàn; tìm vị trí ngành Y; hồ sơ Anh tách nộp/kết quả/nhập học và chi tiết thu gọn; giảm chuyện ngẫu nhiên; thương lượng cổ phần người thân, danh tính qua di sản và liên kết biểu quyết/liên minh; tab phối ngẫu hoàng gia; hàng chờ nhiều phim; cơ hội cám dỗ theo giàu/nổi tiếng và tiếp diễn tin nhắn sau hai năm. Chi tiết, giới hạn và kiểm thử: docs/PLAYER-FEEDBACK-872.md.
+- Lương quản lý gia đình/tập đoàn được phân loại thu nhập tiền lương, không tính thêm thuế lợi nhuận doanh nghiệp cá nhân.
+- Bằng chỉ khôi phục khi còn bản ghi tốt nghiệp xác nhận. Save cũ đã xóa cả hồ sơ không đủ căn cứ để tự cấp bằng; chưa có save thật người góp ý để đối chiếu. Cổ đông cũ thiếu liên kết danh tính không tự ghép theo tên trùng.
+- Các nhóm dữ liệu rộng của yêu cầu trước (danh mục chương trình/học phí/quy chế mọi trường, homeschool theo vùng, đối chiếu từng câu quốc gia, di trú/phúc lợi/y tế/tài chính, luật hoàng gia lịch sử, thể thức/FIFA, chủ nợ cửa hàng khi chuyển thế hệ) VẪN MỞ. Không chuyển thành nghiệm thu đơn thuần hoặc đánh dấu đã hoàn tất toàn BACKLOG.
+- GĐ6: chưa nghiệm thu toàn diện, thiết bị/save thật và REVIEWS_DB Production chưa xác minh. Bản72 giữ packaged cho tới khi chủ dự án xác nhận upload.
+
+- Bản72: package:cloudflare PASS28file/3513880byte, SHA2568133799687D4B53CE348885D5B2511BBF6C33541102B4D0B5DBF42C81DA9C21C; loading/API-admin cục bộ và16view giáo dục/phối ngẫu hoàng gia trên dist đạt. Nhật ký195mục,194mục cũ không đổi; kiểm JSON/HTML, tìm/lọc/tải thêm390/1280 đạt. Chi tiết PLAYER-FEEDBACK-872.md.
+
+### Tiếp tục toàn phạm vi sau72
+
+Chủ dự án yêu cầu làm hết mục triển khai rồi mới gói chung, bỏ nghiệm thu toàn diện. Ma trận hiện hành và nguồn/kiểm thử ở [BACKLOG-IMPLEMENTATION-873.md](BACKLOG-IMPLEMENTATION-873.md). Các mục rộng vẫn mở cho đến khi có triển khai và đối chiếu đủ; artifact72 không phải bản của thay đổi đang làm.
+
+Đã qua kiểm thử trọng điểm cho phần đã triển khai về khoản vay cửa hàng, tuyển sinh Y/Luật Mỹ, học tại nhà Pennsylvania/Québec, đổi đội tuyển, nhập tịch theo cư trú, ly hôn England/Wales và sổ kỳ hạn NS&I. Bổ sung dữ liệu ngành, hồ sơ họ tên Tây Ban Nha, nguồn lao động và chi trả y tế cho phạm vi ghi trong ma trận. Các mục triển khai còn lại vẫn mở.
+
+Theo yêu cầu đóng gói riêng sau đó, 8.10.73 Preview đã tạo dist và dist.zip mới. Trạng thái các mục triển khai xem sổ tiến độ. Bản này chưa được xác nhận phát hành.
+
+### Tiếp tục triển khai sau gói 8.10.73
+
+Đã bổ sung bài thi cho hồ sơ MIT/UCL, hạn chuyển học tại nhà giữa năm Québec, căn cứ huyết thống FIFA, bước tống đạt hồ sơ ly hôn England/Wales và nhiếp chính Tây Ban Nha theo Hiến pháp 1876. Phạm vi và phần còn thiếu ở [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#tiếp-tục-sau-gói-81073). Các thay đổi này chưa có trong dist.zip 8.10.73.
+
+### Gói 8.10.74 Preview — doanh nghiệp gia đình và đổi nơi sống
+
+Theo yêu cầu mới của chủ dự án: cổ phần công ty gia đình ngẫu nhiên (niêm yết hoặc không), thâu tóm trước khi thừa kế, đưa công ty lên sàn, sửa lỗi trúng cử không đổi chức vụ/lương, lương điều hành theo quy mô, thiên phú kinh doanh, niềm tin bố mẹ theo thành tích, sửa lỗi về Việt Nam mất tài sản, nút mở lại bảng vừa đóng và gỡ nhãn “mô phỏng” thừa. Mục “Tranh quyền doanh nghiệp gia đình” có thêm ca 50/50 (Chủ tịch quyết khi bổ nhiệm TGĐ), anh chị em tự mua dần cổ phần; bế tắc bầu Chủ tịch vẫn mở. Chi tiết, nguồn và kiểm thử ở [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81074--doanh-nghiệp-gia-đình-niêm-yết-đổi-nơi-sống). Các nhóm dữ liệu rộng trong checklist bàn giao vẫn mở. GĐ6 chưa nghiệm thu; REVIEWS_DB Production chưa xác minh.
+
+### Gói 8.10.75 Preview
+
+8.10.73 và 8.10.74 đã ghi phát hành (13/11/2026 10:40 +07:00). Bản 8.10.75 sửa lỗi gốc khiến AI ít kết hôn và có con, đo lại tỷ lệ theo nhiều seed, thêm ngưỡng chào mua Anh/Nhật/Úc/Mỹ, gỡ bế tắc 50/50 khi bầu Chủ tịch và quy chế hôn nhân Monaco 1882 từ Công báo gốc. Chi tiết và phần còn mở: [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81075--tình-cảm-có-con-luật-chào-mua-monaco-1882).
+
+### Gói 8.10.76 Preview
+
+Đợt 1 các mục dữ liệu lớn: Tây Ban Nha 1876, ly hôn Scotland/Bắc Ireland, bốn liên đoàn Anh, Johns Hopkins/Yale, mức xác minh hồ sơ quốc gia. Chi tiết và phần còn mở: [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81076--đợt-1-các-mục-dữ-liệu-lớn).
+
+### GĐ6 — nghiệm thu bổ sung 9.7.0
+
+- Regression toàn bộ mã cuối và bản lưu thật cho Saudi Pro League/họ tên thường dân Tây Ban Nha. Test trọng điểm và giao diện hẹp/rộng chạy trong đợt triển khai; không thay thế nghiệm thu toàn diện.
+- Chưa dựng đủ các CLB/hạng dưới và thể thức Saudi từng mùa; chưa mô phỏng hồ sơ đổi họ ngoại lệ với chứng cứ bạo hành, toàn bộ hộ tịch trước 2000 và gia đình đa quốc tịch. Phạm vi/nguồn: docs/SAUDI-SPAIN-970.md.
+- Kiểm tra binding REVIEWS_DB và cấu hình Production do chủ dự án quản lý; không deploy hoặc ghi D1 Production trong đợt này.

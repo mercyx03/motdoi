@@ -14,6 +14,13 @@ add('publicReview116',l=>{E.startJob(l,'cong_chuc',()=>0,()=>{},true);l.job.rank
 add('civicWork118',l=>{l.flags.civic106={front:true};});
 add('borderReview122',l=>{E.WORLD120.s(l).exitOrder={until:47,reason:'Nghĩa vụ tài sản đang được xem xét'};});
 add('anniversary122',l=>{E.startJob(l,'quan_doi',()=>0,()=>{},true);l.birthYear=2030-l.age;});
+add('mockHighSchool853',l=>{l.age=14;l.edu=1;l.school='lower';});
+add('study_special54,chuyen_on',l=>{l.age=15;l.edu=2;l.school='lower';const d=E.DEC.hs.make(l,()=>.5);E.DEC.hs.apply(l,d,'special54',()=>.5,()=>{});l.pending=[];});
+{const l=out.chuyen_on.life,d=E.DEC.study_special54.make(l,()=>.5);E.DEC.study_special54.apply(l,d,'english',()=>.5,()=>{});l.pending=[];}
+add('khoi912,luyen_thi',l=>{l.age=17;l.edu=2;l.school='upper';l.khoi='A00';});
+add('study_wishes54',l=>{l.age=18;l.edu=3;l.school=null;l.khoi='A00';E.EDUCATION54.open(l,()=>.5);l.pending=[];});
+add('thi_lai_tn',l=>{l.age=18;l.edu=2;l.school=null;l.flags.hsFail=1;});
+add('mockUniExam853',l=>{l.age=17;l.edu=2;l.school='upper';l.khoi='A00';});
 add('highSchool125',l=>{l.age=15;l.edu=2;});
 add('highFallback125',l=>{l.age=15;l.edu=2;let d=E.DEC.highSchool125.make(l,()=>0);E.DEC.highSchool125.apply(l,d,'0',()=>0,()=>{});l.pending=[];});
 add('academicReview125',l=>{E.WORLD120.s(l).academicCase={at:44,status:'pending',evidence:1};});
@@ -116,7 +123,11 @@ add('shopAsk920',l=>{wed(l);l.money=l.base*100;});
 add('parenting920,anger920',l=>{l.kids=[{name:'Minh',sex:'M',born:33,alive:true,study:50,close:60,uid110:'ctx-kid'}];},{id:'ctx-kid'});
 add('doubt920,truth920',l=>{wed(l);l.partner.pid920='ctx-p';l.flags.kin920={cheat:{who:'ctx-p',real:true,at:45,done:false}};});
 add('school920',l=>{Object.assign(l,{age:16,indep:false,school:'upper',schoolEnd:18});E.SCHOOL920.plan(l,()=>{});});
-add('rite920',l=>{Object.assign(l,{age:13});l.religion='Do Thái giáo';});
+add('rite920',l=>{Object.assign(l,{age:13,sex:'M'});l.religion='Do Thái giáo';});
 add('royalCircle920,royalPerson920,royalRole920,royalDuty920,royalRumor920',l=>{l.country='GB';l.flags.royal={tier:'direct',c:'GB',house:'Hoàng gia Anh',role920:'working'};l.fame=2e6;const h=E.ROYAL920.house(l,'GB'),m=E.ROYAL920.eligible(l,h)[0];if(m)E.ROYAL920.st(l).rel={[m.id]:{cc:'GB',stage:'trust',trust:40,at:2000}};});
 if(out.royalPerson920){const L=out.royalPerson920.life;out.royalPerson920.arg={id:Object.keys(E.ROYAL920.st(L).rel||{})[0]};}
+add('sixth829,schoolEngland829',l=>{Object.assign(l,{age:16,mode:'world',country:'GB',city:'London',abroad:null,birthYear:2003,school:'lower',alive:true});});
+add('exchange829,aid829',l=>{Object.assign(l,{age:20,mode:'world',country:'US',abroad:null,school:'uni',alive:true});});
+add('babyFaith830',l=>{l.kids=[{name:'An',born:l.age,sex:'F',alive:true}];l.religion='Công giáo';});
+add('dossier830,faithHome830',l=>{l.country='VN';l.abroad=null;l.age=30;wed(l);});
 return out;};

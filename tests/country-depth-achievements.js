@@ -48,7 +48,7 @@ for (const cc of ['FI', 'GH', 'IE']) {
     E.finishYear(q);
     if (q.pending.some(d => d.id === 'world_cuisine173')) queued++;
   }
-  ok(queued > 0, cc + ' cuisine reachable through real annual pipeline');
+  ok(queued === 0, cc + ' cuisine stays in the voluntary local activity menu');
 }
 {
   const l = life('JP');

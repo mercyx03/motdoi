@@ -11,7 +11,7 @@
   function pick(r, a) { return U.pick(r, a); }
   function ch(r, p) { return r() < p; }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function pct(x) { return (x >= 0 ? '+' : '−') + Math.abs(Math.round(x * 100)) + '%'; }
 
   // ===================================================================

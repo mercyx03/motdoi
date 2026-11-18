@@ -2,7 +2,7 @@ const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.r
 const E=G.E,W=E.WILL70;let n=0;function ok(x,t){assert.ok(x,t);n++;}function life(age=70){const l=E.createLife({mode:'vn',seed:551});l.age=age;l.school=null;l.indep=true;l.money=100;l.pending=[];l.kids=[];l.partner=null;return l;}
 function save(l,plan,note='Lời nhắn cho gia đình'){const d=E.act(l,'di_chuc70');d.data.plan=plan;d.data.note=note;E.resolve(l,'save');return d;}
 {
- let l=life(17);ok(!E.act(l,'di_chuc70'),'age gate');l.age=18;l.acts=999;l.flags.actAt={di_chuc70:70};l.jailUntil=80;ok(E.actions(l).find(x=>x.id==='di_chuc70').ok===true,'can write any time after adulthood even action cap/jail');const money=l.money,karma=l.karma;save(l,'personal','Lời nhắn lần đầu');save(l,'personal','Lời nhắn sửa lại');ok(l.flags.will70.note==='Lời nhắn sửa lại'&&l.flags.will70.revision===2,'repeat same year updates');ok(l.acts===999&&l.money===money&&l.karma===karma,'no action/cash/karma farming');
+ let l=life(17);ok(!E.act(l,'di_chuc70'),'age gate');l.age=18;l.acts=999;l.flags.actAt={di_chuc70:70};ok(E.actions(l).find(x=>x.id==='di_chuc70').ok===true,'ordinary adult can edit despite action cap');const money=l.money,karma=l.karma;save(l,'personal','Lời nhắn lần đầu');save(l,'personal','Lời nhắn sửa lại');ok(l.flags.will70.note==='Lời nhắn sửa lại'&&l.flags.will70.revision===2,'repeat same year updates');ok(l.acts===999&&l.money===money&&l.karma===karma,'no action/cash/karma farming');
  const current=E.act(l,'di_chuc70');current.data.note='';ok(!!W.check(l,current.data),'empty personal message rejected');E.resolve(l,'none');ok(l.flags.will70.note==='Lời nhắn sửa lại','cancel preserves');
  let d=E.act(l,'di_chuc70');d.data.plan='equal';ok(!!W.check(l,d.data),'no children no child inheritance');E.resolve(l,'none');
  const reload=E.migrate(JSON.parse(JSON.stringify(l)));ok(reload.flags.will70.note===l.flags.will70.note,'save reload retains');
@@ -15,3 +15,20 @@ function save(l,plan,note='Lời nhắn cho gia đình'){const d=E.act(l,'di_chu
  const poor=life();poor.money=-100;save(poor,'charity');poor.alive=false;ok(W.settle(poor).net>=0,'no negative inheritance');
 }
 console.log('V5.5.1: '+n+' will checks passed');
+
+{
+ let l=life(25);l.birthYear=2000;l.flags.military=0;
+ save(l,'personal','Bản gốc');
+ const original=JSON.stringify(l.flags.will70), stale=E.DEC.di_chuc.make(l);
+ l.abroad={code:'KH',trapped:true};
+ ok(!E.act(l,'di_chuc70')&&!E.DEC.will150.valid(l),'isolation prevents editing either will');
+ E.DEC.di_chuc.apply(l,stale,'revoke',()=>.5,()=>{});
+ ok(JSON.stringify(l.flags.will70)===original,'isolation preserves existing will');
+ l.abroad=null;l.jailUntil=30;
+ ok(!E.act(l,'di_chuc70')&&E.act(l,'willMeeting70'),'custody requires an appointment');
+ E.resolve(l,'request');ok(!E.act(l,'di_chuc70'),'appointment starts next year');
+ l.age++;l=E.migrate(JSON.parse(JSON.stringify(l)));
+ ok(E.act(l,'di_chuc70')&&E.DEC.will150.valid(l),'confirmed appointment survives reload');
+ l.age++;ok(!E.act(l,'di_chuc70'),'appointment expires');
+ l.age=30;ok(E.act(l,'di_chuc70')&&JSON.stringify(l.flags.will70)===original,'release restores access without changing the will');
+}

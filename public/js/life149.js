@@ -1,7 +1,7 @@
 /* Góp ý người chơi — Mốc D: kết giao người có địa vị, người nổi tiếng (kể cả hẹn hò tự nguyện giữa người trưởng thành),
    mặt tối giới giải trí, giới thiệu đối tượng cho con, quà tặng người thân, chuỗi cầu hôn.
    · Dùng chung mạng lưới NPC của life148 (mã định danh cố định) và sổ tài sản có chủ sở hữu.
-   · Mọi nhân vật là hư cấu. Không có lựa chọn "chấp nhận" trao đổi lợi ích không phù hợp; nổi tiếng vẫn đạt được bằng con đường bình thường.
+   · Mọi nhân vật là. Không có lựa chọn "chấp nhận" trao đổi lợi ích không phù hợp; nổi tiếng vẫn đạt được bằng con đường bình thường.
    · Cầu hôn được nhận lời chỉ là đính hôn; đám cưới vẫn do hai người quyết định ở bước sau, nhẫn không bắt buộc. */
 (function (G) {
   'use strict';
@@ -28,7 +28,7 @@
   // ===================================================================
   function eligible(p) { return p && p.alive !== false && !p.burned && !p.abuser149; }
   X.menu('social149', 'Kết giao, mở rộng quan hệ', function (l) { return free(l); },
-    function (l) { return 'Tầng lớp: ' + C.tierName(l) + ' · uy tín ' + Math.round(C.S(l).rep) + '/100. Người quen nhớ những lần gặp; ai cũng có quyền từ chối lời mời. Mọi nhân vật trong game là hư cấu.'; },
+    function (l) { return 'Tầng lớp: ' + C.tierName(l) + ' · uy tín ' + Math.round(C.S(l).rep) + '/100. Người quen nhớ những lần gặp; ai cũng có quyền từ chối lời mời.'; },
     function (l) {
       var t = C.tier(l), rows = [{ k: 'event', l: t >= 2 ? 'Dự sự kiện câu lạc bộ doanh nhân, hội từ thiện' : 'Tham gia hội nhóm nghề nghiệp, sự kiện cộng đồng', h: mo(l, l.base * (0.02 + t * 0.05)), why: once(l, 'event') ? 'Đã đi sự kiện năm nay' : liquid(l) < l.base * (0.02 + t * 0.05) ? 'Chưa đủ tiền' : true, run: function (l, r, log) { event(l, r, log); } }];
       C.contacts(l, eligible).sort(function (a, b) { return b.trust - a.trust; }).slice(0, 20).forEach(function (p) {

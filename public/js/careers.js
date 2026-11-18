@@ -189,9 +189,11 @@
   function resolveJob(id) { return CAR[id] ? id : ALIAS[id] || 'cong_nhan'; }
   function J(l) { return l.job ? CAR[resolveJob(l.job.id)] : null; }
 
+  // 9.5.5: lương theo thời đại — hệ số flags.eraK954 (price954.js) nhân vào mọi bảng lương; chênh lệch vùng miền tính trên thu nhập cơ sở chưa nhân hệ số
   function scale(l, c, monthly) {
-    if (G.WEC) { var local = G.WEC.scale(l, c, monthly); if (local != null) return local; }
-    if (l.cur === 'vnd') return Math.pow(l.base / 90, 0.45); // chênh lệch vùng miền: Hà Nội/TP.HCM cao hơn ~20–30%
+    var K = (l.flags && l.flags.eraK954) || 1;
+    if (G.WEC) { var local = G.WEC.scale(l, c, monthly); if (local != null) return local * K; }
+    if (l.cur === 'vnd') return Math.pow(l.base / K / 90, 0.45) * K; // chênh lệch vùng miền: Hà Nội/TP.HCM cao hơn ~20–30%
     return l.base / 90;
   }
   // thu nhập theo danh tiếng (triệu/tháng ở VN)
@@ -259,6 +261,8 @@
     return w;
   }
   function eligible(l, c) {
+    if (E.ERA902 && E.ERA902.jobBlocked(l, c.id, c)) return false;
+    if (c.id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     if (c.hidden) return false;
     if (c.minAge && l.age < c.minAge) return false;
     if (c.edu > l.edu) return false;
@@ -314,18 +318,22 @@
   function offerLabel(l, id) { var c = CAR[resolveJob(id)]; return c.t[startRank(l, c)]; }
   function startJob(l, id, r, log, quiet) {
     id = resolveJob(id);
+    if (id === 'phi_cong' && E.pilotEligible836 && !E.pilotEligible836(l)) return false;
     var c = CAR[id];
+    if (E.ERA902 && E.ERA902.jobBlocked(l, id, c)) { if (!quiet) log('Nghề này chưa xuất hiện vào thời của bạn.', 'neutral'); return false; } // 9.1: không nhận nghề chưa tồn tại
     if (c.minAge && l.age < c.minAge) { if (!quiet) log('Công việc này chỉ nhận từ ' + c.minAge + ' tuổi.', 'neutral'); return false; }
     if (l.job && resolveJob(l.job.id) === id && l.job.yrs === 0 && l.jobsHist && l.jobsHist.length && l.jobsHist[l.jobsHist.length - 1].from === l.age) return; // v2.8: vừa nhận đúng việc này trong năm
     if (l.school && l.school !== 'police') { if (!quiet) log('Bỏ dở việc học để đi làm.', 'bad'); l.school = null; l.schoolEnd = null; l.cityStudent = null; if (l.abroad && l.abroad.study) l.abroad = null; }
     l.job = { id: id, rank: startRank(l, c), yrs: 0, since: l.age, rankSince: l.age };
     l.job.rankTracked = l.job.rank;
+    if (l.retired) { l.retired = false; l.flags.afterRet = Math.max(l.flags.afterRet || 0, l.age + 5); if (!quiet) log('Đã nghỉ hưu nhưng bạn quay lại làm việc.', 'neutral'); } // 9.0.2: người nghỉ hưu nhận việc mới không còn bị "nghỉ hưu" lặp lại mỗi năm
     if (c.prod) l.job.p = U.pick(r, c.prod);
     if (c.fame && !l.fame) l.fame = U.randint(r, 200, 3000) * (l.talent === c.talent ? 2 : 1);
     if ((id === 'streamer' || id === 'tuyen_thu_es' || id === 'coach_es') && !l.game) { if (l.talent !== 'game' && !l.gameType) l.gameType = r() < 0.5 ? 'FPS' : 'MOBA'; l.game = E.gameFor(l, r); } // v2.8: game khớp thể loại sở trường
     if (c.skillRank != null) l.job.rank = c.id === 'tuyen_thu_es' ? 0 : rankBySkill(l, c);
     if (id === 'tuyen_thu_es' && E.ESPORTS) E.ESPORTS.init(l, r);
-    l.flags.needJob = false; l.indep = true;
+    delete l.flags.jobReminder978;
+    l.flags.needJob = false; l.indep = !(E.atFamilyHome121 && E.atFamilyHome121(l)); if(!quiet&&E.familyHousing121)E.familyHousing121(l,r);
     l.jobsHist = l.jobsHist || [];
     l.jobsHist.push({ id: id, from: l.age });
     if (!quiet) { log('Bắt đầu công việc mới: ' + jobTitleOf(l) + '.', c.sec === 'crime' ? 'bad' : 'good'); H.fx(l, { hap: 3 }); }

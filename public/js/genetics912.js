@@ -131,7 +131,7 @@
         delete t.uid110; delete t.cond912; delete t.persona141; delete t.blood909; t.sex = sex; t.name = twinName(l, rm, k, sex); t.multi912 = key; k.multi912 = key;
         if (mz && i === 0) { t.genes912 = JSON.parse(JSON.stringify(k.genes912)); t.genes912.sex = sex; t.monozygotic912 = true; k.monozygotic912 = true; }
         else { t.genes912 = inherit(mom, dad, sex, rng(l.id + ':birth912:' + key + ':twin' + i)); if (rm() < t21Risk(motherAge(l, k))) t.genes912.t21 = true; }
-        l.kids.push(t); X.uid(l, t); initCond(l, t, t.genes912, t.born);
+        l.kids.push(t); X.uid(l, t); if(E.SPAIN_COMMON970)E.SPAIN_COMMON970.registerBirth(l,t,rm,[]); initCond(l, t, t.genes912, t.born);
       }
       if (extra) { if (log) log((extra === 2 ? 'Ba em bé' : 'Hai em bé') + ' cùng chào đời' + (mz ? ' — cặp sinh đôi cùng trứng' : '') + '. Đa thai cần theo dõi kỹ hơn, nhưng các bé đều được chăm sóc như mọi trẻ sơ sinh.', 'big'); if (l.mind) l.mind.stress = Math.min(100, (l.mind.stress || 0) + 6); }
     });
@@ -188,7 +188,7 @@
   }
   X.menu('screen912', 'Khám sức khỏe & sàng lọc di truyền', screenReason,
     function (l) { var s = st(l), last = s.tests.slice(-3).map(function (t) { return TESTS[t.kind].n + ' (' + (l.birthYear + t.at) + ', ' + (t.status === 'ready' ? 'đã có kết quả' : 'chờ kết quả') + ')'; }).join('; ');
-      return 'Đây là mô phỏng trò chơi, không thay thế tư vấn y khoa. Mỗi người tự quyết có xét nghiệm hay không; kết quả của người kia chỉ hiện khi người ấy đồng ý. Âm tính chỉ có nghĩa là không phát hiện trong phạm vi kỹ thuật đã chọn, không bảo đảm khỏe mạnh suốt đời; WES/WGS cũng có giới hạn và có thể trả kết quả chưa rõ ý nghĩa cần xác nhận thêm.' + (last ? '\nĐã làm: ' + last + '.' : ''); },
+      return 'Kết quả của nhân vật không thay thế tư vấn y khoa. Mỗi người tự quyết có xét nghiệm hay không; kết quả của người kia chỉ hiện khi người ấy đồng ý. Âm tính chỉ có nghĩa là không phát hiện trong phạm vi kỹ thuật đã chọn, không bảo đảm khỏe mạnh suốt đời; WES/WGS cũng có giới hạn và có thể trả kết quả chưa rõ ý nghĩa cần xác nhận thêm.' + (last ? '\nĐã làm: ' + last + '.' : ''); },
     function (l) {
       var out = [];
       Object.keys(TESTS).forEach(function (kind) { var T = TESTS[kind], cost = l.base * T.cost, both = partnerOk(l);

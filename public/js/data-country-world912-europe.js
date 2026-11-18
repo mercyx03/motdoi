@@ -319,7 +319,7 @@
     f: [['semana_santa', 'Semana Santa', 'Tuần trước Phục sinh', 'variable', 'xem rước, tôn trọng không gian nghi lễ'], ['san_fermin', 'San Fermín (Pamplona)', '6–14/7', 'fixed', 'xem hòa nhạc; không bắt buộc chạy cùng bò'], ['fiesta_nacional', 'Fiesta Nacional', '12/10', 'fixed', 'xem diễu hành']],
     m: [['Lễ dân sự hoặc tôn giáo', 'Cả hai có hiệu lực khi đăng ký.'], ['Hôn nhân bình đẳng', 'Từ 2005, hai người cùng giới có thể kết hôn.'], ['Hồ sơ trước', 'Mở hồ sơ tại Registro Civil.']],
     d: ['Paella', 'Tortilla de patatas', 'Gazpacho', 'Jamón ibérico', 'Churros'],
-    w: [['Estatuto de los Trabajadores', 'Văn bản chính.'], ['Giờ làm', 'Mốc luật: 40 giờ/tuần trung bình năm; có đề xuất giảm.'], ['Phép năm', 'Mốc luật: 30 ngày theo lịch.'], ['SMI', 'Lương tối thiểu liên ngành.'], ['Đăng ký giờ làm', 'Doanh nghiệp phải ghi giờ làm hằng ngày.']]
+    w: [['Estatuto de los Trabajadores', 'Văn bản chính.'], ['Giờ làm', 'Giờ làm thông thường tối đa 40 giờ làm việc thực tế mỗi tuần, tính trung bình cả năm. Lịch cụ thể phụ thuộc hợp đồng hoặc thỏa ước.', 'https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a34'], ['Phép năm', 'Phép năm có lương, tối thiểu 30 ngày theo lịch theo Điều 38.', 'https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a38'], ['SMI', 'Lương tối thiểu liên ngành.'], ['Ghi nhận giờ làm', 'Doanh nghiệp ghi thời điểm bắt đầu và kết thúc ngày làm của từng người, lưu hồ sơ bốn năm theo Điều 34.9.', 'https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a34']]
   });
   A('SE', {
     e: [['Gymnasium', 'Không có kỳ thi cuối cấp quốc gia chung; xét theo điểm, có thể dùng högskoleprovet.'], ['Yrkesprogram và yrkeshögskola', 'Chương trình nghề và cao đẳng nghề.'], ['Đại học', 'Đăng ký qua antagning.se.']],
@@ -356,8 +356,8 @@
     e: [['A Level, Scottish Highers', 'Anh, Wales, Bắc Ireland dùng GCSE và A Level; Scotland dùng Nationals và Highers.'], ['Apprenticeships và T Levels', 'Học việc và T Level kỹ thuật.'], ['Đại học qua UCAS', 'Học phí và khoản vay khác nhau giữa bốn vùng.']],
     x: 'A Level (Anh) / Highers (Scotland)',
     f: [['bonfire_night', 'Bonfire Night', '5/11', 'fixed', 'xem pháo hoa có tổ chức'], ['christmas', 'Giáng sinh', '25/12', 'fixed', 'ăn bữa tối Giáng sinh'], ['notting_hill', 'Notting Hill Carnival', 'Cuối tuần lễ ngân hàng tháng 8', 'variable', 'xem diễu hành văn hóa Caribe']],
-    m: [['Thông báo dự định kết hôn', 'Thông báo trước tại văn phòng đăng ký.'], ['Độ tuổi 18', 'Mốc luật: 18 ở Anh và Wales từ 2023.'], ['Hôn nhân bình đẳng', 'Hai người cùng giới có thể kết hôn.']],
+    m: [['Thông báo dự định kết hôn', 'Thông báo trước tại văn phòng đăng ký.'], ['Độ tuổi kết hôn tại England và Wales', 'Từ 27/02/2023, hai bên phải từ đủ 18 tuổi để kết hôn hoặc đăng ký civil partnership tại England và Wales.', 'https://www.legislation.gov.uk/ukpga/2022/28/section/1'], ['Hôn nhân bình đẳng', 'Hai người cùng giới có thể kết hôn.']],
     d: ['Fish and chips', 'Sunday roast', 'Full English breakfast', 'Shepherd’s pie', 'Scones'],
-    w: [['Working Time Regulations', 'Trung bình tối đa 48 giờ/tuần, có thể tự nguyện không áp dụng.'], ['Phép năm', 'Mốc luật: 5,6 tuần (28 ngày).'], ['National Living Wage', 'Lương tối thiểu theo độ tuổi.'], ['Hưu trí tự động', 'Tự động tham gia hưu trí nơi làm.'], ['ACAS', 'Cơ quan hòa giải tranh chấp lao động.']]
+    w: [['Working Time Regulations', 'Giới hạn thường là 48 giờ/tuần tính trung bình 17 tuần. Người trưởng thành có thể tự nguyện chọn làm thêm bằng văn bản nếu nghề cho phép.', 'https://www.gov.uk/maximum-weekly-working-hours'], ['Phép năm', 'Đa số người làm 5 ngày/tuần được tối thiểu 28 ngày phép có lương. Ngày nghỉ lễ có thể tính trong số đó. Lịch bán thời gian hoặc không đều tính riêng.', 'https://www.gov.uk/holiday-entitlement-rights'], ['National Living Wage', 'Lương tối thiểu theo độ tuổi.'], ['Hưu trí tự động', 'Tự động tham gia hưu trí nơi làm.'], ['ACAS', 'Cơ quan hòa giải tranh chấp lao động.']]
   });
 })(globalThis.G);

@@ -18,7 +18,7 @@
   function inJail(l) { return l.jailUntil != null && l.age < l.jailUntil; }
   function free(l) { return !inJail(l) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function T(id, when, p, cd, max) { E.TRIG.push({ id: id, when: function (l, a) { return free(l) && when(l, a); }, p: p, cd: cd || 4, max: max || 1 }); }
   function stress(l, x) { if (l.mind) l.mind.stress = U.clamp(l.mind.stress + x, 0, 100); }
   function jid(l) { return l.job ? E.resolveJob(l.job.id) : null; }
@@ -216,7 +216,7 @@
     if (cast24 && cast24.m.indexOf('Phan Đình Tùng') < 0) cast24.m.push('Phan Đình Tùng');
     CC.kr.n = 'Kpop Hàn Quốc';
     CC.vn.a = [A_('Sơn Tùng M-TP', 1994), A_('Jack - J97', 1997), A_('Soobin Hoàng Sơn', 1992), A_('Mỹ Tâm', 1981), A_('Hà Anh Tuấn', 1984), A_('Đen Vâu', 1989), A_('Hồ Ngọc Hà', 1984), A_('Noo Phước Thịnh', 1988), A_('Hoàng Thùy Linh', 1988), A_('Đông Nhi', 1988), A_('Tóc Tiên', 1989), A_('Vũ.', 1995), A_('Hòa Minzy', 1995), A_('AMEE', 2000), A_('MONO', 2000), A_('Văn Mai Hương', 1994), A_('Phan Mạnh Quỳnh', 1990), A_('Đàm Vĩnh Hưng', 1971), A_('Lệ Quyên', 1981), A_('Hoàng Dũng', 1995)];
-    CC.kr.a = [A_('BTS', 1995), A_('BLACKPINK', 1996), A_('TWICE', 1997), A_('SEVENTEEN', 1997), A_('Stray Kids', 2000), A_('NewJeans', 2005), A_('aespa', 2001), A_('IVE', 2004), A_('(G)I-DLE', 1998), A_('LE SSERAFIM', 2002), A_('ENHYPEN', 2003), A_('TOMORROW X TOGETHER', 2001), A_('ATEEZ', 1999), A_('ITZY', 2001), A_('NCT 127', 1997), A_('EXO', 1992), A_('BIGBANG', 1988), A_('Red Velvet', 1995), A_('BABYMONSTER', 2006), A_('RIIZE', 2002), A_('IU', 1993), A_('Hwasa', 1995), A_('PSY', 1977), A_('G-Dragon', 1988)];
+    CC.kr.a = [A_('CORTIS', 2007), A_('BTS', 1995), A_('BLACKPINK', 1996), A_('TWICE', 1997), A_('SEVENTEEN', 1997), A_('Stray Kids', 2000), A_('NewJeans', 2005), A_('aespa', 2001), A_('IVE', 2004), A_('(G)I-DLE', 1998), A_('LE SSERAFIM', 2002), A_('ENHYPEN', 2003), A_('TOMORROW X TOGETHER', 2001), A_('ATEEZ', 1999), A_('ITZY', 2001), A_('NCT 127', 1997), A_('EXO', 1992), A_('BIGBANG', 1988), A_('Red Velvet', 1995), A_('BABYMONSTER', 2006), A_('RIIZE', 2002), A_('IU', 1993), A_('Hwasa', 1995), A_('PSY', 1977), A_('G-Dragon', 1988)];
     CC.us.n = 'Nghệ sĩ US/UK';
     CC.us.a = [A_('Taylor Swift', 1989), A_('Ed Sheeran', 1991), A_('Coldplay', 1977), A_('Adele', 1988), A_('Bruno Mars', 1985), A_('The Weeknd', 1990), A_('Billie Eilish', 2001), A_('Ariana Grande', 1993), A_('Dua Lipa', 1995), A_('Harry Styles', 1994), A_('Olivia Rodrigo', 2003), A_('Justin Bieber', 1994), A_('Lady Gaga', 1986), A_('Beyoncé', 1981), A_('Sabrina Carpenter', 1999), A_('Post Malone', 1995), A_('Imagine Dragons', 1987), A_('Maroon 5', 1979), A_('Charlie Puth', 1991), A_('Rihanna', 1988), A_('Katy Perry', 1984), A_('Sam Smith', 1992), A_('Lana Del Rey', 1985), A_('Arctic Monkeys', 1986), A_('Shawn Mendes', 1998), A_('Selena Gomez', 1992), A_('Lewis Capaldi', 1996), A_('Chappell Roan', 1998), A_('SZA', 1989), A_('Doja Cat', 1995), A_('Calvin Harris', 1984), A_('Oasis', 1970)];
     CC.rapvn.a = [A_('RPT MCK', 1999), A_('Dangrangto', 2000), A_('B Ray', 1994), A_('Wxrdie', 1999), A_('Binz', 1988), A_('Karik', 1989), A_('Rhymastic', 1990), A_('Suboi', 1990), A_('tlinh', 2000), A_('Low G', 1998), A_('Obito', 1998), A_('Andree Right Hand', 1989), A_('16 Typh', 2000), A_('Seachains', 1995), A_('Wowy', 1988), A_('Double2T', 1998), A_('Đen Vâu', 1989)];
@@ -242,7 +242,7 @@
     ])
   });
   if (E.DEC.concert_chon) E.DEC.concert_chon.def.opts.forEach(function (o) {
-    if (o.k === 'no') return;
+    if (o.k === 'no' || o.k === 'local') return;
     if (o.k === 'show') { o.h = function (l) { return E.artistsOf('show', l).map(function (a) { return a.n; }).join(', '); }; return; }
     o.h = ''; o.run = function (l, r) { l.pending.unshift(E.DEC.concert_nghe_si.make(l, r, { cat: o.k })); };
   });

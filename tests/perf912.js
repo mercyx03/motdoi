@@ -11,7 +11,7 @@ for (const l of lives) {
   let rows; try { rows = E.actions(l); } finally { JSON.parse = parse; }
   ok(JSON.stringify(l) === before, 'listing actions never changes the save (age ' + l.age + ')');
   ok(parses <= 4, 'actions listing clones the save at most a few times, not per action (' + parses + ')');
-  ok(rows.length === E.ACT.length && rows.every(r => r.ok === true || typeof r.ok === 'string'), 'every action has a state');
+  ok(rows.length <= E.ACT.length && rows.length >= E.ACT.length - 5 /* era902 ẩn hành động chưa tồn tại ở năm sống */ && rows.every(r => r.ok === true || typeof r.ok === 'string'), 'every action has a state');
   ok(JSON.stringify(E.actions(l)) === JSON.stringify(rows), 'listing is deterministic');
   const times = []; for (let i = 0; i < 7; i++) { const t = process.hrtime.bigint(); E.actions(l); times.push(Number(process.hrtime.bigint() - t) / 1e6); }
   times.sort((a, b) => a - b); const median = times[3];

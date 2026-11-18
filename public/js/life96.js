@@ -154,20 +154,20 @@
   SC('hv_nang_cao', {
     title: 'Cử đi học nâng cao',
     prep: function (l) { return { u: uni(l) }; },
-    valid: function (l) { return !!uni(l) && l.job.rank >= 3 && l.job.rank <= 5 && !l.flags.midAcad && !l.flags.midAcadStudy; },
+    valid: function (l) { return !!uni(l) && l.job.rank >= 3 && (l.job.rank <= 5 || uni(l)==='cong_an') && !l.flags.midAcad && !l.flags.midAcadStudy; },
     text: function (l, d) { return 'Bạn mang quân hàm ' + E.jobTitle(l) + ', được đơn vị đề xuất cử đi học 2 năm. Muốn được bổ nhiệm cấp cao hơn, gần như ai cũng phải qua lớp đào tạo này.'; },
     opts: [0, 1].map(function (i) { return { k: 'h' + i, l: function (l, d) { var m = MID[d.u || uni(l) || 'quan_doi'][i]; return 'Học ' + m[1]; }, h: function (l, d) { return MID[d.u || uni(l) || 'quan_doi'][i][2]; }, ai: { w: 1, amb: 1 }, run: function (l, r, log, d) { if (l.flags.midAcad || l.flags.midAcadStudy) return; var track = uni(l), m = MID[track][i]; l.flags.midAcadStudy = { id: m[0], n: m[1], track: track, at: l.age, until: l.age + 2 }; log('Bắt đầu khóa học hai năm tại ' + m[1] + ', ' + m[2] + '.', 'big'); } }; }).concat([
       { k: 'thoi', l: 'Xin ở lại đơn vị, chưa đi học', ai: { w: 0.3 }, run: function (l, r, log) { l.flags.midAcadNo = (l.flags.midAcadNo || 0) + 1; log('Bạn xin ở lại đơn vị. Cơ hội thăng tiến lên cấp cao vì thế mà chậm lại.', 'neutral'); } }])
   });
-  E.TRIG.push({ id: 'hv_nang_cao', when: function (l, a) { return !!uni(l) && l.job.rank >= 3 && l.job.rank <= 5 && !l.flags.midAcad && !l.flags.midAcadStudy && (l.flags.midAcadNo || 0) < 2 && !(l.jailUntil != null && a < l.jailUntil); }, p: 0.35, cd: 3, max: 3 });
+  E.TRIG.push({ id: 'hv_nang_cao', when: function (l, a) { return !!uni(l) && l.job.rank >= 3 && (l.job.rank <= 5 || uni(l)==='cong_an') && !l.flags.midAcad && !l.flags.midAcadStudy && (l.flags.midAcadNo || 0) < 2 && !(l.jailUntil != null && a < l.jailUntil); }, p: 0.35, cd: 3, max: 3 });
   SC('hv_quoc_phong', {
     title: function (l) { return uni(l) === 'cong_an' ? 'Lớp cao cấp lý luận chính trị' : 'Học viện Quốc phòng'; },
-    valid: function (l) { return !!uni(l) && l.job.rank === 7 && !!l.flags.midAcad && !l.flags.topAcad; },
+    valid: function (l) { return !!uni(l) && (l.job.rank===7 || uni(l)==='cong_an' && l.job.rank>7) && !!l.flags.midAcad && !(l.flags.topAcad>0); },
     text: function (l) { return uni(l) === 'cong_an' ? 'Là Đại tá, bạn được cử đi học lớp cao cấp lý luận chính trị và bồi dưỡng cán bộ lãnh đạo cấp cao — điều kiện để được xem xét phong hàm cấp tướng.' : 'Là Đại tá, bạn được cử đi học Học viện Quốc phòng — nơi đào tạo cán bộ chiến lược, chiến dịch. Đây là bậc học gần như bắt buộc trước khi được xem xét phong hàm cấp tướng.'; },
     opts: [{ k: 'di', l: 'Đi học', ai: { w: 1.2, amb: 1 }, run: function (l, r, log) { l.flags.topAcad = l.age; log(uni(l) === 'cong_an' ? 'Hoàn thành lớp cao cấp lý luận chính trị.' : 'Tốt nghiệp Học viện Quốc phòng.', 'good'); H.fx(l, { kno: 3 }); } },
       { k: 'thoi', l: 'Không đi, sắp đến tuổi nghỉ hưu', ai: { w: 0.4 }, run: function (l, r, log) { l.flags.topAcad = -1; log('Bạn nhường suất học cho người trẻ hơn.', 'neutral'); } }]
   });
-  E.TRIG.push({ id: 'hv_quoc_phong', when: function (l) { return !!uni(l) && l.job.rank === 7 && !!l.flags.midAcad && !l.flags.topAcad; }, p: 0.4, cd: 2, max: 2 });
+  E.TRIG.push({ id: 'hv_quoc_phong', when: function (l) { return !!uni(l) && (l.job.rank===7 || uni(l)==='cong_an' && l.job.rank>7) && !!l.flags.midAcad && !(l.flags.topAcad>0); }, p: 0.4, cd: 2, max: 2 });
   // điều kiện thăng quân hàm: lên Thượng tá phải qua học viện cấp trung, lên tướng phải qua Học viện Quốc phòng / lớp cao cấp
   var ca = E.canAdvance;
   if (ca) E.canAdvance = function (l, c, yearEnd) {
@@ -186,7 +186,7 @@
       var c = E.jobDef(l), rk = l.job.rank, since = l.job.rankSince != null ? l.job.rankSince : l.age - (l.job.yrs || 0), inRank = l.age - since;
       var rows = c.t.map(function (t, i) { var mark = i < rk ? '✔ ' : i === rk ? '▶ ' : '○ '; var y = i < c.t.length - 1 ? ' → lên ' + c.t[i + 1] + ' sau tối thiểu ' + c.yrs[i] + ' năm' + (i === 5 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'Học viện Chính trị CAND' : 'Học viện Lục quân / Học viện Chính trị') + ')' : i === 7 ? ' (cần qua ' + (uni(l) === 'cong_an' ? 'lớp cao cấp' : 'Học viện Quốc phòng') + ', xét theo chức vụ)' : '') : ''; return mark + t + y; });
       var need = c.yrs[rk] || 0, left = Math.max(0, need - inRank);
-      return 'Quân hàm hiện tại: ' + c.t[rk] + ' (' + inRank + ' năm ở bậc này' + (rk < c.t.length - 1 ? ', còn khoảng ' + left + ' năm nữa đủ niên hạn' : '') + ').\n' + rows.join('\n') + '\nLộ trình mô phỏng trong game: đủ thời gian chưa chắc được thăng hàm; còn cần hoàn thành nhiệm vụ, đủ sức khỏe, học nâng cao và có chức vụ phù hợp.';
+      return 'Quân hàm hiện tại: ' + c.t[rk] + ' (' + inRank + ' năm ở bậc này' + (rk < c.t.length - 1 ? ', còn khoảng ' + left + ' năm nữa đủ niên hạn' : '') + ').\n' + rows.join('\n') + '\nLộ trình trong game: đủ thời gian chưa chắc được thăng hàm; còn cần hoàn thành nhiệm vụ, đủ sức khỏe, học nâng cao và có chức vụ phù hợp.';
     },
     opts: [{ k: 'ok', l: 'Đã hiểu', ai: { w: 1 }, run: function () { } }]
   });

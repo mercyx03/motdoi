@@ -6,8 +6,11 @@
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, N = E.ELITE148;
+  // Fictional settings with dedicated organized-crime storylines in life59.
+  var CONTRACT_SETTINGS = ['IT', 'MX', 'CO', 'JP', 'RU', 'US'];
+  function hasContracts(l) { return CONTRACT_SETTINGS.indexOf(H.resCode(l)) >= 0; }
   function free(l) {
-    return l && l.alive && l.age >= 18 && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military);
+    return l && hasContracts(l) && l.alive && l.age >= 18 && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military);
   }
   function state(l) {
     var s = l.flags.hitman176 || (l.flags.hitman176 = {});
@@ -131,6 +134,7 @@
 
   // Thực hiện hợp đồng
   function executeContract(l, r, log, targetId, taskId, tierId) {
+    if (!free(l)) return false;
     var target = getTarget(l, targetId);
     if (!target) {
       log('Mục tiêu không còn tồn tại hoặc đã rời khỏi tầm ngắm.', 'neutral');
@@ -280,6 +284,19 @@
         };
       });
     });
+
+  var actions = E.actions;
+  E.actions = function (l) {
+    var list = actions.apply(this, arguments);
+    return hasContracts(l) ? list : list.filter(function (a) { return a.id !== 'hitman176'; });
+  };
+  var migrate = E.migrateExt;
+  E.migrateExt = function (l) {
+    if (migrate) migrate(l);
+    if (!hasContracts(l) && l.pending) l.pending = l.pending.filter(function (d) {
+      return !['hitman176', 'hitmanTask176', 'hitmanTier176'].includes(d.id);
+    });
+  };
 
   E.HITMAN176 = {
     state: state,

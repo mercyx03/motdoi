@@ -8,7 +8,7 @@
   function fx(l, o) { H.fx(l, o); }
   function stress(l, d) { if (l.mind) l.mind.stress = U.clamp(l.mind.stress + d, 0, 100); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function mo(l, v) { return H.money(l, v); }
   function free(l) { return l.alive && !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function A(id, g, label, o) { var x = { id: id, g: g, l: label }; for (var k in o) x[k] = o[k]; E.ACT.push(x); }
@@ -20,16 +20,18 @@
   function exes(l) { return l.flags.exList || (l.flags.exList = []); }
   function exWord(l, x) { return x.married ? (x.sex === l.sex ? 'người bạn đời cũ' : x.sex === 'M' ? 'chồng cũ' : 'vợ cũ') : 'người yêu cũ'; }
   function sharedKids(l, x) { return (l.kids || []).filter(function (k) { return k.alive !== false && (k.otherParent === x.name || (x.since != null && k.born >= x.since && k.born <= (x.until != null ? x.until : l.age) && !k.adopted)); }); }
-  E.HOOKS.year.unshift(function (l, r, log, a) {
+  var exYear80 = function (l, r, log, a) {
     if (!l.alive) return;
     var p = l.partner, prev = l.flags.lastP;
     if (prev && (!p || p.name !== prev.name)) {
       var widowed = p && p.name === prev.name && p.alive === false;
-      if (!widowed && !prev.dead && !(E.isDeadPartner && E.isDeadPartner(l, prev))) { /* v7.2: người đã mất không thành "người cũ" */ var L = exes(l); if (!L.some(function (x) { return x.name === prev.name && (!x.uid || !prev.uid || x.uid === prev.uid); })) L.push({ name: prev.name, sex: prev.sex, d: prev.d, married: prev.married, since: prev.since, until: a, inc: prev.inc, job: prev.job, uid: prev.uid }); if (L.length > 6) L.shift(); }
+      if (!widowed && !prev.dead && !(E.isDeadPartner && E.isDeadPartner(l, prev))) { /* v7.2: người đã mất không thành "người cũ" */ var L = exes(l); if (!L.some(function (x) { return x.name === prev.name && (!x.uid || !prev.uid || x.uid === prev.uid); })) L.push({ looks134: prev.looks134, name: prev.name, sex: prev.sex, d: prev.d, married: prev.married, since: prev.since, until: a, inc: prev.inc, job: prev.job, uid: prev.uid }); if (L.length > 6) L.shift(); }
     }
-    l.flags.lastP = p && p.alive !== false ? { name: p.name, sex: p.sex, d: (p.age || a) - a, married: p.status === 'married', since: p.since, inc: p.inc, job: p.job, uid: p.uid110 } : null;
+    if (p && p.alive !== false && E.LOOKS134) E.LOOKS134.partnerLooks(l, p); // ngoại hình được giữ nguyên khi chia tay rồi quay lại
+    l.flags.lastP = p && p.alive !== false ? { looks134: p.looks134, name: p.name, sex: p.sex, d: (p.age || a) - a, married: p.status === 'married', since: p.since, inc: p.inc, job: p.job, uid: p.uid110 } : null;
     if (p && p.alive === false && prev) prev.dead = true;
-  });
+  };
+  E.HOOKS.year.unshift(exYear80); E.EXES80 = { year: exYear80 };
   function candidates(l) { if (l.partner || l.age < 18) return []; return exes(l).filter(function (x) { return !x.closed && !x.dead && !(E.isDeadPartner && E.isDeadPartner(l, x)) && l.age - (x.until || l.age) >= 1 && l.age + (x.d || 0) <= 85; }); }
   SC('quay_lai_cu', {
     title: function (l, d) { return 'Gặp lại ' + d.word; },
@@ -40,7 +42,7 @@
       { k: 'quay_lai', l: 'Cho nhau thêm một cơ hội', ai: { w: 0.8 }, run: function (l, r, log, d) {
         var x = exes(l).filter(function (e) { return e.name === d.n; })[0]; if (!x || l.partner) return;
         var p = 0.45 + (d.kids.length ? 0.2 : 0) - (l.age - x.until > 10 ? 0.15 : 0);
-        if (r() < p) { var np = { name: x.name, sex: x.sex, age: l.age + (x.d || 0), status: 'dating', since: l.age, alive: true, inc: x.inc, job: x.job, reunited: true }; if (H.partnerJob && !np.job) H.partnerJob(l, np, r); l.partner = np; x.closed = true; fx(l, { hap: 8 }); log('Bạn và ' + x.name + ' quyết định quay lại với nhau. ' + (d.kids.length ? 'Các con vui nhất nhà khi thấy bố mẹ lại đi chung.' : 'Lần này cả hai đều trưởng thành hơn.') + (x.married ? ' Hai người tính chuyện tái hôn khi mọi thứ ổn định.' : ''), 'big'); H.mem(l, 'Ngày quay lại với ' + x.name + '.', 4); }
+        if (r() < p) { var np = { name: x.name, sex: x.sex, age: l.age + (x.d || 0), status: 'dating', since: l.age, alive: true, inc: x.inc, job: x.job, reunited: true }; if (x.looks134 == null && E.LOOKS134) x.looks134 = E.LOOKS134.partnerLooks(l, { name: x.name, since: x.since, age: x.since != null ? x.since + (x.d || 0) : null }); if (x.looks134 != null) np.looks134 = x.looks134; if (H.partnerJob && !np.job) H.partnerJob(l, np, r); l.partner = np; x.closed = true; fx(l, { hap: 8 }); log('Bạn và ' + x.name + ' quyết định quay lại với nhau. ' + (d.kids.length ? 'Các con vui nhất nhà khi thấy bố mẹ lại đi chung.' : 'Lần này cả hai đều trưởng thành hơn.') + (x.married ? ' Hai người tính chuyện tái hôn khi mọi thứ ổn định.' : ''), 'big'); H.mem(l, 'Ngày quay lại với ' + x.name + '.', 4); }
         else { x.closed = true; fx(l, { hap: -3 }); log('Gặp lại vài lần, bạn và ' + x.name + ' nhận ra mọi thứ đã khác. Hai người chúc nhau bình yên.', 'neutral'); }
       } },
       { k: 'ban', l: function (l, d) { return d.kids.length ? 'Chỉ làm bạn, cùng nhau chăm con' : 'Chỉ làm bạn, hỏi thăm nhau'; }, ai: { w: 1 }, run: function (l, r, log, d) { (l.kids || []).forEach(function (k) { if (d.kids.indexOf(k.name) >= 0) k.close = U.clamp((k.close || 50) + 4, 0, 100); }); fx(l, { hap: 2 }); log(d.kids.length ? 'Bạn và ' + d.n + ' giữ quan hệ bạn bè, cùng đi họp phụ huynh, cùng tổ chức sinh nhật cho con.' : 'Bạn và ' + d.n + ' thỉnh thoảng hỏi thăm nhau như những người bạn cũ.', 'neutral'); } },
@@ -117,7 +119,7 @@
   E.HOOKS.year.unshift(function (l, r, log, a) { // đầu danh sách: độc lập với các hook khác
     if (!l.job) { l.flags.rankSeen = null; return; }
     var S = l.flags.rankSeen, id = E.resolveJob(l.job.id), rk = l.job.rank || 0;
-    if (S && S.id === id && rk > S.rk && !l.job.fam) { var c = E.jobDef(l); if (c && !c.fame && c.skillRank == null) { var why = []; why.push('đủ ' + (S.need || 3) + ' năm kinh nghiệm ở vị trí cũ'); if (l.st.kno >= 70) why.push('kiến thức vững'); if (l.focus === 'work') why.push('tập trung cho công việc'); if ((l.job.rep || 50) >= 65) why.push('uy tín tốt trong nghề'); log('Lý do được thăng chức: ' + why.join(', ') + '.', 'neutral'); } }
+    if (S && S.id === id && rk > S.rk && !l.job.fam) { var c = E.jobDef(l); if (c && !c.fame && c.skillRank == null) { var why = []; why.push('đủ ' + (S.need || 3) + ' năm kinh nghiệm ở vị trí cũ'); if (l.st.kno >= 70) why.push('kiến thức vững'); if (l.focus === 'work') why.push('tập trung cho công việc'); if ((l.job.rep || 50) >= 65) why.push('uy tín tốt trong nghề'); log(E.stamp(l, 'Lý do được thăng chức: ' + why.join(', ') + '.'), 'neutral'); } }
     var cc = E.jobDef(l); l.flags.rankSeen = { id: id, rk: rk, need: cc && cc.yrs ? cc.yrs[rk] || 3 : 3 };
   });
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

@@ -40,17 +40,17 @@
     return true;
   }
   // Xét visa khi đặt chuyến tới nước cần thị thực: một lần mỗi năm cho mỗi nước, kết quả cố định theo năm.
-  function decide(l, code, log) {
+  function decide(l, code, log, accompanied) {
     var s = st(l), e = entry(l, code); if ((e.kind !== 'visa' && e.kind !== 'evisa') || validVisa(l, code)) return true;
     if (s.denied[code] === l.age) return 'Visa ' + name(code) + ' đã bị từ chối năm nay; có thể nộp lại năm sau';
     var ok = roll(l, code) < Math.min(0.95, chance(l, code) + (e.kind === 'evisa' ? 0.15 : 0));
     if (ok) { s.visas[code] = { at: l.age, until: l.age + 1 }; if (log) log('Được cấp visa du lịch ' + name(code) + '.', 'good'); return true; }
-    s.denied[code] = l.age; H.cash(l, -l.base * (e.kind === 'evisa' ? BAL.evisaFee : BAL.visaFee), e.kind === 'evisa' ? 'Lệ phí e-visa (không hoàn)' : 'Lệ phí visa (không hoàn)');
+    s.denied[code] = l.age; var charge=l.base*(e.kind==='evisa'?BAL.evisaFee:BAL.visaFee); if(accompanied)E.childExpense(l,charge,'Lệ phí visa gia đình',false,true);else H.cash(l,-charge,'Lệ phí visa (không hoàn)');
     return 'Visa ' + name(code) + ' chưa được chấp thuận (hồ sơ tài chính/việc làm chưa đủ thuyết phục); lệ phí không hoàn, có thể nộp lại năm sau';
   }
 
   // ---------- hộ chiếu của người chơi ----------
-  X.menu('passport918', 'Hộ chiếu và đi lại', function (l) { return X.reason(l, 14); }, function (l) {
+  X.menu('passport918', 'Hộ chiếu và đi lại', function (l) { return X.reason(l, 4); }, function (l) {
     var s = st(l), p = passport(l);
     return 'Hộ chiếu: ' + (p ? 'còn hạn đến khi bạn ' + p.until + ' tuổi' + (p.inferred ? ' (ghi nhận từ các chuyến đi trước)' : '') : s.pending ? 'đang chờ cấp' : 'chưa có hoặc đã hết hạn') + '. ' +
       (home(l) === 'VN' ? 'Hộ chiếu phổ thông từ 14 tuổi có hạn 10 năm; lệ phí ' + H.money(l, fee(l)) + '. ' : '') +
@@ -58,9 +58,20 @@
       (Object.keys(s.denied).length ? '\nVisa bị từ chối: ' + Object.keys(s.denied).map(function (c) { return name(c) + ' (' + s.denied[c] + ' tuổi)'; }).join(', ') + '.' : '') +
       (s.trips.length ? '\nChuyến đi gần đây: ' + s.trips.slice(-4).map(function (t) { return name(t.code) + ' (' + t.age + ' tuổi' + (t.kids ? ', cùng ' + t.kids + ' con' : '') + ')'; }).join(', ') + '.' : '');
   }, function (l) {
-    var s = st(l), p = passport(l), out = [];
-    out.push({ k: 'pp', l: (p ? 'Làm lại' : 'Làm') + ' hộ chiếu', h: 'Lệ phí ' + H.money(l, fee(l)) + ' · cấp trong năm sau', why: s.pending ? 'Đang chờ cấp' : p && p.until - l.age > 1 ? 'Hộ chiếu còn hạn' : l.money < fee(l) ? 'Chưa đủ tiền lệ phí' : true,
-      run: function (l, r, log) { var q = st(l); if (q.pending || passport(l) && passport(l).until - l.age > 1 || l.money < fee(l)) return; H.cash(l, -fee(l), 'Lệ phí hộ chiếu'); q.pending = { at: l.age }; log('Nộp hồ sơ cấp hộ chiếu.', 'neutral'); } });
+    var s = st(l), p = passport(l), out = [], minor=l.age<18,guardian=l.fam.mAlive&&!l.fam.noMom||l.fam.fAlive&&!l.fam.noDad;
+    if(minor&&!guardian)return [{k:'wait',l:'Chờ người giám hộ thu xếp giấy tờ',run:function(l,r,log){log('Chưa có người đi cùng và đứng ra lo chuyến đi.','neutral');}}];
+    if(minor)['JP','FR','US','TH','GB','VN'].filter(c=>c!==home(l)).forEach(function(code){
+      var cost=l.base*BAL.tripPerson*2;
+      out.push({k:'accompany:'+code,l:'Đi '+name(code)+' cùng gia đình',h:'Người lớn đi cùng, ngân sách hai người '+H.money(l,cost),why:l.abroad?'Đang ở nước ngoài':s.famAt===l.age?'Đã đi cùng gia đình năm nay':why(l,code),run:function(l,r,log){
+        if(why(l,code)!==true||s.famAt===l.age)return;
+        var visa=decide(l,code,log,true);if(visa!==true){log(visa,'neutral');return;}
+        var pay=E.childExpense(l,cost,'Du lịch cùng người lớn',false,true);log(pay.note,'neutral');if(!pay.ok)return;
+        s.famAt=l.age;s.trips.push({code:code,age:l.age,ok:true,guardian:true});s.trips=s.trips.slice(-20);
+        H.mem(l,'Cùng gia đình đi '+name(code)+' rồi trở về nhà.',3);H.fx(l,{hap:4});log('Bạn khám phá '+name(code)+' cùng người lớn trong kỳ nghỉ.','good');
+      }});
+    });
+    out.push({ k: 'pp', l: (p ? 'Làm lại' : 'Làm') + ' hộ chiếu', h: 'Lệ phí ' + H.money(l, fee(l)) + ' · cấp trong năm sau', why: s.pending ? 'Đang chờ cấp' : p && p.until - l.age > 1 ? 'Hộ chiếu còn hạn' : !minor && l.money < fee(l) ? 'Chưa đủ tiền lệ phí' : true,
+      run: function (l, r, log) { var q = st(l); if (q.pending || passport(l) && passport(l).until - l.age > 1 || !minor&&l.money<fee(l)) return; if(minor){var pay=E.childExpense(l,fee(l),'Hộ chiếu trẻ em',false,true);log(pay.note,'neutral');if(!pay.ok)return;}else H.cash(l,-fee(l),'Lệ phí hộ chiếu'); q.pending = { at: l.age }; log('Nộp hồ sơ cấp hộ chiếu.', 'neutral'); } });
     Object.keys(VISA_FREE_VN).forEach(function (code) {
       if (home(l) !== 'VN') return;
       var kids = (l.kids || []).filter(function (k) { return k.alive !== false && l.age - k.born < 18 && !(k.custody === 'other' || k.custody === 'ex'); });
@@ -71,7 +82,7 @@
         run: function (l, r, log) { var q = st(l); if (q.famAt === l.age || l.money < cost || why(l, code) !== true) return; q.famAt = l.age; H.cash(l, -cost, 'Du lịch gia đình ' + name(code)); H.fx(l, { hap: 5 }); kids.forEach(function (k) { k.close = U.clamp((k.close || 60) + 3, 0, 100); }); q.trips.push({ code: code, age: l.age, ok: true, kids: kids.length }); q.trips = q.trips.slice(-20); H.mem(l, 'Chuyến du lịch ' + name(code) + ' cùng các con.', 3); log('Cả nhà đi du lịch ' + name(code) + ' vài ngày rồi về; các con mang hộ chiếu riêng.', 'good'); } });
     });
     return out;
-  }, 14, 'Đời sống');
+  }, 4, 'Đời sống');
 
   // ---------- gói du lịch life62: kiểm hộ chiếu và xét visa trước khi thu tiền ----------
   var C = E.WORLD120;

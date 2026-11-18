@@ -89,12 +89,34 @@
     tx_cn: [['tai_xe_tai', 1, 0.1, 0, 'Có người giới thiệu chỗ lái xe tải đường dài, thu nhập khá hơn.']],
     kd_tu_do: [['chu_dau_tu', 0, 8, 2, 'Công ty làm ăn tốt, bạn tính lấn sân đầu tư bất động sản.']]
   };
+  // Chuyển ngang giữa các nghề gần nhau (không cần vốn): nhóm nghề lao động dịch vụ và nhóm văn phòng thương mại. Nghề cần chứng chỉ, ngạch nhà nước, danh tiếng hay phi pháp không nằm trong đây.
+  var LATERAL = {
+    labor: ['worker', 'poor', 'farm', 'service', 'beauty'],
+    office: ['office', 'sale', 'biz', 'free']
+  };
+  function lateralFamily(c) { for (var f in LATERAL) if (LATERAL[f].indexOf(c.cat) >= 0) return f; return null; }
+  function lateralFor(l) {
+    var cur = jid(l), c = cur && E.CAR[cur]; if (!c || c.hidden || c.owner || c.fame || c.crime || c.skillRank != null || !E.jobEligible) return null;
+    var fam = lateralFamily(c); if (!fam) return null;
+    var tired = (l.st.hap < 55 || (l.mind && l.mind.stress > 60)), long = l.job.yrs >= 8;
+    if (!tired && !long) return null; // chuyển ngang khi chán nản, kiệt sức hoặc đã làm rất lâu một chỗ
+    var pool = Object.keys(E.CAR).filter(function (id) {
+      var t = E.CAR[id]; return id !== cur && !t.hidden && !t.owner && !t.fame && !t.crime && t.skillRank == null && lateralFamily(t) === fam && t.t.length >= 2 && (!t.maxAge || l.age <= t.maxAge) && E.jobEligible(l, t) && !(t.edu > c.edu + 1);
+    }).sort(); // sắp xếp để kết quả ổn định giữa các lần gọi trong cùng một năm
+    if (!pool.length) return null;
+    var h = { rs: (l.rs ^ Math.imul(l.age + 1, 2654435761) ^ Math.imul(l.job.yrs + 7, 40503)) | 0 }, to = pool[Math.floor(U.rand(h) * pool.length)], t2 = E.CAR[to];
+    var rk = Math.min(t2.t.length - 1, rank(l) >= 2 ? 1 : 0), why = tired
+      ? 'Công việc ' + E.jobTitle(l).toLowerCase() + ' đã làm bạn mệt mỏi; một người quen giới thiệu chỗ ' + t2.t[rk].toLowerCase() + ' ở nơi khác. Lương có thể thấp hơn lúc đầu và bạn phải học lại việc.'
+      : 'Làm ' + E.jobTitle(l).toLowerCase() + ' nhiều năm, bạn có cơ hội sang làm ' + t2.t[rk].toLowerCase() + '. Công việc mới ít quen thuộc nhưng có thể mở ra hướng đi khác.';
+    return [to, rk, 0, 0, why, 'lateral'];
+  }
   function pathFor(l) {
-    var ps = PATHS[jid(l)]; if (!ps) return null;
-    return ps.filter(function (p) { return rank(l) >= p[3] && !(p[0] === jid(l) && rank(l) >= p[1]); })[0] || null;
+    var ps = PATHS[jid(l)];
+    var p = ps && ps.filter(function (p) { return rank(l) >= p[3] && !(p[0] === jid(l) && rank(l) >= p[1]); })[0];
+    return p || lateralFor(l);
   }
   SC('chuyen_huong', {
-    title: 'Ngã rẽ sự nghiệp', prep: function (l) { var p = pathFor(l); return p ? { to: p[0], rk: p[1], cost: p[2], t: p[4] } : null; },
+    title: 'Ngã rẽ sự nghiệp', prep: function (l) { var p = pathFor(l); return p ? { to: p[0], rk: p[1], cost: p[2], t: p[4], lateral: p[5] === 'lateral' } : null; },
     valid: function (l) { return !!(l.job && pathFor(l)); },
     text: function (l, d) { return d.t + (d.cost ? ' Cần khoảng ' + mb(l, d.cost) + ' vốn ban đầu, hiện bạn có ' + mo(l, l.money) + '.' : ''); },
     opts: [
@@ -182,7 +204,7 @@
         if (ch(r, d.danger * 1.5)) { H.kill(l, 'hy sinh khi làm nhiệm vụ', log, true); return; }
         if (ch(r, 0.3)) { log('Bị đối tượng chống trả, bị thương nặng phải nằm viện nhiều tuần.', 'bad'); fx(l, { hea: -15 }); }
         rep(l, 12); log('Trực tiếp khống chế đối tượng, phá thành công chuyên án. Được đề nghị tặng Huân chương Chiến công.', 'big'); fx(l, { hap: 8, karma: 4 });
-        if (l.job.rank < E.CAR.cong_an.t.length - 1 && ch(r, 0.4) && l.job.yrs >= 1 && (l.job.rank < 7 || !E.canAdvance || E.canAdvance(l, E.CAR.cong_an, false))) { l.job.rank++; l.job.yrs = 0; log('Được thăng quân hàm vượt cấp lên ' + E.CAR.cong_an.t[l.job.rank] + ' nhờ thành tích.', 'big'); }
+        if (l.job.rank < E.CAR.cong_an.t.length - 1 && ch(r, 0.4) && E.canAdvance(l, E.CAR.cong_an, false)) { l.job.rank++; l.job.yrs = 0; l.job.rankSince = l.age; l.job.rankTracked = l.job.rank; log('Được thăng quân hàm vượt cấp lên ' + E.CAR.cong_an.t[l.job.rank] + ' nhờ thành tích.', 'big'); }
         H.mem(l, 'Chuyên án năm ' + yr(l) + ' — lần bạn đi đầu đối mặt với tội phạm.', 6);
         if (d.b === 'mt' || d.b === 'hs') l.flags.revenge = (l.flags.revenge || 0) + 1;
       } },
@@ -466,7 +488,7 @@
       { k: 'campaign', l: 'Đi khắp địa bàn, lắng nghe cử tri', ai: { w: 1.4, soc: 1 }, run: function (l, r, log) {
         var p = U.clamp(0.5 + (l.st.soc - 50) / 120 + (l.karma || 0) / 200 + (l.flags.eliteBoost ? 0.15 : 0), 0.2, 0.92);
         fx(l, { hea: -3 });
-        if (ch(r, p)) { l.flags.daibieu = (l.flags.daibieu || 0) + 1; log(isVN(l) ? 'Trúng cử đại biểu Quốc hội với số phiếu cao.' : 'Thắng cử sát nút!', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Đêm nghe công bố kết quả bầu cử năm ' + yr(l) + '.', 5); if (rank(l) < E.CAR[jid(l)].t.length - 1 && ch(r, 0.4) && (jid(l) !== 'chinh_tri' || rank(l) < 6 || !E.canAdvance || E.canAdvance(l, E.CAR[jid(l)], false))) { l.job.rank++; l.job.yrs = 0; log('Được giao trọng trách mới: ' + E.jobTitle(l) + '.', 'big'); } }
+        if (ch(r, p)) { l.flags.daibieu = (l.flags.daibieu || 0) + 1; log(isVN(l) ? 'Trúng cử đại biểu Quốc hội với số phiếu cao.' : 'Thắng cử sát nút!', 'big'); fx(l, { hap: 8 }); H.mem(l, 'Đêm nghe công bố kết quả bầu cử năm ' + yr(l) + '.', 5); if (rank(l) < E.CAR[jid(l)].t.length - 1 && ch(r, 0.4) && ((!E.CAR[jid(l)].ladder && (jid(l) !== 'chinh_tri' || rank(l) < 6)) || E.canAdvance(l, E.CAR[jid(l)], false))) { l.job.rank++; l.job.yrs = 0; if(E.CAR[jid(l)].ladder){l.job.rankSince=l.age;l.job.rankTracked=l.job.rank;} log('Được giao trọng trách mới: ' + E.jobTitle(l) + '.', 'big'); } }
         else { log(isVN(l) ? 'Không trúng cử lần này.' : 'Thất cử.', 'bad'); fx(l, { hap: -6 }); }
       } },
       { k: 'money', l: 'Chi tiền "vận động" ngầm', ai: { bad: 1.3, risk: 1 }, run: function (l, r, log) { cashB(l, -1, 'Chi phí vận động'); fx(l, { karma: -8 }); l.flags.dirty = (l.flags.dirty || 0) + 1; if (ch(r, 0.6)) { l.flags.daibieu = (l.flags.daibieu || 0) + 1; log('Trúng cử. Ai cũng biết cái giá của nó.', 'neutral'); } else log('Mất tiền mà vẫn thất cử.', 'bad'); } },

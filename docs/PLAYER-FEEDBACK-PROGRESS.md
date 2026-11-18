@@ -83,3 +83,7 @@ Kiểm thử mốc E: feedback-e 75 · integration-feedback 1.132–1.142 (số 
 - Mốc C: commit `e1fd93f` (`feat(feedback-c)`).
 - Mốc D: commit `15a3441` (`feat(feedback-d)`).
 - Mốc E + tích hợp: commit xem lịch sử nhánh (`feat(feedback-e)`). Các commit B, C, D chưa kèm `dist.zip` (bản dựng chạy sau commit); commit cuối kèm bản dựng cuối cùng.
+
+## Rà soát thi thử và dự báo — 8.10.54
+
+Đã triển khai mô hình từng môn chung, bỏ cộng điểm/tâm lý ẩn, migration một lần và nhóm trường mô phỏng. Kiểm thử trọng điểm, cân bằng và nghiệm thu artifact được ghi tại [EXAM-REVIEW-PROGRESS.md](EXAM-REVIEW-PROGRESS.md); công thức tại [EXAM-MODEL.md](EXAM-MODEL.md). Chỉ Preview; chưa nghiệm thu toàn diện.

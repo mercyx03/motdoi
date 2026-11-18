@@ -23,7 +23,9 @@ function pct(v){return Math.round(v*1000)/10+'%';}
 function share(v){return Math.round(v*10)/10;}
 function ensure(c){if(!SECTORS[c.sector])c.sector='general';if(!c.roles||typeof c.roles!=='object')c.roles={};if(typeof c.payout!=='number')c.payout=.5;if(!(c.peak>=c.value))c.peak=c.value;return c;}
 function randomSector(r){var k=Object.keys(SECTORS).filter(function(k){return k!=='general';});return k[Math.floor(r()*k.length)%k.length];}
-function pay(l,c,kind){var k=KINDS[kind];return k?l.base*k.pay+Math.max(0,c.value)*(kind==='relative'?.001:k.rate):0;}
+// Lương ban điều hành theo quy mô công ty: công ty nhỏ không trả mức lương của tập đoàn (trước đây bổ nhiệm một giám đốc vào công ty vốn vài trăm triệu làm lỗ 35–60% vốn mỗi năm, năm nào cũng lỗ).
+function sizeK(l,c){return U.clamp(Math.max(0,(c&&c.value)||0)/(l.base*12),.08,1);}
+function pay(l,c,kind){var k=KINDS[kind];return k?l.base*k.pay*sizeK(l,c)+Math.max(0,c.value)*(kind==='relative'?.001:k.rate):0;}
 function selfSkill(l){return U.clamp(((l.st.kno||0)*.5+(l.st.soc||0)*.3)/100+(l.edu>=7?.15:l.edu>=5?.1:0),.1,.9);}
 // Tác động tổng hợp của ban điều hành lên một công ty.
 function effects(l,c){if(E.BUSINESS137)E.BUSINESS137.refreshRoles(l,c);var f={m:0,sd:1,loss:1,g:0,opp:0,cost:0},roles=ensure(c).roles;Object.keys(ROLES).forEach(function(id){var x=roles[id];if(!x)return;var s=x.kind==='self'?selfSkill(l):x.skill;f.cost+=E.LEADERS169?E.LEADERS169.pay(l,c,x):pay(l,c,x.kind);if(id==='ceo')f.m+=(s-.35)*.05;if(id==='cfo'){f.sd*=1-.3*s;f.loss*=1-.4*s;}if(id==='coo')f.m+=(s-.3)*.025;if(id==='cso'){f.g+=s*.02;f.opp+=s*.05;}});if(!roles.ceo)f.m-=.005;return f;}
@@ -35,12 +37,13 @@ E.startJob=function(l,id,r,log,quiet){if(seated(l)&&E.resolveJob(id)!==CHAIR){if
 function groupFormed(l,r,log){takeSeat(l,r,log);C.queue(l,'groupSector133',r);if(E.BUSINESS137)C.queue(l,'companyName137',r,{group:true});}
 // Lợi nhuận hằng năm: vốn × biên ngành ± biến động, trừ lương ban điều hành; lỗ làm giảm vốn.
 function companyYear(l,r,log){var q=S(l),crisis=q.crisis&&q.crisis.until>l.age,team=E.assetTeam123&&E.assetTeam123(l),core=q.group&&q.group.sector,total=0,notes=[];
- active(l).forEach(function(c){ensure(c);if(c.lastAt===l.age)return;if(E.TREASURY165)E.TREASURY165.ensure(l,c);if(E.DEALS166)E.DEALS166.year(l,c,r,log);if(E.LEADERS169)E.LEADERS169.year(l,c,r,log);if(E.EDUCATION170)E.EDUCATION170.internYear(l,c,r,log);var ops=E.OPERATIONS168?E.OPERATIONS168.impact(l,c):null;var s=sec(c),f=effects(l,c),ctrl=c.share>50,gf=ctrl&&q.group?q.groupEffect137:null;if(gf){f.m+=gf.m*.5;f.sd*=gf.sd;f.loss*=gf.loss;f.g+=gf.g*.5;f.opp+=gf.opp*.5;}var m=(ops?ops.margin:0)+s.m+(c.governance||0)*.004+f.m+s.sd*f.sd*U.clamp(U.normal(r),-2.5,2.5)-(crisis?.04*s.cyc:0)+(core?(c.sector===core?.01:-.003):0);
+ active(l).forEach(function(c){ensure(c);if(c.lastAt===l.age)return;if(E.TREASURY165)E.TREASURY165.ensure(l,c);if(E.DEALS166)E.DEALS166.year(l,c,r,log);if(E.LEADERS169)E.LEADERS169.year(l,c,r,log);if(E.EDUCATION170)E.EDUCATION170.internYear(l,c,r,log);if(E.FOOTBALL_BUS959)E.FOOTBALL_BUS959.season(l,c,r,log);var ops=E.OPERATIONS168?E.OPERATIONS168.impact(l,c):null;var s=sec(c),f=effects(l,c),ctrl=c.share>50,gf=ctrl&&q.group?q.groupEffect137:null;if(gf){f.m+=gf.m*.5;f.sd*=gf.sd;f.loss*=gf.loss;f.g+=gf.g*.5;f.opp+=gf.opp*.5;}var m=(ops?ops.margin:0)+s.m+(c.governance||0)*.004+f.m+s.sd*f.sd*U.clamp(U.normal(r),-2.5,2.5)-(crisis?.04*s.cyc:0)+(core?(c.sector===core?.01:-.003):0);
   var opp=r()<s.opp+f.opp,shock=!opp&&r()<.04*s.cyc;if(opp){m+=s.sd*1.2;notes.push(c.name+' trúng hợp đồng lớn');}if(shock){m-=s.sd*1.5;notes.push(c.name+' gặp cú sốc ngành');}
-  var fresh=c.fresh&&c.fresh.until>l.age?c.fresh.amt*.6:0,overhead=f.cost+(c.chairCost137||0)+(c.groupCost137||0),profit=Math.max(0,c.value-fresh)*m-overhead-(ops?ops.payroll-ops.baselinePayroll+ops.nonCash:0);c.chairCost137=0;c.groupCost137=0;
+  var fresh=c.fresh&&c.fresh.until>l.age?c.fresh.amt*.6:0,overhead=f.cost+(c.chairCost137||0)+(c.groupCost137||0),clubBook=E.FOOTBALL_BUS959?E.FOOTBALL_BUS959.book(c):0,profit=Math.max(0,c.value-fresh-clubBook)*m-overhead-(ops?ops.payroll-ops.baselinePayroll+ops.nonCash:0);c.chairCost137=0;c.groupCost137=0;
   Object.keys(c.roles).forEach(function(id){var x=c.roles[id];if(x.kind==='relative'&&r()<.05*(1-x.skill)){profit-=c.value*.03;notes.push(c.name+': '+ROLES[id].n+' để thất thoát vốn');}});
+  if(E.BIZ874)profit=E.BIZ874.talent(l,c,profit);
   if(E.TREASURY165){var settlement=E.TREASURY165.settle(l,c,profit,f.loss*(team?.75:1),overhead,ops);profit=settlement.profit;total+=settlement.dividend*c.share/100*.95;}else if(profit>=0){var div=profit*(ctrl?c.payout:.4);c.value+=profit-div;total+=div*c.share/100*.95;}else c.value=Math.max(0,c.value+profit*f.loss*(team?.75:1));
-  var beforeGrowth=c.value;if(c.value>0)c.value*=1+s.g*(r()*1.4-.2)*(profit>0?1:.3)+f.g*(profit>0?1:0);
+  var beforeGrowth=c.value;if(c.value>0){var growth=s.g*(r()*1.4-.2)*(profit>0?1:.3)+f.g*(profit>0?1:0);if(clubBook)c.value+=Math.max(0,c.value-clubBook)*growth;else c.value*=1+growth;}
   c.value=Math.round(c.value*100)/100;c.lastProfit=Math.round(profit*100)/100;c.lastAt=l.age;c.peak=Math.max(c.peak||0,c.value);
   if(E.TREASURY165)E.TREASURY165.finish(l,c,beforeGrowth);
   if(c.value<c.peak*.05){c.merged=true;c.bankrupt=l.age;notes.push(c.name+' mất gần hết vốn và giải thể');}});

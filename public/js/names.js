@@ -130,9 +130,9 @@
     car: { M: 'Andre,Jamal,Shane,Kevin,Tyrone,Marlon,Dwayne,Ricardo,Kemar,Rohan,Damion,Jerome,Omari,Shamar',
       F: 'Shanice,Kerry-Ann,Tamika,Keisha,Monique,Simone,Latoya,Ashanti,Renee,Natalia,Gabrielle,Alicia,Jada,Tiana',
       L: 'Brown,Williams,Campbell,Thompson,Clarke,Reid,Grant,Henry,Bailey,Richards,Joseph,Charles,Gordon,Edwards,Francis,Scott' },
-    es: { style: 'double', M: 'Hugo,Martín,Lucas,Mateo,Leo,Daniel,Alejandro,Pablo,Manuel,Álvaro,Javier,Antonio,José,David,Sergio,Jorge',
-      F: 'Lucía,Sofía,Martina,María,Julia,Paula,Valeria,Emma,Daniela,Carmen,Laura,Ana,Elena,Isabel,Marta,Alba',
-      L: 'García,Rodríguez,González,Fernández,López,Martínez,Sánchez,Pérez,Gómez,Martín,Jiménez,Ruiz,Hernández,Díaz,Moreno,Muñoz,Álvarez,Romero,Navarro,Torres' },
+    es: { style: 'double', M: 'Javier,Alejandro,David,Daniel,Manuel,Pablo,Álvaro,Adrián,Hugo,Marcos,Diego,Lucas,Mateo,Leo,Martín,Sergio,Jorge,Iván,Carlos,Miguel,Antonio,José,Juan,Andrés,Fernando,Francisco',
+      F: 'Lucía,Sofía,Martina,María,Paula,Julia,Daniela,Valeria,Alba,Sara,Noa,Inés,Elena,Marta,Laura,Claudia,Carmen,Irene,Ana,Eva,Isabel,Teresa,Beatriz,Mercedes',
+      L: 'García,Rodríguez,González,Fernández,López,Martínez,Sánchez,Pérez,Gómez,Martín,Jiménez,Ruiz,Hernández,Díaz,Moreno,Muñoz,Álvarez,Romero,Alonso,Gutiérrez,Navarro,Torres' },
     es_la: { style: 'double', M: 'Santiago,Mateo,Sebastián,Matías,Diego,Nicolás,Alejandro,Samuel,Daniel,José,Juan,Luis,Carlos,Miguel Ángel,Emiliano,Jesús,Andrés,Gabriel',
       F: 'Sofía,Valentina,Isabella,Camila,Valeria,Mariana,Gabriela,Daniela,María José,Ximena,Luciana,Victoria,Fernanda,Guadalupe,Ana,Paola',
       L: 'García,Rodríguez,Martínez,Hernández,López,González,Pérez,Sánchez,Ramírez,Torres,Flores,Rivera,Gómez,Díaz,Cruz,Morales,Reyes,Gutiérrez,Ortiz,Castillo,Rojas,Vargas,Mendoza,Quispe,Mamani' },
@@ -241,9 +241,53 @@
 
   function parts(entry) { var a = entry.split(':'); return { lat: a[0], nat: a[1] || '', hv: a[2] || '' }; }
 
+  // Structured surnames keep internal spaces, y and hyphens intact through generations.
+  var ES970 = {
+    M: ['Juan Carlos','José Luis','José Manuel','Miguel Ángel','Juan José','Francisco Javier','José Antonio','Carlos Alberto'],
+    F: ['María Teresa','María José','Ana María','María Carmen','María Isabel','María del Mar','María Dolores','Ana Belén'],
+    rare: ['Del Bosque','Palacios','Blanco','Del Río','Sierra','Vega','Robles','Campos','Fuentes','Flores','Castillo','Valle','Soler','Pujol','Roca'],
+    compound: ['Silva y Mendoza','García-López','Pérez-Reverte','Ruiz-Gallardón','Fernández de la Vega','Álvarez de Toledo']
+  };
+  function spanishSurname(r) { var n = r(); return G.U.pick(r, n < .7 ? P.es.La : n < .9 ? ES970.rare : ES970.compound); }
+  function spanishGiven(r, sex) { return G.U.pick(r, r() < .7 ? (sex === 'F' ? P.es.Fa : P.es.Ma) : ES970[sex === 'F' ? 'F' : 'M']); }
+  function spanishName(given, first, second, joiner) {
+    var p = { given: given, first: first, second: second || '', joiner: joiner === ' y ' ? ' y ' : ' ' };
+    p.full = given + ' ' + first + (second ? p.joiner + second : ''); return p;
+  }
+  function spanishParse(name, hint) {
+    name = String(name || '').trim();
+    if (hint && hint.full === name && hint.first && hint.given) return Object.assign({}, hint);
+    var all = P.es.La.concat(ES970.rare, ES970.compound).sort(function(a,b){return b.length-a.length;}), found;
+    // Try both complete surname units before interpreting an inter-surname connector.
+    for (var i=0;i<all.length;i++) for (var j=0;j<all.length;j++) for (var k=0;k<2;k++) {
+      var join = k ? ' y ' : ' ', suffix = ' '+all[i]+join+all[j];
+      if (name.endsWith(suffix) && name.length>suffix.length) return spanishName(name.slice(0,-suffix.length),all[i],all[j],join);
+    }
+    var words=name.split(/\s+/), given=ES970.M.concat(ES970.F,P.es.Ma,P.es.Fa).sort(function(a,b){return b.length-a.length;}).find(function(g){return name.startsWith(g+' ');});
+    if (given) {
+      var rest=name.slice(given.length+1);
+      found=all.find(function(s){return rest.startsWith(s+' ');});
+      if(found) return spanishName(given,found,rest.slice(found.length+1).replace(/^y /,''),rest.slice(found.length).startsWith(' y ')?' y ':' ');
+    }
+    if(words.length<3)return null;
+    return spanishName(words.slice(0,-2).join(' '),words[words.length-2],words[words.length-1]);
+  }
+  function spanishChild(r, sex, father, mother, order, joiner, given) {
+    father = father && (typeof father === 'string' ? spanishParse(father) : father);
+    mother = mother && (typeof mother === 'string' ? spanishParse(mother) : mother);
+    var first=father&&father.first||mother&&mother.first||spanishSurname(r),second=mother&&mother.first||father&&father.second||spanishSurname(r);
+    if(!father&&mother)second=mother.second;
+    if(father&&mother&&order==='mother'){first=mother.first;second=father.first;}
+    var p=spanishName(given||spanishGiven(r,sex),first,second,joiner);p.order=father&&mother?(order==='mother'?'mother':'father'):'single';return p;
+  }
+
   // Sinh tên cho một bộ tên. surname: giữ họ (vd con theo họ cha). Trả về {full, sub, sur}
   function worldName(r, poolKey, sex, surname) {
     var U = G.U;
+    if(poolKey==='es') {
+      var es=spanishName(spanishGiven(r,sex),surname&&typeof surname==='object'?surname.first:surname||spanishSurname(r),surname&&typeof surname==='object'?surname.second:spanishSurname(r),surname&&surname.joiner);
+      return {full:es.full,sub:'',sur:es.first,es970:es};
+    }
     if (poolKey === 'vn') {
       var vn = G.VN.vnName(r, 'kinh', sex, surname);
       return { full: vn.full, sub: '', sur: vn.sur };
@@ -286,5 +330,5 @@
     return { full: full, sub: '', sur: sur };
   }
 
-  G.NAMES = { P: P, worldName: worldName, femSur: femSur };
+  G.NAMES = { P: P, worldName: worldName, femSur: femSur, ES970: ES970, spanishSurname: spanishSurname, spanishGiven: spanishGiven, spanishName: spanishName, spanishParse: spanishParse, spanishChild: spanishChild };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

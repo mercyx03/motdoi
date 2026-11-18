@@ -60,7 +60,8 @@ const cases = [
   { name: 'highschool-fallback-continues', run(t, G) {
     // Trượt lớp 10: trượt cả phương án dự phòng hoặc chọn "chờ đợt sau" thì phải còn cơ hội, không bị kẹt ngoài trường mãi
     const E = G.E, ctx = require('./regression-contexts')(G).highFallback125, log = noop;
-    const l = clone(ctx.life); E.DEC.highSchool125.apply(l, E.DEC.highSchool125.make(l, () => 0), '0', () => 0, log); l.pending = [];
+    const hs0 = E.hsExamScore853; E.hsExamScore853 = () => 30; /* điểm thi thấp để trượt nguyện vọng 1 dù đời dựng sẵn học khá */
+    const l = clone(ctx.life); l.school = null; { const w0 = l.flags.world120 || {}; delete w0.highSchool; delete w0.highExam; delete w0.hsExamAt; delete w0.hsFailed; } E.DEC.highSchool125.apply(l, E.DEC.highSchool125.make(l, () => 0), '0', () => 0, log); l.pending = [];
     const p = l.flags.world120 || {};
     if (!t.ok(p.hsFailed, 'dựng được trạng thái trượt nguyện vọng 1')) return;
     p.highExam.score = 50; // đủ điểm để có phương án công lập địa phương
@@ -75,7 +76,7 @@ const cases = [
       t.ok(l.school === 'voc', 'chọn trung cấp nghề thì được đi học');
     }
     // chờ đợt sau → năm sau được xét lại
-    const w = clone(ctx.life); E.DEC.highSchool125.apply(w, E.DEC.highSchool125.make(w, () => 0), '0', () => 0, log); w.pending = [];
+    const w = clone(ctx.life); w.school = null; { const w1 = w.flags.world120 || {}; delete w1.highSchool; delete w1.highExam; delete w1.hsExamAt; delete w1.hsFailed; } E.DEC.highSchool125.apply(w, E.DEC.highSchool125.make(w, () => 0), '0', () => 0, log); w.pending = []; E.hsExamScore853 = hs0;
     const dw = E.DEC.highFallback125.make(w, () => 0.5); E.DEC.highFallback125.apply(w, dw, String(dw.data.keys.indexOf('wait')), () => 0.5, log);
     const hook = E.HOOKS.year.find(fn => String(fn).indexOf('fallbackAt') >= 0);
     if (t.ok(!!hook, 'có cơ chế xét lại năm sau')) { hook(w, () => 0.5, log, w.age); w.age++; w.pending = []; E.beginYear(w, {}); t.ok(w.pending.some(x => x.id === 'highFallback125'), 'năm sau có lại lựa chọn đi học'); }

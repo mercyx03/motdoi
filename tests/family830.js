@@ -22,8 +22,43 @@ for(const opts of variants){
 }
 let abroad=life();abroad.abroad={name:'Nhật Bản',code:'JP',perm:false};ok(!S.localChild(abroad,abroad.kids[0]),'temporary overseas work does not imply child traveled too');let changedMoney=life();E.act(changedMoney,'family100_romance');const startCash=changedMoney.money;changedMoney.abroad={name:'Hoa Kỳ',code:'US',perm:true};E.resolve(changedMoney,'support');ok(changedMoney.money===startCash,'old fee snapshot expires when currency/location changes');let drained=life();E.act(drained,'family100_romance');drained.money=0;E.resolve(drained,'support');ok(drained.money===0,'funds rechecked after prompt without debt');
 // Trait-specific scenes cannot silently switch to a different parent or trait.
-let l=life();l.fam.mTrait='nong_tinh';l.fam.fTrait='coi_mo';let d=add(l,'family100_parent_nong_tinh',{index:'m'});ok(d.text.includes(l.fam.mName),'specific parent in narrative');l.fam.mAlive=false;const social=JSON.stringify(l.flags.family100);E.resolve(l,'listen');ok(JSON.stringify(l.flags.family100)===social,'deceased parent has no dialogue effects');
+let l=life();l.fam.mTrait='nong_tinh';l.fam.fTrait='coi_mo';let d=add(l,'family100_parent_nong_tinh',{index:'m'});ok(d.data.name.includes(l.fam.mName)&&/mẹ/i.test(d.text)&&!d.text.includes(l.fam.mName),'natural dialogue keeps the specific parent identity');l.fam.mAlive=false;const social=JSON.stringify(l.flags.family100);E.resolve(l,'listen');ok(JSON.stringify(l.flags.family100)===social,'deceased parent has no dialogue effects');
 // New automatic scenes genuinely occur in both normal and Hardcore games.
 const hook=E.HOOKS.year.find(f=>/s.lastAuto===a/.test(String(f)))||E.HOOKS.year[E.HOOKS.year.length-1];// hook của module gia đình (life100), không phụ thuộc thứ tự nạp
-for(const opts of variants){let count=0;for(let seed=0;seed<100;seed++){let x=life(opts,840000+seed);hook(x,()=>.5,()=>{},x.age);if(x.pending.some(d=>/^family100_/.test(d.id)))count++;const n=x.pending.length;hook(x,()=>.5,()=>{},x.age);ok(x.pending.length===n,'annual hook cannot enqueue twice');}ok(count>5&&count<60,'automatic drama reached across mode '+opts.mode+'/'+opts.difficulty);}
-console.log('PASS: '+checks+' family interactions, 40 dramas, four real-world variants, stale/dead target guards and budgets.');
+for(const opts of variants){let count=0;for(let seed=0;seed<100;seed++){let x=life(opts,840000+seed);E.STORY971.state(x).mode='full';hook(x,()=>.5,()=>{},x.age);if(x.pending.some(d=>/^family100_/.test(d.id)))count++;const n=x.pending.length;hook(x,()=>.5,()=>{},x.age);ok(x.pending.length===n,'annual hook cannot enqueue twice');}ok(count>5&&count<60,'automatic drama reached in full rhythm across '+opts.mode+'/'+opts.difficulty);}
+// Adult boundaries develop over years. Both menus use the same relationship and contact allowance.
+{
+ const l=life(), k=l.kids[2], say=(t,kind)=>l.log.push({a:l.age,t,k:kind});
+ const review=E.HOOKS.year.find(f=>f.name==='reviewContact');
+ S.info(l,'child',2).trust=45;
+ review(l,()=>.5,say); review(l,()=>.5,say);
+ ok(!S.distant(l,k),'one difficult year is not enough, even after re-running the hook');
+ l.age++; review(l,()=>.5,say);
+ ok(S.distant(l,k)&&!S.distant(l,l.kids[1])&&!l.pending.length,'two years create personal boundaries without a popup');
+ ok(E.act(l,'family100_children'),'manual contact stays available'); E.resolve(l,'kid_2');
+ ok(/muốn giữ khoảng cách/.test(l.pending[0].text),'contact menu shows the boundary'); E.resolve(l,'visit');
+ ok(l.log.some(e=>e.t.includes('từ chối gặp')),'adult can decline an invitation');
+ const id=E.UPDATE110.uid(l,k);
+ const option=(d,key)=>d.opts.find(o=>E.UPDATE110.menuKey(d,o.k)===key)?.k;
+ const sameYear=add(l,'child141',{id});
+ ok(option(sameYear,'listen')==null,'contact is shared between menus');
+ l.pending=[]; l.age++;
+ E.resolve(l,option(add(l,'child141',{id}),'repair'));
+ ok(S.distant(l,k),'an apology does not fix the relationship immediately');
+ const saved=copy(l); E.migrateExt(saved); const adult=saved.kids[2];
+ ok(S.distant(saved,adult)&&S.canContact(saved,adult,'listen')!==true,'reload preserves progress and the annual limit');
+ saved.age++; E.resolve(saved,option(add(saved,'child141',{id}),'listen'));
+ ok(!S.distant(saved,adult),'later contact can rebuild sufficient trust');
+}
+{
+ const l=life(), k=l.kids[2], before=l.money;
+ const review=E.HOOKS.year.find(f=>f.name==='reviewContact');
+ S.info(l,'child',2).trust=40;
+ review(l,()=>.5,()=>{}); l.age++; review(l,()=>.5,()=>{});
+ k.married=false;
+ const s=E.FAMILY126.init(l,k);
+ s.match={person:{name:'Bạn đời của con',age:32,compatibility:.8},since:l.age-2};
+ E.childMarriage126(l,k,()=>.5,(t,kind)=>l.log.push({a:l.age,t,k:kind}));
+ ok(k.married&&l.money===before&&!l.pending.some(d=>d.id==='childWedding129')&&l.log.some(e=>e.t.includes('đã tự thu xếp lễ cưới')),'major news arrives without requiring permission, a payment or a popup');
+}
+console.log('PASS: '+checks+' family interactions, four real-world variants, adult contact, stale target guards and budgets.');

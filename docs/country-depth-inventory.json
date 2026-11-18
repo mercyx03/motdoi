@@ -794,6 +794,9 @@
     "esWork912": "https://www.ilo.org/regions-and-countries/europe-and-central-asia/european-union-eu/spain",
     "esCulture912": "https://www.unesco.org/en/countries/es",
     "esWed912": "https://genderdata.worldbank.org/en/economies/spain",
+    "esWork912:1": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a34",
+    "esWork912:2": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a38",
+    "esWork912:4": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a34",
     "seEdu912": "https://education-profiles.org/europe-and-northern-america/sweden/~sweden",
     "seWork912": "https://www.ilo.org/regions-and-countries/europe-and-central-asia/european-union-eu/sweden",
     "seCulture912": "https://www.unesco.org/en/countries/se",
@@ -803,7 +806,7 @@
     "chCulture912": "https://www.unesco.org/en/countries/ch",
     "chWed912": "https://genderdata.worldbank.org/en/economies/switzerland",
     "trEdu912": "https://education-profiles.org/northern-africa-and-western-asia/turkiye/~turkiye",
-    "trWork912": "https://www.ilo.org/regions-and-countries/europe-and-central-asia/türkiye-0",
+    "trWork912": "https://www.ilo.org/regions-and-countries/europe-and-central-asia/t%C3%BCrkiye-0",
     "trCulture912": "https://www.unesco.org/en/countries/tr",
     "trWed912": "https://genderdata.worldbank.org/en/economies/turkiye",
     "uaEdu912": "https://education-profiles.org/europe-and-northern-america/ukraine/~ukraine",
@@ -814,6 +817,9 @@
     "gbWork912": "https://www.ilo.org/regions-and-countries/europe-and-central-asia/united-kingdom",
     "gbCulture912": "https://www.unesco.org/en/countries/gb",
     "gbWed912": "https://genderdata.worldbank.org/en/economies/united-kingdom",
+    "gbWed912:1": "https://www.legislation.gov.uk/ukpga/2022/28/section/1",
+    "gbWork912:0": "https://www.gov.uk/maximum-weekly-working-hours",
+    "gbWork912:1": "https://www.gov.uk/holiday-entitlement-rights",
     "dzEdu912": "https://education-profiles.org/northern-africa-and-western-asia/algeria/~algeria",
     "dzWork912": "https://www.ilo.org/regions-and-countries/africa/algeria",
     "dzCulture912": "https://www.unesco.org/en/countries/dz",
@@ -867,7 +873,7 @@
     "cdCulture912": "https://www.unesco.org/en/countries/cd",
     "cdWed912": "https://genderdata.worldbank.org/en/economies/congo-dem-rep",
     "ciEdu912": "https://education-profiles.org/sub-saharan-africa/cote-divoire/~cote-divoire",
-    "ciWork912": "https://www.ilo.org/regions-and-countries/africa/côte-d’ivoire",
+    "ciWork912": "https://www.ilo.org/regions-and-countries/africa/c%C3%B4te-d%E2%80%99ivoire",
     "ciCulture912": "https://www.unesco.org/en/countries/ci",
     "ciWed912": "https://genderdata.worldbank.org/en/economies/cote-d-ivoire",
     "djEdu912": "https://education-profiles.org/sub-saharan-africa/djibouti/~djibouti",
@@ -1058,6 +1064,8 @@
     "caWork912": "https://www.ilo.org/regions-and-countries/canada",
     "caCulture912": "https://www.unesco.org/en/countries/ca",
     "caWed912": "https://genderdata.worldbank.org/en/economies/canada",
+    "caWed912:2": "https://laws-lois.justice.gc.ca/eng/acts/c-31.5/section-2.2.html",
+    "caWork912:2": "https://www.ontario.ca/document/your-guide-employment-standards-act-0/vacation",
     "clEdu912": "https://education-profiles.org/latin-america-and-the-caribbean/chile/~chile",
     "clWork912": "https://www.ilo.org/regions-and-countries/latin-america-and-caribbean/chile",
     "clCulture912": "https://www.unesco.org/en/countries/cl",
@@ -8131,8 +8139,8 @@
           {
             "id": "wed2912",
             "name": "Độ tuổi tối thiểu",
-            "note": "Luật liên bang: không dưới 16; tỉnh có quy định đồng ý.",
-            "source": "caWed912",
+            "note": "Luật liên bang yêu cầu từ đủ 16 tuổi. Các tỉnh và vùng lãnh thổ có quy định riêng về sự đồng ý và giấy phép.",
+            "source": "caWed912:2",
             "countryCode": "CA"
           }
         ],
@@ -8176,9 +8184,9 @@
           },
           {
             "id": "work2912",
-            "name": "Phép năm",
-            "note": "Mốc thường gặp: 2 tuần, tăng theo thâm niên.",
-            "source": "caWork912",
+            "name": "Phép năm tại Ontario",
+            "note": "Theo Employment Standards Act của Ontario, người thuộc phạm vi áp dụng được tối thiểu 2 tuần dưới 5 năm làm việc, 3 tuần từ đủ 5 năm. Tỉnh khác có thể áp dụng mức riêng.",
+            "source": "caWork912:2",
             "countryCode": "CA"
           },
           {
@@ -8231,7 +8239,9 @@
           "caEdu912",
           "caCulture912",
           "caWed912",
-          "caWork912"
+          "caWed912:2",
+          "caWork912",
+          "caWork912:2"
         ]
       },
       "completeSixDomains": true,
@@ -37365,15 +37375,15 @@
           {
             "id": "work1912",
             "name": "Giờ làm",
-            "note": "Mốc luật: 40 giờ/tuần trung bình năm; có đề xuất giảm.",
-            "source": "esWork912",
+            "note": "Giờ làm thông thường tối đa 40 giờ làm việc thực tế mỗi tuần, tính trung bình cả năm. Lịch cụ thể phụ thuộc hợp đồng hoặc thỏa ước.",
+            "source": "esWork912:1",
             "countryCode": "ES"
           },
           {
             "id": "work2912",
             "name": "Phép năm",
-            "note": "Mốc luật: 30 ngày theo lịch.",
-            "source": "esWork912",
+            "note": "Phép năm có lương, tối thiểu 30 ngày theo lịch theo Điều 38.",
+            "source": "esWork912:2",
             "countryCode": "ES"
           },
           {
@@ -37385,9 +37395,9 @@
           },
           {
             "id": "work4912",
-            "name": "Đăng ký giờ làm",
-            "note": "Doanh nghiệp phải ghi giờ làm hằng ngày.",
-            "source": "esWork912",
+            "name": "Ghi nhận giờ làm",
+            "note": "Doanh nghiệp ghi thời điểm bắt đầu và kết thúc ngày làm của từng người, lưu hồ sơ bốn năm theo Điều 34.9.",
+            "source": "esWork912:4",
             "countryCode": "ES"
           }
         ],
@@ -37426,7 +37436,10 @@
           "esEdu912",
           "esCulture912",
           "esWed912",
-          "esWork912"
+          "esWork912",
+          "esWork912:1",
+          "esWork912:2",
+          "esWork912:4"
         ]
       },
       "completeSixDomains": true,
@@ -41929,9 +41942,9 @@
           },
           {
             "id": "wed1912",
-            "name": "Độ tuổi 18",
-            "note": "Mốc luật: 18 ở Anh và Wales từ 2023.",
-            "source": "gbWed912",
+            "name": "Độ tuổi kết hôn tại England và Wales",
+            "note": "Từ 27/02/2023, hai bên phải từ đủ 18 tuổi để kết hôn hoặc đăng ký civil partnership tại England và Wales.",
+            "source": "gbWed912:1",
             "countryCode": "GB"
           },
           {
@@ -41969,15 +41982,15 @@
           {
             "id": "work0912",
             "name": "Working Time Regulations",
-            "note": "Trung bình tối đa 48 giờ/tuần, có thể tự nguyện không áp dụng.",
-            "source": "gbWork912",
+            "note": "Giới hạn thường là 48 giờ/tuần tính trung bình 17 tuần. Người trưởng thành có thể tự nguyện chọn làm thêm bằng văn bản nếu nghề cho phép.",
+            "source": "gbWork912:0",
             "countryCode": "GB"
           },
           {
             "id": "work1912",
             "name": "Phép năm",
-            "note": "Mốc luật: 5,6 tuần (28 ngày).",
-            "source": "gbWork912",
+            "note": "Đa số người làm 5 ngày/tuần được tối thiểu 28 ngày phép có lương. Ngày nghỉ lễ có thể tính trong số đó. Lịch bán thời gian hoặc không đều tính riêng.",
+            "source": "gbWork912:1",
             "countryCode": "GB"
           },
           {
@@ -42037,6 +42050,9 @@
           "gbEdu912",
           "gbCulture912",
           "gbWed912",
+          "gbWed912:1",
+          "gbWork912:0",
+          "gbWork912:1",
           "gbWork912"
         ]
       },

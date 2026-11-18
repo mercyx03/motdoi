@@ -3,7 +3,7 @@
    · Em xinh "Say Hi" (ca sĩ nữ trẻ): cùng thể thức
    · Anh trai vượt ngàn chông gai (nghệ sĩ nam có tên tuổi, từ 30 tuổi): Đêm Hội ngộ → Công diễn 1 → 5 → Đêm chung kết (Gia tộc Anh tài Toàn năng)
    Mỗi vòng ghép đội ngẫu nhiên với các anh trai / em xinh / anh tài thật của chương trình; có thể bị loại rồi được bình chọn cứu / hồi sinh, hoặc vô địch nếu đủ mạnh.
-   Diễn biến hư cấu, chỉ mô phỏng thể thức chương trình. */
+   Diễn biến, chỉ mô phỏng thể thức chương trình. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;
@@ -12,11 +12,11 @@
   function ch(r, p) { return r() < p; }
   function mo(l, v) { return H.money(l, v); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function yr(l) { return l.birthYear + l.age; }
   function jid(l) { return l.job ? E.resolveJob(l.job.id) : ''; }
-  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1) { l.job.rank++; l.job.yrs = 0; return true; } return false; }
+  function promote(l) { var c = l.job ? E.jobDef(l) : null; if (c && l.job.rank < c.t.length - 1 && (!c.ladder || E.canAdvance(l,c,false))) { l.job.rank++; l.job.yrs = 0; if(c.ladder){l.job.rankSince=l.age;l.job.rankTracked=l.job.rank;} return true; } return false; }
   function shuffle(r, a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function given(l) { var w = String(l.name || '').split(' '); return w[w.length - 1] || 'bạn'; }
 

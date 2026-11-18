@@ -79,13 +79,17 @@ const chains = l => (l.flags.chains144 || { active: [], done: [] });
 
 // ---------- 2. Nghề nghiệp: nhường suất → tìm việc → được giới thiệu ----------
 {
-  const l = adult(21, 32); l.edu = 5; l.st.kno = 70; E.startJob(l, 'van_phong', H.rf(l), say(l), true);
-  const giu = clone(l); decide(giu, 'cs_cat_giam', 'giu');
-  ok(!C.active(giu, 'career'), 'career: giữ việc thì không mở chuỗi');
-  const d0 = decide(l, 'cs_cat_giam', 'nhuong');
-  const c = C.active(l, 'career');
-  ok(c && c.npc.name === d0.data.n && !l.job && l.lastJob, 'career: nhường suất → chuỗi nhớ đúng người đồng nghiệp');
-  const s = nextStage(l, c.id);
+  // giai đoạn "tìm việc" xuất hiện theo xác suất của từng đời: thử vài mầm cho tới khi gặp đời có nhánh này (không phụ thuộc may rủi của một mầm cố định)
+  let l = null, c = null, d0 = null, s = null;
+  for (let seed = 21; seed < 90 && !s; seed++) {
+    const x = adult(seed, 32); x.edu = 5; x.st.kno = 70; E.startJob(x, 'van_phong', H.rf(x), say(x), true);
+    const giu = clone(x); decide(giu, 'cs_cat_giam', 'giu');
+    ok(!C.active(giu, 'career'), 'career: giữ việc thì không mở chuỗi');
+    const dd = decide(x, 'cs_cat_giam', 'nhuong'), cc = C.active(x, 'career');
+    ok(cc && cc.npc.name === dd.data.n && !x.job && x.lastJob, 'career: nhường suất → chuỗi nhớ đúng người đồng nghiệp');
+    const ss = nextStage(clone(x), cc.id);
+    if (ss && ss.id === 'ch144_job_search' && ss.at === 33) { l = x; c = cc; d0 = dd; s = nextStage(l, c.id); }
+  }
   ok(s && s.id === 'ch144_job_search' && s.at === 33, 'career: năm sau còn thất nghiệp thì có lựa chọn tìm việc');
   const m0 = l.money; decide(l, s.id, 'retrain', s.arg);
   ok(l.money < m0 && c.data.retrained && c.stage === 1, 'career: học nghề trừ học phí đúng một lần');
@@ -196,7 +200,7 @@ ok(married, 'marriage: có nhân vật đã kết hôn để kiểm');
 
 // ---------- 7. Bạn bè: danh tính theo uid, không nhầm người trùng tên ----------
 let social = null;
-for (let s = 700; s < 760 && !social; s++) social = grow(s, x => x.age >= 25 && x.age <= 40 && x.indep && E.friendsOf(x).filter(f => x.age + (f.d || 0) >= 18).length >= 2);
+for (let s = 700; s < 760 && !social; s++) social = grow(s, x => x.age >= 25 && x.age <= 40 && x.indep && !x.abroad && E.friendsOf(x).filter(f => x.age + (f.d || 0) >= 18).length >= 2);
 ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
 {
   const l = clone(social), fs2 = E.friendsOf(l).filter(f => l.age + (f.d || 0) >= 18), A = fs2[0], B = fs2[1];
@@ -207,7 +211,7 @@ ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
   B.alive = false;
   C.yearly(l, H.rf(l), say(l), l.age);
   ok(C.active(l, 'friend'), 'friend: người trùng tên qua đời không làm hủy chuỗi');
-  const l2 = clone(l); l2.friends.concat([l2.bff]).filter(f => f && f.uid110 === A.uid110).forEach(f => { f.alive = false; });
+  const l2 = clone(l); l2.friends.concat([l2.bff]).filter(f => f && f.uid110 === A.uid110).forEach(f => { f.alive = false; }); { const q = E.NPC.find(l2, A.uid110); if (q && q.obj) q.obj.alive = false; }
   C.yearly(l2, H.rf(l2), say(l2), l2.age);
   ok(!C.active(l2, 'friend') && chains(l2).done.some(x => x.result === 'gone'), 'friend: đúng người ấy qua đời → hủy chuỗi');
   l.job = null; l.retired = false; l.money = -l.base;
@@ -300,7 +304,8 @@ ok(social, 'friend: có nhân vật nhiều bạn để kiểm');
   // Hai ngữ cảnh mới, cùng trạng thái đồng hồ / Math.random (life.id phụ thuộc chúng), chỉ khác có hay không GĐ4.
   // 8.10.20: drama917 (biến cố B8 chạy trên GĐ4, có test riêng tests/drama917.js) ghi trạng thái mỗi năm nên cũng loại khỏi cả hai ngữ cảnh,
   // để phép so sánh vẫn chỉ đo riêng tác động của GĐ4.
-  const dependents=['js/childhood-context.js','js/health-aging.js','js/drama917.js'];
+  // Hoàng gia860/864 cũng là module phụ thuộc CHAIN144; bỏ khỏi cả hai phía của phép cô lập.
+  const dependents=['js/childhood-context.js','js/health-aging.js','js/drama917.js','js/royal860.js','js/royal864.js','js/kid953.js','js/life965.js'];
   const E = gameContext({skip:dependents}).E, without = gameContext({ skip: dependents.concat(['js/life144.js']) }).E;
   ok(E.TRIG.filter(t => t.contextTags).length === 50 && without.TRIG.filter(t => t.contextTags).length === 50, 'GĐ3: vẫn đúng 50 trigger có hệ số hoàn cảnh');
   let same = 0, touched = 0, applied = 0, perYear = 0, afterDeath = 0, newLoans = 0, lives = 0;

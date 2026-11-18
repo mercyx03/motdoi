@@ -8,9 +8,9 @@
   if(E.TALENTS.indexOf('đạo diễn')<0)E.TALENTS.push('đạo diễn');
   E.CAR.dao_dien.talent='đạo diễn';
   E.TALENT_SCHOOLS['đạo diễn']={sug:'trợ lý đạo diễn → đạo diễn điện ảnh, truyền hình, phim ngắn và nội dung số',sch:[
-    ['dd_hn','Trường Đại học Sân khấu – Điện ảnh Hà Nội','Hà Nội','art','Đạo diễn điện ảnh',.58,'uni',['dao_dien','bien_kich'],'thi năng khiếu tư duy hình ảnh, kể chuyện và phân tích phim (mô phỏng)'],
-    ['dd_hcm','Trường Đại học Sân khấu – Điện ảnh TP. Hồ Chí Minh','TP. Hồ Chí Minh','art','Đạo diễn điện ảnh – truyền hình',.56,'uni',['dao_dien','bien_kich'],'thi phân tích phim, kể chuyện bằng hình ảnh (mô phỏng)'],
-    ['dd_tv','Trường Đại học Sân khấu – Điện ảnh Hà Nội','Hà Nội','art','Đạo diễn truyền hình',.54,'uni',['dao_dien'],'thi năng khiếu và tư duy kể chuyện truyền hình (mô phỏng)']
+    ['dd_hn','Trường Đại học Sân khấu – Điện ảnh Hà Nội','Hà Nội','art','Đạo diễn điện ảnh',.58,'uni',['dao_dien','bien_kich'],'thi năng khiếu tư duy hình ảnh, kể chuyện và phân tích phim '],
+    ['dd_hcm','Trường Đại học Sân khấu – Điện ảnh TP. Hồ Chí Minh','TP. Hồ Chí Minh','art','Đạo diễn điện ảnh – truyền hình',.56,'uni',['dao_dien','bien_kich'],'thi phân tích phim, kể chuyện bằng hình ảnh '],
+    ['dd_tv','Trường Đại học Sân khấu – Điện ảnh Hà Nội','Hà Nội','art','Đạo diễn truyền hình',.54,'uni',['dao_dien'],'thi năng khiếu và tư duy kể chuyện truyền hình ']
   ]};
   var uni=E.DEC.uni,um=uni.make,ua=uni.apply;
   uni.make=function(l){var d=um.apply(this,arguments);if(l.talent==='đạo diễn'&&H.isVN(l))d.text+=' Bạn có năng khiếu đạo diễn: có thể chọn một trong các trường / ngành đạo diễn bên dưới. Đỗ mới bắt đầu khóa học 4 năm, tốt nghiệp rồi làm trợ lý trước. Cách thi và xác suất trong game được giản lược, không phải quy chế tuyển sinh thật.';return d;};
@@ -63,11 +63,11 @@
   }
   function o(k,l,h){return{k:k,l:l,h:h||''};}
   function choices(l){var p=project(l),s=STAGES[p.stage],a=[];
-    if(s==='format')Object.keys(FORMATS).forEach(function(k){if(k==='short'||(l.job.rank||0)>=1)a.push(o(k,FORMATS[k].n,k==='tv'?'Một mùa ngắn mô phỏng trong năm':k==='cinema'?'Phát hành rạp':k==='web'?'Phát hành theo tập trên mạng':'Dự án đầu tay / liên hoan phim'));});
+    if(s==='format')Object.keys(FORMATS).forEach(function(k){if(k==='short'||(l.job.rank||0)>=1)a.push(o(k,FORMATS[k].n,k==='tv'?'Một mùa ngắn trong năm':k==='cinema'?'Phát hành rạp':k==='web'?'Phát hành theo tập trên mạng':'Dự án đầu tay / liên hoan phim'));});
     if(s==='medium')a=[o('live','Phim người đóng (live action)'),o('animation','Phim hoạt hình','Chọn họa sĩ / animator theo ê-kíp; casting diễn viên lồng tiếng')];
     if(s==='source')a=[o('original','Kịch bản gốc do ê-kíp sáng tác'),o('adapt','Chuyển thể tác phẩm được cấp phép','Phí quyền chuyển thể nằm trong ngân sách; người đóng = live action chuyển thể'),o('public','Chuyển thể tác phẩm thuộc phạm vi công cộng','Kiểm tra quyền với từng bản dịch / hình ảnh, không mặc định mọi bản chuyển thể đều miễn phí')];
     if(s==='genre')Object.keys(GENRES).forEach(function(k){a.push(o(k,GENRES[k]));});
-    if(s==='fund'){var b=value(l,format(p).budget)*(p.medium==='animation'?1.2:1),fee=value(l,format(p).fee);a=[o('studio','Nhận dự án do hãng đầu tư','Hãng thanh toán '+H.money(l,b)+' cho cả ê-kíp, không cộng vào ví bạn. Cát-xê sau phát hành '+H.money(l,fee)+'; không hưởng toàn bộ doanh thu.')];if(l.money>=b)a.push(o('self','Tự đầu tư '+H.money(l,b),'Trừ một lần toàn bộ ngân sách, gồm diễn viên, bản quyền, hậu kỳ, quảng bá. Thu hồi từ doanh thu ròng mô phỏng; có thể lỗ.'));}
+    if(s==='fund'){var b=value(l,format(p).budget)*(p.medium==='animation'?1.2:1),fee=value(l,format(p).fee);a=[o('studio','Nhận dự án do hãng đầu tư','Hãng thanh toán '+H.money(l,b)+' cho cả ê-kíp, không cộng vào ví bạn. Cát-xê sau phát hành '+H.money(l,fee)+'; không hưởng toàn bộ doanh thu.')];if(l.money>=b)a.push(o('self','Tự đầu tư '+H.money(l,b),'Trừ một lần toàn bộ ngân sách, gồm diễn viên, bản quyền, hậu kỳ, quảng bá. Thu hồi từ doanh thu ròng; có thể lỗ.'));}
     if(s==='cast1'||s==='cast2')p.candidates.filter(function(x){return p.cast.indexOf(x.id)<0;}).forEach(function(x){a.push(o(x.id,x.name,actorText(l,x)));});
     if(s==='script')a=[o('workshop','Đọc bàn, sửa động cơ nhân vật','Tăng chất lượng, tăng sự phối hợp'),o('improv','Cho diễn viên ứng tác có kiểm soát','Hợp phim hài / tình cảm hơn'),o('rush','Giữ bản đầu, dành thời gian cho hình ảnh','Tiết kiệm thời gian nhưng kịch bản có thể yếu')];
     if(s==='board')a=p.board.options.map(function(x,i){return o('b'+i,x);});
@@ -83,10 +83,10 @@
   function setupGames(p,r){var boards=[['Một người nhặt được vé tàu, quyết định lên đường, rồi gặp lại người bạn cũ.','Nhặt vé → Quyết định đi → Gặp bạn',['Gặp bạn → Nhặt vé → Quyết định đi','Quyết định đi → Gặp bạn → Nhặt vé']],['Nhân vật nghe chuông, mở cửa, rồi nhận thư.','Nghe chuông → Mở cửa → Nhận thư',['Nhận thư → Nghe chuông → Mở cửa','Mở cửa → Nhận thư → Nghe chuông']],['Nhân vật thấy khói, báo động, rồi mọi người sơ tán.','Thấy khói → Báo động → Sơ tán',['Sơ tán → Báo động → Thấy khói','Báo động → Sơ tán → Thấy khói']]],b=U.pick(r,boards),ci=U.randint(r,0,2),opts=b[2].slice();opts.splice(ci,0,b[1]);p.board={text:b[0],options:opts,correct:ci};
     var cont=U.pick(r,[['Cảnh trước: cốc ở tay trái, cửa đóng, áo xanh. Cảnh nối: cốc tay phải, cửa đóng, áo xanh.','Đổi cốc về tay trái',['Đổi màu áo','Mở cửa']],['Cảnh trước: đồng hồ 8 giờ, trời sáng, nhân vật đeo kính. Cảnh nối: đồng hồ 8 giờ, trời sáng, không có kính.','Khôi phục chiếc kính',['Đổi sang trời tối','Đổi đồng hồ thành 10 giờ']],['Cảnh trước: túi trên vai phải, điện thoại màu đỏ. Cảnh nối: túi vai phải, điện thoại màu đen.','Sửa màu điện thoại về đỏ',['Đổi vai đeo túi','Đổi màu nền']]]),cc=U.randint(r,0,2),co=cont[2].slice();co.splice(cc,0,cont[1]);p.continuity={text:cont[0],options:co,correct:cc};
   }
-  function description(l){var p=project(l),s=STAGES[p.stage];return 'Dự án hư cấu: '+p.name+' · Năm '+p.year+' · Chặng '+(p.stage+1)+'/'+STAGES.length+'. '+(p.format?format(p).n+' · ':'')+(p.medium?(p.medium==='animation'?'Hoạt hình':'Người đóng')+' · ':'')+(p.source?(p.source==='adapt'?'Chuyển thể có phép':p.source==='public'?'Chuyển thể phạm vi công cộng':'Kịch bản gốc')+' · ':'')+(p.genre?GENRES[p.genre]+'. ':'')+
+  function description(l){var p=project(l),s=STAGES[p.stage];return 'Dự án: '+p.name+' · Năm '+p.year+' · Chặng '+(p.stage+1)+'/'+STAGES.length+'. '+(p.format?format(p).n+' · ':'')+(p.medium?(p.medium==='animation'?'Hoạt hình':'Người đóng')+' · ':'')+(p.source?(p.source==='adapt'?'Chuyển thể có phép':p.source==='public'?'Chuyển thể phạm vi công cộng':'Kịch bản gốc')+' · ':'')+(p.genre?GENRES[p.genre]+'. ':'')+
     (s==='format'?((l.job.rank||0)<1?'Bạn đang là trợ lý đạo diễn: được hướng dẫn làm phim ngắn đầu tay; phim dài mở khi lên bậc đạo diễn.':'Bạn đã có thể dẫn dắt dự án dài. Một dự án / năm.'):
     s==='fund'?'Các con số ngân sách / cát-xê là cân bằng game, không phải báo giá ngành phim. Chọn ai chịu vốn; không thu thêm lẻ tẻ về sau.':
-    s==='cast1'||s==='cast2'?'Chọn '+role(l)+' cho '+(s==='cast1'?'vai chính':'vai đối trọng')+'. Vai nhân vật đều là người trưởng thành. Hồ sơ hư cấu, tuổi tính đúng năm hiện tại; cát-xê trong gói sản xuất, không trừ hai lần.':
+    s==='cast1'||s==='cast2'?'Chọn '+role(l)+' cho '+(s==='cast1'?'vai chính':'vai đối trọng')+'. Vai nhân vật đều là người trưởng thành. Hồ sơ, tuổi tính đúng năm hiện tại; cát-xê trong gói sản xuất, không trừ hai lần.':
     s==='board'?p.board.text+' Chọn thứ tự nguyên nhân → hành động → kết quả.':
     s==='shoot2'?p.continuity.text+' Tìm chi tiết cần sửa để nối cảnh khớp nhau.':
     s==='shoot1'?(p.medium==='animation'?'Thu thoại và diễn hoạt cảnh đầu.':'Buổi quay đầu tiên, diễn viên chưa bắt được nhịp cảm xúc.'):
@@ -104,7 +104,7 @@
     p.paid=true;p.payout=payout;if(payout>0)H.cash(l,payout,p.funding==='self'?'Thu hồi ròng phim '+p.name:'Cát-xê đạo diễn phim '+p.name);
     p.profit=p.funding==='self'?payout-p.budget:payout;
     var followers=Math.round(reach*(.015+response/2000));l.fame=(l.fame||0)+followers;if(l.job)l.job.rep=U.clamp((l.job.rep||50)+(q>=65?5:-3),0,100);
-    log('Phát hành '+p.name+' ('+f.n+', '+GENRES[p.genre]+'): chất lượng '+p.score+'/100, '+p.reception+', khoảng '+reach.toLocaleString('vi-VN')+' lượt khán giả mô phỏng. '+(p.funding==='self'?'Vốn tự góp '+H.money(l,p.budget)+', thu hồi ròng '+H.money(l,payout)+', '+(p.profit>=0?'lãi ':'lỗ ')+H.money(l,Math.abs(p.profit))+'.':'Hãng thu doanh thu; bạn nhận cát-xê '+H.money(l,payout)+'.')+' Thêm '+followers.toLocaleString('vi-VN')+' người quan tâm. Không tự thăng chức sau một phim.',q>=65?'big':'neutral');
+    log('Phát hành '+p.name+' ('+f.n+', '+GENRES[p.genre]+'): chất lượng '+p.score+'/100, '+p.reception+', khoảng '+reach.toLocaleString('vi-VN')+' lượt khán giả. '+(p.funding==='self'?'Vốn tự góp '+H.money(l,p.budget)+', thu hồi ròng '+H.money(l,payout)+', '+(p.profit>=0?'lãi ':'lỗ ')+H.money(l,Math.abs(p.profit))+'.':'Hãng thu doanh thu; bạn nhận cát-xê '+H.money(l,payout)+'.')+' Thêm '+followers.toLocaleString('vi-VN')+' người quan tâm. Không tự thăng chức sau một phim.',q>=65?'big':'neutral');
     H.mem(l,'Phát hành bộ phim '+p.name+' do mình đạo diễn, được khán giả đón xem.',4);
   }
   function play(l,d,k,r,log){if(!valid(l,d))return;var p=project(l),os=choices(l);if(!os.some(function(x){return x.k===k;}))return;if(k==='quit'){cancel(l,log);return;}var s=STAGES[p.stage],delta=0;

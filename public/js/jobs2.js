@@ -1,7 +1,7 @@
 /* Một Đời — v3.3: sự kiện & cạm bẫy theo nhóm nghề (theo tài liệu "Sự kiện & cạm bẫy theo nhóm nghề").
    Nguyên tắc: mô phỏng hiện thực nhưng giữ cân bằng — lựa chọn liêm chính luôn có, sai phạm luôn có hậu quả (thường đến muộn,
    qua cơ chế "cờ chờ nổ"), cơ quan chức năng phát hiện và xử lý; mỗi nhóm có sự kiện tốt và người tử tế.
-   Mọi nhân vật, tình huống đều hư cấu, không ám chỉ cá nhân hay tổ chức nào. */
+   Mọi nhân vật, tình huống đều, không ám chỉ cá nhân hay tổ chức nào. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC;

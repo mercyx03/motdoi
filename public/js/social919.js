@@ -5,7 +5,7 @@
      lưu, đã dự sự kiện giao lưu); không bảo đảm, có thể không gặp ai. Giàu không đồng nghĩa tính cách tốt hay xấu.
    · Sự kiện cùng doanh nhân/người nổi tiếng trong danh bạ (ELITE148, celeb912): yến tiệc/gala, cùng làm từ thiện, diễn đàn
      kinh doanh/golf, đấu giá nghệ thuật. Người kia có thể từ chối; tin cậy tăng theo tính cách của họ; có thể được giới thiệu người mới.
-   · Cha hoặc mẹ là ca sĩ/diễn viên nổi tiếng (nhân vật hư cấu của đời này): bị trêu ở trường, phóng viên chờ trước cổng, người lạ
+   · Cha hoặc mẹ là ca sĩ/diễn viên nổi tiếng (nhân vật của đời này): bị trêu ở trường, phóng viên chờ trước cổng, người lạ
      bám theo (chuỗi nhiều năm có báo cha mẹ/cơ quan chức năng), nhưng cũng có cơ hội và áp lực bị so sánh. Tần suất cân bằng. */
 (function (G) {
   'use strict';
@@ -60,7 +60,7 @@
   }
   X.menu('eliteEvents919', 'Sự kiện cùng doanh nhân và người nổi tiếng', function (l) { var r = X.reason(l, 18); if (r !== true) return r; return contacts(l).length ? true : 'Chưa quen doanh nhân hay người nổi tiếng nào'; }, function (l, d) {
     var a = d && d.arg || {}, p = a.id && C.find(l, a.id); if (p) return p.name + ' · ' + (p.job || '') + ' · tin cậy ' + Math.round(trustOf(p)) + '/100. Mỗi sự kiện tốn chi phí, người kia có thể từ chối; quan hệ phát triển dần qua nhiều lần gặp.';
-    return 'Mời người quen trong giới doanh nhân/nghệ sĩ cùng tham gia sự kiện. Tối đa 3 sự kiện/năm. Các nhân vật trong danh bạ là hư cấu.';
+    return 'Mời người quen trong giới doanh nhân/nghệ sĩ cùng tham gia sự kiện. Tối đa 3 sự kiện/năm.';
   }, function (l, arg) {
     var p = arg && arg.id && C.find(l, arg.id);
     if (!p) return contacts(l).map(function (q) { return { k: q.uid110, l: q.name + ' · ' + (q.job || q.kind) + ' · tin cậy ' + Math.round(trustOf(q)), run: function (l, r) { X.next(l, 'eliteEvents919', r, { id: q.uid110 }); } }; });
@@ -98,7 +98,7 @@
   E.TRIG.push({ id: 'celebKid919', when: function (l, a) { return !!cp(l) && a >= 5 && a <= 25 && !(l.jailUntil != null && a < l.jailUntil); }, p: 0.18, cd: 2, max: 8 });
   // Con của người nổi tiếng vào nghề biểu diễn: khán giả tò mò ban đầu, nhưng giữ được hay không là do năng lực.
   var sj0 = E.startJob; E.startJob = function (l, id, r, log) { var had = l.job && l.job.id, out = sj0.apply(this, arguments); var c = cp(l), car = E.CAR && E.CAR[id]; if (c && car && car.fame && had !== id && !st(l).debut) { st(l).debut = l.age; l.fame = Math.max(l.fame || 0, 3e4); if (typeof log === 'function') log('Khán giả tò mò về con của ' + c.kind + ' ' + c.name + '; bạn có sự chú ý ban đầu, nhưng giữ được hay không là do năng lực.', 'neutral'); } return out; };
-  var prof0 = E.profile; E.profile = function (l) { var p = prof0.apply(this, arguments), c = l.flags && l.flags.celebParent919; if (p && p.jobInfo && c) p.jobInfo.push((c.side === 'm' ? 'Mẹ' : 'Bố') + ' là ' + c.kind + ' nổi tiếng ' + c.name + ' (nhân vật hư cấu)'); return p; };
+  var prof0 = E.profile; E.profile = function (l) { var p = prof0.apply(this, arguments), c = l.flags && l.flags.celebParent919; if (p && p.jobInfo && c) p.jobInfo.push((c.side === 'm' ? 'Mẹ' : 'Bố') + ' là ' + c.kind + ' nổi tiếng ' + c.name + ''); return p; };
   E.HOOKS.year.push(function (l, r, log) { if (!l.alive || !l.flags || !l.flags.social919 && !l.flags.celebParent919) return; stalkYear(l, log); });
   var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.social919 != null && typeof l.flags.social919 !== 'object') delete l.flags.social919; };
   E.SOCIAL919 = { reach: reach, richJob: richJob, EV: EV, evWhy: evWhy, runEv: runEv, contacts: contacts, cp: cp, ev: ev, state: st };

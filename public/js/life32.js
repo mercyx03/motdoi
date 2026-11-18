@@ -16,7 +16,7 @@
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function rng(r, a, b) { return a + (b - a) * r(); }
   function jobC(l) { return l.job ? E.jobDef(l) : null; }
   function rich(l) { return l.money > l.base * 8 || (!l.indep && l.fam.q >= 5); }
@@ -47,14 +47,17 @@
   function abroadRes(l) { return !vnd(l); }
   function resCity(l) { var W = G.W, c = W && W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country]; return { place: l.place || l.city || (c && c.cities[0]) || 'thành phố', big: !!(c && (l.place || l.city) && c.cities.slice(0, 2).indexOf(l.place || l.city) >= 0) }; }
   function cls(l) { if (abroadRes(l)) { var rc = resCity(l); return rc.big ? 'big' : l.urban ? 'urb' : 'rur'; } return H.inBigCity(l) ? 'big' : (l.urban || l.movedTo) ? 'urb' : 'rur'; }
+  // 9.5.5: giá nhà theo thu nhập thời đó (hệ số flags.eraK954 của price954.js); loại nhà chỉ có từ năm nhất định ở Việt Nam
+  function ek(l) { return (l.flags && l.flags.eraK954) || 1; }
+  var HT_FROM = { cu: 1960, lau: 1988, mini: 2003, cc: 1998, ccc: 2005 };
   function hPrice(l, h, r) {
     var c = cls(l);
-    if (h.m) { var g = (G.W && G.W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country] || {}).gdp || l.gdp || 20; return h.m[c] * g * 1000 * 0.55 * (l.urban ? 1.1 : 0.8) * (g < 8 ? 1.6 : g < 20 ? 1.25 : 1) * (r ? rng(r, 0.9, 1.15) : 1); } // nước thu nhập thấp: giá nhà / thu nhập cao hơn
+    if (h.m) { var g = (G.W && G.W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country] || {}).gdp || l.gdp || 20; return h.m[c] * g * 1000 * 0.55 * (l.urban ? 1.1 : 0.8) * (g < 8 ? 1.6 : g < 20 ? 1.25 : 1) * ek(l) * (r ? rng(r, 0.9, 1.15) : 1); } // nước thu nhập thấp: giá nhà / thu nhập cao hơn
     var p = h.p[c] != null ? h.p[c] : h.p.urb;
     if (!vnd(l)) return p / 90 * l.base * 0.35 * (r ? rng(r, 0.9, 1.15) : 1);
-    return Math.round(p * (c !== 'big' && l.cityWealth ? Math.min(1.3, Math.max(0.7, l.cityWealth)) : 1) * (r ? rng(r, 0.88, 1.18) : 1));
+    return Math.round(p * ek(l) * (c !== 'big' && l.cityWealth ? Math.min(1.3, Math.max(0.7, l.cityWealth)) : 1) * (r ? rng(r, 0.88, 1.18) : 1));
   }
-  function avail(l) { if (abroadRes(l)) return HTW; var c = cls(l); return HT.filter(function (h) { return h.p[c] != null; }); }
+  function avail(l) { if (abroadRes(l)) return HTW; var c = cls(l); var wy = l.birthYear + l.age; return HT.filter(function (h) { return h.p[c] != null && !(l.era920 && HT_FROM[h.k] && wy < HT_FROM[h.k]); }); }
   function homeDebt(l) { return (l.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (l.mortgage || 0); }
   function have(l) { return Math.max(0, l.money) + (l.ownHouse ? Math.max(0, (l.houseVal || 0) - homeDebt(l)) : 0); }
   function canLoan(l, price) { return l.indep && H.canBankLoan(l) && H.loanAgeOk(l, 'home') && (l.income || 0) > 0 && price * 0.7 <= Math.max(l.income || 0, l.base * 0.5) * 9; }
@@ -281,13 +284,13 @@
   // ===================================================================
   SC('nhan_tin', {
     title: 'Nhắn tin tán tỉnh', valid: function (l) { return !l.partner && l.age >= 15; },
-    prep: function (l, r) { var s = H.partnerSex(l, r); return { n: H.stranger(l, r, s), s: s, where: pick(r, l.school ? ['bạn học khác lớp', 'người quen trên mạng xã hội', 'bạn của bạn thân'] : ['đồng nghiệp ở công ty bên cạnh', 'người quen trên mạng xã hội', 'bạn của bạn thân', 'người gặp ở phòng gym']) }; },
+    prep: function (l, r) { var s = H.datingSex(l, r); return { n: H.stranger(l, r, s), s: s, where: pick(r, l.school ? ['bạn học khác lớp', 'người quen trên mạng xã hội', 'bạn của bạn thân'] : ['đồng nghiệp ở công ty bên cạnh', 'người quen trên mạng xã hội', 'bạn của bạn thân', 'người gặp ở phòng gym']) }; },
     text: function (l, d) { return 'Bạn để ý ' + d.n + ' (' + d.where + ') và bắt đầu nhắn tin làm quen. Tin nhắn nào cũng được trả lời bằng một biểu tượng cảm xúc.'; },
     opts: [
       { k: 'flirt', l: 'Nhắn tiếp, tán tỉnh ra mặt', ai: { w: 1, soc: 0.8 }, run: function (l, r, log, d) {
         var x = r();
         if (x < 0.3) { log('Nhắn tin cho ' + d.n + ' được hai tuần thì bị "ghost": tin nhắn hiện "đã xem" rồi im bặt.', 'bad'); fx(l, { hap: -4 }); }
-        else if (x < 0.6) { l.flags.mapMo = d.n; log('Với ' + d.n + ' cứ mập mờ: tối nào cũng nhắn, cuối tuần đi cà phê, nhưng chẳng ai nói ra là gì của nhau.', 'neutral'); fx(l, { hap: 2 }); }
+        else if (x < 0.6) { l.flags.mapMo = d.n; l.flags.ambiguous101={n:d.n,sex:d.s,age:l.age,at:l.age}; log('Với ' + d.n + ' cứ mập mờ: tối nào cũng nhắn, cuối tuần đi cà phê, nhưng chẳng ai nói ra là gì của nhau.', 'neutral'); fx(l, { hap: 2 }); }
         else l.pending.unshift(E.DEC.love.make(l, r, { where: 'qua những tin nhắn làm quen' }));
       } },
       { k: 'slow', l: 'Từ từ, để xem người ta có ý không', ai: { w: 0.8 }, run: function (l, r, log, d) { if (ch(r, 0.35)) l.pending.unshift(E.DEC.love.make(l, r, { where: 'sau mấy tháng nhắn tin qua lại' })); else log('Nhắn qua nhắn lại vài lần rồi cũng thưa dần.', 'neutral'); } },

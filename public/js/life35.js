@@ -4,7 +4,7 @@
      theo năng khiếu hay chọn hướng khác đều được, nhưng luôn có đề xuất. Thi năng khiếu đỗ hay trượt tùy trình độ và sự chuẩn bị.
    · sự kiện theo bối cảnh từng ngành: ca hát (mua bài hát, tự sáng tác, thi truyền hình, clip lan truyền, bản quyền, giữ giọng), mỹ thuật,
      sân khấu – điện ảnh, thể thao, ngoại ngữ, kỹ thuật, và các nghề trước đây ít sự kiện.
-   Mọi nhân vật, tình huống đều hư cấu, không ám chỉ cá nhân hay tổ chức nào. */
+   Mọi nhân vật, tình huống đều, không ám chỉ cá nhân hay tổ chức nào. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;
@@ -14,7 +14,7 @@
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped) && !(l.flags.military && l.age < l.flags.military); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function pay(l, tr, why) { var x = Math.min(V(l, tr), Math.max(0, l.money) + l.base * 0.5); H.cash(l, -x, why); return x; }
   function earn(l, tr, why) { var x = V(l, tr); H.cash(l, x, why); return x; }
   function jid(l) { return l.job ? E.resolveJob(l.job.id) : ''; }

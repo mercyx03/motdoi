@@ -6,7 +6,38 @@
   'use strict';
   var E=G.E,H=E.H;
   var CAUSES={hoc:'Quỹ khuyến học cho học sinh nghèo ở quê nhà',benh:'Quỹ hỗ trợ bệnh nhi ung thư',tre:'Mái ấm, trại trẻ mồ côi',truong:'Quỹ học bổng mang tên bạn ở trường cũ',tho:'Nơi thờ tự bạn vẫn hay lui tới',rung:'Quỹ trồng rừng, bảo vệ môi trường',gia:'Viện dưỡng lão cho người già neo đơn'};
-  function allowed(l){return l.alive&&l.age>=18;}
+  function custody(l){return l.jailUntil!=null&&l.age<l.jailUntil;}
+  function adultAccess(l){
+    if(!l.alive||l.age<18)return 'Dành cho nhân vật còn sống từ 18 tuổi';
+    if(l.abroad&&l.abroad.trapped)return 'Chưa có cách liên lạc riêng và tiếp cận thủ tục di chúc';
+    return true;
+  }
+  function appointmentReason(l){
+    var access=adultAccess(l);
+    if(access!==true)return access;
+    if(!custody(l))return 'Chỉ dùng khi đang thụ án';
+    if(H.resCode(l)!=='VN'||l.birthYear+l.age<2017)return 'Chưa có thủ tục được đối chiếu cho nơi hoặc thời kỳ đang thụ án';
+    if(l.age+1>=l.jailUntil)return 'Có thể thu xếp thủ tục sau khi mãn hạn';
+    var meeting=l.flags.willMeeting70;
+    return meeting&&meeting.at>=l.age?'Đã có lịch hẹn':true;
+  }
+  function reason(l){
+    var access=adultAccess(l);
+    if(access!==true||!custody(l))return access;
+    var meeting=l.flags.willMeeting70;
+    return meeting&&meeting.at===l.age&&meeting.until===l.jailUntil&&H.resCode(l)==='VN'
+      ?true:'Cần buổi hẹn làm việc riêng với người phụ trách cơ sở giam giữ';
+  }
+  function allowed(l){return reason(l)===true;}
+  E.SC('willMeeting70',{title:'Xin lịch làm việc về di chúc trong thời gian thụ án',
+    valid:function(l){return appointmentReason(l)===true;},
+    text:'Có thể đề nghị được trao đổi riêng và tiếp cận thủ tục xác nhận di chúc. Nếu thu xếp được, lịch hẹn trong game mở vào năm sau. Điều 638 Bộ luật Dân sự 2015 ghi nhận trường hợp di chúc có xác nhận của người phụ trách cơ sở giam giữ.',
+    opts:[{k:'request',l:'Đề nghị thu xếp lịch hẹn',run:function(l,r,log){
+      if(appointmentReason(l)!==true)return;
+      l.flags.willMeeting70={at:l.age+1,until:l.jailUntil};
+      log('Đã thu xếp buổi hẹn riêng vào năm sau nếu bạn vẫn đang thụ án tại đây.','neutral');
+    }},{k:'later',l:'Để sau',run:function(){}}]});
+  E.ACT.push({id:'willMeeting70',g:'Tiền bạc',l:'Xin lịch làm việc về di chúc trong trại',min:18,jail:true,sc:'willMeeting70',avail:appointmentReason,ai:{w:0}});
   function kids(l){return(l.kids||[]).filter(function(k){return k.alive!==false;});}
   function spouse(l){return l.partner&&l.partner.alive!==false&&l.partner.status!=='dating'?l.partner:null;}
   function partnerKey(l,p){return p&&(p.heritageId||[p.name,p.sex,l.birthYear+l.age-p.age].join(':'));}
@@ -45,17 +76,17 @@
   }
   E.DEC.di_chuc={valid:valid,make:function(l){var w=l.flags.will70,plan=w&&w.plan||(['equal','charity'].indexOf(l.flags.will)>=0?l.flags.will:'personal');if(!choices(l).some(function(x){return x.k===plan;}))plan='personal';
     var shares={};if(w&&w.shares)Object.keys(w.shares).forEach(function(k){if(recipients(l).some(function(x){return x.key===k;}))shares[k]=w.shares[k];});
-    return{id:'di_chuc',title:w?'Xem / sửa di chúc':'Viết di chúc',text:'Bạn có thể sửa bất cứ lúc nào. Bản lưu mới nhất sẽ thay thế bản trước; tài sản vẫn thuộc về bạn khi còn sống. Phần không ghi trong di chúc sẽ chia theo pháp luật.',data:{at:l.age,revision:l.flags.willRevision70||w&&w.revision||0,note:w&&w.note||'',plan:plan,partner:partnerKey(l,spouse(l)),shares:shares,cause:w&&w.cause||'hoc',otherName:w&&w.otherName||''},opts:[{k:'save',l:'Lưu di chúc',h:''},{k:'none',l:'Đóng, không thay đổi',h:''}].concat(w?[{k:'revoke',l:'Hủy bản di chúc đã lưu',h:''}]:[])};},
+    return{id:'di_chuc',title:w?'Xem / sửa di chúc':'Viết di chúc',text:'Bạn có thể sửa khi tiếp cận được thủ tục. Bản lưu mới nhất sẽ thay thế bản trước; tài sản vẫn thuộc về bạn khi còn sống. Phần không ghi trong di chúc sẽ chia theo pháp luật.',data:{at:l.age,revision:l.flags.willRevision70||w&&w.revision||0,note:w&&w.note||'',plan:plan,partner:partnerKey(l,spouse(l)),shares:shares,cause:w&&w.cause||'hoc',otherName:w&&w.otherName||''},opts:[{k:'save',l:'Lưu di chúc',h:''},{k:'none',l:'Đóng, không thay đổi',h:''}].concat(w?[{k:'revoke',l:'Hủy bản di chúc đã lưu',h:''}]:[])};},
     auto:function(){return 'none';},
     apply:function(l,d,k,r,log){if(!valid(l,d.data)||!d.opts.some(function(o){return o.k===k;}))return;if(k==='none')return;if(k==='revoke'){l.flags.willRevision70=(l.flags.willRevision70||l.flags.will70&&l.flags.will70.revision||0)+1;delete l.flags.will70;delete l.flags.will;log('Bạn hủy bản di chúc đã lưu.','neutral');return;}if(check(l,d.data))return;var old=l.flags.will70,revision=(l.flags.willRevision70||old&&old.revision||0)+1;l.flags.willRevision70=revision;
       var w={revision:revision,age:l.age,year:l.birthYear+l.age,note:d.data.note.trim(),plan:d.data.plan,partner:d.data.partner,partnerName:spouse(l)&&spouse(l).name};
       if(d.data.plan==='charity')w.cause=CAUSES[d.data.cause]?d.data.cause:'hoc';
       if(d.data.plan==='custom'){var sh={},rs=recipients(l);Object.keys(d.data.shares||{}).forEach(function(key){var v=+d.data.shares[key];if(v>0){sh[key]=v;var x=rs.filter(function(y){return y.key===key;})[0];if(x&&x.kind==='kid')(w.kidNames||(w.kidNames={}))[key]=x.name;}});w.shares=sh;if(sh.s)w.cause=d.data.cause;if(sh.o)w.otherName=d.data.otherName.trim();}
       l.flags.will70=w;l.flags.will=d.data.plan;log((old?'Cập nhật':'Lưu')+' di chúc ở tuổi '+l.age+'.','neutral');}};
-  E.ACT.push({id:'di_chuc70',g:'Tiền bạc',l:'Viết / sửa di chúc',min:18,jail:true,trap:true,mil:true,sc:'di_chuc',avail:function(l){return allowed(l)?true:'Từ 18 tuổi';},ai:{w:0}});
+  E.ACT.push({id:'di_chuc70',g:'Tiền bạc',l:'Viết / sửa di chúc',min:18,jail:true,trap:true,mil:true,sc:'di_chuc',avail:reason,ai:{w:0}});
   var actions=E.actions,act=E.act,avail=E.actAvail;
-  E.actions=function(l){return actions.apply(this,arguments).map(function(a){if(a.id==='di_chuc70')a.ok=allowed(l)?true:'Từ 18 tuổi';return a;});};
-  E.actAvail=function(l,a){return a&&a.id==='di_chuc70'?(allowed(l)?true:'Từ 18 tuổi'):avail.apply(this,arguments);};
+  E.actions=function(l){return actions.apply(this,arguments).map(function(a){if(a.id==='di_chuc70')a.ok=reason(l);return a;});};
+  E.actAvail=function(l,a){return a&&a.id==='di_chuc70'?reason(l):avail.apply(this,arguments);};
   E.act=function(l,id){if(id!=='di_chuc70')return act.apply(this,arguments);if(!allowed(l))return null;var d=E.DEC.di_chuc.make(l);d.manual=true;l.pending=(l.pending||[]).filter(function(x){return x.id!=='di_chuc';});l.pending.unshift(d);return d;};
   // người thừa kế theo pháp luật (hàng thứ nhất): các con còn sống và bạn đời còn sống
   function legalHeirs(l){var a=[];(l.kids||[]).forEach(function(k,i){if(k.alive!==false)a.push({name:k.name,kid:i});});var p=spouse(l);if(p)a.push({name:p.name,spouse:true});return a;}
@@ -101,5 +132,5 @@
     else if(s.law.length&&s.net>0)lines.push('Di sản ròng '+H.money(l,s.net)+' chia theo pháp luật cho '+s.law.map(function(x){return x.name;}).join(', ')+'.');
     stages.push({h:'Di chúc để lại',x:'Bản lưu năm '+w.year+' · '+w.age+' tuổi.',list:lines});return stages;};
   var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);l.pending=(l.pending||[]).filter(function(d){return d.id!=='di_chuc'||allowed(l);}).map(function(d){if(d.id==='di_chuc'&&(!d.data||!d.data.plan)){var fresh=E.DEC.di_chuc.make(l);fresh.manual=d.manual;return fresh;}if(d.id==='di_chuc'&&d.data&&!d.data.shares){d.data.shares={};d.data.cause=d.data.cause||'hoc';d.data.otherName=d.data.otherName||'';}return d;});};
-  E.WILL70={allowed:allowed,choices:choices,check:check,settle:settle,estate:estate,forKid:forKid,recipients:recipients,causes:CAUSES,legalHeirs:legalHeirs};
+  E.WILL70={reason:reason,allowed:allowed,choices:choices,check:check,settle:settle,estate:estate,forKid:forKid,recipients:recipients,causes:CAUSES,legalHeirs:legalHeirs};
 })(G);

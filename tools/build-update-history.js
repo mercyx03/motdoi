@@ -16,8 +16,9 @@ const entries=releases.map((c,i)=>{const upper=Math.max(...c.versions),lower=i+1
 
 entries.unshift({id:'community-update',publishedAt:new Date().toISOString(),title:'Góc cập nhật, cộng đồng và hành trình theo đuổi đam mê',summary:'Xem lịch sử phát triển, góp ý bằng tài khoản và biết rõ rủi ro trước khi chuyển nghề diễn viên.',tags:['Tính năng','Cộng đồng','Sửa lỗi'],details:['Thêm cảnh báo rời công việc và lương hiện tại nếu trúng vai khi chuyển sang diễn xuất; tài năng và may mắn có thể đưa bạn lên hạng A, nhưng cũng có thể dừng ở vai phụ hoặc quần chúng.','Bổ sung, sửa tên các thành tựu fandom theo danh sách người chơi cung cấp; giữ tiến độ thành tựu đã có.','Đánh giá chỉ còn số sao; giữ dữ liệu cũ và đưa nơi góp ý sang trang cập nhật.']});
 entries.sort(newestFirst);
+const privateIds=new Set();
 const extraPath=path.join(root,'docs/update-extra.json');
-if(fs.existsSync(extraPath))entries.unshift(...JSON.parse(fs.readFileSync(extraPath,'utf8')));
+if(fs.existsSync(extraPath)){const extra=JSON.parse(fs.readFileSync(extraPath,'utf8'));extra.filter(e=>e.private).forEach(e=>privateIds.add(e.id));entries.unshift(...extra);}
 // Rebuilding the page does not change the date an existing update was published.
 const previousPath=path.join(root,'public/data/updates.json');
 if(fs.existsSync(previousPath)){
@@ -34,6 +35,7 @@ if(fs.existsSync(previousPath)){
  old.forEach(e=>{const next=merged.get(e.id);if(!next||!next.correctedAt)merged.set(e.id,e);});
  publicEntries=[...merged.values()].sort(newestFirst);
 }
+publicEntries=publicEntries.filter(e=>!e.private&&!privateIds.has(e.id));
 for(const entry of publicEntries){const at=Date.parse(entry.publishedAt);if(!Number.isFinite(at)||at>Date.now())throw Error('Invalid or future update time: '+entry.id);}
 fs.writeFileSync(path.join(root,'public/data/updates.json'),JSON.stringify({generatedAt:new Date().toISOString(),entries:publicEntries},null,2)+'\n');
 console.log('Built '+publicEntries.length+' dated update entries; prior history and explicit version/status preserved.');

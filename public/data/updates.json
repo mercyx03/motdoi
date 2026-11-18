@@ -1,11 +1,2256 @@
 {
-  "generatedAt": "2026-11-03T06:39:05.217Z",
+  "generatedAt": "2026-11-18T08:43:26.000Z",
   "entries": [
+    {
+      "id": "pacific-disasters-and-haiti-food-98600",
+      "version": "9.8.6",
+      "publishedAt": "2026-11-18T15:43:26+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Thiên tai ở Thái Bình Dương và thiếu lương thực ở Haiti",
+      "summary": "Thêm ba thiên tai theo đảo hoặc khu vực chịu ảnh hưởng. Sơ tán và việc học có thể tiếp diễn trong năm phục hồi. Khủng hoảng lương thực ở Haiti ảnh hưởng khác nhau đến từng hộ.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Sóng thần Samoa năm 2009 ảnh hưởng mạnh ở Lalomanu và Poutasi trên đảo Upolu. Đảo Niuatoputapu của Tonga cũng có bối cảnh riêng trong cùng năm.",
+        "Vụ phun trào Hunga Tonga–Hunga Haʻapai và sóng thần năm 2022 ảnh hưởng nặng hơn ở Atatā, một số làng trên Tongatapu và các đảo Haʻapai. Vavaʻu có mức ảnh hưởng nhẹ hơn.",
+        "Động đất Port Vila tháng 12/2024 làm gián đoạn việc học và chỗ ở trên đảo Efate. Từ năm 2025, trường mở lại với lớp học tạm trong thời gian sửa chữa.",
+        "Gia đình có thể ở tại điểm cứu trợ gần nhà hoặc chuyển tới điểm tiếp nhận phù hợp. Phần học dở được giữ để xin học tiếp khi thu xếp được chỗ ở. Mốc trở về phụ thuộc tình trạng nơi cũ.",
+        "Haiti 2024–2025 hiển thị khủng hoảng lương thực nghiêm trọng. Nơi ở, tiền dự phòng và tình trạng sơ tán ảnh hưởng mức thiếu ăn. Bạn có thể tìm điểm hỗ trợ, dành tiền mua thêm thức ăn hoặc chia lại khẩu phần."
+      ],
+      "correctedAt": "2026-11-18T08:47:46.412Z"
+    },
+    {
+      "id": "occupation-and-historical-regions-98500",
+      "version": "9.8.5",
+      "publishedAt": "2026-11-18T15:13:36+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Philippines, Đông Timor và vùng lịch sử ở Malaysia, Đức",
+      "summary": "Bối cảnh thời chiến khớp với bên đang cai quản. Nơi sinh và nơi chuyển đến ở Malaysia, Đức có tên vùng và điều kiện đi lại theo từng năm.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Ở Philippines, game phân biệt Thịnh vượng chung trước chiến tranh, thời Nhật chiếm đóng, giai đoạn giải phóng và mốc độc lập năm 1946. Ở Đông Timor, bối cảnh ghi nhận Nhật chiếm đóng từ 1942 và chính quyền Bồ Đào Nha trở lại sau khi Nhật đầu hàng năm 1945.",
+        "Kuala Lumpur năm 1958 thuộc Liên bang Malaya đã độc lập, còn Kuching ở Sarawak và Jesselton ở Bắc Borneo vẫn thuộc Anh. Tình trạng khẩn cấp Malaya chỉ áp dụng ở bán đảo.",
+        "Dresden và Munich có chính quyền, sự kiện và điều kiện đi lại khác nhau trong thời Đức chia cắt. Bạn có thể sinh ở Đông Berlin hoặc Tây Berlin và sẽ thấy tên Berlin thống nhất khi sống qua năm 1990.",
+        "Màn tạo đời có thể chọn thành phố hoặc vùng sinh tại Malaysia và Đức. Lựa chọn chuyển chỗ ở và sơ tán xét cả địa điểm đang sống, điểm đến và năm. Hồ sơ vẫn lưu nơi sinh theo tên vào thời điểm chào đời."
+      ],
+      "correctedAt": "2026-11-18T08:47:46.395Z"
+    },
+    {
+      "id": "evacuation-and-afghan-education-98400",
+      "version": "9.8.4",
+      "publishedAt": "2026-11-18T14:47:12+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Sơ tán tới nơi ở thật và việc học tại Afghanistan",
+      "summary": "Lựa chọn sơ tán cập nhật địa chỉ và lưu nơi đã rời đi. Các bậc học tại Afghanistan mở hoặc tạm dừng theo đúng mốc trong game.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Khi rời nơi có biến cố, nếu có điểm đến ít bị ảnh hưởng hơn, cả nhà chuyển tới đó và hồ sơ ghi rõ quê cũ cùng nơi mới. Nếu chưa có điểm đến phù hợp, game ghi nhận trú tạm tại khu vực hiện tại.",
+        "Gia đình chỉ có thể quay về khi nơi cũ đủ an toàn và tuyến đi còn phù hợp. Chuyển sang năm mới sẽ không tự mở đường trở về các vùng còn gặp khủng hoảng.",
+        "Nữ sinh ở Afghanistan vẫn học tiểu học. Việc học chính quy sau lớp 6 bị gián đoạn từ năm 2021, còn đại học có mốc riêng vào tháng 12/2022. Bằng cấp đã hoàn thành và phần học đang dở được lưu trong hồ sơ.",
+        "Khi trường học bị gián đoạn, bạn có thể học bổ trợ qua nhóm cộng đồng, tài liệu hoặc từ xa nếu tiếp cận được. Sau khi đã ổn định ở nơi có thể đi học, bạn có thể xin tiếp tục chương trình phổ thông hoặc nộp hồ sơ đại học theo điều kiện địa phương."
+      ],
+      "correctedAt": "2026-11-18T08:47:46.378Z"
+    },
+    {
+      "id": "thailand-marriage-timeline-98300",
+      "version": "9.8.3",
+      "publishedAt": "2026-11-18T14:13:11+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Kết hôn ở Thái Lan theo từng thời kỳ",
+      "summary": "Cơ hội đăng ký kết hôn thay đổi theo năm, độ tuổi của cả hai và nơi đang sống.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Trước 2025, cặp cùng giới ở Thái Lan có thể chọn sống chung. Từ 2025, cặp sống chung đủ điều kiện được mời đăng ký một lần và có thể mở lại lựa chọn từ mục Tình cảm & gia đình.",
+        "Tuổi đăng ký thông thường ở Thái Lan đổi từ đủ 17 lên đủ 18 vào năm 2025. Nếu một trong hai chưa đủ 20 tuổi, gia đình có thể thu xếp giấy đồng ý hoặc hai bạn có thể chờ đến khi tự đăng ký được.",
+        "Danh sách đi nước ngoài để kết hôn xét các nước đã cho đăng ký trong năm đó. Tải lại lựa chọn cũ vẫn phải đủ điều kiện ở thời điểm xác nhận thì mới chuyển nơi sống và trừ tiền."
+      ],
+      "correctedAt": "2026-11-18T07:13:11.906Z"
+    },
+    {
+      "id": "historical-authority-and-congo-school-98200",
+      "version": "9.8.2",
+      "publishedAt": "2026-11-18T13:52:01+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Chính thể theo niên đại và việc học ở Congo",
+      "summary": "Bối cảnh cai quản dùng chung một mốc theo năm. Chiến sự tại Goma và Bukavu tác động khác nhau tới việc học và cơ hội sơ tán.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Singapore năm 1943 hiện đúng là đang bị Nhật chiếm đóng. Năm 1945 ghi mốc quân quản Anh tiếp quản, rồi mới tới tự trị, gia nhập Malaysia và độc lập. Namibia, Somalia và Libya cũng có các mốc cai quản và chuyển tiếp rõ hơn.",
+        "Tại CHDC Congo, Goma và Bukavu có diễn biến riêng từng năm 2022–2025. Giao tranh quanh Goma năm 2024 gây gián đoạn nặng hơn, còn việc M23 kiểm soát Goma và tiến vào Bukavu xuất hiện đúng năm 2025. Kinshasa vẫn có lịch học bình thường.",
+        "Học bổ trợ hoặc học lớp tạm giữ tiến độ. Tạm nghỉ làm lùi mốc hoàn thành thêm một năm. Khi sơ tán, gia đình có thể thu xếp chỗ ở và xin tiếp tục chương trình ngay tại nơi đến. Việc có thể trở về được xét riêng theo tình hình quê cũ."
+      ],
+      "correctedAt": "2026-11-18T07:13:11.890Z"
+    },
+    {
+      "id": "ongoing-recovery-and-dated-cities-98100",
+      "version": "9.8.1",
+      "publishedAt": "2026-11-18T13:22:17+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Hồi phục sau biến cố và địa danh đúng niên đại",
+      "summary": "Hậu quả sau biến cố tiếp tục qua các năm. Sơ tán dựa trên nơi đang sống, còn nơi sinh và chuyển nhà dùng tên theo đúng thời kỳ.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Hồ sơ sang chấn, khó khăn kinh tế và các ảnh hưởng đang theo dõi tiếp tục tiến triển sau năm 2023. Tải lại trong cùng năm không tính lại chi phí hoặc ảnh hưởng.",
+        "Người đang sống ở nước ngoài có thể sơ tán trong nước đang ở nếu đã xác định được thành phố và có điểm đến ít bị ảnh hưởng hơn. Hồ sơ nhớ đúng nơi sơ tán, giữ việc học đang dở và xét đường trở về theo tình hình từng năm.",
+        "Nơi đang sống cũng quyết định tác động của một số biến cố địa phương. Ví dụ, sự kiện riêng về sóng thần Tōhoku xét nơi nhân vật đang ở tại Nhật vào năm 2011.",
+        "Quezon City xuất hiện từ năm 1939. Thành phố Dnipro dùng tên Katerynoslav, Dnipropetrovsk hoặc Dnipro theo năm. Canberra, Soweto và Polokwane cũng có mốc lịch sử riêng trong màn sinh, chuyển nơi ở và hồ sơ."
+      ],
+      "correctedAt": "2026-11-18T07:13:11.874Z"
+    },
+    {
+      "id": "birth-odds-and-local-demographics-98000",
+      "version": "9.8.0",
+      "publishedAt": "2026-11-18T11:04:15+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T04:10:54.000Z",
+      "title": "Xác suất nơi sinh theo năm và bối cảnh khi chuyển nước",
+      "summary": "Chọn nước ngẫu nhiên theo số ca sinh từng năm. Khi sang nước khác, nhân vật dùng mức sinh, sức khỏe và điều kiện phát triển của nơi đang sống.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Ở chế độ Thế giới, số ca sinh của 194 nước có dữ liệu quyết định xác suất chọn nơi sinh. Bảng xác suất và giấy khai sinh cùng dùng dữ liệu này.",
+        "Giai đoạn 1950–2023 dùng ước tính của Liên Hợp Quốc. Năm 2024–2025 dùng dự phóng, gồm số ca sinh, mức sinh, tuổi thọ và tử vong dưới 5 tuổi. Với năm sinh trước 1950, tỷ trọng bốc nước lấy theo mốc 1950.",
+        "Chuyển nước hoặc trở về làm thay đổi bối cảnh của nhân vật trong năm đó. Nơi sinh vẫn có trong hồ sơ, và bố mẹ ở quê tiếp tục dùng điều kiện tại quê nhà.",
+        "Ở chế độ tự động, mức sinh địa phương ảnh hưởng tới khuynh hướng có con. Số con mong muốn do người chơi đặt và lần đang thử có con vẫn theo quyết định đã chọn."
+      ],
+      "correctedAt": "2026-11-18T04:10:54.303Z"
+    },
+    {
+      "id": "dated-places-and-regional-history-97900",
+      "version": "9.7.9",
+      "publishedAt": "2026-11-18T10:42:39+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T04:10:54.000Z",
+      "title": "Tên nơi sinh theo thời kỳ và biến cố theo từng vùng",
+      "summary": "Tên nước và thành phố thay đổi theo năm. Biến cố 2024–2025 ảnh hưởng đến việc học, thu nhập và sơ tán theo nơi gia đình thực sự sống.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tên nơi sinh, hồ sơ và chuyển nhà dùng cùng mốc thời gian. Faisalabad mang tên Lyallpur trước năm 1977, còn Belmopan chỉ xuất hiện từ giai đoạn xây dựng năm 1967.",
+        "Bổ sung bối cảnh chính trị ở những mốc như chia cắt Ấn Độ năm 1947, hình thành hai nhà nước Đức năm 1949 và giai đoạn chuyển tiếp của Syria năm 2025.",
+        "Bối cảnh 2024–2025 phân theo nơi sinh sống. Game phân biệt nguy cơ nạn đói ở Gaza năm 2023 với nạn đói được ghi nhận tại tỉnh Gaza năm 2025, đồng thời phân vùng ảnh hưởng tại Sudan.",
+        "Khi trường phải nghỉ vì thiên tai, học sinh có thể chọn học tạm hoặc nghỉ. Chọn sơ tán sẽ chuyển gia đình tới nơi phù hợp và mở các việc cần giải quyết. Nếu chưa có nơi đến phù hợp, gia đình tìm chỗ trú gần nơi ở."
+      ],
+      "correctedAt": "2026-11-18T04:10:54.324Z"
+    },
+    {
+      "id": "quiet-job-search-and-recovery-costs-97800",
+      "version": "9.7.8",
+      "publishedAt": "2026-11-18T10:13:22+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T03:19:24.000Z",
+      "title": "Tạm dừng nhắc tìm việc và khép chi phí sống tạm sau sơ tán",
+      "summary": "Bảng tìm việc có thể tạm dừng. Chi phí sống tạm kết thúc khi cuộc sống ổn định hoặc đến mốc giới hạn. Hồ sơ vẫn giữ lựa chọn về quê.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Chọn tiếp tục tìm việc để có hai năm yên trước khi game tự mở lại bảng. Chọn tạm dừng nhắc nếu muốn tự quyết thời điểm xem. Khi đạt bậc bằng cấp cao hơn, game có thể nhắc một lần. Lời giới thiệu cho vị trí cụ thể vẫn xuất hiện theo câu chuyện của người giới thiệu.",
+        "Phí phát sinh và ảnh hưởng giao tiếp sau sơ tán dừng khi chỗ ở và sinh hoạt đã ổn định, hoặc chậm nhất khi đã qua bảy năm chịu phí. Những việc còn dở vẫn xem được trong mục Đời sống.",
+        "Hồ sơ sơ tán giữ thông tin quê cũ. Bạn có thể tự chọn trở về khi đường về phù hợp, quê cũ đã an toàn hơn và đủ chi phí."
+      ],
+      "correctedAt": "2026-11-18T03:19:24.338Z"
+    },
+    {
+      "id": "medical-debt-and-partner-work-97700",
+      "version": "9.7.7",
+      "publishedAt": "2026-11-18T10:00:04+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T03:19:24.000Z",
+      "title": "Trả đúng nợ viện phí và giữ đúng nghề của bạn đời",
+      "summary": "Lời hẹn trả viện phí theo đúng khoản đã vay. Thỏa thuận việc làm và lương khi quay lại làm được giữ theo từng người.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khi có nhiều khoản vay họ hàng trong cùng một năm, trả nợ viện phí chỉ trừ vào đúng khoản viện phí. Nhật ký ghi số tiền đã trả và phần còn lại, kể cả khi chưa gom đủ một nửa hoặc tiền bán xe chưa đủ trả hết.",
+        "Lời hẹn trả viện phí xuất hiện chậm nhất vào năm đến hạn khi nhân vật có thể xử lý. Nếu bản lưu cũ có nhiều khoản giống nhau và chưa xác định được khoản viện phí, lời hẹn cũ khép lại. Các khoản vay vẫn được giữ trong mục Tài chính.",
+        "Sau khi đổi bạn đời, công việc, lương và lịch hẹn của người cũ không chuyển sang người mới. Với cùng một người, bạn vẫn có thể bàn việc quay lại công việc đã tạm nghỉ."
+      ],
+      "correctedAt": "2026-11-18T03:19:24.356Z"
+    },
+    {
+      "id": "partner-plans-training-to-work-97600",
+      "version": "9.7.6",
+      "publishedAt": "2026-11-18T09:44:30+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T03:19:24.000Z",
+      "title": "Dự định của bạn đời có lịch học và cơ hội việc làm",
+      "summary": "Hỗ trợ đầy đủ giúp học đều hơn. Cách tiết kiệm giảm chi phí nhưng thường mất thêm thời gian. Ngoại ngữ đã học có thể dùng để ứng tuyển.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Mỗi cách hỗ trợ có học phí và nhịp học riêng. Lịch học chịu ảnh hưởng bởi việc làm và việc chăm sóc trong nhà. Bạn có thể xem mức phí trước khi chọn.",
+        "Khi chưa trả lời hoặc tạm gác vì thiếu tiền, khóa học giữ nguyên tiến độ. Hai người có thể bàn tiếp trong mục Tình cảm & gia đình → Dự định của bạn đời.",
+        "Sau khi học ngoại ngữ, bạn đời đủ điều kiện có thể dùng kỹ năng này để ứng tuyển làm lễ tân khách sạn. Kết quả phỏng vấn quyết định việc tuyển dụng. Nếu trúng tuyển, nghề và thu nhập thay đổi trong hồ sơ và ngân sách gia đình.",
+        "Sau khi hoàn thành dự định học hoặc chuẩn bị đi làm lại, hai người có thể bàn chuyện trở lại công việc cũ nếu việc đó còn phù hợp với nơi sống và bạn đời đồng ý."
+      ],
+      "correctedAt": "2026-11-18T03:19:24.371Z"
+    },
+    {
+      "id": "recovery-milestones-and-family-referrals-97500",
+      "version": "9.7.5",
+      "publishedAt": "2026-11-18T09:29:29+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T03:19:24.000Z",
+      "title": "Tin mới sau sơ tán và việc làm qua lời giới thiệu",
+      "summary": "Chỉ nhắc khi hồ sơ sơ tán có tiến triển. Có thể chủ động làm hòa với người thân hoặc nộp hồ sơ cho vị trí được giới thiệu.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Sau lần mở hồ sơ sơ tán đầu tiên, game chỉ hiện lại khi có tin mới: đã thu xếp chỗ ở, nhập học lại, có việc, gặp lại người thân hoặc có thể về quê. Bạn vẫn có thể tự mở hồ sơ trong mục Đời sống.",
+        "Khi đã xem lời mời làm hòa, game không hỏi lại mỗi năm. Nếu quan hệ cải thiện rõ, có thể có thêm một dịp. Bạn có thể chủ động hỏi thăm trong mục Tình cảm & gia đình hoặc chọn giữ khoảng cách lâu dài.",
+        "Khi người thân giới thiệu việc, bạn xem vị trí phù hợp tại nơi đang sống và hạn nộp trong mục Công việc. Bạn có thể ứng tuyển, dự phỏng vấn hoặc từ chối. Lời giới thiệu không bảo đảm được tuyển. Nếu hồ sơ chưa được chọn, các cách tìm việc khác vẫn mở."
+      ],
+      "correctedAt": "2026-11-18T03:19:24.385Z"
+    },
+    {
+      "id": "rehab-and-academic-deadlines-97400",
+      "version": "9.7.4",
+      "publishedAt": "2026-11-18T09:16:25+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T03:19:24.000Z",
+      "title": "Hoãn phục hồi khi thiếu tiền và khép hồ sơ học thuật đúng hạn",
+      "summary": "Giảm lựa chọn lặp sau tai nạn và cho tranh chấp công trình một hạn bổ sung, kết quả rõ ràng.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Đợt phục hồi sau tai nạn hiển thị phần bạn thực trả. Khi thiếu tiền, bạn có thể hoãn để thu xếp. Game giữ số đợt đã theo, không thu thêm và không mở lại hộp thoại trong cùng năm. Nếu đủ tiền trước khi hết hạn giữ hẹn, lịch có thể mở lại.",
+        "Khi đang đi làm, bạn có thể giữ việc và chọn lịch làm nhẹ. Thời gian nghỉ và thay đổi thu nhập được tính theo lịch đã chọn. Nếu dừng theo dõi hoặc hết thời gian chờ, game không tự coi cơn đau cũ đã khỏi.",
+        "Hồ sơ tranh chấp học thuật hiện mốc bổ sung chứng cứ và tiến độ giải trình. Hội đồng chỉ báo thiếu hồ sơ một lần, sau đó phản hồi khi có kết quả hoặc khi hết hạn.",
+        "Nếu công trình phải rút và bạn còn kỳ bảo vệ, bạn có một năm chuẩn bị công trình thay thế. Các môn đã đạt được giữ. Sau đó bạn trở lại quy trình bảo vệ với các điều kiện của chương trình. Bản lưu cũ có hồ sơ đang treo cũng được xử lý theo mốc này."
+      ],
+      "correctedAt": "2026-11-18T03:19:24.401Z"
+    },
+    {
+      "id": "childcare-and-football-audience-97300",
+      "version": "9.7.3",
+      "publishedAt": "2026-11-18T08:45:45+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T01:57:39.207Z",
+      "title": "Chia lịch chăm bé và đưa thành tích bóng đá đến người hâm mộ",
+      "summary": "Cách hỗ trợ con ảnh hưởng đến việc học, việc làm và thời gian chăm bé. Mùa giải hay có thể mang đến người theo dõi ngay cả khi bạn chưa đăng video.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Cùng hai gia đình chia lịch, góp một khoản trong khả năng, tìm người hỗ trợ hoặc để hai con tự thu xếp. Số tiền đã hẹn, thời gian thực tế của người thân và phần việc bên còn lại đảm nhận đều ảnh hưởng tới lịch chăm bé.",
+        "Con có thể tiếp tục lịch học, học linh hoạt hoặc tạm nghỉ. Năm bị gián đoạn sẽ lùi thời điểm tốt nghiệp hoặc bảo lưu phần khóa học còn lại. Nếu con đã đi làm, thời gian tích lũy kinh nghiệm có thể chậm lại. Hồ sơ của con cho biết cách đang chia việc chăm bé và lịch học hoặc công việc tương ứng.",
+        "Game chỉ tự đưa lời hỏi một lần. Có thể mở lại kế hoạch từ hồ sơ của con trước khi bé chào đời. Nếu bỏ qua hoặc chơi tự động, hai con tự thu xếp và gia đình không tự cam kết chi tiền.",
+        "Bàn thắng, kiến tạo, giữ sạch lưới, điểm trận và màn trình diễn tại trận lớn góp vào danh tiếng. Quy mô giải đấu và đội tuyển ảnh hưởng mức độ được biết đến. Mở kết quả mùa giải để xem danh tiếng tăng bao nhiêu.",
+        "Kênh mạng xã hội có thể đón người hâm mộ bóng đá dù bạn chưa đăng video. Mục quản lý kênh cho biết bao nhiêu người đến từ bóng đá, danh tiếng bên ngoài, video hoặc hợp tác. Số người theo dõi cũ được giữ và phần thiếu dữ liệu được hiện là chưa rõ nguồn."
+      ],
+      "correctedAt": "2026-11-18T01:57:39.347Z"
+    },
+    {
+      "id": "free-agent-news-and-adult-family-boundaries-97200",
+      "version": "9.7.2",
+      "publishedAt": "2026-11-18T08:26:55+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T01:57:39.207Z",
+      "title": "Chờ hợp đồng bóng đá và nối lại liên lạc với con",
+      "summary": "Chỉ báo khi có đề nghị hợp đồng mới. Con đã trưởng thành có thể giữ khoảng cách và dần mở lòng trở lại.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khi là cầu thủ tự do, bạn có thể tiếp tục tập riêng. Mùa không có đề nghị mới sẽ trôi qua mà không bật hộp thoại. Những mùa vắng sân vẫn ảnh hưởng đến phong độ và danh tiếng.",
+        "Đại diện tìm cơ hội và báo khi có đề nghị mới phù hợp. CLB vừa được báo sẽ không lặp lại ở mùa kế tiếp. Bạn vẫn có thể chủ động liên hệ CLB hoặc xem hợp đồng còn hạn trong Hồ sơ bóng đá.",
+        "Khi quan hệ căng thẳng kéo dài, con trưởng thành có thể chủ động giữ khoảng cách, từ chối lời mời gặp và chỉ báo một số tin lớn, chẳng hạn sau khi đã tự thu xếp lễ cưới. Thay đổi này hiện trong nhật ký và hồ sơ của con.",
+        "Bạn có thể chủ động hỏi thăm hoặc xin lỗi. Con cần thấy sự thay đổi qua nhiều năm mới dần nối lại liên lạc. Mục giao lưu và hồ sơ của con dùng chung lịch sử liên lạc."
+      ],
+      "correctedAt": "2026-11-18T01:57:39.331Z"
+    },
+    {
+      "id": "life-rhythm-and-continuity-97100",
+      "version": "9.7.1",
+      "publishedAt": "2026-11-18T08:11:55+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T01:57:39.207Z",
+      "title": "Nhịp sống thưa hơn, chuyện gia đình có tiếp nối",
+      "summary": "Giảm lời nhắc đời thường lặp lại, cho phép ẩn gợi ý nấu ăn và nối hệ quả từ cách đồng hành với con đến mạng xã hội, bóng đá.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Nhiều năm giờ có thể yên ả hơn: các chuyện đời thường ngẫu nhiên được giãn cách, hạn chế tình huống cùng chủ đề lặp lại và không dồn quá nhiều lựa chọn trong một năm. Biến cố, mốc quan trọng, việc đã hẹn và câu chuyện đang xử lý vẫn được ưu tiên.",
+        "Trong mục “Nhịp sống và lời nhắc”, bạn có thể chọn nhịp thưa hoặc nhận thêm chuyện đời thường. Cũng có thể tắt hẳn gợi ý nấu ăn, ẩm thực; lựa chọn này được lưu trong cuộc đời và có thể bật lại.",
+        "Các lời nhắc tự động về việc quan tâm con dừng khi con trưởng thành. Những tình huống thường ngày của con cũng được tiết chế; chuyện sức khỏe, bị bắt nạt, bỏ nhà đi và tình huống cần người lớn hỗ trợ vẫn được giữ.",
+        "Khi con chia sẻ chuyện tình cảm tuổi học trò, cách bạn lắng nghe, trao đổi về an toàn, bỏ qua hay cấm đoán sẽ ảnh hưởng đến mức độ tin cậy và việc con có tìm bạn khi gặp khó khăn. Một số lựa chọn có thể dẫn tới chuyện làm cha mẹ ngoài dự định, khi đó gia đình phải bàn trách nhiệm, việc học và kế hoạch chăm sóc.",
+        "Danh tiếng từ trước có thể giúp kênh mạng xã hội mới nhanh có người theo dõi hơn. Người đã có khán giả bên ngoài cũng có thể tăng trưởng tự nhiên theo thời gian. Thành tích và số lần ra sân trong sự nghiệp bóng đá góp phần tạo danh tiếng theo quy mô giải đấu và đội bóng.",
+        "Nhịp thưa là thiết lập mặc định cho các bản lưu mới; bản lưu cũ tiếp tục chơi được và có thể đổi nhịp trong mục cài đặt."
+      ],
+      "correctedAt": "2026-11-18T01:57:39.315Z"
+    },
+    {
+      "id": "saudi-pro-league-and-spanish-family-names-97000",
+      "version": "9.7.0",
+      "publishedAt": "2026-11-18T00:44:08.895Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T00:52:15.009Z",
+      "title": "Saudi Pro League và hai họ trong gia đình Tây Ban Nha",
+      "summary": "Thêm cơ hội thi đấu tại Saudi và cách đặt tên, truyền họ rõ ràng qua các thế hệ ở Tây Ban Nha.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Thị trường bóng đá có thêm Al Hilal, Al Nassr, Al Ittihad và Al Ahli. Bạn xem điều kiện, nhận lời mời rồi tự quyết định ký hợp đồng và chuyển nơi ở. Quốc tịch được giữ nguyên; giải Saudi chỉ xuất hiện từ thời kỳ đã hình thành.",
+        "Từ năm 2023, kỹ năng thi đấu đặc biệt cao hoặc danh tiếng ngôi sao có thể giúp bạn được chào lương cơ bản tới 60 triệu USD/năm. Cầu thủ thông thường vẫn nhận mức phù hợp năng lực. Hợp đồng Saudi giữ trần lương khi gia hạn và tăng hằng năm; thưởng và tài trợ được tính riêng.",
+        "Lời mời Saudi hiện rõ lương USD theo năm bên cạnh mức quy đổi. Chưa ký thì chưa nhận lương; khoản ký hợp đồng và lương hằng năm đi qua sổ thu nhập đang có, tránh nhận hai lần khi lưu rồi chơi tiếp. Doanh nghiệp cũng có thể xem xét mua CLB Saudi trong danh mục.",
+        "Tên thường dân Tây Ban Nha đa dạng hơn với tên đơn, tên ghép, họ phổ biến và họ ít gặp. Không tự thêm cụm tên nghi lễ hoàng gia. Họ có nhiều từ, dấu nối hoặc chữ y được giữ thành từng phần rõ ràng.",
+        "Con nhận họ thứ nhất của mỗi cha mẹ đã ghi nhận. Có thể thống nhất họ mẹ trước theo thời kỳ; các con của cùng hai người giữ thứ tự đã đăng ký. Khi đứa con lớn lên và có con, chính họ đứng đầu tiếp tục được truyền lại.",
+        "Hai cha mẹ cùng họ García vẫn có thể sinh con mang hai họ García García. Chọn chữ y chỉ đổi cách nối, không tự lấy thêm họ khác. Nếu chỉ một cha hoặc mẹ được ghi nhận, trẻ mang hai họ của người đó; sinh ngoài hôn nhân không tự đồng nghĩa với thiếu cha được ghi nhận.",
+        "Việc đặt lại tên gọi cho trẻ, sinh đôi và sống tiếp đời con giữ đúng hai họ của gia đình. Cha mẹ đổi họ không tự đổi tên những người con đã đăng ký; tên trong bản lưu cũ được giữ nguyên.",
+        "Người trưởng thành có thể nộp hồ sơ đảo thứ tự hoặc đổi cách nối hai họ, chờ sang năm rồi chủ động xem kết quả. Lịch sử tên và việc cập nhật giấy tờ được theo dõi. Đề nghị dùng hoàn toàn hai họ mẹ cần căn cứ phù hợp; mong muốn tri ân không tự làm mất họ cha trên giấy tờ."
+      ],
+      "correctedAt": "2026-11-18T00:52:15.073Z"
+    },
+    {
+      "id": "dated-locations-recovery-and-vocational-96900",
+      "version": "9.6.9",
+      "publishedAt": "2026-11-17T16:35:36+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T00:21:57.000Z",
+      "title": "Địa điểm theo niên đại, cuộc sống sau sơ tán và đường học nghề",
+      "summary": "Chọn nơi ở đúng thời kỳ, từng bước ổn định sau sơ tán và theo học nghề tại nơi đang sống.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Kiểm tra mốc hình thành của Brasília, Islamabad, Naypyidaw, Abuja và Tel Aviv khi chọn nơi sinh, chuyển đến thành phố, di cư và tìm nơi sơ tán. Giai đoạn xây dựng Brasília và Naypyidaw có tên gọi riêng. Chuyển nhà trong nước không tự đưa bạn sang một thành phố thuộc quốc gia khác.",
+        "Tên vùng Nghệ Tĩnh, Bình Trị Thiên và Sông Bé xuất hiện theo giai đoạn đã đối chiếu. Lựa chọn nơi sinh vẫn giữ rõ khu vực gốc; tên hành chính thay đổi theo năm nhưng nơi sinh và nhà đất không tự chuyển sang vùng khác.",
+        "Sau sơ tán, bạn có thể nhờ người thân thu xếp chỗ ở, tìm nơi thuê, xin tiếp tục chương trình học, xem cơ hội việc làm và nối lại tin tức gia đình. Mỗi năm thu xếp một việc; lựa chọn và phần còn dở được giữ khi lưu rồi chơi tiếp.",
+        "Xin học lại có thời gian chờ, giữ kết quả đã học và phần chương trình còn thiếu. Chuyển nơi ở trong lúc chờ cần trao đổi lại; hoàn cảnh chưa an toàn sẽ kéo dài thời gian chờ. Khi trở về quê, hồ sơ học còn dở vẫn được theo dõi.",
+        "Có thể hẹn gặp người thân còn sống và đang ở gần sau khi đã hỏi được tin. Khi quê cũ an toàn hơn, bạn chọn trở về hoặc gắn bó với nơi ở hiện tại; game không tự quyết thay. Trở về có chi phí và công việc cũ cần tìm lại.",
+        "Đường học nghề dùng hồ sơ khóa học dài hạn: học cùng thợ địa phương, Kōsen tại Nhật từ 1962, đào tạo nghề kép tại Đức từ 1969, ITI/CTS ở Ấn Độ từ 1950 và chương trình bac professionnel ba năm ở Pháp từ 2009. Cần đủ tuổi, bậc học và điều kiện cư trú.",
+        "Khóa nghề có học phí, thời hạn và đánh giá cuối khóa. Trẻ chưa tự lập có thể đề nghị gia đình chi trả; người thân có thể từ chối. Chuyển nước sẽ dừng khóa tại nơi cũ; biến cố lớn làm gián đoạn thì giữ thời gian học còn lại. Học cùng thợ không tự biến thành bằng chính quy.",
+        "Con và anh chị em có thể theo lộ trình phù hợp qua mục học dài hạn. Con chưa nhận việc trong lúc đang học nghề; khi tuyển việc, cả nghề được gia đình gợi ý và vị trí thông thường đều kiểm tra thời đại, tuổi, bằng cấp, chuyên ngành và nơi sống.",
+        "Tuyến học đại học thông thường bị kiểm tra lại theo nơi và năm, gồm giai đoạn gián đoạn tuyển sinh tại Trung Quốc. Lựa chọn cũ và kết quả khóa học không được áp dụng hai lần khi tải lại bản lưu."
+      ],
+      "correctedAt": "2026-11-18T00:21:57.743Z"
+    },
+    {
+      "id": "birthplace-and-year-context-96800",
+      "version": "9.6.8",
+      "publishedAt": "2026-11-17T15:45:37+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T08:45:37.000Z",
+      "title": "Bối cảnh nơi sinh và năm sinh",
+      "summary": "Chọn vùng sinh đúng thời kỳ, nghề của bố mẹ phù hợp hơn và sự kiện địa phương theo nơi đang sống.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Chọn năm sinh trước 2025 sẽ chuyển sang danh sách vùng sinh trước sáp nhập, giữ đúng khu vực đã chọn thay vì hiểu nhầm chỉ số tỉnh. Sinh ở Việt Nam qua chế độ thế giới cũng dùng đúng danh sách theo năm.",
+        "Khi chọn quốc gia ngẫu nhiên, phần giới thiệu không còn lấy nhầm bối cảnh Việt Nam. Chọn một nước sẽ thấy bối cảnh chính trị, tên gọi và biến cố theo năm đó; chọn vùng ở Việt Nam sẽ thấy ảnh hưởng tại vùng thay vì chỉ mức chung cả nước.",
+        "Hồ sơ xuất phát và nhật ký chào đời dùng tên địa điểm theo thời kỳ; nơi sinh giữ tên của năm chào đời khi nhân vật lớn lên. Xem trước phản ánh vùng và dân tộc đã chọn. Sửa tên cũ bị dùng quá sớm ở Saint Petersburg, Volgograd, Astana, Bishkek, Almaty, Dushanbe và Huambo.",
+        "Nghề của bố mẹ khi chào đời và khi tìm lại việc được kiểm tra theo năm, tránh shipper, tài xế công nghệ, kỹ sư phần mềm, bán hàng trực tuyến hoặc làm truyền hình xuất hiện quá sớm.",
+        "Sự kiện địa phương vẫn nhận đúng vùng khi bản lưu dùng tên thành phố lịch sử. Bối cảnh chính trị khi đang ở nước ngoài theo nơi đang sống.",
+        "Lựa chọn của thời loạn hết hiệu lực khi đã đổi năm, đổi nơi ở hoặc hoàn cảnh gây ra sự kiện không còn. Lựa chọn cũ không tiếp tục trừ tiền hay gây thương vong ở nơi mới.",
+        "Giải thích rõ hơn số liệu ước tính trước 1950 và vẫn hiển thị bối cảnh cho các năm gần đây."
+      ],
+      "correctedAt": "2026-11-17T08:59:15.584Z"
+    },
+    {
+      "id": "mentor-work-review-and-youth-development-96700",
+      "version": "9.6.7",
+      "publishedAt": "2026-11-17T15:16:46+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T08:16:46.000Z",
+      "title": "Tiếp nối lời khuyên của thầy cô và cơ hội phát triển nghề",
+      "summary": "Trao đổi khi công việc gặp khó, bổ sung hồ sơ còn dở và rèn kỹ năng cho cầu thủ trẻ sau mùa cho mượn.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sau lần thầy cô hỏi thăm công việc, bạn có thể kể thật về khó khăn rồi nhìn lại kết quả sau một đến hai năm. Lựa chọn tiếp theo thay đổi khi bạn đã đổi việc hoặc người thầy cũ không còn.",
+        "Khi hồ sơ công tác tại FBI, CIA hoặc MI5 cần bổ sung, phần việc được giữ sang năm sau. Bạn có thể đối chiếu lại cùng người hướng dẫn hoặc bàn giao để chuyển sang việc khác. Hồ sơ được duyệt chỉ tính thành tích một lần.",
+        "Cầu thủ đã có đủ phút thi đấu nhưng chưa đạt đánh giá để lên đội một có thể rèn kỹ năng tại CLB chủ quản. Công ty trả phí, HLV đánh giá lại vào mùa sau. Trong thời gian này, cầu thủ tiếp tục ở đội chủ quản.",
+        "Rút hoặc để quá hạn hồ sơ tuyển dụng sẽ khép cả phần chuẩn bị của lần nộp đó."
+      ],
+      "correctedAt": "2026-11-17T08:59:15.692Z"
+    },
+    {
+      "id": "deeper-mentor-recruitment-and-loans-96600",
+      "version": "9.6.6",
+      "publishedAt": "2026-11-17T14:56:16+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T07:56:16.000Z",
+      "title": "Thêm bước tiếp nối sau lời giới thiệu, thi tuyển và cho mượn",
+      "summary": "Thầy cô hỏi thăm sau lần giới thiệu việc. Ứng viên có thể chuẩn bị lại sau khi trượt, còn CLB nhận mượn ảnh hưởng đến cơ hội ra sân.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sau khi thầy cô giới thiệu việc, họ có thể hỏi thăm vài năm sau. Bạn có thể kể về công việc đang làm, xin thêm góp ý để tìm việc hoặc giữ liên lạc khi chọn hướng riêng.",
+        "Trong chuỗi ứng tuyển FBI, CIA hoặc MI5, bạn có thể luyện kỹ năng cho vòng đánh giá khi đang chờ. Mỗi vòng có hạn xử lý và hồ sơ quá hạn cần được nộp lại.",
+        "Khi cho mượn cầu thủ trẻ, xem khoảng phút thi đấu dự kiến ở đội nhận. Đội ưu tiên học viện và có mức cạnh tranh phù hợp tạo thêm cơ hội ra sân. Nếu chọn cho mượn tiếp, đề nghị chuyển nhượng đang chờ của chính cầu thủ đó sẽ khép lại."
+      ],
+      "correctedAt": "2026-11-17T08:59:15.794Z"
+    },
+    {
+      "id": "childhood-paths-and-local-life-96500",
+      "version": "9.6.5",
+      "publishedAt": "2026-11-17T14:44:05+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T07:44:05.000Z",
+      "title": "Kỷ niệm tuổi nhỏ mở ra những hướng đi mới",
+      "summary": "Gặp lại bạn cũ, theo đuổi sở thích hoặc được thầy cô gợi ý tìm việc. Bảng nghề cho biết bước tiếp theo và khi nào có thể thực hiện.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Một số chuyến ngoại khóa, buổi biểu diễn và sinh hoạt địa phương mở ra chuyện tiếp nối sau vài năm. Bạn có thể gặp lại người đã quen, luyện kỹ năng, hỏi thầy cô về việc làm hoặc giữ chuyện đó như một kỷ niệm.",
+        "Bảng CLB ghi mùa cầu thủ trở về, yêu cầu lên đội một và hạn chốt chuyển nhượng. Hồ sơ FBI, CIA và MI5 ghi năm xử lý tiếp, điều kiện và lý do chưa qua vòng xét. Kế nghiệp hiển thị bước đề cử, bỏ phiếu hoặc bàn giao.",
+        "Mục Sinh hoạt ở nơi đang sống có gợi ý vui chơi và tìm việc theo địa phương. Bạn bè ở xa có thể viết thư, gọi điện hoặc gọi video tùy nơi và năm.",
+        "Chế độ tự động dùng các nút còn hợp lệ trên bảng đang mở. Với bảng cũ chỉ còn đường quay lại, game có thể thoát để cuộc đời tiếp tục."
+      ],
+      "correctedAt": "2026-11-17T07:48:56.369Z"
+    },
+    {
+      "id": "school-event-navigation-96400",
+      "version": "9.6.4",
+      "publishedAt": "2026-11-17T14:35:37+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T07:35:37.000Z",
+      "title": "Sửa lỗi kẹt sau khi tham gia ngoại khóa",
+      "summary": "Có thể trở về danh sách sự kiện hoặc đóng bảng để chơi tiếp, kể cả khi đã dùng hết lượt trong năm.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Chuyến ngoại khóa đã tham dự chỉ hiện trong phần tổng kết. Chế độ tự động có thể đi tiếp sau khi xem đến một sự kiện đã kết thúc.",
+        "Khi mở bản lưu cũ, trò chơi bỏ bảng ngoại khóa bị trùng hoặc đã qua năm học. Lịch sử tham dự và kỷ niệm vẫn được giữ."
+      ],
+      "correctedAt": "2026-11-17T07:48:56.461Z"
+    },
+    {
+      "id": "period-actions-and-household-life-96300",
+      "version": "9.6.3",
+      "publishedAt": "2026-11-17T14:27:15+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T07:27:15.000Z",
+      "title": "Việc làm hợp thời và đời sống gia đình tự nhiên hơn",
+      "summary": "Lựa chọn theo nơi ở, tuổi và năm đang sống. Các cảnh hoàng gia phản ánh việc gia nhân lo sinh hoạt trong nhà.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Những năm chưa có danh mục nhạc thần tượng phù hợp, bạn có thể đi xem một buổi biểu diễn tại nơi đang sống. Danh sách nghệ sĩ và chương trình mở theo thời kỳ; một số nhóm được kiểm tra theo năm ra mắt.",
+        "Mục Việc bạn muốn làm kiểm tra lại điều kiện trước khi mở hoặc thực hiện lựa chọn cũ. Trọng tâm năm hiển thị tuổi, năm và nơi ở, với nội dung phù hợp hơn khi đang học, tìm việc hoặc trong hoàn cảnh cần giữ an toàn.",
+        "Khi có gia nhân, họ phụ trách bữa ăn. Trẻ có thể vào thăm người thân đang ốm hoặc học làm một món cùng đầu bếp; các tình huống tuổi nhỏ dùng lời thoại phù hợp hơn.",
+        "Bỏ nhãn hư cấu lặp lại trong cuộc đời và các đuôi miễn phí, không chi tiền trên nút lựa chọn. Giá và điều kiện thực tế vẫn được hiển thị.",
+        "Khi chuyển sang sống tiếp đời con, tên đã ghi trong gia đình được giữ nếu phần dựng lại quá khứ có lựa chọn giữ họ."
+      ],
+      "correctedAt": "2026-11-17T07:48:56.547Z"
+    },
+    {
+      "id": "world-careers-and-family-dialogue-96200",
+      "version": "9.6.2",
+      "publishedAt": "2026-11-17T14:10:56+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T07:10:56.000Z",
+      "title": "Thêm đường nghề ở nước ngoài và cách gọi bố mẹ tự nhiên hơn",
+      "summary": "Rèn võ, tìm người giới thiệu vào tổ chức địa phương hoặc theo đuổi nghề điều tra và tình báo với quy trình tuyển nhiều vòng.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Trong mục Đường tối, nhóm Yakuza ở Nhật xét kỹ năng võ thuật. Các nhóm kiểu Mafia ở Ý, Mỹ và Nga xem xét kinh nghiệm trong giới tại địa phương. Bạn cần người giới thiệu và chờ đến năm sau mới có thể gia nhập.",
+        "Thành viên có thể theo hướng cưỡng ép, đầu mối tài chính hoặc sát thủ đánh thuê ở những nhóm phù hợp. Từng vai trò có yêu cầu về tín nhiệm và kinh nghiệm, cùng sự kiện và rủi ro pháp lý riêng.",
+        "Trong mục Công việc, Mỹ có đặc vụ và chuyên viên phân tích FBI, chuyên viên phân tích và sĩ quan nghiệp vụ CIA. Anh có chuyên viên phân tích MI5. Nhân vật phải đáp ứng điều kiện trong game và đi qua các vòng đánh giá, thẩm tra trước khi nhận việc.",
+        "Trong các tình huống trò chuyện, nhờ vả và hỗ trợ gia đình, lời thoại dùng cách gọi Mẹ hoặc Bố."
+      ],
+      "correctedAt": "2026-11-17T07:48:56.631Z"
+    },
+    {
+      "id": "first-team-postgraduate-succession-96100",
+      "version": "9.6.1",
+      "publishedAt": "2026-11-17T13:55:19+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-17T06:55:19.000Z",
+      "title": "Cầu thủ trẻ lên đội một, con học cao hơn và anh chị em kế nghiệp",
+      "summary": "Theo dõi cầu thủ sau mùa cho mượn, hỗ trợ con học thạc sĩ hoặc tiến sĩ, và để anh chị em có năng lực thử sức với gia nghiệp.",
+      "tags": [
+        "Tính năng",
+        "Cải tiến"
+      ],
+      "details": [
+        "Sau mùa cho mượn, xem số phút và đánh giá của HLV tại CLB chủ quản. Nếu cầu thủ đạt yêu cầu và CLB đủ ngân quỹ, bạn có thể ký hợp đồng phát triển đội một hai mùa. Bạn cũng có thể cho mượn tiếp hoặc tìm đề nghị chuyển nhượng.",
+        "Trong hồ sơ của con, bạn có thể đề nghị hỗ trợ học phí hoặc động viên con xin học bổng. Thạc sĩ học hai năm, tiến sĩ học bốn năm. Con nhận bằng sau khi hoàn thành chương trình.",
+        "Anh chị em có thể học đại học, tiến lên các vị trí chuyên môn và quản lý, hoặc tích lũy kinh nghiệm ở công ty gia đình. Người phù hợp có thể ứng cử rồi tiếp quản nếu được biểu quyết thông qua. Bạn vẫn có thể theo đuổi nghề mình thích.",
+        "Sự kiện theo nơi ở và năm đã điều chỉnh kỳ Gaokao tại Trung Quốc, lộ trình tú tài nghề ở Pháp và nội dung đi làm tại Pháp ở giai đoạn chưa dùng email."
+      ],
+      "correctedAt": "2026-11-17T07:48:56.716Z"
+    },
+    {
+      "id": "club-loans-and-work-history-96000",
+      "version": "9.6.0",
+      "publishedAt": "2026-11-17T10:59:30+07:00",
+      "releaseStatus": "released",
+      "title": "Cho mượn cầu thủ trẻ và giữ đúng quyền sở hữu CLB",
+      "summary": "Các đội trong mạng lưới có thể chia lương để cầu thủ trẻ được thi đấu một mùa; lời mời đi làm nước ngoài theo đúng thời điểm các chương trình mở.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Đội có học viện đang phát triển có thể cho cầu thủ trẻ mượn một mùa trong mạng lưới. Bạn chọn tỷ lệ đội nhận chịu lương, xem số phút thi đấu và theo dõi cầu thủ trở về đội chủ quản.",
+        "Khi sáp nhập, CLB và lịch sử các lượt mượn chuyển sang doanh nghiệp nhận sáp nhập. Sau khi thừa kế, lời đề nghị mua CLB cũ không tự tiếp tục. Mất quyền kiểm soát công ty thì bạn không còn được điều hành hay bán CLB thay công ty.",
+        "Lời mời đi làm nước ngoài chỉ nhắc chương trình phù hợp với năm đang sống. Ví dụ, thực tập kỹ năng ở Nhật xuất hiện từ 1993 và chương trình EPS ở Hàn Quốc từ 2004."
+      ],
+      "releasedAt": "2026-11-17T04:01:21.000Z",
+      "correctedAt": "2026-11-17T04:02:41.517Z"
+    },
+    {
+      "id": "salary-and-football-95900",
+      "version": "9.5.9",
+      "publishedAt": "2026-11-17T10:47:36+07:00",
+      "releaseStatus": "released",
+      "title": "Giữ phần dư từ lương lớn và xây mạng lưới CLB bóng đá",
+      "summary": "Chi mua sắm tự động có ngân sách rõ ràng và công ty có thể mua, điều hành nhiều đội bóng tại các thị trường khác nhau.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mua sắm, giải trí tự động có trần theo mức sống và chế độ chi tiêu bạn chọn. Lương, thưởng và cổ tức lớn không kéo khoản này tăng theo. Khoản dư sau các khoản chi được giữ lại.",
+        "Trong hồ sơ doanh nghiệp bạn kiểm soát, có thể chọn CLB, gửi đề nghị rồi quay lại chốt sau khi cổ đông phản hồi. Giao dịch dùng ngân quỹ doanh nghiệp và có thể bị từ chối.",
+        "Mỗi mùa CLB có doanh thu vé, tài trợ, quỹ lương và chi phí vận hành. Chọn ưu tiên học viện hoặc thương mại, rồi theo dõi kết quả trong sổ công ty. Sở hữu ở nhiều quốc gia sẽ mở lựa chọn dùng chung tuyển trạch và đào tạo."
+      ],
+      "releasedAt": "2026-11-17T03:49:25.000Z",
+      "correctedAt": "2026-11-17T03:49:25.578Z"
+    },
+    {
+      "id": "life-paths-and-nhs-95800",
+      "version": "9.5.8",
+      "publishedAt": "2026-11-17T10:34:56+07:00",
+      "releaseStatus": "released",
+      "title": "Đường đi sau đội trường, chuyển cấp và viện phí đúng thời",
+      "summary": "Dùng kinh nghiệm đội trường để thử tuyển, gặp lựa chọn học và làm phù hợp với năm sống, và sửa khoản thu NHS quá mức.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Các mùa thể thao ở trường giúp bạn thử sức với đội địa phương. Hồ sơ bóng đá đủ điều kiện có thể hỗ trợ khi thử tuyển học viện. Bạn tự chọn tiếp tục tập, thử lại hoặc giữ thể thao như sở thích.",
+        "Chuyển cấp ở Anh thời trước dùng lựa chọn học tiếp hoặc học nghề phù hợp với bối cảnh; màn GCSE theo thang điểm hiện đại xuất hiện từ năm phù hợp. Đời cũ ở Việt Nam có lựa chọn trường địa phương mà không bị áp địa chỉ trường thời nay.",
+        "Danh sách tìm việc loại nghề chưa có trong năm đó trước khi đưa cho bạn chọn. Lời mời di cư xét cả hạn chế rời nơi đi và xem điểm đến có phù hợp với năm sống.",
+        "Phí y tế dự báo có giới hạn. Với bản lưu cũ, game chỉ hoàn phí kê đơn NHS tính thừa khi còn đủ bằng chứng về khoản thu trong sổ thu chi và nhật ký; người được miễn phí không bị cộng tiền nhầm."
+      ],
+      "releasedAt": "2026-11-17T03:39:09.000Z",
+      "correctedAt": "2026-11-17T03:46:05.053Z"
+    },
+    {
+      "id": "school-sport-context-95700",
+      "version": "9.5.7",
+      "publishedAt": "2026-11-17T10:17:15+07:00",
+      "releaseStatus": "released",
+      "title": "Đội thể thao học đường qua nhiều mùa",
+      "summary": "Tập luyện cùng đồng đội, tranh suất thi đấu và cân bằng thể thao với học tập khi hoàn cảnh đổi thay.",
+      "tags": [
+        "Tính năng mới",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Đăng ký đội ở trường để bắt đầu một hành trình nhiều mùa. Khi chưa qua tuyển, bạn có thể thử lại. Khi ở đội dự bị, tập đều và phối hợp tốt giúp bạn tiến gần suất chính.",
+        "Gặp lại đồng đội ở các mùa sau và xây dựng sự tin cậy. Bạn có thể tập vừa sức để dành giờ học, tạm nghỉ hoặc khép lại hành trình. Tập đúng môn sở trường giúp rèn thêm kỹ năng.",
+        "Khi chuyển nơi ở, đội mới chọn môn phù hợp hơn và bạn mang theo một phần kinh nghiệm. Chiến sự, thiên tai, dịch bệnh hoặc thiếu lương thực nghiêm trọng có thể khiến mùa tập phải dừng.",
+        "Nội dung học tập và công nghệ dùng điều kiện của nơi bạn đang sống trong năm đó, kể cả khi đi du học. Ví dụ, khả năng dùng internet đầu những năm 2000 thay đổi khi bạn từ Việt Nam sang Mỹ."
+      ],
+      "releasedAt": "2026-11-17T03:19:21.000Z",
+      "correctedAt": "2026-11-17T03:46:04.962Z"
+    },
+    {
+      "id": "event-continuity-95600",
+      "version": "9.5.6",
+      "publishedAt": "2026-11-17T09:24:24+07:00",
+      "releaseStatus": "released",
+      "title": "Ôn thi đúng năm, giải nghệ đúng hạn và sửa tình huống lễ hội",
+      "summary": "Kết quả chuyển cấp đến đúng lúc, vận động viên chơi trọn mùa cuối và nhật ký ghi đúng nơi bạn rời đi.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sự kiện chuẩn bị chuyển cấp chỉ xuất hiện trước năm chuyển cấp. Cách ôn đã chọn giúp tích lũy kiến thức cho kỳ tuyển sinh hiện có, và bạn nhận kết quả khi dự kỳ tuyển sinh.",
+        "Khi chọn giải nghệ lúc hợp đồng hết hạn, vận động viên vẫn thi đấu và hưởng mức sàn trong mùa cuối. Hồ sơ sau giải nghệ được ghi khi hợp đồng kết thúc, kể cả khi lưu rồi quay lại.",
+        "Khi rời đi vì bị phân biệt đối xử, nhật ký ghi đúng nơi đã rời. Game xét điểm đến theo đúng loại rào cản đang khiến bạn phải chuyển đi.",
+        "Lễ Tạ ơn thời chưa phổ biến truyền hình bỏ lựa chọn xem màn hình. Chuyện ngắm trăng ở Nhật Bản và Hàn Quốc có lựa chọn và lời kể phù hợp với cảnh mở đầu."
+      ],
+      "releasedAt": "2026-11-17T02:28:48.000Z",
+      "correctedAt": "2026-11-17T03:46:04.870Z"
+    },
+    {
+      "id": "era-society-95500",
+      "version": "9.5.5",
+      "publishedAt": "2026-11-16T23:54:13+07:00",
+      "releaseStatus": "released",
+      "title": "Lương, giá và sự kiện đúng thời đại, phân biệt đối xử trong lịch sử",
+      "summary": "Người sinh trước nay chỉ gặp những chuyện có thật vào thời của mình, với mức lương và giá cả của thời ấy.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Lương theo thời đại: mọi ngành nay có mức lương theo thu nhập thật của năm bạn sống, ở mọi nước (trước đây lương của người sinh năm 1960 vẫn là lương 2026 trong khi chi phí đã đổi). Giá nhà, các loại nhà (chung cư thương mại, cao cấp chỉ có từ khi xuất hiện), bảo hiểm xã hội và thuế thu nhập ở Việt Nam cũng theo năm.",
+        "Không còn chuyện sai thời: gameshow và cuộc thi truyền hình, văn hóa thần tượng, clip lan truyền, mạng xã hội, ứng dụng vay tiền, game MOBA, nghề shipper, streamer, làm móng… chỉ xuất hiện từ khi chúng có thật ở nước bạn sống.",
+        "Phân biệt đối xử trong lịch sử: kỳ thị người đồng tính, song tính theo luật và xã hội từng nước và năm (ví dụ Anh trước 1967, Liên Xô 1934–1993, Mỹ đến 2003) cùng các chế độ phân biệt chủng tộc, sắc tộc (Jim Crow, apartheid, Quốc xã…). Bạn có thể phải giữ kín, bị lộ, mất việc, nhờ cộng đồng giúp, đấu tranh hay rời quê.",
+        "Thêm hơn một trăm biến cố lịch sử theo nước và vùng: khủng hoảng kinh tế, dịch bệnh, thiên tai, xung đột (chiến tranh Mùa đông, Intifada, khủng hoảng Tequila, SARS, lũ miền Bắc 1971, bão Linda 1997…).",
+        "Tuổi thơ ngoài Việt Nam: lễ hội của từng nước (Tết Âm lịch, Diwali, Eid, Giáng sinh, Halloween, Carnaval, Songkran…), thêm chuyện ở tuổi 1–2 và 10–14.",
+        "Vận động viên chuyên nghiệp ngoài bóng đá có hợp đồng nhiều năm với mức sàn tăng theo năm; ca sĩ, diễn viên, doanh nhân thu nhập lớn không còn chi sinh hoạt ăn hết phần dư.",
+        "Bỏ chữ \"(hư cấu)\" khỏi tên công ty và chương trình."
+      ],
+      "releasedAt": "2026-11-16T21:57:56.000Z",
+      "correctedAt": "2026-11-16T21:57:57.097Z"
+    },
+    {
+      "id": "economy-era-95400",
+      "version": "9.5.4",
+      "publishedAt": "2026-11-16T21:32:18+07:00",
+      "releaseStatus": "released",
+      "title": "Lương và giá nhà theo thời đại, cầu thủ gia hạn hoặc tự do, sửa thừa kế",
+      "summary": "Người sinh năm 1960 hay 1985 có mức lương, tiền nhà đúng thời đó; cầu thủ hết hợp đồng có đường đi tiếp.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Lương và chi phí theo thời đại: người sinh năm 1950 ở Việt Nam có mặt bằng thu nhập chỉ khoảng một phần tám hiện nay, 1985 khoảng một phần năm, 2000 khoảng một phần ba. Tiền ăn ở, tiền nhà, học phí và giá nhà đi theo mặt bằng ấy; thu nhập lớn dần mỗi năm cùng nền kinh tế. Các nước khác cũng theo mức phát triển của chính họ.",
+        "Xe ô tô giữ giá thực nên với thu nhập thời trước là rất đắt, chỉ ít người mua được. Người sinh từ 2024 không đổi.",
+        "Bóng đá: lương hợp đồng tăng theo năm, hợp đồng dài có điều khoản giải phóng cho CLB đủ tiền mua đứt giữa chừng.",
+        "Bóng đá: năm cuối hợp đồng bạn quyết định gia hạn, đòi tăng lương, chạy hết hợp đồng để ra thị trường hoặc giải nghệ. Hết hợp đồng thành cầu thủ tự do sẽ nhận lời mời từ các CLB phù hợp; chờ quá lâu thì phong độ và tên tuổi giảm. Chơi tự động không còn bỏ trống nhiều năm không câu lạc bộ.",
+        "Sửa lỗi thừa kế: khi cha hoặc mẹ mất lúc còn vợ/chồng, phần thừa kế của con ở \"sống tiếp đời con\" nay khớp với màn chia tài sản cuối đời, không còn lệch."
+      ],
+      "releasedAt": "2026-11-16T15:25:56.000Z",
+      "correctedAt": "2026-11-16T15:25:56.377Z"
+    },
+    {
+      "id": "kid-childhood-95300",
+      "version": "9.5.3",
+      "publishedAt": "2026-11-16T18:34:28+07:00",
+      "releaseStatus": "released",
+      "title": "Tuổi thơ nhỏ đa dạng hơn, hợp đồng cầu thủ dài tới 7 năm",
+      "summary": "Bớt cảnh lạc ở chợ phiên, thêm chuyện tuổi thơ theo nơi sinh và thời đại; cầu thủ ký hợp đồng 5–7 năm và lương lớn vào tài sản ròng.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng"
+      ],
+      "details": [
+        "Hai chuyện “Lạc mẹ giữa chợ phiên” và “Lạc mất mẹ” được gộp lại: mỗi đời chỉ gặp tối đa một lần và hiếm hơn rất nhiều (trước đây khoảng một phần tư số đời, nay chỉ còn vài phần trăm thời bình).",
+        "Nơi bạn bị lạc đổi theo nơi sinh và thời đại: chợ phiên, ngày hội, siêu thị (chỉ khi đã có), bến xe; nhà buôn bán ở chợ thì quen đường hơn.",
+        "Lạc xong còn hậu quả nhiều năm: có thể sợ chỗ đông người nên bỏ lỡ hội hè, hòa nhạc; hoặc học thuộc địa chỉ nhà nên được tự đi xe buýt sớm hơn. Đứng ở rìa xem pháo hoa có thể làm nỗi sợ nguôi dần.",
+        "Ở vùng có chiến sự hoặc thiên tai nặng, cảnh đi chợ được thay bằng cảnh thất lạc khi chạy loạn, kéo dài nhiều năm: tìm tin người thân, đoàn tụ hoặc chưa có tin.",
+        "Thêm mười chuyện tuổi thơ mới: với tay lên bếp, bờ nước sau nhà, nuốt nhầm đồ, cơn sốt giữa đêm, nhà có thêm em bé, đêm hội, trò giả làm người lớn, chuyến đi xa đầu tiên, phụ giúp việc nhỏ, thất lạc khi chạy loạn. Cơ sở y tế gần hay xa, số người trông trẻ và vật dụng trong nhà theo năm quyết định kết quả.",
+        "Bỏ các dòng chú thích “thử nghiệm” ở màn chọn năm sinh.",
+        "Bóng đá: hợp đồng chuyên nghiệp nay dài ngắn theo tuổi và vị thế. Dưới 18 tuổi 2–3 năm, 18–22 tuổi 3–5 năm, đang sung sức 3–5 năm, ngôi sao đang sung sức 5–7 năm, 30–32 tuổi 2–4 năm, trên 32 tuổi 1–2 năm.",
+        "Bóng đá: lương hợp đồng lớn không còn bị chi sinh hoạt ăn gần hết. Chi tiêu vượt ngưỡng mức sống chỉ còn một phần tư phần vượt, phần dư vào tiền mặt và tài sản ròng; hồ sơ bóng đá ghi rõ năm đó tài sản ròng tăng bao nhiêu."
+      ],
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.280Z"
+    },
+    {
+      "id": "era-regions-95200",
+      "version": "9.5.2",
+      "publishedAt": "2026-11-16T11:57:17+07:00",
+      "releaseStatus": "released",
+      "title": "Bối cảnh từng vùng cho mọi cuộc chiến, nạn đói và thiên tai lớn",
+      "summary": "Cùng một năm nhưng mỗi thành phố một cảnh ngộ; sơ tán thật sự chuyển bạn tới nơi yên hơn.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mọi cuộc chiến, nạn đói và thiên tai lớn (mức 2–3) trong bảng bối cảnh nay có mức riêng theo thành phố hoặc tỉnh: Hà Nội, Hải Phòng và Nghệ An bị ném bom 1965–1968 còn vùng núi phía Bắc là nơi sơ tán; Tây Ninh, Rạch Giá và Long Xuyên chịu chiến tranh biên giới 1977–1978; Lạng Sơn, Hà Giang 1979–1988; Tôkyô 1923, Kobe 1995, Sendai 2011, Thiên Tân 1976, Yên Bái 2024, Beirut 2020, Marrakesh 2023… mỗi nơi một mức khác nhau.",
+        "Sửa những cửa sổ quá dài: Việt Nam 1955–1964 không còn bị coi là chiến tranh toàn quốc (miền Bắc hòa bình, miền Nam bất ổn dần), Kavkaz và Trung Á thời Thế chiến II là hậu phương chứ không phải chiến trường, Đông Bengal 1947–48 nhẹ hơn Punjab, Chile và Argentina đàn áp đỉnh điểm rồi dịu dần theo từng giai đoạn của chính nó.",
+        "Thêm các biến cố 1955–2025 còn thiếu: nội chiến Sudan lần thứ nhất ở miền nam, chiến tranh biên giới Việt Nam 1977–1988, Israel–Hezbollah 2024, Israel–Iran 2025, Amhara 2023, bạo lực băng đảng Ecuador, động đất Managua, Guatemala, Chile 2010, Ecuador 2016, Mexico 2017, Herat 2023, lũ Pakistan 2022, động đất Myanmar 2025, lũ Valencia 2024.",
+        "Chọn sơ tán khi có chiến sự hoặc rời quê khi đói nay thật sự chuyển bạn tới một thành phố yên hơn (ưu tiên cùng vùng ở Việt Nam), bỏ lại việc làm và phải tìm việc mới. Quê cũ yên rồi thì có thể về, sau bảy năm thì bạn ổn định ở nơi mới.",
+        "Màn chọn năm sinh nay hiện bối cảnh của nước và năm đó, kèm lưu ý nơi sinh quyết định bạn gặp gì."
+      ],
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.429Z"
+    },
+    {
+      "id": "era-depth-95100",
+      "version": "9.5.1",
+      "publishedAt": "2026-11-15T23:45:39Z",
+      "releaseStatus": "released",
+      "title": "Thư mời học bổng, học đại học muộn ở nước ngoài, bối cảnh từng vùng",
+      "summary": "Học sinh nổi bật được chọn trường theo thư mời, người sống ở nước khác học đại học muộn được, mỗi vùng mỗi cảnh ngộ.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Học sinh có giải thưởng, điểm thi xuất sắc hoặc được tuyển thẳng giờ nhận thư mời nhập học kèm học bổng (toàn phần, 50% hoặc 25% học phí). Bạn chọn trường, chọn ngành, hoặc từ chối để tự đăng ký. Đủ ngoại ngữ thì có thêm thư mời du học. Học bổng phải giữ bằng học lực khá trở lên; tụt học lực là mất.",
+        "Người sống ở nước khác (tị nạn, thường trú, nhập quốc tịch) mà mới học tới phổ thông nay có thể đăng ký đại học ở nước đó. Có quốc tịch thì đóng học phí như người bản xứ; thường trú hoặc người tị nạn đã ổn định hai năm thì đóng cao hơn; mới đến thì chưa được. Có thể học bổ túc phổ thông, học năm dự bị về ngôn ngữ rồi mới nộp hồ sơ.",
+        "Cùng một năm nhưng mỗi vùng một cảnh ngộ: Hà Nội 1967 bị ném bom nặng hơn Sài Gòn, miền Bắc đói năm 1945 còn Nam Kỳ thì không, vùng Biafra 1968 bị phong tỏa còn Lagos thì không, Amsterdam đói mùa đông 1944 hơn Eindhoven, Hiroshima 1945, thành phố bị vây hay gần tiền tuyến khác hẳn vùng hậu phương.",
+        "Thêm chuyện của những chính sách lớn: cải cách ruộng đất và tập thể hóa, chiến dịch chính trị, di dời và chia cắt đất nước. Cùng một chính sách, nhà ít của được chia thêm, nhà nhiều của mất nhiều hơn; bạn chọn nộp, giấu, tham gia hay bỏ đi, và mỗi lựa chọn để lại hệ quả về sau.",
+        "Thời thuộc địa có thuế và phu dịch, kỳ thi vào trường thuộc địa, tuyển lính cho chính quốc, phong trào đòi độc lập. Lựa chọn của bạn được nhắc lại khi đất nước giành độc lập. Siêu lạm phát khiến tiền tiết kiệm mất giá: đổi vàng, đổi ngoại tệ hay giữ tiền mặt cho kết quả rất khác nhau."
+      ],
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.574Z"
+    },
+    {
+      "id": "era-context-95000",
+      "version": "9.5.0",
+      "publishedAt": "2026-11-16T00:34:48+07:00",
+      "releaseStatus": "released",
+      "title": "Hoàn cảnh thời đại: chiến tranh, nạn đói, dịch bệnh theo từng nước và năm sinh",
+      "summary": "Năm sinh và nước sinh nay quyết định hoàn cảnh: thời chiến, nạn đói, thuộc địa, đóng cửa biên giới, và sửa tôn giáo sai theo nước.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mỗi đời sinh ra giữa chiến tranh, nạn đói, dịch bệnh, khủng hoảng hay thiên tai lớn của nước đó sẽ khó khăn hơn hẳn: trẻ nhỏ và người già dễ chết hơn, cha mẹ có thể mất sớm, thiếu ăn, nghỉ học, nhà bị di dời. Nam giới tuổi chiến đấu chịu rủi ro lớn nhất ở thời chiến.",
+        "Ngày xưa chưa có thì giờ không có: lễ thôi nôi bốc đồ, tiệc sinh nhật, mẫu giáo, đồ chơi mua sẵn, lò luyện thi, học thêm và trường quốc tế chỉ xuất hiện từ khi thời đại và nước đó đã có, và không có giữa chiến sự hay nạn đói. Nhà nghèo ở thời kỳ nghèo khó cũng thường không có.",
+        "Bối cảnh được dựng cho hàng trăm cuộc chiến tranh, nạn đói, dịch bệnh, khủng hoảng kinh tế, thiên tai lớn từ 1900 đến nay, thời thuộc địa và các giai đoạn đóng cửa biên giới. Khi nước đóng cửa thì xuất khẩu lao động, du học, di cư gần như không thể.",
+        "Thời loạn có việc riêng: tìm chỗ trú, xếp hàng khẩu phần, con ốm, bị gọi nhập ngũ, mất việc, dịch bệnh, dựng lại cuộc sống. Việc chưa xong tiếp diễn sang năm sau và để lại dấu ấn.",
+        "Sửa dữ liệu sai: tôn giáo nay theo từng nước (trước đây một số nước như Rwanda ra \"Chính thống giáo Đông phương\"), giáo phái Kitô giáo theo vùng. Điểm thi trung bình sát thực tế hơn (khoảng 22 so với 20,9). Nền tử vong trước 1950 thực tế hơn. Đời sinh gần đây ở nước giàu hầu như không đổi."
+      ],
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.708Z"
+    },
+    {
+      "id": "startup-econ-94500",
+      "version": "9.4.5",
+      "publishedAt": "2026-11-15T18:53:08+07:00",
+      "releaseStatus": "released",
+      "title": "Khởi nghiệp theo vốn, kinh doanh sát thực tế hơn, con học giỏi dễ đỗ đại học",
+      "summary": "Thêm mục Khởi nghiệp theo vốn, sửa tình trạng công ty nhỏ năm nào cũng lỗ và khả năng con đỗ đại học.",
+      "tags": [
+        "Tính năng mới",
+        "Cân bằng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục mới \"Khởi nghiệp theo vốn\" (nhóm Tiền bạc): vốn nhỏ thì bán bánh mì, cá viên chiên, trà sữa, quần áo, bán hàng online; vốn vừa thì tiệm tạp hóa, giặt ủi, nail, quán cơm, tiệm bánh; vốn lớn thì nhượng quyền, xưởng, trang trại, thành lập công ty hoặc góp vốn startup.",
+        "Mỗi mô hình có bản phân tích hòa vốn và quỹ dự phòng. Bạn chọn cách huy động vốn (tiền tự có, vay người thân, vay ngân hàng hoặc chuẩn bị thêm), rồi đánh giá cuối năm thứ nhất và thứ hai, đối mặt các việc kinh doanh như kiểm tra vệ sinh, giải tỏa vỉa hè, đối thủ mở cạnh bên, hàng tồn.",
+        "Kinh doanh sát thực tế hơn: năm đầu thường lỗ nhẹ rồi khá dần, một phần cơ sở phải đóng cửa. Công ty nhỏ không còn phải trả lương ban điều hành như tập đoàn nên không còn lỗ gần hết vốn mỗi năm.",
+        "Con học giỏi, được học thêm hoặc học trường quốc tế nay có khả năng đỗ đại học cao hơn rõ; trường quốc tế và lớp có người hướng dẫn giúp giữ học lực qua các năm."
+      ],
+      "releasedAt": "2026-11-16T12:33:34.000Z",
+      "correctedAt": "2026-11-16T12:33:34.861Z"
+    },
+    {
+      "id": "era-balance-94400",
+      "version": "9.4.4",
+      "publishedAt": "2026-11-15T16:49:44+07:00",
+      "releaseStatus": "released",
+      "title": "Điểm thi sát thực tế hơn, đổi nghề linh hoạt hơn, tuổi thơ và đời sống bớt lặp",
+      "summary": "Điểm thi tốt nghiệp quanh mức thực tế, thêm chuyển ngang giữa các nghề gần nhau, lời kể bớt lặp và ít bị hỏi dồn.",
+      "tags": [
+        "Cân bằng",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Điểm thi tốt nghiệp THPT không còn dồn lên rất cao: học đều vẫn đạt khá, điểm trung bình quanh 23 trên thang 30 (khối A00 năm 2024 thật là 20,9), hiếm khi chạm 27 điểm.",
+        "Khi chán nản, kiệt sức hoặc làm rất lâu một chỗ, nhân vật có thể được mời chuyển sang nghề gần nghề cũ; bắt đầu lại với thâm niên mới và bậc thấp hơn.",
+        "Lời kể dịp lễ, chuyến ngoại khóa, chuyện chỗ ở và nhiều thông báo hằng năm đa dạng hơn, bớt lặp lại nguyên văn.",
+        "Một số cảnh lặp mỗi năm (chuyện đời sống nơi ở, gia hạn cư trú, hỏi nhập quốc tịch, dịp lễ) nay thưa hơn để bạn bớt bị hỏi dồn; chuyện công sở, hàng xóm, mạng xã hội và họp lớp xảy ra thường hơn một chút."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.638Z"
+    },
+    {
+      "id": "era-rwanda-94300",
+      "version": "9.4.3",
+      "publishedAt": "2026-11-15T13:30:13+07:00",
+      "releaseStatus": "released",
+      "title": "Thêm Rwanda 1990–1997 và sửa lỗi hiển thị lượt hẹn yêu xa",
+      "summary": "Nhân vật ở Rwanda trong những năm 1990 chịu chiến sự và biến cố năm 1994; lựa chọn hẹn dịp khác khi yêu xa nay có dòng giải thích.",
+      "tags": [
+        "Thời đại",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Nhân vật sống ở Rwanda từ năm 1990 đến 1997 có thể phải tạm lánh vì chiến sự, đối mặt rủi ro rất cao trong năm 1994 và chọn ở lại hay vượt biên sang nước láng giềng; tổn thương và mất nơi ở được ghi nhớ nhiều năm.",
+        "Trò chơi không gán rủi ro cho nhóm nào; mức rủi ro là tỉ lệ trung bình chung của cả nước.",
+        "Khi yêu xa, lựa chọn \"Chưa khớp lịch, hẹn dịp khác\" nay có dòng giải thích đi kèm. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.469Z"
+    },
+    {
+      "id": "era-quality-94200",
+      "version": "9.4.2",
+      "publishedAt": "2026-11-15T09:26:38+07:00",
+      "releaseStatus": "released",
+      "title": "Rút gọn tiêu đề cập nhật cũ và rà soát độ tin cậy",
+      "summary": "Mười bốn tiêu đề cập nhật quá dài đã được rút gọn; không đổi nội dung tính năng.",
+      "tags": [
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Các tiêu đề dài của những lần cập nhật trước nay gọn hơn để dễ đọc trên trang cập nhật.",
+        "Rà soát thêm độ tin cậy của phần bối cảnh lịch sử: đối chiếu thêm một công trình nghiên cứu về Campuchia thập niên 1970 và từng nước Xô viết, Nam Tư cũ.",
+        "Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.287Z"
+    },
+    {
+      "id": "era-conflicts-94100",
+      "version": "9.4.1",
+      "publishedAt": "2026-11-15T07:41:13+07:00",
+      "releaseStatus": "released",
+      "title": "Thêm xung đột Libya, Yemen, Nam Sudan, Mali, Tigray và bối cảnh Baltic chính xác hơn",
+      "summary": "Thêm các cuộc xung đột gần đây vào mô phỏng và sửa cách ghi bối cảnh ba nước Baltic.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Nhân vật ở Libya, Yemen, Nam Sudan, Cộng hòa Trung Phi, Mali, Myanmar và vùng Tigray của Ethiopia có thể gặp chiến sự đúng thời điểm, với lựa chọn ở lại hay rời đi.",
+        "Estonia, Latvia và Litva: đời sinh trước 1990 được ghi là sống trong một nước bị Liên Xô sáp nhập năm 1940; năm 1990 là năm tuyên bố khôi phục độc lập nhưng chưa được công nhận.",
+        "Hiệu chỉnh tử vong được đo lại trên khoảng một nghìn đời ở 22 nước: sai lệch tuổi thọ trung bình dưới một năm. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:04.118Z"
+    },
+    {
+      "id": "era-events-94000",
+      "version": "9.4.0",
+      "publishedAt": "2026-11-15T07:19:05+07:00",
+      "releaseStatus": "released",
+      "title": "Nội chiến, độc tài, Chernobyl, Tōhoku, hôn nhân cùng giới theo năm",
+      "summary": "Đời sinh năm cũ gặp thêm chiến tranh, độc tài và thảm họa; nhiều quy định và số liệu theo đúng năm hơn.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Nội chiến và chiến tranh ở 24 nước, từ Syria, Ukraine, Afghanistan, Liban đến Angola, Sri Lanka, Colombia và Peru: có lựa chọn ở lại hay đi tị nạn; ở Ukraine từ 2022, nam giới 18–60 tuổi không được rời nước.",
+        "Chính quyền độc tài ở Argentina, Chile, Brazil, Uruguay, Hy Lạp, Hàn Quốc, Philippines, Ethiopia, Tây Ban Nha, Bồ Đào Nha và Myanmar: gia đình bị gây khó dễ, mất việc, có thể chọn lưu vong. Game không gán quan điểm cho nhân vật.",
+        "Chernobyl 1986 ở Ukraine, Belarus, Nga (vùng Gomel và Kyiv bị tác động nhiều nhất) và động đất, sóng thần Tōhoku 2011 ở Nhật.",
+        "Hôn nhân cùng giới chỉ hợp pháp từ năm có hiệu lực ở từng nước (Hà Lan 2001, Mỹ 2015, Thái Lan 2025…); trước đó đời sinh năm cũ không được tính là hợp pháp.",
+        "Tỷ suất sinh của nhân vật sinh năm nay ở các nước ngoài Việt Nam theo số liệu Liên Hợp Quốc 2023 (ví dụ Nigeria 4,5, Hàn Quốc 0,72) thay vì công thức cũ, nên số con mong muốn sát thực tế hơn.",
+        "Quảng Trị, nơi sông Bến Hải chia đôi, nay thuộc phía Bắc hoặc phía Nam tùy nhân vật.",
+        "Chưa làm: lương và giá cả theo năm, các chính sách còn lại, Rwanda và số liệu trước 1950."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.944Z"
+    },
+    {
+      "id": "era-calib-93200",
+      "version": "9.3.2",
+      "publishedAt": "2026-11-15T05:53:13+07:00",
+      "releaseStatus": "released",
+      "title": "Hiệu chỉnh rủi ro chiến tranh, vượt biên, lạm phát và COVID-19 theo mốc đã công bố",
+      "summary": "Các tỷ lệ rủi ro của biến cố lịch sử được kéo về cùng bậc độ lớn với các ước tính công bố; một mốc MRI được sửa.",
+      "tags": [
+        "Thời đại",
+        "Cân bằng"
+      ],
+      "details": [
+        "Người lính miền Bắc và Việt Cộng chịu rủi ro tử trận cao hơn lính miền Nam, phản ánh số người chết ước tính cao hơn nhiều.",
+        "Vượt biên: khoảng một phần năm số người ra đi chết trên biển; phần lớn người đến nơi được Hoa Kỳ nhận, tiếp theo là Úc, Canada và Pháp.",
+        "Lạm phát phi mã ở Liên Xô cũ, Serbia và Bosnia làm mất phần lớn tiền để dành năm đầu; ở các nước khác mất ít hơn. Tỷ lệ nhiễm COVID-19 năm 2022 giảm từ 45% xuống 35% cho khớp các nghiên cứu huyết thanh.",
+        "Ảnh MRI người đầu tiên là năm 1976 chứ không phải 1977. Hiệu chỉnh tử vong theo năm đo lại trên 400 đời ở 10 nước: sai lệch trung bình khoảng một năm tuổi thọ.",
+        "Các tỷ lệ vẫn là tham số trò chơi, không phải thống kê. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.774Z"
+    },
+    {
+      "id": "era-verify-93100",
+      "version": "9.3.1",
+      "publishedAt": "2026-11-15T05:24:58+07:00",
+      "releaseStatus": "released",
+      "title": "Đối chiếu nguồn cho bối cảnh lịch sử và sửa các mốc sai",
+      "summary": "Các mốc độc lập, chế độ, chiến tranh và biến cố đã được đối chiếu với bách khoa trực tuyến; vài chỗ sai đã được sửa.",
+      "tags": [
+        "Thời đại",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Đã đối chiếu 83 năm độc lập, 118 khẳng định về chế độ, chiến tranh, tên nước và tên thành phố, cùng các biến cố lịch sử với bách khoa trực tuyến và kết quả tìm kiếm; phần lớn khớp. Đây vẫn là nguồn thứ cấp, chưa phải văn bản gốc.",
+        "Sửa: quần đảo Ellice đổi tên thành Tuvalu từ 1975 chứ không phải 1978; quán internet đầy đủ chỉ có từ 1994; ví MoMo từ 2012; một lỗi đánh máy ở dòng bối cảnh đảo Síp 1974.",
+        "Các con số như số người bị giam sau 1975, số người di cư năm 1954 hay số thuyền nhân khác nhau nhiều giữa các nguồn nên game không nêu số; tỷ lệ vượt biên thành công hay thất bại chỉ là tham số trò chơi.",
+        "Bảng đối chiếu đầy đủ, kèm nơi nguồn còn khác nhau, nằm trong tài liệu của dự án. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.599Z"
+    },
+    {
+      "id": "era-events-93000",
+      "version": "9.3.0",
+      "publishedAt": "2026-11-15T00:58:53+07:00",
+      "releaseStatus": "released",
+      "title": "Biến cố lịch sử có hậu quả nhiều năm: Việt Nam, Khmer Đỏ, Đông Âu, COVID-19",
+      "summary": "Đời sinh năm cũ gặp các biến cố lớn của đúng nước và thời điểm, có lựa chọn và hậu quả kéo dài nhiều năm.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Việt Nam: chiến tranh Đông Dương (1950–1953), Hiệp định Genève 1954 và lựa chọn ở lại hay di cư, cải cách ruộng đất và đợt sửa sai 1956, chiến tranh ở hai miền (lệnh nhập ngũ, sơ tán, giao tranh), 30/4/1975 với học tập cải tạo, kinh tế mới và vượt biên, làn sóng người Hoa 1978–1979, thời bao cấp và hai lần đổi tiền, chiến tranh Campuchia.",
+        "Nơi sinh quyết định bạn chịu biến cố nào: tỉnh sinh ra cho biết miền Bắc hay miền Nam; tuổi, giới tính, nghề và gia đình quyết định ai bị gọi nhập ngũ, ai mất việc, ai phải rời nhà.",
+        "Lựa chọn được ghi nhớ: nhập ngũ, hoãn, tránh nghĩa vụ; ở lại hay đi; vượt biên có thể chết, bị bắt hoặc đến nơi định cư. Điều bạn chọn đổi các biến cố sau (phía của đất nước, đã làm lính, đã tị nạn).",
+        "Hậu quả không biến mất ngay: chấn thương tâm lý, di dời, túng thiếu và nhãn thành phần mở ra rồi kéo sang các năm sau, nhẹ dần hoặc dai dẳng tùy tiền, việc làm, gia đình và sức khỏe.",
+        "Thế giới: Khmer Đỏ ở Campuchia 1975–1979, chuyển đổi kinh tế và lạm phát phi mã ở Liên Xô cũ và Đông Âu, các cuộc chiến ở Nam Tư cũ, cú sốc dầu mỏ 1974–1975 và 1980–1982, khủng hoảng châu Á 1997, khủng hoảng tài chính 2008, sóng thần 2004 và đại dịch COVID-19.",
+        "Hơn 140 nước có dòng bối cảnh chính trị theo năm (thuộc địa đến năm độc lập, độc tài, nội chiến, đảo chính) hiện trong nhật ký khi tình trạng đổi.",
+        "Các mốc và sự kiện là kiến thức công khai, chưa đối chiếu lại từng nguồn; xác suất và mức thiệt hại là tham số trò chơi, không phải số liệu thương vong. Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.439Z"
+    },
+    {
+      "id": "era-data-92000",
+      "version": "9.2.0",
+      "publishedAt": "2026-11-15T00:40:00+07:00",
+      "releaseStatus": "released",
+      "title": "Đời sinh 1950–2023 dùng số liệu thật theo năm, tên nước và thành phố đúng thời",
+      "summary": "Tuổi thọ, sinh đẻ, trẻ em tử vong, đô thị hóa, điện thoại và internet nay theo đúng nước và đúng năm.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Chọn năm sinh từ 1950 đến nay: tuổi thọ, tổng tỷ suất sinh, tử vong dưới 5 tuổi, tỷ lệ dân đô thị, thuê bao di động và người dùng internet lấy theo đúng nước và đúng năm (Liên Hợp Quốc, Ngân hàng Thế giới, ITU, Maddison, qua Our World in Data). Đường tử vong được tính lại mỗi năm, nên người sinh năm 1950 hưởng cải thiện y tế qua các thập niên thay vì sống cả đời với số liệu hiện nay.",
+        "Số con, cỡ gia đình, nghề của mẹ, lao động trẻ em, tảo hôn, lao phổi, tiêm chủng và học tập theo mức phát triển của năm đang sống. Việt Nam sinh trước 2025 dùng 63 tỉnh như thời đó.",
+        "Điện thoại di động, mạng xã hội và nhắn tin chỉ xuất hiện khi nước bạn sống đủ mức phổ cập: một đứa trẻ ở Nigeria năm 2004 chưa có Facebook như đứa trẻ ở Mỹ cùng năm.",
+        "Tên nước và thành phố theo năm: Sài Gòn trước 2/7/1976, Bombay, Leningrad, Miến Điện, Zaire, Liên Xô, Tiệp Khắc, Nam Tư, Đức chia đôi; thuộc địa đến năm độc lập. Hiện ở màn thiết lập và trong nhật ký.",
+        "Năm sinh 1900–1949 vẫn chọn được nhưng thuộc nhóm thử nghiệm: trước 1950 chưa có số liệu dân số theo từng nước và từng năm nên game không bịa số liệu, chỉ tránh công nghệ chưa có.",
+        "Chưa làm: lương và giá cả theo năm, chính sách từng nước (hưu trí, bảo hiểm y tế, giáo dục bắt buộc). Đời sinh năm nay không đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.268Z"
+    },
+    {
+      "id": "era-year-select-91000",
+      "version": "9.1.0",
+      "publishedAt": "2026-11-14T21:28:00+07:00",
+      "releaseStatus": "released",
+      "title": "Chọn năm sinh từ 1900, chặn công nghệ và sự kiện chưa tồn tại (thử nghiệm)",
+      "summary": "Thêm ô chọn năm sinh; đời sinh năm cũ không còn gặp YouTube, smartphone, internet hay Covid trước khi chúng xuất hiện.",
+      "tags": [
+        "Thời đại",
+        "Tính năng mới"
+      ],
+      "details": [
+        "Màn thiết lập có ô \"Năm sinh (thử nghiệm)\", từ 1900 đến năm nay; để mặc định là năm nay như trước.",
+        "Đời sinh năm cũ tránh những thứ chưa tồn tại vào thời đó: tivi, điện thoại di động, internet, mạng xã hội, YouTube, smartphone, TikTok, livestream, game online, tiền mã hóa, AI, Covid, một số kỹ thuật y học và nghề mới. Tin nhắn thời chưa có tin nhắn được kể bằng thư hoặc cuộc gọi.",
+        "Đây là giai đoạn 1: tuổi thọ, kinh tế, tên nước và thành phố, mức phổ biến công nghệ theo từng nước và các sự kiện lịch sử riêng từng nước vẫn là của hiện nay, sẽ được bổ sung dần. Đời sinh năm nay không thay đổi."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:03.080Z"
+    },
+    {
+      "id": "logic-sweep-90002",
+      "version": "9.0.2",
+      "publishedAt": "2026-11-14T20:50:34+07:00",
+      "releaseStatus": "released",
+      "title": "Rà logic hàng loạt: sửa kẹt Sixth Form ở Anh, nghỉ hưu lặp lại và trẻ di cư",
+      "summary": "Quét hàng nghìn đời mô phỏng ở 20 nước để tìm trạng thái kẹt hoặc mâu thuẫn, rồi sửa các lỗi tìm được.",
+      "tags": [
+        "Sửa lỗi",
+        "Học tập",
+        "Gia đình"
+      ],
+      "details": [
+        "Học sinh ở Anh (England) không còn bị kẹt ở bậc trung học cả đời: nếu bạn chưa tự đăng ký, trường sẽ đăng ký cho bạn thi GCSE cuối Year 11 để bạn lên Sixth Form hoặc đại học. Ai học tại nhà hoặc đã chọn lộ trình riêng thì giữ nguyên.",
+        "Người đã nghỉ hưu rồi đi làm lại không còn bị thông báo \"Nghỉ hưu\" lặp đi lặp lại mỗi năm.",
+        "Trẻ em theo gia đình di cư hoặc tị nạn không còn bị coi là đang \"cần tìm việc\" suốt nhiều năm.",
+        "Nhân vật tự động có mong muốn đông con theo tỷ suất sinh của nước vẫn được hỏi chuyện sinh thêm sau hai con; kế hoạch con do bạn đặt vẫn được tôn trọng.",
+        "Sửa dấu cách thừa trong dòng hóa trị."
+      ],
+      "releasedAt": "2026-11-15T10:20:02.000Z",
+      "correctedAt": "2026-11-15T10:20:02.920Z"
+    },
+    {
+      "id": "looks-study-fund-90001",
+      "version": "9.0.1",
+      "publishedAt": "2026-11-14T16:31:59.043+07:00",
+      "releaseStatus": "released",
+      "title": "Quen lại người cũ giữ ngoại hình, xem ngoại hình trước, xin tiền bố mẹ du học",
+      "summary": "Quen lại người cũ giữ nguyên ngoại hình; xem ngoại hình trước khi quyết định tìm hiểu; du học nói rõ thiếu gì và cho xin hoặc mượn bố mẹ.",
+      "tags": [
+        "Tình cảm",
+        "Học tập",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Quen lại người cũ không còn bị đổi ngoại hình: điểm ngoại hình được lưu lúc chia tay và giữ nguyên khi quay lại.",
+        "Khi gặp người mới, lời giới thiệu hiện ngoại hình (điểm và nhãn) trước khi bạn chọn tìm hiểu; cảnh gặp lại người cũ cũng hiện ngoại hình hiện tại.",
+        "Du học: khi tiền riêng chưa đủ học phí, game nêu rõ thiếu bao nhiêu và cho xin hoặc mượn bố mẹ, rồi nộp hồ sơ tự túc luôn. Bước visa liệt kê từng điều kiện còn thiếu kèm số tiền. Bố mẹ có thể đồng ý đủ, giúp một phần hoặc từ chối; khả năng theo thu nhập gia đình, số con và tiền tiết kiệm ước tính."
+      ],
+      "releasedAt": "2026-11-14T13:01:00.000Z",
+      "correctedAt": "2026-11-14T13:00:50.718Z"
+    },
+    {
+      "id": "family-naturalization-90000",
+      "version": "9.0.0",
+      "publishedAt": "2026-11-14T14:32:54.180+07:00",
+      "releaseStatus": "released",
+      "title": "Nhập tịch nhiều giai đoạn, nợ anh chị em, trợ cấp thất nghiệp, hùn vốn và homeschool",
+      "summary": "Hồ sơ nhập quốc tịch là quy trình nhiều năm; trả nợ giúp anh chị em có hệ quả lâu dài; mất việc ở Anh và Canada có trợ cấp theo đóng góp; bế tắc 50/50 công ty gia đình leo thang; sáu vùng homeschool có thủ tục chi tiết hơn.",
+      "tags": [
+        "Gia đình",
+        "Tài chính",
+        "Quốc gia",
+        "Kinh doanh"
+      ],
+      "details": [
+        "Nhập quốc tịch: nộp hồ sơ rồi chờ nhiều năm, phỏng vấn có thể thuê luật sư; hồ sơ bị hủy nếu bạn rời nước, đi tù hoặc có tiền án mới; trượt thì nộp lại sau một năm.",
+        "Gia đình: trả nợ giúp anh chị em tạo khoản nợ theo dõi nhiều năm (trả theo đợt, lỡ hẹn, qua đời); trễ lâu thì chọn bỏ qua, gia hạn, kiện hoặc trừ vào di sản. Di chúc rõ ràng giảm nguy cơ kiện di sản.",
+        "Phúc lợi: người thường trú ở Anh và Canada đã đóng bảo hiểm mà mất việc nhận trợ cấp thất nghiệp theo đóng góp (mức là tham số trò chơi).",
+        "Công ty gia đình: bế tắc 50/50 kéo dài ba năm thì phía còn lại đề nghị nhượng 1% hoặc ra tòa; giữ nguyên làm giảm điểm quản trị và sau ba lần tòa tự chỉ định chủ tịch độc lập.",
+        "Học tại nhà: British Columbia, Queensland, Manitoba, Nova Scotia, Florida và Virginia có hạn nộp, báo cáo, tài trợ và điều kiện văn bằng theo trang chính thức. Các vùng còn lại giữ quy tắc chung.",
+        "Mạng và thiết bị: sự kiện mạng xã hội, việc làm trực tuyến, freelance, game và giao hàng qua ứng dụng xuất hiện ít hơn ở nước và hoàn cảnh ít người dùng internet (theo số liệu World Bank); nước đã phổ cập không đổi."
+      ],
+      "releasedAt": "2026-11-14T13:01:00.000Z",
+      "correctedAt": "2026-11-14T13:00:50.604Z"
+    },
+    {
+      "id": "bank-health-81080",
+      "version": "8.10.80",
+      "publishedAt": "2026-11-14T07:07:19.235+07:00",
+      "releaseStatus": "released",
+      "title": "Lãi suất ngân hàng theo nước, thuốc NHS, đồng chi trả Nhật, thuế Scotland và NI",
+      "summary": "Sổ tiết kiệm và khoản vay mới ở Anh, Mỹ, Canada, Úc theo lãi suất của ngân hàng trung ương; phí kê đơn và phiếu trả trước thuốc của NHS England; tỷ lệ tự trả viện phí ở Nhật từ 70 tuổi; thuế lương Scotland và National Insurance.",
+      "tags": [
+        "Tài chính",
+        "Sức khỏe",
+        "Quốc gia"
+      ],
+      "details": [
+        "Ngân hàng: từ năm 2026, mở sổ tiết kiệm có kỳ hạn theo lãi bình quân của Anh (Bank of England 4,42%), Mỹ (FDIC, CD 12 tháng 1,76%), Canada (GIC niêm yết, Bank of Canada) và Úc (RBA, 1 năm 5,00%). Anh vẫn có trái phiếu NS&I.",
+        "Khoản vay mới theo lãi nơi đang sống: vay mua nhà Anh 4,63%, Mỹ 7,11% (30 năm), Canada 6,19%, Úc 6,2%; vay tiêu dùng Anh 9,85%, Mỹ 11,90%; thẻ tín dụng Mỹ 21,19%, Úc 21,74%. Khoản vay đã ký giữ lãi cũ, kể cả khi chuyển nước. Singapore và các nước khác giữ mức cũ.",
+        "NHS England: phí kê đơn cố định £9,90 mỗi lần; có thể mua phiếu trả trước PPC 3 tháng (£32,05) hoặc 12 tháng (£114,50) và bật tự gia hạn. Học sinh 16–18 học toàn thời gian được miễn.",
+        "Nhật Bản từ 70 tuổi: 70–74 tự trả 20%; từ 75 tự trả 10%, hoặc 20% nếu thu nhập hộ từ 200 vạn yên (một người) hay 320 vạn yên (hai người trở lên); thu nhập ngang người đang làm trả 30%.",
+        "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2023–24 (19% đến 47–48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; hai ngưỡng 500 nghìn và 1 triệu SGD đã đối chiếu IRAS."
+      ],
+      "releasedAt": "2026-11-14T05:20:24.615Z",
+      "correctedAt": "2026-11-14T05:20:28.915Z"
+    },
+    {
+      "id": "wage-tax-81079",
+      "version": "8.10.79",
+      "publishedAt": "2026-11-13T16:05:00.000+07:00",
+      "releaseStatus": "released",
+      "title": "Thuế thu nhập tiền lương ở Anh, Úc, Singapore, Canada",
+      "summary": "Lương ở bốn nước này nay bị trừ thuế theo biểu chính thức, có lịch sử theo năm trong hồ sơ.",
+      "tags": [
+        "Tài chính",
+        "Quốc gia"
+      ],
+      "details": [
+        "Anh (từ 2023–24), Úc (từ 2024–25, gồm Medicare 2%), Singapore (từ 2023), Canada liên bang (từ 2026): thuế tính trên thu nhập chịu thuế theo biểu, hiển thị ở bảng lương và hồ sơ nghề nghiệp.",
+        "Chưa gồm Scotland, National Insurance, phụ phí Medicare, thuế tỉnh Canada và các khoản giảm trừ; đây là ước tính, không phải tờ khai."
+      ],
+      "releasedAt": "2026-11-13T09:15:00.000Z",
+      "correctedAt": "2026-11-13T16:15:00.000+07:00"
+    },
+    {
+      "id": "mortgage-ipo-81078",
+      "version": "8.10.78",
+      "publishedAt": "2026-11-13T15:41:00.000+07:00",
+      "releaseStatus": "released",
+      "title": "Giữ nhà đang vay khi chuyển nước, chia nợ khi chủ nợ mất, điều kiện niêm yết",
+      "summary": "Nhà còn nợ thế chấp không còn bị bán gấp khi bạn đổi nước; di sản người vay chia đều theo tỷ lệ cho các chủ nợ; điều kiện IPO riêng cho Anh và Mỹ; thêm dòng giáo dục đối chiếu nguồn chính thức.",
+      "tags": [
+        "Tài chính",
+        "Quốc gia",
+        "Kinh doanh"
+      ],
+      "details": [
+        "Chuyển nước khi nhà còn vay thế chấp: nếu giá trị nhà vượt nợ đủ rộng, căn nhà được giữ lại làm tài sản ở nơi cũ và khoản vay tiếp tục trả dần, quy đổi tiền theo nước mới. Trễ hạn kéo dài thì ngân hàng phát mại; bán nhà sẽ tất toán khoản vay bằng tiền sẵn có; dọn về ở lại thì khoản vay trở lại là vay mua nhà. Nhà nợ gần bằng giá trị vẫn bán như trước.",
+        "Khi người vay vốn cửa hàng của bạn qua đời và di sản còn nhiều chủ nợ: tiền mặt di sản chia đồng hạng theo tỷ lệ cho bạn, nợ cá nhân và các quyền thu hồi khác của cùng người vay; không còn dừng lại chờ đối soát vô thời hạn.",
+        "Niêm yết cổ phiếu: Anh áp dụng quy tắc từ 29/07/2024 (vốn hóa từ 30 triệu bảng, 10% cổ phiếu cho công chúng, không đòi hồ sơ ba năm); Mỹ áp dụng điều kiện Nasdaq Global Market (lợi nhuận trước thuế từ 1 triệu USD, vốn chủ từ 15 triệu USD, 400 cổ đông). Nước khác vẫn dùng điều kiện chung.",
+        "Hồ sơ quốc gia: thêm 7 dòng giáo dục của Nhật, Đức, Úc và Singapore đối chiếu với bộ giáo dục hoặc cơ quan chính thức; nay 251/3705 mục có nguồn riêng."
+      ],
+      "releasedAt": "2026-11-13T09:15:00.000Z",
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "country-verified-81077",
+      "version": "8.10.77",
+      "publishedAt": "2026-11-13T13:31:00.000+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T08:27:00.000Z",
+      "title": "Đối chiếu luật hôn nhân, nguyên nhân qua đời và điện lưới theo nước",
+      "summary": "Tuổi kết hôn ở 8 nước đổi theo nơi sống và năm; nguyên nhân qua đời của nhân vật và người thân theo từng nước (WHO/World Bank); nhà có điện lưới hay chưa theo nước, năm và vùng; gỡ chữ \"mô phỏng\" trong giao diện; sửa số phiên bản hiển thị.",
+      "tags": [
+        "Pháp luật",
+        "Hôn nhân",
+        "Quốc gia",
+        "Sức khỏe"
+      ],
+      "details": [
+        "Tuổi kết hôn theo nơi sống và năm: Trung Quốc nam 22, nữ 20 (từ 1981); Indonesia 19 cho cả hai từ 15/10/2019 (trước đó nữ 16); Hàn Quốc 18 cho cả hai từ 2008 (trước đó nữ 16); Nhật Bản 18 cho cả hai từ 1/4/2022; Thái Lan 18 từ 23/1/2025 (trước đó 17); Philippines, Singapore và Đức 18. Nhân vật chưa đủ tuổi sẽ chung sống và hẹn cưới khi đủ tuổi như ở Việt Nam.",
+        "Singapore: từ 21 tuổi tự đăng ký; 18–21 cần cha mẹ đồng ý; dưới 18 phải có Giấy phép Hôn nhân Đặc biệt.",
+        "Mục hồ sơ quốc gia đã đối chiếu hiển thị phạm vi văn bản (điều luật, ngày hiệu lực) thay cho nhãn \"nguồn tổng hợp\"; hiện 246/3705 mục có nguồn riêng.",
+        "Nguyên nhân qua đời của nhân vật, bố mẹ, anh chị em và bạn đời theo số liệu từng nước (World Bank WDI, gốc WHO Global Health Estimates): tỷ trọng bệnh truyền nhiễm, bệnh không lây và chấn thương; tai nạn giao thông, bạo lực, lao, sốt rét, HIV, tiêu chảy, ngộ độc theo tỷ lệ của nước đó. Biết bơi, rượu, ma túy, thuốc lá và bệnh đang mắc vẫn được tính. Nước chưa có số liệu giữ bảng cũ.",
+        "Điện lưới tại nhà theo nước, năm sinh, thành thị hay nông thôn và nhóm thu nhập gia đình. Nhà chưa có điện được kéo điện dần theo tốc độ phủ điện của nước đó; trẻ đi học học bài dưới đèn dầu, ngày có điện được ghi vào nhật ký và ký ức.",
+        "Gỡ chữ \"mô phỏng\" thừa trong các thông báo công vụ, bầu cử, hạn chế xuất cảnh, hoàng gia, Monaco, Tây Tạng và nhà ở xã hội; giữ lại ghi chú về kịch bản chính trị và giờ bay giả lập.",
+        "Sửa số phiên bản hiển thị trong game (trước đó vẫn ghi số phiên bản cũ)."
+      ],
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "law-sport-81076",
+      "version": "8.10.76",
+      "publishedAt": "2026-11-13T11:11:29.000+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T08:27:00.000Z",
+      "title": "Nhiếp chính Tây Ban Nha 1876, ly hôn ở Scotland, bốn liên đoàn bóng đá Anh",
+      "summary": "Bổ sung các bước nhiếp chính, giám hộ và mất khả năng của Hiến pháp Tây Ban Nha 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; chọn đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland; thêm hồ sơ Y khoa Johns Hopkins và Luật Yale; ghi rõ mức xác minh của thông tin quốc gia.",
+      "tags": [
+        "Hoàng gia",
+        "Pháp luật",
+        "Thể thao",
+        "Học tập"
+      ],
+      "details": [
+        "Tây Ban Nha 1876–1923: Cortes có thể công nhận Quân vương mất khả năng; nhiếp chính lần lượt là con trưởng trên 16 tuổi, phối ngẫu, rồi người được gọi theo Hiến pháp. Khi không ai đủ điều kiện, Hội đồng Bộ trưởng tạm quyền cho tới khi Cortes chỉ định một, ba hoặc năm người. Giám hộ Quân vương vị thành niên theo di chúc, cha hoặc mẹ góa, hoặc Cortes chọn; chỉ cha hoặc mẹ được kiêm cả nhiếp chính và giám hộ.",
+        "Ly hôn khi đang thụ án ở Scotland: cần sống tách biệt một năm nếu hai bên đồng ý, hai năm nếu không. Có thủ tục đơn giản khi không có con dưới 16 tuổi. Thời gian thụ án được tính là sống tách biệt.",
+        "Ở Bắc Ireland: không được nộp đơn trong hai năm đầu hôn nhân; cần sống tách biệt hai năm nếu hai bên đồng ý, năm năm nếu không. Tòa ra decree nisi trước, rồi mới tới decree absolute.",
+        "Bóng đá: người có quốc tịch Anh có thể đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland nếu sinh ra ở đó, có cha mẹ hoặc ông bà ruột sinh ra ở đó, hoặc học ít nhất năm năm trước 18 tuổi tại đó. Có thể chọn liên đoàn khi chưa ra sân chính thức cấp đội tuyển.",
+        "Thêm hồ sơ Y khoa (MD) tại Johns Hopkins và Luật (J.D.) tại Yale, có lệ phí hồ sơ và các bước tuyển sinh như các trường hiện có.",
+        "Thông tin về giáo dục, hôn nhân và điều kiện làm việc ở từng quốc gia nay ghi rõ khi mục chỉ dựa trên nguồn tổng hợp quốc tế, chưa được đối chiếu riêng."
+      ],
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "family-life-81075",
+      "version": "8.10.75",
+      "publishedAt": "2026-11-13T10:54:28.000+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T08:27:00.000Z",
+      "title": "Tình cảm đôi lứa, kế hoạch có con và luật chào mua theo từng nước",
+      "summary": "Tình cảm giữa hai người thay đổi theo thời gian bên nhau, giúp các cặp đôi đi tới hôn nhân và có con đúng với mong muốn hơn. Bổ sung luật chào mua cổ phần của Anh, Nhật, Úc, Mỹ, cách gỡ bế tắc 50/50 và quy chế hôn nhân hoàng gia Monaco năm 1882.",
+      "tags": [
+        "Gia đình",
+        "Doanh nghiệp",
+        "Hoàng gia",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tình cảm với người yêu, vợ hoặc chồng thay đổi mỗi năm theo thời gian bên nhau, mức hạnh phúc, căng thẳng, xa cách và ngoại tình. Trước đây tình cảm chỉ được tính một lần nên nhiều cặp không bao giờ đủ điều kiện bàn chuyện cưới.",
+        "Khi chưa đủ tình cảm để cưới, chọn “chưa vội” không còn làm lần hỏi sau bị dời xa hơn. Nhân vật tự động có thể chủ động ngỏ lời khi hai người đã gắn bó.",
+        "Khi hai người đã quyết định có con, họ tiếp tục cố gắng qua các năm sau mà không cần chờ được hỏi lại, cho tới khi có tin vui, đủ số con mong muốn hoặc dừng. Các cặp còn mong con được gợi ý chuyện con cái thường hơn.",
+        "Ngưỡng phải chào mua cổ phần theo nơi đăng ký công ty: Anh 30% (Takeover Code Rule 9); Nhật một phần ba trước 2026, 30% từ 2026; Úc 20% và tối đa 3% mỗi sáu tháng khi đã trên 20%; Mỹ không có ngưỡng chào mua bắt buộc mà phải công bố khi nắm từ 5%.",
+        "Khi bầu Chủ tịch hòa phiếu 50/50, công ty rơi vào bế tắc kéo dài và điểm quản trị giảm dần. Có thể thương lượng chia vai trò Chủ tịch và Tổng giám đốc, mời chủ tịch độc lập hoặc mua thêm cổ phần để phá thế cân bằng.",
+        "Hoàng gia Monaco từ năm 1883 đến trước năm 2015: mọi thành viên Gia đình Quân chủ kết hôn đều cần Quân vương cho phép; kết hôn không phép làm người đó và con cháu mất quyền kế vị, theo quy chế đăng trên Công báo Monaco năm 1882."
+      ],
+      "correctedAt": "2026-11-13T08:28:13.267Z"
+    },
+    {
+      "id": "family-business-81074",
+      "version": "8.10.74",
+      "publishedAt": "2026-11-13T10:28:12.000+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T03:40:00.000Z",
+      "title": "Cổ phần công ty gia đình, đưa công ty lên sàn và lương điều hành",
+      "summary": "Công ty của bố mẹ có cơ cấu cổ đông riêng và có thể đã niêm yết. Bạn có thể mua dần cổ phần, giành quyền điều hành, đưa công ty lên sàn và nhận lương theo quy mô doanh nghiệp. Về nước không còn làm mất nhà và tài sản.",
+      "tags": [
+        "Doanh nghiệp",
+        "Gia đình",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Công ty của bố mẹ giờ có thể là công ty chưa niêm yết hoặc công ty đã niêm yết. Bố mẹ không phải lúc nào cũng giữ 100%: phần còn lại thuộc đối tác góp vốn, quỹ đầu tư hoặc cổ đông đại chúng. Bố mẹ cũng có thể tự đưa công ty lên sàn khi đủ điều kiện.",
+        "Mục mới “Cổ phần công ty gia đình và thâu tóm” cho phép mua phần của đối tác, mua dần trên sàn hoặc đăng ký chào mua công khai, đề nghị bố mẹ chuyển nhượng hay tặng cổ phần. Khi nắm trên 50% quyền biểu quyết, bạn có thể tự bầu Tổng giám đốc và Chủ tịch ngay khi bố mẹ còn sống. Anh chị em có tham vọng cũng có thể mua dần cổ phần để cạnh tranh.",
+        "Với công ty Việt Nam đã niêm yết, mua thêm khiến tỷ lệ sở hữu vượt các mốc 25%, 35%, 45%, 55%, 65% và 75% phải chào mua công khai; mua dần trên sàn tối đa 5% mỗi năm. Căn cứ là Luật Chứng khoán 2019 (áp dụng từ 2021).",
+        "Có thể đưa công ty bạn kiểm soát lên sàn qua các bước: kiểm toán và chuyển đổi, nộp hồ sơ chào bán, chờ xét duyệt rồi chọn tỷ lệ chào bán ra công chúng. Ở Việt Nam từ 2021 cần vốn chủ sở hữu từ 30 tỷ đồng, hai năm liền có lãi, ROE từ 5% và chào bán tối thiểu 15% cổ phiếu. Sau niêm yết, giá trị thị trường của phần cổ phần được tính vào tài sản và biến động theo kết quả kinh doanh. Các nước khác dùng điều kiện chung, ghi rõ mức xác minh.",
+        "Sửa lỗi ứng cử Tổng giám đốc hoặc Chủ tịch thành công mà chức vụ và lương không đổi. Nay trúng cử là nhận chức danh mới, lương tính theo quy mô và lợi nhuận công ty, trả từ chi phí doanh nghiệp. Hội đồng quản trị hòa phiếu khi bổ nhiệm Tổng giám đốc sẽ theo phía Chủ tịch; Chủ tịch công ty đại chúng tại Việt Nam không kiêm Tổng giám đốc.",
+        "Lương khi được bố mẹ giao điều hành công ty gia đình được tính lại theo quy mô doanh nghiệp, không còn mức rất thấp như trước.",
+        "Thành tích học tập, năng khiếu, giải thưởng và kinh nghiệm làm việc giúp bố mẹ tin tưởng hơn. Mức tin cao có thể mang lại chức vụ trong công ty từ khi còn trẻ, được đề bạt, được tặng cổ phần, được giao quyền điều hành sớm và được ưu tiên trong di chúc. Con chưa thành niên vẫn giữ phần tối thiểu theo luật Việt Nam.",
+        "Thiên phú kinh doanh giúp công ty bạn trực tiếp điều hành có lợi nhuận cao hơn khoảng 20–30% trong những năm có lãi.",
+        "Sửa lỗi chuyển từ nước ngoài về Việt Nam làm mất tài sản: mọi khoản tiết kiệm, đầu tư và tài sản theo dõi riêng đều được quy đổi đầy đủ. Nhà không còn nợ vay được giữ lại thay vì bị bán, và bạn dọn về ở lại khi trở về đúng nơi đó. Chi phí chuyển nước giảm về mức hợp lý. Người đi lao động hoặc du học bằng tiền Việt không còn bị quy đổi sai khi về nước.",
+        "Thêm nút “Mở lại” trong danh sách việc để quay về bảng vừa đóng (ví dụ bảng nhân viên và lương trong quản lý doanh nghiệp) chỉ bằng một lần bấm.",
+        "Gỡ bớt chữ “mô phỏng” không cần thiết trong giao diện. Những tham số chưa có nguồn được ghi là ước tính; các ghi chú về kịch bản chính trị vẫn giữ."
+      ],
+      "correctedAt": "2026-11-13T03:40:51.346Z"
+    },
+    {
+      "id": "education-family-world-81073",
+      "version": "8.10.73",
+      "publishedAt": "2026-11-12T09:16:38.119+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-13T03:40:00.000Z",
+      "title": "Hồ sơ học tập, khoản vay gia đình và đổi đội tuyển",
+      "summary": "Bổ sung các bước tuyển sinh, nộp hồ sơ học tại nhà, thu hồi vốn cửa hàng và xét điều kiện đại diện đội tuyển.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Khoản cho bạn đời vay để mở cửa hàng vẫn được ghi sau chia tay hoặc khi người vay qua đời. Người thừa kế có thể nhận quyền thu hồi. Tiền chỉ được ghi khi thực sự thu được khoản trả.",
+        "Hồ sơ Y và Luật tại Harvard, Stanford và UCLA có các bước đối chiếu bằng cấp, bài thi, nộp hồ sơ và theo dõi thư nhận học tùy trường. Thêm GRE, MCAT, PREview và một số học phần chuẩn bị trước khi học Y.",
+        "Thêm tên chương trình và thời lượng tham chiếu ở MIT, UCL và Cambridge. Tại Pennsylvania và Québec, có thể chọn ngày nộp báo cáo học tại nhà và xem hồ sơ đúng hạn hay trễ hạn.",
+        "Cầu thủ có thể nộp hồ sơ đổi đội tuyển. Game đối chiếu quốc tịch, thời gian cư trú và các trận đã thi đấu trước khi quyết định. Lịch trận câu lạc bộ phân biệt lượt sân nhà và sân khách.",
+        "Hồ sơ nhập tịch thường tại Canada, Mỹ và Úc xem xét thời gian cư trú đã ghi, có phân biệt tạm trú với thường trú.",
+        "Tại England và Wales, hồ sơ ly hôn khi thụ án có quyết định có điều kiện và quyết định cuối cùng. Thêm sổ NS&I bằng bảng Anh, với lãi gộp và khóa rút trước hạn.",
+        "Bổ sung nguồn cho một số mục lao động, hôn nhân và quyền lợi khám bệnh theo nơi ở. Hồ sơ hoàng gia Tây Ban Nha có thêm mốc Asturias năm 1977 và kiểm tra đúng cha mẹ khi đăng ký thứ tự họ."
+      ],
+      "correctedAt": "2026-11-13T03:40:51.466Z"
+    },
+    {
+      "id": "player-feedback-81072",
+      "version": "8.10.72",
+      "publishedAt": "2026-11-12T00:58:39.661Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-12T00:58:39.661Z",
+      "title": "Giữ tiến độ học Y, cổ phần gia đình và các phim đã nhận",
+      "summary": "Sửa đường tốt nghiệp và tìm việc ngành Y, bổ sung thương lượng cổ phần, làm gọn hồ sơ học tập và nối tiếp các lựa chọn trong cuộc đời.",
+      "tags": [
+        "Sửa lỗi",
+        "Học tập",
+        "Đời sống",
+        "Tính năng"
+      ],
+      "details": [
+        "Ba năm nội trú được tính vào thời hạn chương trình Y, tránh coi thời gian đang học là quá hạn tốt nghiệp. Bảo vệ đạt vẫn cần đủ các điều kiện đầu ra; mục tiến độ chỉ rõ phần còn thiếu.",
+        "Đóng nguyện vọng không còn tự chọn đi làm. Người đang học có nút đóng và xem tiến độ; người đã tốt nghiệp có hướng tìm việc theo bằng hiện có, không quay lại ngã rẽ phổ thông. Bằng được ghi khi tốt nghiệp; chỉ khôi phục hồ sơ có dữ liệu xác nhận, không tự cấp bằng từ một lần bảo vệ.",
+        "Sau tốt nghiệp ngành Y có mục tìm vị trí theo hướng đào tạo. Giữ bằng và chuyên ngành khi mở hoặc đóng menu. Không tự coi bằng đại học là đã có mọi giấy phép hành nghề.",
+        "Giảm chuyện đời thường ngẫu nhiên và cho phép có năm yên bình. Các lịch hẹn, chuỗi đang diễn ra và mốc học tập bắt buộc tiếp tục được xử lý.",
+        "Tại Anh, màn hình học tập hiển thị bước cần làm trước; bảng điểm, điều kiện và mô tả đầy đủ nằm trong Xem chi tiết. Nộp hồ sơ, nhận kết quả và xác nhận nhập học là các thao tác riêng; có thể rút hồ sơ mà giữ nguyên việc học và bằng cấp.",
+        "Có thể hỏi mua cổ phần của anh chị em và người thân trưởng thành, chờ phản hồi hoặc giá thương lượng ở năm sau rồi quyết định thanh toán bằng tiền cá nhân. Mua đủ có thể phá thế sở hữu 50/50; quyền điều hành còn có ứng cử, vận động và liên minh. Không tự lấy phần của người không đồng ý bán.",
+        "Danh tính cổ đông được nối qua di sản sang đời con. Thương lượng kiểm tra lại người bán, cổ phần, thời hạn và tiền; không trừ ngân quỹ công ty, không thanh toán hai lần.",
+        "Người giàu hoặc nổi tiếng có thêm cơ hội gặp cám dỗ, có khoảng nghỉ giữa các lần. Ưu tiên người quen trưởng thành phù hợp, giữ quyền từ chối; quan hệ ngoài hôn nhân đi qua bước xác nhận và luồng hậu quả hiện có. Tin nhắn mập mờ có thể trở lại sau hai năm với lời nhắc chuyện cũ.",
+        "Kết hôn với thành viên hoàng gia mở mục Hoàng gia riêng, hiển thị gia đình và các việc phù hợp với vai trò hiện tại.",
+        "Nhận phim mới không còn ghi đè phim đã đóng máy đang chờ phát hành. Từng hợp đồng và phim được tính riêng, kể cả hai phim cùng tên; danh sách chờ và tiến độ được giữ qua lưu/tải.",
+        "Sửa việc lương quản lý doanh nghiệp gia đình bị tính thêm thuế lợi nhuận doanh nghiệp trước thuế lương.",
+        "Hồ sơ J.D. Harvard có chuẩn bị tài liệu, CAS, LSAT, nộp, phỏng vấn, quyết định và thư nhận học có hạn qua nhiều năm. Tuyển sinh mới dùng thời lượng J.D. Harvard ba năm, MD Harvard/UCLA bốn năm; giữ niên hạn đang học của bản lưu cũ. Điều kiện, phí tham chiếu và nguồn được ghi trong hồ sơ; kết quả của nhân vật do diễn biến cuộc đời quyết định."
+      ],
+      "correctedAt": "2026-11-12T01:14:30.640Z"
+    },
+    {
+      "id": "life-school-football-81071",
+      "version": "8.10.71",
+      "publishedAt": "2026-11-12T00:19:15.640Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-12T00:19:15.640Z",
+      "title": "Ngành học, sự kiện cuối cấp và đời sống bóng đá",
+      "summary": "Bổ sung tên câu lạc bộ có nguồn, sửa nguyện vọng ngành học và nối các bước sự kiện, tài chính gia đình.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Danh mục bóng đá có 192 tên câu lạc bộ với nguồn tham chiếu; mùa tham chiếu có thể khác nhau giữa các giải. Mùa thi đấu và thu nhập trong cuộc đời vẫn được tính theo cơ chế trò chơi.",
+        "Đội tuyển tiếp tục thi đấu khi bạn không được gọi hoặc đã giải nghệ. Cầu thủ có thể thương lượng tài trợ, thực hiện nghĩa vụ quảng bá và nhận khoản thanh toán theo hợp đồng; giải nghệ hoặc hết hợp đồng sẽ tất toán phần đã hoàn thành.",
+        "Bổ sung chương trình có nguồn cho sáu trường Việt Nam. Nguyện vọng cũ sai tên chương trình cần chọn lại; giữ nguyên bằng đã hoàn thành. MD và J.D. tại Harvard, Stanford, UCLA kiểm tra bằng cử nhân trước khi nhập học.",
+        "Sự kiện cuối cấp đi tiếp qua từng bước chuẩn bị; có hình minh họa kỷ yếu và tiệc. Buổi chia tay tại một số nơi không còn ép lễ phục, chọn bạn đi cùng hay khiêu vũ. Thẻ cũ sau đổi trường, chuyển nước hoặc qua năm không được thu tiền tham dự.",
+        "Chuyển từ khóa tiếng sang đại học tại chỗ giữ đúng nơi ở và tiền tệ. Rút hồ sơ, bị từ chối hoặc hết hạn xử lý khoản học phí chưa dùng và nơi trở về.",
+        "Cửa hàng của bạn đời có vốn, cổ phần và sổ doanh nghiệp chung; trả vay từ tiền riêng thực có. Đóng cửa hàng không tự xóa khoản vay cá nhân.",
+        "Công nhận bằng điều dưỡng và giáo viên kiểm đúng ngành. Di chúc xét khả năng liên lạc và tiếp cận thủ tục khi đang bị giam hoặc kiểm soát.",
+        "Nhóm trẻ cùng hai cha mẹ tại Tây Ban Nha có quy trình xin đổi thứ tự họ theo mốc chuyển tiếp; giữ tên cũ, không đổi quyền kế vị hoặc họ của anh chị đã trưởng thành."
+      ],
+      "correctedAt": "2026-11-12T01:14:30.566Z"
+    },
+    {
+      "id": "reference-ucl-vff-fscs-81070",
+      "version": "8.10.70",
+      "publishedAt": "2026-11-11T01:08:15.989Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-11T01:08:15.989Z",
+      "title": "Y khoa UCL, Hạng Nhì Việt Nam và thông tin theo nước",
+      "summary": "Bổ sung học phí theo kỳ, bốn câu lạc bộ, diện tay nghề Úc và bảo hiểm tiền gửi Anh.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Tính năng"
+      ],
+      "details": [
+        "Danh mục Anh có chương trình Medicine MBBS BSc tại UCL, yêu cầu UCAT và học phí công bố cho năm 2027/28.",
+        "Thêm Đắk Lắk, Vĩnh Long, Quảng Ngãi và Trường Giang Gia Định theo Hạng Nhì Quốc gia 2026. Giữ mã đội trong bản lưu.",
+        "Hồ sơ cư trú Úc có điều kiện được mời của diện tay nghề 189. Mục ngân hàng Anh thêm hạn mức bảo hiểm tiền gửi FSCS theo mốc hiệu lực."
+      ],
+      "correctedAt": "2026-11-12T01:14:30.490Z"
+    },
+    {
+      "id": "reference-jd-vleague2-81069",
+      "version": "8.10.69",
+      "publishedAt": "2026-11-11T01:03:41.279Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-11T01:03:41.279Z",
+      "title": "Luật tại Harvard, Hạng Nhất Việt Nam và dữ liệu theo nước",
+      "summary": "Thêm thông tin tuyển sinh, đội bóng, cư trú, bảo hiểm tiền gửi và tước hiệu lịch sử có nguồn.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Tính năng"
+      ],
+      "details": [
+        "Danh mục học tập Mỹ có lộ trình Juris Doctor ba năm tại Harvard Law School và điều kiện bằng cử nhân trước khi nhập học.",
+        "Hạng Nhất Việt Nam thêm Công an Nhân dân, Hưng Yên, Thái Nguyên và Thép Cần Thơ theo nguồn VPF mùa 2026/27. Các mã đội trong bản lưu được giữ.",
+        "Hồ sơ cư trú Canada có điều kiện kinh nghiệm làm việc của Canadian Experience Class và điều kiện Canada Child Benefit đối với người cư trú tạm.",
+        "Hồ sơ ngân hàng tại Mỹ có hạn mức bảo hiểm tiền gửi FDIC. Hồ sơ Tây Ban Nha có căn cứ riêng cho danh xưng danh dự của Juan Carlos I và Sofía."
+      ],
+      "correctedAt": "2026-11-12T01:14:30.408Z"
+    },
+    {
+      "id": "reference-residence-payroll-81068",
+      "version": "8.10.68",
+      "publishedAt": "2026-11-11T00:55:05.473Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-11T00:55:05.473Z",
+      "title": "Lộ trình cư trú, câu lạc bộ và lương theo hợp đồng",
+      "summary": "Tra điều kiện cư trú theo nước, bổ sung câu lạc bộ thật và sửa cách tính lương cầu thủ.",
+      "tags": [
+        "Đời sống",
+        "Học tập",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục cư trú dẫn tới lộ trình thường trú theo nơi đang sống. Bốn năm làm việc không tự mở quyền xin thường trú. Hồ sơ đang chờ theo cách cũ được hoàn phí để xem lại theo nước.",
+        "Tại Anh, thời hạn tìm việc sau khi học được cập nhật theo mốc Graduate visa, có thời hạn riêng cho tiến sĩ. Hồ sơ giải thích quyền tiếp cận trợ cấp và dẫn nguồn điều kiện Universal Credit.",
+        "Bổ sung Công an Hà Nội, Thể Công Viettel, Manchester City, Chelsea, Atlético de Madrid và Athletic Club. Lương hợp đồng đã tính dự phòng thuế và phí đại diện, tránh khấu trừ lặp.",
+        "Danh mục học tập ở Mỹ giải thích lộ trình MD và điều kiện môn dự bị. Hồ sơ hoàng gia Tây Ban Nha có thêm trường hợp thoái vị năm 2014 và văn bản ban hành.",
+        "Ứng viên đã từ chối điều hành doanh nghiệp của bố mẹ được loại khỏi vòng chọn CEO của doanh nghiệp đó. Tỷ lệ cổ phần vẫn theo hồ sơ tài sản."
+      ],
+      "correctedAt": "2026-11-11T01:00:28.934Z"
+    },
+    {
+      "id": "institutions-programmes-81067",
+      "version": "8.10.67",
+      "publishedAt": "2026-11-10T08:49:31.829Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T08:49:31.829Z",
+      "title": "Tra cơ sở giáo dục và giữ đúng ngành đã chọn",
+      "summary": "Thêm danh mục cơ sở có nguồn theo quốc gia, sửa hướng học Điều dưỡng và Y học dự phòng, gỡ nhãn thừa trong đời sống.",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Trong Học tập, từ 13 tuổi có thể tra tên và địa điểm cơ sở giáo dục theo 195 quốc gia. Danh mục phân biệt trường, college và cơ sở khu vực; nơi tham chiếu ở nước lân cận được ghi rõ địa điểm thực tế.",
+        "Thông tin danh tính cơ sở đi kèm nguồn đối chiếu. Xem danh mục không tự đổi nơi sống, quốc tịch, trường đang học, tài sản hay cấp văn bằng. Trường đã có trong lộ trình tuyển sinh hiện hành có thể mở nguyện vọng; các chương trình chưa được đối chiếu không tự trở thành ngành được trường công bố.",
+        "Sửa lỗi xác nhận ngành sức khỏe tại trường đã chọn: Điều dưỡng đi đúng hướng bốn năm; Y học dự phòng giữ hướng sáu năm thay vì bị chuyển thành Y khoa. Dược học, Y học cổ truyền và Răng-Hàm-Mặt có hướng riêng khi hồ sơ đã ghi cụ thể.",
+        "Chương trình Medicine MBChB tiêu chuẩn tại Manchester dùng thời gian năm năm, không áp mặc định sáu năm. Xác nhận chương trình giữ trường đã chọn; thao tác lặp lại không kéo dài khóa học.",
+        "Thẻ xác nhận ngành đang chờ trong bản lưu cũ được làm mới từ nguyện vọng đã có. Giữ hồ sơ trường và bằng cấp đã ghi; việc làm mới thẻ không tự cấp bằng hay nhận việc.",
+        "Gỡ thêm nhiều nhãn thừa trong hồ sơ đời sống, học tập, việc làm, giải trí, đầu tư và sức khỏe. Giá và khoản chi chưa có báo giá được ghi là ước tính; không đổi tên khoản ước tính thành giá chính thức. Các tình huống chính trị vẫn được phân biệt khi cần.",
+        "Đây là một phần của đợt rà dữ liệu toàn game. Danh mục tên cơ sở không đồng nghĩa mọi ngành, học phí, điểm chuẩn, quy định cư trú hay quyền hành nghề đã được xác minh; các phần còn thiếu tiếp tục được đối chiếu."
+      ],
+      "correctedAt": "2026-11-11T01:00:29.010Z"
+    },
+    {
+      "id": "reference-parentage-81066",
+      "version": "8.10.66",
+      "publishedAt": "2026-11-10T07:42:58.359Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T07:42:58.359Z",
+      "title": "Tên trường, sổ tiết kiệm và hồ sơ kế nghiệp",
+      "tags": [
+        "Học tập",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sửa tỷ lệ phiếu bị NaN ở doanh nghiệp do bố mẹ nắm giữ. Hai phụ huynh còn sống chia đều quyền biểu quyết; còn một người thì người đó có đủ trọng số, không tự chuyển cổ phần hay tạo tiền.",
+        "Danh mục đại học giữ tên trường đã có thay vì đổi thành tên nhóm chung. Sửa vị trí một số trường Anh, Mỹ và tách tên UCLA khỏi UC Berkeley. Sở thích từ đồ vật sinh nhật đầu tiên giúp đưa trường có nhóm ngành liên quan lên trước; vẫn chọn được hướng khác và phải đáp ứng điều kiện học tập.",
+        "Chứng chỉ tiếng Pháp dùng các mức DELF A1–B2 và DALF C1 theo lộ trình đang hỗ trợ, giữ cấp độ đã lưu.",
+        "Mở sổ VND tại Vietcombank dùng biểu lãi suất có nguồn ngày 10/11/2026, theo đúng kỳ hạn và hình thức gửi. Không tự cộng thêm lãi trực tuyến hay kéo dài kỳ hạn không có trong biểu; mỗi sổ giữ nguồn và lãi đã ký. Nơi chưa có biểu được đối chiếu chưa mở sổ mới; sổ cũ vẫn giữ điều kiện và tất toán được.",
+        "Nguồn cha mẹ của trẻ hoàng gia được nối bằng mã người đã lưu lúc sinh hoặc nhận nuôi. Đổi bạn đời không tự đổi cha mẹ, nhánh gia phả hay họ pháp lý đã có. Hồ sơ mâu thuẫn cần đối chiếu trước khi tự chuyển ngôi.",
+        "Gỡ một số nhãn thừa trong hồ sơ hoàng gia, sở thích, công việc và đời sống. Chi phí chưa có báo giá chính thức vẫn ghi là ước tính; đợt này chưa xác minh xong dữ liệu tham chiếu toàn game."
+      ],
+      "summary": "Sửa tỷ lệ phiếu kế nghiệp, giữ tên trường và bổ sung biểu tiết kiệm có nguồn; nối hồ sơ cha mẹ theo đúng người đã lưu.",
+      "correctedAt": "2026-11-11T01:00:29.085Z"
+    },
+    {
+      "id": "royal-regency-civil-81065",
+      "version": "8.10.65",
+      "publishedAt": "2026-11-10T06:31:36.852Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T06:31:36.852Z",
+      "title": "Nhiếp chính, hộ tịch và các mốc luật hoàng gia",
+      "tags": [
+        "Đời sống",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Monaco trước sửa đổi năm 2002 xét hậu duệ trực hệ và hồ sơ nhận nuôi riêng khi không còn hậu duệ hợp pháp; không dùng nhánh anh chị em của luật mới để thay thế. Tuổi thực hiện quyền quân chủ là 21 trước mốc sửa đổi và 18 sau đó.",
+        "Phân biệt ủy quyền tạm thời với hồ sơ mất khả năng thực hiện nhiệm vụ. Cần thông tin đánh giá, bước trình và quyết định qua thời gian; người giữ ngôi vẫn giữ ngôi khi người khác thực hiện quyền nhân danh họ.",
+        "Monaco có thành phần Hội đồng Nhiếp chính theo các mốc 2002, 2015 và 2022. Phiên theo quy tắc 2022 kiểm tra số vị trí tham dự, ủy quyền, xung đột lợi ích, người chủ trì và phiếu trước khi ghi ý kiến cho đúng hồ sơ đề cử.",
+        "Hồ sơ hộ tịch Monaco phải xác lập đúng hai cha mẹ và đối chiếu hôn nhân đã xảy ra. Xác lập huyết thống sau hôn nhân hoặc thiếu thứ tự thời gian cần thêm hồ sơ nuôi dưỡng chung và phán quyết sau thời gian xét; không tự tạo đám cưới hoặc hợp pháp hóa mọi trẻ vì một người đang có bạn đời.",
+        "Tây Ban Nha phân biệt người nhiếp chính với người giám hộ, xét tuổi, quốc tịch, quan hệ cha mẹ và quyết định Cortes khi cần. Kiêm nhiệm giám hộ có điều kiện riêng; hồ sơ giám hộ kết thúc khi đổi tuổi hoặc không còn đủ điều kiện.",
+        "Quân chủ chưa đủ tuổi hoặc đang mất khả năng thực hiện nhiệm vụ không tự dùng quyền phong tước hay nhận lịch công vụ của chính mình. Tài sản và các quyết định đã có vẫn được giữ trong lịch sử.",
+        "Thứ tự hai họ Tây Ban Nha đã có lựa chọn theo thỏa thuận cha mẹ từ mốc tháng 2/2000; trước đó dùng thứ tự cha rồi mẹ trong đường đã cấu hình. Các anh chị em cùng hai cha mẹ giữ thứ tự đã đăng ký.",
+        "Hồ sơ tên Tây Ban Nha có thể lưu ngày sinh đã xác minh để đối chiếu khi việc sinh và mất vị trí Asturias xảy ra cùng năm. Chỉ biết năm thì không tự suy ra trẻ đã sinh trước mốc thay đổi; sửa ngày có kiểm tra và lưu lịch sử. Ngày sinh được đồng bộ với hồ sơ nhân vật và giữ khi chuyển đời; tuổi thực hiện quyền cũng đối chiếu sinh nhật đã biết.",
+        "Bổ sung các ca tham chiếu tước chuyển tiếp Tây Ban Nha 1987/2014 theo đúng mã người và căn cứ riêng; không suy ra tước danh dự của mọi cựu quân chủ hay truyền quyền cá nhân sang phối ngẫu, con cháu. Các thủ tục và quyết định thao tác trong game là mô phỏng."
+      ],
+      "summary": "Thêm hồ sơ nhiếp chính, xét hộ tịch và đối chiếu ngày luật; tách người giữ ngôi, người thực hiện quyền và người giám hộ.",
+      "correctedAt": "2026-11-11T01:00:29.159Z"
+    },
+    {
+      "id": "international-royal-arcs-81064",
+      "version": "8.10.64",
+      "publishedAt": "2026-11-10T02:43:23.220Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T02:43:23.220Z",
+      "title": "Sinh hoạt quốc tế và chuyện phân vai trong hoàng tộc",
+      "tags": [
+        "Đời sống",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Sinh hoạt tín ngưỡng, ngày tưởng niệm và ngày lễ xét nơi đang sống, đức tin và nguồn gốc gia đình. Người ở nước ngoài không tự nhận các nghi lễ Việt Nam; gia đình có gốc Việt vẫn có thể giữ tập tục riêng.",
+        "Trẻ hoàng gia tham quan vườn cùng người chăm sóc và xin phép người phụ trách; không dùng chuyện trộm quả ở xóm làm sinh hoạt mặc định. Các dịp lễ khi phục vụ, chấp hành án hoặc xa nhà dùng bối cảnh phù hợp nơi cư trú.",
+        "Thêm chủ đề tuổi nhỏ, tuổi đi học và trưởng thành cho đủ27 bối cảnh hoàng gia hiện có. Lịch học, sở thích, an toàn và quyền riêng tư được giữ trong câu chuyện.",
+        "Người trưởng thành có thể mở hồ sơ phân chia vai trò với một thành viên có thật trong gia phả: đối chiếu chứng cứ, nghe các bên, vận động hoặc hòa giải, chờ xét rồi nhìn lại kết quả sau thời gian thử.",
+        "Chi phí đối chiếu lấy từ quỹ riêng có hạn. Lời kể chưa kiểm chứng không tự thành kết luận phá hoại; người ủng hộ và phản đối phụ thuộc lịch sử tin cậy, căng thẳng và cách trao đổi.",
+        "Vai trò dự án, cam kết bị phá vỡ và quan hệ để lại lịch sử nhiều năm. Người liên quan qua đời hoặc đổi người trị vì khiến hồ sơ cần khép lại hoặc xét lại; chuyện phân vai không tự đổi luật kế vị hay phong tước.",
+        "Bản lưu giữ mã người, quỹ, lịch sử và hồ sơ gia đình. Các tình huống đang chờ được làm mới khi nơi cư trú đổi, tránh dùng lựa chọn cũ để chi tiền sai bối cảnh."
+      ],
+      "summary": "Ngày lễ và sinh hoạt theo nơi sống; thêm chuyện hoàng gia theo tuổi và hồ sơ tranh vai trò có chứng cứ, quan hệ và hậu quả nhiều năm.",
+      "correctedAt": "2026-11-11T01:00:29.233Z"
+    },
+    {
+      "id": "education-pathways-81063",
+      "version": "8.10.63",
+      "publishedAt": "2026-11-10T02:10:16.519Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T02:10:16.519Z",
+      "title": "Học tại nhà: thêm vùng, văn bằng và công nhận học bạ",
+      "tags": [
+        "Học tập",
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Các bang và vùng còn thiếu của Mỹ, Canada, Úc và Northern Ireland có cấu hình đường lập hồ sơ theo nơi cư trú, hình thức, cơ quan tiếp nhận và nghĩa vụ riêng; không dùng luật của nơi khác để tự thay thế.",
+        "Người giám hộ có quỹ thời gian dạy dùng chung qua nhiều con. Tự học, gia sư và học xuyên hè vẫn dùng ngân sách, sức khỏe và tiến độ từng môn.",
+        "Có hồ sơ hoàn chi phí tài liệu ở chương trình Alberta được giám sát và đúng school division đã cấu hình tại Saskatchewan; cần tiếp nhận đúng hạn, chi thật và chứng từ. Không tự cấp tiền cho mọi gia đình học tại nhà.",
+        "Trợ cấp New Zealand xét phần kỳ từ ngày miễn học, khai báo từng kỳ và thời gian ở ngoài nước; giữ lịch sử để tránh nhận trùng.",
+        "GCSE có lựa chọn Combined Science với hai điểm hoặc Biology/Chemistry/Physics riêng. Trung tâm phải nhận phần thực hành; nhiều ngoại ngữ có thêm thông tin văn bằng và phần nói.",
+        "Thêm hồ sơ qua cơ sở tiếp nhận cho GED/HiSET, AP, SAT, IGCSE, A-Level, IB, Leaving Certificate và NSC theo nơi, tuổi và hình thức phù hợp. Thi có thời gian học, phần đánh giá cần thiết và kết quả khóa theo môn/kỳ; AP/SAT không tự thành bằng tốt nghiệp.",
+        "HSC và VCE đi qua chương trình trường hoặc provider tiếp nhận, giữ đánh giá học phần và điều kiện hoàn tất; không tự cấp bằng vì hoàn thành kế hoạch homeschool.",
+        "Dual enrollment lưu học phần riêng; trường nhận xét tín chỉ ở bước sau. Quay lại trường có đối chiếu học bạ và phần cần bổ sung.",
+        "Có đối chiếu môn/điểm với dữ liệu tuyển sinh tham chiếu; đạt phần học thuật không bảo đảm được nhận. Văn bằng, hoàn thành học phổ thông và hồ sơ vào cao đẳng/đại học là các bước riêng.",
+        "Bổ sung chặn các tình huống trường học không phù hợp với người học tại nhà độc lập; giữ lịch sử, kết quả và hồ sơ qua lưu/tải. Trung tâm, phí và quyết định nhận hồ sơ trong game là mô phỏng."
+      ],
+      "summary": "Mở rộng hồ sơ theo nơi cư trú, tiến độ học, văn bằng qua cơ sở tiếp nhận và các bước công nhận kết quả.",
+      "correctedAt": "2026-11-11T01:00:29.308Z"
+    },
+    {
+      "id": "spain-asturias-surnames-81062",
+      "version": "8.10.62",
+      "publishedAt": "2026-11-10T01:30:51.773Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T01:31:03.021Z",
+      "title": "Tây Ban Nha: Asturias, tước phối ngẫu và hai họ Borbón",
+      "tags": [
+        "Tính năng",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "summary": "Gia phả quyết định hàng kế vị và danh xưng; tên, hai họ, quyền dùng tước theo hôn nhân và công vụ được xét riêng.",
+      "details": [
+        "Thứ tự kế vị Tây Ban Nha được tính lại theo nhánh, thế hệ, giới và tuổi. Nữ thừa kế giữ Asturias cho tới khi có người đủ điều kiện ưu tiên hơn hoặc đổi ngôi; các vị trí sau cũng cập nhật từ gia phả.",
+        "Vua, Nữ vương, Vương hậu và Vương phu dùng cách gọi riêng. Phối ngẫu của cả nam và nữ thừa kế được xét phẩm vị Asturias và kính ngữ theo hôn nhân; việc kết hôn không tạo quyền kế vị.",
+        "Con của quân chủ và con của người thừa kế được xét Infante/Infanta; con của Infante/Infanta được xét Grande và Excelencia, không tự có một tước gắn địa danh. Người thuộc nhánh xa có thể được xem xét đặc cách qua hồ sơ và quyết định riêng trong game.",
+        "Asturias hiển thị chính trong sinh hoạt; hồ sơ nghi lễ có thể xem thêm Girona, Viana, Montblanc, Cervera và Balaguer. Tên trị vì và số thứ tự được lưu riêng với tên pháp lý.",
+        "Quyền dùng tước của người được phong và của phối ngẫu có hồ sơ riêng. Ly hôn kết thúc quyền dùng theo hôn nhân; quyết định thu hồi tác động đúng tước, giữ các tước riêng còn hiệu lực và lịch sử trước đó. Lugo và Palma de Mallorca có dữ liệu tham chiếu riêng.",
+        "Phong tước địa danh kiểm tra cả cấp tước và tên vùng, người đang giữ và lịch sử đã có. Nếu không còn mục đủ căn cứ, giữ cách gọi hiện tại. Việc xem xét tái sử dụng tước lịch sử cần chờ rồi có quyết định ghi rõ Kịch bản trong game; không tự cấp đất, thu nhập hoặc ngân sách.",
+        "Kho tên có đủ nhóm nam/nữ kinh điển, lịch sử và tên đệm Tây Ban Nha; gợi ý 2–3 tên không lặp, giữ dấu và cho tự nhập. Predro được sửa thành Pedro; Ferdinand có thể giữ như biến thể riêng. Có thể gợi ý tên tổ tiên và phối ngẫu theo hồ sơ gia đình.",
+        "Tên chính, tên đệm, cụm de Todos los Santos, hai họ và tên nhà được lưu riêng. Có thể bật/tắt cụm truyền thống, chọn cách nối hai họ, xem trước thứ tự họ theo dữ liệu cha mẹ; anh chị em cùng cha mẹ giữ thứ tự đã đăng ký. Thứ tự họ không thay quyền kế vị.",
+        "Kết hôn giữ tên pháp lý của phối ngẫu. Hồ sơ, trường học, sinh hoạt và nghi lễ dùng cách hiển thị phù hợp; bản lưu cũ giữ mã người, tên, tước lịch sử, tài sản và nhật ký. Quy định chưa đủ dữ liệu ở các năm cũ được báo rõ."
+      ],
+      "correctedAt": "2026-11-10T01:31:03.081Z"
+    },
+    {
+      "id": "monaco-succession-names-81061",
+      "version": "8.10.61",
+      "publishedAt": "2026-11-10T01:00:37.119Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T01:17:22.000Z",
+      "title": "Monaco: kế vị, tước riêng và kho tên Grimaldi",
+      "summary": "Theo dõi nhánh kế vị Monaco, nhiếp chính, tước phối ngẫu và tên nhiều thành phần trên cùng gia phả.",
+      "tags": [
+        "Tính năng",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Kế vị Monaco được xét từ người đang trị vì: hậu duệ hợp pháp trước, rồi anh chị em và hậu duệ của họ; ưu tiên nam trong cùng hàng con, giữ quyền đại diện theo nhánh. Quốc tịch Monaco được kiểm tra riêng. Hồ sơ thiếu căn cứ chỉ có vị trí dự kiến, chưa tự được lên ngôi.",
+        "Khi hết nhánh thông thường, việc chọn một họ hàng bàng hệ cần hồ sơ chỉ định của Hội đồng Vương quyền và ý kiến đồng thuận của Hội đồng Nhiếp chính. Trong game, hồ sơ cần thời gian xem xét và đủ hai bước; không tự chọn một họ hàng bất kỳ.",
+        "Trẻ vị thành niên có thể tiếp nhận ngôi vị trong khi quyền lực được thực hiện theo cơ chế nhiếp chính phù hợp thời kỳ. Các mốc trước và sau cải cách năm 2022 được phân biệt; luật trước năm 2002 chưa đủ dữ liệu sẽ báo rõ và chờ đối chiếu.",
+        "Dùng riêng kính ngữ Monaco H.S.H., S.A.S. hoặc Điện hạ. Tước người thừa kế, Baux và Carladès là các mục riêng. Nữ đứng đầu có thể là hoàng trữ giả định và bị thay thế khi có em trai đủ điều kiện; Baux không tự được cấp chỉ vì đứng đầu danh sách.",
+        "Phối ngẫu, người tự giữ tước và người giữ ngôi được phân biệt. Chồng của nữ quân chủ hoặc công chúa không tự nhận tước Monaco; tước và kính ngữ có nguồn gốc nước khác vẫn giữ căn cứ riêng. Các quyết định phong tước chưa có quy tắc tổng quát được ghi rõ là kịch bản trong game.",
+        "Kho tên Monaco có gợi ý vương thất, truyền thống Công giáo/Pháp ngữ, hiện đại và bên ngoại. Tên có dấu, gạch nối và nhiều thành phần được giữ nguyên. Nhà Grimaldi, họ pháp lý, tên thường dùng và tên đi học không bị gộp với tước theo xứ.",
+        "Gia đình có thể chọn tên ngắn hoặc nhiều tên đệm, ghi lý do chọn tên và người tổ tiên được tri ân theo mã gia phả. Tên của phối ngẫu có thể vào kho riêng gia đình; tên được nhiều thế hệ dùng để tri ân có thể trở thành truyền thống, vẫn giữ dấu vết người mang tên đầu tiên trong hồ sơ.",
+        "Sửa việc tự tạo hôn nhân hoặc hợp pháp hóa mọi trẻ chỉ vì người chơi đang có bạn đời. Hồ sơ cần đúng cha mẹ, huyết thống đã xác lập và điều kiện hôn nhân/chấp thuận. Truyền thống đức tin không tự trở thành điều kiện loại khỏi kế vị khi chưa có căn cứ.",
+        "Bản lưu cũ giữ tên, mã người, tước lịch sử, tài sản và nhật ký. Dữ liệu Monaco mới vẫn dùng chung các luồng sinh con, kết hôn, đổi ngôi, chuyển thế hệ và đặt tên hiện có."
+      ],
+      "correctedAt": "2026-11-10T01:17:22.459Z"
+    },
+    {
+      "id": "royal-lifetime-81060",
+      "version": "8.10.60",
+      "publishedAt": "2026-11-09T09:26:11.396Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-10T01:17:22.000Z",
+      "title": "Sinh ra trong hoàng tộc và chuyện gia tộc nhiều thế hệ",
+      "summary": "Thu nhập hoàng gia không công khai, nguồn lực gia tộc lớn và những lựa chọn về cơ hội, đời tư, ảnh hưởng từ nhỏ đến lớn.",
+      "tags": [
+        "Tính năng",
+        "Đời sống"
+      ],
+      "details": [
+        "Hồ sơ xuất phát, giấy khai sinh và bảng gia đình hiển thị thu nhập hoàng gia là “Không công khai”. Giá trị dùng cho tính toán vẫn được giữ bên trong; không hiện mức lương phổ thông như thu nhập thật của hoàng tộc.",
+        "Trong chế độ hoàng gia hư cấu, nhân vật mới có ngoại hình khởi sinh 90–100/100, từ mức Cực phẩm, cùng quà riêng của gia tộc. Ngoại hình vẫn chịu tác động của tuổi và sức khỏe; bản lưu cũ không bị tự đổi ngoại hình hoặc nhận lại quà chào đời.",
+        "Quỹ riêng gia tộc hỗ trợ phần lớn nhu cầu học tập, sở thích và sinh hoạt. Trẻ có tiền tiêu vặt; người trưởng thành nhận trợ cấp riêng và có thể xin hỗ trợ một kế hoạch lớn mỗi năm. Nguồn lực có sổ chi và hạn mức mô phỏng, được phân biệt với tiền cá nhân và ngân sách công vụ.",
+        "Cơ hội giáo viên riêng, sở thích, thăm cộng đồng, học tập và gặp người hướng dẫn xuất hiện theo tuổi. Gia đình hỗ trợ chi phí nhưng nhân vật vẫn cần luyện tập, đạt điều kiện tuyển sinh và tự xây dựng nghề nghiệp.",
+        "Có thêm chuyện ảnh riêng bị chia sẻ, tranh vai trò đại diện, tài liệu nội bộ bị tiết lộ, phân bổ quỹ gia đình và truyền kinh nghiệm cho thế hệ sau. Các câu chuyện đi qua bước mở đầu, chuẩn bị và kết quả ở những năm tiếp theo.",
+        "Thành viên gia tộc được nhận diện bằng mã trong gia phả, có tin cậy và căng thẳng được ghi nhớ. Hòa giải, chuẩn bị hoặc gây sức ép tạo kết quả khác nhau. Giành ảnh hưởng có thể làm tổn hại quan hệ và uy tín; tin đồn không tự thay luật kế vị hoặc thu tước.",
+        "Quỹ riêng và quan hệ gia tộc được giữ khi chuyển thế hệ. Chuyện đang diễn biến khép lại khi người liên quan không còn hoặc nhân vật rời sinh hoạt hoàng gia. Những lợi thế tài chính và ngoại hình là cách chơi hư cấu, không mô tả mọi gia đình hoàng gia ngoài đời."
+      ],
+      "correctedAt": "2026-11-10T01:17:22.471Z"
+    },
+    {
+      "id": "childhood-context-81059",
+      "version": "8.10.59",
+      "publishedAt": "2026-11-09T08:46:31.684Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-09T08:54:57.000Z",
+      "title": "Chuyện tuổi thơ theo nơi sống và gia đình",
+      "summary": "Buổi chơi cùng bạn và các chuyện tuổi nhỏ xét nơi đang sống, người chăm sóc và hoàn cảnh hoàng gia.",
+      "tags": [
+        "Sửa lỗi",
+        "Đời sống"
+      ],
+      "details": [
+        "Ngoài Việt Nam, chơi bán hàng dùng quầy đồ chơi, thẻ giấy hoặc đồng xu đồ chơi; không tự kể chuyện tiền lá cây hay “giàu nhất xóm”. Trẻ hoàng gia có buổi chơi được người chăm sóc thu xếp, không tự gọi cả xóm vào nhà. Trò đóng vai không tạo thu nhập thật.",
+        "Khi có người bạn cùng tuổi còn sống ở gần, buổi chơi ghi nhận đúng người và tăng gắn bó. Bạn ở xa hoặc đã mất không được tự đưa tới nhà. Đổi nơi sống trước khi chơi thì cần thu xếp lại; cùng một lựa chọn đã giải quyết không được nhận thưởng lần nữa.",
+        "Điều chỉnh các chuyện mất điện, nghỉ hè cùng người thân, giờ nghỉ, đọc truyện, chăm con vật, ốm ở nhà, quan sát sinh vật, trông em, chó chạy tới và tham quan cho bối cảnh ngoài Việt Nam. Không mặc định mọi nơi có chè đỗ đen, chấm điểm 10, bán gà dịp Tết hoặc ngủ trưa đi bắt ve.",
+        "Những hoạt động riêng của trường học và cộng đồng Việt Nam chỉ xuất hiện khi đang sống tại Việt Nam; không dựa riêng vào quốc tịch gốc. Những dòng kể tuổi thơ liên quan cũng tránh mặc định trẻ ở nước ngoài đi học thêm tiếng Anh hoặc có phong tục tiên răng giống nhau.",
+        "Sự kiện chơi đang chờ trong bản lưu cũ được cập nhật lời kể và lựa chọn theo hoàn cảnh hiện tại. Giữ mã nhân vật, tiền, lịch sử và các dòng nhật ký đã xảy ra."
+      ],
+      "correctedAt": "2026-11-09T08:55:02.240Z"
+    },
+    {
+      "id": "royal-titles-names-81058",
+      "version": "8.10.58",
+      "publishedAt": "2026-11-09T08:30:42.520Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-09T08:39:31.000Z",
+      "title": "Tước hiệu, tên họ và lựa chọn hoàng gia",
+      "summary": "Theo dõi từng tước theo gia phả, quốc gia và thời kỳ; chọn tên, đời tư và phong cách cá nhân với quyền lợi được phân biệt rõ.",
+      "tags": [
+        "Tính năng",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tại Anh, đứng đầu hàng kế vị chưa tự có Wales. Cornwall và Rothesay xét điều kiện riêng; hồ sơ phân biệt người giữ tước với phối ngẫu và cách gọi “of Wales” của con. Nữ giữ Wales theo quyền riêng cần quyết định có nhãn kịch bản trong game.",
+        "Prince/Princess và HRH được xét lại khi đổi ngôi theo văn thư áp dụng. Lord/Lady cần căn cứ. Phong tước có bước xem xét và điều kiện truyền riêng: Sussex theo dòng nam hợp lệ, Edinburgh tham chiếu sáng lập năm 2023 chỉ suốt đời người nhận.",
+        "Tây Ban Nha phân biệt Asturias, Infante/Infanta và Grande; Bỉ xét Brabant riêng theo nhánh. Thụy Điển phong công tước theo tỉnh bằng quyết định riêng, có thể giữ Prince/Princess và tước tỉnh khi rời Royal House. Đan Mạch có thay đổi Monpezat đúng phạm vi và mốc hiệu lực.",
+        "Hà Lan phân biệt Orange, Netherlands, Orange-Nassau, Count và Jonkheer qua căn cứ riêng. Luxembourg xét tước Đại Công tước Kế vị từ tuổi và thời kỳ phù hợp; Bourbon-Parma cần căn cứ riêng.",
+        "Tên chính, nhiều tên đệm, tên nghi lễ, tên thường dùng, họ pháp lý và nhà/vương triều được lưu riêng. Hỗ trợ dấu bản địa, gạch nối, họ kép và gợi ý tri ân theo mã gia phả. Ở sáu vị trí đầu, tên hiện đại có thể gây trao đổi trong gia đình nhưng không tự bị phủ quyết.",
+        "Người trưởng thành có thể giảm công vụ hoặc dùng tên đời thường nơi công cộng. Tước, HRH, tư cách Vương thất, kế vị, tài sản riêng, quyền điền sản và ngân sách công vụ được kiểm tra riêng; tiền công vụ chưa chi được hoàn lại khi nghỉ nhiệm vụ.",
+        "Làm đẹp có gợi ý theo tuổi và bối cảnh: tự nhiên, dewy, regal, bronzed, smoky; thêm tóc thẳng, gợn nhẹ, tóc tết và phụ kiện. Người trưởng thành có móng màu, son đậm và hình xăm mini. Phản ứng tại công vụ dựa vào sự kiện, mức chú ý và lịch sử; bình luận thẩm mỹ không tự làm mất tước hay quyền kế vị.",
+        "Hồ sơ, gia phả và bảng kế vị dùng cùng nguồn dữ liệu. Bản lưu cũ giữ mã người, lịch sử tước và tài sản; phần thiếu căn cứ ghi Chưa xác định. Gia tộc trong game vẫn là mô phỏng hư cấu."
+      ],
+      "correctedAt": "2026-11-09T08:40:41.785Z"
+    },
+    {
+      "id": "homeschool-england-81057",
+      "version": "8.10.57",
+      "publishedAt": "2026-11-09T07:01:54.160Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-09T08:39:31.000Z",
+      "title": "Học tại nhà và chọn môn tại England",
+      "summary": "Chuẩn bị hồ sơ học tại nhà theo nơi cư trú, giữ học bạ khi đổi lộ trình và theo dõi ngoại ngữ, môn tự chọn, thi GCSE tại England.",
+      "tags": [
+        "Học tập",
+        "Tính năng"
+      ],
+      "details": [
+        "Trong Học tập, học sinh và giám hộ có thể xem quy định, trao đổi lý do, chọn hình thức, chuẩn bị giấy tờ và kế hoạch. Nơi cần duyệt trước vẫn giữ trường cũ trong khi chờ; khu vực chưa đủ dữ liệu sẽ báo rõ và chưa mở chuyển lộ trình.",
+        "Học tại nhà theo dõi tiến độ từng môn, thời gian, sức khỏe, chi phí và hoạt động cộng đồng. Tự học, gia sư và học xuyên hè có điều kiện khác nhau. Quay lại trường hoặc đổi nơi ở vẫn giữ hồ sơ; trường tiếp nhận xét công nhận riêng.",
+        "Tách hoàn thành chương trình, hết nghĩa vụ giáo dục, văn bằng và điều kiện nộp đại học. Diploma gia đình không tự biến thành bằng trường hoặc GED. Tài nguyên chương trình California và trợ cấp New Zealand chỉ mở theo điều kiện tương ứng.",
+        "Tại England, từng ngoại ngữ giữ kỹ năng khi đổi tiếng hoặc trường. Ở giai đoạn phù hợp, học sinh chọn ngoại ngữ hiện đại hoặc cổ ngữ; môn mở, lớp đầy và trùng giờ được kiểm tra trước khi đăng ký.",
+        "Môn tự chọn có nhóm rõ ràng, số suất theo trường và bước chốt nguyện vọng. Lớp học ngoại ngữ, văn bằng GCSE đã xác minh và môn trung tâm nhận thi được phân biệt. Những văn bằng chưa đủ dữ liệu chỉ hiện là lớp bổ trợ.",
+        "Thi thử GCSE và thi thật dùng cùng cách chấm từng môn trên thang 9–1/U. Đăng ký thi cần trung tâm nhận môn và hỗ trợ phần đánh giá; điểm đã chốt được giữ khi đổi môn hay tải lại. Có kết quả mới mở chuyển tiếp A-Level, IB hoặc học nghề. Trường và trung tâm trong mô phỏng không phải danh mục tuyển sinh thật."
+      ],
+      "correctedAt": "2026-11-09T08:40:41.773Z"
+    },
+    {
+      "id": "royal-birth-display-81056",
+      "version": "8.10.56",
+      "publishedAt": "2026-11-07T18:20:07+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-07T11:24:26.000Z",
+      "title": "Nhận biết rõ xuất thân hoàng gia khi bắt đầu cuộc đời",
+      "summary": "Hiển thị nhánh hoàng gia và sửa lời kể gia cảnh lúc chào đời.",
+      "tags": [
+        "Sửa lỗi",
+        "Đời sống"
+      ],
+      "details": [
+        "Khi random được hoàng gia, ô quay số và hồ sơ xuất phát ghi rõ nhánh chính hoặc nhánh phụ. Giấy khai sinh có mục xuất thân hoàng gia bên cạnh thông tin thu nhập gia đình.",
+        "Sửa câu nhật ký chào đời còn giữ gia cảnh bốc trước khi xác định xuất thân hoàng gia. Bản lưu cũ được đối chiếu lại câu này theo xuất thân đã có.",
+        "Trong chế độ Thế giới, sinh tại một nước quân chủ được hỗ trợ có 3% cơ hội xuất thân hoàng gia. Random quốc gia toàn thế giới còn phụ thuộc xác suất chọn được nước đó."
+      ],
+      "correctedAt": "2026-11-07T11:24:27.047Z"
+    },
+    {
+      "id": "education-fallback-graduation-81055",
+      "version": "8.10.55",
+      "publishedAt": "2026-11-07T12:25:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-07T05:29:02.000Z",
+      "title": "Chọn đại học trong nước và theo dõi điều kiện tốt nghiệp",
+      "summary": "Có hướng học trong nước khi du học không thành và biết rõ điều kiện còn thiếu để tốt nghiệp.",
+      "tags": [
+        "Học tập",
+        "Tính năng"
+      ],
+      "details": [
+        "Khi hồ sơ du học đại học bị từ chối, có thể chuyển sang đăng ký nguyện vọng trong nước. Mục Học tập cũng có lựa chọn này cho người tốt nghiệp phổ thông chưa nhập học đại học.",
+        "Có thể chuyển hướng ngay khi chưa đủ học phí hoặc đang chờ visa. Khi rút hồ sơ, phần học phí du học đã dự trù được hoàn lại; phí hồ sơ và visa đã chi không được hoàn. Đại học trong nước vẫn xét điểm và điều kiện tuyển sinh.",
+        "Tiến độ đại học hiển thị rõ tín chỉ, chuyên cần, ngoại ngữ đầu ra, hồ sơ học thuật và kết quả bảo vệ. Chứng chỉ hết hạn được chỉ rõ để người học biết cần thi lại.",
+        "Từ màn hình tiến độ, có thể mở phần học lại, học ngoại ngữ, thi lại chứng chỉ, xử lý hồ sơ học thuật hoặc bảo vệ khi đến kỳ. Hoàn tất các điều kiện để được xét bằng vào cuối năm học."
+      ],
+      "correctedAt": "2026-11-07T05:29:02.324Z"
+    },
+    {
+      "id": "exam-model-review-81054",
+      "version": "8.10.54",
+      "publishedAt": "2026-11-06T15:19:24.681+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-06T09:18:34.000Z",
+      "title": "Thi thử và thi thật thống nhất, kỹ năng luyện đề có giới hạn",
+      "summary": "Thi thử lớp 10 và Đại học dùng cùng cách chấm từng môn với kỳ thi thật. Báo cáo giải thích rõ kiến thức, trạng thái và biến động phòng thi; các mốc xét tuyển dùng nhóm trường mô phỏng.",
+      "tags": [
+        "Học tập",
+        "Cân bằng",
+        "Bản lưu"
+      ],
+      "details": [
+        "Bỏ cộng thẳng điểm thi thử và điểm gỡ tâm lý vào tổng bài thi. Luyện dạng đề, quản lý thời gian, xử lý câu khó, kỹ năng chuyên hoặc năng khiếu và độ ổn định tiến bộ giảm dần, tối đa hai đợt nhiều tuần trong một năm; luyện dồn gây mệt mỏi.",
+        "Kiến thức cao tạo lợi thế rõ rệt. Không còn điểm trừ lớn từ tâm lý ẩn. Báo cáo ghi điểm từng môn, khoảng thấp – kỳ vọng – cao, mức căng thẳng và cách cải thiện; khoảng dự kiến không cam kết đỗ.",
+        "Kết quả mỗi kỳ thi được lưu cố định. Mở lại báo cáo, đổi menu hoặc tải lại không chấm lại vận may. Thi thử không sửa điểm thi thật đã có; thi lại chấm theo cùng mô hình, có thể tốt hơn hoặc kém hơn.",
+        "Tiến độ luyện ở bản lưu cũ được chuyển một lần sang kỹ năng có giới hạn. Giữ điểm và lịch sử những kỳ thi đã hoàn tất; điểm luyện môn chuyên cũ không biến thành cộng thêm 8/10.",
+        "Thay tên trường chưa có dữ liệu tuyển sinh kiểm chứng bằng nhóm trường mô phỏng. Mỗi nguyện vọng ghi ngưỡng trong game và điều kiện tổ hợp, thành tích hoặc năng khiếu; không coi đó là điểm chuẩn thật hay đưa ra phần trăm đỗ thiếu căn cứ.",
+        "Môn chuyên được xét riêng ở lộ trình chuyên; năng khiếu dùng kỹ năng vẽ hoặc biểu diễn và điều kiện riêng của nhóm nghệ thuật, không cộng thêm vào tổng văn hóa. Báo cáo ghi thời điểm và nhắc xem lại khi trạng thái hoặc nguyện vọng thay đổi."
+      ],
+      "correctedAt": "2026-11-06T09:18:34.678Z"
+    },
+    {
+      "id": "mock-exam-highschool-uni-81053",
+      "version": "8.10.53",
+      "publishedAt": "2026-11-06T14:30:00+07:00",
+      "releaseStatus": "released",
+      "title": "Thi thử vào lớp 10 và thi thử đại học: ước điểm chuẩn, chẩn đoán năng lực",
+      "summary": "Theo góp ý của người chơi, bổ sung tính năng Thi thử Cấp 2 vào Cấp 3 (Lớp 10) và Thi thử Đại học ngay trong mục Học tập, giúp ước lượng chính xác khoảng điểm thi thật, xác suất đỗ từng trường/nguyện vọng, giải thích vì sao chỉ số Kiến thức cao vẫn có thể thiếu điểm vào trường Top và tích lũy điểm cộng thực chiến cho kỳ thi chính thức.",
+      "tags": [
+        "Tính năng",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Thi thử Cấp 2 vào Cấp 3 (Lớp 10) & Ước lượng điểm chuẩn (mở ở mục Học tập cho học sinh THCS từ 11–17 tuổi): chấm điểm chi tiết 3 môn Toán (nhân 2) + Ngữ văn (nhân 2) + Tiếng Anh (hệ số 1) trên thang 50 điểm kèm điểm môn chuyên (thang 10), hiển thị rõ công thức nền Kiến thức (tối đa 35/50 điểm) và biên độ 15/50 điểm phân hóa phòng thi để người chơi hiểu vì sao học sinh giỏi (Kiến thức 90–100) vẫn có thể trượt các trường chuyên lấy 37–38/50 điểm nếu không luyện đề. Bảng ước lượng đối chiếu trực tiếp tỷ lệ đỗ (%) với cả 7 trường THPT (THPT chuyên Hà Nội – Amsterdam 38/50, THPT chuyên KHTN 38/50, THPT chuyên Lê Hồng Phong 37/50, THPT chuyên địa phương 34/50, THPT Nguyễn Khuyến 30/50, THPT công lập 20/50 và THPT dân lập 18/50). Mỗi đợt thi thử giúp tăng Kiến thức và tích lũy điểm cộng thực chiến (+0.9 đến +4.5 điểm), nâng sàn đề khó (+3.0 điểm) và điểm cộng môn chuyên (+8.0 điểm) tính thẳng vào kỳ thi tuyển sinh lớp 10 chính thức.",
+        "Thi thử Đại học & Ước lượng điểm xét tuyển (mở ở mục Học tập cho học sinh THPT và thí sinh tự do): phân tích đầy đủ điểm nền từ Kiến thức (tối đa 23/30 điểm), điểm cộng Luyện thi đại học, mức Tập trung, Căng thẳng, thành tích Học sinh giỏi các môn trong tổ hợp và đặc biệt là \"Tâm lý & bản lĩnh phòng thi\" (yếu tố ẩn từng khiến nhiều nhân vật Kiến thức 95–100 bị tụt 3–5 điểm xuống mức 19–21/30 khi vào phòng thi thật). Bảng báo cáo hiển thị khoảng điểm dự kiến (Tối thiểu – Kỳ vọng – Tối đa trên thang 30), điểm dự kiến từng môn trong tổ hợp, điểm năng khiếu dự kiến (thang 10 cho khối H/M/N/S/T/V), đánh giá xác suất đỗ từng Nguyện vọng 1–3 đã đăng ký và so sánh với 4 phân khúc trường Đại học (Top đầu Y Dược/Bách Khoa/Ngoại Thương 27–28.5đ, trường trọng điểm 25–26.5đ, công lập khá 21–24.5đ, vừa sức 15–20.5đ). Ba chế độ thi thử (Đề chuẩn Bộ GD&ĐT, Đề phân hóa 8+ 9+ trường Top, Rèn tâm lý phòng thi & Khối năng khiếu) giúp gỡ điểm trừ tâm lý phòng thi (tối đa +2.5đ) và cộng tối đa +3.5 điểm thực chiến vào kỳ thi tốt nghiệp THPT & Đại học.",
+        "Hiển thị trực tiếp ước lượng điểm và tỷ lệ đỗ ngay trên các màn hình quyết định: khi bước vào kỳ thi lớp 10 (Chọn trường cấp ba), Chọn trường cấp 3 / chuyên, Chọn tổ hợp khối thi THPT, Luyện thi đại học và Đăng ký nguyện vọng Đại học – Cao đẳng, hệ thống tự động hiển thị khoảng điểm thi dự kiến (hoặc điểm thi thật đã có) cùng xác suất đỗ và chênh lệch điểm chuẩn của từng trường để người chơi chủ động điều chỉnh mục tiêu."
+      ],
+      "releasedAt": "2026-11-06T07:30:30.000Z",
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "royal-line-heir-titles-81052",
+      "version": "8.10.52",
+      "publishedAt": "2026-11-06T13:34:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-06T06:34:00.000Z",
+      "title": "Thứ tự kế vị và tước hiệu của Thái tử, Thái nữ cùng bạn đời ở hoàng gia châu Âu",
+      "summary": "Làm rõ thứ tự kế vị theo nhánh của người kế vị (cháu đích tôn đứng ngay sau cha/mẹ và đẩy chú/dì xuống), và cập nhật tước hiệu xứ sở của Thái tử/Thái nữ cùng tước hiệu bạn đời theo từng quốc gia.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Đời sống"
+      ],
+      "details": [
+        "Thứ tự kế vị theo nhánh: Thái tử/Thái nữ đứng #1, con thứ nhất #2, con thứ hai #3, con thứ ba #4. Khi con trưởng của Thái tử/Thái nữ có con đầu lòng (cháu đích tôn/đích nữ), người cháu đó lên #3 và đẩy các em của cha/mẹ mình cùng các chú/dì xuống thấp hơn; có thêm con thì tiếp tục đẩy xuống. Ở Tây Ban Nha và Monaco (ưu tiên nam giới), con trai được xếp trước chị gái và con của người con trai đứng ngay sau cha mình. Menu tôn giáo – kế vị hoàng gia châu Âu nay hiển thị hàng kế vị hiện tại.",
+        "Tước hiệu xứ sở của người kế vị số 1: Anh — Thân vương/Thân vương nữ xứ Wales kèm Công tước xứ Cornwall và Công tước xứ Rothesay (Scotland); Bỉ — Công tước/Nữ Công tước xứ Brabant; Tây Ban Nha — Thân vương/Thân vương nữ xứ Asturias; Thụy Điển — Công tước/Nữ Công tước của xứ do Quốc vương phong (như xứ Västergötland); Na Uy — Thái tử/Thái nữ Na Uy, không phong xứ; Đan Mạch — Thái tử/Thái nữ Đan Mạch kèm tước gia tộc Monpezat; Monaco — Hầu tước/Nữ Hầu tước xứ Baux; Luxembourg — Đại Công tước Kế vị, có thể kèm Thân vương xứ Bourbon-Parma; Liechtenstein — Thân vương/Thân vương nữ Kế vị.",
+        "Tước hiệu bạn đời: vợ của Thái tử hưởng phiên bản nữ của tước xứ theo chồng (Vương phi xứ Wales, Nữ Công tước xứ Brabant, Vương phi xứ Asturias, Nữ Hầu tước xứ Baux, Đại Công tước Phi Kế vị, Thân vương Phi Kế vị...). Chồng của Thái nữ không được nắm tước xứ gốc của vợ: Bỉ phong Hoàng tử Bỉ, Tây Ban Nha phong Vương thân Tây Ban Nha, Luxembourg phong Hoàng tử xứ Luxembourg, Monaco phong Hoàng thân Monaco, Liechtenstein là Hoàng tử xứ Liechtenstein dạng phối ngẫu, Na Uy và Đan Mạch là Hoàng tử, Vương thân (như Hoàng thân Henrik luôn đi sau vợ một bước); riêng Thụy Điển cho chồng mượn danh Công tước cùng xứ ở thế hạ vị (như Hoàng tử Daniel, Công tước xứ Västergötland) nhưng không sở hữu xứ về pháp lý."
+      ],
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "uk-school-fix-euro-royals-81051",
+      "version": "8.10.51",
+      "publishedAt": "2026-11-06T07:54:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-06T00:55:00.000Z",
+      "title": "Chuẩn hóa chương trình học Anh và quy tắc kế vị ở 10 hoàng gia châu Âu",
+      "summary": "Khắc phục triệt để lỗi chương trình học và sự kiện học đường Việt Nam xuất hiện tại Vương quốc Anh và nước ngoài; mở rộng toàn diện 10 Hoàng gia Châu Âu về quyền kế vị (8 nước bình đẳng tuyệt đối vs. 2 nước ưu tiên nam giới Tây Ban Nha & Monaco), quyền phủ quyết dự luật Công giáo của Thân vương Monaco, Đặc quyền màu trắng Vatican, Luật Gia tộc Liechtenstein, quy định tôn giáo con cái và cơ chế hợp pháp hóa con ngoài giá thú sau sinh tại Monaco.",
+      "tags": [
+        "Sửa lỗi",
+        "Học tập",
+        "Tính năng",
+        "Gia đình",
+        "Đời sống"
+      ],
+      "details": [
+        "Khắc phục triệt để lỗi học tập tại Vương quốc Anh (GB) bị giống chương trình Việt Nam: áp dụng thống nhất lộ trình Year 1–13 (Primary School từ 5 tuổi -> Secondary School Year 7 -> thi GCSE cuối Year 11 ở tuổi 16 -> Sixth Form Year 12–13 học A-Level hoặc IB Diploma đến 18 tuổi) cho mọi thành phố và vùng lãnh thổ thuộc Vương quốc Anh (England, Scotland, Wales, Northern Ireland) ở mọi năm sinh; gỡ bỏ dòng so sánh lớp Việt Nam trong nhật ký Year 1–13, tích hợp trực tiếp 3 nhóm ngành A-Level vs. IB Diploma vào quyết định tuổi 16 sau GCSE, bổ sung danh sách đại học danh tiếng Anh/Mỹ (Oxford, Cambridge, Imperial, LSE, UCL, Edinburgh, Manchester...) với thời lượng chuẩn 3 năm tại England/Wales/NI (4 năm tại Scotland) và chặn hoàn toàn các sự kiện học đường đặc thù Việt Nam (tiền tiểu học lớp 1, báo tường 20/11, chuyển trường vào Nam ra Bắc, cấp hai/cấp ba) không ảnh hưởng sang nước khác.",
+        "Phân loại chuẩn xác 10 Hoàng gia Châu Âu theo quy tắc kế vị giới tính: chỉ còn đúng 2 hoàng gia giữ quy tắc ưu tiên nam giới (Male-preference primogeniture) là Tây Ban Nha (ES) và Monaco (MC); cả 8 hoàng gia còn lại gồm Thụy Điển (tiên phong 1980), Hà Lan (1983), Na Uy (1990), Bỉ (1991), Đan Mạch (2009), Luxembourg (2011), Vương quốc Anh (2013) và Liechtenstein (LI — cải cách từ Luật Salic cổ bảo thủ nhất châu Âu sang bình đẳng giới) đều áp dụng quyền kế vị tuyệt đối cho người con đầu lòng bất kể Hoàng tử hay Công chúa.",
+        "Khắc họa sự khác biệt hiến định và tôn giáo giữa Tây Ban Nha (ES) và Monaco (MC): dù cùng gắn bó với Công giáo La Mã và ưu tiên nam giới, Tây Ban Nha không có quốc giáo (thành viên hoàng gia theo đạo tự nguyện hơn là ép buộc) và Nhà vua giữ vai trò biểu tượng lập hiến, không thể dùng lý do tôn giáo để từ chối ký ban hành đạo luật đã được Quốc hội thông qua; ngược lại ở Monaco, Công giáo La Mã là Quốc giáo, con cái Hoàng tộc Grimaldi bắt buộc rửa tội và nuôi dạy theo Công giáo, bạn đời kết hôn (như Vương phi Charlene năm 2011) thường chủ động cải đạo trước lễ cưới, và Thân vương Monaco nắm quyền lực lập pháp thực tế rất lớn với quyền phủ quyết các dự luật đi ngược giáo lý Công giáo (như tiền lệ Thân vương Albert II từ chối dự luật mở rộng quyền phá thai).",
+        "Mở rộng chiều sâu Hoàng gia Bỉ (BE) và Liechtenstein (LI): tại Bỉ, Hiến pháp thế tục tách biệt nhà thờ – nhà nước (luật kế vị chỉ xét dòng dõi hợp pháp từ Vua Albert II và chấp thuận hôn nhân của Vua/Quốc hội, không bắt buộc tôn giáo dù kết hôn khác đạo), song thực tế gia đình Vua Philippe, Hoàng hậu Mathilde và Thái nữ Elisabeth rất sùng đạo Công giáo và Hoàng hậu Mathilde (cùng Hoàng hậu Tây Ban Nha, Đại Công tước phu nhân Luxembourg, Thân vương phi Monaco) được Tòa thánh Vatican trao \"Đặc quyền màu trắng\" (Privilège du blanc — mặc trang phục trắng khi diện kiến Giáo hoàng); tại Liechtenstein, Công giáo là Quốc giáo, Luật Hôn nhân gia tộc (House Law) đòi hỏi môn đăng hộ đối và văn bản đồng ý của Thân vương trị vì để giữ quyền kế vị.",
+        "Chuẩn hóa 2 nhóm quy định tôn giáo đối với con cái và luật về con ngoài giá thú tại 10 Hoàng gia Châu Âu: Nhóm bắt buộc 100% con cái phải rửa tội và nuôi dạy theo đạo Hoàng gia nếu không sẽ mất quyền kế vị (Anh Quốc theo Anh giáo Church of England; Thụy Điển, Na Uy, Đan Mạch theo Tin Lành Lutheran; Monaco, Liechtenstein theo Công giáo La Mã) đối lập với Nhóm tự do pháp lý / giao thoa gia đình (Hà Lan rửa tội Tin Lành Orange-Nassau nhưng Thái nữ Catharina-Amalia và các em vừa đi lễ Công giáo cùng mẹ là Hoàng hậu Máxima vừa dự lễ Tin Lành cùng cha là Vua Willem-Alexander; Bỉ, Tây Ban Nha, Luxembourg tự do trên giấy tờ nhưng tự nguyện nuôi dạy Công giáo). Đặc biệt, mô phỏng cơ chế \"Hợp pháp hóa sau sinh\" độc nhất tại Monaco (con sinh ngoài giá thú lập tức được đưa vào hàng kế vị ngay khi cha mẹ ruột kết hôn hợp pháp như các con của Công chúa Caroline) so với lệnh cấm vĩnh viễn ở 9 hoàng gia châu Âu còn lại."
+      ],
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "kr-baekil-es-royal-uk-ib-mbti-81050",
+      "version": "8.10.50",
+      "publishedAt": "2026-11-05T16:02:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T09:02:00.000Z",
+      "title": "Lễ Baek-il Hàn Quốc, kế vị Tây Ban Nha, A-Level/IB Anh, 16 nhóm MBTI",
+      "summary": "Thêm Lễ Baek-il 100 ngày tại Hàn Quốc theo 3 phân khúc gia đình, quy tắc sắc phong kế vị nhiều thế hệ & Công giáo Tây Ban Nha, lộ trình A-Level vs. IB tại Anh theo nhóm ngành đại học, hệ thống đam mê – năng khiếu – sở đoản, 16 nhóm tính cách MBTI và phân biệt giờ sinh/tuổi con giáp Á Đông với phương Tây.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Tại Hàn Quốc, bổ sung Lễ Baek-il 100 ngày cho các bé (đánh dấu cột mốc sinh tồn 100 ngày đầu đời và con số 100 — 百 tượng trưng cho sự trọn vẹn, trường thọ theo phong cách tối giản Minimalism và riêng tư gia đình): mâm cúng tạ ơn bà mụ Samshin Halmoni gồm đúng 3 bát cơm trắng, 3 bát canh rong biển Miyeok-guk không cắt bằng dao kéo và bộ ba rau Namul; 4 loại bánh gạo truyền thống (Baekseolgi trắng tinh khiết chia sẻ cho 100 người tích phúc đức, bánh gạo đậu đỏ Susupatteok xua vận xui, bánh ngũ sắc Songpyeon cầu trí tuệ, bánh nếp Injeolmi cầu dẻo dai); phân biệt trang trí & Hanbok hiện đại giữa bé trai (chữ 百 xanh dương/xanh lá, phông nền xanh pastel/xám/beige, áo Vest kèm quần Baji xanh/tím) và bé gái (chữ 百 hồng/đỏ/vàng, phông nền hồng khói/cam đào/vàng nhạt, váy xòe Chima hồng/đỏ kèm mũ dây ruy-băng Ayam).",
+        "Mô phỏng 3 phân khúc tổ chức Lễ Baek-il theo điều kiện kinh tế gia đình Hàn Quốc: Nhóm Tiết kiệm (\"Self-Baek-il\" tự làm tại nhà ~50.000–70.000 Won: thuê set decor và Hanbok trên Coupang/Naver Shopping chụp xong đóng gói gửi trả, đặt bánh tiệm gần nhà, bố mẹ tự chụp ảnh bằng điện thoại tại phòng khách), Nhóm Khá giả trung lưu Seoul/Busan (đặt phòng riêng nhà hàng truyền thống cao cấp Hanjeongsik hoặc khách sạn, bánh gạo nghệ thuật Design Tteok đóng hộp gỗ 100.000–200.000 Won, thuê thợ ảnh Snapshot chuyên nghiệp, 10–15 người thân ruột thịt và tặng nhẫn vàng ròng 100 ngày Baek-il banji 1 chỉ 3.75g khắc chữ 百/vương miện), Nhóm Thượng lưu Chaebol / Old money (phòng VIP khách sạn 6 sao Shilla Hotel / Signiel Seoul do Art Director thiết kế với 100% hoa tươi nhập khẩu và đồ gốm/đồng thủ công, Hanbok Haute Couture độc bản, quà lắc tay vàng, thỏi vàng, đồ hiệu Dior Baby / Gucci Kids và set quà cảm ơn sâm quý/nến thơm), kèm lựa chọn hiếm khi gia đình Old money chủ động chọn làm kiểu Khá giả ấm cúng cho thế hệ mình.",
+        "Mở rộng quy tắc kế vị Hoàng gia Tây Ban Nha và truyền ngôi nhiều thế hệ: gắn với truyền thống Công giáo La Mã (tôn giáo chiếm đa số tại Tây Ban Nha); ưu tiên Hoàng tử (nam) hơn Công chúa (nữ) trong cùng hàng con (nếu nhiều hoàng tử thì hoàng tử lớn tuổi nhất lên ngôi; nếu không có con trai thì Trưởng nữ nhận tước Princesa de Asturias để kế vị). Chuẩn hóa thứ tự kế vị nhiều thế hệ (Thái tử/Thái nữ đứng #1 -> con trưởng của họ #2 -> cháu trưởng #3): cháu nội/ngoại hoặc chắt của vị Vua đang trị vì chưa tự động là Thái tử/Thái nữ mà chỉ được sắc phong kỹ càng khi cha hoặc mẹ chính thức lên ngai vàng; phản ánh thực tế nhiều người kế vị ở tuổi trung niên/cao niên mới thành Thái tử/Thái nữ hoặc lên ngôi Vua/Nữ hoàng vì quân vương tiền nhiệm sống rất thọ và chỉ thoái vị khi sức khỏe yếu hoặc qua đời.",
+        "Tại Vương quốc Anh (GB), bổ sung định hướng chuyên sâu giữa A-Level và IB Diploma ở bậc dự bị đại học (Sixth Form) theo 3 nhóm ngành đại học: Nhóm 1 bắt buộc hoặc ưu tiên tuyệt đối A-Level chuyên sâu 3–4 môn đạt A/A* (Y – Nha – Thú y cần Hóa + Sinh; Kỹ thuật chuyên sâu tại Russell Group như Imperial/Cambridge và Khoa học Máy tính cực kỳ ưu tiên Toán + Toán nâng cao Further Maths + Lý/Máy tính), Nhóm 2 cực kỳ chuộng IB Diploma nhờ bài Tiểu luận EE 4.000 từ và Lý thuyết nhận thức TOK (Luật LLB, khối ngành tinh hoa PPE tại Oxford/LSE, Quan hệ Quốc tế và Tâm lý học), và Nhóm 3 cân bằng tùy phong cách học lệch sâu hay học đều rộng (Kinh tế – Tài chính – Kinh doanh cần Maths HL nếu học IB; Kiến trúc – Thiết kế cân đối giữa thời gian làm Portfolio ở A-Level và Visual Arts HL + CAS/EE ở IB).",
+        "Bổ sung hệ thống Đam mê (Passions), Năng khiếu / Sở trường sẵn có (Aptitudes) và Sở đoản (Weaknesses) đa lĩnh vực: nhân vật không tự động ghét một ngành không thuộc đam mê của mình trừ khi đó là sở đoản; làm đúng đam mê giúp hăng say và năng suất hơn, có năng khiếu sẵn có giúp học và làm việc trơn tru dù không nhất thiết đam mê, còn với sở đoản người chơi có quyền né tránh hoặc kiên trì rèn luyện để khắc phục; theo năm tháng sở thích có thể chuyển dịch tự nhiên ở mức vừa phải nhưng mọi kỹ năng đã luyện từ trước đều được giữ nguyên. Kết hợp 16 nhóm tính cách MBTI (INTJ..ESFP) ảnh hưởng vừa phải tới phong cách học tập, công việc và cách quan tâm gia đình mà vẫn giữ trọn quyền quyết định cho người chơi, đồng thời tách biệt văn hóa Giờ sinh Can Chi & 12 Con Giáp chỉ xuất hiện ở các nước Á Đông (VN, CN, JP, KR, KP...) còn các nước phương Tây chỉ dùng giờ đồng hồ 24h và cung Hoàng đạo phương Tây."
+      ],
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "india-religions-varna-vn-faith-81049",
+      "version": "8.10.49",
+      "publishedAt": "2026-11-05T15:33:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T08:33:00.000Z",
+      "title": "Bức tranh tôn giáo – đẳng cấp Ấn Độ, hạn ngạch EWS 10% và đời sống tâm linh Việt Nam",
+      "summary": "Mở rộng các nhánh tôn giáo, tháp xã hội Varna, ý nghĩa họ tên và hạn ngạch EWS 10% tại Ấn Độ; bổ sung sinh hoạt tín ngưỡng theo gia cảnh tại Việt Nam và tách biệt dữ liệu giữa các nước.",
+      "tags": [
+        "Tính năng",
+        "Đời sống",
+        "Học tập",
+        "Gia đình"
+      ],
+      "details": [
+        "Tại Ấn Độ, mở rộng chi tiết cơ cấu tôn giáo và các nhánh đặc thù: Hindu giáo (~79.8%: Vaishnavism thờ thần Vishnu, Shaivism thờ thần Shiva, Shaktism thờ Nữ thần với lễ hội Durga Puja, Smartism & triết học Advaita Vedanta), Hồi giáo (~14.2%: dòng Sunni với trường phái Barelvi chịu ảnh hưởng Sufi, Deobandi và dòng Shia lớn thứ 3 thế giới tại Lucknow, Hyderabad, Jammu & Kashmir), Phật giáo (~0.7%: Tân Phật giáo Navayana tại Maharashtra, Kim Cương thừa vùng Himalaya/Ladakh và Nguyên thủy – Đại thừa).",
+        "Mô phỏng sâu bức tranh Kitô giáo Ấn Độ (~2.3%): Công giáo (Goa, Mumbai, Kerala), mô hình Giáo hội Tin Lành Hợp nhất độc đáo sau khi Anh rút đi (CSI miền Nam năm 1947 và CNI miền Bắc năm 1970 chiếm ~50% khối Tin Lành, giữ quản trị Giám mục và sở hữu các trường đại học, bệnh viện danh tiếng như Đại học Y CMC Vellore), hệ phái Báp-tít vùng Đông Bắc (Nagaland >90% Báp-tít, Mizoram, Meghalaya), phong trào Ngũ Tuần hỗ trợ giáo dục – y tế miễn phí và Giáo hội Chính thống Syria Malankara lâu đời nhất miền Nam.",
+        "Khắc họa đời sống kinh tế – xã hội của Đạo Sikh (~1.7% tại \"vựa lúa\" Punjab: phân biệt Khalsa Sikhs chính thống ~70–80% giữ \"5K\", quấn khăn Turban, mang họ Singh cho nam / Kaur cho nữ với Sahajdhari Sikhs), Kỳ Na giáo (~0.4% nhưng có tỷ lệ biết chữ và thu nhập bình quân cao nhất Ấn Độ nhờ giới luật Ahimsa chuyển sang ngân hàng, vàng, kim cương toàn cầu; phân nhánh Bạch y phái Svetambara xây đền đá cẩm thạch Dilwara và Không y phái Digambara) cùng cộng đồng Hỏa giáo Parsi (như gia tộc Tata nắm công nghiệp hóa và từ thiện bệnh viện, viện nghiên cứu).",
+        "Bổ sung tháp phân tầng Varna, hệ thống Họ (Surname) như \"thẻ căn cước xã hội\" tại Ấn Độ (Sharma, Chaturvedi, Iyer của Brahmin; Singh, Rathore của Kshatriya; Gupta, Agarwal, Shah của Vaishya; Kumar, Yadav, Patel của Shudra/OBC; Jatav, Mahar của Dalit/SC; Murmu, Soren của Adivasi/ST) và hạn ngạch Hiến pháp EWS 10% dành cho người thuộc đẳng cấp trên có hoàn cảnh kinh tế khó khăn, bên cạnh SC (15%), ST (7.5%), OBC (27%) và bối cảnh chính trị – tôn giáo (Ram Mandir tại Ayodhya).",
+        "Tại Việt Nam, bổ sung sinh hoạt tín ngưỡng – tôn giáo tự nhiên theo truyền thống gia đình, vùng miền và điều kiện kinh tế (thờ cúng gia tiên, Phật giáo Bắc tông / Nam tông / Khất sĩ / Thiền phái Trúc Lâm, Công giáo, Tin Lành, tín ngưỡng thờ Mẫu Tam Tứ phủ, Cao Đài, Phật giáo Hòa Hảo, học bổng khuyến học và thiện nguyện), đồng thời rà soát tách biệt tuyệt đối để dữ liệu Ấn Độ và hoàng gia châu Âu không xuất hiện ở nhân vật Việt Nam."
+      ],
+      "correctedAt": "2026-11-05T08:40:00.000Z"
+    },
+    {
+      "id": "nordic-heirs-india-quota-81048",
+      "version": "8.10.48",
+      "publishedAt": "2026-11-05T14:57:00+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T07:57:23.000Z",
+      "title": "Đào tạo người kế vị Na Uy, Đan Mạch và hạn ngạch suất học Ấn Độ",
+      "summary": "Thêm lộ trình trường công lập và nghi lễ của Hoàng gia Na Uy, Đan Mạch cùng hệ thống đẳng cấp, cải đạo và hạn ngạch đại học tại Ấn Độ.",
+      "tags": [
+        "Tính năng",
+        "Học tập",
+        "Đời sống",
+        "Gia đình"
+      ],
+      "details": [
+        "Người thừa kế Hoàng gia Na Uy được rèn thành công dân kiểu mẫu trước khi lên ngôi: học trường mẫu giáo và phổ thông công lập địa phương (trường làng), tự đi bộ đến trường cùng trẻ thường dân; đào tạo quân sự tại Học viện Hải quân, Không quân và 12 tháng thực chiến tại Tiểu đoàn Công binh Quốc gia; học đại học về Khoa học Chính trị, Luật Hiến pháp, Phát triển Bền vững / Môi trường và được phép du học nước ngoài.",
+        "Nghi lễ Hoàng gia Na Uy (bỏ đăng quang truyền thống từ năm 1908): tân vương tuyên thệ trước Quốc hội Storting và nhận Lễ Ban Phước tại Nhà thờ Nidaros (Trondheim) với Vương miện chỉ đặt trên bàn thờ làm biểu tượng lịch sử, tuyệt đối không đội. Ngày Quốc khánh 17/5 không duyệt binh quân sự mà mặc trang phục truyền thống Bunad đứng trên ban công Cung điện Oslo vẫy chào đoàn diễu hành thiếu nhi; đời thường tự lái xe hoặc đi phương tiện công cộng, quốc yến ưu tiên sản vật địa phương thân thiện môi trường.",
+        "Người thừa kế Hoàng gia Đan Mạch phá vỡ truyền thống gia sư biệt lập: học trường tiểu học công lập Tranegårdskolen bình đẳng cùng con em thợ điện, kỹ sư Copenhagen; học Khoa học Chính trị tại Đại học Aarhus, du học Đại học Harvard dưới tên giả để tránh truyền thông; rèn quân sự tại khóa Sĩ quan Doanh trại Antvorskov và khóa huấn luyện sinh tồn khắc nghiệt của Lực lượng Người nhái Hải quân (Frømandskorpset).",
+        "Nghi lễ Hoàng gia Đan Mạch (bỏ đăng quang tôn giáo từ năm 1849): bàn giao quyền lực tại Hội đồng Nhà nước, Thủ tướng bước ra ban công Cung điện Christiansborg tuyên bố ba lần trước thần dân, nhà vua mới mặc quân phục xuất hiện trên ban công mà không đội vương miện, sau đó diễu hành xe ngựa ấm áp theo văn hóa Hygge và dự lễ tạ ơn dân sự tại nhà thờ.",
+        "Tại Ấn Độ, bổ sung chiều sâu về nguồn gốc đẳng cấp trong cổ thư Hindu, phong trào cải đạo sang Phật giáo Tân xe (Navayana năm 1956 của Tiến sĩ B.R. Ambedkar) và hệ thống hạn ngạch Hiến pháp SC (15%), ST (7.5%), OBC (27%) khi thi tuyển đại học danh tiếng (IIT, AIIMS ngành Y) và công chức: điểm chuẩn thấp hơn, miễn học phí, ký túc xá miễn phí và trợ cấp sinh hoạt cho SC/ST; mô phỏng nghịch lý pháp lý khi người Dalit cải đạo sang Kitô giáo hoặc Hồi giáo bị mất tư cách hạn ngạch SC dù định kiến xã hội chưa biến mất, cùng các cuộc tranh luận xã hội về chỉ tiêu đại học."
+      ],
+      "correctedAt": "2026-11-15T07:50:35+07:00"
+    },
+    {
+      "id": "royal-upbringing-births-81047",
+      "version": "8.10.47",
+      "publishedAt": "2026-11-05T06:52:32.809Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T07:57:23.000Z",
+      "title": "Đào tạo người kế vị, tuổi thơ quý tộc và nghi thức đón em bé hoàng gia",
+      "summary": "Bổ sung lộ trình đào tạo người kế vị Thụy Điển, bảo mẫu đa ngôn ngữ, trường nội trú, quy tắc an ninh và nghi thức chào mừng em bé theo từng hoàng gia châu Âu.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Người thừa kế Hoàng gia Thụy Điển có lộ trình học tập trong nước theo Hiến pháp: nghĩa vụ quân sự cơ bản, chiến thuật sinh tồn, khóa sĩ quan ba quân chủng (Lục quân, Hải quân, Không quân), học sâu về Quốc hội Riksdag, Bộ Ngoại giao, thực tập ngắn hạn tại Liên Hợp Quốc hoặc đại sứ quán và thông thạo tiếng Thụy Điển, Anh, Pháp, Đức; khi lên ngôi giữ cấp bậc tối cao của ba quân chủng.",
+        "Các em bé hoàng gia có bảo mẫu châu Âu giúp học ngoại ngữ tự nhiên từ nhỏ và rèn tính tự lập theo độ tuổi; Hoàng gia Anh học thêm tiếng Wales, Hoàng gia Đan Mạch và Bắc Âu học thêm ngôn ngữ láng giềng Thụy Điển, Na Uy. Từ 5–6 tuổi bắt đầu theo cha mẹ dự sự kiện trang nghiêm; từ 7–8 tuổi tách máy bay và xe hộ tống riêng để bảo vệ danh sách kế vị.",
+        "Tuổi thiếu niên có trường nội trú quý tộc chia khu nam nữ, rèn luyện cưỡi ngựa Polo, múa ba lê, bắn cung, thuyền buồm, khiêu vũ, thưởng trà, đánh cờ, đàn Harp, hội họa và thơ ca. Ra ngoài có vệ sĩ hộ tống giữ khoảng cách, kết bạn đa dạng và giữ lối sống giản dị kiểu Bắc Âu; tài khoản chính thức do đội ngũ truyền thông vận hành, hạn chế tự ý dùng mạng xã hội hoặc chỉ dùng tài khoản ẩn danh.",
+        "Danh hiệu của người bạn đời tự động cập nhật khi kết hôn, khi trở thành người kế vị đứng đầu hoặc khi đăng quang. Nghi thức đón em bé hoàng gia phân biệt sinh đơn thuận lợi với sinh mổ và đa thai (sinh đôi, sinh ba, sinh tư cực hiếm có thứ tự kế vị theo phút chào đời), kèm bắn đại bác đúng giờ tại Anh, Na Uy, Thụy Điển, thắp đèn màu danh thắng London, chụp ảnh ra mắt theo truyền thống Anh, Na Uy, Bỉ, Thụy Điển, Tây Ban Nha, Đan Mạch, Monaco, xét duyệt tên 6 vị trí kế vị đầu và lễ rửa tội mặc váy thời Victoria có đủ hai bên nội ngoại."
+      ],
+      "correctedAt": "2026-11-05T08:06:28.779Z"
+    },
+    {
+      "id": "first-birthday-objects-81046",
+      "version": "8.10.46",
+      "publishedAt": "2026-11-05T09:07:13.173+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T02:07:58.000Z",
+      "title": "Thêm đồ bốc thôi nôi và hướng phát triển khi lớn",
+      "summary": "Danh mục thôi nôi có 28 món tượng trưng, vẫn lọc theo ngân sách gia đình; mỗi món gợi một hướng sở thích.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Thêm cọ vẽ, máy ảnh, bộ bếp, máy tính, địa cầu, búa thẩm phán, máy bay, đồ thể thao, thú bông, thẻ sân khấu và các món khác. Những món hiện ra vẫn phụ thuộc khả năng gia đình như trước; nhóm ít tốn kém cũng có thêm lựa chọn.",
+        "Micro được ghi rõ hướng ca sĩ và đưa lên đầu khi gia đình đủ điều kiện. Chọn micro lưu sở thích ca hát, đánh dấu Hát là môn yêu thích để tiếp tục rèn luyện khi lớn; các đồ khác nối với hướng phát triển tương ứng.",
+        "Hồ sơ giữ món đã bốc và hướng quan tâm. Khi lớn vẫn có thể đổi sở thích; không tự cấp nghề hoặc bằng cấp ở tuổi một. Nếu bản lưu đang chờ bốc đồ, danh sách được bổ sung các món mới phù hợp ngân sách. Lễ đã hoàn tất giữ kết quả cũ, không bốc lại để nhận thưởng lặp."
+      ],
+      "correctedAt": "2026-11-05T02:08:10.699Z"
+    },
+    {
+      "id": "first-birthday-choice-81045",
+      "version": "8.10.45",
+      "publishedAt": "2026-11-05T08:56:25.109+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T02:07:58.000Z",
+      "title": "Chọn đồ thôi nôi trong sinh nhật đầu tiên",
+      "summary": "Bảng bốc đồ chơi ở tuổi một trở lại để bạn cùng gia đình chọn vật kỷ niệm.",
+      "tags": [
+        "Sửa lỗi",
+        "Gia đình"
+      ],
+      "details": [
+        "Khi nhân vật tròn một tuổi, lễ thôi nôi hoặc sinh nhật đầu tiên có bảng chọn đồ chơi, không bị bỏ qua cùng những phản ứng tự động của em bé. Chế độ chỉ dừng ở ngã rẽ lớn cũng giữ bảng chọn này; tự động hoàn toàn vẫn có thể tự bốc.",
+        "Các hành động chủ động khác vẫn mở từ bốn tuổi. Lễ chỉ thực hiện một lần, giữ kết quả trong bản lưu và không cộng thưởng lặp khi tải lại."
+      ],
+      "correctedAt": "2026-11-05T02:08:10.686Z"
+    },
+    {
+      "id": "family-milestones-81044",
+      "version": "8.10.44",
+      "publishedAt": "2026-11-05T08:22:39.185+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T01:32:53.000Z",
+      "title": "Lớn lên cùng gia đình và lưu kỷ niệm đón bé",
+      "summary": "Lịch làm nhẹ, ngân sách học tập, lựa chọn ở chung và lễ đón em bé có thêm cách thu xếp phù hợp từng gia đình.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Đời sống"
+      ],
+      "details": [
+        "Trẻ dưới 4 tuổi tiếp tục tự phản ứng; lần bốc đồ chơi đầu đời nay giữ lựa chọn ổn định theo nhân vật và sở thích đã bộc lộ. Từ 4 tuổi mới mở hành động chủ động, giới hạn theo tuổi và người chăm sóc.",
+        "Từ 13 tuổi có thể bàn lịch làm nhẹ 6 hoặc 12 giờ mỗi tuần trong một đợt; từ 16 tuổi có thêm lịch 16 giờ. Thu nhập theo lịch đã chọn, vẫn giữ trường học. Ca làm chính thức còn phụ thuộc tuổi và giấy phép nơi cư trú; nhận việc không khai báo có thể bị phát hiện, dừng ca và cơ sở bị xử phạt.",
+        "Có thể tiếp tục ở cùng bố mẹ sau khi đi làm hoặc kết hôn, cùng góp hóa đơn hoặc thu xếp ra riêng. Tiền hỗ trợ dọn nhà được kiểm tra và ghi vào ngân sách gia đình; trưởng thành không tự đồng nghĩa ngừng được hỗ trợ học tập.",
+        "Sinh viên ở Hoa Kỳ có thể bàn mức gia đình hỗ trợ 25%, 50%, 75% hoặc toàn bộ phần còn lại, hoặc tự lo. Học bổng trừ trước học phí, cộng sinh hoạt rồi mới xét khả năng gia đình, tiền riêng và khoản thiếu cần vay; không tự tăng mức chi vượt ngân sách thực tế.",
+        "Điều chỉnh cơ hội có thai trong một đợt thử mỗi năm cho các nhóm dưới 35, dưới 40 và dưới 45 tuổi, vẫn giảm theo tuổi và không bảo đảm thành công. Có trạng thái mãn kinh được giữ trong bản lưu và chặn thụ thai tự nhiên; các lựa chọn điều trị, nhận nuôi hoặc mang thai hộ tiếp tục theo điều kiện hiện có.",
+        "Có mục Lễ đón bé, Baek-il và tiệc gia đình trong năm sinh. Gia đình Việt có thể chọn cúng Mụ theo nếp nhà hoặc tiệc không nghi lễ; gia đình Kitô giáo có tiệc mừng riêng với nghi lễ nhà thờ được ghi độc lập. Tại Hàn Quốc, có Baek-il chụp ảnh, Hanbok, tiệc nhỏ và cầu nguyện theo đức tin; lễ Samshin chỉ xuất hiện như lựa chọn tự nguyện phù hợp.",
+        "Mỗi bé có thể tổ chức tại nhà, chọn ảnh studio và tiệc vừa, hoặc sự kiện lớn khi đủ tiền dự phòng. Chi phí, ảnh, quy mô khách và quà dùng cho bé được lưu riêng; có thể hoãn mà không mất tình cảm. Tiệc không tự thực hiện phép rửa, không tổ chức lặp để kiếm lời từ quà."
+      ],
+      "correctedAt": "2026-11-05T01:32:58.071Z"
+    },
+    {
+      "id": "royal-continuity-81043",
+      "version": "8.10.43",
+      "publishedAt": "2026-11-05T08:02:46.989+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T01:32:53.000Z",
+      "title": "Giữ tước vị và gia tộc khi sống tiếp đời con",
+      "summary": "Tước vị, gia tộc và các nhánh kế vị được giữ khi chuyển sang một người con trong hoàng gia.",
+      "tags": [
+        "Sửa lỗi",
+        "Gia đình",
+        "Đời sống"
+      ],
+      "details": [
+        "Khi sống tiếp ở tuổi hiện tại của con, giữ nguyên gia tộc, người đang trị vì, các nhánh họ hàng, tước đã được trao và vị trí trong cây kế vị. Không tạo một hoàng gia mới chỉ vì đổi nhân vật đang chơi.",
+        "Con của nữ quân vương được đối chiếu quyền mang tước như con của người trị vì. Hồ sơ con trong bản lưu cũ được bổ sung phần còn thiếu khi đủ căn cứ; quyết định thu hồi tước đã ghi vẫn được giữ. Đứng gần ngai vàng không tự đồng nghĩa được phong mọi tước.",
+        "Mục Vai trò trong hoàng gia và danh sách trẻ hoàng gia hiển thị tước cùng thứ tự kế vị của từng con. Công vụ, tước vị và quyền kế vị tiếp tục được phân biệt. Ngân sách công vụ của bố mẹ không chuyển thành tiền riêng cho đời con."
+      ],
+      "correctedAt": "2026-11-05T01:32:58.082Z"
+    },
+    {
+      "id": "feedback-academic-spiritual-81042",
+      "version": "8.10.42",
+      "publishedAt": "2026-11-05T07:43:00.438+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-05T00:57:36.000Z",
+      "title": "Nghiên cứu, hẹn hò yêu xa và đời sống tín ngưỡng",
+      "summary": "Có thêm cách hoàn thiện công trình, công bố nhiều bài trong năm, giữ kết nối khi yêu xa và tìm hiểu các thực hành tâm linh.",
+      "tags": [
+        "Tính năng",
+        "Học tập",
+        "Tình cảm",
+        "Đời sống",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mỗi năm có lượt riêng cho thực nghiệm, chỉnh sửa đề tài, hướng dẫn học viên và tối đa ba lần gửi bài. Công trình đã nghiệm thu mở 1–4 hướng công bố độc lập theo chất lượng và thời lượng; bài bị từ chối vẫn giữ hướng để sửa và gửi lại.",
+        "Có thể rà soát phương pháp, bổ sung mẫu, kiểm tra dữ liệu hoặc nhờ đồng nghiệp phản biện để nâng chất lượng. Người học thạc sĩ, tiến sĩ có thể sửa luận văn và tập bảo vệ từng năm để tăng khả năng hoàn thành; bằng cấp và học hàm vẫn cần đủ điều kiện.",
+        "Trong mục Nơi sống và lịch hẹn, xác nhận người ấy đang học hoặc làm việc ở thành phố khác. Khi yêu xa, buổi hẹn chuyển thành gọi điện, xem phim từ xa, gửi thư quà hoặc đi thăm trong nước khi cả hai trưởng thành và đủ tiền. Có thể bàn kế hoạch sống gần, chờ thu xếp và nhận phản hồi; bỏ liên lạc lâu làm giảm tình cảm.",
+        "Tìm hiểu 34 hình thức qua các nhóm tử vi, Bát tự, Kinh dịch, chọn ngày, bói dân gian, phong thủy, Tarot, bản đồ sao và thuật số. Chọn điều muốn hỏi, nghe lời gợi mở rồi tự quyết định cách phản hồi; mỗi năm hai buổi, có phí và quỹ dự phòng. Ghi việc thực tế để nhìn lại vào năm sau, hoặc dừng ở trải nghiệm văn hóa.",
+        "Thêm sáu lễ gia đình: Rằm tháng Giêng, giỗ gia tiên, Tết Đoan Ngọ, Rằm tháng Bảy và Vu Lan, ông Công ông Táo, giao thừa. Có chuyến đi cầu bình an, sức khỏe, công danh, tình duyên hoặc trước việc lớn; trẻ tham dự cùng gia đình, người lớn chọn lễ vừa ngân sách.",
+        "Tìm hiểu thờ cúng tổ tiên, thờ Mẫu, Thành hoàng, Thần Tài và Thổ Địa, Đức Thánh Trần, Phật giáo và tín ngưỡng dân gian. Nhân vật có thể tự diễn giải linh cảm hoặc truyền thống căn số; con có lịch sử riêng, không mặc định giống bố mẹ. Sau thời gian tìm hiểu, người lớn có thể tự nguyện tham dự hầu đồng có hướng dẫn, vẫn kết hôn và sinh con bình thường.",
+        "Các lời luận và trải nghiệm căn số được thể hiện như niềm tin của nhân vật, không quyết định bệnh tật, vận may hoặc ép phải làm lễ. Chia sẻ có đạo đức được ghi nhận; bịa tai họa, đe dọa ép tiền có thể dẫn đến phản ánh, xác minh và hậu quả trong những năm sau.",
+        "Bình luận giữ tên hiển thị cuối cùng khi tài khoản bị xóa kể từ bản cập nhật này. Những bình luận cũ có tài khoản còn tồn tại được bổ sung tên dự phòng. Tên của tài khoản đã xóa từ trước chỉ giữ được nếu dữ liệu vẫn còn lưu."
+      ],
+      "correctedAt": "2026-11-05T00:57:42.319Z"
+    },
+    {
+      "id": "plural-family-81040",
+      "version": "8.10.40",
+      "publishedAt": "2026-11-04T17:01:01+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-04T14:51:24.000Z",
+      "title": "Quan hệ mập mờ và cuộc sống trong gia đình nhiều phối ngẫu",
+      "summary": "Người bạn gặp có tên phù hợp với lựa chọn hẹn hò. Các gia đình đủ điều kiện có thể bàn chuyện kết hôn thêm và tổ chức cuộc sống chung.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Thế giới"
+      ],
+      "details": [
+        "Người mới trong quan hệ mập mờ, trò chuyện tán tỉnh hoặc ngoại tình dùng cùng giới tính cho tên và hồ sơ. Lựa chọn hẹn hò với nam, nữ hoặc không giới hạn được tôn trọng.",
+        "Trong mục Gia đình, xem hình thức hôn nhân hiện tại, thu xếp buổi gặp công khai, hỏi ý kiến từng người rồi đợi xét hồ sơ. Có nơi cần tòa hoặc hội đồng cho phép; gia đình có thể bị từ chối khi không đủ căn cứ hay khả năng chu cấp.",
+        "Hôn nhân theo luật nhân thân và tập quán phụ thuộc nơi cư trú, hình thức đăng ký và cộng đồng. Ở Bhutan, gia đình đa phu theo tập quán không nhận thêm giấy kết hôn; tại Nepal, hôn nhân hiện đại không mở đăng ký thêm.",
+        "Gia đình có thể chia lịch tuần, tiền riêng, quỹ chung, việc nhà, chăm con, quyền tham gia quyết định và không gian riêng. Mức tin cậy và căng thẳng được ghi riêng cho từng cặp.",
+        "Các phối ngẫu có thể tâm sự, tặng quà, chăm nhau lúc bệnh, cùng nuôi con, làm thiện nguyện, xảy ra tranh chấp hoặc liên minh. Thiên vị kéo dài có thể khiến một người đề nghị thay đổi hoặc rời gia đình."
+      ],
+      "correctedAt": "2026-11-04T14:51:25.000Z"
+    },
+    {
+      "id": "growing-up-839",
+      "version": "8.10.39",
+      "publishedAt": "2026-11-04T12:06:26+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-04T09:51:26.000Z",
+      "title": "Lớn lên cùng gia đình, học tập và kế hoạch có con",
+      "summary": "Từ tuổi thơ đến khi lập gia đình, bạn có thêm lựa chọn phù hợp với độ tuổi, nơi sống và số tiền thực sự có thể chi.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập"
+      ],
+      "details": [
+        "Trước 4 tuổi, các tình huống của bé tự diễn ra theo tính cách và sự chăm sóc của người lớn. Từ 4 tuổi, bạn bắt đầu chọn các hoạt động phù hợp.",
+        "Từ 13 tuổi, bạn có thể nhận vẽ tranh, thử sáng tác, biểu diễn nhạc cụ đã học, bán đồ tự làm hoặc nhận việc nhẹ sau giờ học. Ca làm phụ thuộc nơi cư trú; cơ sở thuê không khai báo có thể bị phát hiện.",
+        "Chăm sóc da từ 13 tuổi dùng ngân sách gia đình hoặc tiền riêng. Trẻ có người lớn đi cùng có thể xin hộ chiếu, đi nghỉ ở nước ngoài khi đủ giấy tờ và đủ kinh phí.",
+        "Khi trưởng thành và ở cùng thành phố, bạn có thể ở với bố mẹ, góp hóa đơn theo thu nhập hoặc ra riêng. Gia đình có điều kiện có thể giúp một phần chi phí dọn nhà.",
+        "Ở Mỹ, trường tư, trường công, cao đẳng cộng đồng và học nghề có ngân sách khác nhau. Học bổng, tiền gia đình góp và tiền riêng được tính trước khi vay phần còn thiếu.",
+        "Kế hoạch có con xét tuổi của người mang thai. Hai người có thể điều trị hiếm muộn, thử IVF hoặc tìm hiểu mang thai hộ khi đủ điều kiện trong các tuyến Việt Nam và Anh."
+      ],
+      "correctedAt": "2026-11-04T09:51:26.218Z"
+    },
+    {
+      "id": "school-home-police-838",
+      "version": "8.10.38",
+      "publishedAt": "2026-11-04T11:46:42+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-04T04:55:32.000Z",
+      "title": "Chọn trường THPT, chỗ ở và con đường công tác",
+      "summary": "Bạn có thể chọn trường, môn chuyên và nơi sống khi học hoặc làm gần gia đình.",
+      "tags": [
+        "Học tập",
+        "Gia đình",
+        "Công việc"
+      ],
+      "details": [
+        "Chọn trường chuyên Khoa học Tự nhiên, Nguyễn Khuyến hoặc trường chuyên, công lập, dân lập tại địa phương. Nguồn lực trong game phản ánh loại trường đã chọn.",
+        "Học chuyên xa tỉnh sẽ ở ký túc xá. Khi học đại học hoặc đi làm cùng thành phố với bố mẹ, bạn có thể ở nhà hoặc ra riêng.",
+        "Gia đình có thể tặng xe đạp từ tuổi đi học. Trong ngành công an, xét thăng hàm có kiểm tra thâm niên và nhận nhiệm vụ cấp chiến lược sẽ ghi chức vụ mới vào hồ sơ."
+      ],
+      "correctedAt": "2026-11-04T04:55:33.064Z"
+    },
+    {
+      "id": "royal-faith-837",
+      "version": "8.10.37",
+      "publishedAt": "2026-11-04T11:01:16.383+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-04T04:12:23.000Z",
+      "title": "Hoàng gia, quyền kế vị và lựa chọn đức tin",
+      "summary": "Mỗi vị trí trong hoàng gia có áp lực và trách nhiệm riêng; luật kế vị, hôn nhân và nghi lễ thay đổi theo quốc gia.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Thế giới"
+      ],
+      "details": [
+        "Hoàng gia Anh, Thụy Điển, Na Uy và Đan Mạch có điều kiện kế vị, đức tin và chấp thuận hôn nhân riêng. Kết hôn với người Công giáo không tự loại thành viên hoàng gia Anh; đức tin của người kế vị và bạn đời được xét riêng.",
+        "Thứ tự kế vị dùng cây gia đình xuyên nhiều lần chuyển ngôi, có xét các ngoại lệ theo năm sinh. Tây Ban Nha giữ ưu tiên nam và dùng Príncipe/Princesa de Asturias, Infante/Infanta, tách người trị vì khỏi phối ngẫu.",
+        "Người được giới thiệu hôn nhân cần tìm hiểu, không cưới ngay. Bạn có thể chuẩn bị lễ cưới, quy mô, quyền riêng tư và hai gia đình; xin chấp thuận qua thời gian, hoặc chấp nhận hệ quả kế vị khi cưới không có chấp thuận cần thiết.",
+        "Người kế vị và người dự phòng có áp lực, không gian riêng và khả năng hồi phục khác nhau. Có thể xin hỗ trợ, thăm gia đình, giữ sở thích và cùng hỗ trợ người kế vị; không mặc định anh chị em tranh ngôi.",
+        "Có thêm chương trình bổ trợ lễ nghi, lịch sử, hiến pháp và kế hoạch trường học phù hợp tuổi. Học quân sự cần nhiều năm, không tự nhận bằng hoặc coi đây là luật bắt buộc để lên ngôi.",
+        "Lên ngôi và đăng quang là hai việc khác nhau. Nghi thức Anh gồm đăng quang, khai mạc Quốc hội và Trooping the Colour; nước khác giữ truyền thống riêng. Cúi chào/curtsy là lựa chọn truyền thống, không ép công chúng hoặc đo sự tôn trọng bằng độ cúi thấp.",
+        "Rút công vụ không tự làm mất quyền kế vị; việc xin rời hàng kế vị hoặc thoái vị có quá trình riêng. Thai kỳ và hậu sản có thể điều chỉnh công vụ, ưu tiên sức khỏe.",
+        "Tên nghi lễ nhiều thành phần có thể tưởng nhớ tổ tiên, được lưu riêng để giữ tên và danh tính cũ. Trẻ hoàng gia có nghi lễ phù hợp quốc gia; váy rửa tội trắng dành cho cả bé trai/bé gái, bánh tầng cưới là tập tục tùy gia đình Anh.",
+        "Gia đình Tin Lành phân biệt truyền thống rửa tội trẻ nhỏ và lễ dâng con. Phép rửa được ghi riêng, không lặp lại; khi lớn lên, con có thể tìm hiểu rồi tự quyết việc xác nhận đức tin hoặc xin rửa tội lần đầu.",
+        "Con có quyền hoãn hoặc từ chối. Lắng nghe, tôn trọng hoặc gây áp lực tạo ảnh hưởng khác nhau đến tin cậy, ký ức và bất đồng trong gia đình, có thể kéo dài nhiều năm."
+      ],
+      "correctedAt": "2026-11-04T04:12:29.439Z"
+    },
+    {
+      "id": "world-family-flight-836",
+      "version": "8.10.36",
+      "publishedAt": "2026-11-04T10:20:41.830+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-04T03:43:30.000Z",
+      "title": "Có thêm em, học lái xe và theo đuổi bầu trời",
+      "summary": "Con lớn có cảm xúc riêng khi nhà có em; cuộc sống tại Mỹ có thêm lộ trình tập lái, học bay và khác biệt nơi sống.",
+      "tags": [
+        "Tính năng",
+        "Gia đình",
+        "Học tập",
+        "Thế giới"
+      ],
+      "details": [
+        "Con lớn có thể vui, bình thường hoặc lo bố mẹ ít quan tâm khi có em. Có bé thích em cùng giới, có bé không quan trọng giới tính; suy nghĩ này được ghi nhớ và có thể dịu dần khi lớn. Bạn có thể hỏi và lắng nghe con trong mục Tính cách và chuyện của các con.",
+        "Trẻ đủ lớn có thể tự nguyện giúp chơi với em trong thời gian ngắn khi người lớn sẵn sàng hỗ trợ; trẻ nhỏ hơn cần bố mẹ ở ngay cạnh. Con được từ chối, không phải bỏ học hay thay ca chăm sóc của người lớn.",
+        "Tại 14 thành phố Mỹ trong game, học lái ô tô có bước học lý thuyết, xin giấy phép tập lái, tích lũy giờ có giám sát và thi thực hành theo mốc bang. Bằng tuổi teen còn giới hạn lái đêm và chở bạn; New York City không cho bằng junior tự lái. Bảo hiểm tài xế teen được tính riêng khi sử dụng ô tô.",
+        "Bạn có thể học bay cùng thầy từ sớm, ghi giờ bay từng năm, học tiếng Anh hàng không, khám y tế và thi PPL, IR, CPL, multi-engine, CFI rồi ATP. Solo máy bay từ 16 tuổi, PPL từ 17, CPL từ 18; đạt giờ chưa bảo đảm đỗ hay được hãng tuyển.",
+        "Sau CPL có thể nhận công việc bay phù hợp; có CFI có thể dạy bay để kiếm thu nhập và tích lũy giờ. Nhánh đại học hàng không phải học và trả phí qua bốn năm, chỉ chương trình phù hợp mới giảm yêu cầu giờ khi xét R-ATP. Chứng nhận y tế hết hạn cần khám lại.",
+        "Ở Mỹ, hoạt động nhậu được giới hạn từ 21 tuổi. Thuế lương liên bang vẫn có ở bang không thu thuế tiền lương; nơi sống ảnh hưởng chi phí sinh hoạt, nhà ở, thuế bán hàng và chi phí nhà sở hữu. Các mức tiền là ước tính mô phỏng.",
+        "Biến cố súng đạn có trọng số khác nhau giữa một số quốc gia và thành phố Mỹ; không tăng rủi ro mới tại Việt Nam. Biến cố tại trường chỉ xét khi đang đi học và vẫn hiếm với từng nhân vật; hỗ trợ tinh thần có thể tiếp diễn qua nhiều năm."
+      ],
+      "correctedAt": "2026-11-04T03:43:41.198Z"
+    },
+    {
+      "id": "child-observations-835",
+      "version": "8.10.35",
+      "publishedAt": "2026-11-04T06:26:05+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T23:26:05.000Z",
+      "title": "Khám phá tính cách của con qua từng chuyện nhỏ",
+      "summary": "Hồ sơ và lựa chọn trò chuyện để bạn tự hiểu con qua lời nói và hành vi.",
+      "tags": [
+        "Gia đình",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Mục Chuyện gần đây ghi lại điều con vừa làm. Tên kiểu phát triển và động cơ riêng của con được giữ kín, kể cả khi bạn mở lại cuộc đời đang chơi."
+      ],
+      "correctedAt": "2026-11-03T23:26:05.763Z"
+    },
+    {
+      "id": "children-paths-834",
+      "version": "8.10.34",
+      "publishedAt": "2026-11-04T06:11:32+07:00",
+      "releasedAt": "2026-11-03T23:11:32.000Z",
+      "releaseStatus": "released",
+      "title": "Mỗi người con một hướng đi",
+      "summary": "Con ở Việt Nam và nước ngoài có thể bộc lộ một trong 12 hướng phát triển, từ say mê học thuật, nhân hậu đến nổi loạn hay tiêu tiền bí mật.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Từ tuổi phù hợp, con có thể bộc lộ động cơ riêng trong hồ sơ. Những việc xảy ra sau đó cách nhau vài năm. Trong mục Tính cách và chuyện của các con, bạn có thể lắng nghe, đặt giới hạn hoặc gây áp lực; con vẫn có thể tự quyết.",
+        "Việc học, quỹ tiền riêng, nợ, quan hệ anh chị em, cơ hội kế nghiệp và uy tín gia đình thay đổi theo những gì thực sự xảy ra.",
+        "Một số tranh chấp nghiêm trọng của con đã trưởng thành có thể dẫn tới điều tra và xem xét trách nhiệm qua nhiều năm."
+      ],
+      "correctedAt": "2026-11-03T23:11:32.914Z"
+    },
+    {
+      "id": "family-jobs-833",
+      "version": "8.10.33",
+      "publishedAt": "2026-11-04T04:49:14+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T23:26:05.000Z",
+      "title": "Gia đình đa dạng hơn và tên Việt cho hồ sơ mới",
+      "summary": "Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Nghề của bố mẹ được bốc theo nơi sống và hoàn cảnh gia đình. Mẹ vẫn có thể là thợ sửa xe, thợ xây hay tài xế, với tần suất thấp hơn trước.",
+        "Màn hình đầu có thêm hồ sơ mẫu. Bạn có thể quay lại hồ sơ xuất phát để gặp một gia đình khác.",
+        "Hồ sơ người Kinh có thêm các cặp tên đệm và tên gọi như Minh Triết, Trọng Nhân, Ngân Hà và Trúc Giang.",
+        "Dịch vụ thuê sát thủ chỉ xuất hiện trong sáu bối cảnh của trò chơi: Ý, Mexico, Colombia, Nhật Bản, Nga và Mỹ. Khi nhân vật ở Việt Nam, các lựa chọn này không xuất hiện."
+      ],
+      "correctedAt": "2026-11-03T23:26:05.667Z"
+    },
+    {
+      "id": "world-country-jobs-832",
+      "version": "8.10.32",
+      "publishedAt": "2026-11-03T19:59:01+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T12:59:01.000Z",
+      "title": "Chọn quốc gia chào đời và tra cứu nghề",
+      "summary": "Ở chế độ Toàn thế giới, bạn có thể chọn nơi sinh cho hồ sơ mới. Sổ tay Nghề & lương đã bổ sung các mục còn thiếu.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Chọn quốc gia sinh ra hoặc để ngẫu nhiên. Khi đổi hồ sơ xuất phát, quốc gia đã chọn được giữ lại, còn nhân vật và gia đình được tạo lại.",
+        "Tra cứu thêm thu nhập tham chiếu khi phụ giúp gia đình. Sổ tay cũng ghi rõ trường hợp nhân vật bị ép làm việc trong trại lừa đảo và không được trả lương."
+      ],
+      "correctedAt": "2026-11-03T12:59:01.292Z"
+    },
+    {
+      "id": "childhood-family-fixes-831",
+      "version": "8.10.31",
+      "publishedAt": "2026-11-03T19:44:08+07:00",
+      "releasedAt": "2026-11-03T12:54:01.000Z",
+      "releaseStatus": "released",
+      "title": "Tuổi thơ, mái tóc và cách gọi người thân",
+      "summary": "Trẻ nhỏ được chăm tóc theo tuổi. Bạn tự chọn lúc khám phá món địa phương.",
+      "tags": [
+        "Sửa lỗi",
+        "Gia đình"
+      ],
+      "details": [
+        "Trẻ em không còn phải tự kiểm tra nhà cửa khi có cảnh báo thời tiết.",
+        "Tóc lúc mới sinh ngắn hơn, được cắt tỉa thường ngày khi còn nhỏ. Bạn có thể chọn nuôi tóc dài ở mục Làm tóc, tạo kiểu. Salon và mục hiến tóc dùng chung độ dài tóc thật.",
+        "Mở sinh hoạt địa phương để học món mới hoặc thực hành công thức từ năm trước khi bạn muốn.",
+        "Khi bố hoặc mẹ tái hôn, nhật ký giữ đúng cách gọi mẹ kế hoặc bố dượng."
+      ],
+      "correctedAt": "2026-11-03T12:54:01.283Z"
+    },
+    {
+      "id": "family-faith-support-830",
+      "version": "8.10.30",
+      "publishedAt": "2026-11-03T07:53:52.528Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T07:53:52.571Z",
+      "title": "Hỗ trợ hòa nhập, đức tin gia đình và lễ mừng em bé",
+      "summary": "Làm hồ sơ hỗ trợ cho bản thân hoặc con, bàn chuyện tín ngưỡng với bạn đời và tự chọn cách đón bé trong năm sinh.",
+      "tags": [
+        "Tính năng",
+        "Gia đình"
+      ],
+      "details": [
+        "Có thể nộp hồ sơ khuyết tật cho người đang có nhu cầu được ghi nhận. Hồ sơ được xét sang năm, lưu riêng theo người và nơi cư trú. Số tiền mô phỏng thay đổi theo nước, mức nhẹ, nặng hoặc đặc biệt nặng và tình trạng công dân hoặc thường trú.",
+        "Ở trường và đại học, gia đình có thể đề nghị thêm thời gian làm bài, phòng thi yên tĩnh hoặc lớp học có hỗ trợ tiếp cận. Người đi làm có thể đề nghị đổi giờ làm, trang bị thiết bị. Chuyến đi bằng vé công cộng hiển thị giá sau ưu đãi trước khi chọn.",
+        "Hồ sơ gia đình ghi riêng tín ngưỡng của cha, mẹ và nhân vật. Cha mẹ có thể cùng đạo hoặc khác đạo. Với gia đình Kitô giáo, bạn gặp các nhánh Công giáo, Tin Lành, Chính thống giáo Đông phương và Anh giáo.",
+        "Hai người có thể bàn việc nuôi con theo một bên hoặc để con tự quyết. Mức gắn bó của từng người và kỳ vọng gia đình ảnh hưởng cuộc trò chuyện. Bất đồng có thể làm giảm độ thân, sang năm hai bên có thể bàn lại.",
+        "Khi bàn chuyện cưới, người Công giáo có thể tìm hiểu việc xin phép hoặc chuẩn khác đạo và lời hứa về nuôi con. Hai người có thể gặp cộng đoàn rồi trở lại năm sau, thống nhất cưới dân sự hoặc hoãn cưới trong năm để giải quyết bất đồng.",
+        "Trong năm bé chào đời tại Việt Nam, gia đình có thể chọn đầy tháng cúng 12 Bà Mụ, Đức Ông và gia tiên, khai hoa bắt miếng, chè trôi nước cho bé gái hoặc chè đậu cho bé trai. Cũng có lựa chọn chỉ tổ chức tiệc gia đình.",
+        "Gia đình Phật giáo có thể kết hợp cúng Mụ với cầu an tại gia hoặc tại chùa, làm việc thiện hay phóng sinh. Gia đình Cao Đài có thể chọn Tắm Thánh tại Thánh thất hoặc lễ tạ ơn và mừng đầy tháng.",
+        "Gia đình Công giáo có thể đưa bé đi rửa tội và chọn tên thánh. Gia đình Tin Lành có thể làm lễ Dâng Con hoặc tiệc mừng, không có bước chọn tên thánh. Anh giáo có lựa chọn rửa tội theo truyền thống giáo xứ hoặc chúc phúc cho bé.",
+        "Có danh sách tên như Joseph, Maria, Cecilia, Nikolai, Anastasia, Arthur và Elizabeth. Gia đình có thể chọn tên đang dùng hoặc tự nhập tên nghi lễ trong hồ sơ con sau lễ. Tên nghi lễ được lưu riêng với họ tên thường dùng; tín ngưỡng của bé được giữ khi chơi tiếp đời con.",
+        "Hồ sơ công tác có mục kê khai bản thân, cha mẹ, ông bà và tín ngưỡng theo thông tin gia đình. Khi đã kê khai, hồ sơ xuất hiện trong bảng xét bổ nhiệm. Nhân vật không theo đạo ghi “Không”."
+      ],
+      "correctedAt": "2026-11-03T07:53:52.672Z"
+    },
+    {
+      "id": "education-exchange-829",
+      "version": "8.10.29",
+      "publishedAt": "2026-11-03T07:40:35.010Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T08:01:06.679Z",
+      "title": "Từ GCSE đến đại học, trao đổi sinh viên và vay học tập",
+      "summary": "Lên kế hoạch môn học tại England, chọn học nghề bậc đại học hoặc trải nghiệm một kỳ trao đổi ở trường đối tác.",
+      "tags": [
+        "Tính năng",
+        "Học tập"
+      ],
+      "details": [
+        "Ở England hiện đại, nhân vật bắt đầu tiểu học lúc 5 tuổi, lên trung học lúc 11 tuổi và hoàn thành Year 11 lúc 16 tuổi. Hồ sơ học tập cho biết Year, Key Stage, các môn theo giai đoạn và lớp Việt Nam tương đương theo tuổi.",
+        "Cuối Year 6 có mốc đánh giá SATs. Ở tuổi 14–15, có thể chọn nhóm môn GCSE hoặc thêm từng môn như lịch sử, nhiếp ảnh, kinh tế, khoa học máy tính và ngoại ngữ, tối đa bốn môn tự chọn.",
+        "Sau GCSE, chọn học nghề, IB hoặc A-Level hướng y sinh hay luật. Hai gói A-Level bắt đầu với ba môn và có thể chọn môn thứ tư. Kết quả cuối Sixth Form được quy đổi để xét tuyển.",
+        "Chương trình cử nhân thông thường ở Anh được mô phỏng trong ba năm hoặc bốn năm tại Scotland, ngành y có lịch riêng. Tuyến thạc sĩ toàn thời gian thông thường kéo dài một năm và tuyến tiến sĩ thông thường từ ba đến năm năm.",
+        "Tại England, từ 18 tuổi có thể ứng tuyển Degree Apprenticeship. Trúng tuyển thì học bốn năm, nhận lương và tích lũy kinh nghiệm làm việc, với học phí do doanh nghiệp tài trợ.",
+        "Sinh viên ở các quốc gia có thể chọn trường đối tác tại Anh, Mỹ, Úc, Việt Nam, Nhật, Pháp hoặc xem thêm các nước khác. Có ba thời lượng: một tuần, một học kỳ hoặc một năm. Chọn gia đình bản xứ hoặc ký túc xá, xem chi phí trước khi đăng ký và tham gia một hoạt động tại nơi ở.",
+        "Trường gốc giữ hồ sơ học và bằng cấp. Sau đợt trao đổi, kết quả và tín chỉ mô phỏng được lưu trong bảng điểm. Chi phí thay đổi theo nơi đến, thời lượng và chỗ ở.",
+        "Mỹ có khoản vay liên bang và vay tư nhân với điều kiện khác nhau. Trong mô phỏng, khoản liên bang hoãn trả khi chưa có thu nhập và có đường miễn phần dư sau thời gian phục vụ công đủ điều kiện.",
+        "Ở England, khoản vay học phí chuyển đến trường; khoản vay sinh hoạt xét hoàn cảnh gia đình. Các khoản theo thu nhập bắt đầu thu khi thu nhập vượt ngưỡng mô phỏng.",
+        "Úc có HECS-HELP cho đại học, OS-HELP khi trao đổi và VET Student Loans cho học nghề. Youth Allowance và Austudy là hỗ trợ sinh hoạt theo tuổi, không ghi nợ. Tại Việt Nam, sinh viên khó khăn tiếp tục dùng mục vay NHCSXH."
+      ],
+      "correctedAt": "2026-11-03T08:01:06.742Z"
+    },
+    {
+      "id": "olympia-culture-828",
+      "version": "8.10.28",
+      "publishedAt": "2026-11-03T06:56:49.247Z",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T07:10:33.000Z",
+      "title": "Olympia và những cột mốc trưởng thành",
+      "summary": "Thử sức với đề Olympia khó hơn và khám phá các cách mừng trưởng thành, tốt nghiệp cùng gia đình và bạn học.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Olympia có bốn phần thi từ Khởi động đến Về đích. Ở Vượt chướng ngại vật, giải đúng hàng ngang mở thêm chữ cái và manh mối về nghĩa của từ khóa. Đoán càng sớm, số điểm có thể giành càng cao.",
+        "Tăng tốc có đề suy luận số dư, đếm đường đi, tập hợp, biến đổi chuỗi chữ và xác suất rút hai thẻ không hoàn lại. Sau khi trả lời, bạn được xem cách tính.",
+        "Về đích cho chọn câu 10, 20 hoặc 30 điểm. Cùng một gói điểm, đề ở vòng quý và chung kết năm có thể khó hơn vòng tuần.",
+        "Nhật Bản có lễ Thành nhân ở tuổi 20 với lựa chọn furisode, hakama hoặc vest. Trong Quán lễ và Kê lễ, bạn có thể chọn mặc Hán phục, đội mũ, cài trâm hoặc đọc lời hứa trước gia đình.",
+        "Trong gia đình theo Do Thái giáo, nhân vật nam có thể dự Bar Mitzvah ở tuổi 13 và nhân vật nữ dự Bat Mitzvah ở tuổi 12. Có thể bắt đầu chuẩn bị từ năm trước.",
+        "Tại Mỹ, bạn có thể tìm hiểu Rumspringa qua lời kể về thời gian người trẻ Amish cân nhắc việc gia nhập giáo hội. Tại Kenya và Tanzania, bạn có thể nghe người hướng dẫn giới thiệu các nghi lễ trưởng thành Maasai.",
+        "Ở Vanuatu, bạn có thể tìm hiểu Naghol trên đảo Pentecost. Ở Brazil, có dịp nghe kể về nghi lễ găng tay kiến của người Sateré-Mawé. Bạn tham gia với tư cách khách tìm hiểu văn hóa.",
+        "Indonesia có hai dịp tìm hiểu riêng về truyền thống xăm mình, mài răng của người Mentawai và ý nghĩa của nghi lễ Metatah ở Bali.",
+        "Mỹ và Canada có Sweet 16 với lời chúc về tính tự lập hoặc điệu nhảy cùng người thân. Tại Philippines, tiệc Debut tuổi 18 cho chọn 18 đóa hồng hoặc 18 ngọn nến và lời chúc.",
+        "Ở Anh có dạ vũ Scotland với điệu reel. Tại Pháp, Áo, Anh, Úc và Mỹ, nhân vật có thể dự dạ vũ ra mắt theo lời mời, tập nhảy với bạn đồng hành hoặc chọn điệu valse mở màn.",
+        "Tại Đan Mạch, Na Uy và Thụy Điển, Konfirmation có lựa chọn nghi lễ đức tin hoặc lễ thế tục với bài phát biểu. Ở Hà Lan, sinh nhật năm vương miện có thể xuất hiện ở tuổi 5, 10, 15, 20 và 25.",
+        "Ba Lan có buổi tập polonaise cho Studniówka. Ở Ý, lớp có thể ghi lời nhắn trước kỳ thi 100 ngày. Ở Bỉ có tiết mục ngày hội 100 ngày. Tại Trung Quốc và Hàn Quốc, bạn có thể làm sổ lưu niệm, chụp ảnh hoặc viết lời chúc cho lớp.",
+        "Tại Nigeria, bạn có thể thiết kế trang phục Ankara cho thảm đỏ SS3 Graduation Dinner. Ở Kenya và Tanzania, ngày tốt nghiệp có thể là dịp chuẩn bị mâm cơm cùng họ hàng hoặc mời hàng xóm đến chung vui.",
+        "Tiệc cuối cấp ở Lebanon có buổi tập dabke theo nhóm. Tại Ai Cập, bạn có thể chơi trống tabla trong ban nhạc lớp. Ở UAE, bạn có thể phụ trách thảm đỏ và gian chụp ảnh.",
+        "Trong tiệc Hafla ở Ả Rập Xê Út hoặc Qatar, bạn có thể chuẩn bị bàn cà phê qahwa và chà là. Ở Ả Rập Xê Út còn có lựa chọn đón khách với hương bukhoor.",
+        "Farewell ở Ấn Độ có tiết mục Bollywood cùng khóa dưới. Ở Bangladesh, bạn có thể dựng video chia tay. Tại Pakistan, bạn có thể đọc thơ shayari tặng lớp.",
+        "Ở Indonesia, đêm chia tay có batik, kebaya và buổi tập angklung cùng ban nhạc trường. Tại CHDC Congo, bạn có thể tập nhảy ndombolo cùng bạn bè trong dịp Fête de collation.",
+        "Tại Ethiopia, gia đình có thể mời khách dùng injera và cà phê. Ở Brazil và Mexico, bạn có thể mời cha, mẹ hoặc một người thân cùng tập và mở điệu nhảy của dạ tiệc cuối cấp."
+      ],
+      "correctedAt": "2026-11-03T07:10:33.082Z"
+    },
     {
       "id": "scandal-contract-quiz-827",
       "version": "8.10.27-showbiz",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-03T06:55:34.000Z",
       "publishedAt": "2026-11-03T06:39:05.217Z",
       "title": "Một Đời — Scandal, bồi thường hợp đồng và thử thách trí tuệ",
       "summary": "Giải quyết dư luận qua nhiều bước, theo dõi từng hợp đồng có thể bồi thường tới 500% cát-xê và thử sức với nhiều dạng câu hỏi mới.",
@@ -23,7 +2268,8 @@
         "Kho câu hỏi tăng từ 17 lên 25 dạng, thêm suy luận số dư, đếm đường đi, mật mã chữ, biến đổi chuỗi chữ, bài toán tập hợp, năng suất, đếm cặp và mẹo khoảng cách giữa hồi chuông. Các bài thay đổi tham số và có lời giải.",
         "Lưu 1.200 chữ ký câu hỏi gần nhất xuyên các chương trình và mùa chơi để hạn chế trùng; câu đang chơi giữ nguyên khi tải bản lưu. Kho hữu hạn vẫn có thể lặp khi chơi đủ lâu.",
         "Câu khó dùng nhóm suy luận riêng. Siêu Trí Tuệ ghi nhớ dãy 18–34 chữ số và nhận diện một cụm sáu chữ số, chuỗi đồ vật dài hơn, giải mã và suy luận nhiều bước; chương trình thông thường vẫn có mức dễ và vừa."
-      ]
+      ],
+      "correctedAt": "2026-11-03T06:55:34.243Z"
     },
     {
       "id": "salon-caregiver-826",
@@ -100,7 +2346,7 @@
       "version": "8.10.23-md4b",
       "releaseStatus": "released",
       "publishedAt": "2026-11-02T21:38:00.000+07:00",
-      "title": "Một Đời — Làm đẹp, diễn viên quốc tế, quan hệ thượng lưu và hoàn thiện đời sống đa quốc gia",
+      "title": "Làm đẹp, diễn viên quốc tế, quan hệ thượng lưu và đời sống đa quốc gia",
       "summary": "Gộp tẩy/nhuộm tóc vào mục Làm đẹp, thêm bấm khuyên và trang sức; diễn viên có giải thưởng, liên hoan phim, lời mời từ đạo diễn và danh tiếng quốc tế; hẹn hò tìm được người thu nhập cao; nhiều hệ du học, lao động, nhận nuôi, y tế, chăn nuôi được hoàn thiện.",
       "tags": [
         "Tính năng mới",
@@ -124,7 +2370,7 @@
         "Chăn nuôi gia súc, gia cầm với dịch bệnh theo loài và khai báo thú y; quy tắc trong nhà bảo vệ người mang thai hoặc suy giảm miễn dịch khi nuôi thú cưng."
       ],
       "releasedAt": "2026-11-02T23:21:25.000Z",
-      "correctedAt": "2026-11-02T23:21:26.076Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "md4-multinational-822",
@@ -183,7 +2429,7 @@
       "version": "8.10.20-c918",
       "releaseStatus": "released",
       "publishedAt": "2026-11-02T12:00:00.000+07:00",
-      "title": "Một Đời — Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu và chính sách theo thời đại",
+      "title": "Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu",
       "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được đối chiếu lại.",
       "tags": [
         "Tính năng",
@@ -208,7 +2454,7 @@
         "Sửa: tên nước hiện mã (VN, KR) ở mục quốc tịch của con; văn bản nhiều dòng trong các tình huống bị dồn thành một đoạn; số thập phân dùng dấu phẩy."
       ],
       "releasedAt": "2026-11-02T06:04:00.000Z",
-      "correctedAt": "2026-11-02T06:04:33.742Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "state-drama-era-819",
@@ -242,7 +2488,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-01T15:29:00.000Z",
       "publishedAt": "2026-11-01T20:45:00.000+07:00",
-      "title": "Một Đời — Lãnh đạo cấp cao không còn bị tụt chức vì “quy hoạch cán bộ nguồn”, chi phí điều trị thận và gan hợp lý hơn",
+      "title": "Lãnh đạo cấp cao không còn tụt chức vì quy hoạch cán bộ nguồn",
       "summary": "Đợt quy hoạch cán bộ nguồn nay chỉ dành cho cán bộ cấp dưới; người đã giữ chức từ cấp phó sở trở lên giữ nguyên chức vụ.",
       "tags": [
         "Sửa lỗi"
@@ -253,7 +2499,7 @@
         "Nếu tình huống cũ còn nằm chờ trong bản lưu, chọn “Nhận nhiệm vụ mới” sẽ không chuyển chức mà chỉ báo bạn giữ nguyên vị trí.",
         "Bệnh thận và bệnh gan mạn: tiền theo dõi cơ bản không còn bị tính hai lần cùng chi phí chữa bệnh hằng năm; lọc máu, ghép tạng, thuốc kháng virus chỉ được trả khi còn tiền sinh hoạt dự phòng — nếu không đủ, việc điều trị bị gián đoạn thay vì đẩy bạn vào nợ."
       ],
-      "correctedAt": "2026-11-01T15:29:14.847Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "countries-crime-organ-integrity-817",
@@ -261,7 +2507,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T16:00:00.000+07:00",
-      "title": "Một Đời — Đủ 195 quốc gia có câu chuyện riêng, biến động trong giới ngầm, trợ giúp pháp lý trong trại và bệnh thận, bệnh gan theo giai đoạn",
+      "title": "Đủ 195 quốc gia có câu chuyện riêng, giới ngầm, trợ giúp pháp lý, bệnh thận và gan",
       "summary": "Mọi quốc gia giờ đều có lộ trình học, lễ hội, chuyện cưới hỏi, món ăn, điều kiện làm việc và năm câu chuyện kéo dài nhiều năm của riêng nước đó; nhóm trong giới ngầm có người cầm đầu, có thể đổi người dẫn dắt hoặc tan rã; người đang thi hành án có thể đề nghị trợ giúp pháp lý; bệnh thận và bệnh gan mạn tiến triển theo giai đoạn với lọc máu, ghép tạng và thuốc kháng virus.",
       "tags": [
         "Tính năng",
@@ -281,7 +2527,7 @@
         "Sửa lỗi: du học xong chọn ở lại tìm việc nay có nút “Tìm việc” trong thời hạn cư trú tìm việc (trước đây nút biến mất vì bị coi như lao động theo hợp đồng).",
         "Sửa lỗi: anh chị em được mang sang từ đời trước không còn bị ghi “đang đi học” khi đã ngoài 40 tuổi — họ có nghề thật của mình. Sửa lỗi một chỉ số trong chu cấp có thể thành giá trị không hợp lệ, và lỗi đôi khi vẫn ghi chuyện mất ngủ sau dòng qua đời."
       ],
-      "correctedAt": "2026-11-01T13:30:22.460Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "illness-cancer-development-upgrade-816",
@@ -390,7 +2636,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-01T13:30:00.000Z",
       "publishedAt": "2026-11-01T10:10:00.000+07:00",
-      "title": "Một Đời — Chọn khối thi chắc chắn, bán đúng tài sản muốn bán, hẹn hò có lượt và có quyền từ chối",
+      "title": "Chọn khối thi chắc chắn, bán đúng tài sản, hẹn hò có lượt và quyền từ chối",
       "summary": "Học sinh THPT luôn được tự chọn và đổi khối thi trước kỳ thi; bảng việc làm phản hồi nhanh hơn rõ rệt, hồ sơ chi tiết trên điện thoại không còn bị trong suốt; tài sản có bộ lọc, tìm kiếm và phân trang khi bán, tặng hay lập di chúc; tìm người yêu tới 10 lượt mỗi năm và người được gặp có thể từ chối; gói cố vấn thừa kế tính học phí đúng tỷ giá và cộng rõ ràng tối đa 50 điểm mỗi chuyên môn.",
       "tags": [
         "Sửa lỗi",
@@ -411,7 +2657,7 @@
         "Gói cố vấn thừa kế 5 triệu USD tính học phí đúng tỷ giá (khoảng 127 tỷ đồng ở Việt Nam; trước đây bị tính sai lớn hơn rất nhiều). Mỗi chuyên môn trong 7 chuyên môn được cộng tổng cộng tối đa 50 điểm từ khóa (gói 1 triệu USD: 30 điểm): phần lớn trong 10 năm học, phần còn lại khi hoàn thành; không vượt 100 và không cộng vào mọi chỉ số khác.",
         "Khóa cố vấn đang học trong bản lưu cũ được tính tiếp phần đã nhận, không thu phí lại; khóa đã hoàn thành trước đây được bù một lần lên mức mới. Giá dịch vụ tính bằng USD trong đường tối cũng được quy đổi đúng tỷ giá."
       ],
-      "correctedAt": "2026-11-01T13:30:21.673Z"
+      "correctedAt": "2026-11-15T07:50:35+07:00"
     },
     {
       "id": "gameshow-crime-prison-upgrade-811",

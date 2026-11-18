@@ -69,7 +69,7 @@
     var f = l.flags, rs = f.researchStudy, st = f.study107, en = f.life138 && f.life138.entertainmentHome;
     return rs && !rs.finished && rs.home || st && !st.finished && st.home || en || null;
   }
-  function moveCost(l, abroad) { return l.base * (abroad ? 0.5 : 0.25); }
+  function moveCost(l, abroad) { return l.base * (abroad ? 0.15 : 0.25); } // 8.10.74: vé, hành lý và chuyển đồ quốc tế, không còn trừ nửa năm thu nhập
   function situation(l) { var a = l.abroad; return a.research || a.study ? 'study' : a.entertainment139 ? 'trainee' : a.perm ? 'settled' : 'contract'; }
   function why(l, cost) { var b = blocked(l); if (b) return b; if (l.money < cost) return 'Chưa đủ tiền vé và chi phí chuyển đi (' + H.money(l, cost) + ')'; return true; }
   function leaveCommitments(l, log) {
@@ -92,7 +92,7 @@
     return kind;
   }
   function sellAbroadHome(l) {
-    if (!l.ownHouse) return;
+    if (!l.ownHouse || (H.keepHome874 && H.keepHome874(l))) return;
     var debt = (l.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (l.mortgage || 0);
     H.cash(l, l.houseVal - debt, 'Bán nhà ở nước ngoài, tất toán vay mua nhà');
     l.houseVal = 0; l.ownHouse = false; l.mortgage = 0; l.loans = (l.loans || []).filter(function (x) { return x.type !== 'home'; });
@@ -103,11 +103,13 @@
     kind = leaveCommitments(l, log);
     sellAbroadHome(l);
     var homeCur = h.cur || (l.country === 'VN' ? 'vnd' : 'usd');
-    var ratio = homeCur === 'vnd' ? CUR.priceLevel(host.gdp) * CUR.VND / 1e6 : CUR.priceLevel(host.gdp) / CUR.priceLevel(home.gdp);
-    E.abroadConvert(l, ratio); l.cur = homeCur;
+    // 8.10.74: hợp đồng lao động / du học giữ tiền Việt thì không quy đổi lần nữa (trước đây nhân ~26 lần).
+    var ratio = l.cur === homeCur && homeCur === 'vnd' ? 1 : homeCur === 'vnd' ? CUR.priceLevel(host.gdp) * CUR.VND / 1e6 : l.cur === 'vnd' ? 1e6 / CUR.VND / CUR.priceLevel(home.gdp) : CUR.priceLevel(host.gdp) / CUR.priceLevel(home.gdp);
+    if (ratio !== 1) E.abroadConvert(l, ratio); l.cur = homeCur;
     var vh = l.flags.vnHome || {};
     l.flags.abroadSaved = wasPerm ? { code: a.code, name: a.name, perm: true, pool: a.pool, base: a.base, place: l.place } : null;
     l.abroad = null;
+    if (H.reoccupy874) H.reoccupy874(l, l.country, log);
     l.place = h.place || vh.place || (l.prov && l.prov.old) || (home && home.cities[0]) || l.place; l.city = h.city || vh.city || l.place; l.urban = h.urban != null ? h.urban : vh.urban != null ? vh.urban : l.urban;
     H.setBase(l);
     var remote = l.job && /^fl_/.test(E.resolveJob(l.job.id));
@@ -127,7 +129,7 @@
     function (l) {
       var a = l.abroad, k = situation(l), home = W.BY[l.country];
       return 'Bạn đang ở ' + (l.place || a.name) + ', ' + a.name + (k === 'study' ? ' theo chương trình học' : k === 'contract' ? ' theo hợp đồng lao động' : k === 'trainee' ? ' làm thực tập sinh' : ' (định cư)') + '. Quốc tịch gốc: ' + (home ? home.name : l.countryName) + '.' +
-        (k === 'study' ? ' Rời đi bây giờ là dừng chương trình học trước khi hoàn thành.' : k === 'contract' ? ' Rời đi trước hạn phải chịu phí chấm dứt hợp đồng.' : '') + ' Nhà riêng ở nước ngoài (nếu có) sẽ được bán, tiền được quy đổi theo nơi đến.';
+        (k === 'study' ? ' Rời đi bây giờ là dừng chương trình học trước khi hoàn thành.' : k === 'contract' ? ' Rời đi trước hạn phải chịu phí chấm dứt hợp đồng.' : '') + ' Nhà riêng không còn nợ vay được giữ lại làm tài sản; nhà đang vay sẽ được bán để tất toán. Tiền và tài sản được quy đổi theo nơi đến.';
     },
     function (l) {
       var a = l.abroad, home = W.BY[l.country], out = [], cost = moveCost(l, true), w = why(l, cost);

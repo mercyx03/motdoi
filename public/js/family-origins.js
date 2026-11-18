@@ -24,7 +24,7 @@
   function canMeet(l){var o=orphan(l);return free(l)&&!!o&&o.unknown&&o.found!=null;}
   function ready(l){var o=orphan(l);return free(l)&&!!o&&o.unknown&&o.found==null;}
   function found(l,r,log){var o=orphan(l),b=birthFamily(l,r);o.found=l.age;o.contact='open';
-    log('Hồ sơ và đối chiếu ADN trong mô phỏng đã xác nhận '+who(b)+' của bạn. '+b.story+' Người ấy '+b.current+'. Bạn có quyền gặp, giữ khoảng cách hoặc từ chối liên hệ.','big');
+    log('Hồ sơ và đối chiếu ADN trong hồ sơ đã xác nhận '+who(b)+' của bạn. '+b.story+' Người ấy '+b.current+'. Bạn có quyền gặp, giữ khoảng cách hoặc từ chối liên hệ.','big');
     H.mem(l,'Biết được nguồn cội; việc xây dựng quan hệ mới chỉ bắt đầu.',6);}
   // Keep the existing search event, but let an unresolved search continue in later years.
   var search=E.DEC.mc_tim_bo_me.def;

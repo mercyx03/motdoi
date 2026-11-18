@@ -24,13 +24,13 @@
     ja: { n: 'tiếng Nhật', cert: 'JLPT', lv: ['N5', 'N4', 'N3', 'N2', 'N1'], land: 'Nhật Bản' },
     ko: { n: 'tiếng Hàn', cert: 'TOPIK', lv: ['cấp 1', 'cấp 2', 'cấp 3', 'cấp 4', 'cấp 5', 'cấp 6'], land: 'Hàn Quốc' },
     zh: { n: 'tiếng Trung', cert: 'HSK', lv: ['1', '2', '3', '4', '5', '6'], land: 'Trung Quốc / Đài Loan' },
-    fr: { n: 'tiếng Pháp', cert: 'Chứng chỉ tiếng Pháp mô phỏng', lv: ['cấp 1', 'cấp 2', 'cấp 3', 'cấp 4', 'cấp 5'], land: 'Pháp' },
+    fr: { n: 'tiếng Pháp', cert: 'DELF / DALF', lv: ['A1', 'A2', 'B1', 'B2', 'C1'], land: 'Pháp' },
     de: { n: 'tiếng Đức', cert: 'Goethe', lv: ['A1', 'A2', 'B1', 'B2', 'C1'], land: 'Đức' }
   };
   var LANG_OF = { FR: 'fr', JP: 'ja', KR: 'ko', TW: 'zh', CN: 'zh', HK: 'zh', DE: 'de', AT: 'de', CH: 'de', US: 'en', GB: 'en', AU: 'en', CA: 'en', NZ: 'en', IE: 'en', SG: 'en' };
   var LANG_OF_NAME = { 'Pháp': 'fr', 'Nhật Bản': 'ja', 'Hàn Quốc': 'ko', 'Đài Loan': 'zh', 'Trung Quốc': 'zh', 'Đức': 'de', 'Hoa Kỳ': 'en', 'Úc': 'en', 'Anh': 'en', 'Canada': 'en', 'Singapore': 'en' };
   function langLv(l, k) { return (l.lang && l.lang[k]) || 0; }
-  function langCert(l, k) { var L = LANG[k], v = langLv(l, k); return v ? L.cert + ' ' + L.lv[v - 1] : ''; }
+  function langCert(l, k) { var L = LANG[k], v = langLv(l, k); return v ? (k === 'fr' ? (v <= 4 ? 'DELF' : 'DALF') : L.cert) + ' ' + L.lv[v - 1] : ''; }
   function langNext(l, k) { var v = langLv(l, k); return v < LANG[k].lv.length ? v + 1 : null; }
   // ngôn ngữ phù hợp hoàn cảnh: đang/định sang nước nào thì học tiếng nước đó
   function langCtx(l) {
@@ -300,6 +300,9 @@
     { k: 'resort', n: 'resort nghỉ dưỡng ven biển', cap: 150000, rev: 11000, vc: 0.3, mg: 0.14, sd: 0.16, cost: 'nhân sự, bảo dưỡng biệt thự, bãi biển, khấu hao', tour: 1 }
   ];
   BIZ.forEach(function (b) { b.mu = b.mg * b.rev * 12 / b.cap; }); // tỉ suất lãi trên vốn khi làm ăn bình thường (để tương thích)
+  // rủi ro đóng cửa hằng năm ngoài thua lỗ (hz), ngành thực phẩm chịu giá nguyên liệu (food)
+  var BIZ_EXTRA = { store: { hz: 0.025 }, cafe: { hz: 0.05, food: 1 }, rest: { hz: 0.055, food: 1 }, spa: { hz: 0.045 }, gym: { hz: 0.045 }, hotel: { hz: 0.02, renew: 0.025 }, hotel4: { hz: 0.015, renew: 0.025 }, resort: { hz: 0.015, renew: 0.025 } };
+  BIZ.forEach(function (b) { var x = BIZ_EXTRA[b.k]; if (x) for (var p in x) b[p] = x[p]; });
   function bizV(l, x) { return vnd(l) ? x : x / 90 * l.base; } // ra tiền đang dùng: VN là triệu đồng, nước khác quy theo mức sống
   function bizOf(k) { return BIZ.filter(function (b) { return b.k === k; })[0] || BIZ[0]; }
   function venFix(l, v) { // đời chơi từ bản cũ: suy ra doanh thu theo vốn
@@ -389,7 +392,10 @@
       var B = venFix(l, v);
       var econ = l.mkt && l.mkt.stock === 'sập' ? 0.85 : l.mkt && l.mkt.stock === 'tăng mạnh' ? 1.05 : 1;
       // lượng khách năm nay: tay nghề quản lý × kinh tế × dao động; năm đầu còn ít người biết, năm thứ hai mới đông dần
-      var dem = v.q * econ * Math.exp(U.normal(r) * B.sd) * (v.yrs === 1 ? 0.6 : v.yrs === 2 ? 0.88 : 1) * (v.br > 1 ? 1.03 : 1);
+      var ramp = B.ramp || [0.76, 0.93]; // đường cong khách quen: năm đầu chưa đông, năm hai gần đủ (trước đây 0,6 và 0,88 làm năm đầu lỗ 25–35% vốn ở hầu hết ngành)
+      var dem = v.q * econ * Math.exp(U.normal(r) * B.sd) * (v.yrs === 1 ? ramp[0] : v.yrs === 2 ? ramp[1] : 1) * (v.br > 1 ? 1.03 : 1);
+      var ownerBusy = B.labor === 'full' && !!l.job && !v.hired944; // việc cần chủ đứng quầy cả ngày mà bạn còn đi làm: chỉ mở được một phần thời gian
+      if (ownerBusy) dem *= 0.62;
       if (B.tour && ch(r, 0.03)) { dem *= 0.35; log('Du lịch đóng băng (dịch bệnh, khủng hoảng kinh tế) — ' + v.n + ' vắng khách, phòng trống hàng tháng liền.', 'bad'); }
       // Competition persists across years; multiple branches require paid management.
       v.market = U.clamp((v.market == null ? 1 : v.market) * .8 + .2 + U.normal(r) * .10, .55, 1.2);
@@ -397,9 +403,10 @@
       if (ch(r, .08)) { dem *= .65; log('Khách giảm vì đối thủ mới hoặc nhu cầu chững lại: ' + v.n + '.', 'neutral'); }
       var R = v.R * v.br, rev = R * dem;
       var overhead = R * Math.min(.12, Math.max(0, v.br - 1) * .02);
-      var renewal = v.cap * .025;
-      var manager = a >= 65 || l.job ? rev * .03 : 0;
-      var cost = rev * B.vc + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
+      var renewal = v.cap * (B.renew || .03);
+      var manager = a >= 65 || l.job ? rev * (ownerBusy ? .1 : .03) : 0;
+      var shock = 1; if (B.food && ch(r, .12)) { shock = 1 + .06 + r() * .08; log('Giá nguyên liệu và gas tăng, ' + v.n + ' hụt thêm phần lãi nếu chưa kịp điều chỉnh giá bán.', 'neutral'); }
+      var cost = rev * B.vc * shock + R * (1 - B.vc - B.mg) + overhead + renewal + manager;
       var operatingProfit = rev - cost;
       if (rev > cost) cost += (rev - cost) * (1 - E.difficulty(l).passive);
       if (E.economy114Business && rev > cost) cost += rev - cost - E.economy114Business(l, rev - cost, v.cap);
@@ -410,6 +417,9 @@
       // tay nghề quản lý khá lên theo năm (hoặc mất khách dần nếu bỏ bê)
       v.q = U.clamp(1 + (v.q - 1) * 0.92 + U.normal(r) * 0.05 + (v.yrs <= 3 ? 0.02 : 0), 0.45, 1.45);
       log(U.cap(v.n) + (v.br > 1 ? ' (' + v.br + ' cơ sở)' : '') + ': doanh thu ~' + mo(l, rev / 12) + '/tháng, chi phí ' + B.cost + ', quản lý và tái đầu tư ~' + mo(l, cost / 12) + '/tháng → ' + (prof >= 0 ? 'lãi ' + mo(l, prof) + ' cả năm.' : 'lỗ ' + mo(l, -prof) + ' cả năm.'), prof >= 0 ? 'good' : 'bad');
+      // rủi ro đóng cửa ngoài thua lỗ: bị đòi mặt bằng, chủ kiệt sức, giấy phép, tranh chấp; cao hơn khi đang thua lỗ
+      var hz = (B.hz == null ? 0.03 : B.hz) * (v.bad > 0 ? 1.8 : 1) * (v.yrs <= 2 ? 1.3 : 1) * (v.dropHz944 ? 0.5 : 1);
+      if (v.yrs >= 1 && hz > 0 && ch(r, hz)) { closeVen(l, i, log, 0.35, 'Buộc đóng cửa do ' + pick(r, ['chủ nhà đòi lại mặt bằng', 'chủ quán kiệt sức và bệnh', 'bị đình chỉ vì giấy phép', 'đối tác tranh chấp và rút vốn']) + ':'); fx(l, { hap: -8 }); continue; }
       if (v.bad >= 3 || (v.bad >= 2 && l.money < 0)) {
         if (v.br > 1 && v.bad < 4) { v.br--; v.cap -= v.unit; v.bad = 1; log('Thua lỗ kéo dài, phải đóng bớt một chi nhánh ' + v.n + ', còn ' + v.br + ' cơ sở.', 'bad'); fx(l, { hap: -6 }); }
         else { closeVen(l, i, log, 0.15, 'Phá sản, đóng cửa'); fx(l, { hap: -15 }); if (l.mind) l.mind.stress = Math.min(100, l.mind.stress + 15); H.mem(l, 'Ngày gỡ tấm biển ' + v.n + ' xuống — bao nhiêu vốn liếng đổ sông đổ biển.', 6); }
@@ -453,26 +463,65 @@
   H.sibs = sibs; H.sibCall = sibCall; H.sibWord = sibWord;
   E.sibAge = sibAge;
 
+  var SIB_CAREERS = [
+    ['chuyên viên tài chính', 'quản lý tài chính', 'giám đốc tài chính'],
+    ['kỹ sư', 'trưởng nhóm kỹ thuật', 'giám đốc kỹ thuật'],
+    ['chuyên viên nghiên cứu', 'trưởng nhóm nghiên cứu', 'giám đốc nghiên cứu'],
+    ['chuyên viên kinh doanh', 'quản lý kinh doanh', 'giám đốc kinh doanh']
+  ];
+  function sibCareer(l, s, log) {
+    var age = sibAge(l, s);
+    if(E.ERA969&&E.ERA969.learning(l,s)){s.job='đang học nghề';return;}
+    if (!E.PATH139 || !E.LIFE138 || age < 18 || s.adultJob || /^tổng giám đốc /.test(s.job || '')) return;
+    var path = s.career961;
+    if (!path) {
+      if (s.job && s.job !== 'đang đi học' && !SIB_JOBS.includes(s.job)) return;
+      var next = E.LIFE138.random(l.id + ':sibling-career:' + s.n + ':' + s.born);
+      var skill = 30 + Math.floor(next() * 66), ambition = Math.floor(next() * 100);
+      var access = Math.max(0, (l.fam.q || 1) - 1) * 4;
+      path = s.career961 = { skill: skill, ambition: ambition, track: Math.floor(next() * SIB_CAREERS.length),
+        edu: s.edu || (skill + access >= 68 && ambition >= 35 ? 5 : 3), years: 0, training: 0 };
+    }
+    if (path.year === l.age) return;
+    path.year = l.age;
+    if (path.edu >= 5 && age < 22) {
+      s.job = 'đang học đại học';
+      return;
+    }
+    s.edu = Math.max(s.edu || 0, path.edu);
+    var company = (l.fam.fAlive || l.fam.mAlive) && E.PATH139.successor(l);
+    if (company && company.available && !company.finished && path.skill >= 62 && path.ambition >= 45 && age <= 65 && E.LIFE138.sync(l).people[E.UPDATE110.uid(l,s)].willing) {
+      path.training++;
+      s.job = path.training >= 5 ? 'quản lý tại ' + company.name : 'chuyên viên tại ' + company.name;
+      if (path.training === 1 || path.training === 5) log(s.n + ' trở thành ' + s.job + '.', 'good');
+    } else if (path.edu >= 5 && age <= 65) {
+      var jobs = SIB_CAREERS[path.track];
+      s.job = jobs[path.years >= 12 && path.skill >= 78 && path.ambition >= 70 ? 2 : path.years >= 5 && path.ambition >= 55 ? 1 : 0];
+    }
+    path.years++;
+  }
+
   function sibYear(l, r, log, a) {
     initSibs(l);
     // mẹ sinh em bé (em út) khi bạn còn nhỏ
     var f = l.fam, young = (l.sibList || []).filter(function (s) { return s.born > 0; }).length;
     if (a >= 1 && a <= 12 && f.mAlive && f.mAge + a <= 40 && young < 2 && !l.flags.knownSibs && ch(r, (l.tfr || 2) > 2.2 ? 0.08 : 0.035)) {
       var s = newSib(l, r, a); l.sibList.push(s); f.ysibs = (f.ysibs || 0) + 1;
-      log('Mẹ sinh em bé — bạn có thêm ' + (s.sex === 'M' ? 'em trai' : 'em gái') + ' tên ' + s.n + '.', 'good'); fx(l, { hap: 3 });
+      log('Mẹ sinh em bé — bạn có thêm ' + (s.sex === 'M' ? 'em trai' : 'em gái') + ' tên ' + s.n + '.', 'good'); if (!E.WORLD836) fx(l, { hap: 3 });
       H.mem(l, 'Ngày đầu tiên được bế ' + (s.sex === 'M' ? 'em trai' : 'em gái') + ' bé xíu.', 3);
     }
     sibs(l).forEach(function (s) {
       var sa = sibAge(l, s), w = sibCall(l, s);
       // 8.10.17: anh chị em mang sang từ đời trước khởi đầu là "đang đi học"; khi trưởng thành nhận nghề đã biết hoặc một nghề cố định theo tên (không tiêu RNG).
       if (s.job === 'đang đi học' && sa >= 22) { s.job = s.adultJob || SIB_JOBS[Math.abs(String(s.n).split('').reduce(function (h, ch) { return (h * 31 + ch.charCodeAt(0)) | 0; }, 7)) % SIB_JOBS.length]; }
+      sibCareer(l, s, log);
       // anh chị em lập gia đình, sinh con
       if (!s.wed && sa >= 22 && sa <= 38 && ch(r, 0.14)) { s.wed = true; log('Đám cưới của ' + w + '. Cả nhà tất bật mấy ngày liền.', 'good'); fx(l, { hap: 2, soc: 2 }); s.close = Math.min(100, s.close + 2); }
       // cháu gọi bạn: con của anh/chị → chú/cô (bên nội) hoặc cậu/dì (bên ngoại); con của em → bác
       if (s.wed && s.kids < 3 && sa >= 24 && sa <= 42 && ch(r, 0.1)) { s.kids++; if (s.kids === 1 && a >= 6) log(U.cap(w) + ' sinh con đầu lòng — bạn lên chức ' + (s.born > 0 ? 'bác' : s.sex === 'M' ? (l.sex === 'M' ? 'chú' : 'cô') : (l.sex === 'M' ? 'cậu' : 'dì')) + '.', 'good'); }
       // anh chị em mất (tuổi già, bệnh tật, tai nạn hiếm)
       var q = sa < 40 ? 0.0012 : Math.min(0.5, 0.002 * Math.exp((sa - 50) * 0.085));
-      if (ch(r, q)) { s.alive = false; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r)) + '.', 'bad'); fx(l, { hap: s.close > 70 ? -14 : -8 }); H.mem(l, 'Ngày tiễn ' + w + ' — người cùng lớn lên dưới một mái nhà.', s.close > 70 ? 5 : 4); }
+      if (ch(r, q)) { s.alive = false; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r, null, l, s.sex)) + '.', 'bad'); fx(l, { hap: s.close > 70 ? -14 : -8 }); H.mem(l, 'Ngày tiễn ' + w + ' — người cùng lớn lên dưới một mái nhà.', s.close > 70 ? 5 : 4); }
       s.close = U.clamp(s.close + (ch(r, 0.5) ? -1 : 0), 10, 100);
     });
   }

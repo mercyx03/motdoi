@@ -5,7 +5,7 @@
      Đủ 18 tuổi (hoặc tốt nghiệp THPT) mới chuyển sang luồng thực tập sinh toàn thời gian ở Hàn Quốc của life139.
    · Không có nội dung tình cảm / tình dục với người chưa thành niên; không có người lớn ép buộc, lợi dụng như phần thưởng.
    · Ngoại hình chỉ là một yếu tố nhỏ; luyện tập cải thiện kỹ năng, người ít năng lực ban đầu vẫn có thể tiến bộ.
-   · Mọi công ty, thực tập sinh khác, nhóm nhạc và chương trình là mô phỏng hư cấu / lấy cảm hứng từ format thật. */
+   · Mọi công ty, thực tập sinh khác, nhóm nhạc và chương trình là mô phỏng / lấy cảm hứng từ format thật. */
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, SH = E.SHOW151, L = E.LIFE138;
@@ -29,7 +29,7 @@
     var stage = Math.max(sing, dance) * 0.45 + Math.min(sing, dance) * 0.15 + act * 0.08 + inst * 0.06 + lang * 0.06;
     return U.clamp(stage + ((l.st && l.st.soc) || 50) * 0.08 + ((l.st && l.st.hea) || 60) * 0.04 + ((l.st && l.st.kno) || 50) * 0.04 + (looks(l) - 50) * 0.08 + (l.talent === 'âm nhạc' || l.talent === 'nhảy múa' ? 8 : 0), 0, 100);
   }
-  var COMPANIES = [{ name: 'Aurora Entertainment (hư cấu)', rep: 80, split: 0.2, dorm: 'ký túc xá 4 người', school: 'hỗ trợ học phí trường quốc tế' }, { name: 'Starlight Music (hư cấu)', rep: 65, split: 0.3, dorm: 'ký túc xá 3 người', school: 'giờ tập bố trí ngoài giờ học' }, { name: 'Blue Moon Ent. (hư cấu)', rep: 50, split: 0.35, dorm: 'căn hộ chung có quản lý', school: 'gia sư văn hóa hằng tuần' }];
+  var COMPANIES = [{ name: 'Aurora Entertainment', rep: 80, split: 0.2, dorm: 'ký túc xá 4 người', school: 'hỗ trợ học phí trường quốc tế' }, { name: 'Starlight Music', rep: 65, split: 0.3, dorm: 'ký túc xá 3 người', school: 'giờ tập bố trí ngoài giờ học' }, { name: 'Blue Moon Ent.', rep: 50, split: 0.35, dorm: 'căn hộ chung có quản lý', school: 'gia sư văn hóa hằng tuần' }];
   var CHANNELS = ['Một quản lý tài năng xem bạn biểu diễn ở hội diễn văn nghệ của trường', 'Video bạn nhảy cover được chia sẻ rộng trên mạng', 'Ban tuyển chọn của một công ty Hàn Quốc tổ chức buổi thử giọng tại thành phố', 'Một người quen trong giới giải trí giới thiệu bạn với công ty'];
 
   function discoveryChannels(l) { var out=[CHANNELS[2], 'Ban tuyển chọn xem phần thử giọng online của bạn'],cs=l.flags.social131&&l.flags.social131.channels||[]; if(l.school)out.push(CHANNELS[0]);if(cs.some(function(c){return c.followers>=500&&(c.videos||[]).length;}))out.push(CHANNELS[1]);if(L.state(l).artMentor157||(l.flags.elite148&&l.flags.elite148.people||[]).some(function(p){return p.kind==='artist'&&p.alive!==false&&p.trust>=50;}))out.push(CHANNELS[3]);return out; }

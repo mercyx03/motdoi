@@ -42,6 +42,7 @@
   ].map(function (x) { return { id:x[0], min:x[1], max:x[2], title:x[3], text:x[4], gentle:x[5], paid:x[6], cost:x[7], skill:x[8] }; });
   function allowed(l, k, c) {
     var a = age(l,k); if (a<c.min || a>c.max) return false;
+    if (E.FAMILY100?.distant(l,k)) return false;
     if (c.id==='remote') return !home(l,k);
     return home(l,k) && (c.skill!=='study' || a>=18 || school(l,k));
   }
@@ -59,7 +60,7 @@
   E.SC('nd_su_kien',{
     title:function(l,d){return d.title||'Đồng hành cùng con';},
     prep:function(l,r,arg){
-      var ks=eligible(l),k=arg&&arg.pid?ks.filter(function(x){return x.parentId===arg.pid;})[0]:null;
+      var ks=eligible(l);if(E.STORY971&&!(arg&&arg.pid))ks=ks.filter(function(k){return age(l,k)<18;});var k=arg&&arg.pid?ks.filter(function(x){return x.parentId===arg.pid;})[0]:null;
       if(!k&&!(arg&&arg.pid)){ks.sort(function(a,b){return (a.upbringing.last==null?-1e6:a.upbringing.last)-(b.upbringing.last==null?-1e6:b.upbringing.last);});k=ks[0];}
       if(!k)return{};var c=U.pick(r,pool(l,k));return{pid:k.parentId,caseId:c.id,n:k.name,age:age(l,k),at:l.age,auto:!(arg&&arg.pid),title:c.title+' · '+k.name};
     },valid:valid,
@@ -84,7 +85,7 @@
     opts:Array.from({length:8},function(_,i){return{k:'k'+i,l:function(l,d){var c=d.cs[i],k=target(l,c);return c?c.n+' · '+c.age+' tuổi'+(k&&!home(l,k)?' · liên lạc từ xa':''):'';},h:function(l,d){var k=target(l,d.cs[i]);return k?'Gắn kết '+Math.round(k.close)+'/100 · áp lực '+Math.round(k.upbringing.stress)+'/100':'';},req:function(l,d){var k=target(l,d.cs[i]);return !!(k&&slots(l,k)&&pool(l,k).length);},run:function(l,r,log,d){var k=target(l,d.cs[i]);if(k&&free(l)&&slots(l,k)&&pool(l,k).length)l.pending.unshift(E.DEC.nd_su_kien.make(l,r,{pid:k.parentId}));}};}).concat([{k:'no',l:'Để dịp khác',run:function(){}}])});
   var familyGroup=E.ACT.filter(function(a){return a.id==='sinh_con';})[0];
   E.ACT.push({id:'nuoi_day_con',g:familyGroup?familyGroup.g:'Gia đình & bạn bè',l:'Nuôi dạy / đồng hành cùng con',min:16,avail:function(l){return eligible(l).length?true:'Chưa có con hoặc chưa có tình huống phù hợp';},ai:{w:.15}});
-  E.TRIG.push({id:'nd_su_kien',when:function(l){return eligible(l).length>0&&l.flags.parentAutoAt!==l.age;},p:.55,cd:1,rep:true});
+  E.TRIG.push({id:'nd_su_kien',when:function(l){return eligible(l).some(function(k){return !E.STORY971||age(l,k)<18;})&&l.flags.parentAutoAt!==l.age;},p:.4,cd:2,rep:true});
   E.PARENTING={children:children,eligible:eligible,valid:valid,home:home,cases:CASES,pool:pool};
   E.parentingYear=function(l,r,log,a){if(!l.alive)return;children(l).forEach(function(k){var p=k.upbringing;if(p.yearAt===a)return;p.yearAt=a;if(school(l,k))k.study=U.clamp(k.study+(p.stress>=70?-1:p.stress<=35&&p.independence>=45?.5:0),0,100);});};
   E.HOOKS.year.push(E.parentingYear);

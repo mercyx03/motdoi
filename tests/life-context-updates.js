@@ -1,4 +1,5 @@
 'use strict';
+require('./lib/update-compat');
 const fs = require('fs'), cp = require('child_process'), assert = require('assert');
 const base = p => JSON.parse(cp.execFileSync('git', ['show', '7294c42:' + p], { encoding: 'utf8' }));
 const extra = JSON.parse(fs.readFileSync('docs/update-extra.json')), data = JSON.parse(fs.readFileSync('public/data/updates.json'));

@@ -71,7 +71,7 @@ function divorce(l) {
   ok(m.rows.includes('home') && m.rows.length >= 3, 'có lựa chọn về Việt Nam và sang nước khác');
   pick(l, 'abroadMove146', 'home');
   ok(!l.abroad && l.cur === 'vnd' && l.country === 'VN', 'về Việt Nam, tiền quy đổi sang VND, quốc tịch giữ nguyên');
-  const ratio = G.CUR.priceLevel(G.W.BY.JP.gdp) * G.CUR.VND / 1e6, expected = (moneyJP - base.base * 0.5) * ratio;
+  const ratio = G.CUR.priceLevel(G.W.BY.JP.gdp) * G.CUR.VND / 1e6, expected = (moneyJP - base.base * 0.15) * ratio; // 8.10.74: phí chuyển nước 15% thu nhập cơ sở
   ok(Math.abs(l.money - expected) <= Math.abs(expected) * 0.01 + 1e-6, 'quy đổi tiền theo đúng tỷ giá và mức giá nơi đến (' + l.money.toFixed(2) + ' ≈ ' + expected.toFixed(2) + ')');
   ok(!l.sched.some(x => x.id === 'nc_bao_ve') && l.flags.researchStudy.abandoned146 === l.age && !l.job, 'dừng chương trình học: không còn lịch bảo vệ, không còn học bổng');
   ok(!E.actions(l).some(a => a.id === 'abroadMove146' && a.ok === true), 'ở quê nhà thì mục này không còn mở');

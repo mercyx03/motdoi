@@ -7,7 +7,7 @@
     if(!p)return;
     var c=p.jobId&&E.CAR[p.jobId];
     if(!c&&p.job)c=Object.keys(E.CAR).map(function(id){return E.CAR[id];}).filter(function(j){return j.t.indexOf(p.job)>=0;})[0];
-    if(p.age<18){p.job=p.age<15?'học sinh THCS':'học sinh THPT';p.jobId=null;p.inc=0;}
+    if(p.age<18){p.job=H.inVN(l)?(p.age<15?'học sinh THCS':'học sinh THPT'):(H.resCode&&H.resCode(l)==='GB'?(p.age<16?'học sinh Secondary School':'học sinh Sixth Form'):'học sinh trung học');p.jobId=null;p.inc=0;}
     else if(/^học sinh/.test(p.job||'')||(p.job==='sinh viên'&&p.age>=22)||(c&&((c.minAge||0)>p.age||(c.cat==='med'&&p.age<24)||((c.edu||0)>=5&&p.age<22))))H.partnerJob(l,p,r);
   }
   E.normalizePartnerAge=normalize;
@@ -59,7 +59,7 @@
   function pool(l){if(!free(l)||!l.job)return[];var c=E.jobDef(l),s=state(l);if(!c||l.job.id==='an_xin'||c.sec==='crime'||(s.at===l.age&&s.count>=2))return[];return cases.filter(function(x){var at=s.seen[l.job.id+':'+x.id];return x.cat===c.cat&&(at==null||l.age-at>=4);});}
   function token(l){if(!l.job.storyToken){l.flags.careerStorySerial=(l.flags.careerStorySerial||0)+1;l.job.storyToken=l.flags.careerStorySerial;}return l.job.storyToken;}
   function valid(l,d){if(!d||!d.caseId)return pool(l).length>0;return !!(l.job&&d.at===l.age&&d.job===l.job.id&&d.token===token(l)&&d.rank===(l.job.rank||0)&&pool(l).some(function(c){return c.id===d.caseId;}));}
-  function cost(l){return l.cur==='vnd'?.8:l.base*.8/90;}
+  function cost(l){return l.cur==='vnd'?.8*((l.flags&&l.flags.eraK954)||1):l.base*.8/90;}
   function outcome(l,r,log,d,k){if(!valid(l,d))return;var s=state(l),c=cases.filter(function(x){return x.id===d.caseId;})[0];if(k==='learn'&&l.money<cost(l))return;if(s.at!==l.age){s.at=l.age;s.count=0;}s.count++;s.seen[l.job.id+':'+c.id]=l.age;
     var rep=k==='care'?3:k==='learn'?4:k==='rush'?-4:0;l.job.rep=U.clamp((l.job.rep==null?50:l.job.rep)+rep,0,100);
     if(k==='learn'){H.cash(l,-cost(l),'Bồi dưỡng kỹ năng nghề');H.fx(l,{kno:1});log(c.title+': bạn tự chi '+H.money(l,cost(l))+' từ tiền riêng để bồi dưỡng kỹ năng; chưa đồng nghĩa được thăng chức.','neutral');}
@@ -74,6 +74,6 @@
     {k:'later',l:'Tạm hoãn để sắp xếp lại',run:function(l,r,log,d){outcome(l,r,log,d,'later');}}
   ]});
   E.ACT.push({id:'nghe_chuyen_moi',g:'Công việc',l:'Tình huống chuyên môn trong nghề',min:18,sc:'nghe_chuyen_moi',avail:function(l){return pool(l).length?true:'Chưa có tình huống mới phù hợp công việc';},ai:{w:.2}});
-  E.TRIG.push({id:'nghe_chuyen_moi',when:function(l){return pool(l).length>0;},p:.45,cd:2,rep:true});
+  E.TRIG.push({id:'nghe_chuyen_moi',when:function(l){return pool(l).length>0;},p:.38,cd:2,rep:true});
   E.CAREER_STORIES={cases:cases,pool:pool,valid:valid};
 })(G);

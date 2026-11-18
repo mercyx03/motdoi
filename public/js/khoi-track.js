@@ -78,7 +78,7 @@
     if (!studying(l)) return 'Cần đang học THPT';
     if (locked(l)) return 'Đã thi tốt nghiệp — khối thi đã khóa';
     if (!l.khoi) return window_(l) ? true : 'Từ lớp 11 mới chọn khối';
-    if (state(l).changes >= BAL.maxChanges) return 'Đã đổi khối ' + BAL.maxChanges + ' lần';
+    if (((peek(l) || {}).changes || 0) >= BAL.maxChanges) return 'Đã đổi khối ' + BAL.maxChanges + ' lần';
     return true;
   }
   E.SC('khoi912', {

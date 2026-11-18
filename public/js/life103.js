@@ -22,6 +22,7 @@
     (l.ventures || []).forEach(function (x, i) { if ((x.cap || 0) > 0) a.push({ t: 'venture', n: x.n + (x.br > 1 ? ' (' + x.br + ' cơ sở)' : ''), v: x.cap, i: i, data: clone(x) }); });
     if (l.assets && l.assets.land > 0.5) a.push({ t: 'land', n: 'lô đất', v: l.assets.land });
     if(E.BUSINESS137)a=a.concat(E.BUSINESS137.estateItems(l));
+    if(E.RELATIVE163&&E.RELATIVE163.loanItems)a=a.concat(E.RELATIVE163.loanItems(l));
     return a.filter(function (x) { return x.v > 0.5; });
   }
   // những người nhận (gộp phần theo di chúc và theo pháp luật)
@@ -62,7 +63,7 @@
   }
   E.ESTATE84 = { items: itemsOf, allocate: allocate };
 
-  function itemLine(l, x) { return (x.t === 'company137' ? 'cổ phần doanh nghiệp: ' : x.t === 'home' ? 'nhà đang ở: ' : x.t === 'venture' ? 'cơ sở kinh doanh: ' : x.t === 'land' ? '' : x.data && x.data.residential112 ? 'nhà để ở: ' : 'nhà cho thuê: ') + x.n + ' (' + mo(l, x.v) + (x.t === 'home' && x.debt > 0.5 ? ', khoản vay mua nhà được trả từ di sản' : '') + ')'; }
+  function itemLine(l, x) { return (x.t === 'receivable163' ? 'khoản phải thu: ' : x.t === 'company137' ? 'cổ phần doanh nghiệp: ' : x.t === 'home' ? 'nhà đang ở: ' : x.t === 'venture' ? 'cơ sở kinh doanh: ' : x.t === 'land' ? '' : x.data && x.data.residential112 ? 'nhà để ở: ' : 'nhà cho thuê: ') + x.n + ' (' + mo(l, x.v) + (x.t === 'home' && x.debt > 0.5 ? ', khoản vay mua nhà được trả từ di sản' : '') + ')'; }
   // khúc cuối đời: ghi rõ ai nhận nhà, đất, cửa hàng nào
   var fin = E.finale;
   E.finale = function (l) {
@@ -106,7 +107,8 @@
   function P(f) { return f && f.sex === 'M' ? 'bố' : 'mẹ'; }
   function receive(l, f, items, log, a) {
     items.forEach(function (x) {
-      if(x.t==='company137'&&E.BUSINESS137){E.BUSINESS137.receiveCompany(l,x,log);
+      if(x.t==='receivable163'&&E.RELATIVE163){E.RELATIVE163.receiveClaim(l,x,log);
+      } else if(x.t==='company137'&&E.BUSINESS137){E.BUSINESS137.receiveCompany(l,x,log);
       } else if (x.t === 'home') {
         if (!l.ownHouse) {
           l.ownHouse = true; l.houseVal = x.v; l.houseName = x.n; if (x.k) l.houseK = x.k; if (x.tier) l.houseTier = x.tier; l.flags.ownedHome = true;

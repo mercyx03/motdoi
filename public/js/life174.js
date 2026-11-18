@@ -623,6 +623,7 @@
     var eduOk = (l.edu || 0) >= targetPos.reqEdu;
     item(eduOk, 'Trình độ học vấn từ ' + E.EDU[targetPos.reqEdu] + ' trở lên', 'hiện tại: ' + E.EDU[l.edu || 0]);
 
+    if(l.flags?.dossier830)items.push({ok:true,text:'Hồ sơ thân nhân: '+l.flags.dossier830.generations.join(' · ')+' · Tôn giáo đã khai: '+l.flags.dossier830.faith});
     // 2. Kỷ luật & lý lịch
     var cleanOk = (l.record || 0) === 0 && !(l.flags && l.flags.dirty) && s.kpi.integrity >= 50;
     item(cleanOk, 'Hồ sơ kỷ luật & liêm chính trong sạch', 'Liêm chính ' + s.kpi.integrity + '/100');

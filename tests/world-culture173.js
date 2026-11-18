@@ -55,9 +55,9 @@ ok(levelCounts.deep >= 20, 'Ít nhất 20 quốc gia có hồ sơ chuyên sâu (
   const ex = E.DEC.world_exam173.make(l, () => 0.5);
   ok(/Kyōtsū|Center Test|tuyển sinh đại học/i.test(ex.text), 'JP kỳ thi cuối cấp phù hợp');
   l.age = 20; l.school = null; l.indep = true;
-  ok(E.DEC.world_coming173.valid(l), 'JP tuổi 20 mở được Lễ Thành nhân (Seijin-shiki)');
-  const co = E.DEC.world_coming173.make(l, () => 0.5);
-  ok(/Seijin-shiki/i.test(co.text), 'JP có Seijin-shiki ở tuổi 20');
+  ok(E.DEC.rite920.valid(l), 'JP tuổi 20 mở được Lễ Thành nhân (Seijin-shiki)');
+  const co = E.DEC.rite920.make(l, () => 0.5);
+  ok(/Lễ Thành nhân/i.test(co.text), 'JP có Seijin-shiki ở tuổi 20');
   l.age = 26; l.job = { id: 'lap_trinh', rank: 0, yrs: 2 };
   const wk = E.DEC.world_workplace173.make(l, () => 0.5);
   ok(/nomikai/i.test(wk.text), 'JP công sở có tình huống nomikai');
@@ -115,7 +115,7 @@ ok(levelCounts.deep >= 20, 'Ít nhất 20 quốc gia có hồ sơ chuyên sâu (
   gb.age = 14; gb.school = 'lower';
   ok(/GCSE/i.test(E.DEC.world_school173.make(gb, () => 0.5).text), 'GB tuổi 14 có GCSE');
   gb.age = 17; gb.school = 'upper';
-  ok(/A-Level/i.test(E.DEC.world_exam173.make(gb, () => 0.5).text), 'GB tuổi 17 có A-Level');
+  ok(/A[ -]Level/i.test(E.DEC.world_exam173.make(gb, () => 0.5).text), 'GB tuổi 17 có A-Level');
 }
 
 // 6. Kịch bản 5: Ấn Độ / Thái Lan / Indonesia (IN, TH, ID)
@@ -123,7 +123,7 @@ ok(levelCounts.deep >= 20, 'Ít nhất 20 quốc gia có hồ sơ chuyên sâu (
   const ind = makeWorldLife('IN', 207);
   ok(E.celebrationItems173(ind).some(x => /Diwali/.test(x[1])), 'IN có lễ Diwali');
   ind.age = 17; ind.school = 'upper';
-  ok(/Board Exams/i.test(E.DEC.world_exam173.make(ind, () => 0.5).text), 'IN tuổi 17 có Board Exams');
+  ok(/CUET\/JEE\/NEET/i.test(E.DEC.world_exam173.make(ind, () => 0.5).text), 'IN tuổi 17 có kỳ thi tuyển sinh');
 
   const th = makeWorldLife('TH', 208);
   ok(E.celebrationItems173(th).some(x => /Songkran/.test(x[1])), 'TH có lễ Songkran');
@@ -143,8 +143,8 @@ ok(levelCounts.deep >= 20, 'Ít nhất 20 quốc gia có hồ sơ chuyên sâu (
   mx.sex = 'F';
   ok(E.celebrationItems173(mx).some(x => /Día de Muertos/.test(x[1])), 'MX có Día de Muertos');
   mx.age = 15;
-  ok(E.DEC.world_coming173.valid(mx), 'MX nữ 15 tuổi có lễ Quinceañera');
-  const q = E.DEC.world_coming173.make(mx, () => 0.5);
+  ok(E.DEC.rite920.valid(mx), 'MX nữ 15 tuổi có lễ Quinceañera');
+  const q = E.DEC.rite920.make(mx, () => 0.5);
   ok(/Quinceañera/i.test(q.text), 'MX hiển thị Quinceañera');
 }
 
@@ -158,7 +158,7 @@ ok(levelCounts.deep >= 20, 'Ít nhất 20 quốc gia có hồ sơ chuyên sâu (
   const za = makeWorldLife('ZA', 213);
   ok(E.festivalCandidates173(za).some(x => x.id === 'heritage_za' || x.id === 'xmas_summer'), 'ZA có lễ hội Nam Phi');
   za.age = 17; za.school = 'upper';
-  ok(/Matric/i.test(E.DEC.world_exam173.make(za, () => 0.5).text), 'ZA có kỳ thi Matric');
+  ok(/National Senior Certificate/i.test(E.DEC.world_exam173.make(za, () => 0.5).text), 'ZA có kỳ thi Matric');
 }
 
 // 9. Kịch bản 8: Quốc gia nhỏ (AD, BT, FJ, CV, TV) — không lỗi, không có Tết VN, có phương án 0 đồng

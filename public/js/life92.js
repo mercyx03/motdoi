@@ -66,7 +66,7 @@
       var fut = l.flags.futureSibs || [];
       for (var i = fut.length - 1; i >= 0; i--) if (fut[i].born <= a) { var s = fut.splice(i, 1)[0]; (l.sibList || (l.sibList = [])).push(s); if (s.born === a) log('Nhà có thêm em bé — bạn có ' + (s.sex === 'M' ? 'em trai' : 'em gái') + ' tên ' + s.n + '.', 'good'); }
       (l.sibList || []).forEach(function (s) {
-        if (s.alive && s.diesAt != null && a >= s.diesAt) { s.alive = false; var w = H.sibCall ? H.sibCall(l, s) : s.n, sa = a - s.born; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r)) + '.', 'bad'); H.fx(l, { hap: -8 }); }
+        if (s.alive && s.diesAt != null && a >= s.diesAt) { s.alive = false; var w = H.sibCall ? H.sibCall(l, s) : s.n, sa = a - s.born; log(U.cap(w) + ' qua đời ở tuổi ' + sa + (function (c) { return /thanh thản/.test(c) ? ', ' + c : ' vì ' + c; })(H.deathCause(sa, r, null, l, s.sex)) + '.', 'bad'); H.fx(l, { hap: -8 }); }
       });
     }
   });

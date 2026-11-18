@@ -2,7 +2,7 @@
 (function (G) {
   'use strict';
   var E = G.E, H = E.H;
-  // Giá VNĐ là ngân sách mô phỏng, không phải báo giá trực tiếp của nhà phát hành.
+  // Giá VNĐ là ngân sách ước tính, không phải báo giá trực tiếp của nhà phát hành.
   var cats = { fps: ['Counter-Strike 2', 'Valorant', 'Delta Force', 'Free Fire', 'Đột Kích (CrossFire)', 'PUBG Mobile'], moba: ['Liên Minh Huyền Thoại', 'Liên Quân Mobile', 'Mobile Legends: Bang Bang', 'Liên Minh: Tốc Chiến'], other: ['Minecraft', 'Roblox', 'Nghịch Thủy Hàn', 'Đấu Trường Chân Lý (TFT)'] };
   var names = { fps: 'FPS', moba: 'MOBA', other: 'Game khác' }, all = [].concat(cats.fps, cats.moba, cats.other);
   var aliases = { CS2: 'Counter-Strike 2', CF: 'Đột Kích (CrossFire)', 'Liên quân': 'Liên Quân Mobile', 'Liên Minh Tốc Chiến': 'Liên Minh: Tốc Chiến', 'Delta Force Mobile': 'Delta Force' };

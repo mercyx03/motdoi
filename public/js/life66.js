@@ -15,7 +15,7 @@
   function free(l){return l.alive&&!(l.jailUntil!=null&&l.age<l.jailUntil)&&!(l.abroad&&l.abroad.trapped)&&!(l.flags.military&&l.age<l.flags.military);}
   function care(l,k){return k&&k.alive&&age(l,k)>=0&&k.custody!=='ex'&&k.custody!=='other'&&!(k.jail&&age(l,k)<k.jail)&&!k.abroadStudy&&!(l.abroad&&!l.abroad.perm);}
   function schoolOK(l,k){return care(l,k)&&age(l,k)>=3&&age(l,k)<18&&k.vice!=='bỏ học'&&!k.job&&!k.uniUntil;}
-  function stage(l,k){var a=age(l,k);return a<3?'Chưa đến tuổi đi học':a<6?'Mầm non':a<11?'Tiểu học':a<15?'Trung học cơ sở':a<18?'Trung học phổ thông':k.uniUntil?'Đang học đại học':k.edu>=5?'Đã học đại học':k.edu===4?'Học nghề':'Đã trưởng thành';}
+  function stage(l,k){var a=age(l,k);return a<3?'Chưa đến tuổi đi học':a<6?'Mầm non':a<11?'Tiểu học':a<15?'Trung học cơ sở':a<18?'Trung học phổ thông':k.uniUntil?'Đang học '+E.childDegreeName(k.degree961):k.edu>=5?'Tốt nghiệp '+E.childDegreeName(k.edu):k.edu===4?'Học nghề':'Đã trưởng thành';}
   function context(l){return l.cur+':'+(l.abroad&&l.abroad.perm?l.abroad.code:l.country);}
   function quote(l,kind,key){var p=(kind==='school'?SCHOOLS:COURSES)[key];return p?l.base*p.rate:null;}
   function log(l,fn,t){if(fn)fn(t,'good');else(l.log||(l.log=[])).push({a:l.age,y:l.birthYear+l.age,t:t,k:'good'});}

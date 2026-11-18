@@ -14,7 +14,7 @@
   function roll(l, c, y) { return hash([l.rs, l.id, c.id, c.stage, y].join(':')) / 4294967296; }
   function isVN(l) { return H.isVN(l); }
   function vnd(l) { return isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function mo(l, v) { return H.money(l, v); }
   function fx(l, o) { H.fx(l, o); }
   function stress(l, d) { if (l.mind) l.mind.stress = U.clamp(l.mind.stress + d, 0, 100); }
@@ -134,8 +134,9 @@
       if (y < c.next) return;
       if (y > c.due) return st.lapse ? st.lapse(l, c, log) : close(l, c, 'lapsed');
       if (!st.when(l, c)) return;
-      var p = U.clamp((typeof st.p === 'function' ? st.p(l, c) : st.p) * ctx(l, st.tag), 0, 1);
-      if (y === c.due) p = Math.min(1, p * 2); // năm cuối của khoảng thời gian: dễ xảy ra hơn, không bắt buộc
+      var tag = typeof st.tag === 'function' ? st.tag(l, c) : st.tag;
+      var p = U.clamp((typeof st.p === 'function' ? st.p(l, c) : st.p) * ctx(l, tag), 0, 1);
+      if (y === c.due) p = st.requiredAtDue ? 1 : Math.min(1, p * 2);
       if (roll(l, c, y) >= p) return;
       var dec = typeof st.dec === 'function' ? st.dec(l, c) : st.dec;
       if (!dec) { if (st.narrate) { c.last = a; note(c, 'narrate'); st.narrate(l, c, log); } return; }
@@ -155,7 +156,11 @@
     if (s == null) return;
     if (!valid(s)) { delete l.flags.chains144; return; }
     s.active = s.active.filter(function (c) { return c && typeof c.id === 'string' && typeof c.kind === 'string' && Number.isFinite(c.stage) && c.origin; });
-    s.active.forEach(function (c) { if (!Array.isArray(c.hist)) c.hist = []; if (!c.data || typeof c.data !== 'object') c.data = {}; });
+    s.active.forEach(function (c) {
+      if (!Array.isArray(c.hist)) c.hist = [];
+      if (!c.data || typeof c.data !== 'object') c.data = {};
+      if (c.kind === 'debt') loanOf(l, c);
+    });
     if (s.done.length > MAX_DONE) s.done.splice(0, s.done.length - MAX_DONE);
     if (!Number.isFinite(s.seq)) s.seq = s.active.length + s.done.length;
     if (!s.count || typeof s.count !== 'object') s.count = {};
@@ -173,11 +178,24 @@
   function trust(l, ref, d) { return E.NPC ? E.NPC.adjustTrust(l, ref, d) : null; }
   function tension(l, type, side, d) { if (!E.FAMILY100) return; var s = E.FAMILY100.info(l, type, side); s.tension = U.clamp(s.tension + d, 0, 100); }
   function relTrust(l, ref) { var q = E.NPC ? E.NPC.relation(l, ref) : null; return q && Number.isFinite(q.trust) ? q.trust : 60; }
-  function loanOf(l, c) { return (l.loans || []).find(function (L) { return L.type === c.data.loan && L.since === c.data.since && L.bal > 0.5 && !L.closed; }) || null; }
+  function loanOf(l, c) {
+    var data = c.data, loans = l.loans || [], loan;
+    if (data.loanUnclear977) return null;
+    if (data.loanId977) {
+      loan = loans.find(function (item) { return item.uid110 === data.loanId977; });
+    } else {
+      var matches = loans.filter(function (item) { return item.type === data.loan && item.since === data.since; });
+      if (matches.length > 1) { data.loanUnclear977 = true; return null; }
+      loan = matches[0];
+      if (loan) data.loanId977 = X.uid(l, loan);
+    }
+    return loan && loan.bal > 0.5 && !loan.closed ? loan : null;
+  }
   // Khoản vay biến mất: trả xong hay bị xử lý vỡ nợ (engine xóa khoản trễ hạn quá lâu). Ghi nhớ số kỳ trễ mỗi năm để phân biệt.
   function debtState(l, c) {
     var L = loanOf(l, c);
     if (L) { c.data.late = L.late || 0; return 'open'; }
+    if (c.data.loanUnclear977) return 'unmatched';
     if (!c.data.end) c.data.end = !c.data.cleared && (c.data.late || 0) >= (/^(nong|appden)$/.test(c.data.loan) ? 2 : 3) ? 'defaulted' : 'repaid';
     return c.data.end;
   }
@@ -302,14 +320,20 @@
       var st = debtState(l, c);
       if (st === 'repaid') return { result: 'repaid', text: 'Bạn đã trả hết khoản vay lo viện phí năm ' + c.origin.age + ' tuổi. ' + (c.data.loan === 'family' ? 'Họ hàng nhắc đến bạn như người giữ chữ tín.' : 'Không còn ai gọi điện đòi nợ lúc nửa đêm.'), kind: 'good' };
       if (st === 'defaulted') return { result: 'defaulted' }; // hậu quả vỡ nợ đã do hệ thống vay xử lý và kể lại
+      if (st === 'unmatched') return { result: 'unmatched', text: 'Lời hẹn trả viện phí cũ đã khép vì có nhiều khoản vay trùng năm. Các khoản vay vẫn được theo dõi trong mục Tài chính.' };
     },
     stages: [
-      { dec: 'ch144_debt_due', after: [1, 3], p: 0.6, tag: 'pressure',
+      { dec: 'ch144_debt_due', after: [1, 3], p: 0.6, tag: 'pressure', requiredAtDue: true,
         when: function (l) { return free(l); },
         title: function (l, c) { return c.data.loan === 'family' ? 'Họ hàng hỏi chuyện tiền' : 'Lãi vay nóng đến hạn'; },
         text: function (l, c) { var L = loanOf(l, c); return 'Khoản vay lo viện phí cho ' + (c.data.who || 'người thân') + ' năm ' + c.origin.age + ' tuổi còn ' + mo(l, L ? L.bal : 0) + '. ' + (c.data.loan === 'family' ? 'Một người cô gọi điện: nhà cô sắp cưới vợ cho con, hỏi bạn xoay được chưa.' : 'Người cho vay nhắn tin liên tục, đòi trả gốc.'); },
         opts: [
-          { k: 'pay', l: 'Gom tiền trả một nửa', req: function (l) { return l.money > 0; }, ai: { w: 1.2 }, run: function (l, r, log, c) { settle(l, c, 0.5, 'Trả bớt nợ viện phí'); fx(l, { soc: 2 }); log('Bạn dồn tiền tiết kiệm trả một nửa, hẹn rõ ngày trả phần còn lại.', 'good'); advance(l, c); } },
+          { k: 'pay', l: 'Trả tối đa một nửa khoản vay viện phí', req: function (l) { return l.money > 0; }, ai: { w: 1.2 }, run: function (l, r, log, c) {
+            var paid = settle(l, c, 0.5, 'Trả bớt nợ viện phí'), loan = loanOf(l, c);
+            fx(l, { soc: 2 });
+            log('Bạn trả ' + mo(l, paid) + ' cho khoản vay viện phí.' + (loan ? ' Còn nợ ' + mo(l, loan.bal) + ' và hai bên hẹn bàn tiếp.' : ' Khoản vay đã được thanh toán.'), 'good');
+            advance(l, c);
+          } },
           { k: 'extend', l: 'Gặp trực tiếp xin thêm thời gian', ai: { w: 1, soc: 0.5 }, run: function (l, r, log, c) { stress(l, 4); if (c.data.loan === 'nong') { var L = loanOf(l, c); if (L) L.bal *= 1.1; } log(c.data.loan === 'family' ? 'Bạn đến tận nhà xin khất thêm. Cô thở dài nhưng đồng ý.' : 'Người cho vay đồng ý gia hạn, kèm thêm một khoản phí.', 'neutral'); advance(l, c); } },
           { k: 'avoid', l: 'Tránh mặt, chờ có tiền rồi tính', ai: { w: 0.5, bad: 0.6 }, run: function (l, r, log, c) { c.data.avoid = true; fx(l, { soc: -5, karma: -2 }); stress(l, 6); log('Bạn bắt đầu ngại nghe điện thoại, né những buổi giỗ chạp họ hàng.', 'bad'); advance(l, c); } }
         ] },
@@ -319,9 +343,16 @@
         title: 'Món nợ cũ',
         text: function (l, c) { var L = loanOf(l, c); return 'Đã ' + (l.age - c.origin.age) + ' năm từ khoản vay lo viện phí, vẫn còn ' + mo(l, L ? L.bal : 0) + '.' + (c.data.avoid ? ' Họ hàng bắt đầu nói ra nói vào chuyện bạn tránh mặt.' : ''); },
         opts: [
-          { k: 'sellveh', l: 'Bán xe để trả dứt điểm', req: function (l) { return !!l.veh && (l.vehVal || 0) > 0; }, ai: { w: 1 }, run: function (l, r, log, c) { var v = l.vehVal || 0; l.veh = null; l.vehName = null; l.vehK = null; l.vehVal = 0; H.cash(l, v, 'Bán xe trả nợ'); settle(l, c, 1, 'Trả dứt nợ viện phí'); log(c.data.cleared ? 'Bạn bán xe, trả nốt món nợ cũ. Đi làm bằng xe buýt nhưng nhẹ lòng.' : 'Bạn bán xe trả được phần lớn món nợ cũ; phần còn lại hẹn trả dần.', c.data.cleared ? 'good' : 'neutral'); close(l, c, c.data.cleared ? 'repaid' : 'partly'); } },
+          { k: 'sellveh', l: 'Bán xe để trả khoản vay viện phí', req: function (l) { return !!l.veh && (l.vehVal || 0) > 0; }, ai: { w: 1 }, run: function (l, r, log, c) {
+            var sale = l.vehVal;
+            l.veh = null; l.vehName = null; l.vehK = null; l.vehVal = 0;
+            H.cash(l, sale, 'Bán xe trả nợ');
+            var paid = settle(l, c, 1, 'Trả nợ viện phí sau khi bán xe'), loan = loanOf(l, c);
+            log('Bạn bán xe và trả ' + mo(l, paid) + ' cho khoản vay viện phí.' + (loan ? ' Còn nợ ' + mo(l, loan.bal) + '.' : ' Khoản vay đã được thanh toán.'), loan ? 'neutral' : 'good');
+            close(l, c, loan ? 'partly' : 'repaid');
+          } },
           { k: 'plan', l: 'Cam kết trả góp hằng tháng', ai: { w: 1.1 }, run: function (l, r, log, c) { var L = loanOf(l, c); if (L) L.minShare = Math.max(L.minShare || 0, 0.35); fx(l, { soc: 2 }); log('Bạn lập kế hoạch trả góp rõ ràng, mỗi tháng trích lương trả đúng hẹn.', 'neutral'); close(l, c, 'plan'); } },
-          { k: 'ignore', l: 'Mặc kệ, ai đòi thì tính', ai: { w: 0.4, bad: 0.8 }, run: function (l, r, log, c) { fx(l, { soc: -8, hap: -3 }); if (c.data.loan === 'nong' && E.DEC.chu_no) H.sched(l, 'chu_no', 1); log('Bạn mặc kệ món nợ. Quan hệ họ hàng nguội dần' + (c.data.loan === 'nong' ? ', người đòi nợ bắt đầu tìm đến nhà.' : '.'), 'bad'); close(l, c, 'strained'); } }
+          { k: 'ignore', l: 'Mặc kệ, ai đòi thì tính', ai: { w: 0.4, bad: 0.8 }, run: function (l, r, log, c) { fx(l, { soc: -8, hap: -3 }); log(c.data.loan === 'nong' ? 'Bạn chưa thu xếp khoản vay nóng. Lãi và kỳ trả vẫn tiếp tục theo khoản vay.' : 'Bạn mặc kệ món nợ. Quan hệ họ hàng nguội dần.', 'bad'); close(l, c, 'strained'); } }
         ] }
     ]
   });
@@ -329,7 +360,7 @@
     var L = (l.loans || [])[before.loans];
     if ((k === 'ho_hang' || k === 'nong') && L && (L.type === 'family' || L.type === 'nong')) {
       var f = l.fam || {}, m = !f.noMom && f.mAlive, b = !f.noDad && f.fAlive;
-      start(l, 'debt', { dec: 'vd_vay_chua_benh', k: k }, { data: { loan: L.type, since: L.since, who: m && b ? 'bố mẹ' : m ? 'mẹ' : 'bố' } });
+      start(l, 'debt', { dec: 'vd_vay_chua_benh', k: k }, { data: { loan: L.type, since: L.since, loanId977: X.uid(l, L), who: m && b ? 'bố mẹ' : m ? 'mẹ' : 'bố' } });
     }
   });
 

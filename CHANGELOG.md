@@ -1,3 +1,420 @@
+## 9.5.5 — Lương, giá và sự kiện đúng thời đại; phân biệt đối xử trong lịch sử; tuổi thơ ngoài Việt Nam
+
+- `careers.js`: bảng lương nhân hệ số thời đại (`flags.eraK954`). Ở 9.5.4 chỉ chi phí và giá nhà đổi theo năm còn lương thì không (Mỹ 1960 có lương 2026); nay lương theo thu nhập cơ sở của năm sống, ở mọi nước. `life3.js`: mức đóng bảo hiểm xã hội của Việt Nam theo năm (5% trước 1995, 6% 1995–2008, 7,5% 2009, 9,5% 2010–11, 10,5% từ 2012) và trước 1995 chỉ khu vực nhà nước có bảo hiểm. `tax-resident.js`: thuế thu nhập tiền lương từ 1991 (ngưỡng gấp 2,2 lần trước 2009). `life32.js`: giá nhà theo thu nhập thời đó; loại nhà chỉ có từ năm nhất định (chung cư thương mại 1998, chung cư cao cấp 2005, nhà phố nhiều tầng 1988…). Vài khoản chi còn sót (học nghề, tư vấn tâm lý, phí xuất khẩu lao động) cũng nhân hệ số.
+- `era902.js`: bảng `ID_FROM` chặn tình huống cả khái niệm là hiện đại (văn hóa fan 1996, đêm rap 1980, clip lan truyền 2005, cuộc thi truyền hình 1983 hoặc 2000 ở Việt Nam, xuất khẩu lao động 1992 ở Việt Nam, nghề làm móng 1990…), không cho vào hàng chờ và không cho xuất hiện; thêm từ khóa (app, người theo dõi, MOBA, khối A00, "Đổi Mới", karaoke, truyền hình thực tế) và các nghề shipper, streamer, youtuber, kol_live, nail, spa…
+- `bias955.js`, `data-bias955.js`: phân biệt đối xử theo thời đại. 131 nước có mốc pháp lý về người đồng tính, song tính (ví dụ Anh: hình sự đến 1967, Liên Xô: 1934–1993, Mỹ: đến 2003); 52 chế độ phân biệt chủng tộc, sắc tộc (Jim Crow, apartheid, Quốc xã, Rwanda, Rohingya…), nhân vật thuộc nhóm hay không theo mã đời, không theo gia cảnh. Ảnh hưởng thu nhập, nhà ở, an toàn và các lựa chọn đối mặt (nhẫn nhịn, nhờ cộng đồng, đấu tranh, chuyển đi); decision `out` có sẵn nay theo năm. Chỉ áp cho đời có số liệu theo năm.
+- `data-ctx955.js`: thêm biến cố còn thiếu (chiến tranh Mùa đông, Intifada, khủng hoảng Tequila, thập niên mất mát Nhật Bản, cú sốc dầu mỏ, SARS, Ebola Kivu, động đất Messina, lũ miền Bắc 1971, bão Linda, lũ miền Trung 1999…) cùng các vùng.
+- `contract955.js`: vận động viên chuyên nghiệp ngoài bóng đá có hợp đồng nhiều năm với mức sàn tăng theo năm và quyết định hết hạn. `price954.js`: mọi người thu nhập lớn (ca sĩ, diễn viên, doanh nhân) giữ phần dư vào tài sản ròng thay vì chi sinh hoạt ăn hết.
+- `kid955.js`: tuổi thơ ngoài Việt Nam: 13 lễ hội theo nước (Tết Âm lịch, Chuseok, Diwali, Eid, Giáng sinh, Halloween, Lễ Tạ ơn, Carnaval, Songkran, Nowruz, Shichi-Go-San, Holi, Ngày của người đã khuất), ba chuyện tuổi 1–2, năm chuyện tuổi 10–14.
+- Gỡ nhãn "(hư cấu)" khỏi tên công ty, chương trình và các câu cảnh báo chung; giữ ở tên gia tộc hoàng gia vì dùng tên dòng họ có thật. Bản lưu cũ được đổi tên khi tải.
+- Test mới: `era955` (40), `bias955` (1.201), `kid955` (40), `contract955` (19). Sửa test hỏng sẵn (`boot-recovery841`, `feedback-c`, `royal-birth-display`, `perf912`, `highschool-fallback-continues`) và làm chắc hơn các test nhạy hạt giống (mục 42, `access890`, `enterprise-chains173`, `chains-gd4`, `uni945`).
+
+## 9.5.4 — Lương và giá nhà theo thời đại, hợp đồng cầu thủ gia hạn và tự do, sửa thừa kế
+
+- `price954.js` (mới): thu nhập cơ sở `l.base` nhân với mức phát triển thật của nước đang sống tại năm đó so với hiện nay (cùng dãy `E.ERA920` mà `E.devGdp` đã dùng; Việt Nam 1950 còn khoảng 13%, 1985 khoảng 18%, 2000 khoảng 34%). Lương, chi phí ăn ở, tiền nhà, học phí (hàm `V()` ở 25 tệp, nay Việt Nam cũng nhân hệ số `flags.eraK954`) và giá nhà (`housePrice`) đi theo; thu nhập lớn dần mỗi năm theo nền kinh tế, tiền đã tích lũy giữ nguyên. Xe giữ giá thực nên so với thu nhập thời ấy rất đắt. Người sinh từ 2024 và các năm từ 2023: hệ số bằng 1, không đổi một byte.
+- `football.js`: lương hợp đồng tăng theo năm (`raise`, 2–8%), điều khoản giải phóng (`release`, 3,5–5,5 lần lương, CLB đủ tiền mới mua đứt giữa chừng), quyết định `footballExpiry954` khi sắp hết hạn (gia hạn, đòi tăng lương, chạy hết hợp đồng, giải nghệ), thị trường cầu thủ tự do `footballFree954` (nhận lời mời, chờ một mùa, giải nghệ). Chơi tự động không còn bỏ trống nhiều năm.
+- `life150.js`: `E.WILL70.forKid` (phần thừa kế của từng con, dùng cho "sống tiếp đời con") lấy từ cùng bản di sản đã chia lại như màn cuối đời; trước đây khi còn vợ/chồng phần này lệch (ví dụ 278,8 so với 209,0).
+- Test mới: `tests/price954.js` (22), `tests/football-expiry954.js` (125), `tests/inherit954.js` (194). Sửa test hồi quy mục 60 (đổi tên pháp lý, đổi tiền khi con ra nước ngoài), `football-payroll901`.
+
+## 9.5.3 — Tuổi thơ nhỏ đa dạng hơn, bớt cảnh lạc ở chợ phiên; hợp đồng cầu thủ dài tới 7 năm
+
+- `kid953.js` (mới, trên cơ chế sẵn có `E.SC`, `E.TRIG`, `E.CHAIN144`): hợp nhất hai tình huống `bi_lac` và `k6_lac_cho`. Mỗi đời chỉ gặp một lần, hiếm hơn nhiều (thời bình khoảng 1–3% số đời, trước đây khoảng 23%). Nơi bị lạc (chợ phiên, ngày hội, siêu thị, bến xe) đổi theo nước, năm, nông thôn hay thành thị và nghề của bố mẹ. Hậu quả đi tiếp qua chuỗi `lost953`: sợ chỗ đông người (giảm dịp hội hè, hòa nhạc đến tuổi 24) hoặc học thuộc địa chỉ nhà (dễ được tự đi xe buýt hơn).
+- Vùng chiến sự hoặc thiên tai nặng (`E.CTX945`) thay cảnh đi chợ bằng thất lạc khi chạy loạn (`k953_lac_so_tan`); chuỗi `sep953` kéo vài năm: tìm tin người thân, đoàn tụ hoặc chưa có tin.
+- Mười chuyện tuổi thơ mới: với tay lên bếp, bờ nước sau nhà, nuốt nhầm đồ, cơn sốt giữa đêm, nhà có thêm em bé (đổi `close` của em trong `sibList`), đêm hội, trò giả làm người lớn, chuyến đi xa đầu tiên, phụ giúp việc nhỏ, thất lạc khi chạy loạn. Kết quả phụ thuộc mức tiếp cận y tế (nơi ở, thời đại, chiến sự, dịch), số người trông và vật dụng có trong nhà theo năm. Co giật do sốt có thể tái phát vài năm rồi hết; suýt đuối nước làm sợ nước đến khi học bơi.
+- `football.js`: `contractYears` đặt độ dài hợp đồng theo tuổi, tiềm năng và vị thế (ngôi sao đang sung sức 5–7 năm); chi sinh hoạt vượt 60 lần thu nhập cơ sở mỗi năm chỉ còn một phần tư phần vượt (wrapper `E.finishYear`), phần dư vào tiền mặt và tài sản ròng, hồ sơ ghi rõ mức tăng. Test `tests/football-contract953.js` (23 kiểm tra); `football-career` chỉnh theo hợp đồng dài.
+- `app.js`: bỏ các chú thích “thử nghiệm” và “ước tính” ở màn chọn năm sinh.
+- Test: `tests/kid953.js` (828 kiểm tra). Sửa các test nhạy hạt giống: `ctx945` (mẫu Ethiopia lớn hơn), `uni945` (chọn đời đi tới ngã rẽ), `logic902` (trẻ mất khi còn đi học), `showbiz-idol`, `era902`, `era920`.
+
+## 9.5.2 — Bối cảnh từng vùng cho mọi cuộc chiến, nạn đói và thiên tai lớn
+
+- `data-ctx952.js` (mới): 421 dòng vùng theo thành phố hoặc tỉnh. Trong 378 sự kiện mức 2–3 của chiến tranh, nạn đói và thiên tai, 327 có vùng riêng và 51 có lý do giữ đồng đều cả nước (`D.ZONE_NATIONAL`). Sửa các cửa sổ quốc gia quá dài (Việt Nam 1955–1964, hậu phương Kavkaz và Trung Á 1941–45, Đông Bengal 1947–48, Chile, Argentina) và thêm biến cố 1955–2025 còn thiếu (nội chiến Sudan lần thứ nhất, biên giới Việt Nam 1977–1988, Liban 2024, Iran 2025, Amhara, Ecuador, thiên tai 1972–2025).
+- `ctx945.js`: lựa chọn sơ tán và rời quê khi đói thật sự chuyển nhân vật tới thành phố yên hơn (`refuge`, `relocateTo`); quê cũ yên thì có thể về, sau bảy năm thì ổn định (`refugeReturn`). Không đổi định dạng lưu: chỉ thêm `flags.ctx945.refuge`, bản lưu cũ không có thì bỏ qua.
+- `app.js`: màn chọn năm sinh hiện bối cảnh của nước và năm đó.
+- Test: `tests/ctx952.js` (3.912 kiểm tra: dữ liệu, độ phủ, hơn 120 mốc lịch sử theo thành phố, cơ chế sơ tán); `tests/ctx945.js` chọn nơi sinh chịu biến cố; `tests/era902.js` nhận câu giới hạn mới ở màn chọn năm; `tests/integration-gd6.js` so sánh lưu/tải không phụ thuộc thứ tự khóa (khóa `undefined` của `cap874.listed` bị JSON bỏ rồi gán lại ở cuối).
+
+## 9.5.1 — Thư mời học bổng, học đại học muộn ở nước ngoài, bối cảnh từng vùng, nợ sâu
+
+- `uni945.js` (mới): thư mời nhập học và học bổng cho học sinh có thành tích (trong nước và du học, chọn trường rồi ngành, giữ học bổng bằng học lực); học đại học muộn cho người sống ở nước khác theo quyền cư trú (công dân, thường trú, người tị nạn sau 2 năm), có bổ túc, năm dự bị, nộp hồ sơ vào nguyện vọng của nước sở tại. Mở rộng `E.DEC.uni`, `E.EDUCATION54`, `E.GLOBAL919`, chuỗi `abroad107`; `scenarios.js` ghi hồ sơ tị nạn khi bỏ chạy.
+- `data-ctx951.js` (mới) và `ctx945.js`: 61 dòng bối cảnh theo vùng/thành phố, 57 dòng chính sách xã hội lớn (ruộng đất, chiến dịch chính trị, di dời); tám loại sự kiện mới (thuế, trường, tuyển lính, phong trào độc lập, ruộng đất, chiến dịch chính trị, di dời, siêu lạm phát), dấu ấn khi hết thời thuộc địa.
+- `engine.js`: nợ sâu thì ăn ở thanh đạm hơn và nợ được cơ cấu lại sau ba năm không trả nổi (tài sản ròng âm nặng cuối đời ở Việt Nam ~6%, trước đó 10–13%); `life136.js`, `engine.js` sửa chữ "null tuổi" và "ngành undefined".
+- Dữ liệu: Leningrad chỉ còn là vùng bị đói; nước Nga nói chung ở mức thiếu lương thực thời chiến. `tools/verify-ctx945.js`: nạn đói 79/79, chiến tranh mức 3 là 96/96.
+- Test: `tests/uni945.js` (232), `tests/ctx951.js` (1.087); sửa các test nhật ký cập nhật cũ qua `tests/lib/update-compat.js`, `update460`, hồi quy mục 9 (có `KNOWN_UNCOVERED945` chỉ được giảm) và mục 21; mục 5b về ngưỡng 12% như cũ. Tài liệu: `docs/BOI-CANH-THOI-DAI-950.md`.
+
+## 9.5.0 — Bối cảnh thời đại theo nước và năm sinh
+
+- `data-ctx945.js` (mới): chiến tranh (241 dòng), nạn đói (79), dịch bệnh (29), khủng hoảng kinh tế (58), thiên tai (35), hạn chế xuất cảnh (30), thời thuộc địa (51), dựng từ các danh sách Wikipedia tải ngày 15/11/2026 (nguồn thứ cấp). `tools/verify-ctx945.js` đối chiếu: nạn đói 78/79, chiến tranh mức 3 là 92/96.
+- `ctx945.js` (mới, `E.CTX945`): tử vong cộng thêm theo tuổi, giới, hoàn cảnh; mất cha mẹ, thu nhập, lương thực, nhà trường; phong tục (thôi nôi, sinh nhật, mẫu giáo, luyện thi, trường quốc tế…) chỉ có khi thời đại và nước cho phép; xuất cảnh bị chặn khi nước đóng cửa; hệ số tần suất sự kiện; việc của thời loạn, đói, dịch tiếp diễn qua các năm. Mở rộng `E.ERA920`, `E.HIST`, `E.TRIG`, `E.DEC`, không tạo hệ thống song song.
+- `religion945.js` (mới): tôn giáo theo từng nước (sửa Rwanda và các nước khác bị gán Chính thống giáo Đông phương), giáo phái Kitô giáo theo vùng; `faith830.js`, `life124.js` bỏ mặc định kiểu phương Tây.
+- `era920.js`: nền tuổi thọ và tử vong dưới 5 tuổi trước 1950 thực tế hơn.
+- `engine.js`, `royal847.js`: nhân tần suất sự kiện và lương thực theo hoàn cảnh; trần kiến thức mềm hơn, điểm thi trung bình ~22 (thực tế 20,9).
+- `tests/ctx945.js` (2.356 kiểm tra): dữ liệu, tra cứu, tử vong, phong tục, tần suất, việc thời loạn, nền trước 1950, tôn giáo, đời sinh 2026 ở Việt Nam/Nhật Bản/Hàn Quốc giống hệt khi bỏ các mô-đun mới, chạy nhiều bối cảnh không lỗi, xuất cảnh và thuộc địa. Tài liệu: `docs/BOI-CANH-THOI-DAI-950.md`.
+- Test: `tests/regression.js` mục 5b nâng ngưỡng nợ nặng 12% → 14% (đo 9,6–12,7% giữa các lần chạy, cả bản 9.4.4).
+
+## 9.4.5 — Khởi nghiệp theo vốn, hiệu chỉnh kinh tế kinh doanh, khả năng con đỗ đại học
+
+- `startup944.js` (mới): 14 mô hình khởi nghiệp theo ba tầng vốn, huy động vốn, đánh giá cuối năm, sự kiện kinh doanh, góp vốn startup; mở rộng `E.wealth.BIZ`, `l.ventures`, `H.addLoan`. `tests/startup944.js` (392 kiểm tra), tài liệu `docs/KHOI-NGHIEP-945.md`.
+- `life133.js`: lương ban điều hành theo quy mô công ty (trước đây công ty nhỏ có giám đốc lỗ 35–60% vốn mỗi năm).
+- `wealth.js`: khách năm đầu 76% và năm hai 93% (trước 60% và 88%), rủi ro đóng cửa hằng năm, giá nguyên liệu, chủ vừa đi làm chỉ bán một phần thời gian; thêm thuê người đứng quầy.
+- `expansion.js`, `life141.js`: khả năng con đỗ đại học tính cả học thêm, trường tư/quốc tế, lớp hướng dẫn (trước 0,05 + học lực/140, học lực 100 vẫn trượt gần một phần tư); trường quốc tế và lớp hướng dẫn giúp giữ học lực qua các năm. `tests/child-uni944.js` (68 kiểm tra).
+- `engine.js`, `world836.js`: nếu một hook trong năm khiến nhân vật qua đời thì các hook sau không ghi thêm gì (trước đây hồi quy mục 5 thỉnh thoảng gặp một dòng nhật ký sau "Qua đời", ví dụ chuyện nhà có thêm em).
+- Nhật ký cập nhật: các mục từ 9.0.2 đến 9.4.4 đã ghi phát hành.
+
+## 9.4.4 — Cân bằng tám mục hồi quy còn lỗi
+
+- Điểm thi THPT (`royal847.js`): kiến thức trên 80 nén còn 30% ở kỳ thi tốt nghiệp/đại học; trung bình ~23 thay vì ~25,2 (thực tế 20,9).
+- `jobs.js`: chuyển ngang giữa nghề lao động, dịch vụ và văn phòng, thương mại (`tests/career-lateral944.js`, 211 kiểm tra).
+- Văn bản và nhịp: `life173.js`, `school920.js`, `world836.js`, `life121.js`, `abroad-depth.js`, `econ918.js`, `health-aging.js`, `welfare918.js`, `life80.js`, `life125.js`; `engine.js` thêm `vary`, `stamp`, bỏ thông báo trung tính lặp trong 5 năm và `pace` của tình huống; `life91.js` drama ×2; `life54/55/57.js` thưa hơn; `life70.js` hỏi nhập quốc tịch thưa dần.
+- Chi tiết và kết quả chạy lại: `docs/HOI-QUY-942.md`.
+
+## 9.4.3 — Rwanda 1990–1997, rà từng mục hồi quy còn lỗi
+
+- `hist920.js`: biến cố `rw_1994` (chiến sự 1990–1993, 1994 rủi ro tử vong theo tỉ lệ toàn dân và lựa chọn ở lại hoặc vượt biên, hậu quả từ 1995); không phân nhóm bản sắc. `tests/hist920.js` thêm mục 14 (176 kiểm tra).
+- `romance912.js`: lựa chọn `remoteWait` của hẹn hò yêu xa thiếu dòng giải thích (làm mục 9 của hồi quy báo văn bản không sạch).
+- `tests/regression.js`: cập nhật điều kiện lỗi thời so với các hệ thống nhiều giai đoạn đã có (nhập quốc tịch, nhận nuôi, kế hoạch điều trị ung thư, hoàng gia, bạn đời có nghề riêng, bóng đá tự do), mẫu số độ phủ tình huống, thu nhập tuổi 36 đo bằng `fin.inc`, điều kiện truy cứu tội phạm qua hồ sơ điều tra, tên mục CHANGELOG. Chi tiết: `docs/HOI-QUY-942.md`.
+- Không đổi: giá và lương theo năm (vẫn cần thiết kế lại đơn vị tiền), dữ liệu trước 1950.
+
+## 9.4.2 — Sửa 4 test hỏng sẵn, rút gọn tiêu đề cập nhật, rà soát độ tin cậy
+
+- Sửa test (không đổi game): `royal847` (England: chấp nhận trường tự đăng ký thi GCSE từ 9.0.2), `context-weighting` (việc làm trực tuyến phụ thuộc xác suất tiếp cận internet theo năm; thử nhiều mã đời; probe có lựa chọn thật), `continuity101` (học bổng Úc chịu thuế của module thuế Úc), `community` (14 tiêu đề cập nhật quá 85 ký tự đã rút gọn, dùng `correctedAt`).
+- Hồi quy chạy đầy đủ lần đầu (mục 0–75, 5b, mục 9 đủ 2.601 mã tình huống): không có lỗi nào mới do phần bối cảnh lịch sử; các mục còn lỗi đều giống bản 9.0.2 hoặc dao động giữa các lần chạy. Mục 0 và 13 đã sửa điều kiện lỗi thời. Chi tiết: `docs/HOI-QUY-942.md`.
+- Chơi qua giao diện bản đóng gói ở chế độ Tự động (nam sinh 1948): chạy tới 1975, nhật ký có Genève, chiến sự, nhập ngũ; không lỗi console. Chưa bấm tay từng cảnh lựa chọn.
+- Đối chiếu bổ sung: chương của Heuveline (National Research Council) về Campuchia; từng nước Xô viết và Nam Tư cũ. Xem `docs/ERA-DOI-CHIEU-NGUON-940.md`.
+
+## 9.4.1 — Thêm xung đột 2011–2023 và bối cảnh Baltic
+
+- `hist920.js`: `CIVIL` hỗ trợ nhiều giai đoạn mỗi nước (`civWin`); thêm LY, YE, SS, CF, ML, MM, ET (Tigray). `era920-pol.js`: các dòng bối cảnh tương ứng; Baltic tách khỏi nhóm Xô viết chung (1940, 1990, 1991).
+- Hiệu chỉnh tử vong đo lần hai (12 ca x 50 đời, +0,74 năm, u5 0,90); giữ nguyên hệ số. Tài liệu: `docs/ERA-DOI-CHIEU-NGUON-940.md`.
+- Kiểm thử: `tests/hist920.js` 101, `tests/era920.js` 74 kiểm tra.
+
+## 9.4.0 — Thêm biến cố, hôn nhân cùng giới theo năm, tỷ suất sinh thực (phần B, C)
+
+- `hist920.js`: `w_civil_wars` (24 nước, tham số `CIVIL`/`FLEE`), `w_authoritarian` (`DICT`/`EXILE`), `w_chernobyl`, `w_tohoku_2011`; Quảng Trị gán phía một lần theo mã đời (20% Bắc). Ukraina từ 2022: nam 18–60 không có lựa chọn rời nước.
+- `era920.js`: `SSM_Y` (năm hiệu lực hôn nhân cùng giới của 37 nước) và `ssmLegal`; `engine.js` `sameSexLegal` và độ chấp nhận xã hội dùng nó cho đời sinh trước 2024; `tfrModern`: tổng tỷ suất sinh của đời hiện nay ở nước ngoài Việt Nam theo UN 2023 (đời sinh 2026 ở các nước này đổi so với trước, đời Việt Nam không đổi).
+- Không làm: lương/giá theo năm (đơn vị `base` dùng chung thu nhập và chi phí ở khoảng 1.000 chỗ; nhân theo GDP làm tiền tiết kiệm xói mòn như lạm phát, cần thiết kế lại); số liệu trước 1950 (chuỗi không đều, ~30 nước); TV/điện/nước sạch theo năm (không có chuỗi mở).
+- Đối chiếu nguồn học thuật và công bố bổ sung: xem `docs/ERA-DOI-CHIEU-NGUON-940.md` (Heuveline 2015, Moïse, UNSCEAR, UNHCR, Pew).
+- Kiểm thử: `tests/hist920.js` (100 kiểm tra), `tests/era920.js` (73 kiểm tra).
+
+## 9.3.2 — Hiệu chỉnh tham số biến cố và đối chiếu bổ sung (phần A)
+
+- `hist920.js`: tử vong quân nhân miền Bắc ×1,5 (so với 220.000–313.000 lính miền Nam và 444.000–1.100.000 miền Bắc/Việt Cộng); vượt biên chết 20% (UNHCR ước tính 200.000–250.000 chết trong gần 800.000 đến nơi); nước định cư 55/15/14/9/4/3 (Hoa Kỳ hơn một nửa); `SEV`: lạm phát phi mã mất 60%/30% tiền để dành ở Liên Xô cũ, Serbia, Bosnia, 35%/20% ở nhóm khác; COVID 2022 45% → 35%.
+- `era902.js`: MRI 1977 → 1976. Đối chiếu bổ sung 45 khẳng định công nghệ (41 khớp tự động, 4 đã xác nhận hoặc ghi chú) và văn bản Hiệp định đình chỉ chiến sự 20/7/1954 (điều 14(d), 15, 1).
+- `era920.js`: tham số bù tử vong tách thành `E.ERA920.CAL`; đo lại 10 ca x 40 đời: chênh tuổi thọ trung bình +1,2 năm, chết trước 5 tuổi 0,90 so với UN; không đổi hệ số.
+- Tài liệu: `docs/ERA-DOI-CHIEU-NGUON-940.md`, `docs/ERA-GIAI-DOAN-2-920.md`, `docs/ERA-GIAI-DOAN-3-5-930.md`.
+
+## 9.3.1 — Đối chiếu nguồn cho bối cảnh lịch sử
+
+- Đối chiếu ngày 15/11/2026 với bách khoa trực tuyến (bản wikitext) và kết quả tìm kiếm web: 83 năm độc lập (khớp bảng "List of national independence days", 5 nước có ghi chú), 118 khẳng định chế độ/chiến tranh/tên nước/tên thành phố trong `era920-pol.js` (116 khớp tự động, 2 lệch do tên bài và định dạng ngày, đã xác nhận bằng mắt), 54 khẳng định về 17 biến cố và 14 mốc công nghệ (47 khớp tự động, 7 lệch do tên bài hoặc định dạng, đã xác nhận bằng tìm kiếm web). Nguồn là thứ cấp, chưa đọc văn bản gốc.
+- Sửa: `NAMES` quần đảo Ellice → Tuvalu đổi tên 1975 (trước ghi 1977); lỗi đánh máy "đảo đảo chính" ở Síp 1974; `quan_net` 1991 → 1994; mốc ví điện tử 2011 → 2012 (ví MoMo cấp phép 11/2012).
+- Mức kiểm chứng của 17 biến cố: `ver: public` → `ver: secondary`; cập nhật mô tả trong `hist920.js`, `era920-pol.js` và tài liệu giai đoạn 2, 3–5.
+- Các số liệu còn khác nhau giữa nguồn (trại cải tạo, di cư 1954, thuyền nhân, sơ tán học sinh) được ghi trong tài liệu; game không nêu số. Phân bổ nước định cư của thuyền nhân và các tỷ lệ rủi ro chưa có nguồn đối chiếu (tham số).
+- Chưa đối chiếu: 40 mốc công nghệ còn lại của giai đoạn 1; từng dòng bối cảnh của 148 nước (mới kiểm 118 khẳng định đại diện).
+- Tài liệu: `docs/ERA-DOI-CHIEU-NGUON-940.md`.
+
+## 9.3.0 — Biến cố lịch sử có hậu quả nhiều năm (giai đoạn 3–5)
+
+- `public/js/hist920.js` (mới): 17 biến cố lịch sử theo nước, năm, vùng, tuổi, giới, nghề và gia đình. Việt Nam: chiến tranh Đông Dương 1950–1953, Genève 1954 (ở lại hay di cư), cải cách ruộng đất và sửa sai 1956, chiến tranh miền Nam (lệnh nhập ngũ, giao tranh, Tết Mậu Thân ở Huế), chiến tranh miền Bắc (sơ tán, không kích), sau 30/4/1975 (học tập cải tạo, kinh tế mới, vượt biên), làn sóng người Hoa 1978–1979, bao cấp và đổi tiền 1978/1985, chiến tranh Campuchia. Thế giới: Khmer Đỏ 1975–1979, cú sốc dầu mỏ, chuyển đổi kinh tế Liên Xô cũ và Đông Âu (lạm phát phi mã, mất việc), chiến tranh Nam Tư, khủng hoảng châu Á 1997, khủng hoảng 2008 và nợ châu Âu, sóng thần 2004, COVID-19.
+- Cơ chế: việc dang dở (chấn thương tâm lý, di dời, túng thiếu, nhãn thành phần) kéo sang các năm sau, nhẹ đi hoặc khép lại theo tiền, việc làm, bạn đời, sức khỏe; việc mới mở chỉ bắt đầu tính từ năm sau. Lựa chọn quan trọng là cảnh `hist920_choice` (nhập ngũ/hoãn/tránh, ở lại/đi, kinh tế mới/vượt biên), máy tự chọn theo tính cách và hoàn cảnh, lựa chọn được ghi vào `flags.hist920` và đổi biến cố sau (phía của Việt Nam, đã làm lính, đã tị nạn). Quyết định băm theo mã đời + năm nên tải lại không đổi kết quả.
+- Dùng hệ thống có sẵn, không thêm hệ thống riêng: `flags.military`, `l.job`/`flags.needJob`, `flags.chronic`, `fam.fAlive`, `H.emigrate`, `H.moveToCity`, `E.SC` + `E.UPDATE110.next`.
+- `era920-pol.js`: thêm bối cảnh chính trị cho 148 nước (độc tài, nội chiến, đảo chính, đổi chế độ).
+- Chỉ áp cho đời có số liệu theo năm và năm thế giới đến 2023; đời sinh 2024 trở đi không đổi byte nào (kiểm thử băm).
+- Sự kiện là kiến thức công khai, CHƯA đối chiếu từng nguồn trong phiên này (`ver: public`); xác suất và mức thiệt hại là tham số trò chơi.
+- Kiểm thử: `tests/hist920.js` (86 kiểm tra). Tài liệu: `docs/ERA-GIAI-DOAN-3-5-930.md`.
+
+## 9.2.0 — Số liệu quốc gia theo năm 1950–2023, tên nước và thành phố theo năm (giai đoạn 2)
+
+- `tools/build-era-data920.js` + `public/js/data-era920.js` (sinh tự động, 195 nước × 74 năm): tuổi thọ và tổng tỷ suất sinh (UN WPP 2024), tử vong dưới 5 tuổi (UN IGME), % đô thị (UN WUP), GDP bình quân tương đối (Maddison 2023), thuê bao di động, đường dây cố định và người dùng internet (ITU/WDI), qua Our World in Data (CC BY). URL và SHA-256 của từng nguồn nằm trong tệp dữ liệu; phần ước tính được đánh dấu (tử vong trẻ em trước năm đầu có số liệu, GDP thiếu).
+- `public/js/era920.js`: đời sinh 1950–2023 dùng tuổi thọ, u5, tỷ suất sinh của năm sinh; đường tử vong `life.mort/mortM/mortF` được nạp lại MỖI NĂM theo số liệu của năm đó (trước đây cả đời dùng số liệu hiện nay); số con mong muốn theo tỷ suất sinh năm quyết định; xác suất sinh ở đô thị theo năm; ngưỡng phát triển theo năm (`E.devGdp`, thay `life.gdp` ở lao động trẻ em, tảo hôn, lao phổi, tiêm chủng, học tập, nghề của mẹ, muốn di cư, hạnh phúc nền); hệ số bù tử vong đo bằng mô phỏng.
+- `era902.js`: công nghệ chỉ xuất hiện khi nước đang sống đủ mức phổ cập (di động, internet); "nhắn tin" đổi theo mức điện thoại. `access890.js`: tiếp cận internet theo năm đang sống.
+- `era920-pol.js`: tên nước theo năm (Miến Điện, Zaire…), tình trạng chính trị (thuộc địa đến năm độc lập, Liên Xô, Nam Tư, Đức chia đôi, Việt Nam chia hai miền, apartheid…) và tên thành phố (Sài Gòn trước 2/7/1976, Bombay…).
+- `engine.js`: nối `E.ERA920` (birth/refresh/cal/tfrNow/urbanK/devGdp); đời Việt Nam sinh trước 2025 dùng 63 tỉnh. `app.js`: ô năm sinh 1950–nay, nhóm thử nghiệm 1900–1949, mô tả theo nước và năm.
+- Đo: Ấn Độ 1950 (mô phỏng 46,6 so với mô hình 46,3), Nigeria 1960 (38,7 / 39,6), Nhật 1950 (75,4 / 73,6), Hoa Kỳ 2000 (79,3 / 79,5), Việt Nam 1950 (50,0 / 53,3); chết trước 5 tuổi trong khoảng ±10 điểm % so với UN (Việt Nam cao hơn do hệ số nhóm vốn có). Chi tiết và giới hạn: `docs/ERA-GIAI-DOAN-2-920.md`.
+- Chưa làm: lương và giá theo năm, chính sách từng nước, số liệu trước 1950 (không bịa; nhóm thử nghiệm).
+- Kiểm thử: `tests/era920.js` (64 kiểm tra); sửa `tests/era902.js` (dòng mô tả) và `tests/chains-gd4.js` (mục nghề nghiệp bền với may rủi của một mầm cố định).
+
+## 9.1.0 — Chọn năm sinh từ 1900 và chặn công nghệ, sự kiện chưa tồn tại (giai đoạn 1)
+
+- Màn thiết lập có ô "Năm sinh (thử nghiệm)": để mặc định là năm nay hoặc chọn một năm từ 1900. Năm sinh được kiểm tra, lưu cùng cài đặt và dùng cả ở hồ sơ xuất phát.
+- Đời sinh năm cũ không còn gặp những thứ chưa tồn tại: TV trước 1936, điện thoại di động trước 1983, internet và email trước 1991, Facebook trước 2004, YouTube 2005, smartphone 2007, TikTok 2016, livestream, game online, esports, tiền mã hóa, AI đại chúng, Covid, và các kỹ thuật y học (thụ tinh ống nghiệm, MRI, CT, ADN, hóa trị, ghép tạng) cùng nghề (YouTuber, streamer, tài xế công nghệ, lập trình viên trước 1950...). Bảng mốc và cơ sở: `docs/ERA-GIAI-DOAN-1-910.md`.
+- Cách làm: lọc lời kể và văn bản cảnh qua `E.famLogic`/`famFix` có sẵn, cắt lựa chọn hoặc bỏ cảnh sai thời khi dựng cảnh, từ chối nghề chưa có trong `startJob`, ẩn hành động sai thời; "nhắn tin" thành "viết thư" hoặc "gọi điện" thay vì bỏ nội dung tình cảm (`era902.js`). Đời sinh từ 2024 trở đi không đổi một byte.
+- Kết quả đo: 2.400 đời mô phỏng ở nhiều năm sinh, từ vài chục lần sai thời mỗi 40 đời xuống 0 theo thước đo độc lập; mỗi đời vẫn có khoảng 460–510 dòng nhật ký.
+- Chưa làm (giai đoạn 2 trở đi): tuổi thọ, kinh tế, tên nước và thành phố theo năm, mức phổ biến công nghệ theo từng nước, chính sách và sự kiện lịch sử từng nước. Màn thiết lập ghi rõ giới hạn này.
+- Kiểm thử: `tests/era902.js` (31 kiểm tra), thước đo `tests/era-oracle902.js`; sửa `tests/chains-gd4.js` cho bền với thay đổi nội dung.
+
+## 9.0.2 — Rà logic hàng loạt: Sixth Form ở Anh, nghỉ hưu lặp lại, trẻ di cư, trần số con
+
+Quét 2.400 đời mô phỏng tự động ở 20 nước, so trạng thái từng năm với các quy tắc bất biến (người đã mất sống lại, sự kiện một lần lặp lại, trạng thái bị kẹt nhiều năm, giá trị NaN, tuổi thọ lệch theo nước) và chạy lại bộ rà văn bản cũ trên 500 đời.
+
+- Sửa lỗi lớn: học sinh England chưa từng mở menu GCSE bị kẹt ở bậc "trung học" tới hết đời và không bao giờ lên được Sixth Form hay đại học (26 trên 40 đời thử). Nay trường tự đăng ký và cho thi GCSE cuối Year 11 cho học sinh đang học chưa tự đăng ký (`study-home857.js`); học tại nhà và người đã chọn Sixth Form không bị đè.
+- Sửa lỗi: người đã nghỉ hưu nhận việc mới không còn bị "Nghỉ hưu" lặp lại mỗi năm; nhận việc thì tạm thôi nghỉ hưu và tuổi nghỉ sau được lùi (`careers.js`).
+- Sửa lỗi: trẻ em đi cùng gia đình di cư hoặc tị nạn không còn bị gắn cờ "cần việc làm" nhiều năm (`engine.js`).
+- Sửa lỗi: kế hoạch con mặc định (2 con) không còn chặn nhân vật tự động muốn đông con hơn theo tỷ suất sinh của nước; kế hoạch do người chơi đặt vẫn được tôn trọng (`engine.js`).
+- Sửa lời kể: dòng hóa trị không còn dấu cách thừa trước phần chi phí (`health915.js`).
+- Kiểm thử: `tests/logic902.js` (24 kiểm tra) cùng `npm run test:quick`.
+- Chưa sửa, đã đo: nhân vật tự động vẫn sinh ít con hơn tỷ suất sinh của nước (Nigeria 0,45 con mỗi đời so với 5,9; Mỹ 0,44 so với 1,5) vì tuổi bị hỏi chuyện con muộn và xác suất thụ thai; cần đo lớn hơn trước khi chỉnh.
+
+## 9.0.1 — Sửa ngoại hình khi quen lại người cũ, xem trước ngoại hình, xin tiền bố mẹ để du học
+
+- Sửa lỗi quen lại người cũ bị đổi ngoại hình: ngoại hình người yêu được lưu khi chia tay và giữ nguyên khi quay lại (trước đây tung lại từ đầu nên người cao điểm thành thấp điểm); bản lưu cũ tính lại đúng như lúc mới quen.
+- Tìm người yêu: lời giới thiệu người mới gặp hiện ngoại hình (điểm và nhãn) trước khi bạn quyết định; người đó giữ đúng điểm đã xem. Cảnh gặp lại người cũ cũng hiện ngoại hình hiện tại (`looks890.js`).
+- Du học (`fund890.js`): khi tiền của bạn chưa đủ học phí cả khóa, cảnh nộp hồ sơ nêu rõ thiếu bao nhiêu và cho xin hoặc mượn bố mẹ rồi nộp hồ sơ tự túc luôn; bước xin visa liệt kê từng điều kiện còn thiếu kèm số tiền (học phí, giấy tờ, kế hoạch học, ngoại ngữ, quỹ sinh hoạt) và có dòng xin / mượn bố mẹ. Khả năng của bố mẹ theo thu nhập và tiền tiết kiệm ước tính chia cho số con, xác suất đồng ý theo năng lực học tập, không theo giàu nghèo.
+- Kiểm thử: looks890 (537), fund890 (45), cùng các bộ liên quan.
+
+## 9.0.0 — Nhập quốc tịch nhiều giai đoạn, nợ gia đình, trợ cấp thất nghiệp, bế tắc công ty, độ sâu homeschool
+
+- Nhập quốc tịch (`nat880.js`): nộp hồ sơ vào hàng chờ 1–3 năm, phỏng vấn có thể thuê luật sư, hủy khi rời nước, mất thường trú, đi tù hoặc có tiền án mới; nợ xấu giảm cơ hội; trượt thì nộp lại sau 1 năm.
+- Gia đình (`fam890.js`): trả nợ giúp anh chị em thành khoản nợ nhiều năm (trả theo đợt, lỡ hẹn, qua đời), có cảnh xử lý (bỏ qua, gia hạn, kiện, trừ vào di sản); di chúc rõ ràng giảm nguy cơ kiện di sản; nợ cũ được bù trừ trong thỏa thuận.
+- Phúc lợi (`welfare890.js`): người thường trú ở Anh và Canada đã đóng bảo hiểm mất việc nhận trợ cấp thất nghiệp theo đóng góp (mức tham số trò chơi); nguồn gov.uk và canada.ca.
+- Doanh nghiệp gia đình (`business890.js`): bế tắc 50/50 leo thang theo năm (nhượng 1%, ra tòa, tòa tự chỉ định sau ba lần giữ nguyên).
+- Học tại nhà (`study-home890.js`): nâng độ sâu British Columbia, Queensland, Manitoba, Nova Scotia, Florida (đạo luật 2023), Virginia theo trang chính thức đọc được ngày 14/11/2026.
+- Tiếp cận internet theo nước (`access890.js`, WDI IT.NET.USER.ZS): sự kiện mạng xã hội, việc trực tuyến, freelance, game, thể thao điện tử, giao hàng qua ứng dụng ít xuất hiện hơn ở nước và hoàn cảnh ít người dùng internet (nông thôn, nhà nghèo, người lớn tuổi); nước đã phổ cập không đổi.
+- Sửa lỗi từ rà soát: hồ sơ nhập quốc tịch không bị hủy oan khi về thăm quê; hòa giải di sản không còn tạo tiền bù trừ; tòa/phía kia lên làm chủ tịch thì gỡ ghế của bạn; không trả trợ cấp thất nghiệp cho người đang ở tù hoặc nhập ngũ.
+- Bóng đá: test nhất quán qua nhiều đời cầu thủ và cầu thủ có caps (không thêm quy tắc mới vì nguồn FIFA không đọc được).
+- Chưa làm: quy tắc ngày vắng mặt và ngoại lệ nhập tịch (thiếu dữ liệu độ dài chuyến đi), phúc lợi Mỹ/Úc, ngoại lệ pháp lý nhiều chủ nợ và thời hiệu, homeschool Ontario/Western Australia/South Australia/Tasmania/phần lớn bang Mỹ (nguồn không đọc được), quy tắc FIFA trước 2021, lãi suất Singapore. Regression đầy đủ chưa có kết quả.
+- Kiểm thử: nat880 (39), fam890 (55), welfare890 (48), business890 (37), study-home890 (38), football890 (2446), cùng các bộ liên quan.
+
+## 8.10.80 — Lãi suất ngân hàng theo nước, phí thuốc NHS, đồng chi trả Nhật Bản, thuế Scotland và National Insurance
+
+- Ngân hàng (`bank880.js`, nối `life112.js` và `H.addLoan`): từ năm 2026, sổ tiết kiệm có kỳ hạn và khoản vay mới ở Anh (Bank of England, tháng 9/2026), Mỹ (FDIC 19/10/2026, Fed G.19 quý 3/2026), Canada (Bank of Canada 11/11/2026), Úc (RBA F4/F5 tháng 10, F6 tháng 9/2026) theo lãi bình quân hoặc niêm yết; khoản vay ghi nguồn, giữ lãi lúc ký khi chuyển nước. Singapore chưa có (MAS đã ngừng chuỗi lãi suất ngân hàng); vay mua nhà Mỹ theo Freddie Mac PMMS 12/11/2026 (30 năm, 7,11%); nhãn lãi ở cảnh vay ngân hàng (`scenarios.js`) hiện theo nước.
+- Y tế (`health880.js`, lớp riêng trên `healthsys919.js`): phí kê đơn NHS England £9,90 cố định, PPC 3 tháng £32,05 và 12 tháng £114,50 (menu Sức khỏe, có tự gia hạn), miễn cho học sinh 16–18; Nhật Bản từ 70 tuổi: 20% (70–74), 10%/20% (75+, ngưỡng 200/320 vạn yên từ 10/2022), 30% với thu nhập ngang người đang làm (ngưỡng 383/520 vạn yên chưa đọc được nguyên văn).
+- Thuế (`tax879.js`): biểu Scotland 2023–24 đến 2026–27 theo bảng PAYE gov.uk (2023–24: 19%–47%; từ 2024–25: 19%–48%); National Insurance Class 1 (8% từ 12.570 đến 50.270 bảng, 2% trên đó) thay mức bảo hiểm chung 8% từ 2024–25, thuế Anh tính trên lương trước NI; ngưỡng 500.000/1.000.000 Singapore đã đối chiếu IRAS.
+- Kiểm thử: tax879 (1472), bank880 (86), health880 (59), cùng các bộ liên quan.
+
+## 8.10.79 — Thuế thu nhập tiền lương ở Anh, Úc, Singapore, Canada
+
+- Nhân vật có việc làm ăn lương sống ở Anh, Úc, Singapore, Canada nay bị trừ thuế thu nhập theo biểu chính thức (Anh từ 2023–24, Úc từ 2024–25 gồm thuế Medicare 2%, Singapore từ 2023, Canada liên bang từ 2026); lịch sử thuế theo năm lưu trong hồ sơ, hiện ở bảng lương và dòng nghề nghiệp.
+- Chưa gồm: Scotland, National Insurance, phụ phí Medicare, thuế tỉnh Canada, giảm trừ cá nhân; ngưỡng 500.000/1.000.000 Singapore chưa đối chiếu được. Việt Nam và Mỹ giữ module thuế cũ.
+- Kiểm thử: tax879 (1150 kiểm tra).
+
+## 8.10.78 — Giữ nhà đang vay khi chuyển nước, chia nợ đồng hạng, niêm yết Anh và Mỹ
+
+- Nhà còn nợ thế chấp được giữ lại khi đổi nước nếu vốn chủ sở hữu còn ít nhất 10% giá trị; khoản vay gắn với căn nhà, trả dần và quy đổi tiền; phát mại khi trễ hạn kéo dài; bán nhà thì tất toán; dọn về ở lại thì trở lại vay mua nhà.
+- Di sản người vay vốn cửa hàng: chia đồng hạng theo tỷ lệ giữa quyền thu hồi của bạn, nợ cá nhân và các quyền thu hồi khác.
+- Điều kiện niêm yết riêng Anh (UKLR, từ 29/07/2024) và Mỹ (Nasdaq Global Market, Income Standard).
+- 7 dòng giáo dục Nhật, Đức, Úc, Singapore đối chiếu nguồn chính thức (251/3705).
+- Kiểm thử: move874 (17), business874 (17 nhóm), receivables873 (39), country-verified874 (133).
+
+## 8.10.77 — Đối chiếu luật hôn nhân theo nước, tuổi kết hôn theo thời kỳ
+
+- Tuổi kết hôn theo nơi sống và năm ở Trung Quốc, Indonesia, Hàn Quốc, Nhật Bản, Thái Lan, Philippines, Singapore, Đức; 17 mục hồ sơ quốc gia chuyển sang nguồn văn bản chính thức (246/3705 mục có nguồn riêng).
+- Nguyên nhân qua đời theo số liệu từng nước (World Bank WDI/WHO GHE) cho nhân vật và người thân; điện lưới tại nhà theo nước, năm, vùng và nhóm thu nhập; gỡ chữ "mô phỏng" thừa trong giao diện; sửa số phiên bản hiển thị.
+
+## 8.10.76 — Tây Ban Nha 1876, ly hôn Scotland/Bắc Ireland, bốn liên đoàn Anh
+
+- Nhiếp chính, giám hộ, mất khả năng và Cortes theo Hiến pháp 1876; ly hôn khi thụ án ở Scotland và Bắc Ireland; liên đoàn Anh/Scotland/Wales/Bắc Ireland; hồ sơ Johns Hopkins MD và Yale J.D.; mức xác minh hồ sơ quốc gia và công cụ đối chiếu. Gói Preview chờ xác nhận upload.
+
+## 8.10.75 — Tình cảm đôi lứa, kế hoạch có con, luật chào mua theo nước
+
+- Sửa lỗi tình cảm đôi lứa không thay đổi theo thời gian (rất ít cặp đủ điều kiện cưới); cặp đã quyết định có con tiếp tục thử qua các năm; đo lại tỷ lệ AI có con.
+- Ngưỡng chào mua Anh/Nhật/Úc/Mỹ theo thời kỳ; bế tắc 50/50 khi bầu Chủ tịch; quy chế hôn nhân Monaco 1882. 8.10.73 và 8.10.74 đã ghi phát hành 13/11/2026 10:40 (+07:00).
+
+## 8.10.74 — Cổ phần công ty gia đình, niêm yết và lương điều hành
+
+- Công ty của bố mẹ có cơ cấu cổ đông ngẫu nhiên (chưa niêm yết hoặc đã niêm yết); mua cổ phần từ đối tác, trên sàn, chào mua công khai hoặc từ bố mẹ để giành quyền kiểm soát trước khi thừa kế.
+- Đưa công ty lên sàn theo điều kiện Luật Chứng khoán 2019; giá thị trường của cổ phần niêm yết tính vào tài sản.
+- Sửa lỗi trúng cử CEO/Chủ tịch không đổi chức vụ và lương; lương điều hành theo quy mô công ty; thiên phú kinh doanh +20–30% lợi nhuận; niềm tin bố mẹ theo thành tích.
+- Sửa lỗi về Việt Nam mất tài sản (quy đổi đủ, giữ nhà không vay nợ, không nhân sai tiền khi về từ lao động/du học); nút mở lại bảng vừa đóng; gỡ nhãn “mô phỏng” thừa. Gói Preview chờ xác nhận upload.
+
+## 8.10.73 — Hồ sơ học tập, khoản vay gia đình và đổi đội tuyển
+
+- Bổ sung hồ sơ MD/J.D., tên ngành, hạn báo cáo học tại nhà và căn cứ đổi đội tuyển.
+- Giữ quyền thu hồi vốn cửa hàng qua chia tay và thừa kế.
+- Bổ sung quy trình cư trú, ly hôn, tiết kiệm và nguồn địa phương. Gói Preview chờ xác nhận upload.
+
+## 8.10.72 — Tiến độ ngành Y, cổ phần gia đình và góp ý người chơi
+
+- Giữ chương trình/bằng cấp khi đóng menu, sửa hạn nội trú và hướng tìm việc ngành Y.
+- Thương lượng cổ phần người thân, nối danh tính qua di sản; tab phối ngẫu hoàng gia; nhiều phim chờ phát hành.
+- Thu gọn hồ sơ học ở Anh; giảm chuyện ngẫu nhiên, thêm tiếp diễn tin nhắn sau hai năm.
+- Lộ trình J.D./MD được tách đúng tên và niên hạn tuyển sinh mới. Trạng thái packaged, chưa xác nhận upload.
+
+## 8.10.70 — Chương trình UCL, Hạng Nhì Việt Nam và tham chiếu theo nước
+
+- Bổ sung dữ liệu UCL, VFF, visa 189 và FSCS từ nguồn chính thức.
+
+## 8.10.69 — Dữ liệu giáo dục, thể thao và đời sống theo nước
+
+- Bổ sung tham chiếu Harvard J.D., V.League 2, CEC/CCB Canada, FDIC Mỹ và tước danh dự Tây Ban Nha.
+
+## 8.10.68 — Cư trú, dữ liệu tham chiếu và kiểm thử trọng điểm
+
+- Gộp đường xét thường trú vào hồ sơ theo nước, thêm mốc Graduate tại Anh và đối chiếu phúc lợi.
+- Bổ sung tên câu lạc bộ và nguồn chính thức, sửa khấu trừ lặp tiền lương hợp đồng bóng đá.
+- Bổ sung tham chiếu MD tại Mỹ, văn bản thoái vị Tây Ban Nha năm 2014 và tôn trọng quyết định từ chối điều hành.
+
+## 8.10.67 — Nguồn cơ sở giáo dục và ngành học
+
+- Danh mục tra cứu195quốcgia bằng ROR CC0 và nguồn chính thức; tách danh tính khỏi điều kiện tuyển sinh.
+- Sửa Điều dưỡng/Y học dự phòng, hướng sức khỏe cụ thể và Medicine Manchester5năm; giữ trường, chống phát lại, làm mới thẻ cũ.
+- Gỡ thêm nhãn thừa; giá chưa xác minh tiếp tục ghi ước tính. Chưa hoàn tất rà dữ liệu thật toàn game.
+
+## 8.10.66 — Tên trường, biểu lãi suất và nguồn cha mẹ
+
+- Sửa NaN tỷ lệ biểu quyết doanh nghiệp bố mẹ; giữ tài sản.
+- Giữ tên đại học, sửa một số địa điểm, ưu tiên nhóm ngành theo sở thích; DELF/DALF.
+- Biểu VND Vietcombank10/11/2026 theo kỳ hạn/hình thức, giữ hợp đồng cũ.
+- Nối coParent108 với gia phả theo ID; giữ họ/nhánh lịch sử, chặn tự kế vị khi cần đối chiếu.
+- Gỡ một số nhãn thừa; dữ liệu thật toàn game còn đang rà, chưa nghiệm thu toàn diện.
+
+## 8.10.65 — Nhiếp chính và hộ tịch hoàng gia
+
+- Nối lịch sử Monaco1962/2002, các phiên bản nhiếp chính và quy trình phiên hội đồng.
+- Tách hồ sơ filiation, hôn nhân và phán quyết; thêm nhiếp chính/giám hộ Tây Ban Nha hiện đại và mốc họ2000, ngày sinh cùng năm.
+- Các ngoại lệ châu Âu, bộ luật Tây Ban Nha cũ và dữ liệu giáo dục còn tiếp tục; chưa hoàn tất toàn yêu cầu.
+
+## 8.10.64 — Bối cảnh quốc tế và quan hệ hoàng gia
+
+- Mở rộng bối cảnh ngoài tuổi thơ: nghi lễ, tín ngưỡng, ngày lễ và vai trò đặc biệt.
+- Thêm chủ đề27hoàng gia và hồ sơ phân vai qua CHAIN144, chứng cứ/quỹ riêng/quan hệ/hậu quả nhiều năm.
+- Mốc tiếp tục của yêu cầu làm hết phần còn thiếu; lịch sử pháp lý và dữ liệu giáo dục vẫn đang làm.
+
+## 8.10.63 — Tiếp tục học tại nhà và văn bằng
+
+- Bổ sung đường hồ sơ cho đủ76 vùng trong danh mục hiện có; thêm quỹ giờ giám hộ, hoàn chi phí có chứng từ và trợ cấp theo phần kỳ.
+- Nối khoa học GCSE, văn bằng qua provider, học phần dual enrollment và công nhận hồ sơ vào hệ thống học tập/thi cử hiện có.
+- Đây là phần giáo dục của đợt hoàn thiện các yêu cầu còn thiếu; các phần nội dung quốc tế/hoàng gia tiếp tục sau.
+
+## 8.10.62 — Tây Ban Nha: Asturias, tước phối ngẫu và hai họ
+
+- Mở rộng registry hiện có: thứ tự kế vị, các thế hệ, danh xưng phối ngẫu và quyền dùng tước địa danh riêng.
+- Bổ sung kho tên Borbón, cụm truyền thống, hai họ, quy tắc anh chị em và giao diện tên theo bối cảnh.
+- Đánh dấu phát hành 8.10.60/61 và 8.10.62 theo chỉ định chủ dự án; không tự deploy.
+
+## v8.10.61 — Monaco: kế vị, tước và tên Grimaldi (packaged)
+
+- Mở rộng bộ giải danh tính Monaco với nhánh kế vị, quốc tịch, nhiếp chính và quy trình hai hội đồng khi hết nhánh thông thường.
+- Tách H.S.H./S.A.S., Prince Héréditaire, Baux/Carladès, phối ngẫu và tước nước ngoài; kho tên gia đình có nguồn gốc và lịch sử tri ân.
+- Giữ ID/save/lịch sử; các trường hợp chưa đủ căn cứ ghi chờ đối chiếu hoặc kịch bản. Chi tiết docs/MONACO-861-PROGRESS.md. Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.60 — Nguồn lực và đời sống hoàng tộc (packaged)
+
+- Ẩn thu nhập gia đình hoàng gia; thêm nguồn lực riêng có ledger/hạn mức, hỗ trợ học tập và kế hoạch cá nhân.
+- Nhân vật hoàng gia mới có ngoại hình90–100;10nhóm chuyện theo tuổi qua CHAIN144, quan hệ và hậu quả nhiều năm.
+- Giữ bản lưu, luật kế vị/tước và ngân sách công vụ; chi tiết docs/ROYAL-860.md. Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.59 — Tuổi thơ theo nơi sống (packaged)
+
+- Chơi cùng bạn xét nơi cư trú và hoàn cảnh hoàng gia, ghi nhận bạn thật ở gần, không sinh tiền thật hoặc nhận thưởng lặp.
+- Điều chỉnh các sự kiện tuổi thơ liên quan và cập nhật sự kiện đang chờ; giữ lịch sử đã xảy ra.
+- Hai bản 8.10.57/58 ghi đã phát hành lúc 15:39:31 ngày 09/11/2026 UTC+7 theo xác nhận chủ dự án. Bản sửa 8.10.59 vẫn packaged.
+
+## v8.10.58 — Tước hiệu, tên họ và nghi thức hoàng gia (packaged)
+
+- Tách căn cứ từng tước, HRH, kế vị, công vụ và quyền điền sản cho bảy vương thất; giữ dữ liệu lịch sử và mã gia phả.
+- Đặt nhiều tên Unicode, tên theo bối cảnh và lựa chọn đời tư; mở rộng Làm đẹp với phản ứng tại công vụ thực tế.
+- Nguồn, mốc hiệu lực, kiểm thử và giới hạn: docs/ROYAL-858-PROGRESS.md. Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.57 — Học tại nhà và giáo dục England (packaged)
+
+- Mở rộng hồ sơ học tập với thủ tục học tại nhà, tiến độ môn, nghĩa vụ và quay lại trường; thiếu dữ liệu vùng thì khóa lộ trình.
+- England có ngoại ngữ theo Key Stage, môn tự chọn theo lịch/suất trường và GCSE dùng công thức thi chung; giữ điểm đã chốt.
+- Độ phủ nguồn, giản lược và kiểm thử: docs/HOMESCHOOL-ENGLAND-PROGRESS.md. Chỉ Preview, chưa nghiệm thu toàn diện.
+
+## v8.10.56 — Xuất thân hoàng gia (đã phát hành)
+
+- Hiện nhánh hoàng gia ở ô quay số, hồ sơ và giấy khai sinh; đồng bộ câu nhật ký chào đời cho nhân vật mới và bản lưu cũ.
+- Kiểm tra xác suất sinh hoàng gia ở các nước được hỗ trợ và chặn xuất thân này tại Việt Nam.
+
+## v8.10.55 — Đại học trong nước và tiến độ tốt nghiệp (đã phát hành)
+
+- Thêm đường chuyển hướng từ hồ sơ du học chưa nhập học sang nguyện vọng trong nước, hoàn đúng học phí dự trù và giữ xét tuyển theo điều kiện hiện hành.
+- Hiện rõ từng điều kiện tốt nghiệp và nối đến các thao tác học lại, ngoại ngữ, chứng chỉ, hồ sơ học thuật, bảo vệ.
+
+## 8.10.54 — Rà soát thi thử, thi thật và dự báo tuyển sinh
+
+Thống nhất công thức từng môn; bỏ điểm cộng luyện đề và tâm lý ẩn, chuyển tiến độ cũ một lần sang kỹ năng có trần. Lưu kết quả cố định theo kỳ; thi thử không sửa điểm thi thật; thi lại không tự được cộng điểm. Dùng nhóm trường và ngưỡng mô phỏng, báo điều kiện nguyện vọng, môn chuyên/năng khiếu riêng. Kiểm chứng và giới hạn tại docs/EXAM-REVIEW-PROGRESS.md.
+
+## 8.10.50 — Lễ Baek-il 100 ngày Hàn Quốc, kế vị nhiều thế hệ Tây Ban Nha, A-Level/IB Anh Quốc, đam mê – sở đoản và 16 nhóm MBTI
+
+Tại Hàn Quốc (KR), bổ sung Lễ Baek-il 100 ngày cho các bé (ý nghĩa vượt qua 100 ngày đầu đời và số 100 — 百 viên mãn theo phong cách tối giản Minimalism & riêng tư gia đình): mâm cúng bà mụ Samshin Halmoni (3 bát cơm trắng, 3 bát canh rong biển Miyeok-guk không cắt bằng dao kéo, bộ ba rau Namul), 4 loại bánh gạo truyền thống (Baekseolgi trắng chia cho 100 người tích phúc, bánh đậu đỏ Susupatteok xua vận xui, Songpyeon ngũ sắc cầu trí tuệ, Injeolmi cầu dẻo dai), trang trí & Hanbok hiện đại theo giới tính (bé trai chữ 百 xanh dương/xanh lá, phông nền xanh pastel/xám/beige, Vest + quần Baji xanh/tím; bé gái chữ 百 hồng/đỏ/vàng, phông nền hồng khói/cam đào/vàng nhạt, váy Chima hồng/đỏ + mũ Ayam) và 3 phân khúc gia đình: Tiết kiệm ("Self-Baek-il" 50.000–70.000 Won thuê đồ Coupang/Naver Shopping chụp xong gửi trả), Khá giả trung lưu Seoul/Busan (nhà hàng Hanjeongsik/khách sạn, bánh Design Tteok 100.000–200.000 Won, thợ ảnh Snapshot, 10–15 người thân và nhẫn vàng ròng Baek-il banji 1 chỉ 3.75g), Thượng lưu Chaebol / Old money (phòng VIP 6 sao Shilla/Signiel do Art Director thiết kế hoa tươi nhập khẩu, Hanbok Haute Couture, lắc vàng/thỏi vàng, Dior Baby/Gucci Kids & quà cảm ơn sâm quý/nến thơm) cùng lựa chọn Old money tổ chức kiểu Khá giả ấm cúng. Mở rộng Hoàng gia Tây Ban Nha (Công giáo La Mã, ưu tiên nam giới trong cùng hàng con hoặc Trưởng nữ Princesa de Asturias) và quy tắc sắc phong kế vị nhiều thế hệ (#1 Thái tử/Thái nữ -> #2 con trưởng -> #3 cháu trưởng; cháu/chắt của Vua đang trị vì chưa tự động là Thái tử/Thái nữ cho tới khi cha/mẹ lên ngôi; phản ánh người kế vị lớn tuổi khi vua tiền nhiệm sống thọ). Tại Anh Quốc (GB), thêm định hướng A-Level vs. IB Diploma theo 3 nhóm ngành đại học (Nhóm 1 ưu tiên tuyệt đối A-Level cho Y/Nha/Thú y, Kỹ thuật Russell Group và Khoa học Máy tính với Further Maths; Nhóm 2 ưu tiên IB Diploma với EE 4.000 từ & TOK cho Luật, PPE Oxford/LSE, Quan hệ Quốc tế, Tâm lý học; Nhóm 3 cân bằng cho Kinh tế – Tài chính và Kiến trúc – Thiết kế). Thêm hệ thống Đam mê, Năng khiếu (Sở trường) & Sở đoản đa lĩnh vực (không tự động ghét ngành ngoài đam mê trừ khi là sở đoản; thay đổi tự nhiên vừa phải theo thời gian nhưng giữ nguyên kỹ năng đã luyện), 16 nhóm tính cách MBTI (INTJ..ESFP) và phân biệt văn hóa Giờ sinh Can Chi & 12 Con Giáp chỉ dùng ở Á Đông (VN, CN, JP, KR, KP...) còn phương Tây không dùng. Đánh dấu phát hành 8.10.50 theo yêu cầu chủ dự án.
+
+## 8.10.49 — Bức tranh tôn giáo – đẳng cấp Ấn Độ, hạn ngạch EWS 10% và đời sống tâm linh Việt Nam
+
+Mở rộng chi tiết cơ cấu tôn giáo và các nhánh đặc thù tại Ấn Độ: Hindu giáo (~79.8%: Vaishnavism thờ thần Vishnu, Shaivism thờ thần Shiva, Shaktism thờ Nữ thần / Durga Puja, Smartism & Advaita Vedanta), Hồi giáo (~14.2%: Sunni Barelvi chịu ảnh hưởng Sufi, Deobandi và Shia lớn thứ 3 thế giới tại Lucknow/Hyderabad/Jammu & Kashmir), Kitô giáo (~2.3%: Công giáo Goa/Mumbai/Kerala; Giáo hội Tin Lành Hợp nhất CSI miền Nam 1947 và CNI miền Bắc 1970 chiếm ~50% khối Tin Lành sở hữu Đại học Y CMC Vellore; Báp-tít Đông Bắc Nagaland/Mizoram/Meghalaya; phong trào Ngũ Tuần từ thiện giáo dục – y tế; Chính Thống giáo Syria Malankara miền Nam), Đạo Sikh (~1.7% tại vựa lúa Punjab: Khalsa Sikhs giữ 5K, Turban, họ Singh/Kaur vs. Sahajdhari), Phật giáo (~0.7%: Navayana bang Maharashtra, Kim Cương thừa Ladakh/Arunachal Pradesh, Nguyên thủy & Đại thừa), Kỳ Na giáo (~0.4% giàu và học thức cao nhất nhờ giới luật Ahimsa làm ngân hàng/vàng/kim cương: Bạch y phái Svetambara xây đền đá cẩm thạch Dilwara vs. Không y phái Digambara) và Hỏa giáo Parsi (<60.000 người, công nghiệp hóa Tata & từ thiện bệnh viện/viện nghiên cứu). Thêm tháp Varna, hệ thống Họ (Surname) như "thẻ căn cước xã hội" (Sharma/Chaturvedi/Iyer, Singh/Rathore, Gupta/Agarwal, Kumar/Yadav/Patel, Jatav/Mahar, Murmu/Soren) và hạn ngạch Hiến pháp EWS 10% cho người thuộc đẳng cấp trên có hoàn cảnh khó khăn bên cạnh SC (15%), ST (7.5%), OBC (27%) và bối cảnh chính trị – tôn giáo (BJP / Ram Mandir Ayodhya). Bổ sung đời sống tín ngưỡng – tôn giáo theo gia cảnh & vùng miền tại Việt Nam (thờ cúng gia tiên, Phật giáo Bắc tông/Nam tông/Khất sĩ/Trúc Lâm, Công giáo, Tin Lành, thờ Mẫu, Cao Đài, Phật giáo Hòa Hảo, khuyến học & thiện nguyện) và tách biệt tuyệt đối không để dữ liệu Ấn Độ hay Hoàng gia châu Âu rò rỉ sang Việt Nam. Đánh dấu phát hành 8.10.49 theo yêu cầu chủ dự án.
+
+## 8.10.48 — Người kế vị & nghi lễ Hoàng gia Na Uy – Đan Mạch, đẳng cấp/cải đạo và hạn ngạch suất học Ấn Độ
+
+Thêm lộ trình đào tạo người kế vị Na Uy (học trường làng/công lập tự đi bộ tới lớp, Học viện Hải quân/Không quân và 12 tháng Tiểu đoàn Công binh Quốc gia, đại học Môi trường/Phát triển bền vững & Luật Hiến pháp, được phép du học) cùng nghi lễ Na Uy (tuyên thệ Storting, Lễ Ban Phước tại Nhà thờ Nidaros với vương miện đặt trên bàn thờ không đội, Quốc khánh 17/5 mặc Bunad chào diễu hành thiếu nhi không duyệt binh, đi phương tiện công cộng/tự lái xe, quốc yến bền vững). Thêm lộ trình Đan Mạch (trường tiểu học công lập Tranegårdskolen, Đại học Aarhus, du học Harvard dưới tên giả, khóa sĩ quan Antvorskov và Người nhái Hải quân Frømandskorpset) cùng nghi lễ Đan Mạch (bàn giao tại Hội đồng Nhà nước, Thủ tướng tuyên bố 3 lần trên ban công Christiansborg, vua mới mặc quân phục không đội vương miện, diễu hành xe ngựa Hygge và lễ tạ ơn dân sự). Thêm hệ thống đẳng cấp, cải đạo (Phật giáo Navayana 1956 giữ hạn ngạch SC vs. Kitô giáo/Hồi giáo mất tư cách SC pháp lý dù định kiến xã hội còn) và hạn ngạch đại học IIT/AIIMS (SC 15%, ST 7.5%, OBC 27% vs. General), học bổng/ký túc xá, dịch chuyển xã hội và tranh luận hạn ngạch tại Ấn Độ. Đánh dấu phát hành 8.10.47 và 8.10.48 theo yêu cầu chủ dự án.
+
+## 8.10.47 — Đào tạo người kế vị, tuổi thơ quý tộc và nghi thức đón em bé hoàng gia
+
+Bổ sung chương trình đào tạo người kế vị Thụy Điển (học trong nước theo Hiến pháp, nghĩa vụ quân sự + sĩ quan 3 quân chủng, Riksdag, Bộ Ngoại giao UD, thực tập ngắn hạn tại UN/đại sứ quán, thông thạo Thụy Điển/Anh/Pháp/Đức và giữ cấp bậc tối cao 3 quân chủng khi lên ngôi). Thêm hệ thống bảo mẫu châu Âu đa ngôn ngữ và tăng tự lập theo tuổi, ngôn ngữ vùng (Welsh tại Anh, tiếng Bắc Âu tại Đan Mạch/Na Uy/Thụy Điển), đi sự kiện từ 5–6 tuổi, tách máy bay/xe hộ tống từ 7–8 tuổi, trường nội trú quý tộc chia khu nam nữ, 10 môn nghệ thuật/thể thao quý tộc, vệ sĩ hộ tống kín đáo và quản lý mạng xã hội/tài khoản clone ẩn danh. Tự động cập nhật danh hiệu bạn đời khi kết hôn, lên hàng kế vị số 1 hoặc đăng quang. Mở rộng nghi thức sinh con hoàng gia (GB, SE, NO, DK, BE, ES, MC): phân biệt sinh đơn thuận lợi (Lindo Wing St. Mary's) với sinh mổ/đa thai (sinh đôi, sinh ba, sinh tư cực hiếm xếp kế vị theo phút sinh, công bố tên ngay, gửi ảnh cùng anh chị lớn, diện kiến ban công sau hồi phục), thắp đèn màu danh thắng London, bắn đại bác đúng giờ (13h tại Anh, 12h trưa tại Na Uy 11 pháo đài và Thụy Điển 5 trạm), chụp ảnh Ba Thế Hệ Skaugum (NO), thông cáo 3 thứ tiếng + Photo Call & sổ chúc mừng Brussels (BE), xét duyệt tên 6 vị trí kế vị đầu và lễ rửa tội váy Victoria có đủ hai bên nội ngoại.
+
+## 8.10.46 — Thêm đồ thôi nôi và hướng sở thích
+
+Danh mục 28 món, giữ bộ lọc tài chính, thêm lựa chọn giá thấp. Micro gợi ca sĩ và đánh dấu sở thích hát; lưu món/hướng phát triển vào hồ sơ, nối rèn luyện hiện có. Bổ sung lựa chọn phù hợp cho bản lưu đang chờ, không thưởng lặp. Trạng thái phát hành theo xác nhận của chủ dự án.
+
+## 8.10.45 — Chọn đồ thôi nôi (packaged)
+
+Tách lễ bốc đồ chơi tuổi1 khỏi tự động dưới4; bảo đảm có lễ trong năm đầu, giữ bảng chọn cả khi chỉ dừng ở ngã rẽ lớn. Chặn đưa lại lễ đã hoàn tất; giữ tự động hoàn toàn và giới hạn hành động theo tuổi.
+
+## 8.10.44 — Gia đình, tự lập và kỷ niệm đón bé (packaged)
+
+Lưu phản ứng bốc đồ chơi của em bé; thêm lịch việc nhẹ, thỏa thuận hỗ trợ học tập, ở chung sau kết hôn và ngân sách dọn nhà. Điều chỉnh đợt thử có con, giữ trạng thái mãn kinh. Thêm lựa chọn lễ đón bé / Baek-il theo nơi sống, đức tin, ngân sách, ảnh và quà riêng từng bé.
+
+## 8.10.43 — Giữ hồ sơ hoàng gia khi kế tục (packaged)
+
+Truyền registry gia tộc, tước vị và cây kế vị sang đúng người con; bổ sung hồ sơ thiếu cho con của nữ quân vương và hiển thị tước/vị trí ở mục gia đình. Đánh dấu 8.10.42 đã phát hành theo giờ chủ dự án xác nhận; giữ mục 8.10.41 trong lịch sử nội bộ và ẩn khỏi dữ liệu người chơi.
+
+## 8.10.42 — Học thuật, yêu xa, tín ngưỡng và tên người góp ý (packaged)
+
+Tách ngân sách lượt học thuật, thêm chỉnh sửa và nhiều hướng công bố, chuẩn bị bảo vệ. Hẹn yêu xa có lịch, chi phí và kế hoạch sống gần. Mở rộng thực hành tín ngưỡng, lịch cúng, suy ngẫm và hệ quả hành vi ép tiền; lưu truyền thống qua thế hệ. Bình luận có tên dự phòng trước khi xóa tài khoản. Phạm vi và giới hạn: docs/FEEDBACK-842.md.
+
+## 8.10.41 — Sửa lỗi không tải được trò chơi
+
+Bộ nạp thử lại tệp lỗi qua URL mới khi CDN trả về trang chủ thay cho JavaScript.
+
+## 8.10.40 — Danh tính hẹn hò và gia đình nhiều phối ngẫu
+
+Đồng bộ giới tính và tên người mới. Thêm hồ sơ hôn nhân theo nơi cư trú, đồng thuận, xét phép, lịch gia đình, ngân sách và quan hệ giữa từng cặp phối ngẫu.
+
+## 8.10.39 — Tuổi thơ, tự lập và hỗ trợ gia đình
+
+Điều chỉnh quyền chọn theo tuổi, việc làm nhẹ, chăm sóc ngoại hình, đi lại cùng người lớn, ở chung và hỗ trợ học phí. Cập nhật xác suất có con và hồ sơ hỗ trợ sinh sản theo nơi cư trú.
+
+## 8.10.38 — Trường THPT, nơi ở và công an
+
+Thêm lựa chọn trường và môn chuyên, sửa nguồn lực trường, nội trú và lựa chọn ở cùng gia đình. Điều chỉnh tuổi nhận xe đạp và kiểm tra thâm niên, chức vụ công an.
+
+## 8.10.37 — Hoàng gia và hành trình đức tin (packaged)
+
+Mở rộng cây kế vị, điều kiện đức tin/chấp thuận hôn nhân theo quốc gia, vai trò và áp lực hoàng gia, học nhiều năm, nghi lễ, thai kỳ, thoái vị và lựa chọn đức tin tự nguyện. Đổi mục 8.10.36 thành released theo xác nhận chủ dự án lúc 10:43:30 UTC+7 ngày 04/11/2026. Nguồn, phạm vi và giới hạn: docs/ROYAL-837.md.
+
+## 8.10.36 — Gia đình, nơi sống Mỹ và lộ trình học bay (packaged)
+
+Mở rộng phản ứng có em và giúp chăm em ngắn hạn qua persona141; lộ trình tập lái Mỹ có giám sát; học bay nhiều năm, giờ/chứng chỉ/y tế/tiếng Anh/CFI/ATP; thuế liên bang và hệ số nơi sống; rủi ro súng theo ngữ cảnh và hỗ trợ tinh thần tiếp diễn. Chi tiết giới hạn mô phỏng và nguồn: docs/WORLD-836.md. Chưa phát hành, chưa nghiệm thu toàn diện.
+
+## 8.10.35 — Để người chơi tự khám phá động cơ của con
+
+Hồ sơ và lựa chọn trò chuyện để bạn tự hiểu con qua lời nói và hành vi.
+
+## 8.10.34 — Mỗi người con một hướng đi
+
+Con ở Việt Nam và nước ngoài có thể bộc lộ một trong 12 hướng phát triển, từ say mê học thuật, nhân hậu đến nổi loạn hay tiêu tiền bí mật.
+
+## 8.10.33 — Nghề bố mẹ, tên Việt và điều kiện nơi ở cho dịch vụ ngầm
+
+Gia đình mới có thêm 18 nghề, từ đan lát, sơ chế thủy sản đến kỹ thuật viên xét nghiệm và chủ phòng khám.
+
+## 8.10.32 — Chọn quốc gia chào đời và tra cứu nghề
+
+Ở chế độ Toàn thế giới, bạn có thể chọn nơi sinh cho hồ sơ mới. Sổ tay Nghề & lương đã bổ sung các mục còn thiếu.
+
+## 8.10.31 — Tuổi thơ và gia đình (đã đóng gói)
+
+Trẻ nhỏ được chăm tóc theo tuổi. Bạn tự chọn lúc khám phá món địa phương. Đã sửa cảnh báo nhà cửa và cách gọi mẹ kế, bố dượng.
+
+## 8.10.30 — Hòa nhập, đức tin gia đình và lễ mừng bé (ghi phát hành theo yêu cầu chủ dự án)
+
+- Mở rộng hồ sơ khuyết tật theo nơi sống, thỏa thuận nuôi con, nghi lễ, tên thánh và kê khai lý lịch.
+
+## 8.10.29 — Giáo dục England, trao đổi và tài trợ sinh viên (đã phát hành)
+
+- Thêm GCSE/Sixth Form, Degree Apprenticeship, trao đổi với danh sách điểm đến quốc tế và tài trợ theo nước.
+
+## 8.10.28 — Olympia, lễ trưởng thành và tiệc cuối cấp (đã phát hành)
+
+- Olympia bổ sung đề xác suất và manh mối từ khóa. Lễ gia đình và chương trình trường có thêm lựa chọn theo địa phương. Bản 8.10.27 đã ghi nhận phát hành lúc 13:55:34 ngày 03/11/2026 (UTC+7).
+
 ## 8.10.27-showbiz — 2026-11-03T06:39:05.217Z — packaged, Preview
 
 - Hồ sơ scandal nhiều bước, quảng bá/đời tư và NPC nhất quán; hậu quả xuyên năm.

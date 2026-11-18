@@ -8,7 +8,7 @@ function run(l,d,k){l.pending=[d];return E.resolve(l,k);}
 for(const inc of [0,NaN,-2,2,136]){const l=life();l.partner={name:'An',sex:'F',age:30,status:'married',alive:true,job:'nội trợ',inc,since:25};E.finishYear(l);ok(Math.abs(l.fin.partner-(inc>0&&Number.isFinite(inc)?E.economy114Income(l,inc*12*.55):0))<1e-8,'không tạo đóng góp từ thu nhập ảo');}
 {
  const l=life();l.age=18;l.examScore=14;l.edu=3;const logs=run(l,E.DEC.uniFail.make(l),'retry');ok(l.examScore===14&&!logs.some(e=>/lần thi sau đạt/.test(e.t)),'chưa thi lại không hiện trước kết quả');ok(l.flags.retryUni===19&&l.flags.retryExamPending,'đúng lịch năm sau');
- l.pending=[];E.beginYear(l,{});ok(l.examScore===14,'mở lại năm cũ không thi trước hạn');l.pending=[];l.age=19;E.beginYear(l,{});ok(l.examScore>14&&!l.flags.retryExamPending,'chỉ có điểm khi đủ năm');const count=l.log.filter(e=>/Thi lại tốt nghiệp/.test(e.t)).length;l.pending=[];E.beginYear(l,{});ok(l.log.filter(e=>/Thi lại tốt nghiệp/.test(e.t)).length===count,'không phát lại kết quả');
+ l.pending=[];E.beginYear(l,{});ok(l.examScore===14,'mở lại năm cũ không thi trước hạn');l.pending=[];l.age=19;E.beginYear(l,{});ok((l.examScore!==14||l.log.some(e=>/Thi lại tốt nghiệp/.test(e.t)))&&!l.flags.retryExamPending,'chỉ có điểm khi đủ năm (điểm thi lại có thể thấp hơn hoặc cao hơn lần đầu; chỉ cần có kết quả mới)');const count=l.log.filter(e=>/Thi lại tốt nghiệp/.test(e.t)).length;l.pending=[];E.beginYear(l,{});ok(l.log.filter(e=>/Thi lại tốt nghiệp/.test(e.t)).length===count,'không phát lại kết quả');
 }
 {
  const l=life(),c=Object.values(E.CAR).find(c=>c.cat==='office'&&c.t.length>2),p={name:'An',sex:'F',alive:true,age:25,status:'married',since:20,inc:10,jobId:c.id,job:c.t[0],rankSince:30};l.partner=p;

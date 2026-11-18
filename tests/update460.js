@@ -23,7 +23,7 @@ for(const c of P.cases){
  l.age++;const ids=P.pool(l,k).map(c=>c.id);ok(!ids.includes('homework')&&!ids.includes('sharing'),'không lặp cùng chuyện năm kế tiếp');
 }
 {
- const l=life(),k=l.kids[0],d=scene(l,k,'homework');k.alive=false;l.kids.push({name:'Bình',sex:'F',born:l.age-8,alive:true,close:60,study:50});P.children(l);const before=JSON.stringify(l.kids);run(l,d,'paid');ok(JSON.stringify(l.kids)===before&&l.money===100,'con mất không tính phí hoặc áp dụng sang con khác');
+ const l=life(),k=l.kids[0],d=scene(l,k,'homework');k.alive=false;l.kids.push({name:'Bình',sex:'F',born:l.age-8,alive:true,close:60,study:50});P.children(l);const snap=ks=>JSON.stringify(ks.map(x=>{const y=Object.assign({},x);delete y.uid110;delete y.blood909;return y;}));const before=snap(l.kids);run(l,d,'paid');ok(snap(l.kids)===before&&l.money===100,'con mất không tính phí hoặc áp dụng sang con khác');
 }
 {
  const l=life(),k=l.kids[0];l.kids.push({name:'Bình',sex:'F',born:l.age-9,alive:true,close:60,study:50});const d=E.DEC.nuoi_day_con.make(l,()=>.3);k.alive=false;const other=l.kids[1].close;run(l,d,'k0');ok(l.kids[1].close===other&&!l.pending.some(x=>x.id==='nd_su_kien'),'menu cũ không đổi người con theo vị trí mảng');

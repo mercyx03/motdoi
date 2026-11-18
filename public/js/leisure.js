@@ -42,12 +42,15 @@
   };
   var NEXTGEN = { vn: ['Minh Vy', 'Kai Phạm', 'Lam Anh', 'Rin Trần'], kr: ['nhóm nhạc NOVA', 'nhóm nhạc ORBIT', 'nhóm nhạc STELLAR'], us: ['Lyra', 'Kai Rivers', 'ARIA'], rapvn: ['rapper Zeno', 'rapper Bảo Khang'], rapus: ['rapper Sena'] };
   // ca sĩ / nhóm còn đang biểu diễn: tuổi 16–58 (nhóm nhạc lâu năm có thể tái hợp đến ~60)
-  function active(a, y) { return y - a.b >= 16 && y - a.b <= 58; }
+  var CATEGORY_FROM = {vn:1990, show:2024, kr:1996, us:1990, rapvn:2000, rapus:1985};
+  var DEBUT = {BTS:2013, BLACKPINK:2016, BIGBANG:2006, BABYMONSTER:2024, CORTIS:2025};
+  function active(a, y) { return y >= (DEBUT[a.n] || a.b + 16) && y - a.b <= 58; }
   function artistsOf(cat, l) {
     var y = yr(l), C = CATS[cat];
+    if (!C || y < CATEGORY_FROM[cat]) return [];
     if (cat === 'show') return C.shows.filter(function (s) { return y >= s.from; }).map(function (s) { return { n: s.n, b: s.b, show: s, archive: y - s.b > 65 }; });
     var a = C.a.filter(function (x) { return active(x, y); });
-    if (a.length < 3 && NEXTGEN[cat]) a = a.concat(NEXTGEN[cat].map(function (n) { return { n: n, b: y - 24, next: true }; }));
+    if (y > 2026 && a.length < 3 && NEXTGEN[cat]) a = a.concat(NEXTGEN[cat].map(function (n) { return { n: n, b: y - 24, next: true }; }));
     return a;
   }
   // tên hiển thị: thành viên chương trình gọi là "anh trai / em xinh / anh tài + tên"
@@ -61,7 +64,8 @@
     if (l.hobby === 'rap') { w.rapvn = (w.rapvn || 0) + 4; w.rapus = (w.rapus || 0) + 2; }
     if (l.hobby === 'kpop') w.kr = (w.kr || 0) + 5;
     var cats = Object.keys(w).filter(function (c) { return artistsOf(c, l).some(function (a) { return !a.archive; }); });
-    var cat = U.wpick(r, cats, function (c) { return w[c]; }) || 'vn';
+    if (!cats.length) return null;
+    var cat = U.wpick(r, cats, function (c) { return w[c]; });
     var a = pick(r, artistsOf(cat, l).filter(function (a) { return !a.archive; }));
     l.idolCat = cat; l.idolBorn = a.b;
     return a.show ? showMember(a.show, r) : a.n;
@@ -72,18 +76,18 @@
     rapvn: [['TP. Hồ Chí Minh', 0.01, 1], ['Hà Nội', 0.01, 1]], rapus: [['Singapore', 0.05, 3], ['Bangkok', 0.045, 2.5]] };
   function makeShow(l, r, cat, name) {
     var v = pick(r, VENUE[cat] || VENUE.vn), far = v[2] > 1.3;
-    if (!isVN(l)) { v = [W_city(l), v[1], 1]; far = false; }
+    var cc=H.resCode(l), local=({vn:['VN'],show:['VN'],rapvn:['VN'],kr:['KR'],us:['US','GB'],rapus:['US']})[cat];
+    if(local && local.includes(cc)){v=[G.W.BY[cc].cities[0],v[1],1];far=false;}
     var what = cat === 'show' ? 'concert ' + name : cat === 'rapvn' && /đêm|giải/.test(name) ? name : 'concert ' + name;
     return { cat: cat, name: name, city: v[0], price: v[1], trip: v[2], far: far, what: what };
   }
-  function W_city(l) { var c = G.W && G.W.BY[l.country]; return c ? c.cities[0] : 'thành phố'; }
   function costOf(l, d) { return d.price * d.trip; }
   // ai trả tiền: dưới 16 tuổi phải có bố mẹ đưa đi; 16–17 tự đi trong nước (tiền riêng hoặc xin bố mẹ), ra nước ngoài phải có người lớn
   SC('concert_di', {
     title: function (l, d) { return d.cat === 'rapvn' ? 'Đêm nhạc rap' : 'Đêm nhạc của thần tượng'; },
     prep: function (l, r, arg) {
       var cat = (arg && arg.cat) || l.idolCat || 'vn', name = arg && arg.name;
-      if (!name) { var list = artistsOf(cat, l); if (!list.length) { cat = 'vn'; list = artistsOf('vn', l); } var a = pick(r, list); name = a.show ? a.show.n : a.n; if (cat === 'rapvn' && ch(r, 0.4)) name = pick(r, CATS.rapvn.shows); }
+      if (!name) { var list = artistsOf(cat, l); var a = list.length && pick(r, list); name = a ? a.n : 'buổi diễn'; if (a && cat === 'rapvn' && ch(r, 0.4)) name = pick(r, CATS.rapvn.shows.filter(function(x){return yr(l)>=2020||!x.includes('All-Star');})); }
       return makeShow(l, r, cat, name);
     },
     text: function (l, d) { return U.cap(d.what) + ' ở ' + d.city + '. Vé khoảng ' + mb(l, d.price) + (d.far ? ', chưa kể vé máy bay, khách sạn (tổng ~' + mb(l, costOf(l, d)) + ')' : '') + (d.cat === 'rapvn' ? '.' : ' — và hết sạch sau vài phút mở bán.') + (l.age < 16 ? ' Bạn còn nhỏ, muốn đi phải có người lớn đưa đi.' : ''); },
@@ -116,24 +120,74 @@
     } else { log('Canh mỏi mắt vẫn không săn được vé ' + d.what + '.', 'bad'); fx(l, { hap: -4 }); }
   }
   // thần tượng tự tổ chức concert (sự kiện ngẫu nhiên) dùng cùng logic
+  function idolShow(l) {
+    var name=l.idol,cat=l.idolCat||'vn';
+    if(!name)return null;
+    if(cat==='show'||/^(anh trai|em xinh|anh tài) /.test(name)){
+      var shows=artistsOf('show',l).filter(function(a){return !a.archive;});
+      var match=shows.find(function(a){return a.n===name||a.show.m.some(function(m){return memberName(a.show.pre,m)===name;});});
+      return match?{cat:'show',name:match.n}:null;
+    }
+    return artistsOf(cat,l).some(function(a){return a.n===name;})?{cat:cat,name:name}:null;
+  }
   SC('concert', {
-    title: 'Đêm nhạc của thần tượng', prep: function (l, r) { if (!l.idol || (l.idolBorn && yr(l) - l.idolBorn > 58)) l.idol = H.pickIdol(r, l); var cat = l.idolCat || 'vn'; var nm = /^(anh trai|em xinh|anh tài) /.test(l.idol) ? (CATS.show.shows.filter(function (s) { return s.m.some(function (m) { return l.idol.indexOf(m) >= 0; }); })[0] || { n: l.idol }).n : l.idol; return makeShow(l, r, /^(anh trai|em xinh|anh tài) /.test(l.idol) ? 'show' : cat, nm); },
+    title: 'Đêm nhạc của thần tượng', prep: function (l, r) {
+      var show=idolShow(l);
+      if(!show){l.idol=H.pickIdol(r,l);show=idolShow(l);}
+      return show?makeShow(l,r,show.cat,show.name):makeShow(l,r,'vn','buổi diễn');
+    },
     text: function (l, d) { return E.DEC.concert_di.def.text(l, d); }, opts: E.DEC.concert_di.def.opts
   });
   // chọn loại concert muốn đi (hành động chủ động)
   SC('concert_chon', {
-    title: 'Đi xem ca nhạc', text: function (l) { return 'Bạn muốn đi xem concert của ai?' + (l.idol ? ' Thần tượng của bạn: ' + l.idol + '.' : ''); },
+    title: 'Đi xem biểu diễn', text: function (l) { return 'Chọn chương trình phù hợp với nơi bạn đang sống.'; },
     opts: Object.keys(CATS).map(function (c) {
       return { k: c, l: function (l) { var a = artistsOf(c, l); return CATS[c].n; }, h: function (l) { return artistsOf(c, l).slice(0, 4).map(function (a) { return a.n; }).join(', ') + (artistsOf(c, l).length > 4 ? '…' : ''); },
         req: function (l) { return artistsOf(c, l).length > 0 && !(c === 'rapus' && l.age < 16); }, ai: function (l) { return c === l.idolCat ? 2 : 0.5; },
         run: function (l, r, log) { l.pending.unshift(E.DEC.concert_di.make(l, r, { cat: c })); } };
-    }).concat([{ k: 'no', l: 'Thôi, để dịp khác', ai: { w: 0.3 }, run: function () { } }])
+    }).concat([{k:'local',l:'Xem một buổi diễn ở địa phương',req:function(l){return localValid(l);},run:function(l,r){l.pending.unshift(E.DEC.musicLocal963.make(l,r));}},{ k: 'no', l: 'Thôi, để dịp khác', ai: { w: 0.3 }, run: function () { } }])
   });
   E.SHOWS = CATS.show.shows; E.showMember = showMember;
-  E.ACT.forEach(function (a) { if (a.id === 'concert') { a.sc = 'concert_chon'; a.l = 'Đi xem ca nhạc, concert'; a.min = 10; a.max = 60; } });
-  T('concert', function (l, a) { return a >= 13 && a <= 45 && l.idol && !(l.idolBorn && yr(l) - l.idolBorn > 58) && free(l); }, 0.1, 3);
+  E.ACT.forEach(function (a) { if (a.id === 'concert') { a.sc = 'concert_chon'; a.l = 'Đi xem biểu diễn'; a.min = 10; a.max = 60; var avail=a.avail; a.avail=function(l){return localValid(l)?(avail?avail(l):true):'Chưa thể đi xem biểu diễn trong hoàn cảnh hiện tại';}; } });
+  T('concert', function (l, a) { return a >= 13 && a <= 45 && localValid(l) && !!idolShow(l) && !(l.idolBorn && yr(l) - l.idolBorn > 58) && free(l); }, 0.1, 3);
   E.TRIG.forEach(function (t, i) { if (t.id === 'concert' && i < E.TRIG.length - 1) t.when = function () { return false; }; }); // bỏ trigger concert cũ (đã thay bằng cái trên)
-  E.artistsOf = artistsOf; E.CONCERT_CATS = CATS;
+  function localProgram(l) {
+    var country=H.resCode(l), urban=l.urban;
+    if(country==='VN')return urban?'một buổi diễn sân khấu':'một buổi văn nghệ ở làng';
+    if(country==='JP')return urban?'một buổi diễn ở nhà hát':'một buổi biểu diễn tại lễ hội địa phương';
+    if(country==='US'||country==='GB')return urban?'một buổi hòa nhạc ở hội trường':'một buổi nhạc sống của cộng đồng';
+    return urban?'một buổi nhạc sống ở thành phố':'một buổi văn nghệ của cộng đồng';
+  }
+  function localValid(l,d) {
+    var conditions=E.CTX945&&E.CTX945.of(l);
+    return l.age>=10&&free(l)&&(!conditions||conditions.war<3&&conditions.epi<3)&&(!d||!d.cc||d.cc===H.resCode(l)&&d.year===yr(l));
+  }
+  SC('musicLocal963',{
+    title:'Buổi diễn ở địa phương',valid:localValid,
+    prep:function(l){return {cc:H.resCode(l),year:yr(l),cost:l.base*.012};},
+    text:function(l){return 'Gần nơi bạn sống có '+localProgram(l)+'. Bạn có thể tới nghe hoặc để dịp khác.';},
+    opts:[
+      {k:'go',l:function(l){return l.age<16?'Xin người chăm sóc đưa đi':'Đi xem buổi diễn';},
+       h:function(l,d){return 'Vé '+H.money(l,d.cost);},req:function(l,d){return (l.age>=16||parents(l))&&(l.age<16||l.money>=d.cost);},
+       run:function(l,r,log,d){
+         if(!localValid(l,d))return;
+         if(l.age<16){
+           if(!parents(l)||l.fam.q<2){log('Người chăm sóc chưa thu xếp đưa bạn đi lần này.','neutral');return;}
+         }else H.cash(l,-d.cost,'Vé xem biểu diễn');
+         fx(l,{hap:4,soc:1});log('Bạn đến xem '+localProgram(l)+' và về nhà với một giai điệu còn vương trong đầu.','good');
+         if(E.childActivity965)E.childActivity965(l,'musicLocal963',localProgram(l));
+       }},
+      {k:'no',l:'Để dịp khác',run:function(){}}
+    ]
+  });
+  E.concertAt = function(l,d) {
+    if(!d||!d.cat)return true;
+    if(!artistsOf(d.cat,l).length)return false;
+    if(d.cat==='rapvn'&&CATS.rapvn.shows.includes(d.name))return yr(l)>=2020||!d.name.includes('All-Star');
+    return !d.name||artistsOf(d.cat,l).some(function(a){return a.n===d.name;});
+  };
+  E.artistsOf = artistsOf;
+  E.TRIG.filter(function(t){return t.id==='kpop';}).forEach(function(t){var when=t.when;t.when=function(l){return artistsOf('kr',l).length>0&&when.apply(this,arguments);};}); E.CONCERT_CATS = CATS;
 
   // ===================================================================
   // 2. SỞ THÍCH TỪ NHỎ → có thể thành nghề
@@ -150,8 +204,13 @@
     bongda: { n: 'đá bóng', w: [2, 0.3], step: ['đá bóng ngoài bãi đất trống', 'vào đội bóng của trường', 'đá giải phong trào', 'được thầy thể dục để ý'] }
   };
   function hob(l) { return l.hobby ? HOBBY[l.hobby] : null; }
+  function hobbyStep(l,i) {
+    var step=hob(l).step[i];
+    if(!E.ERA902||!E.ERA902.anachronism(l,step))return step;
+    return ({rap:'thu một bản nhạc rồi cho bạn bè nghe',nhay:'tập các bước nhảy cùng bạn',ve:'mang tranh tới cho bạn bè xem',chupanh:'thử chụp ảnh bằng máy ảnh mượn được',doc:'viết cảm nhận sách vào sổ',kpop:'trao đổi bìa đĩa và ảnh với bạn bè'})[l.hobby]||step;
+  }
   EV(function (l, a) { return a >= 9 && a <= 15 && !l.hobby; }, 0.3, function (l, a, r, log) {
-    var ks = Object.keys(HOBBY);
+    var ks = Object.keys(HOBBY).filter(function(k){return k!=='kpop'||yr(l)>=(H.resCode(l)==='VN'?2000:1996);}).filter(function(k){return k!=='rap'||yr(l)>=1980;});
     var k = U.wpick(r, ks, function (k) { var h = HOBBY[k], w = h.w[l.sex === 'M' ? 0 : 1]; if (h.talent && l.talent === h.talent) w *= 3; if (k === 'bongda' && l.talent === 'thể thao') w *= 3; if (k === 'guitar' && l.talent === 'âm nhạc') w *= 3; return w; });
     l.hobby = k; l.hobbySk = 10;
     log('Bắt đầu mê ' + HOBBY[k].n + '.', 'good'); fx(l, { hap: 3 });
@@ -159,10 +218,10 @@
   });
   SC('so_thich', {
     title: function (l) { return 'Niềm đam mê ' + hob(l).n; }, prep: function (l, r) { var h = hob(l); return { i: Math.min(h.step.length - 1, Math.floor((l.hobbySk || 10) / 18)) }; },
-    valid: function (l) { return !!hob(l); },
-    text: function (l, d) { return 'Dạo này bạn ' + hob(l).step[d.i] + '. ' + (l.school ? 'Bài vở trên lớp cũng đang nhiều.' : 'Công việc chiếm gần hết thời gian.'); },
+    valid: function (l) { return !!hob(l)&&!(l.hobby==='kpop'&&yr(l)<(H.resCode(l)==='VN'?2000:1996))&&!(l.hobby==='rap'&&yr(l)<1980); },
+    text: function (l, d) { return 'Dạo này bạn ' + hobbyStep(l,d.i) + '. ' + (l.school ? 'Bài vở trên lớp cũng đang nhiều.' : 'Công việc chiếm gần hết thời gian.'); },
     opts: [
-      { k: 'deep', l: 'Dồn sức cho đam mê', h: 'Giỏi lên nhanh, có thể thành nghề', ai: { w: 1, amb: 0.6 }, run: function (l, r, log, d) { l.hobbySk = Math.min(100, (l.hobbySk || 10) + 14); var h = hob(l); log(U.cap(h.step[d.i]) + ' — ' + pick(r, ['càng làm càng mê.', 'bạn bè bắt đầu để ý.', 'thức khuya mà không thấy mệt.']), 'good'); fx(l, { hap: 4, kno: l.school ? -1 : 0 }); if (h.talent && !l.talent) l.talent = h.talent; } },
+      { k: 'deep', l: 'Dồn sức cho đam mê', h: 'Giỏi lên nhanh, có thể thành nghề', ai: { w: 1, amb: 0.6 }, run: function (l, r, log, d) { l.hobbySk = Math.min(100, (l.hobbySk || 10) + 14); var h = hob(l); log(U.cap(hobbyStep(l,d.i)) + ' — ' + pick(r, ['càng làm càng mê.', 'bạn bè bắt đầu để ý.', 'thức khuya mà không thấy mệt.']), 'good'); fx(l, { hap: 4, kno: l.school ? -1 : 0 }); if (h.talent && !l.talent) l.talent = h.talent; } },
       { k: 'keep', l: 'Giữ làm thú vui lúc rảnh', ai: { w: 1.2 }, run: function (l, r, log) { l.hobbySk = Math.min(100, (l.hobbySk || 10) + 4); log('Vẫn ' + hob(l).n + ' lúc rảnh, cho đầu óc thư giãn.', 'neutral'); fx(l, { hap: 2 }); } },
       { k: 'drop', l: 'Bỏ bớt để tập trung việc chính', ai: { w: 0.4 }, run: function (l, r, log) { log('Cất ' + hob(l).n + ' sang một bên để lo việc chính.', 'neutral'); l.hobby = null; } }
     ]

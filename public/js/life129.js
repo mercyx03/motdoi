@@ -56,13 +56,26 @@ var step=E.DEC.di_buoc_nua,stepApply=step.apply;
 step.apply=function(l,d,key,r,log){if(state(l).stepParent||!step.valid(l,d.data))return;stepApply.apply(this,arguments);if(key==='ung_ho'){
  var side=l.fam.fAlive?'f':'m',sex=side==='f'?'F':'M';state(l).stepParent={name:H.stranger(l,r,sex),sex:sex,born:l.age-Math.max(30,l.fam[side+'Age']+l.age+U.randint(r,-5,5)),alive:true,side:side};log((sex==='M'?'Bố dượng ':'Mẹ kế ')+state(l).stepParent.name+' trở thành một thành viên trong gia đình.','good');
 }};
+// Repair only the generated journal entry whose person is known from the save.
+var migrateFamily=E.migrateExt;
+E.migrateExt=function(l){
+ if(migrateFamily)migrateFamily(l);
+ var sp=l.flags.family129&&l.flags.family129.stepParent;
+ if(!sp)return;
+ var tail=' '+sp.name+' trở thành một thành viên trong gia đình.';
+ (l.log||[]).forEach(function(entry){
+  if(sp.sex==='F'&&entry.t==='Bố kế'+tail)entry.t='Mẹ kế'+tail;
+  if(sp.sex==='M'&&entry.t==='Mẹ dượng'+tail)entry.t='Bố dượng'+tail;
+ });
+};
 var elite=E.DEC.elite_hon_nhan,em=elite.make,ea=elite.apply;
 elite.make=function(l,r){var d=em.apply(this,arguments);d.data.salary129=l.cur==='vnd'?U.randint(r,120,300):l.base*(1.5+r()*2);d.text+=' Người được giới thiệu đang quản lý doanh nghiệp gia đình, thu nhập '+H.money(l,d.data.salary129)+'/tháng.';return d;};
 elite.apply=function(l,d,key,r,log){if(l.age<18)return;ea.apply(this,arguments);if(key==='yes'&&l.partner&&l.partner.name===d.data.n){var p=l.partner;p.age=Math.max(18,p.age);p.jobId='tai_phiet';p.job=E.CAR.tai_phiet.t[0];p.inc=d.data.salary129|| (l.cur==='vnd'?200:l.base*2);p.incKnown=true;p.familyBackground129=d.data.who;p.rankSince=l.age;}};
 function secondarySchool(l){return l.school==='upper'||l.school==='lower';}
+function marriageMin(l){return H.resCode(l)==='TH'?E.marryAge(l,l.sex):18;}
 var marriage=E.DEC.marry,mv=marriage.valid,mm=marriage.make,ma=marriage.apply;
-marriage.valid=function(l,d){return !secondarySchool(l)&&l.age>=18&&(!mv||mv(l,d));};
-marriage.make=function(l){var d=mm.apply(this,arguments);if(secondarySchool(l)||l.age<18)d.opts=[{k:'wait',l:'Tập trung học, chưa bàn chuyện kết hôn'}];return d;};
+marriage.valid=function(l,d){return !secondarySchool(l)&&l.age>=marriageMin(l)&&(!mv||mv(l,d));};
+marriage.make=function(l){var d=mm.apply(this,arguments);if(secondarySchool(l)||l.age<marriageMin(l))d.opts=[{k:'wait',l:secondarySchool(l)?'Tập trung học, chưa bàn chuyện kết hôn':'Chờ đến khi đủ tuổi đăng ký'}];return d;};
 marriage.apply=function(l,d,k){if(!marriage.valid(l,d.data))return;return ma.apply(this,arguments);};
 var contract=E.DEC.contract108,cv=contract.valid;contract.valid=function(l,d){return !secondarySchool(l)&&cv(l,d);};
 var work=E.DEC.tim_nguoi_yeu.def.opts.find(function(o){return o.k==='work';});if(work){var wr=work.req;work.req=function(l,d){return !!(l.school||l.job||l.retired||l.age>=60)&&(!wr||wr(l,d));};}
@@ -90,15 +103,22 @@ function marriagePlan(l,k){var s=E.FAMILY126.init(l,k);if(!s.marriage129){var n=
 function suitor(l,k,r){var sex=k.orient==='gay'?k.sex:k.orient==='bi'?(r()<.5?'M':'F'):k.sex==='M'?'F':'M';return {name:H.stranger(l,r,sex),sex:sex,age:Math.max(18,l.age-k.born+U.randint(r,-2,3)),job:U.pick(r,['kỹ sư','giáo viên','nhân viên văn phòng','kinh doanh']),inc:l.base/12*(1+r()*3),family:U.pick(r,['gia đình lao động','gia đình kinh doanh','gia đình trí thức']),compatibility:.5+r()*.5};}
 E.childMarriage126=function(l,k,r,log){
  E.FAMILY53.init(l);var s=E.FAMILY126.init(l,k),age=l.age-k.born,plan=marriagePlan(l,k);if(k.married||age<18||s.marriageAt129===l.age)return true;s.marriageAt129=l.age;
- if(s.proposal129)return true;
- if(!s.match){var min=plan==='early'?18:plan==='late'?35:23;if(plan==='single'||age<min||r()>=.16)return true;s.match={person:suitor(l,k,r),since:l.age,stage:'dating'};log(k.name+' đang tìm hiểu '+s.match.person.name+'.','neutral');return true;}
- var datingPerson=s.match.person,datedAt=datingPerson.at129==null?s.match.since:datingPerson.at129;if(l.age>datedAt)datingPerson.age+=l.age-datedAt;datingPerson.at129=l.age;if(l.age-s.match.since<2)return true;var p=s.match.person;if(p.age<18||p.compatibility<=.25){delete s.match;log(k.name+' dừng tìm hiểu vì chưa phù hợp.','neutral');return true;}
+ var distant=E.FAMILY100?.distant(l,k);
+ if(s.proposal129&&!distant)return true;
+ if(!s.match){var min=plan==='early'?18:plan==='late'?35:23;if(plan==='single'||age<min||r()>=.16)return true;s.match={person:suitor(l,k,r),since:l.age,stage:'dating'};if(!distant)log(k.name+' đang tìm hiểu '+s.match.person.name+'.','neutral');return true;}
+ var datingPerson=s.match.person,datedAt=datingPerson.at129==null?s.match.since:datingPerson.at129;if(l.age>datedAt)datingPerson.age+=l.age-datedAt;datingPerson.at129=l.age;if(l.age-s.match.since<2)return true;var p=s.match.person;if(p.age<18||p.compatibility<=.25){delete s.match;delete s.proposal129;if(!distant)log(k.name+' dừng tìm hiểu vì chưa phù hợp.','neutral');return true;}
+ if(distant){
+  k.married=true;k.spouse126=clone(p);k.spouse126.at129=l.age;
+  delete s.proposal129;delete s.match;
+  log(k.name+' gửi tin cho bạn sau khi đã tự thu xếp lễ cưới với '+p.name+'.','big');
+  return true;
+ }
  s.proposal129={person:clone(p),at:l.age,fee:l.base*.25,cur:l.cur};if(!p.inc)s.proposal129.person.inc=l.base/12*1.5;
  X.next(l,'childWedding129',r,{id:k.parentId},{manual:false});log(k.name+' muốn kết hôn và hỏi ý kiến cùng khoản hỗ trợ tổ chức cưới của bạn.','big');return true;
 };
-function proposal(l,arg){var k=child(l,arg.id);return k&&!k.married&&l.age-k.born>=18&&E.FAMILY126.init(l,k).proposal129;}
+function proposal(l,arg){var k=child(l,arg.id);return k&&!k.married&&l.age-k.born>=18&&!E.FAMILY100?.distant(l,k)&&E.FAMILY126.init(l,k).proposal129;}
 X.menu('childWedding129','Con xin ý kiến chuyện cưới',free,function(l,d){var q=proposal(l,d.arg),k=child(l,d.arg.id);if(!q)return 'Đề nghị đã được giải quyết.';var p=q.person;return k.name+' muốn cưới '+p.name+' · '+p.age+' tuổi · '+p.job+' · thu nhập '+H.money(l,p.inc)+'/tháng · '+(p.family||'gia cảnh đang tìm hiểu')+'. Ngân sách hỗ trợ tổ chức cưới theo thỏa thuận: '+H.money(l,q.fee)+'.';},function(l,arg){var q=proposal(l,arg),k=child(l,arg.id);if(!q)return[];return [{k:'yes',l:'Đồng ý hỗ trợ ngân sách tổ chức cưới',why:q.cur===l.cur&&l.money>=q.fee?true:'Chưa đủ tiền hoặc cần lập lại dự toán theo tiền tệ hiện tại',run:function(l,r,log){if(!proposal(l,arg)||l.money<q.fee||q.cur!==l.cur)return;H.cash(l,-q.fee,'Hỗ trợ tổ chức cưới cho '+k.name);k.married=true;k.spouse126=q.person;k.spouse126.at129=l.age;delete E.FAMILY126.init(l,k).proposal129;delete k.future126.match;k.close=U.clamp((k.close||50)+5,0,100);log(k.name+' kết hôn với '+q.person.name+'. Bạn hỗ trợ '+H.money(l,q.fee)+' tổ chức lễ cưới.','big');}},{k:'no',l:'Chưa đồng ý, từ chối tài trợ và trao đổi với con',run:function(l,r,log){delete k.future126.proposal129;delete k.future126.match;k.close=U.clamp((k.close||50)-5,0,100);log('Bạn chưa đồng ý hôn sự của '+k.name+', chưa chi tiền. Con cần thêm thời gian trao đổi và tự quyết định tương lai.','neutral');}}];},18);
-menu('weddings129','Xem đề nghị kết hôn của con','Xem đối tượng và ngân sách trước khi quyết định.',function(l){return kids(l).filter(function(k){return k.future126&&k.future126.proposal129;}).map(function(k){return{k:k.parentId,l:k.name,run:function(l,r){var q=k.future126.proposal129;if(q.cur!==l.cur){q.fee=l.base*.25;q.cur=l.cur;}X.next(l,'childWedding129',r,{id:k.parentId},{manual:false});}};});});
+menu('weddings129','Xem đề nghị kết hôn của con','Xem đối tượng và ngân sách trước khi quyết định.',function(l){return kids(l).filter(function(k){return k.future126&&k.future126.proposal129&&!E.FAMILY100?.distant(l,k);}).map(function(k){return{k:k.parentId,l:k.name,run:function(l,r){var q=k.future126.proposal129;if(q.cur!==l.cur){q.fee=l.base*.25;q.cur=l.cur;}X.next(l,'childWedding129',r,{id:k.parentId},{manual:false});}};});});
 
 function statusPerson(l){var a=l.flags.affair107;return a&&a.person108&&a.person108.alive!==false?a.person108:(l.flags.network108||[]).find(function(p){return p.alive!==false&&p.age>=18&&p.status==='ambiguous';})||(l.partner&&l.partner.alive!==false&&l.partner.status==='dating'?l.partner:null);}
 E.SC('status129',{title:'Người ấy muốn một danh phận rõ ràng',valid:function(l,d){var p=statusPerson(l);return l.age>=18&&p&&p.age>=18&&(!d||d.name==null||d.name===p.name);},prep:function(l){return {name:statusPerson(l).name};},text:function(l,d){return d.name+' không muốn tiếp tục mối quan hệ mập mờ, đề nghị nói rõ vị trí của mình và trách nhiệm với con nếu có.';},opts:[{k:'talk',l:'Nói thật, thống nhất ranh giới và trách nhiệm',run:function(l,r,log,d){log('Bạn và '+d.name+' trao đổi thẳng thắn. Chuyện cưới hay chia tay cần được giải quyết riêng, trách nhiệm với con vẫn được giữ.','neutral');H.fx(l,{hap:2});}},{k:'delay',l:'Lảng tránh, xin thêm thời gian',run:function(l,r,log,d){var p=statusPerson(l);if(p)p.affection108=Math.max(0,(p.affection108||35)-10);H.fx(l,{hap:-4});log(d.name+' thất vọng vì bạn tiếp tục né tránh chuyện danh phận.','bad');}}]});

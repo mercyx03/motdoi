@@ -18,7 +18,7 @@
   function k(l) { var b = W.BY[H.resCode(l)]; return Math.max(0.6, Math.min(2.5, (b ? b.gdp : 10) / 15)); }
   // Hồ sơ tóc dùng chung (khởi tạo giống health915 để không lệch dữ liệu).
   function hair(l) {
-    var h = l.flags.hair915; if (!h) { var x = u(l.id + ':hair915'); h = l.flags.hair915 = { len: Math.round(5 + x * (l.sex === 'F' ? 40 : 8)), dyed: false, bleached: false, at: l.age }; }
+    var h = E.HEALTH915.hair(l);
     if (h.lift == null) { h.lift = h.bleached ? 2 : 0; h.dmg = h.bleached ? 30 : 0; h.color = h.dyed ? (h.bleached ? 'sáng màu' : 'nâu') : null; h.style = h.style || null; var old = l.flags.id919 && l.flags.id919.dye; if (old && old.hair) { h.color = old.hair; h.dyed = true; delete old.hair; } }
     return h;
   }
@@ -62,6 +62,7 @@
   }, function (l, arg) {
     var h = hair(l), s = bs(l), out = [], tab = arg && arg.tab, back = { k: 'back', l: '← Làm đẹp', run: function (l, r) { X.next(l, 'beauty919', r, {}); } };
     if (!tab) {
+      if(E.ROYAL858)out.push({k:'presentation858',l:'Trang điểm, tóc và phụ kiện theo bối cảnh',run:function(l,r){X.next(l,'royalLook858',r);}});
       [['color', 'Nhuộm tóc'], ['bleach', 'Tẩy tóc (nâng level)'], ['style', 'Làm tóc, tạo kiểu'], ['pierce', 'Bấm khuyên'], ['jewel', 'Trang sức']].forEach(function (t) { if (t[0] === 'bleach' && l.age < 14 || t[0] === 'color' && l.age < 12) return; out.push({ k: t[0], l: t[1], run: function (l, r) { X.next(l, 'beauty919', r, { tab: t[0] }); } }); });
       out.push({ k: 'care', l: 'Phục hồi, dưỡng tóc tại salon', h: mo(l, cost(l, 0.004)), why: h.dmg <= 5 ? 'Tóc đang khỏe' : payWhy(l, cost(l, 0.004)), run: function (l, r, log) { pay(l, cost(l, 0.004), 'Phục hồi tóc'); h.dmg = Math.max(0, h.dmg - 30); log('Tóc được phục hồi, mềm mượt hơn.', 'good'); } });
       if (h.color || h.lift) out.push({ k: 'natural', l: 'Nhuộm phủ về màu gần tự nhiên', h: mo(l, cost(l, 0.004)), why: payWhy(l, cost(l, 0.004)), run: function (l, r, log) { pay(l, cost(l, 0.004), 'Nhuộm phủ tóc'); h.color = null; h.dyed = true; log('Tóc được nhuộm phủ về tông gần màu tự nhiên; phần tóc mới mọc là màu thật.', 'neutral'); } });
@@ -70,6 +71,11 @@
     if (tab === 'color') COLORS.forEach(function (c) { var need = c[1], ok = lift(l) >= need; out.push({ k: 'c:' + c[0], l: (h.color === c[0] ? '✓ ' : '') + 'Nhuộm ' + c[0], h: mo(l, cost(l, 0.006 + need * 0.002)) + (need ? ' · cần nền level ' + need : ''), why: l.age < 12 ? 'Chưa đủ tuổi' : h.color === c[0] ? 'Đang dùng' : !ok ? 'Cần tẩy lên level ' + need + ' trước (đang ' + lift(l) + ')' : payWhy(l, cost(l, 0.006 + need * 0.002)), run: function (l, r, log) { pay(l, cost(l, 0.006 + need * 0.002), 'Nhuộm tóc ' + c[0]); h.color = c[0]; h.dyed = true; h.dmg = Math.min(100, h.dmg + 4); h.colorAt = l.age; if (h.happyAt !== l.age) { h.happyAt = l.age; H.fx(l, { hap: 2 }); } log('Bạn nhuộm tóc màu ' + c[0] + '.', 'good'); } }); });
     if (tab === 'bleach') [1, 2].forEach(function (n) { var c = cost(l, 0.008 * n); out.push({ k: 'b' + n, l: 'Tẩy nâng ' + n + ' level (lên level ' + Math.min(4, lift(l) + n) + ')', h: mo(l, c) + ' · hư tổn +' + n * 18, why: lift(l) + n > 4 ? 'Vượt level tối đa' : bleachWhy(l, n) !== true ? bleachWhy(l, n) : payWhy(l, c), run: function (l, r, log) { if (bleachWhy(l, n) !== true) return; pay(l, c, 'Tẩy tóc'); h.lift = Math.min(4, lift(l) + n); h.bleached = true; h.dyed = true; h.color = h.lift >= 3 ? 'vàng sáng sau tẩy' : 'nâu sáng sau tẩy'; if (h.bleachAt !== l.age) { h.bleachAt = l.age; h.liftYear = 0; } h.liftYear += n; h.dmg = Math.min(100, h.dmg + n * 18); log('Tóc được tẩy lên level ' + h.lift + '. Giờ có thể nhuộm các màu cần nền sáng.', 'neutral'); if (h.dmg >= 80 && u(l.id + ':break:' + l.age) < 0.4) { h.len = Math.max(3, h.len - 8); log('Tóc hư tổn nặng, gãy rụng một đoạn; nên phục hồi trước khi làm tiếp.', 'bad'); } } }); });
     if (tab === 'style') {
+      out.push({ k: 'routine', l: h.growing ? 'Tỉa định kỳ để giữ độ dài hiện tại' : 'Nuôi tóc dài từ bây giờ', run: function (l, r, log) {
+        h.growing = !h.growing;
+        if (!h.growing) h.trimLength = h.len;
+        log(h.growing ? 'Bạn bắt đầu nuôi tóc dài. Tóc thật sẽ mọc dần qua từng năm.' : 'Bạn chọn tỉa thường xuyên để giữ độ dài hiện tại.', 'neutral');
+      } });
       Object.keys(STYLES).forEach(function (sk) {
         var S = STYLES[sk], c = cost(l, S[1]), chemical = S[2] > 0 && sk !== 'braid';
         var why = payWhy(l, c);

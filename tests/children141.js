@@ -35,3 +35,57 @@ l=parent();a=kid(l,'Lan',12);let s=E.migrate(JSON.parse(JSON.stringify(l)));ok(!
 // Debt collectors at school raise the child's fear.
 l=parent();a=kid(l,'Minh',9);C.init(l,a);a.fear140=40;a.persona141.year=null;C.year(l,seq(5),log);ok(a.persona141.fear>=35,'current events affect the child');
 console.log('Children141: '+n+' checks passed.');
+// Higher education from an old child record and sibling handoff through the real vote.
+l=parent(51);
+a=kid(l,'Nghi',24,{edu:5,study:90});
+const startCash=l.money,tuition=l.base*.25;
+ok(pick(l,a,'postgradSupport',()=>0),'can offer to finance a master’s');
+ok(a.edu===5&&a.degree961===6&&a.uniUntil===26&&l.money===startCash-tuition,'first tuition paid and diploma still pending');
+ok(/đang học thạc sĩ/.test(C.profile(l,a))&&!keys(l,a).includes('postgradScholarship'),'show active program without a second application');
+l.age++;
+E.ext.kidsYear(l,()=>.5,log,l.age);
+ok(Math.abs(l.money-(startCash-2*tuition))<1e-6&&a.edu===5,'one annual payment after enrolment');
+l.age++;
+E.ext.kidsYear(l,()=>.5,log,l.age);
+ok(a.edu===6&&!a.uniUntil&&!a.tuition,'graduation awards completed master’s degree');
+const beforePhD=l.money;
+ok(pick(l,a,'postgradScholarship',()=>0)&&a.degree961===7&&a.uniUntil===30&&l.money===beforePhD,'master’s can lead to a funded doctorate');
+for(let y=0;y<4;y++){l.age++;E.ext.kidsYear(l,()=>.5,log,l.age);}
+ok(a.edu===7&&!a.uniUntil&&l.money===beforePhD,'scholarship covers all years until doctorate');
+
+const P=E.PATH139,D=E.DYNASTY908;
+l=parent(34);
+Object.assign(l.fam,{fJob:'doanh nhân',mJob:'kế toán',fAge:29,mAge:27,fAlive:true,mAlive:true,q:5,knownSibs:true});
+l.flags.knownSibs=true;
+const sib={n:'Vân',born:-2,alive:true,sex:'F',job:'kế toán',close:80,wed:true,kids:3,career961:{skill:95,ambition:90,track:0,edu:5,years:2,training:0}};
+const other={n:'Thu',born:-4,alive:true,sex:'F',job:'kế toán',close:70,wed:true,kids:3,career961:{skill:80,ambition:68,track:2,edu:5,years:5,training:0}};
+l.sibList=[sib,other];
+const sid=X.uid(l,sib);
+E.LIFE138.sync(l).people[sid].willing=true;
+E.LIFE138.sync(l).people[X.uid(l,other)].willing=false;
+for(let y=0;y<6;y++){E.wealth.sibYear(l,()=>.99,log,l.age);l.age++;}
+ok(sib.career961.training===6&&/quản lý tại/.test(sib.job),'sibling learns the family business over several years');
+ok(other.job==='trưởng nhóm nghiên cứu'&&!other.career961.training,'unwilling sibling advances through an independent career');
+const q=P.successor(l);
+function succession(key){
+  const def=E.DEC.succession139,d=def.make(l,()=>0,{});
+  const i=d.data.keys.indexOf(key);
+  assert(i>=0);
+  def.apply(l,d,String(i),()=>0,log);
+}
+const cash=l.money,job=l.job;
+succession('decline');
+ok(q.selfWilling===false,'player can pursue a different career');
+const family=D.entities(l).find(e=>e.id==='parents');
+const cap=E.BIZ874.cap(l);
+Object.assign(cap,{self:30,parents:{f:65,m:5},kin:{},others:[]});
+const applicant=D.people(l).find(p=>p.id===sid);
+ok(D.nominate(l,family,applicant,'ceo','steady'),'trained sibling stands for family vote');
+l.age++;
+ok(D.vote(l,family,'ceo',log).won,'experience helps sibling win the vote');
+succession('handoff');
+const company=E.BUSINESS123.companies(l).find(c=>c.family874);
+ok(q.finished&&company&&company.roles.ceo.personId===sid&&company.share===30&&l.job===job&&l.money===cash,'handoff assigns sibling as CEO and keeps career, share and cash');
+E.wealth.sibYear(l,()=>.99,log,l.age);
+ok(sib.job.startsWith('tổng giám đốc'),'ordinary annual career cannot overwrite appointed CEO');
+console.log('9.6.1 postgraduate and sibling handoff scenarios passed');

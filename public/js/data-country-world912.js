@@ -232,16 +232,16 @@
     return [
       { id: k + '_route912', kind: 'education', min: 15, max: 19, source: 'edu',
         title: ['Chọn hướng sau bậc phổ thông tại ', 'Buổi hướng nghiệp cuối cấp ở ', 'Kế hoạch học tiếp của học sinh ở '][v] + N,
-        text: 'Người tư vấn hư cấu muốn bạn so sánh ' + e[0][0] + ', ' + e[1][0] + ' và ' + e[2][0] + '. ' + exam + 'một buổi nói chuyện không tự cấp bằng hay suất học.',
+        text: 'Người tư vấn muốn bạn so sánh ' + e[0][0] + ', ' + e[1][0] + ' và ' + e[2][0] + '. ' + exam + 'một buổi nói chuyện không tự cấp bằng hay suất học.',
         goal: 'tìm lộ trình học vừa sức tại ' + N },
       { id: k + '_training912', kind: 'training', min: 18, source: 'edu',
         title: ['Thử sức với ', 'Tìm hiểu kỹ ', 'Một buổi học thử: '][v] + lower1(e[1][0]) + ' (' + N + ')',
-        text: e[1][1] + ' Người hướng dẫn hư cấu đề nghị bạn xem chương trình, bài thực hành và chi phí trước khi cam kết; không ai hứa việc làm sau một buổi.',
+        text: e[1][1] + ' Người hướng dẫn đề nghị bạn xem chương trình, bài thực hành và chi phí trước khi cam kết; không ai hứa việc làm sau một buổi.',
         goal: 'biết mình có hợp cách học và nghề này không', options: ['Xem chương trình và làm thử một bài thực hành', 'Dự buổi giới thiệu, chưa cam kết', 'Giữ ngân sách, để năm sau tính tiếp'],
         followup: 'Bạn đối chiếu bài thực hành với yêu cầu chương trình; bằng cấp vẫn phải học và được đánh giá đủ.' },
       { id: k + '_work912', kind: 'work', min: 18, source: 'work',
         title: ['Lịch ca mới và quy định ở ', 'Đối chiếu điều kiện làm việc tại ', 'Một đề nghị đổi giờ làm ở '][v] + N,
-        text: 'Đơn vị hư cấu đề nghị đổi lịch làm. ' + w[0] + ': ' + w[1] + ' Bạn muốn đối chiếu hợp đồng và bảng chấm công trước khi nhận; chưa có kết luận ai làm sai.',
+        text: 'Đơn vị đề nghị đổi lịch làm. ' + w[0] + ': ' + w[1] + ' Bạn muốn đối chiếu hợp đồng và bảng chấm công trước khi nhận; chưa có kết luận ai làm sai.',
         goal: 'làm rõ lịch làm và cách trả công có căn cứ', options: ['Giữ bảng giờ và hẹn đối chiếu hợp đồng', 'Đề xuất lịch làm vừa sức khỏe và gia đình', 'Chưa nhận ca mới khi điều khoản chưa rõ'],
         followup: 'Bạn và người phụ trách đối chiếu từng ca với hợp đồng thay vì đoán theo một con số truyền miệng.' },
       { id: k + '_fest912', kind: 'community', min: 12, source: 'culture',
@@ -263,13 +263,14 @@
     if (D.profiles[cc]) throw new Error('Country already has a depth profile: ' + cc);
     var key = { edu: cc.toLowerCase() + 'Edu912', work: cc.toLowerCase() + 'Work912', culture: cc.toLowerCase() + 'Culture912', wed: cc.toLowerCase() + 'Wed912' }, u = urls(cc);
     Object.keys(key).forEach(function (kind) { D.sources[key[kind]] = u[kind].url; });
+    function itemSource(kind,index,row){if(!row[2])return key[kind];var id=key[kind]+':'+index;D.sources[id]=row[2];return id;}
     var p = {
       countryCode: cc,
       education: sp.e.map(function (x, i) { return { id: ['academic', 'vocational', 'higher'][i] + '912', name: x[0], note: x[1], route: ['academic', 'vocational', 'applied'][i], source: key.edu }; }),
       festivals: sp.f.map(function (x) { return { id: /_[a-z]{2}$/.test(x[0]) ? x[0] : x[0] + '_' + cc.toLowerCase(), name: x[1], date: x[2], calendar: x[3], activity: x[4], since: x[5], source: key.culture }; }),
-      marriage: sp.m.map(function (x, i) { return { id: 'wed' + i + '912', name: x[0], note: x[1], source: key.wed }; }),
+      marriage: sp.m.map(function (x, i) { return { id: 'wed' + i + '912', name: x[0], note: x[1], source: itemSource('wed',i,x) }; }),
       cuisine: { dishes: sp.d.slice(), source: key.culture },
-      labor: sp.w.map(function (x, i) { return { id: 'work' + i + '912', name: x[0], note: x[1], source: key.work }; }),
+      labor: sp.w.map(function (x, i) { return { id: 'work' + i + '912', name: x[0], note: x[1], source: itemSource('work',i,x) }; }),
       lifeEvents: events(cc, sp).map(function (ev) { ev.source = key[ev.source]; return ev; })
     };
     if (sp.x) p.exam = sp.x;

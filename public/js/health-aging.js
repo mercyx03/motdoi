@@ -18,7 +18,7 @@ function care(l,c,mode,r,log){
  c.careAt=l.age;c.lastCare=l.age;c.plan=mode==='defer'?'defer':mode==='support'?'supported':'regular';
  if(mode==='review'){E.medBill(l,cost(l),'Tái khám theo dõi '+c.name,log,1);c.severity=Math.max(0,c.severity-1);if(l.ill&&l.ill.n===c.name){l.ill.mult=1+(l.ill.m-1)*.45;l.ill.cure=Math.max(l.ill.cure||0,l.ill.base||0);}H.fx(l,{hap:1});}
  else if(mode==='support'){log('Bạn sắp lại lịch theo dõi và hỏi cơ sở y tế về phương án phù hợp khả năng chi trả; chưa được tính là đã điều trị hay khỏi bệnh.','neutral');}
- else {c.severity=Math.min(3,c.severity+1);log('Bạn hoãn việc theo dõi năm nay. Hồ sơ vẫn còn và nguy cơ mất kiểm soát trong mô phỏng tăng.','neutral');}
+ else {c.severity=Math.min(3,c.severity+1);log('Bạn hoãn việc theo dõi năm nay. Hồ sơ vẫn còn và nguy cơ mất kiểm soát trong cuộc đời này tăng.','neutral');}
  loghist(health(l),l,mode+':'+c.name);return true;
 }
 function burden(l){return health(l).conditions.reduce(function(n,c){return n+c.severity;},0)+(l.flags.dauLung?1:0);}
@@ -36,7 +36,7 @@ C.define('chronic899',{max:8,cancel:function(l,c){return !condition(l,c.data.con
  {k:'support',l:'Thu xếp cách theo dõi phù hợp chi phí',run:function(l,r,log,c){care(l,condition(l,c.data.condition),'support',r,log);C.advance(l,c);}},
  {k:'defer',l:'Hoãn và xem lại khi có điều kiện',run:function(l,r,log,c){care(l,condition(l,c.data.condition),'defer',r,log);C.advance(l,c);}}
  ]},
- {dec:'chronicWork899',after:[1,2],p:1,when:free,title:'Sức khỏe đi cùng công việc và gia đình',text:function(l,c){return 'Sau lần theo dõi '+c.data.name+', bạn cần thu xếp nhịp sống'+(l.job?' và công việc '+E.jobTitle(l):'')+'. Giảm giờ có thể giảm lương trong mô phỏng; không tự buộc nghỉ việc hay bắt người nhà chăm sóc.';},opts:[
+ {dec:'chronicWork899',after:[1,2],p:1,when:free,title:'Sức khỏe đi cùng công việc và gia đình',text:function(l,c){return 'Sau lần theo dõi '+c.data.name+', bạn cần thu xếp nhịp sống'+(l.job?' và công việc '+E.jobTitle(l):'')+'. Giảm giờ có thể giảm lương trong cuộc đời này; không tự buộc nghỉ việc hay bắt người nhà chăm sóc.';},opts:[
  {k:'pace',l:'Giảm giờ trong hai năm, giữ công việc',req:function(l){return !!l.job;},run:function(l,r,log,c){health(l).reducedUntil=l.age+1;log('Bạn giữ công việc với lịch giảm giờ hai năm; thu nhập lao động còn 90% trước các điều chỉnh khác, cổ tức và lương hưu không bị trừ theo lịch này.','neutral');C.advance(l,c);}},
  {k:'adapt',l:'Sắp việc và lịch sinh hoạt, chưa đổi giờ làm',run:function(l,r,log,c){H.fx(l,{hap:1});log('Bạn rà lịch điều trị và nhờ người thân trao đổi khả năng hỗ trợ, chưa giao trách nhiệm cho ai.','neutral');C.advance(l,c);}},
  {k:'push',l:'Giữ nhịp cũ dù đang mệt',run:function(l,r,log,c){var q=condition(l,c.data.condition);q.severity=Math.min(3,q.severity+1);H.fx(l,{hap:-1});C.advance(l,c);}}
@@ -51,13 +51,13 @@ function local(l,p){var code=p.loc||p.abroad&&p.abroad.code||(p.abroad||p.abroad
 function supportPerson(l,s){var w=s.helper&&E.NPC.find(l,s.helper);return w&&w.alive&&w.obj&&!(w.obj.jail&&l.age<w.obj.jail)&&!w.obj.ill&&local(l,w.obj)?w.obj:null;}
 function paidCare(l,s,log){if(s.paidAt===l.age)return s.care==='paid';var fee=l.base*.12;s.paidAt=l.age;if(l.money<fee+l.base*.1){s.care='self';log('Chưa đủ chi phí chăm sóc và dự phòng sinh hoạt; không tự cho nhân sự làm miễn phí.','neutral');return false;}H.cash(l,-fee,'Hỗ trợ chăm sóc tuổi già trong năm');s.care='paid';return true;}
 X.menu('ageingCare899','Tuổi già — tự lập, chăm sóc và di sản tinh thần',function(l){return X.reason(l,60);},function(l){var s=elder(l);return 'Khả năng tự lập trong game '+Math.round(s.independence)+'/100 · cảm giác cô đơn '+Math.round(s.loneliness)+'/100. Đây không phải chẩn đoán y khoa. Kế hoạch chăm sóc: '+({self:'tự lập',paid:'thuê hỗ trợ theo năm',family:'người thân hỗ trợ một phần'}[s.care]||'chưa thu xếp')+'. Chi phí thuê người '+H.money(l,l.base*.12)+'/năm, trả từng năm; người thân cần được hỏi và có thể từ chối.';},function(l){var s=elder(l),out=[
- {k:'community',l:s.independence<45?'Tham gia nhóm trò chuyện từ xa':'Dành thời gian cho nhóm cộng đồng phù hợp sức khỏe',why:s.contactAt!==l.age,run:function(l,r,log){s.contactAt=l.age;s.loneliness=Math.max(0,s.loneliness-10);s.communityUntil=l.age+1;H.fx(l,{hap:2});log('Bạn duy trì liên lạc qua hoạt động vừa sức; cảm giác cô đơn giảm, không tự chữa khỏi bệnh hay tạo thêm con cháu.','good');}},
+ {k:'community',l:s.independence<45?'Tham gia nhóm trò chuyện từ xa':'Dành thời gian cho nhóm cộng đồng phù hợp sức khỏe',why:s.contactAt!==l.age,run:function(l,r,log){s.contactAt=l.age;s.loneliness=Math.max(0,s.loneliness-10);s.communityUntil=l.age+1;H.fx(l,{hap:2});log(E.stamp(l,E.vary(l,'contact-aging',['Bạn duy trì liên lạc qua hoạt động vừa sức; cảm giác cô đơn giảm, không tự chữa khỏi bệnh hay tạo thêm con cháu.','Những lần gặp gỡ và gọi điện đều đặn khiến bạn bớt cô đơn, dù sức khỏe vẫn như cũ.','Bạn giữ nhịp sinh hoạt chung với mọi người; ngày dài dễ chịu hơn nhưng bệnh tật không vì thế mà biến mất.'])),'good');}},
  {k:'paid',l:'Thuê hỗ trợ chăm sóc theo năm',h:H.money(l,l.base*.12)+'/năm',why:s.care!=='paid'||s.paidAt!==l.age,run:function(l,r,log){paidCare(l,s,log);}},
  {k:'self',l:'Tự lập, dừng thuê từ năm sau',run:function(l,r,log){if(s.care==='paid'&&s.paidAt===l.age)s.stopAfterYear=l.age;else s.care='self';delete s.helper;log('Bạn giữ phần việc tự làm được. Chi phí đã dùng không hoàn lại; dừng tự gia hạn từ năm sau.','neutral');}},
  {k:'home',l:'Sắp lại chỗ ở để dễ sinh hoạt',h:H.money(l,l.base*.08),why:!s.adapted&&l.money>=l.base*.08,run:function(l,r,log){if(s.adapted)return;H.cash(l,-l.base*.08,'Điều chỉnh chỗ ở hỗ trợ tự lập');s.adapted=true;s.independence=Math.min(100,s.independence+5);log('Chỗ ở được thu xếp thuận tiện hơn; không tự chuyển nhà, chuyển quyền tài sản hay chữa khỏi bệnh.','good');}},
  {k:'memoir',l:'Ghi lại một ký ức và chọn người nhận',why:s.memoirAt!==l.age,run:function(l,r){X.next(l,'ageingMemory899',r);}}
  ];relatives(l).forEach(function(p){var uid=X.uid(l,p);out.push({k:'ask:'+uid,l:'Hỏi '+p.name+' về khả năng cùng thu xếp chăm sóc',why:s.askAt!==l.age,run:function(l,r,log){s.askAt=l.age;var trust=E.NPC.relation(l,uid).trust;if(!local(l,p)){log(p.name+' đang ở xa, có thể liên lạc nhưng chưa nhận chăm trực tiếp. Bạn cần thu xếp phương án tại nơi đang sống.','neutral');s.loneliness=Math.max(0,s.loneliness-3);return;}if((trust!=null&&trust<35)||r()>(p.job?.65:.85)){log(p.name+' chưa thu xếp được lịch hoặc chưa đồng ý; không bị ép bỏ việc hay tự chuyển đến ở cùng.','neutral');return;}s.helper=uid;s.care='family';log(p.name+' đồng ý phụ giúp một phần sinh hoạt, giữ việc làm và nơi ở riêng. Kế hoạch được xét lại khi hoàn cảnh đổi.','good');}});});return out;},60,'Gia đình');
-X.menu('ageingMemory899','Ký ức muốn gửi lại',function(l){return X.reason(l,60);},'Chọn giữ riêng hoặc gửi một ký ức đã có cho một người thân còn sống. Đây là di sản tinh thần; không thay di chúc hay chuyển tiền và cổ phần.',function(l){var s=elder(l),m=(l.mem||[]).slice(-8);if(!m.length)return [];return m.map(function(m,i){return {k:String(i),l:m.t,why:s.memoirAt!==l.age,run:function(l,r,log){s.memoirAt=l.age;s.memories.push({at:l.age,text:m.t,private:true});if(s.memories.length>12)s.memories.shift();X.next(l,'ageingMemorySend899',r,{index:s.memories.length-1,text:m.t});log('Đã ghi lại ký ức. Bạn tự chọn giữ riêng hoặc gửi, không thay quyền thừa kế.','neutral');}};});},60);
+X.menu('ageingMemory899','Ký ức muốn gửi lại',function(l){return X.reason(l,60);},'Chọn giữ riêng hoặc gửi một ký ức đã có cho một người thân còn sống. Đây là di sản tinh thần; không thay di chúc hay chuyển tiền và cổ phần.',function(l){var s=elder(l),m=(l.mem||[]).slice(-8);if(!m.length)return [];return m.map(function(m,i){return {k:String(i),l:m.t,why:s.memoirAt!==l.age,run:function(l,r,log){s.memoirAt=l.age;s.memories.push({at:l.age,text:m.t,private:true});if(s.memories.length>12)s.memories.shift();X.next(l,'ageingMemorySend899',r,{index:s.memories.length-1,text:m.t});log(E.stamp(l,'Đã ghi lại ký ức. Bạn tự chọn giữ riêng hoặc gửi, không thay quyền thừa kế.'),'neutral');}};});},60);
 X.menu('ageingMemorySend899','Người nhận ký ức',function(l){return X.reason(l,60);},'Chỉ gửi khi bạn xác nhận. Người ở xa nhận qua thư hoặc liên lạc từ xa; bản ghi không chuyển quyền tài sản.',function(l,a){var s=elder(l),m=s.memories[a.index];if(!m||m.text!==a.text||m.sent)return [];return relatives(l).map(function(p){return {k:X.uid(l,p),l:'Gửi cho '+p.name,run:function(l,r,log){if(p.alive===false||m.sent)return;m.sent=true;m.private=false;m.to=X.uid(l,p);H.mem(l,'Gửi ký ức cho '+p.name+': '+m.text,4);log('Đã gửi ký ức cho '+p.name+(local(l,p)?'.':' qua thư hoặc cuộc gọi vì đang ở xa.'),'good');}};}).concat([{k:'private',l:'Giữ riêng',run:function(){m.sent=true;}}]);},60);
 C.define('ageing899',{max:3,cancel:function(l){return l.age<60?{result:'not_elder'}:null;},stages:[
  {dec:'ageingFirst899',after:[1,2],p:1,when:free,title:'Những việc nhỏ cần thêm hỗ trợ',text:function(l){var s=elder(l);return 'Tuổi già của bạn có nhịp riêng. Khả năng tự lập '+Math.round(s.independence)+'/100; '+(!l.partner&&l.widowed?'sau khi mất bạn đời, việc tìm người trò chuyện cũng khó hơn.':'bạn muốn tự quyết phần việc còn làm được.')+' Chọn chăm sóc không tự thay đổi tài sản hoặc bắt con nghỉ việc.';},opts:[
@@ -70,12 +70,12 @@ C.define('ageing899',{max:3,cancel:function(l){return l.age<60?{result:'not_elde
  ]},
  {dec:'ageingLegacy899',after:[2,4],p:1,when:free,title:'Điều muốn giữ lại sau nhiều năm',text:'Sau những lần thu xếp chăm sóc, bạn nghĩ đến câu chuyện muốn để lại. Ký ức và người nhận là lựa chọn của bạn, không đồng nghĩa thay di chúc.',opts:[
  {k:'write',l:'Chọn một ký ức để giữ riêng hoặc gửi lại',run:function(l,r,log,c){X.next(l,'ageingMemory899',r,null,{manual:false});C.close(l,c,'legacy');}},
- {k:'private',l:'Chưa ghi lại, giữ đời sống riêng',run:function(l,r,log,c){C.close(l,c,'private',log,'Bạn giữ quyền riêng tư; kế hoạch chăm sóc vẫn tiếp tục.','neutral');}}
+ {k:'private',l:'Chưa ghi lại, giữ đời sống riêng',run:function(l,r,log,c){C.close(l,c,'private',log,E.stamp(l,'Bạn giữ quyền riêng tư; kế hoạch chăm sóc vẫn tiếp tục.'),'neutral');}}
  ]}
 ]});
 X.menu('consequences899','Những câu chuyện đang tiếp diễn',function(l){return X.reason(l,18);},function(l){var s=C.summary(l);return (s.active.map(function(c){return 'Bắt đầu năm '+c.since+' tuổi · '+({school:'Học tập',career:'Sự nghiệp',marriage:'Hôn nhân',parent:'Gia đình',debt:'Nợ và tài chính',business:'Kinh doanh',friend:'Tình bạn',health:'Phục hồi sau tai nạn',holiday898:'Sở thích tuổi nhỏ',chronic899:'Theo dõi bệnh mạn tính',ageing899:'Chăm sóc tuổi già'}[c.kind]||'Câu chuyện cuộc đời')+' · bước '+(c.stage+1);}).join('\n')||'Hiện không có chuỗi sự kiện đang mở.')+'\nCác chuyện được hẹn tiếp theo hoàn cảnh, không tự coi một lựa chọn đã giải quyết mọi hệ quả. Hồ sơ bệnh và kế hoạch chăm sóc được giữ riêng sau khi một chuỗi khép lại.';},function(l){return [{k:'health',l:'Mở hồ sơ theo dõi sức khỏe',why:health(l).conditions.length>0,run:function(l,r){X.next(l,'healthFollow899',r);}},{k:'elder',l:'Mở kế hoạch tuổi già',why:l.age>=60,run:function(l,r){X.next(l,'ageingCare899',r);}}];},18,'Đời sống');
 function year(l,r,log){if(!l.alive)return;r=E.LIFE138.random(l.id+':health899:'+l.age);var q=health(l);if(q.tick===l.age)return;q.tick=l.age;var c=observe(l);if(c)startHealth(l,c);
- q.conditions.forEach(function(c){if(c.phase==='active'&&(!l.ill||l.ill.n!==c.name)){c.phase='controlled';c.counted=true;}if(c.phase==='controlled'&&!c.legacy&&!l.ill){var risk=relapseRisk(l,c);if(r()<risk){l.ill=Object.assign({},c.template,{since:l.age,cure:c.template.base||.08,treated:null});c.phase='active';c.severity=Math.min(3,c.severity+1);c.relapses++;log('Hồ sơ '+c.name+' có đợt mất kiểm soát trong mô phỏng. Cần xem lại theo dõi; không phải bệnh mới để tính thuốc duy trì hai lần.','neutral');startHealth(l,c);}}if(c.lastCare<l.age-1)c.severity=Math.min(3,c.severity+.25);});
+ q.conditions.forEach(function(c){if(c.phase==='active'&&(!l.ill||l.ill.n!==c.name)){c.phase='controlled';c.counted=true;}if(c.phase==='controlled'&&!c.legacy&&!l.ill){var risk=relapseRisk(l,c);if(r()<risk){l.ill=Object.assign({},c.template,{since:l.age,cure:c.template.base||.08,treated:null});c.phase='active';c.severity=Math.min(3,c.severity+1);c.relapses++;log('Hồ sơ '+c.name+' có đợt mất kiểm soát trong cuộc đời này. Cần xem lại theo dõi; không phải bệnh mới để tính thuốc duy trì hai lần.','neutral');startHealth(l,c);}}if(c.lastCare<l.age-1)c.severity=Math.min(3,c.severity+.25);});
  if(l.age<60)return;var s=elder(l),helper=supportPerson(l,s);if(s.care==='family'&&!helper){s.care='self';delete s.helper;log('Người hỗ trợ không còn ở gần hoặc không thể tiếp tục. Kế hoạch cần thu xếp lại, không gọi người đã mất.','neutral');}if(s.stopAfterYear!=null&&s.stopAfterYear<l.age){s.care='self';delete s.stopAfterYear;}if(s.care==='paid')paidCare(l,s,log);
  var target=U.clamp(100-Math.max(0,l.age-65)*.8-Math.max(0,65-l.st.hea)*.65-burden(l)*4+(s.adapted?5:0),10,100);s.independence=U.clamp(s.independence+(target-s.independence)*.35,10,100);
  var company=!!(l.partner&&l.partner.alive!==false)||helper||s.communityUntil>=l.age;
@@ -83,26 +83,77 @@ function year(l,r,log){if(!l.alive)return;r=E.LIFE138.random(l.id+':health899:'+
  if(!C.active(l,'ageing899')&&(s.chainAt==null||l.age-s.chainAt>=10)){var chain=C.start(l,'ageing899',{dec:'ageingCare899',k:'assessment'},{data:{}});if(chain)s.chainAt=l.age;}
 }
 var treat=E.DEC.treat,make=treat.make,apply=treat.apply;treat.make=function(l){var d=make.apply(this,arguments);d.data.ill899=l.ill&&l.ill.n+':'+l.ill.since;return d;};treat.apply=function(l,d,k,r,log){if(d.data.done899||!l.ill||l.ill.treatAt899===l.age||d.data.ill899&&d.data.ill899!==l.ill.n+':'+l.ill.since)return;d.data.done899=true;l.ill.treatAt899=l.age;var out=apply.apply(this,arguments),c=observe(l);if(c){c.plan=k==='none'?'defer':'regular';if(k!=='none'){c.lastCare=l.age;c.careAt=l.age;}startHealth(l,c);}return out;};
-var career=E.careerYear;E.careerYear=function(l,r,log){var f=factor(l),income=career.apply(this,arguments);if(income>0&&f<1&&!(E.FOOTBALL&&E.FOOTBALL.employed(l))){if(l.job&&l.job.id===E.BUSINESS133.chair)E.BUSINESS123.controlled(l).forEach(function(c){if(c.chairCost137)c.chairCost137*=f;});if(l.alive)log('Nhịp làm việc theo sức khỏe trong mô phỏng: thu nhập lao động còn '+Math.round(f*100)+'%; công việc không tự bị xóa.','neutral');income*=f;}return income;};
+var career=E.careerYear;E.careerYear=function(l,r,log){var f=factor(l),income=career.apply(this,arguments);if(income>0&&f<1&&!(E.FOOTBALL&&E.FOOTBALL.employed(l))){if(l.job&&l.job.id===E.BUSINESS133.chair)E.BUSINESS123.controlled(l).forEach(function(c){if(c.chairCost137)c.chairCost137*=f;});if(l.alive)log(E.vary(l,'rhythm-aging',['Nhịp làm việc theo sức khỏe trong cuộc đời này: thu nhập lao động còn '+Math.round(f*100)+'%; công việc không tự bị xóa.','Ở tuổi '+l.age+', sức khỏe buộc bạn làm việc chậm lại: thu nhập lao động còn '+Math.round(f*100)+'%, việc làm vẫn được giữ.','Bạn làm việc theo sức mình; thu nhập lao động năm nay còn '+Math.round(f*100)+'%, công việc không bị mất.']),'neutral');income*=f;}return income;};
 // Extend the existing accident chain without reindexing stages in old saves.
-var rehab=C.KINDS.health,rehabStage=rehab.stages[1],oldDec=rehabStage.dec,oldWhen=rehabStage.when;
+var rehab=C.KINDS.health,rehabStage=rehab.stages[1],oldDec=rehabStage.dec,oldWhen=rehabStage.when,oldLapse=rehabStage.lapse,oldTag=rehabStage.tag;
 var physio=rehab.stages[0].opts.find(function(o){return o.k==='physio';});
-physio.h=function(l){return 'Bắt đầu liệu trình · '+H.money(l,l.base*.06)+E.medNote(l,l.base*.06,.5);};
-physio.req=function(l){return !l.indep||l.money>=l.base*.06*(1-.5*E.bhytShare(l));};
+function rehabCost(l){return E.medOwnCost(l,l.base*.06,.5);}
+function canPayRehab(l){var own=rehabCost(l);return own===0||l.money>=own;}
+function rehabQuote(l){var own=rehabCost(l);return own>0?'Phần bạn trả: '+H.money(l,own):'';}
+physio.h=rehabQuote;
+physio.req=canPayRehab;
 physio.run=function(l,r,log,c){E.medBill(l,l.base*.06,'Bắt đầu phục hồi sau tai nạn',log,.5);c.data.rehab=true;c.data.rehab899={sessions:1,at:l.age};H.fx(l,{hea:2});log('Bắt đầu phục hồi chức năng, chưa kết luận đã khỏi đau lưng. Cần đánh giá tiếp qua các năm.','neutral');C.advance(l,c,[1,2]);};
 // stageDec retained references to each option, including the changed run/req/h.
 var physioDef=E.DEC.ch144_health_rehab.def.opts.find(function(o){return o.k==='physio';});physioDef.h=physio.h;
-rehabStage.when=function(l,c){return c.data.rehab899?free(l):oldWhen(l,c);};rehabStage.p=function(l,c){return c.data.rehab899?1:l.flags.dauLung?.45:.35;};
+rehabStage.when=function(l,c){
+ var recovery=c.data.rehab899;
+ return recovery?free(l)&&(!recovery.waitFunds||canPayRehab(l)):oldWhen(l,c);
+};
+rehabStage.lapse=function(l,c,log){
+ if(!c.data.rehab899?.waitFunds)return oldLapse(l,c,log);
+ C.close(l,c,'rehab_wait_expired',log,'Hết thời gian giữ lịch phục hồi sau '+c.data.rehab899.sessions+' đợt đã hoàn thành. Cơn đau cũ vẫn có thể cần theo dõi.','neutral');
+};
+rehabStage.p=function(l,c){return c.data.rehab899?1:l.flags.dauLung?.45:.35;};
+rehabStage.tag=function(l,c){return c.data.rehab899?null:oldTag;};
 rehabStage.dec=function(l,c){return c.data.rehab899?'rehabProgress899':oldDec(l,c);};
 function rehabValid(l,d){var c=d&&C.chain(l,d.cid);return !!(free(l)&&c&&c.kind==='health'&&c.stage===1&&c.data.rehab899&&c.open&&c.open.token===d.token&&!d.done);}
 function rehabClaim(l,d){if(!rehabValid(l,d))return null;var c=C.chain(l,d.cid);d.done=true;c.open=null;c.last=l.age;return c;}
-E.SC('rehabProgress899',{title:'Đánh giá tiến trình phục hồi sau tai nạn',prep:function(l,r,a){return {cid:a&&a.cid,token:a&&a.token};},valid:rehabValid,text:function(l,d){var c=C.chain(l,d.cid);return c&&c.data.rehab899?'Đã hoàn thành '+c.data.rehab899.sessions+' đợt theo dõi. '+(l.flags.dauLung?'Cơn đau vẫn cần đánh giá.':'Bạn xem mức vận động đã phục hồi.')+' Có thể tiếp tục liệu trình, xin lịch làm nhẹ hoặc dừng; không có thao tác chữa khỏi tức thì.':'Hồ sơ phục hồi đã khép lại.';},opts:[
- {k:'continue',l:'Theo tiếp liệu trình và đánh giá năm sau',h:function(l){return H.money(l,l.base*.06)+E.medNote(l,l.base*.06,.5);},run:function(l,r,log,d){if(!rehabValid(l,d))return;if(l.indep&&l.money<l.base*.06*(1-.5*E.bhytShare(l))){log('Chưa đủ phần chi trả; chưa thu tiền và chưa cộng tiến trình.','neutral');X.next(l,'rehabProgress899',r,{cid:d.cid,token:d.token},{manual:false});return;}var c=rehabClaim(l,d);E.medBill(l,l.base*.06,'Theo dõi phục hồi chức năng',log,.5);c.data.rehab899.sessions++;H.fx(l,{hea:2});if(c.data.rehab899.sessions>=3){if(r()<.7){delete l.flags.dauLung;C.close(l,c,'rehabilitated',log,'Sau nhiều đợt phục hồi, khả năng vận động được cải thiện trong mô phỏng. Kỷ niệm tai nạn và hồ sơ được giữ.','good');}else C.close(l,c,'chronic',log,'Phục hồi giúp vận động tốt hơn nhưng còn đau kéo dài; tiếp tục thu xếp sinh hoạt, không báo đã khỏi.','neutral');}else{c.next=l.age+1;c.due=l.age+3;log('Đã hoàn thành thêm một đợt; hẹn đánh giá tiếp năm sau.','neutral');}}},
- {k:'lighter',l:'Thu xếp lịch làm nhẹ trong hai năm',req:function(l){return !!l.job;},run:function(l,r,log,d){var c=rehabClaim(l,d);if(!c)return;health(l).reducedUntil=l.age+1;c.next=l.age+1;c.due=l.age+3;log('Giữ nghề với lịch giảm giờ hai năm; thu nhập lao động tính theo lịch mới, không tự mất việc.','neutral');}},
+function rehabWait(l,c,gap){
+ var q=c.data.rehab899;
+ q.waitFunds=!canPayRehab(l);
+ c.next=l.age+gap;
+ c.due=q.waitFunds?(q.budgetDue||(q.budgetDue=l.age+3)):l.age+3;
+}
+function deferRehab(l,d,log){
+ var c=rehabClaim(l,d);if(!c)return;
+ rehabWait(l,c,1);
+ log('Bạn giữ tiến độ đã có và hoãn đợt tiếp theo. Lịch sẽ mở lại nếu bạn đủ phần chi trả trong thời gian giữ hẹn.','neutral');
+}
+E.SC('rehabProgress899',{title:'Đánh giá tiến trình phục hồi sau tai nạn',prep:function(l,r,a){return {cid:a&&a.cid,token:a&&a.token};},valid:rehabValid,text:function(l,d){
+ var c=C.chain(l,d.cid);if(!c?.data.rehab899)return 'Hồ sơ phục hồi đã khép lại.';
+ return 'Đã hoàn thành '+c.data.rehab899.sessions+' đợt theo dõi. '+
+  (canPayRehab(l)?'Bạn có thể tiếp tục theo dõi hoặc thu xếp lịch sinh hoạt.':'Bạn chưa đủ phần chi trả '+H.money(l,rehabCost(l))+'. Có thể giữ lịch để thu xếp thêm.');
+},opts:[
+ {k:'continue',l:'Theo tiếp liệu trình và đánh giá năm sau',h:rehabQuote,req:canPayRehab,run:function(l,r,log,d){
+  var c=rehabClaim(l,d);if(!c)return;
+  E.medBill(l,l.base*.06,'Theo dõi phục hồi chức năng',log,.5);
+  var q=c.data.rehab899;q.sessions++;delete q.waitFunds;delete q.budgetDue;H.fx(l,{hea:2});
+  if(q.sessions>=3){
+   if(r()<.7){delete l.flags.dauLung;C.close(l,c,'rehabilitated',log,'Sau nhiều đợt phục hồi, khả năng vận động được cải thiện.','good');}
+   else C.close(l,c,'chronic',log,'Phục hồi giúp vận động tốt hơn nhưng còn đau kéo dài.','neutral');
+  }else{c.next=l.age+1;c.due=l.age+3;log('Đã hoàn thành thêm một đợt; hẹn đánh giá tiếp năm sau.','neutral');}
+ }},
+ {k:'defer',l:'Hoãn đợt này để thu xếp chi phí',req:function(l){return !canPayRehab(l);},run:function(l,r,log,d){deferRehab(l,d,log);}},
+ {k:'lighter',l:'Thu xếp lịch làm nhẹ trong hai năm',req:function(l){return !!l.job&&!(l.flags.health899?.reducedUntil>=l.age);},run:function(l,r,log,d){
+  var c=rehabClaim(l,d);if(!c)return;
+  health(l).reducedUntil=l.age+1;rehabWait(l,c,2);
+  log('Bạn giữ công việc với lịch giảm giờ hai năm. Thu nhập lao động tính theo lịch mới.','neutral');
+ }},
  {k:'pause',l:'Tạm dừng liệu trình, giữ hồ sơ và thu xếp sinh hoạt',run:function(l,r,log,d){var c=rehabClaim(l,d);if(c)C.close(l,c,'rehab_paused',log,'Liệu trình tạm dừng; không kết luận đã khỏi. Dấu hiệu đau cũ và hồ sơ tai nạn được giữ.','neutral');}}
 ]});
+var rehabApply=E.DEC.rehabProgress899.apply;
+E.DEC.rehabProgress899.apply=function(l,d,key,r,log){
+ if(key==='continue'&&!canPayRehab(l)){deferRehab(l,d.data,log);return;}
+ return rehabApply.apply(this,arguments);
+};
+E.DEC.rehabProgress899.auto=function(l,d,r){
+ var keys=d.opts.map(function(o){return o.k;});
+ if(!canPayRehab(l)&&keys.includes('defer'))return 'defer';
+ // An older queued decision can still have 'continue'; apply turns it into a budget hold.
+ return keys.includes('continue')?'continue':keys[0];
+};
 var flareTreat=E.DEC.ch144_health_flare.def.opts.find(function(o){return o.k==='treat';});
-flareTreat.l='Bắt đầu liệu trình theo dõi phục hồi nhiều năm';flareTreat.h=physio.h;flareTreat.run=function(l,r,log,d){if(!E.DEC.ch144_health_flare.valid(l,d))return;if(l.indep&&l.money<l.base*.06*(1-.5*E.bhytShare(l))){log('Chưa đủ phần chi trả. Chưa bắt đầu liệu trình; có thể thu xếp hỗ trợ sau.','neutral');return;}var c=C.chain(l,d.cid);d.done=true;c.open=null;c.data.rehab899={sessions:1,at:l.age};c.next=l.age+1;c.due=l.age+3;E.medBill(l,l.base*.06,'Bắt đầu theo dõi phục hồi đau lưng',log,.5);log('Bắt đầu liệu trình nhiều năm, chưa coi cơn đau đã khỏi.','neutral');};
+flareTreat.l='Bắt đầu liệu trình theo dõi phục hồi nhiều năm';flareTreat.h=rehabQuote;flareTreat.req=canPayRehab;flareTreat.run=function(l,r,log,d){if(!E.DEC.ch144_health_flare.valid(l,d)||!canPayRehab(l))return;var c=C.chain(l,d.cid);d.done=true;c.open=null;c.data.rehab899={sessions:1,at:l.age};c.next=l.age+1;c.due=l.age+3;E.medBill(l,l.base*.06,'Bắt đầu theo dõi phục hồi đau lưng',log,.5);log('Bắt đầu liệu trình nhiều năm, chưa coi cơn đau đã khỏi.','neutral');};
 E.HOOKS.year.push(year);
 var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);var q=health(l);if(!Array.isArray(q.conditions))q.conditions=[];if(!Array.isArray(q.history))q.history=[];q.conditions=q.conditions.filter(function(c){return c&&typeof c.id==='string'&&typeof c.name==='string';});q.conditions.forEach(function(c){c.severity=Number.isFinite(c.severity)?U.clamp(c.severity,0,3):0;});observe(l);if(l.flags.chronic>0&&!q.conditions.length)q.conditions.push({id:'legacy',name:'Hồ sơ bệnh mạn tính từ bản lưu cũ',phase:'controlled',legacy:true,counted:true,severity:0,lastCare:l.age-1,plan:'unset',relapses:0});};
 E.HEALTH899={state:health,observe:observe,remit:remit,care:care,year:year,factor:factor,needs:needs,risk:relapseRisk};E.AGEING899={state:elder,relatives:relatives,local:local,year:year};

@@ -56,7 +56,7 @@
     if (r() < 0.2) list.push('giảm bạch cầu'); if (r() < 0.25) list.push('thiếu máu'); if (r() < 0.1) list.push('giảm tiểu cầu');
     p.side = list; if (list.indexOf('rụng tóc') >= 0) { var h = hair(l); h.len = 0; h.lostAt = l.age; }
     H.fx(l, { hea: -2 - (list.indexOf('giảm bạch cầu') >= 0 ? 4 : 0), hap: -3 });
-    log('Hóa trị đợt này gây ' + (list.length ? list.join(', ') : 'ít tác dụng phụ') + '. ' + (list.indexOf('rụng tóc') < 0 ? 'Bạn không bị rụng tóc — không phải phác đồ nào cũng gây rụng tóc. ' : 'Tóc thường mọc lại sau khi ngừng hóa trị. ') + (list.indexOf('thiếu máu') >= 0 || list.indexOf('giảm tiểu cầu') >= 0 ? 'Bác sĩ cân nhắc truyền chế phẩm máu theo chỉ định.' : ''), 'neutral');
+    log(('Hóa trị đợt này gây ' + (list.length ? list.join(', ') : 'ít tác dụng phụ') + '. ' + (list.indexOf('rụng tóc') < 0 ? 'Bạn không bị rụng tóc — không phải phác đồ nào cũng gây rụng tóc. ' : 'Tóc thường mọc lại sau khi ngừng hóa trị. ') + (list.indexOf('thiếu máu') >= 0 || list.indexOf('giảm tiểu cầu') >= 0 ? 'Bác sĩ cân nhắc truyền chế phẩm máu theo chỉ định.' : '')).replace(/\s+$/, ''), 'neutral'); // 9.0.2: bỏ dấu cách thừa cuối câu trước phần chi phí
   }
   X.menu('cancerPlan915', 'Phác đồ điều trị ung thư', function (l) { return plan(l) ? true : 'Không có điều trị ung thư đang diễn ra'; },
     function (l) { var p = plan(l); if (!p) return ''; return l.ill.n + ' · ' + STAGE[p.stage].n + '. Chọn từng phương pháp theo chỉ định; mỗi phương pháp có chi phí và tác động riêng. Không phương pháp nào bảo đảm khỏi bệnh; đáp ứng còn tùy loại, giai đoạn, thể trạng và khả năng tiếp cận điều trị.' + (Object.keys(p.mods).length ? ' Đã chọn: ' + Object.keys(p.mods).map(function (k) { return MOD[k].n.toLowerCase(); }).join(', ') + '.' : '') + (p.side.length ? ' Tác dụng phụ gần nhất: ' + p.side.join(', ') + '.' : '') + (p.port ? ' Có buồng truyền dưới da.' : ''); },
@@ -126,9 +126,26 @@
 
   // ===================== Tóc và hiến tóc =====================
   // Tóc mọc khoảng 12–15 cm mỗi năm (tham số gameplay). Hai chương trình hiến tóc dưới đây là HƯ CẤU, điều kiện khác nhau.
-  var HAIR = [{ k: 'p1', n: 'Chương trình làm tóc giả cho bệnh nhi (hư cấu)', min: 20, dyed: true, bleached: false }, { k: 'p2', n: 'Quỹ tóc giả cộng đồng (hư cấu)', min: 30, dyed: true, bleached: true }];
-  function hair(l) { var h = l.flags.hair915; if (!h) { var r = rng(l.id + ':hair915'); h = l.flags.hair915 = { len: Math.round(5 + r() * (l.sex === 'F' ? 40 : 8)), dyed: false, bleached: false, at: l.age }; } return h; }
-  function hairYear(l) { var h = hair(l); if (h.at === l.age) return; var yrs = l.age - h.at; h.at = l.age; if (!(l.ill && plan(l) && plan(l).side.indexOf('rụng tóc') >= 0)) h.len = Math.min(120, h.len + 13 * yrs); }
+  var HAIR = [{ k: 'p1', n: 'Chương trình làm tóc giả cho bệnh nhi', min: 20, dyed: true, bleached: false }, { k: 'p2', n: 'Quỹ tóc giả cộng đồng', min: 30, dyed: true, bleached: true }];
+  // Routine trims maintain a personal length unless the player chooses to grow it out.
+  function groomedLength(l) {
+    var r = rng(l.id + ':hair915'), target = Math.round(3 + r() * (l.sex === 'F' ? 30 : 9));
+    return Math.min(target, 2 + 10 * l.age);
+  }
+  function hair(l) {
+    var h = l.flags.hair915;
+    if (!h) h = l.flags.hair915 = { len: groomedLength(l), dyed: false, bleached: false, at: l.age };
+    if (l.age < 12 && !h.growing && (!h.style || h.len === 120)) h.len = Math.min(h.len, groomedLength(l));
+    return h;
+  }
+  function hairYear(l) {
+    var h = hair(l), yrs = l.age - h.at;
+    if (yrs <= 0) return;
+    h.at = l.age;
+    if (l.ill && plan(l) && plan(l).side.indexOf('rụng tóc') >= 0) return;
+    var limit = h.growing ? 120 : Math.max(h.len, h.trimLength == null ? groomedLength(l) : h.trimLength);
+    h.len = Math.min(limit, h.len + (l.age === 1 ? 10 : 13) * yrs);
+  }
   X.menu('hair915', 'Tóc và hiến tóc', function (l) { return X.reason(l, 12); }, function (l) { var h = hair(l); return 'Tóc hiện dài khoảng ' + h.len + ' cm' + (h.dyed ? ', đã nhuộm' : '') + (h.bleached ? ', đã tẩy' : '') + '. Mỗi chương trình có điều kiện riêng; cắt hiến sẽ trừ đúng phần tóc đã cắt và tóc cần thời gian mọc lại.'; },
     function (l) { var h = hair(l), out = HAIR.map(function (P) { var ok = h.len - 5 >= P.min && (!h.bleached || P.bleached) && (!h.dyed || P.dyed); return { k: P.k, l: 'Hiến cho ' + P.n, h: 'Cần tối thiểu ' + P.min + ' cm' + (P.bleached ? '' : ', không nhận tóc đã tẩy'), why: ok ? true : h.bleached && !P.bleached ? 'Chương trình này không nhận tóc đã tẩy' : 'Tóc chưa đủ dài (cần giữ lại khoảng 5 cm)',
       run: function (l, r, log) { var x = hair(l); if (!(x.len - 5 >= P.min) || x.bleached && !P.bleached) return; var cut = x.len - 5; x.len = 5; x.donated = (x.donated || 0) + 1; H.fx(l, { hap: 4, karma: 2 }); log('Bạn cắt ' + cut + ' cm tóc gửi ' + P.n + '. Tóc còn khoảng 5 cm, sẽ mọc lại dần.', 'good'); } }; });

@@ -67,7 +67,7 @@ function job(l){return l.job&&JOBS[E.resolveJob(l.job.id)]?E.resolveJob(l.job.id
 function profile(l){return BY[current(l)]||PROFILES[PROFILES.length-1];}
 function state(l){
  var s=l.flags.worldCrime||(l.flags.worldCrime={groups:{},seen:{},serial:0,count:0}),code=current(l);
- if(s.current!==code){var old=s.groups[s.current];if(old)old.joined=false;s.current=code;s.serial++;var u=l.flags.underworld;if(u&&u.worldOrigin&&u.worldOrigin!==code)u.linked=false;}
+ if(s.current!==code){var old=s.groups[s.current];if(old){old.joined=false;delete old.lead;delete old.joinedAt;old.trust=30;}s.current=code;s.serial++;var u=l.flags.underworld;if(u&&u.worldOrigin&&u.worldOrigin!==code)u.linked=false;}
  if(!s.groups[code])s.groups[code]={joined:false,choice:0,trust:30};return s;
 }
 function group(l){var s=state(l);return s.groups[current(l)];}
@@ -78,14 +78,14 @@ function heat(l,n){var u=under(l);u.heat=U.clamp((u.heat||0)+n,0,100);}
 function jobKey(l){return[l.job&&l.job.id,l.job&&l.job.rank,l.job&&l.job.since,l.job&&l.job.rankSince,l.flags.worldCareerSerial||0].join('|');}
 function context(l){var s=state(l);return{code:current(l),at:l.age,job:jobKey(l),token:++s.serial};}
 function validContext(l,d){return foreign(l)&&free(l)&&d&&d.code===current(l)&&d.at===l.age&&d.job===jobKey(l)&&d.token===state(l).serial;}
-function leave(l,log){group(l).joined=false;under(l).linked=false;if(job(l))E.quitCrime(l,log,'Chấm dứt công việc trái phép, bắt đầu tìm việc hợp pháp.');heat(l,-8);if(under(l).hunted)log('Đã rời việc bất chính nhưng mối đe dọa cũ vẫn cần được giải quyết.','neutral');}
+function leave(l,log){var g=group(l);g.joined=false;delete g.lead;delete g.joinedAt;g.trust=30;under(l).linked=false;if(job(l))E.quitCrime(l,log,'Chấm dứt công việc trái phép, bắt đầu tìm việc hợp pháp.');heat(l,-8);if(under(l).hunted)log('Đã rời việc bất chính nhưng mối đe dọa cũ vẫn cần được giải quyết.','neutral');}
 function pool(l){if(!foreign(l)||!free(l))return[];var s=state(l),g=group(l);if(!job(l)&&!g.joined||s.at===l.age&&s.count>=2)return[];var p=profile(l);return CASES.filter(function(c){var seen=s.seen[c.id];return(!c.job||c.job===job(l))&&(!c.profile||c.profile===p[0])&&(!c.joined||g.joined)&&(!c.family||hasFamily(l))&&(seen==null||l.age-seen>=5);});}
 function eventValid(l,d){return d&&d.caseId?validContext(l,d)&&pool(l).some(function(c){return c.id===d.caseId;}):pool(l).length>0;}
 function caseFor(d){return CASES.filter(function(c){return c.id===d.caseId;})[0];}
 function mark(l,d){var s=state(l);if(s.at!==l.age){s.at=l.age;s.count=0;}s.count++;s.seen[d.caseId]=l.age;s.serial++;}
 function capital(l){return Math.max(0,l.base)*.08;}
 function arrest(l){if(!(l.sched||[]).some(function(s){return s.id==='bi_bat';})&&!(l.jailUntil!=null&&l.age<l.jailUntil))H.sched(l,'bi_bat',0,{why:'tham gia hoạt động trái phép trong mạng tội phạm',sev:2});}
-function outcome(l,r,log,d,k){if(!eventValid(l,d))return;var c=caseFor(d);if(k==='risk'&&l.money<capital(l))return;mark(l,d);
+function outcome(l,r,log,d,k){if(!eventValid(l,d))return;var c=caseFor(d);if(k==='risk'&&(c.job==='wc_hitman'||l.money<capital(l)))return;mark(l,d);
  var where=W.BY[current(l)].name+' · '+c.title+': ';
  if(k==='risk'){var amt=capital(l);H.cash(l,-amt,'Vốn việc làm bất chính');heat(l,12);H.fx(l,{karma:-3});if(r()<.45){var payout=amt*1.8;H.cash(l,payout,'Thu hồi vốn và khoản chia bất chính');log(where+'bạn tiếp tục dính líu, tự góp '+H.money(l,amt)+', nhận lại '+H.money(l,payout)+' gồm vốn. Rủi ro pháp lý và trả thù vẫn còn.','bad');}else{log(where+'việc đổ bể, mất '+H.money(l,amt)+' đã góp; các mối liên hệ quay sang trách móc.','bad');if(r()<.18+(under(l).heat||0)/1000)arrest(l);} }
  else if(k==='leave'){leave(l,log);log(where+'bạn quyết định rời việc bất chính, tìm đường làm lại.','good');}
@@ -94,17 +94,97 @@ function outcome(l,r,log,d,k){if(!eventValid(l,d))return;var c=caseFor(d);if(k==
 }
 E.SC('wc_su_kien',{title:function(l,d){var c=caseFor(d);return c?c.title:'Chuyện trong thế giới ngầm';},valid:eventValid,prep:function(l,r){var p=pool(l);if(!p.length)return{};var c=U.pick(r,p),d=context(l);d.caseId=c.id;return d;},text:function(l,d){var c=caseFor(d);return c?W.BY[current(l)].name+' · '+(group(l).joined?label(l):'các mối liên hệ bất chính')+'. '+c.text:'';},opts:[
  {k:'legal',l:'Tạm dừng, nhờ luật sư tư vấn',ai:{w:1.2},run:function(l,r,log,d){outcome(l,r,log,d,'legal');}},
- {k:'risk',l:function(l){return'Tiếp tục dính líu · tự góp '+H.money(l,capital(l));},req:function(l){return l.money>=capital(l);},ai:{bad:1,risk:1},run:function(l,r,log,d){outcome(l,r,log,d,'risk');}},
+ {k:'risk',l:function(l){return'Tiếp tục dính líu · tự góp '+H.money(l,capital(l));},req:function(l,d){return caseFor(d)?.job!=='wc_hitman'&&l.money>=capital(l);},ai:{bad:1,risk:1},run:function(l,r,log,d){outcome(l,r,log,d,'risk');}},
  {k:'leave',l:'Rời nhóm, tìm việc khác',ai:{w:.8},run:function(l,r,log,d){outcome(l,r,log,d,'leave');}},
  {k:'later',l:'Chờ thêm tin tức',run:function(l,r,log,d){outcome(l,r,log,d,'later');}}
 ]});
-E.SC('wc_to_chuc',{title:'Chọn mối liên hệ trong thế giới ngầm',valid:function(l,d){return foreign(l)&&free(l)&&(!d||!d.code||validContext(l,d));},prep:context,text:function(l){return W.BY[current(l)].name+' · Có người muốn kéo bạn vào nhóm. Bạn nhận lời hay từ chối?' ;},opts:[0,1].map(function(i){return{k:'g'+i,l:function(l){return'Nhận lời liên hệ với '+profile(l)[3][i];},run:function(l,r,log,d){if(!validContext(l,d))return;var g=group(l);g.joined=true;g.choice=i;var u=under(l);u.linked=true;u.worldOrigin=current(l);heat(l,8);state(l).serial++;log('Nhận lời liên hệ với '+label(l)+' tại '+W.BY[current(l)].name+'.','bad');}};}).concat([{k:'no',l:'Từ chối, không gia nhập',run:function(){}}])});
-E.SC('wc_nghe',{title:'Nghề phi pháp tại nơi đang sống',valid:function(l,d){return foreign(l)&&free(l)&&(!d||!d.code||validContext(l,d));},prep:context,text:function(l){return W.BY[current(l)].name+' · Chọn hoạt động trái phép, không phải nghề hợp pháp cùng lĩnh vực. Những khoản vay, casino hay dịch vụ hợp pháp không thuộc các lựa chọn này. Mỗi nghề có sự kiện riêng; bắt đầu từ bậc thấp, không tự gia nhập tổ chức.';},opts:Object.keys(JOBS).map(function(id){return{k:id,l:JOBS[id],req:function(l){return job(l)!==id&&(id!=='cho_vay'||l.money>l.base);},run:function(l,r,log,d){if(!validContext(l,d))return;E.startJob(l,id,r,log);}};}).concat([{k:'no',l:'Không tham gia',run:function(){}}])});
+[
+ ['wc_enforcer','Người bị hại trình báo','Một người bị nhóm hành hung đã trình báo. Tổ chức muốn đẩy trách nhiệm về phía bạn.'],
+ ['wc_broker','Tiền chia bị giữ lại','Tranh chấp trong tổ chức khiến khoản chia bị giữ lại, trong lúc một vụ điều tra đang đến gần.'],
+ ['wc_hitman','Tổ chức đòi thêm một hợp đồng','Tổ chức muốn bạn nhận thêm một hợp đồng giết người. Bạn cân nhắc dừng lại và tìm hỗ trợ pháp lý.']
+].forEach(function(c){CASES.push({id:c[0],job:c[0],title:c[1],text:c[2],joined:true});});
+var ROLES={
+ wc_enforcer:{title:'tay chân cưỡng ép của tổ chức',ranks:['tay chân cưỡng ép','chỉ huy nhóm cưỡng ép'],pay:[15,25],profiles:['jp','br','mx','co'],risk:[.20,.014,'thiệt mạng do tranh chấp băng nhóm','cưỡng ép và hành hung'],skill:60},
+ wc_broker:{title:'đầu mối tài chính của tổ chức',ranks:['đầu mối tài chính bất chính','điều phối tài chính bất chính'],pay:[16,28],profiles:['it','us','ru','uk','eu','ca','pac','sea','asia','other'],risk:[.19,0,'','tham gia hoạt động tài chính của tổ chức tội phạm'],skill:0},
+ wc_hitman:{title:'sát thủ đánh thuê',ranks:['sát thủ đánh thuê','sát thủ lâu năm'],pay:[22,36],profiles:['it','us','ru','mx','co'],risk:[.35,.035,'thiệt mạng trong xung đột với tổ chức','bị điều tra vì giết người theo hợp đồng'],skill:75}
+};
+Object.keys(ROLES).forEach(function(id){
+ var p=ROLES[id];
+ JOBS[id]=p.title;
+ E.CAR[id]={id:id,t:p.ranks,vn:p.pay,yrs:[4],cat:'crime',sec:'crime',hidden:true,edu:0,minAge:18,sigma:.34,crime:p.risk,crimeSeverity:id==='wc_hitman'?4:2,promo:.32};
+});
+function martial(l){
+ var trained=l.flags.worldCrimeMartial||0;
+ var athlete=l.talentSub==='võ thuật'&&[l.job,l.lastJob].some(function(j){return j&&j.id==='vdv';});
+ return Math.max(trained,athlete?(l.skill||0):0);
+}
+function train(l,log){
+ if(!foreign(l)||!free(l)||l.flags.worldCrimeTrainingAt===l.age||l.st.hea<45||l.money<l.base*.03||martial(l)>=100)return;
+ l.flags.worldCrimeTrainingAt=l.age;
+ H.cash(l,-l.base*.03,'Tập võ tại câu lạc bộ');
+ l.flags.worldCrimeMartial=Math.min(100,martial(l)+16);
+ log('Bạn tập võ tại câu lạc bộ. Kỹ năng hiện tại: '+martial(l)+'/100.','good');
+}
+function inviteWhy(l,i){
+ var g=group(l),p=profile(l)[0];
+ if(g.joined)return 'Đã có tổ chức địa phương';
+ if(g.lead&&g.lead.choice!==i)return 'Đang được một nhóm khác xem xét';
+ if(!g.lead)return true;
+ if(l.age<=g.lead.at)return 'Chờ đến năm sau';
+ if(i===0&&p==='jp')return martial(l)>=55?true:'Nhóm Yakuza này yêu cầu kỹ năng võ thuật 55/100';
+ var years=i===0&&['it','us','ru','mx','co'].includes(p)?2:1;
+ return (g.years||0)>=years?true:'Cần '+years+' năm kinh nghiệm bất chính tại nơi đang sống';
+}
+function invite(l,i,log){
+ if(inviteWhy(l,i)!==true)return;
+ var g=group(l);
+ if(!g.lead){
+   g.lead={choice:i,at:l.age};
+   log('Một người giới thiệu bạn với '+profile(l)[3][i]+'. Nhóm sẽ xem xét từ năm sau.','neutral');
+ }else{
+   delete g.lead;
+   g.joined=true;g.choice=i;g.joinedAt=l.age;g.trust=Math.max(35,g.trust||0);
+   var u=under(l);u.linked=true;u.worldOrigin=current(l);heat(l,8);
+   log('Bạn gia nhập '+label(l)+' tại '+W.BY[current(l)].name+'.','bad');
+ }
+ state(l).serial++;
+}
+function roleWhy(l,id){
+ var g=group(l),p=ROLES[id];
+ if(!g.joined||g.choice!==0||!p.profiles.includes(profile(l)[0]))return 'Cần là thành viên của tổ chức phù hợp tại địa phương';
+ var senior=id==='wc_hitman';
+ if(l.age-(g.joinedAt==null?l.age:g.joinedAt)<(senior?3:1)||g.trust<(senior?65:45))return 'Cần thêm thâm niên và tín nhiệm trong tổ chức';
+ if(martial(l)<p.skill)return 'Cần kỹ năng võ thuật '+p.skill+'/100';
+ return true;
+}
+E.HOOKS.year.push(function(l){
+ if(!foreign(l)||!free(l)||!job(l)&&!l.flags.worldCrime)return;
+ var g=group(l);
+ if(g.lastYear===l.age)return;
+ g.lastYear=l.age;
+ if(g.joined&&g.joinedAt==null)g.joinedAt=l.age;
+ if(job(l)&&l.job.worldCrimeCountry!==current(l)){l.job.worldCrimeCountry=current(l);l.job.worldCrimeSince=l.age;}
+ if(job(l)&&l.job.since<l.age&&l.job.worldCrimeSince<l.age&&l.flags.crime911?.pauseAt!==l.age){
+   g.years=(g.years||0)+1;
+   if(g.joined)g.trust=Math.min(100,(g.trust||30)+10);
+ }
+});
+E.SC('wc_to_chuc',{title:'Tìm đường vào một tổ chức địa phương',valid:function(l,d){return foreign(l)&&free(l)&&(!d||!d.code||validContext(l,d));},prep:context,text:function(l){
+ var g=group(l),p=profile(l);
+ if(!g.lead)return 'Bạn có thể nhờ người giới thiệu. Mỗi nhóm có thời gian xem xét và điều kiện riêng.';
+ var why=inviteWhy(l,g.lead.choice);
+ return 'Đang được '+p[3][g.lead.choice]+' xem xét. '+(why===true?'Đã đủ điều kiện để quyết định.':why+'.');
+},opts:[0,1].map(function(i){return{k:'g'+i,l:function(l){return (group(l).lead?'Gia nhập ':'Xin giới thiệu tới ')+profile(l)[3][i];},req:function(l){return inviteWhy(l,i)===true;},run:function(l,r,log,d){if(validContext(l,d))invite(l,i,log);}};}).concat([
+ {k:'drop',l:'Rút lời nhờ giới thiệu',req:function(l){return !!group(l).lead;},run:function(l,r,log,d){if(validContext(l,d)){delete group(l).lead;state(l).serial++;log('Bạn dừng liên hệ với nhóm.','neutral');}}},
+ {k:'no',l:'Để dịp khác',run:function(){}}
+])});
+E.SC('wc_nghe',{title:'Nghề phi pháp tại nơi đang sống',valid:function(l,d){return foreign(l)&&free(l)&&(!d||!d.code||validContext(l,d));},prep:context,text:function(l){return W.BY[current(l)].name+' · Chọn hoạt động trái phép, không phải nghề hợp pháp cùng lĩnh vực. Những khoản vay, casino hay dịch vụ hợp pháp không thuộc các lựa chọn này. Công việc riêng lẻ không tự đưa bạn vào tổ chức.'+Object.keys(ROLES).filter(function(id){return ROLES[id].profiles.includes(profile(l)[0]);}).map(function(id){var why=roleWhy(l,id);return '\n'+U.cap(ROLES[id].title)+': '+(why===true?'đủ điều kiện':why)+'.';}).join('');},opts:Object.keys(JOBS).map(function(id){return{k:id,l:JOBS[id],req:function(l){return job(l)!==id&&(id!=='cho_vay'||l.money>l.base)&&(!ROLES[id]||roleWhy(l,id)===true);},run:function(l,r,log,d){if(!validContext(l,d))return;E.startJob(l,id,r,log);}};}).concat([{k:'no',l:'Không tham gia',run:function(){}}])});
 E.SC('wc_menu',{title:'Thế giới ngầm tại nơi đang sống',prep:context,valid:function(l,d){return foreign(l)&&free(l)&&(!d||!d.code||validContext(l,d));},text:function(l){return W.BY[current(l)].name+' · '+(group(l).joined?'Đang liên hệ với '+label(l):'Chưa gia nhập tổ chức địa phương')+'. '+(under(l).hunted?'Mối đe dọa truy sát cũ vẫn còn. ':'')+'Bạn muốn làm gì tiếp?' ;},opts:[
  {k:'group',l:'Xem lời mời từ tổ chức địa phương',req:function(l){return !group(l).joined;},run:function(l,r){l.pending.unshift(E.DEC.wc_to_chuc.make(l,r));}},
  {k:'job',l:'Xem các nghề phi pháp tại nơi đang sống',run:function(l,r){l.pending.unshift(E.DEC.wc_nghe.make(l,r));}},
  {k:'event',l:'Giải quyết chuyện trong nghề / tổ chức',req:function(l){return pool(l).length>0;},run:function(l,r){l.pending.unshift(E.DEC.wc_su_kien.make(l,r));}},
  {k:'leave',l:'Chấm dứt quan hệ và công việc bất chính',req:function(l){return group(l).joined||!!job(l);},run:function(l,r,log){leave(l,log);}},
+ {k:'train',l:function(l){return 'Tập võ tại câu lạc bộ · '+martial(l)+'/100 · '+H.money(l,l.base*.03);},req:function(l){return l.flags.worldCrimeTrainingAt!==l.age&&l.st.hea>=45&&l.money>=l.base*.03&&martial(l)<100;},run:function(l,r,log){train(l,log);}},
  {k:'no',l:'Đóng lại',run:function(){}}
 ]});
 ['wc_menu','wc_nghe','wc_to_chuc','wc_su_kien'].forEach(function(id){var D=E.DEC[id],ap=D.apply;D.apply=function(l,d){if(!D.valid(l,d.data))return;return ap.apply(this,arguments);};});
@@ -117,11 +197,20 @@ invitation.apply=function(l,d,k,r,log){if(!foreign(l))return ia.apply(this,argum
 var mem=H.mem;H.mem=function(l,t){if(foreign(l)&&job(l)&&/^Ngày bạn bước chân vào con đường /.test(t)){var args=Array.prototype.slice.call(arguments);args[1]='Ngày bước chân vào hoạt động '+JOBS[job(l)]+'.';return mem.apply(this,args);}return mem.apply(this,arguments);};
 // Các cảnh đường dây cũ mang bối cảnh Việt Nam được thay bằng bộ mới ở nước ngoài.
 Object.keys(E.DEC).filter(function(id){return /^dd_/.test(id)||/^uw_(phan_boi|chia_phan|tong_tien|dieu_tra|mat_von|gia_dinh|dan_em_gap_nan|duong_lui)$/.test(id);}).forEach(function(id){var d=E.DEC[id],v=d.valid;d.valid=function(l,data){return !foreign(l)&&v(l,data);};E.TRIG.filter(function(t){return t.id===id;}).forEach(function(t){var before=t.when;t.when=function(l,a){return !foreign(l)&&before(l,a);};});});
-var title=E.jobTitle;E.jobTitle=function(l){var base=title(l);if(!foreign(l)||!job(l))return base;return JOBS[job(l)]+' · bậc '+((l.job.rank||0)+1)+(group(l).joined?' · '+label(l):' · '+W.BY[current(l)].name);};
-var start=E.startJob;E.startJob=function(l,id,r,log,quiet){var resolved=E.resolveJob(id);if(foreign(l)&&JOBS[resolved]&&!free(l))return false;var before=l.job;if(foreign(l)&&JOBS[resolved]&&l.abroad&&l.abroad.study){l.abroad=Object.assign({},l.abroad,{study:false,studyEnded:true});}var result=start(l,id,r,function(t,k){if(foreign(l)&&job(l)&&/^Bắt đầu công việc mới:/.test(t))t='Bắt đầu công việc mới: '+E.jobTitle(l)+'.';if(log)log(t,k);},quiet);if(foreign(l)&&JOBS[resolved]&&l.job!==before){l.flags.worldCareerSerial=(l.flags.worldCareerSerial||0)+1;state(l).serial++;}return result;};
-var quit=E.quitCrime;E.quitCrime=function(l){if(l.flags.worldCrime){Object.keys(l.flags.worldCrime.groups).forEach(function(code){l.flags.worldCrime.groups[code].joined=false;});l.flags.worldCrime.serial++;}return quit.apply(this,arguments);};
-var rankText=E.rankUpText;E.rankUpText=function(l,c){if(foreign(l)&&job(l))return{t:'Bạn được giao vị trí cao hơn trong hoạt động '+JOBS[job(l)]+'. Thu nhập theo bậc mới nhưng nguy cơ điều tra, phản bội vẫn còn.',m:'Một bước lún sâu hơn vào công việc trái phép.'};return rankText?rankText.apply(this,arguments):null;};
+var title=E.jobTitle;E.jobTitle=function(l){var base=title(l);if(!foreign(l)||!job(l))return base;return (ROLES[job(l)]?base:JOBS[job(l)]+' · bậc '+((l.job.rank||0)+1))+(group(l).joined?' · '+label(l):' · '+W.BY[current(l)].name);};
+var start=E.startJob;E.startJob=function(l,id,r,log,quiet){var resolved=E.resolveJob(id);if(foreign(l)&&JOBS[resolved]&&!free(l)||ROLES[resolved]&&(!foreign(l)||roleWhy(l,resolved)!==true))return false;var before=l.job;if(foreign(l)&&JOBS[resolved]&&l.abroad&&l.abroad.study){l.abroad=Object.assign({},l.abroad,{study:false,studyEnded:true});}var result=start(l,id,r,function(t,k){if(foreign(l)&&job(l)&&/^Bắt đầu công việc mới:/.test(t))t='Bắt đầu công việc mới: '+E.jobTitle(l)+'.';if(log)log(t,k);},quiet);if(foreign(l)&&JOBS[resolved]&&l.job!==before){l.job.worldCrimeCountry=current(l);l.job.worldCrimeSince=l.age;l.flags.worldCareerSerial=(l.flags.worldCareerSerial||0)+1;state(l).serial++;}return result;};
+var quit=E.quitCrime;E.quitCrime=function(l){if(l.flags.worldCrime){Object.keys(l.flags.worldCrime.groups).forEach(function(code){var g=l.flags.worldCrime.groups[code];g.joined=false;delete g.lead;delete g.joinedAt;g.trust=30;});l.flags.worldCrime.serial++;}return quit.apply(this,arguments);};
+var rankText=E.rankUpText;E.rankUpText=function(l,c){if(foreign(l)&&job(l)&&!ROLES[c.id])return{t:'Bạn được giao vị trí cao hơn trong hoạt động '+JOBS[job(l)]+'. Thu nhập theo bậc mới nhưng nguy cơ điều tra, phản bội vẫn còn.',m:'Một bước lún sâu hơn vào công việc trái phép.'};return rankText?rankText.apply(this,arguments):null;};
 E.ACT.push({id:'wc_menu',g:'Đường tối',l:'Tổ chức / nghề phi pháp nơi đang sống',min:18,sc:'wc_menu',avail:function(l){return foreign(l)&&free(l)?true:'Mục này dành cho nhân vật đủ 18 tuổi đang ở nước ngoài và được tự do';},ai:{w:.08}});
 E.TRIG.push({id:'wc_su_kien',when:function(l){return pool(l).length>0;},p:.6,cd:1,rep:true});
-E.WORLD_CRIME={jobs:JOBS,cases:CASES,profiles:PROFILES,current:current,profile:profile,group:group,pool:pool,context:context,valid:eventValid,state:state,free:free};
+var career=E.careerYear;
+E.careerYear=function(l,r,log){
+ if(l.job&&ROLES[l.job.id]&&(!foreign(l)||!group(l).joined)){
+   l.lastJob=l.job;l.job=null;l.flags.needJob=true;
+   log('Bạn mất vai trò khi không còn thuộc tổ chức địa phương.','neutral');
+   return 0;
+ }
+ return career.apply(this,arguments);
+};
+E.WORLD_CRIME={jobs:JOBS,cases:CASES,profiles:PROFILES,current:current,profile:profile,group:group,pool:pool,context:context,valid:eventValid,state:state,free:free,martial:martial,roleWhy:roleWhy};
 })(G);

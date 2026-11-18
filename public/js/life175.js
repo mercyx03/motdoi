@@ -1,5 +1,5 @@
 /* Hai chương trình truyền hình mới trên bộ máy SHOW151: Bếp Trưởng Tranh Tài (ẩm thực) và Chuyện Đời Người Nổi Tiếng (talk show).
-   Diễn biến, thí sinh, khách mời và câu chuyện đều là mô phỏng hư cấu; kết quả phụ thuộc năng lực, danh tiếng, giao tiếp và lựa chọn của nhân vật. */
+   Diễn biến, thí sinh, khách mời và câu chuyện đều là mô phỏng; kết quả phụ thuộc năng lực, danh tiếng, giao tiếp và lựa chọn của nhân vật. */
 (function (G) {
   'use strict';
   var E = G.E, H = E.H, U = G.U, X = E.UPDATE110, SH = E.SHOW151;

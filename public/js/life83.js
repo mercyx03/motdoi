@@ -8,7 +8,7 @@
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC;
   function vnd(l) { return H.isVN(l) && l.cur === 'vnd' && !(l.abroad && l.abroad.perm); }
-  function V(l, tr) { return vnd(l) ? tr : tr / 90 * l.base; }
+  function V(l, tr) { return vnd(l) ? tr * ((l.flags && l.flags.eraK954) || 1) : tr / 90 * l.base; }
   function pick(r, a) { return U.pick(r, a); }
   function ch(r, p) { return r() < p; }
   function free(l) { return !(l.jailUntil != null && l.age < l.jailUntil) && !(l.abroad && l.abroad.trapped); }
@@ -120,7 +120,7 @@
   KID('k6_bai_tho', 9, 13, 'Báo tường ngày Nhà giáo', [function (l) { return 'Lớp làm báo tường chào mừng ngày Nhà giáo' + (vn(l) ? ' 20/11' : '') + ', cô giao bạn viết một bài thơ.'; }], [
     { k: 'viet', l: 'Thức khuya viết bài thơ về cô', ai: { w: 1.2 }, out: [[0.6, 'Bài thơ được đọc trước toàn trường. Cô giáo rưng rưng.', { kno: 2, hap: 3 }, 'good', mem('Bài thơ tặng cô được đọc trước toàn trường.', 2)], [0.4, 'Vần chưa chuẩn nhưng cô vẫn dán bài thơ vào giữa tờ báo.', { hap: 1 }, 'good']] },
     { k: 've', l: 'Xin vẽ tranh thay vì viết', out: [[1, 'Bức tranh bó hoa tặng cô được dán ngay trang đầu tờ báo tường.', { hap: 2 }, 'good']] },
-    { k: 'chep', l: 'Chép một bài thơ trên mạng', ai: { bad: 1, w: 0.5 }, out: [[0.5, 'Cô nhận ra bài thơ chép mạng, nhẹ nhàng nhắc bạn trước lớp. Bạn xấu hổ đỏ mặt.', { karma: -2, hap: -2 }, 'bad'], [0.5, 'Không ai phát hiện, nhưng lời khen nghe chẳng vui.', { karma: -1 }, 'neutral']] }], school);
+    { k: 'chep', l: 'Chép một bài thơ trên mạng', ai: { bad: 1, w: 0.5 }, out: [[0.5, 'Cô nhận ra bài thơ chép mạng, nhẹ nhàng nhắc bạn trước lớp. Bạn xấu hổ đỏ mặt.', { karma: -2, hap: -2 }, 'bad'], [0.5, 'Không ai phát hiện, nhưng lời khen nghe chẳng vui.', { karma: -1 }, 'neutral']] }], function (l) { return vn(l) && school(l); });
 
   KID('k6_nguoi_la', 10, 14, 'Người lạ trên mạng', ['Một tài khoản lạ kết bạn, khen bạn dễ thương, hỏi tên trường, địa chỉ nhà rồi rủ gặp mặt.', 'Một "anh / chị" trong nhóm game hứa tặng quà, chỉ cần gửi ảnh và nói nhà ở đâu.'], [
     { k: 'ke', l: 'Kể ngay với bố mẹ', ai: { smart: 1, w: 1.4 }, out: [[1, 'Bố mẹ chặn tài khoản và báo cho nhà trường. Hóa ra kẻ đó từng dụ dỗ nhiều bạn nhỏ khác.', { karma: 2, kno: 1 }, 'good']] },
@@ -411,13 +411,22 @@
     } else if (h.debt) log(P + ' để lại khoản nợ, nhưng theo luật người thừa kế chỉ trả nợ trong phạm vi di sản được hưởng, nên bạn không phải gánh thêm.', 'neutral');
   });
   // tiếp tục ngay ở tuổi hiện tại của con: dựng lại những năm đã qua (máy tự chọn), chọn bản giống hồ sơ của con nhất
+  // The selected child's recorded name already describes the end of the replay.
+  function replayChoice(life) {
+    var scene = life.pending[0];
+    if (scene.id === 'surname919' && E.ID919) {
+      var keep = E.ID919.marryOptions(life).findIndex(function (o) { return !o.fam && !o.use; });
+      if (keep >= 0 && scene.opts.some(function (o) { return o.k === 'o' + keep; })) return 'o' + keep;
+    }
+    return E.autoKey(life);
+  }
   function ffTo(life, at) {
     var guard = 0;
     while (life.alive && life.age < at && guard++ < 130) {
       E.beginYear(life, { auto: true }); var g = 0;
-      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, E.autoKey(life));
+      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, replayChoice(life));
       if (life.alive) E.finishYear(life); g = 0;
-      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, E.autoKey(life));
+      while (life.pending.length && life.alive && g++ < 64) E.resolve(life, replayChoice(life));
       E.endYear(life);
     }
     return life.alive && life.age === at;

@@ -43,7 +43,7 @@
     v.done = true; v.reason = reason || 'completed';
     var earned = Math.round(v.fee * v.completed / v.total);
     if (!v.paid) { v.paid = true; v.earned = earned; if (earned > 0) H.cash(l, earned, 'Cát-xê ' + TITLES[v.k] + ' (' + v.completed + '/' + v.total + ' tập)'); }
-    log((reason ? 'Dừng lịch quay ' : 'Hoàn tất mùa mô phỏng ') + TITLES[v.k] + ' với vai trò '+roleName(v)+': đã quay ' + v.completed + '/' + v.total + ' tập, thắng ' + v.wins + ' tập. Khán giả quan tâm thêm: '+(v.audienceGain||0)+' người theo dõi. Cát-xê thực nhận ' + H.money(l, earned) + (reason ? '. Lý do: ' + reason + '.' : '.'), reason ? 'neutral' : 'big');
+    log((reason ? 'Dừng lịch quay ' : 'Hoàn tất mùa ') + TITLES[v.k] + ' với vai trò '+roleName(v)+': đã quay ' + v.completed + '/' + v.total + ' tập, thắng ' + v.wins + ' tập. Khán giả quan tâm thêm: '+(v.audienceGain||0)+' người theo dõi. Cát-xê thực nhận ' + H.money(l, earned) + (reason ? '. Lý do: ' + reason + '.' : '.'), reason ? 'neutral' : 'big');
     l.pending = l.pending.filter(function (d) { return d.id !== 'vr_vong'; });
   }
   function queue(l, r, log) { if (!valid(l)) { finish(l, log, 'không thể tiếp tục lịch quay'); return; } var d = E.DEC.vr_vong.make(l, r); if (season(l).manual) d.manual = true; l.pending.unshift(d); }
@@ -54,7 +54,7 @@
     l.flags.varietySerial = (l.flags.varietySerial || 0) + 1;
     l.flags.variety = { compact: true, k: k, token: l.flags.varietySerial, year: year(l), age: l.age, role:role, manual:!!d.manual, ep: 0, total: ROLES[role].total, completed: 0, wins: 0, fee: quote(d.fee,role), audienceGain:0, paid: false, regulars: regulars, routes: shuffle(r, LOCATIONS).slice(0, ROLES[role].total), tasks: shuffle(r, TASKS[k]).slice(0, ROLES[role].total), history: [] };
     episode(l, r);
-    log('Nhận lời tham gia ' + TITLES[k] + ' làm '+roleName(season(l))+': '+season(l).total+' tập mô phỏng trong năm '+year(l) + ', dự kiến cát-xê ' + H.money(l, season(l).fee) + '. Quyết toán theo số tập thực sự hoàn thành; mỗi tập phát sóng giúp bạn được khán giả biết đến hơn.', 'big');
+    log('Nhận lời tham gia ' + TITLES[k] + ' làm '+roleName(season(l))+': '+season(l).total+' tập trong năm '+year(l) + ', dự kiến cát-xê ' + H.money(l, season(l).fee) + '. Quyết toán theo số tập thực sự hoàn thành; mỗi tập phát sóng giúp bạn được khán giả biết đến hơn.', 'big');
     queue(l, r, log);
   }
   function offerValid(l,d) { var o=l.flags.varietyOffer;return invite(l)&&!!o&&o.year===year(l)&&(!d||d.token==null||(d.token===o.token&&d.k===o.k&&d.year===o.year)); }
@@ -67,13 +67,13 @@
   E.SC('vr_vai_tro',{
     title:function(l,d){return 'Vai trò trong '+(TITLES[d.k]||'game show');},valid:offerValid,
     prep:function(l){return Object.assign({},l.flags.varietyOffer||{});},
-    text:function(l,d){return 'Bạn muốn tham gia '+(TITLES[d.k]||'chương trình')+' với vai trò nào? Khách mời quay 2 tập, mỗi tập 3 chặng lựa chọn. Thành viên cố định quay 6 tập mô phỏng trong năm, mỗi tập 5 chặng và gắn bó với dàn cast lâu hơn. Cả hai đều có khách mời, chia đội ngẫu nhiên và được khán giả quan tâm sau mỗi tập hoàn thành. Chưa quay thì chưa nhận cát-xê.';},
+    text:function(l,d){return 'Bạn muốn tham gia '+(TITLES[d.k]||'chương trình')+' với vai trò nào? Khách mời quay 2 tập, mỗi tập 3 chặng lựa chọn. Thành viên cố định quay 6 tập trong năm, mỗi tập 5 chặng và gắn bó với dàn cast lâu hơn. Cả hai đều có khách mời, chia đội ngẫu nhiên và được khán giả quan tâm sau mỗi tập hoàn thành. Chưa quay thì chưa nhận cát-xê.';},
     opts:['guest','regular'].map(function(role){return{k:role,l:role==='guest'?'Làm khách mời · 2 tập':'Làm thành viên cố định · 6 tập',h:function(l,d){return (role==='guest'?'6':'30')+' lượt lựa chọn · cát-xê trọn lịch '+H.money(l,quote(d.fee,role))+' · quyết toán theo số tập hoàn thành';},ai:{w:role==='guest'?1:.8},run:function(l,r,log,d){if(!offerValid(l,d))return;var offer=l.flags.varietyOffer;delete l.flags.varietyOffer;start(l,r,log,offer,offer.k,role);}};}).concat([{k:'no',l:'Chưa nhận lịch quay',ai:{w:.15},run:function(l){delete l.flags.varietyOffer;}}])
   });
   var roleApply=E.DEC.vr_vai_tro.apply;
   E.DEC.vr_vai_tro.apply=function(l,d){if(!offerValid(l,d.data))return;return roleApply.apply(this,arguments);};
   E.DEC.gameshow.def.valid = invite;
-  E.DEC.gameshow.def.text = function () { return 'Chọn chương trình để xem hai hình thức tham gia: khách mời 2 tập hoặc thành viên cố định 6 tập mô phỏng. Màn tiếp theo hiển thị số sự kiện và cát-xê của từng vai trò. Mỗi tập hoàn thành đều giúp tăng danh tiếng, dù thắng hay thua.'; };
+  E.DEC.gameshow.def.text = function () { return 'Chọn chương trình để xem hai hình thức tham gia: khách mời 2 tập hoặc thành viên cố định 6 tập. Màn tiếp theo hiển thị số sự kiện và cát-xê của từng vai trò. Mỗi tập hoàn thành đều giúp tăng danh tiếng, dù thắng hay thua.'; };
   E.DEC.gameshow.def.opts.forEach(function (o) { if (TITLES[o.k]) o.run = function (l, r, log, d) { selectShow(l,r,log,d,o.k); }; else if (o.k === 'no') o.l = 'Từ chối, giữ lịch hiện tại'; });
   var invitationApply = E.DEC.gameshow.apply;
   E.DEC.gameshow.apply = function(l,d){var result=invitationApply.apply(this,arguments);if(l.pending[0]&&l.pending[0].id==='vr_vai_tro'){l.pending[0].manual=!!d.manual;if(l.flags.varietyOffer)l.flags.varietyOffer.manual=!!d.manual;}return result;};
@@ -85,7 +85,7 @@
   function describe(l) {
     var v = season(l);
     return U.cap(roleName(v))+' · Tập ' + (v.ep + 1) + '/' + v.total + ' tại ' + v.location + ', quay trong năm ' + v.year + '. Khách mời: ' + v.guests.join(', ') + '.\nĐội bạn: ' + v.team.join(', ') + '. Đội đối thủ: ' + v.opponents.join(', ') + '.\nĐiểm tập này: ' + v.score + '. ' +
-      (v.stage === 0 ? 'Dàn thành viên và diễn biến trong game là mô phỏng. Bạn muốn bắt nhịp với đội và tạo dấu ấn với khán giả như thế nào?' : v.stage === 2 && v.k === 'hai' ? 'Thắng được chọn món đặc sản; thua vẫn có suất ăn cơ bản, không bị bỏ đói.' : v.stage === 3 && v.k === 'hai' ? 'Thắng được ngủ trong nhà; đội thua ngủ lều có ê-kíp hỗ trợ.' : v.stage === 3 ? 'Bốc thăm đổi một đồng đội với đội đối thủ, giữ nguyên điểm đã kiếm. Bạn muốn phối hợp thế nào với người mới?' : v.stage === 4 && v.k === 'rm' ? 'Manh mối từ những vòng trước giúp đội bạn trong cuộc đua cuối. Xé bảng tên là trò chơi có giám sát, không phải đánh nhau ngoài đời.' : 'Kết quả phụ thuộc sức khỏe, phối hợp, cách chơi và may mắn; không phải cứ chọn liều là thắng.');
+      (v.stage === 0 ? 'Dàn thành viên có hồ sơ và lịch quay riêng. Bạn muốn bắt nhịp với đội và tạo dấu ấn với khán giả như thế nào?' : v.stage === 2 && v.k === 'hai' ? 'Thắng được chọn món đặc sản; thua vẫn có suất ăn cơ bản, không bị bỏ đói.' : v.stage === 3 && v.k === 'hai' ? 'Thắng được ngủ trong nhà; đội thua ngủ lều có ê-kíp hỗ trợ.' : v.stage === 3 ? 'Bốc thăm đổi một đồng đội với đội đối thủ, giữ nguyên điểm đã kiếm. Bạn muốn phối hợp thế nào với người mới?' : v.stage === 4 && v.k === 'rm' ? 'Manh mối từ những vòng trước giúp đội bạn trong cuộc đua cuối. Xé bảng tên là trò chơi có giám sát, không phải đánh nhau ngoài đời.' : 'Kết quả phụ thuộc sức khỏe, phối hợp, cách chơi và may mắn; không phải cứ chọn liều là thắng.');
   }
   function play(l, r, log, d, how) {
     if (!valid(l, d)) return; // chặn lựa chọn cũ sau khi đã sang vòng khác

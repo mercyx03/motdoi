@@ -30,9 +30,10 @@ const base = process.env.MOTDOI_URL || 'http://localhost:8084/';
         if (cc === 'GH' || cc === 'JP') { await sleep(450); await p.screenshot(path.join(__dirname, '../.cache/country-minimum-review/' + cc + '-' + width + '.png')); }
       }
       await p.load(base + 'updates.html');
-      ok(await p.eval(() => document.querySelector('.update-entry').innerText.includes('8 quốc gia') && document.querySelector('.update-entry').innerText.includes('Đã phát hành')), 'latest eight-country note released');
       await p.eval(() => { const q = document.querySelector('#updateSearch'); q.value = 'cau chuyen'; q.dispatchEvent(new Event('input')); });
-      ok(await p.eval(() => document.querySelector('.update-entry').innerText.includes('8 quốc gia')), 'accentless search');
+      ok(await p.eval(() => [...document.querySelectorAll('.update-entry')].some(entry =>
+        entry.innerText.includes('Câu chuyện riêng và sáu nhóm nội dung tại 8 quốc gia') &&
+        entry.innerText.includes('Đã phát hành'))), 'accentless search finds the released eight-country note');
       ok(await p.eval(() => document.documentElement.scrollWidth <= innerWidth + 1), 'history no overflow');
       ok(p.errors.length === 0, 'no JS exceptions'); p.close();
     }

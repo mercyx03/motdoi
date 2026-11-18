@@ -7,6 +7,14 @@ let checks=0;const ok=(c,m)=>{assert(c,m);checks++;};
 const load=(dir,f)=>JSON.parse(fs.readFileSync(path.join(dir,f),'utf8'));
 const list=d=>Array.isArray(d)?d:d.entries;
 const STATUS_TEXT=/chưa phát hành|chưa phải ngày ra mắt|đang được chuẩn bị|đã phát hành/i;
+function copyWithFixtures(dir){
+ for(const f of FILES){
+  const doc=load(root,f);
+  for(const id of ['fixture-release-a','fixture-release-b'])list(doc).unshift({id,version:'9.0.0',releaseStatus:'packaged',releasedAt:null,publishedAt:'2026-10-26T00:00:00.000Z',title:'T',summary:'S',details:['D']});
+  fs.mkdirSync(path.dirname(path.join(dir,f)),{recursive:true});
+  fs.writeFileSync(path.join(dir,f),JSON.stringify(doc,null,2)+'\n');
+ }
+}
 
 // 1. Current data: every status field is consistent and the note text never carries the status.
 const pub=load(root,FILES[1]),extra=load(root,FILES[0]);
@@ -15,7 +23,7 @@ for(const e of pub.entries){
  ok(['packaged','released'].includes(e.releaseStatus),e.id+': known status');
  ok(typeof e.version==='string'&&e.version.length>0,e.id+': status entries carry a version');
  if(e.releaseStatus==='packaged')ok(e.releasedAt===null,e.id+': packaged has no release date');
- else{const at=Date.parse(e.releasedAt);ok(Number.isFinite(at)&&at<=Date.now()+5*60e3&&at>=Date.parse(e.publishedAt),e.id+': real release date');ok(!!e.correctedAt,e.id+': release recorded as explicit correction');}
+ else{const at=Date.parse(e.releasedAt);ok(e.releasedAt===null||Number.isFinite(at)&&at<=Date.now()+5*60e3&&at>=Date.parse(e.publishedAt),e.id+': recorded date is real or left blank');ok(!!e.correctedAt,e.id+': release recorded as explicit correction');}
  ok(![e.title,e.summary].concat(e.details).some(s=>STATUS_TEXT.test(s)),e.id+': status shown by the page, not baked into the note');
  const x=extra.find(y=>y.id===e.id);
  if(x)for(const k of ['version','releaseStatus','releasedAt','publishedAt','title'])ok(JSON.stringify(x[k])===JSON.stringify(e[k]),e.id+': '+k+' matches docs/update-extra.json');
@@ -25,7 +33,7 @@ ok(new Set(pub.entries.map(e=>e.id)).size===pub.entries.length,'unique IDs');
 // 2. Release tool on a scratch copy: refuses guesses, records only an explicit past time with a zone.
 const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'motdoi-release-'));
 try{
- for(const f of FILES){fs.mkdirSync(path.dirname(path.join(tmp,f)),{recursive:true});fs.copyFileSync(path.join(root,f),path.join(tmp,f));}
+ copyWithFixtures(tmp);
  const before=FILES.map(f=>fs.readFileSync(path.join(tmp,f),'utf8'));
  const target=pending(tmp)[0];
  if(target){
@@ -49,6 +57,16 @@ try{
   assert.throws(()=>release(tmp,target.id,at,{now}),/--correct/);checks++;
   const fixed=new Date(now-1800e3).toISOString();
   ok(release(tmp,target.id,fixed,{now,correct:true}).releasedAt===fixed,'explicit correction allowed');
+  assert.throws(()=>release(tmp,target.id,undefined,{now,correct:true,markOnly:true}),/--released-at/);checks++;
+  const labelOnly=pending(tmp).find(e=>e.id.startsWith('fixture-')).id;
+  assert.throws(()=>release(tmp,labelOnly,at,{now,markOnly:true}),/Chọn/);checks++;
+  const marked=release(tmp,labelOnly,undefined,{now,markOnly:true});
+  ok(marked.releasedAt===null&&!pending(tmp).some(e=>e.id===labelOnly),'owner label does not invent a release time');
+  for(const f of FILES){
+   const labeled=list(load(tmp,f)).find(x=>x.id===labelOnly);
+   ok(labeled.releaseStatus==='released'&&labeled.releasedAt===null&&labeled.correctedAt, f+': label is durable');
+  }
+  ok(release(tmp,labelOnly,at,{now}).releasedAt===r.releasedAt,'real upload time can be supplied later');
 
   // 3. The history generator keeps a released entry (correctedAt) instead of the older packaged copy.
   const playerEntry=require('../tools/player-update-notes').playerEntry;
@@ -67,7 +85,8 @@ try{
   const win={document,localStorage:{getItem:()=>null},addEventListener(){},location:{hash:''},fetch:()=>new Promise(()=>{})};
   const ctx=Object.assign({window:win,AbortController,setTimeout,clearTimeout,console,Date,JSON,Intl,URLSearchParams},win);
   vm.createContext(ctx);vm.runInContext(code,ctx);
-  return {timeline:els.updateTimeline.innerText,latest:els.latestUpdate.textContent};
+  const stamp=els.updateTimeline.children[0].children[0];
+  return {timeline:els.updateTimeline.innerText,latest:els.latestUpdate.textContent,time:stamp.children.find(e=>e.tag==='time')};
  }
  const base={title:'T',summary:'S',details:['D'],tags:['Tính năng']};
  const prepared='2026-10-26T09:49:57.975Z',rel='2026-10-28T13:15:00.000Z';
@@ -78,6 +97,10 @@ try{
  const relText=new Date(rel).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',dateStyle:'medium',timeStyle:'short'});
  ok(/Đã phát hành/.test(released.timeline)&&!/chưa phát hành/.test(released.timeline),'released label replaces packaged label');
  ok(released.timeline.includes(relText)&&released.latest===relText,'released entry shows the real release time');
+ const marked=render([Object.assign({id:'d',version:'9.8.3',releaseStatus:'released',releasedAt:null,publishedAt:prepared},base)]);
+ const preparedText=new Date(prepared).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',dateStyle:'medium',timeStyle:'medium'});
+ ok(/Đã phát hành/.test(marked.timeline)&&marked.timeline.includes('Cập nhật lúc '+preparedText)&&marked.latest==='Cập nhật lúc '+preparedText,'released label shows the stored update time in Vietnam');
+ ok(marked.time.dateTime===prepared&&marked.time.title.includes('Thời điểm cập nhật')&&released.time.dateTime===rel&&released.time.title.includes('Thời điểm phát hành'),'update and actual release times are identified separately');
  const legacy=render([Object.assign({id:'c',publishedAt:prepared},base)]);
  ok(!/phát hành/.test(legacy.timeline),'legacy entries unchanged');
 }finally{fs.rmSync(tmp,{recursive:true,force:true});}
@@ -85,7 +108,7 @@ try{
 // 5. Several notes released by one upload: same real time, all-or-nothing.
 const tmp2=fs.mkdtempSync(path.join(os.tmpdir(),'motdoi-release-many-'));
 try{
- for(const f of FILES){fs.mkdirSync(path.dirname(path.join(tmp2,f)),{recursive:true});fs.copyFileSync(path.join(root,f),path.join(tmp2,f));}
+ copyWithFixtures(tmp2);
  const ids=pending(tmp2).map(e=>e.id),before=FILES.map(f=>fs.readFileSync(path.join(tmp2,f),'utf8'));
  if(ids.length>=2){
   const latest=Math.max(...pending(tmp2).map(e=>Date.parse(e.preparedAt))),now=latest+86400e3,at=new Date(now-3600e3).toISOString();

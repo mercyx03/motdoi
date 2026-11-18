@@ -2,7 +2,7 @@
    · Bạn muốn hẹn hò: ngồi sau hàng rào trái tim, giới thiệu bản thân, người thân góp ý, kéo màn trò chuyện 2 phút, rồi cùng bấm nút
    · Người ấy là ai: bạn là "nữ chính / nam chính", lần lượt loại ứng viên qua 3 vòng (clip giới thiệu – tài năng – trò chuyện riêng); cẩn thận người "đã có chủ"
    · Đảo thiên đường: 4 nam 5 nữ sống chung trên đảo Phú Quốc, thắng thử thách thì được đi hẹn hò ở khu nghỉ dưỡng, cuối cùng chọn người mình quan tâm nhất
-   Mọi chương trình diễn ra trọn trong một năm. Nhân vật, tình huống đều hư cấu. */
+   Mọi chương trình diễn ra trọn trong một năm. Nhân vật, tình huống đều. */
 (function (G) {
   'use strict';
   var U = G.U, E = G.E, H = E.H, SC = E.SC, isVN = H.isVN;

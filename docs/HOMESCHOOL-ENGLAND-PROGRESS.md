@@ -1,0 +1,59 @@
+# Học tại nhà và giáo dục England — 8.10.57
+
+Trạng thái: TRIỂN KHAI CƠ CHẾ — KIỂM THỬ CHUYÊN ĐỀ ĐẠT — ĐANG NGHIỆM THU, chỉ Preview. Độ phủ pháp lý/chứng chỉ và regression chưa đầy đủ; không deploy Production.
+
+## Cơ chế đã triển khai
+
+- Mở rộng `study829`, dùng nơi cư trú của `H.resCode` và bảng bang/thành phố `WORLD836`; không dùng quốc tịch để quyết định luật. Có danh mục 50 bang + DC, 13 tỉnh/lãnh thổ Canada, 8 bang/lãnh thổ Australia và bốn vùng UK. Không nhận diện được nơi cư trú thì không tự chọn luật bang khác / England.
+- Hành động Học tập cho học sinh và cùng menu giáo dục con cho người giám hộ có con sống cùng: lý do → chọn hình thức → giấy tờ/kế hoạch/ý kiến trẻ → nộp → bổ sung hoặc chờ → xét ở kỳ năm sau → xác nhận bắt đầu. Thời gian xử lý một kỳ năm là giản lược của game, không phải thời hạn cơ quan thật. Hình thức chỉ thông báo không bị gán thành xin phép. Trường chuyên biệt / school attendance order cần phê duyệt trong luồng GB khi hồ sơ có cờ tương ứng.
+- Giữ trường đang học trong khi chờ. Chặn đường tốt nghiệp tự động và đổi môi trường trường học bỏ qua hồ sơ. Học tại nhà độc lập không sinh lớp chính quy/prom từ hai module school920/life138; hình thức do trường quản lý vẫn dùng hệ trường. Các sự kiện trường học ở module khác chưa được rà toàn diện.
+- Chi phí dùng ngân sách gia đình life138 hoặc tiền giám hộ; tự học miễn phí, gia sư và xuyên hè tốn phí. Mỗi môn giữ tiến độ riêng, giảm dần khi gần trần; tối đa ba đợt và 12 giờ người dạy/tuần theo kế hoạch mô phỏng. Gia sư giảm giờ trực tiếp, xuyên hè có chi phí sức khỏe. Các giới hạn này là tham số game, không phải luật; chưa cộng tổng giờ dạy của một giám hộ qua nhiều con.
+- Nhật ký động cơ, quyết định, báo cáo, hồ sơ năm trước còn thiếu, chuyển nơi ở và quay lại trường được giữ. CLB/lớp nhóm giúp kết nối. Đổi vùng khóa tiếp tục theo quy tắc cũ; học bạ và văn bằng không bị xóa. Trường nhận xét xếp lớp/công nhận tín chỉ; chưa tự cấp tín chỉ trường nhận.
+- Tách hoàn thành môn, hết nghĩa vụ giáo dục/đào tạo, điều kiện cấp văn bằng và điều kiện nộp đại học. Ngưỡng 80/100 cho năm nhóm môn là mục tiêu kế hoạch mô phỏng, không phải chuẩn tốt nghiệp pháp lý. Texas có lựa chọn diploma gia đình riêng, không giả thành bằng trường/GED hoặc tự nâng `edu`. Các nơi khác chưa đủ quy trình cấp văn bằng thì báo phần còn thiếu.
+- California: PSA độc lập, trường tư online, trường công/charter independent study và gia sư credential tách nhau. Chỉ chương trình đã tiếp nhận có tài nguyên tương ứng; không tự cấp tiền mặt cho homeschool độc lập.
+- New Zealand: chỉ sau giấy miễn học và năm học đủ kỳ, có declaration từng kỳ mới chi trợ cấp. Hai kỳ được khóa riêng, bốn mức theo thứ tự trẻ; quy đổi qua bộ máy tiền tệ hiện có. Chưa mô phỏng khoản lẻ năm bắt đầu, ngày trong nửa năm và số ngày ra nước ngoài, nên không trả trợ cấp năm bắt đầu. Trẻ vẫn có thể học sau 16, việc hết nghĩa vụ không đồng nghĩa nhận bằng. Alberta/Saskatchewan chưa cấp tiền khi chưa đủ số tiền/chứng từ/địa phương được xác minh.
+- England: dùng lại ID menu schoolEngland829; projection môn tự chọn cũ chỉ đọc, không sửa kết quả GCSE/IB/A-Level đã chốt. Year 3–6 nhận hiện đại/cổ ngữ, Year 7–9 chuyển sang hiện đại mà giữ cổ ngữ. Từng tiếng giữ kỹ năng và nối mức hiện đại sang `life.lang`; không áp chương trình maintained school lên academy/free/private/homeschool. Có lớp đầy, trường chỉ mở một tiếng, ba tiếng tối đa và kiểm trùng giờ theo cấu hình trường.
+- GCSE: nhóm nhân văn/nghệ thuật/công nghệ/ngoại ngữ/cổ ngữ; kiểm tối thiểu/tối đa theo trường, trùng block và xác nhận. Tách chương trình bắt buộc với đăng ký văn bằng; RE khác Religious Studies. Các môn chưa xác minh văn bằng chỉ là bổ trợ. Danh mục có 16 văn bằng tham chiếu đã đối chiếu, ngoài ba môn thi nền. Khoa học là chương trình bắt buộc nhưng cấu hình thi Combined/Separate Science chưa có trong adapter mới.
+- Trung tâm thi hư cấu kiểm đúng môn, năm, hỗ trợ speaking/fieldwork/performance/coursework và lệ phí mô phỏng. Có thể chọn trung tâm hỗ trợ thực hành; sửa đăng ký thu riêng môn thêm ở cùng trung tâm. Đây không phải danh sách trung tâm thật hoặc báo giá thật.
+- GCSE dùng bộ máy môn học MOCK_EXAM853 với adapter thang 9–1/U, cùng công thức cho dự báo và thi thật; không dùng tổng /30 Việt Nam làm điểm GCSE. Kết quả khóa theo môn/năm, đổi danh sách môn không thi lại môn đã chốt; giữ điểm qua lưu/tải. Có kết quả GCSE mới mở chuyển tiếp Sixth Form A-Level/IB/học nghề; không ghi đè `study829.gcse/final` đã có. Chưa có dữ liệu yêu cầu từng trường/đại học nên không gắn điểm tối thiểu cụ thể hoặc tự xác nhận đủ điều kiện đại học.
+- Chuyển góc nhìn sang đời con giữ hồ sơ học; chơi lại từ lúc sinh không nhận hồ sơ tương lai.
+
+## Độ phủ dữ liệu và nguồn
+
+Ngày đối chiếu: 09/11/2026, UTC+7. Đây là ảnh chụp dữ liệu áp dụng trong game từ năm 2026 và tiếp tục cho tương lai mô phỏng cho tới khi có bản cấu hình mới, **không phải ngày hiệu lực pháp luật**. `legalEffectiveAt=null` nếu chưa xác minh ngày hiệu lực. Không áp hồi tố cấu hình 2026 vào đời lịch sử. Các cấu hình có nguồn chỉ xác minh những nghĩa vụ đã nêu, không được hiểu là toàn bộ luật của nơi đó đã được kiểm chứng.
+
+- 13/51 bang/DC Mỹ có cấu hình có nguồn: Texas, Oklahoma, Alaska, Idaho, New Jersey, Michigan (chỉ exemption f), Iowa (IPI/CPI tách đường), California, New York, Pennsylvania, Massachusetts, Rhode Island, Vermont. 38 nơi còn lại khóa theo “Chưa có dữ liệu cho khu vực này”. Nguồn trong `STUDY857.SOURCES` và trường `source` từng cấu hình; Alaska dùng FAQ chính thức của học khu Anchorage, không suy rộng hỗ trợ correspondence. Chưa đủ tuổi bắt buộc/ngoại lệ người dạy từng bang: các trường chưa xác minh không được điền số tuổi phỏng đoán.
+- GB: England, Scotland (đường rút khỏi state school), Wales có cấu hình. Northern Ireland chưa đủ thủ tục rút trường/ngoại lệ để mở, giữ unknown. Đầu mối chính thức đã tìm: <https://www.education-ni.gov.uk/articles/elective-home-education> và <https://www.eani.org.uk/parents/other-help-for-parents/educating-your-child-at-home>.
+- Canada: Alberta và Saskatchewan có nguồn cấp tỉnh. Alberta supervised / notification-only tách nhau; hạn funding và hai đánh giá được ghi riêng. Chưa xác minh số tiền theo niên khóa và reimbursement nên chưa chi. Saskatchewan không gán mức hỗ trợ của một school division cho cả tỉnh. 11 tỉnh/lãnh thổ còn lại unknown.
+- Australia: NSW và Victoria có cấu hình đăng ký. Sáu nơi còn lại unknown. NSW dùng Department of Education từ 6/5/2025, không dùng tên cơ quan tiếp nhận cũ. Không cấp HSC/VCE tự động. Chưa mở Cambridge / chương trình quốc tế vì chưa đủ provider/khảo thí.
+- NZ, Ireland và Nam Phi có nguồn cho hồ sơ khởi đầu. BELA hiệu lực 24/12/2024 được lưu với nguồn DBE trả lời nghị viện; các điều kiện cấp bằng và công nhận đại học Cambridge/GED/NSC chưa đủ để mở. Ireland chưa mở Leaving Certificate do thiếu điều kiện trung tâm/coursework đã kiểm chứng.
+- Việt Nam: không mở homeschool thay thế; giữ trường chính quy, các mục hỗ trợ và học thêm hiện có. Chưa có cấu hình trường online hoặc trường hợp đặc biệt đủ căn cứ để chuyển khỏi trường.
+- England: [DfE framework](https://www.gov.uk/government/publications/national-curriculum-in-england-framework-for-key-stages-1-to-4/the-national-curriculum-in-england-framework-for-key-stages-1-to-4), [DfE languages](https://www.gov.uk/government/publications/national-curriculum-in-england-languages-progammes-of-study), [school leaving/participation](https://www.gov.uk/know-when-you-can-leave-school), [home education](https://www.gov.uk/home-education), [JCQ private candidates](https://www.jcq.org.uk/private-candidates/).
+- Văn bằng: [AQA GCSE catalogue](https://www.aqa.org.uk/qualifications?level=gcse), AQA French 8652 / German 8662 / Spanish 8692 (thi đầu 2026), [OCR Latin và Classical Greek](https://www.ocr.org.uk/qualifications/by-type/gcse/classics/). Các tiếng Trung, Ý, Nga, Nhật, Ả Rập, Ba Lan, Na Uy, Thổ Nhĩ Kỳ có thể mở lớp theo trường quốc tế mẫu nhưng chưa gắn nhãn GCSE trong bản này. Không khẳng định rằng các văn bằng này không tồn tại; chỉ thiếu xác minh trong dữ liệu game.
+- Không dùng các số “hơn 60 quốc gia”, “73%”, “800 NZD/năm” hay “20–24 tín chỉ” làm quy tắc chung.
+
+## Kiểm thử và giới hạn nghiệm thu
+
+- Chuyên đề `tests/study-home857.js`: 242 kiểm tra đạt trên mã cuối; các ca gồm chuyển góc nhìn/chơi lại từ lúc sinh, trung tâm coursework, unknown, vùng, hồ sơ thiếu/chờ, nơi duyệt trước, chuyển vùng/quay lại trường, tiến độ môn, bốn mốc, tiền trợ cấp không nhận trùng, cờ California, Latin → hiện đại, trùng giờ/suất/lớp đầy, môn chưa có chứng chỉ, trung tâm, công thức thi, kết quả khóa và chuyển tiếp IB.
+- Browser: sáu menu/thao tác thật ở 390px và 1280px đạt, không tràn ngang/NaN/lỗi JavaScript; đã xem ảnh điện thoại. Đã chạy lại trên bản dist cuối, đạt cả tìm kiếm nhật ký không dấu, lọc, tải thêm và kiểm mục mới ở đầu. Đã xem ảnh điện thoại và máy tính.
+- Smoke 11/11, saves-compat 10/10, save-safety 10/10, NPC 14/14 đạt. Cảnh báo cũ về ID giờ thật và fixture hc_story cũ vẫn còn.
+- `exam-model` 565 kiểm tra và 96.000 mẫu; `exam127` 244; `education-fallback-graduation` 104; `update840` 1.043; `world120` 74; `university136` đạt. `royal847` cập nhật kịch bản England để thực sự đăng ký và thi GCSE trước Sixth Form: 248 kiểm tra đạt.
+- `school-home-police838` FAIL ở kỳ vọng trường chuyên: nhận công lập. Thất bại tương tự khi không tải module mới study-home857; không nới assertion để đánh dấu PASS. Cần rà test/danh mục trường cũ ở GĐ6.
+- Regression nhóm 9,36,46,59: 6.887.685 kiểm tra đạt, 98 lỗi. Nhóm 9 duyệt 486.266 lượt chọn, tiếp cận 2.173/2.543 tình huống; có lỗi thiếu khuôn, nội dung cũ như studyReview136 hiện null tuổi, và các nhóm khác chưa phân loại hết. Không coi nhóm này PASS, không khẳng định mọi lỗi đều cũ. Chạy riêng các nhóm 36,46,59 trên mã cuối: 38 kiểm tra đạt, 0 lỗi. Test chuyên đề riêng kiểm được các luồng giáo dục nêu trên; còn hồi quy toàn bộ và toàn bộ module trường/NPC con ở BACKLOG.
+
+## Git và artifact
+
+Trước sửa: `5d9d6e8`; nhánh `codex/life-context-upgrade`; origin `mercyx03/motdoi` public. GitHub xác nhận push/admin; 0 workflow, 0 webhook, 0 deployment gần nhất. Chưa kiểm chứng tích hợp Pages bên ngoài GitHub nên chỉ chủ dự án upload, không chạy deploy.
+
+Giữ nguyên thay đổi có sẵn `public/js/healthsys919.js`, `tests/world-country-jobs832-browser.js`, `tests/healthsys-rx-cap.js` và tệp riêng; không stage chúng. Build workspace bao gồm thay đổi y tế đó, nên artifact không thể tái dựng chính xác từ riêng commit giáo dục này. `Claude.md`, `.local-state-review.txt`, `audit-world-520.json` không sửa/commit. dist bị ignore, dist.zip đang được track; giữ chính sách này.
+
+Worker/API chỉ kiểm cục bộ bằng quy trình package; chưa xác minh binding REVIEWS_DB hoặc API Production. Khôi phục bằng `git revert` commit đợt giáo dục rồi đóng gói lại; không reset/force push, không làm mất thay đổi riêng. Chủ dự án tự upload Dashboard.
+
+## Build và ZIP đã kiểm chứng
+
+- npm run package:cloudflare: PASS trên mã cuối; 28 file triển khai, loading/hash/tám cuộc đời nguồn-build trùng nhau, admin/API kiểm cục bộ đạt.
+- dist/ và dist.zip mới ở gốc; ZIP 3.352.839 byte; SHA-256 0D06F5F2A48E807AFC568915C7A25FED08F86E85A399AE053BCFD6C9896949A9. Đã đọc lại toàn bộ tên và nội dung đối chiếu SHA-256 từng file theo script package.
+- Xác minh thêm JSON và HTML bên trong ZIP đều có homeschool-england-81057 đầu danh sách, packaged; có index.html ngay gốc, _worker.js, _routes.json, _headers và .well-known/ai-catalog.json.
+- 179 mục lịch sử cũ không đổi qua build-update-history; update-release 1.006 kiểm tra và update-history-timezones đạt.
+- Browser dist: sáu menu/thao tác và nhật ký ở 390/1280px đạt; không tràn ngang hoặc lỗi JavaScript.
+- Sẵn sàng Production: CHƯA. Còn các lỗi regression/chưa phân loại, độ phủ dữ liệu, binding REVIEWS_DB và thay đổi y tế ngoài commit như đã nêu.
