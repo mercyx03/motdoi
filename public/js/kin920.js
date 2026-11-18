@@ -156,37 +156,74 @@
     var pets = (l.flags.pets919 && l.flags.pets919.pets || []).filter(function (x) { return x.alive !== false; }).length * 0.5, elder = l.flags.caring ? 2 : 0;
     return kids + pets + elder;
   }
+  function arrangementMatches(l, p, owner) {
+    var person = p && pid(l, p);
+    return !!person && (person === owner || !!E.NPC?.same(l, person, owner));
+  }
+  function legacyArrangementMatches(p, a) {
+    var since = a.saved?.at ?? a.since ?? a.at;
+    if (!Number.isFinite(since) || !Number.isFinite(p.since) || p.since > since) return false;
+    if (a.saved && p.jobId && a.saved.jobId && p.jobId !== a.saved.jobId) return false;
+    if (a.kind === 'home') return p.job === 'quản lý gia đình (nội trợ)' && p.inc === 0;
+    if (a.kind === 'pause') return p.job === 'tạm nghỉ việc chăm sóc gia đình' && p.inc === 0;
+    if (a.kind === 'part') return !!a.saved?.job && p.job === a.saved.job + ' (bán thời gian)';
+    return a.kind === 'both' && !a.saved;
+  }
+  function arrangement(l, p) {
+    var s = l.flags.kin920, a = s?.arr;
+    if (!a) return null;
+    if (p && (a.person976 ? arrangementMatches(l, p, a.person976) : legacyArrangementMatches(p, a))) {
+      a.person976 = pid(l, p);
+      return a;
+    }
+    delete s.arr;
+    return null;
+  }
   function arrWhy(l, k) {
-    var p = wed(l) || partner(l); if (!p || p.status === 'dating') return 'Cần đang sống chung hoặc đã kết hôn';
-    var a = st(l).arr; if (a && a.at === l.age) return 'Đã bàn chuyện này năm nay'; if ((a ? a.kind : 'both') === k) return 'Đang áp dụng';
+    var p = goalsPartner(l); if (!p) return 'Cần đang sống chung hoặc đã kết hôn';
+    var a = arrangement(l, p); if (a && a.at === l.age) return 'Đã bàn chuyện này năm nay'; if ((a ? a.kind : 'both') === k) return 'Đang áp dụng';
     if (k !== 'both' && !p.job && !(a && a.saved)) return p.name + ' hiện không đi làm';
     return true;
   }
   function agree(l, p, k) { var w = want(l, p), base = k === 'both' ? (w === 'family' ? 0.55 : 0.9) : k === 'part' ? (w === 'career' ? 0.35 : 0.75) : (w === 'family' ? 0.8 : w === 'balance' ? 0.45 : 0.15); return u(l.id + ':arr:' + k + ':' + l.age) < U.clamp(base + load(l) / 40 + ((p.close || 50) - 50) / 300, 0.05, 0.95); }
   function setArr(l, k, log) {
-    var p = wed(l) || partner(l), s = st(l), a = s.arr || { kind: 'both' };
+    if (arrWhy(l, k) !== true) return;
+    var p = goalsPartner(l), s = st(l), owner = pid(l, p);
+    var a = arrangement(l, p) || { kind: 'both', person976: owner };
     if (!agree(l, p, k)) { s.arr = Object.assign({}, a, { at: l.age }); log(p.name + ' chưa đồng ý: ' + { career: 'muốn tiếp tục phát triển sự nghiệp', balance: 'muốn cân bằng giữa công việc và gia đình', family: 'muốn dành nhiều thời gian cho gia đình hơn' }[want(l, p)] + '. Hai người hẹn bàn lại.', 'neutral'); return; }
     if (k !== 'both' && p.job && !a.saved) { a.saved = { job: p.job, jobId: p.jobId, inc: p.inc, at: l.age, country: H.resCode(l) }; }
     if (k === 'both' && a.saved) { var gap = l.age - a.saved.at; p.job = a.saved.job; p.jobId = a.saved.jobId; p.inc = a.saved.inc * Math.max(0.7, 1 - gap * 0.04); log(p.name + ' quay lại làm ' + p.job + (gap > 1 ? '; sau ' + gap + ' năm nghỉ, thu nhập khởi điểm thấp hơn trước một chút' : '') + '.', 'good'); delete a.saved; }
     else if (k === 'part') { p.job = (a.saved ? a.saved.job : p.job) + ' (bán thời gian)'; p.inc = (a.saved ? a.saved.inc : p.inc) * 0.5; log(p.name + ' chuyển sang làm bán thời gian, thu nhập khoảng một nửa.', 'neutral'); }
     else if (k === 'pause') { p.job = 'tạm nghỉ việc chăm sóc gia đình'; p.inc = 0; log(p.name + ' tạm nghỉ việc; hai người hẹn xem lại sau ' + 2 + ' năm. Đây là công việc chăm sóc không lương, không phải thất nghiệp.', 'neutral'); }
     else if (k === 'home') { p.job = 'quản lý gia đình (nội trợ)'; p.inc = 0; log(p.name + ' nhận phần quản lý gia đình. Công việc chăm sóc không lương này có giá trị như mọi công việc khác.', 'neutral'); }
-    s.arr = { kind: k, at: l.age, since: l.age, review: k === 'pause' ? l.age + 2 : null, saved: a.saved, person976: pid(l, p) };
+    s.arr = { kind: k, at: l.age, since: l.age, review: k === 'pause' ? l.age + 2 : null, saved: a.saved, person976: owner };
     if (p.jobId === null && E.FIN920) E.FIN920.jobTrack(l, p, null);
   }
-  X.menu('household920', 'Thỏa thuận công việc và quản lý gia đình', function (l) { var a = adult(l); if (a !== true) return a; var p = partner(l); return p && p.status !== 'dating' ? true : 'Cần đang sống chung hoặc đã kết hôn'; }, function (l) {
-    var p = partner(l), s = st(l), a = s.arr || { kind: 'both' }, h = s.help || 'none', b = s.pbudget || 0;
+  X.menu('household920', 'Thỏa thuận công việc và quản lý gia đình', function (l) { var a = adult(l); if (a !== true) return a; return goalsPartner(l) ? true : 'Cần đang sống chung hoặc đã kết hôn'; }, function (l) {
+    var p = goalsPartner(l); if (!p) return '';
+    var s = st(l), a = arrangement(l, p) || { kind: 'both' }, h = s.help || 'none', b = s.pbudget || 0;
     return 'Hiện tại: ' + ARR[a.kind] + '. Mong muốn của ' + p.name + ': ' + { career: 'ưu tiên sự nghiệp', balance: 'cân bằng', family: 'ưu tiên gia đình' }[want(l, p)] + '. Áp dụng cho mọi giới; người ấy có quyền đồng ý, thương lượng, đổi ý.' +
       '\nTải chăm sóc trong nhà: ' + Math.round(load(l) * 10) / 10 + ' (con nhỏ, thú cưng, người già) · hỗ trợ: ' + { none: 'chưa thuê', nanny: 'bảo mẫu', maid: 'giúp việc theo giờ' }[h] + (b ? ' · ngân sách cá nhân của người ấy ' + mo(l, b) + '/tháng' : '') + '.' + (a.review ? '\nHẹn xem lại khi bạn ' + a.review + ' tuổi.' : '');
-  }, function (l) {
+  }, function (l, arg) {
+    var p = goalsPartner(l); if (!arrangementMatches(l, p, arg.person977)) return [];
     var out = Object.keys(ARR).map(function (k) { return { k: 'arr:' + k, l: 'Đề nghị: ' + ARR[k], why: arrWhy(l, k), run: function (l, r, log) { if (arrWhy(l, k) !== true) return; setArr(l, k, log); } }; });
-    var s = st(l), p = partner(l);
+    var s = st(l);
     if(E.PLURAL840&&p.status==='married')out.push({k:'plural',l:'Hồ sơ hôn nhân và quyền của từng phối ngẫu',run:(l,r)=>X.next(l,'pluralUnion840',r)});
     if(E.PLURAL840&&E.PLURAL840.people(l).length>=2)out.push({k:'schedule',l:'Lịch chung và quan hệ giữa các phối ngẫu',run:(l,r)=>X.next(l,'pluralHome840',r)});
     [['none', 'Không thuê người giúp', 0], ['maid', 'Thuê giúp việc theo giờ', 0.08], ['nanny', 'Thuê bảo mẫu', 0.18]].forEach(function (x) { out.push({ k: 'help:' + x[0], l: x[1], h: x[2] ? '~' + mo(l, l.base * x[2]) + '/năm' : '', why: (s.help || 'none') === x[0] ? 'Đang áp dụng' : x[2] && l.money < l.base * x[2] ? 'Chưa đủ tiền' : true, run: function (l, r, log) { var ok = x[0] === 'none' || u(l.id + ':help:' + l.age) < 0.85; if (!ok) { log(p.name + ' chưa muốn có người lạ trong nhà lúc này.', 'neutral'); return; } s.help = x[0]; log(x[0] === 'none' ? 'Hai người tự lo việc nhà.' : 'Đã thuê ' + x[1].replace('Thuê ', '') + '; chi phí trả hằng năm từ quỹ chung.', 'neutral'); } }); });
     [0, 0.04, 0.1].forEach(function (f) { var v = l.base * f / 12; out.push({ k: 'pb:' + f, l: f ? 'Thống nhất ngân sách cá nhân cho ' + p.name + ' ' + mo(l, v) + '/tháng' : 'Không đặt ngân sách cá nhân riêng', why: Math.abs((s.pbudget || 0) - v) < 1e-9 ? 'Đang áp dụng' : true, run: function (l, r, log) { s.pbudget = v; log(f ? 'Hai người thống nhất khoản chi cá nhân của ' + p.name + '; khoản lớn hơn vẫn bàn chung.' : 'Không đặt khoản riêng; chi tiêu lớn bàn chung.', 'neutral'); } }); });
     return out;
   }, 18, 'Tình cảm & gia đình');
+
+  var household = E.DEC.household920, makeHousehold = household.make, validHousehold = household.valid;
+  household.make = function (l, r, arg) {
+    var p = goalsPartner(l);
+    return makeHousehold.call(this, l, r, Object.assign({}, arg, { person977: p && pid(l, p) }));
+  };
+  household.valid = function (l, d) {
+    var data = d?.data || d;
+    return validHousehold.apply(this, arguments) && (!data?.keys || arrangementMatches(l, goalsPartner(l), data.arg?.person977));
+  };
 
   // mục tiêu riêng của bạn đời (HOUSEHOLD-03)
   var GOALS = { cook: ['học nấu ăn / làm bánh', 0.03, 2], interior: ['học thiết kế nội thất', 0.06, 2], fit: ['tập yoga / gym / khiêu vũ', 0.03, 1], music: ['học một nhạc cụ', 0.04, 3], lang: ['học ngoại ngữ', 0.04, 2], finance: ['học quản lý tài chính', 0.02, 1], read: ['câu lạc bộ đọc sách', 0.005, 1], travel: ['một chuyến du lịch riêng', 0.08, 1], health: ['chăm sóc sức khỏe, ngoại hình', 0.04, 1], parents: ['tham gia hội phụ huynh, nhóm cộng đồng', 0.01, 1], charity: ['làm từ thiện, bảo trợ', 0.05, 2], study: ['học lại / đi làm lại', 0.05, 2], shop: ['mở một cửa hàng nhỏ', 0.6, 3] };
@@ -232,7 +269,7 @@
   }
   function pickGoal(l, p) {
     var t = (p.traits130 || []).join(' '), keys = Object.keys(GOALS).filter(function (k) { return (k !== 'shop' || l.money > l.base * 2) && (k !== 'lang' || planLanguage(l, p)); });
-    var r = rng(l.id + ':goal:' + pid(l, p) + ':' + l.age); return U.wpick(r, keys, function (k) { return (k === 'read' && /hướng nội/.test(t) ? 2 : 1) * (k === 'parents' && (l.kids || []).length ? 2 : 1) * (k === 'finance' && /tiết kiệm/.test(t) ? 2 : 1) * (k === 'charity' && l.money > l.base * 10 ? 1.5 : 1) * (k === 'study' && st(l).arr && st(l).arr.kind !== 'both' ? 2 : 1); });
+    var a = arrangement(l, p), r = rng(l.id + ':goal:' + pid(l, p) + ':' + l.age); return U.wpick(r, keys, function (k) { return (k === 'read' && /hướng nội/.test(t) ? 2 : 1) * (k === 'parents' && (l.kids || []).length ? 2 : 1) * (k === 'finance' && /tiết kiệm/.test(t) ? 2 : 1) * (k === 'charity' && l.money > l.base * 10 ? 1.5 : 1) * (k === 'study' && a && a.kind !== 'both' ? 2 : 1); });
   }
   function goalYear(l, r, log) {
     var p = goalsPartner(l); if (!p) return;
@@ -341,8 +378,8 @@
   }
   function workOptions(l, p) {
     if (!p.training976) return [];
-    var a = st(l).arr, work = partnerWork(l, p), out = [];
-    var old = a && a.kind !== 'both' && (!a.person976 || a.person976 === pid(l, p)) ? a.saved : null;
+    var a = arrangement(l, p), work = partnerWork(l, p), out = [];
+    var old = a && a.kind !== 'both' ? a.saved : null;
     if (old) {
       var c = E.CAR[old.jobId], here = H.resCode(l);
       var unavailable = (old.country && old.country !== here) || E.ERA902?.jobBlocked(l, old.jobId, c || { t: [old.job] });
@@ -351,7 +388,7 @@
       out.push({ k: 'return', l: 'Bàn chuyện quay lại làm ' + old.job, why: reason, run: function (l, r, log) {
         E.FIN920?.jobTrack(l, p, null);
         setArr(l, 'both', log);
-        if (st(l).arr.kind === 'both') { p.rankSince = l.age; E.FIN920?.jobTrack(l, p, null); }
+        if (arrangement(l, p)?.kind === 'both') { p.rankSince = l.age; E.FIN920?.jobTrack(l, p, null); }
       }});
     }
     var vacancy = languageVacancy(l, p, old);
@@ -442,7 +479,7 @@
   function helpYear(l) { var s = st(l), c = { maid: 0.08, nanny: 0.18 }[s.help]; if (c && s.helpPaid !== l.age) { s.helpPaid = l.age; if (l.money < l.base * c) { s.help = 'none'; return; } H.cash(l, -l.base * c, s.help === 'nanny' ? 'Lương bảo mẫu' : 'Giúp việc theo giờ'); }
     if (s.pbudget && s.pbPaid !== l.age && partner(l) && !(partner(l).inc > 0)) { s.pbPaid = l.age; H.cash(l, -s.pbudget * 12, 'Ngân sách cá nhân của ' + partner(l).name); } }
   function arrYear(l, r, log) {
-    var s = st(l), a = s.arr, p = partner(l); if (!a) return; if (!p) { delete s.arr; return; }
+    var s = st(l), p = partner(l), a = arrangement(l, p); if (!a || !goalsPartner(l)) return;
     var cap = a.kind === 'home' ? 10 : a.kind === 'pause' ? 9 : a.kind === 'part' ? 6 : 3, help = s.help === 'nanny' ? 4 : s.help === 'maid' ? 2 : 0, over = load(l) - cap - help;
     if (over > 0) { stress(l, Math.min(4, over)); if (u(l.id + ':over:' + l.age) < 0.3) log('Việc nhà và chăm con nhiều hơn sức của cả nhà; ' + p.name + ' và bạn cần chia lại việc hoặc thuê thêm người giúp.', 'neutral'); }
     if (a.review === l.age) log('Đến hẹn xem lại việc ' + p.name + ' tạm nghỉ: có thể tiếp tục, làm bán thời gian hoặc quay lại làm (mục Thỏa thuận công việc và quản lý gia đình).', 'neutral');
@@ -535,6 +572,12 @@
     opts: [{ k: 'counsel', l: 'Cùng đi tư vấn, đặt ranh giới rõ ràng', run: function (l, r, log) { var p = partner(l), c = st(l).cheat; c.closed = 'counsel'; H.cash(l, -l.base * 0.02, 'Tư vấn hôn nhân'); var ok = r() < 0.35 + commit(l, p) / 200; p.close = clamp((p.close || 50) + (ok ? -5 : -15)); stress(l, 6); log(ok ? 'Sau nhiều buổi tư vấn, ' + p.name + ' chấm dứt mối quan hệ kia; hai người xây lại lòng tin từng chút.' : 'Hai người đi tư vấn nhưng vết rạn vẫn còn lớn.', ok ? 'neutral' : 'bad'); } },
       { k: 'space', l: 'Tạm sống riêng một thời gian', run: function (l, r, log) { var p = partner(l); st(l).cheat.closed = 'space'; p.close = clamp((p.close || 50) - 12); stress(l, 5); log('Bạn cần khoảng lặng; hai người tạm sống riêng. Ly thân không phải ly hôn.', 'bad'); } },
       { k: 'end', l: 'Kết thúc mối quan hệ', run: function (l, r, log) { var p = partner(l); st(l).cheat.closed = 'end'; if (p.status === 'dating') { log('Bạn chia tay ' + p.name + '.', 'bad'); H.endPartner(l, log, 'split'); l.exes = (l.exes || 0) + 1; } else { log('Bạn quyết định ly hôn; thủ tục và phân chia tài sản theo quy trình chung.', 'bad'); var d = E.DEC.divorce.make(l, r); d.manual = false; l.pending.unshift(d); } } }] });
+
+  var migrateKin = E.migrateExt;
+  E.migrateExt = function (l) {
+    if (migrateKin) migrateKin(l);
+    if (l?.flags?.kin920?.arr) arrangement(l, partner(l));
+  };
 
   // ================= hook năm =================
   E.HOOKS.year.push(function (l, r, log) {
