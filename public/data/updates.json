@@ -5,7 +5,7 @@
       "id": "pacific-disasters-and-haiti-food-98600",
       "version": "9.8.6",
       "publishedAt": "2026-11-18T15:43:26+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "releasedAt": null,
       "title": "Thiên tai ở Thái Bình Dương và thiếu lương thực ở Haiti",
       "summary": "Thêm ba thiên tai theo đảo hoặc khu vực chịu ảnh hưởng. Sơ tán và việc học có thể tiếp diễn trong năm phục hồi. Khủng hoảng lương thực ở Haiti ảnh hưởng khác nhau đến từng hộ.",
@@ -19,13 +19,14 @@
         "Động đất Port Vila tháng 12/2024 làm gián đoạn việc học và chỗ ở trên đảo Efate. Từ năm 2025, trường mở lại với lớp học tạm trong thời gian sửa chữa.",
         "Gia đình có thể ở tại điểm cứu trợ gần nhà hoặc chuyển tới điểm tiếp nhận phù hợp. Phần học dở được giữ để xin học tiếp khi thu xếp được chỗ ở. Mốc trở về phụ thuộc tình trạng nơi cũ.",
         "Haiti 2024–2025 hiển thị khủng hoảng lương thực nghiêm trọng. Nơi ở, tiền dự phòng và tình trạng sơ tán ảnh hưởng mức thiếu ăn. Bạn có thể tìm điểm hỗ trợ, dành tiền mua thêm thức ăn hoặc chia lại khẩu phần."
-      ]
+      ],
+      "correctedAt": "2026-11-18T08:47:46.412Z"
     },
     {
       "id": "occupation-and-historical-regions-98500",
       "version": "9.8.5",
       "publishedAt": "2026-11-18T15:13:36+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "releasedAt": null,
       "title": "Philippines, Đông Timor và vùng lịch sử ở Malaysia, Đức",
       "summary": "Bối cảnh thời chiến khớp với bên đang cai quản. Nơi sinh và nơi chuyển đến ở Malaysia, Đức có tên vùng và điều kiện đi lại theo từng năm.",
@@ -38,13 +39,14 @@
         "Kuala Lumpur năm 1958 thuộc Liên bang Malaya đã độc lập, còn Kuching ở Sarawak và Jesselton ở Bắc Borneo vẫn thuộc Anh. Tình trạng khẩn cấp Malaya chỉ áp dụng ở bán đảo.",
         "Dresden và Munich có chính quyền, sự kiện và điều kiện đi lại khác nhau trong thời Đức chia cắt. Bạn có thể sinh ở Đông Berlin hoặc Tây Berlin và sẽ thấy tên Berlin thống nhất khi sống qua năm 1990.",
         "Màn tạo đời có thể chọn thành phố hoặc vùng sinh tại Malaysia và Đức. Lựa chọn chuyển chỗ ở và sơ tán xét cả địa điểm đang sống, điểm đến và năm. Hồ sơ vẫn lưu nơi sinh theo tên vào thời điểm chào đời."
-      ]
+      ],
+      "correctedAt": "2026-11-18T08:47:46.395Z"
     },
     {
       "id": "evacuation-and-afghan-education-98400",
       "version": "9.8.4",
       "publishedAt": "2026-11-18T14:47:12+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "releasedAt": null,
       "title": "Sơ tán tới nơi ở thật và việc học tại Afghanistan",
       "summary": "Lựa chọn sơ tán cập nhật địa chỉ và lưu nơi đã rời đi. Các bậc học tại Afghanistan mở hoặc tạm dừng theo đúng mốc trong game.",
@@ -57,7 +59,8 @@
         "Gia đình chỉ có thể quay về khi nơi cũ đủ an toàn và tuyến đi còn phù hợp. Chuyển sang năm mới sẽ không tự mở đường trở về các vùng còn gặp khủng hoảng.",
         "Nữ sinh ở Afghanistan vẫn học tiểu học. Việc học chính quy sau lớp 6 bị gián đoạn từ năm 2021, còn đại học có mốc riêng vào tháng 12/2022. Bằng cấp đã hoàn thành và phần học đang dở được lưu trong hồ sơ.",
         "Khi trường học bị gián đoạn, bạn có thể học bổ trợ qua nhóm cộng đồng, tài liệu hoặc từ xa nếu tiếp cận được. Sau khi đã ổn định ở nơi có thể đi học, bạn có thể xin tiếp tục chương trình phổ thông hoặc nộp hồ sơ đại học theo điều kiện địa phương."
-      ]
+      ],
+      "correctedAt": "2026-11-18T08:47:46.378Z"
     },
     {
       "id": "thailand-marriage-timeline-98300",
