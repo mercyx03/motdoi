@@ -203,7 +203,7 @@
   // ---- 9.5.2: sơ tán thật sự tới nơi yên hơn trong nước (dùng bảng vùng), và về lại khi quê nhà đã yên ----
   function hardness(c) { return c.war * 3 + c.fam * 2 + c.dis; }
   function levelAt(cc, y, city) { var c = at(cc, y), zr = zoneRows(cc, y, city); return zr ? zoned(c, zr) : c; }
-  function citiesOf(l, cc) { return cc === 'VN' && G.VN && G.VN.P63 ? G.VN.P63.map(function (p) { return p.city; }) : ((G.W && G.W.BY[cc]) || {}).cities || []; }
+  function citiesOf(l, cc) { if(E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities)return E.ERA920.POL.cities(cc,wy(l));return cc === 'VN' && G.VN && G.VN.P63 ? G.VN.P63.map(function (p) { return p.city; }) : ((G.W && G.W.BY[cc]) || {}).cities || []; }
   // nơi yên hơn nơi đang ở: chọn trong nhóm ba nơi yên nhất (ưu tiên cùng vùng ở Việt Nam, thành phố lớn ở nước khác), cố định theo mã đời
   function refuge(l) {
     if (l.abroad) return null;
@@ -224,6 +224,7 @@
     return true;
   }
   function refugeReturn(l, c, log) {
+    if(E.ERA969){var pending=E.ERA969.displaced(l);if(pending&&pending.recovery969)return;}
     var s = st(l), rf = s.refuge; if (!rf || rf.back || rf.stay || l.abroad || l.age < 3) return;
     var y = wy(l), cc = resCc(l), home = levelAt(cc, y, rf.from);
     if (y - rf.y >= 7) { rf.stay = y; log('Sau nhiều năm ở ' + rf.to + ', bạn đã quen nếp sống mới; quê cũ chỉ còn là chuyện nhớ lại.', 'neutral'); return; }

@@ -447,8 +447,9 @@
     life.country = c.code; life.countryName = c.name; life.cur = 'usd';
     life.urban = r() < c.urban * (E.ERA920 ? E.ERA920.urbanK(life) : 1);
     if (opts.urban != null) life.urban = !!opts.urban;
-    var city = U.wpick(r, c.cities, function (x, i) { return 1 / Math.pow(i + 1, 0.8); });
-    if (opts.city && c.cities.indexOf(opts.city) >= 0) city = opts.city;
+    var availableCities=E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(c.code,life.birthYear):c.cities;
+    var city = U.wpick(r, availableCities, function (x, i) { return 1 / Math.pow(i + 1, 0.8); });
+    if (opts.city && availableCities.indexOf(opts.city) >= 0) city = opts.city;
     life.city = city; life.birthCity = city;
     life.place = life.urban ? city : 'vùng nông thôn gần ' + city;
     life.pool = c.pool.indexOf(':') >= 0 ? U.wkey(r, c.pool) : c.pool;
@@ -759,6 +760,9 @@
 
   var TW5 = ['Hà Nội', 'Hải Phòng', 'Đà Nẵng', 'Cần Thơ', 'Huế'];
   function provDisplay(life, name) {
+    var P=E.ERA920&&E.ERA920.POL,y=life.birthYear+life.age,h=P&&P.regionName&&P.regionName(life.prov&&life.prov.old||name,y);
+    if(h)return 'tỉnh '+h;
+    if(y<1950)return 'khu vực '+name;
     if (/^TP\./.test(name)) return name;
     var city = life.variant === '34' ? TW5.indexOf(name) >= 0 : TW5.indexOf(name) >= 0 && name !== 'Huế';
     return (city ? 'thành phố ' : 'tỉnh ') + name;
@@ -872,8 +876,8 @@
   // nơi học đại học theo vùng
   function uniPlaces(l) {
     if (!inVN(l) || !l.prov) {
-      var c = W.BY[resCode(l)] || W.BY[l.country] || W.C[0];
-      return { big: c.cities[0], local: l.urban ? l.city : (c.cities[Math.min(2, c.cities.length - 1)] || c.cities[0]), inCity: l.urban && l.city === c.cities[0] };
+      var c = W.BY[resCode(l)] || W.BY[l.country] || W.C[0],cities=E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(c.code,l.birthYear+l.age):c.cities;
+      return { big: cities[0], local: l.urban&&cities.includes(l.city) ? l.city : (cities[Math.min(2, cities.length - 1)] || cities[0]), inCity: l.urban && l.city === cities[0] };
     }
     var reg = l.region, old = l.prov.old;
     var north = reg === 'MNPB' || reg === 'DBSH' || /Thanh Hóa|Nghệ An|Hà Tĩnh/.test(old);
@@ -1142,7 +1146,7 @@
             reg === 'BTB' ? U.pick(r, ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng']) :
               reg === 'NTB' || reg === 'TN' ? U.pick(r, ['TP. Hồ Chí Minh', 'Đà Nẵng', 'TP. Hồ Chí Minh']) :
                 U.pick(r, life.variant === '63' ? ['TP. Hồ Chí Minh', 'Bình Dương', 'Đồng Nai', 'Cần Thơ'] : ['TP. Hồ Chí Minh', 'TP. Hồ Chí Minh', 'Đồng Nai', 'Cần Thơ']);
-        } else dest = W.BY[life.country].cities[0];
+        } else dest = (E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(resCode(life),life.birthYear+life.age):W.BY[life.country].cities)[0];
         return { id: 'city', title: 'Lên ' + dest + ' lập nghiệp?', data: { dest: dest },
           text: 'Ở quê ít việc làm. Nhiều người cùng trang lứa đã lên ' + dest + ' — thu nhập cao hơn, nhưng chi phí cũng đắt đỏ hơn.',
           opts: [opt('go', 'Khăn gói lên ' + dest, ''), opt('stay', 'Ở lại quê', '')] };
@@ -1151,7 +1155,8 @@
       apply: function (life, d, k, r, log) {
         life.flags.cityAsked = true;
         if (k !== 'go') { log('Quyết định bám trụ ở quê.', 'neutral'); return; }
-        moveToCity(life, d.data.dest);
+        if(E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cityAllowed&&!E.ERA920.POL.cityAllowed(resCode(life),life.birthYear+life.age,d.data.dest))return;
+        H.moveToCity(life, d.data.dest);
         if (life.job && /^(nong|ngu_dan|farm|fish|phu_giup)$/.test(life.job.id)) life.job = null;
         if (!life.job) life.flags.needJob = true;
         log('Khăn gói lên ' + d.data.dest + ' lập nghiệp, ở trọ trong một căn phòng nhỏ.', 'big'); life.st.soc -= 5;
@@ -1335,6 +1340,7 @@
   Object.keys(CORE).forEach(function (k) { DEC[k] = CORE[k]; });
 
   function moveToCity(life, dest) {
+    var P=E.ERA920&&E.ERA920.POL;if(P&&P.cityAllowed&&!P.cityAllowed(resCode(life),life.birthYear+life.age,dest))return false;
     life.urban = true; life.movedTo = dest; life.place = dest; life.city = dest;
     if (isVN(life)) { var p = VN.byName[dest] || VN.byName['TP. Hồ Chí Minh']; life.cityWealth = p.wealth; }
     setBase(life);
@@ -1344,7 +1350,8 @@
     var oldGdp = oldCountry ? oldCountry.gdp : life.gdp;
     var cc = W.BY[c[0]];
     life.abroad = { code: c[0], name: c[1], perm: true, arrived873: life.age, pool: c[2], base: cc.gdp * 1000 * 0.55 * 0.75 };
-    life.urban = true; life.place = cc.cities[U.randint(r, 0, Math.min(3, cc.cities.length - 1))]; life.city = life.place;
+    var destinations=E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(cc.code,life.birthYear+life.age):cc.cities;
+    life.urban = true; life.place = destinations[U.randint(r, 0, Math.min(3, destinations.length - 1))]; life.city = life.place;
     if (life.ownHouse && !(H.keepHome874 && H.keepHome874(life, oldCountry ? oldCountry.code : life.country))) { // bán nhà trước khi đi, trả nợ vay mua nhà
       var homeDebt = (life.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (life.mortgage || 0);
       life.money += life.houseVal - homeDebt; life.houseVal = 0; life.ownHouse = false; life.mortgage = 0;
@@ -1911,7 +1918,7 @@
       if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log(E.england829 && E.england829(life) ? 'Hoàn thành Primary School (Year 6), chuyển lên Secondary School (Year 7).' : ('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.'), 'neutral'); }
       else { life.school = null; log(f.q <= 2 ? 'Nhà nghèo, học hết tiểu học thì phải nghỉ ở nhà phụ giúp bố mẹ.' : life.urban ? 'Học lực yếu, thi không đỗ vào lớp 6 trường công, gia đình đành cho nghỉ học.' : 'Trường cấp hai ở xa, đường sá cách trở, học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
-    if (life.school && life.schoolEnd != null && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
+    if (life.school && life.schoolEnd != null && !(E.ERA969&&E.ERA969.learning(life,life)) && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
       var sc = life.school; life.school = null; life.schoolEnd = null;
       if (sc === 'upper' || sc === 'priv') {
         life.edu = Math.max(life.edu, 3);

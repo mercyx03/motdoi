@@ -286,8 +286,10 @@
   // ===================================================================
   var KID_JOBS_BAN = { an_xin: 1, phu_giup: 1, scam_kh: 1, xkld: 1 };
   function kidJobPick(l, k, r) {
-    var preferred = E.childCareer126 && E.childCareer126(l, k); if (preferred && r() < .65) return preferred;
-    var ids = Object.keys(E.CAR).filter(function (id) { var c = E.CAR[id]; return !KID_JOBS_BAN[id] && !c.agency962 && !c.fame && c.skillRank == null && c.sec !== 'crime' && !c.ladder && (c.edu || 0) <= k.edu && !(c.vnOnly && !isVN(l)) && !((c.vnOnly || c.cat === 'state') && l.abroad && l.abroad.perm); }); // v7.0: gia đình đã định cư nước ngoài thì con không làm công chức ở Việt Nam
+    var view=E.ERA902&&E.ERA902.relativeLife?E.ERA902.relativeLife(l,k):l;
+    function qualified(id){var c=E.CAR[id];return !!(c&&(!c.minAge||view.age>=c.minAge)&&(c.edu||0)<=(k.edu||0)&&(!c.major||c.soft||c.major===k.major)&&(!c.majors||c.soft||c.majors.includes(k.major))&&(!E.ERA902||!E.ERA902.jobBlocked(view,id,c))&&(!c.vnOnly||H.resCode(view)==='VN'));}
+    var preferred = E.childCareer126 && E.childCareer126(l, k); if (preferred && qualified(preferred) && r() < .65) return preferred;
+    var ids = Object.keys(E.CAR).filter(function (id) { var c = E.CAR[id]; return qualified(id) && !KID_JOBS_BAN[id] && !c.agency962 && !c.fame && c.skillRank == null && c.sec !== 'crime' && !c.ladder && (c.edu || 0) <= k.edu && !(c.vnOnly && !isVN(l)) && !((c.vnOnly || c.cat === 'state') && l.abroad && l.abroad.perm); }); // v7.0: gia đình đã định cư nước ngoài thì con không làm công chức ở Việt Nam
     return U.wpick(r, ids, function (id) { var c = E.CAR[id]; return (c.w || 1) * (c.hidden ? 0.15 : 1) * (k.edu >= 5 && (c.edu || 0) >= 5 ? 4 : 1) * (k.edu >= 5 && (c.edu || 0) < 3 ? 0.2 : 1); });
   }
   function kidIncome(l, k) {
@@ -325,17 +327,17 @@
         H.sched(l, 'con_lac_loi', 0, { n: k.name });
       }
       // 18 tuổi: ngã rẽ của con — bố mẹ góp ý
-      if (ka === 18 && !k.path18) { k.path18 = true; H.sched(l, 'con_18', 0, { n: k.name }); }
+      if (ka === 18 && !k.path18 && !(E.ERA969&&E.ERA969.learning(l,k))) { k.path18 = true; H.sched(l, 'con_18', 0, { n: k.name }); }
       // tốt nghiệp
       if (k.uniUntil && ka >= k.uniUntil) { var degree = E.childDegreeName(k.degree961); k.uniUntil = null; k.edu = Math.max(k.edu || 0, k.degree961 || 5); delete k.degree961; log('Con ' + k.name + ' tốt nghiệp ' + degree + '.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Ngày dự lễ tốt nghiệp của ' + k.name + ', bạn khóc lúc nào không hay.', 4); }
       if (!k.uniUntil) k.tuition = 0;
       if (k.tuition && l.indep) H.cash(l, -k.tuition, 'Tiền học cho ' + k.name);
       // đi làm
-      if (!k.job && !k.internship170 && !k.uniUntil && ka >= 19 && ka <= 60 && !k.jail && (ka >= 22 || k.edu < 5) && r() < 0.6) {
+      if (!k.job && !k.internship170 && !k.uniUntil && !(E.ERA969&&E.ERA969.learning(l,k)) && ka >= 19 && ka <= 60 && !k.jail && (ka >= 22 || k.edu < 5) && r() < 0.6) {
         if (k.vice === 'ma túy' && r() < 0.6) return;
         k.edu = Math.max(k.edu, ka >= 18 ? 3 : 2);
         k.job = kidJobPick(l, k, r); k.rank = 0; k.jyrs = 0; k.inc = kidIncome(l, k);
-        if (ka <= 30) log('Con ' + k.name + ' đi làm ' + kidTitle(k) + ', lương ' + mo(l, k.inc) + '/tháng.', 'good');
+        if (k.job&&ka <= 30) log('Con ' + k.name + ' đi làm ' + kidTitle(k) + ', lương ' + mo(l, k.inc) + '/tháng.', 'good');
       } else if (k.job) {
         k.jyrs = (k.jyrs || 0) + 1;
         var c = E.CAR[k.job];

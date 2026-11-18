@@ -125,15 +125,22 @@ const lev = (cc, y, city) => C.of(life(cc, y, city));
   ok(l.log.some(x => /Cả nhà chuyển tới/.test(x.t)), 'nhật ký ghi nơi chuyển tới');
 
   // về lại khi quê cũ đã yên
-  const home = l.flags.ctx945.refuge; l.alive = true; let back = null;
-  for (let y = 1947; y <= 1955 && !home.back && !home.stay; y++) { l.age = y - l.birthYear; C.refugeReturn(l, C.of(l), (t, k) => l.log.push({ a: l.age, y, t, k })); }
+  function decideRecovery(l) {
+    if(!E.ERA969||!E.ERA969.displaced(l))return;
+    const d=E.DEC.recovery969.make(l,R(l)),keys=['return','relatives','rent','settle','later'];
+    const option=keys.map(key=>d.opts.find(o=>E.UPDATE110.menuKey(d,o.k)===key)).find(Boolean);
+    if(option){l.pending=[d];E.resolve(l,option.k);}
+  }
+  const home = l.flags.ctx945.refuge; l.alive = true; l.indep=true;l.money=Math.max(l.money,l.base);let back = null;
+  for (let y = 1947; y <= 1955 && !home.back && !home.stay; y++) { l.age = y - l.birthYear; C.refugeReturn(l, C.of(l), (t, k) => l.log.push({ a: l.age, y, t, k })); decideRecovery(l); }
   ok(home.back || home.stay, 'sau vài năm người sơ tán hoặc về quê khi đã yên, hoặc ổn định ở nơi mới');
   if (home.back) ok(l.city === 'Surabaya', 'đã về lại quê cũ');
   // quê cũ vẫn loạn thì không về, rồi ổn định sau bảy năm
   const l2 = life('LB', 1976, 'Beirut', { age: 20 }); l2.flags.ctx945 = null; l2.pending = [E.DEC.ctx945_event.make(l2, R(l2), { kind: 'shelter', y: 1976 })];
   const d2 = l2.pending[0], f2 = d2.opts.find(o => /Sơ tán/.test(o.l)); E.resolve(l2, f2.k); const rf2 = l2.flags.ctx945.refuge; ok(rf2 && rf2.from === 'Beirut' && l2.city !== 'Beirut', 'người ở Beirut 1976 sơ tán đi nơi khác: ' + l2.city);
-  for (let y = 1977; y <= 1990; y++) { l2.age = y - l2.birthYear; C.refugeReturn(l2, C.of(l2), (t, k) => l2.log.push({ a: l2.age, y, t, k })); if (rf2.back) break; }
-  ok(!rf2.back && rf2.stay, 'quê cũ còn chiến sự thì không về, và sau bảy năm ở nơi mới thì ổn định');
+  l2.indep=true;l2.money=Math.max(l2.money,l2.base);
+  for (let y = 1977; y <= 1990; y++) { l2.age = y - l2.birthYear; C.refugeReturn(l2, C.of(l2), (t, k) => l2.log.push({ a: l2.age, y, t, k })); decideRecovery(l2); if (rf2.back) break; }
+  ok(!rf2.back && rf2.stay, 'quê cũ còn chiến sự thì không về; lựa chọn thu xếp chỗ ở rồi ổn định được giữ');
 
   // sơ tán lần hai: vẫn nhớ quê gốc, chỉ đổi nơi đang ở
   { const l3 = life('LB', 1982, 'Beirut', { age: 30 }); l3.flags.ctx945 = null; C.relocateTo(l3, C.of(l3), () => {}, 'Chạy loạn.'); const first = l3.flags.ctx945.refuge, c1 = l3.city; ok(first && first.from === 'Beirut' && first.to === c1, 'lần sơ tán đầu ghi quê gốc');

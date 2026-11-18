@@ -311,7 +311,7 @@ X.menu('child141','Hồ sơ và cách đồng hành',function(l){return l&&l.ali
 function words(v,hi,mid,lo){return v>=70?hi:v>=40?mid:lo;}
 function postgraduate(l,k,p){
   var level=k.edu===5?6:k.edu===6?7:0,a=age(l,k);
-  if(!level||a<22||k.uniUntil||k.jail||k.internship170)return[];
+  if(!level||a<22||k.uniUntil||k.jail||k.internship170||E.ERA969&&(E.ERA969.academicReason(l,k)!==true||E.ERA969.learning(l,k)))return[];
   var degree=E.childDegreeName(level),years=level===6?2:4,fee=l.base*(level===6?.25:.35);
   return [true,false].map(function(funded){
     return {k:'postgrad'+(funded?'Support':'Scholarship'),min:22,max:200,

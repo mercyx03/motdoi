@@ -89,7 +89,7 @@
 
   function setupName968(name) {
     var P=E.ERA920&&E.ERA920.POL;
-    return P?P.rename({birthYear:S.set.year||NOW_YEAR,age:0},name):name;
+    var y=S.set.year||NOW_YEAR;return P?P.regionChoice?P.regionChoice(name,y):P.rename({birthYear:y,age:0},name):name;
   }
   function syncBirthRegion968() {
     if(!(S.set.year&&S.set.year<2025)||S.set.variant==='63')return false;
@@ -260,7 +260,7 @@
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':l.city+' · '+(P&&P.nameAt(l.country,l.birthYear)||l.countryName);
-    if(P)where=P.rename(l,where);
+    if(P){if(E.isVN(l)&&P.regionName){var admin=P.regionName(l.prov.old,l.birthYear);if(admin)where=admin+' · khu vực '+l.prov.old+' · Việt Nam';}where=P.rename(l,where);}
     var orph = f.orphan && f.orphan.adopted == null ? f.orphan : null; // v7.1: xuất thân mồ côi
     var fam = orph ? 'Mồ côi · ' + orph.carer + ' nuôi dưỡng' : (f.noDad ? '' : 'Bố ' + f.fJob + ' · ') + 'Mẹ ' + f.mJob;
     var inc = f.mInc + f.fInc;

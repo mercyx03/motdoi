@@ -471,6 +471,7 @@
   ];
   function sibCareer(l, s, log) {
     var age = sibAge(l, s);
+    if(E.ERA969&&E.ERA969.learning(l,s)){s.job='đang học nghề';return;}
     if (!E.PATH139 || !E.LIFE138 || age < 18 || s.adultJob || /^tổng giám đốc /.test(s.job || '')) return;
     var path = s.career961;
     if (!path) {

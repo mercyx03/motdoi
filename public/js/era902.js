@@ -184,6 +184,7 @@
     if (firstHit(a, s)) { stats.job++; return true; } return false;
   }
   // --- 4. hành động chủ động ---
+  function relativeLife(l,p){var code=p&&(p.res919||p.countryCode)||E.H.resCode(l);if(!G.W.BY[code])code=E.H.resCode(l);return Object.assign({},l,{country:code,abroad:null,age:p&&p.born!=null?l.age-p.born:l.age,birthYear:p&&p.born!=null?l.birthYear+p.born:l.birthYear});}
   function parentJobAllowed(l, title) {
     var id = /shipper/.test(title) ? 'shipper' : /tài xế công nghệ/.test(title) ? 'tx_cn' : /phần mềm/.test(title) ? 'dev' : null;
     return !jobBlocked(l, id || '', {t:[title]});
@@ -193,6 +194,6 @@
     var label = typeof a.l === 'function' ? a.l(l) : a.l;
     return !!anachronism(l, substitute(l, label));
   }
-  E.ERA902 = { parentJobAllowed: parentJobAllowed, ID_FROM: ID_FROM, idBlocked: idBlocked, actionBlocked: actionBlocked, YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
+  E.ERA902 = { relativeLife:relativeLife, parentJobAllowed: parentJobAllowed, ID_FROM: ID_FROM, idBlocked: idBlocked, actionBlocked: actionBlocked, YEAR_MIN: YEAR_MIN, ADOPT: ADOPT, activeFor: activeFor, TECH: TECH, JOB_FROM: JOB_FROM, MAXFROM: MAXFROM, substitute: substitute, worldYear: worldYear, activeAt: activeAt, anachronism: anachronism, clean: clean, refine: refine, jobBlocked: jobBlocked, stats: stats };
   if (E.ERA917) E.ERA917.tech = E.ERA902; // gắn vào khung thời đại có sẵn
 })(globalThis.G);

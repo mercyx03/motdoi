@@ -1,6 +1,31 @@
 {
-  "generatedAt": "2026-11-17T08:45:59.810Z",
+  "generatedAt": "2026-11-17T09:35:36.479Z",
   "entries": [
+    {
+      "id": "dated-locations-recovery-and-vocational-96900",
+      "version": "9.6.9",
+      "publishedAt": "2026-11-17T16:35:36+07:00",
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-18T00:21:57.000Z",
+      "title": "Địa điểm theo niên đại, cuộc sống sau sơ tán và đường học nghề",
+      "summary": "Chọn nơi ở đúng thời kỳ, từng bước ổn định sau sơ tán và theo học nghề tại nơi đang sống.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Kiểm tra mốc hình thành của Brasília, Islamabad, Naypyidaw, Abuja và Tel Aviv khi chọn nơi sinh, chuyển đến thành phố, di cư và tìm nơi sơ tán. Giai đoạn xây dựng Brasília và Naypyidaw có tên gọi riêng. Chuyển nhà trong nước không tự đưa bạn sang một thành phố thuộc quốc gia khác.",
+        "Tên vùng Nghệ Tĩnh, Bình Trị Thiên và Sông Bé xuất hiện theo giai đoạn đã đối chiếu. Lựa chọn nơi sinh vẫn giữ rõ khu vực gốc; tên hành chính thay đổi theo năm nhưng nơi sinh và nhà đất không tự chuyển sang vùng khác.",
+        "Sau sơ tán, bạn có thể nhờ người thân thu xếp chỗ ở, tìm nơi thuê, xin tiếp tục chương trình học, xem cơ hội việc làm và nối lại tin tức gia đình. Mỗi năm thu xếp một việc; lựa chọn và phần còn dở được giữ khi lưu rồi chơi tiếp.",
+        "Xin học lại có thời gian chờ, giữ kết quả đã học và phần chương trình còn thiếu. Chuyển nơi ở trong lúc chờ cần trao đổi lại; hoàn cảnh chưa an toàn sẽ kéo dài thời gian chờ. Khi trở về quê, hồ sơ học còn dở vẫn được theo dõi.",
+        "Có thể hẹn gặp người thân còn sống và đang ở gần sau khi đã hỏi được tin. Khi quê cũ an toàn hơn, bạn chọn trở về hoặc gắn bó với nơi ở hiện tại; game không tự quyết thay. Trở về có chi phí và công việc cũ cần tìm lại.",
+        "Đường học nghề dùng hồ sơ khóa học dài hạn: học cùng thợ địa phương, Kōsen tại Nhật từ 1962, đào tạo nghề kép tại Đức từ 1969, ITI/CTS ở Ấn Độ từ 1950 và chương trình bac professionnel ba năm ở Pháp từ 2009. Cần đủ tuổi, bậc học và điều kiện cư trú.",
+        "Khóa nghề có học phí, thời hạn và đánh giá cuối khóa. Trẻ chưa tự lập có thể đề nghị gia đình chi trả; người thân có thể từ chối. Chuyển nước sẽ dừng khóa tại nơi cũ; biến cố lớn làm gián đoạn thì giữ thời gian học còn lại. Học cùng thợ không tự biến thành bằng chính quy.",
+        "Con và anh chị em có thể theo lộ trình phù hợp qua mục học dài hạn. Con chưa nhận việc trong lúc đang học nghề; khi tuyển việc, cả nghề được gia đình gợi ý và vị trí thông thường đều kiểm tra thời đại, tuổi, bằng cấp, chuyên ngành và nơi sống.",
+        "Tuyến học đại học thông thường bị kiểm tra lại theo nơi và năm, gồm giai đoạn gián đoạn tuyển sinh tại Trung Quốc. Lựa chọn cũ và kết quả khóa học không được áp dụng hai lần khi tải lại bản lưu."
+      ],
+      "correctedAt": "2026-11-18T00:21:57.743Z"
+    },
     {
       "id": "birthplace-and-year-context-96800",
       "version": "9.6.8",
