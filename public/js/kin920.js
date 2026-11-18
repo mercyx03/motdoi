@@ -166,12 +166,12 @@
   function setArr(l, k, log) {
     var p = wed(l) || partner(l), s = st(l), a = s.arr || { kind: 'both' };
     if (!agree(l, p, k)) { s.arr = Object.assign({}, a, { at: l.age }); log(p.name + ' chưa đồng ý: ' + { career: 'muốn tiếp tục phát triển sự nghiệp', balance: 'muốn cân bằng giữa công việc và gia đình', family: 'muốn dành nhiều thời gian cho gia đình hơn' }[want(l, p)] + '. Hai người hẹn bàn lại.', 'neutral'); return; }
-    if (k !== 'both' && p.job && !a.saved) { a.saved = { job: p.job, jobId: p.jobId, inc: p.inc, at: l.age }; }
+    if (k !== 'both' && p.job && !a.saved) { a.saved = { job: p.job, jobId: p.jobId, inc: p.inc, at: l.age, country: H.resCode(l) }; }
     if (k === 'both' && a.saved) { var gap = l.age - a.saved.at; p.job = a.saved.job; p.jobId = a.saved.jobId; p.inc = a.saved.inc * Math.max(0.7, 1 - gap * 0.04); log(p.name + ' quay lại làm ' + p.job + (gap > 1 ? '; sau ' + gap + ' năm nghỉ, thu nhập khởi điểm thấp hơn trước một chút' : '') + '.', 'good'); delete a.saved; }
     else if (k === 'part') { p.job = (a.saved ? a.saved.job : p.job) + ' (bán thời gian)'; p.inc = (a.saved ? a.saved.inc : p.inc) * 0.5; log(p.name + ' chuyển sang làm bán thời gian, thu nhập khoảng một nửa.', 'neutral'); }
     else if (k === 'pause') { p.job = 'tạm nghỉ việc chăm sóc gia đình'; p.inc = 0; log(p.name + ' tạm nghỉ việc; hai người hẹn xem lại sau ' + 2 + ' năm. Đây là công việc chăm sóc không lương, không phải thất nghiệp.', 'neutral'); }
     else if (k === 'home') { p.job = 'quản lý gia đình (nội trợ)'; p.inc = 0; log(p.name + ' nhận phần quản lý gia đình. Công việc chăm sóc không lương này có giá trị như mọi công việc khác.', 'neutral'); }
-    s.arr = { kind: k, at: l.age, since: l.age, review: k === 'pause' ? l.age + 2 : null, saved: a.saved };
+    s.arr = { kind: k, at: l.age, since: l.age, review: k === 'pause' ? l.age + 2 : null, saved: a.saved, person976: pid(l, p) };
     if (p.jobId === null && E.FIN920) E.FIN920.jobTrack(l, p, null);
   }
   X.menu('household920', 'Thỏa thuận công việc và quản lý gia đình', function (l) { var a = adult(l); if (a !== true) return a; var p = partner(l); return p && p.status !== 'dating' ? true : 'Cần đang sống chung hoặc đã kết hôn'; }, function (l) {
@@ -190,26 +190,223 @@
 
   // mục tiêu riêng của bạn đời (HOUSEHOLD-03)
   var GOALS = { cook: ['học nấu ăn / làm bánh', 0.03, 2], interior: ['học thiết kế nội thất', 0.06, 2], fit: ['tập yoga / gym / khiêu vũ', 0.03, 1], music: ['học một nhạc cụ', 0.04, 3], lang: ['học ngoại ngữ', 0.04, 2], finance: ['học quản lý tài chính', 0.02, 1], read: ['câu lạc bộ đọc sách', 0.005, 1], travel: ['một chuyến du lịch riêng', 0.08, 1], health: ['chăm sóc sức khỏe, ngoại hình', 0.04, 1], parents: ['tham gia hội phụ huynh, nhóm cộng đồng', 0.01, 1], charity: ['làm từ thiện, bảo trợ', 0.05, 2], study: ['học lại / đi làm lại', 0.05, 2], shop: ['mở một cửa hàng nhỏ', 0.6, 3] };
+  var SUPPORT = {
+    fund: { label: 'Hỗ trợ theo kế hoạch đầy đủ', fee: 1, pace: 1 },
+    cheap: { label: 'Chọn cách tiết kiệm', fee: 0.3, pace: 0.62 }
+  };
+  function goalsPartner(l) {
+    var p = partner(l);
+    return p && p.status !== 'dating' && !p.separated908 ? p : null;
+  }
+  function planKey(p, g) { return [p.uid110, g.k, g.at].join(':'); }
+  function nativeLanguage(l, p) { return E.ID919.langOf(p.homeCountry || p.country108 || l.country); }
+  function planLanguage(l, p) {
+    var here = H.resCode(l), local = E.ID919.langOf(here), native = nativeLanguage(l, p);
+    var preferred = local !== native ? local : local === 'en' ? (here === 'US' ? 'es' : 'fr') : 'en';
+    return [preferred, 'fr'].find(function (k) { return k !== native && !p.training976?.languages[k]; });
+  }
+  function goalName(l, p, g) {
+    if (g.k !== 'lang') return GOALS[g.k][0];
+    var code = g.language976 || planLanguage(l, p);
+    return code ? 'học ' + E.ID919.lname(code) : GOALS.lang[0];
+  }
+  function courseFee(l, g, mode) { return l.base * GOALS[g.k][1] * SUPPORT[mode].fee; }
+  function payCourse(l, p, g, mode, term) {
+    var fee = courseFee(l, g, mode);
+    if (l.money < fee) return false;
+    H.cash(l, -fee, 'Hỗ trợ dự định của ' + p.name);
+    g.paidTerm976 = term;
+    return true;
+  }
+  function completeGoal(l, p, g, r, log) {
+    g.end = 'done'; g.endAt = l.age;
+    p.close = clamp((p.close ?? 50) + 2);
+    if (g.k === 'lang' || g.k === 'study') {
+      var training = p.training976 || (p.training976 = { languages: {} });
+      if (g.k === 'lang' && g.language976) training.languages[g.language976] = { level: 60, at: l.age };
+      if (g.k === 'study') training.study = l.age;
+    }
+    log(p.name + ' hoàn thành mục tiêu ' + goalName(l, p, g) + '.' +
+      (p.training976 && (g.k === 'lang' || g.k === 'study') ? ' Có thể xem cơ hội việc làm trong mục Dự định của bạn đời.' : ''), 'good');
+    if (g.k === 'shop') X.next(l, 'shopAsk920', r, {}, { manual: false });
+  }
   function pickGoal(l, p) {
-    var t = (p.traits130 || []).join(' '), keys = Object.keys(GOALS).filter(function (k) { return k !== 'shop' || l.money > l.base * 2; });
+    var t = (p.traits130 || []).join(' '), keys = Object.keys(GOALS).filter(function (k) { return (k !== 'shop' || l.money > l.base * 2) && (k !== 'lang' || planLanguage(l, p)); });
     var r = rng(l.id + ':goal:' + pid(l, p) + ':' + l.age); return U.wpick(r, keys, function (k) { return (k === 'read' && /hướng nội/.test(t) ? 2 : 1) * (k === 'parents' && (l.kids || []).length ? 2 : 1) * (k === 'finance' && /tiết kiệm/.test(t) ? 2 : 1) * (k === 'charity' && l.money > l.base * 10 ? 1.5 : 1) * (k === 'study' && st(l).arr && st(l).arr.kind !== 'both' ? 2 : 1); });
   }
   function goalYear(l, r, log) {
-    var p = partner(l); if (!p || p.status === 'dating') return; var s = st(l), g = p.goal920;
-    if (g && !g.end) {
-      var busy = load(l) / 8 + (p.job && !/nội trợ|tạm nghỉ/.test(p.job) ? 0.3 : 0) - (s.help === 'nanny' ? 0.3 : s.help === 'maid' ? 0.15 : 0);
-      g.prog = Math.min(100, g.prog + Math.round(45 / GOALS[g.k][2] * U.clamp(1 - busy * 0.5, 0.3, 1.2)));
-      if (g.prog >= 100) { g.end = 'done'; g.endAt = l.age; p.close = clamp((p.close || 50) + 2); log(p.name + ' hoàn thành mục tiêu: ' + GOALS[g.k][0] + '.', 'good'); if (g.k === 'shop') X.next(l, 'shopAsk920', r, {}, { manual: false }); }
-      else if (u(l.id + ':gq:' + l.age) < 0.12 + Math.max(0, busy) * 0.1) { g.end = 'dropped'; g.endAt = l.age; log(p.name + ' tạm gác ' + GOALS[g.k][0] + ' vì quá bận; có thể quay lại sau.', 'neutral'); }
+    var p = goalsPartner(l); if (!p) return;
+    var g = p.goal920;
+    if (GOALS[g?.k] && !g.end) {
+      if (!SUPPORT[g.ok] || l.age <= (g.chosen976 ?? g.at) || g.tick976 === l.age) return;
+      g.tick976 = l.age;
+      if (g.k === 'lang') g.language976 = g.language976 || planLanguage(l, p);
+      // Bản lưu cũ đã đóng kỳ đầu khi chọn cách hỗ trợ.
+      var paid = g.paidTerm976 ?? g.at + 1;
+      if (paid !== l.age && !payCourse(l, p, g, g.ok, l.age)) {
+        g.ok = 'no';
+        log('Chưa đủ tiền cho kỳ tiếp theo. ' + p.name + ' giữ tiến độ đã có và tạm gác dự định.', 'neutral');
+        return;
+      }
+      var help = st(l).help;
+      var busy = load(l) / 8 + (p.inc > 0 ? 0.3 : 0) - (help === 'nanny' ? 0.3 : help === 'maid' ? 0.15 : 0);
+      var gain = Math.round(112 / GOALS[g.k][2] * SUPPORT[g.ok].pace * U.clamp(1 - busy * 0.35, 0.35, 1.08));
+      g.prog = Math.min(100, (g.prog || 0) + gain);
+      if (g.prog === 100) completeGoal(l, p, g, r, log);
       return;
     }
-    if ((!g || l.age - (g.endAt || 0) >= 2) && u(l.id + ':gnew:' + l.age) < 0.3) { var k = pickGoal(l, p); p.goal920 = { k: k, at: l.age, prog: 0 }; X.next(l, 'goalAsk920', r, { k: k }, { manual: false }); }
+    if ((!g || l.age - (g.endAt || 0) >= 2) && u(l.id + ':gnew:' + l.age) < 0.3) {
+      var k = pickGoal(l, p);
+      p.goal920 = { k: k, at: l.age, prog: 0, language976: k === 'lang' ? planLanguage(l, p) : undefined };
+      X.next(l, 'goalAsk920', r, { k: k }, { manual: false });
+    }
   }
-  E.SC('goalAsk920', { title: 'Dự định riêng của bạn đời', prep: function (l, r, arg) { return { at: l.age, k: arg && arg.k }; }, valid: function (l, d) { var p = partner(l); return !!(p && p.goal920 && d && p.goal920.k === d.k && d.at === l.age && !p.goal920.ok); },
-    text: function (l, d) { var p = partner(l), G0 = GOALS[d.k]; return p.name + ' muốn ' + G0[0] + ' (khoảng ' + G0[2] + ' năm, chi phí ~' + mo(l, l.base * G0[1]) + '/năm). Đây là mong muốn của người ấy; bạn có thể ủng hộ, cùng tìm cách tiết kiệm hơn hoặc nói thật về tài chính.'; },
-    opts: [{ k: 'yes', l: 'Ủng hộ, chi từ quỹ chung', run: function (l, r, log, d) { var p = partner(l); p.goal920.ok = 'fund'; H.cash(l, -l.base * GOALS[d.k][1], 'Hỗ trợ dự định của ' + p.name); p.close = clamp((p.close || 50) + 3); log('Bạn ủng hộ ' + p.name + ' theo đuổi ' + GOALS[d.k][0] + '.', 'good'); } },
-      { k: 'cheap', l: 'Ủng hộ theo cách tiết kiệm (tự học, lớp cộng đồng)', run: function (l, r, log, d) { var p = partner(l); p.goal920.ok = 'cheap'; H.cash(l, -l.base * GOALS[d.k][1] * 0.3, 'Hỗ trợ dự định của ' + p.name); p.close = clamp((p.close || 50) + 1); log('Hai người chọn cách tiết kiệm; ' + p.name + ' vẫn bắt đầu dự định.', 'neutral'); } },
-      { k: 'no', l: 'Nói thật năm nay tài chính chưa cho phép', run: function (l, r, log) { var p = partner(l); p.goal920.ok = 'no'; p.goal920.end = 'declined'; p.goal920.endAt = l.age; p.close = clamp((p.close || 50) - 2); log(p.name + ' hiểu, nhưng có chút buồn. Hai người hẹn xem lại sau.', 'neutral'); } }] });
+  function goalText(l, p, g) {
+    var name = goalName(l, p, g), description = p.name + ' muốn ' + name + '.';
+    if (g.end === 'done') return p.name + ' đã hoàn thành mục tiêu ' + name + '.';
+    if (g.end) return p.name + ' đã khép lại dự định ' + name + '.';
+    var status = g.ok === 'no' ? 'Tạm gác' : SUPPORT[g.ok]?.label || 'Chờ hai người thống nhất';
+    if (g.k === 'lang') description += ' Lớp đều đặn thường mất khoảng 2 năm. Tự học hoặc lớp cộng đồng đi chậm hơn. Công việc và chăm sóc trong nhà có thể kéo dài lịch học.';
+    return description + '\nTiến độ ' + (g.prog || 0) + '% · ' + status + '.';
+  }
+  function canChangePlan(l, g) { return g.chosen976 !== l.age && g.paidTerm976 !== l.age + 1; }
+  function supportWhy(l, g, mode) {
+    if (!canChangePlan(l, g)) return 'Đã thống nhất lịch kỳ này';
+    if (g.ok === mode) return 'Đang áp dụng';
+    if (l.money < courseFee(l, g, mode)) return 'Chưa đủ tiền cho kỳ đầu';
+    return true;
+  }
+  function chooseSupport(l, p, g, mode, log) {
+    if (supportWhy(l, g, mode) !== true || !payCourse(l, p, g, mode, l.age + 1)) return;
+    if (g.k === 'lang') g.language976 = g.language976 || planLanguage(l, p);
+    g.ok = mode; g.chosen976 = l.age;
+    p.close = clamp((p.close ?? 50) + (mode === 'fund' ? 3 : 1));
+    log(mode === 'fund' ? 'Hai người dành ngân sách để theo kế hoạch đều đặn.' :
+      'Hai người chọn cách tiết kiệm. Dự định tiếp tục với nhịp chậm hơn.', 'good');
+  }
+  function pauseGoal(l, g, log) {
+    g.ok = 'no'; g.chosen976 = l.age;
+    log('Hai người tạm gác dự định. Bạn có thể bàn lại khi sẵn sàng.', 'neutral');
+  }
+  function offeredGoal(l, d) {
+    var p = goalsPartner(l), g = p?.goal920;
+    return adult(l) === true && GOALS[g?.k] && !g.end && !g.ok && d?.at === l.age && g.k === d.k
+      && (!d.plan976 || d.plan976 === planKey(p, g)) ? g : null;
+  }
+  E.SC('goalAsk920', {
+    title: 'Dự định của bạn đời',
+    prep: function (l, r, arg) {
+      var p = goalsPartner(l), g = p?.goal920;
+      if (p) X.uid(l, p);
+      return { at: l.age, k: arg?.k || g?.k, plan976: g && planKey(p, g) };
+    },
+    valid: function (l, d) { return !!offeredGoal(l, d); },
+    text: function (l, d) { var g = offeredGoal(l, d); return g ? goalText(l, l.partner, g) : 'Dự định đã thay đổi.'; },
+    opts: [['yes', 'fund'], ['cheap', 'cheap']].map(function (row) {
+      var mode = row[1];
+      return {
+        k: row[0], l: SUPPORT[mode].label,
+        h: function (l, d) { return mo(l, courseFee(l, { k: d.k }, mode)) + '/năm học'; },
+        req: function (l, d) { var g = offeredGoal(l, d); return !!g && supportWhy(l, g, mode) === true; },
+        run: function (l, r, log, d) { var g = offeredGoal(l, d); if (g) chooseSupport(l, l.partner, g, mode, log); }
+      };
+    }).concat([
+      { k: 'no', l: 'Tạm gác vì tài chính', run: function (l, r, log, d) {
+        var g = offeredGoal(l, d); if (g) pauseGoal(l, g, log);
+      }},
+      { k: 'later', l: 'Bàn lại khi sẵn sàng', run: function () {} }
+    ])
+  });
+  E.DEC.goalAsk920.auto = function () { return 'later'; };
+
+  function partnerWork(l, p) {
+    var here = H.resCode(l), home = p.homeCountry || p.country108 || l.country;
+    if (p.age < 18 || p.age >= 62 || /^(học sinh|sinh viên|đã nghỉ hưu)/.test(p.job || '')) return 'Chưa phù hợp để đi làm';
+    if (p.res919 && p.res919 !== here) return 'Hiện đang sống ở nơi khác';
+    if (home !== here && !(p.res919 === here && p.permit919?.work)) return 'Cần quyền làm việc tại nơi đang sống';
+    return true;
+  }
+  function languageVacancy(l, p, old) {
+    var previous = E.CAR[old?.jobId || p.jobId], local = E.ID919.langOf(H.resCode(l));
+    var skills = p.training976.languages;
+    var languages = Object.keys(skills).filter(function (k) { return skills[k].level >= 60; });
+    if (local === nativeLanguage(l, p) ? !languages.length : !languages.includes(local)) return null;
+    var c = E.CAR.le_tan;
+    var candidate = {
+      ...l, age: p.age, birthYear: l.birthYear + l.age - p.age, edu: p.edu ?? previous?.edu ?? 0,
+      major: p.major || previous?.major, talent: p.talent, job: null,
+      uniTier: p.uniTier, lang: p.lang, langAt: p.langAt, langExp: p.langExp
+    };
+    return E.jobEligible(candidate, c) ? { job: c, candidate: candidate } : null;
+  }
+  function workOptions(l, p) {
+    if (!p.training976) return [];
+    var a = st(l).arr, work = partnerWork(l, p), out = [];
+    var old = a && a.kind !== 'both' && (!a.person976 || a.person976 === pid(l, p)) ? a.saved : null;
+    if (old) {
+      var c = E.CAR[old.jobId], here = H.resCode(l);
+      var unavailable = (old.country && old.country !== here) || E.ERA902?.jobBlocked(l, old.jobId, c || { t: [old.job] });
+      var reason = work !== true ? work : !old.inc || /^(học sinh|sinh viên|đã nghỉ hưu)/.test(old.job || '') ? 'Chưa có công việc cũ phù hợp' :
+        unavailable ? 'Công việc cũ không còn phù hợp nơi ở hoặc thời điểm này' : arrWhy(l, 'both');
+      out.push({ k: 'return', l: 'Bàn chuyện quay lại làm ' + old.job, why: reason, run: function (l, r, log) {
+        E.FIN920?.jobTrack(l, p, null);
+        setArr(l, 'both', log);
+        if (st(l).arr.kind === 'both') { p.rankSince = l.age; E.FIN920?.jobTrack(l, p, null); }
+      }});
+    }
+    var vacancy = languageVacancy(l, p, old);
+    if (vacancy && p.jobId !== vacancy.job.id && p.training976.applied !== l.age) {
+      var pay = E.monthlyEst(vacancy.candidate, vacancy.job.id, 0);
+      out.push({ k: 'apply', l: 'Dùng ngoại ngữ để ứng tuyển ' + vacancy.job.t[0],
+        h: 'Dự kiến ' + mo(l, pay) + '/tháng' + (p.inc > 0 ? ' · chuyển việc nếu được tuyển' : ''), why: work, run: function (l, r, log) {
+        p.training976.applied = l.age;
+        var chance = U.clamp(0.7 - load(l) / 32 + (want(l, p) === 'career' ? 0.12 : 0), 0.25, 0.88);
+        if (r() >= chance) {
+          log(p.name + ' đã dự phỏng vấn nhưng chưa được chọn. Có thể thử lại năm sau.', 'neutral');
+          return;
+        }
+        E.FIN920?.jobTrack(l, p, null);
+        H.adoptJob(l, p, { job: vacancy.job.t[0], jobId: vacancy.job.id, inc: pay }, r);
+        st(l).arr = { kind: 'both', at: l.age, since: l.age, person976: pid(l, p) };
+        E.FIN920?.jobTrack(l, p, null);
+        log(p.name + ' dùng ngoại ngữ trong buổi phỏng vấn và được tuyển làm ' + p.job + '. Thu nhập mới được tính cho gia đình theo thỏa thuận tài chính.', 'good');
+      }});
+    }
+    return out;
+  }
+  function planWhy(l) {
+    var p = goalsPartner(l), why = adult(l);
+    return why !== true ? why : p && (GOALS[p.goal920?.k] || p.training976) ? true : 'Chưa có dự định của bạn đời';
+  }
+  X.menu('partnerPlan976', 'Dự định của bạn đời', planWhy, function (l) {
+    var p = goalsPartner(l); if (!p) return '';
+    var g = p.goal920, body = GOALS[g?.k] ? goalText(l, p, g) : '';
+    var names = Object.keys(p.training976?.languages || {}).map(E.ID919.lname);
+    if (names.length) body += '\nNgoại ngữ đã học xong: ' + names.join(', ') + '.';
+    if (p.training976?.study != null) body += '\nĐã hoàn thành chuẩn bị để đi làm lại.';
+    return body.trim();
+  }, function (l, arg) {
+    var p = goalsPartner(l); if (!p || arg.person976 !== p.uid110) return [];
+    var g = p.goal920, out = workOptions(l, p);
+    if (!GOALS[g?.k] || g.end || arg.plan976 !== planKey(p, g)) return out;
+    return Object.keys(SUPPORT).map(function (mode) {
+      return { k: mode, l: SUPPORT[mode].label, h: mo(l, courseFee(l, g, mode)) + '/năm học', why: supportWhy(l, g, mode),
+        run: function (l, r, log) { chooseSupport(l, p, g, mode, log); } };
+    }).concat({
+      k: 'pause', l: 'Tạm gác và giữ tiến độ', why: canChangePlan(l, g) && !!SUPPORT[g.ok] ? true : 'Chưa có kỳ học để tạm gác',
+      run: function (l, r, log) { pauseGoal(l, g, log); }
+    }, {
+      k: 'closePlan', l: 'Cùng khép lại dự định này',
+      why: canChangePlan(l, g) ? true : 'Đã thống nhất lịch kỳ này',
+      run: function (l, r, log) { g.end = 'declined'; g.endAt = l.age; log('Hai người khép lại dự định này.', 'neutral'); }
+    }, out);
+  }, 18, 'Tình cảm & gia đình');
+  var planMake = E.DEC.partnerPlan976.make;
+  E.DEC.partnerPlan976.make = function (l, r, arg) {
+    var p = goalsPartner(l), g = p?.goal920;
+    return planMake.call(this, l, r, p ? { person976: X.uid(l, p), plan976: g && planKey(p, g) } : arg);
+  };
+  E.DEC.partnerPlan976.auto = function () { return 'cancel'; };
   function shopCompany(l, p, q) {
     var all = E.BUSINESS123.companies(l), c = q.company871 && all.find(function (v) { return X.uid(l, v) === q.company871; });
     if (q.company871) return c || null;
