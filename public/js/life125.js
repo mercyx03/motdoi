@@ -41,9 +41,120 @@ E.DEC.highFallback125.auto=function(l,d){var key=d.opts.some(function(o){return 
 C.wrap('hs',function(old,l,d,k,r,log){if(k==='thpt'&&H.inVN(l)&&l.age<18){l.edu=Math.max(l.edu,2);C.queue(l,'highSchool125',r,undefined,{manual:!!d.manual});return;}return old(l,d,k,r,log);});
 // Award cash follows a newly recorded award exactly once.
 C.wrap('study_contest54',function(old,l,d,k,r,log){var before=(X.peek(l).awards||[]).length,out=old(l,d,k,r,log),awards=X.peek(l).awards||[];if(awards.length>before){var a=awards[awards.length-1],key=[a.year,a.tier,a.subject,a.award].join(':'),paid=S(l).awardPaid||(S(l).awardPaid={});if(!paid[key]){paid[key]=true;var v=l.base*[.01,.03,.08,.12,.2][Math.min(4,a.tier)];H.cash(l,v,'Thưởng học tập');log('Quỹ khuyến học trao '+H.money(l,v)+' cho thành tích mới. Mức thưởng là khoản dự kiến của quỹ, không phải định mức chung của Nhà nước.','good');}}return out;});
-function scholar(l){return C.adult(l)===true&&(l.edu>=6||['uni','post','phd'].includes(l.school)||['nghien_cuu','giang_vien'].includes(C.job(l)));}
-C.event('academicCase125',function(l){return scholar(l)&&(!P(l).academicCase||P(l).academicCase.status!=='pending');},.035,function(l,r){return {kind:r()<.5?'stolen':'accused'};});C.incident('academicCase125','Tranh chấp tác quyền học thuật',scholar,function(l,arg){return (arg.kind==='stolen'?'Bạn thấy dữ liệu và đoạn nghiên cứu của mình xuất hiện trong bản thảo đứng tên người khác.':'Bạn nhận thông báo có người tố cáo công trình của mình đạo nhái. Cần đối chiếu để chứng minh đóng góp và tính độc lập.')+' Cáo buộc chưa phải kết luận.';},function(l,arg){return[{k:'archive',l:'Lưu dữ liệu gốc, lịch sử bản thảo và gửi hội đồng xác minh',run:function(l,r,log){S(l).academicCase={at:l.age,kind:arg.kind||'accused',evidence:2,status:'pending'};log('Hội đồng tiếp nhận hồ sơ, đối chiếu đóng góp và thời gian. Bạn giữ dữ liệu gốc, chưa có kết luận hay bồi thường.','neutral');}},{k:'ignore',l:'Chưa phản hồi, chấp nhận rủi ro chậm xét công trình',run:function(l,r,log){S(l).academicCase={at:l.age,kind:arg.kind||'accused',evidence:0,status:'pending'};H.fx(l,{hap:-3});log('Chưa gửi chứng cứ, công trình có thể bị tạm dừng xét để làm rõ.','bad');}}];});
-M('academicReview125','Chứng cứ và xử lý tranh chấp học thuật',function(l){return !scholar(l)||!P(l).academicCase||P(l).academicCase.status!=='pending'?'Không có hồ sơ học thuật đang xác minh':C.once(l,'academicAt');},'Nộp bản thảo, dữ liệu và đóng góp tác giả; trường/tạp chí xem xét học thuật. Nếu có dấu hiệu hành vi vi phạm pháp luật, có thể gửi cơ quan có thẩm quyền, không tự kết tội đối phương.',function(l){return[{k:'evidence',l:'Bổ sung dữ liệu gốc và giải trình với hội đồng',run:function(l,r,log){S(l).academicAt=l.age;P(l).academicCase.evidence++;log('Đã bổ sung chứng cứ. Hội đồng tiếp tục xác minh; năm sau sẽ có phản hồi.','neutral');}},{k:'authority',l:'Đề nghị xem xét dấu hiệu vi phạm pháp luật',run:function(l,r,log){S(l).academicAt=l.age;P(l).academicCase.authority=true;log('Cơ quan tiếp nhận thông tin, đánh giá thẩm quyền và dấu hiệu vi phạm; chưa đồng nghĩa có vụ án hoặc người phạm tội.','neutral');}}];},18,'Học thuật');
+function academicProgram(l){
+ if(!['uni','post','phd'].includes(l.school)&&!(l.school==='abroad'&&l.abroad?.study))return null;
+ return [l.school,l.flags.pg106?.started??'',l.major||''].join(':');
+}
+function scholar(l){return C.adult(l)===true&&(l.edu>=6||academicProgram(l)||['nghien_cuu','giang_vien'].includes(C.job(l)));}
+function academicActive(q){return !!q&&['pending','replacement'].includes(q.status);}
+function academicCase(l){
+ var q=P(l).academicCase;
+ if(!q)return null;
+ if(q.status==='needsEvidence')q.status='pending';
+ if(q.program===undefined)q.program=academicProgram(l);
+ if(!Number.isFinite(q.due))q.due=(Number.isFinite(q.at)?q.at:l.age)+2;
+ if(!Number.isFinite(q.reviewAt))q.reviewAt=q.due-1;
+ return q;
+}
+function academicBlocks(l){
+ var q=academicCase(l);
+ return academicActive(q)&&!!q.program&&academicProgram(l)===q.program;
+}
+function canOpenAcademic(l){
+ var q=academicCase(l);
+ return scholar(l)&&!academicActive(q)&&!q?.researchDefense&&(!q||l.age-(q.closedAt??q.at??l.age)>=5);
+}
+function holdResearchDefense(l,q){
+ if(q.program||q.researchDefense)return;
+ var pending=l.pending.find(function(d){return d.id==='nc_bao_ve';});
+ var scheduled=l.sched.find(function(d){return d.id==='nc_bao_ve';});
+ if(!pending&&!scheduled)return;
+ q.researchDefense={at:pending?l.age:scheduled.at,arg:Object.assign({},pending?pending.data:scheduled.arg)};
+ l.pending=l.pending.filter(function(d){return d.id!=='nc_bao_ve';});
+ l.sched=l.sched.filter(function(d){return d.id!=='nc_bao_ve';});
+}
+function restoreResearchDefense(l,q){
+ var d=q.researchDefense,defense=E.DEC.nc_bao_ve;
+ if(!d)return;
+ if(!defense.def.valid(l,d.arg)){delete q.researchDefense;return;}
+ if(!defense.valid(l,d.arg))return;
+ H.sched(l,'nc_bao_ve',Math.max(1,d.at-l.age),d.arg);
+ delete q.researchDefense;
+}
+function closeAcademic(l,q,result,log){
+ q.status='resolved';q.result=result;q.closedAt=l.age;
+ restoreResearchDefense(l,q);
+ if(result==='verified'){
+  H.fx(l,{hap:3});
+  log(q.kind==='stolen'?'Hội đồng xác nhận phần đóng góp của bạn. Công trình trở lại quy trình xét duyệt.':'Hội đồng đã đối chiếu dữ liệu và chấp nhận giải trình. Công trình trở lại quy trình xét duyệt.','good');
+ }else if(q.readyAt!=null)log('Công trình thay thế đã sẵn sàng để xét. Bạn có thể tiếp tục quy trình bảo vệ theo điều kiện của chương trình.','neutral');
+ else log('Hồ sơ đã khép lại và công trình đang tranh chấp được rút khỏi đợt xét. Các kết quả học tập và bằng đã có được giữ.','neutral');
+}
+function replaceAcademic(l,q,result,log){
+ if(!academicBlocks(l)&&!q.researchDefense){closeAcademic(l,q,result,log);return;}
+ q.status='replacement';q.result=result;q.readyAt=l.age+1;
+ if(q.program&&academicProgram(l)===q.program){delete l.flags.gradOK;delete l.flags.gradTry;delete l.flags.gradTries;}
+ log((result==='expired'?'Đã hết hạn bổ sung chứng cứ. ':'Bạn rút công trình đang tranh chấp. ')+
+   'Công trình cũ dừng xét. Kết quả các môn đã đạt được giữ và bạn có một năm để chuẩn bị công trình thay thế trước khi bảo vệ.','neutral');
+}
+function academicYear(l,log){
+ var q=academicCase(l);if(!q)return;
+ if(!academicActive(q)){restoreResearchDefense(l,q);return;}
+ holdResearchDefense(l,q);
+ if(q.status==='replacement'){
+  if(l.age>=q.readyAt)closeAcademic(l,q,q.result,log);
+  return;
+ }
+ if(l.age<q.reviewAt)return;
+ if(q.evidence>=2){closeAcademic(l,q,'verified',log);return;}
+ if(l.age>=q.due){replaceAcademic(l,q,'expired',log);return;}
+ if(q.noticeAt==null){
+  q.noticeAt=l.age;
+  log('Hội đồng cần thêm chứng cứ cho công trình. Hạn bổ sung là cuối năm '+(l.birthYear+q.due)+'. Bạn có thể mở hồ sơ học thuật để bổ sung hoặc rút công trình.','neutral');
+ }
+}
+function startAcademic(l,kind,evidence,log){
+ if(!canOpenAcademic(l))return;
+ var q=S(l).academicCase={at:l.age,kind:kind||'accused',evidence:evidence,status:'pending',due:l.age+2,reviewAt:l.age+1,program:academicProgram(l)};
+ holdResearchDefense(l,q);
+ log((evidence?'Hội đồng tiếp nhận bản thảo và dữ liệu gốc để đối chiếu. ':'Bạn chưa nộp chứng cứ. ')+
+  'Hạn bổ sung hồ sơ là cuối năm '+(l.birthYear+q.due)+'.','neutral');
+}
+C.event('academicCase125',canOpenAcademic,.035,function(l,r){return {kind:r()<.5?'stolen':'accused'};});
+C.incident('academicCase125','Tranh chấp tác quyền học thuật',canOpenAcademic,function(l,arg){
+ return arg.kind==='stolen'?'Bạn nhận ra dữ liệu của mình trong bản thảo đứng tên người khác.':'Bạn nhận thông báo có người đặt câu hỏi về nguồn gốc công trình. Hội đồng cần xem dữ liệu và lịch sử bản thảo.';
+},function(l,arg){return [
+ {k:'archive',l:'Nộp dữ liệu gốc và lịch sử bản thảo cho hội đồng',run:function(l,r,log){startAcademic(l,arg.kind,2,log);}},
+ {k:'ignore',l:'Chưa nộp chứng cứ, xem lại trong hồ sơ sau',run:function(l,r,log){startAcademic(l,arg.kind,0,log);}}
+];});
+M('academicReview125','Hồ sơ tranh chấp học thuật',function(l){
+ var reason=C.adult(l);return reason!==true?reason:academicCase(l)?true:'Chưa có hồ sơ học thuật';
+},function(l){
+ var q=academicCase(l);if(!q)return 'Chưa có hồ sơ học thuật.';
+ if(q.status==='pending')return 'Hồ sơ có '+(q.evidence||0)+'/2 phần chứng cứ. Hạn bổ sung là cuối năm '+(l.birthYear+q.due)+'.';
+ if(q.status==='replacement')return 'Kết quả học tập cũ được giữ. Công trình thay thế sẽ được đưa vào kỳ xét năm '+(l.birthYear+q.readyAt)+'.';
+ var result=q.result==='verified'||!q.result?'Hồ sơ xác minh đã khép lại.':'Công trình cũ đã dừng xét. Các kết quả học tập đã đạt được giữ.';
+ return result+(q.researchDefense?' Lịch bảo vệ sẽ được sắp xếp lại khi bạn đủ điều kiện ngoại ngữ.':'');
+},function(l){
+ var q=academicCase(l);if(q?.status!=='pending')return [];
+ return [
+ {k:'evidence',l:'Bổ sung dữ liệu gốc hoặc phần giải trình',why:(q.evidence||0)<2?C.once(l,'academicAt'):'Đã đủ hồ sơ để đối chiếu',run:function(l,r,log){
+  S(l).academicAt=l.age;q.evidence=(q.evidence||0)+1;log('Đã bổ sung một phần chứng cứ vào hồ sơ.','neutral');
+ }},
+ {k:'authority',l:'Đề nghị chuyển hồ sơ tới nơi có thẩm quyền xem xét',why:!q.authority?C.once(l,'academicAt'):'Đã gửi yêu cầu',run:function(l,r,log){
+  S(l).academicAt=l.age;q.authority=true;log('Yêu cầu được ghi nhận. Hạn bổ sung với hội đồng giữ nguyên.','neutral');
+ }},
+ {k:'withdraw',l:'Rút công trình đang tranh chấp',run:function(l,r,log){replaceAcademic(l,q,'withdrawn',log);}}
+ ];
+},18,'Học thuật');
+var academicMenu=E.DEC.academicReview125,makeAcademic=academicMenu.make,validAcademic=academicMenu.valid;
+academicMenu.make=function(l){
+ var d=makeAcademic.apply(this,arguments),q=academicCase(l);if(q)d.data.caseAt125=q.at;return d;
+};
+academicMenu.valid=function(l,d){
+ var q=academicCase(l);
+ return !!q&&(!d||d.caseAt125==null||d.caseAt125===q.at)&&validAcademic.apply(this,arguments);
+};
 M('workplaceReport125','Phản ánh và tố cáo tại nơi làm việc',function(l){return C.adult(l)!==true?C.adult(l):!l.job||l.retired?'Cần đang đi làm':C.once(l,'reportAt');},'Bạn có thể báo cáo dấu hiệu sai phạm của đồng nghiệp/cấp trên. Kênh không ghi tên có thể tiếp nhận thông tin nhưng không mặc nhiên là tố cáo hợp lệ. Điều tra cần chứng cứ; không bảo đảm đối phương mất việc hoặc bạn được thế chỗ.',function(l){return[{k:'evidence',l:'Gửi thông tin kèm tài liệu, đề nghị bảo vệ danh tính',run:function(l,r,log){S(l).reportAt=l.age;S(l).workCase={at:l.age,evidence:2,fabricated:false};log('Hồ sơ được tiếp nhận để kiểm tra, chưa có kết luận.','neutral');}},{k:'anonymous',l:'Gửi phản ánh không ghi tên để cơ quan sàng lọc',run:function(l,r,log){S(l).reportAt=l.age;S(l).workCase={at:l.age,evidence:1,fabricated:false};log('Thông tin được ghi nhận; có thể cần thêm tài liệu trước khi xem xét.','neutral');}},{k:'false',l:'Bịa cáo buộc để tranh vị trí — rủi ro kỷ luật và trách nhiệm pháp lý',run:function(l,r,log){S(l).reportAt=l.age;S(l).workCase={at:l.age,evidence:0,fabricated:true};H.fx(l,{karma:-8});log('Bạn gửi cáo buộc bịa đặt. Hành động có thể bị phát hiện, không tự làm người khác mất việc hay giúp bạn thăng chức.','bad');}}];},18,'Phát triển sự nghiệp');
 C.event('patron125',function(l){return C.adult(l)===true&&l.job&&l.st.kno>=70;},.035);C.incident('patron125','Lời giới thiệu từ người có kinh nghiệm',C.adult,'Một lãnh đạo hoặc giáo sư ghi nhận công việc của bạn và đề nghị hướng dẫn hồ sơ. Sự giúp đỡ không thay thế điều kiện tuyển chọn hay tự tạo chức vụ.',function(l){return[{k:'learn',l:'Nhờ góp ý chuyên môn và giới thiệu cơ hội phù hợp',run:function(l,r,log){S(l).mentor={at:l.age,until:l.age+3};H.fx(l,{kno:2,soc:2});if(E.PUBLIC116&&E.isStableService(l))E.PUBLIC116.record(l).points++;log(E.vary(l,'patron125',['Bạn nhận góp ý và cơ hội trình bày năng lực. Chức vụ và việc làm vẫn xét theo hồ sơ.','Một người đi trước dành thời gian chỉ bạn cách làm tốt hơn; việc thăng tiến vẫn dựa trên hồ sơ của bạn.','Bạn được mời trình bày một phần việc của mình và nhận nhiều góp ý hữu ích. Kết quả công việc vẫn do bạn tự chứng minh.']),'good');}},{k:'decline',l:'Cảm ơn, tiếp tục tự phấn đấu',run:function(l,r,log){log('Bạn tiếp tục công việc theo kế hoạch riêng.','neutral');}}];});
 C.event('bribe125',function(l){return C.adult(l)===true&&(P(l).companies||[]).some(function(c){return c.share>50&&!c.merged;});},.018);C.incident('bribe125','Đề nghị chi ngoài hợp đồng trong thương vụ',C.adult,'Một trung gian đòi tiền để tác động người có thẩm quyền. Không gắn sự việc với cơ quan, doanh nghiệp hoặc cá nhân có thật.',function(l){return[{k:'refuse',l:'Từ chối, yêu cầu thủ tục minh bạch',run:function(l,r,log){H.fx(l,{karma:2});log('Bạn từ chối khoản chi ngoài hợp đồng; thương vụ có thể chậm nhưng không phát sinh khoản đưa hối lộ.','neutral');}},{k:'report',l:'Lưu tài liệu và phản ánh tới kênh có thẩm quyền',run:function(l,r,log){H.fx(l,{karma:2});log('Bạn chuyển tài liệu để xác minh, không tự kết tội người liên quan.','neutral');}},{k:'pay',l:'Chấp nhận khoản chi bất hợp pháp, chịu rủi ro điều tra',why:l.money<l.base?'Không đủ tiền':true,run:function(l,r,log){H.cash(l,-l.base,'Khoản chi bất hợp pháp');H.fx(l,{karma:-12});S(l).bribeCase={at:l.age};log('Khoản chi không bảo đảm trúng thương vụ; hồ sơ có thể bị điều tra, tiền đã chi không tự được hoàn.','bad');}}];});
@@ -52,10 +163,33 @@ function risk(l){var reg=l.region;return /DBSH|BTB|NTB|MNPB/.test(reg||'')?.05:.
 function weatherEligible(l){return l.alive&&l.age>=18&&H.isVN(l)&&!l.abroad;}
 C.incident('weather125','Cảnh báo thời tiết trong cuộc đời',weatherEligible,function(l){return 'Dự báo: '+(P(l).weatherKind||'mưa lớn, giông lốc')+' tại vùng đang cư trú. Không phải tin bão thật. Thiệt hại chỉ xét tài sản có ở khu vực bị ảnh hưởng, không tự gán ruộng cho người sống tại đô thị.';},function(l){return[{k:'prepare',l:'Theo dõi cảnh báo, gia cố và di chuyển đến nơi an toàn',run:function(l,r,log){var q=S(l),exposure=homeExposure(l),loss=exposure*Math.min(.003,risk(l)*.05);if(l.age>=18)H.cash(l,-Math.min(Math.max(0,l.money),loss),'Ứng phó thời tiết tại nơi cư trú');H.fx(l,{hap:-1});log('Bạn ưu tiên an toàn, kiểm tra nhà ở và đồ dùng. '+(!l.ownHouse?'Không phát sinh khoản thiệt hại ruộng hay nhà riêng vì không sở hữu tài sản đó.':'Chi phí ứng phó được tính theo căn nhà đang ở. Không bán nhà để trả một khoản thiệt hại ngẫu nhiên.'),'neutral');}},{k:'wait',l:'Chủ quan, tiếp tục lịch thường ngày',run:function(l,r,log){var exposure=homeExposure(l),loss=exposure*.008;if(exposure>0&&r()<risk(l)*5){H.cash(l,-Math.min(Math.max(0,l.money),loss),'Thiệt hại nhà ở do thời tiết');H.fx(l,{hea:-2,hap:-3});log('Thời tiết gây hư hại tại chỗ ở; chỉ tính thiệt hại nhà bạn đang sở hữu.','bad');}else log('Đợt thời tiết đi qua, bạn chưa ghi nhận thiệt hại tài sản.','neutral');}}];});
 // More common warnings in northern/central regions; earthquakes stay rare.
-E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;var q=S(l);if(weatherEligible(l)&&r()<risk(l)){q.weatherKind=U.pick(r,['bão số '+(3+Math.floor(r()*3))+' theo dõi khả năng ảnh hưởng','mưa đá và giông lốc','nguy cơ cháy rừng trong mùa khô']);C.queue(l,'weather125',r,undefined,{manual:false});}else if(weatherEligible(l)&&r()<.0008){q.weatherKind='rung chấn động đất hiếm gặp';C.queue(l,'weather125',r,undefined,{manual:false});}if(q.academicCase&&q.academicCase.status==='pending'&&l.age>q.academicCase.at){q.academicCase.status=q.academicCase.evidence>=2?'resolved':'needsEvidence';if(q.academicCase.status==='resolved'){H.fx(l,{hap:3});log('Hội đồng đối chiếu chứng cứ, làm rõ tác quyền, bảo vệ phần đóng góp hợp lệ và yêu cầu sửa thông tin cần thiết. Không tự kết tội người thật.','good');}else{q.academicCase.status='pending';log('Hồ sơ học thuật thiếu chứng cứ; cần giải trình thêm, chưa có kết luận.','neutral');}}if(q.workCase&&l.age>q.workCase.at&&!q.workCase.done){q.workCase.done=true;if(q.workCase.fabricated){l.flags.dirty=(l.flags.dirty||0)+1;H.fx(l,{soc:-8});log('Xác minh phát hiện cáo buộc bịa đặt: bạn bị xử lý kỷ luật theo hồ sơ, không được thế chỗ người bị tố.','bad');}else{var proven=r()<q.workCase.evidence*.25;log(proven?'Cơ quan xác minh có căn cứ, xử lý người liên quan theo kết luận. Vị trí trống nếu có vẫn phải tuyển chọn, bạn không tự được bổ nhiệm.':'Chưa đủ căn cứ kết luận sai phạm; không ai tự mất việc chỉ vì bị phản ánh.','neutral');}}if(q.bribeCase&&l.age>q.bribeCase.at&&!q.bribeCase.reviewed){q.bribeCase.reviewed=true;if(r()<.6){l.flags.dirty=(l.flags.dirty||0)+1;H.cash(l,-Math.min(Math.max(0,l.money),l.base*2),'Chi phí vụ việc hối lộ');q.exitOrder={reason:'quyết định tạm hoãn trong vụ việc cần xác minh',until:l.age+2};log('Vụ việc khoản chi bất hợp pháp bị phát hiện theo hồ sơ, phát sinh xử lý và quyết định hạn chế đi lại có thời hạn.','bad');}}});
+E.HOOKS.year.push(function(l,r,log){if(!l.alive)return;var q=S(l);if(weatherEligible(l)&&r()<risk(l)){q.weatherKind=U.pick(r,['bão số '+(3+Math.floor(r()*3))+' theo dõi khả năng ảnh hưởng','mưa đá và giông lốc','nguy cơ cháy rừng trong mùa khô']);C.queue(l,'weather125',r,undefined,{manual:false});}else if(weatherEligible(l)&&r()<.0008){q.weatherKind='rung chấn động đất hiếm gặp';C.queue(l,'weather125',r,undefined,{manual:false});}academicYear(l,log);if(q.workCase&&l.age>q.workCase.at&&!q.workCase.done){q.workCase.done=true;if(q.workCase.fabricated){l.flags.dirty=(l.flags.dirty||0)+1;H.fx(l,{soc:-8});log('Xác minh phát hiện cáo buộc bịa đặt: bạn bị xử lý kỷ luật theo hồ sơ, không được thế chỗ người bị tố.','bad');}else{var proven=r()<q.workCase.evidence*.25;log(proven?'Cơ quan xác minh có căn cứ, xử lý người liên quan theo kết luận. Vị trí trống nếu có vẫn phải tuyển chọn, bạn không tự được bổ nhiệm.':'Chưa đủ căn cứ kết luận sai phạm; không ai tự mất việc chỉ vì bị phản ánh.','neutral');}}if(q.bribeCase&&l.age>q.bribeCase.at&&!q.bribeCase.reviewed){q.bribeCase.reviewed=true;if(r()<.6){l.flags.dirty=(l.flags.dirty||0)+1;H.cash(l,-Math.min(Math.max(0,l.money),l.base*2),'Chi phí vụ việc hối lộ');q.exitOrder={reason:'quyết định tạm hoãn trong vụ việc cần xác minh',until:l.age+2};log('Vụ việc khoản chi bất hợp pháp bị phát hiện theo hồ sơ, phát sinh xử lý và quyết định hạn chế đi lại có thời hạn.','bad');}}});
 M('serviceExtension125','Đề nghị xem xét kéo dài thời gian công tác',function(l){return C.adult(l)!==true?C.adult(l):!l.job||l.retired||!E.isStableService(l)||l.age<55?'Cần đang công tác công vụ ở giai đoạn xét nghỉ hưu':C.once(l,'extensionAt');},'Cần nhu cầu tổ chức, hồ sơ, sức khỏe và quyết định; không tự kéo tuổi nghỉ hưu của mọi cán bộ lên 80. Vai trò lãnh đạo nhiệm kỳ đặc thù được xét riêng. Các mốc dưới đây là quy tắc trong game, không phải cách tính tuổi phục vụ theo luật.',function(l){return[{k:'request',l:'Nộp nguyện vọng, chờ đơn vị xét nhu cầu và điều kiện',run:function(l,r,log){S(l).extensionAt=l.age;var special=C.job(l)==='chinh_tri'&&l.job.rank>=8||E.LIFE114&&E.LIFE114.peek(l).office&&E.LIFE114.peek(l).office.until>l.age,cap=special?80:C.officer(l)?67:65;if(l.st.hea<65||l.flags.dirty||l.age>=cap||r()>.45){log('Chưa được chấp thuận kéo dài, áp dụng quy trình nghỉ hưu hiện tại.','neutral');return;}S(l).extensionUntil=Math.min(cap,l.age+3);log('Được xem xét tiếp tục công tác đến tuổi '+S(l).extensionUntil+'. Quyết định có thời hạn và vẫn xét sức khỏe, kỷ luật.','good');}}];},18,'Nhà nước & cộng đồng');
 E.retirementAge125=function(l,age){var q=P(l);return q.extensionUntil>l.age&&l.st.hea>=55&&!l.flags.dirty?Math.max(age,q.extensionUntil):age;};
-var graduate=E.gradFail;E.gradFail=function(l,r,log){if(P(l).academicCase&&P(l).academicCase.status==='pending'&&['uni','post','phd'].includes(l.school)){l.schoolEnd=l.age+2;if(l.flags.pg106&&!l.flags.pg106.done)l.flags.pg106.end=l.schoolEnd;log('Hội đồng tạm hoãn xét công trình cho đến khi làm rõ tác quyền; chưa kết luận bạn đạo nhái.','neutral');return true;}return graduate&&graduate.apply(this,arguments);};
+var graduate=E.gradFail;
+E.gradFail=function(l,r,log){
+ if(academicBlocks(l)){
+  academicYear(l,log);
+  if(academicBlocks(l)){
+   var q=academicCase(l);
+   l.schoolEnd=Math.max(l.schoolEnd||0,l.age+2);
+   if(l.flags.pg106&&!l.flags.pg106.done)l.flags.pg106.end=l.schoolEnd;
+   if(l.abroad?.study)l.abroad.until=Math.max(l.abroad.until||0,l.schoolEnd);
+   if(q.status==='pending'&&q.holdNoted==null&&q.noticeAt!==l.age){
+    q.holdNoted=l.age;
+    log('Kỳ xét tốt nghiệp tạm giữ phần công trình đang xác minh. Các môn đã đạt vẫn được giữ.','neutral');
+   }
+   return true;
+  }
+ }
+ return graduate&&graduate.apply(this,arguments);
+};
+['bao_ve_tn','pg106_defense','nc_bao_ve'].forEach(function(id){
+ var d=E.DEC[id],valid=d.valid,apply=d.apply;
+ function blocked(l){return id==='nc_bao_ve'?academicActive(P(l).academicCase)&&!!P(l).academicCase.researchDefense:academicBlocks(l);}
+ d.valid=function(l){return !blocked(l)&&valid.apply(this,arguments);};
+ d.apply=function(l){if(!blocked(l))return apply.apply(this,arguments);};
+});
 var profile=E.profile;E.profile=function(l){var p=profile.apply(this,arguments),q=P(l);if(q.highSchool)p.jobInfo.push('THPT: '+q.highSchool.name+' · '+q.highSchool.address+(q.highSchool.subject?' · chuyên '+E.EDUCATION54.subjects[q.highSchool.subject]:'')+(q.highSchool.boarding&&l.school==='upper'?' · ở ký túc xá':''));if(q.unit&&C.officer(l))p.jobInfo.push('Đơn vị công tác: '+q.unit.name+' · '+q.unit.region+' · '+q.unit.place);if(q.specialty)p.jobInfo.push('Chuyên khoa: '+q.specialty);if(q.extensionUntil>l.age)p.jobInfo.push('Quyết định tiếp tục công tác đến tuổi '+q.extensionUntil);return p;};
-E.EVENTS125={hs:hs,high:high,highOptions:function(l){return high.filter(function(a){return historicalSchoolChoice(l,a);});},risk:risk};
+E.EVENTS125={hs:hs,high:high,highOptions:function(l){return high.filter(function(a){return historicalSchoolChoice(l,a);});},risk:risk,academicYear:academicYear,academicBlocks:academicBlocks};
 })(globalThis.G);

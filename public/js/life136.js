@@ -2,15 +2,17 @@
 (function(G){'use strict';var E=G.E,H=E.H,X=E.UPDATE110,C=E.WORLD120;
 function student(l){return l.school==='uni'||l.school==='abroad';}
 function state(l){return l.flags.studyProgress136||(l.flags.studyProgress136={due:Number.isFinite(l.schoolEnd)?l.schoolEnd:l.age+1,reviewAt:-1});}
+function extensionLimit(s){return s.due+4+(s.academicHoldYears||0);}
 function conditions(l){
   var q=C.p(l),language=E.EDU111.exitRequirement(l);
+  var academicBlocked=E.EVENTS125?.academicBlocks(l);
   return [
     {key:'credits',met:!(q.debtCredits>0),text:q.debtCredits>0?'Còn nợ '+q.debtCredits+' tín chỉ':'Đã hoàn tất tín chỉ'},
     {key:'attendance',met:!(q.absences>=2),text:q.absences>=2?'Thiếu chuyên cần ('+q.absences+' đợt vắng)':'Đủ chuyên cần'},
     {key:'language',met:language.met,text:language.level
       ?'Ngoại ngữ đầu ra: cần '+language.label+' còn hạn. Hiện tại: '+((l.lang&&l.lang.en)?H.langCert(l,'en')+(E.certValid(l,'en')?' còn hạn':' đã hết hạn'):'chưa có chứng chỉ')
       :'Chương trình này không yêu cầu chứng chỉ ngoại ngữ đầu ra riêng'},
-    {key:'academic',met:!(q.academicCase&&q.academicCase.status==='pending'),text:q.academicCase&&q.academicCase.status==='pending'?'Hồ sơ học thuật đang chờ xác minh':'Hồ sơ học thuật đủ điều kiện'},
+    {key:'academic',met:!academicBlocked,text:academicBlocked?(q.academicCase.status==='replacement'?'Đang chuẩn bị công trình thay thế':'Hồ sơ học thuật đang chờ xác minh'):'Hồ sơ học thuật đủ điều kiện'},
     {key:'defense',met:!!l.flags.gradOK,text:l.flags.gradOK?'Đã bảo vệ đạt':l.flags.gradTry===l.age?'Bảo vệ chưa đạt trong năm nay':'Chưa hoàn tất bảo vệ tốt nghiệp'}
   ];
 }
@@ -20,20 +22,32 @@ function actionReason(l,id){
   return action&&action.avail?action.avail(l):true;
 }
 function leave(l,log){var s=state(l),q=C.s(l);s.closed=true;s.closedAt=l.age;s.result='unfinished';s.name=l.uniName||l.majorName||'Đại học';s.debt=q.debtCredits||0;l.school=null;l.schoolEnd=null;l.flags.needJob=true;delete l.flags.gradOK;delete l.flags.gradTry;delete l.flags.gradTries;delete q.debtCredits;delete q.absences;delete q.creditNoticeAt;delete q.languageNoticeAt;l.pending=(l.pending||[]).filter(function(d){return !['studyReview136','courseFail121','bao_ve_tn'].includes(d.id);});if(l.abroad&&l.abroad.study){l.abroad.until=l.age+1;H.sched(l,'du_hoc_ve',1);}log('Kết thúc đợt học '+s.name+' khi chưa đủ điều kiện tốt nghiệp. Kết quả và lý do được lưu, không cấp bằng; bạn có thể tìm việc hoặc đăng ký học lại qua tuyển sinh.','neutral');}
-var grad=E.gradFail;E.gradFail=function(l,r,log){if(!student(l))return grad&&grad.apply(this,arguments);var s=state(l);if(s.closed)delete l.flags.studyProgress136;s=state(l);var failed=grad&&grad.apply(this,arguments);if(!failed){s.completed=true;return false;}if(l.age+1>=s.due+4){leave(l,log);return true;}l.schoolEnd=l.age+2;if(l.abroad&&l.abroad.study)l.abroad.until=l.schoolEnd;if(s.reviewAt!==l.age){s.reviewAt=l.age;log('Xét tốt nghiệp chưa đạt: '+conditions(l).filter(function(c){return !c.met;}).map(function(c){return c.text;}).join('; ')+'. Còn tối đa '+Math.max(0,s.due+4-l.age-1)+' năm gia hạn. Mở mục Tiến độ đại học để xử lý.','neutral');if(!l.pending.some(function(d){return d.id==='studyReview136';}))l.pending.push(E.DEC.studyReview136.make(l,r));}return true;};
+var grad=E.gradFail;E.gradFail=function(l,r,log){
+ if(!student(l))return grad&&grad.apply(this,arguments);
+ var s=state(l);if(s.closed)delete l.flags.studyProgress136;s=state(l);
+ if(E.EVENTS125?.academicBlocks(l)){
+  E.EVENTS125.academicYear(l,log);
+  // The dispute has its own deadline. Keep the student's academic record while it is on hold.
+  if(E.EVENTS125.academicBlocks(l)){
+   if(s.academicHoldAt!==l.age){s.academicHoldAt=l.age;s.academicHoldYears=(s.academicHoldYears||0)+1;}
+   return grad&&grad.apply(this,arguments);
+  }
+ }
+ var failed=grad&&grad.apply(this,arguments);if(!failed){s.completed=true;return false;}if(l.age+1>=extensionLimit(s)){leave(l,log);return true;}l.schoolEnd=l.age+2;if(l.abroad&&l.abroad.study)l.abroad.until=l.schoolEnd;if(s.reviewAt!==l.age){s.reviewAt=l.age;log('Xét tốt nghiệp chưa đạt: '+conditions(l).filter(function(c){return !c.met;}).map(function(c){return c.text;}).join('; ')+'. Còn tối đa '+Math.max(0,extensionLimit(s)-l.age-1)+' năm gia hạn. Mở mục Tiến độ đại học để xử lý.','neutral');if(!l.pending.some(function(d){return d.id==='studyReview136';}))l.pending.push(E.DEC.studyReview136.make(l,r));}return true;
+};
 function why(l){var w=X.reason(l,16);return w!==true?w:student(l)?true:'Cần đang học đại học';}
 X.menu('studyReview136','Tiến độ đại học và điều kiện tốt nghiệp',why,function(l){
   var s=state(l);
   return 'Chương trình: '+(l.uniName||l.majorName||'đại học')+'.\n'+checklist(l)+
     '\nHạn dự kiến: '+s.due+' tuổi; kỳ xét tiếp theo: '+(l.schoolEnd!=null?l.schoolEnd:s.due)+' tuổi; tối đa 4 năm gia hạn trong game. Hoàn tất các điều kiện để được xét bằng khi kết thúc năm học.';
 },function(l){
-  var language=E.EDU111.exitRequirement(l),q=C.p(l);
+  var language=E.EDU111.exitRequirement(l);
   var rows=[{k:'credits',l:'Xem tín chỉ, học lại hoặc bổ sung chuyên cần',why:actionReason(l,'student121'),run:function(l,r){X.next(l,'student121',r);}}];
   if(language.level&&!language.met){
     rows.push({k:'language',l:'Học bổ sung tiếng Anh đầu ra',why:actionReason(l,'hoc_them'),run:function(l,r){l.flags.langGoal='en';X.next(l,'hoc_them',r);}});
     if(l.lang&&l.lang.en&&!E.certValid(l,'en'))rows.push({k:'renew',l:'Thi lại chứng chỉ tiếng Anh đã hết hạn',run:function(l,r){X.next(l,'chung_chi_het_han',r,{k:'en',manual:true});}});
   }
-  if(q.academicCase&&q.academicCase.status==='pending')rows.push({k:'academic',l:'Xử lý hồ sơ học thuật đang xác minh',why:actionReason(l,'academicReview125'),run:function(l,r){X.next(l,'academicReview125',r);}});
+  if(E.EVENTS125?.academicBlocks(l))rows.push({k:'academic',l:'Xem hồ sơ và hạn xử lý tranh chấp học thuật',why:actionReason(l,'academicReview125'),run:function(l,r){X.next(l,'academicReview125',r);}});
   rows.push({k:'defense',l:'Chuẩn bị và bảo vệ tốt nghiệp',
     why:l.flags.gradOK?'Đã bảo vệ đạt':l.flags.gradTry===l.age?'Đã bảo vệ năm nay':!E.DEC.bao_ve_tn.valid(l)?'Chưa đến kỳ bảo vệ':conditions(l).some(function(c){return c.key!=='defense'&&!c.met;})?'Cần hoàn tất tín chỉ, chuyên cần, ngoại ngữ và hồ sơ học thuật':true,
     run:function(l,r){l.pending=l.pending.filter(function(d){return d.id!=='bao_ve_tn';});X.next(l,'bao_ve_tn',r);}});

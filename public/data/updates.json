@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-18T01:45:45.009Z",
+  "generatedAt": "2026-11-18T02:16:25.923Z",
   "entries": [
+    {
+      "id": "rehab-and-academic-deadlines-97400",
+      "version": "9.7.4",
+      "publishedAt": "2026-11-18T09:16:25+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Hoãn phục hồi khi thiếu tiền và khép hồ sơ học thuật đúng hạn",
+      "summary": "Giảm lựa chọn lặp sau tai nạn và cho tranh chấp công trình một hạn bổ sung, kết quả rõ ràng.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Đợt phục hồi sau tai nạn hiển thị phần bạn thực trả. Khi thiếu tiền, bạn có thể hoãn để thu xếp. Game giữ số đợt đã theo, không thu thêm và không mở lại hộp thoại trong cùng năm. Nếu đủ tiền trước khi hết hạn giữ hẹn, lịch có thể mở lại.",
+        "Khi đang đi làm, bạn có thể giữ việc và chọn lịch làm nhẹ. Thời gian nghỉ và thay đổi thu nhập được tính theo lịch đã chọn. Nếu dừng theo dõi hoặc hết thời gian chờ, game không tự coi cơn đau cũ đã khỏi.",
+        "Hồ sơ tranh chấp học thuật hiện mốc bổ sung chứng cứ và tiến độ giải trình. Hội đồng chỉ báo thiếu hồ sơ một lần, sau đó phản hồi khi có kết quả hoặc khi hết hạn.",
+        "Nếu công trình phải rút và bạn còn kỳ bảo vệ, bạn có một năm chuẩn bị công trình thay thế. Các môn đã đạt được giữ. Sau đó bạn trở lại quy trình bảo vệ với các điều kiện của chương trình. Bản lưu cũ có hồ sơ đang treo cũng được xử lý theo mốc này."
+      ]
+    },
     {
       "id": "childcare-and-football-audience-97300",
       "version": "9.7.3",

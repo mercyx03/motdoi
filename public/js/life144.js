@@ -134,7 +134,8 @@
       if (y < c.next) return;
       if (y > c.due) return st.lapse ? st.lapse(l, c, log) : close(l, c, 'lapsed');
       if (!st.when(l, c)) return;
-      var p = U.clamp((typeof st.p === 'function' ? st.p(l, c) : st.p) * ctx(l, st.tag), 0, 1);
+      var tag = typeof st.tag === 'function' ? st.tag(l, c) : st.tag;
+      var p = U.clamp((typeof st.p === 'function' ? st.p(l, c) : st.p) * ctx(l, tag), 0, 1);
       if (y === c.due) p = Math.min(1, p * 2); // năm cuối của khoảng thời gian: dễ xảy ra hơn, không bắt buộc
       if (roll(l, c, y) >= p) return;
       var dec = typeof st.dec === 'function' ? st.dec(l, c) : st.dec;

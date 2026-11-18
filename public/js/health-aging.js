@@ -85,24 +85,75 @@ function year(l,r,log){if(!l.alive)return;r=E.LIFE138.random(l.id+':health899:'+
 var treat=E.DEC.treat,make=treat.make,apply=treat.apply;treat.make=function(l){var d=make.apply(this,arguments);d.data.ill899=l.ill&&l.ill.n+':'+l.ill.since;return d;};treat.apply=function(l,d,k,r,log){if(d.data.done899||!l.ill||l.ill.treatAt899===l.age||d.data.ill899&&d.data.ill899!==l.ill.n+':'+l.ill.since)return;d.data.done899=true;l.ill.treatAt899=l.age;var out=apply.apply(this,arguments),c=observe(l);if(c){c.plan=k==='none'?'defer':'regular';if(k!=='none'){c.lastCare=l.age;c.careAt=l.age;}startHealth(l,c);}return out;};
 var career=E.careerYear;E.careerYear=function(l,r,log){var f=factor(l),income=career.apply(this,arguments);if(income>0&&f<1&&!(E.FOOTBALL&&E.FOOTBALL.employed(l))){if(l.job&&l.job.id===E.BUSINESS133.chair)E.BUSINESS123.controlled(l).forEach(function(c){if(c.chairCost137)c.chairCost137*=f;});if(l.alive)log(E.vary(l,'rhythm-aging',['Nhịp làm việc theo sức khỏe trong cuộc đời này: thu nhập lao động còn '+Math.round(f*100)+'%; công việc không tự bị xóa.','Ở tuổi '+l.age+', sức khỏe buộc bạn làm việc chậm lại: thu nhập lao động còn '+Math.round(f*100)+'%, việc làm vẫn được giữ.','Bạn làm việc theo sức mình; thu nhập lao động năm nay còn '+Math.round(f*100)+'%, công việc không bị mất.']),'neutral');income*=f;}return income;};
 // Extend the existing accident chain without reindexing stages in old saves.
-var rehab=C.KINDS.health,rehabStage=rehab.stages[1],oldDec=rehabStage.dec,oldWhen=rehabStage.when;
+var rehab=C.KINDS.health,rehabStage=rehab.stages[1],oldDec=rehabStage.dec,oldWhen=rehabStage.when,oldLapse=rehabStage.lapse,oldTag=rehabStage.tag;
 var physio=rehab.stages[0].opts.find(function(o){return o.k==='physio';});
-physio.h=function(l){return 'Bắt đầu liệu trình · '+H.money(l,l.base*.06)+E.medNote(l,l.base*.06,.5);};
-physio.req=function(l){return !l.indep||l.money>=l.base*.06*(1-.5*E.bhytShare(l));};
+function rehabCost(l){return E.medOwnCost(l,l.base*.06,.5);}
+function canPayRehab(l){var own=rehabCost(l);return own===0||l.money>=own;}
+function rehabQuote(l){var own=rehabCost(l);return own>0?'Phần bạn trả: '+H.money(l,own):'';}
+physio.h=rehabQuote;
+physio.req=canPayRehab;
 physio.run=function(l,r,log,c){E.medBill(l,l.base*.06,'Bắt đầu phục hồi sau tai nạn',log,.5);c.data.rehab=true;c.data.rehab899={sessions:1,at:l.age};H.fx(l,{hea:2});log('Bắt đầu phục hồi chức năng, chưa kết luận đã khỏi đau lưng. Cần đánh giá tiếp qua các năm.','neutral');C.advance(l,c,[1,2]);};
 // stageDec retained references to each option, including the changed run/req/h.
 var physioDef=E.DEC.ch144_health_rehab.def.opts.find(function(o){return o.k==='physio';});physioDef.h=physio.h;
-rehabStage.when=function(l,c){return c.data.rehab899?free(l):oldWhen(l,c);};rehabStage.p=function(l,c){return c.data.rehab899?1:l.flags.dauLung?.45:.35;};
+rehabStage.when=function(l,c){
+ var recovery=c.data.rehab899;
+ return recovery?free(l)&&(!recovery.waitFunds||canPayRehab(l)):oldWhen(l,c);
+};
+rehabStage.lapse=function(l,c,log){
+ if(!c.data.rehab899?.waitFunds)return oldLapse(l,c,log);
+ C.close(l,c,'rehab_wait_expired',log,'Hết thời gian giữ lịch phục hồi sau '+c.data.rehab899.sessions+' đợt đã hoàn thành. Cơn đau cũ vẫn có thể cần theo dõi.','neutral');
+};
+rehabStage.p=function(l,c){return c.data.rehab899?1:l.flags.dauLung?.45:.35;};
+rehabStage.tag=function(l,c){return c.data.rehab899?null:oldTag;};
 rehabStage.dec=function(l,c){return c.data.rehab899?'rehabProgress899':oldDec(l,c);};
 function rehabValid(l,d){var c=d&&C.chain(l,d.cid);return !!(free(l)&&c&&c.kind==='health'&&c.stage===1&&c.data.rehab899&&c.open&&c.open.token===d.token&&!d.done);}
 function rehabClaim(l,d){if(!rehabValid(l,d))return null;var c=C.chain(l,d.cid);d.done=true;c.open=null;c.last=l.age;return c;}
-E.SC('rehabProgress899',{title:'Đánh giá tiến trình phục hồi sau tai nạn',prep:function(l,r,a){return {cid:a&&a.cid,token:a&&a.token};},valid:rehabValid,text:function(l,d){var c=C.chain(l,d.cid);return c&&c.data.rehab899?'Đã hoàn thành '+c.data.rehab899.sessions+' đợt theo dõi. '+(l.flags.dauLung?'Cơn đau vẫn cần đánh giá.':'Bạn xem mức vận động đã phục hồi.')+' Có thể tiếp tục liệu trình, xin lịch làm nhẹ hoặc dừng; không có thao tác chữa khỏi tức thì.':'Hồ sơ phục hồi đã khép lại.';},opts:[
- {k:'continue',l:'Theo tiếp liệu trình và đánh giá năm sau',h:function(l){return H.money(l,l.base*.06)+E.medNote(l,l.base*.06,.5);},run:function(l,r,log,d){if(!rehabValid(l,d))return;if(l.indep&&l.money<l.base*.06*(1-.5*E.bhytShare(l))){log('Chưa đủ phần chi trả; chưa thu tiền và chưa cộng tiến trình.','neutral');X.next(l,'rehabProgress899',r,{cid:d.cid,token:d.token},{manual:false});return;}var c=rehabClaim(l,d);E.medBill(l,l.base*.06,'Theo dõi phục hồi chức năng',log,.5);c.data.rehab899.sessions++;H.fx(l,{hea:2});if(c.data.rehab899.sessions>=3){if(r()<.7){delete l.flags.dauLung;C.close(l,c,'rehabilitated',log,'Sau nhiều đợt phục hồi, khả năng vận động được cải thiện trong cuộc đời này. Kỷ niệm tai nạn và hồ sơ được giữ.','good');}else C.close(l,c,'chronic',log,'Phục hồi giúp vận động tốt hơn nhưng còn đau kéo dài; tiếp tục thu xếp sinh hoạt, không báo đã khỏi.','neutral');}else{c.next=l.age+1;c.due=l.age+3;log('Đã hoàn thành thêm một đợt; hẹn đánh giá tiếp năm sau.','neutral');}}},
- {k:'lighter',l:'Thu xếp lịch làm nhẹ trong hai năm',req:function(l){return !!l.job;},run:function(l,r,log,d){var c=rehabClaim(l,d);if(!c)return;health(l).reducedUntil=l.age+1;c.next=l.age+1;c.due=l.age+3;log('Giữ nghề với lịch giảm giờ hai năm; thu nhập lao động tính theo lịch mới, không tự mất việc.','neutral');}},
+function rehabWait(l,c,gap){
+ var q=c.data.rehab899;
+ q.waitFunds=!canPayRehab(l);
+ c.next=l.age+gap;
+ c.due=q.waitFunds?(q.budgetDue||(q.budgetDue=l.age+3)):l.age+3;
+}
+function deferRehab(l,d,log){
+ var c=rehabClaim(l,d);if(!c)return;
+ rehabWait(l,c,1);
+ log('Bạn giữ tiến độ đã có và hoãn đợt tiếp theo. Lịch sẽ mở lại nếu bạn đủ phần chi trả trong thời gian giữ hẹn.','neutral');
+}
+E.SC('rehabProgress899',{title:'Đánh giá tiến trình phục hồi sau tai nạn',prep:function(l,r,a){return {cid:a&&a.cid,token:a&&a.token};},valid:rehabValid,text:function(l,d){
+ var c=C.chain(l,d.cid);if(!c?.data.rehab899)return 'Hồ sơ phục hồi đã khép lại.';
+ return 'Đã hoàn thành '+c.data.rehab899.sessions+' đợt theo dõi. '+
+  (canPayRehab(l)?'Bạn có thể tiếp tục theo dõi hoặc thu xếp lịch sinh hoạt.':'Bạn chưa đủ phần chi trả '+H.money(l,rehabCost(l))+'. Có thể giữ lịch để thu xếp thêm.');
+},opts:[
+ {k:'continue',l:'Theo tiếp liệu trình và đánh giá năm sau',h:rehabQuote,req:canPayRehab,run:function(l,r,log,d){
+  var c=rehabClaim(l,d);if(!c)return;
+  E.medBill(l,l.base*.06,'Theo dõi phục hồi chức năng',log,.5);
+  var q=c.data.rehab899;q.sessions++;delete q.waitFunds;delete q.budgetDue;H.fx(l,{hea:2});
+  if(q.sessions>=3){
+   if(r()<.7){delete l.flags.dauLung;C.close(l,c,'rehabilitated',log,'Sau nhiều đợt phục hồi, khả năng vận động được cải thiện.','good');}
+   else C.close(l,c,'chronic',log,'Phục hồi giúp vận động tốt hơn nhưng còn đau kéo dài.','neutral');
+  }else{c.next=l.age+1;c.due=l.age+3;log('Đã hoàn thành thêm một đợt; hẹn đánh giá tiếp năm sau.','neutral');}
+ }},
+ {k:'defer',l:'Hoãn đợt này để thu xếp chi phí',req:function(l){return !canPayRehab(l);},run:function(l,r,log,d){deferRehab(l,d,log);}},
+ {k:'lighter',l:'Thu xếp lịch làm nhẹ trong hai năm',req:function(l){return !!l.job&&!(l.flags.health899?.reducedUntil>=l.age);},run:function(l,r,log,d){
+  var c=rehabClaim(l,d);if(!c)return;
+  health(l).reducedUntil=l.age+1;rehabWait(l,c,2);
+  log('Bạn giữ công việc với lịch giảm giờ hai năm. Thu nhập lao động tính theo lịch mới.','neutral');
+ }},
  {k:'pause',l:'Tạm dừng liệu trình, giữ hồ sơ và thu xếp sinh hoạt',run:function(l,r,log,d){var c=rehabClaim(l,d);if(c)C.close(l,c,'rehab_paused',log,'Liệu trình tạm dừng; không kết luận đã khỏi. Dấu hiệu đau cũ và hồ sơ tai nạn được giữ.','neutral');}}
 ]});
+var rehabApply=E.DEC.rehabProgress899.apply;
+E.DEC.rehabProgress899.apply=function(l,d,key,r,log){
+ if(key==='continue'&&!canPayRehab(l)){deferRehab(l,d.data,log);return;}
+ return rehabApply.apply(this,arguments);
+};
+E.DEC.rehabProgress899.auto=function(l,d,r){
+ var keys=d.opts.map(function(o){return o.k;});
+ if(!canPayRehab(l)&&keys.includes('defer'))return 'defer';
+ // An older queued decision can still have 'continue'; apply turns it into a budget hold.
+ return keys.includes('continue')?'continue':keys[0];
+};
 var flareTreat=E.DEC.ch144_health_flare.def.opts.find(function(o){return o.k==='treat';});
-flareTreat.l='Bắt đầu liệu trình theo dõi phục hồi nhiều năm';flareTreat.h=physio.h;flareTreat.run=function(l,r,log,d){if(!E.DEC.ch144_health_flare.valid(l,d))return;if(l.indep&&l.money<l.base*.06*(1-.5*E.bhytShare(l))){log('Chưa đủ phần chi trả. Chưa bắt đầu liệu trình; có thể thu xếp hỗ trợ sau.','neutral');return;}var c=C.chain(l,d.cid);d.done=true;c.open=null;c.data.rehab899={sessions:1,at:l.age};c.next=l.age+1;c.due=l.age+3;E.medBill(l,l.base*.06,'Bắt đầu theo dõi phục hồi đau lưng',log,.5);log('Bắt đầu liệu trình nhiều năm, chưa coi cơn đau đã khỏi.','neutral');};
+flareTreat.l='Bắt đầu liệu trình theo dõi phục hồi nhiều năm';flareTreat.h=rehabQuote;flareTreat.req=canPayRehab;flareTreat.run=function(l,r,log,d){if(!E.DEC.ch144_health_flare.valid(l,d)||!canPayRehab(l))return;var c=C.chain(l,d.cid);d.done=true;c.open=null;c.data.rehab899={sessions:1,at:l.age};c.next=l.age+1;c.due=l.age+3;E.medBill(l,l.base*.06,'Bắt đầu theo dõi phục hồi đau lưng',log,.5);log('Bắt đầu liệu trình nhiều năm, chưa coi cơn đau đã khỏi.','neutral');};
 E.HOOKS.year.push(year);
 var migrate=E.migrateExt;E.migrateExt=function(l){if(migrate)migrate(l);var q=health(l);if(!Array.isArray(q.conditions))q.conditions=[];if(!Array.isArray(q.history))q.history=[];q.conditions=q.conditions.filter(function(c){return c&&typeof c.id==='string'&&typeof c.name==='string';});q.conditions.forEach(function(c){c.severity=Number.isFinite(c.severity)?U.clamp(c.severity,0,3):0;});observe(l);if(l.flags.chronic>0&&!q.conditions.length)q.conditions.push({id:'legacy',name:'Hồ sơ bệnh mạn tính từ bản lưu cũ',phase:'controlled',legacy:true,counted:true,severity:0,lastCare:l.age-1,plan:'unset',relapses:0});};
 E.HEALTH899={state:health,observe:observe,remit:remit,care:care,year:year,factor:factor,needs:needs,risk:relapseRisk};E.AGEING899={state:elder,relatives:relatives,local:local,year:year};

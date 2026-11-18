@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.7.4: còn nghiệm thu toàn diện và xác minh binding REVIEWS_DB Production. Bộ chains-gd4 có ca hẹn trả nợ khi tải lại không đạt trên bản 9.7.3 trước đợt sửa này; ghi nhận riêng, không tính PASS.
+
 - 9.7.3: cần nghiệm thu toàn diện kế hoạch chăm cháu và việc học/làm của con, danh tiếng bóng đá và nguồn người theo dõi trên mã cuối, bản lưu thật và binding REVIEWS_DB Production.
 
 - 9.7.2: cần nghiệm thu toàn diện nhịp thị trường cầu thủ tự do và khoảng cách với con trưởng thành trên mã cuối, bản lưu thật và xác minh binding REVIEWS_DB Production.

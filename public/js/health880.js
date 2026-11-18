@@ -44,6 +44,14 @@ function split(l,total,p){
  return {p:p,own:own,ins:total-own,toDed:toDed};
 }
 function countRx(l){var s=st(l);if(!s.rx||s.rx.age!==l.age){if(s.rx)s.prevN=s.rx.n;s.rx={age:l.age,n:0};}s.rx.n++;}
+var own0=E.medOwnCost;
+E.medOwnCost=function(l,total,cover){
+ var p=total>0&&override(l);
+ if(!p)return own0.apply(this,arguments);
+ if(!l.indep&&l.age<18)return 0;
+ var base=total*(cover==null?1:cover);
+ return split(l,base,p).own+(total-base)+(p.rxLocal||0);
+};
 var bill0=E.medBill;
 E.medBill=function(l,total,why,log,cover){
  var p=total>0&&override(l);if(!p)return bill0.apply(this,arguments);

@@ -66,10 +66,18 @@
     return { p: p, own: own, ins: total - own, toDed: toDed };
   }
   var share0 = E.bhytShare; E.bhytShare = function (l) { if (!l || !l.flags || vnHome(l) || !['vn', 'world'].includes(l.mode)) return share0.apply(this, arguments); return policy(l).share; };
+  function payable(l, total, base, x) { return x.own + (total - base) + (x.p.rxFee ? usd(l, x.p.rxFee) : 0); }
+  var own0 = E.medOwnCost;
+  E.medOwnCost = function (l, total, cover) {
+    if (!l || !l.flags || vnHome(l) || !['vn', 'world'].includes(l.mode) || !(total > 0)) return own0.apply(this, arguments);
+    if (!l.indep && l.age < 18) return 0;
+    var base = total * (cover == null ? 1 : cover);
+    return payable(l, total, base, split(l, base));
+  };
   var bill0 = E.medBill;
   E.medBill = function (l, total, why, log, cover) {
     if (!l || !l.flags || vnHome(l) || !['vn', 'world'].includes(l.mode) || !(total > 0)) return bill0.apply(this, arguments);
-    var c = cover == null ? 1 : cover, base = total * c, x = split(l, base), own = x.own + (total - base) + (x.p.rxFee ? usd(l, x.p.rxFee) : 0), y = yr(l);
+    var c = cover == null ? 1 : cover, base = total * c, x = split(l, base), own = payable(l, total, base, x), y = yr(l);
     if (!l.indep && l.age < 18) { if (log) log('Gia đình lo viện phí ' + mo(l, total) + ' (' + x.p.name + ' chi trả ' + mo(l, x.ins) + ').', 'neutral'); y.ded += x.toDed; y.oop += x.own; return 0; }
     H.cash(l, -own, why); y.ded += x.toDed; y.oop += x.own; y.n++;
     if (log) log('Viện phí ' + mo(l, total) + ': ' + x.p.name + ' chi trả ' + mo(l, x.ins) + (x.toDed > 0 ? ', khấu trừ ' + mo(l, x.toDed) : '') + ', bạn trả ' + mo(l, own) + '. Thời gian tiếp cận: ' + x.p.wait + '.', 'neutral');

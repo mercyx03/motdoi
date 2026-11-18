@@ -23,6 +23,10 @@
     return 0.8;
   };
   // trả viện phí: cover = 1 (đúng tuyến), 0.5 (dịch vụ: BHYT trả phần chuẩn), 0 (tư nhân / thẩm mỹ)
+  E.medOwnCost = function (l, total, cover) {
+    if (!(total > 0) || !l.indep && l.age < 18) return 0;
+    return total - total * ((cover == null ? 1 : cover) * E.bhytShare(l));
+  };
   E.medBill = function (l, total, why, log, cover) {
     if (!(total > 0)) return 0;
     var share = (cover == null ? 1 : cover) * E.bhytShare(l), ins = total * share, own = total - ins;
