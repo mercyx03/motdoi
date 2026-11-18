@@ -3,8 +3,8 @@
     "id": "childcare-and-football-audience-97300",
     "version": "9.7.3",
     "publishedAt": "2026-11-18T08:45:45+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-18T01:57:39.207Z",
     "title": "Chia lịch chăm bé và đưa thành tích bóng đá đến người hâm mộ",
     "summary": "Cách hỗ trợ con ảnh hưởng đến việc học, việc làm và thời gian chăm bé. Mùa giải hay có thể mang đến người theo dõi ngay cả khi bạn chưa đăng video.",
     "tags": [
@@ -16,14 +16,15 @@
       "Game chỉ tự đưa lời hỏi một lần. Có thể mở lại kế hoạch từ hồ sơ của con trước khi bé chào đời. Nếu bỏ qua hoặc chơi tự động, hai con tự thu xếp và gia đình không tự cam kết chi tiền.",
       "Bàn thắng, kiến tạo, giữ sạch lưới, điểm trận và màn trình diễn tại trận lớn góp vào danh tiếng. Quy mô giải đấu và đội tuyển ảnh hưởng mức độ được biết đến. Mở kết quả mùa giải để xem danh tiếng tăng bao nhiêu.",
       "Kênh mạng xã hội có thể đón người hâm mộ bóng đá dù bạn chưa đăng video. Mục quản lý kênh cho biết bao nhiêu người đến từ bóng đá, danh tiếng bên ngoài, video hoặc hợp tác. Số người theo dõi cũ được giữ và phần thiếu dữ liệu được hiện là chưa rõ nguồn."
-    ]
+    ],
+    "correctedAt": "2026-11-18T01:57:39.347Z"
   },
   {
     "id": "free-agent-news-and-adult-family-boundaries-97200",
     "version": "9.7.2",
     "publishedAt": "2026-11-18T08:26:55+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-18T01:57:39.207Z",
     "title": "Chờ hợp đồng bóng đá và nối lại liên lạc với con",
     "summary": "Chỉ báo khi có đề nghị hợp đồng mới. Con đã trưởng thành có thể giữ khoảng cách và dần mở lòng trở lại.",
     "tags": [
@@ -35,14 +36,15 @@
       "Đại diện tìm cơ hội và báo khi có đề nghị mới phù hợp. CLB vừa được báo sẽ không lặp lại ở mùa kế tiếp. Bạn vẫn có thể chủ động liên hệ CLB hoặc xem hợp đồng còn hạn trong Hồ sơ bóng đá.",
       "Khi quan hệ căng thẳng kéo dài, con trưởng thành có thể chủ động giữ khoảng cách, từ chối lời mời gặp và chỉ báo một số tin lớn, chẳng hạn sau khi đã tự thu xếp lễ cưới. Thay đổi này hiện trong nhật ký và hồ sơ của con.",
       "Bạn có thể chủ động hỏi thăm hoặc xin lỗi. Con cần thấy sự thay đổi qua nhiều năm mới dần nối lại liên lạc. Mục giao lưu và hồ sơ của con dùng chung lịch sử liên lạc."
-    ]
+    ],
+    "correctedAt": "2026-11-18T01:57:39.331Z"
   },
   {
     "id": "life-rhythm-and-continuity-97100",
     "version": "9.7.1",
     "publishedAt": "2026-11-18T08:11:55+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-18T01:57:39.207Z",
     "title": "Nhịp sống thưa hơn, chuyện gia đình có tiếp nối",
     "summary": "Giảm lời nhắc đời thường lặp lại, cho phép ẩn gợi ý nấu ăn và nối hệ quả từ cách đồng hành với con đến mạng xã hội, bóng đá.",
     "tags": [
@@ -56,7 +58,8 @@
       "Khi con chia sẻ chuyện tình cảm tuổi học trò, cách bạn lắng nghe, trao đổi về an toàn, bỏ qua hay cấm đoán sẽ ảnh hưởng đến mức độ tin cậy và việc con có tìm bạn khi gặp khó khăn. Một số lựa chọn có thể dẫn tới chuyện làm cha mẹ ngoài dự định, khi đó gia đình phải bàn trách nhiệm, việc học và kế hoạch chăm sóc.",
       "Danh tiếng từ trước có thể giúp kênh mạng xã hội mới nhanh có người theo dõi hơn. Người đã có khán giả bên ngoài cũng có thể tăng trưởng tự nhiên theo thời gian. Thành tích và số lần ra sân trong sự nghiệp bóng đá góp phần tạo danh tiếng theo quy mô giải đấu và đội bóng.",
       "Nhịp thưa là thiết lập mặc định cho các bản lưu mới; bản lưu cũ tiếp tục chơi được và có thể đổi nhịp trong mục cài đặt."
-    ]
+    ],
+    "correctedAt": "2026-11-18T01:57:39.315Z"
   },
   {
     "id": "saudi-pro-league-and-spanish-family-names-97000",
