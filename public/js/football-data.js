@@ -2,6 +2,7 @@
 (function (G) {
   'use strict';
   var markets = {
+    SA: ['AFC', 'Saudi Pro League', "King's Cup", 18000000, 79, ['Al Hilal', 'Al Nassr', 'Al Ittihad', 'Al Ahli']],
     VN: ['AFC', 'V.League', 'Cúp Quốc gia', 18000, 53, ['Hà Nội FC', 'Hoàng Anh Gia Lai', 'Công an Hà Nội', 'Thể Công Viettel', 'Công an Nhân dân', 'Hưng Yên', 'Thái Nguyên', 'Thép Cần Thơ', 'Đắk Lắk', 'Vĩnh Long', 'Quảng Ngãi', 'Trường Giang Gia Định']],
     JP: ['AFC', 'J1 League', 'Emperor Cup', 180000, 70, ['Kashima Antlers', 'Urawa Reds', 'Kashiwa Reysol', 'FC Tokyo']],
     KR: ['AFC', 'K League', 'Korea Cup', 140000, 68, ["Ulsan HD", "Jeonbuk Hyundai", "FC Seoul", "Pohang Steelers"]],
@@ -28,6 +29,7 @@
     OFC: { club: 'OFC Champions League', nation: 'OFC Nations Cup', anchor: 2024, cycle: 4, strength: 49, slots: 1 }
   };
   var sources = {
+    SA: 'https://www.spl.com.sa/en/fixtures-results',
     TH: 'https://thaileague.co.th/standings/?season=2025-26',
     EG: 'https://www.egyptianproleague.com/news/details/323',
     MX: 'https://leaguescup.ligamx.net/clubes',
@@ -85,11 +87,11 @@
     ES: { name: 'Primera Federación', season: '2025/26', source: 'https://rfef.es/sites/default/files/2025-07/Calendario_Primera_Federacion_G1_2025-2026.pdf',
       teams: ['CD Tenerife', 'SD Ponferradina', 'Racing Club Ferrol', 'CD Lugo'] }
   };
-  var firstSeasons = {"VN":"2026","JP":"2026","GB":"2025/26","US":"2026","ZA":"2025/26","EG":"2025/26","TH":"2026/27","KR":"2026","IT":"2025/26","BR":"2025","AR":"2025","FR":"2025/26","NZ":"2026"};
+  var firstSeasons = {"SA":"2026/27","VN":"2026","JP":"2026","GB":"2025/26","US":"2026","ZA":"2025/26","EG":"2025/26","TH":"2026/27","KR":"2026","IT":"2025/26","BR":"2025","AR":"2025","FR":"2025/26","NZ":"2026"};
   var clubs = [];
   Object.keys(markets).forEach(function (code) {
     var m = markets[code];
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < (code === 'SA' ? 4 : 12); i++) {
       var tier = i < 4 ? 1 : i < 8 ? 2 : 3;
       var vnLeague = code === 'VN' && (tier === 2 ? { name: 'V.League 2', season: '2026/27', source: vnTier2Source } : tier === 3 ? { name: 'Hạng Nhì Quốc gia', season: '2026', source: vnTier3Source } : null);
       var leagueReference = vnLeague || (tier === 2 ? secondTier[code] : tier === 3 ? thirdTier[code] : null);
@@ -98,7 +100,8 @@
       clubs.push({ id: code + '-' + i, name: name, country: code,
         confed: m[0], league: leagueReference ? leagueReference.name : tier === 1 ? m[1] : tier === 2 ? 'Hạng dưới · ' + code : 'Bán chuyên · ' + code,
         cup: tier === 3 && leagueReference ? null : m[2], source: name ? (leagueReference ? leagueReference.teamSources && leagueReference.teamSources[i % 4] || leagueReference.source : sources[code] || null) : null, referenceSeason: leagueReference && leagueReference.season || (tier === 1 ? firstSeasons[code] : null) || null, tier: tier, strength: Math.max(15, m[4] - i * 4), reputation: Math.max(10, m[4] - i * 3),
-        financeUSD: m[3] * (i < 2 ? 5 : tier === 1 ? 1 : tier === 2 ? .12 : .025),
+        financeUSD: code === 'SA' ? 300000000 : m[3] * (i < 2 ? 5 : tier === 1 ? 1 : tier === 2 ? .12 : .025),
+        from970: code === 'SA' ? 1976 : null,
         academy: Math.max(30, m[4] - i * 3), promotion: Math.max(.12, .5 - i * .03), competition: m[4] - i * 2,
         minAge: 10, maxAge: 21, education: i !== 7, scholarship: i < 6, scout: Math.max(15, m[4] - i * 5),
         objective: i < 2 ? 'Cạnh tranh chức vô địch' : tier === 1 ? 'Giành suất dự cúp' : 'Phát triển cầu thủ và trụ hạng',

@@ -436,3 +436,9 @@ Theo yêu cầu mới của chủ dự án: cổ phần công ty gia đình ng�
 ### Gói 8.10.76 Preview
 
 Đợt 1 các mục dữ liệu lớn: Tây Ban Nha 1876, ly hôn Scotland/Bắc Ireland, bốn liên đoàn Anh, Johns Hopkins/Yale, mức xác minh hồ sơ quốc gia. Chi tiết và phần còn mở: [sổ tiến độ](BACKLOG-IMPLEMENTATION-873.md#gói-81076--đợt-1-các-mục-dữ-liệu-lớn).
+
+### GĐ6 — nghiệm thu bổ sung 9.7.0
+
+- Regression toàn bộ mã cuối và bản lưu thật cho Saudi Pro League/họ tên thường dân Tây Ban Nha. Test trọng điểm và giao diện hẹp/rộng chạy trong đợt triển khai; không thay thế nghiệm thu toàn diện.
+- Chưa dựng đủ các CLB/hạng dưới và thể thức Saudi từng mùa; chưa mô phỏng hồ sơ đổi họ ngoại lệ với chứng cứ bạo hành, toàn bộ hộ tịch trước 2000 và gia đình đa quốc tịch. Phạm vi/nguồn: docs/SAUDI-SPAIN-970.md.
+- Kiểm tra binding REVIEWS_DB và cấu hình Production do chủ dự án quản lý; không deploy hoặc ghi D1 Production trong đợt này.

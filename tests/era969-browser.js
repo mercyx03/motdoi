@@ -47,7 +47,7 @@ function seed(kind){
      const filters=[...document.querySelectorAll('#updateFilters button')];filters.find(b=>b.textContent==='Sửa lỗi').click();
      const search=document.querySelector('#updateSearch');search.value='so tan';search.dispatchEvent(new Event('input',{bubbles:true}));
      return {first:data[0],visible:document.querySelector('#updateTimeline').innerText,overflow:document.documentElement.scrollWidth>innerWidth+1};
-    });assert.equal(history.first.version,'9.6.9');assert.equal(history.first.releaseStatus,expected.releaseStatus);
+    });assert.equal(history.first.version,expected.version);assert.equal(history.first.releaseStatus,expected.releaseStatus);
     assert(history.visible.includes('cuộc sống sau sơ tán'));assert(history.visible.includes(expected.releaseStatus==='released'?'Đã phát hành':'Bản chuẩn bị'));assert(!history.overflow);
     assert.deepEqual(p.errors,[]);console.log('PASS era969-browser: dated region, recovery, Kosen admission/save reload and update history '+width);
    }catch(error){console.error(p.errors);throw error;}finally{p.close();}

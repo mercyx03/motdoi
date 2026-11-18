@@ -110,9 +110,9 @@
   // ================= D13: họ tên =================
   var FAMFIRST = /^(VN|CN|TW|HK|JP|KR|HU|MN)$/;
   function nameRec(l) {
-    var s = st(l); if (s.name && s.name.legal) return s.name;
+    var s = st(l); if (s.name && s.name.legal) { if(E.SPAIN_COMMON970?.eligible(l)){var es=G.NAMES.spanishParse(l.name,l.es970);if(es)s.name.family=[es.first,es.second];}return s.name;}
     var full = String(l.name || '').trim(), order = FAMFIRST.test(l.country) ? 'family-first' : 'given-first', parts = full.split(/\s+/), sur = l.sur && full.indexOf(l.sur) >= 0 ? l.sur : order === 'family-first' ? parts[0] : parts[parts.length - 1];
-    s.name = { legal: full, display: full, birth: full, family: [sur], order: order, nick: '', hist: [{ at: l.age, legal: full, why: 'lúc sinh' }], docs: [] }; return s.name;
+    s.name = { legal: full, display: full, birth: full, family: l.country==='ES'&&G.NAMES.spanishParse(full)?[G.NAMES.spanishParse(full).first,G.NAMES.spanishParse(full).second]:[sur], order: order, nick: '', hist: [{ at: l.age, legal: full, why: 'lúc sinh' }], docs: [] }; return s.name;
   }
   function validName(t, cc) {
     t = String(t == null ? '' : t); var s = t.trim();
@@ -147,8 +147,8 @@
   };
   function marryRule(cc) { return MARRY[cc] || { opts: ['keep', 'take'], note: 'Quy định ' + cname(cc) + ' chưa xác minh chi tiết; trò chơi cho giữ họ hoặc theo họ bạn đời.' }; }
   function surnameOf(name, cc) { var p = String(name || '').trim().split(/\s+/); return FAMFIRST.test(cc) ? p[0] : p[p.length - 1]; }
-  function givenOf(l) { var n = nameRec(l), f = n.family.join(' '); return n.legal.replace(f, '').trim() || n.legal; }
-  function compose(l, fam) { var n = nameRec(l), g = givenOf(l); return n.order === 'family-first' ? fam + ' ' + g : g + ' ' + fam; }
+  function givenOf(l) { if(E.SPAIN_COMMON970?.eligible(l)){var es=G.NAMES.spanishParse(l.name,l.es970);if(es)return es.given;}var n = nameRec(l), f = n.family.join(' '); return n.legal.replace(f, '').trim() || n.legal; }
+  function compose(l, fam) { if(E.SPAIN_COMMON970?.eligible(l)){var es=G.NAMES.spanishParse(l.name,l.es970);if(es&&fam===es.first+' '+es.second)return es.full;}var n = nameRec(l), g = givenOf(l); return n.order === 'family-first' ? fam + ' ' + g : g + ' ' + fam; }
   function marryOptions(l) {
     var p = l.partner, cc = res(l), rule = marryRule(cc), intl = p && p.homeCountry && p.homeCountry !== l.country, o = (rule.intl && intl ? rule.intl : rule.opts).slice(), ps = surnameOf(p && p.name, p && p.homeCountry || cc), mine = nameRec(l).family.join(' ');
     var out = [];
@@ -199,7 +199,7 @@
     }
     return out;
   }, 6, 'Bản thân');
-  function N(l, r) { var sex = l.sex === 'F' ? 'F' : 'M', full = H.name ? H.name(l, r, sex).full : l.name; var p = String(full).split(/\s+/); return FAMFIRST.test(l.country) ? p.slice(1).join(' ') : p.slice(0, -1).join(' ') || p[0]; }
+  function N(l, r) { if(E.SPAIN_COMMON970?.eligible(l))return G.NAMES.spanishGiven(r,l.sex);var sex = l.sex === 'F' ? 'F' : 'M', full = H.name ? H.name(l, r, sex).full : l.name; var p = String(full).split(/\s+/); return FAMFIRST.test(l.country) ? p.slice(1).join(' ') : p.slice(0, -1).join(' ') || p[0]; }
 
   // ================= hook năm, sinh con, đời con =================
   E.HOOKS.year.push(function (l, r, log) {

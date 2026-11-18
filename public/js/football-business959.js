@@ -152,7 +152,7 @@
   function price(l, club) { return E.usdToLocal(l, club.financeUSD * (club.tier === 1 ? 24 : 16)); }
   function reserve(l, c) { return Math.min(c.value * .03, l.base * 2); }
   function canBuy(l, c, club, amount) {
-    return allowed(l, c) && club && !occupied(l, club.id) &&
+    return allowed(l, c) && F.available(l,club) && !occupied(l, club.id) &&
       !owned(c).some(function (a) { return F.club(a.id).country === club.country; }) &&
       T.ensure(l, c).cash >= amount + reserve(l, c);
   }
@@ -277,10 +277,10 @@
     });
     if (!arg.market) {
       Object.keys(D.markets).forEach(function (cc) {
-        if (!markets.has(cc)) out.push({ k: 'market:' + cc, l: 'Xem CLB tại ' + G.W.BY[cc].name, run: function (l, r) { X.next(l, 'footballCompany959', r, { cid: arg.cid, market: cc }); } });
+        if (!markets.has(cc) && (cc!=='SA'||year(l)>=1976)) out.push({ k: 'market:' + cc, l: 'Xem CLB tại ' + G.W.BY[cc].name, run: function (l, r) { X.next(l, 'footballCompany959', r, { cid: arg.cid, market: cc }); } });
       });
     } else {
-      D.clubs.filter(function (club) { return club.country === arg.market && !occupied(l, club.id); }).forEach(function (club) {
+      D.clubs.filter(function (club) { return club.country === arg.market && F.available(l,club) && !occupied(l, club.id); }).forEach(function (club) {
         var amount = price(l, club);
         out.push({ k: 'buy:' + club.id, l: 'Đề nghị mua ' + club.name + ' · ' + H.money(l, amount),
           why: p.deals.some(function (d) { return d.id === club.id && d.review >= y; }) ? 'Đang có đề nghị' : canBuy(l, c, club, amount) ? true : 'Thiếu ngân quỹ hoặc trùng giải',

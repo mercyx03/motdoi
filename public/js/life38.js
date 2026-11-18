@@ -317,6 +317,7 @@
       if (P2 && P2.style === 'double') { var mom = l.sex === 'F' ? String(l.name).split(' ') : l.partner ? String(l.partner.name).split(' ') : null; if (mom && mom.length >= 3) { var ww = nm.split(' '); ww[ww.length - 1] = mom[mom.length - 2]; nm = ww.join(' '); } } // họ thứ hai của con là họ thứ nhất của mẹ
       if (nm !== old) { kid.name = nm; lg.forEach(function (e) { e[0] = e[0].split(old).join(nm); }); (l.mem || []).forEach(function (m) { if (m && m.t) m.t = m.t.split(old).join(nm); }); }
     }
+    if(kid&&E.SPAIN_COMMON970)E.SPAIN_COMMON970.registerBirth(l,kid,r,lg);
     lg.forEach(function (e) { log(e[0], e[1]); });
     return x;
   };

@@ -131,7 +131,7 @@
         delete t.uid110; delete t.cond912; delete t.persona141; delete t.blood909; t.sex = sex; t.name = twinName(l, rm, k, sex); t.multi912 = key; k.multi912 = key;
         if (mz && i === 0) { t.genes912 = JSON.parse(JSON.stringify(k.genes912)); t.genes912.sex = sex; t.monozygotic912 = true; k.monozygotic912 = true; }
         else { t.genes912 = inherit(mom, dad, sex, rng(l.id + ':birth912:' + key + ':twin' + i)); if (rm() < t21Risk(motherAge(l, k))) t.genes912.t21 = true; }
-        l.kids.push(t); X.uid(l, t); initCond(l, t, t.genes912, t.born);
+        l.kids.push(t); X.uid(l, t); if(E.SPAIN_COMMON970)E.SPAIN_COMMON970.registerBirth(l,t,rm,[]); initCond(l, t, t.genes912, t.born);
       }
       if (extra) { if (log) log((extra === 2 ? 'Ba em bé' : 'Hai em bé') + ' cùng chào đời' + (mz ? ' — cặp sinh đôi cùng trứng' : '') + '. Đa thai cần theo dõi kỹ hơn, nhưng các bé đều được chăm sóc như mọi trẻ sơ sinh.', 'big'); if (l.mind) l.mind.stress = Math.min(100, (l.mind.stress || 0) + 6); }
     });
