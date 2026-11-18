@@ -84,12 +84,12 @@ var ASK={
  crush:[['safety','Lắng nghe, trao đổi về ranh giới và cách giữ an toàn',function(l,k,p,r,log){rel(k,p,3,2,-1);log('Bạn tôn trọng cảm xúc của '+k.name+', trao đổi về sự đồng thuận, trách nhiệm và người có thể giúp khi con lo lắng.','good');}],['ignore','Để con tự tìm hiểu, chưa trao đổi thêm',function(l,k,p,r,log){log(k.name+' tự tìm hiểu chuyện tình cảm; hai bên chưa thống nhất cách chia sẻ khi gặp khó khăn.','neutral');}],['talk','Lắng nghe, chia sẻ kinh nghiệm của mình',function(l,k,p,r,log){var x=react(l,k,r,.3,false);log(k.name+' '+REACT[x]+' khi bạn trò chuyện về tình cảm tuổi học trò.','neutral');rel(k,p,2,1,0);}],['ban','Cấm tuyệt đối, kiểm tra tin nhắn',function(l,k,p,r,log){var x=react(l,k,r,-.8,true);log(k.name+' '+REACT[x]+'. Con bắt đầu cài mật khẩu điện thoại.','bad');remember(l,k,'Lần bị bố mẹ đọc tin nhắn riêng.',3,'bad',false);}]],
  ill:[['treat','Đưa con đi điều trị đầy đủ',function(l,k,p,r,log){var cost=(l.base||1)*.4;if(l.money>=cost){H.cash(l,-cost,'Điều trị cho con');log(k.name+' được điều trị, hồi phục dần sau vài tháng. Cả nhà luân phiên chăm.','good');}else{log('Gia đình vay mượn người thân và nhận hỗ trợ từ quỹ bệnh nhi; '+k.name+' được điều trị và hồi phục dần.','neutral');H.fx(l,{hap:-4});}p.ill=null;rel(k,p,2,4,0);remember(l,k,'Những tháng '+k.name+' nằm viện, bố mẹ thay nhau thức trông.',4,'good');}],['wait','Theo dõi thêm ở nhà',function(l,k,p,r,log){if(r()<.5){p.ill=null;log(k.name+' tự khỏi dần nhưng mệt mỏi kéo dài; bác sĩ khuyên tái khám.','neutral');}else{log('Bệnh của '+k.name+' nặng hơn, phải nhập viện gấp. May mà kịp thời.','bad');p.ill=null;H.fx(l,{hap:-6});}}]],
  runaway:[['search','Đi tìm con, khi gặp thì lắng nghe trước',function(l,k,p,r,log){rel(k,p,4,4,-4);log('Sau hai ngày tìm kiếm, bạn gặp '+k.name+' ở nhà một người bạn. Hai bên nói chuyện lần đầu tiên thật lâu.','good');remember(l,k,'Đêm bố mẹ tìm được '+k.name+' và nói chuyện thật lòng.',5,'good');}],['police','Báo công an, đưa con về và kỷ luật',function(l,k,p,r,log){rel(k,p,-2,0,4);log(k.name+' được đưa về an toàn nhưng đóng cửa phòng, không nói chuyện nhiều tuần.','neutral');remember(l,k,'Lần bỏ nhà đi và bị đưa về.',4,'bad',false);}]]};
-function pickEvent(l,k,p,r,tr){var a=age(l,k),pool=EV.filter(function(e){return !p.seen[e.id]&&a>=e.min&&a<=e.max;});var rare=pool.filter(function(e){return e.rare&&e.w(l,k,p,tr)>0&&r()<e.rare*e.w(l,k,p,tr);});if(rare.length)return rare[0];if(r()>=.45)return null;var common=pool.filter(function(e){return !e.rare&&e.w(l,k,p,tr)>0;});if(!common.length)return null;return U.wpick(r,common,function(e){return e.w(l,k,p,tr)+1e-9;});}
+function pickEvent(l,k,p,r,tr){var a=age(l,k),distant=E.FAMILY100?.distant(l,k),pool=EV.filter(function(e){return !p.seen[e.id]&&a>=e.min&&a<=e.max&&(!distant||!['caregive','travel','marriageView','kidsView'].includes(e.id));});var rare=pool.filter(function(e){return e.rare&&e.w(l,k,p,tr)>0&&r()<e.rare*e.w(l,k,p,tr);});if(rare.length)return rare[0];if(r()>=.45)return null;var common=pool.filter(function(e){return !e.rare&&e.w(l,k,p,tr)>0;});if(!common.length)return null;return U.wpick(r,common,function(e){return e.w(l,k,p,tr)+1e-9;});}
 function evolve(l,k,p,r){var a=age(l,k),rate=a<6?1.6:a<18?1.2:.6;KEYS.forEach(function(key){p.traits[key]=cl(p.traits[key]+gauss(r)*rate);});
  if(p.fear>55){p.traits.sensitive=cl(p.traits.sensitive+1);p.traits.regulation=cl(p.traits.regulation-1);}if(p.attach>70)p.traits.regulation=cl(p.traits.regulation+.6);if(a>=16)p.traits.indep=cl(p.traits.indep+(a<=20?1.2:.3));
  if(p.fear>0&&!k.fear140)p.fear=cl(p.fear-1);if(k.fear140){p.fear=Math.max(p.fear,cl(k.fear140));k.fear140=Math.max(0,k.fear140-5);}
  if(!p.dream&&a>=3)p.dream=a<7?U.pick(r,CHILD_DREAMS):DREAMS[p.interests[0]];else if(p.dream&&a>=12&&CHILD_DREAMS.indexOf(p.dream)>=0)p.dream=DREAMS[p.talent.shown?p.talent.domain:p.interests[0]];}
-function resurface(l,k,p,r,log){var a=age(l,k);if(a<16||r()>=.06)return;var m=p.memories.filter(function(x){return !x.resurfaced&&a-x.age>=5&&x.w>=3;}).sort(function(x,y){return y.w-x.w;})[0];if(!m)return;m.resurfaced=true;if(m.tone==='bad'&&!m.healed){rel(k,p,-2,-3,0);log('Trong một lần trò chuyện, '+k.name+' nhắc lại chuyện cũ: "'+m.text+'" Giọng con vẫn còn chút tổn thương.','bad');}else{rel(k,p,1,3,0);log(k.name+' bất ngờ nhắc lại kỷ niệm: "'+m.text+'" Bạn nhận ra con vẫn nhớ.','good');}}
+function resurface(l,k,p,r,log){var a=age(l,k);if(a<16||E.FAMILY100?.distant(l,k)||r()>=.06)return;var m=p.memories.filter(function(x){return !x.resurfaced&&a-x.age>=5&&x.w>=3;}).sort(function(x,y){return y.w-x.w;})[0];if(!m)return;m.resurfaced=true;if(m.tone==='bad'&&!m.healed){rel(k,p,-2,-3,0);log('Trong một lần trò chuyện, '+k.name+' nhắc lại chuyện cũ: "'+m.text+'" Giọng con vẫn còn chút tổn thương.','bad');}else{rel(k,p,1,3,0);log(k.name+' bất ngờ nhắc lại kỷ niệm: "'+m.text+'" Bạn nhận ra con vẫn nhớ.','good');}}
 // Exam failure: the child picks the next step from personality and real family means.
 var FAIL={retake:'ôn thi lại năm sau',vocational:'học nghề hoặc cao đẳng',work:'đi làm ngay để tự lập',private:'học đại học tư thục',gap:'nghỉ một năm để tìm hiểu bản thân',business:'thử buôn bán nhỏ'};
 function failChoice(l,k,r,F){var p=init(l,k),t=p.traits,tr=tier(l,F),b=l.base||1,w={retake:.4+t.diligent/100+t.ambition/150,vocational:.35+(100-t.ambition)/120+t.selfReliance/250,work:.25+t.selfReliance/110+(tr==='low'?.4:0),private:l.money>=b&&tr!=='low'?.25+t.ambition/150:0,gap:.15+t.curious/130,business:.08+t.ambition/180+t.impulse/250+t.indep/250};return U.wpick(r,Object.keys(w),function(x){return w[x]+1e-9;});}
@@ -307,7 +307,36 @@ function requests(l,k){var a=age(l,k),b=l.base||1,p=init(l,k),fav=p.interests[0]
  if(E.WORLD836)all=all.concat(E.WORLD836.familyRows(l,k));
  return all.filter(function(o){return a>=o.min&&a<=o.max&&(!o.show||o.show(l,k,p));});}
 X.menu('children141','Tính cách và chuyện của các con',function(l){return !l||!l.alive?'Cuộc đời đã kết thúc':l.age<16?'Cần đủ 16 tuổi':!(l.kids||[]).some(live)?'Chưa có con':true;},'Mỗi người con có tính cách riêng, thay đổi dần theo thời gian. Tính cách chỉ làm thay đổi khả năng xảy ra, không định sẵn kết quả.',function(l){return (l.kids||[]).filter(live).slice(0,40).map(function(k){var id=X.uid(l,k);return{k:id,l:k.name+' · '+age(l,k)+' tuổi · '+stage(age(l,k)),run:function(l,r){X.next(l,'child141',r,{id:id});}};});},16,'Tình cảm & gia đình');
-X.menu('child141','Hồ sơ và cách đồng hành',function(l){return l&&l.alive?true:'Cuộc đời đã kết thúc';},function(l,d){var k=find(l,(d.arg||{}).id);return k?profile(l,k):'Hoàn cảnh của con đã thay đổi.';},function(l,a){var k=find(l,a.id);if(!k)return[];var p=init(l,k);return requests(l,k).map(function(o){return{k:o.k,l:o.l,why:p.acted[o.k]===l.age?'Đã làm năm nay':!near(k)?'Con đang sống với người giám hộ khác':o.cost&&l.money<o.cost?'Chưa đủ tiền ('+H.money(l,o.cost)+')':true,run:function(l,r,log){var kid=find(l,a.id);if(!kid)return;var q=init(l,kid);if(q.acted[o.k]===l.age||o.cost&&l.money<o.cost)return;q.acted[o.k]=l.age;var res=o.run(l,kid,q,r,log);if(o.cost&&res!==false)H.cash(l,-o.cost,o.k==='support'?'Hỗ trợ con':o.k==='postgradSupport'?'Tiền học cho '+kid.name:'Chi phí cho con');}};});},16);
+X.menu('child141','Hồ sơ và cách đồng hành',function(l){return l&&l.alive?true:'Cuộc đời đã kết thúc';},function(l,d){
+ var k=find(l,(d.arg||{}).id);
+ if(!k)return 'Hoàn cảnh của con đã thay đổi.';
+ var contact=E.FAMILY100?.contactText(l,k);
+ return profile(l,k)+(contact?' '+contact:'');
+},function(l,a){
+ var k=find(l,a.id);if(!k)return[];
+ var p=init(l,k),family=E.FAMILY100,adult=age(l,k)>=18&&family;
+ var rows=requests(l,k).filter(function(o){return !adult||!['listen','repair'].includes(o.k);}).map(function(o){
+  function why(l,k,p){
+   if(p.acted[o.k]===l.age)return 'Đã làm năm nay';
+   if(!near(k))return 'Con đang sống với người giám hộ khác';
+   if(family?.distant(l,k))return 'Con đang giữ khoảng cách. Hãy bắt đầu bằng lời hỏi thăm.';
+   return o.cost&&l.money<o.cost?'Chưa đủ tiền ('+H.money(l,o.cost)+')':true;
+  }
+  return {k:o.k,l:o.l,why:why(l,k,p),run:function(l,r,log){
+   var kid=find(l,a.id);if(!kid)return;
+   var q=init(l,kid);if(why(l,kid,q)!==true)return;
+   q.acted[o.k]=l.age;
+   var res=o.run(l,kid,q,r,log);
+   if(o.cost&&res!==false)H.cash(l,-o.cost,o.k==='support'?'Hỗ trợ con':o.k==='postgradSupport'?'Tiền học cho '+kid.name:'Chi phí cho con');
+  }};
+ });
+ if(adult){
+  var choices=[['listen',family.distant(l,k)?'Gửi lời hỏi thăm, để con trả lời khi sẵn sàng':'Hỏi thăm và lắng nghe con'],['visit','Hẹn gặp hoặc mời con về thăm']];
+  if(family.distant(l,k)||p.trust<55||p.memories.some(function(m){return m.tone==='bad'&&!m.healed;}))choices.push(['repair','Xin lỗi và cho con thời gian']);
+  return choices.map(function(c){return {k:c[0],l:c[1],why:family.canContact(l,k,c[0]),run:function(l,r,log){var kid=find(l,a.id);if(kid)family.adultContact(l,kid,c[0],r,log);}};}).concat(rows);
+ }
+ return rows;
+},16);
 function words(v,hi,mid,lo){return v>=70?hi:v>=40?mid:lo;}
 function postgraduate(l,k,p){
   var level=k.edu===5?6:k.edu===6?7:0,a=age(l,k);

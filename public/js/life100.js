@@ -6,7 +6,7 @@ function hash(s){var n=2166136261;for(var i=0;i<s.length;i++)n=Math.imul(n^s.cha
 function state(l){return l.flags.family100||(l.flags.family100={v:1,serial:0,parents:{},seen:{},lastAuto:-1});}
 function parentAlive(l,side){return !!l.fam[side+'Alive']&&(side!=='f'||!l.fam.noDad)&&!(l.fam.orphan&&l.fam.orphan.adopted==null);}
 function actor(l,type,index,create){if(type==='child')return l.kids[index];if(type==='partner')return l.partner;var s=create?state(l):l.flags.family100;if(!s)return null;return s.parents[index]||(create?s.parents[index]={}:null);}
-function present(l,type,index){if(type==='child'){var k=l.kids[index];return !!k&&k.alive!==false&&Number.isFinite(k.born)&&l.age>=k.born;}if(type==='partner')return !!l.partner&&l.partner.alive!==false&&l.age>=16&&(l.partner.age==null||l.partner.age>=16);return parentAlive(l,index)&&l.age>=6;}
+function present(l,type,index){if(type==='child'){var k=l.kids[index];return !!k&&k.alive!==false&&k.died==null&&Number.isFinite(k.born)&&l.age>=k.born;}if(type==='partner')return !!l.partner&&l.partner.alive!==false&&l.age>=16&&(l.partner.age==null||l.partner.age>=16);return parentAlive(l,index)&&l.age>=6;}
 function info(l,type,index){var a=actor(l,type,index,true),s=state(l);if(!a.family100)a.family100={uid:type+':'+(++s.serial),trust:60,tension:10,lastActivity:-1};return E.NPC?E.NPC.relView(l,a):a.family100;} // GĐ2: tin cậy của con đọc/ghi ở persona141
 function name(l,type,index){return type==='child'?l.kids[index].name:type==='partner'?l.partner.name:(index==='m'?'mẹ ':'bố ')+l.fam[index+'Name'];}
 function display(d){return d.type==='parent'?d.index==='m'?'mẹ':'bố':d.name;}
@@ -21,6 +21,72 @@ function resetMenu(l,type){if(l.flags.actAt)delete l.flags.actAt[type==='child'?
 function queue(l,id,arg){var d=E.DEC[id].make(l,H.rf(l),arg);d.manual=true;l.pending.unshift(d);}
 function stress(l,n){if(l.mind)l.mind.stress=U.clamp(l.mind.stress+n,0,100);}
 function delta(l,d,trust,tension){var s=info(l,d.type,d.index),a=actor(l,d.type,d.index);s.trust=U.clamp(s.trust+trust,0,100);s.tension=U.clamp(s.tension+tension,0,100);if(d.type==='child'||d.type==='partner')a.close=U.clamp((a.close==null?d.type==='child'?70:60:a.close)+trust*.65,0,100);}
+function adult(l,k){return !!k&&l.age-k.born>=18;}
+function contact(k){return k.family100&&k.family100.contact972;}
+function distant(l,k){return adult(l,k)&&!!contact(k)?.distant;}
+function contactText(l,k){
+ if(!distant(l,k))return '';
+ return contact(k).steps>=2?'Hai bên đã bắt đầu nối lại liên lạc. Con vẫn muốn đi từng bước.':'Con muốn giữ khoảng cách: chỉ trao đổi ngắn và chủ động báo những tin quan trọng.';
+}
+function reviewContact(l,r,log){
+ if(!free(l))return;
+ targets(l,'child').forEach(function(i){
+  var k=l.kids[i];
+  if(!adult(l,k))return;
+  var q=contact(k),p=k.persona141;
+  var strained=(p?.trust??k.family100?.trust??k.close??60)<46||k.close<42||k.family100?.tension>=55||p?.fear>=50;
+  if(!q&&!strained)return;
+  q=q||(info(l,'child',i).contact972={});
+  if(q.checkedAt===l.age)return;
+  var previous=q.checkedAt;
+  q.checkedAt=l.age;
+  if(q.distant)return;
+  q.strained=strained?(previous===l.age-1?(q.strained||0)+1:1):0;
+  if(q.strained<2)return;
+  q.distant=true;
+  q.steps=0;
+  q.apologyAt=null;
+  log(k.name+' bắt đầu ít liên lạc và muốn có khoảng riêng. Bạn có thể hỏi thăm khi con sẵn sàng.','neutral');
+ });
+}
+function canContact(l,k,kind){
+ var i=l.kids.indexOf(k);
+ if(!adult(l,k)||!free(l)||!present(l,'child',i)||!unused(l,'child',i))return 'Chưa thể liên lạc lúc này hoặc đã hỏi thăm trong năm';
+ if(kind==='visit'&&(k.jail>l.age-k.born||k.abroadStudy&&k.uniUntil||l.abroad&&!l.abroad.perm))return 'Hiện chỉ có thể hỏi thăm từ xa';
+ if(kind==='repair'&&distant(l,k)&&contact(k).apologyAt!=null)return 'Bạn đã xin lỗi. Hãy cho con thời gian và hỏi thăm khi phù hợp.';
+ return true;
+}
+function adultContact(l,k,kind,r,log){
+ if(canContact(l,k,kind)!==true)return false;
+ var i=l.kids.indexOf(k),d=snapshot(l,'child',i),s=info(l,'child',i),q=contact(k);
+ if(!distant(l,k)&&kind!=='repair'&&kind!=='visit')return finish(l,d,kind,r,log,false);
+ s.lastActivity=l.age;
+ resetMenu(l,'child');
+ if(distant(l,k)&&kind==='visit'&&q.steps<2){
+  log(k.name+' từ chối gặp lần này và xin thêm thời gian. Bạn để con tự chọn lúc sẵn sàng.','neutral');
+  return true;
+ }
+ var p=k.persona141;
+ if(kind==='repair'){
+  if(q?.distant)q.apologyAt=l.age;
+  delta(l,d,5,-8);
+  if(p)p.fear=U.clamp(p.fear-3,0,100);
+  log('Bạn nhận phần trách nhiệm của mình và xin lỗi '+k.name+'. Con nghe, nhưng muốn có thời gian để xem mọi chuyện thay đổi thế nào.','neutral');
+ }else{
+  delta(l,d,kind==='visit'?5:4,-5);
+  log(kind==='visit'?k.name+' đồng ý gặp một lúc. Hai bên chọn nói chuyện nhẹ nhàng trước.':k.name+' đáp lại lời hỏi thăm. Bạn lắng nghe và để con tự chọn những gì muốn kể.','neutral');
+ }
+ if(!q?.distant)return true;
+ q.steps++;
+ if(q.steps>=2&&s.trust>=52&&k.close>=44&&s.tension<55&&(!p||p.fear<50)){
+  q.distant=false;
+  q.strained=0;
+  var memory=p?.memories.slice().reverse().find(function(m){return m.tone==='bad'&&!m.healed;});
+  if(memory&&q.apologyAt!=null)memory.healed=true;
+  log(k.name+' bắt đầu chủ động liên lạc trở lại sau những lần hai bên nói chuyện và tôn trọng giới hạn của nhau.','good');
+ }
+ return true;
+}
 function response(l,d,r,log){var s=info(l,d.type,d.index),trait=style(l,d.type,d.index),open=['coi_mo','am_ap','hai_huoc','direct'].includes(trait)?.12:['nong_tinh','gia_truong','private','quiet'].includes(trait)?-.1:['sensitive','anxious'].includes(trait)?-.04:0,chance=U.clamp(.3+s.trust*.004-s.tension*.002+open,.15,.85);var kid=d.type==='parent'&&l.age<12;if(r()<chance){delta(l,d,3,-6);log(kid?U.cap(display(d))+' nghe bạn nói hết, dịu giọng lại và hứa lần sau sẽ để ý hơn.':U.cap(display(d))+' sẵn lòng trao đổi thêm; hai bên hiểu rõ nhau hơn một chút.','good');return true;}delta(l,d,0,1);log(kid?U.cap(display(d))+' vẫn giữ ý mình. Bạn hơi buồn, nhưng ít ra đã nói ra được.':U.cap(display(d))+' chưa muốn nói tiếp. Bạn đã nêu mong muốn của mình, nhưng chuyện này vẫn cần thời gian.','neutral');return false;}
 function finish(l,d,kind,r,log,automatic){if(!valid(l,d)||!automatic&&!unused(l,d.type,d.index))return false;var writer=log,scene=cases.find(function(c){return c.id===d.caseId;}),head=scene?heading(scene,l):d.type==='child'?'Dành thời gian cho con':d.type==='parent'?'Trò chuyện với người thân':'Chuyện của hai người';log=function(t,k){writer(head+' · '+display(d)+': '+t,k);};d.done=true;var s=info(l,d.type,d.index);if(!automatic){s.lastActivity=l.age;resetMenu(l,d.type);}else state(l).seen[d.caseId+':'+d.uid]=l.age;
  if(kind==='listen'){delta(l,d,2,-2);response(l,d,r,log);H.fx(l,{hap:1,soc:1});stress(l,-1);}
@@ -32,11 +98,13 @@ function finish(l,d,kind,r,log,automatic){if(!valid(l,d)||!automatic&&!unused(l,
  return true;}
 // Child-specific activities: every living child gets one turn each year.
 SC('family100_children',{title:'Giao lưu với con cái',valid:function(l){return free(l)&&l.age>=16&&targets(l,'child').some(function(i){return unused(l,'child',i);});},prep:function(l){return {at:l.age};},text:function(l){return 'Bạn muốn dành thời gian cho người con nào? Mỗi người con có tuổi, hoàn cảnh và mức độ gắn bó riêng.';},opts:Array.from({length:8},function(_,i){return {k:'kid_'+i,l:function(l){var k=l.kids[i];return k?k.name+' · '+(l.age-k.born)+' tuổi · '+(E.kidWhere?E.kidWhere(l,k):''):'';},req:function(l){return present(l,'child',i)&&unused(l,'child',i);},run:function(l,r,log){queue(l,'family100_child_time',snapshot(l,'child',i));}};}).concat([{k:'close',l:'Để dịp khác',run:function(l){resetMenu(l,'child');}}])});
-SC('family100_child_time',{title:function(l,d){return 'Dành thời gian cho '+display(d);},prep:function(l,r,arg){return arg||snapshot(l,'child',targets(l,'child')[0]);},valid:function(l,d){return d&&d.uid?valid(l,d)&&unused(l,'child',d.index):free(l)&&targets(l,'child').length>0;},text:function(l,d){var k=l.kids[d.index],age=l.age-k.born;return display(d)+' hiện '+age+' tuổi'+(E.kidWhere?' · '+E.kidWhere(l,k):'')+'. '+summary(l,'child',d.index)+'. '+(age<3?'Bé cần được chăm sóc và tương tác vừa sức, chưa thể tham gia một cuộc đối thoại như người lớn.':age<12?'Bạn có thể cùng chơi, nghe con kể chuyện hoặc giúp con thử điều con muốn học.':age<18?'Con đang cần cả sự hỗ trợ lẫn khoảng riêng. Bạn có thể hỏi, nhưng không tự quyết thay mọi mong muốn của con.':'Con đã trưởng thành; bạn có thể đề nghị hỗ trợ, còn các quyết định riêng vẫn thuộc về con.');},opts:[
- {k:'care',l:function(l,d){return l.age-l.kids[d.index].born<3?'Chơi ú òa, đọc sách tranh và chăm bé':'Cùng làm một việc con thích';},req:function(l,d){return valid(l,d)&&localChild(l,l.kids[d.index]);},run:function(l,r,log,d){finish(l,d,'care',r,log);}},
- {k:'listen',l:function(l,d){return localChild(l,l.kids[d.index])?'Hỏi thăm và lắng nghe con':'Liên lạc qua người chăm sóc / gọi, nhắn tin hỏi thăm';},run:function(l,r,log,d){if(l.age-l.kids[d.index].born<3){if(valid(l,d)){d.done=true;info(l,'child',d.index).lastActivity=l.age;resetMenu(l,'child');delta(l,d,2,-1);log('Bạn liên lạc với người đang chăm '+display(d)+' để hỏi lịch ăn ngủ và nhu cầu của bé.');}}else finish(l,d,'listen',r,log);}},
- {k:'boundary',l:'Nói về ranh giới và phần mình có thể hỗ trợ',req:function(l,d){return valid(l,d)&&l.age-l.kids[d.index].born>=12;},run:function(l,r,log,d){finish(l,d,'boundary',r,log);}},
- {k:'support',l:'Hỗ trợ một nhu cầu đã trao đổi',h:function(l,d){return d.fee>0?H.money(l,d.fee):'';},req:function(l,d){return valid(l,d)&&d.fee>0&&l.money>=d.fee&&l.age-l.kids[d.index].born>=6;},run:function(l,r,log,d){finish(l,d,'support',r,log);}},
+SC('family100_child_time',{title:function(l,d){return 'Dành thời gian cho '+display(d);},prep:function(l,r,arg){return arg||snapshot(l,'child',targets(l,'child')[0]);},valid:function(l,d){return d&&d.uid?valid(l,d)&&unused(l,'child',d.index):free(l)&&targets(l,'child').length>0;},text:function(l,d){var k=l.kids[d.index],age=l.age-k.born;return display(d)+' hiện '+age+' tuổi'+(E.kidWhere?' · '+E.kidWhere(l,k):'')+'. '+summary(l,'child',d.index)+'. '+(age<3?'Bé cần được chăm sóc và tương tác vừa sức, chưa thể tham gia một cuộc đối thoại như người lớn.':age<12?'Bạn có thể cùng chơi, nghe con kể chuyện hoặc giúp con thử điều con muốn học.':age<18?'Con đang cần cả sự hỗ trợ lẫn khoảng riêng. Bạn có thể hỏi, nhưng không tự quyết thay mọi mong muốn của con.':contactText(l,k)||'Con đã trưởng thành. Bạn có thể hỏi thăm, còn các quyết định riêng vẫn thuộc về con.');},opts:[
+ {k:'care',l:function(l,d){return l.age-l.kids[d.index].born<3?'Chơi ú òa, đọc sách tranh và chăm bé':'Cùng làm một việc con thích';},req:function(l,d){return valid(l,d)&&!adult(l,l.kids[d.index])&&localChild(l,l.kids[d.index]);},run:function(l,r,log,d){finish(l,d,'care',r,log);}},
+ {k:'listen',l:function(l,d){var k=l.kids[d.index];return distant(l,k)?'Gửi lời hỏi thăm, để con trả lời khi sẵn sàng':adult(l,k)||localChild(l,k)?'Hỏi thăm và lắng nghe con':'Liên lạc qua người chăm sóc / gọi, nhắn tin hỏi thăm';},run:function(l,r,log,d){var k=l.kids[d.index];if(adult(l,k)){adultContact(l,k,'listen',r,log);return;}if(l.age-k.born<3){if(valid(l,d)){d.done=true;info(l,'child',d.index).lastActivity=l.age;resetMenu(l,'child');delta(l,d,2,-1);log('Bạn liên lạc với người đang chăm '+display(d)+' để hỏi lịch ăn ngủ và nhu cầu của bé.');}}else finish(l,d,'listen',r,log);}},
+ {k:'visit',l:'Hẹn gặp hoặc mời con về thăm',req:function(l,d){return valid(l,d)&&canContact(l,l.kids[d.index],'visit')===true;},run:function(l,r,log,d){adultContact(l,l.kids[d.index],'visit',r,log);}},
+ {k:'repair',l:'Xin lỗi và cho con thời gian',req:function(l,d){return valid(l,d)&&adult(l,l.kids[d.index])&&(distant(l,l.kids[d.index])||info(l,'child',d.index).trust<55)&&canContact(l,l.kids[d.index],'repair')===true;},run:function(l,r,log,d){adultContact(l,l.kids[d.index],'repair',r,log);}},
+ {k:'boundary',l:'Nói về ranh giới và phần mình có thể hỗ trợ',req:function(l,d){return valid(l,d)&&l.age-l.kids[d.index].born>=12&&!distant(l,l.kids[d.index]);},run:function(l,r,log,d){finish(l,d,'boundary',r,log);}},
+ {k:'support',l:'Hỗ trợ một nhu cầu đã trao đổi',h:function(l,d){return d.fee>0?H.money(l,d.fee):'';},req:function(l,d){return valid(l,d)&&d.fee>0&&l.money>=d.fee&&l.age-l.kids[d.index].born>=6&&!distant(l,l.kids[d.index]);},run:function(l,r,log,d){finish(l,d,'support',r,log);}},
  {k:'close',l:'Chưa sắp xếp được, để dịp khác',run:function(l,r,log,d){if(valid(l,d)){resetMenu(l,'child');}}}
  ]});
 SC('family100_parents',{title:'Trò chuyện với bố mẹ',valid:function(l){return free(l)&&targets(l,'parent').some(function(i){return unused(l,'parent',i);});},prep:function(l){return {at:l.age};},text:function(l){return 'Mỗi người có cách bày tỏ tình cảm khác nhau. Bạn muốn nói chuyện với ai?';},opts:['m','f'].map(function(side){return{k:side,l:function(l){return U.cap(display({type:'parent',index:side}))+' · '+(E.PARENT_TRAITS[l.fam[side+'Trait']]||{n:'chưa rõ tính cách'}).n;},req:function(l){return present(l,'parent',side)&&unused(l,'parent',side);},run:function(l,r,log){queue(l,'family100_parent_time',snapshot(l,'parent',side));}};}).concat([{k:'close',l:'Để dịp khác',run:function(l){resetMenu(l,'parent');}}])});
@@ -159,5 +227,6 @@ E.migrateExt=function(l){
    (scene.opts||[]).forEach(function(o){o.l=refresh(o.l);o.h=refresh(o.h);});
  });
 };
-E.FAMILY100={cases:cases,free:free,targets:targets,info:info,style:style,summary:summary,valid:valid,localChild:localChild};
+E.HOOKS.year.push(reviewContact);
+E.FAMILY100={cases:cases,free:free,targets:targets,info:info,style:style,summary:summary,valid:valid,localChild:localChild,distant:distant,contactText:contactText,canContact:canContact,adultContact:adultContact};
 })(globalThis.G);

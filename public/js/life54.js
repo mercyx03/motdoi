@@ -42,6 +42,7 @@
   ].map(function (x) { return { id:x[0], min:x[1], max:x[2], title:x[3], text:x[4], gentle:x[5], paid:x[6], cost:x[7], skill:x[8] }; });
   function allowed(l, k, c) {
     var a = age(l,k); if (a<c.min || a>c.max) return false;
+    if (E.FAMILY100?.distant(l,k)) return false;
     if (c.id==='remote') return !home(l,k);
     return home(l,k) && (c.skill!=='study' || a>=18 || school(l,k));
   }

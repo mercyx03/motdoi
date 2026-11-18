@@ -2031,8 +2031,11 @@
       if (!marriageHandled && ka >= 23 && ka <= 35 && !k.married && !(k.future126 && k.future126.match) && r() < 0.15) { k.married = true; log('Con ' + k.name + ' lập gia đình.', 'good'); H.cash(life, -life.base * 0.25, 'Lo đám cưới cho con'); st.hap += 4; H.mem(life, 'Dắt tay ' + k.name + ' trong ngày cưới của con.', 4); }
       if (k.married && ka <= 45 && k.kids < 3 && r() < 0.14) {
         k.kids++; life.grand++;
-        log((life.grand === 1 ? 'Lên chức ông bà: ' : 'Có thêm cháu: ') + 'con ' + k.name + ' sinh ' + (r() < 0.5 ? 'bé trai' : 'bé gái') + '.', 'good'); st.hap += 5;
-        if (life.grand === 1) H.mem(life, 'Lần đầu bế cháu nội ngoại — tiếng gọi "ông bà" đầu tiên.', 4);
+        var grandchild = r() < 0.5 ? 'bé trai' : 'bé gái', distant = E.FAMILY100?.distant(life, k);
+        log(distant ? k.name + ' gửi tin cho bạn biết gia đình vừa đón một ' + grandchild + '.' :
+          (life.grand === 1 ? 'Lên chức ông bà: ' : 'Có thêm cháu: ') + 'con ' + k.name + ' sinh ' + grandchild + '.', 'good');
+        st.hap += 5;
+        if (life.grand === 1 && !distant) H.mem(life, 'Lần đầu bế cháu nội ngoại — tiếng gọi "ông bà" đầu tiên.', 4);
       }
       if (ka >= 45 && k.kids > 0 && life.ggrand < 6 && life.flags.ggAt !== a && r() < 0.05) { life.ggrand++; life.flags.ggAt = a; log(life.ggrand === 1 ? 'Có chắt — bốn thế hệ cùng chung một nhà.' : 'Có thêm chắt, nay đã ' + life.ggrand + ' đứa chắt.', 'good'); st.hap += 4; }
     });

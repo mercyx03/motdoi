@@ -71,7 +71,16 @@ function signed(age, rep, years, seed) {
   const { l, s } = signed(27, 90, 3, 17); l.age = s.contract.end - l.birthYear; F.annual(l, () => .5, say(l));
   const d = l.pending.find(x => x.id === 'footballFree954'); l.pending = [d]; E.resolve(l, 'wait');
   ok(s.stage === 'free' && s.freeYears954 === 1, 'chờ một mùa: vẫn tự do và đếm số mùa');
-  l.age++; F.annual(l, () => .5, say(l)); ok(l.pending.some(x => x.id === 'footballFree954'), 'năm sau lại được hỏi');
+  const shown = d.data.offers.map(id => s.offers.find(o => o.id === id).club);
+  const saved = JSON.parse(JSON.stringify(l)); E.migrateExt(saved);
+  l.age++; F.annual(l, () => .999, say(l));
+  ok(!l.pending.some(x => x.id === 'footballFree954') && s.freeYears954 === 2, 'mùa không có đề nghị: tự tập và đếm mùa, không mở hộp thoại');
+  ok(!Object.values(s.negotiations897 || {}).includes(l.birthYear + l.age), 'đại diện không dùng lượt liên hệ của người chơi');
+  saved.age++; F.annual(saved, () => .06, say(saved));
+  const fresh = saved.pending.find(x => x.id === 'footballFree954');
+  ok(fresh && fresh.data.offers.every(id => !shown.includes(F.peek(saved).offers.find(o => o.id === id).club)), 'bản lưu giữ danh sách CLB đã báo và chỉ mở lại khi có lời mời khác');
+  saved.pending = [{ id: 'footballFree954', data: { offers: [] } }];
+  E.migrateExt(saved); ok(!saved.pending.length, 'bỏ hộp thoại trống từ bản lưu cũ');
   const young = player('VN', 16, 40, 18); young.s.stage = 'free'; young.l.age = 16; F.annual(young.l, () => .5, say(young.l)); ok(!young.l.pending.some(x => x.id === 'footballFree954'), 'dưới 17 tuổi không vào thị trường tự do');
 }
 // 5. Tự động chơi qua nhiều năm: không còn khoảng trống dài không câu lạc bộ
