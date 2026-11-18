@@ -1454,6 +1454,7 @@
     if (E.ERA920) E.ERA920.refresh(life);
     if (E.TRANSIT907 && E.TRANSIT907.visit(life) && E.TRANSIT907.visit(life).at < life.age) E.TRANSIT907.restore(life);
     if (!life.alive) return life.pending;
+    E.ERA969?.prepareAfghanSchool(life);
     // Bản lưu cũ có thể còn lựa chọn của năm trước đã hết hạn: bỏ đi thay vì bắt người chơi bấm rồi báo "không còn phù hợp".
     if (life.pending.length) life.pending = life.pending.filter(function (d) { return !DEC[d.id] || !DEC[d.id].valid || DEC[d.id].valid(life, d.data || {}); });
     if (life.pending.length) return life.pending;
@@ -1518,6 +1519,10 @@
       }
     }
     // học hành
+    if (E.ERA969?.afghanStudyDue(life)) {
+      add('afghanStudy984');
+      if (q.some(function (d) { return d.id === 'afghanStudy984'; })) life.flags.afghanStudy984.notified = true;
+    }
     var schoolAge = E.CTX945 ? E.CTX945.schoolAge(life) : a;
     var schoolAgenda = E.CTX945?.schoolAgenda(life);
     if (schoolAgenda) add('ctx945_event', schoolAgenda);
@@ -1702,7 +1707,7 @@
     var x = a.avail ? a.avail(l) : true;
     return x === true || x === undefined ? true : (x || 'Chưa thể làm lúc này');
   }
-  function actions(l) { return ACT.filter(function(a){return (!a.onlyCountry||a.onlyCountry===resCode(l))&&(!E.ERA902||!E.ERA902.actionBlocked(l,a));}).map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
+  function actions(l) { return ACT.filter(function(a){return (!a.onlyCountry||a.onlyCountry===resCode(l))&&(!a.showFor||a.showFor(l))&&(!E.ERA902||!E.ERA902.actionBlocked(l,a));}).map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
   function act(l, id) {
     var a = ACT.filter(function (x) { return x.id === id; })[0];
     if (!a || actAvail(l, a) !== true) return null;
@@ -1954,6 +1959,7 @@
     }
 
     // ---- Học hành ----
+    if (life.school) E.ERA969?.pauseAfghanSchool(life, life.school, log);
     if (a === (E.england829 && E.england829(life) ? 5 : 6)) {
       if (E.england829 && E.england829(life) || life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : (E.england829 && E.england829(life) ? 'Bắt đầu vào học Year 1 (Primary School).' : 'Bắt đầu đi học tiểu học.'), 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
       else { life.school = null; log('Không được đến trường — nhà quá nghèo, trường lại xa.', 'bad'); st.hap -= 4; }
@@ -1963,7 +1969,8 @@
     if (life.school && !missedSchool) life.yearsInSchool++;
     if (!missedSchool && (E.CTX945 ? E.CTX945.schoolAge(life) : a) === 11 && life.school === 'primary') {
       life.edu = 1;
-      if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log(E.england829 && E.england829(life) ? 'Hoàn thành Primary School (Year 6), chuyển lên Secondary School (Year 7).' : ('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.'), 'neutral'); }
+      if (E.ERA969?.pauseAfghanSchool(life, 'lower', log, true)) log('Bạn hoàn thành chương trình tiểu học.', 'good');
+      else if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log(E.england829 && E.england829(life) ? 'Hoàn thành Primary School (Year 6), chuyển lên Secondary School (Year 7).' : ('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.'), 'neutral'); }
       else { life.school = null; log(f.q <= 2 ? 'Nhà nghèo, học hết tiểu học thì phải nghỉ ở nhà phụ giúp bố mẹ.' : life.urban ? 'Học lực yếu, thi không đỗ vào lớp 6 trường công, gia đình đành cho nghỉ học.' : 'Trường cấp hai ở xa, đường sá cách trở, học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
     if (!missedSchool && life.school && life.schoolEnd != null && !(E.ERA969&&E.ERA969.learning(life,life)) && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường

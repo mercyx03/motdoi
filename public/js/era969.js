@@ -100,8 +100,93 @@
    if(p.id==='self')l.flags.needJob=true;
   }
  }
+ function formalSchoolReason(l,kind,person,destination){
+  if((destination||cc(person?relativeLife(l,person):l))!=='AF'||(person?.sex||l.sex)!=='F')return true;
+  var y=year(l);
+  if(y>=2021&&['lower','upper','priv','voc'].includes(kind))return 'Từ tháng 9/2021, nữ sinh tại Afghanistan chưa được trở lại học chính quy sau lớp 6.';
+  if(y>=2022&&['uni','abroad','post','phd','police'].includes(kind))return 'Từ tháng 12/2022, phụ nữ tại Afghanistan bị đình chỉ tiếp cận giáo dục đại học.';
+  return true;
+ }
+ function pauseAfghanSchool(l,kind,log,afterYear){
+  if(formalSchoolReason(l,kind)===true||kind==='voc'&&learning(l,l))return false;
+  var s=l.flags.afghanStudy984||(l.flags.afghanStudy984={years:0}),a=l.age+(afterYear?1:0);
+  if(!s.paused){
+   var calendar=C.schoolAge(l)+(afterYear?1:0);
+   s.paused={kind:kind,at:year(l),remaining:Math.max(1,(l.schoolEnd||(kind==='upper'||kind==='priv'?a+3:a+1))-a)};
+   delete s.notified;
+   if(kind==='lower')s.paused.calendarAge=Math.min(15,calendar);
+   log(formalSchoolReason(l,kind)+' Việc học tạm dừng, phần đã hoàn thành được giữ trong hồ sơ.', 'neutral');
+  }
+  l.school=null;l.schoolEnd=null;
+  return true;
+ }
+ function prepareAfghanSchool(l){
+  if(l.school){
+   pauseAfghanSchool(l,l.school,function(t,k){l.log.push({a:l.age,y:year(l),t:t,k:k});});
+  }
+  l.pending.forEach(function(d){
+   if(!['hs','uni'].includes(d.id))return;
+   var why=afghanPolicyForDecision(l,d.id);
+   if(why!==true&&!d.opts.some(function(o){return o.k==='afghanStudy984';}))presentBlockedStudy(d,d.id,why);
+  });
+ }
+ function afghanStudyKind(l){
+  return l.flags.afghanStudy984?.paused?.kind||(l.edu>=3?'uni':'upper');
+ }
+ function afghanStudyAvailable(l){
+  var paused=l.flags.afghanStudy984?.paused;
+  return !!(paused||!l.school&&l.age>=12&&formalSchoolReason(l,afghanStudyKind(l))!==true);
+ }
+ function afghanStudyDue(l){
+  var s=l.flags.afghanStudy984;
+  return !!(s?.paused&&s.paused.at!=null&&!s.notified&&formalSchoolReason(l,s.paused.kind)!==true);
+ }
+ function studyInformally(l,key,log){
+  if(l.school||formalSchoolReason(l,afghanStudyKind(l))===true)return;
+  var s=l.flags.afghanStudy984||(l.flags.afghanStudy984={years:0}),y=year(l);
+  if(s.lastStudy===y)return;
+  if(key==='community'&&C.of(l).hard>=3||key==='remote'&&!remoteAfghanStudy(l))return;
+  s.lastStudy=y;s.years=(s.years||0)+1;s.lastMethod=key;
+  H.fx(l,key==='community'?{kno:4,soc:2}:key==='remote'?{kno:3,hap:1}:{kno:2});
+  log('Bạn '+(key==='community'?'học cùng nhóm cộng đồng':key==='remote'?'tiếp tục học từ xa':'tự học qua tài liệu')+' và giữ được nhịp học. Kết quả năm này được lưu trong hồ sơ học bổ trợ.', 'good');
+ }
+ function remoteAfghanStudy(l){
+  return year(l)>=2023&&l.urban&&(E.ERA920.net('AF',year(l))||0)>=5&&C.of(l).hard<3;
+ }
+ function resumeAfghanSchool(l,r,log){
+  var s=l.flags.afghanStudy984, p=s?.paused, recovery=currentRecovery(l);
+  if(!p||l.school||formalSchoolReason(l,p.kind)!==true||!C.canResumeSchool(l)||recovery&&!housing(l,recovery))return;
+  if(['lower','upper','priv','voc'].includes(p.kind)){
+   l.school=p.kind;
+   if(p.calendarAge!=null){l.flags.schoolDelay982=Math.max(0,l.age-p.calendarAge);l.schoolEnd=null;}
+   else l.schoolEnd=l.age+p.remaining;
+   log('Gia đình thu xếp để bạn học tiếp bậc cũ tại nơi đang sống. Việc học bổ trợ đã giúp bạn duy trì kiến thức.', 'good');
+  }else{
+   if(academicReason(l)!==true||E.DEC.uni.valid&&!E.DEC.uni.valid(l,{}))return;
+   if(!X.next(l,'uni',r))return;
+   log('Bạn có thể nộp hồ sơ tại nơi đang sống. Trường sẽ xét điều kiện nhập học theo lộ trình hiện có.', 'neutral');
+  }
+  delete s.paused;
+ }
+ X.menu('afghanStudy984','Tiếp tục việc học bị gián đoạn',function(l){return afghanStudyAvailable(l)?X.reason(l,11):'Chưa có chương trình bị gián đoạn';},function(l){
+  var why=formalSchoolReason(l,afghanStudyKind(l)),s=l.flags.afghanStudy984;
+  return (why===true?'Ở nơi hiện tại bạn có thể hỏi về việc học tiếp.':why+' Bạn có thể duy trì việc học qua các lựa chọn phù hợp với điều kiện gia đình.')+(s?.years?' Đã học bổ trợ '+s.years+' năm.':'');
+ },function(l){
+  if(formalSchoolReason(l,afghanStudyKind(l))===true){
+   return [{k:'resume',l:'Thu xếp học tiếp tại nơi đang sống',why:!l.school&&C.canResumeSchool(l)&&(!currentRecovery(l)||housing(l,currentRecovery(l)))?true:'Cần có chỗ ở ổn định và chương trình đang tiếp nhận',run:resumeAfghanSchool}];
+  }
+  var available=l.flags.afghanStudy984?.lastStudy!==year(l),out=[];
+  function add(key,label){out.push({k:key,l:label,why:available?true:'Đã học bổ trợ trong năm này',run:function(l,r,log){studyInformally(l,key,log);}});}
+  if(C.of(l).hard<3)add('community','Tham gia nhóm học cộng đồng');
+  if(remoteAfghanStudy(l))add('remote','Theo bài học từ xa');
+  add('materials','Tự học qua tài liệu đang có');
+  return out;
+ },11,'Học tập');
+ E.ACT.find(function(a){return a.id==='afghanStudy984';}).showFor=afghanStudyAvailable;
  function academicReason(l,person,destination){
   if(learning(l,person||l))return 'Đang theo khóa học nghề';
+  var policy=formalSchoolReason(l,'uni',person,destination);
+  if(policy!==true)return policy;
   var v=relativeLife(l,person),y=year(l);if(destination&&G.W.BY[destination])v=Object.assign({},v,{country:destination,abroad:null});
   if(cc(v)==='CN'&&y>=1966&&y<=1976)return 'Tuyến tuyển sinh đại học thông thường đang gián đoạn';
   if(C.of(v).hard>=3)return 'Cơ sở đào tạo chưa thể duy trì tuyển sinh trong hoàn cảnh hiện tại';
@@ -109,10 +194,39 @@
  }
  var entry=E.EDUCATION54.entryReason;
  E.EDUCATION54.entryReason=function(l,u){var code=u&&String(u.id).slice(0,2),why=academicReason(l,null,code);return why!==true?why:entry&&entry.apply(this,arguments);};
- ['uni','post','major'].forEach(function(id){var d=E.DEC[id];if(!d)return;var make=d.make,apply=d.apply;
-  d.make=function(l){var out=make.apply(this,arguments);if(academicReason(l)!==true&&out&&out.opts)out.opts=out.opts.filter(function(o){return id==='uni'?!/^uni_/.test(o.k):id==='post'?o.k!=='yes':false;});return out;};
-  d.apply=function(l,d,key,r,log){if(academicReason(l)!==true&&(id==='major'||id==='post'&&key==='yes'||id==='uni'&&/^uni_/.test(key))){log('Lộ trình học này chưa thể tiếp nhận hồ sơ tại nơi và năm đang sống.','neutral');return;}return apply.apply(this,arguments);};
+ function afghanPolicyForDecision(l,id){return formalSchoolReason(l,id==='hs'?'upper':'uni');}
+ function allowedAfghanStudyChoice(id,key){
+  return key==='afghanStudy984'||['cancel','close','close872','work','home'].includes(key)||(id==='uni'&&key==='abroad');
+ }
+ function presentBlockedStudy(out,id,why){
+  out.text=why;
+  out.opts=out.opts.filter(function(o){return allowedAfghanStudyChoice(id,o.k);});
+  if(id!=='major')out.opts.unshift({k:'afghanStudy984',l:'Xem cách tiếp tục học phù hợp'});
+ }
+ ['hs','uni','post','major','phd','uniFail'].forEach(function(id){var d=E.DEC[id];if(!d)return;var make=d.make,apply=d.apply,auto=d.auto;
+  d.make=function(l){
+   var out=make.apply(this,arguments),why=afghanPolicyForDecision(l,id);
+   if(why!==true)presentBlockedStudy(out,id,why);
+   else if(['uni','post','major'].includes(id)&&academicReason(l)!==true&&out?.opts)out.opts=out.opts.filter(function(o){return id==='uni'?!/^uni_/.test(o.k):id==='post'?o.k!=='yes':false;});
+   return out;
+  };
+  d.apply=function(l,d,key,r,log){
+   var why=afghanPolicyForDecision(l,id);
+   if(why!==true&&(key==='afghanStudy984'||!allowedAfghanStudyChoice(id,key))){
+    if(id==='hs')pauseAfghanSchool(l,'upper',log);
+    if(E.DEC.afghanStudy984.valid(l,{}))X.next(l,'afghanStudy984',r);
+    return;
+   }
+   if(academicReason(l)!==true&&(id==='major'||id==='post'&&key==='yes'||id==='uni'&&/^uni_/.test(key))){log('Lộ trình học này chưa thể tiếp nhận hồ sơ tại nơi và năm đang sống.','neutral');return;}
+   return apply.apply(this,arguments);
+  };
+  d.auto=function(l,decision,r){return decision.opts.some(function(o){return o.k==='afghanStudy984';})?'afghanStudy984':auto.apply(this,arguments);};
   if(id==='major'){var valid=d.valid;d.valid=function(l){return academicReason(l)===true&&(!valid||valid.apply(this,arguments));};}
+ });
+ Object.keys(E.DEC).filter(function(id){return /^(study_wishes54|postgraduate108(?:_|$)|phd106(?:_|$)|pg106_defense$)/.test(id);}).forEach(function(id){
+  var d=E.DEC[id],valid=d.valid,apply=d.apply;
+  d.valid=function(l){return formalSchoolReason(l,'uni')===true&&(!valid||valid.apply(this,arguments));};
+  d.apply=function(l){if(formalSchoolReason(l,'uni')===true)return apply.apply(this,arguments);};
  });
  X.menu('vocational969','Đường học nghề theo nơi và năm',function(l){return X.reason(l,15);},function(l,d){var p=learner(l,d.arg&&d.arg.id);return p?p.name+' · '+p.age+' tuổi · năm '+year(l)+'. Chọn lộ trình phù hợp bậc học đã hoàn thành. Thời gian học, học phí và đánh giá được ghi trong hồ sơ khóa dài hạn.':'Người học không còn trong hồ sơ.';},function(l,a){var p=learner(l,a.id);if(!p)return[];return routes.filter(function(r){return !!route(l,r.id,p);}).map(function(r){return{k:r.id,l:r.name+' · '+r.years+' năm',h:H.money(l,l.base*r.rate*r.years),why:courseReason(l,p.id,r.id),run:function(l,rng,log){startCourse(l,p.id,r.id,rng,log);}};});},15,'Học tập');
 
@@ -128,10 +242,12 @@
    school.regional982=true;
   }
   var state=Hist.st(l),serial=state.recoverySerial969=(state.recoverySerial969||0)+1;
-  var q=o.recovery969={id:l.id+':recovery:'+year(l)+':'+serial,from:rf&&!rf.back&&!rf.stay&&(rf.country||l.country)===cc(l)?rf.from:residentCity(l),country:cc(l),at:Number.isFinite(o.y0)?o.y0:year(l),history:[],school:school};
+  var origin=o.origin984;
+  var q=o.recovery969={id:l.id+':recovery:'+year(l)+':'+serial,from:origin?origin.city:rf&&!rf.back&&!rf.stay&&(rf.country||l.country)===cc(l)?rf.from:residentCity(l),country:origin?.country||cc(l),at:Number.isFinite(o.y0)?o.y0:year(l),history:[],school:school};
   if(school){l.school=null;l.schoolEnd=null;}
   else if(o.previousSchool981)q.school=o.previousSchool981;
   delete o.previousSchool981;
+  delete o.origin984;
   return q;
  }
  function currentRecovery(l){
@@ -141,6 +257,18 @@
   return last&&(last.result==='stable978'||last.result==='ordinary978')?last:null;
  }
  function record(l,q,key){q.acted=year(l);q.history.push({year:year(l),choice:key,country:cc(l),city:residentCity(l)});}
+ function recordDisplacement(l,country,from,to){
+  var o=displaced(l);if(!o)return;
+  var q=recovery(l,o), dest={country:cc(l),city:to||residentCity(l)};
+  if(to&&q.destination984&&(q.destination984.city!==dest.city||q.destination984.country!==dest.country)){
+   delete q.schoolDue;
+   if(Array.isArray(q.notice975))q.notice975=q.notice975.filter(function(k){return !['housing','returnHome'].includes(k);});
+  }
+  q.destination984=dest;
+  q.shelter984=!to;
+  if(to)q.lastMove984=year(l);
+  q.history.push({year:year(l),choice:to?'relocate':'shelter',country:dest.country,city:dest.city,from:from,fromCountry:country});
+ }
  function housing(l,q){
   if(l.ownHouse)return true;
   if(!q.housing)return false;
@@ -151,7 +279,7 @@
  function recoveryReady(l,q){return X.reason(l,3)===true&&q.acted!==year(l);}
  function returnReady(l,q){
   var here=residentCity(l),y=year(l);
-  return !l.abroad?.trapped&&!E.TRANSIT907?.visit(l)&&q.country===cc(l)&&!!q.from&&!!here&&P.canonicalCity(q.from)!==here&&y>q.at&&cityAllowed(q.country,y,q.from)&&C.localEvacuationRoute(q.country,y,here,q.from)&&C.hardness(C.returnContext(q.country,y,q.from))<=3;
+  return !l.abroad?.trapped&&!E.TRANSIT907?.visit(l)&&q.country===cc(l)&&!!q.from&&!!here&&y>Math.max(q.at,q.lastMove984||q.at)&&cityAllowed(q.country,y,q.from)&&C.safeReturn(q.country,y,here,P.canonicalCity(q.from));
  }
  function canPayRecovery(l){return l.age<18&&!l.indep||l.money>=l.base*.12;}
  function canMeetRecovery(l,q){return !!(q.contact&&!q.reunited&&family(l)&&year(l)>q.contact&&housing(l,q)&&C.of(l).hard<2);}
@@ -171,7 +299,7 @@
   if(!history.includes(q))history.push(q);
   if(history.length>20)history.splice(0,history.length-20);
  }
- function sameRecoveryCountry(l,o){return recovery(l,o).country===cc(l);}
+ function sameRecoveryCountry(l,o){var q=recovery(l,o);return (q.destination984?.country||q.country)===cc(l);}
  function replaceRecovery(l,o){
   var q=recovery(l,o),s=Hist.st(l);
   delete q.schoolDue;
@@ -213,7 +341,7 @@
  X.menu('recovery969','Ổn định cuộc sống sau sơ tán',function(l){return currentRecovery(l)?X.reason(l,3):'Đã khép hồ sơ sơ tán';},function(l,d){
   var q=currentRecovery(l);if(!q)return 'Hoàn cảnh đã thay đổi.';
   var news=d?.arg?.news||[], costs=q.costEnded978!=null?'Giai đoạn chi phí sống tạm đã kết thúc. ':'';
-  return (news.length?news.join('. ')+'.\n':'')+'Bạn đang ở '+E.placeText(l)+'. '+costs+(housing(l,q)?'Đã thu xếp chỗ ở. ':'Chỗ ở còn tạm bợ. ')+(q.school&&!q.schoolDone?'Chương trình học trước đây bị gián đoạn. ':'')+(q.schoolDue?'Đã nộp nguyện vọng tiếp tục học, chờ trả lời năm '+q.schoolDue+'. ':'')+'Gia đình có thể ổn định từng bước hoặc cân nhắc trở về khi quê cũ an toàn hơn.';
+  return (news.length?news.join('. ')+'.\n':'')+'Bạn đang ở '+E.placeText(l)+'. '+costs+(housing(l,q)?'Đã thu xếp chỗ ở. ':q.shelter984?'Gia đình đang trú tạm trong vùng. ':'Chỗ ở còn tạm bợ. ')+(q.school&&!q.schoolDone?'Chương trình học trước đây bị gián đoạn. ':'')+(q.schoolDue?'Đã nộp nguyện vọng tiếp tục học, chờ trả lời năm '+q.schoolDue+'. ':'')+'Gia đình có thể ổn định từng bước hoặc cân nhắc trở về khi quê cũ an toàn hơn.';
  },function(l){
   var q=currentRecovery(l);if(!q)return[];var ready=recoveryReady(l,q),out=[];
   function add(key,label,why,run,cost){out.push({k:key,l:label,h:cost?H.money(l,l.base*cost):'',why:!ready?'Đã thu xếp một việc trong năm':why,run:function(l,r,log){if(currentRecovery(l)!==q||!recoveryReady(l,q))return;run(l,r,log);}});}
@@ -225,7 +353,7 @@
   if(l.age>=18&&!l.job&&!l.school)add('work','Hỏi việc và xem cơ hội tại nơi đang sống',housing(l,q)&&E.DEC.job.valid(l,{requested:true})?true:'Cần ổn định chỗ ở và đủ điều kiện tìm việc',function(l,r,log){record(l,q,'work');if(X.next(l,'job',r))l.pending[0].data.requested=true;log('Bạn tìm người giới thiệu và xem các vị trí đang tuyển tại nơi ở mới.','neutral');});
   if(!q.contact&&family(l))add('family','Nhờ người quen hỏi tin và hẹn gặp người thân',true,function(l,r,log){record(l,q,'family');q.contact=year(l);H.fx(l,{hap:3,soc:1});log('Bạn nối lại tin tức với những người thân còn liên lạc được. Những người đã mất vẫn được tưởng nhớ.','good');});
   if(q.contact&&!q.reunited&&family(l)&&year(l)>q.contact)add('meet','Thu xếp buổi gặp lại người thân đang ở gần',canMeetRecovery(l,q)?true:'Cần chỗ gặp và đường đi an toàn',function(l,r,log){record(l,q,'meet');q.reunited=year(l);H.fx(l,{hap:4});(l.sibList||[]).filter(function(s){return s.alive!==false;}).forEach(function(s){s.close=Math.min(100,(s.close||50)+3);});log('Gia đình thu xếp buổi gặp với những người thân còn sống và đang ở gần. Người ở xa tiếp tục giữ liên lạc.','good');});
-  if(returnReady(l,q))add('return','Cùng gia đình trở về '+P.cityLabel(q.country,year(l),q.from),canPayRecovery(l)?true:'Chưa đủ tiền cho chuyến trở về',function(l,r,log){if(!returnReady(l,q)||!E.LIFE138.fund(l,.12,'chuyến trở về sau sơ tán',r,log))return;record(l,q,'return');H.moveToCity(l,q.from);if(l.job){l.job=null;l.income=0;l.flags.needJob=true;}if(q.school&&!q.schoolDone){q.schoolDue=year(l)+1;q.schoolCity=residentCity(l);q.schoolCountry=cc(l);}closeRecovery(l,q,'returned',log);},.12);
+  if(returnReady(l,q))add('return','Cùng gia đình trở về '+P.cityLabel(q.country,year(l),q.from),canPayRecovery(l)?true:'Chưa đủ tiền cho chuyến trở về',function(l,r,log){if(!returnReady(l,q)||!E.LIFE138.fund(l,.12,'chuyến trở về sau sơ tán',r,log))return;if(H.moveToCity(l,q.from)===false)return;record(l,q,'return');if(l.job){l.job=null;l.income=0;l.flags.needJob=true;}if(q.school&&!q.schoolDone){q.schoolDue=year(l)+1;q.schoolCity=residentCity(l);q.schoolCountry=cc(l);}closeRecovery(l,q,'returned',log);},.12);
   add('settle','Chọn gắn bó lâu dài với nơi ở hiện tại',housing(l,q)&&year(l)>q.at&&(l.age<18||l.job||l.money>=l.base*.2)&&(!q.school||q.schoolDone||l.age>=18)?true:'Cần thu xếp cuộc sống và chương trình học còn dở',function(l,r,log){record(l,q,'settle');closeRecovery(l,q,'settled',log);});
   add('later','Xem lại khi có tiến triển',true,function(l,r,log){record(l,q,'later');log('Bạn có thể mở lại hồ sơ bất cứ khi nào. Sau này sẽ chỉ có lời nhắc khi tình hình tiến triển.','neutral');});return out;
  },3,'Đời sống');
@@ -244,7 +372,7 @@
    if(l.school){q.schoolDone=true;delete q.schoolDue;}
    else if(cc(l)!==q.schoolCountry||residentCity(l)!==P.canonicalCity(q.schoolCity)){delete q.schoolDue;log('Nơi cư trú đã đổi; cần trao đổi lại về chương trình học tại nơi mới.','neutral');}
    else if(l.age>=18){delete q.schoolDue;log('Bạn đã đến tuổi trưởng thành; có thể tiếp tục bằng học bổ túc hoặc học nghề phù hợp.','neutral');}
-   else if(C.canResumeSchool(l)){
+   else if(C.canResumeSchool(l)&&formalSchoolReason(l,q.school.kind)===true){
     l.school=q.school.kind;
     if(q.school.calendarAge!=null){
      // Duyệt hồ sơ cuối năm. Buổi học đầu tiên diễn ra từ năm tiếp theo.
@@ -283,5 +411,5 @@
  E.HOOKS.year.push(recoveryYear);
  var inherit=E.heirAtAge;
  E.heirAtAge=function(parent,k){var l=inherit.apply(this,arguments);if(!l)return l;var course=((l.flags.expansion110||{}).courses170||[]).find(function(c){return c.learner==='self'&&c.route969&&c.status==='active';});if(course){l.vocational969=course.id;l.school='voc';l.schoolEnd=course.due;if(!k.job)l.job=null;}return l;};
- E.ERA969={cities:cities,regions:regions,routes:routes,route:route,learners:learners,learner:learner,sameRecoveryCountry:sameRecoveryCountry,replaceRecovery:replaceRecovery,academicReason:academicReason,courseReason:courseReason,startCourse:startCourse,courseStill:courseStill,coursePaused:coursePaused,finishCourse:finishCourse,learning:learning,recovery:recovery,recoveryCosts:recoveryCosts,currentRecovery:currentRecovery,recoveryYear:recoveryYear,displaced:displaced,returnReady:returnReady};
+ E.ERA969={cities:cities,regions:regions,routes:routes,route:route,learners:learners,learner:learner,sameRecoveryCountry:sameRecoveryCountry,replaceRecovery:replaceRecovery,academicReason:academicReason,formalSchoolReason:formalSchoolReason,prepareAfghanSchool:prepareAfghanSchool,pauseAfghanSchool:pauseAfghanSchool,afghanStudyDue:afghanStudyDue,courseReason:courseReason,startCourse:startCourse,courseStill:courseStill,coursePaused:coursePaused,finishCourse:finishCourse,learning:learning,recovery:recovery,recordDisplacement:recordDisplacement,recoveryCosts:recoveryCosts,currentRecovery:currentRecovery,recoveryYear:recoveryYear,displaced:displaced,returnReady:returnReady};
 })(globalThis.G);

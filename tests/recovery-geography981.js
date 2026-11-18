@@ -109,7 +109,7 @@ assert.equal(newcomer.flags.ctx945.refuge.country, 'MM');
 assert(!E.DEC.ctx945_event.valid(newcomer, rebuilding.data));
 const saved = load(newcomer);
 saved.age++;
-assert(R.returnReady(saved, record), 'can return to the original city when its context eases');
+assert(!R.returnReady(saved, record), 'the end of the crisis table cannot by itself make Mandalay safe');
 host(saved, 'JP', 'Osaka');
 assert(!R.returnReady(saved, record), 'local return never crosses a border');
 

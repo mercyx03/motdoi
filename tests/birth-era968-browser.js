@@ -102,6 +102,14 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     await p.reload();await p.eval(async()=>{await MotDoiBoot.load();});
     const panel=await p.eval(()=>{document.querySelector('#resumeBtn').click();return document.querySelector('#placePanel').textContent;});
     assert.match(panel,/Anh/);assert.match(panel,/Nơi đang sống.*Nhật Bản.*Mức sinh · 1960/);
+    const education=await p.eval(()=>{
+     const E=G.E,l=E.createLife({mode:'world',country:'AF',city:'Kabul',year:2009,gender:'F',seed:984});
+     Object.assign(l,{age:15,school:'lower',edu:1,pending:[],sched:[],ill:null,job:null});
+     E.beginYear(l,{auto:false});
+     const option=l.pending.find(d=>d.id==='afghanStudy984');
+     return {school:l.school,offer:option?.opts.some(o=>/Tự học qua tài liệu/.test(o.l)),canReturn:E.CTX945.safeReturn('PS',2026,'Ramallah','Gaza')};
+    });
+    assert.deepEqual(education,{school:null,offer:true,canReturn:false});
     await p.load(url+'updates.html');
     const newest=await p.eval(()=>{
      const data=JSON.parse(document.querySelector('#updateHistoryData').textContent).entries;

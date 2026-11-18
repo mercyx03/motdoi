@@ -1,5 +1,24 @@
 [
   {
+    "id": "evacuation-and-afghan-education-98400",
+    "version": "9.8.4",
+    "publishedAt": "2026-11-18T14:47:12+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Sơ tán tới nơi ở thật và việc học tại Afghanistan",
+    "summary": "Lựa chọn sơ tán cập nhật địa chỉ và lưu nơi đã rời đi. Các bậc học tại Afghanistan mở hoặc tạm dừng theo đúng mốc trong game.",
+    "tags": [
+      "Sửa lỗi",
+      "Tính năng"
+    ],
+    "details": [
+      "Khi rời nơi có biến cố, nếu có điểm đến ít bị ảnh hưởng hơn, cả nhà chuyển tới đó và hồ sơ ghi rõ quê cũ cùng nơi mới. Nếu chưa có điểm đến phù hợp, game ghi nhận trú tạm tại khu vực hiện tại.",
+      "Gia đình chỉ có thể quay về khi nơi cũ đủ an toàn và tuyến đi còn phù hợp. Chuyển sang năm mới sẽ không tự mở đường trở về các vùng còn gặp khủng hoảng.",
+      "Nữ sinh ở Afghanistan vẫn học tiểu học. Việc học chính quy sau lớp 6 bị gián đoạn từ năm 2021, còn đại học có mốc riêng vào tháng 12/2022. Bằng cấp đã hoàn thành và phần học đang dở được lưu trong hồ sơ.",
+      "Khi trường học bị gián đoạn, bạn có thể học bổ trợ qua nhóm cộng đồng, tài liệu hoặc từ xa nếu tiếp cận được. Sau khi đã ổn định ở nơi có thể đi học, bạn có thể xin tiếp tục chương trình phổ thông hoặc nộp hồ sơ đại học theo điều kiện địa phương."
+    ]
+  },
+  {
     "id": "thailand-marriage-timeline-98300",
     "version": "9.8.3",
     "publishedAt": "2026-11-18T14:13:11+07:00",
