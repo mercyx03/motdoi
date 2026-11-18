@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-18T03:13:22.563Z",
+  "generatedAt": "2026-11-18T03:42:39.295Z",
   "entries": [
+    {
+      "id": "dated-places-and-regional-history-97900",
+      "version": "9.7.9",
+      "publishedAt": "2026-11-18T10:42:39+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Tên nơi sinh theo thời kỳ và biến cố theo từng vùng",
+      "summary": "Tên nước và thành phố thay đổi theo năm. Biến cố 2024–2025 ảnh hưởng đến việc học, thu nhập và sơ tán theo nơi gia đình thực sự sống.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Tên nơi sinh, hồ sơ và chuyển nhà dùng cùng mốc thời gian. Faisalabad mang tên Lyallpur trước năm 1977, còn Belmopan chỉ xuất hiện từ giai đoạn xây dựng năm 1967.",
+        "Bổ sung bối cảnh chính trị ở những mốc như chia cắt Ấn Độ năm 1947, hình thành hai nhà nước Đức năm 1949 và giai đoạn chuyển tiếp của Syria năm 2025.",
+        "Bối cảnh 2024–2025 phân theo nơi sinh sống. Game phân biệt nguy cơ nạn đói ở Gaza năm 2023 với nạn đói được ghi nhận tại tỉnh Gaza năm 2025, đồng thời phân vùng ảnh hưởng tại Sudan.",
+        "Khi trường phải nghỉ vì thiên tai, học sinh có thể chọn học tạm hoặc nghỉ. Chọn sơ tán sẽ chuyển gia đình tới nơi phù hợp và mở các việc cần giải quyết. Nếu chưa có nơi đến phù hợp, gia đình tìm chỗ trú gần nơi ở."
+      ]
+    },
     {
       "id": "quiet-job-search-and-recovery-costs-97800",
       "version": "9.7.8",

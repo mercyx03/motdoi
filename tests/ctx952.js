@@ -78,7 +78,7 @@ const lev = (cc, y, city) => C.of(life(cc, y, city));
     // Trung Đông, Bắc Phi
     ['EG', 1941, 'Alexandria', 3, null, null], ['EG', 1941, 'Cairo', 1, null, null], ['LY', 1930, 'Benghazi', 3, null, null], ['IQ', 1984, 'Basra', 3, null, null], ['IQ', 1984, 'Mosul', 2, null, null],
     ['IR', 1985, 'Ahvaz', 3, null, null], ['IR', 1985, 'Shiraz', 2, null, null], ['LB', 2024, 'Tyre', 3, null, null], ['LB', 2024, 'Tripoli', 1, null, null], ['LB', 2020, 'Beirut', null, null, 3], ['LB', 2020, 'Tripoli', null, null, 0],
-    ['IL', 2024, 'Beersheba', 3, null, null], ['PS', 2024, 'Gaza', 3, 3, null], ['PS', 2024, 'Ramallah', 2, 1, null], ['SY', 2023, 'Aleppo', null, null, 3], ['SY', 2023, 'Damascus', null, null, 0], ['MA', 2023, 'Marrakesh', null, null, 2], ['MA', 2023, 'Casablanca', null, null, 0],
+    ['IL', 2024, 'Beersheba', 3, null, null], ['PS', 2024, 'Gaza', 3, 2, null], ['PS', 2025, 'Gaza', 3, 3, null], ['PS', 2024, 'Ramallah', 2, 1, null], ['SY', 2023, 'Aleppo', null, null, 3], ['SY', 2023, 'Damascus', null, null, 0], ['MA', 2023, 'Marrakesh', null, null, 2], ['MA', 2023, 'Casablanca', null, null, 0],
     // Châu Phi
     ['SD', 1960, 'Khartoum', 1, null, null], ['SD', 2004, 'Nyala', 3, 3, null], ['SD', 2004, 'Khartoum', null, 0, null], ['SS', 1960, 'Juba', 3, null, null], ['SO', 1995, 'Hargeisa', 1, null, null], ['SO', 1995, 'Mogadishu', 3, null, null],
     ['CD', 1962, 'Kinshasa', 2, null, null], ['CD', 1962, 'Lubumbashi', 3, null, null], ['CD', 2013, 'Kinshasa', 1, null, null], ['CD', 2013, 'Goma', 3, null, null], ['RW', 1991, 'Musanze', 3, null, null], ['RW', 1991, 'Huye', 1, null, null],
@@ -116,7 +116,7 @@ const lev = (cc, y, city) => C.of(life(cc, y, city));
   // lựa chọn sơ tán đi qua sự kiện thật
   const l = life('ID', 1946, 'Surabaya', { age: 22 }); l.job = { t: 'Thợ' }; l.income = 3; l.flags.ctx945 = null;
   const d = E.DEC.ctx945_event.make(l, R(l), { kind: 'shelter', y: 1946 }); l.pending = [d];
-  const flee = d.opts.find(o => /Sơ tán/.test(o.l)); ok(flee && /Chuyển tới /.test(flee.h), 'lựa chọn sơ tán nói rõ nơi sẽ chuyển tới: ' + (flee && flee.h));
+  const flee = d.opts.find(o => /Sơ tán/.test(o.l)); ok(flee && flee.l.includes(C.refuge(l)), 'lựa chọn sơ tán nói rõ nơi sẽ chuyển tới: ' + (flee && flee.l));
   const dest22 = C.refuge(l), money0 = l.money; E.resolve(l, flee.k);
   ok(l.city !== 'Surabaya' && l.city === dest22, 'nhân vật thật sự chuyển tới nơi yên hơn: ' + l.city);
   ok(l.flags.ctx945.refuge && l.flags.ctx945.refuge.from === 'Surabaya' && l.flags.ctx945.refuge.to === l.city, 'ghi nhớ nơi đi và nơi đến');

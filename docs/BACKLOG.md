@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.7.9: còn hồi quy toàn diện, bản lưu thật và binding REVIEWS_DB Production. Các ca ctx945 (chạy đối chứng thiếu module phục hồi), ctx951 (hệ quả cải cách ruộng đất) và era920 (hiệu chuẩn tuổi thọ) đã thất bại trên cả 9.7.8 và 9.7.9. Tiếp tục đối chiếu những địa phương chưa có mốc chính thể, ranh giới và tên theo năm.
+
 - 9.7.8: còn hồi quy toàn diện, kiểm thử nhắc tìm việc và ngừng phí sơ tán trên bản lưu thật, cùng xác minh binding REVIEWS_DB Production.
 
 - 9.7.7: còn regression toàn diện, kiểm thử chuỗi nợ viện phí và thỏa thuận việc làm khi đổi bạn đời trên bản lưu thật, cùng xác minh binding REVIEWS_DB Production.

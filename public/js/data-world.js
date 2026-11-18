@@ -171,7 +171,7 @@
     'SS|Nam Sudan|370|57|1.5|99|21|ss|Juba,Wau,Malakal,Yei,Bor',
     'ES|Tây Ban Nha|320|84|48|3|81|es|Madrid,Barcelona,Valencia,Seville,Zaragoza,Málaga,Bilbao,Murcia',
     'LK|Sri Lanka|320|77|15|7|19|lk|Colombo,Kandy,Galle,Jaffna,Negombo,Kurunegala,Batticaloa',
-    'SD|Sudan|1500|66|3.5|55|36|ar|Khartoum,Omdurman,Port Sudan,Kassala,Nyala,El Obeid',
+    'SD|Sudan|1500|66|3.5|55|36|ar|Khartoum,Omdurman,Port Sudan,Kassala,Nyala,El Obeid,El Fasher,Kadugli',
     'SR|Suriname|10|72|18|17|66|car:45,in:35,nl:20|Paramaribo,Lelydorp,Nieuw Nickerie',
     'SE|Thụy Điển|100|83|65|2|88|nord:85,ar:15|Stockholm,Gothenburg,Malmö,Uppsala,Västerås,Örebro',
     'CH|Thụy Sĩ|80|84|85|4|74|de:63,fr:25,it:12|Zurich,Geneva,Basel,Lausanne,Bern,Lucerne,Lugano',

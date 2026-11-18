@@ -35,7 +35,28 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     });
     assert(setup.early.includes('ước tính'));assert(!setup.random.includes('Việt Nam'));assert(setup.random.includes('được chọn khi chào đời'));
     assert(setup.bd.includes('Đông Pakistan'));assert(setup.mm.includes('Miến Điện'));assert(setup.profile.includes('Zaire'));assert(!setup.overflow);
+    const dates=await p.eval(()=>{
+     function choose(id,value){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}
+     choose('yearSel','1900');choose('countrySel','PK');
+     const pk=document.querySelector('#countrySel').selectedOptions[0].textContent;
+     const pkProfile=document.querySelector('#heroProfile').innerText;
+     choose('yearSel','2025');choose('countrySel','UA');
+     return {pk,pkProfile,ukraine:document.querySelector('#yearHint').innerText};
+    });
+    assert.match(dates.pk,/Ấn Độ thuộc Anh · nay là Pakistan/);
+    assert.match(dates.pkProfile,/Ấn Độ thuộc Anh/);
+    assert.match(dates.ukraine,/tấn công toàn diện/);
     await p.load(url+'updates.html');
+    const newest=await p.eval(()=>{
+     const data=JSON.parse(document.querySelector('#updateHistoryData').textContent).entries;
+     const text=document.querySelector('#updateTimeline').innerText;
+     return {id:data[0].id, status:data[0].releaseStatus, count:data.filter(e=>e.releaseStatus==='packaged').length,text};
+    });
+    assert.equal(newest.id,expectedUpdates[0].id);
+    assert.equal(newest.status,expectedUpdates[0].releaseStatus);
+    assert.equal(newest.count,expectedUpdates.filter(e=>e.releaseStatus==='packaged').length);
+    assert(newest.text.includes(expectedUpdates[0].title));
+    assert(newest.text.includes(newest.status==='released'?'Đã phát hành':'Bản chuẩn bị'));
     const update=await p.eval(()=>{
      const data=JSON.parse(document.querySelector('#updateHistoryData').textContent).entries,search=document.querySelector('#updateSearch');
      document.querySelector('#moreUpdates')?.click();

@@ -182,7 +182,7 @@
       country.innerHTML='<option value="">🎲 Ngẫu nhiên (theo số trẻ chào đời)</option>';
       W.C.filter(function (c) { return c.births > 0; })
         .sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); })
-        .forEach(function (c) { var P=E.ERA920&&E.ERA920.POL,n=P&&P.nameAt(c.code,S.set.year||NOW_YEAR);country.add(new Option(n&&n!==c.name?n+' — '+c.name:c.name,c.code)); });
+        .forEach(function (c) { var P=E.ERA920&&E.ERA920.POL,n=P&&P.nameAt(c.code,S.set.year||NOW_YEAR);country.add(new Option(n&&n!==c.name?n+' · nay là '+c.name:c.name,c.code)); });
     }
     country.value = S.set.country || '';
     if (!country.value) { S.set.country = ''; country.value = ''; }
@@ -259,7 +259,7 @@
   function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, prov:S.set.mode==='vn'?S.set.prov:'',eth:S.set.mode==='vn'?S.set.eth:'',gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
-    var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':l.city+' · '+(P&&P.nameAt(l.country,l.birthYear)||l.countryName);
+    var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':l.birthPlace;
     if(P){if(E.isVN(l)&&P.regionName){var admin=P.regionName(l.prov.old,l.birthYear);if(admin)where=admin+' · khu vực '+l.prov.old+' · Việt Nam';}where=P.rename(l,where);}
     var orph = f.orphan && f.orphan.adopted == null ? f.orphan : null; // v7.1: xuất thân mồ côi
     var fam = orph ? 'Mồ côi · ' + orph.carer + ' nuôi dưỡng' : (f.noDad ? '' : 'Bố ' + f.fJob + ' · ') + 'Mẹ ' + f.mJob;

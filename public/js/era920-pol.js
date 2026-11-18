@@ -3,7 +3,7 @@
    · STATUS[mã nước]: các khoảng năm [từ, đến, mô tả]. Chỉ ghi sự kiện chính trị-pháp lý đã được ghi nhận rộng rãi (độc lập, thống nhất, tan rã, chia cắt, đổi quốc hiệu).
      Đây là bối cảnh: không phải số liệu thống kê, không đánh giá đúng sai về phía nào; mức kiểm chứng: đã đối chiếu ngày 15/11/2026 với bách khoa trực tuyến (118 khẳng định đại diện, 83 năm độc lập; xem docs/ERA-DOI-CHIEU-NGUON-940.md), nguồn THỨ CẤP, chưa đọc văn bản gốc.
    · NAMES: tên nước dùng thời đó (Miến Điện, Zaire...). CITIES: tên thành phố đổi theo năm (Sài Gòn trước 2/7/1976, Bombay, Leningrad...) thay vào văn bản nhật ký/cảnh/vị trí khi năm thế giới nhỏ hơn mốc đổi tên.
-   · Mô tả hiện ở màn thiết lập (E.ERA920.status), ở dòng nhật ký đầu đời và mỗi khi tình trạng đổi trong đời (E.HOOKS.year). Đời sinh từ 2024 trở đi không đổi. */
+   · Mô tả hiện ở màn thiết lập (E.ERA920.status), ở dòng nhật ký đầu đời và mỗi khi tình trạng đổi trong đời (E.HOOKS.year). Các mốc chính trị được tra độc lập với chuỗi số liệu nhân khẩu. */
 (function (G) {
   'use strict';
   var E = G.E, X = E && E.ERA920; if (!X) return;
@@ -33,7 +33,7 @@
   add('VN', 1955, 1974, 'Việt Nam chia hai miền (Việt Nam Dân chủ Cộng hòa ở phía Bắc, Việt Nam Cộng hòa ở phía Nam); chiến tranh Việt Nam'); add('VN', 1975, 1975, 'chiến tranh Việt Nam kết thúc ngày 30/4/1975'); add('VN', 1976, 1976, 'thống nhất cả nước, Cộng hòa Xã hội Chủ nghĩa Việt Nam từ 2/7/1976');
   ['KR', 'KP'].forEach(function (c) { add(c, 1950, 1953, 'chiến tranh Triều Tiên (đình chiến 27/7/1953)'); });
   add('YE', 1950, 1989, 'Yemen chưa thống nhất (Bắc Yemen và Nam Yemen/Aden), thống nhất 22/5/1990');
-  add('BD', 1950, 1970, 'Đông Pakistan (thuộc Pakistan)'); add('BD', 1971, 1971, 'chiến tranh giải phóng, độc lập năm 1971');
+  add('BD', 1947, 1954, 'Đông Bengal thuộc Pakistan'); add('BD', 1955, 1970, 'Đông Pakistan (thuộc Pakistan)'); add('BD', 1971, 1971, 'chiến tranh giải phóng, độc lập năm 1971');
   add('ER', 1950, 1951, 'dưới sự quản lý của Anh'); add('ER', 1952, 1990, 'thuộc Ethiopia (liên bang 1952, sáp nhập 1962; chiến tranh đòi độc lập 1961–1991)'); add('ER', 1991, 1992, 'tự quản sau chiến tranh; trưng cầu dân ý năm 1993');
   add('SS', 1950, 2010, 'thuộc Sudan (độc lập tháng 7/2011)');
   add('TL', 1950, 1974, A + 'Bồ Đào Nha (Timor thuộc Bồ)'); add('TL', 1975, 1998, 'bị Indonesia chiếm đóng và sáp nhập năm 1976 (Liên Hợp Quốc không công nhận)'); add('TL', 1999, 2001, 'Liên Hợp Quốc quản lý chuyển tiếp; độc lập 20/5/2002');
@@ -53,12 +53,48 @@
     ['IN', 1975, 1976, 'tình trạng khẩn cấp (6/1975–3/1977)'], ['PK', 1971, 1971, 'chiến tranh với Ấn Độ và Đông Pakistan ly khai'], ['MM', 1962, 1987, 'chế độ quân sự của Ne Win (từ 3/1962)'], ['MM', 1988, 1988, 'cuộc nổi dậy 8/1988 và quân đội nắm quyền'], ['MM', 2021, 2023, 'quân đội đảo chính (1/2/2021) và xung đột sau đó'], ['LA', 1960, 1974, 'nội chiến Lào (1959–1975)'], ['LA', 1975, 1975, 'Cộng hòa Dân chủ Nhân dân Lào ra đời (12/1975)'],
     ['HU', 1956, 1956, 'cách mạng Hungary (10–11/1956)'], ['RO', 1989, 1989, 'cách mạng Romania (12/1989)'], ['KR', 1961, 1986, 'các chính quyền độc tài quân sự (1961–1987)'], ['KR', 1987, 1987, 'dân chủ hóa sau phong trào tháng 6/1987'], ['PH', 1972, 1980, 'thiết quân luật dưới thời Marcos (9/1972–1/1981)'], ['PH', 1986, 1986, 'cách mạng Quyền lực Nhân dân (2/1986)']]
     .forEach(function (x) { add(x[0], x[1], x[2], x[3]); });
+  // Gắn nhãn theo năm. Các mốc trước và sau chuỗi nhân khẩu có cùng cách tra cứu.
+  [['IN', 1900, 1946, 'Ấn Độ thuộc Anh; quy chế khác nhau giữa các tỉnh và phiên quốc'],
+    ['PK', 1900, 1946, 'khu vực thuộc Ấn Độ thời Anh cai trị; Pakistan chưa thành lập'],
+    ['BD', 1900, 1946, 'khu vực Bengal thuộc Ấn Độ thời Anh cai trị'],
+    ['IN', 1947, 1947, 'Ấn Độ độc lập và tiểu lục địa bị chia cắt'],
+    ['PK', 1947, 1947, 'Pakistan thành lập khi Ấn Độ thuộc Anh chia tách'],
+    ['BZ', 1900, 1949, A + 'Anh (Honduras thuộc Anh)'],
+    ['GH', 1900, 1949, 'Bờ Biển Vàng dưới quyền Anh; quy chế và ranh giới thay đổi theo vùng'],
+    ['KR', 1910, 1945, 'bán đảo Triều Tiên dưới quyền cai trị của Nhật Bản'],
+    ['KP', 1910, 1945, 'bán đảo Triều Tiên dưới quyền cai trị của Nhật Bản'],
+    ['SS', 1900, 1949, 'miền nam Sudan trong thời kỳ Anh và Ai Cập đồng quản lý'],
+    ['DE', 1945, 1948, 'Đức được chia thành các vùng chiếm đóng của Đồng Minh sau chiến tranh'],
+    ['DE', 1949, 1949, 'thành lập Cộng hòa Liên bang Đức và Cộng hòa Dân chủ Đức'],
+    ['UA', 2024, 2025, 'cuộc chiến sau khi Nga tấn công toàn diện tiếp diễn; nguy cơ thay đổi theo vùng'],
+    ['SD', 2023, 2025, 'xung đột vũ trang từ tháng 4/2023 và khủng hoảng di dời'],
+    ['MM', 2024, 2025, 'xung đột sau đảo chính tiếp diễn; mức ảnh hưởng khác nhau giữa các vùng'],
+    ['PS', 2023, 2025, 'chiến tranh tại Dải Gaza; Bờ Tây chịu bạo lực và hạn chế đi lại theo bối cảnh riêng'],
+    ['AF', 2024, 2025, 'Taliban tiếp tục nắm quyền trên thực tế'],
+    ['SY', 2024, 2024, 'chiến sự kéo dài; chính quyền Bashar al-Assad sụp đổ vào tháng 12'],
+    ['SY', 2025, 2025, 'giai đoạn chuyển tiếp chính trị sau thay đổi chính quyền tháng 12/2024']
+  ].forEach(function (x) { add(x[0], x[1], x[2], x[3]); });
+  ['RU', 'AM', 'AZ', 'GE'].forEach(function (cc) { add(cc, 1922, 1949, 'thuộc Liên Xô từ khi liên bang thành lập cuối năm 1922; quyền kiểm soát thay đổi ở các vùng chiến sự'); });
+  ['UA', 'BY'].forEach(function (cc) { add(cc, 1922, 1949, 'các nước cộng hòa Xô viết tại đây tham gia lập Liên Xô năm 1922; biên giới thời đó khác biên giới hiện nay'); });
   // tên nước dùng thời đó: [mã, từ, đến, tên]
   var NAMES = [['MM', 1950, 1988, 'Miến Điện (Burma)'], ['LK', 1950, 1971, 'Ceylon'], ['CD', 1971, 1996, 'Zaire'], ['BJ', 1960, 1974, 'Dahomey'], ['BF', 1960, 1983, 'Thượng Volta'], ['SZ', 1950, 2017, 'Swaziland'], ['MK', 1991, 2018, 'Macedonia'], ['WS', 1950, 1996, 'Tây Samoa'], ['ZW', 1950, 1979, 'Rhodesia'], ['BZ', 1950, 1972, 'Honduras thuộc Anh'], ['GY', 1950, 1965, 'Guiana thuộc Anh'], ['TV', 1950, 1974, 'quần đảo Ellice'], ['KI', 1950, 1978, 'quần đảo Gilbert'], ['VU', 1950, 1979, 'Tân Hebrides'], ['DJ', 1967, 1976, 'Lãnh thổ người Afar và Issa'], ['KH', 1970, 1974, 'Cộng hòa Khmer'], ['KH', 1975, 1978, 'Campuchia Dân chủ'], ['KH', 1979, 1988, 'Cộng hòa Nhân dân Campuchia']];
+  NAMES.push(['IN', 1900, 1946, 'Ấn Độ thuộc Anh'], ['PK', 1900, 1946, 'Ấn Độ thuộc Anh'],
+    ['BD', 1900, 1946, 'Bengal, Ấn Độ thuộc Anh'], ['BD', 1947, 1954, 'Đông Bengal, Pakistan'],
+    ['BD', 1955, 1970, 'Đông Pakistan'], ['BZ', 1900, 1949, 'Honduras thuộc Anh'],
+    ['GH', 1900, 1956, 'Bờ Biển Vàng'], ['SS', 1900, 1955, 'miền nam Sudan thuộc Anh–Ai Cập'],
+    ['SS', 1956, 2010, 'miền nam Sudan']);
   // tên thành phố: [tên hiện nay, tên thời đó, năm cuối còn dùng tên cũ, (tùy chọn) năm đầu]
-  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928]];
+  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928], ['Faisalabad', 'Lyallpur', 1976], ['Gqeberha', 'Port Elizabeth', 2020]];
   function resCC(l) { return l ? E.H.resCode(l) : null; }
-  function status(cc, y) { var s = STATUS[cc]; if (!s) return null; for (var i = 0; i < s.length; i++) if (y >= s[i][0] && y <= s[i][1]) return s[i][2]; return null; }
+  function status(cc, y) {
+    var s = STATUS[cc] || [];
+    for (var i = 0; i < s.length; i++) if (y >= s[i][0] && y <= s[i][1]) return s[i][2];
+    if (y >= 1900 && y < 1950) {
+      var colony = (G.CTX945_DATA?.COLONY || []).find(function (r) { return r[0] === cc && y >= r[1] && y <= r[2] && r[3] !== 'không thuộc địa'; });
+      if (colony) return 'khu vực dưới quyền quản lý của ' + colony[3];
+    }
+    return null;
+  }
   function nameAt(cc, y) { for (var i = 0; i < NAMES.length; i++) if (NAMES[i][0] === cc && y >= NAMES[i][1] && y <= NAMES[i][2]) return NAMES[i][3]; return null; }
   function wy(l) { return l && l.birthYear != null ? l.birthYear + (l.age || 0) : 9999; }
   // thay tên thành phố hiện nay bằng tên thời đó (nhận diện ranh giới từ, không dùng lookbehind để chạy được trên Safari cũ)
@@ -82,17 +118,36 @@
   function note(l) { var cc = resCC(l), y = wy(l); return cc ? status(cc, y) : null; }
   var famLogic0 = E.famLogic;
   E.famLogic = function (l, t, isLog) { var u = famLogic0 ? famLogic0.call(this, l, t, isLog) : t; return u == null ? u : rename(l, u); };
+  function datedPlace(l, s) {
+    var label = nameAt(l.country, wy(l)), suffix = ', ' + l.countryName;
+    s = X.POL.rename(l, s);
+    return label && s.endsWith(suffix) ? s.slice(0, -suffix.length) + ', ' + label : s;
+  }
+  function birthText(l) {
+    var birth = { country: l.country, countryName: l.countryName, birthYear: l.birthYear, age: 0 };
+    return datedPlace(birth, l.birthPlace);
+  }
   var placeText0 = E.placeText;
-  if (typeof placeText0 === 'function') E.placeText = function (l) { var s=rename(l, placeText0.apply(this, arguments)), n=nameAt(l.country,wy(l)); return n&&l.countryName?s.replace(l.countryName,n):s; };
+  if (typeof placeText0 === 'function') E.placeText = function (l) {
+    var cc = resCC(l), label = nameAt(cc, wy(l));
+    if (l.abroad && l.abroad.perm && l.abroad.code === cc) {
+      return rename(l, l.place) + ', ' + (label || l.abroad.name || G.W.BY[cc]?.name || cc);
+    }
+    return datedPlace(l, placeText0.apply(this, arguments));
+  };
   // đời có số liệu theo năm: ghi bối cảnh chính trị lúc sinh và mỗi khi tình trạng đổi
   E.HOOKS.year.push(function (l, r, log) {
-    if (!l.alive || !l.era920 || wy(l) > X.TO) return;
-    var cc = resCC(l), y = wy(l), s = status(cc, y), m = l.era920, prev = m.polCC && m.polCC !== cc ? undefined : m.pol;
+    var y = wy(l);
+    if (!l.alive || y < 1900 || y > 2025) return;
+    var cc = resCC(l), s = status(cc, y), m = l.era920 || l.flags.eraPolitical979;
+    if (!m && !s) return;
+    if (!m) m = l.flags.eraPolitical979 = {};
+    var prev = m.polCC && m.polCC !== cc ? undefined : m.pol;
     if (prev === s && m.polCC === cc) return; m.polCC=cc; m.pol = s || null;
     if (!s && prev === undefined) return;
     var nm = nameAt(cc, y);
     if (s) log((prev === undefined ? 'Bối cảnh năm ' + y + ': ' : 'Năm ' + y + ', bối cảnh nơi bạn sống đổi: ') + (nm ? nm + ' — ' : '') + s + '.', 'info');
     else if (prev) log('Năm ' + y + ': ' + (nameAt(cc, y - 1) ? nameAt(cc, y - 1) + ' không còn dùng tên cũ. ' : '') + 'Tình trạng chính trị nơi bạn sống đã khác trước.', 'info');
   });
-  X.POL = { canonicalCity: canonicalCity, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, nameAt: nameAt, rename: rename, note: note };
+  X.POL = { canonicalCity: canonicalCity, birthText: birthText, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, nameAt: nameAt, rename: rename, note: note };
 })(globalThis.G);

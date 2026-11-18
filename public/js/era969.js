@@ -10,9 +10,15 @@
   PK:{Islamabad:{from:1960}},
   MM:{Naypyidaw:{from:2002,ready:2005,label:'khu xây dựng gần Pyinmana'}},
   NG:{Abuja:{from:1976}},
+  BZ:{Belmopan:{from:1967,ready:1970,label:'công trường Belmopan'}},
   IL:{'Tel Aviv':{from:1909}}
  };
- var locations={},known={};
+ var locations={},known={},constructionAliases=new Map();
+ Object.values(cities).forEach(function(rows){
+  Object.keys(rows).forEach(function(name){var row=rows[name];if(row.label)constructionAliases.set(row.label,name);});
+ });
+ var canonical=P.canonicalCity;
+ P.canonicalCity=function(name){return canonical(constructionAliases.get(name)||name);};
  G.W.C.forEach(function(c){locations[c.code]=new Set(c.cities);c.cities.forEach(function(n){known[n]=true;});});
  G.VN.P63.forEach(function(p){locations.VN.add(p.city);locations.VN.add(p.name);known[p.city]=known[p.name]=true;});
  function cityAllowed(code,y,name){name=P.canonicalCity(name);if(known[name]&&locations[code]&&!locations[code].has(name))return false;var a=cities[code],r=a&&a[name];return !r||y>=r.from;}
@@ -121,7 +127,7 @@
  function housing(l,q){return !!(q.housing||l.ownHouse);}
  function family(l){return !!(l.fam&&(l.fam.mAlive&&!l.fam.noMom||l.fam.fAlive&&!l.fam.noDad)||(l.sibList||[]).some(function(s){return s.alive!==false;})||l.partner&&l.partner.alive!==false);}
  function recoveryReady(l,q){return X.reason(l,3)===true&&q.acted!==year(l);}
- function returnReady(l,q){return q.country===cc(l)&&q.from!==(l.city||l.place)&&year(l)>q.at&&cityAllowed(q.country,year(l),q.from)&&C.hardness(C.levelAt(q.country,year(l),q.from))<=3;}
+ function returnReady(l,q){return q.country===cc(l)&&q.from!==(l.city||l.place)&&year(l)>q.at&&cityAllowed(q.country,year(l),q.from)&&C.localEvacuationRoute(q.country,year(l),l.city||l.place,q.from)&&C.hardness(C.levelAt(q.country,year(l),q.from))<=3;}
  function canPayRecovery(l){return l.age<18&&!l.indep||l.money>=l.base*.12;}
  function canMeetRecovery(l,q){return !!(q.contact&&!q.reunited&&family(l)&&year(l)>q.contact&&housing(l,q)&&C.of(l).hard<2);}
  function recoveryMilestones(l,q){

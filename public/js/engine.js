@@ -449,7 +449,8 @@
     if (opts.urban != null) life.urban = !!opts.urban;
     var availableCities=E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(c.code,life.birthYear):c.cities;
     var city = U.wpick(r, availableCities, function (x, i) { return 1 / Math.pow(i + 1, 0.8); });
-    if (opts.city && availableCities.indexOf(opts.city) >= 0) city = opts.city;
+    var requestedCity = E.ERA920?.POL?.canonicalCity(opts.city) || opts.city;
+    if (requestedCity && availableCities.includes(requestedCity)) city = requestedCity;
     life.city = city; life.birthCity = city;
     life.place = life.urban ? city : 'vùng nông thôn gần ' + city;
     life.pool = c.pool.indexOf(':') >= 0 ? U.wkey(r, c.pool) : c.pool;
@@ -2249,7 +2250,7 @@
   // ================= CÁO PHÓ =================
   function obituary(life) {
     var s = [];
-    s.push('Sinh ra là một bé ' + (life.sex === 'M' ? 'trai' : 'gái') + (life.fam.q === 1 || life.fam.q === 5 ? ' thuộc ' : ' trong ') + QUINT[life.fam.q] + ' ở ' + (life.birthPlace || placeText(life)) + '.');
+    s.push('Sinh ra là một bé ' + (life.sex === 'M' ? 'trai' : 'gái') + (life.fam.q === 1 || life.fam.q === 5 ? ' thuộc ' : ' trong ') + QUINT[life.fam.q] + ' ở ' + (life.birthPlace ? (E.ERA920?.POL?.birthText?.(life) || life.birthPlace) : placeText(life)) + '.');
     if (life.fam.vice && !life.fam.noDad) s.push('Lớn lên bên người bố ' + VICE[life.fam.vice] + '.');
     if (life.movedTo) s.push('Lên ' + life.movedTo + ' lập nghiệp.');
     if (life.death && life.death.age < 6) { s.push('Ra đi vì ' + life.death.cause + ' khi mới ' + (life.death.age === 0 ? 'chưa tròn một tuổi' : life.death.age + ' tuổi') + '.'); return s.join(' '); }

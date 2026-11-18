@@ -113,10 +113,11 @@
   z('YE', 2014, 2025, 'Ibb', { war: -1 }, 'Tương đối xa tuyến đầu');
   z('YE', 2016, 2025, 'Aden', { fam: -1 }, 'Nơi chính phủ đóng, hàng cứu trợ vào dễ hơn miền cao');
   z('PS', 1947, 1949, 'Nablus|Jenin|Hebron|Bethlehem|Ramallah', { war: -1 }, 'Bờ Tây do Jordan kiểm soát, ít bị tàn phá hơn Gaza');
-  z('PS', 2008, 2023, 'Gaza|Khan Younis', { war: 1 }, 'Phong tỏa và các cuộc chiến 2008–09, 2012, 2014, 2021');
-  z('PS', 2008, 2023, 'Hebron|Nablus|Ramallah|Jenin|Bethlehem', { war: -1 }, 'Bờ Tây: bạo lực thấp hơn Dải Gaza');
-  z('PS', 2023, 2025, 'Ramallah|Bethlehem|Hebron', { war: -1 }, 'Bờ Tây: các chiến dịch và hạn chế đi lại, thấp hơn Gaza');
-  z('PS', 2023, 2025, 'Hebron|Nablus|Ramallah|Jenin|Bethlehem', { fam: '=1' }, 'Bờ Tây thiếu hụt và đắt đỏ nhưng không có nạn đói như Dải Gaza');
+  z('PS', 2008, 2022, 'Gaza|Khan Younis', { war: 1 }, 'Phong tỏa và các cuộc chiến 2008–09, 2012, 2014, 2021');
+  z('PS', 2008, 2022, 'Hebron|Nablus|Ramallah|Jenin|Bethlehem', { war: -1 }, 'Bờ Tây: bạo lực thấp hơn Dải Gaza');
+  z('PS', 2023, 2025, 'Hebron|Nablus|Ramallah|Jenin|Bethlehem', { war: -1 }, 'Bờ Tây: các chiến dịch và hạn chế đi lại, thấp hơn Gaza');
+  z('PS', 2023, 2025, 'Hebron|Nablus|Ramallah|Jenin|Bethlehem', { fam: '=1' }, 'Bờ Tây chịu thiếu hụt và giá sinh hoạt tăng');
+  z('PS', 2025, 2025, '^Gaza$', { fam: '=3' }, 'IPC phân loại nạn đói tại tỉnh Gaza vào tháng 8/2025');
   // ===== CHÂU PHI =====
   z('AO', 1961, 1974, '.', { war: -1 }, 'Chiến sự ở phía bắc và phía đông nông thôn; thành phố ven biển yên hơn');
   z('AO', 1975, 1991, 'Luanda', { war: -1 }, 'Thủ đô do chính phủ giữ, ít giao tranh trực tiếp nhưng đông người tị nạn');
@@ -404,6 +405,8 @@
   z('PL', 1940, 1945, 'Poznań|Gdańsk|Wrocław', { fam: -1 }, 'Vùng sáp nhập vào Đức có khẩu phần cao hơn');
   z('SD', 2003, 2005, 'Nyala', { fam: '=3' }, 'Darfur là tâm điểm của nạn đói chiến tranh');
   z('SD', 2003, 2005, 'Khartoum|Omdurman|Port Sudan|Kassala|El Obeid', { fam: '=0' }, 'Nạn đói tập trung ở Darfur');
+  z('SD', 2024, 2024, 'El Fasher', { fam: '=2' }, 'Khủng hoảng lương thực tại El Fasher; IPC ghi nhận nạn đói ở các trại sơ tán lân cận');
+  z('SD', 2025, 2025, 'El Fasher|Kadugli', { fam: '=3' }, 'IPC ghi nhận nạn đói tại El Fasher và Kadugli vào tháng 9/2025');
   z('SS', 1988, 1988, 'Juba', { fam: -1 }, 'Thị trấn đồn trú có hàng cứu trợ');
   z('SY', 2025, 2025, 'Damascus|Latakia', { fam: -1 }, 'Vùng có thị trường lương thực tốt hơn vùng hạn hán phía đông bắc');
   z('BI', 1943, 1944, 'Bujumbura|Rumonge', { fam: -1 }, 'Ven hồ Tanganyika có cá và buôn bán');
