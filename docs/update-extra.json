@@ -3,8 +3,8 @@
     "id": "birth-odds-and-local-demographics-98000",
     "version": "9.8.0",
     "publishedAt": "2026-11-18T11:04:15+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-18T04:10:54.000Z",
     "title": "Xác suất nơi sinh theo năm và bối cảnh khi chuyển nước",
     "summary": "Chọn nước ngẫu nhiên theo số ca sinh từng năm. Khi sang nước khác, nhân vật dùng mức sinh, sức khỏe và điều kiện phát triển của nơi đang sống.",
     "tags": [
@@ -16,14 +16,15 @@
       "Giai đoạn 1950–2023 dùng ước tính của Liên Hợp Quốc. Năm 2024–2025 dùng dự phóng, gồm số ca sinh, mức sinh, tuổi thọ và tử vong dưới 5 tuổi. Với năm sinh trước 1950, tỷ trọng bốc nước lấy theo mốc 1950.",
       "Chuyển nước hoặc trở về làm thay đổi bối cảnh của nhân vật trong năm đó. Nơi sinh vẫn có trong hồ sơ, và bố mẹ ở quê tiếp tục dùng điều kiện tại quê nhà.",
       "Ở chế độ tự động, mức sinh địa phương ảnh hưởng tới khuynh hướng có con. Số con mong muốn do người chơi đặt và lần đang thử có con vẫn theo quyết định đã chọn."
-    ]
+    ],
+    "correctedAt": "2026-11-18T04:10:54.303Z"
   },
   {
     "id": "dated-places-and-regional-history-97900",
     "version": "9.7.9",
     "publishedAt": "2026-11-18T10:42:39+07:00",
-    "releaseStatus": "packaged",
-    "releasedAt": null,
+    "releaseStatus": "released",
+    "releasedAt": "2026-11-18T04:10:54.000Z",
     "title": "Tên nơi sinh theo thời kỳ và biến cố theo từng vùng",
     "summary": "Tên nước và thành phố thay đổi theo năm. Biến cố 2024–2025 ảnh hưởng đến việc học, thu nhập và sơ tán theo nơi gia đình thực sự sống.",
     "tags": [
@@ -35,7 +36,8 @@
       "Bổ sung bối cảnh chính trị ở những mốc như chia cắt Ấn Độ năm 1947, hình thành hai nhà nước Đức năm 1949 và giai đoạn chuyển tiếp của Syria năm 2025.",
       "Bối cảnh 2024–2025 phân theo nơi sinh sống. Game phân biệt nguy cơ nạn đói ở Gaza năm 2023 với nạn đói được ghi nhận tại tỉnh Gaza năm 2025, đồng thời phân vùng ảnh hưởng tại Sudan.",
       "Khi trường phải nghỉ vì thiên tai, học sinh có thể chọn học tạm hoặc nghỉ. Chọn sơ tán sẽ chuyển gia đình tới nơi phù hợp và mở các việc cần giải quyết. Nếu chưa có nơi đến phù hợp, gia đình tìm chỗ trú gần nơi ở."
-    ]
+    ],
+    "correctedAt": "2026-11-18T04:10:54.324Z"
   },
   {
     "id": "quiet-job-search-and-recovery-costs-97800",
