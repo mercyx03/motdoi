@@ -21,9 +21,9 @@
   (D.RESTRICT || []).forEach(function (r) { expand(r[0]).forEach(function (c) { (RES[c] = RES[c] || []).push({ a: r[1], b: r[2], s: r[3], n: r[4] }); }); });
   // thời thuộc địa suy ra từ bảng bối cảnh chính trị của era920-pol ("thuộc địa của X", "lãnh thổ bảo hộ của X"); trước 1950 coi như kéo dài nếu cửa sổ đầu tiên bắt đầu từ 1950
   var COL = {}; (D.COLONY || []).forEach(function (r) { if (r[3] !== 'không thuộc địa') (COL[r[0]] = COL[r[0]] || []).push(r); });
-  function authorityAt(cc, y) { return E.ERA920?.POL?.authorityAt(cc, y) || null; }
-  function colonyAt(cc, y) {
-    var authority = authorityAt(cc, y);
+  function authorityAt(cc, y, city) { return E.ERA920?.POL?.authorityAt(cc, y, city) || null; }
+  function colonyAt(cc, y, city) {
+    var authority = authorityAt(cc, y, city);
     if (authority) return authority.ruler;
     var cl = COL[cc];
     if (cl) {
@@ -224,10 +224,26 @@
   }
   // ---- 9.5.2: sơ tán thật sự tới nơi yên hơn trong nước (dùng bảng vùng), và về lại khi quê nhà đã yên ----
   function hardness(c) { return c.war * 3 + c.fam * 2 + c.dis; }
-  function levelAt(cc, y, city) { var c = at(cc, y), zr = zoneRows(cc, y, city); return zr ? zoned(c, zr) : c; }
+  function levelAt(cc, y, city) {
+    var c = at(cc, y), zr = zoneRows(cc, y, city), region = E.ERA920?.POL?.regionAt(cc, y, city);
+    if (zr) c = zoned(c, zr);
+    if (!region) return c;
+    c = Object.assign({}, c, { region: region });
+    if (region.authority) { c.authority = region.authority; c.colony = region.authority.ruler; }
+    if (region.restrict != null) {
+      c.restrict = region.restrict;
+      c.restrictLabel = region.restrict ? 'kiểm soát xuất cảnh từ Đông Đức' : null;
+    }
+    if (cc === 'DE' && region.area !== 'east' && c.purge) {
+      c.purge = 0; c.soc = Object.assign({}, c.soc); delete c.soc.purge;
+    }
+    return c;
+  }
   function citiesOf(l, cc) { if(E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities)return E.ERA920.POL.cities(cc,wy(l));return cc === 'VN' && G.VN && G.VN.P63 ? G.VN.P63.map(function (p) { return p.city; }) : ((G.W && G.W.BY[cc]) || {}).cities || []; }
   // nơi yên hơn nơi đang ở: chọn trong nhóm ba nơi yên nhất (ưu tiên cùng vùng ở Việt Nam, thành phố lớn ở nước khác), cố định theo mã đời
   function localEvacuationRoute(cc, y, from, to) {
+    var reason = E.ERA920?.POL?.moveReason(cc, y, from, to);
+    if (reason && reason !== true) return false;
     if (cc === 'CD' && y >= 2024 && ((from === 'Goma' && to === 'Bukavu') || (from === 'Bukavu' && to === 'Goma'))) return false;
     if (cc !== 'PS' || y < 2023) return true;
     var gaza = /Gaza|Khan Younis/i, westBank = /Hebron|Nablus|Ramallah|Jenin|Bethlehem/i;
@@ -473,7 +489,7 @@
   // Hết thời thuộc địa: dấu ấn của những lựa chọn trước đó
   function colonyEnd(l, c, log) {
     var s = st(l), y = wy(l); if (s.noted.colEnd || c.colony) return;
-    var prev = at(resCc(l), y - 1);
+    var prev = levelAt(resCc(l), y - 1, currentCity(l));
     if (!prev.colony || (prev.authority || c.authority) && (c.authority?.kind !== 'independent' || c.authority.from !== y)) return;
     var f = l.flags.indep945;
     if (c.authority && !f && !l.flags.colSchool945) return; // Mốc độc lập đã có trong nhật ký chính trị.

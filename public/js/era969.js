@@ -16,6 +16,8 @@
   AU:{Canberra:{from:1913,ready:1927,label:'khu xây dựng Canberra'}},
   ZA:{Soweto:{from:1904,ready:1963,label:'các khu dân cư phía tây nam Johannesburg'}}
  };
+ var berlinSectors=['Đông Berlin','Tây Berlin'];
+ function dividedBerlin(y){return y>=1945&&y<1990;}
  var locations={},known={},constructionAliases=new Map();
  Object.values(cities).forEach(function(rows){
   Object.keys(rows).forEach(function(name){var row=rows[name];if(row.label)constructionAliases.set(row.label,name);});
@@ -24,16 +26,43 @@
  P.canonicalCity=function(name){return canonical(constructionAliases.get(name)||name);};
  G.W.C.forEach(function(c){locations[c.code]=new Set(c.cities);c.cities.forEach(function(n){known[n]=true;});});
  G.VN.P63.forEach(function(p){locations.VN.add(p.city);locations.VN.add(p.name);known[p.city]=known[p.name]=true;});
- function cityAllowed(code,y,name){name=P.canonicalCity(name);if(known[name]&&locations[code]&&!locations[code].has(name))return false;var a=cities[code],r=a&&a[name];return !r||y>=r.from;}
- function cityList(code,y){var a=code==='VN'?G.VN.P63.map(function(p){return p.city;}):(G.W.BY[code]||{}).cities||[];return a.filter(function(n){return cityAllowed(code,y,n);});}
+ function cityAtYear(code,y,name){
+  var city=P.canonicalCity(name);
+  return code==='DE'&&y>=1990&&berlinSectors.includes(city)?'Berlin':city;
+ }
+ function cityAllowed(code,y,name){
+  name=P.canonicalCity(name);
+  if(berlinSectors.includes(name))return code==='DE'&&dividedBerlin(y);
+  if(known[name]&&locations[code]&&!locations[code].has(name))return false;
+  var row=cities[code]?.[name];return !row||y>=row.from;
+ }
+ function cityList(code,y){
+  var a=code==='VN'?G.VN.P63.map(function(p){return p.city;}):(G.W.BY[code]||{}).cities||[];
+  if(code==='DE'&&dividedBerlin(y))a=a.flatMap(function(city){return city==='Berlin'?berlinSectors:[city];});
+  return a.filter(function(n){return cityAllowed(code,y,n);});
+ }
  function residentCity(l){
-  var city=P.canonicalCity(!l.abroad&&l.cityStudent?.city||l.city||l.place),code=cc(l);
+  var code=cc(l),city=cityAtYear(code,year(l),!l.abroad&&l.cityStudent?.city||l.city||l.place);
   return city&&cityAllowed(code,year(l),city)?city:null;
  }
  function cityLabel(code,y,city){
-  var key=P.canonicalCity(city),row=cities[code]?.[key];
+  var key=cityAtYear(code,y,city),row=cities[code]?.[key];
   if(row&&y<row.from)return 'khu vực sau này là '+key;
   return P.rename({country:code,birthYear:y,age:0},key);
+ }
+ function locationLabel(code,y,city){
+  var label=cityLabel(code,y,city),region=P.regionAt(code,y,city);
+  return region&&region.label!==label?label+' · '+region.label:label;
+ }
+ function moveReason(code,y,from,to){
+  var origin=P.regionAt(code,y,from),dest=P.regionAt(code,y,to);
+  if(!origin||!dest||origin.area===dest.area)return true;
+  if(code==='MY'&&y<1963)return 'Chuyến đi qua hai vùng quản lý riêng, cần thủ tục qua biên giới';
+  if(code!=='DE'||y<1952||y>=1989)return true;
+  if(origin.area==='berlin'&&berlinSectors.includes(to))return true;
+  if(origin.area==='berlin'||dest.area==='berlin')return 'Cần xác định khu vực ở Berlin trước khi đi qua ranh giới';
+  if(y<1961&&berlinSectors.includes(from)&&berlinSectors.includes(to))return true;
+  return 'Chuyến đi qua biên giới Đông–Tây Đức, cần giấy phép đặc biệt';
  }
  // Province keys remain stable spatial anchors; only the dated administrative label changes.
  var regions=[
@@ -48,7 +77,8 @@
   var a=cities[cc(l)],y=year(l);if(!a)return s;
   Object.keys(a).forEach(function(n){var r=a[n];if(r.label&&y>=r.from&&y<r.ready&&!s.includes(r.label))s=s.split(n).join(r.label);});return s;
  }
- P.cityAllowed=cityAllowed;P.cities=cityList;P.residentCity=residentCity;P.cityLabel=cityLabel;P.regionName=regionName;P.regionChoice=regionChoice;
+ P.cityAllowed=cityAllowed;P.cities=cityList;P.cityAtYear=cityAtYear;P.residentCity=residentCity;P.cityLabel=cityLabel;
+ P.locationLabel=locationLabel;P.moveReason=moveReason;P.regionName=regionName;P.regionChoice=regionChoice;
  var rename=P.rename,place=E.placeText,fam=E.famLogic;
  P.rename=function(l,s){return geoText(l,rename(l,s));};
  E.placeText=function(l){return geoText(l,place.apply(this,arguments));};

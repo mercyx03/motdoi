@@ -16,7 +16,7 @@
   // giữ nguyên khóa lưu trữ từ bản 1.0 để người chơi không mất dữ liệu
   var K = { settings: 'mkn.settings', cur: 'mkn.current', mem: 'mkn.memorial', theme: 'mkn.theme', last: 'mkn.lastEnd', recent: 'mkn.recent', ach: 'mkn.ach', tree: 'mkn.tree' };
 
-  var DEF = { mode: 'vn', variant: '34', difficulty: 'normal', prov: '', country: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
+  var DEF = { mode: 'vn', variant: '34', difficulty: 'normal', prov: '', country: '', worldCity: '', eth: '', name: '', gender: 'random', lifeMin: 30 };
   var S = {
     set: Object.assign({}, DEF, LS.get(K.settings, {})),
     life: null, cohort: null, speed: 1, paused: false, auto: false, skipping: false,
@@ -145,7 +145,7 @@
     if (o.epi >= 2 && o.labels.epi) p.push(o.labels.epi + ' (' + lv[o.epi] + ')');
     if (o.dis) p.push((o.labels.dis || 'thiên tai') + ' (' + lv[o.dis] + ')');
     if (o.econ >= 2 && o.labels.econ) p.push(o.labels.econ);
-    var P=E.ERA920&&E.ERA920.POL,pol=P&&P.status(cc,y);
+    var P=E.ERA920&&E.ERA920.POL,pol=P&&P.status(cc,y,city);
     if(pol)p.push(pol);else if(o.colony)p.push('thuộc '+o.colony);
     if (o.restrict >= 2) p.push('hạn chế ra nước ngoài' + (o.restrict >= 3 ? ' gần như tuyệt đối' : ''));
     var zones = ((C.ZONEX || {})[cc] || []).filter(function (z) { return y >= z.a && y <= z.b; }).length;
@@ -167,7 +167,9 @@
     var source = X ? birthSource(y, X.birthDistribution(y)) : '';
     if (S.set.mode === 'world' && !S.set.country) return 'Năm ' + y + ': quốc gia và vùng sinh sẽ được chọn khi chào đời. ' + source;
     var cc = S.set.mode === 'world' ? S.set.country : 'VN', c = W.BY[cc], nm = X?.POL?.nameAt(cc, y) || c?.name || cc;
-    var context = ctxHintText(cc, y), start = 'Năm ' + y + ', ' + nm + ': ';
+    var city = S.set.mode === 'world' ? S.set.worldCity : '';
+    if (city) nm = X.POL.locationLabel(cc, y, city);
+    var context = ctxHintText(cc, y, city), start = 'Năm ' + y + ', ' + nm + ': ';
     if (y < F) return start + 'sức khỏe và kinh tế được ước tính từ dữ liệu sớm nhất và xu hướng thời đại.' + context;
     var a = X?.at(cc, y);
     if (!a?.demographicYear) return start + 'sinh hoạt và biến cố theo năm đang sống.' + context;
@@ -176,6 +178,17 @@
     if (a.projected) return start + 'dự phóng UN WPP năm ' + a.demographicYear + ' cho thấy ' + rates + '.' + context;
     var access = a.mobile < .5 && a.internet < .5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet';
     return start + rates + (a.u5Observed ? '' : ' (ước tính)') + ', ' + d(a.urban, 0) + '% dân ở đô thị, ' + access + '.' + context;
+  }
+  function syncWorldBirthCity() {
+    var cc = S.set.country, enabled = S.set.mode === 'world' && (cc === 'MY' || cc === 'DE');
+    var select = $('#worldCitySel'), P = E.ERA920.POL, y = S.set.year || NOW_YEAR;
+    $('#worldCityField').classList.toggle('hidden', !enabled);
+    if (!enabled) return;
+    var choices = P.cities(cc, y), selected = P.cityAtYear(cc, y, S.set.worldCity);
+    select.length = 1;
+    choices.forEach(function (city) { select.add(new Option(P.locationLabel(cc, y, city), city)); });
+    select.value = choices.includes(selected) ? selected : '';
+    if (S.set.worldCity !== select.value) { S.set.worldCity = select.value; saveSettings(); }
   }
   function syncSetupUI() {
     if(syncBirthRegion968()){saveSettings();fillSelects();}
@@ -189,7 +202,6 @@
       if (MIN_YEAR < FULL_FROM) { og = document.createElement('optgroup'); og.label = (FULL_FROM - 1) + '–' + MIN_YEAR + ' (trước ' + FULL_FROM + ')'; for (y = FULL_FROM - 1; y >= MIN_YEAR; y--) og.appendChild(new Option(String(y), String(y))); ys.appendChild(og); }
     }
     ys.value = S.set.year ? String(S.set.year) : '';
-    $('#yearHint').textContent = yearHintText();
     if (country.options.length === 1 || country.dataset.year968!==String(S.set.year||NOW_YEAR)) {
       country.dataset.year968=String(S.set.year||NOW_YEAR);
       country.innerHTML='<option value="">🎲 Ngẫu nhiên (theo số trẻ chào đời)</option>';
@@ -199,6 +211,8 @@
     }
     country.value = S.set.country || '';
     if (!country.value) { S.set.country = ''; country.value = ''; }
+    syncWorldBirthCity();
+    $('#yearHint').textContent = yearHintText();
     $$('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.mode === S.set.mode); });
     $('#vnOpts').classList.toggle('hidden', !vn);
     $('#worldOpts').classList.toggle('hidden', vn);
@@ -214,7 +228,7 @@
     $('#heroTitle').innerHTML = vn ? '1 trong <em>100 triệu</em>' : '1 trong <em>8 tỷ</em>';
     $('#heroLead').textContent = vn
       ? 'Cứ khoảng 23 giây lại có một em bé chào đời ở Việt Nam. Bạn sẽ trở thành một trong số đó và sống trọn một đời người — với những ngã rẽ, cám dỗ, mất mát và hạnh phúc. Sinh ra ở tỉnh nào, dân tộc nào, trong gia đình nào — bạn không được chọn. Cũng như ngoài đời.'
-      : 'Mỗi giây có khoảng bốn em bé chào đời trên Trái Đất. Bạn sẽ trở thành một trong số đó và sống trọn một đời người. Bạn có thể chọn quốc gia sinh ra; thành phố, gia đình và các đặc điểm khác vẫn ngẫu nhiên.';
+      : 'Mỗi giây có khoảng bốn em bé chào đời trên Trái Đất. Bạn sẽ trở thành một trong số đó và sống trọn một đời người. Bạn có thể chọn quốc gia và chọn thành phố nếu có trong danh sách. Gia đình và các đặc điểm khác vẫn ngẫu nhiên.';
     renderOdds();
   }
 
@@ -273,7 +287,7 @@
     if (!vn && l.gdp < 3) return 'Lớn lên ở nơi thiếu thốn điện, nước sạch, trường học';
     return TEASERS[Math.abs(l.rs) % TEASERS.length];
   }
-  function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, prov:S.set.mode==='vn'?S.set.prov:'',eth:S.set.mode==='vn'?S.set.eth:'',gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
+  function profileOpts() { var city = S.set.mode === 'world' ? S.set.worldCity : ''; return { country: S.set.mode === 'world' ? S.set.country : '', city: city || undefined, urban: city ? true : undefined, mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, prov:S.set.mode==='vn'?S.set.prov:'',eth:S.set.mode==='vn'?S.set.eth:'',gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
     var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':P?.birthText(l)||l.birthPlace;
@@ -359,7 +373,8 @@
   $$('#variantChips .chip').forEach(function (c) { c.onclick = function () { S.set.variant = c.dataset.variant; S.set.prov = ''; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); }; });
   $('#provSel').onchange = function () { S.set.prov = this.value; saveSettings(); updateProvHint(); $('#yearHint').textContent=yearHintText(); S.preview=null;renderProfile(); };
   $('#yearSel').onchange = function () { S.set.year = this.value ? +this.value : null; S.preview = null; saveSettings(); syncSetupUI(); fillSelects(); renderProfile(); };
-  $('#countrySel').onchange = function () { S.set.country = this.value; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
+  $('#countrySel').onchange = function () { S.set.country = this.value; S.set.worldCity = ''; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
+  $('#worldCitySel').onchange = function () { S.set.worldCity = this.value; S.preview = null; saveSettings(); syncSetupUI(); renderProfile(); };
   $('#ethSel').onchange = function () { S.set.eth = this.value; S.preview=null;saveSettings();renderProfile(); };
   $('#nameInp').oninput = function () { S.set.name = this.value; };
   $$('#genderChips .chip').forEach(function (c) { c.onclick = function () { S.set.gender = c.dataset.g; if ((c.dataset.g === 'F' && /^(top|bot)$/.test(S.set.orient)) || (c.dataset.g === 'M' && S.set.orient === 'les')) S.set.orient = 'lgbt'; saveSettings(); syncSetupUI(); }; });
@@ -385,6 +400,7 @@
   $('#bornBtn').onclick = function () {
     var opts = { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, gender: S.set.gender, orient: S.set.orient || null, lifeMin: S.set.lifeMin, year: S.set.year || undefined };
     if (S.set.mode === 'vn') { opts.prov = S.set.prov; opts.eth = S.set.eth; opts.name = ($('#nameInp').value || '').trim(); }
+    else if (S.set.worldCity) { opts.city = S.set.worldCity; opts.urban = true; }
     bornWith(opts);
   };
   function bornWith(opts) {
@@ -411,7 +427,7 @@
       { lab: 'Gia cảnh', pool: famNames, fin: famNames[l.fam.q - 1] }
     ];
     else {
-      var dated = function (city) { return P.cityLabel(l.country, y, city); };
+      var dated = function (city) { return P.locationLabel(l.country, y, city); };
       reels = [
       { lab: 'Quốc gia', pool: W.C.filter(function (c) { return c.births > 0; }).map(function (c) { return birthCountryLabel(c, y); }), fin: birthCountryLabel(W.BY[l.country], y) },
       { lab: 'Nơi sinh', pool: P.cities(l.country, y).map(dated).concat(['nông thôn']), fin: E.isVN(l) ? provinceLabel(l.provLabel) : (l.urban ? dated(l.city) : 'Nông thôn') },
@@ -421,7 +437,7 @@
     }
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var N = 28, H = 44, durs = reduce ? [300, 350, 400, 450] : [1700, 2300, 2800, 3300];
-    modal('<div class="agep">Số phận đang được quay</div><h2>Bạn sẽ được sinh ra là ai?</h2><p class="muted small" style="margin:0">Không ai được chọn nơi mình sinh ra.</p>' +
+    modal('<div class="agep">Số phận đang được quay</div><h2>Bạn sẽ được sinh ra là ai?</h2><p class="muted small" style="margin:0">' + (S.set.mode === 'world' && S.set.worldCity ? 'Bạn đã chọn thành phố sinh ra.' : 'Gia cảnh lúc chào đời do số phận quyết định.') + '</p>' +
       '<div class="reels">' + reels.map(function (r, i) {
         var items = shuffled(r.pool, N).concat([r.fin]);
         return '<div class="reel" id="reel' + i + '"><div class="lab">' + esc(r.lab) + '</div><div class="win"><ul style="transform:translateY(' + H + 'px)">' +
@@ -887,6 +903,8 @@
     if (l.abroad && l.abroad.trapped) return 'Một trại lừa đảo ở Campuchia';
     if (l.abroad && l.abroad.study) return l.abroad.name + ' (du học)';
     if (l.abroad && !l.abroad.perm) return l.abroad.name + ' (lao động có thời hạn)';
+    var P = E.ERA920?.POL, y = l.birthYear + l.age, cc = E.H.resCode(l), city = P?.residentCity?.(l);
+    if (P?.regionAt(cc, y, city) && (l.cityStudent || l.movedTo)) return P.locationLabel(cc, y, city) + (l.cityStudent ? ' (sinh viên)' : '');
     if (l.abroad) return E.placeText(l);
     if (l.cityStudent) return (E.ERA920?.POL?.cityLabel?.(l.country, l.birthYear + l.age, l.cityStudent.city) || l.cityStudent.city) + ' (sinh viên)';
     if (l.movedTo) return l.movedTo;
@@ -1318,12 +1336,14 @@
         ['Quan hệ cùng giới', ss]
       ]);
     }
-    var residence = E.H.resCode(l);
+    var residence = E.H.resCode(l), P = E.ERA920.POL, y = placeYear + l.age, currentCity = P.residentCity(l);
+    if (P.regionAt(l.country, placeYear, l.birthCity)) html += dl([['Nơi sinh · ' + placeYear, P.birthText(l)]]);
     if (residence !== l.country) {
       var current = E.ERA920.demography(residence, l.birthYear + l.age);
       html += '<h3 style="margin-top:14px">Nơi đang sống</h3>' + dl([['Quốc gia', birthCountryLabel(W.BY[residence] || { code: residence, name: l.abroad.name || residence }, l.birthYear + l.age)]]);
       if (current) html += dl([['Mức sinh · ' + current.year + (current.projected ? ' (dự phóng)' : ''), U.fmtNum(current.tfr, 2) + ' con/phụ nữ'], ['Tuổi thọ lúc sinh', U.fmtNum(current.e0, 1) + ' năm']]);
     }
+    if (P.regionAt(residence, y, currentCity)) html += dl([['Nơi ở · ' + y, P.locationLabel(residence, y, currentCity)]]);
     var home=E.HOMETOWN&&E.HOMETOWN.own(l);
     if(home)html+='<h3 style="margin-top:14px">Dấu ấn quê hương · '+esc(home.name)+'</h3>'+dl([['Địa danh',home.places.join(' · ')],['Ẩm thực / sản vật',home.foods.join(' · ')]]);
     html += '<p class="small muted" style="margin:10px 0 0">' + esc(birthSource(placeYear, counts)) + ' Các chỉ số khác dùng mốc ghi bên cạnh hoặc dữ liệu gần nhất.</p>';

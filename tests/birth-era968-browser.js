@@ -60,6 +60,34 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     assert.match(authority.transition,/quân quản Anh/);
     assert.match(authority.congo2024,/giao tranh leo thang ở Bắc Kivu/);
     assert.doesNotMatch(authority.congo2024,/chiếm Goma|vào Bukavu/);
+    const regional=await p.eval(()=>{
+     const choose=(id,value)=>{const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));};
+     const hint=()=>document.querySelector('#yearHint').innerText;
+     choose('yearSel','1958');choose('countrySel','MY');choose('worldCitySel','Kuching');const kuching=hint();
+     choose('worldCitySel','Kota Kinabalu');const jesselton=document.querySelector('#worldCitySel').selectedOptions[0].textContent;
+     choose('worldCitySel','Kuala Lumpur');const malaya=hint();
+     choose('countrySel','DE');choose('yearSel','1965');choose('worldCitySel','Đông Berlin');const east=hint();
+     choose('worldCitySel','Tây Berlin');const west=hint();
+     choose('yearSel','1990');const united=document.querySelector('#worldCitySel').value;
+     choose('yearSel','1965');choose('worldCitySel','Dresden');
+     const profile=document.querySelector('#heroProfile').innerText;
+     const original=G.E.makeCohort;G.E.makeCohort=()=>[];
+     let birth, saved;
+     try{document.querySelector('#bornBtn').click();document.querySelector('#rollSkip').click();birth=document.querySelector('#birthWrap').innerText;saved=G.SaveStore.read('mkn.current').value.life;}
+     finally {G.E.makeCohort=original;}
+     return {kuching,jesselton,malaya,east,west,united,profile,birth,city:saved.birthCity,year:saved.birthYear,overflow:document.documentElement.scrollWidth>innerWidth+1};
+    });
+    assert.match(regional.kuching,/Sarawak trở thành thuộc địa của Anh/);
+    assert.doesNotMatch(regional.kuching,/khẩn cấp Malaya/);
+    assert.match(regional.jesselton,/Jesselton.*Bắc Borneo/);
+    assert.match(regional.malaya,/khẩn cấp Malaya.*Liên bang Malaya độc lập/);
+    assert.match(regional.east,/Đông Berlin.*hạn chế ra nước ngoài/);
+    assert.match(regional.west,/Tây Berlin do Mỹ, Anh và Pháp quản lý/);
+    assert.doesNotMatch(regional.west,/hạn chế ra nước ngoài/);
+    assert.equal(regional.united,'Berlin');assert.equal(regional.city,'Dresden');assert.equal(regional.year,1965);
+    assert.match(regional.profile,/Dresden, Đông Đức/);assert.match(regional.birth,/Dresden, Đông Đức/);assert(!regional.overflow);
+    await p.reload();await p.eval(async()=>{await MotDoiBoot.load();});
+    await p.eval(()=>{for(const [id,value] of [['countrySel','UA'],['yearSel','2025']]){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}});
     const odds=await p.eval(()=>{
      function choose(id,value){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}
      choose('yearSel','1900');

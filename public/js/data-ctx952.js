@@ -253,6 +253,9 @@
   z('MM', 1942, 1945, 'Taunggyi|Naypyidaw|Mawlamyine', { war: -1 }, 'Xa các tuyến chính của chiến dịch');
   z('MM', 2017, 2017, '.', { war: '=1' }, 'Cuộc đàn áp ở bang Rakhine; các thành phố này ở xa');
   z('MY', 1941, 1942, 'Johor Bahru|George Town|Ipoh|Kuala Lumpur|Malacca', { war: 1 }, 'Chiến dịch Mã Lai và Sook Ching');
+  z('TL', 1942, 1944, 'Dili', { war: '=3' }, 'Dili dưới quyền chiếm đóng của Nhật Bản');
+  z('PH', 1945, 1945, 'Manila|Quezon City|Caloocan', { war: '=3' }, 'Chiến sự giải phóng Manila và vùng phụ cận đầu năm 1945');
+  z('MY', 1948, 1960, 'Kuching|Kota Kinabalu', { war: '=0' }, 'Tình trạng khẩn cấp Malaya chỉ áp dụng ở bán đảo');
   z('MY', 1945, 1945, 'Kota Kinabalu|Kuching', { war: 1 }, 'Chiến dịch giải phóng Borneo');
   z('NP', 1996, 2006, 'Kathmandu|Lalitpur|Pokhara|Biratnagar', { war: -1 }, 'Chiến tranh nhân dân ở nông thôn miền tây và miền trung');
   z('PH', 1900, 1902, 'Manila|Quezon City|Caloocan', { war: -1 }, 'Chiến sự lan ra nông thôn, Manila đã do Mỹ kiểm soát');
@@ -455,7 +458,10 @@
   nat('ME', 1941, 1945, 'Chiếm đóng và nội chiến lan khắp lãnh thổ');
   nat('MK', 1912, 1913, 'Macedonia là chiến trường chính của các cuộc chiến tranh Balkan');
   nat('MK', 1941, 1945, 'Chiếm đóng và nội chiến lan khắp lãnh thổ');
-  nat('PH', 1941, 1945, 'Chiếm đóng và giải phóng làm tổn hại mọi thành phố lớn');
+  nat('PH', 1941, 1941, 'Nhật tấn công nhiều địa điểm ở Philippines vào cuối năm 1941');
+  nat('PH', 1942, 1944, 'Nhật chiếm đóng các thành phố lớn ở Philippines');
+  nat('PH', 1945, 1945, 'Các chiến dịch giải phóng diễn ra ở nhiều đảo trong năm 1945');
+  nat('TL', 1942, 1945, 'Đông Timor nằm dưới quyền chiếm đóng của Nhật đến khi Nhật đầu hàng năm 1945');
   nat('RS', 1941, 1945, 'Chiếm đóng và nội chiến lan khắp lãnh thổ');
   nat('RW', 1918, 1929, 'Ghi chép chung của Ruanda-Urundi, chưa có số liệu theo vùng đủ chắc');
   nat('SG', 1942, 1945, 'Chiếm đóng toàn đảo; các khu phố hiện nay chưa tồn tại như đơn vị riêng');

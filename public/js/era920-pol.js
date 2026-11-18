@@ -10,7 +10,7 @@
   var A = 'thuộc địa của ', P = 'lãnh thổ bảo hộ của ';
   // [mã, năm độc lập, bên cai quản] — ghi cho năm thế giới < năm độc lập
   var DEP = [['MA', 1956, 'Pháp và Tây Ban Nha (bảo hộ)'], ['TN', 1956, 'Pháp (bảo hộ)'], ['SD', 1956, 'Anh và Ai Cập đồng quản lý'], ['KH', 1953, A + 'Pháp (Liên hiệp Pháp)'], ['LA', 1953, A + 'Pháp (Liên hiệp Pháp)'],
-    ['MY', 1957, A + 'Anh (Malaya)'], ['GH', 1957, A + 'Anh (Bờ Biển Vàng)'], ['GN', 1958, A + 'Pháp'], ['CM', 1960, 'lãnh thổ do Pháp và Anh quản lý (ủy trị/giám hộ Liên Hợp Quốc)'], ['TG', 1960, 'lãnh thổ do Pháp quản lý'], ['MG', 1960, A + 'Pháp'], ['CD', 1960, A + 'Bỉ (Congo thuộc Bỉ)'],
+    ['GH', 1957, A + 'Anh (Bờ Biển Vàng)'], ['GN', 1958, A + 'Pháp'], ['CM', 1960, 'lãnh thổ do Pháp và Anh quản lý (ủy trị/giám hộ Liên Hợp Quốc)'], ['TG', 1960, 'lãnh thổ do Pháp quản lý'], ['MG', 1960, A + 'Pháp'], ['CD', 1960, A + 'Bỉ (Congo thuộc Bỉ)'],
     ['SO', 1960, 'lãnh thổ do Ý (giám hộ) và Anh quản lý'], ['BJ', 1960, A + 'Pháp'], ['NE', 1960, A + 'Pháp'], ['BF', 1960, A + 'Pháp'], ['CI', 1960, A + 'Pháp'], ['TD', 1960, A + 'Pháp'], ['CF', 1960, A + 'Pháp'], ['CG', 1960, A + 'Pháp'], ['GA', 1960, A + 'Pháp'], ['SN', 1960, A + 'Pháp'], ['ML', 1960, A + 'Pháp'], ['MR', 1960, A + 'Pháp'],
     ['NG', 1960, A + 'Anh'], ['CY', 1960, A + 'Anh'], ['SL', 1961, A + 'Anh'], ['KW', 1961, P + 'Anh'], ['TZ', 1961, A + 'Anh (Tanganyika)'], ['RW', 1962, 'lãnh thổ do Bỉ quản lý (giám hộ Liên Hợp Quốc)'], ['BI', 1962, 'lãnh thổ do Bỉ quản lý (giám hộ Liên Hợp Quốc)'], ['UG', 1962, A + 'Anh'], ['DZ', 1962, 'lãnh thổ của Pháp (Algérie thuộc Pháp)'],
     ['JM', 1962, A + 'Anh'], ['TT', 1962, A + 'Anh'], ['WS', 1962, 'lãnh thổ do New Zealand quản lý (giám hộ Liên Hợp Quốc)'], ['KE', 1963, A + 'Anh'], ['MW', 1964, A + 'Anh (Nyasaland)'], ['ZM', 1964, A + 'Anh (Bắc Rhodesia)'], ['MT', 1964, A + 'Anh'], ['GM', 1965, A + 'Anh'], ['MV', 1965, P + 'Anh'],
@@ -36,7 +36,7 @@
   add('BD', 1947, 1954, 'Đông Bengal thuộc Pakistan'); add('BD', 1955, 1970, 'Đông Pakistan (thuộc Pakistan)'); add('BD', 1971, 1971, 'chiến tranh giải phóng, độc lập năm 1971');
   add('ER', 1950, 1951, 'dưới sự quản lý của Anh'); add('ER', 1952, 1990, 'thuộc Ethiopia (liên bang 1952, sáp nhập 1962; chiến tranh đòi độc lập 1961–1991)'); add('ER', 1991, 1992, 'tự quản sau chiến tranh; trưng cầu dân ý năm 1993');
   add('SS', 1950, 2010, 'thuộc Sudan (độc lập tháng 7/2011)');
-  add('TL', 1950, 1974, A + 'Bồ Đào Nha (Timor thuộc Bồ)'); add('TL', 1975, 1998, 'bị Indonesia chiếm đóng và sáp nhập năm 1976 (Liên Hợp Quốc không công nhận)'); add('TL', 1999, 2001, 'Liên Hợp Quốc quản lý chuyển tiếp; độc lập 20/5/2002');
+  add('TL', 1975, 1998, 'bị Indonesia chiếm đóng và sáp nhập năm 1976 (Liên Hợp Quốc không công nhận)'); add('TL', 1999, 2001, 'Liên Hợp Quốc quản lý chuyển tiếp; độc lập 20/5/2002');
 
   add('ZW', 1950, 1964, A + 'Anh tự quản (Nam Rhodesia)'); add('ZW', 1965, 1979, 'Rhodesia do chính quyền thiểu số da trắng đơn phương tuyên bố độc lập (1965), không được quốc tế công nhận');
   add('ZA', 1950, 1993, 'chế độ phân biệt chủng tộc apartheid (1948–1994)');
@@ -84,10 +84,36 @@
     ['GH', 1900, 1956, 'Bờ Biển Vàng'], ['SS', 1900, 1955, 'miền nam Sudan thuộc Anh–Ai Cập'],
     ['SS', 1956, 2010, 'miền nam Sudan']);
   // tên thành phố: [tên hiện nay, tên thời đó, năm cuối còn dùng tên cũ, (tùy chọn) năm đầu]
-  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928], ['Faisalabad', 'Lyallpur', 1976], ['Gqeberha', 'Port Elizabeth', 2020], ['Dnipro', 'Katerynoslav', 1925], ['Dnipro', 'Dnipropetrovsk', 2015, 1926], ['Polokwane', 'Pietersburg', 2001]];
+  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928], ['Faisalabad', 'Lyallpur', 1976], ['Gqeberha', 'Port Elizabeth', 2020], ['Dnipro', 'Katerynoslav', 1925], ['Dnipro', 'Dnipropetrovsk', 2015, 1926], ['Polokwane', 'Pietersburg', 2001], ['Kota Kinabalu', 'Jesselton', 1967], ['Shah Alam', 'khu vực Batu Tiga', 1962]];
   function resCC(l) { return l ? E.H.resCode(l) : null; }
   // [năm đầu, năm cuối, hình thức cai quản, bên quản lý, mô tả]. Các mốc chuyển giao trong năm có ghi tháng.
   var AUTHORITY = {
+    PH: [
+      [1900, 1934, 'colony', 'Mỹ', 'Philippines dưới quyền cai trị của Mỹ'],
+      [1935, 1940, 'commonwealth', 'Mỹ', 'Thịnh vượng chung Philippines tự trị dưới chủ quyền Mỹ'],
+      [1941, 1941, 'commonwealth', 'Mỹ', 'Thịnh vượng chung Philippines dưới chủ quyền Mỹ; Nhật Bản mở cuộc tấn công vào tháng 12/1941'],
+      [1942, 1942, 'occupation', 'Nhật Bản', 'Nhật Bản chiếm Manila từ tháng 1/1942; chính phủ Thịnh vượng chung Philippines tiếp tục hoạt động lưu vong'],
+      [1943, 1943, 'occupation', 'Nhật Bản', 'Philippines dưới quyền chiếm đóng của Nhật Bản; nền Đệ nhị Cộng hòa do Nhật bảo trợ ra đời tháng 10/1943'],
+      [1944, 1944, 'occupation', 'Nhật Bản', 'Nhật Bản còn chiếm phần lớn Philippines; quân Đồng Minh đổ bộ lên Leyte vào tháng 10/1944'],
+      [1945, 1945, 'transition', 'Mỹ', 'Đồng Minh giành lại Manila đầu năm 1945 và chính phủ Thịnh vượng chung Philippines trở lại; chiến sự tiếp tục ở nhiều nơi'],
+      [1946, 2025, 'independent', null, 'Philippines độc lập từ ngày 4/7/1946']
+    ],
+    TL: [
+      [1900, 1941, 'colony', 'Bồ Đào Nha', 'Đông Timor là thuộc địa Bồ Đào Nha'],
+      [1942, 1942, 'occupation', 'Nhật Bản', 'Quân Nhật đổ bộ lên Dili tháng 2/1942 và kiểm soát Đông Timor trong thời chiến'],
+      [1943, 1944, 'occupation', 'Nhật Bản', 'Đông Timor dưới quyền chiếm đóng của Nhật Bản; Bồ Đào Nha vẫn tuyên bố chủ quyền thuộc địa'],
+      [1945, 1945, 'transition', 'Bồ Đào Nha', 'Nhật Bản chiếm đóng Đông Timor đến khi đầu hàng năm 1945; Bồ Đào Nha trở lại quản lý'],
+      [1946, 1974, 'colony', 'Bồ Đào Nha', 'Đông Timor dưới quyền quản lý của Bồ Đào Nha']
+    ],
+    MY: [
+      [1900, 1940, 'regional', null, 'Bán đảo Malaya, Vương quốc Sarawak và Bắc Borneo có các chính quyền riêng dưới ảnh hưởng của Anh'],
+      [1941, 1941, 'transition', null, 'Quân Nhật mở cuộc tấn công vào bán đảo Malaya và Borneo tháng 12/1941'],
+      [1942, 1944, 'occupation', 'Nhật Bản', 'Nhật Bản chiếm đóng Malaya, Sarawak và Bắc Borneo'],
+      [1945, 1945, 'transition', 'Anh', 'Nhật đầu hàng năm 1945; quân quản Anh tiếp quản Malaya, Sarawak và Bắc Borneo'],
+      [1946, 1956, 'regional', null, 'Malaya, Sarawak và Bắc Borneo nằm dưới quyền Anh qua các chính quyền riêng'],
+      [1957, 1962, 'regional', null, 'Liên bang Malaya độc lập từ 31/8/1957; Sarawak và Bắc Borneo vẫn do Anh quản lý'],
+      [1963, 2025, 'federation', null, 'Liên bang Malaysia thành lập ngày 16/9/1963 với Malaya, Sarawak, Sabah và Singapore; Singapore tách ra năm 1965']
+    ],
     SG: [
       [1900, 1941, 'colony', 'Anh', 'Singapore thuộc Các khu định cư Eo biển của Anh'],
       [1942, 1942, 'occupation', 'Nhật Bản', 'Nhật Bản chiếm Singapore từ tháng 2/1942'],
@@ -120,12 +146,83 @@
       [1951, 1951, 'independent', null, 'Libya độc lập từ ngày 24/12/1951']
     ]
   };
-  function authorityAt(cc, y) {
-    var row = AUTHORITY[cc]?.find(function (r) { return y >= r[0] && y <= r[1]; });
-    return row ? { from: row[0], kind: row[2], ruler: row[3], text: row[4] } : null;
+  var MALAYA = [
+    [1900, 1940, 'protectorate', 'Anh', 'Các bang và khu định cư trên bán đảo Malaya dưới quyền hoặc bảo hộ của Anh'],
+    [1946, 1947, 'colony', 'Anh', 'Liên hiệp Malaya dưới quyền Anh từ tháng 4/1946'],
+    [1948, 1956, 'federation', 'Anh', 'Liên bang Malaya dưới quyền Anh từ tháng 2/1948'],
+    [1957, 1962, 'independent', null, 'Liên bang Malaya độc lập từ ngày 31/8/1957']
+  ];
+  var BORNEO = {
+    sarawak: [
+      [1900, 1940, 'protectorate', 'Anh', 'Vương quốc Sarawak do nhà Brooke cai trị dưới sự bảo hộ của Anh'],
+      [1946, 1962, 'colony', 'Anh', 'Sarawak trở thành thuộc địa của Anh vào tháng 7/1946'],
+      [1963, 2025, 'federation', null, 'Sarawak gia nhập Liên bang Malaysia ngày 16/9/1963']
+    ],
+    sabah: [
+      [1900, 1940, 'protectorate', 'Anh', 'Bắc Borneo do Công ty Bắc Borneo cai quản dưới sự bảo hộ của Anh'],
+      [1946, 1962, 'colony', 'Anh', 'Bắc Borneo trở thành thuộc địa của Anh vào tháng 7/1946'],
+      [1963, 2025, 'federation', null, 'Bắc Borneo gia nhập Liên bang Malaysia với tên Sabah ngày 16/9/1963']
+    ]
+  };
+  var GERMAN_ZONES = {
+    Hamburg: 'Anh', Cologne: 'Anh', Düsseldorf: 'Anh',
+    Munich: 'Mỹ', Frankfurt: 'Mỹ', Stuttgart: 'Mỹ', Leipzig: 'Liên Xô', Dresden: 'Liên Xô'
+  };
+  var GERMAN_STATES = {
+    Berlin: 'Berlin', Hamburg: 'Hamburg', Cologne: 'Bắc Rhine–Westphalia', Düsseldorf: 'Bắc Rhine–Westphalia',
+    Munich: 'Bayern', Frankfurt: 'Hessen', Stuttgart: 'Baden-Württemberg', Leipzig: 'Sachsen', Dresden: 'Sachsen'
+  };
+  var MALAYAN_STATES = { 'Johor Bahru': 'Johor', 'George Town': 'Penang', Ipoh: 'Perak', Malacca: 'Malacca', 'Shah Alam': 'Selangor' };
+  function authority(from, kind, ruler, text) { return { from: from, kind: kind, ruler: ruler, text: text }; }
+  function datedAuthority(rows, y) {
+    var row = rows?.find(function (r) { return y >= r[0] && y <= r[1]; });
+    return row ? authority(row[0], row[2], row[3], row[4]) : null;
   }
-  function status(cc, y) {
-    var authority = authorityAt(cc, y);
+  function malaysiaRegion(y, city) {
+    var area = city === 'Kuching' ? 'sarawak' : city === 'Kota Kinabalu' ? 'sabah' : 'malaya';
+    if (area === 'malaya' && !G.W.BY.MY.cities.includes(city)) return null;
+    var label = area === 'sarawak' ? 'Sarawak' : area === 'sabah' ? (y < 1963 ? 'Bắc Borneo' : 'Sabah') :
+      y >= 1963 ? 'Malaysia bán đảo' : y >= 1948 ? 'Liên bang Malaya' : y >= 1946 ? 'Liên hiệp Malaya' : 'Malaya';
+    if (area === 'malaya' && y >= 1963) label = city === 'Kuala Lumpur' ? (y >= 1974 ? 'Lãnh thổ Liên bang Kuala Lumpur' : 'Selangor') : MALAYAN_STATES[city];
+    return { area: area, label: label, authority: datedAuthority(BORNEO[area] || MALAYA, y) };
+  }
+  function germanyRegion(y, city) {
+    var berlin = city === 'Berlin' || city === 'Đông Berlin' || city === 'Tây Berlin';
+    var eastBerlin = city === 'Đông Berlin', westBerlin = city === 'Tây Berlin';
+    var zone = GERMAN_ZONES[city], east = eastBerlin || zone === 'Liên Xô';
+    var area = east ? 'east' : city === 'Berlin' ? 'berlin' : 'west';
+    if (y < 1945 || (!berlin && !G.W.BY.DE.cities.includes(city))) return null;
+    if (y >= 1990) return { area: 'unified', label: berlin ? 'Đức' : GERMAN_STATES[city] + ', Đức' };
+    if (city === 'Berlin') return { area: area, label: 'bốn khu vực quân quản', authority: authority(1945, 'divided', null,
+      'Berlin chia thành bốn khu vực của Liên Xô, Mỹ, Anh và Pháp; quy định sinh sống tùy phía thành phố') };
+    if (y < 1949) {
+      var power = eastBerlin ? 'Liên Xô' : westBerlin ? 'Mỹ, Anh và Pháp' : zone;
+      return { area: area, label: (berlin ? 'khu vực ' : 'vùng quân quản ') + power,
+        authority: authority(1945, 'occupation', power, (berlin ? city + ' nằm trong các khu vực do ' : 'Sau chiến tranh, nơi này nằm trong vùng quân quản do ') + power + ' quản lý') };
+    }
+    var label = east ? (eastBerlin ? 'khu vực Liên Xô tại Berlin' : 'Đông Đức') : (westBerlin ? 'khu vực Mỹ, Anh và Pháp tại Berlin' : 'Tây Đức');
+    var text = eastBerlin ? 'Đông Berlin là nơi đặt chính quyền và được Đông Đức coi là thủ đô; địa vị của Berlin vẫn thuộc quy chế bốn cường quốc' :
+      westBerlin ? 'Tây Berlin do Mỹ, Anh và Pháp quản lý theo quy chế riêng và gắn bó với Tây Đức' :
+      east ? 'Nơi này thuộc Cộng hòa Dân chủ Đức (Đông Đức)' : 'Nơi này thuộc Cộng hòa Liên bang Đức (Tây Đức)';
+    var from = 1949, restricted = east && y >= 1961 && y < 1989;
+    if (y >= 1952 && y < 1961) { from = 1952; text += '; biên giới liên Đức bị siết từ năm 1952, lối qua giữa hai phía Berlin còn mở'; }
+    if (y >= 1961 && y < 1989) { from = 1961; text += '; Bức tường Berlin được dựng từ 13/8/1961'; }
+    if (y === 1989) { from = 1989; text += '; các cửa khẩu ở Bức tường Berlin mở từ 9/11/1989'; }
+    return { area: area, label: label, restrict: restricted ? 3 : 0,
+      authority: authority(from, berlin ? 'specialStatus' : 'independent', null, text) };
+  }
+  function regionAt(cc, y, city) {
+    if (!city || y < 1900) return null;
+    city = X.POL.canonicalCity(city);
+    if (cc === 'MY') return malaysiaRegion(y, city);
+    if (cc === 'DE') return germanyRegion(y, city);
+    return null;
+  }
+  function authorityAt(cc, y, city) {
+    return regionAt(cc, y, city)?.authority || datedAuthority(AUTHORITY[cc], y);
+  }
+  function status(cc, y, city) {
+    var authority = authorityAt(cc, y, city);
     if (authority) return authority.text;
     var s = STATUS[cc] || [];
     for (var i = 0; i < s.length; i++) if (y >= s[i][0] && y <= s[i][1]) return s[i][2];
@@ -155,21 +252,27 @@
     CITIES.concat([['Astana','Nur-Sultan']]).forEach(function(c){s=s.replace(cityRe(c[1]),function(m,p){return p+c[0];});});
     return s;
   }
-  function note(l) { var cc = resCC(l), y = wy(l); return cc ? status(cc, y) : null; }
+  function note(l) { var cc = resCC(l), y = wy(l); return cc ? status(cc, y, X.POL.residentCity?.(l)) : null; }
   var famLogic0 = E.famLogic;
   E.famLogic = function (l, t, isLog) { var u = famLogic0 ? famLogic0.call(this, l, t, isLog) : t; return u == null ? u : rename(l, u); };
   function datedPlace(l, s) {
-    var label = nameAt(l.country, wy(l)), suffix = ', ' + l.countryName;
+    var label = regionAt(l.country, wy(l), l.city)?.label || nameAt(l.country, wy(l)), suffix = ', ' + l.countryName;
     var P = X.POL, city = P.canonicalCity(l.city);
     s = P.canonicalCity(s);
-    if (city && P.cityAllowed && !P.cityAllowed(l.country, wy(l), city) && typeof s === 'string') {
-      s = s.replace(cityRe(city), function (m, prefix) { return prefix + P.cityLabel(l.country, wy(l), city); });
+    var local = city && P.cityLabel?.(l.country, wy(l), city);
+    if (local && local !== city && typeof s === 'string') {
+      s = s.replace(cityRe(city), function (m, prefix) { return prefix + local; });
     }
     s = P.rename(l, s);
     return label && s.endsWith(suffix) ? s.slice(0, -suffix.length) + ', ' + label : s;
   }
   function birthText(l) {
-    var birth = { country: l.country, countryName: l.countryName, birthYear: l.birthYear, age: 0, city: l.birthCity };
+    var P = X.POL, city = l.birthCity;
+    if (!city && (l.country === 'DE' || l.country === 'MY')) {
+      var name = P.canonicalCity(l.birthPlace?.split(',')[0].replace(/^vùng nông thôn gần /, ''));
+      if (name === 'Berlin' && l.country === 'DE' || P.cities?.(l.country, l.birthYear).includes(name)) city = name;
+    }
+    var birth = { country: l.country, countryName: l.countryName, birthYear: l.birthYear, age: 0, city: city };
     return datedPlace(birth, l.birthPlace);
   }
   var placeText0 = E.placeText;
@@ -177,7 +280,7 @@
     var cc = resCC(l), label = nameAt(cc, wy(l));
     if (l.abroad && l.abroad.code === cc) {
       var city = X.POL.residentCity ? X.POL.residentCity(l) : l.city || l.place;
-      var country = label || l.abroad.name || G.W.BY[cc]?.name || cc;
+      var country = regionAt(cc, wy(l), city)?.label || label || l.abroad.name || G.W.BY[cc]?.name || cc;
       return city ? (X.POL.cityLabel ? X.POL.cityLabel(cc, wy(l), city) : rename(l, city)) + ', ' + country : country;
     }
     return datedPlace(l, placeText0.apply(this, arguments));
@@ -186,15 +289,15 @@
   E.HOOKS.year.push(function (l, r, log) {
     var y = wy(l);
     if (!l.alive || y < 1900 || y > 2025) return;
-    var cc = resCC(l), s = status(cc, y), m = l.era920 || l.flags.eraPolitical979;
+    var cc = resCC(l), city = X.POL.residentCity?.(l), s = status(cc, y, city), m = l.era920 || l.flags.eraPolitical979;
     if (!m && !s) return;
     if (!m) m = l.flags.eraPolitical979 = {};
     var prev = m.polCC && m.polCC !== cc ? undefined : m.pol;
     if (prev === s && m.polCC === cc) return; m.polCC=cc; m.pol = s || null;
     if (!s && prev === undefined) return;
-    var nm = nameAt(cc, y);
+    var nm = regionAt(cc, y, city)?.label || nameAt(cc, y);
     if (s) log((prev === undefined ? 'Bối cảnh năm ' + y + ': ' : 'Năm ' + y + ', bối cảnh nơi bạn sống đổi: ') + (nm ? nm + ' — ' : '') + s + '.', 'info');
     else if (prev) log('Năm ' + y + ': ' + (nameAt(cc, y - 1) ? nameAt(cc, y - 1) + ' không còn dùng tên cũ. ' : '') + 'Tình trạng chính trị nơi bạn sống đã khác trước.', 'info');
   });
-  X.POL = { canonicalCity: canonicalCity, birthText: birthText, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, authorityAt: authorityAt, nameAt: nameAt, rename: rename, note: note };
+  X.POL = { canonicalCity: canonicalCity, birthText: birthText, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, authorityAt: authorityAt, regionAt: regionAt, nameAt: nameAt, rename: rename, note: note };
 })(globalThis.G);

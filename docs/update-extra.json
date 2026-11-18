@@ -1,5 +1,24 @@
 [
   {
+    "id": "occupation-and-historical-regions-98500",
+    "version": "9.8.5",
+    "publishedAt": "2026-11-18T15:13:36+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Philippines, Đông Timor và vùng lịch sử ở Malaysia, Đức",
+    "summary": "Bối cảnh thời chiến khớp với bên đang cai quản. Nơi sinh và nơi chuyển đến ở Malaysia, Đức có tên vùng và điều kiện đi lại theo từng năm.",
+    "tags": [
+      "Sửa lỗi",
+      "Tính năng"
+    ],
+    "details": [
+      "Ở Philippines, game phân biệt Thịnh vượng chung trước chiến tranh, thời Nhật chiếm đóng, giai đoạn giải phóng và mốc độc lập năm 1946. Ở Đông Timor, bối cảnh ghi nhận Nhật chiếm đóng từ 1942 và chính quyền Bồ Đào Nha trở lại sau khi Nhật đầu hàng năm 1945.",
+      "Kuala Lumpur năm 1958 thuộc Liên bang Malaya đã độc lập, còn Kuching ở Sarawak và Jesselton ở Bắc Borneo vẫn thuộc Anh. Tình trạng khẩn cấp Malaya chỉ áp dụng ở bán đảo.",
+      "Dresden và Munich có chính quyền, sự kiện và điều kiện đi lại khác nhau trong thời Đức chia cắt. Bạn có thể sinh ở Đông Berlin hoặc Tây Berlin và sẽ thấy tên Berlin thống nhất khi sống qua năm 1990.",
+      "Màn tạo đời có thể chọn thành phố hoặc vùng sinh tại Malaysia và Đức. Lựa chọn chuyển chỗ ở và sơ tán xét cả địa điểm đang sống, điểm đến và năm. Hồ sơ vẫn lưu nơi sinh theo tên vào thời điểm chào đời."
+    ]
+  },
+  {
     "id": "evacuation-and-afghan-education-98400",
     "version": "9.8.4",
     "publishedAt": "2026-11-18T14:47:12+07:00",

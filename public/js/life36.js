@@ -127,21 +127,37 @@
   // ===================================================================
   // 3. CHUYỂN CHỖ Ở
   // ===================================================================
+  function regionRules(l) { return ['DE', 'MY'].includes(H.resCode(l)); }
+  function moveYear(l) { return l.birthYear + l.age; }
+  function moveLabel(l, city) { return E.ERA920?.POL?.locationLabel?.(H.resCode(l), moveYear(l), city) || city; }
+  function route(l, city) {
+    var P = E.ERA920?.POL;
+    if (!city || P?.cityAllowed && !P.cityAllowed(H.resCode(l), moveYear(l), city)) return false;
+    return P?.moveReason?.(H.resCode(l), moveYear(l), P.residentCity(l), city) ?? true;
+  }
   function cities(l) {
     if (vnd(l)) return ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Nha Trang', 'Đà Lạt'].filter(function (c) { return c !== l.movedTo && c !== l.city && c !== (l.prov && l.prov.n); });
-    var W = G.W, c = W && W.BY[l.abroad && l.abroad.perm ? l.abroad.code : l.country];
-    return ((c && c.cities) || []).filter(function (x) { return x !== l.place && x !== l.city; }).slice(0, 5);
+    var P = E.ERA920?.POL, code = H.resCode(l), here = P?.residentCity?.(l) || l.city;
+    return (P?.cities?.(code, moveYear(l)) || G.W.BY[code]?.cities || []).filter(function (x) { return x !== here && x !== l.place; });
   }
   SC('chuyen_noi_o', {
     title: 'Chuyển chỗ ở',
     valid: function (l) { return l.indep && !l.ownHouse; },
-    prep: function (l) { return { cs: cities(l).slice(0, 4) }; },
-    text: function (l) { return 'Bạn đang thuê nhà ở ' + (l.place || l.city || 'nơi ở hiện tại') + '. Chuyển đến thành phố khác thì phải thu xếp đồ đạc, đặt cọc nhà mới (khoảng ' + mo(l, V(l, 15)) + '); công việc' + (l.job && H.isEmployee(l) ? ' hiện tại có thể phải xin chuyển hoặc tìm việc mới' : ' và các mối quan hệ cũng phải làm lại từ đầu') + '.'; },
-    opts: [0, 1, 2, 3].map(function (i) {
-      return { k: 'c' + i, l: function (l, d) { return d.cs[i] ? 'Chuyển đến ' + d.cs[i] : ''; }, req: function (l, d) { return !!d.cs[i]; }, ai: { w: 0.5 },
+    prep: function (l) { return { cs: cities(l).filter(function (city) { return route(l, city) === true; }).slice(0, regionRules(l) ? 10 : 4), cc: H.resCode(l) }; },
+    text: function (l) {
+      var here = regionRules(l) ? moveLabel(l, E.ERA920.POL.residentCity(l)) : l.place || l.city;
+      var limits = regionRules(l) ? [...new Set(cities(l).map(function (city) { return route(l, city); }).filter(function (reason) { return typeof reason === 'string'; }))] : [];
+      return 'Bạn đang thuê nhà ở ' + (here || 'nơi ở hiện tại') + '. Chuyển đến thành phố khác thì phải thu xếp đồ đạc, đặt cọc nhà mới (khoảng ' + mo(l, V(l, 15)) + '); công việc' + (l.job && H.isEmployee(l) ? ' hiện tại có thể phải xin chuyển hoặc tìm việc mới' : ' và các mối quan hệ cũng phải làm lại từ đầu') + '.' + (limits.length ? ' ' + limits.join('. ') + '.' : '');
+    },
+    opts: Array.from({ length: 10 }, function (_, i) {
+      function reachable(l, d) { return (!d.cc || d.cc === H.resCode(l)) && route(l, d.cs[i]) === true; }
+      return { k: 'c' + i, l: function (l, d) { return d.cs[i] ? 'Chuyển đến ' + moveLabel(l, d.cs[i]) : ''; }, req: reachable, ai: { w: 0.5 },
         run: function (l, r, log, d) {
-          var to = d.cs[i]; H.cash(l, -V(l, 15), 'Chuyển nhà, đặt cọc nhà mới');
-          if (vnd(l)) H.moveToCity(l, to); else { l.place = to; l.city = to; l.urban = true; }
+          if (!reachable(l, d)) return;
+          var to = d.cs[i], fee = V(l, 15);
+          if (!H.moveToCity(l, to)) return;
+          H.cash(l, -fee, 'Chuyển nhà, đặt cọc nhà mới');
+          to = moveLabel(l, to);
           l.cityStudent = null;
           if (l.job && H.isEmployee(l) && ch(r, 0.5)) { log('Chuyển đến ' + to + '. Công ty không có chi nhánh ở đó, bạn phải nghỉ việc để tìm việc mới.', 'neutral'); l.job = null; l.flags.needJob = true; }
           else log('Chuyển đến sống ở ' + to + ' — một khởi đầu mới.', 'good');

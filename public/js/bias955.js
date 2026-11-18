@@ -87,9 +87,9 @@
   });
   function betterCity(l) {
     var b = G.W && G.W.BY[code(l)]; if (!b || !H.moveToCity) return null;
-    var g = top(l), cur = String(l.city || l.place || '');
+    var P = E.ERA920?.POL, cc = code(l), y = wy(l), g = top(l), cur = P?.residentCity?.(l) || l.city || l.place;
     if (!g || !g.row[8] || g.row[5] >= g.lv) return null; var re = new RegExp(g.row[8]);
-    var list = (b.cities || []).filter(function (c) { return !re.test(c) && c !== cur; });
+    var list = (P?.cities?.(cc, y) || b.cities).filter(function (c) { return !re.test(c) && c !== cur && (P?.moveReason?.(cc, y, cur, c) ?? true) === true; });
     return list.length ? list[Math.floor(hs(l, 'move' + wy(l)) * list.length)] : null;
   }
   function raceRiskAt(c, y) {
@@ -100,7 +100,7 @@
   }
   function moveAway(l, r, log, why) {
     var city = betterCity(l);
-    if (city && why === 'chủng tộc') { H.moveToCity(l, city); H.cash(l, -V(l, 2), 'Chi phí chuyển nơi ở'); H.fx(l, { hap: -1, soc: -2 }); log('Bạn dọn tới ' + city + ', nơi quy định bớt khắt khe hơn, bỏ lại họ hàng và quen biết cũ.', 'neutral'); return; }
+    if (city && why === 'chủng tộc' && H.moveToCity(l, city)) { H.cash(l, -V(l, 2), 'Chi phí chuyển nơi ở'); H.fx(l, { hap: -1, soc: -2 }); log('Bạn dọn tới ' + (E.ERA920?.POL?.locationLabel?.(code(l), wy(l), city) || city) + ', nơi quy định bớt khắt khe hơn, bỏ lại họ hàng và quen biết cũ.', 'neutral'); return; }
     var okAbroad = E.CTX945 && E.CTX945.emigAllowed && E.CTX945.emigAllowed(l);
     var from = code(l), y = wy(l), riskAt = why === 'lgbt' ? lgbtAt : raceRiskAt;
     var here = why === 'lgbt' ? lgbtAt(from, y) : top(l).lv;
@@ -147,7 +147,7 @@
         var lv = lgbt(l); l.out = true; var acc = [0.85, 0.55, 0.25, 0.1][lv] + (fl(l).community ? 0.08 : 0);
         if (r() < acc) { log('Bạn công khai và nhận được sự đón nhận của những người quan trọng nhất, dù vẫn có người quay lưng.', 'good'); H.fx(l, { hap: 6, soc: 2 }); H.mem(l, 'Ngày dám sống thật với mọi người.', 6); } else { log('Công khai khiến nhiều người xa lánh và gây hậu quả nặng nề.', 'bad'); exposed(l, r, log, 'cong'); }
       } },
-      { k: 'di', l: 'Rời đi, đến nơi bạn có thể thở dễ hơn', ai: { w: 0.5, risk: 1 }, req: function (l) { return l.age >= 18 && l.money > -l.base; }, run: function (l, r, log) { var f = fl(l); if (E.CTX945 && !f.anon) { var b = G.W && G.W.BY[code(l)], big = b && b.cities && b.cities[0]; if (big && String(l.city || l.place) !== big && H.moveToCity && lgbt(l) < 3) { H.moveToCity(l, big); f.anon = true; log('Bạn dọn tới ' + big + ', nơi đông người, dễ ẩn mình và có thêm bạn bè giống mình.', 'neutral'); H.fx(l, { hap: 2, soc: -1 }); return; } } moveAway(l, r, log, 'lgbt'); } }
+      { k: 'di', l: 'Rời đi, đến nơi bạn có thể thở dễ hơn', ai: { w: 0.5, risk: 1 }, req: function (l) { return l.age >= 18 && l.money > -l.base; }, run: function (l, r, log) { var f = fl(l); if (E.CTX945 && !f.anon) { var b = G.W && G.W.BY[code(l)], big = b && b.cities && b.cities[0]; if (big && String(l.city || l.place) !== big && H.moveToCity && lgbt(l) < 3 && H.moveToCity(l, big)) { f.anon = true; log('Bạn dọn tới ' + big + ', nơi đông người, dễ ẩn mình và có thêm bạn bè giống mình.', 'neutral'); H.fx(l, { hap: 2, soc: -1 }); return; } } moveAway(l, r, log, 'lgbt'); } }
     ]
   });
 

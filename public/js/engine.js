@@ -459,8 +459,8 @@
     if (opts.urban != null) life.urban = !!opts.urban;
     var availableCities=E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(c.code,life.birthYear):c.cities;
     var city = U.wpick(r, availableCities, function (x, i) { return 1 / Math.pow(i + 1, 0.8); });
-    var requestedCity = E.ERA920?.POL?.canonicalCity(opts.city) || opts.city;
-    if (requestedCity && availableCities.includes(requestedCity)) city = requestedCity;
+    var requestedCity = E.ERA920?.POL?.cityAtYear?.(c.code, life.birthYear, opts.city) || opts.city;
+    if (requestedCity && (availableCities.includes(requestedCity) || c.code === 'DE' && requestedCity === 'Berlin')) city = requestedCity;
     life.city = city; life.birthCity = city;
     life.place = life.urban ? city : 'vùng nông thôn gần ' + city;
     life.pool = c.pool.indexOf(':') >= 0 ? U.wkey(r, c.pool) : c.pool;
@@ -1162,6 +1162,13 @@
       }
     },
     city: {
+      valid: function (life, data) {
+        data = data || {};
+        var P = E.ERA920?.POL, cc = resCode(life), y = life.birthYear + life.age;
+        if (data.cc && data.cc !== cc) return false;
+        if (data.dest && P?.cityAllowed && !P.cityAllowed(cc, y, data.dest)) return false;
+        return data.dest ? !P?.moveReason || P.moveReason(cc, y, P.residentCity(life), data.dest) === true : !!worldCityDestination(life);
+      },
       make: function (life, r) {
         var dest;
         if (isVN(life)) {
@@ -1170,7 +1177,7 @@
             reg === 'BTB' ? U.pick(r, ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng']) :
               reg === 'NTB' || reg === 'TN' ? U.pick(r, ['TP. Hồ Chí Minh', 'Đà Nẵng', 'TP. Hồ Chí Minh']) :
                 U.pick(r, life.variant === '63' ? ['TP. Hồ Chí Minh', 'Bình Dương', 'Đồng Nai', 'Cần Thơ'] : ['TP. Hồ Chí Minh', 'TP. Hồ Chí Minh', 'Đồng Nai', 'Cần Thơ']);
-        } else dest = (E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(resCode(life),life.birthYear+life.age):W.BY[life.country].cities)[0];
+        } else dest = worldCityDestination(life);
         var label = datedCity(life, dest);
         return { id: 'city', title: 'Lên ' + label + ' lập nghiệp?', data: { dest: dest, cc: resCode(life) },
           text: 'Ở quê ít việc làm. Nhiều người cùng trang lứa đã lên ' + label + ' — thu nhập cao hơn, nhưng chi phí cũng đắt đỏ hơn.',
@@ -1365,11 +1372,21 @@
   };
   Object.keys(CORE).forEach(function (k) { DEC[k] = CORE[k]; });
 
-  function datedCity(life, dest) { return E.ERA920?.POL?.cityLabel?.(resCode(life), life.birthYear + life.age, dest) || dest; }
+  function worldCityDestination(life) {
+    var P = E.ERA920?.POL, cc = resCode(life), y = life.birthYear + life.age;
+    var choices = P?.cities?.(cc, y) || W.BY[cc]?.cities || [];
+    if (cc !== 'DE' && cc !== 'MY') return choices[0];
+    var here = P.residentCity(life);
+    return choices.find(function (dest) { return dest !== here && P.moveReason(cc, y, here, dest) === true; }) ||
+      choices.find(function (dest) { return dest === here; });
+  }
+  function datedCity(life, dest) { return E.ERA920?.POL?.locationLabel?.(resCode(life), life.birthYear + life.age, dest) || dest; }
   function moveToCity(life, dest) {
     var P = E.ERA920?.POL;
     dest = P?.canonicalCity(dest) || dest;
-    if (!dest || P?.cityAllowed && !P.cityAllowed(resCode(life), life.birthYear + life.age, dest)) return false;
+    var cc = resCode(life), y = life.birthYear + life.age;
+    if (!dest || P?.cityAllowed && !P.cityAllowed(cc, y, dest)) return false;
+    if (P?.moveReason && P.moveReason(cc, y, P.residentCity(life), dest) !== true) return false;
     life.urban = true; life.movedTo = dest; life.place = dest; life.city = dest;
     if (life.cityStudent && !life.abroad) life.cityStudent.city = dest;
     if (inVN(life)) { var p = VN.byName[dest] || VN.P63.find(function (p) { return p.city === dest; }) || VN.byName['TP. Hồ Chí Minh']; life.cityWealth = p.wealth; }
@@ -1381,7 +1398,8 @@
     var oldGdp = oldCountry ? oldCountry.gdp : life.gdp;
     var cc = W.BY[c[0]];
     life.abroad = { code: c[0], name: c[1], perm: true, arrived873: life.age, pool: c[2], base: cc.gdp * 1000 * 0.55 * 0.75 };
-    var destinations=E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(cc.code,life.birthYear+life.age):cc.cities;
+    var P = E.ERA920?.POL, y = life.birthYear + life.age, destinations = P?.cities?.(cc.code, y) || cc.cities;
+    if (cc.code === 'DE' && y >= 1949 && y < 1990) destinations = destinations.filter(function (dest) { return P.regionAt(cc.code, y, dest)?.area === 'west'; });
     life.urban = true; life.place = destinations[U.randint(r, 0, Math.min(3, destinations.length - 1))]; life.city = life.place;
     if (life.ownHouse && !(H.keepHome874 && H.keepHome874(life, oldCountry ? oldCountry.code : life.country))) { // bán nhà trước khi đi, trả nợ vay mua nhà
       var homeDebt = (life.loans || []).filter(function (x) { return x.type === 'home'; }).reduce(function (s, x) { return s + x.bal; }, 0) + (life.mortgage || 0);
