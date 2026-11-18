@@ -2349,7 +2349,6 @@
     if (!l.pets) { l.pets = []; if (l.flags.pet) { var op = l.flags.pet; l.pets.push({ k: op.k, br: op.k, n: op.n, since: op.since || 0, life: 14, alive: op.alive !== false }); delete l.flags.pet; } } // v2.2
     if (l.job && E.resolveJob) l.job.id = E.resolveJob(l.job.id);
     if (E.migrateExt) E.migrateExt(l); // v2.3: tài sản, tâm lý, đời con cái
-    if (E.ERA920 && (l.abroad || l.flags.resMort980)) E.ERA920.refresh(l);
     l.pending = l.pending.filter(function (d) { return DEC[d.id]; });
     l.sv = SAVE_SCHEMA;
     return l;

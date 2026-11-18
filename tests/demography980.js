@@ -116,6 +116,7 @@ const modernMort = modern.mort;
 modern.flags.wantKids = 3;
 modern.abroad = { code: 'JP', name: 'Nhật Bản', perm: false, study: true };
 const saved = clone(modern);
+same(saved.mort, modernMort, 'loading does not apply a year of local health context before the next turn');
 X.refresh(saved);
 assert(!saved.era920 && saved.flags.resMort980.resCC === 'JP');
 assert.notEqual(saved.mort, modernMort);
