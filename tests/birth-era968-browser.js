@@ -167,14 +167,17 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     assert.equal(newest.count,expectedUpdates.filter(e=>e.releaseStatus==='packaged').length);
     assert(newest.text.includes(expectedUpdates[0].title));
     assert(newest.text.includes(newest.status==='released'?'Đã phát hành':'Bản chuẩn bị'));
-    if (expectedUpdates[0].version === '9.8.3') {
+    const latestEntries=expectedUpdates.slice(0,3);
+    if (latestEntries.every(entry=>entry.releaseStatus==='released')) {
      const labels=await p.eval(()=>Array.from(document.querySelectorAll('#updateTimeline article')).slice(0,3).map(article=>{
       const stamp=article.querySelector('.update-date');
-      return {label:stamp.querySelector('p').textContent,version:stamp.querySelector('p:last-child').textContent,dated:!!stamp.querySelector('time')};
+      const time=stamp.querySelector('time');
+      return {label:stamp.querySelector('p').textContent,version:stamp.querySelector('p:last-child').textContent,when:time.dateTime,time:time.textContent,updateOnly:stamp.textContent.includes('Cập nhật lúc')};
      }));
-     assert.deepEqual(labels,['9.8.3','9.8.2','9.8.1'].map(version=>{
-      const entry=expectedUpdates.find(note=>note.version===version);
-      return {label:'Đã phát hành',version,dated:!!entry.releasedAt};
+     assert.deepEqual(labels,latestEntries.map(entry=>{
+      const when=entry.releasedAt||entry.publishedAt,updateOnly=!entry.releasedAt;
+      const time=new Date(when).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',dateStyle:'medium',timeStyle:updateOnly?'medium':'short'});
+      return {label:'Đã phát hành',version:entry.version,when,time,updateOnly};
      }));
     }
     const update=await p.eval(()=>{

@@ -85,7 +85,8 @@ try{
   const win={document,localStorage:{getItem:()=>null},addEventListener(){},location:{hash:''},fetch:()=>new Promise(()=>{})};
   const ctx=Object.assign({window:win,AbortController,setTimeout,clearTimeout,console,Date,JSON,Intl,URLSearchParams},win);
   vm.createContext(ctx);vm.runInContext(code,ctx);
-  return {timeline:els.updateTimeline.innerText,latest:els.latestUpdate.textContent};
+  const stamp=els.updateTimeline.children[0].children[0];
+  return {timeline:els.updateTimeline.innerText,latest:els.latestUpdate.textContent,time:stamp.children.find(e=>e.tag==='time')};
  }
  const base={title:'T',summary:'S',details:['D'],tags:['Tính năng']};
  const prepared='2026-10-26T09:49:57.975Z',rel='2026-10-28T13:15:00.000Z';
@@ -97,7 +98,9 @@ try{
  ok(/Đã phát hành/.test(released.timeline)&&!/chưa phát hành/.test(released.timeline),'released label replaces packaged label');
  ok(released.timeline.includes(relText)&&released.latest===relText,'released entry shows the real release time');
  const marked=render([Object.assign({id:'d',version:'9.8.3',releaseStatus:'released',releasedAt:null,publishedAt:prepared},base)]);
- ok(/Đã phát hành/.test(marked.timeline)&&!/26\/10|Invalid Date/.test(marked.timeline)&&marked.latest==='9.8.3','owner label with no fabricated date');
+ const preparedText=new Date(prepared).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',dateStyle:'medium',timeStyle:'medium'});
+ ok(/Đã phát hành/.test(marked.timeline)&&marked.timeline.includes('Cập nhật lúc '+preparedText)&&marked.latest==='Cập nhật lúc '+preparedText,'released label shows the stored update time in Vietnam');
+ ok(marked.time.dateTime===prepared&&marked.time.title.includes('Thời điểm cập nhật')&&released.time.dateTime===rel&&released.time.title.includes('Thời điểm phát hành'),'update and actual release times are identified separately');
  const legacy=render([Object.assign({id:'c',publishedAt:prepared},base)]);
  ok(!/phát hành/.test(legacy.timeline),'legacy entries unchanged');
 }finally{fs.rmSync(tmp,{recursive:true,force:true});}
