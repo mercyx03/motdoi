@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.7.5: còn nghiệm thu toàn diện các mốc sau sơ tán, hòa giải và ứng tuyển qua người thân trên bản lưu thật, cùng binding REVIEWS_DB Production. Ca hist920 về việc hồ sơ sơ tán tự khép lại sau nhiều năm thất bại cả trên 9.7.4 và 9.7.5; cần rà riêng quy tắc kết thúc khi người chơi chưa chọn ổn định hay trở về.
+
 - 9.7.4: còn nghiệm thu toàn diện và xác minh binding REVIEWS_DB Production. Bộ chains-gd4 có ca hẹn trả nợ khi tải lại không đạt trên bản 9.7.3 trước đợt sửa này; ghi nhận riêng, không tính PASS.
 
 - 9.7.3: cần nghiệm thu toàn diện kế hoạch chăm cháu và việc học/làm của con, danh tiếng bóng đá và nguồn người theo dõi trên mã cuối, bản lưu thật và binding REVIEWS_DB Production.

@@ -1,6 +1,24 @@
 {
-  "generatedAt": "2026-11-18T02:16:25.923Z",
+  "generatedAt": "2026-11-18T02:29:29.851Z",
   "entries": [
+    {
+      "id": "recovery-milestones-and-family-referrals-97500",
+      "version": "9.7.5",
+      "publishedAt": "2026-11-18T09:29:29+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Tin mới sau sơ tán và việc làm qua lời giới thiệu",
+      "summary": "Chỉ nhắc khi hồ sơ sơ tán có tiến triển. Có thể chủ động làm hòa với người thân hoặc nộp hồ sơ cho vị trí được giới thiệu.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Sau lần mở hồ sơ sơ tán đầu tiên, game chỉ hiện lại khi có tin mới: đã thu xếp chỗ ở, nhập học lại, có việc, gặp lại người thân hoặc có thể về quê. Bạn vẫn có thể tự mở hồ sơ trong mục Đời sống.",
+        "Khi đã xem lời mời làm hòa, game không hỏi lại mỗi năm. Nếu quan hệ cải thiện rõ, có thể có thêm một dịp. Bạn có thể chủ động hỏi thăm trong mục Tình cảm & gia đình hoặc chọn giữ khoảng cách lâu dài.",
+        "Khi người thân giới thiệu việc, bạn xem vị trí phù hợp tại nơi đang sống và hạn nộp trong mục Công việc. Bạn có thể ứng tuyển, dự phỏng vấn hoặc từ chối. Lời giới thiệu không bảo đảm được tuyển. Nếu hồ sơ chưa được chọn, các cách tìm việc khác vẫn mở."
+      ]
+    },
     {
       "id": "rehab-and-academic-deadlines-97400",
       "version": "9.7.4",
