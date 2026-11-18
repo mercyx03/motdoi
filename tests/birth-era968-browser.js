@@ -46,6 +46,20 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     assert.match(dates.pk,/Ấn Độ thuộc Anh · nay là Pakistan/);
     assert.match(dates.pkProfile,/Ấn Độ thuộc Anh/);
     assert.match(dates.ukraine,/tấn công toàn diện/);
+    const authority=await p.eval(()=>{
+     const choose=(id,value)=>{const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));};
+     const hint=()=>document.querySelector('#yearHint').innerText;
+     choose('countrySel','SG');choose('yearSel','1943');const occupied=hint();
+     choose('yearSel','1945');const transition=hint();
+     choose('countrySel','CD');choose('yearSel','2024');const congo2024=hint();
+     choose('countrySel','UA');choose('yearSel','2025');
+     return {occupied,transition,congo2024};
+    });
+    assert.match(authority.occupied,/chiếm đóng của Nhật Bản/);
+    assert.doesNotMatch(authority.occupied,/thuộc địa của Anh/);
+    assert.match(authority.transition,/quân quản Anh/);
+    assert.match(authority.congo2024,/giao tranh leo thang ở Bắc Kivu/);
+    assert.doesNotMatch(authority.congo2024,/chiếm Goma|vào Bukavu/);
     const odds=await p.eval(()=>{
      function choose(id,value){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}
      choose('yearSel','1900');

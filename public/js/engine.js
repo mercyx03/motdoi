@@ -940,11 +940,13 @@
         if (k === 'thpt') {
           if (inVN(life)) {
             var pass = U.clamp(0.5 + (life.st.kno - 50) / 70 + (life.focus === 'study' ? 0.1 : 0), 0.15, 0.97);
-            if (r() < pass) { life.school = 'upper'; life.schoolEnd = 18; log('Thi đỗ vào lớp 10 trường công lập.', 'good'); life.st.hap += 4; H.mem(life, 'Cầm giấy báo đỗ lớp 10, cả nhà mừng rơi nước mắt.', 2); }
-            else if (life.fam.q >= 3) { life.school = 'priv'; life.schoolEnd = 18; log('Trượt nguyện vọng trường công, bố mẹ cho học trường tư thục.', 'bad'); life.st.hap -= 3; }
-            else { life.school = 'voc'; life.schoolEnd = 18; log('Trượt lớp 10 công lập, nhà không đủ tiền học trường tư — chuyển sang học nghề.', 'bad'); life.st.hap -= 5; }
-          } else { life.school = 'upper'; life.schoolEnd = 18; log('Tiếp tục học trung học phổ thông.', 'neutral'); }
-        } else if (k === 'voc') { life.school = 'voc'; life.schoolEnd = 18; log('Vào học trung cấp nghề.', 'neutral'); }
+            if (r() < pass) { life.school = 'upper'; life.schoolEnd = 18 + (life.flags.schoolDelay982 || 0); log('Thi đỗ vào lớp 10 trường công lập.', 'good'); life.st.hap += 4; H.mem(life, 'Cầm giấy báo đỗ lớp 10, cả nhà mừng rơi nước mắt.', 2); }
+            else if (life.fam.q >= 3) { life.school = 'priv'; life.schoolEnd = 18 + (life.flags.schoolDelay982 || 0); log('Trượt nguyện vọng trường công, bố mẹ cho học trường tư thục.', 'bad'); life.st.hap -= 3; }
+            else { life.school = 'voc'; life.schoolEnd = 18 + (life.flags.schoolDelay982 || 0); log('Trượt lớp 10 công lập, nhà không đủ tiền học trường tư — chuyển sang học nghề.', 'bad'); life.st.hap -= 5; }
+          } else { life.school = 'upper'; life.schoolEnd = 18 + (life.flags.schoolDelay982 || 0); log('Tiếp tục học trung học phổ thông.', 'neutral'); }
+          var disruption = E.CTX945?.schoolAgenda(life);
+          if (disruption) E.UPDATE110.next(life, 'ctx945_event', r, disruption, { manual: false });
+        } else if (k === 'voc') { life.school = 'voc'; life.schoolEnd = 18 + (life.flags.schoolDelay982 || 0); log('Vào học trung cấp nghề.', 'neutral'); }
         else { life.school = null; life.flags.needJob = true; log('Nghỉ học sau trung học cơ sở để đi làm phụ giúp gia đình.', 'bad'); life.st.hap -= 3; H.mem(life, 'Ngày cất cặp sách lên gác và bắt đầu đi tìm việc.', 3); life.pending.unshift(DEC.job.make(life, r)); }
       }
     },
@@ -1515,12 +1517,15 @@
       }
     }
     // học hành
+    var schoolAge = E.CTX945 ? E.CTX945.schoolAge(life) : a;
+    var schoolAgenda = E.CTX945?.schoolAgenda(life);
+    if (schoolAgenda) add('ctx945_event', schoolAgenda);
     if (a === 16 && E.england829 && E.england829(life) && life.school === 'lower') {
       life.edu = Math.max(2, life.edu);
       if (E.modernSixth829 && E.modernSixth829(life)) add('sixth829');
       else { life.school = null; add('hs'); }
     }
-    if (a === 15 && !(E.england829 && E.england829(life)) && life.school === 'lower') { life.school = null; life.edu = Math.max(life.edu, 2); add('hs'); }
+    if (schoolAge === 15 && !(E.england829 && E.england829(life)) && life.school === 'lower') { life.school = null; life.edu = Math.max(life.edu, 2); add('hs'); }
     if (life.flags.uniNext === a) { life.flags.uniNext = null; add('uni'); }
     if (life.flags.retryUni != null && life.flags.retryUni <= a) { life.flags.retryUni = null; if (life.flags.retryExamPending) { delete life.flags.retryExamPending; var previousExam = life.examScore; life.examScore = E.rollExamScore ? E.rollExamScore(life, r) : Math.min(30, (previousExam || 15) + 1 + r() * 2.5);  life.log.push({a:a,y:life.birthYear+a,t:'Thi lại tốt nghiệp THPT: '+U.fmtNum(life.examScore,2)+' điểm.',k:'neutral'}); if (life.examScore >= 27) life.flags.scholar = true; } add('uni'); } // v3.8: không để cờ "ôn thi lại" treo mãi chặn việc tìm việc
     // việc làm
@@ -1948,14 +1953,15 @@
       if (E.england829 && E.england829(life) || life.fam.q >= 3 || r() < eduP(life).prim) { life.school = 'primary'; log(isVN(life) ? 'Vào lớp 1. Mặc áo trắng, đeo chiếc cặp mới đến trường.' : (E.england829 && E.england829(life) ? 'Bắt đầu vào học Year 1 (Primary School).' : 'Bắt đầu đi học tiểu học.'), 'good'); H.mem(life, 'Ngày đầu tiên đến trường, nắm chặt tay mẹ không chịu buông.', 3); }
       else { life.school = null; log('Không được đến trường — nhà quá nghèo, trường lại xa.', 'bad'); st.hap -= 4; }
     }
-    if (life.school && E.finishStudyBudget839) E.finishStudyBudget839(life,log);
-    if (life.school) life.yearsInSchool++;
-    if (a === 11 && life.school === 'primary') {
+    var missedSchool = life.flags.schoolMissed982 === life.birthYear + a;
+    if (life.school && !missedSchool && E.finishStudyBudget839) E.finishStudyBudget839(life,log);
+    if (life.school && !missedSchool) life.yearsInSchool++;
+    if (!missedSchool && (E.CTX945 ? E.CTX945.schoolAge(life) : a) === 11 && life.school === 'primary') {
       life.edu = 1;
       if (E.england829 && E.england829(life) || life.fam.q >= 4 || r() < eduP(life).lower) { life.school = 'lower'; log(E.england829 && E.england829(life) ? 'Hoàn thành Primary School (Year 6), chuyển lên Secondary School (Year 7).' : ('Học xong tiểu học, lên ' + (isVN(life) ? 'lớp 6' : 'trung học cơ sở') + '.'), 'neutral'); }
       else { life.school = null; log(f.q <= 2 ? 'Nhà nghèo, học hết tiểu học thì phải nghỉ ở nhà phụ giúp bố mẹ.' : life.urban ? 'Học lực yếu, thi không đỗ vào lớp 6 trường công, gia đình đành cho nghỉ học.' : 'Trường cấp hai ở xa, đường sá cách trở, học hết tiểu học thì phải nghỉ học.', 'bad'); st.hap -= 3; }
     }
-    if (life.school && life.schoolEnd != null && !(E.ERA969&&E.ERA969.learning(life,life)) && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
+    if (!missedSchool && life.school && life.schoolEnd != null && !(E.ERA969&&E.ERA969.learning(life,life)) && a + 1 >= life.schoolEnd && !(E.gradFail && E.gradFail(life, r, log, a))) { // v3.9: đại học phải bảo vệ đồ án / khóa luận mới ra trường
       var sc = life.school; life.school = null; life.schoolEnd = null;
       if (sc === 'upper' || sc === 'priv') {
         life.edu = Math.max(life.edu, 3);

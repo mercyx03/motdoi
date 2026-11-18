@@ -19,7 +19,7 @@ const lev = (cc, y, city) => C.of(life(cc, y, city));
     ok(known.has(r[0]) || groups.has(r[0]), 'mã nước hợp lệ: ' + r[0]);
     ok(r[1] <= r[2] && r[1] >= 1900 && r[2] <= 2025, 'khoảng năm hợp lệ: ' + r[0] + ' ' + r[1] + '–' + r[2]);
     ok(typeof r[3] === 'string' && new RegExp(r[3], 'i'), 'biểu thức thành phố hợp lệ');
-    const ks = Object.keys(r[4]); ok(ks.length >= 1 && ks.every(k => ['war', 'fam', 'dis'].includes(k)), 'chỉ đổi war/fam/dis');
+    const ks = Object.keys(r[4]); ok(ks.length >= 1 && ks.every(k => ['war', 'fam', 'dis', 'school'].includes(k)), 'chỉ đổi chiến sự, đói, thiên tai và việc học');
     ks.forEach(k => { const v = r[4][k]; ok(typeof v === 'number' ? v !== 0 && Math.abs(v) <= 3 : /^=[0-3]$/.test(v), 'giá trị hợp lệ ' + r[0] + ' ' + JSON.stringify(r[4])); });
     ok(r[5] && r[5].length > 5, 'có nhãn: ' + r[0] + ' ' + r[1]);
     if (r[0] !== 'VN') { const B = G.W.BY[r[0]]; ok(B && B.cities.some(c => new RegExp(r[3], 'i').test(c)), 'có thành phố khớp: ' + r[0] + ' ' + r[3].slice(0, 30)); }

@@ -9,7 +9,7 @@
   var E = G.E, X = E && E.ERA920; if (!X) return;
   var A = 'thuộc địa của ', P = 'lãnh thổ bảo hộ của ';
   // [mã, năm độc lập, bên cai quản] — ghi cho năm thế giới < năm độc lập
-  var DEP = [['LY', 1951, 'Anh và Pháp quản lý (Liên Hợp Quốc)'], ['MA', 1956, 'Pháp và Tây Ban Nha (bảo hộ)'], ['TN', 1956, 'Pháp (bảo hộ)'], ['SD', 1956, 'Anh và Ai Cập đồng quản lý'], ['KH', 1953, A + 'Pháp (Liên hiệp Pháp)'], ['LA', 1953, A + 'Pháp (Liên hiệp Pháp)'],
+  var DEP = [['MA', 1956, 'Pháp và Tây Ban Nha (bảo hộ)'], ['TN', 1956, 'Pháp (bảo hộ)'], ['SD', 1956, 'Anh và Ai Cập đồng quản lý'], ['KH', 1953, A + 'Pháp (Liên hiệp Pháp)'], ['LA', 1953, A + 'Pháp (Liên hiệp Pháp)'],
     ['MY', 1957, A + 'Anh (Malaya)'], ['GH', 1957, A + 'Anh (Bờ Biển Vàng)'], ['GN', 1958, A + 'Pháp'], ['CM', 1960, 'lãnh thổ do Pháp và Anh quản lý (ủy trị/giám hộ Liên Hợp Quốc)'], ['TG', 1960, 'lãnh thổ do Pháp quản lý'], ['MG', 1960, A + 'Pháp'], ['CD', 1960, A + 'Bỉ (Congo thuộc Bỉ)'],
     ['SO', 1960, 'lãnh thổ do Ý (giám hộ) và Anh quản lý'], ['BJ', 1960, A + 'Pháp'], ['NE', 1960, A + 'Pháp'], ['BF', 1960, A + 'Pháp'], ['CI', 1960, A + 'Pháp'], ['TD', 1960, A + 'Pháp'], ['CF', 1960, A + 'Pháp'], ['CG', 1960, A + 'Pháp'], ['GA', 1960, A + 'Pháp'], ['SN', 1960, A + 'Pháp'], ['ML', 1960, A + 'Pháp'], ['MR', 1960, A + 'Pháp'],
     ['NG', 1960, A + 'Anh'], ['CY', 1960, A + 'Anh'], ['SL', 1961, A + 'Anh'], ['KW', 1961, P + 'Anh'], ['TZ', 1961, A + 'Anh (Tanganyika)'], ['RW', 1962, 'lãnh thổ do Bỉ quản lý (giám hộ Liên Hợp Quốc)'], ['BI', 1962, 'lãnh thổ do Bỉ quản lý (giám hộ Liên Hợp Quốc)'], ['UG', 1962, A + 'Anh'], ['DZ', 1962, 'lãnh thổ của Pháp (Algérie thuộc Pháp)'],
@@ -17,7 +17,7 @@
     ['BW', 1966, P + 'Anh (Bechuanaland)'], ['LS', 1966, P + 'Anh (Basutoland)'], ['BB', 1966, A + 'Anh'], ['GY', 1966, A + 'Anh (Guiana thuộc Anh)'], ['MU', 1968, A + 'Anh'], ['SZ', 1968, P + 'Anh'], ['GQ', 1968, A + 'Tây Ban Nha'], ['NR', 1968, 'lãnh thổ do Úc, New Zealand và Anh quản lý (giám hộ Liên Hợp Quốc)'],
     ['FJ', 1970, A + 'Anh'], ['TO', 1970, P + 'Anh'], ['BH', 1971, P + 'Anh'], ['QA', 1971, P + 'Anh'], ['AE', 1971, P + 'Anh (các tiểu vương quốc Trucial)'], ['BS', 1973, A + 'Anh'], ['GW', 1974, A + 'Bồ Đào Nha'], ['GD', 1974, A + 'Anh'], ['MZ', 1975, A + 'Bồ Đào Nha'], ['AO', 1975, A + 'Bồ Đào Nha'], ['CV', 1975, A + 'Bồ Đào Nha'], ['ST', 1975, A + 'Bồ Đào Nha'],
     ['KM', 1975, A + 'Pháp'], ['PG', 1975, 'lãnh thổ do Úc quản lý'], ['SR', 1975, A + 'Hà Lan'], ['SC', 1976, A + 'Anh'], ['DJ', 1977, A + 'Pháp'], ['DM', 1978, A + 'Anh'], ['SB', 1978, A + 'Anh'], ['TV', 1978, A + 'Anh (quần đảo Ellice)'], ['LC', 1979, A + 'Anh'], ['VC', 1979, A + 'Anh'], ['KI', 1979, A + 'Anh (quần đảo Gilbert)'],
-    ['VU', 1980, 'lãnh thổ do Anh và Pháp đồng quản lý (Tân Hebrides)'], ['BZ', 1981, A + 'Anh (Honduras thuộc Anh)'], ['AG', 1981, A + 'Anh'], ['KN', 1983, A + 'Anh'], ['BN', 1984, P + 'Anh'], ['NA', 1990, 'lãnh thổ do Nam Phi quản lý (Tây Nam Phi)'], ['MH', 1986, 'lãnh thổ ủy thác Liên Hợp Quốc do Hoa Kỳ quản lý'], ['FM', 1986, 'lãnh thổ ủy thác Liên Hợp Quốc do Hoa Kỳ quản lý'], ['PW', 1994, 'lãnh thổ ủy thác Liên Hợp Quốc do Hoa Kỳ quản lý']];
+    ['VU', 1980, 'lãnh thổ do Anh và Pháp đồng quản lý (Tân Hebrides)'], ['BZ', 1981, A + 'Anh (Honduras thuộc Anh)'], ['AG', 1981, A + 'Anh'], ['KN', 1983, A + 'Anh'], ['BN', 1984, P + 'Anh'], ['MH', 1986, 'lãnh thổ ủy thác Liên Hợp Quốc do Hoa Kỳ quản lý'], ['FM', 1986, 'lãnh thổ ủy thác Liên Hợp Quốc do Hoa Kỳ quản lý'], ['PW', 1994, 'lãnh thổ ủy thác Liên Hợp Quốc do Hoa Kỳ quản lý']];
   var STATUS = {};
   function add(cc, a, b, t) { (STATUS[cc] = STATUS[cc] || []).push([a, b, t]); }
   DEP.forEach(function (d) { add(d[0], 1950, d[1] - 1, d[2]); });
@@ -37,7 +37,7 @@
   add('ER', 1950, 1951, 'dưới sự quản lý của Anh'); add('ER', 1952, 1990, 'thuộc Ethiopia (liên bang 1952, sáp nhập 1962; chiến tranh đòi độc lập 1961–1991)'); add('ER', 1991, 1992, 'tự quản sau chiến tranh; trưng cầu dân ý năm 1993');
   add('SS', 1950, 2010, 'thuộc Sudan (độc lập tháng 7/2011)');
   add('TL', 1950, 1974, A + 'Bồ Đào Nha (Timor thuộc Bồ)'); add('TL', 1975, 1998, 'bị Indonesia chiếm đóng và sáp nhập năm 1976 (Liên Hợp Quốc không công nhận)'); add('TL', 1999, 2001, 'Liên Hợp Quốc quản lý chuyển tiếp; độc lập 20/5/2002');
-  add('SG', 1950, 1962, A + 'Anh'); add('SG', 1963, 1964, 'một bang của Liên bang Malaysia (độc lập riêng 9/8/1965)');
+
   add('ZW', 1950, 1964, A + 'Anh tự quản (Nam Rhodesia)'); add('ZW', 1965, 1979, 'Rhodesia do chính quyền thiểu số da trắng đơn phương tuyên bố độc lập (1965), không được quốc tế công nhận');
   add('ZA', 1950, 1993, 'chế độ phân biệt chủng tộc apartheid (1948–1994)');
   add('KH', 1970, 1974, 'Cộng hòa Khmer; nội chiến'); add('KH', 1975, 1978, 'Campuchia Dân chủ dưới chế độ Khmer Đỏ (17/4/1975–7/1/1979)'); add('KH', 1979, 1988, 'Cộng hòa Nhân dân Campuchia; nội chiến tiếp diễn'); add('KH', 1989, 1992, 'Nhà nước Campuchia; Liên Hợp Quốc quản lý chuyển tiếp 1992–1993');
@@ -46,7 +46,7 @@
     ['IR', 1979, 1979, 'cách mạng Hồi giáo (1979)'], ['IR', 1980, 1988, 'chiến tranh Iran–Iraq (9/1980–8/1988)'], ['IQ', 1980, 1988, 'chiến tranh Iran–Iraq (9/1980–8/1988)'], ['KW', 1990, 1991, 'Iraq xâm chiếm Kuwait (2/8/1990) và chiến tranh Vùng Vịnh'], ['IQ', 1990, 1991, 'chiến tranh Vùng Vịnh sau khi Iraq xâm chiếm Kuwait'], ['IQ', 2003, 2011, 'chiến tranh Iraq và thời kỳ quân đội nước ngoài hiện diện (3/2003–12/2011)'],
     ['AF', 1979, 1989, 'quân đội Liên Xô can thiệp và chiến tranh (12/1979–2/1989)'], ['AF', 1996, 2000, 'phong trào Taliban cầm quyền phần lớn đất nước'], ['AF', 2001, 2020, 'chiến tranh và sự hiện diện quân sự nước ngoài (10/2001–8/2021)'], ['AF', 2021, 2023, 'Taliban trở lại cầm quyền (8/2021)'],
     ['LB', 1975, 1990, 'nội chiến Liban (4/1975–10/1990)'], ['SY', 2011, 2023, 'nội chiến Syria (từ 2011)'], ['LY', 2011, 2011, 'nội chiến và lật đổ chính quyền cũ (2011)'], ['LY', 2014, 2020, 'nội chiến Libya lần thứ hai (2014–2020)'], ['YE', 2014, 2023, 'nội chiến Yemen (từ 2014)'], ['SS', 2011, 2012, 'độc lập khỏi Sudan (9/7/2011)'], ['SS', 2013, 2023, 'nội chiến Nam Sudan (từ 12/2013)'], ['CF', 2012, 2023, 'xung đột vũ trang ở Cộng hòa Trung Phi (từ 12/2012)'], ['ML', 2012, 2023, 'xung đột ở Mali (từ 1/2012)'], ['ET', 2020, 2022, 'xung đột ở Tigray (11/2020–11/2022)'], ['UA', 2014, 2021, 'Nga sáp nhập Crimea (2014) và chiến sự ở vùng Donbas'], ['UA', 2022, 2023, 'Nga tấn công toàn diện (từ 24/2/2022)'],
-    ['ET', 1974, 1990, 'chế độ quân sự Derg và nội chiến (1974–1991)'], ['SO', 1991, 2023, 'nội chiến, không có chính phủ trung ương hiệu lực từ 1991'], ['SL', 1991, 2002, 'nội chiến Sierra Leone (1991–2002)'], ['LR', 1989, 2003, 'các cuộc nội chiến ở Liberia (1989–2003)'], ['AO', 1975, 2001, 'nội chiến Angola (1975–2002)'], ['MZ', 1977, 1991, 'nội chiến Mozambique (1977–1992)'], ['DZ', 1991, 2001, 'nội chiến Algeria (thập niên 1990)'], ['CD', 1996, 2002, 'các cuộc chiến tranh Congo (1996–97 và 1998–2003)'],
+    ['ET', 1974, 1990, 'chế độ quân sự Derg và nội chiến (1974–1991)'], ['SL', 1991, 2002, 'nội chiến Sierra Leone (1991–2002)'], ['LR', 1989, 2003, 'các cuộc nội chiến ở Liberia (1989–2003)'], ['AO', 1975, 2001, 'nội chiến Angola (1975–2002)'], ['MZ', 1977, 1991, 'nội chiến Mozambique (1977–1992)'], ['DZ', 1991, 2001, 'nội chiến Algeria (thập niên 1990)'], ['CD', 1996, 2002, 'các cuộc chiến tranh Congo (1996–97 và 1998–2003)'],
     ['RW', 1990, 1993, 'nội chiến Rwanda (1990–1993)'], ['RW', 1994, 1994, 'diệt chủng người Tutsi ở Rwanda (4–7/1994)'], ['BI', 1993, 2004, 'nội chiến Burundi (1993–2005)'], ['NG', 1967, 1970, 'nội chiến Nigeria (Biafra, 1967–1970)'], ['SD', 1983, 2004, 'nội chiến Sudan lần thứ hai (1983–2005)'],
     ['LK', 1983, 2008, 'nội chiến Sri Lanka (1983–5/2009)'], ['CO', 1964, 2015, 'xung đột vũ trang nội bộ Colombia (đến thỏa thuận hòa bình 2016)'], ['NP', 1996, 2005, 'nội chiến do phong trào Maoist phát động (1996–2006)'], ['PE', 1980, 1999, 'xung đột nội bộ Peru (1980–2000)'], ['GT', 1960, 1995, 'nội chiến Guatemala (1960–1996)'], ['SV', 1979, 1991, 'nội chiến El Salvador (1979–1992)'], ['NI', 1979, 1989, 'cách mạng Sandinista (1979) và chiến tranh Contra'],
     ['CU', 1991, 1995, 'thời kỳ đặc biệt sau khi Liên Xô tan rã'], ['KP', 1994, 1998, 'nạn đói nghiêm trọng (1994–1998)'], ['ID', 1965, 1966, 'biến động chính trị và bạo lực hàng loạt (1965–1966)'], ['ID', 1998, 1998, 'khủng hoảng và Suharto từ chức (21/5/1998)'], ['CN', 1959, 1961, 'nạn đói lớn sau phong trào Đại nhảy vọt'], ['CN', 1966, 1976, 'Cách mạng Văn hóa (1966–1976)'], ['CN', 1980, 2015, 'chính sách kế hoạch hóa gia đình "một con" (1980–2015)'],
@@ -86,7 +86,47 @@
   // tên thành phố: [tên hiện nay, tên thời đó, năm cuối còn dùng tên cũ, (tùy chọn) năm đầu]
   var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928], ['Faisalabad', 'Lyallpur', 1976], ['Gqeberha', 'Port Elizabeth', 2020], ['Dnipro', 'Katerynoslav', 1925], ['Dnipro', 'Dnipropetrovsk', 2015, 1926], ['Polokwane', 'Pietersburg', 2001]];
   function resCC(l) { return l ? E.H.resCode(l) : null; }
+  // [năm đầu, năm cuối, hình thức cai quản, bên quản lý, mô tả]. Các mốc chuyển giao trong năm có ghi tháng.
+  var AUTHORITY = {
+    SG: [
+      [1900, 1941, 'colony', 'Anh', 'Singapore thuộc Các khu định cư Eo biển của Anh'],
+      [1942, 1942, 'occupation', 'Nhật Bản', 'Nhật Bản chiếm Singapore từ tháng 2/1942'],
+      [1943, 1944, 'occupation', 'Nhật Bản', 'Singapore nằm dưới quyền chiếm đóng của Nhật Bản'],
+      [1945, 1945, 'transition', 'Anh', 'Nhật Bản chiếm đóng đến tháng 9/1945; quân quản Anh tiếp quản sau khi Nhật đầu hàng'],
+      [1946, 1958, 'colony', 'Anh', 'Singapore là thuộc địa riêng của Anh'],
+      [1959, 1962, 'selfGovernment', 'Anh', 'Singapore tự trị nội bộ; Anh vẫn phụ trách quốc phòng và đối ngoại'],
+      [1963, 1964, 'federation', null, 'Singapore là một bang của Liên bang Malaysia từ tháng 9/1963'],
+      [1965, 2025, 'independent', null, 'Singapore độc lập từ ngày 9/8/1965']
+    ],
+    NA: [
+      [1900, 1914, 'protectorate', 'Đức', 'Tây Nam Phi thuộc Đức'],
+      [1915, 1919, 'occupation', 'Nam Phi', 'Nam Phi chiếm Tây Nam Phi từ năm 1915 và lập quân quản'],
+      [1920, 1965, 'mandate', 'Nam Phi', 'Nam Phi cai quản Tây Nam Phi theo ủy trị của Hội Quốc Liên từ cuối năm 1920'],
+      [1966, 1988, 'occupation', 'Nam Phi', 'Liên Hợp Quốc chấm dứt ủy trị năm 1966; Nam Phi vẫn duy trì quyền kiểm soát'],
+      [1989, 1989, 'transition', 'Nam Phi', 'Namibia chuyển tiếp sang độc lập dưới sự giám sát của Liên Hợp Quốc'],
+      [1990, 2025, 'independent', null, 'Namibia độc lập từ ngày 21/3/1990']
+    ],
+    SO: [
+      [1960, 1960, 'independent', null, 'Somalia thành lập ngày 1/7/1960 khi hai vùng vừa giành độc lập hợp nhất'],
+      [1991, 2003, 'fragmented', null, 'Chính quyền trung ương sụp đổ năm 1991; quyền kiểm soát phân tán giữa các vùng'],
+      [2004, 2011, 'transition', null, 'Chính phủ Liên bang Chuyển tiếp Somalia được thành lập; quyền kiểm soát còn hạn chế'],
+      [2012, 2025, 'federal', null, 'Chính phủ Liên bang Somalia thành lập năm 2012; quyền kiểm soát và an ninh khác nhau theo vùng']
+    ],
+    LY: [
+      [1900, 1910, 'province', 'Đế quốc Ottoman', 'Các vùng của Libya ngày nay thuộc Đế quốc Ottoman'],
+      [1911, 1911, 'transition', 'Đế quốc Ottoman và Ý', 'Ý mở cuộc chiến với Đế quốc Ottoman và đổ bộ vào Libya cuối năm 1911'],
+      [1912, 1942, 'colony', 'Ý', 'Libya dưới quyền cai trị của Ý; quyền kiểm soát thay đổi theo vùng và thời điểm'],
+      [1943, 1950, 'occupation', 'Anh và Pháp', 'Anh quân quản Tripolitania và Cyrenaica, Pháp quân quản Fezzan'],
+      [1951, 1951, 'independent', null, 'Libya độc lập từ ngày 24/12/1951']
+    ]
+  };
+  function authorityAt(cc, y) {
+    var row = AUTHORITY[cc]?.find(function (r) { return y >= r[0] && y <= r[1]; });
+    return row ? { from: row[0], kind: row[2], ruler: row[3], text: row[4] } : null;
+  }
   function status(cc, y) {
+    var authority = authorityAt(cc, y);
+    if (authority) return authority.text;
     var s = STATUS[cc] || [];
     for (var i = 0; i < s.length; i++) if (y >= s[i][0] && y <= s[i][1]) return s[i][2];
     if (y >= 1900 && y < 1950) {
@@ -156,5 +196,5 @@
     if (s) log((prev === undefined ? 'Bối cảnh năm ' + y + ': ' : 'Năm ' + y + ', bối cảnh nơi bạn sống đổi: ') + (nm ? nm + ' — ' : '') + s + '.', 'info');
     else if (prev) log('Năm ' + y + ': ' + (nameAt(cc, y - 1) ? nameAt(cc, y - 1) + ' không còn dùng tên cũ. ' : '') + 'Tình trạng chính trị nơi bạn sống đã khác trước.', 'info');
   });
-  X.POL = { canonicalCity: canonicalCity, birthText: birthText, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, nameAt: nameAt, rename: rename, note: note };
+  X.POL = { canonicalCity: canonicalCity, birthText: birthText, STATUS: STATUS, NAMES: NAMES, CITIES: CITIES, status: status, authorityAt: authorityAt, nameAt: nameAt, rename: rename, note: note };
 })(globalThis.G);

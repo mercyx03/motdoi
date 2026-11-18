@@ -13,7 +13,7 @@ function yearOf(l) { E.beginYear(l, { auto: true }); let k = 0; while (l.pending
 {
   const known = new Set(G.W.C.map(c => c.code)), groups = new Set(Object.keys(D.GRP));
   ok(D.ZONE.length >= 55 && D.SOC.length >= 54, 'có đủ dòng vùng (' + D.ZONE.length + ') và chính sách xã hội (' + D.SOC.length + ')');
-  D.ZONE.forEach(r => { ok(known.has(r[0]) || groups.has(r[0]), 'mã nước hợp lệ: ' + r[0]); ok(r[1] <= r[2] && r[1] >= 1900 && r[2] <= 2025, 'khoảng năm hợp lệ: ' + r[0] + r[1]); ok(typeof r[3] === 'string' && new RegExp(r[3], 'i'), 'biểu thức thành phố hợp lệ'); ok(Object.keys(r[4]).every(k => ['war', 'fam', 'dis'].includes(k)), 'chỉ đổi war/fam/dis'); ok(r[5] && r[5].length > 5, 'có nhãn'); });
+  D.ZONE.forEach(r => { ok(known.has(r[0]) || groups.has(r[0]), 'mã nước hợp lệ: ' + r[0]); ok(r[1] <= r[2] && r[1] >= 1900 && r[2] <= 2025, 'khoảng năm hợp lệ: ' + r[0] + r[1]); ok(typeof r[3] === 'string' && new RegExp(r[3], 'i'), 'biểu thức thành phố hợp lệ'); ok(Object.keys(r[4]).every(k => ['war', 'fam', 'dis', 'school'].includes(k)), 'chỉ đổi chiến sự, đói, thiên tai và việc học'); ok(r[5] && r[5].length > 5, 'có nhãn'); });
   D.SOC.forEach(r => { ok(known.has(r[0]) || groups.has(r[0]), 'mã nước hợp lệ: ' + r[0]); ok(['land', 'purge', 'expel'].includes(r[3]) && r[4] >= 1 && r[4] <= 3 && r[5] > 0 && r[5] <= 1 && r[1] <= r[2], 'dòng chính sách hợp lệ: ' + r[0] + r[1]); });
   // thành phố nêu trong bảng vùng phải tồn tại trong dữ liệu thế giới (trừ Việt Nam dùng tỉnh)
   D.ZONE.filter(r => r[0] !== 'VN').forEach(r => { const B = G.W.BY[r[0]]; if (!B) return; const re = new RegExp(r[3], 'i'); ok(B.cities.some(c => re.test(c)), 'có thành phố khớp biểu thức: ' + r[0] + ' ' + r[3].slice(0, 30)); });

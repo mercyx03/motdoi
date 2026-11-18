@@ -21,7 +21,10 @@
   (D.RESTRICT || []).forEach(function (r) { expand(r[0]).forEach(function (c) { (RES[c] = RES[c] || []).push({ a: r[1], b: r[2], s: r[3], n: r[4] }); }); });
   // thời thuộc địa suy ra từ bảng bối cảnh chính trị của era920-pol ("thuộc địa của X", "lãnh thổ bảo hộ của X"); trước 1950 coi như kéo dài nếu cửa sổ đầu tiên bắt đầu từ 1950
   var COL = {}; (D.COLONY || []).forEach(function (r) { if (r[3] !== 'không thuộc địa') (COL[r[0]] = COL[r[0]] || []).push(r); });
+  function authorityAt(cc, y) { return E.ERA920?.POL?.authorityAt(cc, y) || null; }
   function colonyAt(cc, y) {
+    var authority = authorityAt(cc, y);
+    if (authority) return authority.ruler;
     var cl = COL[cc];
     if (cl) {
       for (var j = 0; j < cl.length; j++) if (y >= cl[j][1] && y <= cl[j][2]) return cl[j][3];
@@ -57,7 +60,7 @@
   function zoneRows(cc, y, city) { var Z = ZONEX[cc]; if (!Z || !city) return null; var P=E.ERA920&&E.ERA920.POL; if(P&&P.canonicalCity)city=P.canonicalCity(city); var out = null; for (var i = 0; i < Z.length; i++) { var z = Z[i]; if (y >= z.a && y <= z.b && z.re.test(city)) (out = out || []).push(z); } return out; }
   function zoned(c, rows) {
     var o = Object.assign({}, c); o.zone = []; o.labels = Object.assign({}, c.labels);
-    rows.forEach(function (z) { ['war', 'fam', 'dis'].forEach(function (k) { var v = z.d[k]; if (v == null) return; o[k] = typeof v === 'string' ? +v.slice(1) : Math.max(0, Math.min(3, o[k] + v)); if (o[k] > 0 && (z.d[k] !== 0)) o.labels[k] = z.n; }); o.zone.push(z.n); });
+    rows.forEach(function (z) { ['war', 'fam', 'dis', 'school'].forEach(function (k) { var v = z.d[k]; if (v == null) return; o[k] = typeof v === 'string' ? +v.slice(1) : Math.max(0, Math.min(3, (o[k] || 0) + v)); if (v !== 0 && (o[k] > 0 || k === 'school' || v === '=0')) o.labels[k] = o[k] > 0 ? z.n : null; }); o.zone.push(z.n); });
     return derive(o);
   }
   function at(cc, y) {
@@ -65,7 +68,7 @@
     var I = IDX[cc] || { war: [], fam: [], epi: [], econ: [], dis: [] };
     var w = best(I.war, y), f = best(I.fam, y), e = best(I.epi.concat(GLOBAL.epi), y), c = best(I.econ.concat(GLOBAL.econ), y), d = best(I.dis, y);
     var o = { cc: cc, y: y, war: w ? w.s : 0, fam: f ? f.s : 0, epi: e ? e.s : 0, econ: c ? c.s : 0, dis: d ? d.s : 0, warKind: w && w.k, econKind: c && c.k, labels: { war: w && w.n, fam: f && f.n, epi: e && e.n, econ: c && c.n, dis: d && d.n } };
-    var rs = best(RES[cc] || [], y); o.restrict = rs ? rs.s : 0; o.restrictLabel = rs && rs.n; o.colony = colonyAt(cc, y);
+    var rs = best(RES[cc] || [], y); o.restrict = rs ? rs.s : 0; o.restrictLabel = rs && rs.n; o.authority = authorityAt(cc, y); o.colony = o.authority ? o.authority.ruler : colonyAt(cc, y);
     socOf(cc, y, o); derive(o);
     return (cache[key] = o);
   }
@@ -80,7 +83,7 @@
     var p = d < 1.2 ? 3 : d < 2.5 ? 2 : d < 6 ? 1 : 0; if (y < 1935 && p < 3 && d < 15) p++; return p;
   }
   function of(l) {
-    var y = wy(l), cc0 = resCc(l), c = at(cc0, y), zr = zoneRows(cc0, y, currentCity(l)); if (zr) c = zoned(c, zr); var o = Object.create(c); o.pov = pov(l); o.lux = Math.max(c.level, o.pov >= 3 ? 2 : o.pov >= 2 ? 1 : 0); return o;
+    var c = levelAt(resCc(l), wy(l), currentCity(l)), o = Object.create(c); o.pov = pov(l); o.lux = Math.max(c.level, o.pov >= 3 ? 2 : o.pov >= 2 ? 1 : 0); return o;
   }
   function st(l) { return l.flags.ctx945 || (l.flags.ctx945 = { noted: {} }); }
   function r2(l, tag) { var h = 2166136261, s = String(l.id) + ':' + tag; for (var i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); h ^= h >>> 15; h = Math.imul(h, 2246822507); h ^= h >>> 13; return (h >>> 0) / 4294967296; }
@@ -148,7 +151,20 @@
   E.TRIG.forEach(function (t) { var R = CUSTOMS[t.id]; if (!R) return; var w = t.when; t.when = function (l, a) { return w(l, a) && customAllowed(l, t.id); }; });
   Object.keys(CUSTOMS).forEach(function (id) { var d = E.DEC[id]; if (!d || !d.def) return; var v = d.def.valid; d.def.valid = function (l, dd) { return customAllowed(l, id) && (!v || v.apply(this, arguments)); }; });
   // Học thêm và trường quốc tế cho con: chỉ có khi nước và thời kỳ đã có (từ khoảng 1990), không ở vùng chiến sự hay nạn đói, nhà đủ điều kiện
-  function schoolOptionOk(l, kind) { var c = of(l), y = wy(l), q = (l.fam && l.fam.q) || 3; if (c.hard >= 2) return false; if (kind === 'intl') return y >= 1990 && c.pov <= 2 && q >= 3; if (kind === 'extra') return y >= 1950 && c.pov <= 2 || q >= 4; return true; }
+  function schoolOptionOk(l, kind) { var c = of(l), y = wy(l), q = (l.fam && l.fam.q) || 3; if (c.hard >= 2 || c.school >= 2) return false; if (kind === 'intl') return y >= 1990 && c.pov <= 2 && q >= 3; if (kind === 'extra') return y >= 1950 && c.pov <= 2 || q >= 4; return true; }
+  function canResumeSchool(l) {
+    var c = of(l);
+    if (c.school == null) return c.hard < 2;
+    return c.school < 2 && c.war < 3 && Math.max(c.fam, c.epi >= 2 ? c.epi : 0, c.dis, c.econ >= 3 ? c.econ : 0) < 2;
+  }
+  function schoolAge(l) { return l.age - (l.flags.schoolDelay982 || 0); }
+  function schoolAgenda(l) {
+    if (!l.school || l.age < 6 || l.age > 17) return null;
+    var city = currentCity(l), c = levelAt(resCc(l), wy(l), city), previous = l.flags.ctx945?.school982;
+    if (!(c.school > 0) || !EV.school.when(c, l) || (l.school === 'lower' && schoolAge(l) >= 15)) return null;
+    if (previous?.city === city && previous.level >= c.school && c.y - previous.year <= 1) return null;
+    return { kind: 'school', y: c.y, cc: c.cc, city: city, regionalSchool: true };
+  }
   // Xuất cảnh, du học, xuất khẩu lao động chỉ có khi nước cho phép: mức 3 gần như cấm, mức 2 chỉ khi nhà khá giả và có quan hệ (nhà thường vẫn bị từ chối)
   var EMIG = ['xkld', 'emig', 'du_hoc', 'abroad107', 'abroad107_country', 'abroad107_school', 'abroad107_field', 'abroad107_apply', 'migrate114', 'move114', 'abroadMove146', 'studyVisa900', 'studyAbroad919', 'visaFile900', 'passport918'];
   function emigAllowed(l) { var c = of(l); if (c.restrict >= 3) return false; if (c.restrict === 2) return ((l.fam && l.fam.q) || 3) >= 4; return true; }
@@ -184,7 +200,7 @@
       if (c.fam >= 1 || c.war >= 2) { H.fx(l, { hea: -(3 + 2 * Math.max(c.fam, c.war >= 2 ? c.war - 1 : 0)) }); l.flags.lowBirth945 = true; }
       H.mem(l, 'Bạn chào đời năm ' + wy(l) + ' giữa ' + lb[1] + '.', 6);
     }
-    if (l.age === 0 && !s.noted.colony && c.colony) { s.noted.colony = 1; log('Bạn chào đời khi đất nước còn là ' + (/^(Anh|Pháp|Hà Lan|Bồ Đào Nha|Tây Ban Nha|Ý|Đức|Bỉ|Nhật Bản|Mỹ)/.test(c.colony) ? 'thuộc địa của ' + c.colony : 'vùng đất thuộc ' + c.colony) + '; trường học, việc làm và quyền đi lại bị giới hạn theo luật của chính quyền cai trị.', 'neutral'); }
+    if (l.age === 0 && !s.noted.colony && c.colony && !c.authority) { s.noted.colony = 1; log('Bạn chào đời khi đất nước còn là ' + (/^(Anh|Pháp|Hà Lan|Bồ Đào Nha|Tây Ban Nha|Ý|Đức|Bỉ|Nhật Bản|Mỹ)/.test(c.colony) ? 'thuộc địa của ' + c.colony : 'vùng đất thuộc ' + c.colony) + '; trường học, việc làm và quyền đi lại bị giới hạn theo luật của chính quyền cai trị.', 'neutral'); }
     if (!s.noted['res' + (c.restrict || 0)] && c.restrict >= 2 && l.age >= 16) { s.noted['res' + c.restrict] = 1; log(c.restrictLabel + ': ' + (c.restrict >= 3 ? 'ra nước ngoài gần như không thể.' : 'muốn ra nước ngoài phải xin phép và hiếm khi được duyệt.'), 'neutral'); }
     if (c.level >= 2) {
       var lab = labelOf(c), key = lab ? lab[0] + ':' + lab[1] : '';
@@ -194,7 +210,7 @@
     if (deathCheck(l, c, r, log)) return;
     parentLoss(l, c, r, log);
     // nhà trường bị gián đoạn
-    if (l.age >= 6 && l.age <= 17 && l.school && (c.war >= 2 || c.fam >= 3 || c.epi >= 3 || c.dis >= 3)) {
+    if (l.age >= 6 && l.age <= 17 && l.school && ((c.school == null && c.war >= 2) || c.fam >= 3 || c.epi >= 3 || c.dis >= 3)) {
       var kk = r2(l, 'school:' + wy(l));
       if (kk < 0.5) { l.st.kno = Math.max(0, l.st.kno - 2); l.st.hap -= 2; if (!s.noted['school' + wy(l)]) { s.noted['school' + wy(l)] = 1; log('Năm ' + wy(l) + ' trường học ' + (c.epi >= 3 ? 'đóng cửa vì dịch bệnh' : c.dis >= 3 ? 'bị phá hủy vì thiên tai' : c.fam >= 3 ? 'vắng học sinh vì đói' : 'thường xuyên đóng cửa vì chiến sự') + '; việc học bị gián đoạn nhiều tháng.', 'bad'); } }
     }
@@ -212,10 +228,15 @@
   function citiesOf(l, cc) { if(E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities)return E.ERA920.POL.cities(cc,wy(l));return cc === 'VN' && G.VN && G.VN.P63 ? G.VN.P63.map(function (p) { return p.city; }) : ((G.W && G.W.BY[cc]) || {}).cities || []; }
   // nơi yên hơn nơi đang ở: chọn trong nhóm ba nơi yên nhất (ưu tiên cùng vùng ở Việt Nam, thành phố lớn ở nước khác), cố định theo mã đời
   function localEvacuationRoute(cc, y, from, to) {
+    if (cc === 'CD' && y >= 2024 && y <= 2025 && ((from === 'Goma' && to === 'Bukavu') || (from === 'Bukavu' && to === 'Goma'))) return false;
     if (cc !== 'PS' || y < 2023 || y > 2025) return true;
     var gaza = /Gaza|Khan Younis/i, westBank = /Hebron|Nablus|Ramallah|Jenin|Bethlehem/i;
     var separateAreas = gaza.test(from) && westBank.test(to) || westBank.test(from) && gaza.test(to);
     return !separateAreas && levelAt(cc, y, to).war < 3;
+  }
+  function returnContext(cc, y, city) {
+    // Ngoài phạm vi dữ liệu, vùng Congo đang có giao tranh lớn chưa có mốc xác nhận đủ an toàn để về.
+    return levelAt(cc, cc === 'CD' && y > 2025 ? 2025 : y, city);
   }
   function refuge(l) {
     if (l.abroad?.trapped || E.TRANSIT907?.visit(l)) return null;
@@ -245,7 +266,7 @@
     if(E.ERA969?.currentRecovery(l))return;
     var s = st(l), rf = s.refuge, cc = resCc(l);
     if (!rf || rf.back || rf.stay || (rf.country || l.country) !== cc || l.abroad?.trapped || E.TRANSIT907?.visit(l) || l.age < 3) return;
-    var y = wy(l), home = levelAt(cc, y, rf.from);
+    var y = wy(l), home = returnContext(cc, y, rf.from);
     if (y - rf.y >= 7) { rf.stay = y; log('Sau nhiều năm ở ' + rf.to + ', bạn đã quen nếp sống mới; quê cũ chỉ còn là chuyện nhớ lại.', 'neutral'); return; }
     if (y - rf.y < 1 || hardness(home) > 3 || currentCity(l) !== rf.to || !localEvacuationRoute(cc, y, rf.to, rf.from)) return;
     if (r2(l, 'refugeBack:' + y) >= 0.55) return;
@@ -265,9 +286,9 @@
   var EV = {
     shelter: { n: 'Chạy trốn bom đạn', when: function (c) { return c.war >= 2; }, w: 2, t: function () { return 'Chiến sự áp sát khu bạn ở. Máy bay và pháo kích có thể tới bất cứ lúc nào; mọi người phải quyết định ở lại hay sơ tán.'; }, o: function (l, c) { var d = refuge(l); return [
       { k: 'hide', l: 'Ở lại, đào hầm trú ẩn gần nhà', h: 'Giữ nhà cửa và việc làm, rủi ro cao', run: function (l, r, log) { if (r() < [0, 0.01, 0.04, 0.09][c.war] * (l.age < 5 ? 1.5 : 1)) { H.kill(l, 'bom đạn trong ' + (c.labels.war || 'chiến sự'), log, false); return; } H.fx(l, { hap: -4, hea: -3 }); log('Bạn ở lại, nhiều đêm phải trốn xuống hầm khi báo động. Nhà cửa vẫn còn nhưng ai cũng thất thần.', 'bad'); } },
-      { k: 'flee', l: d ? 'Sơ tán tới ' + movingLabel(l, d) : 'Tìm chỗ trú tạm trong khu vực', h: d ? 'Chuyển chỗ ở và có thể phải tìm việc mới' : 'Thu xếp nơi trú gần chỗ ở hiện tại', run: function (l, r, log) { H.fx(l, { hap: -5 }); H.cash(l, -0.15 * l.base, 'Chi phí sơ tán'); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); relocateTo(l, c, log, 'Gia đình gói ghém ít đồ và tìm nơi trú tạm.'); } },
+      { k: 'flee', l: d ? 'Sơ tán tới ' + movingLabel(l, d) : 'Tìm chỗ trú tạm trong khu vực', h: d ? 'Chuyển chỗ ở và có thể phải tìm việc mới' : 'Thu xếp nơi trú gần chỗ ở hiện tại', run: function (l, r, log) { evacuate(l, c, log); } },
       { k: 'split', l: 'Gửi trẻ nhỏ về quê, người lớn ở lại làm việc', h: 'Trẻ an toàn hơn nhưng xa cha mẹ', run: function (l, r, log) { if (l.age <= 14) { H.fx(l, { hap: -6, soc: -2 }); log('Bạn bị gửi về nhờ ông bà ở quê; xa bố mẹ cả mùa, nhớ nhà nhưng bớt hiểm nguy.', 'neutral'); } else { H.fx(l, { hap: -3 }); log('Bạn ở lại làm việc cùng người lớn, lo cho cả nhà.', 'neutral'); } } }]; } },
-    ration: { n: 'Tem phiếu và thiếu hàng', when: function (c) { return c.war >= 1 || c.econ >= 2; }, w: 1.4, t: function () { return 'Hàng hóa khan hiếm, gạo và dầu phải xếp hàng hoặc mua theo tem phiếu; chợ đen thì giá gấp nhiều lần.'; }, o: function (l, c) { return [
+    ration: { n: 'Tem phiếu và thiếu hàng', when: function (c) { return c.school == null && (c.war >= 1 || c.econ >= 2); }, w: 1.4, t: function () { return 'Hàng hóa khan hiếm, gạo và dầu phải xếp hàng hoặc mua theo tem phiếu; chợ đen thì giá gấp nhiều lần.'; }, o: function (l, c) { return [
       { k: 'queue', l: 'Xếp hàng theo tem phiếu, chịu đủ thứ thiếu', h: 'Rẻ nhưng mất nhiều thời gian và vẫn không đủ', run: function (l, r, log) { H.fx(l, { hap: -2, hea: -1 }); log('Cả nhà thay phiên xếp hàng từ rạng sáng; có hàng thì mua, hết là về tay không.', 'bad'); } },
       { k: 'black', l: 'Mua ở chợ đen với giá cao', h: 'Đủ ăn nhưng tốn tiền; có thể bị phạt', run: function (l, r, log) { H.cash(l, -0.12 * l.base, 'Mua hàng chợ đen'); if (r() < 0.12) { H.cash(l, -0.08 * l.base, 'Bị phạt buôn bán chợ đen'); log('Mua hàng chợ đen bị kiểm tra và phạt thêm.', 'bad'); } else log('Bạn mua ở chợ đen với giá cắt cổ nhưng bữa cơm gia đình đủ đầy hơn.', 'neutral'); } },
       { k: 'barter', l: 'Đổi đồ đạc lấy gạo, dầu', h: 'Mất tài sản nhỏ, ăn được vài tuần', run: function (l, r, log) { H.cash(l, -0.05 * l.base, 'Đổi đồ lấy lương thực'); H.fx(l, { hap: -1 }); log('Gia đình đổi chiếc đồng hồ, tấm vải lấy mấy yến gạo; qua được mấy tuần khó khăn.', 'neutral'); } }]; } },
@@ -278,10 +299,19 @@
     sickkid: { n: 'Em nhỏ ốm yếu', when: function (c) { return c.fam >= 1 || c.war >= 2 || c.epi >= 2; }, w: 1.2, t: function (l) { return 'Người nhỏ nhất trong nhà ốm yếu vì thiếu ăn và không có thuốc; trạm y tế gần nhất hết thuốc từ lâu.'; }, o: function (l, c) { return [
       { k: 'herb', l: 'Chữa bằng thuốc nam, cháo loãng', h: 'Rẻ, hiệu quả không chắc', run: function (l, r, log) { H.fx(l, { hap: -2 }); log('Bà đun thuốc nam, cả nhà nhường phần cháo đặc cho em; có đỡ nhưng em vẫn yếu.', 'neutral'); } },
       { k: 'doctor', l: 'Tìm thầy thuốc hoặc trạm xá xa · ' + 'tốn kém', h: 'Có cơ hội cứu nhưng tốn tiền và đường xa', run: function (l, r, log) { H.cash(l, -0.1 * l.base, 'Tiền thuốc và đi lại'); H.fx(l, { hap: -1 }); log('Bố mẹ cõng em đi nhiều cây số để xin thuốc; em qua được cơn bệnh.', 'good'); } }]; } },
-    school: { n: 'Trường đóng cửa', when: function (c, l) { return l.age >= 6 && l.age <= 17 && !!l.school && (c.war >= 2 || c.epi >= 3 || c.fam >= 2 || c.dis >= 2); }, w: 1.2, t: function (l, c) { return 'Trường của bạn ' + (c.epi >= 3 ? 'đóng cửa vì dịch bệnh' : c.dis >= 2 ? 'phải tạm nghỉ vì thiên tai' : c.war >= 2 ? 'bị đóng hoặc dùng làm nơi trú ẩn' : 'vắng học sinh và hết cả sách vở') + '. Bạn có thể học lớp tạm hoặc nghỉ.'; }, o: function (l, c) { return [
+    school: { n: 'Việc học bị gián đoạn', when: function (c, l) {
+      return l.age >= 6 && l.age <= 17 && (c.school == null
+        ? !!l.school && (c.war >= 2 || c.epi >= 3 || c.fam >= 2 || c.dis >= 2)
+        : c.school > 0 && ['primary', 'lower', 'upper', 'priv'].includes(l.school));
+    }, w: 1.2, t: function (l, c) {
+      if (c.school > 0) return c.school === 2
+        ? 'Lớp chính khóa thường xuyên phải ngừng. Gia đình cần chọn cách học tiếp hoặc thu xếp sang nơi khác.'
+        : 'Lịch học vẫn thay đổi và trường đang thu xếp chỗ cho học sinh sơ tán. Có thể học bổ trợ trong lúc giãn buổi.';
+      return 'Trường của bạn ' + (c.epi >= 3 ? 'đóng cửa vì dịch bệnh' : c.dis >= 2 ? 'phải tạm nghỉ vì thiên tai' : c.war >= 2 ? 'bị đóng hoặc dùng làm nơi trú ẩn' : 'vắng học sinh và hết cả sách vở') + '. Bạn có thể học lớp tạm hoặc nghỉ.';
+    }, o: function (l, c) { return c.school > 0 ? regionalSchoolOptions(l, c) : [
       { k: 'temp', l: 'Học lớp tạm ở nhà dân, hầm trú', h: 'Vẫn học được một ít', run: function (l, r, log) { l.st.kno = Math.min(100, l.st.kno + 1); H.fx(l, { hap: -1 }); log('Bạn học chữ ở lớp tạm dưới hầm / nhà dân, sách vở chuyền tay nhau.', 'neutral'); } },
       { k: 'work', l: 'Nghỉ học đi làm phụ giúp gia đình', h: 'Có thêm tiền, bỏ dở việc học', run: function (l, r, log) { l.st.kno = Math.max(0, l.st.kno - 2); H.cash(l, 0.08 * l.base, 'Tiền làm thêm của con'); H.fx(l, { hap: -2 }); log('Bạn nghỉ học một thời gian đi làm giúp gia đình; chữ nghĩa mai một dần.', 'bad'); } }]; } },
-    drafted: { n: 'Lệnh nhập ngũ và tuyển quân', when: function (c, l) { return c.war >= 2 && c.warKind !== 'terror' && l.sex === 'M' && l.age >= 16 && l.age <= 40; }, w: 1.6, t: function () { return 'Đợt tuyển quân đến tận làng. Thanh niên trong độ tuổi bị gọi, người trốn tránh bị truy lùng.'; }, o: function (l, c) { return [
+    drafted: { n: 'Lệnh nhập ngũ và tuyển quân', when: function (c, l) { return c.war >= 2 && c.warKind !== 'terror' && !c.authority && c.school == null && l.sex === 'M' && l.age >= 16 && l.age <= 40; }, w: 1.6, t: function () { return 'Đợt tuyển quân đến tận làng. Thanh niên trong độ tuổi bị gọi, người trốn tránh bị truy lùng.'; }, o: function (l, c) { return [
       { k: 'go', l: 'Nhập ngũ theo lệnh', h: 'Được cấp lương thực, đối mặt nguy hiểm', run: function (l, r, log) { H.fx(l, { hap: -3 }); if (r() < [0, 0.02, 0.07, 0.15][c.war]) { H.kill(l, 'tử trận trong ' + (c.labels.war || 'chiến sự'), log, false); return; } if (r() < 0.25) { l.flags.chronic = Math.min(3, (l.flags.chronic || 0) + 1); H.fx(l, { hea: -10 }); log('Bạn nhập ngũ, bị thương trong một trận đánh nhưng sống sót trở về.', 'bad'); } else log('Bạn nhập ngũ, trải qua nhiều tháng khổ cực nhưng bình an.', 'neutral'); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'trauma', 2); } },
       { k: 'hide', l: 'Trốn lính, ẩn náu', h: 'Tránh được ra trận, bị truy lùng và liên lụy gia đình', run: function (l, r, log) { H.fx(l, { hap: -4, soc: -3 }); if (r() < 0.35) { H.cash(l, -0.15 * l.base, 'Bị phạt vì trốn lính'); log('Bạn bị phát hiện và gia đình phải đóng phạt; bạn bị bắt nhập ngũ muộn hơn.', 'bad'); } else log('Bạn trốn được qua đợt tuyển quân, sống thấp thỏm nhiều tháng.', 'neutral'); } },
       { k: 'leave', l: 'Rời nước tránh quân dịch · ' + 'tốn kém', h: 'Chi phí cao, bỏ lại tất cả', run: function (l, r, log) { H.cash(l, -0.4 * l.base, 'Chi phí rời nước'); H.fx(l, { hap: -5 }); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); log('Gia đình gom tiền cho bạn đi tránh quân dịch; bạn phải bắt đầu lại ở nơi xa.', 'bad'); } }]; } },
@@ -355,12 +385,45 @@
       { k: 'hold', l: 'Giữ tiền mặt, tin là sẽ ổn lại', h: 'Mất phần lớn giá trị', run: function (l, r, log) { var m = Math.max(0, l.money); H.cash(l, -(0.5 + 0.1 * c.econ) * m, 'Tiền mất giá'); H.fx(l, { hap: -5 }); log('Tiền để trong nhà mất gần hết sức mua chỉ sau vài tháng; nhiều năm tiết kiệm tan thành không.', 'bad'); } },
       { k: 'spend', l: 'Tiêu và trữ lương thực ngay', h: 'Không mất giá trị nhưng cạn tiền mặt', run: function (l, r, log) { var m = Math.max(0, l.money); H.cash(l, -0.6 * m, 'Mua trữ hàng thiết yếu'); H.fx(l, { hap: 1 }); log('Bạn dùng tiền mua gạo, dầu và vật dụng thiết yếu trữ cho cả năm; tiền mặt cạn nhưng nhà đủ ăn.', 'neutral'); } }]; } }
   });
+  function regionalSchoolOptions(l, c) {
+    var options = [
+      { k: 'temp', l: c.school === 2 ? 'Theo lớp học tạm để theo kịp chương trình' : 'Học bổ trợ vào những ngày trường giãn buổi',
+        run: function (l, r, log) {
+          H.fx(l, { kno: 1, hap: -1 });
+          log('Bạn theo lớp học bổ trợ và giữ được tiến độ của năm học.', 'good');
+        } }
+    ];
+    if (c.school === 1) options.push({ k: 'regular', l: 'Theo lịch của trường và tự học vào ngày nghỉ',
+      run: function (l, r, log) {
+        H.fx(l, { kno: -1 });
+        log('Bạn hoàn thành năm học theo lịch rút gọn; còn vài phần phải học bù.', 'neutral');
+      } });
+    else options.push({ k: 'pause', l: 'Tạm nghỉ và học bù một năm khi có thể',
+      run: function (l, r, log) {
+        if (l.flags.schoolMissed982 === c.y) return;
+        l.flags.schoolMissed982 = c.y;
+        l.flags.schoolDelay982 = (l.flags.schoolDelay982 || 0) + 1;
+        if (Number.isFinite(l.schoolEnd)) l.schoolEnd++;
+        log('Bạn tạm nghỉ học. Năm này không được tính vào chương trình; mốc hoàn thành lùi một năm.', 'bad');
+      } });
+    var dest = c.school === 2 && refuge(l);
+    if (dest) options.push({ k: 'evacuate', l: 'Cùng gia đình sơ tán tới ' + movingLabel(l, dest),
+      run: function (l, r, log) { evacuate(l, c, log); } });
+    return options;
+  }
+  function evacuate(l, c, log) {
+    H.fx(l, { hap: -5 });
+    H.cash(l, -0.15 * l.base, 'Chi phí sơ tán');
+    if (E.ERA920?.HIST) E.ERA920.HIST.open(l, 'displaced', 2);
+    relocateTo(l, c, log, 'Gia đình gói ghém ít đồ và tìm nơi trú tạm.');
+  }
+  function colonialScenes(c) { return !!c.colony && !c.authority && !c.soc.colony; }
   function socialKinds(l, c) {
     var s = st(l), y = wy(l), out = [];
     function once(k, tag, yrs) { var key = k + ':' + tag, last = s.noted[key]; if (last != null && y - last < (yrs || 99)) return false; return true; }
     function mark(k, tag) { s.noted[k + ':' + tag] = y; }
     var male = l.sex === 'M';
-    if (c.colony && !c.soc.colony) {
+    if (colonialScenes(c)) {
       if (l.age >= 16 && l.age <= 60 && once('col_tax', 'a', 2) && r2(l, 'ctax:' + y) < 0.25) out.push(['col_tax', 'a', 0.9]);
       if (l.age >= 10 && l.age <= 15 && once('col_exam', 'a', 99) && r2(l, 'cexam:' + y) < 0.5) out.push(['col_exam', 'a', 1]);
       var world = (y >= 1914 && y <= 1918) || (y >= 1939 && y <= 1945);
@@ -385,25 +448,36 @@
   // Hết thời thuộc địa: dấu ấn của những lựa chọn trước đó
   function colonyEnd(l, c, log) {
     var s = st(l), y = wy(l); if (s.noted.colEnd || c.colony) return;
-    var prev = at(resCc(l), y - 1); if (!prev.colony) return; s.noted.colEnd = y;
+    var prev = at(resCc(l), y - 1);
+    if (!prev.colony || (prev.authority || c.authority) && (c.authority?.kind !== 'independent' || c.authority.from !== y)) return;
     var f = l.flags.indep945;
+    if (c.authority && !f && !l.flags.colSchool945) return; // Mốc độc lập đã có trong nhật ký chính trị.
+    s.noted.colEnd = y;
     log('Năm ' + y + ' đất nước chấm dứt ách ' + prev.colony + '. ' + (f === 'fighter' ? 'Những năm hoạt động của bạn được ghi nhận; bạn có chỗ đứng trong chính quyền mới.' : f === 'informer' ? 'Việc bạn từng báo tin cho chính quyền cũ bị nhắc lại; bạn bị xa lánh.' : f === 'supporter' ? 'Cả xóm biết nhà bạn từng giúp đỡ phong trào; bạn được trọng nể.' : 'Bạn vừa mừng vừa lo vì mọi thứ sắp thay đổi.'), f === 'informer' ? 'bad' : 'big');
     if (f === 'fighter') { H.fx(l, { soc: 6, hap: 4 }); l.flags.statusHero945 = true; } else if (f === 'informer') { H.fx(l, { soc: -8, hap: -4 }); } else if (f === 'supporter') H.fx(l, { soc: 3 });
     if (l.flags.colSchool945 && l.age >= 18) { H.fx(l, { soc: 2 }); log('Vốn chữ và tiếng chính quốc của bạn được cần đến khi cơ quan mới thiếu người biết chữ.', 'good'); }
   }
   function kindsFor(l, c) { return Object.keys(EV).filter(function (k) { return EV[k].when(c, l); }); }
-  function pickKind(l, c, r) { var ks = kindsFor(l, c); if (!ks.length) return null; return U.wpick(r, ks, function (k) { return EV[k].w; }); }
-  X.menu('ctx945_event', 'Việc của thời buổi khó khăn', function (l) { return X.reason(l, 3); }, function (l, d) { var a = d && d.arg || {}, c = of(l), e = EV[a.kind]; return e ? e.n + '. ' + e.t(l, c) + ' Hoàn cảnh chung: ' + (labelOf(c) ? labelOf(c)[1] : 'thời kỳ khó khăn') + '.' : 'Chuyện này không còn hiệu lực.'; }, function (l, arg) { var e = EV[arg && arg.kind], c = of(l); return e ? e.o(l, c).map(function (o) { return Object.assign({ why: true }, o); }) : []; }, 3);
+  function pickKind(l, c, r) { var ks = kindsFor(l, c).filter(function (k) { return k !== 'school' || c.school == null; }); if (!ks.length) return null; return U.wpick(r, ks, function (k) { return EV[k].w; }); }
+  X.menu('ctx945_event', 'Việc của thời buổi khó khăn', function (l) { return X.reason(l, 3); }, function (l, d) { var a = d && d.arg || {}, c = of(l), e = EV[a.kind]; return e ? e.n + '. ' + e.t(l, c) + ' Hoàn cảnh chung: ' + (a.kind === 'school' && c.labels.school || labelOf(c)?.[1] || 'thời kỳ khó khăn') + '.' : 'Chuyện này không còn hiệu lực.'; }, function (l, arg) { var e = EV[arg && arg.kind], c = of(l); return e ? e.o(l, c).map(function (o) { return Object.assign({ why: true }, o); }) : []; }, 3);
   function eventCurrent(l,data) {
-    var a=data&&data.arg||data&&data.data&&data.data.arg||{},e=EV[a.kind];
-    return !!(e&&e.when(of(l),l)&&(a.y==null||a.y===wy(l))&&(!a.cc||a.cc===resCc(l))&&(!a.city||(E.ERA920?.POL?.canonicalCity(a.city)||a.city)===currentCity(l)));
+    var a=data?.arg||data?.data?.arg||data||{}, e=EV[a.kind], c=of(l);
+    if (!e || a.y!=null && a.y!==c.y || a.cc && a.cc!==c.cc || a.city && (E.ERA920?.POL?.canonicalCity(a.city)||a.city)!==currentCity(l)) return false;
+    if (!e.soc) return (a.kind !== 'school' || !!a.regionalSchool === (c.school > 0)) && e.when(c,l);
+    if (a.kind.startsWith('col_')) return colonialScenes(c);
+    if (a.kind === 'hyp_savings') return c.econ >= 3 && c.econKind === 'hyp';
+    return !!c.soc[a.kind];
   }
   var contextMenu=E.DEC.ctx945_event,contextValid=contextMenu.valid,contextApply=contextMenu.apply;
   contextMenu.valid=function(l,data){return contextValid.apply(this,arguments)&&eventCurrent(l,data);};
-  contextMenu.apply=function(l,d){if(!this.valid(l,d.data))return;return contextApply.apply(this,arguments);};
+  contextMenu.apply=function(l,d){if(!this.valid(l,d.data))return;
+    var c=of(l);
+    if(d.data?.arg?.kind==='school'&&c.school>0)st(l).school982={city:currentCity(l),level:c.school,year:c.y};
+    return contextApply.apply(this,arguments);
+  };
   E.HOOKS.year.push(yearHook);
   // ------------------------------------------------------------------
   // 6. Bảng tra cứu và thử nghiệm
   // ------------------------------------------------------------------
-  E.CTX945 = { localEvacuationRoute: localEvacuationRoute, refuge: refuge, refugeReturn: refugeReturn, relocateTo: relocateTo, levelAt: levelAt, hardness: hardness, socialKinds: socialKinds, exile: exile, cls: cls, derive: derive, zoneRows: zoneRows, ZONEX: ZONEX, SOCX: SOCX, emigAllowed: emigAllowed, EMIG: EMIG, colonyAt: colonyAt, of: of, at: at, pov: pov, hazard: hazard, eventK: eventK, customAllowed: customAllowed, CUSTOMS: CUSTOMS, EV: EV, incomeK: incomeK, foodK: foodK, IDX: IDX, GLOBAL: GLOBAL, labelOf: labelOf, kindsFor: kindsFor, schoolOptionOk: schoolOptionOk, DATA: D };
+  E.CTX945 = { localEvacuationRoute: localEvacuationRoute, refuge: refuge, refugeReturn: refugeReturn, relocateTo: relocateTo, levelAt: levelAt, hardness: hardness, socialKinds: socialKinds, exile: exile, cls: cls, derive: derive, zoneRows: zoneRows, ZONEX: ZONEX, SOCX: SOCX, emigAllowed: emigAllowed, EMIG: EMIG, colonyAt: colonyAt, of: of, at: at, pov: pov, hazard: hazard, eventK: eventK, customAllowed: customAllowed, CUSTOMS: CUSTOMS, EV: EV, incomeK: incomeK, foodK: foodK, IDX: IDX, GLOBAL: GLOBAL, labelOf: labelOf, kindsFor: kindsFor, schoolOptionOk: schoolOptionOk, canResumeSchool: canResumeSchool, schoolAge: schoolAge, schoolAgenda: schoolAgenda, returnContext: returnContext, DATA: D };
 })(typeof window !== 'undefined' ? (window.G = window.G || {}) : (globalThis.G = globalThis.G || {}));

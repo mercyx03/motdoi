@@ -146,9 +146,19 @@
   z('CD', 1996, 1997, 'Kinshasa', { war: -1 }, 'Phiến quân tiến vào thủ đô gần như không giao chiến');
   z('CD', 1998, 2003, 'Kinshasa|Lubumbashi|Mbuji-Mayi|Kananga', { war: -1 }, 'Vùng do chính phủ giữ, xa chiến trường miền đông');
   z('CD', 1998, 2004, 'Kinshasa|Lubumbashi|Mbuji-Mayi|Kananga', { fam: -1 }, 'Ít bị cắt đứt nguồn lương thực hơn miền đông');
-  z('CD', 2004, 2025, 'Kinshasa|Lubumbashi|Mbuji-Mayi', { war: -1 }, 'Xung đột tập trung ở Kivu và Ituri');
+  z('CD', 2004, 2021, 'Kinshasa|Lubumbashi|Mbuji-Mayi', { war: -1 }, 'Xung đột tập trung ở Kivu và Ituri');
   z('CD', 2008, 2013, 'Goma|Bukavu', { war: 1 }, 'Chiến tranh CNDP và M23');
-  z('CD', 2022, 2025, 'Goma|Bukavu', { war: 1 }, 'M23 chiếm Goma và Bukavu đầu 2025');
+  // school: 0 học bình thường, 1 gián đoạn/áp lực tiếp nhận, 2 phải thu xếp việc học thay thế.
+  z('CD', 2022, 2025, '^(Kinshasa|Lubumbashi|Mbuji-Mayi|Kisangani|Kananga)$', { war: '=0', school: '=0' }, 'Xa vùng giao tranh chính ở Kivu');
+  z('CD', 2025, 2025, '^(Kisangani|Kananga|Mbuji-Mayi)$', { school: '=1' }, 'Việc học chịu thêm sức ép tại Tshopo và vùng Kasaï');
+  z('CD', 2022, 2022, '^Goma$', { war: '=2', school: '=1' }, 'Giao tranh ở Rutshuru và làn sóng sơ tán về vùng Goma');
+  z('CD', 2022, 2022, '^Bukavu$', { war: '=1', school: '=0' }, 'Bukavu ở phía nam vùng giao tranh chính tại Bắc Kivu');
+  z('CD', 2023, 2023, '^Goma$', { war: '=2', school: '=1' }, 'Trường học quanh Goma chịu sức ép khi nhiều gia đình phải rời Bắc Kivu');
+  z('CD', 2023, 2023, '^Bukavu$', { war: '=1', school: '=0' }, 'Giao tranh chính của M23 vẫn tập trung ở Bắc Kivu');
+  z('CD', 2024, 2024, '^Goma$', { war: '=3', school: '=2' }, 'Giao tranh áp sát Sake và vùng ven Goma');
+  z('CD', 2024, 2024, '^Bukavu$', { war: '=1', school: '=1' }, 'Đường liên vùng gián đoạn, Nam Kivu tiếp nhận người rời vùng giao tranh');
+  z('CD', 2025, 2025, '^Goma$', { war: '=3', school: '=2' }, 'M23 chiếm Goma cuối tháng 1/2025; việc mở lại trường gặp nhiều trở ngại');
+  z('CD', 2025, 2025, '^Bukavu$', { war: '=3', school: '=2' }, 'M23 vào Bukavu giữa tháng 2/2025; việc học bị gián đoạn');
   z('CF', 2013, 2014, 'Bangui|Bimbo', { war: 1 }, 'Séléka chiếm Bangui, bạo lực lan khắp thủ đô');
   z('CI', 2002, 2004, 'Bouaké|Korhogo|Daloa', { war: 1 }, 'Phiến quân kiểm soát miền bắc, giao tranh miền tây');
   z('CI', 2010, 2011, 'Abidjan', { war: 1 }, 'Khủng hoảng sau bầu cử');

@@ -1,6 +1,24 @@
 {
-  "generatedAt": "2026-11-18T06:22:17.361Z",
+  "generatedAt": "2026-11-18T06:52:01.000Z",
   "entries": [
+    {
+      "id": "historical-authority-and-congo-school-98200",
+      "version": "9.8.2",
+      "publishedAt": "2026-11-18T13:52:01+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Chính thể theo niên đại và việc học ở Congo",
+      "summary": "Bối cảnh cai quản dùng chung một mốc theo năm. Chiến sự tại Goma và Bukavu tác động khác nhau tới việc học và cơ hội sơ tán.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Singapore năm 1943 hiện đúng là đang bị Nhật chiếm đóng. Năm 1945 ghi mốc quân quản Anh tiếp quản, rồi mới tới tự trị, gia nhập Malaysia và độc lập. Namibia, Somalia và Libya cũng có các mốc cai quản và chuyển tiếp rõ hơn.",
+        "Tại CHDC Congo, Goma và Bukavu có diễn biến riêng từng năm 2022–2025. Giao tranh quanh Goma năm 2024 gây gián đoạn nặng hơn, còn việc M23 kiểm soát Goma và tiến vào Bukavu xuất hiện đúng năm 2025. Kinshasa vẫn có lịch học bình thường.",
+        "Học bổ trợ hoặc học lớp tạm giữ tiến độ. Tạm nghỉ làm lùi mốc hoàn thành thêm một năm. Khi sơ tán, gia đình có thể thu xếp chỗ ở và xin tiếp tục chương trình ngay tại nơi đến. Việc có thể trở về được xét riêng theo tình hình quê cũ."
+      ]
+    },
     {
       "id": "ongoing-recovery-and-dated-cities-98100",
       "version": "9.8.1",

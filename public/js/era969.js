@@ -122,6 +122,11 @@
  function recovery(l,o){
   if(o.recovery969)return o.recovery969;
   var rf=l.flags.ctx945&&l.flags.ctx945.refuge,school=l.school&&l.age>=6&&l.age<18&&['primary','lower','upper','priv'].includes(l.school)?{kind:l.school,remaining:Math.max(1,(l.schoolEnd||l.age+1)-l.age),edu:l.edu}:null;
+  if(school&&(C.of(l).school!=null||l.flags.schoolDelay982)){
+   if(school.kind==='primary'||school.kind==='lower')school.calendarAge=C.schoolAge(l);
+   if(school.calendarAge!=null)school.remaining=Math.max(1,(school.kind==='primary'?12:15)-school.calendarAge);
+   school.regional982=true;
+  }
   var state=Hist.st(l),serial=state.recoverySerial969=(state.recoverySerial969||0)+1;
   var q=o.recovery969={id:l.id+':recovery:'+year(l)+':'+serial,from:rf&&!rf.back&&!rf.stay&&(rf.country||l.country)===cc(l)?rf.from:residentCity(l),country:cc(l),at:Number.isFinite(o.y0)?o.y0:year(l),history:[],school:school};
   if(school){l.school=null;l.schoolEnd=null;}
@@ -146,7 +151,7 @@
  function recoveryReady(l,q){return X.reason(l,3)===true&&q.acted!==year(l);}
  function returnReady(l,q){
   var here=residentCity(l),y=year(l);
-  return !l.abroad?.trapped&&!E.TRANSIT907?.visit(l)&&q.country===cc(l)&&!!q.from&&!!here&&P.canonicalCity(q.from)!==here&&y>q.at&&cityAllowed(q.country,y,q.from)&&C.localEvacuationRoute(q.country,y,here,q.from)&&C.hardness(C.levelAt(q.country,y,q.from))<=3;
+  return !l.abroad?.trapped&&!E.TRANSIT907?.visit(l)&&q.country===cc(l)&&!!q.from&&!!here&&P.canonicalCity(q.from)!==here&&y>q.at&&cityAllowed(q.country,y,q.from)&&C.localEvacuationRoute(q.country,y,here,q.from)&&C.hardness(C.returnContext(q.country,y,q.from))<=3;
  }
  function canPayRecovery(l){return l.age<18&&!l.indep||l.money>=l.base*.12;}
  function canMeetRecovery(l,q){return !!(q.contact&&!q.reunited&&family(l)&&year(l)>q.contact&&housing(l,q)&&C.of(l).hard<2);}
@@ -239,7 +244,16 @@
    if(l.school){q.schoolDone=true;delete q.schoolDue;}
    else if(cc(l)!==q.schoolCountry||residentCity(l)!==P.canonicalCity(q.schoolCity)){delete q.schoolDue;log('Nơi cư trú đã đổi; cần trao đổi lại về chương trình học tại nơi mới.','neutral');}
    else if(l.age>=18){delete q.schoolDue;log('Bạn đã đến tuổi trưởng thành; có thể tiếp tục bằng học bổ túc hoặc học nghề phù hợp.','neutral');}
-   else if(C.of(l).hard<2){l.school=q.school.kind;l.schoolEnd=l.age+q.school.remaining;q.schoolDone=true;delete q.schoolDue;log('Bạn được tiếp tục chương trình cũ, giữ kết quả đã học và học đủ phần còn lại.','good');}
+   else if(C.canResumeSchool(l)){
+    l.school=q.school.kind;
+    if(q.school.calendarAge!=null){
+     // Duyệt hồ sơ cuối năm. Buổi học đầu tiên diễn ra từ năm tiếp theo.
+     l.flags.schoolDelay982=Math.max(0,l.age+1-q.school.calendarAge);
+     l.schoolEnd=null;
+    }else l.schoolEnd=l.age+q.school.remaining+(q.school.regional982?1:0);
+    q.schoolDone=true;delete q.schoolDue;
+    log('Bạn được tiếp tục chương trình cũ, giữ kết quả đã học và học đủ phần còn lại.','good');
+   }
    else q.schoolDue=year(l)+1;
   }
  }
