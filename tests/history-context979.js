@@ -79,7 +79,8 @@ assert.match(P.status('UA', 2024), /tấn công toàn diện/);
 assert.notEqual(P.status('SY', 2024), P.status('SY', 2025));
 assert.match(P.status('AF', 2025), /Taliban/);
 const ukrainian = born('UA', 2025, 'Kharkiv');
-assert(!ukrainian.era920);
+assert(ukrainian.era920);
+delete ukrainian.era920; // Bản lưu 9.7.9 sinh vào 2025 chưa có ngữ cảnh nhân khẩu mới.
 const politics = E.HOOKS.year.find(fn => fn.toString().includes('m.polCC'));
 const entries = [];
 politics(ukrainian, rng, text => entries.push(text));

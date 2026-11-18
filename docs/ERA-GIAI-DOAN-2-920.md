@@ -69,3 +69,11 @@ Module: `public/js/data-era920.js` (dữ liệu, sinh tự động), `public/js/
 - Tổng tỷ suất sinh của đời sinh năm nay vẫn dùng công thức cũ theo u5 (không đổi để giữ nguyên đời hiện nay); công thức đó lệch UN ở một số nước (ví dụ Nigeria 5,9 so với 4,5 của UN 2023).
 - Số liệu theo năm lấy ở mức cả nước: không có chênh lệch vùng, thành thị/nông thôn, nhóm thu nhập hay dân tộc ngoài các hệ số tham số vốn có của engine.
 - Không có số liệu cho Vatican (trong game dùng mức mặc định).
+
+## Số ca sinh và nơi cư trú trong 9.8.0
+
+- Chế độ Thế giới chọn nước theo số ca sinh trên cùng bảng dùng cho biểu đồ xác suất và giấy khai sinh. Bảng có 194 nước từng có trọng số sinh. Vatican giữ trọng số bằng 0 như trước do tập dữ liệu này không dùng Vatican để chọn ngẫu nhiên.
+- UN WPP 2024 cung cấp số ca sinh ước tính vào 1950–2023 và dự phóng kịch bản trung bình cho 2024–2025. Trước 1950, game dùng tỷ trọng năm 1950. Sau 2025, game giữ tỷ trọng 2025. Giao diện ghi mốc và nguồn tại chỗ. Ranh giới thống kê của nguồn dùng mã địa lý hiện đại.
+- Tuổi thọ lúc sinh, tỷ suất sinh và tỷ suất tử vong dưới 5 tuổi có thêm dự phóng 2024–2025. Thông tin GDP, đô thị hóa và công nghệ dùng các chuỗi trước đây. Bản lưu cũ giữ chỉ số được ghi lúc sinh. Các hệ số tử vong trước 1950 vẫn theo mô hình cũ.
+- Khi chuyển nước, người chơi và gia đình cùng nhà dùng rủi ro sức khỏe ở nơi đang sống. Bố mẹ mặc định dùng điều kiện quê nhà. Mức sinh địa phương ảnh hưởng đến cách chế độ tự động cân nhắc có con. Khuynh hướng cá nhân lưu một lần và phản hồi theo địa phương. Kế hoạch số con do người chơi đặt có ưu tiên, và lần đang thử được lưu trên hồ sơ bạn đời.
+- Dữ liệu dùng bản WPP 2024 và tệp đính chính Togo. Công cụ sinh kiểm tra đủ từng nước và từng năm, lưu SHA-256 tệp nguồn và lượng ca sinh về đơn vị người. Tệp CSV gốc và tệp ZIP đính chính nằm trong cache tải xuống. [Phương pháp UN WPP 2024](https://population.un.org/wpp/assets/Files/WPP2024_Methodology.pdf), [Tệp dữ liệu UN](https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz), [Bản đính chính Togo](https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/WPP2024_CSV_files_update.zip).

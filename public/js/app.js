@@ -152,17 +152,30 @@
     var bx = G.E && G.E.BIAS955 && G.E.BIAS955.hint ? G.E.BIAS955.hint(cc, y) : '';
     return ' Bối cảnh năm sinh: ' + (p.length ? p.join('; ') : 'không có biến cố lớn trong bảng bối cảnh') + '.' + bx + (!city&&zones?' Bối cảnh cụ thể còn tùy thành phố hoặc vùng sinh.':'');
   }
-  // 9.2: mô tả những gì thay đổi theo năm sinh đã chọn (số liệu thật theo nước và năm từ 1950; trước 1950 chỉ chặn công nghệ sai thời)
+  function birthCountryLabel(c, y) {
+    var name = E.ERA920?.POL?.nameAt(c.code, y);
+    return name && name !== c.name ? name + ' · nay là ' + c.name : c.name;
+  }
+  function birthSource(y, data) {
+    if (data.year == null) return 'Ước tính theo bảng số sinh mặc định.';
+    if (y < data.year) return 'Ước tính theo tỷ trọng năm ' + data.year + ' do chưa có chuỗi số sinh theo từng nước trước 1950.';
+    if (data.projected) return 'Dùng dự phóng trung bình năm ' + data.year + ' của UN World Population Prospects 2024.';
+    return 'Dùng số ca sinh ước tính năm ' + data.year + ' của UN World Population Prospects 2024.';
+  }
   function yearHintText() {
-    var y=S.set.year||NOW_YEAR,X=E.ERA920,F=X&&X.FROM||1950,T=X&&X.TO||2023;
-    if(S.set.mode==='world'&&!S.set.country)return 'Năm '+y+': quốc gia và vùng sinh sẽ được chọn khi chào đời. Bối cảnh, sinh hoạt và cơ hội thay đổi theo nơi được chọn và từng năm bạn sống.';
-    var cc=S.set.mode==='world'?S.set.country:'VN',P=X&&X.POL,c=W.BY[cc],nm=P&&P.nameAt(cc,y)||c&&c.name||cc;
-    var context=ctxHintText(cc,y);
-    if(y<F)return 'Năm '+y+', '+nm+': sinh hoạt và cơ hội theo thời kỳ. Sức khỏe và kinh tế trước 1950 được ước tính từ dữ liệu sớm nhất và xu hướng thời đại.'+context;
-    var a=X&&y<=T?X.at(cc,y):null;
-    if(!a)return 'Năm '+y+', '+nm+': dùng số liệu gần nhất; hoạt động và sự kiện vẫn theo năm đang sống.'+context;
-    function d(v,n){return Number(v).toFixed(n).replace('.',',');}
-    return 'Năm '+y+', '+nm+': tuổi thọ lúc sinh khoảng '+d(a.e0,0)+' năm, phụ nữ trung bình '+d(a.tfr,1)+' con, khoảng '+d(a.u5/10,0)+'% trẻ chết trước 5 tuổi, '+d(a.urban,0)+'% dân ở đô thị, '+(a.mobile<.5&&a.internet<.5?'chưa có điện thoại di động và internet đại chúng':d(a.mobile,0)+' thuê bao di động trên 100 dân và '+d(a.internet,0)+'% dân dùng internet')+' (UN, Maddison, ITU qua Our World in Data).'+context;
+    var y = S.set.year || NOW_YEAR, X = E.ERA920, F = X?.FROM || 1950;
+    var source = X ? birthSource(y, X.birthDistribution(y)) : '';
+    if (S.set.mode === 'world' && !S.set.country) return 'Năm ' + y + ': quốc gia và vùng sinh sẽ được chọn khi chào đời. ' + source;
+    var cc = S.set.mode === 'world' ? S.set.country : 'VN', c = W.BY[cc], nm = X?.POL?.nameAt(cc, y) || c?.name || cc;
+    var context = ctxHintText(cc, y), start = 'Năm ' + y + ', ' + nm + ': ';
+    if (y < F) return start + 'sức khỏe và kinh tế được ước tính từ dữ liệu sớm nhất và xu hướng thời đại.' + context;
+    var a = X?.at(cc, y);
+    if (!a?.demographicYear) return start + 'sinh hoạt và biến cố theo năm đang sống.' + context;
+    function d(v, n) { return Number(v).toFixed(n).replace('.', ','); }
+    var rates = 'tuổi thọ lúc sinh khoảng ' + d(a.e0, 0) + ' năm, phụ nữ trung bình ' + d(a.tfr, 2) + ' con, khoảng ' + d(a.u5 / 10, 1) + '% trẻ mất trước 5 tuổi';
+    if (a.projected) return start + 'dự phóng UN WPP năm ' + a.demographicYear + ' cho thấy ' + rates + '.' + context;
+    var access = a.mobile < .5 && a.internet < .5 ? 'chưa có điện thoại di động và internet đại chúng' : d(a.mobile, 0) + ' thuê bao di động trên 100 dân và ' + d(a.internet, 0) + '% dân dùng internet';
+    return start + rates + (a.u5Observed ? '' : ' (ước tính)') + ', ' + d(a.urban, 0) + '% dân ở đô thị, ' + access + '.' + context;
   }
   function syncSetupUI() {
     if(syncBirthRegion968()){saveSettings();fillSelects();}
@@ -182,7 +195,7 @@
       country.innerHTML='<option value="">🎲 Ngẫu nhiên (theo số trẻ chào đời)</option>';
       W.C.filter(function (c) { return c.births > 0; })
         .sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); })
-        .forEach(function (c) { var P=E.ERA920&&E.ERA920.POL,n=P&&P.nameAt(c.code,S.set.year||NOW_YEAR);country.add(new Option(n&&n!==c.name?n+' · nay là '+c.name:c.name,c.code)); });
+        .forEach(function (c) { country.add(new Option(birthCountryLabel(c, S.set.year || NOW_YEAR), c.code)); });
     }
     country.value = S.set.country || '';
     if (!country.value) { S.set.country = ''; country.value = ''; }
@@ -206,7 +219,8 @@
   }
 
   function renderOdds() {
-    var rows, sub;
+    var rows, sub, y = S.set.year || NOW_YEAR;
+    $('#oddsTitle').textContent = S.set.mode === 'vn' ? 'Xác suất nơi sinh ở Việt Nam' : 'Xác suất nơi sinh năm ' + y;
     if (S.set.mode === 'vn') {
       var list = S.set.variant === '63' ? VN.P63 : VN.P34;
       var tot = list.reduce(function (s, p) { return s + p.pop; }, 0);
@@ -216,10 +230,13 @@
       rows.push([(list.length - 9) + ' tỉnh thành khác', rest / tot]);
       sub = 'Ước tính theo dân số ' + (S.set.variant === '63' ? '63 tỉnh thành (trước 1/7/2025)' : '34 tỉnh thành sau sáp nhập') + ', Niên giám Thống kê 2023.';
     } else {
-      var t = W.BIRTHS_TOTAL, cs = W.C.slice().sort(function (a, b) { return b.births - a.births; });
-      rows = cs.slice(0, 9).map(function (c) { return [c.name, c.births / t]; });
-      rows.push([(W.C.length - 9) + ' quốc gia khác', cs.slice(9).reduce(function (s, c) { return s + c.births; }, 0) / t]);
-      sub = 'Theo số trẻ sinh ra mỗi năm ở 195 quốc gia — UN World Population Prospects 2024 (làm tròn). Việt Nam: ' + pct(W.BY.VN.births / t, 2) + ', khoảng 1 trong ' + oneIn(W.BY.VN.births / t) + ' em bé.';
+      var data = E.ERA920.birthDistribution(y), t = data.total;
+      var cs = W.C.filter(function (c) { return data.counts[c.code] > 0; });
+      cs.sort(function (a, b) { return data.counts[b.code] - data.counts[a.code]; });
+      rows = cs.slice(0, 9).map(function (c) { return [birthCountryLabel(c, y), data.counts[c.code] / t]; });
+      rows.push([(cs.length - 9) + ' quốc gia khác', cs.slice(9).reduce(function (s, c) { return s + data.counts[c.code]; }, 0) / t]);
+      var vnShare = data.counts.VN / t;
+      sub = birthSource(y, data) + ' Việt Nam chiếm ' + pct(vnShare, 2) + ', khoảng 1 trong ' + oneIn(vnShare) + ' em bé.';
     }
     $('#oddsSub').textContent = sub;
     var max = Math.max.apply(null, rows.map(function (r) { return r[1]; }));
@@ -460,7 +477,8 @@
       fact('Tuổi thọ kỳ vọng', U.fmtNum(l.e0sex, 1) + ' năm') +
       fact('Nguy cơ mất trước 5 tuổi', pct(l.p5)) +
       fact('GDP bình quân đầu người', incomeLine(l));
-    var odds;
+    var odds, birthData = E.ERA920.birthDistribution(l.birthYear), shareOfBirths = (birthData.counts[l.country] || 0) / birthData.total;
+    var globalOdds = shareOfBirths > 0 ? 'Trong các ca sinh dùng để chọn ngẫu nhiên năm ' + l.birthYear + ', ' + pct(shareOfBirths, 2) + ' thuộc ' + esc(birthCountryLabel(W.BY[l.country], l.birthYear)) + ' — khoảng 1 trong ' + oneIn(shareOfBirths) + ' em bé. ' + esc(birthSource(l.birthYear, birthData)) + ' ' : '';
     if (vn) {
       var list = l.variant === '63' ? VN.P63 : VN.P34, tot = list.reduce(function (s, p) { return s + p.pop; }, 0);
       var pp = list.filter(function (p) { return p.name === l.provLabel; })[0];
@@ -469,12 +487,13 @@
       odds = 'Khoảng ' + pct(share) + ' trẻ sơ sinh Việt Nam chào đời ở ' + esc(l.provLabel) + ' — cứ ' + oneIn(share) + ' em thì có 1. ' +
         'Người ' + esc(l.eth) + ' chiếm ' + pct(ethReal, ethReal < 0.01 ? 3 : 1) + ' dân số Việt Nam' + (eth.id === 0 ? '.' : ' (Tổng điều tra 2019: ' + U.fmtNum(eth.pop) + ' người).') +
         ' Và ' + (l.urban ? 'bạn là một trong khoảng 38% người Việt sinh ra ở thành thị.' : 'như khoảng 62% người Việt, bạn sinh ra ở nông thôn.');
-      if (l.mode === 'world') odds = 'Trong số trẻ sơ sinh toàn thế giới hôm nay, ' + pct(W.BY.VN.births / W.BIRTHS_TOTAL, 2) + ' chào đời ở Việt Nam — khoảng 1 trong ' + oneIn(W.BY.VN.births / W.BIRTHS_TOTAL) + '. ' + odds;
+      if (l.mode === 'world') odds = globalOdds + odds;
     } else {
-      var c = W.BY[l.country], s2 = c.births / W.BIRTHS_TOTAL;
+      var c = W.BY[l.country], birthYearData = E.ERA920.at(l.country, l.birthYear);
       var cur = G.CUR.CUR[l.country];
-      odds = pct(s2, 2) + ' trẻ sơ sinh hôm nay chào đời ở ' + esc(l.countryName) + ' — khoảng 1 trong ' + oneIn(s2) + '. ' +
-        (l.urban ? 'Bạn sinh ra ở thành phố, như ' + pct(c.urban, 0) + ' dân số nơi đây.' : 'Bạn sinh ra ở nông thôn, như ' + pct(1 - c.urban, 0) + ' dân số nơi đây.') +
+      var urbanShare = birthYearData ? birthYearData.urban / 100 : c.urban;
+      odds = globalOdds + (l.urban ? 'Bạn sinh ra ở thành phố.' : 'Bạn sinh ra ở nông thôn.') +
+        ' Dân thành thị chiếm khoảng ' + pct(urbanShare, 0) + ' theo dữ liệu mốc ' + (birthYearData?.year || 'gần nhất') + '.' +
         (cur ? ' Đồng tiền nơi đây: ' + esc(cur.name) + ' (' + cur.code + ').' : '');
     }
     var sec = secPerYear(l);
@@ -1265,7 +1284,7 @@
   }
   function dl(rows) { return '<dl class="statlist">' + rows.map(function (r) { return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl>'; }
   function renderPlace() {
-    var l = S.life, html;
+    var l = S.life, html, placeYear = l.birthYear, birthplaceRates = E.ERA920.demography(l.country, placeYear), counts = E.ERA920.birthDistribution(placeYear);
     if (E.isVN(l)) {
       var o = VN.byName[l.prov.old], n = VN.P34[l.prov.neuId];
       var ethE = VN.ethByName(l.eth);
@@ -1277,26 +1296,33 @@
         ['Thu nhập so với TB cả nước', '×' + U.fmtNum(o.wealth, 2)],
         ['Dân tộc ' + l.eth, ethE.id === 0 ? '85,3% dân số' : U.fmtNum(ethE.pop) + ' người']
       ]) + '<h3 style="margin-top:14px">Việt Nam</h3>' + dl([
-        ['Dân số', '~100,3 triệu'], ['Trẻ sinh mỗi năm', '~1,35 triệu'], ['Tuổi thọ nữ / nam', '77,4 / 72,2'],
-        ['Tử vong dưới 5 tuổi', '~20‰'], ['GDP/người (PPP)', '~$14.300'], ['Tỷ lệ đô thị', '~38%'], ['Hôn nhân cùng giới', 'Chưa công nhận']
+        ['Số ca sinh · ' + counts.year, U.fmtNum(counts.counts.VN)],
+        ['Tuổi thọ lúc sinh · ' + birthplaceRates.year, U.fmtNum(birthplaceRates.e0, 1) + ' năm'],
+        ['Tử vong dưới 5 tuổi', U.fmtNum(birthplaceRates.u5) + '‰'], ['GDP/người (PPP, mốc gần đây)', '~$14.300'], ['Hôn nhân cùng giới', 'Chưa công nhận']
       ]);
     } else {
-      var c = W.BY[l.country], cur = G.CUR.CUR[l.country];
+      var c = W.BY[l.country], cur = G.CUR.CUR[l.country], indicators = E.ERA920.at(c.code, placeYear);
       var ss = W.SSM.indexOf(c.code) >= 0 ? 'Hợp pháp' : W.CRIM.indexOf(c.code) >= 0 ? 'Bị hình sự hóa' : 'Chưa công nhận';
-      html = '<h3>' + esc(c.name) + '</h3>' + dl([
-        ['Trẻ sinh mỗi năm', c.births >= 1000 ? U.fmtNum(c.births / 1000, 2) + ' triệu' : U.fmtNum(c.births * 1000)],
-        ['Tỷ lệ trên thế giới', pct(c.births / W.BIRTHS_TOTAL, 2)],
-        ['Tuổi thọ trung bình', U.fmtNum(c.e0, 1) + ' năm'],
-        ['Tử vong dưới 5 tuổi', U.fmtNum(c.u5) + '‰'],
-        ['GDP/người (PPP)', '$' + U.fmtNum(c.gdp * 1000)],
+      html = '<h3>' + esc(birthCountryLabel(c, placeYear)) + '</h3>' + dl([
+        ['Số ca sinh · ' + counts.year, counts.counts[c.code] ? U.fmtNum(counts.counts[c.code]) : 'Chưa có dữ liệu'],
+        ['Tỷ trọng khi chọn nơi sinh ngẫu nhiên', pct((counts.counts[c.code] || 0) / counts.total, 2)],
+        ['Tuổi thọ lúc sinh' + (birthplaceRates ? ' · ' + birthplaceRates.year : ''), U.fmtNum(birthplaceRates?.e0 || c.e0, 1) + ' năm'],
+        ['Tử vong dưới 5 tuổi', U.fmtNum(birthplaceRates?.u5 || c.u5) + '‰'],
+        ['GDP/người (PPP, mốc gần đây)', '$' + U.fmtNum(c.gdp * 1000)],
         ['Đồng tiền', cur ? cur.name + ' (' + cur.code + ')' : '—'],
-        ['Tỷ lệ đô thị', pct(c.urban, 0)],
+        ['Tỷ lệ đô thị · ' + (indicators?.year || 'mốc gần nhất'), pct((indicators?.urban ?? c.urban * 100) / 100, 0)],
         ['Quan hệ cùng giới', ss]
       ]);
     }
+    var residence = E.H.resCode(l);
+    if (residence !== l.country) {
+      var current = E.ERA920.demography(residence, l.birthYear + l.age);
+      html += '<h3 style="margin-top:14px">Nơi đang sống</h3>' + dl([['Quốc gia', birthCountryLabel(W.BY[residence] || { code: residence, name: l.abroad.name || residence }, l.birthYear + l.age)]]);
+      if (current) html += dl([['Mức sinh · ' + current.year + (current.projected ? ' (dự phóng)' : ''), U.fmtNum(current.tfr, 2) + ' con/phụ nữ'], ['Tuổi thọ lúc sinh', U.fmtNum(current.e0, 1) + ' năm']]);
+    }
     var home=E.HOMETOWN&&E.HOMETOWN.own(l);
     if(home)html+='<h3 style="margin-top:14px">Dấu ấn quê hương · '+esc(home.name)+'</h3>'+dl([['Địa danh',home.places.join(' · ')],['Ẩm thực / sản vật',home.foods.join(' · ')]]);
-    html += '<p class="small muted" style="margin:10px 0 0">Số liệu làm tròn (GSO, UN WPP 2024, World Bank); thời điểm nguồn được ghi theo từng bộ dữ liệu.</p>';
+    html += '<p class="small muted" style="margin:10px 0 0">' + esc(birthSource(placeYear, counts)) + ' Các chỉ số khác dùng mốc ghi bên cạnh hoặc dữ liệu gần nhất.</p>';
     $('#placePanel').innerHTML = html;
   }
 

@@ -1,5 +1,24 @@
 [
   {
+    "id": "birth-odds-and-local-demographics-98000",
+    "version": "9.8.0",
+    "publishedAt": "2026-11-18T11:04:15+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Xác suất nơi sinh theo năm và bối cảnh khi chuyển nước",
+    "summary": "Chọn nước ngẫu nhiên theo số ca sinh từng năm. Khi sang nước khác, nhân vật dùng mức sinh, sức khỏe và điều kiện phát triển của nơi đang sống.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Ở chế độ Thế giới, số ca sinh của 194 nước có dữ liệu quyết định xác suất chọn nơi sinh. Bảng xác suất và giấy khai sinh cùng dùng dữ liệu này.",
+      "Giai đoạn 1950–2023 dùng ước tính của Liên Hợp Quốc. Năm 2024–2025 dùng dự phóng, gồm số ca sinh, mức sinh, tuổi thọ và tử vong dưới 5 tuổi. Với năm sinh trước 1950, tỷ trọng bốc nước lấy theo mốc 1950.",
+      "Chuyển nước hoặc trở về làm thay đổi bối cảnh của nhân vật trong năm đó. Nơi sinh vẫn có trong hồ sơ, và bố mẹ ở quê tiếp tục dùng điều kiện tại quê nhà.",
+      "Ở chế độ tự động, mức sinh địa phương ảnh hưởng tới khuynh hướng có con. Số con mong muốn do người chơi đặt và lần đang thử có con vẫn theo quyết định đã chọn."
+    ]
+  },
+  {
     "id": "dated-places-and-regional-history-97900",
     "version": "9.7.9",
     "publishedAt": "2026-11-18T10:42:39+07:00",

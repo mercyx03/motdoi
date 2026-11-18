@@ -46,6 +46,34 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     assert.match(dates.pk,/Ấn Độ thuộc Anh · nay là Pakistan/);
     assert.match(dates.pkProfile,/Ấn Độ thuộc Anh/);
     assert.match(dates.ukraine,/tấn công toàn diện/);
+    const odds=await p.eval(()=>{
+     function choose(id,value){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}
+     choose('yearSel','1900');
+     const early=document.querySelector('#oddsSub').innerText;
+     const first=document.querySelector('#oddsBars').innerText;
+     choose('yearSel','2025');
+     return {early,first,recent:document.querySelector('#oddsSub').innerText,last:document.querySelector('#oddsBars').innerText,title:document.querySelector('#oddsTitle').innerText};
+    });
+    assert.match(odds.early,/Ước tính theo tỷ trọng năm 1950/);
+    assert.match(odds.recent,/dự phóng trung bình năm 2025/);
+    assert.match(odds.title,/2025/);assert.notEqual(odds.first,odds.last);
+    const certificate=await p.eval(()=>{
+     const engine=G.E, original=engine.makeCohort;
+     engine.makeCohort=()=>[];
+     try {
+      document.querySelector('#bornBtn').click();document.querySelector('#rollSkip').click();
+      return document.querySelector('#birthWrap .odds').textContent;
+     } finally { engine.makeCohort=original; }
+    });
+    assert.match(certificate,/năm 2025.*Ukraine.*dự phóng trung bình năm 2025/);
+    await p.eval(()=>{
+     const E=G.E,l=E.createLife({mode:'world',country:'GB',year:1935,seed:980});
+     l.age=25;E.H.emigrate(l,['JP','Nhật Bản',G.W.BY.JP.pool],()=>.4,()=>{});
+     G.SaveStore.write('mkn.current',{life:l,cohort:[],speed:1,auto:false});
+    });
+    await p.reload();await p.eval(async()=>{await MotDoiBoot.load();});
+    const panel=await p.eval(()=>{document.querySelector('#resumeBtn').click();return document.querySelector('#placePanel').textContent;});
+    assert.match(panel,/Anh/);assert.match(panel,/Nơi đang sống.*Nhật Bản.*Mức sinh · 1960/);
     await p.load(url+'updates.html');
     const newest=await p.eval(()=>{
      const data=JSON.parse(document.querySelector('#updateHistoryData').textContent).entries;
