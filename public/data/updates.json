@@ -1,11 +1,30 @@
 {
-  "generatedAt": "2026-11-18T06:52:01.000Z",
+  "generatedAt": "2026-11-18T07:13:11.000Z",
   "entries": [
+    {
+      "id": "thailand-marriage-timeline-98300",
+      "version": "9.8.3",
+      "publishedAt": "2026-11-18T14:13:11+07:00",
+      "releaseStatus": "released",
+      "releasedAt": null,
+      "title": "Kết hôn ở Thái Lan theo từng thời kỳ",
+      "summary": "Cơ hội đăng ký kết hôn thay đổi theo năm, độ tuổi của cả hai và nơi đang sống.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Trước 2025, cặp cùng giới ở Thái Lan có thể chọn sống chung. Từ 2025, cặp sống chung đủ điều kiện được mời đăng ký một lần và có thể mở lại lựa chọn từ mục Tình cảm & gia đình.",
+        "Tuổi đăng ký thông thường ở Thái Lan đổi từ đủ 17 lên đủ 18 vào năm 2025. Nếu một trong hai chưa đủ 20 tuổi, gia đình có thể thu xếp giấy đồng ý hoặc hai bạn có thể chờ đến khi tự đăng ký được.",
+        "Danh sách đi nước ngoài để kết hôn xét các nước đã cho đăng ký trong năm đó. Tải lại lựa chọn cũ vẫn phải đủ điều kiện ở thời điểm xác nhận thì mới chuyển nơi sống và trừ tiền."
+      ],
+      "correctedAt": "2026-11-18T07:13:11.906Z"
+    },
     {
       "id": "historical-authority-and-congo-school-98200",
       "version": "9.8.2",
       "publishedAt": "2026-11-18T13:52:01+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "releasedAt": null,
       "title": "Chính thể theo niên đại và việc học ở Congo",
       "summary": "Bối cảnh cai quản dùng chung một mốc theo năm. Chiến sự tại Goma và Bukavu tác động khác nhau tới việc học và cơ hội sơ tán.",
@@ -17,13 +36,14 @@
         "Singapore năm 1943 hiện đúng là đang bị Nhật chiếm đóng. Năm 1945 ghi mốc quân quản Anh tiếp quản, rồi mới tới tự trị, gia nhập Malaysia và độc lập. Namibia, Somalia và Libya cũng có các mốc cai quản và chuyển tiếp rõ hơn.",
         "Tại CHDC Congo, Goma và Bukavu có diễn biến riêng từng năm 2022–2025. Giao tranh quanh Goma năm 2024 gây gián đoạn nặng hơn, còn việc M23 kiểm soát Goma và tiến vào Bukavu xuất hiện đúng năm 2025. Kinshasa vẫn có lịch học bình thường.",
         "Học bổ trợ hoặc học lớp tạm giữ tiến độ. Tạm nghỉ làm lùi mốc hoàn thành thêm một năm. Khi sơ tán, gia đình có thể thu xếp chỗ ở và xin tiếp tục chương trình ngay tại nơi đến. Việc có thể trở về được xét riêng theo tình hình quê cũ."
-      ]
+      ],
+      "correctedAt": "2026-11-18T07:13:11.890Z"
     },
     {
       "id": "ongoing-recovery-and-dated-cities-98100",
       "version": "9.8.1",
       "publishedAt": "2026-11-18T13:22:17+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "releasedAt": null,
       "title": "Hồi phục sau biến cố và địa danh đúng niên đại",
       "summary": "Hậu quả sau biến cố tiếp tục qua các năm. Sơ tán dựa trên nơi đang sống, còn nơi sinh và chuyển nhà dùng tên theo đúng thời kỳ.",
@@ -36,7 +56,8 @@
         "Người đang sống ở nước ngoài có thể sơ tán trong nước đang ở nếu đã xác định được thành phố và có điểm đến ít bị ảnh hưởng hơn. Hồ sơ nhớ đúng nơi sơ tán, giữ việc học đang dở và xét đường trở về theo tình hình từng năm.",
         "Nơi đang sống cũng quyết định tác động của một số biến cố địa phương. Ví dụ, sự kiện riêng về sóng thần Tōhoku xét nơi nhân vật đang ở tại Nhật vào năm 2011.",
         "Quezon City xuất hiện từ năm 1939. Thành phố Dnipro dùng tên Katerynoslav, Dnipropetrovsk hoặc Dnipro theo năm. Canberra, Soweto và Polokwane cũng có mốc lịch sử riêng trong màn sinh, chuyển nơi ở và hồ sơ."
-      ]
+      ],
+      "correctedAt": "2026-11-18T07:13:11.874Z"
     },
     {
       "id": "birth-odds-and-local-demographics-98000",

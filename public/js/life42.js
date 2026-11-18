@@ -122,32 +122,68 @@
   // ===================================================================
   var SSM = ['TH', 'AU', 'CA', 'US', 'NL', 'DE', 'FR', 'GB', 'ES', 'NZ', 'SE', 'IE', 'BE', 'DK', 'NO', 'CH', 'AT', 'PT', 'FI', 'IS', 'LU', 'MT', 'BR', 'AR', 'MX', 'CL', 'CO', 'UY', 'ZA', 'CR', 'EE', 'SI', 'GR', 'EC', 'CU', 'AD', 'LI'].filter(function (c) { return W && W.BY[c] && W.SSM.indexOf(c) >= 0; });
   E.SSM_LIST = SSM;
+  function weddingTravelAllowed(l) {
+    var p = l.partner;
+    return !!(l.alive && p && p.alive !== false && p.sex === l.sex && ['dating','cohabit'].includes(p.status)
+      && !l.abroad?.trapped && (!E.FAMILY53 || E.FAMILY53.free(l)) && (!E.CTX945 || E.CTX945.emigAllowed(l)));
+  }
+  function weddingDestination(l, cc) {
+    return cc !== H.resCode(l) && SSM.includes(cc) && (!E.ERA920 || E.ERA920.ssmLegal(l, cc))
+      && (cc === 'TH' ? !!E.thaiRegister983?.(l) : (!E.legalToMarry || E.legalToMarry(l, cc)));
+  }
+  function weddingDestinations(l) {
+    return weddingTravelAllowed(l) ? SSM.filter(function (cc) { return weddingDestination(l, cc); }) : [];
+  }
   var mk0 = E.DEC.marry.make, ap0 = E.DEC.marry.apply;
   E.DEC.marry.make = function (l, r) {
     var d = mk0.apply(this, arguments), p = l.partner;
-    if (p && p.sex === l.sex && !H.sameSexLegal(l) && SSM.length) {
+    var destinations = p && p.sex === l.sex && !H.sameSexLegal(l) ? weddingDestinations(l) : [];
+    if (destinations.length) {
       d.opts.splice(1, 0, { k: 'nuoc_ngoai', l: 'Cùng sang một nước đã công nhận hôn nhân đồng giới để kết hôn và sinh sống', h: 'Kết hôn hợp pháp · chuyển cả cuộc sống sang nước đó · chi phí thủ tục, vé máy bay' });
-      d.text += ' Nhiều nước đã công nhận hôn nhân cùng giới — gần nhất là Thái Lan, xa hơn có Úc, Canada, Mỹ, Hà Lan, Đức…';
+      d.text += ' Hai bạn có thể cân nhắc nơi đã cho đăng ký trong năm nay, chẳng hạn ' + destinations.slice(0, 3).map(function (cc) { return W.BY[cc].name; }).join(', ') + '.';
     }
     return d;
   };
   var au0 = E.DEC.marry.auto;
   E.DEC.marry.auto = function (l, d, r) { if (d.opts.some(function (o) { return o.k === 'nuoc_ngoai'; }) && r() < 0.12) return 'nuoc_ngoai'; return au0.apply(this, arguments); };
-  E.DEC.marry.apply = function (l, d, k, r, log) { if (k === 'nuoc_ngoai') { l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: 0 })); return; } return ap0.apply(this, arguments); };
+  E.DEC.marry.apply = function (l, d, k, r, log) {
+    if (k === 'nuoc_ngoai') {
+      if (weddingDestinations(l).length) l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: 0 }));
+      return;
+    }
+    return ap0.apply(this, arguments);
+  };
   var PER = 8;
   SC('ket_hon_nn', {
-    title: 'Chọn nước để kết hôn và sinh sống', valid: function (l) { return !!(l.partner && l.partner.sex === l.sex); },
-    prep: function (l, r, a) { var p = (a && a.p) || 0; return { p: p, cs: SSM.slice(p * PER, p * PER + PER) }; },
+    title: 'Chọn nước để kết hôn và sinh sống',
+    valid: function (l, d) { return weddingTravelAllowed(l) && (!d?.who983 || l.partner.uid110 === d.who983) && (!d?.from983 || d.from983 === H.resCode(l)); },
+    prep: function (l, r, a) {
+      var choices = weddingDestinations(l), p = Math.max(0, Math.min(a?.p || 0, Math.ceil(choices.length / PER) - 1));
+      return { p: p, cs: choices.slice(p * PER, p * PER + PER), who983: l.partner && E.UPDATE110.uid(l, l.partner), from983: H.resCode(l) };
+    },
     text: function (l, d) { return 'Các nước đã hợp pháp hóa hôn nhân đồng giới. Sang đó, hai bạn đăng ký kết hôn và bắt đầu cuộc sống mới: tìm việc, thuê nhà, mua sắm bằng tiền nước đó. Tiền tiết kiệm sẽ được quy đổi theo tỉ giá.'; },
     opts: Array.apply(null, Array(PER)).map(function (_, i) {
-      return { k: 'n' + i, l: function (l, d) { var c = d.cs[i]; return c ? W.BY[c].name : ''; }, h: function (l, d) { var c = d.cs[i]; if (!c) return ''; var B = W.BY[c]; return (c === 'TH' ? 'gần Việt Nam, hợp pháp từ 2025 · ' : '') + 'mức sống ' + (B.gdp >= 50 ? 'cao' : B.gdp >= 20 ? 'khá' : 'trung bình') + ' · thành phố: ' + B.cities.slice(0, 2).join(', '); }, req: function (l, d) { return !!d.cs[i]; }, ai: { w: 1 },
+      return { k: 'n' + i, l: function (l, d) { var c = d.cs[i]; return c ? W.BY[c].name : ''; }, h: function (l, d) { var c = d.cs[i]; if (!c) return ''; var B = W.BY[c]; return 'Mức sống ' + (B.gdp >= 50 ? 'cao' : B.gdp >= 20 ? 'khá' : 'trung bình') + ' · thành phố: ' + B.cities.slice(0, 2).join(', '); }, req: function (l, d) { return weddingDestination(l, d.cs[i]); }, ai: { w: 1 },
         run: function (l, r, log, d) { var c = d.cs[i]; moveAbroadMarried(l, r, log, c); } };
     }).concat([
-      { k: 'them', l: 'Xem thêm các nước khác ›', req: function (l, d) { return SSM.length > (d.p + 1) * PER; }, ai: { w: 0 }, run: function (l, r, log, d) { l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: d.p + 1 })); } },
-      { k: 'o_lai', l: 'Thôi, ở lại Việt Nam, sống chung là đủ', ai: { w: 0.5 }, run: function (l, r, log) { ap0.call(E.DEC.marry, l, { data: {} }, 'marry', r, log); } }
+      { k: 'them', l: 'Xem thêm các nước khác ›', req: function (l, d) { return weddingDestinations(l).length > (d.p + 1) * PER; }, ai: { w: 0 }, run: function (l, r, log, d) { l.pending.unshift(E.DEC.ket_hon_nn.make(l, r, { p: d.p + 1 })); } },
+      { k: 'o_lai', l: 'Ở lại nơi đang sống', ai: { w: 0.5 }, run: function (l, r, log) {
+        if (!H.sameSexLegal(l) && l.partner.status === 'dating' && E.legalToMarry(l)) ap0.call(E.DEC.marry, l, { data: {} }, 'cohabit', r, log);
+      } }
     ])
   });
+  var weddingTravel = E.DEC.ket_hon_nn, applyWeddingTravel = weddingTravel.apply;
+  weddingTravel.apply = function (l, d, key, r, log) {
+    if (!this.valid(l, d.data)) return;
+    if (/^n[0-7]$/.test(key) && !weddingDestination(l, d.data.cs?.[+key.slice(1)])) {
+      log('Nơi đã chọn chưa phù hợp với điều kiện kết hôn trong năm nay.', 'neutral');
+      if (weddingDestinations(l).length) l.pending.unshift(this.make(l, r, {p:0}));
+      return;
+    }
+    return applyWeddingTravel.apply(this, arguments);
+  };
   function moveAbroadMarried(l, r, log, c) {
+    if (!weddingTravelAllowed(l) || !weddingDestination(l, c)) return false;
     var B = W.BY[c], pool = String(B.pool || 'en').split(',')[0].split(':')[0];
     var cost = c === 'TH' ? 25 : 70; if (!vnd(l)) cost = l.abroad && l.abroad.perm ? cost / toVNDf(l) : V(l, cost); l.money -= cost; var costTxt = mo(l, cost);
     l.flags.vnHome = { place: l.place, city: l.city, urban: l.urban, movedTo: l.movedTo, cityWealth: l.cityWealth };
@@ -155,6 +191,7 @@
     l.partner.status = 'married'; l.partner.since = l.age; l.flags.ssmAbroad = c;
     log('Đăng ký kết hôn với ' + l.partner.name + ' ở ' + B.name + ' — tờ giấy hôn thú mà ở quê nhà chưa thể có. Thủ tục, vé máy bay, ổn định chỗ ở hết khoảng ' + costTxt + '.', 'big'); fx(l, { hap: 12 });
     H.mem(l, 'Ngày ký giấy kết hôn với ' + l.partner.name + ' ở ' + B.name + '.', 8);
+    return true;
   }
   E.moveAbroadMarried = moveAbroadMarried;
 

@@ -72,9 +72,10 @@ var elite=E.DEC.elite_hon_nhan,em=elite.make,ea=elite.apply;
 elite.make=function(l,r){var d=em.apply(this,arguments);d.data.salary129=l.cur==='vnd'?U.randint(r,120,300):l.base*(1.5+r()*2);d.text+=' Người được giới thiệu đang quản lý doanh nghiệp gia đình, thu nhập '+H.money(l,d.data.salary129)+'/tháng.';return d;};
 elite.apply=function(l,d,key,r,log){if(l.age<18)return;ea.apply(this,arguments);if(key==='yes'&&l.partner&&l.partner.name===d.data.n){var p=l.partner;p.age=Math.max(18,p.age);p.jobId='tai_phiet';p.job=E.CAR.tai_phiet.t[0];p.inc=d.data.salary129|| (l.cur==='vnd'?200:l.base*2);p.incKnown=true;p.familyBackground129=d.data.who;p.rankSince=l.age;}};
 function secondarySchool(l){return l.school==='upper'||l.school==='lower';}
+function marriageMin(l){return H.resCode(l)==='TH'?E.marryAge(l,l.sex):18;}
 var marriage=E.DEC.marry,mv=marriage.valid,mm=marriage.make,ma=marriage.apply;
-marriage.valid=function(l,d){return !secondarySchool(l)&&l.age>=18&&(!mv||mv(l,d));};
-marriage.make=function(l){var d=mm.apply(this,arguments);if(secondarySchool(l)||l.age<18)d.opts=[{k:'wait',l:'Tập trung học, chưa bàn chuyện kết hôn'}];return d;};
+marriage.valid=function(l,d){return !secondarySchool(l)&&l.age>=marriageMin(l)&&(!mv||mv(l,d));};
+marriage.make=function(l){var d=mm.apply(this,arguments);if(secondarySchool(l)||l.age<marriageMin(l))d.opts=[{k:'wait',l:secondarySchool(l)?'Tập trung học, chưa bàn chuyện kết hôn':'Chờ đến khi đủ tuổi đăng ký'}];return d;};
 marriage.apply=function(l,d,k){if(!marriage.valid(l,d.data))return;return ma.apply(this,arguments);};
 var contract=E.DEC.contract108,cv=contract.valid;contract.valid=function(l,d){return !secondarySchool(l)&&cv(l,d);};
 var work=E.DEC.tim_nguoi_yeu.def.opts.find(function(o){return o.k==='work';});if(work){var wr=work.req;work.req=function(l,d){return !!(l.school||l.job||l.retired||l.age>=60)&&(!wr||wr(l,d));};}

@@ -13,7 +13,7 @@ var SRC={
  deAge874:'https://www.gesetze-im-internet.de/bgb/__1303.html',
  deCeremony874:'https://www.gesetze-im-internet.de/bgb/__1310.html',
  jpAge874:'https://www.moj.go.jp/EN/MINJI/minji07_00218.html',
- thAge874:'https://www.thailandlawonline.com/translations/marriage-equality-act-amendment-act-no-24-b-e-2567',
+ thAge874:'https://sdgs.nesdc.go.th/en/a-significant-step-for-thai-society-toward-equality-dismantling-the-binary-gender-system-in-law-through-marriage-equality-to-create-a-new-society-that-embraces-all-diversity/',
  mextSchool874:'https://www.mext.go.jp/en/policy/education/overview/index.htm',
  kmkPaths874:'https://www.kmk.org/en/bildungsministerkonferenz/bildungsthemen/educational-paths-and-qualifications.html',
  kmkVocational874:'https://www.kmk.org/en/bildungsministerkonferenz/bildungsthemen/berufliche-bildung-und-weiterbildung.html',
@@ -56,12 +56,25 @@ var AGE={
  ID:{src:'idMarriage874',f:function(y){return y>=2020?{M:19,F:19,t:'Luật 16/2019 (từ 15/10/2019): cả hai 19 tuổi.'}:y>=1975?{M:19,F:16,t:'Luật Hôn nhân 1974: nam 19, nữ 16.'}:null;}},
  KR:{src:'krCivil874',f:function(y){return y>=2008?{M:18,F:18,t:'Bộ luật Dân sự Điều 807 (sửa bởi Luật 8720/2007): cả hai 18; dưới 19 cần cha mẹ đồng ý.'}:{M:18,F:16,t:'Điều 807 trước sửa đổi 2007: nam 18, nữ 16.'};}},
  JP:{src:'jpAge874',f:function(y){return y>=2023?{M:18,F:18,t:'Bộ luật Dân sự Nhật sửa đổi, hiệu lực 1/4/2022: cả hai 18.'}:{M:18,F:16,t:'Bộ luật Dân sự Nhật trước 1/4/2022: nam 18, nữ 16 (cần cha mẹ đồng ý khi chưa thành niên).'};}},
- TH:{src:'thAge874',f:function(y){return y>=2025?{M:18,F:18,t:'Điều 1448 sửa đổi, hiệu lực 23/1/2025: từ 18 tuổi.'}:{M:17,F:17,t:'Điều 1448 trước 2025: từ 17 tuổi.'};}},
+ TH:{src:'thAge874',f:function(y){
+  var equal=y>=2025,min=equal?18:17;
+  return {M:min,F:min,sameSex:equal,consentUntil:20,t:equal
+   ?'Từ 23/1/2025, cả hai từ đủ 18 tuổi, bất kể giới tính. Dưới 20 tuổi cần người có thẩm quyền đồng ý.'
+   :'Trước 2025, đăng ký giữa nam và nữ từ đủ 17 tuổi. Dưới 20 tuổi cần người có thẩm quyền đồng ý.'};
+ }},
  PH:{src:'phFamily874',f:function(y){return y>=1988?{M:18,F:18,t:'Bộ luật Gia đình (EO 209/1987), Điều 5: từ 18; 18–21 cần cha mẹ đồng ý.'}:null;}},
  SG:{src:'sgMarriage874',f:function(){return {M:18,F:18,t:'Singapore: 18–21 cần cha mẹ đồng ý; dưới 18 chỉ khi có Giấy phép Hôn nhân Đặc biệt.'};}},
  DE:{src:'deAge874',f:function(y){return y>=2018?{M:18,F:18,t:'BGB §1303 (từ 22/7/2017): 18 tuổi, không ngoại lệ.'}:null;}}
 };
-function at874(l){var cc=E.resCode?E.resCode(l):(l&&l.abroad&&l.abroad.code)||(l&&l.country)||'VN',y=(l&&l.birthYear!=null&&l.age!=null)?l.birthYear+l.age:null,R=AGE[cc];if(!R||y==null)return null;var v=R.f(y);if(!v)return null;return {code:cc,year:y,M:v.M,F:v.F,text:v.t,source:R.src};}
-E.MARRY_AGE874={rules:AGE,at:at874,age:function(l,sex){var v=at874(l);return v?(sex==='M'?v.M:v.F):null;}};
+function forYear(cc,y){
+ var R=AGE[cc],v=R&&Number.isFinite(y)&&R.f(y);
+ if(!v)return null;
+ return {code:cc,year:y,M:v.M,F:v.F,text:v.t,source:R.src,sameSex:v.sameSex,consentUntil:v.consentUntil};
+}
+function at874(l,cc){
+ var code=cc||(E.resCode?E.resCode(l):E.H.resCode(l));
+ return l&&l.birthYear!=null&&l.age!=null?forYear(code,l.birthYear+l.age):null;
+}
+E.MARRY_AGE874={rules:AGE,forYear:forYear,at:at874,age:function(l,sex,cc){var v=at874(l,cc);return v?(sex==='M'?v.M:v.F):null;}};
 E.COUNTRY_VERIFIED874={rows:ROWS,applied:applied,checkedAt:AT};
 })(globalThis.G);

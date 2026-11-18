@@ -683,7 +683,10 @@
       { k: 'pause', l: 'Dừng kế hoạch hiện tại', h: 'Không tự quyết thay người yêu, trường học hay nơi làm việc', run: function (l, r, log) { q.status = 'paused'; caseRecord(l, e, q, 'pause', 'Dừng kế hoạch hiện tại.'); log('Bạn khép lại kế hoạch đang làm dở, giữ lịch sử đã trao đổi.', 'neutral'); } }
     ];
     if (e.kind === 'education') return depthAt(l).education.map(function (route) { return { k: route.route, l: 'Lập kế hoạch: ' + route.name, h: route.note + vtag874(route), run: function (l, r, log) { startCase(l, e, route.route, 0, r, log); } }; });
-    if (e.kind === 'marriage') return depthAt(l).marriage.map(function (item, i) { return { k: item.id, l: 'Cùng tìm hiểu: ' + item.name, h: item.note + vtag874(item), run: function (l, r, log) { startCase(l, e, item.id, 0, r, log); } }; });
+    if (e.kind === 'marriage') return depthAt(l).marriage.map(function (item) {
+      var localRule = code(l)==='TH' && item.id==='wed1912' && E.MARRY_AGE874?.at(l);
+      return { k: item.id, l: 'Cùng tìm hiểu: ' + item.name, h: localRule ? localRule.text : item.note + vtag874(item), run: function (l, r, log) { startCase(l, e, item.id, 0, r, log); } };
+    });
     var labels = e.options || ['Cùng chuẩn bị và hẹn xem lại', 'Tham gia một phần vừa sức', 'Tạm hoãn'];
     return labels.map(function (label, i) { var rate = i === 0 && (e.kind === 'training' || e.kind === 'safety') ? .01 : 0;
       return { k: ['plan', 'light', 'pause'][i], l: label, h: rate && adult(l) ? 'Chi phí chuẩn bị ước tính: ' + H.money(l, l.base * rate) : 'Không chi thêm tiền', why: !rate || !adult(l) || l.money >= l.base * rate, run: function (l, r, log) { startCase(l, e, ['plan', 'light', 'pause'][i], rate, r, log); } };

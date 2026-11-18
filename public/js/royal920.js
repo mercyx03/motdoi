@@ -143,6 +143,7 @@
     if ((q.stage === 'invite' || q.stage === 'trust') && NEXT[q.stage] === 'dating' && l.partner && l.partner.alive !== false) return 'Bạn đang có người yêu/bạn đời';
     if (q.stage === 'invite' && l.partner && l.partner.alive !== false) return 'Bạn đang có người yêu/bạn đời';
     if (l.age < 21 || age(l, m) < 21) return 'Cả hai cần trưởng thành';
+    if (q.stage === 'approval' && q.cc === 'TH' && !E.thaiRegister983?.(l, {sex:m.sex,age:age(l,m)})) return 'Chưa đủ điều kiện đăng ký kết hôn tại Thái Lan trong năm nay';
     return true;
   }
   function step(l, id, r, log) {
@@ -164,7 +165,9 @@
     if (want === 'engaged') q.stage = 'approval'; // bước chấp thuận luôn được xét; chỉ người trong phạm vi luật mới có thể bị hoãn
   }
   function wed(l, h, m, log) {
-    var q = st(l).rel[m.id], R = rule(h.cc); if(E.ROYAL837&&!E.ROYAL837.weddingAllowed(l,h,m,q))return false; q.stage = 'married'; m.spouse = 'player';
+    var q = st(l).rel[m.id], R = rule(h.cc);
+    if (h.cc==='TH'&&!E.thaiRegister983?.(l,{sex:m.sex,age:age(l,m)})) return false;
+    if(E.ROYAL837&&!E.ROYAL837.weddingAllowed(l,h,m,q))return false; q.stage = 'married'; m.spouse = 'player';
     l.partner = { name: m.name, sex: m.sex, age: age(l, m), status: 'married', since: l.age, alive: true, job: 'thành viên hoàng gia (' + h.name + ')', jobId: null, inc: 0, incKnown: true, royal920: { cc: h.cc, id: m.id }, homeCountry: h.cc };
     var me = byId(h,'player') || { id: 'player', name: l.name, sex: l.sex, by: l.birthYear, alive: true, player: true, titles: [] }; me.spouse=m.id;me.role='spouse';
     if (R.femaleLeaves && m.sex === 'F') { m.removed = 'rời hoàng tộc khi kết hôn'; (m.titles || []).forEach(function (t) { t.lost = 'kết hôn với thường dân theo luật hoàng thất'; }); log('Theo luật hoàng thất, ' + m.name + ' rời hoàng tộc khi kết hôn; hai bạn sống như thường dân.', 'neutral'); }

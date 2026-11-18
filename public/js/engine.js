@@ -1114,13 +1114,14 @@
       auto: function (life, d, r) { var x = r(); return x < 0.45 ? 'marry' : x < 0.55 && d.opts.some(function (o) { return o.k === 'small'; }) ? 'small' : x < 0.88 ? 'wait' : 'split'; },
       apply: function (life, d, k, r, log) {
         var p = life.partner;
-        if (k === 'marry' || k === 'small') {
+        if (k === 'marry' || k === 'small' || k === 'cohabit') {
           var same = p.sex === life.sex, legal = sameSexLegal(life);
-          p.status = same && !legal ? 'cohabit' : 'married'; p.since = life.age;
+          p.status = k === 'cohabit' || same && !legal ? 'cohabit' : 'married'; p.since = life.age;
           if (p.status === 'married') {
             if (k === 'marry') { H.cash(life, -life.base * 0.6, 'Tổ chức đám cưới'); H.cash(life, life.base * (0.3 + r() * 0.4), 'Tiền mừng cưới'); }
-            log((k === 'marry' ? (isVN(life) ? 'Tổ chức đám cưới với ' : 'Kết hôn với ') : 'Đăng ký kết hôn, làm vài mâm cơm thân mật với ') + p.name + '.', 'big');
-          } else log('Về chung sống với ' + p.name + '. Một đám cưới nhỏ chỉ có bạn bè thân.', 'big');
+            log((k === 'marry' ? (isVN(life) ? 'Tổ chức đám cưới với ' : 'Kết hôn với ')
+              : resCode(life) === 'TH' ? 'Đăng ký kết hôn tại văn phòng huyện với ' : 'Đăng ký kết hôn, làm vài mâm cơm thân mật với ') + p.name + '.', 'big');
+          } else log('Về chung sống với ' + p.name + '.', 'big');
           life.st.hap += 10; life.st.soc += 5;
           H.mem(life, p.status === 'cohabit' ? 'Ngày cùng ' + p.name + ' dọn về chung một nhà — chìa khóa có hai cái tên.' : 'Ngày cưới ' + p.name + ' — bạn cười không ngớt.', 5);
         } else if (k === 'split') { log('Chia tay ' + p.name + '.', 'bad'); life.partner = null; life.exes++; life.st.hap -= 8; }
@@ -1543,6 +1544,10 @@
       var pm = 0.13 + (life.focus === 'social' ? 0.07 : 0) - (a > 40 ? 0.08 : 0) + (life.st.soc - 50) / 400 + (E.LOOKS134 ? E.LOOKS134.loveBonus(life) : 0); // ngoại hình ưa nhìn dễ có người yêu hơn
       if (r() < pm) add('love');
     } else if (p && p.status === 'dating' && a - p.since >= 1 && (life.flags.marryAskAt == null || a - life.flags.marryAskAt >= 2 + Math.min(4, life.flags.marryWait || 0)) && r() < 0.4) { add('marry'); life.flags.marryAskAt = a; } // v3.0: không hỏi chuyện cưới năm nào cũng như năm nào
+    if (p && !p.thaiReview983 && E.canReviewThaiMarriage?.(life)) {
+      add('marry');
+      if (q.some(function (d) { return d.id === 'marry'; })) p.thaiReview983 = true;
+    }
     var plannedKids = explicitFamilyTarget(life), targetKids = plannedKids;
     if (targetKids == null) targetKids = p && p.status !== 'dating' && a <= 50 && E.ERA920 ? E.ERA920.familyTarget(life) : life.flags.wantKids;
     if (p && p.status !== 'dating' && a <= 50 && (life.flags.noKidUntil == null || a >= life.flags.noKidUntil) && (life.flags.kidAskAt == null || a - life.flags.kidAskAt >= 2) && life.kids.length < (plannedKids ?? Math.max(2, targetKids || 0)) && !(life.flags.pregnancy108) && (!E.RELATIONS108 || E.RELATIONS108.fertile(life,p)) && r() < ((targetKids != null ? targetKids : 2) > life.kids.length ? (life.kids.length >= 1 ? 0.18 : 0.35) : 0.05)) { /* 8.10.74b: cặp còn mong con được hỏi thường hơn; 9.0.2: kế hoạch mặc định 2 con không còn chặn nhân vật AI muốn đông con hơn theo tỷ suất sinh của nước */ var beforeKid=q.length; add('kid'); if(q.length>beforeKid)life.flags.kidAskAt=a; }
@@ -1643,7 +1648,7 @@
       var p = life.partner;
       switch (d.id) {
         case 'job': return !(life.job && life.job.fam) && !(life.fam && life.fam.elite && life.flags.eliteFollow && !life.flags.eliteCut && !life.flags.eliteJobDone && life.age <= 24) && !life.school && !(life.abroad && !life.abroad.perm) && (!life.job || life.flags.upgradeJob) && !(life.jailUntil != null && life.age < life.jailUntil);
-        case 'marry': return !!(p && p.status === 'dating');
+        case 'marry': return !!(p && (p.status === 'dating' || E.canReviewThaiMarriage?.(life)));
         case 'kid': return !!(p && p.alive !== false && p.age >= 18 && life.age >= 18);
         case 'divorce': return !!(p && p.status !== 'dating');
         case 'love': return !p && life.age <= (d.data && d.data.search912 && E.LOVE_SEARCH_MAX || E.LOVE_MAX || 120); // v4.2: chuyện tình tự đến chỉ dưới 55 tuổi; người chủ động đi tìm thì tới 85 (romance912.js)
@@ -1697,7 +1702,7 @@
     var x = a.avail ? a.avail(l) : true;
     return x === true || x === undefined ? true : (x || 'Chưa thể làm lúc này');
   }
-  function actions(l) { return ACT.filter(function(a){return !E.ERA902||!E.ERA902.actionBlocked(l,a);}).map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
+  function actions(l) { return ACT.filter(function(a){return (!a.onlyCountry||a.onlyCountry===resCode(l))&&(!E.ERA902||!E.ERA902.actionBlocked(l,a));}).map(function (a) { return { id: a.id, g: a.g, l: famFix(l, typeof a.l === 'function' ? a.l(l) : a.l), ok: actAvail(l, a) }; }); } // v2.9: tên hành động có thể theo hoàn cảnh (tôn giáo…)
   function act(l, id) {
     var a = ACT.filter(function (x) { return x.id === id; })[0];
     if (!a || actAvail(l, a) !== true) return null;
@@ -1723,7 +1728,7 @@
     { c: function (l, a) { return a >= 12 && a <= 17 && l.orient !== 'straight' && !l.realized; }, p: function (l, a) { return a <= 13 ? 0.8 : 0.4; }, run: function (l, a, r, log) { l.realized = true; log(E.realizeText ? E.realizeText(l, r) : l.orient === 'bi' ? 'Nhận ra mình có thể rung động với cả bạn nam lẫn bạn nữ.' : 'Nhận ra mình rung động với người cùng giới.', 'big'); } }, // v3.7: phần lớn nhận ra khoảng 12–13 tuổi
     { c: function (l, a) { return a >= 15 && a <= 17 && l.sex === 'F' && !l.partner && earlyMarriageRisk(l) > 0; }, p: function (l) { return earlyMarriageRisk(l); }, run: function (l, a, r, log) {
       var nm = strangerName(l, r, 'M');
-      l.partner = { name: nm, sex: 'M', age: a + U.randint(r, 3, 12), status: 'married', since: a, alive: true };
+      l.partner = { name: nm, sex: 'M', age: a + U.randint(r, 3, 12), status: resCode(l) === 'TH' ? 'cohabit' : 'married', since: a, alive: true };
       l.school = null; l.flags.earlyMarried = true; l.flags.needJob = false;
       log('Bị gia đình gả cho ' + nm + ' khi mới ' + a + ' tuổi, phải nghỉ học.', 'bad'); l.st.hap -= 12;
       H.mem(l, 'Ngày bị gả đi khi mới ' + a + ' tuổi.', 5);

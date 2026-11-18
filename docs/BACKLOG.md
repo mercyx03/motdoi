@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.8.3: còn hồi quy toàn diện, bản lưu thật ở ranh giới luật hôn nhân và xác minh binding REVIEWS_DB Production. Luật kết hôn dùng bước một năm. Ngoại lệ tòa án và xung đột luật theo quốc tịch chưa được mô phỏng.
+
 - 9.8.2: còn hồi quy toàn diện trên mã cuối, bản lưu thật qua nhiều lần gián đoạn học và sơ tán, cùng xác minh binding REVIEWS_DB Production. Các mốc cai quản và tình hình học đường cần tiếp tục đối chiếu tại những vùng chưa có bảng riêng.
 
 - 9.8.1: còn hồi quy toàn diện, bản lưu thật qua nhiều lần sơ tán và binding REVIEWS_DB Production. Năm thành lập và tên theo niên đại cần tiếp tục đối chiếu cho những địa phương chưa có mốc.

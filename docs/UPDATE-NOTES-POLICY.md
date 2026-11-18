@@ -24,6 +24,7 @@ Từ GĐ3, mục mới có version, releaseStatus=packaged và releasedAt=null k
 - Liệt kê mục đang chờ: node tools/release-update.js (cũng tự in ở cuối npm run package:cloudflare).
 - Khi chủ dự án upload Production: (1) chạy node tools/release-update.js <id> --released-at 2026-10-28T20:15:00+07:00 với thời điểm thực tế; (2) npm run package:cloudflare; (3) upload dist.zip mới; (4) commit docs/update-extra.json, public/data/updates.json, dist.zip. Nếu thời điểm upload khác đã ghi, chạy lại với --correct.
 - Công cụ từ chối: thiếu ngày, thiếu múi giờ, ngày tương lai (lệch quá 5 phút), sớm hơn thời điểm chuẩn bị, ID không có; cập nhật đồng thời hai file, giữ nguyên mọi mục khác và đặt correctedAt để công cụ dựng lịch sử chấp nhận. Kiểm thử: node tests/update-release.js.
+- Khi chủ dự án yêu cầu hiện nhãn **Đã phát hành** ngay trong gói dù chưa có giờ upload, dùng `node tools/release-update.js <id> --mark-released`. Mục này hiện nhãn và phiên bản, để trống ngày phát hành. Khi có giờ upload thực tế, dùng `--released-at` để điền giờ. Giờ chuẩn bị được lưu riêng.
 - Gói ZIP còn mục packaged chỉ là bản Preview; nếu lỡ upload, trang sẽ ghi “chưa phát hành” cho tới khi chạy bước trên và upload lại.
 
 ## Phát hành nhiều bản cùng một đợt (từ GĐ6)
