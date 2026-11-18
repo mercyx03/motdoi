@@ -1,5 +1,25 @@
 [
   {
+    "id": "pacific-disasters-and-haiti-food-98600",
+    "version": "9.8.6",
+    "publishedAt": "2026-11-18T15:43:26+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Thiên tai ở Thái Bình Dương và thiếu lương thực ở Haiti",
+    "summary": "Thêm ba thiên tai theo đảo hoặc khu vực chịu ảnh hưởng. Sơ tán và việc học có thể tiếp diễn trong năm phục hồi. Khủng hoảng lương thực ở Haiti ảnh hưởng khác nhau đến từng hộ.",
+    "tags": [
+      "Sửa lỗi",
+      "Tính năng"
+    ],
+    "details": [
+      "Sóng thần Samoa năm 2009 ảnh hưởng mạnh ở Lalomanu và Poutasi trên đảo Upolu. Đảo Niuatoputapu của Tonga cũng có bối cảnh riêng trong cùng năm.",
+      "Vụ phun trào Hunga Tonga–Hunga Haʻapai và sóng thần năm 2022 ảnh hưởng nặng hơn ở Atatā, một số làng trên Tongatapu và các đảo Haʻapai. Vavaʻu có mức ảnh hưởng nhẹ hơn.",
+      "Động đất Port Vila tháng 12/2024 làm gián đoạn việc học và chỗ ở trên đảo Efate. Từ năm 2025, trường mở lại với lớp học tạm trong thời gian sửa chữa.",
+      "Gia đình có thể ở tại điểm cứu trợ gần nhà hoặc chuyển tới điểm tiếp nhận phù hợp. Phần học dở được giữ để xin học tiếp khi thu xếp được chỗ ở. Mốc trở về phụ thuộc tình trạng nơi cũ.",
+      "Haiti 2024–2025 hiển thị khủng hoảng lương thực nghiêm trọng. Nơi ở, tiền dự phòng và tình trạng sơ tán ảnh hưởng mức thiếu ăn. Bạn có thể tìm điểm hỗ trợ, dành tiền mua thêm thức ăn hoặc chia lại khẩu phần."
+    ]
+  },
+  {
     "id": "occupation-and-historical-regions-98500",
     "version": "9.8.5",
     "publishedAt": "2026-11-18T15:13:36+07:00",

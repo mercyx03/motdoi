@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.8.6: còn hồi quy toàn diện, đối chiếu save thật qua nhiều đợt sơ tán và xác minh binding REVIEWS_DB Production. Danh sách đảo chỉ gồm địa điểm có thể chơi trong game. Mức thiếu ăn của hộ Haiti là độ khó trong mô phỏng và dữ liệu địa phương dùng bước một năm.
+
 - 9.8.5: còn hồi quy toàn diện và xác minh binding REVIEWS_DB Production. Bối cảnh dùng mốc theo năm, chưa có ngày sinh hoặc giấy phép riêng theo từng cửa khẩu lịch sử. Kiểm tra thêm bản lưu thật từng đi qua nhiều vùng và các đợt chuyển giao cùng năm.
 
 - 9.8.4: còn hồi quy toàn diện, bản lưu thật qua nhiều lần đổi chỗ trú, đối chiếu thêm mốc mở lại tuyến sơ tán sau 2025 và xác minh binding REVIEWS_DB Production. Ngày thay đổi chính sách học ở Afghanistan hiển thị trong nội dung, hiệu lực trò chơi dùng bước một năm.

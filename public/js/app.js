@@ -180,7 +180,7 @@
     return start + rates + (a.u5Observed ? '' : ' (ước tính)') + ', ' + d(a.urban, 0) + '% dân ở đô thị, ' + access + '.' + context;
   }
   function syncWorldBirthCity() {
-    var cc = S.set.country, enabled = S.set.mode === 'world' && (cc === 'MY' || cc === 'DE');
+    var cc = S.set.country, enabled = S.set.mode === 'world' && ['MY', 'DE', 'WS', 'TO', 'VU', 'HT'].includes(cc);
     var select = $('#worldCitySel'), P = E.ERA920.POL, y = S.set.year || NOW_YEAR;
     $('#worldCityField').classList.toggle('hidden', !enabled);
     if (!enabled) return;

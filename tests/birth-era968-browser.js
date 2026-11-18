@@ -87,6 +87,24 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     assert.equal(regional.united,'Berlin');assert.equal(regional.city,'Dresden');assert.equal(regional.year,1965);
     assert.match(regional.profile,/Dresden, Đông Đức/);assert.match(regional.birth,/Dresden, Đông Đức/);assert(!regional.overflow);
     await p.reload();await p.eval(async()=>{await MotDoiBoot.load();});
+    const disasters=await p.eval(()=>{
+     const choose=(id,value)=>{const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));};
+     const hint=()=>document.querySelector('#yearHint').innerText;
+     choose('countrySel','WS');choose('yearSel','2009');choose('worldCitySel','Lalomanu');const samoa=hint();
+     choose('worldCitySel','Salelologa');const savaii=hint();
+     choose('countrySel','TO');choose('yearSel','2022');choose('worldCitySel','Atatā');const tonga=hint();
+     choose('countrySel','VU');choose('yearSel','2024');choose('worldCitySel','Port Vila');const vila=hint();
+     choose('yearSel','2025');const reopening=hint();
+     choose('countrySel','HT');choose('worldCitySel','Port-au-Prince');const haiti=hint();
+     choose('worldCitySel','Cap-Haïtien');const north=hint();
+     return {samoa,savaii,tonga,vila,reopening,haiti,north,overflow:document.documentElement.scrollWidth>innerWidth+1};
+    });
+    assert.match(disasters.samoa,/Sóng thần Samoa.*Upolu/);assert.doesNotMatch(disasters.savaii,/Sóng thần Samoa/i);
+    assert.match(disasters.tonga,/Hunga Tonga.*Atatā/);assert.match(disasters.vila,/17\/12\/2024.*Efate/);
+    assert.match(disasters.reopening,/2025 với lớp học tạm/);
+    assert.match(disasters.haiti,/Khủng hoảng lương thực nghiêm trọng.*Port-au-Prince/);
+    assert.match(disasters.north,/khủng hoảng lương thực nghiêm trọng.*một phần/i);
+    assert.doesNotMatch(disasters.haiti,/nạn đói/i);assert(!disasters.overflow);
     await p.eval(()=>{for(const [id,value] of [['countrySel','UA'],['yearSel','2025']]){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}});
     const odds=await p.eval(()=>{
      function choose(id,value){const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));}

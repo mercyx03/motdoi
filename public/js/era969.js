@@ -290,6 +290,8 @@
  function recordDisplacement(l,country,from,to){
   var o=displaced(l);if(!o)return;
   var q=recovery(l,o), dest={country:cc(l),city:to||residentCity(l)};
+  var origin=C.levelAt(country,year(l),from);
+  if(origin.disasterResponse?.refuge)q.disaster986={country:country,city:from,year:origin.y,label:origin.labels.dis};
   if(to&&q.destination984&&(q.destination984.city!==dest.city||q.destination984.country!==dest.country)){
    delete q.schoolDue;
    if(Array.isArray(q.notice975))q.notice975=q.notice975.filter(function(k){return !['housing','returnHome'].includes(k);});
@@ -300,7 +302,7 @@
   q.history.push({year:year(l),choice:to?'relocate':'shelter',country:dest.country,city:dest.city,from:from,fromCountry:country});
  }
  function housing(l,q){
-  if(l.ownHouse)return true;
+  if(l.ownHouse&&!q.disaster986)return true;
   if(!q.housing)return false;
   var step=q.history.filter(function(h){return h.choice==='relatives'||h.choice==='rent';}).at(-1);
   return cc(l)===(step?.country||q.country)&&(!step?.city||residentCity(l)===P.canonicalCity(step.city));
@@ -320,6 +322,11 @@
   if(q.reunited)out.reunion='Đã gặp lại người thân';
   if(canMeetRecovery(l,q))out.meet='Đã có thể thu xếp gặp người thân';
   if(q.history.some(function(h){return h.choice==='work';})&&l.job)out.work='Đã có công việc';
+  var disaster=q.disaster986;
+  if(disaster&&year(l)>disaster.year&&cc(l)===disaster.country){
+   var local=C.levelAt(cc(l),year(l),residentCity(l));
+   if(local.school===1&&local.labels.school)out.disasterSchool=local.labels.school;
+  }
   if(returnReady(l,q)&&canPayRecovery(l))out.returnHome='Đã có thể thu xếp trở về quê';
   return out;
  }
@@ -371,7 +378,7 @@
  X.menu('recovery969','Ổn định cuộc sống sau sơ tán',function(l){return currentRecovery(l)?X.reason(l,3):'Đã khép hồ sơ sơ tán';},function(l,d){
   var q=currentRecovery(l);if(!q)return 'Hoàn cảnh đã thay đổi.';
   var news=d?.arg?.news||[], costs=q.costEnded978!=null?'Giai đoạn chi phí sống tạm đã kết thúc. ':'';
-  return (news.length?news.join('. ')+'.\n':'')+'Bạn đang ở '+E.placeText(l)+'. '+costs+(housing(l,q)?'Đã thu xếp chỗ ở. ':q.shelter984?'Gia đình đang trú tạm trong vùng. ':'Chỗ ở còn tạm bợ. ')+(q.school&&!q.schoolDone?'Chương trình học trước đây bị gián đoạn. ':'')+(q.schoolDue?'Đã nộp nguyện vọng tiếp tục học, chờ trả lời năm '+q.schoolDue+'. ':'')+'Gia đình có thể ổn định từng bước hoặc cân nhắc trở về khi quê cũ an toàn hơn.';
+  return (news.length?news.join('. ')+'.\n':'')+(q.disaster986?q.disaster986.label+'. ':'')+'Bạn đang ở '+E.placeText(l)+'. '+costs+(housing(l,q)?'Đã thu xếp chỗ ở. ':q.shelter984?'Gia đình đang trú tạm trong vùng. ':'Chỗ ở còn tạm bợ. ')+(q.school&&!q.schoolDone?'Chương trình học trước đây bị gián đoạn. ':'')+(q.schoolDue?'Đã nộp nguyện vọng tiếp tục học, chờ trả lời năm '+q.schoolDue+'. ':'')+'Gia đình có thể ổn định từng bước hoặc cân nhắc trở về khi quê cũ an toàn hơn.';
  },function(l){
   var q=currentRecovery(l);if(!q)return[];var ready=recoveryReady(l,q),out=[];
   function add(key,label,why,run,cost){out.push({k:key,l:label,h:cost?H.money(l,l.base*cost):'',why:!ready?'Đã thu xếp một việc trong năm':why,run:function(l,r,log){if(currentRecovery(l)!==q||!recoveryReady(l,q))return;run(l,r,log);}});}

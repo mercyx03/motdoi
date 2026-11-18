@@ -6,7 +6,7 @@
   'use strict';
   var D = G.CTX945_DATA; if (!D) return;
   var Z = [], NAT = [];
-  function z(cc, a, b, re, d, n) { Z.push([cc, a, b, re, d, n]); }
+  function z(cc, a, b, re, d, n, response) { var row = [cc, a, b, re, d, n]; if (response) row.push(response); Z.push(row); }
   function nat(cc, a, b, why) { NAT.push([cc, a, b, why]); }
   // ===== CHÂU ÂU, LIÊN XÔ CŨ =====
   z('AL', 1912, 1913, 'Shkodër', { war: 1 }, 'Cuộc vây hãm Shkodër');
@@ -278,7 +278,9 @@
   z('GT', 1960, 1996, 'Guatemala City|Mixco|Villa Nueva|Escuintla', { war: -1 }, 'Đô thị miền trung và ven biển ít bị đốt phá hơn cao nguyên');
   z('HT', 2021, 2025, 'Port-au-Prince', { war: 1 }, 'Băng nhóm kiểm soát phần lớn thủ đô');
   z('HT', 2021, 2025, 'Cap-Haïtien|Jacmel|Les Cayes', { war: -1 }, 'Ít bị băng nhóm kiểm soát hơn Port-au-Prince');
-  z('HT', 2024, 2025, 'Cap-Haïtien|Jacmel|Les Cayes', { fam: -1 }, 'Đường nối với Port-au-Prince bị chặn nên đói nặng ở thủ đô hơn');
+  z('HT', 2024, 2025, '^Port-au-Prince$', { fam: '=2' }, 'Khủng hoảng lương thực nghiêm trọng ở vùng thủ đô Port-au-Prince');
+  z('HT', 2024, 2025, '^Gonaïves$', { fam: '=2' }, 'Khủng hoảng lương thực nghiêm trọng tại Artibonite');
+  z('HT', 2024, 2025, '^(Cap-Haïtien|Jacmel|Les Cayes)$', { fam: '=1' }, 'Khủng hoảng lương thực nghiêm trọng ở Haiti, sức ép thay đổi theo nguồn cung và khả năng mua của từng hộ');
   z('MX', 1910, 1920, 'Mérida|Tijuana', { war: -2 }, 'Yucatán và biên giới Baja ít bị cuốn vào');
   z('MX', 1910, 1920, 'Monterrey|Guadalajara', { war: -1 }, 'Chủ yếu đổi chủ giữa các phe, ít là chiến trường');
   z('MX', 1926, 1929, 'Guadalajara|León', { war: 1 }, 'Vùng Bajío và Jalisco là trung tâm chiến tranh Cristero');
@@ -345,11 +347,31 @@
   quake('MA', 2023, 0, [['Marrakesh', 2, 'Động đất Maroc']]);
   quake('LY', 2023, 0, [['Benghazi', 1, 'Lũ Derna: người tị nạn và đứt đường']]);
   quake('VN', 2024, 0, [['Hà Nội|Hải Phòng|Hạ Long|Thái Nguyên|Việt Trì|Lạng Sơn|Bắc Giang|Bắc Ninh|Hải Dương|Cao Bằng|Hà Giang|Bắc Kạn|Tuyên Quang|Thái Bình|Nam Định|Hưng Yên|Phủ Lý|Vĩnh Yên|Hoa Lư', 2, 'Bão Yagi và lũ miền Bắc'], ['Yên Bái|Lào Cai', 3, 'Bão Yagi: sạt lở và lũ quét']]);
+  // Các tuyến sơ tán ưu tiên điểm tiếp nhận cùng đảo hoặc điểm đến đã được ghi nhận.
+  z('WS', 2009, 2009, '^(Lalomanu|Poutasi)$', { dis: '=3', school: '=2' }, 'Sóng thần Samoa ngày 29/9/2009 tàn phá bờ nam và đông Upolu', { refuge: ['Apia'] });
+  z('WS', 2009, 2009, '^Salelologa$', { dis: '=0' }, 'Salelologa trên Savaiʻi ở ngoài vùng bị tàn phá chính');
+  z('WS', 2010, 2010, '^(Lalomanu|Poutasi)$', { dis: '=1', school: '=1' }, 'Các làng ở Upolu xây lại nhà cửa và khôi phục đường đến trường');
+  z('TO', 2009, 2009, '^Niuatoputapu$', { dis: '=3', school: '=2' }, 'Sóng thần ngày 29/9/2009 tàn phá các làng ven biển Niuatoputapu', { refuge: [] });
+  z('TO', 2009, 2009, '^(?!Niuatoputapu$).+', { dis: '=0' }, 'Các địa điểm này nằm ngoài vùng thiệt hại chính ở Niuatoputapu');
+  z('TO', 2010, 2010, '^Niuatoputapu$', { dis: '=1', school: '=1' }, 'Niuatoputapu thu xếp nơi ở và dựng lại các công trình cộng đồng sau sóng thần');
+  z('TO', 2022, 2022, '^(Atatā|Kanokupolu)$', { dis: '=3', school: '=2' }, 'Núi lửa Hunga Tonga–Hunga Haʻapai phun trào ngày 15/1/2022, sóng thần tàn phá Atatā và bờ tây Tongatapu', { refuge: ["Nuku'alofa"] });
+  z('TO', 2022, 2022, '^(Mango|Fonoifua)$', { dis: '=3', school: '=2' }, 'Sóng thần sau vụ phun trào Hunga Tonga–Hunga Haʻapai tàn phá các đảo nhỏ của Haʻapai', { refuge: ['Nomuka', "Nuku'alofa"] });
+  z('TO', 2022, 2022, "^(Nuku'alofa|Nomuka|'Ohonua)$", { dis: '=2', school: '=1' }, 'Tro núi lửa và sóng thần ở Tongatapu, Haʻapai và ʻEua gây gián đoạn sinh hoạt và học tập');
+  z('TO', 2022, 2022, '^Neiafu$', { dis: '=1' }, 'Vavaʻu bị ảnh hưởng nhẹ hơn, chủ yếu do tro núi lửa');
+  z('TO', 2022, 2022, '^Niuatoputapu$', { dis: '=0' }, 'Niuatoputapu ở xa vùng bị thiệt hại chính do vụ phun trào năm 2022');
+  z('TO', 2023, 2023, "^(Nuku'alofa|Kanokupolu|Fonoifua|Nomuka|'Ohonua)$", { dis: '=1', school: '=1' }, 'Tiếp tục sửa nhà và hỗ trợ học sinh sau vụ phun trào năm 2022');
+  z('TO', 2023, 2025, '^(Atatā|Mango)$', { dis: '=1', school: '=2' }, 'Nhà ở và trường cũ trên đảo chưa đủ điều kiện qua lại và sinh hoạt như trước; các hộ sơ tán tiếp tục ổn định ở nơi mới', { returnBlocked: true });
+  z('VU', 2024, 2024, '^(Port Vila|Etas)$', { dis: '=3', school: '=2' }, 'Động đất ngày 17/12/2024 làm hư hại nhà và trường học ở Port Vila và đảo Efate', { refuge: ['Pango'] });
+  z('VU', 2024, 2024, '^Pango$', { dis: '=1', school: '=1' }, 'Pango trên đảo Efate tiếp nhận người cần chỗ trú tạm sau động đất');
+  z('VU', 2024, 2024, '^Luganville$', { dis: '=0' }, 'Luganville trên Espiritu Santo nằm ngoài vùng thiệt hại chính ở Efate');
+  z('VU', 2025, 2025, '^(Port Vila|Etas|Pango)$', { dis: '=1', school: '=1' }, 'Các trường ở Efate mở lại từ đầu năm học 2025 với lớp học tạm trong khi sửa cơ sở vật chất');
   // ===== DÒNG MỚI: thiên tai và biến cố 1970–2025 chưa có trong bảng quốc gia =====
   var DIS_NEW = [
     ['NI', 1972, 3, 'động đất Managua'], ['GT', 1976, 3, 'động đất Guatemala'], ['CL', 2010, 2, 'động đất Chile 2010'], ['EC', 2016, 2, 'động đất Ecuador'],
     ['MX', 2017, 2, 'động đất Mexico 2017'], ['LB', 2020, 2, 'vụ nổ cảng Beirut'], ['AF', 2023, 2, 'động đất Herat'], ['HT', 2021, 2, 'động đất Haiti 2021'],
-    ['PK', 2022, 3, 'lũ lụt Pakistan 2022'], ['NG', 2022, 2, 'lũ lụt Nigeria 2022'], ['NG', 2024, 2, 'lũ lụt Maiduguri'], ['MM', 2025, 3, 'động đất Myanmar 2025'], ['ES', 2024, 2, 'lũ lụt Valencia']
+    ['PK', 2022, 3, 'lũ lụt Pakistan 2022'], ['NG', 2022, 2, 'lũ lụt Nigeria 2022'], ['NG', 2024, 2, 'lũ lụt Maiduguri'], ['MM', 2025, 3, 'động đất Myanmar 2025'], ['ES', 2024, 2, 'lũ lụt Valencia'],
+    ['WS', 2009, 1, 'sóng thần Samoa ngày 29/9/2009'], ['TO', 2009, 1, 'sóng thần tại Niuatoputapu'],
+    ['TO', 2022, 2, 'núi lửa Hunga Tonga–Hunga Haʻapai phun trào và sóng thần năm 2022'], ['VU', 2024, 1, 'động đất Port Vila ngày 17/12/2024']
   ];
   quake('NI', 1972, 0, [['Managua', 3, 'Động đất Managua phá hủy trung tâm thành phố'], ['Masaya|León', 1, 'Rung chấn và tiếp nhận người tị nạn']]);
   quake('GT', 1976, 0, [['Guatemala City|Mixco|Villa Nueva', 3, 'Động đất Guatemala 1976'], ['Escuintla|Quetzaltenango', 1, 'Rung chấn']]);
