@@ -318,7 +318,7 @@
       if (ka < 1) return;
       // tình cảm cha mẹ – con cái
       var dc = U.normal(r) * 2 + (l.focus === 'social' ? 2.5 : l.focus === 'work' ? -1 : 0) - (l.abroad && !l.abroad.perm ? 3 : 0) - (l.jailUntil != null && a < l.jailUntil ? 5 : 0) - (l.addict && (l.addict.alcohol || l.addict.gamble || l.addict.drugs) ? 2 : 0);
-      k.close = U.clamp(k.close + dc + (ka > 25 ? -0.5 : 0), 0, 100);
+      k.close = U.clamp(k.close + (ka>=18?dc*.35:dc), 0, 100);
       // học hành của con
       if (ka >= 6 && ka <= 17) k.study = U.clamp(k.study + U.normal(r) * 5 + (l.fam.q >= 4 ? 0.5 : 0) + (k.close >= 60 ? 1 : -1) + (k.tutor ? 1.5 : 0), 0, 100);
       // tuổi mới lớn: lạc lối

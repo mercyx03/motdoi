@@ -5,7 +5,7 @@ function p(l){return l.flags.expansion110||{};}
 function free(l,min){return l&&l.alive&&['vn','world'].includes(l.mode)&&l.age>=(min==null?18:min)&&E.FAMILY53.free(l);}
 function uid(l,o){if(!o.uid110)o.uid110=l.id+':110:'+(s(l).serial=(s(l).serial||0)+1);return o.uid110;}
 function log(l,t,k){l.log.push({a:l.age,y:l.birthYear+l.age,t:t,k:k||'neutral'});}
-function next(l,id,r,arg,o){var d=E.DEC[id].make(l,r,arg);d.manual=o&&o.manual!=null?!!o.manual:true;l.pending.unshift(d);} // GĐ6: {manual:false} cho chuyện hệ thống tự đưa tới, để chế độ Tự động không đứng chờ
+function next(l,id,r,arg,o){var d=E.DEC[id].make(l,r,arg);d.manual=o&&o.manual!=null?!!o.manual:true;if(E.PACE145?.optional971&&!E.PACE145.optional971(l,d,l.pending))return false;l.pending.unshift(d);if(E.PACE145?.offered971)E.PACE145.offered971(l,d);return true;} // GĐ6: {manual:false} cho chuyện hệ thống tự đưa tới, để chế độ Tự động không đứng chờ
 function menu(id,title,why,text,choices,min,group){
  function valid(l,d){return why(l)===true&&(!d||d.data&&d.data.requested&&d.data.actionYear850===l.age||d.at==null||d.at===l.age&&!d.done);}
  // v8.10.12: trong một lần dựng menu, danh sách dòng chỉ tính một lần (trước đây tính lại cho từng nhãn/điều kiện của 54 ô).

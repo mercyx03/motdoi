@@ -491,6 +491,7 @@
     s.role = rating(l) > c.strength + 10 && apps >= 5 ? 'Ngôi sao' : apps >= 4 ? 'Đá chính' : 'Dự bị';
     if (s.role !== 'Dự bị' && s.skills.discipline >= 80 && s.coach.trust >= 70) s.role = 'Đội trưởng';
     s.reputation = U.clamp(s.reputation + apps * .35 + (z.place === 1 ? 3 : 0) - (apps < 3 ? 2 : 0), 0, 100);
+    if(E.FOLLOW919?.sport971)E.FOLLOW919.sport971(l,z);
     s.coach.trust = U.clamp(s.coach.trust + (s.training === 'intense' ? -3 : 2) + (s.form > 60 ? 2 : -1), 0, 100);
     log('Mùa ' + y + ' · ' + c.name + ': hạng ' + z.place + ', ' + apps + ' lần ra sân; ' + s.role + '.', 'neutral');
     if (!youth) exchangeDivision(s, c, z);

@@ -81,6 +81,7 @@
   // Điểm kiểm tra duy nhất, engine gọi cho tình huống ngẫu nhiên (trigger) và hành động AI tự chọn.
   // Trả về false thì engine bỏ qua và thử tình huống khác; cooldown của tình huống bị bỏ qua không bị tính.
   function admit(l, d, q, src) {
+    if(E.PACE145.optional971&&!E.PACE145.optional971(l,d,q,src))return false;
     var s = state(l), a = l.age, t = tier(d), g = group(d.id);
     var queued = q.map(function (x) { return { t: tier(x), g: group(x.id) }; });
     // Hành động AI tự chọn chỉ thêm vào năm còn thưa, để chế độ tự động không dồn nhiều hộp lựa chọn.
@@ -92,7 +93,7 @@
     }
     // Quiet years and one incidental story leave room for consequential choices.
     // Only random, non-recurring daily triggers pass this gate; scheduled milestones bypass it.
-    if(t==='daily'&&src&&typeof src.when==='function'&&!src.rep){if(!chance(l,'quiet-year872',.45))return false;if(queued.some(function(x){return x.t==='daily';})||s.h.some(function(x){return x[0]===a&&x[1]==='d';}))return false;}
+    if(!E.PACE145.optional971&&t==='daily'&&src&&typeof src.when==='function'&&!src.rep){if(!chance(l,'quiet-year872',.45))return false;if(queued.some(function(x){return x.t==='daily';})||s.h.some(function(x){return x[0]===a&&x[1]==='d';}))return false;}
     // Hai tình huống khác ID nhưng gần như cùng nội dung trong 3 năm: bỏ cái sau. Chuỗi đang diễn ra (rep) được giữ.
     if (!(src && src.rep)) {
       var me = sig(d);

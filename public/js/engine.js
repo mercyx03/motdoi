@@ -1435,6 +1435,7 @@
       if (schoolOff(life, dm.title + ' ' + dm.text + ' ' + dm.opts.map(function (o) { return o.l; }).join(' '))) return; // v3.1: đã nghỉ học thì không có chuyện trên lớp
       if (src && E.PACE145 && E.PACE145.admit && !E.PACE145.admit(life, dm, q, src)) return; // GĐ5: nhịp sự kiện (chỉ tình huống ngẫu nhiên, hành động AI)
       q.push(dm);
+      if(src&&E.PACE145?.offered971)E.PACE145.offered971(life,dm,src);
     }
 
     // Save cũ có thể đã nhận trợ cấp nhưng chưa chạy bước kết thúc năm.
@@ -1547,7 +1548,7 @@
       var kidT = (hardcorePool ? [] : TRIG).filter(function (T) {
         return T.child && (!E.CONTEXT143 || E.CONTEXT143.factor(T, life) > 0) && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
-      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * (E.CONTEXT143 ? E.CONTEXT143.factor(T, life) : 1) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); /* v2.5: trọng số theo giới tính, hoàn cảnh; v3.0: tình huống đã gặp ít được chọn lại */ add(KT.id); cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1; }
+      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * (E.CONTEXT143 ? E.CONTEXT143.factor(T, life) : 1) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); var beforeKid=q.length;add(KT.id,undefined,KT);if(q.length>beforeKid){cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1;} }
     }
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)

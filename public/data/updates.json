@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-11-17T09:35:36.479Z",
+  "generatedAt": "2026-11-18T08:11:55+07:00",
   "entries": [
+    {
+      "id": "life-rhythm-and-continuity-97100",
+      "version": "9.7.1",
+      "publishedAt": "2026-11-18T08:11:55+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Nhịp sống thưa hơn, chuyện gia đình có tiếp nối",
+      "summary": "Giảm lời nhắc đời thường lặp lại, cho phép ẩn gợi ý nấu ăn và nối hệ quả từ cách đồng hành với con đến mạng xã hội, bóng đá.",
+      "tags": [
+        "Cải tiến",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Nhiều năm giờ có thể yên ả hơn: các chuyện đời thường ngẫu nhiên được giãn cách, hạn chế tình huống cùng chủ đề lặp lại và không dồn quá nhiều lựa chọn trong một năm. Biến cố, mốc quan trọng, việc đã hẹn và câu chuyện đang xử lý vẫn được ưu tiên.",
+        "Trong mục “Nhịp sống và lời nhắc”, bạn có thể chọn nhịp thưa hoặc nhận thêm chuyện đời thường. Cũng có thể tắt hẳn gợi ý nấu ăn, ẩm thực; lựa chọn này được lưu trong cuộc đời và có thể bật lại.",
+        "Các lời nhắc tự động về việc quan tâm con dừng khi con trưởng thành. Những tình huống thường ngày của con cũng được tiết chế; chuyện sức khỏe, bị bắt nạt, bỏ nhà đi và tình huống cần người lớn hỗ trợ vẫn được giữ.",
+        "Khi con chia sẻ chuyện tình cảm tuổi học trò, cách bạn lắng nghe, trao đổi về an toàn, bỏ qua hay cấm đoán sẽ ảnh hưởng đến mức độ tin cậy và việc con có tìm bạn khi gặp khó khăn. Một số lựa chọn có thể dẫn tới chuyện làm cha mẹ ngoài dự định, khi đó gia đình phải bàn trách nhiệm, việc học và kế hoạch chăm sóc.",
+        "Danh tiếng từ trước có thể giúp kênh mạng xã hội mới nhanh có người theo dõi hơn. Người đã có khán giả bên ngoài cũng có thể tăng trưởng tự nhiên theo thời gian. Thành tích và số lần ra sân trong sự nghiệp bóng đá góp phần tạo danh tiếng theo quy mô giải đấu và đội bóng.",
+        "Nhịp thưa là thiết lập mặc định cho các bản lưu mới; bản lưu cũ tiếp tục chơi được và có thể đổi nhịp trong mục cài đặt."
+      ]
+    },
     {
       "id": "saudi-pro-league-and-spanish-family-names-97000",
       "version": "9.7.0",
