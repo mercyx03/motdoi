@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-18T01:26:55.208Z",
+  "generatedAt": "2026-11-18T01:45:45.009Z",
   "entries": [
+    {
+      "id": "childcare-and-football-audience-97300",
+      "version": "9.7.3",
+      "publishedAt": "2026-11-18T08:45:45+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Chia lịch chăm bé và đưa thành tích bóng đá đến người hâm mộ",
+      "summary": "Cách hỗ trợ con ảnh hưởng đến việc học, việc làm và thời gian chăm bé. Mùa giải hay có thể mang đến người theo dõi ngay cả khi bạn chưa đăng video.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Cùng hai gia đình chia lịch, góp một khoản trong khả năng, tìm người hỗ trợ hoặc để hai con tự thu xếp. Số tiền đã hẹn, thời gian thực tế của người thân và phần việc bên còn lại đảm nhận đều ảnh hưởng tới lịch chăm bé.",
+        "Con có thể tiếp tục lịch học, học linh hoạt hoặc tạm nghỉ. Năm bị gián đoạn sẽ lùi thời điểm tốt nghiệp hoặc bảo lưu phần khóa học còn lại. Nếu con đã đi làm, thời gian tích lũy kinh nghiệm có thể chậm lại. Hồ sơ của con cho biết cách đang chia việc chăm bé và lịch học hoặc công việc tương ứng.",
+        "Game chỉ tự đưa lời hỏi một lần. Có thể mở lại kế hoạch từ hồ sơ của con trước khi bé chào đời. Nếu bỏ qua hoặc chơi tự động, hai con tự thu xếp và gia đình không tự cam kết chi tiền.",
+        "Bàn thắng, kiến tạo, giữ sạch lưới, điểm trận và màn trình diễn tại trận lớn góp vào danh tiếng. Quy mô giải đấu và đội tuyển ảnh hưởng mức độ được biết đến. Mở kết quả mùa giải để xem danh tiếng tăng bao nhiêu.",
+        "Kênh mạng xã hội có thể đón người hâm mộ bóng đá dù bạn chưa đăng video. Mục quản lý kênh cho biết bao nhiêu người đến từ bóng đá, danh tiếng bên ngoài, video hoặc hợp tác. Số người theo dõi cũ được giữ và phần thiếu dữ liệu được hiện là chưa rõ nguồn."
+      ]
+    },
     {
       "id": "free-agent-news-and-adult-family-boundaries-97200",
       "version": "9.7.2",

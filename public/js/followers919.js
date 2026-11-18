@@ -51,37 +51,123 @@
   function fameJob(l) { var c = l.job && E.jobDef ? E.jobDef(l) : null; return c && c.fame ? c : null; }
   function liveJob(l) { var c = fameJob(l); return !!c && /^(streamer|kol_live|youtuber)$/.test(c.id); }
   function channels(l) { var s = l.flags.social131; return s && Array.isArray(s.channels) ? s.channels : []; }
-  // Public recognition and channel followers overlap: conversion never adds fame a second time.
-  function publicReach971(l){return Math.max(0,Number(l.fame)||0);}
+  var SOURCES973=['football','outside','content','collaboration','unknown'];
+  function channelAudience973(c) {
+    var total=Math.max(0,Math.round(c.followers||0));
+    var sources=c.audience973;
+    if(!sources){
+      var known=(c.public971?.history||[]).reduce(function(n,e){return n+Math.max(0,e.gain||0);},0);
+      var outside=Math.min(total,known);
+      sources=c.audience973={football:0,outside:outside,content:0,collaboration:0,unknown:total-outside};
+    }
+    var counted=SOURCES973.reduce(function(n,key){return n+sources[key];},0);
+    if(counted>total){
+      var left=total;
+      SOURCES973.forEach(function(key){
+        sources[key]=Math.floor(sources[key]*total/counted);
+        left-=sources[key];
+      });
+      var largest=SOURCES973.reduce(function(a,b){return sources[a]>=sources[b]?a:b;});
+      sources[largest]+=left;
+    }else sources.unknown+=total-counted;
+    return sources;
+  }
+  function channelGain973(c,key,amount) {
+    var sources=channelAudience973(c),gain=Math.max(0,Math.min(Math.round(amount||0),1e9-(c.followers||0)));
+    sources[key]+=gain;
+    c.followers=(c.followers||0)+gain;
+    return gain;
+  }
+  function personalAudience973(l) {
+    var s=st(l),total=Math.max(0,Number(l.fame)||0);
+    if(!s.origin973)s.origin973={seen:total,channel:0};
+    var origin=s.origin973;
+    if(total<origin.seen)origin.channel=Math.round(origin.channel*total/origin.seen);
+    origin.seen=total;
+    return origin;
+  }
+  function contentGain973(l,c,source,amount){
+    var origin=personalAudience973(l);
+    var gain=channelGain973(c,source,amount);
+    l.fame=origin.seen+=gain;
+    origin.channel+=gain;
+    return gain;
+  }
+  // Conversion from offline fame creates followers on a channel without increasing personal fame again.
+  function publicReach971(l){
+    var origin=personalAudience973(l);
+    return Math.max(0,origin.seen-origin.channel);
+  }
+  function footballReach973(l,reach) {
+    return Math.min(reach,l.flags.football?.public973?.earned||0);
+  }
   function activeChannel971(l,c){
     var from={facebook:2004,youtube:2005,instagram:2010,tiktok:2017};
     return l.alive&&l.age>=13&&year(l)>=(from[c.app]||1995)&&c.private971!==true&&
       E.SOCIAL131.apps().some(function(a){return a.id===c.app&&a.enabled;})&&(!E.ERA902||!E.ERA902.idBlocked('social131',l));
   }
+  function publicGain973(l,c,fraction,rate) {
+    var reach=publicReach971(l);
+    if(reach<1000)return 0;
+    var target=Math.round(Math.min(capacity(l)*.1,reach*fraction));
+    var sources=channelAudience973(c);
+    var gap=Math.max(0,target-sources.football-sources.outside);
+    var amount=Math.round(gap*rate);
+    if(!amount)return 0;
+    var football=Math.round(amount*footballReach973(l,reach)/reach);
+    var fromFootball=channelGain973(c,'football',football);
+    var fromOutside=channelGain973(c,'outside',amount-football);
+    var gain=fromFootball+fromOutside;
+    if(gain){
+      var history=c.public971.history;
+      history.push({age:l.age,gain:gain,football:fromFootball,why:'khán giả đã biết bạn tìm tới kênh'});
+      if(history.length>12)history.shift();
+    }
+    return gain;
+  }
   function seedChannel971(l,c){
     if(!activeChannel971(l,c)||c.public971)return 0;
-    var reach=publicReach971(l),gain=reach>=1000?Math.max(0,Math.round(Math.min(capacity(l)*.1,reach*.15))-(c.followers||0)):0;
-    c.public971={seededAt:l.age,source:reach,lastAt:l.age,history:[]};
-    if(gain){c.followers+=gain;c.engagement=U.clamp(Math.max(c.engagement||20,25+Math.min(15,Math.log10(reach)*2)),0,100);c.public971.history.push({age:l.age,gain:gain,why:'khán giả đã biết bạn tìm tới kênh'});}
+    channelAudience973(c);
+    var reach=publicReach971(l);
+    c.public971={seededAt:l.age,source:reach,history:[]};
+    var gain=publicGain973(l,c,.15,1);
+    if(gain)c.engagement=U.clamp(Math.max(c.engagement||20,25+Math.min(15,Math.log10(reach)*2)),0,100);
     return gain;
   }
   function channelsYear971(l){
+    var state=l.flags.social131;
+    if(!state||state.publicCycleAt973===l.age)return;
+    state.publicCycleAt973=l.age;
     channels(l).forEach(function(c){
       if(!activeChannel971(l,c))return;seedChannel971(l,c);var q=c.public971;if(!q||q.lastAt===l.age)return;q.lastAt=l.age;
-      var target=Math.round(Math.min(capacity(l)*.1,publicReach971(l)*.22)),gap=Math.max(0,target-(c.followers||0));
-      var gain=publicReach971(l)>=1000?Math.round(gap*.25):0;
-      if(gain){c.followers+=gain;q.history.push({age:l.age,gain:gain,why:'được biết đến qua hoạt động ngoài kênh'});if(q.history.length>12)q.history.shift();}
+      if(!Array.isArray(q.history))q.history=[];
+      publicGain973(l,c,.22,.25);
     });
   }
-  function sport971(l,z){
-    var f=l.flags.football,c=f&&E.FOOTBALL.club(z.club);if(!c||!z||z.public971)return 0;
-    var played=(z.matches||[]).filter(function(m){return m.minutes>0;}),apps=played.filter(function(m){return !m.international;}).length;
-    if(!played.length||!['pro','youth'].includes(z.stage))return 0;z.public971=true;
-    var visibility=Math.pow(c.strength/90,2)/(c.tier*c.tier),rep=U.clamp(f.reputation||0,0,100)/100,intl=U.clamp(f.internationalRep||0,0,100)/100;
+  function sport971(l,z,impact){
+    if(!z||z.public971||z.year!==year(l)||!['pro','youth'].includes(z.stage))return 0;
+    var f=l.flags.football,c=f&&E.FOOTBALL.club(z.club);
+    if(!c)return 0;
+    impact=impact||E.FOOTBALL.seasonImpact973(z);
+    if(!impact.apps&&!impact.international)return 0;
+    z.public971=true;
+    var audience=f.public973||(f.public973={earned:0});
+    var tier=z.tier||c.tier,visibility=Math.pow(c.strength/90,2)/(tier*tier);
+    var rep=U.clamp(f.reputation||0,0,100)/100,intl=U.clamp(f.internationalRep||0,0,100)/100;
     var cups=(f.trophies||[]).filter(function(t){return t.year===z.year;}).length;
-    var target=z.stage==='youth'?Math.min(1500,100+apps*35+rep*700):Math.round((1000+Math.pow(rep,2.5)*3000000)*visibility+Math.pow(intl,2.5)*12000000+cups*50000*visibility);
-    target=Math.min(capacity(l),target);var gain=Math.max(0,target-publicReach971(l));
-    if(gain){var e=entry(l);l.fame=(l.fame||0)+gain;e.gain+=gain;e.end=Math.round(l.fame);e.why.push('thành tích bóng đá và những trận đã ra sân (+'+fmt(gain)+')');}
+    var youth=z.stage==='youth';
+    var target=youth?Math.min(1500,100+impact.apps*35+rep*700):
+      (1000+Math.pow(rep,2.5)*3000000)*visibility+Math.pow(intl,2.5)*12000000+cups*50000*visibility;
+    var cap=capacity(l),before=Math.max(0,l.fame||0);
+    var headline=youth?Math.min(350,impact.points*12):Math.min(1000000,impact.points*3500*visibility*(.5+rep+intl));
+    var gain=Math.max(0,Math.min(Math.floor(cap-before),Math.round(Math.max(0,Math.min(cap,target)-before)+headline*(1-Math.min(1,before/cap)))));
+    z.public973=Object.assign({gain:gain},impact);
+    if(gain){
+      var e=entry(l);
+      l.fame=before+gain;audience.earned+=gain;
+      e.gain+=gain;e.end=Math.round(l.fame);
+      e.why.push('bóng đá: '+impact.goals+' bàn, '+impact.assists+' kiến tạo, '+impact.clean+' trận sạch lưới, '+impact.big+' lần tỏa sáng ở trận lớn (+'+fmt(gain)+')');
+    }
     return gain;
   }
   // Khán giả duy nhất ước tính: nhiều kênh có người theo dõi trùng nhau (tham số trùng lặp 35% phần ngoài kênh lớn nhất).
@@ -168,5 +254,5 @@
 
   E.HOOKS.year.push(function (l, r, log) { if (!l.alive || !l.flags || !['vn', 'world'].includes(l.mode)) return; channelsYear971(l);if ((l.fame || 0) > 0 || l.flags.follow919) { dealYear(l, log); donationYear(l, log); giftYear(l, log); storageYear(l, log); dealOffers(l); reconcile(l); } });
   var mig = E.migrateExt; E.migrateExt = function (l) { if (mig) mig(l); if (l && l.flags && l.flags.follow919 != null && typeof l.flags.follow919 !== 'object') delete l.flags.follow919; if (l && !(l.fame >= 0)) l.fame = 0; };
-  E.FOLLOW919 = { publicReach971:publicReach971,seedChannel971:seedChannel971,channelsYear971:channelsYear971,sport971:sport971,platforms: platforms, markets: markets, dealOffers: dealOffers, dealYear: dealYear, storageYear: storageYear, BAL: BAL, careerGrowth: careerGrowth, capacity: capacity, quality: quality, audience: audience, incomeFactor: incomeFactor, donation: donation, donationYear: donationYear, giftYear: giftYear, reconcile: reconcile, state: st, entry: entry };
+  E.FOLLOW919 = { publicReach971:publicReach971,seedChannel971:seedChannel971,channelsYear971:channelsYear971,sport971:sport971,channelAudience973:channelAudience973,contentGain973:contentGain973,platforms: platforms, markets: markets, dealOffers: dealOffers, dealYear: dealYear, storageYear: storageYear, BAL: BAL, careerGrowth: careerGrowth, capacity: capacity, quality: quality, audience: audience, incomeFactor: incomeFactor, donation: donation, donationYear: donationYear, giftYear: giftYear, reconcile: reconcile, state: st, entry: entry };
 })(globalThis.G);

@@ -2029,7 +2029,7 @@
       // v2.3: chuyện con 18 tuổi đi học hay đi làm do module mở rộng xử lý (tình huống con_18)
       var marriageHandled = E.childMarriage126 && E.childMarriage126(life, k, r, log);
       if (!marriageHandled && ka >= 23 && ka <= 35 && !k.married && !(k.future126 && k.future126.match) && r() < 0.15) { k.married = true; log('Con ' + k.name + ' lập gia đình.', 'good'); H.cash(life, -life.base * 0.25, 'Lo đám cưới cho con'); st.hap += 4; H.mem(life, 'Dắt tay ' + k.name + ' trong ngày cưới của con.', 4); }
-      if (k.married && ka <= 45 && k.kids < 3 && r() < 0.14) {
+      if (k.married && ka <= 45 && k.kids < 3 && E.STORY971?.relation(k)?.phase!=='pregnancy' && (E.STORY971?.relation(k)?.birthAt??-1)!==ka && r() < 0.14) {
         k.kids++; life.grand++;
         var grandchild = r() < 0.5 ? 'bé trai' : 'bé gái', distant = E.FAMILY100?.distant(life, k);
         log(distant ? k.name + ' gửi tin cho bạn biết gia đình vừa đón một ' + grandchild + '.' :

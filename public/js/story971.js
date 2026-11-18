@@ -46,6 +46,10 @@
  function trim(l){
   var kept=[],s=state(l),routine=false;
   (l.pending||[]).forEach(function(d){
+   if(d.id==='teenFamily971'){
+    var k=child(l,d.data?.arg?.id);
+    if(!k||!canPlan(l,k)||relation(k).token!==d.data.arg.token)return;
+   }
    if(!optional(l,d)){kept.push(d);return;}
    if(d.id==='world_cuisine173'&&cuisineMuted(l)||adultPrompt(l,d))return;
    if(s.mode!=='full'&&routine)return;
@@ -62,7 +66,7 @@
   {k:'full',l:'Nhận thêm chuyện đời thường',run:function(l,r,log){state(l).mode='full';log('Bạn chọn nhận thêm những chuyện đời thường.','neutral');}},
   {k:'cuisine',l:cuisineMuted(l)?'Bật lại gợi ý ẩm thực':'Ẩn gợi ý nấu ăn và ẩm thực',run:function(l,r,log){var s=l.flags.culture173||(l.flags.culture173={}),q=s.kitchen||(s.kitchen={learned:{},cooked:{},lastAt:null});q.noAuto971=!q.noAuto971;log(q.noAuto971?'Đã ghi nhớ: bạn không muốn được nhắc việc nấu ăn.':'Bạn cho phép gợi ý nấu ăn trở lại.','neutral');}}
  ];},0,'Bản thân');
- function child(l,id){return (l.kids||[]).find(function(k){return k.alive!==false&&X.uid(l,k)===id;});}
+ function child(l,id){return id&&(l.kids||[]).find(function(k){return k.alive!==false&&X.uid(l,k)===id;});}
  function relation(k){return k.persona141?.plan?.relationship971;}
  function onCrush(l,k,choice,log){
   var a=l.age-k.born;if(a<12||a>16||relation(k))return false;
@@ -76,19 +80,109 @@
   var communication=U.clamp((p.trust-p.fear)/100,0,1),base=.025+p.traits.impulse/2000+(100-p.traits.regulation)/3000;
   return U.clamp(base*({safety:.25,talk:.6,ignore:1,ban:1.1}[q.policy]||.8)*(1-communication*.25),.002,.12);
  }
+ var CARE_PLANS={
+  together:{first:.03,annual:.04,time:24,partner:9,label:'Cùng hai gia đình chia lịch chăm bé và hỗ trợ chi phí'},
+  limited:{first:.01,annual:.015,time:7,partner:5,label:'Góp một khoản vừa khả năng, để hai con tự chia lịch'},
+  community:{first:0,annual:0,time:13,partner:6,label:'Giúp con tìm người thân hoặc chỗ hỗ trợ chăm bé'},
+  independent:{first:0,annual:0,time:0,partner:0,label:'Để hai con tự thu xếp việc chăm bé'}
+ };
  function familyChoice(l,k,key,log){
   var q=relation(k);if(!q||q.phase!=='pregnancy'||q.plan)return false;
-  if(!['together','limited','community'].includes(key))return false;
-  var immediate=key==='together'?l.base*.03:key==='limited'?l.base*.01:0;if(l.money<immediate)return false;
+  var plan=Object.prototype.hasOwnProperty.call(CARE_PLANS,key)&&CARE_PLANS[key];
+  if(!plan||l.age-k.born>=q.due)return false;
+  var immediate=l.base*plan.first;if(immediate>0&&l.money<immediate)return false;
   if(immediate)H.cash(l,-immediate,'Khoản hỗ trợ tự nguyện khi con chuẩn bị làm cha mẹ');
-  q.plan=key;q.support=key==='together'?l.base*.04:key==='limited'?l.base*.015:0;q.supportUntil=q.due+2;
+  q.plan=key;q.support=l.base*plan.annual;q.supportUntil=q.due+2;
   q.history.push({age:l.age-k.born,choice:key,paid:immediate});
-  log(key==='community'?'Bạn giữ giới hạn tài chính, giúp con liên hệ người có thể hỗ trợ và cùng bên gia đình còn lại bàn trách nhiệm.':key==='together'?'Hai gia đình bắt đầu bàn việc chăm sóc, đi khám và thu xếp để con còn đường học tiếp.':'Bạn thống nhất khoản hỗ trợ vừa khả năng; con và người cùng làm cha mẹ vẫn phải chia sẻ trách nhiệm.','neutral');return true;
+  log(plan.label+'. Lịch thực tế sẽ tùy vào thời gian và khả năng của từng người.','neutral');return true;
  }
- function openFamily(l,k,r){
-  var q=relation(k);if(!q||q.phase!=='pregnancy'||q.plan||q.askedAt===l.age)return;
-  if(l.pending.some(function(d){return d.id==='teenFamily971'&&d.data?.arg?.id===X.uid(l,k);}))return;
-  q.askedAt=l.age;X.next(l,'teenFamily971',r,{id:X.uid(l,k),token:q.token},{manual:false});
+ function canPlan(l,k){
+  var q=relation(k);
+  return !!q&&q.phase==='pregnancy'&&!q.plan&&l.age-k.born<q.due;
+ }
+ function openFamily(l,k,r,manual){
+  var q=relation(k);if(!canPlan(l,k)||(!manual&&q.askedAt!=null))return;
+  var id=X.uid(l,k);
+  if(l.pending.some(function(d){return d.id==='teenFamily971'&&d.data?.arg?.id===id;}))return;
+  if(X.next(l,'teenFamily971',r,{id:id,token:q.token},{manual:!!manual}))q.askedAt=l.age;
+ }
+ function learningTrack(l,k,a){
+  if(k.uniUntil)return 'university';
+  var courses=l.flags.expansion110?.courses170||[];
+  if(courses.length&&courses.some(function(c){return c.status==='active'&&c.learner===X.uid(l,k);}))return 'course';
+  if((a<=18||relation(k)?.care973?.schoolDelayed)&&!k.path18&&(k.edu||0)<3&&k.vice!=='bỏ học'&&!k.job)return 'school';
+  return k.job?'work':'home';
+ }
+ function careYear(l,k,log){
+  var q=relation(k),a=l.age-k.born;
+  if(!q||!l.alive||k.alive===false||k.died!=null)return null;
+  var newborn=q.phase==='pregnancy'&&a>=q.due;
+  if(!newborn&&q.phase!=='parenting')return null;
+  if(newborn){
+   if(!q.plan){q.plan='independent';q.support=0;q.history.push({age:a,choice:'independent',defaulted:true});}
+   q.phase='parenting';q.birthAt=a;
+   var r=random(l,q.token+':birth');
+   q.baby={id:q.token+':baby',name:H.name(l,r,r()<.5?'M':'F').full,year:year(l),parents:[X.uid(l,k),q.peer.uid110]};
+   k.kids=(k.kids||0)+1;l.grand=(l.grand||0)+1;
+   l.pending=l.pending.filter(function(d){return d.id!=='teenFamily971'||d.data?.arg?.token!==q.token;});
+  }
+  var care=q.care973||(q.care973={lastAge:newborn?null:q.year,pauseCount:0,history:[]});
+  if(care.lastAge===a)return care;
+  if(a>(q.birthAt??q.due)+2){
+   q.phase='resolved';
+   log('Lịch chăm bé của '+k.name+' đã qua giai đoạn đầu.'+(q.support>0?' Các khoản hỗ trợ đã hẹn kết thúc.':''),'neutral');
+   return null;
+  }
+  care.lastAge=a;
+  var plan=CARE_PLANS[q.plan]||CARE_PLANS.independent;
+  var committed=a<=q.supportUntil?Math.max(0,q.support||0):0;
+  var paid=Math.min(committed,Math.max(0,l.money));
+  if(paid>0&&q.paidAge!==a){H.cash(l,-paid,'Hỗ trợ chăm cháu theo khoản đã thống nhất');q.paidAge=a;}
+  var cannotHelp=l.jailUntil>l.age||l.abroad?.trapped||l.st.hea<35;
+  var away=k.custody==='ex'||k.custody==='other'||k.abroadStudy&&k.uniUntil||l.abroad&&!l.abroad.perm;
+  var availability=cannotHelp?0:away ? .35 : 1;
+  var relief=committed?paid/committed:0;
+  var yearsWithBaby=Math.max(0,a-(q.birthAt??q.due));
+  var otherParent=q.peer.alive===false?0:Math.round(19+random(l,q.token+':co-parent')()*18+plan.partner+yearsWithBaby*3);
+  var helpers=Math.round(plan.time*availability+relief*12+yearsWithBaby*3);
+  var childShare=100-otherParent-helpers;
+  var track=learningTrack(l,k,a),education=['school','university','course'].includes(track);
+  var previous=care.schedule;
+  var status=education?(childShare>=62&&care.pauseCount<2?'paused':childShare>=42?'flex':'regular'):
+    track==='work'?(childShare>=55?'reduced':'working'):(childShare>=55?'careFirst':'available');
+  if(status==='paused'){
+   care.pauseCount++;
+   if(track==='university')k.uniUntil++;
+   if(track==='school')care.schoolDelayed=true;
+  }
+  if(education&&status!=='regular')k.study=U.clamp((k.study??50)-(status==='paused'?5:2),0,100);
+  care.schedule={track:track,status:status,child:childShare,otherParent:otherParent,helpers:helpers,paid:paid,committed:committed};
+  care.history.push(Object.assign({age:a},care.schedule));
+  if(newborn){
+   var fallback=q.history.some(function(row){return row.defaulted;});
+   log('Em bé của '+k.name+' và '+q.peer.name+' chào đời. '+(fallback?'Hai con tự thu xếp việc chăm bé. ':'')+careText(l,k),'big');
+  }else if(previous?.status!==status){
+   log(k.name+' đã thu xếp lại lịch. '+careText(l,k),'neutral');
+  }
+  if(paid<committed&&!care.shortfall)log('Khoản hỗ trợ năm nay chưa đủ như đã hẹn. '+k.name+' phải tự thu xếp thêm thời gian chăm bé.','neutral');
+  care.shortfall=paid<committed;
+  return care;
+ }
+ function careText(l,k){
+  var q=relation(k),schedule=q?.care973?.schedule;
+  if(!schedule)return '';
+  if(q.phase==='resolved'){
+   var paused=q.care973.pauseCount;
+   return 'Giai đoạn thu xếp chăm bé ban đầu đã kết thúc.'+(paused?' Con từng tạm nghỉ học '+paused+' năm để chăm bé.':'');
+  }
+  var labels={paused:'tạm nghỉ học trong năm này',flex:'học theo lịch linh hoạt',regular:'tiếp tục lịch học',reduced:'giảm thời gian làm việc',
+    working:'giữ lịch làm việc',careFirst:'ưu tiên chăm bé, hoãn tìm việc',available:'đã có thêm thời gian để tìm việc hoặc học nghề'};
+  return 'Lịch chăm bé: '+k.name+' đảm nhận khoảng '+schedule.child+'%, bên còn lại '+schedule.otherParent+'%, người hỗ trợ '+schedule.helpers+'%. '+
+    k.name+' '+labels[schedule.status]+'.';
+ }
+ function learningPaused(l,k){
+  var care=relation(k)?.care973;
+  return care?.lastAge===l.age-k.born&&care.schedule?.status==='paused';
  }
  function teenYear(l,log){
   if(!l.alive)return;
@@ -105,26 +199,29 @@
      E.CHILD141.remember(l,k,'Năm '+k.name+' và '+q.peer.name+' đối diện việc có con ngoài dự định.',4,'neutral');
      log(k.sex==='F'?k.name+' cho biết mình đang mang thai ngoài dự định. Gia đình cần cùng con bàn chăm sóc, học tập và trách nhiệm của hai bên.':k.name+' báo tin '+q.peer.name+' đang mang thai ngoài dự định. Con phải cùng người ấy bàn trách nhiệm, chăm sóc và việc học.','big');openFamily(l,k,r);
     }
-   }else if(q.phase==='pregnancy'&&a>=q.due){
-    q.phase='parenting';q.birthAt=a;var baby={id:q.token+':baby',name:H.name(l,r,r()<.5?'M':'F').full,year:year(l),parents:[X.uid(l,k),q.peer.uid110]};
-    q.baby=baby;k.kids=(k.kids||0)+1;l.grand=(l.grand||0)+1;
-    var p=E.CHILD141.init(l,k);p.plan.education971={at:a,status:'adjusted',resumeAt:a+1};
-    if(k.uniUntil&&k.uniUntil>a)k.uniUntil++;k.study=U.clamp((k.study||50)-3,0,100);
-    log('Em bé của '+k.name+' và '+q.peer.name+' chào đời. '+(q.plan==='together'?'Người thân đã thống nhất chia việc chăm sóc.':'Hai người phải tiếp tục thu xếp chỗ dựa và lịch chăm bé.')+' Việc học của con cần một lịch mới.','big');
    }else if(q.phase==='pregnancy')openFamily(l,k,r);
-   if(q.phase==='parenting'){
-    var p=E.CHILD141.init(l,k),ed=p.plan.education971;
-    if(ed?.status==='adjusted'&&a>=ed.resumeAt){ed.status='resumed';k.study=U.clamp((k.study||50)+2,0,100);log(k.name+' bắt đầu trở lại nhịp học theo lịch đã thu xếp; việc chăm con vẫn cần chia sẻ.','neutral');}
-    if(q.support>0&&a<=q.supportUntil&&q.paidAge!==a){q.paidAge=a;var paid=Math.min(q.support,Math.max(0,l.money));if(paid>0)H.cash(l,-paid,'Hỗ trợ chăm cháu theo khoản đã tự nguyện thống nhất');q.history.push({age:a,paid:paid,expected:q.support});if(paid<q.support)log('Năm nay bạn không đủ khoản hỗ trợ đã hẹn cho '+k.name+'; gia đình cần thu xếp lại ngân sách chăm bé.','neutral');}
-    if(a>q.supportUntil)q.phase='resolved';
-   }
   });
  }
- X.menu('teenFamily971','Cùng con đối diện việc làm cha mẹ',function(l){return l.alive?true:'Cuộc đời đã kết thúc';},function(l,d){var k=child(l,d.arg.id),q=k&&relation(k);return q?k.name+' và '+q.peer.name+' đang đối diện thai kỳ ngoài dự định. Hai bên cần được lắng nghe, có người hỗ trợ và bàn việc học cùng trách nhiệm chăm sóc.':'Hoàn cảnh đã thay đổi.';},function(l,arg){var k=child(l,arg.id),q=k&&relation(k);if(!q||q.phase!=='pregnancy'||q.plan||arg.token!==q.token)return [];return [
-  {k:'together',l:'Cùng hai gia đình thu xếp chăm sóc và giữ đường học',why:l.money>=l.base*.03?true:'Chưa đủ khoản hỗ trợ dự kiến',run:function(l,r,log){familyChoice(l,k,'together',log);}},
-  {k:'limited',l:'Thống nhất khoản hỗ trợ trong khả năng của mình',why:l.money>=l.base*.01?true:'Chưa đủ khoản hỗ trợ dự kiến',run:function(l,r,log){familyChoice(l,k,'limited',log);}},
-  {k:'community',l:'Giữ giới hạn tài chính, giúp con tìm người hỗ trợ',run:function(l,r,log){familyChoice(l,k,'community',log);}}
- ];},16);
+ X.menu('teenFamily971','Cùng con đối diện việc làm cha mẹ',function(l){return l.alive?true:'Cuộc đời đã kết thúc';},function(l,d){
+  var k=child(l,d.arg.id),q=k&&relation(k);
+  return q?k.name+' và '+q.peer.name+' cần chia thời gian chăm bé và thu xếp việc học hoặc công việc. Có thể bàn lại trong hồ sơ của con trước khi bé chào đời.':'Hoàn cảnh đã thay đổi.';
+ },function(l,arg){
+  var k=child(l,arg.id);if(!k||!canPlan(l,k)||arg.token!==relation(k).token)return [];
+  return Object.keys(CARE_PLANS).map(function(key){
+   var plan=CARE_PLANS[key];
+   return {k:key,l:plan.label,h:plan.annual?'Chuẩn bị '+H.money(l,l.base*plan.first)+' · dự kiến '+H.money(l,l.base*plan.annual)+'/năm trong 3 năm':'',
+    why:!plan.first||l.money>=l.base*plan.first?true:'Chưa đủ khoản hỗ trợ dự kiến',run:function(l,r,log){familyChoice(l,k,key,log);}};
+  });
+ },16);
+ E.DEC.teenFamily971.auto=function(l,d){
+  var index=d.data?.keys?.indexOf('independent');
+  return index>=0?String(index):'cancel';
+ };
+ var convert=E.abroadConvert;E.abroadConvert=function(l,factor){
+  var out=convert.apply(this,arguments);
+  (l.kids||[]).forEach(function(k){var q=relation(k);if(q&&q.support>0)q.support*=factor;});
+  return out;
+ };
  E.HOOKS.year.push(function(l,r,log){teenYear(l,log);});
- E.STORY971={state:state,canQueue:canQueue,offered:offered,optional:optional,trim:trim,cuisineMuted:cuisineMuted,onCrush:onCrush,teenRisk:teenRisk,familyChoice:familyChoice,teenYear:teenYear,relation:relation};
+ E.STORY971={state:state,canQueue:canQueue,offered:offered,optional:optional,trim:trim,cuisineMuted:cuisineMuted,onCrush:onCrush,teenRisk:teenRisk,familyChoice:familyChoice,teenYear:teenYear,relation:relation,canPlan:canPlan,openFamily:openFamily,careYear:careYear,careText:careText,learningPaused:learningPaused};
 })(globalThis.G);

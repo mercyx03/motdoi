@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.7.3: cần nghiệm thu toàn diện kế hoạch chăm cháu và việc học/làm của con, danh tiếng bóng đá và nguồn người theo dõi trên mã cuối, bản lưu thật và binding REVIEWS_DB Production.
+
 - 9.7.2: cần nghiệm thu toàn diện nhịp thị trường cầu thủ tự do và khoảng cách với con trưởng thành trên mã cuối, bản lưu thật và xác minh binding REVIEWS_DB Production.
 
 - 9.6.9: nghiệm thu toàn diện các luồng địa điểm/năm, hồ sơ sau sơ tán và học nghề dùng sổ khóa học 170. Cần tiếp tục đối chiếu các đô thị chưa có mốc, ranh giới hành chính ngoài ba nhóm đã bổ sung, các lộ trình giáo dục địa phương, bản lưu thật và REVIEWS_DB Production. Các hệ số học phí/đánh giá/hồi phục là tham số game. Xem docs/ERA-969.md.

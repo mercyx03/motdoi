@@ -316,30 +316,33 @@
       initKid(k);
       var ka = a - k.born;
       if (ka < 1) return;
+      var care = E.STORY971?.careYear(l, k, log);
+      var schedule = care && care.schedule;
       // tình cảm cha mẹ – con cái
       var dc = U.normal(r) * 2 + (l.focus === 'social' ? 2.5 : l.focus === 'work' ? -1 : 0) - (l.abroad && !l.abroad.perm ? 3 : 0) - (l.jailUntil != null && a < l.jailUntil ? 5 : 0) - (l.addict && (l.addict.alcohol || l.addict.gamble || l.addict.drugs) ? 2 : 0);
       k.close = U.clamp(k.close + (ka>=18?dc*.35:dc), 0, 100);
       // học hành của con
-      if (ka >= 6 && ka <= 17) k.study = U.clamp(k.study + U.normal(r) * 5 + (l.fam.q >= 4 ? 0.5 : 0) + (k.close >= 60 ? 1 : -1) + (k.tutor ? 1.5 : 0), 0, 100);
+      if (ka >= 6 && ka <= 17 && schedule?.status !== 'paused') k.study = U.clamp(k.study + U.normal(r) * 5 + (l.fam.q >= 4 ? 0.5 : 0) + (k.close >= 60 ? 1 : -1) + (k.tutor ? 1.5 : 0), 0, 100);
       // tuổi mới lớn: lạc lối
       if (ka >= 13 && ka <= 20 && !k.vice && r() < 0.012 + (k.close < 40 ? 0.03 : 0) + (l.addict && (l.addict.gamble || l.addict.drugs) ? 0.02 : 0)) {
         k.vice = U.wkey(r, 'game:5,bỏ học:3,đua xe:2,ma túy:0.6');
         H.sched(l, 'con_lac_loi', 0, { n: k.name });
       }
       // 18 tuổi: ngã rẽ của con — bố mẹ góp ý
-      if (ka === 18 && !k.path18 && !(E.ERA969&&E.ERA969.learning(l,k))) { k.path18 = true; H.sched(l, 'con_18', 0, { n: k.name }); }
+      var needsSchoolDecision = ka === 18 || ka > 18 && E.STORY971?.relation(k)?.care973?.schoolDelayed && !k.job && k.vice !== 'bỏ học' && k.edu < 3;
+      if (needsSchoolDecision && !k.path18 && schedule?.status !== 'paused' && !(E.ERA969&&E.ERA969.learning(l,k))) { k.path18 = true; H.sched(l, 'con_18', 0, { n: k.name }); }
       // tốt nghiệp
       if (k.uniUntil && ka >= k.uniUntil) { var degree = E.childDegreeName(k.degree961); k.uniUntil = null; k.edu = Math.max(k.edu || 0, k.degree961 || 5); delete k.degree961; log('Con ' + k.name + ' tốt nghiệp ' + degree + '.', 'good'); fx(l, { hap: 5 }); H.mem(l, 'Ngày dự lễ tốt nghiệp của ' + k.name + ', bạn khóc lúc nào không hay.', 4); }
       if (!k.uniUntil) k.tuition = 0;
       if (k.tuition && l.indep) H.cash(l, -k.tuition, 'Tiền học cho ' + k.name);
       // đi làm
-      if (!k.job && !k.internship170 && !k.uniUntil && !(E.ERA969&&E.ERA969.learning(l,k)) && ka >= 19 && ka <= 60 && !k.jail && (ka >= 22 || k.edu < 5) && r() < 0.6) {
+      if (!k.job && !k.internship170 && !k.uniUntil && schedule?.status !== 'careFirst' && schedule?.track !== 'school' && !(E.ERA969&&E.ERA969.learning(l,k)) && ka >= 19 && ka <= 60 && !k.jail && (ka >= 22 || k.edu < 5) && r() < 0.6) {
         if (k.vice === 'ma túy' && r() < 0.6) return;
         k.edu = Math.max(k.edu, ka >= 18 ? 3 : 2);
         k.job = kidJobPick(l, k, r); k.rank = 0; k.jyrs = 0; k.inc = kidIncome(l, k);
         if (k.job&&ka <= 30) log('Con ' + k.name + ' đi làm ' + kidTitle(k) + ', lương ' + mo(l, k.inc) + '/tháng.', 'good');
       } else if (k.job) {
-        k.jyrs = (k.jyrs || 0) + 1;
+        k.jyrs = (k.jyrs || 0) + (schedule?.status === 'reduced' ? .5 : 1);
         var c = E.CAR[k.job];
         if (c && (k.rank || 0) < c.t.length - 1 && k.jyrs >= (c.yrs[k.rank || 0] || 4) && r() < 0.25 + (k.study - 50) / 200) {
           k.rank = (k.rank || 0) + 1; k.jyrs = 0; k.inc = kidIncome(l, k);

@@ -219,11 +219,14 @@
   function tournament(l, z, name, strength, r, group, international) {
     var id = name + ':' + z.year, results = [], points = 0;
     if (group) {
-      for (var i = 0; i < 3; i++) { var m = match(l, z, id + ':group' + i, strength + i * 2, r, international, false); results.push(m); points += m.gf > m.ga ? 3 : m.gf === m.ga ? 1 : 0; }
+      for (var i = 0; i < 3; i++) { var m = match(l, z, id + ':group' + i, strength + i * 2, r, international, false); m.stage973 = 'group'; m.featured973 = true; results.push(m); points += m.gf > m.ga ? 3 : m.gf === m.ga ? 1 : 0; }
       if (points < 4) { z.competitions.push({ name: name, stage: 'Bị loại vòng bảng', points: points }); return false; }
     }
     for (var round = 0; round < 3; round++) {
-      var k = match(l, z, id + ':knockout' + round, strength + round * 3, r, international, true); results.push(k);
+      var k = match(l, z, id + ':knockout' + round, strength + round * 3, r, international, true);
+      k.stage973 = round===2?'final':'knockout';
+      k.featured973 = !!group;
+      results.push(k);
       if (!k.win) { z.competitions.push({ name: name, stage: ['Tứ kết', 'Bán kết', 'Chung kết'][round] }); return false; }
     }
     z.competitions.push({ name: name, stage: 'Vô địch' });
@@ -451,6 +454,21 @@
     divisions[counterpart.id] = tier;
     z.movement = { from: tier, to: target, counterpart: counterpart.id };
   }
+  function seasonImpact973(z) {
+    var stats={apps:0,international:0,goals:0,assists:0,clean:0,big:0,points:0};
+    (z.matches||[]).forEach(function(m){
+      if(!(m.minutes>0))return;
+      if(m.international)stats.international++;else stats.apps++;
+      var goals=m.goals||0,assists=m.assists||0,clean=m.clean||0;
+      var contribution=goals*1.8+assists*1.25+clean*1.6+Math.max(0,(m.rating||0)-7)*.55;
+      var featured=m.stage973==='final'||m.featured973;
+      var weight=m.stage973==='final'?(m.featured973?2.1:1.55):m.featured973?1.45:m.international?1.2:1;
+      stats.goals+=goals;stats.assists+=assists;stats.clean+=clean;
+      if(featured&&contribution>=1.2)stats.big++;
+      stats.points+=contribution*weight;
+    });
+    return stats;
+  }
   function season(l, r, log) {
     var s = peek(l), y = year(l), c = club(s.loan ? s.loan.club : s.club);
     if (s.seasons.some(function (z) { return z.year === y; })) return s.seasons.find(function (z) { return z.year === y; });
@@ -491,8 +509,10 @@
     s.estimatedValueUSD = Math.round(wage(l, c) * Math.max(.2, (s.contract ? s.contract.end - y : 0)) * (l.age < 25 ? 2 : 1));
     s.role = rating(l) > c.strength + 10 && apps >= 5 ? 'Ngôi sao' : apps >= 4 ? 'Đá chính' : 'Dự bị';
     if (s.role !== 'Dự bị' && s.skills.discipline >= 80 && s.coach.trust >= 70) s.role = 'Đội trưởng';
-    s.reputation = U.clamp(s.reputation + apps * .35 + (z.place === 1 ? 3 : 0) - (apps < 3 ? 2 : 0), 0, 100);
-    if(E.FOLLOW919?.sport971)E.FOLLOW919.sport971(l,z);
+    var impact=seasonImpact973(z);
+    var performance=Math.min(youth?1.5:4,impact.points*(youth ? .095 : .18));
+    s.reputation = U.clamp(s.reputation + apps * .35 + (z.place === 1 && apps ? 3 : 0) - (apps < 3 ? 2 : 0) + performance, 0, 100);
+    if(E.FOLLOW919?.sport971)E.FOLLOW919.sport971(l,z,impact);
     s.coach.trust = U.clamp(s.coach.trust + (s.training === 'intense' ? -3 : 2) + (s.form > 60 ? 2 : -1), 0, 100);
     log('Mùa ' + y + ' · ' + c.name + ': hạng ' + z.place + ', ' + apps + ' lần ra sân; ' + s.role + '.', 'neutral');
     if (!youth) exchangeDivision(s, c, z);
@@ -707,7 +727,9 @@
 
   X.menu('footballResults', 'Mùa giải bóng đá', function (l) { return !!peek(l) ? true : 'Chưa có hồ sơ'; }, function (l) {
     var s = peek(l), z = s.seasons[s.seasons.length - 1]; if (!z) return 'Chưa có mùa giải.';
-    return 'Mùa ' + z.year + '\n' + z.table.map(function (t, i) { return (i + 1) + '. ' + t.name + ' · ' + t.points + ' điểm · ' + t.gf + ':' + t.ga; }).join('\n') + '\n' +
+    var reach=z.public973;
+    var publicLine=reach?'\nĐộ nổi tiếng từ mùa này: +'+reach.gain.toLocaleString('vi-VN')+' · '+reach.goals+' bàn · '+reach.assists+' kiến tạo · '+reach.clean+' trận sạch lưới · '+reach.big+' màn trình diễn nổi bật ở trận lớn.':'';
+    return 'Mùa ' + z.year + publicLine + '\n' + z.table.map(function (t, i) { return (i + 1) + '. ' + t.name + ' · ' + t.points + ' điểm · ' + t.gf + ':' + t.ga; }).join('\n') + '\n' +
       z.matches.map(function (m, i) { return 'Trận ' + (i + 1) + ' · ' + m.competition + ' · gặp ' + m.opponentName + ': ' + m.gf + '–' + m.ga + ' · ' + m.minutes + ' phút · ' + m.goals + ' bàn / ' + m.assists + ' kiến tạo' + (m.card ? ' · thẻ ' + m.card : '') + (m.absence ? ' · ' + m.absence : '') + (m.rating ? ' · điểm ' + m.rating.toFixed(1) : ''); }).join('\n');
   }, function () { return []; }, 10);
   ['football_scout', 'football_caster'].forEach(function (id, i) { E.CAR[id] = { id: id, t: [i ? 'bình luận viên bóng đá' : 'tuyển trạch viên bóng đá', i ? 'bình luận viên bóng đá nổi tiếng' : 'trưởng bộ phận tuyển trạch'], vn: [12, 28], yrs: [5], cat: 'sport', sec: 'formal', edu: 3, hidden: 1, sigma: .1, loss: .02 }; });
@@ -829,6 +851,6 @@
   footballAch.push(['football_three_countries', '🧳', 'Hành trình ba nền bóng đá', 'Có phút ra sân ở câu lạc bộ thuộc 3 quốc gia khác nhau.', function (l) { var s = eligibleAchievement(l); if (!s) return false; var codes = {}; (s.seasons || []).forEach(function (z) { var c = club(z.club); if (c && (z.matches || []).some(function (m) { return !m.international && m.minutes > 0; })) codes[c.country] = true; }); return Object.keys(codes).length >= 3; }]);
   footballAch.push(['football_second_career', '🎙️', 'Sau tiếng còi cuối', 'Giải nghệ sau ít nhất 20 trận, rồi làm huấn luyện, tuyển trạch hoặc bình luận bóng đá.', function (l) { var s = eligibleAchievement(l); return !!s && s.stage === 'retired' && (s.totals || {}).apps >= 20 && !!l.job && ['football_scout', 'football_caster', 'hlv_tt'].indexOf(l.job.id) >= 0; }]);
   E.addAchievements(footballAch);
-  E.FOOTBALL = { releaseFor: releaseFor, wageNow: wageNow, renew: renew, init: init, peek: peek, club: club, rating: rating, trial: trial, trialOptions: trialOptions, trialCost: trialCost, negotiate: negotiate,
+  E.FOOTBALL = { releaseFor: releaseFor, wageNow: wageNow, renew: renew, init: init, peek: peek, club: club, rating: rating, trial: trial, trialOptions: trialOptions, trialCost: trialCost, negotiate: negotiate, seasonImpact973:seasonImpact973,
     nationWorld:nationWorld,sponsorState:sponsorState,sponsorOffers:sponsorOffers,sponsorPay:sponsorPay,employed:employed,syncOccupation:syncOccupation,syncTalent:syncTalent,negotiationWhy:negotiationWhy,negotiationChance:negotiationChance,accept: accept, annual: annual, season: season, match: match, national: national, income: income, wage: wage, available: available, leagueName: leagueName970, usd: usd, loan: loan, retire: retire, summary: summary, relocate: relocate };
 })(globalThis.G);
