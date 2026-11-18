@@ -49,13 +49,13 @@
     var s = st(l), c = circ(l), keep = [];
     s.open.forEach(function (o) {
       var D = OPEN[o.k]; if (!D) return;
+      if (o.k === 'displaced' && E.ERA969) {
+        delete o.fresh;
+        if (E.ERA969.recoveryCosts(l,o,log)) keep.push(o);
+        return;
+      }
       if (o.fresh) { delete o.fresh; keep.push(o); return; } // việc vừa mở trong năm nay chưa kịp lành: năm sau mới bắt đầu tính
       o.n++;
-      if(o.k==='displaced'&&E.ERA969){
-        var q=E.ERA969.recovery(l,o);l.st.soc-=1;var fee=l.base*(q.housing==='family'?.015:.03);
-        if(l.age<18&&!l.indep&&E.childExpense)E.childExpense(l,fee,'chỗ ở sau sơ tán',false);else H.cash(l,-Math.min(Math.max(0,l.money),fee),'Chi phí ổn định nơi ở');
-        keep.push(o);return;
-      }
       D.drag(l, o);
       if (o.k === 'classLabel' && wy(l) >= 1956 && !o.corrected) { // sửa sai: nhiều hồ sơ được xem lại, không phải tất cả
         o.corrected = true; if (u(l, 'sai:' + o.y0) < 0.6) { H.fx(l, { soc: 5, hap: 3, money: 0.15 }); log('Đợt sửa sai năm 1956: hồ sơ gia đình bạn được xem lại, một phần ruộng đất và danh dự được trả.', 'good'); H.mem(l, 'Năm 1956 gia đình được sửa sai, nhưng những gì đã mất không lấy lại hết được.', 3); return; }

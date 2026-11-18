@@ -1,6 +1,24 @@
 {
-  "generatedAt": "2026-11-18T03:00:04.107Z",
+  "generatedAt": "2026-11-18T03:13:22.563Z",
   "entries": [
+    {
+      "id": "quiet-job-search-and-recovery-costs-97800",
+      "version": "9.7.8",
+      "publishedAt": "2026-11-18T10:13:22+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Tạm dừng nhắc tìm việc và khép chi phí sống tạm sau sơ tán",
+      "summary": "Bảng tìm việc có thể tạm dừng. Chi phí sống tạm kết thúc khi cuộc sống ổn định hoặc đến mốc giới hạn. Hồ sơ vẫn giữ lựa chọn về quê.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Chọn tiếp tục tìm việc để có hai năm yên trước khi game tự mở lại bảng. Chọn tạm dừng nhắc nếu muốn tự quyết thời điểm xem. Khi đạt bậc bằng cấp cao hơn, game có thể nhắc một lần. Lời giới thiệu cho vị trí cụ thể vẫn xuất hiện theo câu chuyện của người giới thiệu.",
+        "Phí phát sinh và ảnh hưởng giao tiếp sau sơ tán dừng khi chỗ ở và sinh hoạt đã ổn định, hoặc chậm nhất khi đã qua bảy năm chịu phí. Những việc còn dở vẫn xem được trong mục Đời sống.",
+        "Hồ sơ sơ tán giữ thông tin quê cũ. Bạn có thể tự chọn trở về khi đường về phù hợp, quê cũ đã an toàn hơn và đủ chi phí."
+      ]
+    },
     {
       "id": "medical-debt-and-partner-work-97700",
       "version": "9.7.7",

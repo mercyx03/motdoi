@@ -1034,21 +1034,28 @@
       }
     },
     job: {
-      make: function (life, r) {
+      make: function (life, r, arg) {
         var offers = E.offers(life, r).filter(function (id) { return !E.ERA902 || !E.ERA902.jobBlocked(life, id, E.CAR[id]); });
         var has = !!life.job;
         return { id: 'job', title: has ? 'Cơ hội đổi việc' : 'Tìm việc làm',
-          text: (has ? 'Bạn có thể tìm việc tốt hơn công việc ' + jobTitle(life) + ' hiện tại.' : (life.record ? 'Với tiền án trong hồ sơ, tìm việc chẳng dễ dàng. ' : '') + 'Bạn có vài lựa chọn công việc') + ' (' + (life.urban ? 'ở ' + (life.city || 'thành phố') : 'gần nhà') + ').',
-          data: { offers: offers },
+          text: (has ? 'Bạn có thể tìm việc tốt hơn công việc ' + jobTitle(life) + ' hiện tại.' : (arg?.newQualification978 ? 'Bạn vừa có bằng cấp mới nên có thể xem lại cơ hội. ' : '') + (life.record ? 'Với tiền án trong hồ sơ, tìm việc chẳng dễ dàng. ' : '') + 'Bạn có vài lựa chọn công việc') + ' (' + (life.urban ? 'ở ' + (life.city || 'thành phố') : 'gần nhà') + ').',
+          data: { offers: offers, newQualification978: !!arg?.newQualification978 },
           opts: offers.map(function (id) { return opt(id, U.cap(E.offerLabel ? E.offerLabel(life, id) : E.jobLabel(id)), E.offerHint(life, id)); })
-            .concat([opt('none', has ? 'Giữ công việc hiện tại' : 'Chưa nhận, tiếp tục tìm', '')]) };
+            .concat(has ? [opt('none', 'Giữ công việc hiện tại', '')] : [
+              opt('none', 'Tiếp tục tìm việc, xem lại sau', ''),
+              opt('pause978', 'Tạm dừng nhắc tìm việc', '')
+            ]) };
       },
       auto: function (life, d, r) { return d.data.offers.length ? U.wpick(r, d.data.offers, function (id) { return E.offerAI(life, id); }) : 'none'; },
       apply: function (life, d, k, r, log) {
         life.flags.upgradeJob = false;
-        if (k === 'none') {
-          if (life.job) log('Quyết định gắn bó với công việc hiện tại.', 'neutral');
-          else { log('Chưa tìm được công việc ưng ý.', 'neutral'); life.flags.needJob = true; }
+        if (k === 'pause978' || k === 'none') {
+          if (life.job) { log('Quyết định gắn bó với công việc hiện tại.', 'neutral'); return; }
+          var paused = k === 'pause978';
+          life.flags.needJob = true;
+          life.flags.jobReminder978 = { paused: paused, edu: life.edu, after: life.age + 3 };
+          if (paused) life.pending = life.pending.filter(function (d) { return d.id !== 'job' || d.manual || d.data?.requested; });
+          log(paused ? 'Bạn tạm dừng lời nhắc tìm việc. Khi sẵn sàng, hãy mở mục Công việc.' : 'Bạn dành hai năm để theo dõi cơ hội. Có bằng cấp mới thì có thể xem lại sớm.', 'neutral');
           return;
         }
         E.startJob(life, k, r, log);
@@ -1494,9 +1501,12 @@
     if (life.flags.uniNext === a) { life.flags.uniNext = null; add('uni'); }
     if (life.flags.retryUni != null && life.flags.retryUni <= a) { life.flags.retryUni = null; if (life.flags.retryExamPending) { delete life.flags.retryExamPending; var previousExam = life.examScore; life.examScore = E.rollExamScore ? E.rollExamScore(life, r) : Math.min(30, (previousExam || 15) + 1 + r() * 2.5);  life.log.push({a:a,y:life.birthYear+a,t:'Thi lại tốt nghiệp THPT: '+U.fmtNum(life.examScore,2)+' điểm.',k:'neutral'}); if (life.examScore >= 27) life.flags.scholar = true; } add('uni'); } // v3.8: không để cờ "ôn thi lại" treo mãi chặn việc tìm việc
     // việc làm
+    if (life.job) delete life.flags.jobReminder978;
     var studyDecision = q.some(function (d) { return d.id === 'hs' || d.id === 'uni'; });
-    if (!(E.FOOTBALL&&E.FOOTBALL.employed(life)) && !studyDecision && !(life.flags.world120 && life.flags.world120.monastic) && !life.school && (!life.job || life.flags.upgradeJob) && !life.retired && !(life.flags.selfRun && !life.job && (life.ventures || []).length && !life.flags.needJob) && a >= 15 && !life.flags.military && life.flags.retryUni == null &&
-      (life.flags.needJob || life.flags.upgradeJob || (a >= 18 && r() < 0.6)) && !(life.abroad && !life.abroad.perm)) add('job');
+    var reminder = life.flags.jobReminder978, newQualification = reminder && life.edu > reminder.edu;
+    var allowJobReminder = !reminder || newQualification || (!reminder.paused && a >= reminder.after);
+    if (allowJobReminder && !(E.FOOTBALL&&E.FOOTBALL.employed(life)) && !studyDecision && !(life.flags.world120 && life.flags.world120.monastic) && !life.school && (!life.job || life.flags.upgradeJob) && !life.retired && !(life.flags.selfRun && !life.job && (life.ventures || []).length && !life.flags.needJob) && a >= 15 && !life.flags.military && life.flags.retryUni == null &&
+      (newQualification || life.flags.needJob || life.flags.upgradeJob || (a >= 18 && r() < 0.6)) && !(life.abroad && !life.abroad.perm)) add('job', newQualification ? { newQualification978: true } : null);
     // xu hướng tính dục
     if (life.orient !== 'straight' && life.realized && !life.out && a >= 16 && a <= 40 && (life.flags.outAskedAt == null || a - life.flags.outAskedAt >= 3) && r() < 0.2) add('out');
     // tình cảm
@@ -1565,6 +1575,7 @@
 
     life.pending = q;
     prune(life);
+    if (newQualification && life.pending.some(function (d) { return d.id === 'job' && d.data?.newQualification978; })) reminder.edu = life.edu;
     return life.pending;
   }
 

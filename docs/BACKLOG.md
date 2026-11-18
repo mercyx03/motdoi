@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.7.8: còn hồi quy toàn diện, kiểm thử nhắc tìm việc và ngừng phí sơ tán trên bản lưu thật, cùng xác minh binding REVIEWS_DB Production.
+
 - 9.7.7: còn regression toàn diện, kiểm thử chuỗi nợ viện phí và thỏa thuận việc làm khi đổi bạn đời trên bản lưu thật, cùng xác minh binding REVIEWS_DB Production.
 
 - 9.7.6: còn regression toàn diện, kiểm thử Dự định của bạn đời trên bản lưu thật và xác minh binding REVIEWS_DB Production.

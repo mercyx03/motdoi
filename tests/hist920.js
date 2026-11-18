@@ -173,9 +173,18 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
 // 10. việc dang dở kéo dài nhiều năm, không tự biến mất ngay; có thể nhẹ đi hoặc khép lại
 {
   const mk = i => { const l = life('VN', 1960, 10, { seed: 160 + i, money: 0 }); l.id = 'op' + i; l.money = 0; return l; };
-  let remain1 = 0, ended8 = 0, stuckLog = 0, N = 100;
-  for (let i = 0; i < N; i++) { const l = mk(i); HI.open(l, 'displaced', 3, { y0: 1975 }); l.age = 15; HI.processOpen(l, say(l)); if (HI.st(l).open.length) remain1++; for (let k = 0; k < 24; k++) { l.age++; HI.processOpen(l, say(l)); } if (!HI.st(l).open.length) ended8++; if (l.log.some(x => /đã thành nhà/.test(x.t))) stuckLog++; }
-  ok(remain1 / N > 0.6, 'sau một năm phần lớn việc dang dở vẫn còn (' + remain1 + '/' + N + ')'); ok(ended8 === N, 'sau tối đa vài chục năm đều có kết cục (khép lại hoặc thành nếp sống)'); ok(stuckLog > 0, 'một số trường hợp kết thúc bằng việc ổn định tại nơi mới');
+  for (let i = 0; i < 100; i++) {
+    const l = mk(i);
+    HI.open(l, 'displaced', 3, { y0: 1975 });
+    l.age = 16;
+    HI.processOpen(l, say(l));
+    ok(HI.st(l).open.length === 1, 'năm đầu chưa thu xếp được chỗ ở vẫn cần hỗ trợ');
+    for (let k = 0; k < 8; k++) { l.age++; HI.processOpen(l, say(l)); }
+    ok(HI.st(l).open.length === 0, 'chi phí tạm thời có mốc kết thúc');
+    const archived = HI.st(l).recoveryHistory969.at(-1);
+    ok(archived.result === 'ordinary978' && E.ERA969.currentRecovery(l) === archived,
+      'hồ sơ khó khăn vẫn truy cập được sau khi dừng phí, chưa coi như đã có nhà');
+  }
   const rich = mk(1); rich.money = rich.base * 5; rich.job = { id: 'ke_toan', rank: 1, yrs: 1 }; HI.open(rich, 'hardship', 2, { y0: 1975 }); const poor = mk(1); HI.open(poor, 'hardship', 2, { y0: 1975 });
   const ease = l => HI.OPEN.hardship.ease(l, { k: 'hardship', lvl: 2, y0: 1975, n: 0 }, HI.circ(l));
   ok(ease(rich) > ease(poor) + 0.1, 'khả năng vượt qua khó khăn phụ thuộc việc làm và tiền (' + ease(poor).toFixed(2) + ' → ' + ease(rich).toFixed(2) + ')');

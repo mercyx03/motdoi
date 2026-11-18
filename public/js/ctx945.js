@@ -224,7 +224,7 @@
     return true;
   }
   function refugeReturn(l, c, log) {
-    if(E.ERA969){var pending=E.ERA969.displaced(l);if(pending&&pending.recovery969)return;}
+    if(E.ERA969?.currentRecovery(l))return;
     var s = st(l), rf = s.refuge; if (!rf || rf.back || rf.stay || l.abroad || l.age < 3) return;
     var y = wy(l), cc = resCc(l), home = levelAt(cc, y, rf.from);
     if (y - rf.y >= 7) { rf.stay = y; log('Sau nhiều năm ở ' + rf.to + ', bạn đã quen nếp sống mới; quê cũ chỉ còn là chuyện nhớ lại.', 'neutral'); return; }
