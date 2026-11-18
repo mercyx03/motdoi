@@ -84,7 +84,7 @@
     ['GH', 1900, 1956, 'Bờ Biển Vàng'], ['SS', 1900, 1955, 'miền nam Sudan thuộc Anh–Ai Cập'],
     ['SS', 1956, 2010, 'miền nam Sudan']);
   // tên thành phố: [tên hiện nay, tên thời đó, năm cuối còn dùng tên cũ, (tùy chọn) năm đầu]
-  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928], ['Faisalabad', 'Lyallpur', 1976], ['Gqeberha', 'Port Elizabeth', 2020]];
+  var CITIES = [['TP. Hồ Chí Minh', 'Sài Gòn', 1975], ['Mumbai', 'Bombay', 1994], ['Chennai', 'Madras', 1995], ['Kolkata', 'Calcutta', 2000], ['Bengaluru', 'Bangalore', 2013], ['Yangon', 'Rangoon', 1988], ['Saint Petersburg', 'Leningrad', 1990, 1924], ['Saint Petersburg', 'Petrograd', 1923, 1914], ['Volgograd', 'Stalingrad', 1960, 1925], ['Volgograd', 'Tsaritsyn', 1924, 1900], ['Almaty', 'Alma-Ata', 1992, 1921], ['Almaty', 'Verny', 1920, 1900], ['Astana', 'Akmola', 1997, 1992], ['Astana', 'Tselinograd', 1991, 1961], ['Astana', 'Akmolinsk', 1960, 1900], ['Bishkek', 'Frunze', 1990, 1926], ['Bishkek', 'Pishpek', 1925, 1900], ['Dushanbe', 'Stalinabad', 1960, 1929], ['Dushanbe', 'Dyushambe', 1928, 1900], ['Kinshasa', 'Léopoldville', 1965], ['Lubumbashi', 'Élisabethville', 1965], ['Harare', 'Salisbury', 1981], ['Mutare', 'Umtali', 1981], ['Gweru', 'Gwelo', 1981], ['Maputo', 'Lourenço Marques', 1975], ['Huambo', 'Nova Lisboa', 1974, 1928], ['Faisalabad', 'Lyallpur', 1976], ['Gqeberha', 'Port Elizabeth', 2020], ['Dnipro', 'Katerynoslav', 1925], ['Dnipro', 'Dnipropetrovsk', 2015, 1926], ['Polokwane', 'Pietersburg', 2001]];
   function resCC(l) { return l ? E.H.resCode(l) : null; }
   function status(cc, y) {
     var s = STATUS[cc] || [];
@@ -120,18 +120,25 @@
   E.famLogic = function (l, t, isLog) { var u = famLogic0 ? famLogic0.call(this, l, t, isLog) : t; return u == null ? u : rename(l, u); };
   function datedPlace(l, s) {
     var label = nameAt(l.country, wy(l)), suffix = ', ' + l.countryName;
-    s = X.POL.rename(l, s);
+    var P = X.POL, city = P.canonicalCity(l.city);
+    s = P.canonicalCity(s);
+    if (city && P.cityAllowed && !P.cityAllowed(l.country, wy(l), city) && typeof s === 'string') {
+      s = s.replace(cityRe(city), function (m, prefix) { return prefix + P.cityLabel(l.country, wy(l), city); });
+    }
+    s = P.rename(l, s);
     return label && s.endsWith(suffix) ? s.slice(0, -suffix.length) + ', ' + label : s;
   }
   function birthText(l) {
-    var birth = { country: l.country, countryName: l.countryName, birthYear: l.birthYear, age: 0 };
+    var birth = { country: l.country, countryName: l.countryName, birthYear: l.birthYear, age: 0, city: l.birthCity };
     return datedPlace(birth, l.birthPlace);
   }
   var placeText0 = E.placeText;
   if (typeof placeText0 === 'function') E.placeText = function (l) {
     var cc = resCC(l), label = nameAt(cc, wy(l));
-    if (l.abroad && l.abroad.perm && l.abroad.code === cc) {
-      return rename(l, l.place) + ', ' + (label || l.abroad.name || G.W.BY[cc]?.name || cc);
+    if (l.abroad && l.abroad.code === cc) {
+      var city = X.POL.residentCity ? X.POL.residentCity(l) : l.city || l.place;
+      var country = label || l.abroad.name || G.W.BY[cc]?.name || cc;
+      return city ? (X.POL.cityLabel ? X.POL.cityLabel(cc, wy(l), city) : rename(l, city)) + ', ' + country : country;
     }
     return datedPlace(l, placeText0.apply(this, arguments));
   };

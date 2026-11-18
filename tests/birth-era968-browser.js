@@ -57,6 +57,11 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
     assert.match(odds.early,/Ước tính theo tỷ trọng năm 1950/);
     assert.match(odds.recent,/dự phóng trung bình năm 2025/);
     assert.match(odds.title,/2025/);assert.notEqual(odds.first,odds.last);
+    const datedCities=await p.eval(()=>{
+     const P=G.E.ERA920.POL;
+     return [P.cities('PH',1900).includes('Quezon City'),P.cities('PH',1939).includes('Quezon City'),P.cityLabel('UA',1950,'Dnipro'),P.cityLabel('UA',2025,'Dnipropetrovsk')];
+    });
+    assert.deepEqual(datedCities,[false,true,'Dnipropetrovsk','Dnipro']);
     const certificate=await p.eval(()=>{
      const engine=G.E, original=engine.makeCohort;
      engine.makeCohort=()=>[];
@@ -66,6 +71,15 @@ const port=+process.env.PORT||8801,url='http://127.0.0.1:'+port+'/';
      } finally { engine.makeCohort=original; }
     });
     assert.match(certificate,/năm 2025.*Ukraine.*dự phóng trung bình năm 2025/);
+    await p.reload();await p.eval(async()=>{await MotDoiBoot.load();});
+    const moved=await p.eval(()=>{
+     const choose=(id,value)=>{const e=document.getElementById(id);e.value=value;e.dispatchEvent(new Event('change',{bubbles:true}));};
+     choose('countrySel','PH');choose('yearSel','1900');
+     const original=G.E.makeCohort;G.E.makeCohort=()=>[];
+     try {document.querySelector('#bornBtn').click();const reel=document.querySelector('#reel1').textContent;document.querySelector('#rollSkip').click();return reel;}
+     finally {G.E.makeCohort=original;}
+    });
+    assert.doesNotMatch(moved,/Quezon City/);
     await p.eval(()=>{
      const E=G.E,l=E.createLife({mode:'world',country:'GB',year:1935,seed:980});
      l.age=25;E.H.emigrate(l,['JP','Nhật Bản',G.W.BY.JP.pool],()=>.4,()=>{});

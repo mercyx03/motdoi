@@ -15,7 +15,7 @@
   function u(l, tag) { return hash((l.id || '') + ':h920:' + tag) / 4294967296; }
   function wy(l) { return l.birthYear + l.age; }
   function st(l) { var s = l.flags.hist920; if (!s || typeof s !== 'object') s = l.flags.hist920 = { seen: {}, open: [], did: {} }; if (!s.seen) s.seen = {}; if (!Array.isArray(s.open)) s.open = []; if (!s.did) s.did = {}; return s; }
-  function res(l) { return (l.abroad && l.abroad.perm && l.abroad.code) || l.country; }
+  function res(l) { return H.resCode(l); }
   function inVN(l) { return l.country === 'VN' && res(l) === 'VN'; }
   function male(l) { return l.sex === 'M'; }
   function money(l, v) { return H.money(l, v); }
@@ -41,12 +41,16 @@
   };
   function open(l, k, lvl, extra) {
     var s = st(l), ex = s.open.filter(function (o) { return o.k === k; })[0];
+    if (ex && k === 'displaced' && E.ERA969 && !E.ERA969.sameRecoveryCountry(l, ex)) {
+      extra = Object.assign({}, extra, { previousSchool981: E.ERA969.replaceRecovery(l, ex) });
+      ex = null;
+    }
     if (ex) { ex.lvl = Math.min(3, Math.max(ex.lvl, lvl || 1)); return ex; }
     var o = { k: k, lvl: lvl || 1, y0: wy(l), n: 0, fresh: 1 }; if (extra) for (var p in extra) o[p] = extra[p];
     s.open.push(o);if(k==='displaced'&&E.ERA969)E.ERA969.recovery(l,o);return o;
   }
   function processOpen(l, log) {
-    var s = st(l), c = circ(l), keep = [];
+    var s = st(l), c = circ(l), keep = [], y = wy(l);
     s.open.forEach(function (o) {
       var D = OPEN[o.k]; if (!D) return;
       if (o.k === 'displaced' && E.ERA969) {
@@ -54,7 +58,11 @@
         if (E.ERA969.recoveryCosts(l,o,log)) keep.push(o);
         return;
       }
-      if (o.fresh) { delete o.fresh; keep.push(o); return; } // việc vừa mở trong năm nay chưa kịp lành: năm sau mới bắt đầu tính
+      if (o.lastYear981 === y) { keep.push(o); return; }
+      o.lastYear981 = y;
+      var openedNow = o.fresh && (!Number.isFinite(o.y0) || y <= o.y0);
+      delete o.fresh;
+      if (openedNow) { keep.push(o); return; }
       o.n++;
       D.drag(l, o);
       if (o.k === 'classLabel' && wy(l) >= 1956 && !o.corrected) { // sửa sai: nhiều hồ sơ được xem lại, không phải tất cả
@@ -90,7 +98,7 @@
   // ---- cảnh lựa chọn chung ----
   E.SC('hist920_choice', {
     title: function (l, d) { return d.title; }, text: function (l, d) { return d.text; }, tone: 'dark',
-    valid: function (l, d) { return !!(l.alive && d && BY[d.id]); },
+    valid: function (l, d) { return !!(l.alive && d && BY[d.id] && (d.year981 == null || d.year981 === wy(l)) && (!d.country981 || d.country981 === res(l))); },
     prep: function (l, r, d) { return d; },
     opts: ['a', 'b', 'c'].map(function (k) {
       return { k: k, req: function (l, d) { var o = d.ch && d.ch[k]; return !!(o && (!BY[d.id].req || BY[d.id].req(l, k, d))); },
@@ -100,7 +108,7 @@
     })
   });
   if (E.MAJOR) E.MAJOR.hist920_choice = 1; // lựa chọn lớn của đời người: hiện như quyết định quan trọng
-  function ask(l, r, id, ch, extra) { var e = BY[id]; var d = { id: id, title: e.title, text: e.ask(l), ch: ch }; if (extra) for (var p in extra) d[p] = extra[p]; E.UPDATE110.next(l, 'hist920_choice', r, d, { manual: false }); }
+  function ask(l, r, id, ch, extra) { var e = BY[id]; var d = { id: id, title: e.title, text: e.ask(l), ch: ch, year981: wy(l), country981: res(l) }; if (extra) for (var p in extra) d[p] = extra[p]; E.UPDATE110.next(l, 'hist920_choice', r, d, { manual: false }); }
   function add(e) { EP.push(e); BY[e.id] = e; return e; }
   var VNQ = [['US', 55], ['AU', 15], ['CA', 14], ['FR', 9], ['DE', 4], ['GB', 3]]; // nơi định cư (tham số trò chơi, theo thứ tự lớn nhỏ chung của các nước tiếp nhận)
   var WARTRAUMA = 0.35;
@@ -396,7 +404,7 @@
       H.mem(l, 'Mùa xuân 1986, nỗi sợ nhiễm xạ phủ lên cả vùng.', 3); s.chernobyl = y;
     } });
   add({ id: 'w_tohoku_2011', title: 'Động đất và sóng thần Tōhoku 11/3/2011', from: 2011, to: 2011, ver: 'secondary',
-    who: function (l) { return res(l) === 'JP' && l.coast ? 1 : 0; },
+    who: function (l) { return res(l) === 'JP' && (E.CTX945 ? E.CTX945.of(l).dis >= 2 : l.coast) ? 1 : 0; },
     run: function (l, y, r, log) {
       if (u(l, 'th:' + y) >= 0.02) return;
       if (u(l, 'thd:' + y) < 0.12) { H.kill(l, 'sóng thần sau trận động đất Tōhoku', log, true); return; }
@@ -405,14 +413,16 @@
     } });
   // ======================= HOOK NĂM =======================
   function step(l, r, log) {
-    if (!l.alive || !l.era920 || !l.flags) return; var y = wy(l); if (y > X.TO) return;
+    if (!l.alive || !l.flags) return;
+    var y = wy(l), inEpisodes = y <= X.TO && l.era920;
+    if (!inEpisodes && !l.flags.hist920?.open?.length) return;
     var s = st(l);
-    EP.forEach(function (e) {
+    if (inEpisodes) EP.forEach(function (e) {
       if (y < e.from || y > e.to) return; var ok = e.who(l, y); if (!(ok > 0)) return;
       var k = e.id + ':' + y; if (s.seen[k]) return; s.seen[k] = 1;
       try { e.run(l, y, r, log, circ(l)); } catch (err) { if (G.DEBUG_HIST920) throw err; }
     });
-    if (l.alive) processOpen(l, log);
+    if (l.alive && s.open.length) processOpen(l, log);
   }
   E.HOOKS.year.push(step);
   X.HIST = { step: step, EP: EP, BY: BY, st: st, open: open, vnSide: vnSide, OPEN: OPEN, processOpen: processOpen, circ: circ, u: u };

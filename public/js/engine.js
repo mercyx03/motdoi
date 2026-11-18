@@ -951,9 +951,9 @@
     uni: {
       make: function (life, r) {
         var vn = inVN(life), P = uniPlaces(life), f = life.fam;
-        var o = [];
-        o.push(opt('uni_big', P.inCity ? 'Thi vào đại học ở ' + P.big : 'Lên ' + P.big + ' học đại học', 'Bằng cấp được trọng dụng hơn · chi phí cao · cạm bẫy nơi phố thị'));
-        if (!P.inCity) o.push(opt('uni_local', 'Học đại học ở ' + P.local + ' (gần nhà)', 'Tiết kiệm, gần gia đình'));
+        var o = [], big = datedCity(life, P.big), local = datedCity(life, P.local);
+        o.push(opt('uni_big', P.inCity ? 'Thi vào đại học ở ' + big : 'Lên ' + big + ' học đại học', 'Bằng cấp được trọng dụng hơn · chi phí cao · cạm bẫy nơi phố thị'));
+        if (!P.inCity) o.push(opt('uni_local', 'Học đại học ở ' + local + ' (gần nhà)', 'Tiết kiệm, gần gia đình'));
         if (life.st.kno >= 45 && life.st.hea >= 55) o.push(opt('police', vn ? 'Thi vào trường Công an / Quân đội' : 'Vào học viện cảnh sát / quân đội', 'Ra trường có việc ổn định, kỷ luật nghiêm'));
         if (f.q >= 4 || life.st.kno >= 72) o.push(opt('abroad', 'Đi du học', f.q >= 4 ? 'Bố mẹ có điều kiện, hoặc săn học bổng' : 'Phải săn học bổng hoặc nhờ công ty du học'));
         o.push(opt('voc', 'Học cao đẳng / trường nghề', ''));
@@ -962,8 +962,8 @@
         if (life.sex === 'M' && !life.abroad && CONSCRIPT.indexOf(resCode(life)) >= 0) o.push(opt('military', 'Đi nghĩa vụ quân sự', '2 năm rèn luyện trong quân ngũ'));
         if (vn) o.push(opt('xkld', life.flags.famDebt ? 'Đi xuất khẩu lao động, kiếm tiền trả nợ cho nhà' : 'Đi xuất khẩu lao động', 'Thu nhập cao, xa nhà, tốn phí ban đầu'));
         var tries = life.flags.uniTries || 0; // v3.8: thi lại thì tiêu đề, lời kể theo đúng tuổi và số lần thi
-        return { id: 'uni', title: tries ? 'Thi lại đại học — lần thứ ' + (tries + 1) : life.age <= 18 ? 'Mười tám tuổi — ngã rẽ đầu tiên của đời người' : 'Ngã rẽ sau phổ thông', data: { P: P },
-          text: (tries ? 'Sau ' + (tries === 1 ? 'một năm' : tries + ' năm') + ' ôn thi lại' + (life.examScore != null ? ', điểm thi lần này của bạn là ' + U.fmtNum(life.examScore, 2) : '') + ', bạn lại đứng trước ngã rẽ.' : 'Bạn vừa học xong phổ thông.') + ' Bạn bè xung quanh mỗi người chọn một ngả.' + (life.flags.famDebt ? ' Nhà vẫn còn nợ nần chưa trả hết.' : '') + (P.inCity ? '' : ' Ở quê, ai cũng bảo phải lên ' + P.big + ' mới có tương lai.'), opts: o };
+        return { id: 'uni', title: tries ? 'Thi lại đại học — lần thứ ' + (tries + 1) : life.age <= 18 ? 'Mười tám tuổi — ngã rẽ đầu tiên của đời người' : 'Ngã rẽ sau phổ thông', data: { P: P, cc: resCode(life) },
+          text: (tries ? 'Sau ' + (tries === 1 ? 'một năm' : tries + ' năm') + ' ôn thi lại' + (life.examScore != null ? ', điểm thi lần này của bạn là ' + U.fmtNum(life.examScore, 2) : '') + ', bạn lại đứng trước ngã rẽ.' : 'Bạn vừa học xong phổ thông.') + ' Bạn bè xung quanh mỗi người chọn một ngả.' + (life.flags.famDebt ? ' Nhà vẫn còn nợ nần chưa trả hết.' : '') + (P.inCity ? '' : ' Ở quê, ai cũng bảo phải lên ' + big + ' mới có tương lai.'), opts: o };
       },
       auto: function (life, d, r) {
         var p = eduP(life), ks = d.opts.map(function (o) { return o.k; });
@@ -975,15 +975,18 @@
       apply: function (life, d, k, r, log) {
         var P = d.data.P;
         if (k === 'uni_big' || k === 'uni_local') {
+          var city = E.ERA920?.POL?.canonicalCity(k === 'uni_big' ? P.big : P.local) || (k === 'uni_big' ? P.big : P.local);
+          var country = resCode(life);
+          if (d.data.cc && d.data.cc !== country || E.ERA920?.POL?.cityAllowed?.(country, life.birthYear + life.age, city) === false) return;
           var adm = U.clamp(0.2 + (life.st.kno - 50) / 60 + (life.focus === 'study' ? 0.1 : 0) + (life.fam.q - 3) * 0.04 - (k === 'uni_big' ? 0.08 : -0.05), 0.05, 0.95);
           // v2.3: có điểm thi tốt nghiệp THPT thì xét tuyển theo điểm chuẩn (trường lớn ~23 điểm, trường địa phương ~18 điểm)
           if (life.examScore != null) adm = U.clamp(0.5 + (life.examScore - (k === 'uni_big' ? 23 : 18)) / 4 + (life.fam.q - 3) * 0.02, 0.03, 0.97);
           var admitted = !!life.flags.tuyenThang || (life.examScore != null ? life.examScore >= (k === 'uni_big' ? 23 : 18) : life.st.kno >= 95 || r() < adm);
           if (admitted) {
-            var city = k === 'uni_big' ? P.big : P.local;
+            var label = datedCity(life, city);
             life.uniTier = k === 'uni_big' ? 1.15 : 1; life.uniCity = city;
-            log('Đỗ đại học ở ' + city + '!', 'good'); life.st.hap += 6;
-            H.mem(life, 'Ngày nhận giấy báo trúng tuyển đại học ở ' + city + '.', 3);
+            log('Đỗ đại học ở ' + label + '!', 'good'); life.st.hap += 6;
+            H.mem(life, 'Ngày nhận giấy báo trúng tuyển đại học ở ' + label + '.', 3);
             if (k === 'uni_big' && !P.inCity) { life.cityStudent = { city: city, since: life.age }; if (inVN(life) && r() < 0.55) H.sched(life, 'ben_xe', 0); }
             life.pending.unshift(DEC.major.make(life));
           } else { log(life.examScore != null ? 'Điểm xét tuyển ' + U.fmtNum(life.examScore, 2) + ' chưa đạt mốc ' + (k === 'uni_big' ? 23 : 18) + ' của nhóm trường đã chọn.' : 'Chưa đạt yêu cầu xét tuyển của nhóm trường đã chọn.', 'bad'); life.st.hap -= 6; life.pending.unshift(DEC.uniFail.make(life)); }
@@ -1165,20 +1168,22 @@
               reg === 'NTB' || reg === 'TN' ? U.pick(r, ['TP. Hồ Chí Minh', 'Đà Nẵng', 'TP. Hồ Chí Minh']) :
                 U.pick(r, life.variant === '63' ? ['TP. Hồ Chí Minh', 'Bình Dương', 'Đồng Nai', 'Cần Thơ'] : ['TP. Hồ Chí Minh', 'TP. Hồ Chí Minh', 'Đồng Nai', 'Cần Thơ']);
         } else dest = (E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cities?E.ERA920.POL.cities(resCode(life),life.birthYear+life.age):W.BY[life.country].cities)[0];
-        return { id: 'city', title: 'Lên ' + dest + ' lập nghiệp?', data: { dest: dest },
-          text: 'Ở quê ít việc làm. Nhiều người cùng trang lứa đã lên ' + dest + ' — thu nhập cao hơn, nhưng chi phí cũng đắt đỏ hơn.',
-          opts: [opt('go', 'Khăn gói lên ' + dest, ''), opt('stay', 'Ở lại quê', '')] };
+        var label = datedCity(life, dest);
+        return { id: 'city', title: 'Lên ' + label + ' lập nghiệp?', data: { dest: dest, cc: resCode(life) },
+          text: 'Ở quê ít việc làm. Nhiều người cùng trang lứa đã lên ' + label + ' — thu nhập cao hơn, nhưng chi phí cũng đắt đỏ hơn.',
+          opts: [opt('go', 'Khăn gói lên ' + label, ''), opt('stay', 'Ở lại quê', '')] };
       },
       auto: function (life, d, r) { return r() < (life.fam.q <= 3 ? 0.55 : 0.35) ? 'go' : 'stay'; },
       apply: function (life, d, k, r, log) {
+        if (d.data.cc && resCode(life) !== d.data.cc) return;
+        if (k !== 'go') { life.flags.cityAsked = true; log('Quyết định bám trụ ở quê.', 'neutral'); return; }
+        if (H.moveToCity(life, d.data.dest) === false) return;
+        var label = datedCity(life, life.city);
         life.flags.cityAsked = true;
-        if (k !== 'go') { log('Quyết định bám trụ ở quê.', 'neutral'); return; }
-        if(E.ERA920&&E.ERA920.POL&&E.ERA920.POL.cityAllowed&&!E.ERA920.POL.cityAllowed(resCode(life),life.birthYear+life.age,d.data.dest))return;
-        H.moveToCity(life, d.data.dest);
         if (life.job && /^(nong|ngu_dan|farm|fish|phu_giup)$/.test(life.job.id)) life.job = null;
         if (!life.job) life.flags.needJob = true;
-        log('Khăn gói lên ' + d.data.dest + ' lập nghiệp, ở trọ trong một căn phòng nhỏ.', 'big'); life.st.soc -= 5;
-        H.mem(life, 'Chuyến xe đêm lên ' + d.data.dest + ' với một chiếc ba lô và rất nhiều hy vọng.', 3);
+        log('Khăn gói lên ' + label + ' lập nghiệp, ở trọ trong một căn phòng nhỏ.', 'big'); life.st.soc -= 5;
+        H.mem(life, 'Chuyến xe đêm lên ' + label + ' với một chiếc ba lô và rất nhiều hy vọng.', 3);
         if (isVN(life) && r() < 0.5) H.sched(life, 'ben_xe', 0);
       }
     },
@@ -1357,11 +1362,16 @@
   };
   Object.keys(CORE).forEach(function (k) { DEC[k] = CORE[k]; });
 
+  function datedCity(life, dest) { return E.ERA920?.POL?.cityLabel?.(resCode(life), life.birthYear + life.age, dest) || dest; }
   function moveToCity(life, dest) {
-    var P=E.ERA920&&E.ERA920.POL;if(P&&P.cityAllowed&&!P.cityAllowed(resCode(life),life.birthYear+life.age,dest))return false;
+    var P = E.ERA920?.POL;
+    dest = P?.canonicalCity(dest) || dest;
+    if (!dest || P?.cityAllowed && !P.cityAllowed(resCode(life), life.birthYear + life.age, dest)) return false;
     life.urban = true; life.movedTo = dest; life.place = dest; life.city = dest;
-    if (isVN(life)) { var p = VN.byName[dest] || VN.byName['TP. Hồ Chí Minh']; life.cityWealth = p.wealth; }
+    if (life.cityStudent && !life.abroad) life.cityStudent.city = dest;
+    if (inVN(life)) { var p = VN.byName[dest] || VN.P63.find(function (p) { return p.city === dest; }) || VN.byName['TP. Hồ Chí Minh']; life.cityWealth = p.wealth; }
     setBase(life);
+    return true;
   }
   function emigrate(life, c, r, log) {
     var oldCountry = life.abroad && W.BY[life.abroad.code];
@@ -1387,8 +1397,9 @@
     if (E.ERA920) E.ERA920.refresh(life);
     if (life.job) life.job = { id: E.resolveJob(life.job.id) === 'nong' ? 'phu_ho' : E.resolveJob(life.job.id), rank: 0, yrs: 0 };
     else if (life.age >= 15) life.flags.needJob = true; // 9.0.2: trẻ em đi cùng gia đình không bị gắn cờ "cần việc làm" suốt nhiều năm
-    log('Di cư sang ' + c[1] + ', sống ở ' + life.place + '.', 'big'); life.st.soc -= 10;
-    H.mem(life, 'Ngày đặt chân đến ' + life.place + ', ' + c[1] + ' — một khởi đầu mới.', 4);
+    var label = datedCity(life, life.city), country = E.ERA920?.POL?.nameAt(cc.code, life.birthYear + life.age) || c[1];
+    log('Di cư sang ' + country + ', sống ở ' + label + '.', 'big'); life.st.soc -= 10;
+    H.mem(life, 'Ngày đặt chân đến ' + label + ', ' + country + ' — một khởi đầu mới.', 4);
   }
   H.moveToCity = moveToCity; H.emigrate = emigrate; H.setBase = setBase;
 
@@ -1957,7 +1968,7 @@
         runHooks('gradUniversity', [life, r, log, sc]);
         if (sc === 'abroad') H.sched(life, 'du_hoc_ve', 1);
         else {
-          if (life.cityStudent && r() < 0.7 && !life.movedTo) { moveToCity(life, life.cityStudent.city); log('Quyết định ở lại ' + life.cityStudent.city + ' lập nghiệp sau khi ra trường.', 'neutral'); }
+          if (life.cityStudent && r() < 0.7 && !life.movedTo && H.moveToCity(life, life.cityStudent.city)) { log('Quyết định ở lại ' + datedCity(life, life.city) + ' lập nghiệp sau khi ra trường.', 'neutral'); }
           life.cityStudent = null;
           if (r() < 0.25 + (st.kno - 60) / 100) life.flags.postNext = a + 1; else life.flags.needJob = true;
         }

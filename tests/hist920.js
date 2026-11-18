@@ -54,7 +54,7 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   ok(highq > lowq * 3, 'xác suất bị quy thành phần cao hơn hẳn ở gia đình khá giả (' + lowq.toFixed(2) + ' → ' + highq.toFixed(2) + ')');
   const urban = life('VN', 1944, 10, { prov: { old: 'Thái Bình', region: 'DBSH' }, urban: true }); ok(HI.EP.find(e => e.id === 'vn_land_reform').who(urban) === 0, 'thành thị không thuộc phạm vi cải cách ruộng đất');
   // 1956: sửa sai — kết quả khác nhau theo từng nhà, phần còn lại vẫn dang dở
-  let fixed = 0, kept = 0; for (let i = 0; i < 80; i++) { const x = mk(i); x.id = 'sai' + i; HI.open(x, 'classLabel', 2, { y0: 1954 }); x.age = 12; HI.processOpen(x, say(x)); /* tháng đầu: việc mới mở chưa tính */ x.age = 13; HI.processOpen(x, say(x)); /* 1957: xem xét lại hồ sơ sửa sai */ if (x.log.some(y => /sửa sai năm 1956: hồ sơ gia đình bạn được xem lại/.test(y.t))) fixed++; else if (HI.st(x).open.some(y => y.k === 'classLabel')) kept++; }
+  let fixed = 0, kept = 0; for (let i = 0; i < 80; i++) { const x = mk(i); x.id = 'sai' + i; HI.open(x, 'classLabel', 2, { y0: 1954 }); HI.processOpen(x, say(x)); /* 1954: hồ sơ vừa mở */ x.age = 12; HI.processOpen(x, say(x)); /* 1956: xem xét lại hồ sơ sửa sai */ if (x.log.some(y => /sửa sai năm 1956: hồ sơ gia đình bạn được xem lại/.test(y.t))) fixed++; else if (HI.st(x).open.some(y => y.k === 'classLabel')) kept++; }
   ok(fixed > 20 && fixed < 70 && kept > 5, 'sửa sai 1956: một phần được trả lại, phần còn lại vẫn mang nhãn (' + fixed + ' / ' + kept + ')');
 }
 // 5. chiến tranh miền Nam: lệnh động viên, hoãn/nhập ngũ/trốn, rủi ro người lính
@@ -156,9 +156,9 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   const ch = (i, city) => { const l = life('BY', 1976, 10, { seed: 1500 + i }); l.city = city; l.id = 'ch' + i; return l; };
   const rg = rate(i => ch(i, 'Gomel'), l => step(l), l => HI.st(l).open.length > 0, 300), rm = rate(i => ch(i, 'Brest'), l => step(l), l => HI.st(l).open.length > 0, 300);
   ok(rg > 0.35 && rg < 0.65 && rm < 0.1, 'Chernobyl: vùng Gomel bị tác động nhiều hơn hẳn nơi khác (' + rg.toFixed(2) + ' so với ' + rm.toFixed(2) + ')');
-  const jp = (i, coast) => life('JP', 1990, 21, { seed: 1600 + i, coast }); // 2011
+  const jp = (i, affected) => { const l = life('JP', 1990, 21, { seed: 1600 + i, coast: !affected }); l.city = l.place = affected ? 'Sendai' : 'Osaka'; return l; }; // 2011
   const rc = rate(i => jp(i, true), l => step(l), l => !l.alive || HI.st(l).open.length > 0, 600), rn = rate(i => jp(i, false), l => step(l), l => !l.alive || HI.st(l).open.length > 0, 200);
-  ok(rc > 0.005 && rc < 0.05 && rn === 0, 'Tōhoku 2011: chỉ người ở ven biển bị ảnh hưởng (' + (rc * 100).toFixed(1) + '%)');
+  ok(rc > 0.005 && rc < 0.05 && rn === 0, 'Tōhoku 2011: cư dân Sendai chịu ảnh hưởng của biến cố riêng (' + (rc * 100).toFixed(1) + '%)');
 }
 { const who = (cc, by, age) => HI.BY.w_civil_wars.who(life(cc, by, age)); ok(who('LY', 1995, 20) === 1 && who('LY', 1980, 33) === 0 && who('YE', 1995, 22) === 1 && who('MM', 2000, 22) === 1 && who('ET', 2000, 21) === 1 && who('ET', 1990, 20) === 0 && who('ET', 1960, 20) === 1 && who('SS', 1995, 20) === 1 && who('DK', 1995, 20) === 0, 'cửa sổ xung đột nhiều giai đoạn: Libya, Yemen, Myanmar, Tigray, Nam Sudan'); }
 // 9. Nam Tư: lựa chọn ở lại hay đi tị nạn
@@ -188,7 +188,7 @@ const rate = (make, act, cond, N) => { let c = 0; for (let i = 0; i < N; i++) { 
   const rich = mk(1); rich.money = rich.base * 5; rich.job = { id: 'ke_toan', rank: 1, yrs: 1 }; HI.open(rich, 'hardship', 2, { y0: 1975 }); const poor = mk(1); HI.open(poor, 'hardship', 2, { y0: 1975 });
   const ease = l => HI.OPEN.hardship.ease(l, { k: 'hardship', lvl: 2, y0: 1975, n: 0 }, HI.circ(l));
   ok(ease(rich) > ease(poor) + 0.1, 'khả năng vượt qua khó khăn phụ thuộc việc làm và tiền (' + ease(poor).toFixed(2) + ' → ' + ease(rich).toFixed(2) + ')');
-  const t = mk(2); HI.open(t, 'trauma', 1, { y0: 1975 }); HI.processOpen(t, say(t)); const hp0 = t.st.hap; HI.processOpen(t, say(t)); ok(t.st.hap < hp0 || !HI.st(t).open.length, 'chấn thương còn thì mỗi năm kéo hạnh phúc xuống');
+  const t = mk(2); HI.open(t, 'trauma', 1, { y0: 1975 }); HI.processOpen(t, say(t)); const hp0 = t.st.hap; t.age++; HI.processOpen(t, say(t)); ok(t.st.hap < hp0 || !HI.st(t).open.length, 'chấn thương còn thì mỗi năm kéo hạnh phúc xuống');
   const dup = mk(3); HI.open(dup, 'trauma', 1); HI.open(dup, 'trauma', 3); ok(HI.st(dup).open.length === 1 && HI.st(dup).open[0].lvl === 3, 'cùng loại gộp lại, giữ mức cao nhất');
 }
 // 11. quyết định tất định, vòng JSON, bản lưu cũ

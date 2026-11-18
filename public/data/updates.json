@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-18T04:04:15.224Z",
+  "generatedAt": "2026-11-18T06:22:17.361Z",
   "entries": [
+    {
+      "id": "ongoing-recovery-and-dated-cities-98100",
+      "version": "9.8.1",
+      "publishedAt": "2026-11-18T13:22:17+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Hồi phục sau biến cố và địa danh đúng niên đại",
+      "summary": "Hậu quả sau biến cố tiếp tục qua các năm. Sơ tán dựa trên nơi đang sống, còn nơi sinh và chuyển nhà dùng tên theo đúng thời kỳ.",
+      "tags": [
+        "Sửa lỗi",
+        "Tính năng"
+      ],
+      "details": [
+        "Hồ sơ sang chấn, khó khăn kinh tế và các ảnh hưởng đang theo dõi tiếp tục tiến triển sau năm 2023. Tải lại trong cùng năm không tính lại chi phí hoặc ảnh hưởng.",
+        "Người đang sống ở nước ngoài có thể sơ tán trong nước đang ở nếu đã xác định được thành phố và có điểm đến ít bị ảnh hưởng hơn. Hồ sơ nhớ đúng nơi sơ tán, giữ việc học đang dở và xét đường trở về theo tình hình từng năm.",
+        "Nơi đang sống cũng quyết định tác động của một số biến cố địa phương. Ví dụ, sự kiện riêng về sóng thần Tōhoku xét nơi nhân vật đang ở tại Nhật vào năm 2011.",
+        "Quezon City xuất hiện từ năm 1939. Thành phố Dnipro dùng tên Katerynoslav, Dnipropetrovsk hoặc Dnipro theo năm. Canberra, Soweto và Polokwane cũng có mốc lịch sử riêng trong màn sinh, chuyển nơi ở và hồ sơ."
+      ]
+    },
     {
       "id": "birth-odds-and-local-demographics-98000",
       "version": "9.8.0",

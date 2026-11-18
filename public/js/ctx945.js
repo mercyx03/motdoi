@@ -71,6 +71,8 @@
   }
   function wy(l) { return l.birthYear + (l.age || 0); }
   function resCc(l) { return H.resCode ? H.resCode(l) : l.country; }
+  function currentCity(l) { var P = E.ERA920 && E.ERA920.POL; return P && P.residentCity ? P.residentCity(l) : l.city || l.place; }
+  function movingLabel(l, city) { var P = E.ERA920 && E.ERA920.POL; return P && P.cityLabel ? P.cityLabel(resCc(l), wy(l), city) : city; }
   // mức thiếu thốn nền theo mức phát triển tuyệt đối của nước tại năm đó (nghìn đô la bình quân đầu người, đã có sẵn ở E.devGdp)
   function pov(l) {
     var y = wy(l), cc = resCc(l), B = G.W && G.W.BY && G.W.BY[cc], a = E.ERA920 && E.ERA920.at ? E.ERA920.at(cc, y) : null, d = B && a ? B.gdp * a.gdpRel * (y < 1950 ? Math.max(0.55, 1 - (1950 - y) * 0.008) : 1) : (E.devGdp ? E.devGdp(l) : l.gdp);
@@ -78,7 +80,7 @@
     var p = d < 1.2 ? 3 : d < 2.5 ? 2 : d < 6 ? 1 : 0; if (y < 1935 && p < 3 && d < 15) p++; return p;
   }
   function of(l) {
-    var y = wy(l), cc0 = resCc(l), c = at(cc0, y), zr = zoneRows(cc0, y, l.city || l.place); if (zr) c = zoned(c, zr); var o = Object.create(c); o.pov = pov(l); o.lux = Math.max(c.level, o.pov >= 3 ? 2 : o.pov >= 2 ? 1 : 0); return o;
+    var y = wy(l), cc0 = resCc(l), c = at(cc0, y), zr = zoneRows(cc0, y, currentCity(l)); if (zr) c = zoned(c, zr); var o = Object.create(c); o.pov = pov(l); o.lux = Math.max(c.level, o.pov >= 3 ? 2 : o.pov >= 2 ? 1 : 0); return o;
   }
   function st(l) { return l.flags.ctx945 || (l.flags.ctx945 = { noted: {} }); }
   function r2(l, tag) { var h = 2166136261, s = String(l.id) + ':' + tag; for (var i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); h ^= h >>> 15; h = Math.imul(h, 2246822507); h ^= h >>> 13; return (h >>> 0) / 4294967296; }
@@ -198,7 +200,7 @@
     }
     // khủng hoảng kéo dài: chuyện của thời loạn
     if (c.level >= 1 && l.age >= 3 && !(l.pending || []).some(function (d) { return d.id === 'ctx945_event'; }) && r() < [0, 0.12, 0.3, 0.5][c.level]) {
-      var kind = pickKind(l, c, r); if (kind) X.next(l, 'ctx945_event', r, { kind: kind, y: wy(l), cc:resCc(l), city:l.city||l.place }, { manual: false });
+      var kind = pickKind(l, c, r); if (kind) X.next(l, 'ctx945_event', r, { kind: kind, y: wy(l), cc:resCc(l), city:currentCity(l) }, { manual: false });
     }
     colonyEnd(l, c, log);
     socialTrigger(l, c, r);
@@ -216,10 +218,11 @@
     return !separateAreas && levelAt(cc, y, to).war < 3;
   }
   function refuge(l) {
-    if (l.abroad) return null;
-    var cc = resCc(l), y = wy(l), here = l.city || l.place; if (!here) return null;
-    var cur = hardness(levelAt(cc, y, here)), list = citiesOf(l, cc), reg = l.region, P = cc === 'VN' && G.VN && G.VN.P63 ? G.VN.P63 : null;
-    var cand = list.map(function (name, i) { var p = P ? P[i] : null; return { n: name, h: hardness(levelAt(cc, y, name)), same: p && reg && p.region === reg ? 0 : 1, i: i }; })
+    if (l.abroad?.trapped || E.TRANSIT907?.visit(l)) return null;
+    var cc = resCc(l), y = wy(l), here = currentCity(l); if (!here) return null;
+    var cur = hardness(levelAt(cc, y, here)), list = citiesOf(l, cc), regions = cc === 'VN' ? G.VN?.P63 : null;
+    var home = regions && regions.find(function (p) { return p.city === here || p.name === here; });
+    var cand = list.map(function (name, i) { var p = regions && regions.find(function (p) { return p.city === name; }); return { n: name, h: hardness(levelAt(cc, y, name)), same: p && home && p.region === home.region ? 0 : 1, i: i }; })
       .filter(function (x) { return x.n !== here && x.h <= cur - 2 && localEvacuationRoute(cc, y, here, x.n); });
     if (!cand.length) return null;
     cand.sort(function (a, b) { return a.h - b.h || a.same - b.same || a.i - b.i; });
@@ -228,23 +231,26 @@
   // chuyển nhân vật tới nơi yên hơn nếu có; không có nơi nào yên hơn thì chỉ ghi nhật ký như cũ
   function relocateTo(l, c, log, fallback) {
     var d = refuge(l), s = st(l); if (!d || !H.moveToCity) { log(fallback, 'bad'); return false; }
-    var from = l.city || l.place;
+    var from = currentCity(l), cc = resCc(l);
     if (H.moveToCity(l, d) === false) { log(fallback, 'bad'); return false; }
-    if (!s.refuge || s.refuge.back || s.refuge.stay) s.refuge = { from: from, to: d, y: wy(l) }; else s.refuge.to = d; // sơ tán lần hai: vẫn nhớ quê gốc, chỉ đổi nơi đang ở
+    var previous = s.refuge;
+    if (!previous || previous.back || previous.stay || (previous.country || l.country) !== cc) s.refuge = { country: cc, from: from, to: d, y: wy(l) };
+    else { previous.country = cc; previous.to = d; }
     var hadJob = !!l.job;
     if (hadJob) { l.job = null; l.income = 0; l.flags.needJob = true; }
-    var P = E.ERA920 && E.ERA920.POL;
-    log(fallback.replace(/\.$/, '') + '. Cả nhà chuyển tới ' + (P ? P.rename(l, d) : d) + ', nơi ít bị ảnh hưởng hơn ' + (P ? P.rename(l, from) : from) + ' lúc này.' + (hadJob ? ' Bạn phải tìm việc mới.' : ''), 'bad');
+    log(fallback.replace(/\.$/, '') + '. Cả nhà chuyển tới ' + movingLabel(l, d) + ', nơi ít bị ảnh hưởng hơn ' + movingLabel(l, from) + ' lúc này.' + (hadJob ? ' Bạn phải tìm việc mới.' : ''), 'bad');
     return true;
   }
   function refugeReturn(l, c, log) {
     if(E.ERA969?.currentRecovery(l))return;
-    var s = st(l), rf = s.refuge; if (!rf || rf.back || rf.stay || l.abroad || l.age < 3) return;
-    var y = wy(l), cc = resCc(l), home = levelAt(cc, y, rf.from);
+    var s = st(l), rf = s.refuge, cc = resCc(l);
+    if (!rf || rf.back || rf.stay || (rf.country || l.country) !== cc || l.abroad?.trapped || E.TRANSIT907?.visit(l) || l.age < 3) return;
+    var y = wy(l), home = levelAt(cc, y, rf.from);
     if (y - rf.y >= 7) { rf.stay = y; log('Sau nhiều năm ở ' + rf.to + ', bạn đã quen nếp sống mới; quê cũ chỉ còn là chuyện nhớ lại.', 'neutral'); return; }
-    if (y - rf.y < 1 || hardness(home) > 3 || (l.city || l.place) !== rf.to || !localEvacuationRoute(cc, y, rf.to, rf.from)) return;
+    if (y - rf.y < 1 || hardness(home) > 3 || currentCity(l) !== rf.to || !localEvacuationRoute(cc, y, rf.to, rf.from)) return;
     if (r2(l, 'refugeBack:' + y) >= 0.55) return;
-    rf.back = y; if (H.moveToCity) H.moveToCity(l, rf.from);
+    if (!H.moveToCity || H.moveToCity(l, rf.from) === false) return;
+    rf.back = y;
     log('Quê cũ ' + rf.from + ' đã yên hơn nên gia đình bạn trở về sau ' + (y - rf.y) + ' năm sống nhờ ở ' + rf.to + '. Nhà cửa cũ phải sửa lại và việc làm phải tìm từ đầu.', 'neutral'); H.fx(l, { hap: 2 }); if (l.job) { l.job = null; l.income = 0; l.flags.needJob = true; }
   }
   function customsLog(l, c, log) {
@@ -259,7 +265,7 @@
   var EV = {
     shelter: { n: 'Chạy trốn bom đạn', when: function (c) { return c.war >= 2; }, w: 2, t: function () { return 'Chiến sự áp sát khu bạn ở. Máy bay và pháo kích có thể tới bất cứ lúc nào; mọi người phải quyết định ở lại hay sơ tán.'; }, o: function (l, c) { var d = refuge(l); return [
       { k: 'hide', l: 'Ở lại, đào hầm trú ẩn gần nhà', h: 'Giữ nhà cửa và việc làm, rủi ro cao', run: function (l, r, log) { if (r() < [0, 0.01, 0.04, 0.09][c.war] * (l.age < 5 ? 1.5 : 1)) { H.kill(l, 'bom đạn trong ' + (c.labels.war || 'chiến sự'), log, false); return; } H.fx(l, { hap: -4, hea: -3 }); log('Bạn ở lại, nhiều đêm phải trốn xuống hầm khi báo động. Nhà cửa vẫn còn nhưng ai cũng thất thần.', 'bad'); } },
-      { k: 'flee', l: d ? 'Sơ tán tới ' + d : 'Tìm chỗ trú tạm trong khu vực', h: d ? 'Chuyển chỗ ở và có thể phải tìm việc mới' : 'Thu xếp nơi trú gần chỗ ở hiện tại', run: function (l, r, log) { H.fx(l, { hap: -5 }); H.cash(l, -0.15 * l.base, 'Chi phí sơ tán'); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); relocateTo(l, c, log, 'Gia đình gói ghém ít đồ và tìm nơi trú tạm.'); } },
+      { k: 'flee', l: d ? 'Sơ tán tới ' + movingLabel(l, d) : 'Tìm chỗ trú tạm trong khu vực', h: d ? 'Chuyển chỗ ở và có thể phải tìm việc mới' : 'Thu xếp nơi trú gần chỗ ở hiện tại', run: function (l, r, log) { H.fx(l, { hap: -5 }); H.cash(l, -0.15 * l.base, 'Chi phí sơ tán'); if (E.ERA920 && E.ERA920.HIST) E.ERA920.HIST.open(l, 'displaced', 2); relocateTo(l, c, log, 'Gia đình gói ghém ít đồ và tìm nơi trú tạm.'); } },
       { k: 'split', l: 'Gửi trẻ nhỏ về quê, người lớn ở lại làm việc', h: 'Trẻ an toàn hơn nhưng xa cha mẹ', run: function (l, r, log) { if (l.age <= 14) { H.fx(l, { hap: -6, soc: -2 }); log('Bạn bị gửi về nhờ ông bà ở quê; xa bố mẹ cả mùa, nhớ nhà nhưng bớt hiểm nguy.', 'neutral'); } else { H.fx(l, { hap: -3 }); log('Bạn ở lại làm việc cùng người lớn, lo cho cả nhà.', 'neutral'); } } }]; } },
     ration: { n: 'Tem phiếu và thiếu hàng', when: function (c) { return c.war >= 1 || c.econ >= 2; }, w: 1.4, t: function () { return 'Hàng hóa khan hiếm, gạo và dầu phải xếp hàng hoặc mua theo tem phiếu; chợ đen thì giá gấp nhiều lần.'; }, o: function (l, c) { return [
       { k: 'queue', l: 'Xếp hàng theo tem phiếu, chịu đủ thứ thiếu', h: 'Rẻ nhưng mất nhiều thời gian và vẫn không đủ', run: function (l, r, log) { H.fx(l, { hap: -2, hea: -1 }); log('Cả nhà thay phiên xếp hàng từ rạng sáng; có hàng thì mua, hết là về tay không.', 'bad'); } },
@@ -374,7 +380,7 @@
     if ((l.pending || []).some(function (d) { return d.id === 'ctx945_event'; })) return;
     var ks = socialKinds(l, c); if (!ks.length) return;
     var pick = ks[Math.floor(r() * ks.length)], s = st(l); s.noted[pick[0] + ':' + pick[1]] = wy(l);
-    X.next(l, 'ctx945_event', r, { kind: pick[0], y: wy(l), cc:resCc(l), city:l.city||l.place }, { manual: false });
+    X.next(l, 'ctx945_event', r, { kind: pick[0], y: wy(l), cc:resCc(l), city:currentCity(l) }, { manual: false });
   }
   // Hết thời thuộc địa: dấu ấn của những lựa chọn trước đó
   function colonyEnd(l, c, log) {
@@ -390,7 +396,7 @@
   X.menu('ctx945_event', 'Việc của thời buổi khó khăn', function (l) { return X.reason(l, 3); }, function (l, d) { var a = d && d.arg || {}, c = of(l), e = EV[a.kind]; return e ? e.n + '. ' + e.t(l, c) + ' Hoàn cảnh chung: ' + (labelOf(c) ? labelOf(c)[1] : 'thời kỳ khó khăn') + '.' : 'Chuyện này không còn hiệu lực.'; }, function (l, arg) { var e = EV[arg && arg.kind], c = of(l); return e ? e.o(l, c).map(function (o) { return Object.assign({ why: true }, o); }) : []; }, 3);
   function eventCurrent(l,data) {
     var a=data&&data.arg||data&&data.data&&data.data.arg||{},e=EV[a.kind];
-    return !!(e&&e.when(of(l),l)&&(a.y==null||a.y===wy(l))&&(!a.cc||a.cc===resCc(l))&&(!a.city||a.city===(l.city||l.place)));
+    return !!(e&&e.when(of(l),l)&&(a.y==null||a.y===wy(l))&&(!a.cc||a.cc===resCc(l))&&(!a.city||(E.ERA920?.POL?.canonicalCity(a.city)||a.city)===currentCity(l)));
   }
   var contextMenu=E.DEC.ctx945_event,contextValid=contextMenu.valid,contextApply=contextMenu.apply;
   contextMenu.valid=function(l,data){return contextValid.apply(this,arguments)&&eventCurrent(l,data);};

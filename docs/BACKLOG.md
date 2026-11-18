@@ -14,6 +14,8 @@ Chỉ bắt đầu khi chủ dự án giao đợt sửa này; không tự gộp 
 
 ## GĐ6 — nghiệm thu tổng thể và regression đầy đủ (chuyển từ GĐ3)
 
+- 9.8.1: còn hồi quy toàn diện, bản lưu thật qua nhiều lần sơ tán và binding REVIEWS_DB Production. Năm thành lập và tên theo niên đại cần tiếp tục đối chiếu cho những địa phương chưa có mốc.
+
 - 9.8.0: còn hồi quy toàn diện, xác minh dữ liệu bản lưu thật chuyển nước và binding REVIEWS_DB Production. Tỷ trọng số ca sinh 1900–1949 dùng năm 1950. Hệ số hiệu chuẩn tuổi thọ cần nghiệm thu riêng trên mã cuối.
 
 - 9.7.9: còn hồi quy toàn diện, bản lưu thật và binding REVIEWS_DB Production. Các ca ctx945 (chạy đối chứng thiếu module phục hồi), ctx951 (hệ quả cải cách ruộng đất) và era920 (hiệu chuẩn tuổi thọ) đã thất bại trên cả 9.7.8 và 9.7.9. Tiếp tục đối chiếu những địa phương chưa có mốc chính thể, ranh giới và tên theo năm.

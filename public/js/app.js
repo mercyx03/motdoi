@@ -276,7 +276,7 @@
   function profileOpts() { return { country: S.set.mode === 'world' ? S.set.country : '', mode: S.set.mode, variant: S.set.variant, difficulty: S.set.difficulty, prov:S.set.mode==='vn'?S.set.prov:'',eth:S.set.mode==='vn'?S.set.eth:'',gender: 'random', lifeMin: S.set.lifeMin, seed: U.newSeed(), year: S.set.year || undefined }; }
   function renderProfile() {
     var o = S.preview || (S.preview = profileOpts()), l = E.createLife(o), f = l.fam;
-    var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':l.birthPlace;
+    var P=E.ERA920&&E.ERA920.POL,where=E.isVN(l)?(l.birthYear<2025?'Khu vực ':'')+l.provLabel+' · Việt Nam':P?.birthText(l)||l.birthPlace;
     if(P){if(E.isVN(l)&&P.regionName){var admin=P.regionName(l.prov.old,l.birthYear);if(admin)where=admin+' · khu vực '+l.prov.old+' · Việt Nam';}where=P.rename(l,where);}
     var orph = f.orphan && f.orphan.adopted == null ? f.orphan : null; // v7.1: xuất thân mồ côi
     var fam = orph ? 'Mồ côi · ' + orph.carer + ' nuôi dưỡng' : (f.noDad ? '' : 'Bố ' + f.fJob + ' · ') + 'Mẹ ' + f.mJob;
@@ -400,21 +400,25 @@
   // ---------- Quay số phận: các ô quay rồi dừng ở kết quả ----------
   function shuffled(arr, n) { var a = arr.slice(), out = []; while (out.length < n) { if (!a.length) a = arr.slice(); out.push(a.splice(Math.floor(Math.random() * a.length), 1)[0]); } return out; }
   function rollFate(l, done) {
-    var vn = E.isVN(l) && l.mode === 'vn', reels;
+    var vn = E.isVN(l) && l.mode === 'vn', reels, P = E.ERA920.POL, y = l.birthYear;
+    var provinceLabel = function (name) { return P.regionChoice(name, y); };
     var famNames = ['Nghèo nhất', 'Khó khăn', 'Bình thường', 'Khá giả', 'Giàu nhất'];
     var sexTxt = l.sex === 'M' ? 'Bé trai' : 'Bé gái';
     if (vn) reels = [
-      { lab: l.variant === '63' ? 'Tỉnh / thành (63)' : 'Tỉnh / thành (34)', pool: (l.variant === '63' ? VN.P63 : VN.P34).map(function (p) { return p.name; }), fin: l.provLabel },
+      { lab: l.variant === '63' ? 'Tỉnh / thành (63)' : 'Tỉnh / thành (34)', pool: (l.variant === '63' ? VN.P63 : VN.P34).map(function (p) { return provinceLabel(p.name); }), fin: provinceLabel(l.provLabel) },
       { lab: 'Dân tộc', pool: VN.ETH.map(function (e) { return e.name; }), fin: l.eth },
       { lab: 'Giới tính', pool: ['Bé trai', 'Bé gái'], fin: sexTxt },
       { lab: 'Gia cảnh', pool: famNames, fin: famNames[l.fam.q - 1] }
     ];
-    else reels = [
-      { lab: 'Quốc gia', pool: W.C.filter(function (c) { return c.births > 0; }).map(function (c) { return c.name; }), fin: l.countryName },
-      { lab: 'Nơi sinh', pool: E.isVN(l) ? VN.P34.map(function (p) { return p.name; }) : W.BY[l.country].cities.concat(['nông thôn']), fin: E.isVN(l) ? l.provLabel : (l.urban ? l.city : 'Nông thôn') },
+    else {
+      var dated = function (city) { return P.cityLabel(l.country, y, city); };
+      reels = [
+      { lab: 'Quốc gia', pool: W.C.filter(function (c) { return c.births > 0; }).map(function (c) { return birthCountryLabel(c, y); }), fin: birthCountryLabel(W.BY[l.country], y) },
+      { lab: 'Nơi sinh', pool: P.cities(l.country, y).map(dated).concat(['nông thôn']), fin: E.isVN(l) ? provinceLabel(l.provLabel) : (l.urban ? dated(l.city) : 'Nông thôn') },
       { lab: 'Giới tính', pool: ['Bé trai', 'Bé gái'], fin: sexTxt },
       { royal: !!l.flags.royal, lab: l.flags.royal ? 'Xuất thân' : 'Gia cảnh', pool: famNames, fin: l.flags.royal ? (l.flags.royal.tier === 'direct' ? 'Hoàng gia · nhánh chính' : 'Hoàng gia · nhánh phụ') : famNames[l.fam.q - 1] }
     ];
+    }
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var N = 28, H = 44, durs = reduce ? [300, 350, 400, 450] : [1700, 2300, 2800, 3300];
     modal('<div class="agep">Số phận đang được quay</div><h2>Bạn sẽ được sinh ra là ai?</h2><p class="muted small" style="margin:0">Không ai được chọn nơi mình sinh ra.</p>' +
@@ -883,8 +887,8 @@
     if (l.abroad && l.abroad.trapped) return 'Một trại lừa đảo ở Campuchia';
     if (l.abroad && l.abroad.study) return l.abroad.name + ' (du học)';
     if (l.abroad && !l.abroad.perm) return l.abroad.name + ' (lao động có thời hạn)';
-    if (l.abroad) return l.place + ', ' + l.abroad.name;
-    if (l.cityStudent) return l.cityStudent.city + ' (sinh viên)';
+    if (l.abroad) return E.placeText(l);
+    if (l.cityStudent) return (E.ERA920?.POL?.cityLabel?.(l.country, l.birthYear + l.age, l.cityStudent.city) || l.cityStudent.city) + ' (sinh viên)';
     if (l.movedTo) return l.movedTo;
     return E.placeText(l).replace(/, Việt Nam$/, '');
   }
