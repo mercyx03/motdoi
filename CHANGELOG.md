@@ -1,3 +1,12 @@
+## 9.8.8 — Bối cảnh theo nước và năm gắn sự kiện thật; sửa nội dung sai thời
+
+- `birth987.js` (mới) và `data-birth987-{asia,europe,americas,africa,mideast-oceania,detail}.js`: 195 nước × 1900–2025 có giai đoạn liên tục kèm đời sống thường ngày (982 giai đoạn) và hơn 1.000 sự kiện thật theo năm (mức 1/2, sắc thái vui/buồn), mốc thế giới có khóa chống trùng chủ đề. Không dùng rút ngẫu nhiên. Mở rộng era920/era920-pol/ctx945/hist920, không thay thế. Lưu `flags.birth987`, ký ức năm sinh và mốc lớn, tâm trạng ±1–2 theo tin vui/buồn.
+- `engine.js`: dòng tiêm chủng theo thời kỳ (trước 1940, trước Chương trình Tiêm chủng Mở rộng ~1977, Việt Nam trước 1985); `famFix` không đổi chữ “bố” trong từ ghép (khủng bố, tuyên bố, công bố, phân bố, ban bố, bố trí…).
+- `life113.js`: bỏ bản tin dịch theo chu kỳ 23 năm và bản tin quốc tang chung chung; bản tin và chi phí dịch chỉ khi `CTX945` có dịch thật ở nơi sống.
+- `life121.js`: lời mời bổ túc do chuỗi sự kiện hiện tại tạo được đánh dấu `live988`, không bị `repair` xóa khi tải lại (sửa lỗi smoke save-load).
+- Kiểm chứng trên web các mốc 2025 (Timor-Leste vào ASEAN, Nepal, Madagascar, chiến tranh Israel – Iran).
+- Test mới `tests/birth988.js` (31.031).
+
 ## 9.8.7 — Show sống còn, vị trí nhóm, quảng cáo, album solo, đào tạo phi công; sửa nhập quốc tịch và sinh đôi
 
 - `idol987.js` (mới, trên `IDOL155`, `SHOW151`, `LIFE138`): mục Chương trình sống còn cho thí sinh cá nhân 15–25 tuổi ở mọi nước (vé sơ tuyển mở `SH.airing` và vai thí sinh đúng show/năm); thêm 6 show sống còn; công ty quản lý nhóm dự án; menu vị trí trong nhóm; độ nổi tiếng cá nhân; quảng cáo / đại diện nhãn hàng (độc quyền ngành hàng, trả mỗi năm một lần, chấm dứt khi có tiền án mới); album solo (sản xuất năm nay, phát hành năm sau). Thành tựu mới.

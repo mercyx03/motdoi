@@ -1,5 +1,30 @@
 [
   {
+    "id": "birth-context-by-country-98800",
+    "version": "9.8.8",
+    "publishedAt": "2026-11-23T09:28:00+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Bối cảnh lúc chào đời và các sự kiện có thật theo từng nước, từng năm",
+    "summary": "Mỗi cuộc đời giờ mở đầu bằng bối cảnh thật của đất nước trong năm bạn sinh ra, kèm các sự kiện lớn năm ấy. Lớn lên, bạn sẽ chứng kiến các sự kiện có thật của nơi mình sống. Sửa một số chi tiết sai thời đại và lỗi đổi chữ.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Cả 195 nước, từ năm 1900 đến 2025, đều có giai đoạn lịch sử riêng kèm mô tả đời sống thường ngày lúc ấy. Ví dụ: Việt Nam thời bao cấp xếp hàng mua gạo bằng tem phiếu, Nhật Bản thời tăng trưởng thần kỳ nhà nhà mua ti vi, tủ lạnh, Ba Lan thiết quân luật, Argentina khủng hoảng 2001.",
+      "Hơn một nghìn sự kiện có thật được gắn đúng năm và đúng nước: chiến tranh, đổi mới, thiên tai, Olympic, World Cup, các cuộc cách mạng và bầu cử lịch sử, tới những sự kiện năm 2025.",
+      "Dòng chào đời cho biết đất nước đang ở giai đoạn nào và năm ấy có chuyện gì; điều này được lưu thành ký ức đầu đời.",
+      "Mỗi năm, sự kiện có thật của nơi bạn đang sống được ghi vào nhật ký. Mốc lớn xảy ra khi bạn đủ lớn để nhớ sẽ thành ký ức. Tin vui hoặc tin buồn của cả nước làm tâm trạng thay đổi nhẹ. Khi đất nước bước sang giai đoạn mới, hoặc khi bạn chuyển ra nước ngoài, nhật ký cho biết bối cảnh nơi ở mới.",
+      "Một số mốc thế giới lớn (Thế chiến, con người lên Mặt Trăng, Bức tường Berlin sụp đổ, đại dịch COVID-19) cũng xuất hiện, không lặp lại khi nước bạn đã có sự kiện cùng chủ đề.",
+      "Sửa sai thời: trẻ sinh trước thập niên 1970 (Việt Nam trước 1985) không còn được ghi là “tiêm chủng mở rộng”, mà nhận các mũi cơ bản có lúc bấy giờ.",
+      "Bỏ các bản tin “dịch bệnh” và “quốc tang” lặp lại theo chu kỳ, không gắn với sự kiện thật. Bản tin dịch chỉ xuất hiện khi nơi bạn sống thật sự có dịch trong năm đó.",
+      "Sửa lỗi chữ: khi nhà chỉ còn mẹ, các từ như “khủng bố”, “tuyên bố”, “công bố” từng bị đổi nhầm thành “khủng mẹ”, “tuyên mẹ”. Nay giữ nguyên.",
+      "Sửa lỗi lưu rồi tải lại giữa năm làm mất lời mời học bổ túc đang hiện."
+    ],
+    "correctedAt": null
+  },
+  {
     "id": "idol-survival-aviation-twins-98700",
     "version": "9.8.7",
     "publishedAt": "2026-11-23T08:15:00+07:00",

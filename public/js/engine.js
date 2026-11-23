@@ -298,9 +298,9 @@
     var fo = f.orphan && f.orphan.adopted == null ? f.orphan : null, oc = fo ? fo.carer : l.flags && l.flags.orphanCarer || null, pw = m ? 'mẹ' : b ? 'bố' : (l.age < 18 ? oc || 'ông bà' : ''); // v7.1: trẻ mồ côi từ nhỏ — người nuôi dưỡng
     if (pw) t = t.replace(/(^|[^\p{L}])([Bb])ố mẹ(?![\p{L}])/gu, function (x, p, B) { return p + (B === 'B' ? pw.charAt(0).toUpperCase() + pw.slice(1) : pw); });
     if (l.age < 18) {
-      var hasM = /(^|[^\p{L}])[Mm]ẹ(?![\p{L}])/u.test(t), hasB = /(^|[^\p{L}])[Bb]ố(?![\p{L}])/u.test(t);
+      var hasM = /(^|[^\p{L}])[Mm]ẹ(?![\p{L}])/u.test(t), hasB = /(^|[^\p{L}])(?<!(?:[Kk]hủng|[Cc]ông|[Tt]uyên|[Bb]an|[Pp]hân|[Tt]ái|[Cc]áo|[Tt]hông) )[Bb]ố(?![\p{L}])(?! (?:trí|cục|thí|cáo))/u.test(t);
       if (!m && hasM && !hasB) t = t.replace(/(^|[^\p{L}])([Mm])ẹ(?![\p{L}])/gu, function (x, p, M) { var w = b ? 'bố' : fo ? fo.one || 'bà' : 'bà'; return p + (M === 'M' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
-      else if (!b && hasB && !hasM) t = t.replace(/(^|[^\p{L}])([Bb])ố(?![\p{L}])/gu, function (x, p, B) { var w = m ? 'mẹ' : fo ? fo.one || 'ông' : 'ông'; return p + (B === 'B' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
+      else if (!b && hasB && !hasM) t = t.replace(/(^|[^\p{L}])(?<!(?:[Kk]hủng|[Cc]ông|[Tt]uyên|[Bb]an|[Pp]hân|[Tt]ái|[Cc]áo|[Tt]hông) )([Bb])ố(?![\p{L}])(?! (?:trí|cục|thí|cáo))/gu, function (x, p, B) { var w = m ? 'mẹ' : fo ? fo.one || 'ông' : 'ông'; return p + (B === 'B' ? w.charAt(0).toUpperCase() + w.slice(1) : w); });
     }
     return t;
   }
@@ -1968,7 +1968,8 @@
       var vac = f.q >= 3 || (f.q === 2 && r() < 0.8) || (f.q === 1 && r() < (dev(life) < 5 ? 0.35 : 0.65));
       life.vac = vac;
       life.imm = U.clamp(50 + (vac ? 20 : -10) + (f.q - 3) * 5 + Math.log(Math.max(0.6, dev(life)) / 10) * 6 + U.normal(r) * 8, 5, 95);
-      log(vac ? (f.q >= 4 ? 'Được tiêm đủ các mũi vắc-xin, kể cả vắc-xin dịch vụ.' : 'Được tiêm chủng mở rộng đầy đủ.') : 'Nhà nghèo, ở xa trạm y tế — bạn không được tiêm chủng đầy đủ.', vac ? 'neutral' : 'bad');
+      var vy988 = life.birthYear, epi988 = isVN(life) ? 1985 : 1977; // 9.8.8: Chương trình Tiêm chủng Mở rộng của WHO từ 1974 (các nước triển khai dần); Việt Nam phủ toàn quốc từ 1985
+      log(vac ? (vy988 < 1940 ? 'Thời ấy chưa có tiêm chủng cho trẻ sơ sinh; may mắn là bạn được chủng đậu khi y tế về tới nơi.' : vy988 < epi988 ? 'Được tiêm những mũi cơ bản có lúc bấy giờ (chủng đậu, lao' + (vy988 >= 1955 ? ', bạch hầu – ho gà – uốn ván' : '') + ').' : f.q >= 4 ? 'Được tiêm đủ các mũi vắc-xin, kể cả vắc-xin dịch vụ.' : 'Được tiêm chủng mở rộng đầy đủ.') : vy988 < 1940 ? 'Thời ấy chưa có tiêm chủng cho trẻ sơ sinh; bạn lớn lên dựa vào sức đề kháng của mình.' : 'Nhà nghèo, ở xa trạm y tế — bạn không được tiêm chủng đầy đủ.', vac ? 'neutral' : 'bad');
     }
     if (a >= 1 && a <= 12) {
       var pSick = 0.08 * (1.6 - life.imm / 100) * (f.q <= 1 ? 1.3 : 1);

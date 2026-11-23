@@ -5,8 +5,10 @@ E.TRIG.forEach(function(t){if(t.id==='bo_tuc')t.when=function(){return false;};}
 ['hs','school','primary'].forEach(function(id){var D=E.DEC[id];if(!D)return;var v=D.valid;D.valid=function(l,d){return l.age<20&&(!v||v.apply(this,arguments));};});
 C.wrap('bo_tuc',function(old,l,d,k,r,log){if(l.edu>=3||l.school||l.flags.gdtx)return;return old(l,d,k,r,log);});
 // Restore only documented qualifications, never infer them from a high knowledge stat.
-function repair(l){var degree=l.edu||0;(l.flags.postgradDegrees||[]).forEach(function(d){degree=Math.max(degree,d.level||0);});if(l.flags.pg106&&l.flags.pg106.done&&!l.flags.pg106.aborted)degree=Math.max(degree,l.flags.pg106.lv);if(degree>l.edu){l.edu=degree;if(l.flags.gdtx&&l.flags.gdtx.lvl<=degree)delete l.flags.gdtx;}if(l.age>=20)l.pending=(l.pending||[]).filter(function(d){return !['hs','school','primary'].includes(d.id)&&!(d.id==='bo_tuc'&&(l.edu>=3||!d.manual));});}
+function repair(l){var degree=l.edu||0;(l.flags.postgradDegrees||[]).forEach(function(d){degree=Math.max(degree,d.level||0);});if(l.flags.pg106&&l.flags.pg106.done&&!l.flags.pg106.aborted)degree=Math.max(degree,l.flags.pg106.lv);if(degree>l.edu){l.edu=degree;if(l.flags.gdtx&&l.flags.gdtx.lvl<=degree)delete l.flags.gdtx;}if(l.age>=20)l.pending=(l.pending||[]).filter(function(d){return !['hs','school','primary'].includes(d.id)&&!(d.id==='bo_tuc'&&(l.edu>=3||!d.manual&&!(d.data&&d.data.live988)));});}
 var migrate=E.migrate;if(migrate)E.migrate=function(l){var x=migrate.apply(this,arguments);repair(x);return x;};
+/* 9.8.8: lời mời bổ túc do chuỗi sự kiện hiện tại tạo ra được đánh dấu để lưu/tải không xóa mất; chỉ lời mời bắt buộc của bản lưu cũ mới bị bỏ. */
+if(E.DEC.bo_tuc){var btMake=E.DEC.bo_tuc.make;E.DEC.bo_tuc.make=function(){var d=btMake.apply(this,arguments);if(d&&d.data)d.data.live988=true;return d;};}
 function student(l){return ['uni','abroad','post','phd'].includes(l.school);}
   function teenReady(l){return E.FAMILY53.free(l)&&l.alive&&l.age>=13&&l.age<18&&!l.job&&!l.flags.ptJob&&l.flags.teenWorkAt!==l.age;}
 
