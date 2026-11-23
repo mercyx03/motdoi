@@ -1,6 +1,28 @@
 {
-  "generatedAt": "2026-11-23T02:28:00.000Z",
+  "generatedAt": "2026-11-23T03:05:11.270Z",
   "entries": [
+    {
+      "id": "birth-context-by-region-98900",
+      "version": "9.8.9",
+      "publishedAt": "2026-11-23T10:03:10+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Bối cảnh theo vùng, thành phố và năm nào cũng có chuyện của đất nước",
+      "summary": "Bối cảnh lúc chào đời và mỗi năm giờ tính cả vùng, tỉnh, thành phố bạn sống. Từ năm 1900 đến 2025, năm nào cũng có ít nhất một tin thật của nơi bạn ở hoặc của thế giới. Nước lớn có nhiều sự kiện hơn, nước nhỏ có ít hơn.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Việt Nam theo vùng và tỉnh: miền Bắc thời hợp tác xã và sơ tán, miền Nam thời Việt Nam Cộng hòa, Quảng Trị năm 1972, biên giới phía Bắc sau 1979, kinh tế mới ở Tây Nguyên, khu công nghiệp Đông Nam Bộ, đồng bằng sông Cửu Long… kèm sự kiện riêng của từng tỉnh như bão, lũ, Tết Mậu Thân.",
+        "Nước ngoài theo thành phố: Đông và Tây Berlin, Leningrad bị phong tỏa, miền Nam nước Mỹ thời phân biệt chủng tộc, Belfast thời bạo lực, Medellín thời băng đảng, Soweto thời apartheid, miền đông Congo, Thành Đô năm động đất… cùng những sự kiện xảy ra ở chính thành phố ấy.",
+        "Năm nào cũng có chuyện: cả 195 nước, mọi năm từ 1900 đến 2025, đều có ít nhất một dòng: sự kiện của nước, của vùng, tin thế giới có thật của năm, hoặc số liệu đời sống thật như tuổi thọ, Internet, điện thoại di động.",
+        "Thêm hơn 1.700 sự kiện có thật (tổng gần 2.800) và tin thế giới cho đủ từng năm từ 1900 đến 2025. Các nước đông dân như Việt Nam, Mỹ, Trung Quốc, Ấn Độ, Nga, Nhật, Anh, Đức, Hàn Quốc, Pháp có sự kiện ở gần như mỗi năm. Nước nhỏ chỉ có vài mốc lớn.",
+        "Sự kiện của vùng không bị kể lại lần nữa trong tin cả nước cùng năm, và sự kiện mới không trùng với sự kiện đã có.",
+        "Sửa lỗi: người sống ở tỉnh chỉ sáp nhập năm 2025 (ví dụ Bà Rịa – Vũng Tàu vào TP. Hồ Chí Minh) không còn nhận chuyện riêng của tỉnh mới ở những năm trước đó."
+      ],
+      "correctedAt": null
+    },
     {
       "id": "birth-context-by-country-98800",
       "version": "9.8.8",

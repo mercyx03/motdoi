@@ -13,7 +13,7 @@ sample.forEach(([c,y,rx])=>{const l=E.createLife(c==='VN'?{mode:'vn',variant:'63
 let blank=0;codes.forEach((c,i)=>{const l={birthYear:1960+(i%60),age:0,country:c,mode:'world',flags:{},alive:true};if(!B.birthText(l))blank++;});ok(blank===0,'mọi nước có dòng bối cảnh năm sinh');
 // Mỗi năm: sự kiện thật của nước đang sống, một lần mỗi năm; trẻ dưới 5 tuổi chỉ nhận mốc lớn; ký ức khi đủ lớn.
 {const l=E.createLife({mode:'vn',variant:'63',year:1990,seed:3});const logs=[];const log=(t,k)=>logs.push(t);B.onBirth(l,log);for(let a=1;a<=8;a++){l.age=a;B.year(l,()=>.5,log);B.year(l,()=>.5,log);}
- ok(logs.filter(t=>/ASEAN/.test(t)).length===1,'sự kiện 1995 chỉ ghi một lần');ok(logs.some(t=>/Internet/.test(t)),'năm 1997 ghi Internet');ok((l.mem||[]).every(m=>!/Internet/.test(m.t)),'sự kiện mức 1 không thành ký ức');
+ ok(logs.filter(t=>/gia nhập ASEAN/.test(t)).length===1,'sự kiện 1995 chỉ ghi một lần');ok(logs.some(t=>/Internet/.test(t)),'năm 1997 ghi Internet');ok((l.mem||[]).every(m=>!/Internet/.test(m.t)),'sự kiện mức 1 không thành ký ức');
  const b=E.createLife({mode:'vn',variant:'63',year:2000,seed:3});const lb=[];B.onBirth(b,t=>lb.push(t));b.age=8;B.year(b,()=>.5,t=>lb.push(t));ok((b.mem||[]).some(m=>/AFF Cup/.test(m.t)),'mốc lớn lúc 8 tuổi thành ký ức');}
 // Chuyển nước: báo giai đoạn của nơi ở mới; mốc thế giới không lặp khi nước đã có sự kiện cùng chủ đề.
 {const l=E.createLife({mode:'vn',variant:'63',year:1990,seed:5});const logs=[];B.onBirth(l,t=>logs.push(t));l.age=25;l.abroad={code:'JP',name:'Nhật Bản',perm:true};B.year(l,()=>.5,t=>logs.push(t));ok(logs.some(t=>/Nơi bạn đang sống, Nhật Bản/.test(t)),'báo bối cảnh nước mới');

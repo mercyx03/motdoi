@@ -1,3 +1,10 @@
+## 9.8.9 — Bối cảnh theo vùng/thành phố; mọi nước, mọi năm 1900–2025 đều có nội dung
+
+- `birth987.js`: lớp vùng (`places`, `regAt` ưu tiên dòng ít nơi nhất rồi bắt đầu muộn nhất, `regEventsAt`, nhãn vùng Việt Nam theo mã DBSH/MNPB/BTB/NTB/TN/DNB/DBSCL); `trimNational` bỏ phần tin cả nước trùng với tin vùng cùng năm; `fallback` cho năm không có tin (mốc số liệu vượt ngưỡng → tin thế giới → chỉ số đời sống); `covered`. Cờ `rkey` mới, bản lưu 9.8.8 vẫn chạy.
+- `places(l, code, y)`: tỉnh mới sau sắp xếp 2025 (`prov.neu`) chỉ tính từ năm 2025 (sửa lỗi người ở Bà Rịa – Vũng Tàu nhận sự kiện riêng của TP. Hồ Chí Minh từ những năm 1960–1970).
+- Dữ liệu mới `data-birth989-{world,vn,asia,europe,americas,africa,more,more2}.js`: 126 tin thế giới (mỗi năm 1900–2025), 106 giai đoạn vùng ở 31 nước, 244 sự kiện vùng, thêm 1.725 sự kiện quốc gia (tổng 2.791); 10 nước đông dân có sự kiện ở 89–126/126 năm. Dòng trùng ý với dữ liệu 9.8.8 (cùng năm, chung từ hai chữ có nghĩa) tự bỏ khi nạp. Tên nơi đối chiếu đúng danh sách thành phố của game.
+- `tests/birth989.js` (1.908): phủ kín 195 nước × 126 năm, kiểm tra tên nơi, chống trùng, Đông/Tây Berlin, Leningrad, Jim Crow, tỉnh sáp nhập 2025, tất định, bản lưu cũ. `tests/birth988.js`: kiểm tra ASEAN 1995 đổi thành “gia nhập ASEAN” vì năm 1998 có thêm hội nghị ASEAN ở Hà Nội.
+
 ## 9.8.8 — Bối cảnh theo nước và năm gắn sự kiện thật; sửa nội dung sai thời
 
 - `birth987.js` (mới) và `data-birth987-{asia,europe,americas,africa,mideast-oceania,detail}.js`: 195 nước × 1900–2025 có giai đoạn liên tục kèm đời sống thường ngày (982 giai đoạn) và hơn 1.000 sự kiện thật theo năm (mức 1/2, sắc thái vui/buồn), mốc thế giới có khóa chống trùng chủ đề. Không dùng rút ngẫu nhiên. Mở rộng era920/era920-pol/ctx945/hist920, không thay thế. Lưu `flags.birth987`, ký ức năm sinh và mốc lớn, tâm trạng ±1–2 theo tin vui/buồn.
