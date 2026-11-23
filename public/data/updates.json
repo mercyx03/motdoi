@@ -5,7 +5,7 @@
       "id": "idol-survival-aviation-twins-98700",
       "version": "9.8.7",
       "publishedAt": "2026-11-23T08:15:00+07:00",
-      "releaseStatus": "packaged",
+      "releaseStatus": "released",
       "releasedAt": null,
       "title": "Show sống còn, vị trí trong nhóm, quảng cáo, album solo và nghề phi công",
       "summary": "Ngoài audition công ty, bạn có thể dự thi chương trình sống còn để debut. Thần tượng chọn được vị trí trong nhóm, nhận quảng cáo, làm đại diện nhãn hàng và ra album solo khi đủ nổi tiếng. Thêm trường hàng không; muốn làm phi công phải qua tuyển chọn và học bay. Sửa lỗi nhập quốc tịch và lỗi bé sinh đôi.",
@@ -25,7 +25,7 @@
         "Sửa lỗi nhập quốc tịch: bấm Nộp hồ sơ khi năm đang chạy trước đây không có tác dụng, không trừ lệ phí và không có kết quả. Nay hồ sơ được nộp, trừ lệ phí, rồi tới hạn sẽ có phỏng vấn và kết quả đồng ý hoặc từ chối. Nếu thiếu điều kiện, game báo rõ lý do và không trừ tiền.",
         "Sửa lỗi sinh đôi: bé thứ hai từng dùng chung hồ sơ với bé thứ nhất nên bấm vào bé thứ hai lại mở bé thứ nhất, đổi tên cũng đổi nhầm. Nay mỗi bé có hồ sơ, tên và năng khiếu riêng; khi sinh đôi hoặc sinh ba, bạn được đặt tên lần lượt cho từng bé. Bản lưu cũ bị trùng sẽ tự được tách."
       ],
-      "correctedAt": null
+      "correctedAt": "2026-11-23T01:44:43.764Z"
     },
     {
       "id": "pacific-disasters-and-haiti-food-98600",
