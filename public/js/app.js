@@ -1629,12 +1629,14 @@
     }
 
     if(byHand&&S.life.alive&&S.life.kids.length>kids0){
-      E.FAMILY53.init(S.life);var baby=S.life.kids[S.life.kids.length-1],birthAge=S.life.age;persist();if(E.ROYAL858&&(S.life.flags.royal||S.life.flags.royal920&&S.life.flags.royal920.spouse))E.ROYAL920.kidsYear(S.life,function(){});
-      modal('<div class="eyebrow">Chào đón thành viên mới</div><h2>Đặt tên cho bé</h2><form id="babyNameForm" class="family-form"><label for="babyName">Tên của con</label><input id="babyName" maxlength="60" required value="'+esc(baby.name)+'">'+(E.ROYAL858&&baby.royal920?'<label for="babyMiddle858">Tên đệm nghi lễ (phân cách bằng dấu phẩy, tùy chọn)</label><input id="babyMiddle858" maxlength="300">':'')+'<button class="btn gold" type="submit">Chọn tên này</button></form><p id="babyNameStatus" role="status"></p><button class="btn" id="babyNameKeep">Giữ tên hiện tại</button>',function(box){
-        function finish(){closeModal();afterChoose(entries,wasManual,rest);}
+      E.FAMILY53.init(S.life);var babies987=S.life.kids.slice(kids0).filter(function(k){return k&&k.alive!==false;}),birthAge=S.life.age;persist();if(E.ROYAL858&&(S.life.flags.royal||S.life.flags.royal920&&S.life.flags.royal920.spouse))E.ROYAL920.kidsYear(S.life,function(){});
+      /* 9.8.7: sinh đôi/sinh ba — đặt tên lần lượt từng bé, mỗi bé dùng đúng mã hồ sơ của mình */
+      (function nameBaby987(idx){var baby=babies987[idx];if(!baby){closeModal();afterChoose(entries,wasManual,rest);return;}var many987=babies987.length>1,label987=many987?' thứ '+(idx+1)+'/'+babies987.length:'';
+      modal('<div class="eyebrow">Chào đón thành viên mới</div><h2>Đặt tên cho bé'+label987+'</h2>'+(many987?'<p class="muted small">'+(baby.sex==="M"?'Bé trai':'Bé gái')+' · tên tạm: '+esc(baby.name)+'</p>':'')+'<form id="babyNameForm" class="family-form"><label for="babyName">Tên của con</label><input id="babyName" maxlength="60" required value="'+esc(baby.name)+'">'+(E.ROYAL858&&baby.royal920?'<label for="babyMiddle858">Tên đệm nghi lễ (phân cách bằng dấu phẩy, tùy chọn)</label><input id="babyMiddle858" maxlength="300">':'')+'<button class="btn gold" type="submit">Chọn tên này</button></form><p id="babyNameStatus" role="status"></p><button class="btn" id="babyNameKeep">Giữ tên hiện tại</button>',function(box){
+        function finish(){closeModal();nameBaby987(idx+1);}
         $('#babyNameForm',box).onsubmit=function(e){e.preventDefault();var middle858=$('#babyMiddle858',box),names858=middle858?{given:[$('#babyName',box).value].concat(middle858.value.split(',').map(function(v){return v.trim();}).filter(Boolean)),daily:$('#babyName',box).value}:null;if(names858&&!E.ROYAL858.validNameInput(names858)){$('#babyNameStatus',box).textContent='Tên chính/tên đệm chưa hợp lệ.';return;}var result=E.FAMILY53.name(S.life,baby.parentId,$('#babyName',box).value,birthAge,function(t,kind){var item={a:S.life.age,y:S.life.birthYear+S.life.age,t:t,k:kind};S.life.log.push(item);entries.push(item);});if(result.ok){if(names858&&baby.royal920){var royalHouse858=E.ROYAL920.house(S.life,baby.royal920.cc),royalMember858=E.ROYAL920.byId(royalHouse858,baby.royal920.id);if(royalMember858)E.ROYAL858.setNames(S.life,royalHouse858,royalMember858,names858);}finish();}else $('#babyNameStatus',box).textContent=result.message;};
         $('#babyNameKeep',box).onclick=finish;
-      },'profile family-profile');return;
+      },'profile family-profile');})(0);return;
     }
     // v2.7: vừa nhận nuôi thú cưng bằng lựa chọn của chính mình → tự đặt tên
     var newPet = byHand && S.life.alive && (S.life.pets || []).length > pets0 ? S.life.pets[S.life.pets.length - 1] : null;

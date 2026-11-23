@@ -7,7 +7,7 @@
   var COURSES={home:{name:'Tự trải nghiệm cùng gia đình',rate:0},club:{name:'Câu lạc bộ',rate:.025},coach:{name:'Lớp có giáo viên hướng dẫn',rate:.08}};
   function hash(s){var h=2166136261;for(var i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return h>>>0;}
   function age(l,k){return l.age-k.born;}
-  function init(l){E.PARENTING.children(l);(l.kids||[]).forEach(function(k){if(!k.parentId){do{l.flags.parentSerial=(l.flags.parentSerial||0)+1;k.parentId=l.id+':child:'+l.flags.parentSerial;}while(l.kids.some(function(x){return x!==k&&x.parentId===k.parentId;}));}
+  function init(l){E.PARENTING.children(l);var seen9871={};(l.kids||[]).forEach(function(k){/* 9.8.7: con sinh đôi ở bản cũ có thể trùng mã hồ sơ với anh/chị; cấp mã riêng để mở đúng hồ sơ và đổi đúng tên */if(k.parentId&&seen9871[k.parentId])delete k.parentId;if(k.parentId)seen9871[k.parentId]=1;if(!k.parentId){do{l.flags.parentSerial=(l.flags.parentSerial||0)+1;k.parentId=l.id+':child:'+l.flags.parentSerial;}while(l.kids.some(function(x){return x!==k&&x.parentId===k.parentId;}));seen9871[k.parentId]=1;}
     if(!k.family53){var keys=Object.keys(TALENTS),v=hash(k.parentId);k.family53={innate:v%10<3?null:keys[v%keys.length],interest:keys[hash(k.parentId+'interest')%keys.length],skills:{},school:'public',course:'home'};}
     var s=k.family53;if(!SCHOOLS[s.school])s.school='public';if(!COURSES[s.course])s.course='home';if(!s.skills||typeof s.skills!=='object')s.skills={};
   });return l.kids||[];}

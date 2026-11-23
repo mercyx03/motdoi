@@ -1,3 +1,13 @@
+## 9.8.7 — Show sống còn, vị trí nhóm, quảng cáo, album solo, đào tạo phi công; sửa nhập quốc tịch và sinh đôi
+
+- `idol987.js` (mới, trên `IDOL155`, `SHOW151`, `LIFE138`): mục Chương trình sống còn cho thí sinh cá nhân 15–25 tuổi ở mọi nước (vé sơ tuyển mở `SH.airing` và vai thí sinh đúng show/năm); thêm 6 show sống còn; công ty quản lý nhóm dự án; menu vị trí trong nhóm; độ nổi tiếng cá nhân; quảng cáo / đại diện nhãn hàng (độc quyền ngành hàng, trả mỗi năm một lần, chấm dứt khi có tiền án mới); album solo (sản xuất năm nay, phát hành năm sau). Thành tựu mới.
+- `life155.js`: thêm vị trí lead/sub vocal, lead dancer, lead rapper, center; `posFit` dùng chung cho debut, đánh giá năm và menu mới. Vòng nhiệm vụ show sống còn chỉ liệt kê vocal/dance/rap như cũ.
+- `aviation987.js` (mới): tuyển chọn học viên phi công nhiều vòng, học bay hai năm (hãng tài trợ có cam kết hoặc tự túc), trượt hai lần thì dừng; `E.pilotEligible836` ngoài Mỹ yêu cầu chứng chỉ, phi công trong bản lưu cũ giữ nguyên. Sự kiện tuyển sinh tự đến cho chế độ Tự động.
+- `life67.js`: Học viện Hàng không Việt Nam (chương trình riêng qua `progs`), Kỹ thuật hàng không ở HUST/HCMUT, Công nghệ hàng không vũ trụ ở UET (thêm cuối danh sách, không đổi khóa chương trình cũ).
+- `life114.js`: hồ sơ nhập quốc tịch mở khi năm đang chạy (`_yearRun`) bị bỏ qua âm thầm do lệch tuổi; nay so cùng mốc, bỏ chặn 3 năm mâu thuẫn với thông báo “nộp lại sau một năm”, thiếu điều kiện thì ghi lý do và không trừ phí.
+- `genetics912.js`, `life66.js`, `app.js`: bé sinh đôi/sinh ba không còn sao chép `parentId`/`family53` của anh chị; `FAMILY53.init` tách mã trùng trong bản lưu cũ; màn đặt tên hỏi lần lượt từng bé.
+- Test mới `tests/update987.js` (42). Cập nhật `integration-showbiz` (33 chương trình).
+
 ## 9.5.5 — Lương, giá và sự kiện đúng thời đại; phân biệt đối xử trong lịch sử; tuổi thơ ngoài Việt Nam
 
 - `careers.js`: bảng lương nhân hệ số thời đại (`flags.eraK954`). Ở 9.5.4 chỉ chi phí và giá nhà đổi theo năm còn lương thì không (Mỹ 1960 có lương 2026); nay lương theo thu nhập cơ sở của năm sống, ở mọi nước. `life3.js`: mức đóng bảo hiểm xã hội của Việt Nam theo năm (5% trước 1995, 6% 1995–2008, 7,5% 2009, 9,5% 2010–11, 10,5% từ 2012) và trước 1995 chỉ khu vực nhà nước có bảo hiểm. `tax-resident.js`: thuế thu nhập tiền lương từ 1991 (ngưỡng gấp 2,2 lần trước 2009). `life32.js`: giá nhà theo thu nhập thời đó; loại nhà chỉ có từ năm nhất định (chung cư thương mại 1998, chung cư cao cấp 2005, nhà phố nhiều tầng 1988…). Vài khoản chi còn sót (học nghề, tư vấn tâm lý, phí xuất khẩu lao động) cũng nhân hệ số.

@@ -128,7 +128,7 @@
       s.births[key] = { n: 1 + extra, mz: mz && extra > 0, at: l.age };
       for (var i = 0; i < extra; i++) {
         var sex = mz && i === 0 ? k.sex : rm() < 0.512 ? 'M' : 'F', t = JSON.parse(JSON.stringify(k));
-        delete t.uid110; delete t.cond912; delete t.persona141; delete t.blood909; t.sex = sex; t.name = twinName(l, rm, k, sex); t.multi912 = key; k.multi912 = key;
+        delete t.uid110; delete t.parentId; delete t.family53; delete t.cond912; delete t.persona141; delete t.blood909; /* 9.8.7: mỗi bé sinh đôi có mã hồ sơ, tên và năng khiếu riêng */ t.sex = sex; t.name = twinName(l, rm, k, sex); t.multi912 = key; k.multi912 = key;
         if (mz && i === 0) { t.genes912 = JSON.parse(JSON.stringify(k.genes912)); t.genes912.sex = sex; t.monozygotic912 = true; k.monozygotic912 = true; }
         else { t.genes912 = inherit(mom, dad, sex, rng(l.id + ':birth912:' + key + ':twin' + i)); if (rm() < t21Risk(motherAge(l, k))) t.genes912.t21 = true; }
         l.kids.push(t); X.uid(l, t); if(E.SPAIN_COMMON970)E.SPAIN_COMMON970.registerBirth(l,t,rm,[]); initCond(l, t, t.genes912, t.born);

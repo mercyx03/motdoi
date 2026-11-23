@@ -1,5 +1,31 @@
 [
   {
+    "id": "idol-survival-aviation-twins-98700",
+    "version": "9.8.7",
+    "publishedAt": "2026-11-23T08:15:00+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Show sống còn, vị trí trong nhóm, quảng cáo, album solo và nghề phi công",
+    "summary": "Ngoài audition công ty, bạn có thể dự thi chương trình sống còn để debut. Thần tượng chọn được vị trí trong nhóm, nhận quảng cáo, làm đại diện nhãn hàng và ra album solo khi đủ nổi tiếng. Thêm trường hàng không; muốn làm phi công phải qua tuyển chọn và học bay. Sửa lỗi nhập quốc tịch và lỗi bé sinh đôi.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Mục mới Chương trình sống còn tuyển thần tượng: người 15–25 tuổi gửi hồ sơ dự thi với tư cách thí sinh cá nhân, không cần thuộc công ty. Có vòng sơ tuyển theo giọng hát, vũ đạo, biểu cảm; dưới 18 tuổi cần gia đình đồng ý. Người ở Việt Nam sang nơi ghi hình vài tháng rồi về, không đổi nơi cư trú.",
+      "Thêm các chương trình SIXTEEN, Sáng Tạo 101, Produce 101 Japan, Nizi Project, Thanh Xuân Có Bạn và một dự án tuyển chọn toàn cầu từ năm 2025, bên cạnh Produce 101, Girls Planet 999, Boys Planet, I-LAND, Universe Ticket. Mỗi chương trình chỉ có trong đúng những năm phát sóng.",
+      "Lọt đội hình debut thì ra mắt trong nhóm dự án có công ty quản lý riêng. Hết hợp đồng nhóm, bạn thành nghệ sĩ tự do: ký công ty mới, nhận quảng cáo hoặc hoạt động solo.",
+      "Vị trí trong nhóm chi tiết hơn: main vocal, lead vocal, sub vocal, main dancer, lead dancer, main rapper, lead rapper, center, cùng vai trò phụ leader, visual, gương mặt quảng cáo. Mỗi năm được đề nghị đổi vị trí một lần; công ty so kỹ năng của bạn với thành viên đang giữ vị trí đó. Vị trí chính được chú ý nhiều hơn.",
+      "Quảng cáo và đại diện nhãn hàng: lời mời quay TVC, chụp tạp chí, hợp tác sản phẩm, làm đại diện thương hiệu đến theo độ nổi tiếng cá nhân và hình ảnh. Có thể nhận, đòi tăng cát-xê (có thể bị từ chối) hoặc từ chối. Hợp đồng đại diện độc quyền theo ngành hàng, trả tiền mỗi năm, chia phần với công ty quản lý; vướng tiền án thì nhãn hàng chấm dứt hợp đồng.",
+      "Album solo: khi độ nổi tiếng cá nhân đủ cao và giọng hát hoặc rap đạt yêu cầu, bạn chọn đĩa đơn, mini album hoặc album phòng thu, concept và ngân sách. Thành viên nhóm cần công ty duyệt. Sản xuất trong năm, phát hành năm sau; thứ hạng, cúp chương trình âm nhạc và doanh thu tùy kỹ năng, độ nổi tiếng, concept và đầu tư.",
+      "Thêm Học viện Hàng không Việt Nam với các ngành Kỹ thuật hàng không, Quản lý hoạt động bay, Quản lý và khai thác bay, Quản trị hàng không, Kinh tế hàng không… Bách khoa Hà Nội, Bách khoa TP.HCM có thêm Kỹ thuật hàng không; Đại học Công nghệ – ĐHQGHN có Công nghệ hàng không vũ trụ.",
+      "Nghề phi công không còn mở cho mọi người có bằng đại học. Muốn bay phải qua tuyển chọn học viên phi công (tiếng Anh, năng khiếu, sức khỏe hạng 1, tâm lý, phỏng vấn), rồi học bay hai năm theo diện hãng tài trợ (cam kết phục vụ, bỏ ngang phải bồi hoàn) hoặc tự túc học phí. Sinh viên ngành hàng không có lợi thế nhỏ. Người đang là phi công ở bản lưu cũ được giữ nguyên.",
+      "Sửa lỗi nhập quốc tịch: bấm Nộp hồ sơ khi năm đang chạy trước đây không có tác dụng, không trừ lệ phí và không có kết quả. Nay hồ sơ được nộp, trừ lệ phí, rồi tới hạn sẽ có phỏng vấn và kết quả đồng ý hoặc từ chối. Nếu thiếu điều kiện, game báo rõ lý do và không trừ tiền.",
+      "Sửa lỗi sinh đôi: bé thứ hai từng dùng chung hồ sơ với bé thứ nhất nên bấm vào bé thứ hai lại mở bé thứ nhất, đổi tên cũng đổi nhầm. Nay mỗi bé có hồ sơ, tên và năng khiếu riêng; khi sinh đôi hoặc sinh ba, bạn được đặt tên lần lượt cho từng bé. Bản lưu cũ bị trùng sẽ tự được tách."
+    ],
+    "correctedAt": null
+  },
+  {
     "id": "pacific-disasters-and-haiti-food-98600",
     "version": "9.8.6",
     "publishedAt": "2026-11-18T15:43:26+07:00",
