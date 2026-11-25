@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-11-25T03:11:46.620Z",
+  "generatedAt": "2026-11-25T04:20:27.299Z",
   "entries": [
+    {
+      "id": "life-choices-91100",
+      "version": "9.11.0",
+      "publishedAt": "2026-11-25T11:17:00+07:00",
+      "releaseStatus": "packaged",
+      "title": "Thêm lựa chọn ở mọi độ tuổi, hệ quả đến sau nhiều năm",
+      "summary": "Năm nào trống chuyện cần quyết giờ có cơ hội gặp tình huống có lựa chọn thật, từ tuổi nhỏ đến tuổi già; lựa chọn đưa đến hệ quả sau vài năm.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Thêm 26 tình huống có lựa chọn cho tuổi nhỏ, trung niên và tuổi già, mỗi chuyện có giai đoạn hệ quả vài năm sau.",
+        "Năm không có lựa chọn ở tuổi 0–14 giảm còn khoảng 40%, các tuổi sau giảm còn khoảng 9–13% trong mô phỏng.",
+        "Sở thích tuổi thơ và các lựa chọn cũ được nhắc lại về sau; bản lưu cũ vẫn dùng được."
+      ]
+    },
     {
       "id": "events-regional-91020",
       "version": "9.10.2",

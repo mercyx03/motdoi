@@ -1614,11 +1614,19 @@
     }
 
     // Nhịp tuổi thơ: giữ mốc một tuổi; các năm khác có thể yên bình.
-    if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.35)) {
+    if (a >= 1 && a <= 14 && !q.length && (a === 1 || r() < 0.65)) {
       var kidT = (hardcorePool ? [] : TRIG).filter(function (T) {
         return T.child && (!E.CONTEXT143 || E.CONTEXT143.factor(T, life) > 0) && DEC[T.id] && T.when(life, a) && !(T.cd && cdm[T.id] != null && a - cdm[T.id] < T.cd) && (T.rep || (scN[T.id] || 0) < (T.max || 3)) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
       });
-      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * (E.CONTEXT143 ? E.CONTEXT143.factor(T, life) : 1) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); var beforeKid=q.length;add(KT.id,undefined,KT);if(q.length>beforeKid){cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1;} }
+      if (kidT.length) { var KT = U.wpick(r, kidT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * (E.CONTEXT143 ? E.CONTEXT143.factor(T, life) : 1) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); var beforeKid=q.length;add(KT.id,undefined,KT.quiet?undefined:KT);if(q.length>beforeKid){cdm[KT.id] = a; scN[KT.id] = (scN[KT.id] || 0) + 1;} }
+    }
+
+    // v9.11.0: nhịp năm trống cho mọi độ tuổi từ 15 trở lên; chỉ lấy tình huống nhóm T.quiet đang đủ điều kiện, chưa lặp, theo hoàn cảnh
+    if (a >= 15 && q.length <= 1 && !hardcorePool && r() < (a < 55 ? 0.4 : a < 70 ? 0.6 : 0.7) * (q.length ? 0.25 : 1)) {
+      var quietT = TRIG.filter(function (T) {
+        return T.quiet && DEC[T.id] && T.when(life, a) && (!E.CONTEXT143 || E.CONTEXT143.factor(T, life) > 0) && !(cdm[T.id] != null && a - cdm[T.id] < Math.max(4, T.cd || 0)) && (scN[T.id] || 0) < (T.max || 3) && (!DEC[T.id].valid || DEC[T.id].valid(life, {}));
+      });
+      if (quietT.length) { var QT9 = U.wpick(r, quietT, function (T) { return (typeof T.cw === 'function' ? T.cw(life, a) : (T.cw || 1)) * (E.CONTEXT143 ? E.CONTEXT143.factor(T, life) : 1) * Math.pow(0.45, scN[T.id] || 0) * ((life.flags.prevSeen || {})[T.id] ? 0.3 : 1); }); var beforeQ = q.length; add(QT9.id); if (q.length > beforeQ) { cdm[QT9.id] = a; scN[QT9.id] = (scN[QT9.id] || 0) + 1; } }
     }
 
     // AI chủ động hành động (khi người chơi bật tự động, hoặc nhân vật do máy điều khiển)

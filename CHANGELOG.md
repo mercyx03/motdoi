@@ -1,3 +1,12 @@
+## 9.11.0 — Nhiều lựa chọn hơn ở mọi độ tuổi
+
+- `public/js/engine.js`: thêm "nhịp năm trống" cho mọi độ tuổi. Từ 15 tuổi trở lên, năm chưa có chuyện cần quyết có cơ hội (40% dưới 55 tuổi, 60% từ 55, 70% từ 70) gặp một tình huống nhóm `T.quiet` đủ điều kiện; tuổi 1–14 tăng từ 35% lên 65%. Tình huống nhóm này bỏ qua bộ lọc nhịp `PACE145` (bộ lọc từng loại bỏ khoảng một nửa số tình huống thường ngày), nhưng vẫn theo hạn mức lặp, cooldown và điều kiện hoàn cảnh. Chế độ Hardcore không đổi.
+- `public/js/life9110.js` (mới): 26 tình huống dùng `E.SC`, `E.TRIG`, `H.sched`, `H.mem`, `H.fx`; mỗi tình huống có lựa chọn ban đầu và giai đoạn hệ quả đến sau 1–4 năm (`<id>_f`) tùy lựa chọn: bạn bị trêu chọc, tiền riêng đầu tiên, sở thích, điểm kém, thú cưng, anh chị em, ăn uống và giấc ngủ ở tuổi nhỏ; hàng xóm, bạn cũ, khám sức khỏe, học thêm, chăm cha mẹ, kiệt sức, khoản tiền bất ngờ, tình nguyện, nhà hỏng, đồng nghiệp, thú vui cũ quay lại; chuẩn bị nghỉ hưu, di chúc, hồi ký, nơi sống, điện thoại, con cháu về thăm, thú vui tuổi già.
+- Trí nhớ xuyên đời: `l.flags.q9110[id] = { a, tag }`; sở thích tuổi thơ được nhắc lại ở tuổi trưởng thành và tuổi già. Bản lưu cũ chưa có khóa này vẫn chạy bình thường (khóa tự tạo, giá trị sai kiểu được khôi phục).
+- Kết quả phụ thuộc chỉ số, tiền, quan hệ, tuổi, bố mẹ còn hay không, có việc làm hay không, có con hay không; không gán tính cách theo giàu nghèo, tôn giáo, nghề hay ngoại hình.
+- Mô phỏng 36 đời tự động: năm không có lựa chọn ở tuổi 0–14 giảm còn khoảng 40% (trước đó khoảng 55–63%), 15–54 còn khoảng 13% (trước đó 23–33%), từ 55 còn khoảng 9% (trước đó khoảng 15–44%). Số liệu "trước" lấy từ mẫu mô phỏng khác nên chỉ là ước lượng.
+- `tests/life9110.js` (2.141 kiểm tra), script `test:life9110`.
+
 ## 9.10.2 — Sự kiện thật đợt 5: sự kiện vui, năm trống nước lớn, thành phố
 
 - `data-birth9102-joy.js` (mới): thêm sự kiện vui (thể thao, âm nhạc, giải thưởng, khoa học) cho Indonesia, Mexico, Mỹ, Ấn Độ, Trung Quốc, Brazil, Thổ Nhĩ Kỳ, Ai Cập, Iran, Pakistan, Bangladesh, Philippines và một số nước châu Phi.
