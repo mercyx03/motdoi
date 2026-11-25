@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-25T02:27:11.054Z",
+  "generatedAt": "2026-11-25T02:35:42.749Z",
   "entries": [
     {
       "id": "events-regional-91000",
       "version": "9.10.0",
       "publishedAt": "2026-11-25T09:20:00+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-25T09:40:00+07:00",
       "title": "Thêm hàng trăm sự kiện thật cho nước nhỏ và nước đông dân, mở rộng sự kiện thành phố",
       "summary": "Bối cảnh năm sinh phong phú hơn: nhiều nước còn ít dữ liệu được bổ sung, các nước đông dân có thêm mốc rải suốt thế kỷ XX, thêm sự kiện theo thành phố cho Mỹ và nhiều nước lớn.",
       "tags": [
@@ -24,8 +24,8 @@
       "id": "events-regional-99200",
       "version": "9.9.2",
       "publishedAt": "2026-11-25T08:58:00+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-25T09:40:00+07:00",
       "title": "Thêm hàng trăm sự kiện thật đợt 2: nước nhỏ, nước lớn đầu thế kỷ XX, sự kiện vui và tầng thành phố",
       "summary": "Bối cảnh năm sinh phong phú hơn: thêm mốc lịch sử thật cho nhiều nước, cân bằng giữa chuyện vui và chuyện buồn, thêm sự kiện theo thành phố cho nhiều nước lớn.",
       "tags": [
@@ -43,8 +43,8 @@
       "id": "events-streetjobs-99100",
       "version": "9.9.1",
       "publishedAt": "2026-11-25T08:30:00+07:00",
-      "releaseStatus": "packaged",
-      "releasedAt": null,
+      "releaseStatus": "released",
+      "releasedAt": "2026-11-25T09:40:00+07:00",
       "title": "Thêm 477 sự kiện thật theo nước, nghề đường phố theo từng nước, thôi nôi theo hoàn cảnh nhà",
       "summary": "Hàng trăm mốc lịch sử có thật được thêm cho các nước còn ít dữ liệu, người nghèo có nghề đường phố hợp với nước và thời kỳ, nhà nghèo không còn bày mâm bốc đồ, và nội dung khi chơi không còn lặp các dòng chú thích mô phỏng.",
       "tags": [
