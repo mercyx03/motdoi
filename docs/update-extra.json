@@ -1,9 +1,31 @@
 [
   {
+    "id": "idol-awards-concerts-99000",
+    "version": "9.9.0",
+    "publishedAt": "2026-11-25T07:20:00+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Nghề ca sĩ: giải thưởng, hợp đồng nhóm, concert, fan meeting và chuyện trước truyền thông",
+    "summary": "Ca sĩ và thần tượng giờ có mùa trao giải trong nước và quốc tế theo từng nước và từng năm (cả quá khứ lẫn tương lai), hợp đồng nhóm có kỳ hạn, chuyện nội bộ nhóm mà trưởng nhóm phải xử lý, concert từ nhà hát đến dome và sân vận động, fan meeting, sự kiện nhãn hàng và cách bạn phản ứng với truyền thông ảnh hưởng đến ấn tượng của khán giả.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Giải thưởng: Hàn Quốc có Golden Disc, Seoul Music Awards, Melon, MAMA (daesang: nghệ sĩ, album, bài hát của năm), Korean Music Awards; Nhật, Trung Quốc, Việt Nam (Làn Sóng Xanh, Mai Vàng, Cống hiến, Zing), Thái, Indonesia, Philippines, Ấn Độ, Mỹ, Anh, Pháp, Đức, Brasil, Mexico, Nigeria và bộ giải mặc định cho mọi nước còn lại. Mỗi giải có năm bắt đầu và đổi tên theo năm; từ 2026 trở đi các giải vẫn tiếp tục và có giải mới xuất hiện. Có giải lớn, giải chính, tân binh, bình chọn, giới chuyên môn, vinh danh và giải quốc tế khi đã có tiếng ở nước ngoài.",
+      "Hợp đồng nhóm có kỳ hạn (khoảng 7 năm ở Hàn Quốc, Mỹ, Anh; 5 năm ở nhiều nước khác). Hết hạn bạn chọn tái ký, tái ký có đàm phán, ra solo ở lại công ty, rời công ty tự do hoặc giải nghệ; các thành viên khác cũng tự quyết định theo tính cách và mong muốn của họ.",
+      "Thành viên nhóm có tính cách, mong muốn, độ thân thiết và tinh thần. Các sự cố nhiều giai đoạn: mâu thuẫn, hai thành viên yêu nhau, thành viên hẹn hò người hâm mộ, ốm hoặc kiệt sức. Làm trưởng nhóm thì bạn phải xử lý; bỏ mặc thì vấn đề leo thang qua nhiều năm và có thể khiến thành viên rời nhóm.",
+      "Concert: chọn trong nước hay quốc tế, concert nhóm, solo hoặc trực tuyến, nơi tổ chức (nhà hát, nhà thi đấu, dome, sân vận động — chỉ có khi đã được xây ở nước đó), concept, danh sách bài, trang phục, khách mời và mức đầu tư. Có thành tựu lần đầu ở nhà thi đấu, dome, sân vận động, nước ngoài và cháy vé. Thêm fan meeting, sự kiện nhãn hàng và chiến lược quảng bá hợp thời kỳ.",
+      "Mức độ lan tỏa của sản phẩm phụ thuộc thời kỳ: radio và truyền hình, đĩa CD, nhạc số, video ngắn, thời AI. Có ca khúc phủ sóng toàn quốc, lan truyền mạnh, hoặc chìm; ca khúc cũ có thể bất ngờ trở lại.",
+      "Gặp người hâm mộ ngoài đời (xin chữ ký, bị bắt gặp, bị quay lén, người bám theo, giúp người gặp nạn…) và cách phản ứng để lại ấn tượng (thiện cảm, chuyên nghiệp, niềm tin, tai tiếng). Chuyện hẹn hò có chuỗi bí mật, tin đồn, bị đăng báo và hậu quả; cách phản ứng trước truyền thông và mức khắt khe của từng nước làm thay đổi kết quả.",
+      "Sửa lỗi: phát hành album solo trước đây chỉ tăng độ nổi tiếng còn người hâm mộ của nhóm đứng yên; nay fandom tăng hoặc giảm theo chất lượng sản phẩm và nhật ký ghi rõ số người hâm mộ."
+    ]
+  },
+  {
     "id": "birth-context-by-region-98900",
     "version": "9.8.9",
     "publishedAt": "2026-11-23T10:03:10+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "releasedAt": null,
     "title": "Bối cảnh theo vùng, thành phố và năm nào cũng có chuyện của đất nước",
     "summary": "Bối cảnh lúc chào đời và mỗi năm giờ tính cả vùng, tỉnh, thành phố bạn sống. Từ năm 1900 đến 2025, năm nào cũng có ít nhất một tin thật của nơi bạn ở hoặc của thế giới. Nước lớn có nhiều sự kiện hơn, nước nhỏ có ít hơn.",
@@ -25,7 +47,7 @@
     "id": "birth-context-by-country-98800",
     "version": "9.8.8",
     "publishedAt": "2026-11-23T09:28:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "releasedAt": null,
     "title": "Bối cảnh lúc chào đời và các sự kiện có thật theo từng nước, từng năm",
     "summary": "Mỗi cuộc đời giờ mở đầu bằng bối cảnh thật của đất nước trong năm bạn sinh ra, kèm các sự kiện lớn năm ấy. Lớn lên, bạn sẽ chứng kiến các sự kiện có thật của nơi mình sống. Sửa một số chi tiết sai thời đại và lỗi đổi chữ.",

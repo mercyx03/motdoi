@@ -1,3 +1,12 @@
+## 9.9.0 — Nghề ca sĩ: giải thưởng, hợp đồng nhóm, concert, fan meeting, hẹn hò trước truyền thông
+
+- `data-idol990.js` (mới): bộ giải thưởng theo nước và năm (Hàn, Nhật, Trung, Việt, Thái, Indonesia, Philippines, Ấn Độ, Mỹ, Anh, Pháp, Đức, Brasil, Mexico, Nigeria và mặc định cho mọi nước khác); mỗi giải có năm bắt đầu/kết thúc, đổi tên theo năm, giải kế nhiệm và giải mới từ 2026 trở đi; địa điểm (nhà hát, nhà thi đấu, dome, sân vận động) theo năm xây; 7 thời kỳ công nghệ phát hành (radio → thời nhập vai).
+- `idol990.js` (mới, trên `IDOL155`, `IDOL987`, `LIFE138`): hình ảnh công chúng (thiện cảm, chuyên nghiệp, niềm tin, tai tiếng), mùa trao giải trong nước/quốc tế (daesang, tân binh, bình chọn, chuyên môn, vinh danh), hợp đồng nhóm có kỳ hạn và quyết định tái ký/solo/tự do/giải nghệ, hồ sơ thành viên (tính cách, mong muốn, độ thân thiết), sự cố nhóm nhiều giai đoạn (mâu thuẫn, yêu nhau trong nhóm, yêu người hâm mộ, ốm/kiệt sức) do trưởng nhóm xử lý, mức lan tỏa sản phẩm theo thời kỳ, menu Quản lý nhóm.
+- `live990.js` (mới): concert (nhóm/solo/trực tuyến, trong nước/quốc tế, nơi tổ chức, concept, danh sách bài, trang phục, khách mời, ngân sách; diễn năm sau, hoãn/hủy khi tai tiếng hoặc sức khỏe; thành tựu dome/sân vận động/nước ngoài), fan meeting, sự kiện nhãn hàng, chiến lược quảng bá, gặp người hâm mộ ngoài đời (11 tình huống cân bằng tích cực/trung tính/tiêu cực), chuỗi hẹn hò bí mật → tin đồn → bị đăng báo → hậu quả với 6 cách phản ứng.
+- `idol987.js`: sửa lỗi album solo không làm người hâm mộ thay đổi (chỉ `l.fame` tăng, `g.fandom` đứng yên, nhật ký không nói gì); nay fandom tăng/giảm theo chất lượng và nhật ký ghi số người hâm mộ; ghi `lastRelease` cho hệ giải thưởng; tai tiếng nặng làm nhãn hàng chấm dứt hợp đồng và giảm lời mời.
+- `tests/idol990.js` (2.501 kiểm tra), `npm run test:idol990`.
+- Tên giải, nhóm, nhân vật và con số là mô phỏng lấy cảm hứng từ giải thật; mốc năm thành lập đến 2025 kiểm chứng trên web, từ 2026 là hư cấu.
+
 ## 9.8.9 — Bối cảnh theo vùng/thành phố; mọi nước, mọi năm 1900–2025 đều có nội dung
 
 - `birth987.js`: lớp vùng (`places`, `regAt` ưu tiên dòng ít nơi nhất rồi bắt đầu muộn nhất, `regEventsAt`, nhãn vùng Việt Nam theo mã DBSH/MNPB/BTB/NTB/TN/DNB/DBSCL); `trimNational` bỏ phần tin cả nước trùng với tin vùng cùng năm; `fallback` cho năm không có tin (mốc số liệu vượt ngưỡng → tin thế giới → chỉ số đời sống); `covered`. Cờ `rkey` mới, bản lưu 9.8.8 vẫn chạy.

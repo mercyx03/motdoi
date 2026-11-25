@@ -138,6 +138,7 @@
       var fee = V(l, 80 * Math.pow(1.045, pop) * KINDS[kind][1] * (0.8 + rr() * 0.4));
       out.push({ id: l.age + ':' + i, cat: cat, brand: B[Math.floor(rr() * B.length)], kind: kind, fee: fee, years: KINDS[kind][2] });
     }
+    var m990 = l.flags.idol990 && l.flags.idol990.img; if (m990 && m990.scandal >= 50) out.length = Math.min(out.length, 1);
     s.offers = { at: l.age, list: out };
     return out;
   }
@@ -162,6 +163,7 @@
   function dealsYear(l, log) {
     var s = st(l); s.deals.forEach(function (d) {
       if (d.ended) return;
+      var m990 = l.flags.idol990 && l.flags.idol990.img; if (m990 && m990.scandal >= 70) { d.ended = l.age; log(d.brand + ' chấm dứt hợp đồng đại diện vì tai tiếng quanh hình ảnh của bạn.', 'bad'); return; }
       if ((l.record || 0) > d.record0) { d.ended = l.age; log(d.brand + ' chấm dứt hợp đồng đại diện vì hình ảnh của bạn bị ảnh hưởng bởi vụ việc pháp lý.', 'bad'); return; }
       if (l.age >= d.until) { d.ended = l.age; log('Hết hợp đồng đại diện ' + d.brand + '.', 'neutral'); return; }
       if (d.paidAt === l.age) return; d.paidAt = l.age; var mine = d.fee * share(l); H.cash(l, mine, 'Cát-xê đại diện ' + d.brand + ' năm tiếp theo');
@@ -201,10 +203,15 @@
     var gross = V(l, copies * 0.3 + q * 400 * T[2]), artist = (x.byCo ? Math.max(0, gross * 0.3 - x.cost * 0.3) : gross * 0.7);
     var chart = q >= 0.85 ? 'hạng 1' : q >= 0.65 ? 'top 10' : q >= 0.45 ? 'top 50' : 'ngoài top 100', wins = q >= 0.85 ? 1 + Math.floor(rr() * 4) : q >= 0.7 ? Math.floor(rr() * 2) : 0;
     if (artist > 0) H.cash(l, artist, 'Doanh thu ' + T[0].toLowerCase() + ' solo');
-    l.fame = (l.fame || 0) + Math.round(copies * 3 + q * 2e5); s.pop = Math.round(U.clamp((s.pop || pop) + (q - 0.45) * 20, 0, 100));
+    var fame0 = l.fame || 0, fans0 = g ? (g.fandom || 0) : fame0;
+    l.fame = fame0 + Math.round(copies * 3 + q * 2e5); s.pop = Math.round(U.clamp((s.pop || pop) + (q - 0.45) * 20, 0, 100));
+    // 9.9.0: người hâm mộ thay đổi theo chất lượng sản phẩm; trước đây chỉ độ nổi tiếng tăng còn fandom của nhóm đứng yên
+    var fanGain = Math.round((q >= 0.45 ? copies * 0.35 + q * 6000 * T[2] : -fans0 * (0.45 - q) * 0.06));
+    if (g) g.fandom = Math.max(0, (g.fandom || 0) + fanGain);
+    s.lastRelease = { age: l.age, q: q, kind: 'solo', fans: fanGain };
     var title = (x.type === 'full' ? 'Album solo' : x.type === 'mini' ? 'Mini album solo' : 'Đĩa đơn solo') + ' thứ ' + (s.albums.length + 1);
     s.albums.push({ age: l.age, title: title, type: x.type, concept: x.concept, copies: copies, chart: chart, wins: wins }); s.lastSolo = l.age; delete s.solo;
-    log(title + ' (' + C[0] + ') phát hành: bảng xếp hạng ' + chart + ', khoảng ' + U.fmtNum(copies) + ' bản/lượt mua quy đổi' + (wins ? ', giành ' + wins + ' cúp chương trình âm nhạc' : '') + '. Phần của bạn ' + mo(l, Math.max(0, artist)) + '.', q >= 0.65 ? 'big' : 'neutral');
+    log(title + ' (' + C[0] + ') phát hành: bảng xếp hạng ' + chart + ', khoảng ' + U.fmtNum(copies) + ' bản/lượt mua quy đổi' + (wins ? ', giành ' + wins + ' cúp chương trình âm nhạc' : '') + '. Người hâm mộ ' + (fanGain >= 0 ? 'tăng ' : 'giảm ') + U.fmtNum(Math.abs(fanGain)) + (g ? ' (fandom ' + U.fmtNum(g.fandom) + ')' : ' (tổng ' + U.fmtNum(Math.round(l.fame)) + ')') + '. Phần của bạn ' + mo(l, Math.max(0, artist)) + '.', q >= 0.65 ? 'big' : 'neutral');
     if (s.albums.length === 1) H.mem(l, 'Ngày phát hành sản phẩm solo đầu tay.', 5);
   }
   X.menu('solo987', 'Phát hành album solo', function (l) { return l.age >= 16 && (singer(l) || popularity(l) >= 30) ? true : 'Dành cho ca sĩ / thần tượng đã có tên tuổi'; },
