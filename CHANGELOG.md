@@ -1,3 +1,11 @@
+## 9.9.2 — Sự kiện thật đợt 2: nước nhỏ, nước lớn nửa đầu thế kỷ XX, sự kiện vui, thành phố
+
+- `data-birth992-fill.js` (mới): thêm sự kiện cho ~65 nước còn mỏng, gồm cả sự kiện vui (thể thao, âm nhạc, lễ hội, kinh tế).
+- `data-birth992-early.js` (mới): bổ sung 1900–1949 cho các nước lớn (Mỹ, Anh, Pháp, Đức, Ấn Độ, Brazil, Trung Quốc, Nhật…).
+- `data-birth992-regional.js` (mới): tầng thành phố/vùng (REV) cho Argentina, Colombia, Peru, Chile, Kenya và thêm cho Nigeria, Brazil, Ấn Độ, Indonesia, Mexico, Ai Cập, Thổ Nhĩ Kỳ…
+- Đã đối chiếu web: Na Uy dẫn đầu huy chương Thế vận hội mùa đông 2018, Kipchoge 1:59:40 ngày 12/10/2019 (Eldoret đón mừng); bỏ vài mốc không chắc.
+- `tests/birth992.js`.
+
 ## 9.9.1 — Sự kiện thật theo nước, nghề đường phố, thôi nôi theo hoàn cảnh, gỡ chú thích thừa
 
 - `data-birth991-africa.js`, `data-birth991-asia.js`, `data-birth991-euam.js` (mới): 477 sự kiện thật cho 150 nước còn mỏng, dùng cùng bộ lọc chống trùng ý của 9.8.9.

@@ -4288,5 +4288,24 @@
       "Lễ thôi nôi / sinh nhật một tuổi: nhà túng thiếu (mức nghèo nhất) không bày mâm bốc đồ, kể cả ở nước giàu; thời chiến, đói, nước còn nghèo vẫn không có như trước.",
       "Gỡ các dòng chú thích kiểu \"mô phỏng\", \"hư cấu\", \"nhân vật trong game\" khỏi nhật ký, kỷ niệm và tình huống khi chơi (lời nhắc này chỉ còn ở trang chủ); bản lưu cũ cũng được lọc khi hiển thị."
     ]
+  },
+  {
+    "id": "events-regional-99200",
+    "version": "9.9.2",
+    "publishedAt": "2026-11-25T08:58:00+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Thêm hàng trăm sự kiện thật đợt 2: nước nhỏ, nước lớn đầu thế kỷ XX, sự kiện vui và tầng thành phố",
+    "summary": "Bối cảnh năm sinh phong phú hơn: thêm mốc lịch sử thật cho nhiều nước, cân bằng giữa chuyện vui và chuyện buồn, thêm sự kiện theo thành phố cho nhiều nước lớn.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Thêm sự kiện thật cho khoảng 65 nước còn ít dữ liệu và bổ sung 1900–1949 cho các nước lớn.",
+      "Thêm nhiều sự kiện vui (thể thao, âm nhạc, lễ hội, phát minh, kinh tế) để cân bằng với chiến tranh và thiên tai.",
+      "Mở rộng sự kiện theo thành phố/vùng cho Argentina, Colombia, Peru, Chile, Kenya và nhiều nước lớn khác.",
+      "Đã đối chiếu web một số mốc và loại bỏ các mốc không chắc chắn."
+    ]
   }
 ]
