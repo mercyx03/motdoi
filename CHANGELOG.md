@@ -1,3 +1,11 @@
+## 9.10.2 — Sự kiện thật đợt 5: sự kiện vui, năm trống nước lớn, thành phố
+
+- `data-birth9102-joy.js` (mới): thêm sự kiện vui (thể thao, âm nhạc, giải thưởng, khoa học) cho Indonesia, Mexico, Mỹ, Ấn Độ, Trung Quốc, Brazil, Thổ Nhĩ Kỳ, Ai Cập, Iran, Pakistan, Bangladesh, Philippines và một số nước châu Phi.
+- `data-birth9102-gap.js` (mới): thêm sự kiện cho các năm còn trống ở Sudan, Afghanistan, Angola, Mozambique, Niger, Mali, Yemen, Cameroon, Tanzania, Uganda, CHDC Congo.
+- `data-birth9102-city.js` (mới): thêm sự kiện thành phố cho Pakistan, Bangladesh, Ethiopia, Ai Cập, Philippines, Thổ Nhĩ Kỳ, Iran, Tanzania, Uganda, CHDC Congo; tên thành phố đều nằm trong danh sách của game.
+- Đã đối chiếu web: Cheptegei 14/8 và 7/10/2020, Bangladesh nữ vô địch Asia Cup 10/6/2018, Ali Farka Touré Grammy 2/2006, World Cup khúc côn cầu của Pakistan, Dire Dawa 24/12/1902, các kỳ Cúp châu Phi 1968–1988.
+- `tests/birth9102.js`.
+
 ## 9.10.1 — Sự kiện thật đợt 4: bổ sung cho 10 nước đông dân còn mỏng
 
 - `data-birth9101-big.js` (mới): thêm khoảng 120 sự kiện (vui, buồn, trung tính) cho Kenya, CHDC Congo, Colombia, Ukraine, Ba Lan, Myanmar, Thái Lan, Nam Phi, Ethiopia, Iran, rải vào các năm còn trống 1900–2025.

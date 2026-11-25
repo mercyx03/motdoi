@@ -1,6 +1,23 @@
 {
-  "generatedAt": "2026-11-25T02:43:34.462Z",
+  "generatedAt": "2026-11-25T03:11:46.620Z",
   "entries": [
+    {
+      "id": "events-regional-91020",
+      "version": "9.10.2",
+      "publishedAt": "2026-11-25T10:08:00+07:00",
+      "releaseStatus": "packaged",
+      "title": "Thêm sự kiện vui, sự kiện thành phố và lấp năm trống cho nước lớn",
+      "summary": "Các nước lớn có thêm sự kiện vui (thể thao, âm nhạc, giải thưởng), nhiều nước đông dân có thêm sự kiện thành phố và các năm còn trống.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Thêm sự kiện vui cho hơn chục nước lớn.",
+        "Thêm sự kiện theo thành phố cho 10 nước đông dân.",
+        "Lấp các năm trống ở 11 nước châu Phi và Trung Đông.",
+        "Các mốc có ngày cụ thể đã đối chiếu nguồn trên web."
+      ]
+    },
     {
       "id": "events-regional-91010",
       "version": "9.10.1",
