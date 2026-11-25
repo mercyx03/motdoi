@@ -1,3 +1,11 @@
+## 9.9.1 — Sự kiện thật theo nước, nghề đường phố, thôi nôi theo hoàn cảnh, gỡ chú thích thừa
+
+- `data-birth991-africa.js`, `data-birth991-asia.js`, `data-birth991-euam.js` (mới): 477 sự kiện thật cho 150 nước còn mỏng, dùng cùng bộ lọc chống trùng ý của 9.8.9.
+- `street991.js` (mới, mở rộng `E.CAR` và `ERA902.jobBlocked`): 10 nghề đường phố với cửa sổ năm theo nước; `family.js` lọc nghề của bạn đời theo nước và năm.
+- `ctx945.js`: lễ thôi nôi cần nhà từ mức 2 trở lên (`alwaysMinQ`), không phụ thuộc nước giàu hay nghèo.
+- `clean991.js` (mới): lọc chú thích thừa khi hiển thị và khi ghi nhật ký/kỷ niệm; sửa vài chuỗi gốc (`idol987.js`, `life122.js`, `life32.js`, `scenarios.js`, `startup944.js`).
+- `tests/birth991.js`, `tests/street991.js`.
+
 ## 9.9.0 — Nghề ca sĩ: giải thưởng, hợp đồng nhóm, concert, fan meeting, hẹn hò trước truyền thông
 
 - `data-idol990.js` (mới): bộ giải thưởng theo nước và năm (Hàn, Nhật, Trung, Việt, Thái, Indonesia, Philippines, Ấn Độ, Mỹ, Anh, Pháp, Đức, Brasil, Mexico, Nigeria và mặc định cho mọi nước khác); mỗi giải có năm bắt đầu/kết thúc, đổi tên theo năm, giải kế nhiệm và giải mới từ 2026 trở đi; địa điểm (nhà hát, nhà thi đấu, dome, sân vận động) theo năm xây; 7 thời kỳ công nghệ phát hành (radio → thời nhập vai).

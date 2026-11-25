@@ -279,7 +279,7 @@
     title: 'Tìm phòng trọ', prep: function (l) { return { c: l.cityStudent ? l.cityStudent.city : (l.movedTo || 'thành phố') }; },
     text: function (l, d) { return 'Lướt hội nhóm "Phòng trọ giá rẻ ' + d.c + '", một chủ nhà đăng phòng đẹp giá mềm, giục chuyển cọc trước kẻo hết.'; },
     opts: [
-      { k: 'pay', l: 'Chuyển cọc luôn kẻo mất phòng', ai: { risk: 1 }, run: function (l, r, log) { if (ch(r, 0.45)) { cashB(l, -0.04, 'Mất tiền cọc phòng trọ ảo'); log('Chuyển cọc xong thì "chủ nhà" khóa Facebook. Phòng trọ không có thật.', 'bad'); fx(l, { hap: -8 }); H.mem(l, 'Mất tiền cọc phòng trọ ảo — cú lừa đầu tiên ở thành phố.', 3); } else log('May mắn, phòng có thật và chủ nhà tử tế.', 'good'); } },
+      { k: 'pay', l: 'Chuyển cọc luôn kẻo mất phòng', ai: { risk: 1 }, run: function (l, r, log) { if (ch(r, 0.45)) { cashB(l, -0.04, 'Mất tiền cọc phòng trọ ảo'); log('Chuyển cọc xong thì "chủ nhà" khóa Facebook.', 'bad'); fx(l, { hap: -8 }); H.mem(l, 'Mất tiền cọc phòng trọ ảo — cú lừa đầu tiên ở thành phố.', 3); } else log('May mắn, phòng có thật và chủ nhà tử tế.', 'good'); } },
       { k: 'see', l: 'Đến tận nơi xem rồi mới cọc', ai: { smart: 1.2 }, run: function (l, r, log) { log('Đi xem tận nơi, thuê được căn phòng nhỏ đúng như mô tả.', 'good'); fx(l, { kno: 1 }); } },
       { k: 'share', l: 'Ở ghép với bạn cùng quê', ai: { soc: 1 }, run: function (l, r, log) { log('Ở ghép với mấy đứa cùng quê, chật chội nhưng vui và rẻ.', 'good'); fx(l, { soc: 4 }); } }
     ]

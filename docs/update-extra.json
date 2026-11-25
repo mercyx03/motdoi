@@ -3,7 +3,7 @@
     "id": "idol-awards-concerts-99000",
     "version": "9.9.0",
     "publishedAt": "2026-11-25T07:20:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "releasedAt": null,
     "title": "Nghề ca sĩ: giải thưởng, hợp đồng nhóm, concert, fan meeting và chuyện trước truyền thông",
     "summary": "Ca sĩ và thần tượng giờ có mùa trao giải trong nước và quốc tế theo từng nước và từng năm (cả quá khứ lẫn tương lai), hợp đồng nhóm có kỳ hạn, chuyện nội bộ nhóm mà trưởng nhóm phải xử lý, concert từ nhà hát đến dome và sân vận động, fan meeting, sự kiện nhãn hàng và cách bạn phản ứng với truyền thông ảnh hưởng đến ấn tượng của khán giả.",
@@ -4269,5 +4269,24 @@
     ],
     "releasedAt": "2026-11-16T21:57:56.000Z",
     "correctedAt": "2026-11-16T21:57:57.097Z"
+  },
+  {
+    "id": "events-streetjobs-99100",
+    "version": "9.9.1",
+    "publishedAt": "2026-11-25T08:30:00+07:00",
+    "releaseStatus": "packaged",
+    "releasedAt": null,
+    "title": "Thêm 477 sự kiện thật theo nước, nghề đường phố theo từng nước, thôi nôi theo hoàn cảnh nhà",
+    "summary": "Hàng trăm mốc lịch sử có thật được thêm cho các nước còn ít dữ liệu, người nghèo có nghề đường phố hợp với nước và thời kỳ, nhà nghèo không còn bày mâm bốc đồ, và nội dung khi chơi không còn lặp các dòng chú thích mô phỏng.",
+    "tags": [
+      "Tính năng",
+      "Sửa lỗi"
+    ],
+    "details": [
+      "Bối cảnh năm sinh và tin trong đời: 477 sự kiện thật cho 150 nước còn mỏng (độc lập, đảo chính, thiên tai, hiệp ước, kỷ lục), từ châu Phi, Trung Đông, Trung Á, Nam Á, Đông Nam Á, Thái Bình Dương, châu Âu đến châu Mỹ và Caribe; các sự kiện trùng ý trong cùng năm tự được bỏ.",
+      "Nghề đường phố: đánh giày, bán báo dạo, đạp xích lô, bốc vác, bán hàng ở ngã tư, trông giữ xe tự phát, hát rong, tài xế mô tô taxi (okada, boda boda, ojek), bán vé số dạo, rửa xe thuê. Mỗi nghề chỉ có ở đúng các nước và đúng thời kỳ (xích lô ở Việt Nam đến 2005, okada ở châu Phi từ 1990, lau kính ở ngã tư Mexico từ 1975…), thu nhập thấp, có rủi ro tai nạn.",
+      "Lễ thôi nôi / sinh nhật một tuổi: nhà túng thiếu (mức nghèo nhất) không bày mâm bốc đồ, kể cả ở nước giàu; thời chiến, đói, nước còn nghèo vẫn không có như trước.",
+      "Gỡ các dòng chú thích kiểu \"mô phỏng\", \"hư cấu\", \"nhân vật trong game\" khỏi nhật ký, kỷ niệm và tình huống khi chơi (lời nhắc này chỉ còn ở trang chủ); bản lưu cũ cũng được lọc khi hiển thị."
+    ]
   }
 ]

@@ -36,7 +36,7 @@
    ['produce101jp', 'Produce 101 Japan', 'JP', 2019, 2023, 101, null, 11, [60, 35, 20], 'Phiên bản Nhật Bản, khán giả bình chọn đội hình debut 11 người.'],
    ['niziproject', 'Nizi Project', 'JP', 2020, 2020, 26, 'F', 9, [20, 14, 11], 'Thí sinh nữ tuyển chọn ở Nhật và Mỹ, huấn luyện tại Hàn Quốc, đội hình debut 9 người.'],
    ['youthwithyou', 'Thanh Xuân Có Bạn (Youth With You)', 'CN', 2020, 2021, 109, null, 9, [60, 33, 20], 'Thực tập sinh thi đấu, khán giả bình chọn đội hình debut 9 người.'],
-   ['globalidol987', 'Dự án tuyển chọn thần tượng toàn cầu (mô phỏng)', 'KR', 2025, null, 80, null, 7, [48, 24, 14], 'Chương trình sống còn mùa mới nhận thí sinh nhiều quốc gia, đội hình debut 7 người.']
+   ['globalidol987', 'Dự án tuyển chọn thần tượng toàn cầu', 'KR', 2025, null, 80, null, 7, [48, 24, 14], 'Chương trình sống còn mùa mới nhận thí sinh nhiều quốc gia, đội hình debut 7 người.']
   ].forEach(function (x) { if (SH.SHOWS[x[0]]) return; SH.define(x[0], { name: x[1], country: x[2], genre: 'idol', from: x[3], to: x[4], handler: 'survival', field: x[5], sex: x[6] || undefined, debut: x[7], rounds: ROUNDS(x[8]), desc: x[9], roles: role() }); });
   function survivalShows() { return Object.keys(SH.SHOWS).filter(function (id) { return SH.SHOWS[id].handler === 'survival'; }); }
   function onAir(l, sh) { var y = yr(l); return y >= sh.from && (!sh.to || y <= sh.to); }

@@ -147,7 +147,7 @@
   // ------------------------------------------------------------------
   // minQ: nhà cần mức khá giả tối thiểu (l.fam.q 1–5) khi nước còn nghèo; maxLevel: mức biến cố tối đa; poor: mức nghèo nền tối đa; fromYear: năm sớm nhất có phong tục này như một lễ riêng
   var CUSTOMS = {
-    thoi_noi: { maxLevel: 1, poor: 3, poorMinQ: 3, fromYear: 1900, early: { before: 1960, minQ: 3 }, note: 'lễ thôi nôi bốc đồ' },
+    thoi_noi: { maxLevel: 1, poor: 3, poorMinQ: 3, alwaysMinQ: 2, fromYear: 1900, early: { before: 1960, minQ: 3 }, note: 'lễ thôi nôi bốc đồ' },
     sinh_nhat: { maxLevel: 1, poor: 3, poorMinQ: 4, fromYear: 1960, note: 'tiệc sinh nhật' },
     mau_giao: { maxLevel: 1, poor: 3, poorMinQ: 3, fromYear: 1940, note: 'trường mẫu giáo' },
     do_choi: { maxLevel: 2, poor: 3, poorMinQ: 3, fromYear: 1900, note: 'đồ chơi mua sẵn' },
@@ -158,6 +158,7 @@
   function customAllowed(l, id, c) {
     var R = CUSTOMS[id]; if (!R) return true; c = c || of(l); var q = (l.fam && l.fam.q) || 3, y = wy(l);
     if (y < R.fromYear) return false;
+    if (R.alwaysMinQ && q < R.alwaysMinQ) return false; // nhà nghèo túng thiếu (mức 1) không bày mâm bốc đồ, dù ở nước giàu
     if (c.hard > R.maxLevel) return false;
     if (R.early && y < R.early.before && q < R.early.minQ) return false;
     if (c.pov >= R.poor && q < R.poorMinQ) return false;
