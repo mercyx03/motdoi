@@ -1,0 +1,16 @@
+'use strict';
+const fs = require('fs'), path = require('path'), assert = require('assert');
+const { gameContext } = require('./hardcore-isolation.js');
+let n = 0; const ok = (c, m) => { assert(c, m); n++; };
+const ctx = gameContext(); const G = ctx.G || ctx.globalThis && ctx.globalThis.G || ctx;
+const D = G.BIRTH987; const EV = D.EV;
+const spec = { KE: 28, CD: 28, CO: 28, UA: 28, PL: 36, MM: 33, TH: 33, ZA: 42, ET: 36, IR: 40 };
+Object.keys(spec).forEach(c => ok((EV[c] || []).length >= spec[c], c + ' có ít nhất ' + spec[c] + ' sự kiện, hiện ' + (EV[c] || []).length));
+const has = (c, y, w) => (EV[c] || []).some(e => e[0] === y && e[1].indexOf(w) >= 0);
+ok(has('CO', 2001, '29/7'), 'CO 2001 Copa América 29/7');
+ok(has('UA', 1975, '14/5'), 'UA 1975 Cup Winners Cup 14/5');
+ok(has('ET', 2016, '29:17.45'), 'ET 2016 Ayana');
+ok(has('PL', 1932, 'Enigma'), 'PL 1932 Enigma');
+Object.keys(spec).forEach(c => (EV[c] || []).forEach(e => { ok(e[0] >= 1900 && e[0] <= 2025, c + ' năm hợp lệ ' + e[0]); ok(e[2] === 1 || e[2] === 2, 'level'); ok(['', 'joy', 'grief'].indexOf(e[3]) >= 0, 'tone'); }));
+Object.keys(spec).forEach(c => { const seen = {}; (EV[c] || []).forEach(e => { const k = e[0] + '|' + e[1]; ok(!seen[k], 'không trùng ' + c + ' ' + k); seen[k] = 1; }); });
+console.log('birth9101: ' + n + ' checks OK');

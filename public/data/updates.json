@@ -1,6 +1,21 @@
 {
-  "generatedAt": "2026-11-25T02:35:42.749Z",
+  "generatedAt": "2026-11-25T02:43:34.462Z",
   "entries": [
+    {
+      "id": "events-regional-91010",
+      "version": "9.10.1",
+      "publishedAt": "2026-11-25T09:39:00+07:00",
+      "releaseStatus": "packaged",
+      "title": "Thêm sự kiện thật cho 10 nước đông dân",
+      "summary": "Kenya, CHDC Congo, Colombia, Ukraine, Ba Lan, Myanmar, Thái Lan, Nam Phi, Ethiopia và Iran có thêm sự kiện vui, buồn và trung tính ở các năm còn trống.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Khoảng 120 sự kiện mới cho 10 nước đông dân còn mỏng.",
+        "Các mốc có ngày cụ thể đã đối chiếu nguồn trên web."
+      ]
+    },
     {
       "id": "events-regional-91000",
       "version": "9.10.0",

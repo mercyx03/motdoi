@@ -1,3 +1,9 @@
+## 9.10.1 — Sự kiện thật đợt 4: bổ sung cho 10 nước đông dân còn mỏng
+
+- `data-birth9101-big.js` (mới): thêm khoảng 120 sự kiện (vui, buồn, trung tính) cho Kenya, CHDC Congo, Colombia, Ukraine, Ba Lan, Myanmar, Thái Lan, Nam Phi, Ethiopia, Iran, rải vào các năm còn trống 1900–2025.
+- Đã đối chiếu web: phá mã Enigma 12/1932, Copa América 29/7/2001, Dynamo Kyiv 14/5/1975, Ayana 29:17.45 ở Rio 2016.
+- `tests/birth9101.js`.
+
 ## 9.10.0 — Sự kiện thật đợt 3: nước nhỏ, nước đông dân, thành phố, làm rõ câu chung chung
 
 - `data-birth9100-africa/asia/americas/europe/oceania.js`, `data-birth9100-fillA/B/C.js` (mới): bù sự kiện cho các nước còn mỏng. Số nước dưới 12 sự kiện giảm từ 127 xuống 38; nước dưới 8 sự kiện còn 7 (toàn quốc đảo/tiểu quốc).
