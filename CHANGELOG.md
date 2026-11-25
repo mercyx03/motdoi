@@ -1,3 +1,10 @@
+## 9.11.1 — Lấp năm trống 2000–2025, đợt 1 (13 nước đông dân)
+
+- `data-birth9111-pop.js` (mới): thêm 130+ sự kiện cho Nigeria, Pakistan, CHDC Congo, Indonesia, Ethiopia, Bangladesh, Brazil, Mexico, Tanzania, Ai Cập, Philippines, Kenya, Uganda ở các năm 2000–2025 còn trống; có cả tin vui, tin buồn và tin trung tính. Mốc chỉ ghi ở mức năm, tổng hợp từ kiến thức chung, chưa đối chiếu web từng ngày.
+- Nhật ký cập nhật (hiển thị cho người chơi): bỏ các cụm "sự kiện có thật", "đối chiếu nguồn" khỏi mô tả bản cập nhật về sự kiện.
+- `tests/birth9111.js`, script `test:birth9111`.
+- Chưa làm: khoảng 3.600 năm-nước còn trống 2000–2025 ở các nước còn lại; mới xong 13 nước.
+
 ## 9.11.0 — Nhiều lựa chọn hơn ở mọi độ tuổi
 
 - `public/js/engine.js`: thêm "nhịp năm trống" cho mọi độ tuổi. Từ 15 tuổi trở lên, năm chưa có chuyện cần quyết có cơ hội (40% dưới 55 tuổi, 60% từ 55, 70% từ 70) gặp một tình huống nhóm `T.quiet` đủ điều kiện; tuổi 1–14 tăng từ 35% lên 65%. Tình huống nhóm này bỏ qua bộ lọc nhịp `PACE145` (bộ lọc từng loại bỏ khoảng một nửa số tình huống thường ngày), nhưng vẫn theo hạn mức lặp, cooldown và điều kiện hoàn cảnh. Chế độ Hardcore không đổi.
