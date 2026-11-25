@@ -1,3 +1,11 @@
+## 9.11.2 — Mọi nước có chuyện riêng ở mọi năm 2000–2025
+
+- `data-birth9112-fill.js` (mới): 3.647 dòng sự kiện cho 181 nước, lấp toàn bộ 3.645 năm-nước 2000–2025 còn trống. Độ phủ năm 2000–2025 tăng từ 28,5% lên 100% (196/196 nước đủ 26/26 năm). Có 817 tin vui, 735 tin buồn, 2.095 tin trung tính; 2.825 mốc lớn và 822 mốc nhỏ.
+- Nước nhỏ ít biến cố: các năm yên ả được ghi bằng lễ hội, ngày lễ, bầu cử, mùa thể thao quen thuộc của chính nước đó (mức nhỏ, trẻ dưới 5 tuổi không nhận).
+- `birth987.js`: mốc nhỏ có cùng nội dung không được kể lại trong vòng 3 năm (`s.rec9112`), năm đó dùng tin thế giới hoặc chỉ số đời sống như cũ. Bản lưu cũ không có khóa này vẫn chạy.
+- `tests/birth9112.js` (35.283 kiểm tra), script `test:birth9112`.
+- Chưa kiểm chứng: các mốc được soạn từ kiến thức chung, không tra web từng dòng; một số năm của nước nhỏ dùng sự kiện định kỳ thay vì biến cố riêng của năm đó.
+
 ## 9.11.1 — Lấp năm trống 2000–2025, đợt 1 (13 nước đông dân)
 
 - `data-birth9111-pop.js` (mới): thêm 130+ sự kiện cho Nigeria, Pakistan, CHDC Congo, Indonesia, Ethiopia, Bangladesh, Brazil, Mexico, Tanzania, Ai Cập, Philippines, Kenya, Uganda ở các năm 2000–2025 còn trống; có cả tin vui, tin buồn và tin trung tính. Mốc chỉ ghi ở mức năm, tổng hợp từ kiến thức chung, chưa đối chiếu web từng ngày.

@@ -119,6 +119,9 @@
       if (seen[id] || y === s.y && l.age === 0) return; // năm sinh đã kể trong dòng chào đời
       if (e[4] && !major) return;
       if (l.age < 5 && !major) return;
+      var rec = s.rec9112 || (s.rec9112 = {}); // 9.11.2: mốc nhỏ lặp lại hằng năm (lễ hội, ngày lễ) không kể lại trong vòng 3 năm
+      if (!major && rec[e[1]] != null && y - rec[e[1]] < 4) return;
+      if (!major) rec[e[1]] = y;
       seen[id] = 1; told++;
       log((e[4] ? 'Thế giới năm ' : 'Năm ') + y + (e[4] ? ': ' : ' ở ' + (e[5] || name(code, y)) + ': ') + sentence(e[1]) + (l.age < 5 ? ' Bạn còn quá nhỏ để nhớ, nhưng người lớn kể lại nhiều lần.' : ''), 'info');
       if (major && l.age >= 8) H.mem(l, 'Năm ' + y + (l.age < 18 ? ', khi bạn ' + l.age + ' tuổi' : '') + ': ' + (e[5] ? 'ở ' + e[5] + ', ' : '') + lower(e[1]).replace(/\.$/, '') + '.', 2);

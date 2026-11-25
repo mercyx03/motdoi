@@ -1,6 +1,21 @@
 {
-  "generatedAt": "2026-11-25T06:45:07.124Z",
+  "generatedAt": "2026-11-25T07:30:34.817Z",
   "entries": [
+    {
+      "id": "events-2000-2025-full-91120",
+      "version": "9.11.2",
+      "publishedAt": "2026-11-25T14:27:00+07:00",
+      "releaseStatus": "packaged",
+      "title": "Năm nào từ 2000 đến 2025 cũng có chuyện của đất nước",
+      "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm 2000–2025, từ biến cố lớn đến lễ hội và ngày hội quen thuộc của từng nơi.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Thêm hơn 3.600 sự kiện cho 181 nước còn thiếu, gồm tin vui, tin buồn và tin trung tính.",
+        "Những lễ hội lặp lại hằng năm không bị kể dồn dập: cùng một nội dung chỉ xuất hiện lại sau ít nhất ba năm."
+      ]
+    },
     {
       "id": "events-2000-2025-91110",
       "version": "9.11.1",
