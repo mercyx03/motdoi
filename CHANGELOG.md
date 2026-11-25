@@ -1,3 +1,12 @@
+## 9.10.0 — Sự kiện thật đợt 3: nước nhỏ, nước đông dân, thành phố, làm rõ câu chung chung
+
+- `data-birth9100-africa/asia/americas/europe/oceania.js`, `data-birth9100-fillA/B/C.js` (mới): bù sự kiện cho các nước còn mỏng. Số nước dưới 12 sự kiện giảm từ 127 xuống 38; nước dưới 8 sự kiện còn 7 (toàn quốc đảo/tiểu quốc).
+- `data-birth9100-big1.js`, `data-birth9100-big2.js` (mới): nâng Nigeria, Pakistan, Ethiopia, Bangladesh, Ai Cập, Philippines, Kenya, CHDC Congo, Colombia, Argentina, Thái Lan, Myanmar, Nam Phi, Iran, Thổ Nhĩ Kỳ, Ukraine, Ba Lan lên khoảng 19–41 sự kiện, rải 1900–2025 với cả chuyện vui.
+- `data-birth9100-regional.js` (mới): thêm sự kiện thành phố cho Mỹ (43 mục), Nigeria, Brazil, Ấn Độ, Indonesia, Mexico.
+- `data-birth9100-fix.js` (mới): làm rõ 35 mục chung chung (ngày độc lập, sóng thần) bằng ngày/chi tiết đã đối chiếu.
+- Đã đối chiếu web: Na Uy 2018, Kipchoge 2019, Hanni Wenzel 1980, Teklehaimanot 2015, Guor Marial 2012, Filbert Bayi 1974, sụp đổ Amedeo (Brunei) 1998; gỡ mốc ngoài khoảng 1900–2025.
+- `tests/birth9100.js`.
+
 ## 9.9.2 — Sự kiện thật đợt 2: nước nhỏ, nước lớn nửa đầu thế kỷ XX, sự kiện vui, thành phố
 
 - `data-birth992-fill.js` (mới): thêm sự kiện cho ~65 nước còn mỏng, gồm cả sự kiện vui (thể thao, âm nhạc, lễ hội, kinh tế).

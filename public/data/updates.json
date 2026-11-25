@@ -1,6 +1,25 @@
 {
-  "generatedAt": "2026-11-25T02:07:17.888Z",
+  "generatedAt": "2026-11-25T02:27:11.054Z",
   "entries": [
+    {
+      "id": "events-regional-91000",
+      "version": "9.10.0",
+      "publishedAt": "2026-11-25T09:20:00+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Thêm hàng trăm sự kiện thật cho nước nhỏ và nước đông dân, mở rộng sự kiện thành phố",
+      "summary": "Bối cảnh năm sinh phong phú hơn: nhiều nước còn ít dữ liệu được bổ sung, các nước đông dân có thêm mốc rải suốt thế kỷ XX, thêm sự kiện theo thành phố cho Mỹ và nhiều nước lớn.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Bổ sung sự kiện thật cho hơn 90 nước còn mỏng; số nước có dưới 12 sự kiện giảm mạnh.",
+        "Nigeria, Pakistan, Ethiopia, Bangladesh, Ai Cập, Philippines, Kenya, Colombia, Argentina, Thái Lan, Nam Phi, Iran, Thổ Nhĩ Kỳ và nhiều nước khác có thêm mốc từ đầu thế kỷ XX đến nay, gồm cả chuyện vui như thể thao, âm nhạc, văn hóa.",
+        "Thêm sự kiện theo thành phố cho Mỹ, Nigeria, Brazil, Ấn Độ, Indonesia, Mexico.",
+        "Làm rõ các dòng sự kiện chung chung bằng ngày tháng và chi tiết cụ thể; đối chiếu web một số mốc."
+      ]
+    },
     {
       "id": "events-regional-99200",
       "version": "9.9.2",
