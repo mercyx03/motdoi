@@ -1,6 +1,26 @@
 {
-  "generatedAt": "2026-11-26T08:05:25.686Z",
+  "generatedAt": "2026-11-26T15:20:27+07:00",
   "entries": [
+    {
+      "id": "festival-trainee-9119",
+      "version": "9.11.9",
+      "publishedAt": "2026-11-26T15:20:27+07:00",
+      "releaseStatus": "packaged",
+      "releasedAt": null,
+      "title": "Từ phòng tập đến sân khấu lễ hội",
+      "summary": "Thế mạnh khi luyện tập giúp bạn cạnh tranh suất debut. Sau khi ra mắt, bạn có thể mang tiết mục sở trường tới các lễ hội lớn.",
+      "tags": [
+        "Tính năng",
+        "Sửa lỗi"
+      ],
+      "details": [
+        "Kỳ đánh giá tính cả rap và coi trọng kỹ năng sở trường. Các bạn tập cùng tiến bộ chậm dần khi đã giỏi. Thứ hạng của những lứa thực tập sinh trong bản lưu cũ cũng được cân bằng lại.",
+        "Trong Sự nghiệp giải trí, ca sĩ đủ nổi tiếng có thể chọn một sân khấu mỗi năm tại Coachella, Lollapalooza Chicago, Fuji Rock hoặc Summer Sonic. Hát live, rap hay chọn vũ đạo sẽ thử thách kỹ năng khác nhau.",
+        "Diễn tốt giúp tăng danh tiếng. Một màn diễn hụt nhịp, tạo hình ở sự kiện nhãn hàng hay cách bạn đối xử với fan đều có thể trở thành chủ đề được bàn tán. Xem lại lời khen và tranh cãi ở mục Dư luận về nghệ sĩ.",
+        "Có thành tựu cho lần đầu diễn tại từng lễ hội, tổ chức fan meeting và dự sự kiện nhãn hàng.",
+        "Các màn hình tra cứu du học, cư trú, ly hôn, niêm yết và chính sách theo thời kỳ đã ẩn dòng ghi nguồn cùng đường dẫn."
+      ]
+    },
     {
       "id": "events-1900-1919-full-91180",
       "version": "9.11.8",

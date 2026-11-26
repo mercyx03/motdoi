@@ -13,6 +13,62 @@
   function why(l) { return K.performer(l) && K.free(l) && pop(l) >= 25 ? true : !K.free(l) ? 'Hiện không thể hoạt động' : 'Cần có tên tuổi trước (độ nổi tiếng cá nhân từ 25/100)'; }
   function byCo(l) { var g = grp(l), a = agency(l); return !!(g && a && /debut/.test(a.status)); }
   function split(l) { var g = grp(l), sc = l.flags.idol155 && l.flags.idol155.company; return g ? (sc ? sc.split : 0.25) / Math.max(1, (g.members || []).length + 1) : 0.7; }
+  var festivals = [
+    { id: 'coachella', name: 'Coachella', place: 'Mỹ', from: 1999, skips: [2000, 2020, 2021], pop: 60 },
+    { id: 'lolla', name: 'Lollapalooza Chicago', place: 'Mỹ', from: 2005, skips: [2020], pop: 55 },
+    { id: 'fuji', name: 'Fuji Rock', place: 'Nhật Bản', from: 1997, skips: [2020], pop: 45 },
+    { id: 'sonic', name: 'Summer Sonic', place: 'Nhật Bản', from: 2000, skips: [2020, 2021], pop: 50 }
+  ];
+  var sets = { sing: 'Hát live với ban nhạc', rap: 'Rap trên nền beat tối giản', dance: 'Diễn tiết mục vũ đạo' };
+  function topic(l, kind, positive, headline, log) {
+    var s = st(l);
+    s.topics = s.topics || [];
+    s.topics.unshift({ year: yr(l), kind: kind, positive: positive, headline: headline });
+    s.topics.length = Math.min(20, s.topics.length);
+    log('Dư luận · ' + kind + ' · ' + headline, positive ? 'good' : 'bad');
+  }
+  X.menu('topics9119', 'Dư luận về nghệ sĩ', function (l) {
+    return K.performer(l) || (peek(l).topics || []).length ? true : 'Dành cho nghệ sĩ';
+  }, function (l) {
+    var topics = peek(l).topics || [];
+    return topics.length ? topics.map(function (t) {
+      return t.year + ' · ' + t.kind + (t.positive ? ' · Tích cực · ' : ' · Tiêu cực · ') + t.headline;
+    }).join('\n') : 'Chưa có chủ đề nào về bạn.';
+  }, function () { return []; }, 16, 'Sự nghiệp giải trí');
+  function festivalOpen(l, f) { return yr(l) >= f.from && !f.skips.includes(yr(l)); }
+  function festivalRows(l, a) {
+    var season = festivals.filter(function (f) { return festivalOpen(l, f); });
+    if (peek(l).festivalAt === l.age) return [];
+    if (!a.id) return season.map(function (f) {
+      return { k: f.id, l: f.name + ' · ' + f.place + ' · cần độ nổi tiếng ' + f.pop,
+        why: pop(l) >= f.pop || 'Chưa đủ độ nổi tiếng', run: function (l, r) { X.next(l, 'festival9119', r, { id: f.id }); } };
+    });
+    var festival = season.find(function (f) { return f.id === a.id && pop(l) >= f.pop; });
+    if (!festival) return [];
+    return Object.keys(sets).map(function (skill) {
+      return { k: skill, l: sets[skill] + ' · kỹ năng ' + lv(l, skill), run: function (l, r, log) {
+        var s = st(l), rr = seeded(l.id + ':festival:' + yr(l) + ':' + festival.id);
+        var score = lv(l, skill) * .65 + l.st.hea * .2 + img(l).pro * .15 + (rr() - .5) * 18;
+        s.festivalAt = l.age;
+        if (!s.first[festival.id]) {
+          s.first[festival.id] = yr(l);
+          H.mem(l, 'Lần đầu bước lên sân khấu ' + festival.name + '.', 5);
+        }
+        var good = score >= 60;
+        fameMul(l, good ? .09 : -.03);
+        if (good && !l.fame) l.fame = 1000;
+        fxImg(l, good ? { pro: 4, trust: 2 } : { pro: -3, scandal: 5 }, festival.name);
+        topic(l, 'Tài năng', good, festival.name + (good ? ' · Tiết mục chinh phục khán giả, danh tiếng tăng.' : ' · Tiết mục hụt nhịp trở thành chủ đề bị chê.'), log);
+      } };
+    });
+  }
+  X.menu('festival9119', 'Biểu diễn tại lễ hội âm nhạc', why, function (l, d) {
+    if (peek(l).festivalAt === l.age) return 'Bạn đã diễn ở một lễ hội trong năm nay.';
+    if (d.arg.id) return 'Chọn tiết mục. Kỹ năng tương ứng, sức khỏe và tác phong sẽ ảnh hưởng buổi diễn.';
+    return festivals.some(function (f) { return festivalOpen(l, f); }) ?
+      'Chọn một sân khấu cho năm nay. Mỗi lễ hội mời nghệ sĩ theo độ nổi tiếng.' : 'Năm nay chưa có sân khấu nào trong danh mục.';
+  }, festivalRows, 16, 'Sự nghiệp giải trí');
+  E.DEC.festival9119.auto = function () { return 'cancel'; };
   // ================================================================== Concert
   var CONCEPT = { band: ['live cùng ban nhạc', 'sing'], dance: ['vũ đạo và hiệu ứng sân khấu lớn', 'dance'], story: ['kể một câu chuyện xuyên suốt', 'acting'], acoustic: ['mộc mạc, gần gũi với khán giả', 'sing'], rap: ['năng lượng hip-hop', 'rap'] };
   var SETL = { hits: 'Toàn bài nổi tiếng', fresh: 'Giới thiệu sản phẩm mới', fan: 'Chọn theo bình chọn của người hâm mộ', exp: 'Thử nghiệm bản phối mới' };
@@ -122,10 +178,15 @@
   function deals(l) { var s = l.flags.idol987; return s && s.deals ? s.deals.filter(function (d) { return !d.ended && d.until > l.age; }) : []; }
   function holdBrand(l, r, log, a) {
     var s = st(l), rr = seeded(l.id + ':brand990:' + l.age + a.ev), E0 = BEV[a.ev], ds = deals(l), d = ds[0] || null, fee = V(l, 4000 * Math.pow(1.045, pop(l)) * E0[1] * (a.full ? 1 : 0.5));
+    s.first.brand = s.first.brand || yr(l);
     s.brandAt = l.age; var risk = 0; if (a.wear === 'own' && d && rr() < 0.55) risk = 1;
     if (a.wear === 'own' && d) { d.rel990 = (d.rel990 || 0) - 1; }
     H.cash(l, fee * (byCo(l) ? 0.5 : 0.85), 'Cát-xê sự kiện ' + E0[0].toLowerCase());
     fxImg(l, { pro: a.full ? 3 : 1, warm: a.full ? 1 : 0 }, E0[0]); if (d && a.wear === 'brand') d.rel990 = (d.rel990 || 0) + 1; fameMul(l, 0.004 * E0[1] * (a.full ? 1 : 0.5));
+    var styleScore = img(l).pro * .4 + lv(l, 'acting') * .2 + rr() * 40 + (a.wear === 'brand' ? 8 : 0);
+    var praised = styleScore >= 50;
+    topic(l, 'Nhan sắc và phong cách', praised, E0[0] + (praised ? ' · Tạo hình của bạn được khán giả khen.' : ' · Tạo hình của bạn bị bàn tán vì không hợp sự kiện.'), log);
+    fameMul(l, praised ? .01 : -.01);
     if (risk) { fxImg(l, { pro: -4, scandal: 5 }); if (d && d.rel990 <= -2) { d.ended = l.age; log(d.brand + ' chấm dứt hợp đồng sau nhiều lần bạn không dùng sản phẩm của họ ở sự kiện.', 'bad'); } else log('Bạn mặc đồ của hãng khác ở sự kiện của ' + d.brand + ' và bị báo chí chú ý; nhãn hàng nhắc nhở.', 'bad'); }
     else log('Bạn tham dự ' + E0[0].toLowerCase() + (a.full ? ' đến cuối buổi, chụp ảnh và giao lưu' : ' trong thời gian ngắn') + '. Cát-xê ' + mo(l, fee * (byCo(l) ? 0.5 : 0.85)) + (d && a.wear === 'brand' ? '; ' + d.brand + ' hài lòng.' : '.'), 'good');
   }
@@ -163,6 +224,8 @@
     if (o.clip && rr() < o.clip * (pop(l) / 60)) { fx.scandal = (fx.scandal || 0) + 7; fx.warm = (fx.warm || 0) - 3; extra += ' Đoạn clip bị đăng lên mạng và lan nhanh.'; }
     if (o.news && rr() < o.news * pop(l) / 60) { fx.warm = (fx.warm || 0) + 3; extra += ' Báo chí đưa tin tốt về hành động này.'; }
     if (o.cost) H.cash(l, -V(l, o.cost), 'Chi phí xử lý hình ảnh'); if (o.date) chat(l, o.date); if (o.hap) H.fx(l, { hap: o.hap }); if (o.fame) fameMul(l, o.fame);
+    var reaction = (fx.warm || 0) + (fx.pro || 0) - (fx.scandal || 0);
+    if (Math.abs(reaction) >= 2) topic(l, 'Thái độ', reaction > 0, (reaction > 0 ? 'Khán giả đánh giá cao' : 'Khán giả tranh luận về') + ' cách bạn xử sự: ' + o.l.toLowerCase() + '.', log);
     fxImg(l, fx, why); st(l).encLast = st(l).encLast || {}; st(l).encLast[id] = l.age; log(e.text + ' Bạn chọn: ' + o.l.toLowerCase() + '.' + extra, (fx.warm || 0) + (fx.pro || 0) - (fx.scandal || 0) >= 2 ? 'good' : (fx.scandal || 0) >= 3 ? 'bad' : 'neutral');
   }
   E.SC('encounter990', {
@@ -231,5 +294,14 @@
     ['sb_stadium990', '🌟', 'Giữa sân vận động', 'Tổ chức concert ở sân vận động', function (l) { var s = l.flags.idol990; return !!(s && s.first && s.first.stadium); }],
     ['sb_overseas990', '✈️', 'Diễn ở xứ người', 'Tổ chức concert ở nước ngoài', function (l) { var s = l.flags.idol990; return !!(s && s.first && s.first.overseas); }]
   ]);
+  if (E.addAchievements) {
+    var events = festivals.concat([{ id: 'fanmeet', name: 'fan meeting' }, { id: 'brand', name: 'sự kiện nhãn hàng' }]);
+    E.addAchievements(events.map(function (e) {
+      return ['sb_first_' + e.id, '🎤', 'Lần đầu tại ' + e.name, 'Tham dự ' + e.name + ' lần đầu', function (l) {
+        var s = peek(l);
+        return !!(s.first && s.first[e.id] || e.id === 'brand' && s.brandAt != null);
+      }];
+    }));
+  }
   E.IDOL990L = { est: est, planConcert: planConcert, holdConcert: holdConcert, concertYear: concertYear, holdFanmeet: holdFanmeet, holdBrand: holdBrand, dateYear: dateYear, react: react, severity: severity, encounterYear: encounterYear, ENC: ENC, applyEnc: applyEnc, venueList: venueList, CONCEPT: CONCEPT, BUD: BUD };
 })(globalThis.G);

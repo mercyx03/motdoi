@@ -183,4 +183,25 @@ for (const [c, y] of [['KR', 1992], ['KR', 2016], ['KR', 2025], ['KR', 2026], ['
   });
   ok(totalAw > 0 && totalIss > 0, 'qua nhiều nước có giải thưởng (' + totalAw + ') và sự cố nhóm (' + totalIss + ')');
 }
+{
+  function perform(l, festival, skill) {
+    const action = E.DEC.festival9119;
+    const card = action.make(l, half, {});
+    action.apply(l, card, String(card.data.keys.indexOf(festival)), half, logger(l));
+    const next = l.pending.shift();
+    ok(next && next.data.arg.id === festival, 'vào màn chọn tiết mục qua menu');
+    action.apply(l, next, String(next.data.keys.indexOf(skill)), half, logger(l));
+  }
+  for (const [country, festival, level] of [['VN','coachella',95], ['JP','fuji',5]]) {
+    const l = idolLife(23, 2024, {country, skill:level}), fame = l.fame;
+    perform(l, festival, 'rap');
+    const s = K.S(l), good = level > 50;
+    ok((good ? l.fame > fame : l.fame < fame) && s.topics[0].positive === good, 'phản hồi và danh tiếng theo kỹ năng');
+    ok(s.first[festival] === 2024 && !E.DEC.festival9119.make(l, half).data.keys.length, 'lần đầu và giới hạn mùa diễn');
+    const saved = E.migrate(JSON.parse(JSON.stringify(l)));
+    ok(E.DEC.topics9119.make(saved, half).text.includes(s.topics[0].headline), 'tải lại lịch sử dư luận');
+  }
+  ok(!E.DEC.festival9119.make(idolLife(24,1998),half).data.keys.includes('coachella'), 'chưa mở trước mùa đầu');
+}
+
 console.log('idol990: ' + n + ' kiểm tra đạt');

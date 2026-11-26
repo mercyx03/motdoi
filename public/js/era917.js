@@ -279,7 +279,7 @@
     var s = st(l), y = year(l), ix = index(l, y), here = vnHere(l);
     var rows = POLICIES.filter(function (p) { return p.layer !== 'simulated' || effFrom(l, p) != null; }).map(function (p) {
       var f = effFrom(l, p), on = active(l, p.id, y), sg = p.layer === 'simulated' ? STAGE[stage(l, p, y)] : on ? 'đang áp dụng' : f > y ? 'dự kiến từ ' + f : 'hết hiệu lực';
-      return '• [' + layerLabel(p) + '] ' + p.dom + ': ' + p.note + ' — ' + sg + (p.layer === 'simulated' ? ' (năm áp dụng trong đời này: ' + f + ')' : '') + '. Nguồn: ' + p.src + '.' + (p.check ? ' Chưa xác minh: ' + p.check + '.' : '');
+      return '• [' + layerLabel(p) + '] ' + p.dom + ': ' + p.note + ' — ' + sg + (p.layer === 'simulated' ? ' (năm áp dụng trong đời này: ' + f + ')' : '') + '.' + (p.check ? ' Chưa xác minh: ' + p.check + '.' : '');
     });
     return 'Năm ' + y + '. Kịch bản tương lai: ' + SCEN[s.scen].n + ' — ' + SCEN[s.scen].d + (s.chosen ? ' (đã chọn, cố định cho cả đời)' : ' (mặc định, có thể chọn một lần)') + '.\n' +
       (here ? '' : 'Bạn đang sống ngoài Việt Nam: các quy định Việt Nam dưới đây chỉ để tham khảo; nước sở tại dùng hồ sơ quốc gia riêng (mục Quốc gia).\n') +

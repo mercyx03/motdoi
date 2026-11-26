@@ -113,4 +113,24 @@ function signed(o = {}) { for (let s = 0; s < 60; s++) { const l = kid(Object.as
 {
   for (let s = 0; s < 5; s++) { const l = signed({ seed: 9000 + s * 37, age: 15 }); for (let y = 0; y < 10 && l.alive; y++) year(E, l); ok(Number.isFinite(l.money) && ['junior', 'trainee', 'debut', 'left'].includes(I.S(l).stage), 'tự động #' + s + ': ' + I.S(l).stage + ', ' + l.age + ' tuổi'); }
 }
+{
+  const l = signed(), s = I.S(l);
+  s.months = 18;
+  s.peers.forEach(p => { p.skill = 100; });
+  L.skill(l, 'rap').level = 63;
+  const initial = I.ranking(l);
+  const snapshot = JSON.stringify(s.peers);
+  I.ranking(l);
+  ok(snapshot === JSON.stringify(s.peers), 'xem bảng lần nữa không cân bằng lứa cũ lần hai');
+  for (let month = 0; month < 12; month++) {
+    if (month % 3 === 0) { s.mY = 0; l.age++; }
+    const card = E.DEC.eval155.make(l, () => .5);
+    l.pending = [card];
+    choose(l, 'eval155', 'rap');
+  }
+  const final = I.ranking(l);
+  ok(final.score > initial.score && final.rank < initial.rank && final.rank <= 5,
+    'tập rap qua các kỳ có thể vào top 5 từ lứa cũ từng cùng chạm 100');
+}
+
 console.log('PASS showbiz-idol: ' + checks + ' kiểm tra.');

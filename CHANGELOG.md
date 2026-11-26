@@ -1,3 +1,11 @@
+## 9.11.9 — Từ phòng tập đến sân khấu lễ hội
+
+- Kỳ đánh giá tính cả rap và coi trọng kỹ năng sở trường. Các bạn tập cùng tiến bộ chậm dần khi đã giỏi. Thứ hạng của những lứa thực tập sinh trong bản lưu cũ cũng được cân bằng lại.
+- Trong Sự nghiệp giải trí, ca sĩ đủ nổi tiếng có thể chọn một sân khấu mỗi năm tại Coachella, Lollapalooza Chicago, Fuji Rock hoặc Summer Sonic. Hát live, rap hay chọn vũ đạo sẽ thử thách kỹ năng khác nhau.
+- Diễn tốt giúp tăng danh tiếng. Một màn diễn hụt nhịp, tạo hình ở sự kiện nhãn hàng hay cách bạn đối xử với fan đều có thể trở thành chủ đề được bàn tán. Xem lại lời khen và tranh cãi ở mục Dư luận về nghệ sĩ.
+- Có thành tựu cho lần đầu diễn tại từng lễ hội, tổ chức fan meeting và dự sự kiện nhãn hàng.
+- Các màn hình tra cứu du học, cư trú, ly hôn, niêm yết và chính sách theo thời kỳ đã ẩn dòng ghi nguồn cùng đường dẫn.
+
 ## 9.11.8 — Mọi nước có chuyện riêng ở mọi năm 1900–1919
 
 - `data-birth9118-fill00.js` (mới): 3.586 sự kiện cho 193 nước, lấp toàn bộ năm-nước 1900–1919 còn trống. Toàn bộ 1900–2025 giờ đủ 100% (196/196 nước, 126/126 năm; trước đợt này là 85,5%).

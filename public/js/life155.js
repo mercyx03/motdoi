@@ -83,11 +83,23 @@
   // ===================================================================
   var FOCUS = { vocal: ['Luyện thanh', 'sing', 4], dance: ['Luyện vũ đạo', 'dance', 4], rap: ['Tập rap, sáng tác lời', 'rap', 4], stage: ['Luyện biểu cảm sân khấu', 'acting', 4], korean: ['Học tiếng Hàn', null, 0], rest: ['Nghỉ ngơi, chăm sóc sức khỏe, học văn hóa', null, 0] };
   function trainee(l) { var s = l.flags.idol155, a = agency(l); return !!(s && (s.stage === 'junior' || s.stage === 'trainee') && a && (a.status === 'junior155' || a.status === 'trainee')); }
-  function myScore(l) { return Math.round(lv(l, 'sing') * 0.35 + lv(l, 'dance') * 0.35 + lv(l, 'acting') * 0.15 + korean(l) * 0.1 + ((l.st && l.st.hea) || 60) * 0.05); }
-  function ranking(l) { var s = S(l), me = myScore(l), all = s.peers.filter(function (p) { return !p.out; }).map(function (p) { return { name: p.name, sc: p.skill }; }).concat([{ name: 'Bạn', sc: me, me: true }]).sort(function (a, b) { return b.sc - a.sc; }); return { list: all, rank: all.findIndex(function (x) { return x.me; }) + 1, score: me }; }
+  function myScore(l) {
+    var skills = ['sing', 'rap', 'dance', 'acting'].map(function (k) { return lv(l, k); }).sort(function (a, b) { return b - a; });
+    return Math.round(skills[0] * .62 + skills[1] * .18 + skills[2] * .07 + skills[3] * .02 + korean(l) * .06 + l.st.hea * .05);
+  }
+  function prepareCohort(s) {
+    if (s.balancedScores) return;
+    // Bản cũ cộng mức tiến bộ của cả năm vào mỗi kỳ. Chỉ hiệu chỉnh một lần.
+    (s.peers || []).forEach(function (p) {
+      var excess = Math.min(s.months || 0, 14) * (p.grow || 3) * .65;
+      p.skill = Math.max(Math.min(p.skill, 32), p.skill - excess);
+    });
+    s.balancedScores = true;
+  }
+  function ranking(l) { var s = S(l), me = myScore(l); prepareCohort(s); var all = s.peers.filter(function (p) { return !p.out; }).map(function (p) { return { name: p.name, sc: p.skill }; }).concat([{ name: 'Bạn', sc: me, me: true }]).sort(function (a, b) { return b.sc - a.sc; }); return { list: all, rank: all.findIndex(function (x) { return x.me; }) + 1, score: me }; }
   X.menu('eval155', function (l) { var s = S(l); return 'Kỳ đánh giá tháng · ' + (s.stage === 'junior' ? 'thực tập sinh bán thời gian' : 'thực tập sinh') + ' · ' + (s.company ? s.company.name : ''); },
     function (l) { return trainee(l) ? true : 'Không còn là thực tập sinh'; },
-    function (l) { var s = S(l), rk = ranking(l); return 'Kỳ đánh giá thứ ' + ((s.months || 0) + 1) + '. Điểm hiện tại ' + rk.score + '/100, xếp hạng ' + rk.rank + '/' + rk.list.length + ' trong lứa thực tập sinh. Hát ' + lv(l, 'sing') + ' · nhảy ' + lv(l, 'dance') + ' · biểu cảm ' + lv(l, 'acting') + ' · tiếng Hàn ' + korean(l) + ' · sức khỏe ' + Math.round(l.st.hea) + '.' + (s.stage === 'junior' ? ' Giờ tập giới hạn vì bạn còn đi học.' : '') + (s.note ? '\n' + s.note : '') + '\nTháng này bạn tập trung vào gì?'; },
+    function (l) { var s = S(l), rk = ranking(l); return 'Kỳ đánh giá thứ ' + ((s.months || 0) + 1) + '. Điểm hiện tại ' + rk.score + '/100, xếp hạng ' + rk.rank + '/' + rk.list.length + ' trong lứa thực tập sinh. Hát ' + lv(l, 'sing') + ' · rap ' + lv(l, 'rap') + ' · nhảy ' + lv(l, 'dance') + ' · biểu cảm ' + lv(l, 'acting') + ' · tiếng Hàn ' + korean(l) + ' · sức khỏe ' + Math.round(l.st.hea) + '.' + (s.stage === 'junior' ? ' Giờ tập giới hạn vì bạn còn đi học.' : '') + (s.note ? '\n' + s.note : '') + '\nTháng này bạn tập trung vào gì?'; },
     function (l) {
       var s = S(l), rows = Object.keys(FOCUS).map(function (k) { return { k: k, l: FOCUS[k][0], run: function (l, r, log) { train(l, r, log, k); } }; });
       var peer = s.peers.filter(function (p) { return !p.out; })[hash(l.id + (s.months || 0)) % Math.max(1, s.peers.filter(function (p) { return !p.out; }).length)];
@@ -104,8 +116,8 @@
     s.note = f[0] + ' cả tháng.'; done(l, r, log);
   }
   function done(l, r, log) {
-    var s = S(l), rr = seeded(l.id + ':m' + (s.months || 0)); s.months = (s.months || 0) + 1; s.mY = (s.mY || 0) + 1;
-    s.peers.forEach(function (p) { if (!p.out) p.skill = Math.min(100, p.skill + p.grow * (0.6 + rr() * 0.6)); });
+    var s = S(l), rr = seeded(l.id + ':m' + (s.months || 0)); prepareCohort(s); s.months = (s.months || 0) + 1; s.mY = (s.mY || 0) + 1;
+    s.peers.forEach(function (p) { if (!p.out) p.skill = Math.min(100, p.skill + (p.grow || 3) / 3 * (1 - p.skill / 100) * (0.6 + rr() * 0.6)); });
     var rk = ranking(l); s.rank = rk.rank; s.evals.push({ age: l.age, score: rk.score, rank: rk.rank }); if (s.evals.length > 40) s.evals.shift();
     if (s.stage === 'trainee' && rr() < 0.15) { var cut = s.peers.filter(function (p) { return !p.out; }).sort(function (a, b) { return a.skill - b.skill; })[0]; if (cut) { cut.out = true; log(cut.name + ' kết thúc hợp đồng thực tập sinh và về nước.', 'neutral'); } }
     var rival = s.peers.find(function (p) { return !p.out && p.kind === 'cạnh tranh'; }); if (rival && rr() < 0.2) s.note += ' ' + rival.name + ' vượt bạn ở bài kiểm tra vũ đạo, khiến bạn càng muốn cố gắng.';

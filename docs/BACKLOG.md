@@ -472,3 +472,7 @@ Theo yêu cầu mới của chủ dự án: cổ phần công ty gia đình ng�
 - Regression toàn bộ mã cuối và bản lưu thật cho Saudi Pro League/họ tên thường dân Tây Ban Nha. Test trọng điểm và giao diện hẹp/rộng chạy trong đợt triển khai; không thay thế nghiệm thu toàn diện.
 - Chưa dựng đủ các CLB/hạng dưới và thể thức Saudi từng mùa; chưa mô phỏng hồ sơ đổi họ ngoại lệ với chứng cứ bạo hành, toàn bộ hộ tịch trước 2000 và gia đình đa quốc tịch. Phạm vi/nguồn: docs/SAUDI-SPAIN-970.md.
 - Kiểm tra binding REVIEWS_DB và cấu hình Production do chủ dự án quản lý; không deploy hoặc ghi D1 Production trong đợt này.
+
+### GĐ6 — 9.11.9
+
+Còn regression toàn bộ mã cuối và theo dõi cân bằng suất debut trên nhiều đời chơi thực tế.
