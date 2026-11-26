@@ -4378,7 +4378,7 @@
     "id": "events-2000-2025-91110",
     "version": "9.11.1",
     "publishedAt": "2026-11-25T13:42:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Thêm sự kiện 2000–2025 cho 13 nước đông dân",
     "summary": "Các năm 2000–2025 còn trống ở Nigeria, Pakistan, Ethiopia, Bangladesh, Philippines, Kenya và các nước đông dân khác giờ có thêm chuyện của đất nước.",
     "tags": [
@@ -4387,13 +4387,14 @@
     "details": [
       "Hơn 130 sự kiện mới, gồm tin vui, tin buồn và tin trung tính.",
       "Bỏ cách ghi \"sự kiện có thật\" và \"đối chiếu nguồn\" khỏi mô tả bản cập nhật."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-2000-2025-full-91120",
     "version": "9.11.2",
     "publishedAt": "2026-11-25T14:27:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 2000 đến 2025 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm 2000–2025, từ biến cố lớn đến lễ hội và ngày hội quen thuộc của từng nơi.",
     "tags": [
@@ -4402,13 +4403,14 @@
     "details": [
       "Thêm hơn 3.600 sự kiện cho 181 nước còn thiếu, gồm tin vui, tin buồn và tin trung tính.",
       "Những lễ hội lặp lại hằng năm không bị kể dồn dập: cùng một nội dung chỉ xuất hiện lại sau ít nhất ba năm."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-1990s-full-91130",
     "version": "9.11.3",
     "publishedAt": "2026-11-26T11:18:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 1990 đến 1999 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm của thập niên 1990, nối liền với 2000–2025.",
     "tags": [
@@ -4417,13 +4419,14 @@
     "details": [
       "Thêm gần 1.500 sự kiện cho 187 nước: thay đổi chính trị, thiên tai, thể thao, lễ hội.",
       "Người chơi sinh từ thập niên 1980 giờ thấy chuyện của đất nước ở mọi năm tuổi thơ và trưởng thành."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-1975-1989-full-91140",
     "version": "9.11.4",
     "publishedAt": "2026-11-26T13:46:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 1975 đến 1989 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1975 đến 2025.",
     "tags": [
@@ -4432,13 +4435,14 @@
     "details": [
       "Thêm gần 2.400 sự kiện cho 188 nước: thay đổi chính trị, thiên tai, thể thao, lễ hội.",
       "Người chơi sinh từ giữa thập niên 1970 giờ thấy chuyện của đất nước ở mọi năm trong đời."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-1960-1974-full-91150",
     "version": "9.11.5",
     "publishedAt": "2026-11-26T14:03:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 1960 đến 1974 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1960 đến 2025.",
     "tags": [
@@ -4447,13 +4451,14 @@
     "details": [
       "Thêm hơn 2.400 sự kiện cho 188 nước: độc lập, đảo chính, thiên tai, thể thao, lễ hội và mùa vụ.",
       "Người chơi sinh từ thập niên 1960 giờ thấy chuyện của đất nước ở mọi năm trong đời."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-1945-1959-full-91160",
     "version": "9.11.6",
     "publishedAt": "2026-11-26T14:20:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 1945 đến 1959 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1945 đến 2025.",
     "tags": [
@@ -4462,13 +4467,14 @@
     "details": [
       "Thêm hơn 2.500 sự kiện cho 189 nước: hậu chiến, phong trào độc lập, đảo chính, thiên tai, lễ hội và mùa vụ.",
       "Người chơi sinh sau Thế chiến thứ hai giờ thấy chuyện của đất nước ở mọi năm trong đời."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-1920-1944-full-91170",
     "version": "9.11.7",
     "publishedAt": "2026-11-26T14:40:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 1920 đến 1944 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1920 đến 2025.",
     "tags": [
@@ -4477,13 +4483,14 @@
     "details": [
       "Thêm gần 4.400 sự kiện cho 190 nước: thời hậu Thế chiến I, đại khủng hoảng, thuộc địa và ủy trị, Thế chiến II, lễ hội và mùa vụ.",
       "Người chơi sinh từ thập niên 1920 giờ thấy chuyện của đất nước ở mọi năm trong đời."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   },
   {
     "id": "events-1900-1919-full-91180",
     "version": "9.11.8",
     "publishedAt": "2026-11-26T14:51:00+07:00",
-    "releaseStatus": "packaged",
+    "releaseStatus": "released",
     "title": "Năm nào từ 1900 đến 1919 cũng có chuyện của đất nước",
     "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1900 đến 2025.",
     "tags": [
@@ -4492,6 +4499,7 @@
     "details": [
       "Thêm gần 3.600 sự kiện cho 193 nước: các đế quốc cuối cùng, Thế chiến thứ nhất, dịch cúm 1918, lễ hội và mùa vụ.",
       "Dù nhân vật sinh năm nào từ 1900 đến 2025, mỗi năm trong đời đều có chuyện của đất nước mình."
-    ]
+    ],
+    "releasedAt": "2026-11-26T14:59:00+07:00"
   }
 ]
