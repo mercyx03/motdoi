@@ -1,6 +1,6 @@
 {
   "name": "mot-doi",
-  "version": "9.11.2",
+  "version": "9.11.3",
   "private": true,
   "description": "Một Đời — mô phỏng một đời người bằng số liệu thật (Việt Nam 63/34 tỉnh, 54 dân tộc; 195 quốc gia)",
   "scripts": {
@@ -80,6 +80,7 @@
     "test:life9110": "node tests/life9110.js",
     "test:birth9111": "node tests/birth9111.js",
     "test:birth9112": "node tests/birth9112.js",
+    "test:birth9113": "node tests/birth9113.js",
     "test:street991": "node tests/street991.js",
     "test:idol990": "node tests/idol990.js"
   },

@@ -4403,5 +4403,20 @@
       "Thêm hơn 3.600 sự kiện cho 181 nước còn thiếu, gồm tin vui, tin buồn và tin trung tính.",
       "Những lễ hội lặp lại hằng năm không bị kể dồn dập: cùng một nội dung chỉ xuất hiện lại sau ít nhất ba năm."
     ]
+  },
+  {
+    "id": "events-1990s-full-91130",
+    "version": "9.11.3",
+    "publishedAt": "2026-11-26T11:18:00+07:00",
+    "releaseStatus": "packaged",
+    "title": "Năm nào từ 1990 đến 1999 cũng có chuyện của đất nước",
+    "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm của thập niên 1990, nối liền với 2000–2025.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Thêm gần 1.500 sự kiện cho 187 nước: thay đổi chính trị, thiên tai, thể thao, lễ hội.",
+      "Người chơi sinh từ thập niên 1980 giờ thấy chuyện của đất nước ở mọi năm tuổi thơ và trưởng thành."
+    ]
   }
 ]
