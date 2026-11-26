@@ -1,3 +1,10 @@
+## 9.11.7 — Mọi nước có chuyện riêng ở mọi năm 1920–1944
+
+- `data-birth9117-fill20.js` (mới): 4.378 sự kiện cho 190 nước, lấp toàn bộ năm-nước 1920–1944 còn trống. Giai đoạn 1920–2025 giờ đủ 100% (196/196 nước, 106/106 năm). Độ phủ chung 1900–2025 từ 67,8% lên 85,5%.
+- Có 1.214 tin vui, 781 tin buồn, 2.383 tin trung tính; 1.851 mốc lớn và 2.527 mốc nhỏ. Các mốc theo nhóm hoàn cảnh: đại khủng hoảng 1929–1933, thuộc địa Pháp (Vichy hay Nước Pháp Tự do, hội nghị Brazzaville), thuộc địa Anh, Bồ Đào Nha, Bỉ, các lãnh thổ ủy trị, các nước cộng hòa Xô viết (tập thể hóa, nạn đói, thanh trừng), châu Âu bị chiếm đóng trong Thế chiến II. Lễ hội ra đời muộn hơn bị loại hoặc chỉ hiện từ năm bắt đầu; ngày độc lập không xuất hiện trước khi độc lập.
+- `tests/birth9117.js` (47.236 kiểm tra), script `test:birth9117`.
+- Chưa kiểm chứng: soạn từ kiến thức chung, chưa tra web từng dòng; nhiều năm của thuộc địa và nước nhỏ dùng lễ hội, mùa vụ định kỳ; một số mốc của nước ít tư liệu được viết ở mức khái quát (chẳng hạn "khan hiếm hàng hóa thời chiến").
+
 ## 9.11.6 — Mọi nước có chuyện riêng ở mọi năm 1945–1959
 
 - `data-birth9116-fill45.js` (mới): 2.552 sự kiện cho 189 nước, lấp toàn bộ năm-nước 1945–1959 còn trống. Giai đoạn 1945–2025 giờ đủ 100% (196/196 nước, 81/81 năm). Độ phủ chung 1900–2025 từ 57,4% lên 67,8%.
