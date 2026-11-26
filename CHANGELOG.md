@@ -1,3 +1,10 @@
+## 9.11.4 — Mọi nước có chuyện riêng ở mọi năm 1975–1989
+
+- `data-birth9114-fill75.js` (mới): 2.392 sự kiện cho 188 nước, lấp toàn bộ năm-nước 1975–1989 còn trống. Giai đoạn 1975–2025 giờ đủ 100% (196/196 nước, 51/51 năm). Độ phủ chung 1900–2025 từ 37,9% lên 47,6%.
+- Có 860 tin vui, 292 tin buồn, 1.240 tin trung tính; 810 mốc lớn và 1.582 mốc nhỏ. Nước nhỏ ít biến cố dùng lễ hội, ngày lễ quen thuộc (mức nhỏ); cơ chế 9.11.2 tránh kể lại cùng nội dung trong ba năm vẫn áp dụng.
+- `tests/birth9114.js` (24.538 kiểm tra), script `test:birth9114`.
+- Chưa kiểm chứng: soạn từ kiến thức chung, chưa tra web từng dòng; nhiều năm của nước nhỏ dùng sự kiện định kỳ thay vì biến cố riêng của năm đó.
+
 ## 9.11.3 — Mọi nước có chuyện riêng ở mọi năm 1990–1999
 
 - `data-birth9113-fill90.js` (mới): 1.451 sự kiện cho 187 nước, lấp toàn bộ năm-nước 1990–1999 còn trống. Độ phủ 1990–1999 từ 26,1% lên 100%; giai đoạn 1990–2025 giờ đủ 100%. Độ phủ chung 1900–2025 từ 32,1% lên 37,9%.
