@@ -1,3 +1,11 @@
+## 9.11.6 — Mọi nước có chuyện riêng ở mọi năm 1945–1959
+
+- `data-birth9116-fill45.js` (mới): 2.552 sự kiện cho 189 nước, lấp toàn bộ năm-nước 1945–1959 còn trống. Giai đoạn 1945–2025 giờ đủ 100% (196/196 nước, 81/81 năm). Độ phủ chung 1900–2025 từ 57,4% lên 67,8%.
+- Có 850 tin vui, 204 tin buồn, 1.498 tin trung tính; 753 mốc lớn và 1.799 mốc nhỏ. Thuộc địa có mốc riêng của thời kỳ cuối thuộc địa (bãi bỏ lao động cưỡng bức 1946, luật khung 1956, trưng cầu Cộng đồng Pháp 1958, Liên bang Rhodesia và Nyasaland, "tỉnh hải ngoại" Bồ Đào Nha); ngày độc lập chỉ xuất hiện từ năm sau khi độc lập; lễ hội ra đời muộn hơn bị loại hoặc chỉ hiện từ năm bắt đầu. Mỗi nước có ít nhất bốn mốc nhỏ luân phiên.
+- Sửa lỗi cũ trong `live990.js` (từ 9.9.0): khi chuyện hẹn hò của nghệ sĩ bị đăng báo mà nhân vật chưa có dữ liệu hợp đồng quảng cáo, game báo lỗi và dừng xử lý lựa chọn. Lỗi lộ ra khi bước mô phỏng của bản dựng chạy trúng tình huống này; thêm kiểm thử vào `tests/idol990.js`.
+- `tests/birth9116.js` (31.379 kiểm tra), script `test:birth9116`.
+- Chưa kiểm chứng: soạn từ kiến thức chung, chưa tra web từng dòng; nhiều năm của thuộc địa và nước nhỏ dùng lễ hội, mùa vụ định kỳ.
+
 ## 9.11.5 — Mọi nước có chuyện riêng ở mọi năm 1960–1974
 
 - `data-birth9115-fill60.js` (mới): 2.424 sự kiện cho 188 nước, lấp toàn bộ năm-nước 1960–1974 còn trống. Giai đoạn 1960–2025 giờ đủ 100% (196/196 nước, 66/66 năm). Độ phủ chung 1900–2025 từ 47,6% lên 57,4%.

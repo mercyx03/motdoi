@@ -156,6 +156,7 @@ for (const [c, y] of [['KR', 1992], ['KR', 2016], ['KR', 2025], ['KR', 2026], ['
   ok(react('KR', 'deny', true).loss > react('KR', 'sincere', true).loss, 'phủ nhận khi bằng chứng rõ ràng tệ hơn xác nhận');
   ok(react('KR', 'deny', false).loss < react('KR', 'deny', true).loss, 'phủ nhận khi không có bằng chứng ít thiệt hại hơn');
   const bk = react('KR', 'breakup'); ok(bk.t.partner === null && bk.t.exes >= 1 && K.S(bk.t).date990.stage === 'done', 'chia tay để dập tắt: kết thúc mối quan hệ');
+  { const t = mk('KR', 2020); delete t.flags.idol987; K.S(t).date990 = { key: 'Kim Soo-jin:23', name: 'Kim Soo-jin', stage: 'exposed', since: 23, risk: 40, hist: [], ev: true }; let err = null; try { LV.react(t, half, logger(t), 'deny'); } catch (e) { err = e; } ok(!err, '9.11.6: hẹn hò bị lộ khi chưa có dữ liệu hợp đồng quảng cáo không gây lỗi'); }
   const dn = react('KR', 'deny', false); ok(K.S(dn.t).date990.stage === 'secret' && K.S(dn.t).date990.risk > 40, 'phủ nhận thành công vẫn để lại rủi ro về sau');
   ok(react('KR', 'sincere').t.log.some(x => /Người hâm mộ giảm|xác nhận mối quan hệ/.test(x.t)), 'nhật ký ghi phản ứng của người hâm mộ');
   const free = mk('KR', 2020); free.partner = null; LV.dateYear(free, half, logger(free)); ok(!K.S(free).date990, 'không có người yêu thì không có chuỗi hẹn hò');
