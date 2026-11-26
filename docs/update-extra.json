@@ -4478,5 +4478,20 @@
       "Thêm gần 4.400 sự kiện cho 190 nước: thời hậu Thế chiến I, đại khủng hoảng, thuộc địa và ủy trị, Thế chiến II, lễ hội và mùa vụ.",
       "Người chơi sinh từ thập niên 1920 giờ thấy chuyện của đất nước ở mọi năm trong đời."
     ]
+  },
+  {
+    "id": "events-1900-1919-full-91180",
+    "version": "9.11.8",
+    "publishedAt": "2026-11-26T14:51:00+07:00",
+    "releaseStatus": "packaged",
+    "title": "Năm nào từ 1900 đến 1919 cũng có chuyện của đất nước",
+    "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1900 đến 2025.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Thêm gần 3.600 sự kiện cho 193 nước: các đế quốc cuối cùng, Thế chiến thứ nhất, dịch cúm 1918, lễ hội và mùa vụ.",
+      "Dù nhân vật sinh năm nào từ 1900 đến 2025, mỗi năm trong đời đều có chuyện của đất nước mình."
+    ]
   }
 ]

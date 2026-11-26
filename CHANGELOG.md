@@ -1,3 +1,10 @@
+## 9.11.8 — Mọi nước có chuyện riêng ở mọi năm 1900–1919
+
+- `data-birth9118-fill00.js` (mới): 3.586 sự kiện cho 193 nước, lấp toàn bộ năm-nước 1900–1919 còn trống. Toàn bộ 1900–2025 giờ đủ 100% (196/196 nước, 126/126 năm; trước đợt này là 85,5%).
+- Có 1.276 tin vui, 595 tin buồn, 1.715 tin trung tính; 880 mốc lớn và 2.706 mốc nhỏ. Mốc theo hoàn cảnh: dịch cúm Tây Ban Nha 1918–1919; vùng thuộc Đế quốc Nga (cách mạng 1905, Thế chiến I, cách mạng 1917, các nước tuyên bố độc lập 1917–1918, nổi dậy 1916 ở Trung Á); vùng thuộc Áo-Hung; vùng thuộc Đế quốc Ottoman (cách mạng Thanh niên Thổ, chiến tranh Balkan, nạn đói Liban, khởi nghĩa Ả Rập); thuộc địa trong Thế chiến I và các cuộc khởi nghĩa (Herero–Nama, Maji Maji, Chilembwe, Kaocen); Caribe. Ngày độc lập không xuất hiện trước khi độc lập; lễ hội ra đời sau 1919 bị loại.
+- `tests/birth9118.js` (46.407 kiểm tra), script `test:birth9118`.
+- Chưa kiểm chứng: soạn từ kiến thức chung, chưa tra web từng dòng; phần lớn năm của thuộc địa và nước nhỏ dùng lễ hội, mùa vụ định kỳ; tỷ lệ mốc nhỏ của giai đoạn này cao hơn các giai đoạn sau.
+
 ## 9.11.7 — Mọi nước có chuyện riêng ở mọi năm 1920–1944
 
 - `data-birth9117-fill20.js` (mới): 4.378 sự kiện cho 190 nước, lấp toàn bộ năm-nước 1920–1944 còn trống. Giai đoạn 1920–2025 giờ đủ 100% (196/196 nước, 106/106 năm). Độ phủ chung 1900–2025 từ 67,8% lên 85,5%.

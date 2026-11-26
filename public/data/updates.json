@@ -1,6 +1,21 @@
 {
-  "generatedAt": "2026-11-26T07:43:08.855Z",
+  "generatedAt": "2026-11-26T07:54:27.919Z",
   "entries": [
+    {
+      "id": "events-1900-1919-full-91180",
+      "version": "9.11.8",
+      "publishedAt": "2026-11-26T14:51:00+07:00",
+      "releaseStatus": "packaged",
+      "title": "Năm nào từ 1900 đến 1919 cũng có chuyện của đất nước",
+      "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1900 đến 2025.",
+      "tags": [
+        "Tính năng"
+      ],
+      "details": [
+        "Thêm gần 3.600 sự kiện cho 193 nước: các đế quốc cuối cùng, Thế chiến thứ nhất, dịch cúm 1918, lễ hội và mùa vụ.",
+        "Dù nhân vật sinh năm nào từ 1900 đến 2025, mỗi năm trong đời đều có chuyện của đất nước mình."
+      ]
+    },
     {
       "id": "events-1920-1944-full-91170",
       "version": "9.11.7",
