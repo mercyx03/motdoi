@@ -1,3 +1,10 @@
+## 9.11.5 — Mọi nước có chuyện riêng ở mọi năm 1960–1974
+
+- `data-birth9115-fill60.js` (mới): 2.424 sự kiện cho 188 nước, lấp toàn bộ năm-nước 1960–1974 còn trống. Giai đoạn 1960–2025 giờ đủ 100% (196/196 nước, 66/66 năm). Độ phủ chung 1900–2025 từ 47,6% lên 57,4%.
+- Có 803 tin vui, 190 tin buồn, 1.431 tin trung tính; 584 mốc lớn và 1.840 mốc nhỏ. Lễ hội và ngày lễ đúng thời đó: ngày độc lập chỉ xuất hiện từ năm sau khi nước đó độc lập; thuộc địa và các nước cộng hòa trong Liên Xô, Nam Tư, Tiệp Khắc dùng lễ hội, mùa vụ của vùng. Mỗi nước có ít nhất bốn mốc nhỏ luân phiên để cơ chế không kể lại trong ba năm (9.11.2) không làm trống năm.
+- `tests/birth9115.js` (27.670 kiểm tra), script `test:birth9115`.
+- Chưa kiểm chứng: soạn từ kiến thức chung, chưa tra web từng dòng; nhiều năm của nước nhỏ, thuộc địa dùng lễ hội, mùa vụ định kỳ thay vì biến cố riêng của năm đó.
+
 ## 9.11.4 — Mọi nước có chuyện riêng ở mọi năm 1975–1989
 
 - `data-birth9114-fill75.js` (mới): 2.392 sự kiện cho 188 nước, lấp toàn bộ năm-nước 1975–1989 còn trống. Giai đoạn 1975–2025 giờ đủ 100% (196/196 nước, 51/51 năm). Độ phủ chung 1900–2025 từ 37,9% lên 47,6%.

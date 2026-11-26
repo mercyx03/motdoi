@@ -4433,5 +4433,20 @@
       "Thêm gần 2.400 sự kiện cho 188 nước: thay đổi chính trị, thiên tai, thể thao, lễ hội.",
       "Người chơi sinh từ giữa thập niên 1970 giờ thấy chuyện của đất nước ở mọi năm trong đời."
     ]
+  },
+  {
+    "id": "events-1960-1974-full-91150",
+    "version": "9.11.5",
+    "publishedAt": "2026-11-26T14:03:00+07:00",
+    "releaseStatus": "packaged",
+    "title": "Năm nào từ 1960 đến 1974 cũng có chuyện của đất nước",
+    "summary": "Cả 196 nước giờ có chuyện riêng ở mọi năm từ 1960 đến 2025.",
+    "tags": [
+      "Tính năng"
+    ],
+    "details": [
+      "Thêm hơn 2.400 sự kiện cho 188 nước: độc lập, đảo chính, thiên tai, thể thao, lễ hội và mùa vụ.",
+      "Người chơi sinh từ thập niên 1960 giờ thấy chuyện của đất nước ở mọi năm trong đời."
+    ]
   }
 ]
