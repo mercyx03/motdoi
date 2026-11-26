@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T08:00:10.356Z",
+  "generatedAt": "2026-11-26T08:05:25.686Z",
   "entries": [
     {
       "id": "events-1900-1919-full-91180",
@@ -125,7 +125,7 @@
       ],
       "details": [
         "Hơn 130 sự kiện mới, gồm tin vui, tin buồn và tin trung tính.",
-        "Bỏ cách ghi \"sự kiện có thật\" và \"đối chiếu nguồn\" khỏi mô tả bản cập nhật."
+        "Mô tả bản cập nhật gọn hơn, tập trung vào trải nghiệm chơi."
       ],
       "releasedAt": "2026-11-26T14:59:00+07:00"
     },
@@ -683,7 +683,7 @@
       ],
       "details": [
         "Kiểm tra mốc hình thành của Brasília, Islamabad, Naypyidaw, Abuja và Tel Aviv khi chọn nơi sinh, chuyển đến thành phố, di cư và tìm nơi sơ tán. Giai đoạn xây dựng Brasília và Naypyidaw có tên gọi riêng. Chuyển nhà trong nước không tự đưa bạn sang một thành phố thuộc quốc gia khác.",
-        "Tên vùng Nghệ Tĩnh, Bình Trị Thiên và Sông Bé xuất hiện theo giai đoạn đã đối chiếu. Lựa chọn nơi sinh vẫn giữ rõ khu vực gốc; tên hành chính thay đổi theo năm nhưng nơi sinh và nhà đất không tự chuyển sang vùng khác.",
+        "Tên vùng Nghệ Tĩnh, Bình Trị Thiên và Sông Bé xuất hiện đúng theo từng giai đoạn. Lựa chọn nơi sinh vẫn giữ rõ khu vực gốc; tên hành chính thay đổi theo năm nhưng nơi sinh và nhà đất không tự chuyển sang vùng khác.",
         "Sau sơ tán, bạn có thể nhờ người thân thu xếp chỗ ở, tìm nơi thuê, xin tiếp tục chương trình học, xem cơ hội việc làm và nối lại tin tức gia đình. Mỗi năm thu xếp một việc; lựa chọn và phần còn dở được giữ khi lưu rồi chơi tiếp.",
         "Xin học lại có thời gian chờ, giữ kết quả đã học và phần chương trình còn thiếu. Chuyển nơi ở trong lúc chờ cần trao đổi lại; hoàn cảnh chưa an toàn sẽ kéo dài thời gian chờ. Khi trở về quê, hồ sơ học còn dở vẫn được theo dõi.",
         "Có thể hẹn gặp người thân còn sống và đang ở gần sau khi đã hỏi được tin. Khi quê cũ an toàn hơn, bạn chọn trở về hoặc gắn bó với nơi ở hiện tại; game không tự quyết thay. Trở về có chi phí và công việc cũ cần tìm lại.",
@@ -957,7 +957,7 @@
       "publishedAt": "2026-11-16T23:54:13+07:00",
       "releaseStatus": "released",
       "title": "Lương, giá và sự kiện đúng thời đại, phân biệt đối xử trong lịch sử",
-      "summary": "Người sinh trước nay chỉ gặp những chuyện có thật vào thời của mình, với mức lương và giá cả của thời ấy.",
+      "summary": "Người sinh trước nay chỉ gặp những chuyện đúng với thời của mình, với mức lương và giá cả của thời ấy.",
       "tags": [
         "Tính năng mới",
         "Cân bằng",
@@ -965,7 +965,7 @@
       ],
       "details": [
         "Lương theo thời đại: mọi ngành nay có mức lương theo thu nhập thật của năm bạn sống, ở mọi nước (trước đây lương của người sinh năm 1960 vẫn là lương 2026 trong khi chi phí đã đổi). Giá nhà, các loại nhà (chung cư thương mại, cao cấp chỉ có từ khi xuất hiện), bảo hiểm xã hội và thuế thu nhập ở Việt Nam cũng theo năm.",
-        "Không còn chuyện sai thời: gameshow và cuộc thi truyền hình, văn hóa thần tượng, clip lan truyền, mạng xã hội, ứng dụng vay tiền, game MOBA, nghề shipper, streamer, làm móng… chỉ xuất hiện từ khi chúng có thật ở nước bạn sống.",
+        "Không còn chuyện sai thời: gameshow và cuộc thi truyền hình, văn hóa thần tượng, clip lan truyền, mạng xã hội, ứng dụng vay tiền, game MOBA, nghề shipper, streamer, làm móng… chỉ xuất hiện từ khi chúng ra đời ở nước bạn sống.",
         "Phân biệt đối xử trong lịch sử: kỳ thị người đồng tính, song tính theo luật và xã hội từng nước và năm (ví dụ Anh trước 1967, Liên Xô 1934–1993, Mỹ đến 2003) cùng các chế độ phân biệt chủng tộc, sắc tộc (Jim Crow, apartheid, Quốc xã…). Bạn có thể phải giữ kín, bị lộ, mất việc, nhờ cộng đồng giúp, đấu tranh hay rời quê.",
         "Thêm hơn một trăm biến cố lịch sử theo nước và vùng: khủng hoảng kinh tế, dịch bệnh, thiên tai, xung đột (chiến tranh Mùa đông, Intifada, khủng hoảng Tequila, SARS, lũ miền Bắc 1971, bão Linda 1997…).",
         "Tuổi thơ ngoài Việt Nam: lễ hội của từng nước (Tết Âm lịch, Diwali, Eid, Giáng sinh, Halloween, Carnaval, Songkran…), thêm chuyện ở tuổi 1–2 và 10–14.",
@@ -1159,7 +1159,7 @@
       ],
       "details": [
         "Các tiêu đề dài của những lần cập nhật trước nay gọn hơn để dễ đọc trên trang cập nhật.",
-        "Rà soát thêm độ tin cậy của phần bối cảnh lịch sử: đối chiếu thêm một công trình nghiên cứu về Campuchia thập niên 1970 và từng nước Xô viết, Nam Tư cũ.",
+        "Rà soát thêm bối cảnh lịch sử của Campuchia thập niên 1970, các nước Xô viết và Nam Tư cũ.",
         "Đời sinh năm nay không đổi."
       ],
       "releasedAt": "2026-11-15T10:20:02.000Z",
@@ -1233,17 +1233,17 @@
       "version": "9.3.1",
       "publishedAt": "2026-11-15T05:24:58+07:00",
       "releaseStatus": "released",
-      "title": "Đối chiếu nguồn cho bối cảnh lịch sử và sửa các mốc sai",
-      "summary": "Các mốc độc lập, chế độ, chiến tranh và biến cố đã được đối chiếu với bách khoa trực tuyến; vài chỗ sai đã được sửa.",
+      "title": "Rà soát bối cảnh lịch sử và sửa các mốc sai",
+      "summary": "Các mốc độc lập, chế độ, chiến tranh và biến cố được rà soát lại; vài chỗ sai đã được sửa.",
       "tags": [
         "Thời đại",
         "Sửa lỗi"
       ],
       "details": [
-        "Đã đối chiếu 83 năm độc lập, 118 khẳng định về chế độ, chiến tranh, tên nước và tên thành phố, cùng các biến cố lịch sử với bách khoa trực tuyến và kết quả tìm kiếm; phần lớn khớp. Đây vẫn là nguồn thứ cấp, chưa phải văn bản gốc.",
+        "Rà soát 83 năm độc lập, 118 mốc về chế độ, chiến tranh, tên nước và tên thành phố cùng các biến cố lịch sử; phần lớn đã đúng, chỗ sai được sửa.",
         "Sửa: quần đảo Ellice đổi tên thành Tuvalu từ 1975 chứ không phải 1978; quán internet đầy đủ chỉ có từ 1994; ví MoMo từ 2012; một lỗi đánh máy ở dòng bối cảnh đảo Síp 1974.",
-        "Các con số như số người bị giam sau 1975, số người di cư năm 1954 hay số thuyền nhân khác nhau nhiều giữa các nguồn nên game không nêu số; tỷ lệ vượt biên thành công hay thất bại chỉ là tham số trò chơi.",
-        "Bảng đối chiếu đầy đủ, kèm nơi nguồn còn khác nhau, nằm trong tài liệu của dự án. Đời sinh năm nay không đổi."
+        "Các con số như số người bị giam sau 1975, số người di cư năm 1954 hay số thuyền nhân chưa thống nhất nên game không nêu số; tỷ lệ vượt biên thành công hay thất bại chỉ là tham số trò chơi.",
+        "Đời sinh năm nay không đổi."
       ],
       "releasedAt": "2026-11-15T10:20:02.000Z",
       "correctedAt": "2026-11-15T10:20:03.599Z"
@@ -1266,7 +1266,7 @@
         "Hậu quả không biến mất ngay: chấn thương tâm lý, di dời, túng thiếu và nhãn thành phần mở ra rồi kéo sang các năm sau, nhẹ dần hoặc dai dẳng tùy tiền, việc làm, gia đình và sức khỏe.",
         "Thế giới: Khmer Đỏ ở Campuchia 1975–1979, chuyển đổi kinh tế và lạm phát phi mã ở Liên Xô cũ và Đông Âu, các cuộc chiến ở Nam Tư cũ, cú sốc dầu mỏ 1974–1975 và 1980–1982, khủng hoảng châu Á 1997, khủng hoảng tài chính 2008, sóng thần 2004 và đại dịch COVID-19.",
         "Hơn 140 nước có dòng bối cảnh chính trị theo năm (thuộc địa đến năm độc lập, độc tài, nội chiến, đảo chính) hiện trong nhật ký khi tình trạng đổi.",
-        "Các mốc và sự kiện là kiến thức công khai, chưa đối chiếu lại từng nguồn; xác suất và mức thiệt hại là tham số trò chơi, không phải số liệu thương vong. Đời sinh năm nay không đổi."
+        "Xác suất và mức thiệt hại là tham số trò chơi, không phải số liệu thương vong. Đời sinh năm nay không đổi."
       ],
       "releasedAt": "2026-11-15T10:20:02.000Z",
       "correctedAt": "2026-11-15T10:20:03.439Z"
@@ -1395,7 +1395,7 @@
         "Khoản vay mới theo lãi nơi đang sống: vay mua nhà Anh 4,63%, Mỹ 7,11% (30 năm), Canada 6,19%, Úc 6,2%; vay tiêu dùng Anh 9,85%, Mỹ 11,90%; thẻ tín dụng Mỹ 21,19%, Úc 21,74%. Khoản vay đã ký giữ lãi cũ, kể cả khi chuyển nước. Singapore và các nước khác giữ mức cũ.",
         "NHS England: phí kê đơn cố định £9,90 mỗi lần; có thể mua phiếu trả trước PPC 3 tháng (£32,05) hoặc 12 tháng (£114,50) và bật tự gia hạn. Học sinh 16–18 học toàn thời gian được miễn.",
         "Nhật Bản từ 70 tuổi: 70–74 tự trả 20%; từ 75 tự trả 10%, hoặc 20% nếu thu nhập hộ từ 200 vạn yên (một người) hay 320 vạn yên (hai người trở lên); thu nhập ngang người đang làm trả 30%.",
-        "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2023–24 (19% đến 47–48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; hai ngưỡng 500 nghìn và 1 triệu SGD đã đối chiếu IRAS."
+        "Thuế lương: người sống ở Scotland theo biểu Scotland từ 2023–24 (19% đến 47–48%); National Insurance 8% và 2% thay mức bảo hiểm chung 8% ở Anh; cập nhật hai ngưỡng 500 nghìn và 1 triệu SGD."
       ],
       "releasedAt": "2026-11-14T05:20:24.615Z",
       "correctedAt": "2026-11-14T05:20:28.915Z"
@@ -1424,7 +1424,7 @@
       "publishedAt": "2026-11-13T15:41:00.000+07:00",
       "releaseStatus": "released",
       "title": "Giữ nhà đang vay khi chuyển nước, chia nợ khi chủ nợ mất, điều kiện niêm yết",
-      "summary": "Nhà còn nợ thế chấp không còn bị bán gấp khi bạn đổi nước; di sản người vay chia đều theo tỷ lệ cho các chủ nợ; điều kiện IPO riêng cho Anh và Mỹ; thêm dòng giáo dục đối chiếu nguồn chính thức.",
+      "summary": "Nhà còn nợ thế chấp không còn bị bán gấp khi bạn đổi nước; di sản người vay chia đều theo tỷ lệ cho các chủ nợ; điều kiện IPO riêng cho Anh và Mỹ; thêm thông tin giáo dục cho một số nước.",
       "tags": [
         "Tài chính",
         "Quốc gia",
@@ -1434,7 +1434,7 @@
         "Chuyển nước khi nhà còn vay thế chấp: nếu giá trị nhà vượt nợ đủ rộng, căn nhà được giữ lại làm tài sản ở nơi cũ và khoản vay tiếp tục trả dần, quy đổi tiền theo nước mới. Trễ hạn kéo dài thì ngân hàng phát mại; bán nhà sẽ tất toán khoản vay bằng tiền sẵn có; dọn về ở lại thì khoản vay trở lại là vay mua nhà. Nhà nợ gần bằng giá trị vẫn bán như trước.",
         "Khi người vay vốn cửa hàng của bạn qua đời và di sản còn nhiều chủ nợ: tiền mặt di sản chia đồng hạng theo tỷ lệ cho bạn, nợ cá nhân và các quyền thu hồi khác của cùng người vay; không còn dừng lại chờ đối soát vô thời hạn.",
         "Niêm yết cổ phiếu: Anh áp dụng quy tắc từ 29/07/2024 (vốn hóa từ 30 triệu bảng, 10% cổ phiếu cho công chúng, không đòi hồ sơ ba năm); Mỹ áp dụng điều kiện Nasdaq Global Market (lợi nhuận trước thuế từ 1 triệu USD, vốn chủ từ 15 triệu USD, 400 cổ đông). Nước khác vẫn dùng điều kiện chung.",
-        "Hồ sơ quốc gia: thêm 7 dòng giáo dục của Nhật, Đức, Úc và Singapore đối chiếu với bộ giáo dục hoặc cơ quan chính thức; nay 251/3705 mục có nguồn riêng."
+        "Hồ sơ quốc gia: thêm 7 dòng giáo dục của Nhật, Đức, Úc và Singapore."
       ],
       "releasedAt": "2026-11-13T09:15:00.000Z",
       "correctedAt": "2026-11-15T07:50:35+07:00"
@@ -1445,7 +1445,7 @@
       "publishedAt": "2026-11-13T13:31:00.000+07:00",
       "releaseStatus": "released",
       "releasedAt": "2026-11-13T08:27:00.000Z",
-      "title": "Đối chiếu luật hôn nhân, nguyên nhân qua đời và điện lưới theo nước",
+      "title": "Cập nhật luật hôn nhân, nguyên nhân qua đời và điện lưới theo nước",
       "summary": "Tuổi kết hôn ở 8 nước đổi theo nơi sống và năm; nguyên nhân qua đời của nhân vật và người thân theo từng nước (WHO/World Bank); nhà có điện lưới hay chưa theo nước, năm và vùng; gỡ chữ \"mô phỏng\" trong giao diện; sửa số phiên bản hiển thị.",
       "tags": [
         "Pháp luật",
@@ -1456,7 +1456,7 @@
       "details": [
         "Tuổi kết hôn theo nơi sống và năm: Trung Quốc nam 22, nữ 20 (từ 1981); Indonesia 19 cho cả hai từ 15/10/2019 (trước đó nữ 16); Hàn Quốc 18 cho cả hai từ 2008 (trước đó nữ 16); Nhật Bản 18 cho cả hai từ 1/4/2022; Thái Lan 18 từ 23/1/2025 (trước đó 17); Philippines, Singapore và Đức 18. Nhân vật chưa đủ tuổi sẽ chung sống và hẹn cưới khi đủ tuổi như ở Việt Nam.",
         "Singapore: từ 21 tuổi tự đăng ký; 18–21 cần cha mẹ đồng ý; dưới 18 phải có Giấy phép Hôn nhân Đặc biệt.",
-        "Mục hồ sơ quốc gia đã đối chiếu hiển thị phạm vi văn bản (điều luật, ngày hiệu lực) thay cho nhãn \"nguồn tổng hợp\"; hiện 246/3705 mục có nguồn riêng.",
+        "Mục hồ sơ quốc gia hiển thị rõ phạm vi văn bản (điều luật, ngày hiệu lực).",
         "Nguyên nhân qua đời của nhân vật, bố mẹ, anh chị em và bạn đời theo số liệu từng nước (World Bank WDI, gốc WHO Global Health Estimates): tỷ trọng bệnh truyền nhiễm, bệnh không lây và chấn thương; tai nạn giao thông, bạo lực, lao, sốt rét, HIV, tiêu chảy, ngộ độc theo tỷ lệ của nước đó. Biết bơi, rượu, ma túy, thuốc lá và bệnh đang mắc vẫn được tính. Nước chưa có số liệu giữ bảng cũ.",
         "Điện lưới tại nhà theo nước, năm sinh, thành thị hay nông thôn và nhóm thu nhập gia đình. Nhà chưa có điện được kéo điện dần theo tốc độ phủ điện của nước đó; trẻ đi học học bài dưới đèn dầu, ngày có điện được ghi vào nhật ký và ký ức.",
         "Gỡ chữ \"mô phỏng\" thừa trong các thông báo công vụ, bầu cử, hạn chế xuất cảnh, hoàng gia, Monaco, Tây Tạng và nhà ở xã hội; giữ lại ghi chú về kịch bản chính trị và giờ bay giả lập.",
@@ -1484,7 +1484,7 @@
         "Ở Bắc Ireland: không được nộp đơn trong hai năm đầu hôn nhân; cần sống tách biệt hai năm nếu hai bên đồng ý, năm năm nếu không. Tòa ra decree nisi trước, rồi mới tới decree absolute.",
         "Bóng đá: người có quốc tịch Anh có thể đại diện Anh, Scotland, Xứ Wales hoặc Bắc Ireland nếu sinh ra ở đó, có cha mẹ hoặc ông bà ruột sinh ra ở đó, hoặc học ít nhất năm năm trước 18 tuổi tại đó. Có thể chọn liên đoàn khi chưa ra sân chính thức cấp đội tuyển.",
         "Thêm hồ sơ Y khoa (MD) tại Johns Hopkins và Luật (J.D.) tại Yale, có lệ phí hồ sơ và các bước tuyển sinh như các trường hiện có.",
-        "Thông tin về giáo dục, hôn nhân và điều kiện làm việc ở từng quốc gia nay ghi rõ khi mục chỉ dựa trên nguồn tổng hợp quốc tế, chưa được đối chiếu riêng."
+        "Thông tin về giáo dục, hôn nhân và điều kiện làm việc ở từng quốc gia được bổ sung và trình bày rõ hơn."
       ],
       "correctedAt": "2026-11-15T07:50:35+07:00"
     },
@@ -1537,7 +1537,7 @@
         "Thiên phú kinh doanh giúp công ty bạn trực tiếp điều hành có lợi nhuận cao hơn khoảng 20–30% trong những năm có lãi.",
         "Sửa lỗi chuyển từ nước ngoài về Việt Nam làm mất tài sản: mọi khoản tiết kiệm, đầu tư và tài sản theo dõi riêng đều được quy đổi đầy đủ. Nhà không còn nợ vay được giữ lại thay vì bị bán, và bạn dọn về ở lại khi trở về đúng nơi đó. Chi phí chuyển nước giảm về mức hợp lý. Người đi lao động hoặc du học bằng tiền Việt không còn bị quy đổi sai khi về nước.",
         "Thêm nút “Mở lại” trong danh sách việc để quay về bảng vừa đóng (ví dụ bảng nhân viên và lương trong quản lý doanh nghiệp) chỉ bằng một lần bấm.",
-        "Gỡ bớt chữ “mô phỏng” không cần thiết trong giao diện. Những tham số chưa có nguồn được ghi là ước tính; các ghi chú về kịch bản chính trị vẫn giữ."
+        "Gỡ bớt chữ “mô phỏng” không cần thiết trong giao diện. Một số tham số được ghi là ước tính; các ghi chú về kịch bản chính trị vẫn giữ."
       ],
       "correctedAt": "2026-11-13T03:40:51.346Z"
     },
@@ -1562,7 +1562,7 @@
         "Cầu thủ có thể nộp hồ sơ đổi đội tuyển. Game đối chiếu quốc tịch, thời gian cư trú và các trận đã thi đấu trước khi quyết định. Lịch trận câu lạc bộ phân biệt lượt sân nhà và sân khách.",
         "Hồ sơ nhập tịch thường tại Canada, Mỹ và Úc xem xét thời gian cư trú đã ghi, có phân biệt tạm trú với thường trú.",
         "Tại England và Wales, hồ sơ ly hôn khi thụ án có quyết định có điều kiện và quyết định cuối cùng. Thêm sổ NS&I bằng bảng Anh, với lãi gộp và khóa rút trước hạn.",
-        "Bổ sung nguồn cho một số mục lao động, hôn nhân và quyền lợi khám bệnh theo nơi ở. Hồ sơ hoàng gia Tây Ban Nha có thêm mốc Asturias năm 1977 và kiểm tra đúng cha mẹ khi đăng ký thứ tự họ."
+        "Bổ sung thông tin cho một số mục lao động, hôn nhân và quyền lợi khám bệnh theo nơi ở. Hồ sơ hoàng gia Tây Ban Nha có thêm mốc Asturias năm 1977 và kiểm tra đúng cha mẹ khi đăng ký thứ tự họ."
       ],
       "correctedAt": "2026-11-13T03:40:51.466Z"
     },
@@ -1603,16 +1603,16 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-12T00:19:15.640Z",
       "title": "Ngành học, sự kiện cuối cấp và đời sống bóng đá",
-      "summary": "Bổ sung tên câu lạc bộ có nguồn, sửa nguyện vọng ngành học và nối các bước sự kiện, tài chính gia đình.",
+      "summary": "Bổ sung tên câu lạc bộ, sửa nguyện vọng ngành học và nối các bước sự kiện, tài chính gia đình.",
       "tags": [
         "Học tập",
         "Đời sống",
         "Sửa lỗi"
       ],
       "details": [
-        "Danh mục bóng đá có 192 tên câu lạc bộ với nguồn tham chiếu; mùa tham chiếu có thể khác nhau giữa các giải. Mùa thi đấu và thu nhập trong cuộc đời vẫn được tính theo cơ chế trò chơi.",
+        "Danh mục bóng đá có 192 tên câu lạc bộ. Mùa thi đấu và thu nhập trong cuộc đời vẫn được tính theo cơ chế trò chơi.",
         "Đội tuyển tiếp tục thi đấu khi bạn không được gọi hoặc đã giải nghệ. Cầu thủ có thể thương lượng tài trợ, thực hiện nghĩa vụ quảng bá và nhận khoản thanh toán theo hợp đồng; giải nghệ hoặc hết hợp đồng sẽ tất toán phần đã hoàn thành.",
-        "Bổ sung chương trình có nguồn cho sáu trường Việt Nam. Nguyện vọng cũ sai tên chương trình cần chọn lại; giữ nguyên bằng đã hoàn thành. MD và J.D. tại Harvard, Stanford, UCLA kiểm tra bằng cử nhân trước khi nhập học.",
+        "Bổ sung chương trình học cho sáu trường Việt Nam. Nguyện vọng cũ sai tên chương trình cần chọn lại; giữ nguyên bằng đã hoàn thành. MD và J.D. tại Harvard, Stanford, UCLA kiểm tra bằng cử nhân trước khi nhập học.",
         "Sự kiện cuối cấp đi tiếp qua từng bước chuẩn bị; có hình minh họa kỷ yếu và tiệc. Buổi chia tay tại một số nơi không còn ép lễ phục, chọn bạn đi cùng hay khiêu vũ. Thẻ cũ sau đổi trường, chuyển nước hoặc qua năm không được thu tiền tham dự.",
         "Chuyển từ khóa tiếng sang đại học tại chỗ giữ đúng nơi ở và tiền tệ. Rút hồ sơ, bị từ chối hoặc hết hạn xử lý khoản học phí chưa dùng và nơi trở về.",
         "Cửa hàng của bạn đời có vốn, cổ phần và sổ doanh nghiệp chung; trả vay từ tiền riêng thực có. Đóng cửa hàng không tự xóa khoản vay cá nhân.",
@@ -1648,7 +1648,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-11T01:03:41.279Z",
       "title": "Luật tại Harvard, Hạng Nhất Việt Nam và dữ liệu theo nước",
-      "summary": "Thêm thông tin tuyển sinh, đội bóng, cư trú, bảo hiểm tiền gửi và tước hiệu lịch sử có nguồn.",
+      "summary": "Thêm thông tin tuyển sinh, đội bóng, cư trú, bảo hiểm tiền gửi và tước hiệu lịch sử.",
       "tags": [
         "Học tập",
         "Đời sống",
@@ -1656,7 +1656,7 @@
       ],
       "details": [
         "Danh mục học tập Mỹ có lộ trình Juris Doctor ba năm tại Harvard Law School và điều kiện bằng cử nhân trước khi nhập học.",
-        "Hạng Nhất Việt Nam thêm Công an Nhân dân, Hưng Yên, Thái Nguyên và Thép Cần Thơ theo nguồn VPF mùa 2026/27. Các mã đội trong bản lưu được giữ.",
+        "Hạng Nhất Việt Nam thêm Công an Nhân dân, Hưng Yên, Thái Nguyên và Thép Cần Thơ cho mùa 2026/27. Các mã đội trong bản lưu được giữ.",
         "Hồ sơ cư trú Canada có điều kiện kinh nghiệm làm việc của Canadian Experience Class và điều kiện Canada Child Benefit đối với người cư trú tạm.",
         "Hồ sơ ngân hàng tại Mỹ có hạn mức bảo hiểm tiền gửi FDIC. Hồ sơ Tây Ban Nha có căn cứ riêng cho danh xưng danh dự của Juan Carlos I và Sofía."
       ],
@@ -1677,7 +1677,7 @@
       ],
       "details": [
         "Mục cư trú dẫn tới lộ trình thường trú theo nơi đang sống. Bốn năm làm việc không tự mở quyền xin thường trú. Hồ sơ đang chờ theo cách cũ được hoàn phí để xem lại theo nước.",
-        "Tại Anh, thời hạn tìm việc sau khi học được cập nhật theo mốc Graduate visa, có thời hạn riêng cho tiến sĩ. Hồ sơ giải thích quyền tiếp cận trợ cấp và dẫn nguồn điều kiện Universal Credit.",
+        "Tại Anh, thời hạn tìm việc sau khi học được cập nhật theo mốc Graduate visa, có thời hạn riêng cho tiến sĩ. Hồ sơ giải thích quyền tiếp cận trợ cấp và điều kiện Universal Credit.",
         "Bổ sung Công an Hà Nội, Thể Công Viettel, Manchester City, Chelsea, Atlético de Madrid và Athletic Club. Lương hợp đồng đã tính dự phòng thuế và phí đại diện, tránh khấu trừ lặp.",
         "Danh mục học tập ở Mỹ giải thích lộ trình MD và điều kiện môn dự bị. Hồ sơ hoàng gia Tây Ban Nha có thêm trường hợp thoái vị năm 2014 và văn bản ban hành.",
         "Ứng viên đã từ chối điều hành doanh nghiệp của bố mẹ được loại khỏi vòng chọn CEO của doanh nghiệp đó. Tỷ lệ cổ phần vẫn theo hồ sơ tài sản."
@@ -1691,7 +1691,7 @@
       "releaseStatus": "released",
       "releasedAt": "2026-11-10T08:49:31.829Z",
       "title": "Tra cơ sở giáo dục và giữ đúng ngành đã chọn",
-      "summary": "Thêm danh mục cơ sở có nguồn theo quốc gia, sửa hướng học Điều dưỡng và Y học dự phòng, gỡ nhãn thừa trong đời sống.",
+      "summary": "Thêm danh mục cơ sở theo quốc gia, sửa hướng học Điều dưỡng và Y học dự phòng, gỡ nhãn thừa trong đời sống.",
       "tags": [
         "Học tập",
         "Đời sống",
@@ -1699,12 +1699,12 @@
       ],
       "details": [
         "Trong Học tập, từ 13 tuổi có thể tra tên và địa điểm cơ sở giáo dục theo 195 quốc gia. Danh mục phân biệt trường, college và cơ sở khu vực; nơi tham chiếu ở nước lân cận được ghi rõ địa điểm thực tế.",
-        "Thông tin danh tính cơ sở đi kèm nguồn đối chiếu. Xem danh mục không tự đổi nơi sống, quốc tịch, trường đang học, tài sản hay cấp văn bằng. Trường đã có trong lộ trình tuyển sinh hiện hành có thể mở nguyện vọng; các chương trình chưa được đối chiếu không tự trở thành ngành được trường công bố.",
+        "Xem danh mục không tự đổi nơi sống, quốc tịch, trường đang học, tài sản hay cấp văn bằng. Trường đã có trong lộ trình tuyển sinh hiện hành có thể mở nguyện vọng; các chương trình chưa được đối chiếu không tự trở thành ngành được trường công bố.",
         "Sửa lỗi xác nhận ngành sức khỏe tại trường đã chọn: Điều dưỡng đi đúng hướng bốn năm; Y học dự phòng giữ hướng sáu năm thay vì bị chuyển thành Y khoa. Dược học, Y học cổ truyền và Răng-Hàm-Mặt có hướng riêng khi hồ sơ đã ghi cụ thể.",
         "Chương trình Medicine MBChB tiêu chuẩn tại Manchester dùng thời gian năm năm, không áp mặc định sáu năm. Xác nhận chương trình giữ trường đã chọn; thao tác lặp lại không kéo dài khóa học.",
         "Thẻ xác nhận ngành đang chờ trong bản lưu cũ được làm mới từ nguyện vọng đã có. Giữ hồ sơ trường và bằng cấp đã ghi; việc làm mới thẻ không tự cấp bằng hay nhận việc.",
         "Gỡ thêm nhiều nhãn thừa trong hồ sơ đời sống, học tập, việc làm, giải trí, đầu tư và sức khỏe. Giá và khoản chi chưa có báo giá được ghi là ước tính; không đổi tên khoản ước tính thành giá chính thức. Các tình huống chính trị vẫn được phân biệt khi cần.",
-        "Đây là một phần của đợt rà dữ liệu toàn game. Danh mục tên cơ sở không đồng nghĩa mọi ngành, học phí, điểm chuẩn, quy định cư trú hay quyền hành nghề đã được xác minh; các phần còn thiếu tiếp tục được đối chiếu."
+        "Đây là một phần của đợt rà dữ liệu toàn game. Danh mục tên cơ sở không đồng nghĩa mọi ngành, học phí, điểm chuẩn, quy định cư trú hay quyền hành nghề đã đầy đủ; các phần còn thiếu sẽ tiếp tục được bổ sung."
       ],
       "correctedAt": "2026-11-11T01:00:29.010Z"
     },
@@ -1724,11 +1724,11 @@
         "Sửa tỷ lệ phiếu bị NaN ở doanh nghiệp do bố mẹ nắm giữ. Hai phụ huynh còn sống chia đều quyền biểu quyết; còn một người thì người đó có đủ trọng số, không tự chuyển cổ phần hay tạo tiền.",
         "Danh mục đại học giữ tên trường đã có thay vì đổi thành tên nhóm chung. Sửa vị trí một số trường Anh, Mỹ và tách tên UCLA khỏi UC Berkeley. Sở thích từ đồ vật sinh nhật đầu tiên giúp đưa trường có nhóm ngành liên quan lên trước; vẫn chọn được hướng khác và phải đáp ứng điều kiện học tập.",
         "Chứng chỉ tiếng Pháp dùng các mức DELF A1–B2 và DALF C1 theo lộ trình đang hỗ trợ, giữ cấp độ đã lưu.",
-        "Mở sổ VND tại Vietcombank dùng biểu lãi suất có nguồn ngày 10/11/2026, theo đúng kỳ hạn và hình thức gửi. Không tự cộng thêm lãi trực tuyến hay kéo dài kỳ hạn không có trong biểu; mỗi sổ giữ nguồn và lãi đã ký. Nơi chưa có biểu được đối chiếu chưa mở sổ mới; sổ cũ vẫn giữ điều kiện và tất toán được.",
+        "Mở sổ VND tại Vietcombank dùng biểu lãi suất ngày 10/11/2026, theo đúng kỳ hạn và hình thức gửi. Không tự cộng thêm lãi trực tuyến hay kéo dài kỳ hạn không có trong biểu; mỗi sổ giữ lãi suất đã ký. Nơi chưa có biểu lãi suất chưa mở sổ mới; sổ cũ vẫn giữ điều kiện và tất toán được.",
         "Nguồn cha mẹ của trẻ hoàng gia được nối bằng mã người đã lưu lúc sinh hoặc nhận nuôi. Đổi bạn đời không tự đổi cha mẹ, nhánh gia phả hay họ pháp lý đã có. Hồ sơ mâu thuẫn cần đối chiếu trước khi tự chuyển ngôi.",
         "Gỡ một số nhãn thừa trong hồ sơ hoàng gia, sở thích, công việc và đời sống. Chi phí chưa có báo giá chính thức vẫn ghi là ước tính; đợt này chưa xác minh xong dữ liệu tham chiếu toàn game."
       ],
-      "summary": "Sửa tỷ lệ phiếu kế nghiệp, giữ tên trường và bổ sung biểu tiết kiệm có nguồn; nối hồ sơ cha mẹ theo đúng người đã lưu.",
+      "summary": "Sửa tỷ lệ phiếu kế nghiệp, giữ tên trường và bổ sung biểu lãi suất tiết kiệm; nối hồ sơ cha mẹ theo đúng người đã lưu.",
       "correctedAt": "2026-11-11T01:00:29.085Z"
     },
     {
@@ -2757,7 +2757,7 @@
       "releaseStatus": "released",
       "publishedAt": "2026-11-02T12:00:00.000+07:00",
       "title": "Phiếu lương, ngân sách, bảo hiểm, nhà ở xã hội, thuế kinh doanh, hộ chiếu",
-      "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được đối chiếu lại.",
+      "summary": "Xem rõ lương gộp, từng khoản bảo hiểm, thuế và tiền thực nhận; quản lý quỹ khẩn cấp; nghỉ ốm, học nghề ngắn hạn, nhà ở xã hội, vùng phát thải thấp Hà Nội, hộ chiếu và visa du lịch. Số liệu chính sách được cập nhật.",
       "tags": [
         "Tính năng",
         "Sửa lỗi"
@@ -2771,7 +2771,7 @@
         "Hà Nội: vùng phát thải thấp theo lộ trình — đổi xe máy điện, kết hợp xe buýt hoặc đổi lịch đi lại. Kịch bản tương lai có thể miễn vé xe buýt cho học sinh và người cao tuổi.",
         "Hộ chiếu và đi lại: phải làm hộ chiếu trước khi ra nước ngoài; một số nước Đông Nam Á miễn thị thực, nước khác cần visa và có thể bị từ chối (kết quả không đổi khi tải lại). Có thể du lịch cùng con khi các con đã có hộ chiếu.",
         "Biến cố mới gắn với kinh tế: năm giá cả leo thang, chăm sóc cha mẹ già nhiều năm (nối tiếp lựa chọn đón cha mẹ về), nơi làm việc chuyển đổi số.",
-        "Chính sách theo thời đại: kịch bản Cân bằng nay áp dụng chậm và chọn lọc một số chính sách giả định; mỗi chính sách ghi rõ mức kiểm chứng nguồn. Cập nhật lương tối thiểu vùng 2026, mức tham chiếu 2,53 triệu từ 7/2026, căn cứ giảm trừ gia cảnh.",
+        "Chính sách theo thời đại: kịch bản Cân bằng nay áp dụng chậm và chọn lọc một số chính sách giả định. Cập nhật lương tối thiểu vùng 2026, mức tham chiếu 2,53 triệu từ 7/2026, căn cứ giảm trừ gia cảnh.",
         "Hoàn thiện chính sách: giá nhà, y tế, học phí tăng theo thời gian có giới hạn; lương công chức theo lương cơ sở mới, lương hưu được điều chỉnh.",
         "Bảo hiểm: BHYT hộ gia đình phải đóng hằng năm; quỹ hưu trí tự nguyện được trừ thuế; bảo hiểm nhân thọ có thời gian chờ và không chi trả bệnh có từ trước.",
         "Lao động: tăng ca được trả 150% có giới hạn giờ, chọn cách nghỉ phép năm; sinh viên đi thực tập; trợ cấp cho người khuyết tật nặng sau khi xác định mức độ.",
@@ -2843,7 +2843,7 @@
       "details": [
         "Tất cả 195 quốc gia có hồ sơ riêng: ba hướng học (phổ thông, nghề, đại học) kèm kỳ thi nếu nước đó có, ba ngày lễ có thời điểm và hoạt động cụ thể, ba bước tìm hiểu chuyện cưới hỏi, năm món ăn và năm điều kiện làm việc theo luật hoặc thực tế nước đó.",
         "Mỗi nước có năm câu chuyện nhiều năm (chọn hướng học, học thử một nghề, đổi lịch làm, góp sức cho ngày lễ, cùng người yêu chuẩn bị chuyện cưới). Câu chuyện cần theo dõi qua nhiều năm, có thể thất bại rồi thử lại, bị gián đoạn khi đổi việc hoặc chia tay; không tự cấp bằng, việc làm hay đăng ký kết hôn.",
-        "Thông tin quốc gia lấy mốc tham chiếu năm 2026 và có đường dẫn nguồn của UNESCO, ILO, Ngân hàng Thế giới hoặc cổng chính phủ; phần lớn hồ sơ mới là bản tóm lược, chưa đối chiếu từng câu với nguồn. Các chi phí, kết quả trong game là cân bằng gameplay.",
+        "Thông tin quốc gia lấy mốc tham chiếu năm 2026; phần lớn hồ sơ mới là bản tóm lược. Các chi phí, kết quả trong game là cân bằng gameplay.",
         "Ở những nơi có hoàn cảnh đặc biệt (chiến tranh, hạn chế học tập với phụ nữ, khủng hoảng kinh tế), hồ sơ ghi nhận thực tế đó như khó khăn của nhân vật, không coi là lựa chọn của người chơi.",
         "Giới ngầm: nếu bạn chưa đứng đầu nhóm, nhóm có một người cầm đầu cụ thể với tính cách và mức tin tưởng riêng. Khi người này bị bắt, muốn rút lui hoặc mất uy tín, bạn chọn ủng hộ người kế nhiệm, tự đứng ra (có thể thất bại), đứng ngoài hoặc rời nhóm; năm sau người dẫn dắt mới đưa ra điều kiện đóng góp để bạn chấp nhận hoặc thương lượng.",
         "Nếu bạn đang đứng đầu, đàn em có thể thách thức vị trí của bạn: chia lại việc, giữ vị trí (không bảo đảm) hoặc nhường lại. Nhóm gắn kết thấp và nhiều mâu thuẫn có thể tan rã: giữ lại người còn tin mình, theo nhóm khác, tạm lặn hoặc rời giới. Biến động không xảy ra khi bạn đang ở trong trại.",
@@ -3445,7 +3445,7 @@
         "Thêm 109 thành tựu văn hóa và học tập: đón lễ địa phương qua ba năm khác nhau, đạt kết quả xuất sắc ở sự kiện đánh giá cuối cấp, tự làm thành công ba món đã học, hoặc cùng đón Matariki tại New Zealand. Điều kiện cụ thể nằm trong bảng Thành tựu & gia phả.",
         "Thêm 40 thành tựu bóng đá: những lần đầu ra sân, ghi bàn và kiến tạo; các mốc số trận, bàn thắng, phút thi đấu và sạch lưới; cột mốc đội tuyển, hat-trick, danh hiệu thế giới và công việc sau giải nghệ.",
         "Có thành tựu riêng cho hành trình thi đấu tại 16 thị trường bóng đá. Bạn cần thật sự có phút ra sân cho câu lạc bộ; chỉ sinh ra tại nước đó, nhận lời mời, ngồi dự bị hoặc chuyển nơi cư trú chưa đủ. Có thêm cột mốc trải nghiệm câu lạc bộ ở ba quốc gia.",
-        "Khi sống tại Phần Lan, Ghana hoặc Ireland, từ 12 tuổi bạn có thể gặp câu chuyện món ăn địa phương với năm món đã được đối chiếu nguồn ở mỗi nước. Bạn tự chọn học công thức, thực hành hoặc chỉ trò chuyện; không bắt buộc ăn món không hợp khẩu vị.",
+        "Khi sống tại Phần Lan, Ghana hoặc Ireland, từ 12 tuổi bạn có thể gặp câu chuyện món ăn địa phương với năm món đặc trưng của mỗi nước. Bạn tự chọn học công thức, thực hành hoặc chỉ trò chuyện; không bắt buộc ăn món không hợp khẩu vị.",
         "Công thức cần được học từ năm trước mới thực hành. Nấu ăn có thể chưa thành công, kinh nghiệm được giữ để thử lại năm sau; món đã làm được và công thức không mất khi chuyển nước. Chi phí và xác suất là mô phỏng của game.",
         "Bổ sung dịp Matariki tại New Zealand từ năm 2022 theo bối cảnh ngày lễ công cộng, có ghi nhận khác biệt văn hóa giữa các cộng đồng. Game mô phỏng theo năm, không ấn định một ngày lễ cố định cho mọi năm.",
         "Sự kiện văn hóa đang chờ sẽ kiểm tra lại nơi cư trú trước khi trừ tiền hoặc ghi nhận kết quả. Chuyển nước không mang theo một lễ địa phương không còn phù hợp; lễ theo nguồn gốc gia đình và tín ngưỡng vẫn được phân biệt rõ.",
@@ -4455,7 +4455,7 @@
       ],
       "details": [
         "Các đô thị lớn có thêm cơ hội chuyên môn. Có thể tìm việc tại nơi muốn đến, giữ công việc cũ khi hồ sơ chưa được duyệt, rồi mới chuyển chỗ ở khi nhận việc. Cùng nghề có thể khác lương theo địa bàn và đơn vị.",
-        "Thêm cơ hội công tác mô phỏng tại Petrovietnam, Ngân hàng Nhà nước, Xây dựng Trường Sơn và Tân Cảng Sài Gòn. Tên tổ chức có thật, nhưng vị trí tuyển và mức thu nhập trong game không phải thông báo tuyển dụng thật.",
+        "Thêm cơ hội công tác mô phỏng tại Petrovietnam, Ngân hàng Nhà nước, Xây dựng Trường Sơn và Tân Cảng Sài Gòn. Vị trí tuyển và mức thu nhập trong game không phải thông báo tuyển dụng thật.",
         "Tự lập công ty, mở công ty con, mua cổ phần, chào mua để giành quyền kiểm soát, sáp nhập và thoái vốn. Chỉ kiểm soát trên 50% mới quản lý công ty; cần ít nhất ba công ty đang kiểm soát để tổ chức mô hình tập đoàn.",
         "Có chi phí bộ máy, cải tổ, kiểm toán, sức ép HĐQT, cổ tức và tổn thất vốn. Tiền mua cổ phần được trừ thật; sáp nhập không tự nhân đôi tài sản.",
         "Người có tài sản có thể thuê quản lý, luật sư hoặc kiểm toán. Phí được trả định kỳ, giảm một phần rủi ro vận hành và nhà cho thuê bỏ trống, không bảo lãnh lợi nhuận.",
@@ -4592,7 +4592,7 @@
         "Chuẩn ngoại ngữ theo chương trình: một số trường có đầu vào IELTS 5.5, trường khác cho học bổ trợ; đầu ra đại học 4.5 hoặc 5.5. Thạc sĩ đầu vào 5.5/đầu ra 6.5, tiến sĩ 6.5/7.5 trong mô phỏng. Chứng chỉ hết hạn không đủ điều kiện.",
         "Sĩ quan chủ động xin học thạc sĩ/tiến sĩ ở các học viện lực lượng: kỹ thuật quân sự, chỉ huy tham mưu, chính trị, an ninh, tội phạm học. Cần bằng trước, ngoại ngữ, học phí và đơn vị đồng ý.",
         "Danh sách chức vụ chỉ còn những vị trí cao hơn đương nhiệm. Chặn cả lựa chọn cũ đã mở trước khi đổi chức vụ.",
-        "Thẩm tra lý lịch bản thân, bạn đời và hồ sơ ba thế hệ được giữ khi chuyển đời. Chặn vấn đề pháp lý chưa giải quyết. Không tự cấm cả gia đình chỉ vì tôn giáo: nguồn chính thức không xác nhận quy tắc chung đó.",
+        "Thẩm tra lý lịch bản thân, bạn đời và hồ sơ ba thế hệ được giữ khi chuyển đời. Chặn vấn đề pháp lý chưa giải quyết. Không tự cấm cả gia đình chỉ vì tôn giáo: không có quy tắc chung như vậy.",
         "Đề tài 1/3/10/20 năm công việc, thí nghiệm, dữ liệu, tranh biện, hướng dẫn học viên, nghiệm thu và công bố qua phản biện; có tốn phí, chậm tiến độ, sửa và từ chối.",
         "Chủ động nộp hồ sơ PGS/GS, xét bằng tiến sĩ, bài báo, giảng dạy/hướng dẫn và uy tín. Tách bậc nghề khỏi học hàm; giữ học hàm hợp lệ trong bản lưu cũ.",
         "Giáo sư đủ uy tín có thể ứng cử chức vụ lãnh đạo khoa học trong bối cảnh mô phỏng, cần vị trí/phiếu tín nhiệm, nhiệm kỳ 5 năm."
